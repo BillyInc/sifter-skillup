@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Sifter Skill_Up",
+    "slug": "sifter-skillup",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#6366f1"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.sifterskillup"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#6366f1"
+      },
+      "package": "app.sifterskillup"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      ["expo-notifications", {
+        "icon": "./assets/icon.png",
+        "color": "#6366f1"
+      }]
+    ],
+    "scheme": "sifter",
+    "extra": {
+      "eas": { "projectId": "YOUR_EAS_PROJECT_ID" }
+    }
+  }
+}
