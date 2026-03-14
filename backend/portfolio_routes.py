@@ -25,6 +25,11 @@ from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 
+from auth import Auth
+from crypto_utils import encrypt_token, decrypt_token
+from database import db
+from models import ResponseModel
+
 # ─────────────────────────────────────────────────────────────
 # Pydantic models
 # ─────────────────────────────────────────────────────────────
@@ -310,8 +315,8 @@ async def oauth_callback(platform_id: str, request: Request, background_tasks: B
         "platform_id": platform_id,
         "username": username,
         "profile_url": profile_url,
-        "access_token": access_token,          # In production: encrypt this
-        "refresh_token": refresh_token,
+        "access_token": encrypt_token(access_token),
+        "refresh_token": encrypt_token(refresh_token),
         "token_expiry": (datetime.now() + timedelta(seconds=expires_in)).isoformat(),
         "connected_at": datetime.now().isoformat(),
         "auth_method": "oauth",

@@ -2,9 +2,21 @@
 # Sifter Skill_Up — Backend Configuration
 # ============================================
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+def _default_encryption_key() -> str:
+    """Get encryption key from env. Falls back to a fixed dev-only key."""
+    key = os.getenv("ENCRYPTION_KEY", "")
+    if key:
+        return key
+    # Fixed dev-only fallback — MUST set ENCRYPTION_KEY in production
+    # This is a valid Fernet key for local dev only
+    return "c2lmdGVyLWRldi1vbmx5LWtleS0xMjM0NTY3ODkwMTI="
+
 
 class Settings:
     APP_NAME: str = "Sifter Skill_Up API"
@@ -34,6 +46,14 @@ class Settings:
     CELERY_BROKER_URL: str = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
     CELERY_RESULT_BACKEND: str = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 
+    # Encryption
+    ENCRYPTION_KEY: str = _default_encryption_key()
+
+    # GitHub OAuth
+    GITHUB_CLIENT_ID: str = os.getenv("GITHUB_CLIENT_ID", "")
+    GITHUB_CLIENT_SECRET: str = os.getenv("GITHUB_CLIENT_SECRET", "")
+    GITHUB_REDIRECT_URI: str = os.getenv("GITHUB_REDIRECT_URI", "http://localhost:8000/api/github/callback")
+
     # CORS
     ALLOWED_ORIGINS: list = [
         os.getenv("WEB_DASHBOARD_URL", "http://localhost:3000"),
@@ -58,5 +78,6 @@ class Settings:
     # Quant Developer: must complete Python chapters 1-5 before starting
     # Quant Trader / Researcher: start from math (Lab 0), no Python gate
     QUANT_DEV_PYTHON_GATE_CHAPTERS: int = 5
+    QUANT_PYTHON_GATE_CHAPTERS: int = 5
 
 settings = Settings()

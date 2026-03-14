@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity,
+  View, Text, StyleSheet, TouchableOpacity,
   SafeAreaView, StatusBar, Modal,
 } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { ISLANDS, isIslandUnlocked, type Island } from '../data/islands';
 import { getLevel } from '../data/levels';
 import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
+import { useGameStore } from '../stores/gameStore';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import LessonScreen from './LessonScreen';
 
@@ -107,6 +109,11 @@ function IslandCard({ island, completedLevels, onLevelPress, unlocked }: {
 export default function IslandMapScreen() {
   const { user } = useAuth();
   const [activeLevelId, setActiveLevelId] = useState<number | null>(null);
+  const { hasPosition, lastPosition, loadPosition, clearPosition } = useGameStore();
+
+  useEffect(() => {
+    loadPosition();
+  }, []);
 
   const completed = user?.completed_levels || [];
 
@@ -118,12 +125,21 @@ export default function IslandMapScreen() {
     return a.start - b.start;
   });
 
-  const handleLevelPress = (levelId: number) => setActiveLevelId(levelId);
+  const handleLevelPress = useCallback((levelId: number) => setActiveLevelId(levelId), []);
 
   const handleLessonComplete = (stars: number, xp: number) => {
     setActiveLevelId(null);
     // refreshUser handled inside useProgress
   };
+
+  const renderIslandCard = useCallback(({ item: island }: { item: Island }) => (
+    <IslandCard
+      island={island}
+      completedLevels={completed}
+      unlocked={isIslandUnlocked(island, completed)}
+      onLevelPress={handleLevelPress}
+    />
+  ), [completed, handleLevelPress]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -141,19 +157,34 @@ export default function IslandMapScreen() {
         </View>
       </View>
 
+      {/* Resume button */}
+      {hasPosition && lastPosition && (
+        <TouchableOpacity
+          style={styles.resumeButton}
+          onPress={() => setActiveLevelId(Number(lastPosition.lessonId))}
+          activeOpacity={0.85}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={styles.resumeLabel}>Resume</Text>
+            <Text style={styles.resumeDetail} numberOfLines={1}>
+              {lastPosition.trackName} — {lastPosition.lessonTitle}
+            </Text>
+          </View>
+          <Text style={styles.resumeArrow}>→</Text>
+        </TouchableOpacity>
+      )}
+
       {/* Island list */}
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {orderedIslands.map(island => (
-          <IslandCard
-            key={island.id}
-            island={island}
-            completedLevels={completed}
-            unlocked={isIslandUnlocked(island, completed)}
-            onLevelPress={handleLevelPress}
-          />
-        ))}
-        <View style={{ height: 40 }} />
-      </ScrollView>
+      <FlashList
+        data={orderedIslands}
+        renderItem={renderIslandCard}
+        estimatedItemSize={180}
+        keyExtractor={(island) => island.id}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{ height: Spacing.lg }} />}
+        ListFooterComponent={<View style={{ height: 40 }} />}
+      />
 
       {/* Lesson modal */}
       <Modal visible={activeLevelId !== null} animationType="slide" presentationStyle="fullScreen">
@@ -177,8 +208,12 @@ const styles = StyleSheet.create({
   headerStats:      { flexDirection: 'row', gap: Spacing.md },
   statItem:         { fontSize: FontSize.md, fontWeight: '700', color: Colors.text },
 
-  scroll:           { flex: 1 },
-  scrollContent:    { padding: Spacing.lg, gap: Spacing.lg },
+  scrollContent:    { padding: Spacing.lg },
+
+  resumeButton:     { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.accent, marginHorizontal: Spacing.lg, marginTop: Spacing.md, borderRadius: Radius.md, padding: Spacing.md, gap: Spacing.sm },
+  resumeLabel:      { fontSize: FontSize.xs, fontWeight: '800', color: '#fff', textTransform: 'uppercase', letterSpacing: 0.5 },
+  resumeDetail:     { fontSize: FontSize.sm, fontWeight: '600', color: 'rgba(255,255,255,0.9)', marginTop: 2 },
+  resumeArrow:      { fontSize: FontSize.xl, fontWeight: '800', color: '#fff' },
 
   islandCard:       { backgroundColor: Colors.card, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1.5, borderColor: Colors.border },
   islandCardLocked: { opacity: 0.6 },

@@ -67,3 +67,25 @@ class ErrorResponse(BaseModel):
     success: bool = False
     error: str
     details: Optional[Any] = None
+
+
+class TelegramAuthRequest(BaseModel):
+    initData: str
+
+
+class BaseWalletAuthRequest(BaseModel):
+    walletAddress: str
+    signature: str
+    message: str = "Sign in to Sifter Skill_Up"
+
+
+class PushPortfolioRequest(BaseModel):
+    repo_name: str = "sifter-quant-portfolio"
+    description: str = "Quant finance portfolio built on Sifter Skill_Up"
+    files: List[Dict[str, str]]
+
+
+class CreateRepoRequest(BaseModel):
+    name: str = "my-first-repo"
+    description: str = ""
+    private: bool = False
