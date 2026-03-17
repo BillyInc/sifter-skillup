@@ -10,7 +10,7 @@ import { useProgress } from '../hooks/useProgress';
 import { getLevel, LEVELS } from '../data/levels';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import SimulatorCard from '../components/simulators/SimulatorCard';
-import { computeLabTiers, assignScenario } from '../lib/progressionEngine';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
 // ── Types ─────────────────────────────────────────────────────
 interface Props {
@@ -572,11 +572,6 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
   const [termVisible, setTermVisible]         = useState(false);
   const [returnTopic, setReturnTopic]         = useState<string|null>(null);
 
-  // TODO: Integrate progressionEngine here. For late-tier labs (tier index >= half
-  // of total tiers via computeLabTiers), show a topic picker before startLesson.
-  // Use assignScenario() to get topicOptions when labTier.mode === 'user-choice',
-  // then pass selectedTopicId back to assignScenario() once the user picks.
-
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{ if(level) startLesson(level); }, [levelId]);
   useEffect(()=>{ if(state?.answered) setShowFeedback(true); }, [state?.answered]);
@@ -630,7 +625,8 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
 
       <TermLinkModal link={activeLink} visible={termVisible} onClose={()=>setTermVisible(false)} onGoToLesson={handleGoToLinked}/>
       <NotesPanel visible={showNotes} levelId={levelId} topic={level.topic} onClose={()=>setShowNotes(false)}/>
-    </SafeAreaView>
+          <DisclaimerFooter />
+      </SafeAreaView>
   );
 }
 

@@ -16,6 +16,7 @@ import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import LessonScreen from './LessonScreen';
 import { VRBridge } from '../vr/VRBridge';
 import type { VRScenarioKey } from '../vr/VRBridge';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
 // ── Tier colour map ───────────────────────────────────────────
 const TIER_COLORS = {
@@ -309,7 +310,8 @@ export default function QuantMapScreen() {
         labName={vrPrompt?.labName ?? ''}
         onDismiss={() => setVrPrompt(null)}
       />
-    </SafeAreaView>
+          <DisclaimerFooter />
+      </SafeAreaView>
   );
 }
 

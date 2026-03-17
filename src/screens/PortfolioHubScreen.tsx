@@ -26,6 +26,8 @@ import {
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
+import { shareOnPortfolioArtifact } from '../lib/shareEngine';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -687,6 +689,18 @@ function ProgressionTab({
 // Main screen
 // ─────────────────────────────────────────────────────────────────────────────
 
+function handleShareArtifact(artifact: any, userId: string) {
+  shareOnPortfolioArtifact({
+    type: 'portfolio_artifact',
+    userName: 'you',
+    trackName: artifact.track ?? artifact.trackId ?? 'Sifter',
+    artifactName: artifact.name ?? artifact.title,
+    portfolioUrl: artifact.portfolioUrl ?? `https://sifter.app/u/${userId}/portfolio`,
+    verificationUrl: `https://sifter.app/verify/${artifact.id}`,
+    userId,
+  }).catch(() => {});
+}
+
 export default function PortfolioHubScreen() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<HubTab>('overview');
@@ -877,6 +891,7 @@ export default function PortfolioHubScreen() {
           )}
         </ScrollView>
       )}
+      <DisclaimerFooter />
     </SafeAreaView>
   );
 }

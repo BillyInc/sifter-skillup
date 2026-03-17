@@ -872,6 +872,7 @@ Sifter Skill_Up — Lab 8: Applied Quant Python
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
+import DisclaimerFooter from '../components/DisclaimerFooter';
 try:
     import pandas_datareader.data as web
     HAS_DATAREADER = True
@@ -1028,7 +1029,8 @@ export default function GitHubScreen() {
           onLearn={() => setShowLearn(true)}
         />
       )}
-    </SafeAreaView>
+          <DisclaimerFooter />
+      </SafeAreaView>
   );
 }
 

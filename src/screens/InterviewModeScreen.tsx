@@ -29,6 +29,7 @@ import {
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { API } from '../lib/api';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -447,7 +448,8 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
           onDone={onBack}
         />
       )}
-    </SafeAreaView>
+          <DisclaimerFooter />
+      </SafeAreaView>
   );
 }
 

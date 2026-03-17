@@ -13,9 +13,10 @@
 
 import React, { useState, useRef } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity,
+  View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, Animated, Dimensions,
 } from 'react-native';
+import LearnMoreScreen from './LearnMoreScreen';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 
 const { width: SCREEN_W } = Dimensions.get('window');
@@ -128,7 +129,32 @@ function scoreQuiz(answers: Record<string, number>): Array<{ trackId: string; na
     const opt = q.options[selectedIdx];
     opt.fields.forEach(field => {
       fieldScores[field] = (fieldScores[field] ?? 0) + opt.weight;
-    });
+      // Disclaimer
+  disclaimerBody: { padding: Spacing.xl, alignItems: 'center' },
+  disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.lg },
+  disclaimerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
+  disclaimerSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
+  disclaimerCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border },
+  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
+  disclaimerCardBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  disclaimerBullet: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 26, paddingLeft: 4 },
+  acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
+  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
+  learnMoreBtn: { padding: Spacing.md, alignItems: 'center' },
+  learnMoreBtnText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
+  disclaimerBody: { padding: Spacing.xl, alignItems: 'center', paddingBottom: 60 },
+  disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.xl },
+  disclaimerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
+  disclaimerSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
+  disclaimerCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border },
+  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
+  disclaimerCardBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  disclaimerBullet: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 28, paddingLeft: 4 },
+  acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
+  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
+  learnMoreLinkBtn: { padding: Spacing.md, alignItems: 'center' },
+  learnMoreLinkText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
+});
   });
 
   return Object.entries(fieldScores)
@@ -147,12 +173,14 @@ function scoreQuiz(answers: Record<string, number>): Array<{ trackId: string; na
 // ─────────────────────────────────────────────────────────────────────────────
 
 type OnboardingStep =
+  | 'disclaimer'
   | 'welcome'
+  | 'crypto-start'
   | 'quiz'
   | 'quiz-results'
   | 'browse';
 
-function WelcomeStep({ onKnow, onQuiz }: { onKnow: () => void; onQuiz: () => void }) {
+function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: () => void; onQuiz: () => void; onCryptoStart: () => void }) {
   return (
     <View style={styles.stepContainer}>
       <Text style={styles.welcomeEmoji}>⚡</Text>
@@ -160,6 +188,15 @@ function WelcomeStep({ onKnow, onQuiz }: { onKnow: () => void; onQuiz: () => voi
       <Text style={styles.welcomeSub}>
         We have 28 career fields and 800+ roles. Let's find the right one for you.
       </Text>
+
+      <TouchableOpacity style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2 }]} onPress={onCryptoStart} activeOpacity={0.85}>
+        <Text style={styles.bigBtnEmoji}>₿</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.bigBtnTitle, { color: '#f7931a' }]}>New to crypto</Text>
+          <Text style={styles.bigBtnSub}>Start from zero → Bitcoin Bay island map</Text>
+        </View>
+        <Text style={[styles.bigBtnArrow, { color: '#f7931a' }]}>→</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.bigBtn} onPress={() => onKnow('operations')} activeOpacity={0.85}>
         <Text style={styles.bigBtnEmoji}>🎯</Text>
@@ -177,6 +214,47 @@ function WelcomeStep({ onKnow, onQuiz }: { onKnow: () => void; onQuiz: () => voi
           <Text style={styles.bigBtnSub}>6 quick questions → we suggest your best match</Text>
         </View>
         <Text style={[styles.bigBtnArrow, { color: Colors.accent }]}>→</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// ─────────────────────────────────────────────────────────
+// CryptoStartStep — routes true beginners to Bitcoin Bay
+// ─────────────────────────────────────────────────────────
+function CryptoStartStep({ onStart, onBrowse }: { onStart: (trackId: string) => void; onBrowse: () => void }) {
+  return (
+    <View style={styles.stepContainer}>
+      <Text style={styles.welcomeEmoji}>₿</Text>
+      <Text style={styles.welcomeTitle}>Start from the beginning</Text>
+      <Text style={styles.welcomeSub}>
+        You'll start at Bitcoin Bay — 18 islands that take you from complete beginner to confident crypto user. No experience needed.
+      </Text>
+
+      <View style={{ backgroundColor: 'rgba(247,147,26,0.1)', borderRadius: 12, padding: 16, marginBottom: 24 }}>
+        <Text style={{ color: Colors.text, fontSize: 14, lineHeight: 22 }}>
+          {'🏝️  18 islands, 270 levels
+₿  Bitcoin → Ethereum → Wallets → DeFi → NFTs
+🛡️  Security and scam protection built in
+🔓  Unlock skill tracks as you progress'}
+        </Text>
+      </View>
+
+      <TouchableOpacity
+        style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2 }]}
+        onPress={() => onStart('island-map')}
+        activeOpacity={0.85}
+      >
+        <Text style={styles.bigBtnEmoji}>🚀</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.bigBtnTitle, { color: '#f7931a' }]}>Start at Bitcoin Bay</Text>
+          <Text style={styles.bigBtnSub}>Begin Island 1 — no experience needed</Text>
+        </View>
+        <Text style={[styles.bigBtnArrow, { color: '#f7931a' }]}>→</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={{ marginTop: 16, padding: 12, alignItems: 'center' }} onPress={onBrowse}>
+        <Text style={{ color: Colors.textMuted, fontSize: 14 }}>← Back to options</Text>
       </TouchableOpacity>
     </View>
   );
@@ -285,7 +363,8 @@ interface Props {
 }
 
 export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
-  const [step, setStep] = useState<OnboardingStep>('welcome');
+  const [showLearnMore, setShowLearnMore] = useState(false);
+  const [step, setStep] = useState<OnboardingStep>('disclaimer');
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [results, setResults] = useState<ReturnType<typeof scoreQuiz>>([]);
 
@@ -299,12 +378,69 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
     setStep('quiz-results');
   };
 
+  // Disclaimer step
+  if (step === -1) {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <ScrollView contentContainerStyle={styles.disclaimerBody}>
+          <Text style={styles.disclaimerEmoji}>⚡</Text>
+          <Text style={styles.disclaimerTitle}>Welcome to Sifter Skill_Up</Text>
+          <Text style={styles.disclaimerSub}>
+            We're here to help you build real career skills — from foundation to senior level.
+          </Text>
+
+          <View style={styles.disclaimerCard}>
+            <Text style={styles.disclaimerCardTitle}>But mastery isn't built in one place.</Text>
+            <Text style={styles.disclaimerCardBody}>We encourage you to:</Text>
+            {[
+              '📚 Cross-reference with books and other learning materials',
+              '🏗️ Build real projects outside the app',
+              '👥 Join communities and find mentors in your field',
+              '🌍 Practice in the real world — not just simulations',
+            ].map((item, i) => (
+              <Text key={i} style={styles.disclaimerBullet}>{item}</Text>
+            ))}
+          </View>
+
+          <View style={styles.disclaimerCard}>
+            <Text style={styles.disclaimerCardTitle}>What we promise:</Text>
+            <Text style={styles.disclaimerCardBody}>Real, verifiable skills. A portfolio that proves what you can do. Honest, high-quality lessons built against industry standards.</Text>
+          </View>
+
+          <View style={styles.disclaimerCard}>
+            <Text style={styles.disclaimerCardTitle}>What we don't promise:</Text>
+            <Text style={styles.disclaimerCardBody}>A job. Completing a path does not guarantee employment. Your outcomes depend on your effort, your network, and market conditions we can't control.</Text>
+          </View>
+
+          <TouchableOpacity style={styles.acceptBtn} onPress={handleDisclaimerAccept}>
+            <Text style={styles.acceptBtnText}>I understand — Let's build skills</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.learnMoreBtn} onPress={() => setShowLearnMore(true)}>
+            <Text style={styles.learnMoreBtnText}>Read full terms and resources →</Text>
+          </TouchableOpacity>
+        </ScrollView>
+
+        <Modal visible={showLearnMore} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowLearnMore(false)}>
+          <LearnMoreScreen onClose={() => setShowLearnMore(false)} />
+        </Modal>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.safe}>
       {step === 'welcome' && (
         <WelcomeStep
           onKnow={onBrowse}
           onQuiz={() => setStep('quiz')}
+          onCryptoStart={() => setStep('crypto-start')}
+        />
+      )}
+      {step === 'crypto-start' && (
+        <CryptoStartStep
+          onStart={onComplete}
+          onBrowse={() => setStep('welcome')}
         />
       )}
       {step === 'quiz' && (

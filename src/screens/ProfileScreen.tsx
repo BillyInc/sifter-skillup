@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, Lin
 import { useAuth } from '../hooks/useAuth';
 import { API } from '../lib/api';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
 const CHARACTER_STAGES = ['🥚','🐣','📚','🔑','🌱','📈','🔬','🏗️','⚡'];
 const CHARACTER_NAMES  = ['Egg','Hatchling','Learner','Keeper','Farmer','Trader','Analyst','Architect','Legend'];
@@ -43,6 +44,103 @@ function GitHubProfileCard() {
     </View>
   );
 }
+
+// ── Privacy Settings Card ─────────────────────────────────────────────────────
+
+function PrivacySettingsCard() {
+  const { user } = useAuth();
+  const [isPrivate, setIsPrivate] = React.useState(false);
+  const [followRequests, setFollowRequests] = React.useState(0);
+
+  React.useEffect(() => {
+    // Load current privacy setting
+    if (user?.id) {
+      fetch(`${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/users/privacy?userId=${user.id}`)
+        .then(r => r.json())
+        .then(d => { setIsPrivate(d.isPrivate ?? false); setFollowRequests(d.pendingFollowRequests ?? 0); })
+        .catch(() => {});
+    }
+  }, [user?.id]);
+
+  const toggle = async () => {
+    const next = !isPrivate;
+    setIsPrivate(next);
+    try {
+      await fetch(`${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/users/privacy`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user?.id, isPrivate: next }),
+      });
+    } catch { setIsPrivate(!next); } // revert on fail
+  };
+
+  return (
+    <View style={privStyles.card}>
+      <Text style={privStyles.title}>Privacy & Safety</Text>
+
+      {/* Private account toggle */}
+      <View style={privStyles.row}>
+        <View style={{ flex: 1 }}>
+          <Text style={privStyles.rowLabel}>🔒 Private account</Text>
+          <Text style={privStyles.rowSub}>
+            Only approved followers see your posts and progress. Others must request to follow you.
+          </Text>
+        </View>
+        <TouchableOpacity onPress={toggle} style={[privStyles.toggle, isPrivate && privStyles.toggleOn]}>
+          <View style={[privStyles.thumb, isPrivate && privStyles.thumbOn]} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Follow requests (only shown if private + has pending) */}
+      {isPrivate && followRequests > 0 && (
+        <TouchableOpacity style={privStyles.requestsRow}>
+          <Text style={privStyles.requestsText}>👤 {followRequests} follow request{followRequests > 1 ? 's' : ''} pending</Text>
+          <Text style={privStyles.requestsAction}>Review →</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* DM note */}
+      <View style={privStyles.dmNote}>
+        <Text style={privStyles.dmNoteText}>
+          💬 <Text style={{ fontWeight: '700' }}>Messages:</Text> Only you can start a conversation. 
+          Other users cannot message you unless you reach out first.
+        </Text>
+      </View>
+
+      {/* Blocked users */}
+      <TouchableOpacity style={privStyles.linkRow}>
+        <Text style={privStyles.linkText}>🚫 Blocked accounts</Text>
+        <Text style={privStyles.linkArrow}>›</Text>
+      </TouchableOpacity>
+
+      {/* Muted users */}
+      <TouchableOpacity style={privStyles.linkRow}>
+        <Text style={privStyles.linkText}>🔇 Muted accounts</Text>
+        <Text style={privStyles.linkArrow}>›</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const privStyles = StyleSheet.create({
+  card:         { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1.5, borderColor: Colors.border, gap: Spacing.md },
+  title:        { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text },
+  row:          { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
+  rowLabel:     { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text, marginBottom: 2 },
+  rowSub:       { fontSize: 12, color: Colors.textSoft, lineHeight: 17 },
+  toggle:       { width: 50, height: 28, borderRadius: 14, backgroundColor: '#e2e8f0', padding: 2, justifyContent: 'center' },
+  toggleOn:     { backgroundColor: Colors.accent },
+  thumb:        { width: 24, height: 24, borderRadius: 12, backgroundColor: '#fff', alignSelf: 'flex-start' },
+  thumbOn:      { alignSelf: 'flex-end' },
+  requestsRow:  { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f0f4ff', borderRadius: Radius.md, padding: Spacing.md },
+  requestsText: { fontSize: FontSize.sm, color: Colors.text, fontWeight: '600' },
+  requestsAction: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '800' },
+  dmNote:       { backgroundColor: '#f8fafc', borderRadius: Radius.md, padding: Spacing.md },
+  dmNoteText:   { fontSize: 12, color: Colors.textSoft, lineHeight: 18 },
+  linkRow:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 4 },
+  linkText:     { fontSize: FontSize.sm, color: Colors.text, fontWeight: '600' },
+  linkArrow:    { fontSize: 18, color: Colors.textSoft },
+});
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
@@ -114,12 +212,16 @@ export default function ProfileScreen() {
         {/* GitHub card */}
         <GitHubProfileCard />
 
+        {/* Privacy Settings */}
+        <PrivacySettingsCard />
+
         {/* Sign out */}
         <TouchableOpacity style={styles.signOutBtn} onPress={signOut} activeOpacity={0.8}>
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+          <DisclaimerFooter />
+      </SafeAreaView>
   );
 }
 

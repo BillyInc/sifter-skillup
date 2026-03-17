@@ -13,6 +13,7 @@ import { API } from './src/lib/api';
 import { queryClient } from './src/lib/queryClient';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { ScreenErrorBoundary } from './src/components/ScreenErrorBoundary';
+import { OfflineBanner } from './src/components/OfflineBanner';
 
 import AuthScreen from './src/screens/AuthScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
@@ -22,10 +23,14 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import QuantMapScreen from './src/screens/QuantMapScreen';
 import GitHubScreen from './src/screens/GitHubScreen';
 import PortfolioScreen from './src/screens/PortfolioScreen';
+import CommunityScreen from './src/screens/CommunityScreen';
 import LessonScreen from './src/screens/LessonScreen';
 import InterviewModeScreen from './src/screens/InterviewModeScreen';
 import PortfolioHubScreen from './src/screens/PortfolioHubScreen';
-import { OfflineBanner } from './src/components/OfflineBanner';
+import LeaderboardScreen from './src/screens/LeaderboardScreen';
+import GuildScreen from './src/screens/GuildScreen';
+import ReferralScreen from './src/screens/ReferralScreen';
+import DiaryScreen from './src/screens/DiaryScreen';
 import { Colors } from './src/theme';
 
 // ── Navigation types ─────────────────────────────────────────
@@ -47,10 +52,25 @@ export type PortfolioStackParamList = {
   PortfolioHub: { trackId?: string };
 };
 
+export type CommunityStackParamList = {
+  CommunityHome: undefined;
+  Leaderboard: undefined;
+  Guild: { guildId?: string };
+  Referral: undefined;
+};
+
+export type ProfileStackParamList = {
+  ProfileHome: undefined;
+  Diary: undefined;
+  GitHub: undefined;
+};
+
 const Tab = createBottomTabNavigator();
 const MapStack = createStackNavigator<MapStackParamList>();
 const SkillsStack = createStackNavigator<SkillsStackParamList>();
 const PortfolioStack = createStackNavigator<PortfolioStackParamList>();
+const CommunityStack = createStackNavigator<CommunityStackParamList>();
+const ProfileStack = createStackNavigator<ProfileStackParamList>();
 
 // ── Tab icon ─────────────────────────────────────────────────
 
@@ -102,6 +122,31 @@ function PortfolioStackScreen() {
   );
 }
 
+function CommunityStackScreen() {
+  return (
+    <ScreenErrorBoundary screenName="Community">
+      <CommunityStack.Navigator screenOptions={{ headerShown: false }}>
+        <CommunityStack.Screen name="CommunityHome" component={CommunityScreen} />
+        <CommunityStack.Screen name="Leaderboard" component={LeaderboardScreen} />
+        <CommunityStack.Screen name="Guild" component={GuildScreen} />
+        <CommunityStack.Screen name="Referral" component={ReferralScreen} />
+      </CommunityStack.Navigator>
+    </ScreenErrorBoundary>
+  );
+}
+
+function ProfileStackScreen() {
+  return (
+    <ScreenErrorBoundary screenName="Profile">
+      <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+        <ProfileStack.Screen name="ProfileHome" component={ProfileScreen} />
+        <ProfileStack.Screen name="Diary" component={DiaryScreen} />
+        <ProfileStack.Screen name="GitHub" component={GitHubScreen} />
+      </ProfileStack.Navigator>
+    </ScreenErrorBoundary>
+  );
+}
+
 // ── Main navigator ───────────────────────────────────────────
 
 function AppNavigator() {
@@ -118,7 +163,6 @@ function AppNavigator() {
 
   if (!user) return <AuthScreen />;
 
-  // Show onboarding for new users who haven't completed it
   if (!user.onboarding_completed) {
     return (
       <OnboardingScreen
@@ -127,7 +171,6 @@ function AppNavigator() {
           refreshUser();
         }}
         onBrowse={() => {
-          // Skip onboarding — mark as complete with default track
           API.completeOnboarding({}).then(() => refreshUser());
         }}
       />
@@ -165,14 +208,14 @@ function AppNavigator() {
         options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="💼" label="Portfolio" focused={focused} /> }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="👤" label="Profile" focused={focused} /> }}
+        name="Community"
+        component={CommunityStackScreen}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🌐" label="Community" focused={focused} /> }}
       />
       <Tab.Screen
-        name="GitHub"
-        component={GitHubScreen}
-        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="🐙" label="GitHub" focused={focused} /> }}
+        name="Profile"
+        component={ProfileStackScreen}
+        options={{ tabBarIcon: ({ focused }) => <TabIcon emoji="👤" label="Profile" focused={focused} /> }}
       />
     </Tab.Navigator>
   );

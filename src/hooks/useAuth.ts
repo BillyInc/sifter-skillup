@@ -15,8 +15,7 @@ interface UserProfile {
   achievements: string[];
   guild_id: string | null;
   is_verified: boolean;
-  settings: Record<string, boolean>;
-  onboarding_completed?: boolean;
+  settings: Record<string, any>;
 }
 
 interface AuthContextType {

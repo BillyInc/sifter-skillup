@@ -11,29 +11,60 @@
       "resizeMode": "contain",
       "backgroundColor": "#6366f1"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "app.sifterskillup"
+      "bundleIdentifier": "app.sifterskillup",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Used to scan QR codes for wallet connection",
+        "NSFaceIDUsageDescription": "Used to authenticate your account"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#6366f1"
       },
-      "package": "app.sifterskillup"
+      "package": "app.sifterskillup",
+      "permissions": [
+        "CAMERA",
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT",
+        "VIBRATE"
+      ]
     },
     "plugins": [
       "expo-router",
       "expo-font",
-      ["expo-notifications", {
-        "icon": "./assets/icon.png",
-        "color": "#6366f1"
-      }]
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#6366f1"
+        }
+      ]
     ],
     "scheme": "sifter",
     "extra": {
-      "eas": { "projectId": "YOUR_EAS_PROJECT_ID" }
-    }
+      "eas": {
+        "projectId": "YOUR_EAS_PROJECT_ID"
+      },
+      "telegramBotUsername": "SifterSkillUpBot",
+      "baseChainId": 8453,
+      "baseMiniAppId": "sifter-skillup"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/icon.png"
+    },
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "backgroundColor": "#0a0a0a"
   }
 }

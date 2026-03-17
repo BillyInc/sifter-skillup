@@ -1,332 +1,508 @@
-import React, { useState } from 'react';
+/**
+ * Sifter Skill_Up — Skills & Career Explorer
+ * Browse fields, search tracks, take quiz for personalised recommendations
+ */
+
+import React, { useState, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, StatusBar, Modal, FlatList,
+  SafeAreaView, FlatList, TextInput, Modal,
 } from 'react-native';
-import {
-  SKILL_TRACKS, SKILL_CATEGORIES,
-  type SkillTrack, type SkillCategory,
-} from '../data/skills';
+import { ALL_FIELDS, type Field } from '../data/fields';
+import { SKILL_TRACKS, type SkillTrack } from '../data/skills';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../hooks/useAuth';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
-// ── Difficulty badge ───────────────────────────────────────────────────────
-const DIFF_COLORS = {
-  beginner:     { bg: '#f0fdf4', text: '#166534' },
-  intermediate: { bg: '#fffbeb', text: '#92400e' },
-  advanced:     { bg: '#fef2f2', text: '#991b1b' },
-  expert:       { bg: '#f5f3ff', text: '#4c1d95' },
-};
+type MainTab = 'browse' | 'search';
 
-function DiffBadge({ level }: { level: SkillTrack['difficulty'] }) {
-  const c = DIFF_COLORS[level];
+// ─── Field Card ───────────────────────────────────────────────────────────────
+function FieldCard({ field, onPress }: { field: Field; onPress: () => void }) {
+  const isLive = field.status === 'live';
   return (
-    <View style={[styles.badge, { backgroundColor: c.bg }]}>
-      <Text style={[styles.badgeText, { color: c.text }]}>{level.toUpperCase()}</Text>
-    </View>
-  );
-}
-
-// ── Skill track card ───────────────────────────────────────────────────────
-function SkillCard({ track, onPress, status }: { track: SkillTrack; onPress: () => void; status: 'live' | 'gated' | 'soon' }) {
-  const badgeLabel = status === 'live' ? '⚡ AVAILABLE' : status === 'gated' ? '🔒 PYTHON FIRST' : 'COMING SOON';
-  const badgeBg = status === 'live' ? 'rgba(0,255,128,0.25)' : status === 'gated' ? 'rgba(251,191,36,0.25)' : 'rgba(255,255,255,0.15)';
-  return (
-    <TouchableOpacity style={[styles.card, Shadow.sm]} onPress={onPress} activeOpacity={0.85}>
-      {/* Color bar + icon */}
-      <View style={[styles.cardAccent, { backgroundColor: track.color }]}>
-        <Text style={styles.cardIcon}>{track.icon}</Text>
-        <View style={styles.cardAccentRight}>
-          <DiffBadge level={track.difficulty} />
-          <View style={[styles.comingSoonBadge, { backgroundColor: badgeBg }]}>
-            <Text style={styles.comingSoonText}>{badgeLabel}</Text>
-          </View>
+    <TouchableOpacity
+      style={[styles.fieldCard, { borderLeftColor: field.color, borderLeftWidth: 4 }]}
+      onPress={onPress} activeOpacity={0.8}
+    >
+      <View style={styles.fcTop}>
+        <Text style={styles.fcEmoji}>{field.emoji}</Text>
+        <View style={[styles.fcPill, { backgroundColor: isLive ? Colors.greenSoft : '#f1f5f9' }]}>
+          <Text style={[styles.fcPillText, { color: isLive ? Colors.green : Colors.textMuted }]}>
+            {isLive ? '⚡ Live' : '🔜'}
+          </Text>
         </View>
       </View>
-
-      {/* Content */}
-      <View style={styles.cardBody}>
-        <Text style={styles.cardName}>{track.name}</Text>
-        <Text style={styles.cardTagline}>{track.tagline}</Text>
-        <Text style={styles.cardDesc} numberOfLines={2}>{track.description}</Text>
-
-        {/* Stats row */}
-        <View style={styles.statsRow}>
-          <View style={styles.stat}>
-            <Text style={styles.statLabel}>⏱ Hours</Text>
-            <Text style={styles.statValue}>{track.estimatedHours}h</Text>
-          </View>
-          <View style={[styles.stat, styles.statMid]}>
-            <Text style={styles.statLabel}>📦 Modules</Text>
-            <Text style={styles.statValue}>{track.modules.length}</Text>
-          </View>
-          <View style={styles.stat}>
-            <Text style={styles.statLabel}>💰 Earning</Text>
-            <Text style={[styles.statValue, styles.statEarning]} numberOfLines={1}>{track.earningPotential}</Text>
-          </View>
-        </View>
+      <Text style={styles.fcName}>{field.name}</Text>
+      <Text style={styles.fcTagline} numberOfLines={1}>{field.tagline}</Text>
+      <View style={styles.fcMeta}>
+        <Text style={styles.fcMetaItem}>💼 {field.careerCount}</Text>
+        {field.salaryRange && <Text style={styles.fcMetaItem}>💰 {field.salaryRange.mid}</Text>}
       </View>
     </TouchableOpacity>
   );
 }
 
-// ── Track detail modal ─────────────────────────────────────────────────────
-function TrackModal({ track, onClose }: { track: SkillTrack; onClose: () => void }) {
+// ─── Field Detail Modal ────────────────────────────────────────────────────────
+function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => void }) {
+  const [tab, setTab] = useState<'overview' | 'salary' | 'tracks'>('overview');
+  const navigation = useNavigation<any>();
+
+  const relatedTracks = SKILL_TRACKS.filter(t => {
+    if (field.id === 'crypto') return ['spot-trading','memecoin-trading','futures-trading','options-trading','onchain-analysis','token-research'].includes(t.id);
+    if (field.id === 'quant') return ['quant-trading','quant-research','quant-developer'].includes(t.id);
+    if (field.id === 'supply-chain') return t.id.startsWith('supply');
+    return false;
+  });
+
   return (
     <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
-      <SafeAreaView style={styles.modalSafe}>
-        <ScrollView style={styles.modalScroll} showsVerticalScrollIndicator={false}>
-          {/* Header */}
-          <View style={[styles.modalHeader, { backgroundColor: track.color }]}>
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
-              <Text style={styles.closeBtnText}>✕</Text>
-            </TouchableOpacity>
-            <Text style={styles.modalIcon}>{track.icon}</Text>
-            <Text style={styles.modalTitle}>{track.name}</Text>
-            <Text style={styles.modalTagline}>{track.tagline}</Text>
-            <View style={styles.modalBadgeRow}>
-              <DiffBadge level={track.difficulty} />
-              <View style={[styles.comingSoonBadge, { marginLeft: Spacing.sm }]}>
-                <Text style={styles.comingSoonText}>COMING SOON</Text>
-              </View>
-            </View>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }}>
+        <View style={[styles.dHeader, { backgroundColor: field.color }]}>
+          <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <Text style={styles.closeBtnText}>✕</Text>
+          </TouchableOpacity>
+          <Text style={styles.dEmoji}>{field.emoji}</Text>
+          <Text style={styles.dName}>{field.name}</Text>
+          <Text style={styles.dTagline}>{field.tagline}</Text>
+          <View style={styles.dBadges}>
+            {field.remoteWork && <View style={styles.dBadge}><Text style={styles.dBadgeText}>🏠 {field.remoteWork === 'high' ? 'Remote' : field.remoteWork === 'medium' ? 'Hybrid' : 'Office'}</Text></View>}
+            {field.demandTrend && <View style={styles.dBadge}><Text style={styles.dBadgeText}>{field.demandTrend === 'rising' ? '📈 Demand rising' : '➡️ Stable'}</Text></View>}
+            <View style={styles.dBadge}><Text style={styles.dBadgeText}>💼 {field.careerCount} careers</Text></View>
           </View>
+        </View>
 
-          <View style={styles.modalContent}>
-            {/* Description */}
-            <Text style={styles.sectionTitle}>About this track</Text>
-            <Text style={styles.modalDesc}>{track.description}</Text>
-
-            {/* Stats */}
-            <View style={styles.modalStats}>
-              <View style={styles.modalStat}>
-                <Text style={styles.modalStatVal}>{track.estimatedHours}h</Text>
-                <Text style={styles.modalStatLabel}>Estimated</Text>
-              </View>
-              <View style={styles.modalStat}>
-                <Text style={styles.modalStatVal}>{track.modules.length}</Text>
-                <Text style={styles.modalStatLabel}>Modules</Text>
-              </View>
-              <View style={[styles.modalStat, { flex: 1.5 }]}>
-                <Text style={[styles.modalStatVal, { fontSize: FontSize.sm }]}>{track.earningPotential}</Text>
-                <Text style={styles.modalStatLabel}>Earning potential</Text>
-              </View>
-            </View>
-
-            {/* Real-world outcomes */}
-            <Text style={styles.sectionTitle}>What you will be able to do</Text>
-            {track.realWorldOutcomes.map((outcome, i) => (
-              <View key={i} style={styles.outcomeRow}>
-                <Text style={[styles.outcomeDot, { color: track.color }]}>✓</Text>
-                <Text style={styles.outcomeText}>{outcome}</Text>
-              </View>
-            ))}
-
-            {/* Modules */}
-            <Text style={styles.sectionTitle}>Curriculum ({track.modules.length} modules)</Text>
-            {track.modules.map((mod, i) => (
-              <View key={mod.id} style={styles.moduleRow}>
-                <View style={[styles.moduleNum, { backgroundColor: track.color + '20' }]}>
-                  <Text style={[styles.moduleNumText, { color: track.color }]}>{i + 1}</Text>
-                </View>
-                <View style={styles.moduleInfo}>
-                  <Text style={styles.moduleTitle}>{mod.title}</Text>
-                  <Text style={styles.moduleDesc}>{mod.description}</Text>
-                </View>
-                <Text style={styles.moduleLock}>🔒</Text>
-              </View>
-            ))}
-
-            {/* CTA */}
-            <View style={styles.ctaBox}>
-              <Text style={styles.ctaTitle}>🚀 Coming Soon</Text>
-              <Text style={styles.ctaBody}>
-                This track is in development. Complete the crypto islands below to prepare — the knowledge carries over directly.
+        <View style={styles.dTabBar}>
+          {(['overview', 'salary', 'tracks'] as const).map(t => (
+            <TouchableOpacity key={t} style={[styles.dTab, tab === t && { borderBottomWidth: 2, borderBottomColor: field.color }]} onPress={() => setTab(t)}>
+              <Text style={[styles.dTabText, tab === t && { color: field.color, fontWeight: '800' }]}>
+                {t === 'overview' ? '📋 Overview' : t === 'salary' ? '💰 Pay' : '🎓 Tracks'}
               </Text>
-            </View>
+            </TouchableOpacity>
+          ))}
+        </View>
 
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: Spacing.lg }}>
+          {tab === 'overview' && <>
+            <Text style={styles.dSec}>What is this field?</Text>
+            <Text style={styles.dBody}>{field.description}</Text>
+
+            {field.whoIsItFor && <>
+              <Text style={styles.dSec}>Who thrives here</Text>
+              <View style={[styles.whoCard, { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' }]}>
+                <Text style={styles.whoIcon}>✅</Text><Text style={styles.whoText}>{field.whoIsItFor}</Text>
+              </View>
+            </>}
+            {field.whoIsItNotFor && (
+              <View style={[styles.whoCard, { backgroundColor: '#fef2f2', borderColor: '#fecaca' }]}>
+                <Text style={styles.whoIcon}>⚠️</Text><Text style={styles.whoText}>{field.whoIsItNotFor}</Text>
+              </View>
+            )}
+            {field.dayInLife && <>
+              <Text style={styles.dSec}>A typical day</Text>
+              <Text style={styles.dBody}>{field.dayInLife}</Text>
+            </>}
+            {field.pros && field.pros.length > 0 && <>
+              <Text style={styles.dSec}>The upsides</Text>
+              {field.pros.map((p, i) => <View key={i} style={[styles.prosRow, { backgroundColor: '#f0fdf4' }]}><Text style={styles.prosIcon}>{p.icon}</Text><Text style={styles.prosText}>{p.text}</Text></View>)}
+            </>}
+            {field.cons && field.cons.length > 0 && <>
+              <Text style={styles.dSec}>The downsides</Text>
+              {field.cons.map((c, i) => <View key={i} style={[styles.prosRow, { backgroundColor: '#fff9f0' }]}><Text style={styles.prosIcon}>{c.icon}</Text><Text style={styles.prosText}>{c.text}</Text></View>)}
+            </>}
+            <Text style={styles.dSec}>How hiring works</Text>
+            <View style={[styles.hiringCard, { borderColor: field.color + '40', backgroundColor: field.color + '10' }]}>
+              <Text style={[styles.hiringModel, { color: field.color }]}>{field.hiringModel} HIRING</Text>
+              <Text style={styles.dBody}>{field.hiringModelNote}</Text>
+            </View>
+            <Text style={styles.dSec}>Roles in this field</Text>
+            <View style={styles.rolesWrap}>
+              {field.roles.map((r, i) => <View key={i} style={styles.rolePill}><Text style={styles.rolePillText}>{r.title}</Text></View>)}
+            </View>
             <View style={{ height: 40 }} />
-          </View>
+          </>}
+
+          {tab === 'salary' && <>
+            {field.salaryRange ? <>
+              <Text style={styles.dSec}>Salary ranges ({field.salaryRange.currency})</Text>
+              {[
+                { label: '🟢 Junior (0–3 yrs)', val: field.salaryRange.junior },
+                { label: '🟡 Mid-level (3–7 yrs)', val: field.salaryRange.mid },
+                { label: '🔴 Senior (7+ yrs)', val: field.salaryRange.senior },
+              ].map(r => (
+                <View key={r.label} style={styles.salRow}>
+                  <Text style={styles.salLabel}>{r.label}</Text>
+                  <Text style={[styles.salVal, { color: field.color }]}>{r.val}</Text>
+                </View>
+              ))}
+              {field.salaryRange.note && <View style={styles.salNote}><Text style={styles.salNoteText}>ℹ️ {field.salaryRange.note}</Text></View>}
+            </> : <Text style={styles.dBody}>Salary data coming soon.</Text>}
+            {field.timeToHireable && <>
+              <Text style={styles.dSec}>Time to first job</Text>
+              <View style={styles.timeCard}>
+                <Text style={{ fontSize: 28 }}>⏱</Text>
+                <Text style={[styles.dBody, { flex: 1, fontWeight: '700' }]}>{field.timeToHireable}</Text>
+              </View>
+            </>}
+            <View style={{ height: 40 }} />
+          </>}
+
+          {tab === 'tracks' && <>
+            {relatedTracks.length > 0 ? <>
+              <Text style={styles.dSec}>Available skill tracks</Text>
+              <View style={[styles.hiringCard, { borderColor: Colors.accent + '40', backgroundColor: Colors.accentSoft }]}>
+                <Text style={[styles.dBody, { color: Colors.accent }]}>
+                  Each track goes Junior → Intermediate → Senior. Pass a placement exam to skip levels. Complete all three for the full certification.
+                </Text>
+              </View>
+              {relatedTracks.map(track => {
+                const hasContent = !track.comingSoon;
+                const labCount = hasContent && 'sections' in track ? (track as any).sections?.length ?? 0 : (track as any).modules?.length ?? 0;
+                return (
+                  <TouchableOpacity key={track.id} style={[styles.trackCard, { borderTopColor: field.color, borderTopWidth: 3 }]}
+                    onPress={() => { onClose(); if (['quant-trading','quant-research','quant-developer'].includes(track.id)) navigation.navigate('Quant'); }}
+                    activeOpacity={0.85}>
+                    <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'flex-start', marginBottom: Spacing.sm }}>
+                      <Text style={{ fontSize: 28 }}>{track.icon}</Text>
+                      <View style={{ flex: 1 }}>
+                        <Text style={styles.tcName}>{track.name}</Text>
+                        <Text style={styles.tcTagline}>{track.tagline}</Text>
+                      </View>
+                      <View style={[styles.fcPill, { backgroundColor: hasContent ? Colors.greenSoft : '#f1f5f9' }]}>
+                        <Text style={[styles.fcPillText, { color: hasContent ? Colors.green : Colors.textMuted }]}>{hasContent ? '⚡ Live' : '🔜'}</Text>
+                      </View>
+                    </View>
+                    <Text style={[styles.dBody, { marginBottom: Spacing.sm }]} numberOfLines={2}>{track.description}</Text>
+                    <View style={{ flexDirection: 'row', gap: Spacing.xs, marginBottom: Spacing.sm }}>
+                      {['Junior', 'Intermediate', 'Senior'].map((lvl, i) => (
+                        <View key={lvl} style={[styles.lvlChip, i === 0 && hasContent && { backgroundColor: Colors.greenSoft }]}>
+                          <Text style={styles.lvlChipText}>{lvl}</Text>
+                        </View>
+                      ))}
+                    </View>
+                    <View style={{ flexDirection: 'row', gap: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm }}>
+                      <Text style={styles.fcMetaItem}>⏱ {track.estimatedHours}h</Text>
+                      <Text style={styles.fcMetaItem}>📚 {labCount} labs</Text>
+                      <Text style={[styles.fcMetaItem, { color: Colors.green }]}>💰 {track.earningPotential}</Text>
+                    </View>
+                    {hasContent && <View style={styles.placementBanner}><Text style={styles.placementText}>🎯 Placement exam available to skip to Intermediate or Senior</Text></View>}
+                  </TouchableOpacity>
+                );
+              })}
+            </> : (
+              <View style={{ alignItems: 'center', padding: Spacing.xxxl }}>
+                <Text style={{ fontSize: 56 }}>{field.emoji}</Text>
+                <Text style={[styles.dSec, { textAlign: 'center', marginTop: Spacing.md }]}>Tracks coming soon</Text>
+                <Text style={[styles.dBody, { textAlign: 'center' }]}>We are building the {field.name} curriculum. Check back soon.</Text>
+              </View>
+            )}
+            <View style={{ height: 40 }} />
+          </>}
         </ScrollView>
+        <DisclaimerFooter trackId={field.id} />
       </SafeAreaView>
     </Modal>
   );
 }
 
-// ── Category filter bar ────────────────────────────────────────────────────
-type Filter = SkillCategory | 'all';
+// ─── Skill Quiz ───────────────────────────────────────────────────────────────
+const QUIZ_QS = [
+  { id: 'goal', q: 'What do you want most from a career?', opts: [
+    { label: 'Maximum earnings', fields: ['quant','ai-ml','software-engineering'] },
+    { label: 'Full remote freedom', fields: ['software-engineering','cybersecurity','writing-content','crypto'] },
+    { label: 'Meaningful impact', fields: ['healthcare-nonclinical','supply-chain','renewable-energy'] },
+    { label: 'Frontier / cutting-edge work', fields: ['crypto','ai-ml','quant','fintech-blockchain'] },
+  ]},
+  { id: 'strength', q: 'What are you naturally best at?', opts: [
+    { label: 'Numbers and analysis', fields: ['quant','supply-chain','data-science','data-analysis-bi'] },
+    { label: 'Building and coding', fields: ['software-engineering','ai-ml','cybersecurity'] },
+    { label: 'Writing and communication', fields: ['writing-content','token-research','digital-marketing'] },
+    { label: 'Research and investigation', fields: ['cybersecurity','onchain-analysis','quant'] },
+  ]},
+  { id: 'time', q: 'How much time can you study weekly?', opts: [
+    { label: '1–3 hours (light)', fields: ['crypto','digital-marketing','writing-content'] },
+    { label: '4–8 hours (serious)', fields: ['supply-chain','data-analysis-bi','cybersecurity'] },
+    { label: '10+ hours (committed)', fields: ['ai-ml','software-engineering','quant'] },
+  ]},
+  { id: 'env', q: 'Where do you want to work?', opts: [
+    { label: 'Fully remote', fields: ['software-engineering','cybersecurity','writing-content','crypto'] },
+    { label: 'Office with a strong team', fields: ['quant','supply-chain','fintech-blockchain'] },
+    { label: 'Hybrid / flexible', fields: ['ai-ml','data-science','product-design'] },
+  ]},
+  { id: 'start', q: 'What is your starting point?', opts: [
+    { label: 'Complete beginner', fields: ['crypto','supply-chain','digital-marketing'] },
+    { label: 'Some technical skills', fields: ['data-analysis-bi','cybersecurity','software-engineering'] },
+    { label: 'Strong maths/science', fields: ['quant','ai-ml','data-science'] },
+    { label: 'Non-technical professional', fields: ['supply-chain','project-management','human-resources'] },
+  ]},
+];
 
-function FilterBar({ active, onChange }: { active: Filter; onChange: (f: Filter) => void }) {
-  const filters: { key: Filter; label: string; icon: string }[] = [
-    { key: 'all', label: 'All', icon: '⚡' },
-    ...Object.entries(SKILL_CATEGORIES).map(([key, val]) => ({ key: key as SkillCategory, label: val.label, icon: val.icon })),
-  ];
+function SkillQuiz({ onClose }: { onClose: () => void }) {
+  const [step, setStep] = useState(0);
+  const [votes, setVotes] = useState<Record<string, number>>({});
+  const [results, setResults] = useState<Field[] | null>(null);
+  const [selected, setSelected] = useState<Field | null>(null);
 
-  return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll} contentContainerStyle={styles.filterContent}>
-      {filters.map(f => {
-        const isActive = active === f.key;
-        return (
-          <TouchableOpacity
-            key={f.key}
-            style={[styles.filterPill, isActive && styles.filterPillActive]}
-            onPress={() => onChange(f.key)}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.filterIcon}>{f.icon}</Text>
-            <Text style={[styles.filterLabel, isActive && styles.filterLabelActive]}>{f.label}</Text>
-          </TouchableOpacity>
-        );
-      })}
-    </ScrollView>
-  );
-}
-
-// ── Main screen ────────────────────────────────────────────────────────────
-export default function SkillsScreen() {
-  const [activeFilter, setActiveFilter] = useState<Filter>('all');
-  const [selectedTrack, setSelectedTrack] = useState<SkillTrack | null>(null);
-  const navigation = useNavigation<any>();
-
-  const { quantDeveloperUnlocked } = useAuth();
-
-  const getTrackStatus = (track: SkillTrack): 'live' | 'gated' | 'soon' => {
-    if (track.id === 'quant-trading' || track.id === 'quant-research') return 'live';
-    if (track.id === 'quant-developer') return quantDeveloperUnlocked ? 'live' : 'gated';
-    return 'soon';
-  };
-
-  const handleTrackPress = (track: SkillTrack) => {
-    const status = getTrackStatus(track);
-    if (track.id === 'quant-trading' || track.id === 'quant-research') {
-      navigation.navigate('Quant');
-    } else if (track.id === 'quant-developer' && status === 'live') {
-      navigation.navigate('Quant'); // will route to developer map when built
+  const pick = (fields: string[]) => {
+    const newVotes = { ...votes };
+    fields.forEach(f => { newVotes[f] = (newVotes[f] ?? 0) + 1; });
+    if (step < QUIZ_QS.length - 1) {
+      setVotes(newVotes);
+      setStep(s => s + 1);
     } else {
-      setSelectedTrack(track);
+      const ranked = ALL_FIELDS
+        .filter(f => newVotes[f.id] > 0)
+        .sort((a, b) => (newVotes[b.id] ?? 0) - (newVotes[a.id] ?? 0))
+        .slice(0, 5);
+      setResults(ranked.length > 0 ? ranked : ALL_FIELDS.slice(0, 3));
     }
   };
 
-  const visible = activeFilter === 'all'
-    ? SKILL_TRACKS
-    : SKILL_TRACKS.filter(t => t.category === activeFilter);
+  if (selected) return <FieldDetailModal field={selected} onClose={() => setSelected(null)} />;
+
+  return (
+    <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: Spacing.lg, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: '#fff' }}>
+          <TouchableOpacity onPress={onClose}><Text style={{ fontSize: 24 }}>✕</Text></TouchableOpacity>
+          <Text style={{ fontSize: FontSize.lg, fontWeight: '900', color: Colors.text }}>🎯 Find Your Path</Text>
+          <View style={{ width: 24 }} />
+        </View>
+
+        {!results ? (
+          <View style={{ flex: 1, padding: Spacing.xl }}>
+            <View style={{ flexDirection: 'row', gap: Spacing.xs, marginBottom: Spacing.xxl, justifyContent: 'center' }}>
+              {QUIZ_QS.map((_, i) => <View key={i} style={[styles.qDot, i <= step && { backgroundColor: Colors.accent }]} />)}
+            </View>
+            <Text style={{ fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.xl, lineHeight: 28 }}>{QUIZ_QS[step].q}</Text>
+            <View style={{ gap: Spacing.md }}>
+              {QUIZ_QS[step].opts.map(opt => (
+                <TouchableOpacity key={opt.label} style={{ backgroundColor: '#fff', borderRadius: Radius.lg, padding: Spacing.lg, borderWidth: 2, borderColor: Colors.border, ...Shadow.sm }} onPress={() => pick(opt.fields)} activeOpacity={0.8}>
+                  <Text style={{ fontSize: FontSize.md, fontWeight: '700', color: Colors.text }}>{opt.label}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <Text style={{ textAlign: 'center', color: Colors.textMuted, fontSize: FontSize.sm, marginTop: Spacing.xl }}>{step + 1} of {QUIZ_QS.length}</Text>
+          </View>
+        ) : (
+          <ScrollView contentContainerStyle={{ padding: Spacing.lg }}>
+            <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, marginBottom: 6 }}>Your best matches</Text>
+            <Text style={{ fontSize: FontSize.sm, color: Colors.textSoft, marginBottom: Spacing.xl, lineHeight: 18 }}>Based on your answers. Tap any to explore salary, pros/cons and available tracks.</Text>
+            {results.map((f, i) => (
+              <TouchableOpacity key={f.id} style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: '#fff', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Spacing.md, borderWidth: 1.5, borderColor: Colors.border, ...Shadow.sm }} onPress={() => setSelected(f)} activeOpacity={0.85}>
+                <View style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: Colors.accentSoft, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ fontSize: FontSize.xs, fontWeight: '900', color: Colors.accent }}>#{i + 1}</Text>
+                </View>
+                <Text style={{ fontSize: 32 }}>{f.emoji}</Text>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: FontSize.md, fontWeight: '900', color: Colors.text }}>{f.name}</Text>
+                  <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>{f.tagline}</Text>
+                  {f.salaryRange && <Text style={{ fontSize: FontSize.xs, color: Colors.green, fontWeight: '700', marginTop: 2 }}>Mid: {f.salaryRange.mid}</Text>}
+                </View>
+                <Text style={{ fontSize: 20, color: Colors.textMuted }}>›</Text>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity style={{ alignItems: 'center', padding: Spacing.lg }} onPress={() => { setStep(0); setVotes({}); setResults(null); }}>
+              <Text style={{ fontSize: FontSize.sm, color: Colors.accent, fontWeight: '800', textDecorationLine: 'underline' }}>Retake quiz</Text>
+            </TouchableOpacity>
+            <View style={{ height: 40 }} />
+          </ScrollView>
+        )}
+      </SafeAreaView>
+    </Modal>
+  );
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+export default function SkillsScreen() {
+  const [tab, setTab] = useState<MainTab>('browse');
+  const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<Field | null>(null);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const searchResults = useMemo(() => {
+    if (!search.trim()) return { fields: [], tracks: [] };
+    const q = search.toLowerCase();
+    return {
+      fields: ALL_FIELDS.filter(f => f.name.toLowerCase().includes(q) || f.tagline.toLowerCase().includes(q) || f.roles.some(r => r.title.toLowerCase().includes(q))),
+      tracks: SKILL_TRACKS.filter(t => t.name.toLowerCase().includes(q) || t.tagline.toLowerCase().includes(q)),
+    };
+  }, [search]);
+
+  const live = ALL_FIELDS.filter(f => f.status === 'live');
+  const soon = ALL_FIELDS.filter(f => f.status !== 'live');
 
   return (
     <SafeAreaView style={styles.screen}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
-
-      {/* Header */}
       <View style={styles.header}>
-        <View>
-          <Text style={styles.headerTitle}>🎓 Skill Tracks</Text>
-          <Text style={styles.headerSub}>{SKILL_TRACKS.length} careers · all coming soon</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.headerTitle}>🎓 Skill Explorer</Text>
+          <Text style={styles.headerSub}>{ALL_FIELDS.length} fields · {SKILL_TRACKS.length} tracks</Text>
         </View>
+        <TouchableOpacity style={styles.quizBtn} onPress={() => setShowQuiz(true)}>
+          <Text style={styles.quizBtnText}>🎯 Find my path</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Hero banner */}
-      <View style={styles.heroBanner}>
-        <Text style={styles.heroTitle}>Choose your crypto career</Text>
-        <Text style={styles.heroSub}>
-          Complete the crypto islands to unlock. Each track teaches a real, money-earning skill path.
-        </Text>
+      <View style={styles.tabBar}>
+        {(['browse', 'search'] as MainTab[]).map(t => (
+          <TouchableOpacity key={t} style={[styles.tab, tab === t && styles.tabActive]} onPress={() => setTab(t)}>
+            <Text style={[styles.tabText, tab === t && styles.tabTextActive]}>
+              {t === 'browse' ? '🗂 Browse' : '🔍 Search'}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
 
-      {/* Filter */}
-      <FilterBar active={activeFilter} onChange={setActiveFilter} />
+      {tab === 'search' ? (
+        <View style={{ flex: 1 }}>
+          <View style={styles.searchBar}>
+            <Text style={{ fontSize: 18 }}>🔍</Text>
+            <TextInput style={styles.searchInput} placeholder="Field, track, or job title..." placeholderTextColor={Colors.textMuted} value={search} onChangeText={setSearch} autoFocus />
+            {search.length > 0 && <TouchableOpacity onPress={() => setSearch('')}><Text style={{ fontSize: 16, color: Colors.textMuted, fontWeight: '700', padding: 4 }}>✕</Text></TouchableOpacity>}
+          </View>
+          {search.trim() === '' ? (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xxxl }}>
+              <Text style={{ fontSize: 48, marginBottom: Spacing.md }}>🔍</Text>
+              <Text style={{ fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm }}>Search anything</Text>
+              <Text style={{ fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 18 }}>Try "supply chain", "quant", "Python", "procurement", "remote work"</Text>
+            </View>
+          ) : (
+            <ScrollView contentContainerStyle={{ padding: Spacing.md }}>
+              {searchResults.fields.length > 0 && <>
+                <Text style={styles.srSec}>Fields</Text>
+                {searchResults.fields.map(f => (
+                  <TouchableOpacity key={f.id} style={styles.srRow} onPress={() => setSelected(f)}>
+                    <Text style={{ fontSize: 28 }}>{f.emoji}</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: FontSize.md, fontWeight: '800', color: Colors.text }}>{f.name}</Text>
+                      <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{f.careerCount} careers · {f.tagline}</Text>
+                    </View>
+                    <Text style={{ fontSize: 18, color: Colors.textMuted }}>›</Text>
+                  </TouchableOpacity>
+                ))}
+              </>}
+              {searchResults.tracks.length > 0 && <>
+                <Text style={styles.srSec}>Tracks</Text>
+                {searchResults.tracks.map(t => (
+                  <View key={t.id} style={styles.srRow}>
+                    <Text style={{ fontSize: 28 }}>{t.icon}</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ fontSize: FontSize.md, fontWeight: '800', color: Colors.text }}>{t.name}</Text>
+                      <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{t.tagline}</Text>
+                    </View>
+                    <View style={[styles.fcPill, { backgroundColor: t.comingSoon ? '#f1f5f9' : Colors.greenSoft }]}>
+                      <Text style={[styles.fcPillText, { color: t.comingSoon ? Colors.textMuted : Colors.green }]}>{t.comingSoon ? 'Soon' : 'Live'}</Text>
+                    </View>
+                  </View>
+                ))}
+              </>}
+              {searchResults.fields.length === 0 && searchResults.tracks.length === 0 && (
+                <View style={{ alignItems: 'center', padding: Spacing.xxxl }}>
+                  <Text style={{ fontSize: FontSize.lg, fontWeight: '800', color: Colors.text }}>No results for "{search}"</Text>
+                  <Text style={{ fontSize: FontSize.sm, color: Colors.textSoft, marginTop: Spacing.sm, textAlign: 'center' }}>Try a different term, or browse all fields.</Text>
+                </View>
+              )}
+              <View style={{ height: 40 }} />
+            </ScrollView>
+          )}
+        </View>
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{ backgroundColor: Colors.accent, padding: Spacing.xl }}>
+            <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', marginBottom: 6 }}>Every skill. One platform.</Text>
+            <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.85)', lineHeight: 18, marginBottom: Spacing.md }}>Browse 29 career fields. Tap any to see salary, pros/cons, and tracks. Not sure where to start?</Text>
+            <TouchableOpacity style={{ backgroundColor: '#fff', borderRadius: Radius.full, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, alignSelf: 'flex-start' }} onPress={() => setShowQuiz(true)}>
+              <Text style={{ fontSize: FontSize.sm, fontWeight: '800', color: Colors.accent }}>🎯 Help me choose →</Text>
+            </TouchableOpacity>
+          </View>
 
-      {/* Track list */}
-      <FlatList
-        data={visible}
-        keyExtractor={t => t.id}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <SkillCard track={item} onPress={() => handleTrackPress(item)} status={getTrackStatus(item)} />
-        )}
-        ListFooterComponent={<View style={{ height: 32 }} />}
-      />
+          {live.length > 0 && <>
+            <Text style={styles.browseSection}>⚡ Available now</Text>
+            <View style={styles.fieldGrid}>{live.map(f => <FieldCard key={f.id} field={f} onPress={() => setSelected(f)} />)}</View>
+          </>}
 
-      {/* Detail modal */}
-      {selectedTrack && (
-        <TrackModal track={selectedTrack} onClose={() => setSelectedTrack(null)} />
+          <Text style={styles.browseSection}>🔜 Coming soon</Text>
+          <View style={styles.fieldGrid}>{soon.map(f => <FieldCard key={f.id} field={f} onPress={() => setSelected(f)} />)}</View>
+
+          <View style={{ height: 32 }} />
+          <DisclaimerFooter />
+        </ScrollView>
       )}
+
+      {selected && <FieldDetailModal field={selected} onClose={() => setSelected(null)} />}
+      {showQuiz && <SkillQuiz onClose={() => setShowQuiz(false)} />}
     </SafeAreaView>
   );
 }
 
-// ── Styles ─────────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
-  screen:             { flex: 1, backgroundColor: Colors.bg },
-
-  header:             { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
-  headerTitle:        { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
-  headerSub:          { fontSize: FontSize.sm, color: Colors.textSoft, marginTop: 2 },
-
-  heroBanner:         { backgroundColor: Colors.accent, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.xl },
-  heroTitle:          { fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', marginBottom: 4 },
-  heroSub:            { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.85)', lineHeight: 18 },
-
-  filterScroll:       { backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
-  filterContent:      { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row' },
-  filterPill:         { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: Spacing.md, paddingVertical: 6, borderRadius: Radius.full, backgroundColor: Colors.bg, borderWidth: 1.5, borderColor: Colors.border },
-  filterPillActive:   { backgroundColor: Colors.accent, borderColor: Colors.accent },
-  filterIcon:         { fontSize: 14 },
-  filterLabel:        { fontSize: FontSize.sm, fontWeight: '700', color: Colors.textSoft },
-  filterLabelActive:  { color: '#fff' },
-
-  listContent:        { padding: Spacing.lg, gap: Spacing.md },
-
-  // Card
-  card:               { backgroundColor: Colors.card, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1.5, borderColor: Colors.border },
-  cardAccent:         { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md },
-  cardIcon:           { fontSize: 32 },
-  cardAccentRight:    { alignItems: 'flex-end', gap: Spacing.xs },
-  cardBody:           { padding: Spacing.lg },
-  cardName:           { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, marginBottom: 2 },
-  cardTagline:        { fontSize: FontSize.md, fontWeight: '700', color: Colors.accent, marginBottom: 6 },
-  cardDesc:           { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18, marginBottom: Spacing.md },
-
-  statsRow:           { flexDirection: 'row', borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.md, gap: Spacing.sm },
-  stat:               { flex: 1, alignItems: 'center' },
-  statMid:            { borderLeftWidth: 1, borderRightWidth: 1, borderColor: Colors.border },
-  statLabel:          { fontSize: 10, color: Colors.textMuted, fontWeight: '600', marginBottom: 2 },
-  statValue:          { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  statEarning:        { fontSize: 10, color: Colors.green, textAlign: 'center' },
-
-  badge:              { paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
-  badgeText:          { fontSize: 10, fontWeight: '800' },
-  comingSoonBadge:    { backgroundColor: 'rgba(255,255,255,0.25)', paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
-  comingSoonText:     { fontSize: 10, fontWeight: '800', color: '#fff' },
-
-  // Modal
-  modalSafe:          { flex: 1, backgroundColor: Colors.bg },
-  modalScroll:        { flex: 1 },
-  modalHeader:        { paddingTop: Spacing.xxxl, paddingBottom: Spacing.xl, paddingHorizontal: Spacing.lg, alignItems: 'center' },
-  closeBtn:           { position: 'absolute', top: Spacing.lg, right: Spacing.lg, width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.25)', alignItems: 'center', justifyContent: 'center' },
-  closeBtnText:       { color: '#fff', fontWeight: '900', fontSize: 16 },
-  modalIcon:          { fontSize: 48, marginBottom: Spacing.sm },
-  modalTitle:         { fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' },
-  modalTagline:       { fontSize: FontSize.md, color: 'rgba(255,255,255,0.85)', textAlign: 'center', marginTop: 4, marginBottom: Spacing.md },
-  modalBadgeRow:      { flexDirection: 'row', alignItems: 'center' },
-  modalContent:       { padding: Spacing.lg },
-  modalDesc:          { fontSize: FontSize.md, color: Colors.textSoft, lineHeight: 22, marginBottom: Spacing.xl },
-  modalStats:         { flexDirection: 'row', backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: Colors.border },
-  modalStat:          { flex: 1, alignItems: 'center' },
-  modalStatVal:       { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text },
-  modalStatLabel:     { fontSize: 10, color: Colors.textMuted, fontWeight: '600', marginTop: 2 },
-  sectionTitle:       { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, marginBottom: Spacing.md, marginTop: Spacing.sm },
-  outcomeRow:         { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.sm, alignItems: 'flex-start' },
-  outcomeDot:         { fontSize: 16, fontWeight: '900', lineHeight: 22 },
-  outcomeText:        { flex: 1, fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
-  moduleRow:          { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border },
-  moduleNum:          { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
-  moduleNumText:      { fontSize: FontSize.sm, fontWeight: '900' },
-  moduleInfo:         { flex: 1 },
-  moduleTitle:        { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  moduleDesc:         { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
-  moduleLock:         { fontSize: 16 },
-  ctaBox:             { backgroundColor: Colors.accentSoft, borderRadius: Radius.lg, padding: Spacing.lg, marginTop: Spacing.xl, borderWidth: 1.5, borderColor: Colors.accent + '40' },
-  ctaTitle:           { fontSize: FontSize.lg, fontWeight: '900', color: Colors.accent, marginBottom: Spacing.sm },
-  ctaBody:            { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  screen: { flex: 1, backgroundColor: Colors.bg },
+  header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
+  headerTitle: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
+  headerSub: { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
+  quizBtn: { backgroundColor: Colors.accentSoft, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: 6, borderWidth: 1.5, borderColor: Colors.accent },
+  quizBtnText: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent },
+  tabBar: { flexDirection: 'row', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
+  tab: { flex: 1, paddingVertical: Spacing.sm, alignItems: 'center' },
+  tabActive: { borderBottomWidth: 2, borderBottomColor: Colors.accent },
+  tabText: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.textSoft },
+  tabTextActive: { color: Colors.accent, fontWeight: '900' },
+  browseSection: { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, paddingHorizontal: Spacing.lg, paddingTop: Spacing.lg, paddingBottom: Spacing.sm },
+  fieldGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: Spacing.md, gap: Spacing.sm },
+  fieldCard: { width: '47%', backgroundColor: '#fff', borderRadius: Radius.lg, padding: Spacing.md, ...Shadow.sm },
+  fcTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: Spacing.sm },
+  fcEmoji: { fontSize: 28 },
+  fcPill: { borderRadius: Radius.full, paddingHorizontal: 6, paddingVertical: 2 },
+  fcPillText: { fontSize: 10, fontWeight: '700' },
+  fcName: { fontSize: FontSize.sm, fontWeight: '900', color: Colors.text, marginBottom: 2 },
+  fcTagline: { fontSize: 10, color: Colors.textSoft, marginBottom: Spacing.sm },
+  fcMeta: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
+  fcMetaItem: { fontSize: 10, color: Colors.textMuted, fontWeight: '600' },
+  // Detail
+  dHeader: { paddingTop: 48, paddingBottom: Spacing.xl, paddingHorizontal: Spacing.lg, alignItems: 'center' },
+  closeBtn: { position: 'absolute', top: Spacing.lg, right: Spacing.lg, width: 32, height: 32, borderRadius: 16, backgroundColor: 'rgba(255,255,255,0.3)', alignItems: 'center', justifyContent: 'center' },
+  closeBtnText: { color: '#fff', fontWeight: '900', fontSize: 16 },
+  dEmoji: { fontSize: 52, marginBottom: Spacing.sm },
+  dName: { fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' },
+  dTagline: { fontSize: FontSize.md, color: 'rgba(255,255,255,0.85)', textAlign: 'center', marginTop: 4, marginBottom: Spacing.md },
+  dBadges: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs, justifyContent: 'center' },
+  dBadge: { backgroundColor: 'rgba(255,255,255,0.25)', borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 3 },
+  dBadgeText: { fontSize: 10, color: '#fff', fontWeight: '700' },
+  dTabBar: { flexDirection: 'row', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
+  dTab: { flex: 1, paddingVertical: Spacing.sm, alignItems: 'center' },
+  dTabText: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.textSoft },
+  dSec: { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm, marginTop: Spacing.lg },
+  dBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  whoCard: { flexDirection: 'row', gap: Spacing.sm, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1 },
+  whoIcon: { fontSize: 20 },
+  whoText: { flex: 1, fontSize: FontSize.sm, color: Colors.text, lineHeight: 18 },
+  prosRow: { flexDirection: 'row', gap: Spacing.sm, borderRadius: Radius.sm, padding: Spacing.md, marginBottom: Spacing.xs },
+  prosIcon: { fontSize: 20 },
+  prosText: { flex: 1, fontSize: FontSize.sm, color: Colors.text, lineHeight: 18 },
+  hiringCard: { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1, marginBottom: Spacing.sm },
+  hiringModel: { fontSize: FontSize.xs, fontWeight: '900', marginBottom: 4, letterSpacing: 1 },
+  rolesWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
+  rolePill: { backgroundColor: Colors.bg, borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 4, borderWidth: 1, borderColor: Colors.border },
+  rolePillText: { fontSize: FontSize.xs, color: Colors.textSoft, fontWeight: '600' },
+  salRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border },
+  salLabel: { fontSize: FontSize.sm, color: Colors.text, fontWeight: '700' },
+  salVal: { fontSize: FontSize.md, fontWeight: '900' },
+  salNote: { backgroundColor: '#fffbeb', borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.md, borderWidth: 1, borderColor: '#fde68a' },
+  salNoteText: { fontSize: FontSize.xs, color: '#92400e', lineHeight: 16 },
+  timeCard: { flexDirection: 'row', gap: Spacing.md, backgroundColor: Colors.accentSoft, borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center' },
+  trackCard: { backgroundColor: '#fff', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, ...Shadow.sm },
+  tcName: { fontSize: FontSize.md, fontWeight: '900', color: Colors.text },
+  tcTagline: { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
+  lvlChip: { borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 3, backgroundColor: '#f1f5f9' },
+  lvlChipText: { fontSize: 10, fontWeight: '700', color: Colors.textSoft },
+  placementBanner: { backgroundColor: '#fffbeb', borderRadius: Radius.sm, padding: Spacing.sm, marginTop: Spacing.sm },
+  placementText: { fontSize: 10, color: '#92400e', fontWeight: '600' },
+  // Search
+  searchBar: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', margin: Spacing.md, borderRadius: Radius.lg, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderWidth: 1.5, borderColor: Colors.border, gap: Spacing.sm, ...Shadow.sm },
+  searchInput: { flex: 1, fontSize: FontSize.md, color: Colors.text, paddingVertical: 4 },
+  srSec: { fontSize: FontSize.sm, fontWeight: '900', color: Colors.textMuted, marginBottom: Spacing.sm, marginTop: Spacing.md, letterSpacing: 0.5 },
+  srRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.xs, borderWidth: 1, borderColor: Colors.border },
+  // Quiz
+  qDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: Colors.border },
 });

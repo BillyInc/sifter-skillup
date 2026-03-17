@@ -11,6 +11,19 @@ export interface CareerRole {
   seniority?: string; // 'junior' | 'mid' | 'senior' | 'leadership'
 }
 
+export interface SalaryRange {
+  junior: string;
+  mid: string;
+  senior: string;
+  currency: string;
+  note?: string;
+}
+
+export interface FieldPro {
+  icon: string;
+  text: string;
+}
+
 export interface Field {
   id: string;
   name: string;
@@ -24,6 +37,16 @@ export interface Field {
   careerCount: number;         // approx number of distinct career paths
   roles: CareerRole[];
   primaryPlatformIds: string[];
+  // Enrichment for decision-making (all optional so existing data stays valid)
+  salaryRange?: SalaryRange;
+  pros?: FieldPro[];
+  cons?: FieldPro[];
+  dayInLife?: string;          // 3-4 sentence description of a typical day
+  whoIsItFor?: string;         // 1-2 sentences: who thrives here
+  whoIsItNotFor?: string;      // 1-2 sentences: who struggles
+  timeToHireable?: string;     // e.g. "6-12 months with focused study"
+  demandTrend?: 'rising' | 'stable' | 'declining';
+  remoteWork?: 'high' | 'medium' | 'low';
 }
 
 export const ALL_FIELDS: Field[] = [
@@ -54,6 +77,25 @@ export const ALL_FIELDS: Field[] = [
       { title: 'Crypto Research Analyst', type: 'SPECIFIC' },
     ],
     primaryPlatformIds: ['github', 'twitter', 'linkedin', 'etherscan'],
+        salaryRange: { junior: '$45K–$75K', mid: '$80K–$140K', senior: '$150K–$300K+', currency: 'USD', note: 'Plus token compensation at many protocols — often 2–5× base' },
+    pros: [
+      { icon: '🌍', text: 'Work from anywhere — fully remote across virtually all crypto companies' },
+      { icon: '💰', text: 'Token upside can be life-changing — early employees at major protocols made millions' },
+      { icon: '⚡', text: 'Industry is rebuilding finance from scratch — you are at the frontier' },
+      { icon: '📈', text: 'Demand massively outstrips supply — skilled people are always needed' },
+    ],
+    cons: [
+      { icon: '🎢', text: 'Industry cycles hard with crypto prices — companies hire and freeze in waves' },
+      { icon: '🦈', text: 'Scams, rug pulls, and hacks are common — you need good judgement on who to work for' },
+      { icon: '📚', text: 'Technology moves fast — what you learn today may be obsolete in 18 months' },
+      { icon: '😰', text: 'Bear markets are brutal — companies collapse, tokens go to zero, colleagues disappear' },
+    ],
+    dayInLife: 'You start by checking on-chain data and overnight market movements. The morning is meetings — protocol team calls, research discussions, or code reviews depending on your role. Afternoons are deep work: writing analysis, building contracts, or designing strategies. You finish by scanning Twitter and Discord for ecosystem updates. Most of your colleagues are pseudonymous.',
+    whoIsItFor: 'People who are genuinely obsessed with the technology and willing to self-educate continuously. Those who thrive in ambiguity and want to be early at something.',
+    whoIsItNotFor: 'People who need job stability, 9-to-5 structure, or who are primarily motivated by the financial speculation rather than the technology.',
+    timeToHireable: '3-9 months with focused learning. Junior roles at smaller protocols are reachable faster.',
+    demandTrend: 'rising',
+    remoteWork: 'high',
   },
 
   {
@@ -76,6 +118,25 @@ export const ALL_FIELDS: Field[] = [
       { title: 'Risk Analyst — Quant', type: 'SPECIFIC' },
     ],
     primaryPlatformIds: ['github', 'linkedin', 'quantconnect', 'ssrn'],
+        salaryRange: { junior: '$200K–$400K', mid: '$400K–$800K', senior: '$800K–$3M+', currency: 'USD', note: 'Jane Street, Citadel, Two Sigma — total comp includes large bonus. Numbers are for top firms only.' },
+    pros: [
+      { icon: '💸', text: 'Highest total compensation of any technical career path — consistently' },
+      { icon: '🧠', text: 'Intellectually demanding work — you are solving genuinely hard mathematical problems' },
+      { icon: '🏆', text: 'Meritocratic to an unusual degree — performance is measurable and rewarded directly' },
+      { icon: '🔒', text: 'Extremely stable employment — top firms almost never fire performing quants' },
+    ],
+    cons: [
+      { icon: '🎓', text: 'Extremely competitive entry — top firms take mostly PhD graduates from top 10 universities' },
+      { icon: '🏢', text: 'Limited remote work — most top quant firms require full-time office presence in expensive cities' },
+      { icon: '🤐', text: 'Highly secretive environment — you cannot discuss your work publicly or put strategies on LinkedIn' },
+      { icon: '⏰', text: 'Interview process is brutally long — 6-8 rounds including live coding, math derivations, and trading simulations' },
+    ],
+    dayInLife: 'You arrive early to review overnight P&L and check your models' performance against live markets. The morning is usually deep research or strategy development — writing code, running backtests, reviewing statistics. After market close there are team discussions on what worked and what didn't. Evenings are often spent reading papers. The work is quiet, intense, and intellectually satisfying.',
+    whoIsItFor: 'People who genuinely love mathematics and statistics for their own sake, not just as tools. Competitive people who want to be at the absolute frontier of applied quantitative thinking.',
+    whoIsItNotFor: 'People who want public recognition, flexible hours, or to work on products users can see. The work is invisible by design.',
+    timeToHireable: '2-4 years of serious study plus a relevant degree. The junior curriculum gives you the mathematical foundation — getting hired at top firms requires additional undergraduate/graduate mathematics.',
+    demandTrend: 'rising',
+    remoteWork: 'low',
   },
 
   // ════════════════════════════════════════════════════════
@@ -104,6 +165,25 @@ export const ALL_FIELDS: Field[] = [
       { title: 'Generative AI Engineer', type: 'SPECIFIC' },
     ],
     primaryPlatformIds: ['github', 'huggingface', 'kaggle', 'linkedin'],
+        salaryRange: { junior: '$120K–$180K', mid: '$180K–$280K', senior: '$280K–$600K+', currency: 'USD', note: 'Top AI companies (OpenAI, Anthropic, Google DeepMind) pay $300K–$900K+ total comp for strong candidates' },
+    pros: [
+      { icon: '🚀', text: 'Fastest growing field in tech — demand is increasing faster than supply at every level' },
+      { icon: '💡', text: 'Work on genuinely frontier technology that is changing how humanity thinks and works' },
+      { icon: '💰', text: 'Extremely high compensation — especially at frontier AI labs and top tech companies' },
+      { icon: '🌍', text: 'Highly transferable — every industry is adopting AI, so you can work anywhere' },
+    ],
+    cons: [
+      { icon: '📚', text: 'Deep math required — linear algebra, calculus, probability, statistics all needed to go beyond surface level' },
+      { icon: '⚡', text: 'Pace is relentless — a major paper drops every week. Staying current is a full-time job inside your job' },
+      { icon: '🔮', text: 'Role will change dramatically in 5-10 years as AI automates parts of ML engineering itself' },
+      { icon: '🎓', text: 'Competitive at the top — frontier research roles still require strong academic credentials' },
+    ],
+    dayInLife: 'Morning is reviewing experiment results that ran overnight — did the model improve? Afternoon is usually writing code: building pipelines, running ablations, or debugging training runs. A lot of time is spent reading papers and discussing ideas with teammates. Deployment days are stressful — monitoring model performance in production and responding to regressions. The work is technically demanding but intellectually exciting.',
+    whoIsItFor: 'People who are excited about mathematics, comfortable with ambiguity, and genuinely curious about how intelligence works. Strong Python skills are table stakes.',
+    whoIsItNotFor: 'People who want to see immediate tangible results — experiments often fail, and models take weeks to train. Also not ideal for those who want clear 9-to-5 boundaries.',
+    timeToHireable: '12-24 months of serious study for ML Engineering roles. Research roles require 3-5 years plus relevant publications or open-source contributions.',
+    demandTrend: 'rising',
+    remoteWork: 'medium',
   },
 
   {
@@ -174,6 +254,25 @@ export const ALL_FIELDS: Field[] = [
       { title: 'CISO', type: 'SPECIFIC', seniority: 'leadership' },
     ],
     primaryPlatformIds: ['github', 'linkedin', 'hackthebox', 'tryhackme', 'bugcrowd'],
+        salaryRange: { junior: '$60K–$90K', mid: '$90K–$140K', senior: '$140K–$250K+', currency: 'USD', note: 'Bug bounty hunters can earn $50K–$500K+ per year. CISO roles at major companies reach $400K+.' },
+    pros: [
+      { icon: '🛡️', text: 'Virtually every company needs security — no shortage of jobs in any market condition' },
+      { icon: '🕵️', text: 'Intellectually engaging — adversarial work that requires creative thinking and constant learning' },
+      { icon: '💰', text: 'Bug bounty and consulting create unlimited upside — top researchers earn more than senior full-time roles' },
+      { icon: '🌍', text: 'Strong remote work culture — much of security work is done independently' },
+    ],
+    cons: [
+      { icon: '⚠️', text: 'On-call stress — security incidents happen at 3am and someone has to respond' },
+      { icon: '😤', text: 'Frustrating when developers ignore your findings or deprioritise patches' },
+      { icon: '📖', text: 'Certifications are expensive and time-consuming — OSCP, CISSP, CEH all cost thousands' },
+      { icon: '🔒', text: 'Clearance requirements limit some roles — government and defence work requires background checks' },
+    ],
+    dayInLife: 'Offensive roles: you spend the day probing systems for vulnerabilities — running tools, reading code, crafting payloads. Defensive roles: you monitor alerts, investigate suspicious activity, and write detection rules. Red team engagements have you planning and executing simulated attacks against client infrastructure. Most days involve a lot of documentation and communicating findings clearly to non-technical stakeholders.',
+    whoIsItFor: 'Curious, persistent people who enjoy thinking like an adversary. Those who like puzzles and are comfortable with ambiguity and incomplete information.',
+    whoIsItNotFor: 'People who want predictable, process-driven work. Security constantly throws unexpected challenges at you.',
+    timeToHireable: '6-18 months for entry-level SOC/analyst roles. Penetration testing and red team roles typically require 2-3 years of hands-on practice.',
+    demandTrend: 'rising',
+    remoteWork: 'high',
   },
 
   {
@@ -306,6 +405,25 @@ export const ALL_FIELDS: Field[] = [
       { title: 'Chief Supply Chain Officer', type: 'SPECIFIC', seniority: 'leadership' },
     ],
     primaryPlatformIds: ['linkedin', 'personal_site'],
+        salaryRange: { junior: '$45K–$70K', mid: '$75K–$110K', senior: '$110K–$180K', currency: 'USD', note: 'CSCP/CPIM certification adds £10-20K in the UK. Senior roles at multinationals reach $200K+ with bonus.' },
+    pros: [
+      { icon: '🌍', text: 'Every industry needs supply chain — retail, pharma, aerospace, food, automotive. You are never stuck' },
+      { icon: '📊', text: 'Highly analytical — you use real data every day: inventory, demand, costs, suppliers' },
+      { icon: '🤝', text: 'Broad influence — you work across the whole business, not siloed in one function' },
+      { icon: '🏭', text: 'Tangible impact — when you fix something, products actually reach people faster and cheaper' },
+    ],
+    cons: [
+      { icon: '🏢', text: 'Most roles are office/hybrid at best — significant travel to warehouses, factories, and supplier sites' },
+      { icon: '📞', text: 'High stress during disruptions — port strikes, COVID, supplier failures — you own the problem' },
+      { icon: '📈', text: 'Slower salary growth than tech — senior salaries are solid but not Silicon Valley levels' },
+      { icon: '🔄', text: 'Work can be repetitive — a lot of Excel, ERP systems, and weekly status meetings' },
+    ],
+    dayInLife: 'You start with the daily exception report — what's out of stock, what's delayed, what supplier just called with a problem. The morning is largely reactive: firefighting, phone calls, updating forecasts. Afternoons are more strategic: building analyses for the S&OP meeting, reviewing supplier contracts, or presenting a cost-reduction recommendation. You finish by checking the next day's inbound deliveries.',
+    whoIsItFor: 'Organised, data-driven people who can stay calm under pressure. People who like fixing problems that have real physical consequences and want a stable, well-respected career path.',
+    whoIsItNotFor: 'People who want fully remote work or fast Silicon Valley-style career progression. The field rewards tenure and institutional knowledge more than it rewards raw intelligence.',
+    timeToHireable: '6-18 months. The junior track gets you to entry-level analyst roles. APICS/ASCM certification significantly accelerates hiring.',
+    demandTrend: 'rising',
+    remoteWork: 'low',
   },
 
   {

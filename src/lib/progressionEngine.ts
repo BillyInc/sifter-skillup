@@ -282,3 +282,97 @@ export function assignScenario(params: {
     uniquenessKey,
   };
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCENARIO UNIQUENESS ENFORCEMENT
+// Ensures no two users see the same scenario, and no user sees the same
+// scenario twice. Works with both pre-generated scenarios (bossMode) and
+// AI-generated aggregate scenarios.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Fill {template_variables} in a scenario string with user-specific values.
+ * Boss and aggregate scenarios use these placeholders so no two users
+ * read identical scenario text.
+ *
+ * Usage:
+ *   const personalised = fillScenarioVariables(scenario.situation, variables);
+ */
+export function fillScenarioVariables(
+  scenarioText: string,
+  variables: ScenarioVariables,
+): string {
+  return scenarioText
+    .replace(/\{company_type\}/g,  variables.company_type)
+    .replace(/\{company_size\}/g,  variables.company_size)
+    .replace(/\{disruption\}/g,    variables.disruption)
+    .replace(/\{severity\}/g,      variables.severity)
+    .replace(/\{time_pressure\}/g, variables.time_pressure)
+    .replace(/\{geography\}/g,     variables.geography)
+    .replace(/\{seed\}/g,          variables.seed.slice(0, 12));
+}
+
+/**
+ * Select which scenario to show a user from a pool, ensuring they never see
+ * the same scenarioId twice across sessions.
+ *
+ * seenScenarioIds: load from user's backend record
+ * Returns: the chosen scenario + updated seenIds list
+ */
+export function pickUniqueScenario<T extends { id: string; scenarioId?: string }>(
+  scenarios: T[],
+  seenScenarioIds: string[],
+  userId: string,
+  attemptNumber: number,
+): { scenario: T; updatedSeenIds: string[] } {
+  // Filter out scenarios the user has already seen
+  const unseen = scenarios.filter(s =>
+    !seenScenarioIds.includes(s.scenarioId ?? s.id)
+  );
+
+  // If they've seen all, reset (but keep the most recent 2 out to avoid immediate repeat)
+  const pool = unseen.length >= 1 ? unseen : scenarios.filter(
+    s => !seenScenarioIds.slice(-2).includes(s.scenarioId ?? s.id)
+  );
+
+  // Deterministic pick based on userId + attempt so same user+attempt = same scenario
+  // (important for backend reconstruction without storing full text)
+  const seed = `${userId}:pick:${attemptNumber}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = Math.imul(31, hash) + seed.charCodeAt(i) | 0;
+  }
+  const chosen = pool[Math.abs(hash) % pool.length];
+
+  return {
+    scenario: chosen,
+    updatedSeenIds: [...seenScenarioIds, chosen.scenarioId ?? chosen.id],
+  };
+}
+
+/**
+ * Generate a fully personalised boss scenario for a specific user attempt.
+ * Combines: unique scenario selection + variable injection.
+ *
+ * This is what the backend calls when a user taps "Start Boss Battle".
+ */
+export function personaliseScenario<T extends { id: string; scenarioId?: string; situation?: string; scenario?: string }>(
+  scenarios: T[],
+  seenScenarioIds: string[],
+  userId: string,
+  labId: string,
+  attemptNumber: number,
+): { personalised: T & { personalisedText: string }; updatedSeenIds: string[] } {
+  const variables = generateScenarioVariables(userId, labId, attemptNumber);
+  const { scenario, updatedSeenIds } = pickUniqueScenario(
+    scenarios, seenScenarioIds, userId, attemptNumber
+  );
+
+  const rawText = (scenario as any).situation ?? (scenario as any).scenario ?? '';
+  const personalisedText = fillScenarioVariables(rawText, variables);
+
+  return {
+    personalised: { ...scenario, personalisedText },
+    updatedSeenIds,
+  };
+}

@@ -4,6 +4,12 @@
 export type Mechanic = 'match3' | 'memory' | 'chain' | 'rugpull' | 'liquidation' | 'trait' | 'governance';
 export type Tier = 'beginner' | 'intermediate' | 'pro';
 
+export interface LessonSimulation {
+  type: 'judgment-riskAssess' | 'judgment-dataInterpret' | 'judgment-escalation';
+  scenario: string;
+  scoringCriteria: string[];
+}
+
 export interface Level {
   id: number;
   mechanic: Mechanic;
@@ -18,6 +24,7 @@ export interface Level {
   isFinalBoss?: boolean;
   glossaryWord?: string;
   simulatorLesson?: string;
+  lessonSimulations?: LessonSimulation[];
   links?: Array<{ label: string; url: string }>;
 }
 
@@ -37,6 +44,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [390, 480, 600],
     target: 600,
     coins: 30,
+    simulatorLesson: "sendBitcoin",
     links: [{label: "Bitcoin.org", url: "https://bitcoin.org/en/getting-started"}]
   },
   2: {
@@ -45,10 +53,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "beginner",
     topic: "Why Bitcoin Has Value",
     fact: "Only 21 million Bitcoin will ever exist. Governments can print unlimited dollars. Scarcity + demand = value.",
-    plain: "",
+    plain: "Like land in central London — there's only so much of it. Governments can build new roads but they can't print more Mayfair. Bitcoin's 21M cap is written in its code and cannot be changed.",
     stars: [427, 525, 657],
     target: 657,
     coins: 34,
+    simulatorLesson: "halving",
     links: [{label: "Why 21 million?", url: "https://bitcoin.org/en/faq#why-do-bitcoins-have-value"}]
   },
   3: {
@@ -56,11 +65,12 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "memory",
     tier: "beginner",
     topic: "The Blockchain",
-    fact: "A blockchain is a shared record book held by thousands of computers simultaneously. Change one copy and the others reject it.",
+    fact: "A blockchain is a shared record held by 15,000+ computers simultaneously. Adding a new block requires 51% of the network to agree. Change one copy and the other 14,999 reject it. The chain is 376GB and growing.",
     plain: "Like Google Docs, but instead of Google owning the server, 10,000 computers worldwide each hold a copy \u2014 and nobody can secretly edit theirs.",
     stars: [464, 572, 715],
     target: 715,
     coins: 39,
+    simulatorLesson: "sendBitcoin",
     glossaryWord: "blockchain"
   },
   4: {
@@ -86,6 +96,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [539, 664, 830],
     target: 830,
     coins: 48,
+    simulatorLesson: "sendBitcoin",
     glossaryWord: "proofOfWork"
   },
   6: {
@@ -98,7 +109,20 @@ export const LEVELS: Record<number, Level> = {
     stars: [577, 710, 888],
     target: 888,
     coins: 53,
-    glossaryWord: "wallet"
+    simulatorLesson: "metamask",
+    glossaryWord: "wallet",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `Your friend stores their seed phrase as a screenshot in Google Photos and also texts it to themselves "for backup". They have 2 BTC. What risks do you identify and what do you tell them?`,
+      scoringCriteria: [
+          `Google Photos = cloud = can be hacked or leaked`,
+          `Text message = stored on phone + carrier servers`,
+          `Anyone who accesses either gets all 2 BTC permanently`,
+          `Correct advice: write on paper, store offline in two physical locations, never digital`
+      ],
+    }
+  ]
   },
   7: {
     id: 7,
@@ -106,10 +130,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "beginner",
     topic: "Public vs Private Keys",
     fact: "Public key = your account number (share freely so people pay you). Private key = your PIN (never share \u2014 anyone with it controls your funds).",
-    plain: "",
+    plain: "Public key = your email address (share it so people can reach you). Private key = your email password (never share it — anyone with it controls everything). Unlike a password, a lost private key cannot be reset.",
     stars: [614, 756, 946],
     target: 946,
     coins: 57,
+    simulatorLesson: "metamask",
     glossaryWord: "privateKey"
   },
   8: {
@@ -122,14 +147,26 @@ export const LEVELS: Record<number, Level> = {
     stars: [651, 802, 1003],
     target: 1003,
     coins: 62,
-    simulatorLesson: "sendBitcoin"
+    simulatorLesson: "sendBitcoin",
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `You send 0.5 BTC. The transaction is broadcast but shows "unconfirmed" after 2 hours. Gas was set to minimum. What is happening and what are your options?`,
+      scoringCriteria: [
+          `Low fee = miners deprioritise the transaction`,
+          `Stuck in mempool — not lost, just waiting`,
+          `Options: wait (could be days), use RBF to rebroadcast with higher fee, or CPFP`,
+          `It is NOT reversible once it does confirm — address this misunderstanding`
+      ],
+    }
+  ]
   },
   9: {
     id: 9,
     mechanic: "chain",
     tier: "beginner",
     topic: "Bitcoin Fees",
-    fact: "Miners prioritise transactions with higher fees \u2014 like surge pricing. Network congestion means higher fees to get included quickly.",
+    fact: "Miners prioritise transactions with higher fees. (1) Submit transaction with a gas price. (2) Miners select highest-fee txs from mempool first. (3) Your tx confirms when a block with sufficient fee space is mined. (4) Low fee = wait hours; high fee = confirms in seconds.",
     plain: "Like airport security: free lane is slow, fast lane costs extra. Pay more = skip the queue.",
     stars: [689, 848, 1061],
     target: 1061,
@@ -156,10 +193,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "beginner",
     topic: "Bitcoin vs Gold",
     fact: "Both are scarce and no government controls them. Bitcoin is digital \u2014 send it globally in seconds. Gold is physical \u2014 hard to transport and verify.",
-    plain: "",
+    plain: "Gold: you need a vault, an armoured truck, and physical security. Bitcoin: you need a 12-word seed phrase memorised in your head. Both are scarce and no government controls them. One fits in your memory.",
     stars: [764, 940, 1176],
     target: 1176,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "halving"
   },
   12: {
     id: 12,
@@ -179,11 +217,12 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "chain",
     tier: "beginner",
     topic: "Satoshis",
-    fact: "1 Bitcoin = 100,000,000 satoshis. You can buy $5 worth of Bitcoin. Most everyday payments will be in sats.",
-    plain: "",
+    fact: "Bitcoin is divisible to 8 decimal places. (1) 1 Bitcoin = 100,000,000 satoshis. (2) 1,000 sats = roughly $0.60 at current prices. (3) Lightning Network payments are denominated in sats. (4) You can buy $5 of Bitcoin — you don't need a full coin.",
+    plain: "Like pence to the pound, but with 100 million of them per Bitcoin. A coffee might cost 1,500 sats one day. You don't need a full Bitcoin any more than you need a full £100 note to buy a coffee.",
     stars: [839, 1033, 1292],
     target: 1292,
     coins: 85,
+    simulatorLesson: "sendBitcoin",
     glossaryWord: "satoshi"
   },
   14: {
@@ -195,7 +234,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Each node is an auditor who keeps their own complete copy of every transaction ever made. More auditors = harder to cheat.",
     stars: [877, 1080, 1350],
     target: 1350,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "sendBitcoin"
   },
   15: {
     id: 15,
@@ -207,7 +247,30 @@ export const LEVELS: Record<number, Level> = {
     stars: [975, 1200, 1500],
     target: 1500,
     coins: 100,
-    isBoss: true
+    simulatorLesson: "sendBitcoin",
+    isBoss: true,
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `Someone offers to "help you recover" lost Bitcoin for a 20% fee upfront. They claim to have special access to the blockchain. Assess this claim and explain the correct answer.`,
+      scoringCriteria: [
+          `Bitcoin transactions are final — no recovery service can reverse them`,
+          `No one has special blockchain access — it is decentralised`,
+          `This is a scam — the "recovery" fee is the theft`,
+          `Only scenario where recovery is possible: you still have partial key or it is an exchange issue`
+      ],
+    },
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `Bitcoin price drops 40% in one week. A news headline says "Bitcoin is dead — governments are banning it." What do you assess about this situation using what you know about Bitcoin fundamentals?`,
+      scoringCriteria: [
+          `Bitcoin has survived 10+ "deaths" — price volatility is normal`,
+          `No single government can ban the protocol — they can ban exchanges`,
+          `Fixed supply and PoW security unchanged regardless of price`,
+          `Appropriate response: neither panic sell nor dismiss concerns — evaluate specific regulatory claims`
+      ],
+    }
+  ]
   },
   16: {
     id: 16,
@@ -219,6 +282,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [390, 480, 600],
     target: 600,
     coins: 30,
+    simulatorLesson: "gas",
     glossaryWord: "smartContract"
   },
   17: {
@@ -226,7 +290,7 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "memory",
     tier: "beginner",
     topic: "Smart Contracts",
-    fact: "A smart contract is code that runs automatically when conditions are met. No middleman, no delays, no disputes.",
+    fact: "A smart contract executes automatically when conditions are met — no middleman, no delays. Once deployed, its code is immutable and runs exactly as written. Ethereum processes 1.2 million smart contract interactions per day.",
     plain: "Like a vending machine: put in money, select item, get it automatically. No cashier, no opening hours, no arguments.",
     stars: [427, 525, 657],
     target: 657,
@@ -240,13 +304,25 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "chain",
     tier: "beginner",
     topic: "Gas Fees",
-    fact: "Gas is the fee for running code on Ethereum. Simple transfer = 21,000 gas. Complex swap = 150,000+ gas. Price in ETH.",
+    fact: "Gas powers every Ethereum computation. (1) Every operation costs a fixed amount of gas (transfer = 21,000 gas, swap = 150,000+). (2) Gas price (in gwei) is set by you — higher = faster confirmation. (3) Fee = gas used × gas price. (4) Network congestion raises gas price for everyone.",
     plain: "Like postage. A postcard costs 60p, a parcel costs \u00a36. Simple transactions are cheap; complex ones use more computing power.",
     stars: [464, 572, 715],
     target: 715,
     coins: 53,
     simulatorLesson: "gas",
-    glossaryWord: "gasGee"
+    glossaryWord: "gasGee",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You want to swap $50 of ETH on Uniswap. Gas estimate shows $45. Should you proceed? What factors affect this decision?`,
+      scoringCriteria: [
+          `$45 gas on a $50 swap = 90% fee — economically nonsensical for small amount`,
+          `Consider L2 alternatives: same swap on Arbitrum/Base = ~$0.10`,
+          `Gas fluctuates — check at off-peak times (weekends, non-US hours)`,
+          `Alternative: batch with a larger swap, or wait for lower gas`
+      ],
+    }
+  ]
   },
   19: {
     id: 19,
@@ -257,7 +333,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "BTC is like owning a gold bar. ETH is like owning shares in the internet itself \u2014 you need ETH to use any Ethereum app.",
     stars: [502, 618, 773],
     target: 773,
-    coins: 57
+    coins: 57,
+    simulatorLesson: "gas"
   },
   20: {
     id: 20,
@@ -276,11 +353,12 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "chain",
     tier: "beginner",
     topic: "Proof of Stake",
-    fact: "Ethereum switched from mining to staking in 2022 \u2014 energy use dropped 99.9%. Validators lock ETH as collateral instead of burning electricity.",
+    fact: "Ethereum's Proof of Stake replaced mining in 2022. (1) Validators lock 32 ETH as collateral. (2) Validators are randomly selected to propose and attest to blocks. (3) Honest validators earn ~4% APY on staked ETH. (4) Cheating validators have their 32 ETH permanently slashed.",
     plain: "Old: computers burning megawatts racing to solve puzzles. New: people locking money as a deposit \u2014 cheat and lose your deposit.",
     stars: [577, 710, 888],
     target: 888,
     coins: 66,
+    simulatorLesson: "ethValidator",
     glossaryWord: "proofOfStake"
   },
   22: {
@@ -301,10 +379,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "beginner",
     topic: "The Merge",
     fact: 'The Merge (September 2022) switched Ethereum from Proof of Work to Proof of Stake — eliminating 99.95% of energy use overnight. 32 ETH is required to become a validator. The Merge did not increase transaction speed; that comes with future scaling upgrades.',
-    plain: "",
+    plain: "Before: Bitcoin and Ethereum both used mining — computers burning electricity to validate transactions. After: Ethereum moved to staking — validators lock money as a deposit instead. Energy use dropped 99.95% overnight.",
     stars: [651, 802, 1003],
     target: 1003,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "ethValidator"
   },
   24: {
     id: 24,
@@ -316,6 +395,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [689, 848, 1061],
     target: 1061,
     coins: 34,
+    simulatorLesson: "layer2",
     glossaryWord: "layer2",
     links: [{label: "Arbitrum", url: "https://bridge.arbitrum.io"}, {label: "Base", url: "https://base.org"}],
     simulatorLesson: "layer2"
@@ -330,6 +410,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [727, 895, 1119],
     target: 1119,
     coins: 39,
+    simulatorLesson: "staking",
     links: [{label: "Uniswap", url: "https://app.uniswap.org"}, {label: "Aave", url: "https://app.aave.com"}]
   },
   26: {
@@ -337,7 +418,7 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "chain",
     tier: "beginner",
     topic: "Staking ETH",
-    fact: "Staking ETH earns ~4-6% APY for helping secure the network. Liquid staking (Lido, Rocket Pool) lets you stake without the 32 ETH minimum.",
+    fact: "Staking ETH earns yield for securing the network. (1) Lock ETH via a validator or staking service like Lido or Coinbase. (2) Receive stETH or cbETH as a receipt token. (3) Earn ~4–6% APY in new ETH issued as rewards. (4) Withdraw after the unstaking queue (hours to days).",
     plain: "Like a savings account that pays interest, except the bank is replaced by math and you never hand your money to anyone.",
     stars: [764, 940, 1176],
     target: 1176,
@@ -349,34 +430,54 @@ export const LEVELS: Record<number, Level> = {
     id: 27,
     mechanic: "match3",
     tier: "beginner",
-    topic: "EIP-1559 \u2014 Burning ETH",
-    fact: "EIP-1559 makes part of every Ethereum fee permanently burned (destroyed). During high usage, ETH supply actually shrinks \u2014 deflationary.",
-    plain: "Like a restaurant where 60% of every bill goes to the server and 40% is shredded. Less cash in circulation makes each piece more valuable.",
-    stars: [802, 987, 1234],
-    target: 1234,
-    coins: 80
+    topic: "Stablecoins — USDC & USDT",
+    fact: "Stablecoins are cryptocurrencies pegged to $1. USDC (Circle) and USDT (Tether) hold billions in reserves. You can send $1,000 anywhere in the world in seconds for under $0.01.",
+    plain: "Imagine a digital dollar that actually stays at $1 — no price swings, no bank needed. That's what USDC and USDT are. Most crypto trading and DeFi uses stablecoins.",
+    stars: [427, 525, 657],
+    target: 657,
+    coins: 48,
+    simulatorLesson: "stablecoin",
+    glossaryWord: "stablecoin",
+    links: [{label: "What is USDC?", url: "https://www.circle.com/usdc",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You hold $10,000 in a stablecoin called "AlgoUSD" that maintains its peg through an algorithmic mechanism. Compare the risk of this vs holding USDC. What do you need to know before deciding?`,
+      scoringCriteria: [
+          `USDC: backed by real dollar reserves, audited, Circle can freeze — counterparty risk but not depeg risk`,
+          `AlgoUSD: algorithmic = relies on code and incentives, no real backing — UST/LUNA collapsed 100% in 72h`,
+          `Key question: what are the reserves? Who audits them?`,
+          `Algorithmic stablecoins carry depeg risk that reserve-backed ones do not`
+      ],
+    }
+  ]
+  }]
   },
   28: {
     id: 28,
-    mechanic: "memory",
+    mechanic: "chain",
     tier: "beginner",
-    topic: "Solidity",
-    fact: 'Solidity is Ethereum\'s smart contract language. It looks like JavaScript but compiles to EVM bytecode. One critical difference: code is immutable after deployment — bugs can\'t be patched without deploying a new contract. Audits are essential before launch.',
-    plain: "",
-    stars: [839, 1033, 1292],
-    target: 1292,
-    coins: 85
+    topic: "Your First Crypto Exchange",
+    fact: "Buying crypto on a CEX is a 5-step process. (1) Create account on Coinbase or Binance. (2) Complete identity verification (passport or driving licence). (3) Add payment method — bank transfer or card. (4) Buy the desired amount of crypto. (5) Optionally withdraw to your own wallet for self-custody.",
+    plain: "Like buying foreign currency at an airport kiosk — except it's an app, you do it from home, and it takes 5 minutes. The exchange holds your crypto until you withdraw to your own wallet.",
+    stars: [464, 572, 715],
+    target: 715,
+    coins: 53,
+    simulatorLesson: "cexDeposit",
+    glossaryWord: "exchange",
+    links: [{label: "Coinbase — Getting Started", url: "https://www.coinbase.com/learn/getting-started"}]
   },
   29: {
     id: 29,
-    mechanic: "chain",
+    mechanic: "memory",
     tier: "beginner",
-    topic: "Ethereum Classic",
-    fact: "After the 2016 DAO hack, most of Ethereum forked to reverse the theft. Those who refused kept the original chain \u2014 now called Ethereum Classic.",
-    plain: "Like a town that split after a dispute. One half said \"undo the crime\", the other said \"blockchains are immutable \u2014 live with it\".",
-    stars: [877, 1080, 1350],
-    target: 1350,
-    coins: 90
+    topic: "Buying Crypto — Step by Step",
+    fact: "To buy crypto: (1) Create account on Coinbase/Binance. (2) Verify identity — passport or driving licence. (3) Add payment method. (4) Buy. (5) Withdraw to your own wallet for real ownership.",
+    plain: "Step 5 is the one most people skip. Leaving crypto on an exchange means the exchange holds it — not you. 'Not your keys, not your coins' is the golden rule.",
+    stars: [502, 618, 773],
+    target: 773,
+    coins: 57,
+    simulatorLesson: "cexDeposit"
   },
   30: {
     id: 30,
@@ -388,18 +489,42 @@ export const LEVELS: Record<number, Level> = {
     stars: [975, 1200, 1500],
     target: 1500,
     coins: 100,
-    isBoss: true
+    simulatorLesson: "ethValidator",
+    isBoss: true,
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `An Ethereum transaction shows: Value 0 ETH, To: 0xUNISWAP_ROUTER, 150,000 gas used, Tokens Transferred: 1,000 USDC → 0.28 ETH. Interpret every field in plain English.`,
+      scoringCriteria: [
+          `0 ETH value = no ETH sent, but tokens moved via contract`,
+          `High gas = complex smart contract execution (swap), not simple transfer`,
+          `USDC → ETH = token swap through Uniswap`,
+          `Router address confirms DEX interaction, not a direct transfer`
+      ],
+    },
+    {
+      type: `judgment-riskAssess`,
+      scenario: `A new DeFi protocol offers 180% APY on ETH deposits. The smart contract is unverified on Etherscan. The team is anonymous. Assess the risk using what you know about Ethereum.`,
+      scoringCriteria: [
+          `Unverified contract = hidden code = cannot inspect for backdoors or drain functions`,
+          `Anonymous team = no accountability if they rug`,
+          `180% APY is unsustainable — where does the yield come from?`,
+          `Overall: very high risk — all three red flags present simultaneously`
+      ],
+    }
+  ]
   },
   31: {
     id: 31,
     mechanic: "memory",
     tier: "beginner",
     topic: "Hot vs Cold Wallets",
-    fact: "Hot wallet = internet-connected (convenient, more hackable). Cold wallet = offline hardware device (inconvenient, very secure).",
+    fact: "Hot wallet (internet-connected): convenient for daily use, hackable if compromised. Cold wallet (offline hardware device like Ledger): requires physical possession, survives any internet hack. For funds over $500, cold storage is the professional standard.",
     plain: "Hot wallet = cash in your pocket (handy but pickpocketable). Cold wallet = a safe in your wall (inconvenient but secure).",
     stars: [390, 480, 600],
     target: 600,
     coins: 34,
+    simulatorLesson: "metamask",
     glossaryWord: "wallet"
   },
   32: {
@@ -412,18 +537,32 @@ export const LEVELS: Record<number, Level> = {
     stars: [427, 525, 657],
     target: 657,
     coins: 39,
-    glossaryWord: "seedPhrase"
+    simulatorLesson: "metamask",
+    glossaryWord: "seedPhrase",
+  lessonSimulations: [
+    {
+      type: `judgment-escalation`,
+      scenario: `Your cousin DMs you: "I entered my seed phrase on a site to claim a free NFT airdrop. Now all my ETH is gone. The site said it was MetaMask verified. What happened and can I get my money back?"`,
+      scoringCriteria: [
+          `Phishing site harvested seed phrase — entering it anywhere = total wallet compromise`,
+          `All funds permanently transferred — blockchain is irreversible`,
+          `Cannot recover funds — wallet is fully compromised`,
+          `Immediate action: create a new wallet, never use the old address again, report the phishing site`
+      ],
+    }
+  ]
   },
   33: {
     id: 33,
     mechanic: "chain",
     tier: "beginner",
     topic: "MetaMask",
-    fact: "MetaMask is the most-used Ethereum wallet \u2014 a browser extension and mobile app connecting you to any Ethereum or EVM app.",
+    fact: "Setting up MetaMask takes under 5 minutes. (1) Install the MetaMask browser extension or mobile app. (2) Create a new wallet and write down your 12-word seed phrase on paper. (3) Never type or photograph the seed phrase. (4) Add networks like Polygon, Arbitrum, or BSC in Settings > Networks.",
     plain: "Like a universal login \u2014 instead of creating accounts for every crypto app, MetaMask is your identity and wallet in one.",
     stars: [464, 572, 715],
     target: 715,
     coins: 43,
+    simulatorLesson: "metamask",
     links: [{label: "Download MetaMask", url: "https://metamask.io/download/"}],
     simulatorLesson: "metamask"
   },
@@ -437,6 +576,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [502, 618, 773],
     target: 773,
     coins: 48,
+    simulatorLesson: "metamask",
     links: [{label: "Phantom Wallet", url: "https://phantom.app"}]
   },
   35: {
@@ -449,6 +589,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [539, 664, 830],
     target: 830,
     coins: 30,
+    simulatorLesson: "metamask",
     links: [{label: "Ledger", url: "https://www.ledger.com"}, {label: "Trezor", url: "https://trezor.io"}]
   },
   36: {
@@ -461,18 +602,31 @@ export const LEVELS: Record<number, Level> = {
     stars: [577, 710, 888],
     target: 888,
     coins: 53,
-    simulatorLesson: "phishing"
+    simulatorLesson: "phishing",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You receive an email from "support@metamask-secure.com" saying your MetaMask wallet needs verification or it will be suspended. The email includes a link to "verify.metamask-secure.com". Assess this.`,
+      scoringCriteria: [
+          `MetaMask is a local browser extension — it cannot be "suspended" by email`,
+          `metamask-secure.com is not metamask.io — fake domain`,
+          `No legitimate wallet asks for seed phrase via email or website`,
+          `This is a phishing attack — delete, do not click the link`
+      ],
+    }
+  ]
   },
   37: {
     id: 37,
     mechanic: "chain",
     tier: "beginner",
     topic: "Wallet Addresses",
-    fact: "Ethereum addresses start with \"0x\" and are 42 characters. One wrong character = funds lost permanently. Always copy-paste.",
+    fact: "Ethereum addresses follow a specific format. (1) All Ethereum addresses start with 0x. (2) Followed by 40 hexadecimal characters (0–9, a–f). (3) Case sensitivity: checksummed (mixed case) version catches copy errors. (4) The same private key generates the same address on all EVM chains."0x\" and are 42 characters. One wrong character = funds lost permanently. Always copy-paste.",
     plain: "Like a bank sort code and account number \u2014 except 42 characters long and one typo sends money to a random stranger forever.",
     stars: [614, 756, 946],
     target: 946,
-    coins: 57
+    coins: 57,
+    simulatorLesson: "metamask"
   },
   38: {
     id: 38,
@@ -483,7 +637,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "2-of-3 multisig: 2 out of 3 people must approve any transaction. Nobody can run off with funds alone.",
     stars: [651, 802, 1003],
     target: 1003,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "metamask"
   },
   39: {
     id: 39,
@@ -495,6 +650,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [689, 848, 1061],
     target: 1061,
     coins: 66,
+    simulatorLesson: "metamask",
     glossaryWord: "seedPhrase"
   },
   40: {
@@ -506,31 +662,33 @@ export const LEVELS: Record<number, Level> = {
     plain: "Your bank never asks for your full PIN over the phone. Anyone asking for your seed phrase is a criminal. 100% of the time.",
     stars: [727, 895, 1119],
     target: 1119,
-    coins: 71
+    coins: 71,
+    simulatorLesson: "phishing"
   },
   41: {
     id: 41,
     mechanic: "chain",
     tier: "beginner",
     topic: "Transaction Signing",
-    fact: "Signing a transaction proves you own the private key \u2014 without revealing it. This is public-key cryptography in action.",
-    plain: "",
+    fact: "Every Ethereum transaction is cryptographically signed. (1) Your wallet hashes the transaction data. (2) Your private key signs the hash using elliptic curve cryptography. (3) The signature and transaction are broadcast to the network. (4) Nodes verify the signature matches the sender's public key.",
+    plain: "Like a wax seal on a letter that only you can produce. Anyone can verify the seal is genuine using your public key. But only you — with your private key — can create it. No key, no seal. No seal, no transaction.",
     stars: [764, 940, 1176],
     target: 1176,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "metamask"
   },
   42: {
     id: 42,
-    mechanic: "match3",
+    mechanic: "chain",
     tier: "beginner",
-    topic: "Gas Speed Settings",
-    fact: "Wallets offer Slow/Standard/Fast gas speeds. Low gas = slower confirmation. High gas = faster but costlier. During NFT launches, even \"instant\" may fail.",
-    plain: "Like choosing first or second class postage. Pay more = quicker. During busy periods everyone pays more to jump the queue.",
+    topic: "When Transactions Fail or Get Stuck",
+    fact: "When a transaction fails or gets stuck, follow these steps. (1) Check if failed: transaction ran out of gas, or contract reverted — no charge except the gas used. (2) Check if stuck/pending: gas price too low for current mempool. (3) To speed up: resubmit same nonce with higher gas price. (4) To cancel: submit 0-value transaction to your own address with same nonce and higher gas.",
+    plain: "Like placing an order in a busy restaurant. Too small a tip and your order sits ignored. You can either offer a bigger tip (speed up) or cancel the order entirely and resubmit.",
     stars: [802, 987, 1234],
     target: 1234,
-    coins: 80,
+    coins: 66,
     simulatorLesson: "gas",
-    glossaryWord: "gasGee"
+    links: [{label: "How to speed up or cancel a tx", url: "https://support.metamask.io/transactions-and-gas/transactions/how-to-speed-up-or-cancel-a-pending-transaction/"}]
   },
   43: {
     id: 43,
@@ -542,7 +700,21 @@ export const LEVELS: Record<number, Level> = {
     stars: [839, 1033, 1292],
     target: 1292,
     coins: 85,
-    links: [{label: "Revoke.cash", url: "https://revoke.cash"}],
+    simulatorLesson: "tokenApprovals",
+    links: [{label: "Revoke.cash", url: "https://revoke.cash",
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `You connect revoke.cash to your wallet and find: Uniswap V3 has approval for unlimited USDC. OpenSea has approval for all your NFTs. An unknown contract "0x4f3a..." has approval for unlimited WETH. What do you do with each?`,
+      scoringCriteria: [
+          `Uniswap V3: trusted protocol, unlimited is common but reduce to exact amount for safety`,
+          `OpenSea: if you sell NFTs you need this — keep if active, revoke if you stopped selling`,
+          `0x4f3a unknown contract: revoke immediately — unknown unlimited approval is maximum risk`,
+          `Process: check each spender before revoking — revoking Uniswap approval breaks pending swaps`
+      ],
+    }
+  ]
+  }],
     simulatorLesson: "tokenApprovals"
   },
   44: {
@@ -567,18 +739,44 @@ export const LEVELS: Record<number, Level> = {
     stars: [975, 1200, 1500],
     target: 1500,
     coins: 100,
-    isBoss: true
+    simulatorLesson: "tokenApprovals",
+    isBoss: true,
+  lessonSimulations: [
+    {
+      type: `judgment-escalation`,
+      scenario: `A new community member joins your Discord and says: "I lost 5 ETH — I clicked a link in a Twitter DM promising a free mint, signed a transaction, and everything disappeared. I still have my seed phrase safe — what happened?" Walk them through exactly what happened and what to do now.`,
+      scoringCriteria: [
+          `They signed a malicious approval or permit — not key theft`,
+          `Seed phrase being safe does not help — the approval already granted access`,
+          `Check Etherscan for the signing transaction — look for Approval event`,
+          `Revoke any remaining approvals immediately even if some assets are gone`,
+          `Future prevention: never sign transactions from Twitter DMs; check every approval before signing`
+      ],
+    },
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You want to try a new DeFi protocol. Before connecting your main wallet, what is your 5-step security checklist?`,
+      scoringCriteria: [
+          `1. Verify the URL is correct — bookmark the official site, do not use Google search links`,
+          `2. Check the contract is verified on Etherscan`,
+          `3. Review what permissions the transaction is requesting before signing`,
+          `4. Consider using a burner wallet for first interaction`,
+          `5. Check revoke.cash after any new protocol interaction`
+      ],
+    }
+  ]
   },
   46: {
     id: 46,
     mechanic: "chain",
     tier: "intermediate",
     topic: "What is DeFi?",
-    fact: "DeFi recreates every financial service \u2014 savings, loans, trading \u2014 using smart contracts instead of banks. No ID, no account needed.",
+    fact: "DeFi recreates financial services without banks. (1) Connect a wallet — no account creation needed. (2) Trade tokens on a DEX like Uniswap without custody transfer. (3) Lend or borrow via smart contracts on Aave or Compound. (4) Earn yield by providing liquidity to pools. (5) All positions are visible and auditable on-chain.",
     plain: "Everything your bank does (lending, borrowing, trading, savings) rebuilt as open-source code anyone can use with just a wallet.",
     stars: [910, 1120, 1400],
     target: 1400,
     coins: 30,
+    simulatorLesson: "uniswap",
     glossaryWord: "defi",
     links: [{label: "DeFiLlama TVL", url: "https://defillama.com"}]
   },
@@ -592,6 +790,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [967, 1190, 1488],
     target: 1488,
     coins: 39,
+    simulatorLesson: "uniswap",
     glossaryWord: "dex",
     links: [{label: "Uniswap", url: "https://app.uniswap.org"}],
     simulatorLesson: "uniswap"
@@ -607,18 +806,31 @@ export const LEVELS: Record<number, Level> = {
     target: 1576,
     coins: 43,
     glossaryWord: "slippage",
-    simulatorLesson: "slippage"
+    simulatorLesson: "slippage",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You try to swap 10 ETH on a low-liquidity token. Uniswap warns "price impact: 18%". Should you proceed? What does this mean and what are your options?`,
+      scoringCriteria: [
+          `18% price impact = you will receive 18% less than the quoted price due to moving the pool`,
+          `For $30,000 swap this is $5,400 loss to slippage — unacceptable`,
+          `Options: split into smaller trades over time, use aggregator (1inch) to split across pools, wait for more liquidity`,
+          `High slippage also invites sandwich attacks — MEV bots will exploit the spread`
+      ],
+    }
+  ]
   },
   49: {
     id: 49,
     mechanic: "memory",
     tier: "intermediate",
     topic: "Liquidity Pools",
-    fact: "Liquidity pools are shared token reserves enabling swapping. Deposit ETH + USDC, earn a cut of every swap fee as passive income.",
+    fact: "A Uniswap liquidity pool holds 2 tokens. The formula x×y=k maintains the ratio. Add $1,000 to a $100,000 pool: your price impact is ~1%. Add $1,000 to a $10,000 pool: impact is ~9%. Pool size determines slippage.",
     plain: "Like running a currency exchange kiosk. You stock both currencies, people pay you a small fee to swap, you earn without doing anything.",
     stars: [1082, 1332, 1665],
     target: 1665,
     coins: 48,
+    simulatorLesson: "impermanentLoss",
     glossaryWord: "liquidityPool"
   },
   50: {
@@ -632,18 +844,31 @@ export const LEVELS: Record<number, Level> = {
     target: 1753,
     coins: 53,
     glossaryWord: "impermanentLoss",
-    simulatorLesson: "impermanentLoss"
+    simulatorLesson: "impermanentLoss",
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `You deposit ETH + USDC into a Uniswap pool at a 50/50 ratio. ETH doubles in price. When you withdraw, you have more USDC and less ETH than you deposited. The LP fees earned were $200. Did you make money vs just holding ETH?`,
+      scoringCriteria: [
+          `Impermanent loss: pool rebalanced by selling your ETH as price rose — you have less of the winner`,
+          `vs HODL: you would have had more ETH value if you just held`,
+          `With $200 fees, calculate whether fees offset the IL — depends on the specific numbers`,
+          `This is why LPing volatile pairs requires understanding: you are selling your upside`
+      ],
+    }
+  ]
   },
   51: {
     id: 51,
     mechanic: "chain",
     tier: "intermediate",
     topic: "Yield Farming",
-    fact: "Yield farmers move funds between DeFi protocols to maximise returns \u2014 lending, liquidity providing, and staking all at once.",
+    fact: "Yield farming maximises returns by moving capital between protocols. (1) Deposit tokens into a liquidity pool and receive LP tokens. (2) Stake LP tokens in a yield farm to earn additional token rewards. (3) Compound rewards by reinvesting earned tokens into more LP positions. (4) Monitor APY changes and move capital when better rates appear elsewhere.",
     plain: "Like constantly moving savings to the highest-interest bank account. Except the banks are automated, the rates change hourly, and some banks disappear.",
     stars: [1197, 1473, 1842],
     target: 1842,
-    coins: 57
+    coins: 57,
+    simulatorLesson: "lending"
   },
   52: {
     id: 52,
@@ -651,7 +876,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "Lending \u2014 Aave & Compound",
     fact: "Aave and Compound let you lend tokens to earn interest, or borrow by putting up collateral. No credit check \u2014 the contract is the bank.",
-    plain: "",
+    plain: "Aave and Compound are the crypto equivalent of a bank that lends your savings to other people and pays you interest. Except the code is open, the rates update every block, and no human can stop you depositing or withdrawing.",
     stars: [1254, 1544, 1930],
     target: 1930,
     coins: 34,
@@ -664,10 +889,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "Collateral & Over-Collateralisation",
     fact: "DeFi loans are over-collateralised \u2014 lock $1,500 ETH to borrow $1,000 USDC. Protects lenders if ETH drops before you repay.",
-    plain: "",
+    plain: "Borrowing on DeFi: you lock $10,000 of ETH and borrow $6,000 in USDC (60% LTV). If ETH price falls and your collateral dips below the minimum ratio, the protocol sells your ETH automatically to repay the loan.",
     stars: [1312, 1615, 2019],
     target: 2019,
     coins: 62,
+    simulatorLesson: "lending",
     glossaryWord: "collateral"
   },
   54: {
@@ -676,7 +902,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "Liquidations",
     fact: "If collateral drops below threshold (~120% of loan), a liquidation bot instantly sells it to repay the loan, keeping a 5-10% fee.",
-    plain: "",
+    plain: "Liquidation happens when your collateral value falls below the required ratio. You don't get a warning call. The smart contract liquidates your position automatically at a penalty — usually losing 5–15% extra.",
     stars: [1369, 1685, 2107],
     target: 2107,
     coins: 66,
@@ -684,14 +910,28 @@ export const LEVELS: Record<number, Level> = {
   },
   55: {
     id: 55,
-    mechanic: "liquidation",
+    mechanic: "rugpull",
     tier: "intermediate",
     topic: "Flash Loans",
     fact: 'Flash loans: borrow millions of dollars with zero collateral — but you must repay within the same block (one transaction). Used for arbitrage, liquidations, and collateral swaps. If repayment fails, the entire transaction reverts. $350M+ flash loaned daily on Aave alone.',
-    plain: "",
+    plain: "In 2020, a single attacker borrowed $350M in USDC from Aave in one transaction, manipulated an oracle price, drained a protocol, and repaid the loan — all in 13 seconds. No collateral. No credit history. Just code.",
     stars: [1427, 1756, 2196],
     target: 2196,
-    coins: 71
+    coins: 71,
+    simulatorLesson: "stablecoin",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `A DeFi protocol offers 22% APY on USDT deposits. The protocol is unaudited, launched 3 weeks ago, and the team is anonymous. Your alternative is 5% on Aave. Assess the risk/reward.`,
+      scoringCriteria: [
+          `22% vs 5% = 17% premium for taking on smart contract risk + rug risk + anon team risk`,
+          `Unaudited = unknown vulnerabilities — single bug can drain 100% in minutes`,
+          `3 weeks old = no track record through market stress`,
+          `Anon team = no accountability`,
+          `Risk-adjusted: the 17% premium does not compensate for binary loss risk`
+      ],
+    }
+  ]
   },
   56: {
     id: 56,
@@ -703,6 +943,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1484, 1827, 2284],
     target: 2284,
     coins: 76,
+    simulatorLesson: "stablecoin",
     glossaryWord: "stablecoin"
   },
   57: {
@@ -714,18 +955,20 @@ export const LEVELS: Record<number, Level> = {
     plain: "A currency backed only by belief. When faith collapses, it collapses instantly. LUNA went from $80 to $0.0001 in three days.",
     stars: [1542, 1898, 2373],
     target: 2373,
-    coins: 80
+    coins: 80,
+    simulatorLesson: "stablecoin"
   },
   58: {
     id: 58,
-    mechanic: "liquidation",
+    mechanic: "rugpull",
     tier: "intermediate",
     topic: "DeFi Risks",
     fact: "Smart contract bugs, oracle manipulation, rug pulls, and governance attacks can drain DeFi protocols instantly. $3B+ hacked in DeFi.",
     plain: "Every DeFi protocol is a digital safe with code as the lock. A flaw in the code and hackers can drain everything in minutes.",
     stars: [1599, 1968, 2461],
     target: 2461,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "rugcheck"
   },
   59: {
     id: 59,
@@ -750,7 +993,31 @@ export const LEVELS: Record<number, Level> = {
     stars: [1755, 2160, 2700],
     target: 2700,
     coins: 100,
-    isBoss: true
+    simulatorLesson: "liquidation",
+    isBoss: true,
+  lessonSimulations: [
+    {
+      type: `judgment-escalation`,
+      scenario: `A protocol you use posts: "We have identified a critical vulnerability. All users should withdraw immediately. We are pausing the contract in 30 minutes." You have $8,000 in the protocol. Gas is currently 120 Gwei. Walk through your exact decision process.`,
+      scoringCriteria: [
+          `Verify the announcement on the official site AND Discord, not just Twitter — could be a phishing announcement`,
+          `If confirmed official: withdraw now despite high gas — $50 gas on $8,000 is trivial vs total loss`,
+          `Set gas to fast/aggressive to front-run the pause`,
+          `If uncertain authenticity: do not click any links in the announcement — go directly to the official URL`,
+          `After withdrawing: check approvals, revoke the protocol if paused indefinitely`
+      ],
+    },
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `A lending protocol shows your position: Collateral $10,000 ETH, Borrowed $5,000 USDC, Health Factor 1.8. ETH price drops 25%. What is your new health factor approximately and what do you do?`,
+      scoringCriteria: [
+          `New collateral value: $7,500. Borrowed still $5,000. New ratio = 7,500/5,000 = 1.5`,
+          `Health Factor 1.5 is getting close to liquidation threshold (usually 1.0)`,
+          `Action: add collateral or repay some USDC to restore health factor above 2.0`,
+          `If HF drops to 1.0: liquidation bots will close part of your position at a penalty (usually 5-10%)`
+      ],
+    }
+  ]
   },
   61: {
     id: 61,
@@ -762,6 +1029,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [910, 1120, 1400],
     target: 1400,
     coins: 34,
+    simulatorLesson: "nftMint",
     glossaryWord: "nft"
   },
   62: {
@@ -773,7 +1041,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a serial number on a banknote. The blockchain records: Token #7429 belongs to Alice. This record is permanent and verifiable by anyone.",
     stars: [967, 1190, 1488],
     target: 1488,
-    coins: 39
+    coins: 39,
+    simulatorLesson: "nftContract"
   },
   63: {
     id: 63,
@@ -784,7 +1053,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "The NFT is a property deed. The house still exists separately. If the image is on a centralised server that shuts down, your NFT shows a broken link.",
     stars: [1024, 1260, 1576],
     target: 1576,
-    coins: 43
+    coins: 43,
+    simulatorLesson: "nftContract"
   },
   64: {
     id: 64,
@@ -795,7 +1065,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like limited edition trainers. The colourway with only 100 pairs is worth more than the standard 50,000-pair run.",
     stars: [1082, 1332, 1665],
     target: 1665,
-    coins: 48
+    coins: 48,
+    simulatorLesson: "nftMint"
   },
   65: {
     id: 65,
@@ -803,10 +1074,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "Floor Price",
     fact: 'Floor price = the cheapest NFT currently listed in a collection. It\'s the minimum cost to own any piece. Floor price can be manipulated — one person can list 10 NFTs at $1 to crash the floor. Always look at volume and number of unique buyers, not just floor price.',
-    plain: "",
+    plain: "The floor price is the cheapest any NFT in the collection is currently listed for. It is set by the most impatient seller. When the floor falls, it signals that holders are losing confidence.",
     stars: [1139, 1402, 1753],
     target: 1753,
-    coins: 53
+    coins: 53,
+    simulatorLesson: "nftMint"
   },
   66: {
     id: 66,
@@ -827,23 +1099,38 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "Contract Minting (Website Down)",
     fact: "When a popular NFT website crashes during launch, you can mint directly from the smart contract on Etherscan \u2014 no website needed.",
-    plain: "",
+    plain: "When a popular NFT drops, the minting site crashes from traffic. The backup: go directly to the smart contract on Etherscan, click 'Write Contract', connect your wallet, and call the mint() function manually.",
     stars: [1254, 1544, 1930],
     target: 1930,
     coins: 62,
     simulatorLesson: "nftContract",
-    links: [{label: "Etherscan", url: "https://etherscan.io"}]
+    links: [{label: "Etherscan", url: "https://etherscan.io",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `An NFT project mints for 0.08 ETH. You check: the smart contract is verified, the deployer minted 2,000 of 10,000 supply to themselves (20%), there is no LP lock (it is NFTs not a token), and the roadmap promises a metaverse game. Assess.`,
+      scoringCriteria: [
+          `Verified contract is positive — code is inspectable`,
+          `20% dev mint is high — gives them large supply to sell into any price rise`,
+          `NFTs do not have LP to lock — this is not a red flag for NFTs`,
+          `Metaverse roadmap = undelivered promise until proven — many NFT projects abandoned roadmaps`,
+          `Overall: medium risk — 20% dev allocation is aggressive but not automatically a rug`
+      ],
+    }
+  ]
+  }]
   },
   68: {
     id: 68,
     mechanic: "memory",
     tier: "intermediate",
     topic: "NFT Marketplaces",
-    fact: "OpenSea is the largest NFT marketplace. Blur attracted professional traders with fee rebates and on-chain lending. Magic Eden dominates Solana.",
+    fact: "OpenSea holds 60%+ of Ethereum NFT volume. Blur overtook it for wash-trading activity. Magic Eden leads on Solana. Each marketplace charges 0–2.5% platform fees on sales. Royalties (0–10%) go to the original creator.",
     plain: "Like eBay but for digital art. You list, someone buys, the smart contract automatically transfers the NFT and sends you ETH.",
     stars: [1312, 1615, 2019],
     target: 2019,
     coins: 30,
+    simulatorLesson: "nftMint",
     links: [{label: "OpenSea", url: "https://opensea.io"}, {label: "Blur", url: "https://blur.io"}, {label: "Magic Eden", url: "https://magiceden.io"}]
   },
   69: {
@@ -855,7 +1142,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a musician earning royalties every time their song is streamed \u2014 forever, automatically. NFT royalties do the same for visual artists.",
     stars: [1369, 1685, 2107],
     target: 2107,
-    coins: 66
+    coins: 66,
+    simulatorLesson: "nftMint"
   },
   70: {
     id: 70,
@@ -866,7 +1154,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a ticket sale where everyone in the queue can pay extra to skip ahead. The more popular the concert, the more everyone pays.",
     stars: [1427, 1756, 2196],
     target: 2196,
-    coins: 71
+    coins: 71,
+    simulatorLesson: "nftMint"
   },
   71: {
     id: 71,
@@ -877,18 +1166,20 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like wearing a Rolex \u2014 partly status signalling, partly community membership. Except the watch is digital and verifiably yours on-chain.",
     stars: [1484, 1827, 2284],
     target: 2284,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "nftMint"
   },
   72: {
     id: 72,
     mechanic: "memory",
     tier: "intermediate",
     topic: "NFT Utility",
-    fact: "NFTs can be concert tickets (with royalties on resale), gym memberships, game items, or even digital deeds to physical property.",
+    fact: "Beyond JPEGs: NFTs are used for event tickets (no scalping via smart contract lock), gaming items (interoperable across games), music royalties (every stream triggers an automatic on-chain payment), and membership access (token = key).",
     plain: "An NFT concert ticket: programmed so the artist earns 10% of every resale. No scalping without the artist being paid. Smart.",
     stars: [1542, 1898, 2373],
     target: 2373,
-    coins: 80
+    coins: 80,
+    simulatorLesson: "nftMint"
   },
   73: {
     id: 73,
@@ -899,18 +1190,33 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like selling your house to your company 50 times to make it look like prices in the area are booming. Fraudulent but hard to detect on-chain.",
     stars: [1599, 1968, 2461],
     target: 2461,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "rugcheck",
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `An NFT collection shows 4,200 ETH in volume this week. You check the transfer history: the same 6 wallets traded the same 20 token IDs back and forth 47 times. Net ETH movement between these wallets: +/-0.3 ETH. What is happening?`,
+      scoringCriteria: [
+          `47 circular trades between 6 controlled wallets = wash trading`,
+          `Near-zero net ETH movement confirms no real money changed hands`,
+          `4,200 ETH reported volume is fabricated — real volume is near zero`,
+          `Purpose: manipulate floor price and volume metrics to attract real buyers`,
+          `This is market manipulation — avoid the collection and consider reporting to the marketplace`
+      ],
+    }
+  ]
   },
   74: {
     id: 74,
-    mechanic: "match3",
+    mechanic: "trait",
     tier: "intermediate",
     topic: "Bitcoin Ordinals",
     fact: "Bitcoin Ordinals inscribe data directly onto individual satoshis \u2014 NFTs on Bitcoin without smart contracts.",
-    plain: "",
+    plain: "In 2023, someone inscribed a JPEG onto Bitcoin's blockchain by storing it in the witness data of a transaction. Ordinals give every satoshi a serial number, turning Bitcoin into a base for NFTs and tokens.",
     stars: [1657, 2040, 2550],
     target: 2550,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "nftContract"
   },
   75: {
     id: 75,
@@ -922,7 +1228,20 @@ export const LEVELS: Record<number, Level> = {
     stars: [1755, 2160, 2700],
     target: 2700,
     coins: 100,
-    isBoss: true
+    simulatorLesson: "nftMint",
+    isBoss: true,
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You receive an NFT airdrop to your wallet from an unknown collection. It shows as worth $500 on OpenSea. When you try to list it, MetaMask asks you to sign a transaction. Should you sign?`,
+      scoringCriteria: [
+          `Unsolicited airdrop = almost always a trap — the "value" is fake to entice interaction`,
+          `Signing to list = could be a malicious approval draining all tokens in your wallet`,
+          `Real NFTs can be listed without special signing beyond the standard ERC-721 approval`,
+          `Action: do not interact — hide the NFT in your wallet, revoke any approvals if you already signed`
+      ],
+    }
+  ]
   },
   76: {
     id: 76,
@@ -930,21 +1249,23 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "How L2s Derive Security from Ethereum",
     fact: 'L2s inherit Ethereum\'s security by posting transaction data (or proofs) back to Ethereum mainnet. A hacker can\'t steal L2 funds without breaking Ethereum itself — which would require 51% of all staked ETH. This is why L2s can be fast AND secure simultaneously.',
-    plain: "",
+    plain: "L2s inherit Ethereum's security by posting a compressed record of all their transactions back to Ethereum. A fraud proof or validity proof means Ethereum can catch and reject any L2 that tries to cheat.",
     stars: [910, 1120, 1400],
     target: 1400,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "layer2"
   },
   77: {
     id: 77,
-    mechanic: "match3",
+    mechanic: "trait",
     tier: "intermediate",
     topic: "Your ETH on Different Chains \u2014 Same ETH?",
     fact: 'Your ETH address (0x...) is the same on Ethereum, Arbitrum, Base, Optimism, Polygon, and all EVM chains. But the ETH you hold on each chain is separate — bridging is required to move between them. ETH on Base is not the same as ETH on Ethereum mainnet.',
-    plain: "",
+    plain: "Your ETH on Arbitrum IS real ETH — it's the same asset, just held in a bridge contract on Ethereum mainnet. The Arbitrum version is a receipt. Burn the receipt, get your ETH back from the bridge contract.",
     stars: [967, 1190, 1488],
     target: 1488,
-    coins: 66
+    coins: 66,
+    simulatorLesson: "layer2"
   },
   78: {
     id: 78,
@@ -956,6 +1277,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1024, 1260, 1576],
     target: 1576,
     coins: 41,
+    simulatorLesson: "layer2",
     glossaryWord: "rollup"
   },
   79: {
@@ -963,11 +1285,12 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "chain",
     tier: "intermediate",
     topic: "ZK Rollups",
-    fact: "ZK rollups use zero-knowledge proofs to verify transactions instantly. No 7-day wait. Withdrawals take minutes, not days.",
-    plain: "",
+    fact: "ZK rollups validate transactions using zero-knowledge proofs. (1) Transactions are executed off-chain on the L2. (2) A validity proof (ZK-SNARK or ZK-STARK) is generated proving all transactions are correct. (3) The proof is posted to Ethereum mainnet. (4) Ethereum verifies the proof mathematically — no 7-day challenge window needed.",
+    plain: "ZK rollups prove every transaction is valid using cryptography, not trust. Ethereum verifies the proof instantly. No 7-day waiting period. The maths guarantees correctness rather than relying on challengers.",
     stars: [1082, 1332, 1665],
     target: 1665,
     coins: 43,
+    simulatorLesson: "layer2",
     glossaryWord: "zkProof"
   },
   80: {
@@ -979,7 +1302,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a currency exchange where 9 of 13 security guards must agree to process a transaction. Bribe 7 guards, control the vault.",
     stars: [1139, 1402, 1753],
     target: 1753,
-    coins: 48
+    coins: 48,
+    simulatorLesson: "chainBridging"
   },
   81: {
     id: 81,
@@ -990,7 +1314,21 @@ export const LEVELS: Record<number, Level> = {
     plain: "Every bridge holding $1B is a honeypot \u2014 one code flaw can drain it instantly. Concentrated risk, 24/7 attack surface.",
     stars: [1197, 1473, 1842],
     target: 1842,
-    coins: 53
+    coins: 53,
+    simulatorLesson: "chainBridging",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `You need to move $50,000 from Ethereum to Arbitrum. Option A: use the official Arbitrum bridge (7-day withdrawal, no fee beyond gas). Option B: use a third-party bridge promising instant transfer with 0.1% fee. Assess the trade-offs.`,
+      scoringCriteria: [
+          `Official bridge: no smart contract risk beyond Arbitrum itself, slower but battle-tested`,
+          `Third-party bridge: faster but adds a second attack surface — bridges are the #1 hack target ($2B+ stolen)`,
+          `For $50,000: the 0.1% fee ($50) saved is not worth the added smart contract risk of an unaudited bridge`,
+          `Preferred: official bridge or well-audited bridges (Across, Hop) with long track records`,
+          `Never use obscure bridges for large amounts`
+      ],
+    }
+  ]
   },
   82: {
     id: 82,
@@ -1001,7 +1339,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a gold receipt. Deposit real gold at a bank; they give you a paper certificate (wBTC) you can use in financial markets.",
     stars: [1254, 1544, 1930],
     target: 1930,
-    coins: 57
+    coins: 57,
+    simulatorLesson: "chainBridging"
   },
   83: {
     id: 83,
@@ -1009,7 +1348,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "Sent to the Wrong Chain? Your Tokens Are NOT Gone",
     fact: 'Tokens sent to the wrong EVM chain are NOT permanently lost if you own the private key. If you sent ETH via BSC to your MetaMask (set to Ethereum), just switch MetaMask to BSC — your ETH is there. Cross-ecosystem sends (EVM to Solana) are usually unrecoverable.',
-    plain: "",
+    plain: "If you sent ETH to your Ethereum address but on BSC, the tokens are on BSC — not gone. Connect the same wallet to BSC in MetaMask, and you'll see them. The address is the same; only the network differs.",
     stars: [1400, 1723, 2154],
     target: 2154,
     coins: 71,
@@ -1025,7 +1364,22 @@ export const LEVELS: Record<number, Level> = {
     stars: [1100, 1550, 2000],
     target: 2000,
     coins: 30,
-    links: [{label: "Arbitrum Bridge", url: "https://bridge.arbitrum.io"}, {label: "Base Bridge", url: "https://bridge.base.org"}, {label: "Polygon Bridge", url: "https://wallet.polygon.technology"}]
+    simulatorLesson: "wrongChain",
+    links: [{label: "Arbitrum Bridge", url: "https://bridge.arbitrum.io",
+  lessonSimulations: [
+    {
+      type: `judgment-escalation`,
+      scenario: `Your colleague sends 2 ETH to their Coinbase deposit address but selects "Polygon" network instead of "Ethereum." The funds show as received on Polygon but Coinbase shows nothing. What happened, what is recoverable, and what is the process?`,
+      scoringCriteria: [
+          `Funds landed on their Coinbase Polygon address — same address, different chain`,
+          `Most major exchanges support recovery of wrong-network deposits — Coinbase does for major chains`,
+          `Process: contact Coinbase support with the transaction hash, specify the chain it was sent on`,
+          `May take days to weeks and sometimes involves a fee`,
+          `Prevention: always verify the network in the wallet AND on the exchange deposit page before sending`
+      ],
+    }
+  ]
+  }, {label: "Base Bridge", url: "https://bridge.base.org"}, {label: "Polygon Bridge", url: "https://wallet.polygon.technology"}]
   },
   85: {
     id: 85,
@@ -1033,7 +1387,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "intermediate",
     topic: "CEX Deposits \u2014 NEVER Use an Unsupported Network",
     fact: "Every CEX (Binance, Bybit, Coinbase) shows which networks they support for each token. Sending USDT via BSC to an exchange that only supports USDT via TRC20 or ERC20 can result in lost funds. Always match the network the exchange specifies.",
-    plain: "",
+    plain: "Every exchange has specific supported networks per token. Sending USDT via Tron to a Binance BEP-20 deposit address is irreversible. Always match the network the exchange specifies — not what you prefer.",
     stars: [1150, 1650, 2100],
     target: 2100,
     coins: 76,
@@ -1048,18 +1402,20 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like only using official airport currency exchange desks, not random people offering rates on the street.",
     stars: [1484, 1827, 2284],
     target: 2284,
-    coins: 80
+    coins: 80,
+    simulatorLesson: "chainBridging"
   },
   87: {
     id: 87,
     mechanic: "chain",
     tier: "intermediate",
     topic: "Gas on L2s",
-    fact: "Swapping on Ethereum mainnet: ~$15. Same swap on Arbitrum: ~$0.15. Same security, 100x cheaper. Most DeFi is moving to L2.",
+    fact: "L2 gas is a fraction of mainnet cost. (1) L2 executes your transaction off Ethereum mainnet. (2) L2 batches thousands of transactions together. (3) The batch is compressed and posted to Ethereum as a single transaction. (4) You pay only your share of that batched posting cost — usually $0.01–0.10 vs $5–30 on mainnet.",
     plain: "Same-day delivery vs standard \u2014 but in this case, standard is FASTER and 100x CHEAPER. Use mainnet only for maximum security.",
     stars: [1542, 1898, 2373],
     target: 2373,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "baseGas"
   },
   88: {
     id: 88,
@@ -1071,6 +1427,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1551, 1908, 2385],
     target: 2385,
     coins: 34,
+    simulatorLesson: "wrongChain",
     links: [{label: "Binance Recovery Tool", url: "https://www.binance.com/en/my/wallet/history/deposit-crypto"}, {label: "Bybit Support", url: "https://www.bybit.com/en/help-center/"}]
   },
   89: {
@@ -1082,7 +1439,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like checking three things before a bank transfer: correct account number, correct sort code, correct bank name. In crypto: correct token, correct chain, correct destination network. Miss any one and funds go to the wrong place.",
     stars: [1250, 1800, 2300],
     target: 2300,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "wrongChain"
   },
   90: {
     id: 90,
@@ -1094,18 +1452,33 @@ export const LEVELS: Record<number, Level> = {
     stars: [1755, 2160, 2700],
     target: 2700,
     coins: 100,
-    isBoss: true
+    simulatorLesson: "wrongChain",
+    isBoss: true,
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `You bridge 5 ETH from Ethereum to Optimism. The bridge UI shows "Bridging complete." But 30 minutes later your Optimism wallet shows 0 ETH. What are the possible explanations and how do you investigate each one?`,
+      scoringCriteria: [
+          `Possibility 1: bridge is still processing — check the bridge transaction hash on Etherscan for confirmation status`,
+          `Possibility 2: funds arrived but you are looking at the wrong network in your wallet — verify Optimism network is selected`,
+          `Possibility 3: bridge sent to the wrong address — check the bridge receipt for the destination address`,
+          `Possibility 4: bridge exploit — check if other users are reporting issues in the bridge Discord/Twitter`,
+          `Investigation order: check Etherscan first (fastest), then wallet network, then bridge support`
+      ],
+    }
+  ]
   },
   91: {
     id: 91,
     mechanic: "match3",
     tier: "pro",
     topic: "What are Memecoins?",
-    fact: "Memecoins are tokens created around internet culture (DOGE, PEPE, WIF). Massive volatility, community-driven, usually no utility.",
-    plain: "Like buying merchandise for a meme \u2014 the value is entirely based on how many people care. Can 100x or go to zero in hours.",
+    fact: "Memecoins are tokens created around internet culture — DOGE, SHIB, PEPE, WIF. No utility. Value driven entirely by community momentum and narrative. Can 100× or collapse to zero in hours.",
+    plain: "This island teaches you to READ memecoins safely — understand market cap, spot rugs, use the right tools. Island 11 will teach you how to TRADE them. Master the foundations first.",
     stars: [1105, 1360, 1700],
     target: 1700,
-    coins: 53
+    coins: 95,
+    simulatorLesson: "rugcheck"
   },
   92: {
     id: 92,
@@ -1117,6 +1490,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1182, 1455, 1819],
     target: 1819,
     coins: 57,
+    simulatorLesson: "dexscreener",
     glossaryWord: "marketCap"
   },
   93: {
@@ -1142,6 +1516,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1337, 1645, 2057],
     target: 2057,
     coins: 66,
+    simulatorLesson: "rugcheck",
     glossaryWord: "mintAuthority",
     links: [{label: "Rugcheck.xyz", url: "https://rugcheck.xyz"}]
   },
@@ -1164,10 +1539,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "LP Lock \u2014 Why It Matters",
     fact: "LP lock prevents developers from removing liquidity for a set period. No LP lock = developer can drain the pool to zero in one transaction.",
-    plain: "",
+    plain: "LP lock: the team deployed their liquidity tokens to a time-locked contract. They cannot withdraw until the lock expires. A 6-month LP lock = 6 months before they could rug. Always check lock duration, not just existence.",
     stars: [1492, 1836, 2296],
     target: 2296,
     coins: 30,
+    simulatorLesson: "rugcheck",
     glossaryWord: "lpLock",
     links: [{label: "Unicrypt LP Locks", url: "https://unicrypt.network"}, {label: "Streamflow", url: "https://app.streamflow.finance"}]
   },
@@ -1181,6 +1557,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1569, 1932, 2415],
     target: 2415,
     coins: 76,
+    simulatorLesson: "dexscreener",
     links: [{label: "DEXScreener", url: "https://dexscreener.com"}]
   },
   98: {
@@ -1193,6 +1570,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1647, 2027, 2534],
     target: 2534,
     coins: 80,
+    simulatorLesson: "rugcheck",
     glossaryWord: "honeypot",
     links: [{label: "TokenSniffer", url: "https://tokensniffer.com"}]
   },
@@ -1206,6 +1584,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1724, 2122, 2653],
     target: 2653,
     coins: 34,
+    simulatorLesson: "bondingCurve",
     glossaryWord: "bondingCurve",
     links: [{label: "pump.fun", url: "https://pump.fun"}, {label: "Raydium DEX", url: "https://raydium.io"}],
     simulatorLesson: "bondingCurve"
@@ -1220,6 +1599,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1802, 2218, 2773],
     target: 2773,
     coins: 39,
+    simulatorLesson: "rugScanner",
     links: [{label: "Rugcheck.xyz", url: "https://rugcheck.xyz"}, {label: "DEXTools", url: "https://www.dextools.io"}],
     simulatorLesson: "rugcheck"
   },
@@ -1233,6 +1613,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1879, 2313, 2892],
     target: 2892,
     coins: 43,
+    simulatorLesson: "dexscreener",
     links: [{label: "DEXScreener", url: "https://dexscreener.com"}, {label: "DEXTools", url: "https://www.dextools.io"}],
     simulatorLesson: "dexscreener"
   },
@@ -1242,10 +1623,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Memecoin Trading Psychology",
     fact: "FOMO (Fear Of Missing Out) and FUD (Fear, Uncertainty, Doubt) drive memecoin markets. 95% of buyers in a memecoin pump will sell at a loss.",
-    plain: "",
+    plain: "FOMO makes you buy after a 400% pump. FUD makes you sell into a 20% dip before a 300% recovery. Both are the same emotion wearing different masks. The discipline is noticing which one is talking and not listening to it.",
     stars: [1957, 2408, 3011],
     target: 3011,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "bondingCurve"
   },
   103: {
     id: 103,
@@ -1256,7 +1638,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "DOGE is older than most blockchains and has the largest memecoin community. Its value is cultural \u2014 like the oldest meme having the most recognition.",
     stars: [2034, 2504, 3130],
     target: 3130,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "dexscreener"
   },
   104: {
     id: 104,
@@ -1268,6 +1651,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [2112, 2600, 3250],
     target: 3250,
     coins: 48,
+    simulatorLesson: "solanaPump",
     links: [{label: "pump.fun", url: "https://pump.fun"}, {label: "Rugcheck Solana", url: "https://rugcheck.xyz"}]
   },
   105: {
@@ -1280,6 +1664,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "rugScanner",
     isBoss: true
   },
   106: {
@@ -1292,6 +1677,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 30,
+    simulatorLesson: "airdropFarm",
     glossaryWord: "airdrop"
   },
   107: {
@@ -1303,7 +1689,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Retroactive is the jackpot. Announced is more like a loyalty programme. Speculative is a bet that might pay off.",
     stars: [1176, 1448, 1810],
     target: 1810,
-    coins: 48
+    coins: 48,
+    simulatorLesson: "airdropFarm"
   },
   108: {
     id: 108,
@@ -1314,7 +1701,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Quality beats quantity. 12 genuine monthly uses across multiple features beats 1,000 bot transactions. Projects can tell the difference.",
     stars: [1248, 1536, 1921],
     target: 1921,
-    coins: 53
+    coins: 53,
+    simulatorLesson: "airdropFarm"
   },
   109: {
     id: 109,
@@ -1326,6 +1714,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1320, 1625, 2032],
     target: 2032,
     coins: 34,
+    simulatorLesson: "airdropFarm",
     links: [{label: "Scroll Bridge", url: "https://scroll.io/bridge"}, {label: "Base", url: "https://base.org"}, {label: "Layer3 Quests", url: "https://layer3.xyz"}],
     simulatorLesson: "airdropFarm"
   },
@@ -1339,6 +1728,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1392, 1713, 2142],
     target: 2142,
     coins: 57,
+    simulatorLesson: "airdropFarm",
     glossaryWord: "sybilAttack"
   },
   111: {
@@ -1350,7 +1740,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Act like a real user: try new features you actually want to use, vote on proposals you care about, use the protocol genuinely over months.",
     stars: [1464, 1802, 2253],
     target: 2253,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "airdropFarm"
   },
   112: {
     id: 112,
@@ -1370,10 +1761,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Binance & Bybit",
     fact: 'Binance is the world\'s largest CEX by volume. Bybit is #2. Key differences: Binance has more spot pairs and Launchpool; Bybit is known for derivatives and copy trading. Both require KYC for full access. Both offer Earn products and P2P trading desks.',
-    plain: "",
+    plain: "Binance: largest exchange by volume, widest coin selection, powerful futures and earn products, complex interface. Bybit: strong derivatives, growing spot market, cleaner UI, aggressive promotions. Both require ID verification.",
     stars: [1608, 1980, 2475],
     target: 2475,
     coins: 39,
+    simulatorLesson: "cexDeposit",
     links: [{label: "Binance", url: "https://www.binance.com"}, {label: "Bybit", url: "https://www.bybit.com"}],
     simulatorLesson: "cexDeposit"
   },
@@ -1383,7 +1775,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "P2P Trading",
     fact: "P2P trading lets you buy crypto directly from people. Binance P2P escrows the crypto during the trade \u2014 protecting both sides.",
-    plain: "",
+    plain: "P2P trading: you buy crypto directly from another person via the exchange's escrow system. The exchange holds the seller's crypto in escrow until you confirm payment. Risk: fiat payment fraud. Always use the platform's escrow.",
     stars: [1680, 2068, 2585],
     target: 2585,
     coins: 71,
@@ -1398,7 +1790,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like keeping cash in a bank that turned out to be a Ponzi scheme. The safest place for long-term crypto is your own hardware wallet.",
     stars: [1752, 2156, 2696],
     target: 2696,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "leverage"
   },
   116: {
     id: 116,
@@ -1423,6 +1816,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1896, 2333, 2917],
     target: 2917,
     coins: 43,
+    simulatorLesson: "daoVote",
     links: [{label: "Koinly Tax", url: "https://koinly.io"}, {label: "CoinTracker", url: "https://cointracker.io"}]
   },
   118: {
@@ -1431,10 +1825,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "DAOs \u2014 Internet-Native Companies",
     fact: "DAOs are governed by token-holder votes via smart contracts. Uniswap DAO controls a $3B treasury. MakerDAO governs the DAI stablecoin.",
-    plain: "",
+    plain: "A DAO is a company where the rules are code, the votes are token-weighted, and the treasury is a multi-sig wallet. MakerDAO controls $8B+ this way. No CEO. No office. Just wallets voting on Snapshot.",
     stars: [1968, 2422, 3028],
     target: 3028,
     coins: 85,
+    simulatorLesson: "daoVote",
     glossaryWord: "dao"
   },
   119: {
@@ -1446,7 +1841,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Crypto is evolving from speculation to infrastructure. Your mortgage on-chain, your company shares as tokens, your AI agent with its own wallet.",
     stars: [2040, 2511, 3139],
     target: 3139,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "onchainAnalysis"
   },
   120: {
     id: 120,
@@ -1458,6 +1854,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "airdropFarm",
     isBoss: true
   },
   121: {
@@ -1470,6 +1867,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1450, 2000, 2600],
     target: 2600,
     coins: 70,
+    simulatorLesson: "layer2",
     glossaryWord: "zkProof"
   },
   122: {
@@ -1482,6 +1880,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1450, 2000, 2600],
     target: 2600,
     coins: 70,
+    simulatorLesson: "ens",
     links: [{label: "ENS App", url: "https://app.ens.domains"}],
     simulatorLesson: "ens"
   },
@@ -1506,7 +1905,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Crypto started as the wild west. Regulators are building towns. MiCA in Europe gives clarity. US regulation is still being debated.",
     stars: [1500, 2050, 2700],
     target: 2700,
-    coins: 75
+    coins: 75,
+    simulatorLesson: "contractAudit"
   },
   125: {
     id: 125,
@@ -1517,7 +1917,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like comparing three types of \u00a31 coins: one guaranteed by the Bank of England, one by a private company (trust them), one by a computer programme.",
     stars: [1550, 2100, 2800],
     target: 2800,
-    coins: 75
+    coins: 75,
+    simulatorLesson: "stablecoin"
   },
   126: {
     id: 126,
@@ -1537,10 +1938,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "On-Chain Analysis",
     fact: "On-chain analysis reads the blockchain directly: wallet movements, exchange inflows/outflows, large transactions, whale activity.",
-    plain: "",
+    plain: "On-chain analysis treats the blockchain as a public database. Every wallet, every transaction, every token movement is visible. The skill is connecting dots: exchange inflows signal selling pressure; whale accumulation signals confidence.",
     stars: [1600, 2150, 2900],
     target: 2900,
     coins: 80,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Nansen Analytics", url: "https://nansen.ai"}, {label: "Dune Analytics", url: "https://dune.com"}],
     simulatorLesson: "onchainAnalysis"
   },
@@ -1562,7 +1964,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Tokenomics Design",
     fact: "Tokenomics = token supply, distribution, vesting, emissions, and utility. Good tokenomics align incentives. Bad tokenomics create dumpers.",
-    plain: "",
+    plain: "Good tokenomics: low inflation, vesting schedules that align team incentives with long-term price, real utility that creates demand. Bad tokenomics: 80% to team with 3-month unlock, no use case, high FDV.",
     stars: [1650, 2200, 3000],
     target: 3000,
     coins: 85,
@@ -1577,7 +1979,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like converting your property deed into shares you can sell instantly on a global exchange. The property stays the same; the ownership becomes digital.",
     stars: [1650, 2200, 3000],
     target: 3000,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "onchainAnalysis"
   },
   131: {
     id: 131,
@@ -1588,7 +1991,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a financial advisor that works 24/7, never sleeps, never takes commissions, and can execute trades in milliseconds without asking you.",
     stars: [1700, 2250, 3000],
     target: 3000,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "onchainAnalysis"
   },
   132: {
     id: 132,
@@ -1600,6 +2004,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1700, 2300, 3100],
     target: 3100,
     coins: 90,
+    simulatorLesson: "smartWallet",
     links: [{label: "Safe Multisig", url: "https://safe.global"}]
   },
   133: {
@@ -1612,6 +2017,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1750, 2350, 3100],
     target: 3100,
     coins: 90,
+    simulatorLesson: "metamask",
     links: [{label: "Capacitor.js", url: "https://capacitorjs.com"}, {label: "Howler.js Audio", url: "https://howlerjs.com"}]
   },
   134: {
@@ -1620,10 +2026,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Building in Web3",
     fact: "Stack to learn: Solidity (smart contracts), Ethers.js or Viem (frontend integration), Hardhat (testing), The Graph (indexing), IPFS (storage).",
-    plain: "",
+    plain: "The full Web3 developer stack: Solidity or Rust (smart contracts), Hardhat or Foundry (testing), ethers.js or viem (frontend), The Graph (data), IPFS (storage), Vercel (deployment). Each layer has a crypto-native alternative.",
     stars: [1800, 2400, 3200],
     target: 3200,
     coins: 95,
+    simulatorLesson: "smartWallet",
     links: [{label: "Patrick Collins (Dev)", url: "https://www.youtube.com/@PatrickAlphaC"}, {label: "Ethereum Dev Docs", url: "https://ethereum.org/developers/"}]
   },
   135: {
@@ -1632,10 +2039,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BOSS: Advanced Crypto Mastery",
     fact: "You understand ZK proofs, ENS identity, DAO governance, RWA tokenisation, account abstraction, and onchain analysis. Bitcoin to Ethereum to DeFi to NFTs to Bridges to Memecoins to Airdrops to Advanced Crypto. You understand more about crypto than 99% of the world.",
-    plain: "",
+    plain: "You have covered ZK proofs, account abstraction, RWAs, AI×crypto, regulation, yield strategies, on-chain analysis, tokenomics, and DeFi deep dives. You are no longer a beginner. You are a dangerous crypto user.",
     stars: [1800, 2400, 3200],
     target: 3200,
     coins: 100,
+    simulatorLesson: "onchainAnalysis",
     isBoss: true,
     isFinalBoss: true
   },
@@ -1643,121 +2051,121 @@ export const LEVELS: Record<number, Level> = {
     id: 136,
     mechanic: "match3",
     tier: "pro",
-    topic: "What Is a Memecoin?",
-    fact: "Memecoins are cryptocurrencies based on jokes, internet memes, or viral culture \u2014 DOGE, SHIB, PEPE, WIF. They have no utility. They survive entirely on community belief and momentum.",
-    plain: "Like trading cards based on memes. No real-world value, but if enough people want one, the price rises. When interest fades, price crashes just as fast.",
-    stars: [1105, 1360, 1700],
-    target: 1700,
-    coins: 30
+    topic: "Sniper Wallets — Spotting Insider Buys",
+    fact: "Sniper wallets buy in the first seconds of a token launch, often via bots. If 3–5 wallets each buy 5%+ of supply within the first block, they are likely insiders. Check wallet age and previous tokens on Solscan.",
+    plain: "Like scalpers who buy concert tickets the millisecond they go on sale — except they often created the concert. Early concentration from fresh wallets is the clearest insider signal.",
+    stars: [1000, 1230, 1540],
+    target: 1540,
+    coins: 66,
+    simulatorLesson: "rugcheck"
   },
   137: {
     id: 137,
     mechanic: "memory",
     tier: "pro",
-    topic: "Market Cap \u2014 The Only Number That Matters",
-    fact: "Market Cap = Price \u00d7 Circulating Supply. A token at $0.000001 with 1 quadrillion supply has a $1B market cap. Price per token is meaningless without supply context.",
-    plain: "Like a pizza place printing 1 million loyalty tokens at \u00a31 each \u2014 the \"company\" is now worth \u00a31M on paper, even if the shop makes \u00a3500/week. Price per token alone tells you nothing.",
-    stars: [1182, 1455, 1819],
-    target: 1819,
-    coins: 39,
-    simulatorLesson: "fdv"
+    topic: "Entry Timing — When to Buy a Memecoin",
+    fact: "Three entry types: (1) Early — high risk, high reward, low liquidity. (2) Post-graduation — token passed $69K on pump.fun, now on Raydium with real liquidity. (3) Breakout — established token breaking resistance with volume. Each has different risk profiles.",
+    plain: "Don't buy just because something is pumping. Ask: am I early (risky), post-grad (safer), or chasing (dangerous)? Most losses come from entry type 3 — buying the pump instead of the breakout.",
+    stars: [1080, 1328, 1663],
+    target: 1663,
+    coins: 71,
+    simulatorLesson: "bondingCurve"
   },
   138: {
     id: 138,
     mechanic: "chain",
     tier: "pro",
-    topic: "FDV \u2014 Fully Diluted Valuation",
-    fact: "FDV = Price \u00d7 Total Supply (including all locked tokens). FDV 100\u00d7 higher than market cap means 99% of tokens are still locked \u2014 and will hit the market eventually.",
-    plain: "Like a startup valued at \u00a31M but with 99% of shares still locked for employees and investors. When those unlock, everyone sells, diluting you. High FDV = future selling pressure.",
-    stars: [1259, 1550, 1938],
-    target: 1938,
-    coins: 43,
-    simulatorLesson: "fdv"
+    topic: "Position Sizing in Volatile Markets",
+    fact: "Never put more than 1–5% of your portfolio into a single memecoin. Most go to zero. The strategy is to be right once or twice on a 10× while limiting losses on the 9 that fail.",
+    plain: "Like a venture capitalist who expects 9 investments to fail and 1 to return 100×. The math only works if each bet is small enough that the losses don't wipe out the wins.",
+    stars: [1160, 1426, 1786],
+    target: 1786,
+    coins: 76,
+    simulatorLesson: "dexscreener"
   },
   139: {
     id: 139,
     mechanic: "match3",
     tier: "pro",
-    topic: "How a Liquidity Pool is Seeded",
-    fact: "To launch a token, the creator deposits it alongside SOL or ETH into a liquidity pool. The ratio they deposit sets the starting price. No pool = no trading.",
-    plain: "Like opening a bureau de change: you stock it with both currencies (\u00a35,000 and \u20ac5,000). The ratio you deposit sets the exchange rate. Once stocked, customers can swap.",
-    stars: [1337, 1645, 2057],
-    target: 2057,
-    coins: 48,
-    simulatorLesson: "lpSeed",
-    glossaryWord: "liquidityPool"
+    topic: "Reading the Wallet Distribution",
+    fact: "Healthy token: top 10 holders own <30% combined. Risky: top wallet owns 20%+. Check on Solscan (Solana) or Etherscan (Ethereum). Bubblemaps visualises holder concentration as bubbles — large bubbles = danger.",
+    plain: "Like checking who owns shares in a company before you invest. If the founder owns 80%, they can crash the price whenever they sell. Distributed ownership = safer.",
+    stars: [1240, 1525, 1909],
+    target: 1909,
+    coins: 81,
+    simulatorLesson: "rugcheck"
   },
   140: {
     id: 140,
     mechanic: "rugpull",
     tier: "pro",
-    topic: "LP Lock \u2014 Why Unlocked LP = Instant Rug Risk",
-    fact: "Unlocked LP means the creator can drain all the SOL/ETH from the pool in one transaction \u2014 leaving buyers with worthless tokens. This is the most common rug pull mechanic.",
-    plain: "",
-    stars: [1414, 1740, 2176],
-    target: 2176,
-    coins: 53,
+    topic: "The Full Safety Check Before Any Buy",
+    fact: "5-second check: (1) Rugcheck.xyz — overall score. (2) Mint revoked? (3) LP locked? (4) Top holder %? (5) Can you sell? (honeypot test). If any fail, skip. Takes 30 seconds and has saved thousands of traders.",
+    plain: "Like checking a restaurant's hygiene rating before you eat there. Takes 10 seconds. Has saved thousands of people from food poisoning — and from rugs.",
+    stars: [1320, 1623, 2032],
+    target: 2032,
+    coins: 86,
     simulatorLesson: "rugScanner"
   },
   141: {
     id: 141,
     mechanic: "memory",
     tier: "pro",
-    topic: "Mint Authority \u2014 Can They Print Infinite Tokens?",
-    fact: "On Solana, if mint authority is NOT revoked, the creator can print unlimited new tokens any time. Revoked mint authority = fixed supply forever. Non-revoked = active rug risk.",
-    plain: "Like a government with an unlimited printing press vs a fixed-supply gold bar. Every time they print new tokens, your existing tokens become worth less \u2014 inflation without permission.",
-    stars: [1492, 1836, 2296],
-    target: 2296,
-    coins: 57,
-    simulatorLesson: "rugScanner"
+    topic: "Taking Profit — The Discipline Nobody Teaches",
+    fact: "Strategy: take out your initial investment at 2×. At 5×, sell 50% of remaining. Let the rest ride. You now have a free position. Memecoins rarely give you a second chance to sell at the top.",
+    plain: "The hardest thing in memecoins isn't buying — it's selling. Greed says hold for 100×. Discipline says take chips off the table. One guarantees safety; the other guarantees regret.",
+    stars: [1400, 1722, 2156],
+    target: 2156,
+    coins: 91,
+    simulatorLesson: "dexscreener"
   },
   142: {
     id: 142,
-    mechanic: "rugpull",
+    mechanic: "chain",
     tier: "pro",
-    topic: "Honeypots \u2014 You Can Buy But Never Sell",
-    fact: "A honeypot contract has hidden code blocking sells. You can buy freely \u2014 but your tokens are permanently trapped. Every buyer loses 100% of their money, with no recourse.",
-    plain: "Like a hotel that accepts bookings and charges your card upfront, but the exit door is welded shut from the inside. The money is gone the moment you check in.",
-    stars: [1569, 1932, 2415],
-    target: 2415,
-    coins: 62,
-    simulatorLesson: "rugScanner"
+    topic: "Recognising a Pump and Dump in Real Time",
+    fact: "Pump and dump signs: price up 500%+ in under 1 hour, volume spikes then drops, same wallets buying and selling to each other, no new organic buyers entering. The dump follows immediately when the pumpers exit.",
+    plain: "Like watching a crowd run towards a fire exit — except the crowd IS the fire. The moment the organised buyers stop, the price collapses. If you didn't buy before the pump, you're the exit liquidity.",
+    stars: [1480, 1820, 2279],
+    target: 2279,
+    coins: 96,
+    simulatorLesson: "dexscreener"
   },
   143: {
     id: 143,
-    mechanic: "chain",
+    mechanic: "rugpull",
     tier: "pro",
-    topic: "Volume, Wash Trading & Fake Signals",
-    fact: "Volume = total value traded in 24h. Wash trading \u2014 buying and selling between your own wallets \u2014 fakes this number to attract real buyers. DEXTools flags suspicious volume patterns.",
-    plain: "Like a shop owner buying their own products, paying themselves, then claiming \u00a350K in daily sales to attract investors. Real volume requires real buyers and sellers.",
-    stars: [1647, 2027, 2534],
-    target: 2534,
-    coins: 66,
+    topic: "Rug Pull Mechanics — Every Type Explained",
+    fact: "Three rug types: (1) LP removal — creator drains the liquidity pool instantly. (2) Mint dump — creator prints new tokens and sells. (3) Slow rug — team sells gradually over weeks. LP removal is instant. Slow rugs are harder to detect.",
+    plain: "Type 1 is like the waiter stealing the cash register. Type 2 is counterfeiting. Type 3 is embezzlement. LP removal and mint dumps happen in seconds; slow rugs take months but you usually end up with the same result.",
+    stars: [1560, 1918, 2402],
+    target: 2402,
+    coins: 101,
     simulatorLesson: "rugScanner"
   },
   144: {
     id: 144,
     mechanic: "match3",
     tier: "pro",
-    topic: "pump.fun & Bonding Curves",
-    fact: "pump.fun uses a bonding curve: price rises automatically with every buy. At ~$69K market cap (~500 SOL raised), the token \"graduates\" to Raydium \u2014 a real DEX with real liquidity.",
-    plain: "Like a crowd-funded auction where each new bid automatically raises the minimum for the next buyer. Early buyers pay least. At a funding target, the project moves to a proper exchange.",
-    stars: [1724, 2122, 2653],
-    target: 2653,
-    coins: 71,
-    simulatorLesson: "bondingCurve"
+    topic: "Solana vs Ethereum Memecoin Mechanics",
+    fact: "Solana memecoins: launch on pump.fun, graduate to Raydium at ~$69K cap. Ethereum memecoins: deploy direct to Uniswap, higher gas, different audience. Both have rugs. Solana has faster price action; Ethereum has more liquidity for large caps.",
+    plain: "Solana memecoins move like sports cars — fast, chaotic, cheap to enter. Ethereum memecoins move like freight trucks — slower, more expensive, but larger payloads when they work.",
+    stars: [1640, 2017, 2525],
+    target: 2525,
+    coins: 106,
+    simulatorLesson: "solanaPump"
   },
   145: {
     id: 145,
-    mechanic: "rugpull",
+    mechanic: "trait",
     tier: "pro",
-    topic: "The Complete Token Safety Checklist",
-    fact: "Before buying any token: (1) Mint authority revoked? (2) LP locked for how long? (3) Honeypot test passed? (4) Top holders <10% each? (5) Deployer wallet history clean? (6) FDV vs market cap ratio reasonable?",
-    plain: "Like a 6-point car inspection before a long trip. Skip any one check and risk a breakdown. In crypto, a breakdown means losing everything you put in \u2014 with no insurance.",
-    stars: [1802, 2218, 2773],
-    target: 2773,
-    coins: 76,
-    simulatorLesson: "rugScanner"
+    topic: "Your Memecoin Trading Setup",
+    fact: "Minimum toolkit: Phantom wallet (Solana), MetaMask (Ethereum), Rugcheck.xyz, DEXScreener, Bubblemaps, Solscan/Etherscan, Telegram for alpha groups. Set up before you need them — not in the middle of a pump.",
+    plain: "A surgeon has their instruments ready before the patient arrives. Set up your tools, bookmark your checklist, practise the workflow on paper trades. When the opportunity comes, you move in seconds.",
+    stars: [1720, 2115, 2648],
+    target: 2648,
+    coins: 111,
+    simulatorLesson: "rugcheck"
   },
   146: {
     id: 146,
@@ -1768,7 +2176,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a ball bouncing between a floor and ceiling. When it breaks through the ceiling with force (high volume), it often flies much higher. Light taps rarely break through.",
     stars: [1879, 2313, 2892],
     target: 2892,
-    coins: 80
+    coins: 80,
+    simulatorLesson: "dexscreener"
   },
   147: {
     id: 147,
@@ -1776,10 +2185,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "When and How to Take Profit",
     fact: "Memecoins have no intrinsic value \u2014 price is 100% momentum. Experienced traders take partial profits at 2\u00d7 (recoup initial), 5\u00d7, 10\u00d7 rather than holding for maximum gains that often never arrive.",
-    plain: "",
+    plain: "The hardest move in memecoins is not buying — it is selling. Every experienced trader has a story about riding a 10× back to zero because they held for 100×. The 2× exit rule is protection against your own optimism.",
     stars: [1957, 2408, 3011],
     target: 3011,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "dexscreener"
   },
   148: {
     id: 148,
@@ -1787,10 +2197,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Social Engineering & DM Scams",
     fact: 'Social engineering attacks: (1) Fake support DMs — \'I can help recover your wallet, share your seed phrase.\' (2) Fake job offers with malicious files. (3) Romantic scams (\'pig butchering\') building trust over weeks. Rule: no legitimate person ever needs your seed phrase.',
-    plain: "",
+    plain: "Legitimate crypto support never contacts you first. No Binance employee, MetaMask engineer, or wallet company will DM you. Anyone who does is a scammer. The seed phrase question is the tell — legitimate support never needs it.",
     stars: [2034, 2504, 3130],
     target: 3130,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "phishing"
   },
   149: {
     id: 149,
@@ -1809,12 +2220,13 @@ export const LEVELS: Record<number, Level> = {
     id: 150,
     mechanic: "match3",
     tier: "pro",
-    topic: "BOSS: Memecoin Mastery",
-    fact: "You now understand memecoins: market cap, FDV, LP locks, mint authority, honeypots, bonding curves, volume analysis, pump.fun graduation, chart reading, and how to protect yourself.",
-    plain: "",
+    topic: "BOSS: Memecoin Trader",
+    fact: "You can identify insider buys, time entries, size positions, run the full safety checklist, spot pump and dumps, and take profit with discipline. This is the complete memecoin skill set.",
+    plain: "Most memecoin traders lose money because they skip steps. You know every step. That's the entire edge.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "rugScanner",
     isBoss: true
   },
   151: {
@@ -1865,6 +2277,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1337, 1645, 2057],
     target: 2057,
     coins: 71,
+    simulatorLesson: "baseIntro",
     links: [{label: "Base Names", url: "https://www.base.org/names"}]
   },
   155: {
@@ -1877,6 +2290,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1414, 1740, 2176],
     target: 2176,
     coins: 34,
+    simulatorLesson: "baseIntro",
     links: [{label: "OnchainKit Docs", url: "https://onchainkit.xyz"}, {label: "GitHub", url: "https://github.com/coinbase/onchainkit"}]
   },
   156: {
@@ -1911,10 +2325,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Base App — Farcaster & Social Layer",
     fact: "The Base app integrates Farcaster (a decentralised social protocol) natively. Build mini apps visible to all Farcaster users (800K+ accounts). Social + onchain = viral distribution.",
-    plain: "",
+    plain: "Base Mini Apps are small apps that live inside larger apps like Coinbase Wallet. Discovery happens through the Coinbase app's Mini Apps tab — that is the distribution channel most developers are building toward.",
     stars: [1647, 2027, 2534],
     target: 2534,
     coins: 48,
+    simulatorLesson: "miniAppBuild",
     links: [{label: "Farcaster", url: "https://farcaster.xyz"}, {label: "Warpcast", url: "https://warpcast.com"}]
   },
   159: {
@@ -1926,7 +2341,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a loyalty card scheme that automatically creates shares in your business for every customer. The more people use your app, the more valuable the coin \u2014 and you hold some from day one.",
     stars: [1724, 2122, 2653],
     target: 2653,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "miniApp"
   },
   160: {
     id: 160,
@@ -1934,7 +2350,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Base Mini App Technical Requirements",
     fact: "Base Mini App requirements: valid farcaster.json manifest at /.well-known/, @farcaster/miniapp-sdk integrated, sdk.actions.ready() called on load, Quick Auth (no external redirects), sponsored transactions via Paymaster.",
-    plain: "",
+    plain: "A Base Mini App needs: HTTPS URL, valid manifest.json, works inside an iframe, connects to a wallet via the Coinbase Smart Wallet API. If any requirement is missing, the app cannot be featured.",
     stars: [1802, 2218, 2773],
     target: 2773,
     coins: 80,
@@ -1946,7 +2362,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Base Featured Placement Checklist",
     fact: "Base featured criteria: 3s load time, 44px touch targets, light+dark mode, bottom nav bar, user avatar shown (no 0x addresses), sponsored transactions, client-agnostic language, 1024\u00d71024 icon.",
-    plain: "",
+    plain: "The featured placement checklist: verified contract, working app (not just a landing page), clear utility, security audit for any app handling user funds, responsive mobile design. Featured placement = 10× organic traffic.",
     stars: [1879, 2313, 2892],
     target: 2892,
     coins: 85,
@@ -1961,7 +2377,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like converting gold bullion into gold-backed certificates you can actually spend at shops. The gold (BTC) stays locked in a vault; the certificate (cbBTC) moves freely in DeFi.",
     stars: [1957, 2408, 3011],
     target: 3011,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "baseIntro"
   },
   163: {
     id: 163,
@@ -1969,10 +2386,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Base Grants & Ecosystem Funding",
     fact: "Base has active grant programmes for builders: Base Grants (up to $250K), Optimism RetroPGF (retroactive funding for public goods), and direct ecosystem funding from Coinbase Ventures.",
-    plain: "",
+    plain: "Base grants range from $10K micro-grants for experiments to $500K ecosystem grants for protocol infrastructure. The Base Grants Council reviews applications quarterly. Focus areas: DeFi, consumer apps, and developer tooling.",
     stars: [2034, 2504, 3130],
     target: 3130,
     coins: 53,
+    simulatorLesson: "baseIntro",
     links: [{label: "Base Grants", url: "https://base.org/grants"}, {label: "Optimism RetroPGF", url: "https://retrofunding.optimism.io"}]
   },
   164: {
@@ -1981,10 +2399,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "The Base Ecosystem Map",
     fact: "Base ecosystem: Aerodrome (largest DEX, >$1B TVL), Morpho (lending), Uniswap V3 (swaps), Aave V3 (lending), OpenSea (NFTs), Coinbase Wallet (native), Warpcast (social), Base Names (identity).",
-    plain: "",
+    plain: "The Base ecosystem in 2025: Aerodrome (largest DEX by TVL), Uniswap, Aave, and Morpho for DeFi. Friend.tech and Farcaster for social. Base Names for identity. cbBTC and USDC for stable assets. Over 100M transactions processed.",
     stars: [2101, 2586, 3232],
     target: 3232,
     coins: 57,
+    simulatorLesson: "baseIntro",
     links: [{label: "Base Ecosystem", url: "https://base.org/ecosystem"}, {label: "Aerodrome", url: "https://aerodrome.finance"}, {label: "DeFiLlama Base", url: "https://defillama.com/chain/Base"}]
   },
   165: {
@@ -1993,10 +2412,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BOSS: Base Ecosystem Mastery",
     fact: "You understand Base: L2 architecture, Smart Wallet, Base Names, OnchainKit, Paymaster, Mini Apps, Farcaster, App Coins, cbBTC, grants, and the full ecosystem.",
-    plain: "",
+    plain: "Base combines Coinbase's trust and regulatory clarity with Ethereum's security. It is the most accessible L2 for US users and the natural on-ramp for institutions. The Base ecosystem is the fastest-growing in EVM.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "baseGas",
     isBoss: true
   },
   166: {
@@ -2009,6 +2429,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 30,
+    simulatorLesson: "tonWallet",
     links: [{label: "TON.org", url: "https://ton.org"}, {label: "Tonkeeper Wallet", url: "https://tonkeeper.com"}]
   },
   167: {
@@ -2020,7 +2441,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like having a game built into iMessage. The audience is already there \u2014 no App Store listing, no persuading people to download. If your game is good, it spreads through chats instantly.",
     stars: [1182, 1455, 1819],
     target: 1819,
-    coins: 39
+    coins: 39,
+    simulatorLesson: "miniApp"
   },
   168: {
     id: 168,
@@ -2028,7 +2450,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Toncoin (TON) \u2014 The Currency",
     fact: 'Toncoin (TON) is the native token of The Open Network. Uses: gas fees for transactions, staking (nominator pools and validators earn ~4-5% APY), Telegram username auctions (Fragment.com), and governance. 5 billion TON total supply, 3.4 billion circulating.',
-    plain: "",
+    plain: "Toncoin is the native token of the TON blockchain. Total supply: 5 billion. Uses: pay transaction fees, stake to run validators, buy usernames, power Telegram Mini Apps. Price moves with Telegram user activity and developer adoption.",
     stars: [1259, 1550, 1938],
     target: 1938,
     coins: 43,
@@ -2040,10 +2462,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "TON Space — Wallet Inside Telegram",
     fact: "TON Space is the non-custodial wallet built into Telegram. Available to all 900M+ users via the @wallet bot. Supports TON, USDT on TON, and Telegram-exclusive NFTs (TG usernames as NFTs).",
-    plain: "",
+    plain: "TON Space is a non-custodial wallet embedded directly in Telegram. No app to download. Access it from the Telegram menu. Supports Toncoin, USDT on TON, and NFTs. One tap to send to any Telegram contact.",
     stars: [1337, 1645, 2057],
     target: 2057,
     coins: 48,
+    simulatorLesson: "tonWallet",
     links: [{label: "TON Wallet", url: "https://ton.org/wallets"}]
   },
   170: {
@@ -2052,10 +2475,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Telegram Usernames as NFTs",
     fact: "Telegram usernames and phone numbers are NFTs on TON \u2014 you can buy and sell them on Fragment.com. Rare usernames like @crypto sell for thousands of dollars.",
-    plain: "",
+    plain: "Telegram usernames are tokenised as NFTs on TON. Buy and sell them on Fragment.com. Short usernames (under 5 characters) sell for thousands of dollars. Your username becomes a blockchain asset you truly own.",
     stars: [1414, 1740, 2176],
     target: 2176,
     coins: 53,
+    simulatorLesson: "tonWallet",
     links: [{label: "Fragment Marketplace", url: "https://fragment.com"}]
   },
   171: {
@@ -2080,6 +2504,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1569, 1932, 2415],
     target: 2415,
     coins: 34,
+    simulatorLesson: "tonWallet",
     links: [{label: "STON.fi", url: "https://ston.fi"}, {label: "DeDust", url: "https://dedust.io"}]
   },
   173: {
@@ -2091,7 +2516,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like having PayPal built into Telegram \u2014 but with dollars you fully control, no PayPal can freeze. USDT on TON is the most practical daily payment tool in crypto.",
     stars: [1647, 2027, 2534],
     target: 2534,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "tonWallet"
   },
   174: {
     id: 174,
@@ -2099,10 +2525,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Building Telegram Mini Apps",
     fact: "Telegram Mini Apps use standard HTML/CSS/JS and the Telegram Web App SDK. They open inside Telegram on any device. Viral growth happens naturally \u2014 users share in chats and channels.",
-    plain: "",
+    plain: "Building a Telegram Mini App: create a standard web app (React or vanilla JS), add the Telegram Web App SDK, register the bot with BotFather, set the menu button to your app URL. Deployment takes under an hour.",
     stars: [1724, 2122, 2653],
     target: 2653,
     coins: 66,
+    simulatorLesson: "miniAppBuild",
     links: [{label: "Telegram Mini Apps Docs", url: "https://core.telegram.org/bots/webapps"}]
   },
   175: {
@@ -2114,7 +2541,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like choosing a restaurant location. TON = busy airport (captive audience, easy reach). Solana = trendy food market (cool, diverse, but competitive). Base = city centre (established, trusted customers).",
     stars: [1802, 2218, 2773],
     target: 2773,
-    coins: 71
+    coins: 71,
+    simulatorLesson: "chainComparison"
   },
   176: {
     id: 176,
@@ -2122,10 +2550,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "TON Staking & Validators",
     fact: "TON uses Proof of Stake. Validators stake 400,000 TON minimum. Nominators (regular users) can stake any amount through pools like TON Whales. Current yield ~4-5% APY.",
-    plain: "",
+    plain: "TON validators stake a minimum 100,000 TON to participate in block validation. Regular users can delegate to validators via staking pools with no minimum. Current yield: approximately 4–5% APY. 30-day unstaking period.",
     stars: [1879, 2313, 2892],
     target: 2892,
     coins: 76,
+    simulatorLesson: "tonStaking",
     links: [{label: "TON Staking", url: "https://ton.org/stake"}],
     simulatorLesson: "tonStaking"
   },
@@ -2138,7 +2567,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a domain name auction house, but for Telegram identities. Short, memorable usernames are finite \u2014 once sold, only the owner can resell. Digital real estate with messaging app distribution.",
     stars: [1957, 2408, 3011],
     target: 3011,
-    coins: 80
+    coins: 80,
+    simulatorLesson: "tonWallet"
   },
   178: {
     id: 178,
@@ -2149,7 +2579,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like \"Sign in with Google\" but for TON wallets. One tap connects your Tonkeeper to any TON mini app. No typing, no copying addresses, no confusion.",
     stars: [2034, 2504, 3130],
     target: 3130,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "tonWallet"
   },
   179: {
     id: 179,
@@ -2157,10 +2588,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "TON Ecosystem Opportunities",
     fact: 'TON ecosystem opportunities: (1) Build Telegram mini apps — 900M distribution. (2) Stake TON for ~4-5% APY. (3) Trade TON memecoins on STON.fi. (4) Earn via tap-to-earn games (Notcoin model). (5) Buy/sell Telegram usernames on Fragment for speculation.',
-    plain: "",
+    plain: "The TON ecosystem opportunity: 900 million Telegram users are one tap away from a crypto-native experience. Most have never touched a wallet. TON apps that solve real communication or payment problems reach this audience instantly.",
     stars: [2112, 2600, 3250],
     target: 3250,
     coins: 90,
+    simulatorLesson: "tonWallet",
     links: [{label: "TON Grants", url: "https://ton.org/grants"}]
   },
   180: {
@@ -2169,10 +2601,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BOSS: TON & Telegram Mastery",
     fact: "You understand TON: architecture, Toncoin, TON Space, Telegram Mini Apps, Fragment marketplace, TON Connect, USDT on TON, DeFi on TON, and the play-to-airdrop meta.",
-    plain: "",
+    plain: "TON is the only blockchain with direct distribution to 900 million users via Telegram. Toncoin powers the network. TON Space gives instant wallet access. Mini Apps make crypto invisible to end users — they just see a useful app.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "tonStaking",
     isBoss: true
   },
   181: {
@@ -2185,6 +2618,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 30,
+    simulatorLesson: "cbProductPicker",
     links: [{label: "Coinbase", url: "https://coinbase.com"}]
   },
   182: {
@@ -2208,7 +2642,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a frequent flyer lounge membership. Free for occasional travellers makes no sense. For regular traders, the zero-fee trading alone saves more than the subscription cost.",
     stars: [1259, 1550, 1938],
     target: 1938,
-    coins: 39
+    coins: 39,
+    simulatorLesson: "cbProductPicker"
   },
   184: {
     id: 184,
@@ -2216,10 +2651,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Coinbase Learn & Earn",
     fact: "Coinbase rewards users with small amounts of crypto for watching educational videos and passing quizzes. Typically $3-10 per asset learned. Covers dozens of tokens.",
-    plain: "",
+    plain: "Coinbase Learn & Earn: complete short educational quizzes and earn small amounts of listed tokens for free. Since 2018 Coinbase has distributed over $100M in crypto this way. New earn campaigns launch with new token listings.",
     stars: [1337, 1645, 2057],
     target: 2057,
     coins: 43,
+    simulatorLesson: "cbProductPicker",
     links: [{label: "Coinbase Earn", url: "https://www.coinbase.com/earn"}]
   },
   185: {
@@ -2228,10 +2664,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Coinbase Wallet — Self-Custody from Coinbase",
     fact: "Coinbase Wallet is separate from Coinbase.com. It is fully self-custodial — you hold your private keys. Supports Ethereum, Base, Polygon, Solana, and hundreds of tokens.",
-    plain: "",
+    plain: "Coinbase Wallet is a self-custody mobile app — separate from the Coinbase exchange app. You hold your own keys. It connects to any DeFi protocol, supports all EVM chains, Solana, and Bitcoin. No KYC required.",
     stars: [1414, 1740, 2176],
     target: 2176,
-    coins: 48
+    coins: 48,
+    simulatorLesson: "cbProductPicker"
   },
   186: {
     id: 186,
@@ -2243,6 +2680,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1492, 1836, 2296],
     target: 2296,
     coins: 53,
+    simulatorLesson: "cbAdvancedTrade",
     links: [{label: "Advanced Trade", url: "https://advanced.coinbase.com"}],
     simulatorLesson: "cbAdvancedTrade"
   },
@@ -2252,7 +2690,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Coinbase Staking \u2014 Regulated Yield",
     fact: "Coinbase offers ETH staking (3-4% APY), SOL staking, ADA staking, and Coinbase USDC yield. All compliant, insured, and non-custodial for ETH (via cbETH \u2014 staked ETH token).",
-    plain: "",
+    plain: "Coinbase Staking: stake ETH via Coinbase and receive cbETH (Coinbase Wrapped Staked ETH). Current yield ~3–4% APY. Regulated product — Coinbase holds the validator keys, you get the receipts. No 32 ETH minimum.",
     stars: [1569, 1932, 2415],
     target: 2415,
     coins: 57,
@@ -2267,7 +2705,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a private bank for billionaires hidden inside a regular bank branch. The retail app (regular branch) attracts users; the institutional desk (private banking) is where the real profits are.",
     stars: [1647, 2027, 2534],
     target: 2534,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "cbStaking"
   },
   189: {
     id: 189,
@@ -2278,7 +2717,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like opening a bank account \u2014 you need to prove who you are before depositing. This is the trade-off with regulated exchanges: you get legal protection in exchange for identity verification.",
     stars: [1724, 2122, 2653],
     target: 2653,
-    coins: 66
+    coins: 66,
+    simulatorLesson: "cbProductPicker"
   },
   190: {
     id: 190,
@@ -2290,6 +2730,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1802, 2218, 2773],
     target: 2773,
     coins: 71,
+    simulatorLesson: "cbProductPicker",
     links: [{label: "Coinbase Pay Docs", url: "https://docs.cdp.coinbase.com/pay-sdk/docs/welcome"}]
   },
   191: {
@@ -2298,10 +2739,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Base & Coinbase \u2014 The Strategy",
     fact: 'Base is Coinbase\'s strategic L2 — every dollar of Base TVL and gas fees strengthens Coinbase\'s ecosystem. Coinbase earns sequencer fees from Base transactions. Base gives Coinbase a blockchain it controls without being a token issuer (no BASE token, avoiding SEC scrutiny).',
-    plain: "",
+    plain: "Base is Coinbase's L2 blockchain. The strategy: make crypto so easy that buying USDC on Coinbase and using it on Base feels like using a bank app. Coinbase earns sequencer fees from every Base transaction.",
     stars: [1879, 2313, 2892],
     target: 2892,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "cbProductPicker"
   },
   192: {
     id: 192,
@@ -2313,6 +2755,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1957, 2408, 3011],
     target: 3011,
     coins: 80,
+    simulatorLesson: "cbProductPicker",
     links: [{label: "CDP Docs", url: "https://docs.cdp.coinbase.com"}]
   },
   193: {
@@ -2325,6 +2768,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [2034, 2504, 3130],
     target: 3130,
     coins: 85,
+    simulatorLesson: "cbProductPicker",
     links: [{label: "AgentKit", url: "https://docs.cdp.coinbase.com/agentkit/docs/welcome"}]
   },
   194: {
@@ -2336,7 +2780,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like comparing a regulated UK high street bank (Coinbase) to a global offshore financial hub (Binance). The offshore one has more services and fewer restrictions \u2014 but also more regulatory risk.",
     stars: [2112, 2600, 3250],
     target: 3250,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "cbProductPicker"
   },
   195: {
     id: 195,
@@ -2348,6 +2793,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "cbProductPicker",
     isBoss: true
   },
   196: {
@@ -2360,6 +2806,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 34,
+    simulatorLesson: "layer2",
     glossaryWord: "zkProof"
   },
   197: {
@@ -2372,6 +2819,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1182, 1455, 1819],
     target: 1819,
     coins: 39,
+    simulatorLesson: "accountAbstraction",
     links: [{label: "Safe Smart Wallet", url: "https://safe.global"}],
     simulatorLesson: "accountAbstraction"
   },
@@ -2384,7 +2832,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like converting a house deed into tradeable shares. Instead of selling your whole house, you sell 10% to 100 investors globally, instantly, for near-zero transaction cost.",
     stars: [1259, 1550, 1938],
     target: 1938,
-    coins: 43
+    coins: 43,
+    simulatorLesson: "onchainAnalysis"
   },
   199: {
     id: 199,
@@ -2395,7 +2844,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like giving a financial advisor a trading terminal and telling it to work 24/7 with no human input. The AI sets its own strategy, executes, and compounds \u2014 indefinitely.",
     stars: [1337, 1645, 2057],
     target: 2057,
-    coins: 48
+    coins: 48,
+    simulatorLesson: "onchainAnalysis"
   },
   200: {
     id: 200,
@@ -2403,10 +2853,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Crypto Regulation \u2014 Global Picture",
     fact: "EU MiCA (2024): first comprehensive crypto law. US: SEC vs CFTC jurisdiction battles, no clear framework. UK: FCA crypto registration required. Singapore: MAS progressive licensing. Regulation is coming everywhere.",
-    plain: "",
+    plain: "Crypto regulation varies massively: US (SEC vs CFTC jurisdiction battle, ETF approved), EU (MiCA framework live 2024, stablecoin rules strict), UK (FCA registration required), Singapore (MAS licence), Dubai (VARA framework). No single global standard.",
     stars: [1414, 1740, 2176],
     target: 2176,
-    coins: 53
+    coins: 53,
+    simulatorLesson: "onchainAnalysis"
   },
   201: {
     id: 201,
@@ -2414,10 +2865,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "The Onchain Economy",
     fact: "The onchain economy: decentralised exchanges, lending protocols, NFT royalties, DAO salaries, tokenised real estate, creator coins. An entire parallel financial system running 24/7/365.",
-    plain: "",
+    plain: "The onchain economy: over $100B in DeFi TVL, $20B+ daily DEX volume, $2B+ in NFT royalties paid since 2021, $500M+ in DAO grants distributed. Digital assets are a real economy — not a future promise.",
     stars: [1492, 1836, 2296],
     target: 2296,
-    coins: 57
+    coins: 57,
+    simulatorLesson: "onchainAnalysis"
   },
   202: {
     id: 202,
@@ -2440,7 +2892,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like knowing which tool from a toolbox to use: hammer (Bitcoin), Swiss Army knife (Ethereum), power drill (Solana), multi-tool for beginners (Base), megaphone (TON).",
     stars: [1647, 2027, 2534],
     target: 2534,
-    coins: 66
+    coins: 66,
+    simulatorLesson: "onchainAnalysis"
   },
   204: {
     id: 204,
@@ -2452,6 +2905,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1616, 1989, 2487],
     target: 2487,
     coins: 30,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Ethereum Dev", url: "https://ethereum.org/developers/"}, {label: "Patrick Collins", url: "https://www.youtube.com/@PatrickAlphaC"}]
   },
   205: {
@@ -2463,7 +2917,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like building a bank vault \u2014 beautiful design means nothing if the door mechanism has a flaw. Smart contract bugs are permanent and public. Audit before launch, not after.",
     stars: [1802, 2218, 2773],
     target: 2773,
-    coins: 71
+    coins: 71,
+    simulatorLesson: "opsecCheck"
   },
   206: {
     id: 206,
@@ -2474,7 +2929,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like the evolution from coins to paper money to cards to contactless \u2014 now to programmable money. The difference: programmable money can have rules. Pay only at certain shops. Expire if unused.",
     stars: [1879, 2313, 2892],
     target: 2892,
-    coins: 76
+    coins: 76,
+    simulatorLesson: "onchainAnalysis"
   },
   207: {
     id: 207,
@@ -2494,10 +2950,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "The Crypto Roadmap — Unsolved Problems",
     fact: "Key unsolved problems: UX complexity (seed phrases), scalability (still limited TPS), cross-chain fragmentation, regulatory uncertainty, 51% attack risk on smaller chains, Sybil resistance.",
-    plain: "",
+    plain: "Unsolved crypto problems: scalability without centralisation, private transactions without enabling crime, identity without surveillance, regulation that protects users without killing innovation, cross-chain communication without bridges.",
     stars: [2034, 2504, 3130],
     target: 3130,
-    coins: 85
+    coins: 85,
+    simulatorLesson: "onchainAnalysis"
   },
   209: {
     id: 209,
@@ -2508,7 +2965,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Power drills let anyone assemble furniture. But a great designer still builds better furniture than someone with the same drill and no design sense. Tools democratise access; ideas still differentiate.",
     stars: [2112, 2600, 3250],
     target: 3250,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "onchainAnalysis"
   },
   210: {
     id: 210,
@@ -2516,10 +2974,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "FINAL BOSS: Crypto Legend",
     fact: "",
-    plain: "",
+    plain: "You have completed every island. You understand Bitcoin, Ethereum, wallets, DeFi, NFTs, bridges, L2s, memecoins, airdrops, advanced concepts, all major chains, and the cutting edge. You are now a dangerous crypto user.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "onchainAnalysis",
     isBoss: true,
     isFinalBoss: true
   },
@@ -2533,6 +2992,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 30,
+    simulatorLesson: "layer2",
     links: [{label: "Polygon Bridge", url: "https://wallet.polygon.technology"}, {label: "Polygon zkEVM", url: "https://zkevm.polygon.technology"}],
     simulatorLesson: "chainBridging"
   },
@@ -2542,10 +3002,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Polygon — Reddit NFTs & Enterprise Adoption",
     fact: "Polygon powers: Reddit NFT avatars (10M+ minted), Starbucks Odyssey loyalty, Nike .SWOOSH NFTs, Meta Instagram NFTs, Immutable X (gaming). Retail use case: earn creator economy rewards for real activity.",
-    plain: "",
+    plain: "Reddit deployed 10 million+ NFT avatars on Polygon in 2022 — the largest mainstream NFT adoption event in history. Most users did not know they owned NFTs. They thought they were buying profile pictures. That is the real adoption model.",
     stars: [1160, 1428, 1786],
     target: 1786,
     coins: 70,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Polygon Ecosystem", url: "https://polygon.technology/ecosystem"}]
   },
   213: {
@@ -2558,6 +3019,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1216, 1497, 1872],
     target: 1872,
     coins: 73,
+    simulatorLesson: "staking",
     links: [{label: "Polygon Staking", url: "https://staking.polygon.technology"}]
   },
   214: {
@@ -2570,6 +3032,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1272, 1566, 1958],
     target: 1958,
     coins: 33,
+    simulatorLesson: "layer2",
     links: [{label: "Arbitrum Bridge", url: "https://bridge.arbitrum.io"}, {label: "Arbitrum DeFi", url: "https://defillama.com/chain/Arbitrum"}],
     simulatorLesson: "chainBridging"
   },
@@ -2583,6 +3046,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1328, 1635, 2044],
     target: 2044,
     coins: 36,
+    simulatorLesson: "daoVote",
     links: [{label: "Arbitrum DAO", url: "https://arbitrum.foundation"}, {label: "Arbitrum Grants", url: "https://grants.arbitrum.foundation"}]
   },
   216: {
@@ -2591,10 +3055,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Arbitrum DeFi — GMX & Real Yield",
     fact: "GMX is a perpetuals DEX on Arbitrum (and Avalanche). Real yield \u2014 70% of fees go to GLP liquidity providers and GMX stakers. Over $100B in cumulative trading volume.",
-    plain: "",
+    plain: "GMX on Arbitrum: perpetuals DEX where the GLP pool (made of ETH, BTC, USDC, USDT) is the counterparty to all trades. When traders lose, GLP wins. When traders win, GLP loses. Liquidity providers earn 70% of platform fees.",
     stars: [1384, 1704, 2130],
     target: 2130,
     coins: 40,
+    simulatorLesson: "leverage",
     links: [{label: "GMX", url: "https://gmx.io"}, {label: "GLP Yield", url: "https://stats.gmx.io"}]
   },
   217: {
@@ -2607,6 +3072,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1440, 1772, 2216],
     target: 2216,
     coins: 43,
+    simulatorLesson: "layer2",
     links: [{label: "Optimism Bridge", url: "https://app.optimism.io/bridge"}, {label: "OP Ecosystem", url: "https://www.optimism.io/apps"}]
   },
   218: {
@@ -2615,10 +3081,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "RetroPGF \u2014 Rewarding What Matters",
     fact: 'RetroPGF (Retroactive Public Goods Funding) is Optimism\'s mechanism for rewarding builders who created value for the ecosystem. Round 3 distributed $90M to 501 projects. Projects don\'t apply for grants — the community nominates and votes on who deserves funding after the fact.',
-    plain: "",
+    plain: "Optimism's RetroPGF rewards builders after the fact, not before. Instead of applying for grants, you build something valuable, the community recognises it, and tokens follow. Round 3 distributed $90M to 501 projects.",
     stars: [1496, 1841, 2302],
     target: 2302,
     coins: 76,
+    simulatorLesson: "daoVote",
     links: [{label: "RetroPGF", url: "https://retrofunding.optimism.io"}]
   },
   219: {
@@ -2631,6 +3098,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1552, 1910, 2388],
     target: 2388,
     coins: 83,
+    simulatorLesson: "daoVote",
     links: [{label: "Velodrome", url: "https://velodrome.finance"}]
   },
   220: {
@@ -2643,6 +3111,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1608, 1980, 2475],
     target: 2475,
     coins: 46,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Avalanche Bridge", url: "https://bridge.avax.network"}, {label: "Trader Joe DEX", url: "https://traderjoexyz.com"}]
   },
   221: {
@@ -2655,6 +3124,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1664, 2048, 2561],
     target: 2561,
     coins: 80,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Avalanche Ecosystem", url: "https://ecosystem.avax.network"}]
   },
   222: {
@@ -2667,6 +3137,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1720, 2117, 2647],
     target: 2647,
     coins: 86,
+    simulatorLesson: "avaxStaking",
     links: [{label: "AVAX Staking", url: "https://wallet.avax.network"}],
     simulatorLesson: "avaxStaking"
   },
@@ -2680,19 +3151,21 @@ export const LEVELS: Record<number, Level> = {
     stars: [1776, 2186, 2733],
     target: 2733,
     coins: 50,
+    simulatorLesson: "smartWallet",
     links: [{label: "Abstract", url: "https://abs.xyz"}, {label: "Abstract Portal", url: "https://portal.abs.xyz"}]
   },
   224: {
     id: 224,
     mechanic: "memory",
     tier: "pro",
-    topic: "Abstract — Consumer Crypto L2",
-    fact: "Every Abstract wallet is natively a smart contract. No seed phrase, pay gas in any token, session keys for games, batch transactions. Abstract Global Wallet works across all apps \u2014 one login.",
-    plain: "Like Face ID working across every app on your phone without re-entering a password. Abstract Global Wallet means one face scan logs you into every Abstract app, forever.",
-    stars: [1832, 2255, 2819],
-    target: 2819,
-    coins: 90,
-    links: [{label: "Abstract Wallet", url: "https://docs.abs.xyz/how-abstract-works/account-abstraction/introduction"}]
+    topic: "Abstract — What It Means for Normal Users",
+    fact: "Abstract Global Wallet: one login works across every Abstract app. Pay gas in any token. Session keys let games move without approving every action. Batch multiple transactions into one click. No seed phrase management.",
+    plain: "Like how Face ID works across every app on your iPhone without re-entering a password — and you can pay for anything using any card in your wallet. Abstract brings that experience to crypto.",
+    stars: [1160, 1428, 1786],
+    target: 1786,
+    coins: 79,
+    simulatorLesson: "smartWallet"
+  }]
   },
   225: {
     id: 225,
@@ -2704,6 +3177,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1940, 2388, 2985],
     target: 2985,
     coins: 53,
+    simulatorLesson: "smartWallet",
     links: [{label: "Pudgy Penguins", url: "https://www.pudgypenguins.com"}, {label: "Abstract Ecosystem", url: "https://abs.xyz/ecosystem"}]
   },
   226: {
@@ -2723,49 +3197,49 @@ export const LEVELS: Record<number, Level> = {
     id: 227,
     mechanic: "chain",
     tier: "pro",
-    topic: "JUP Perpetuals — On-Chain Leverage",
-    fact: "Jupiter Perpetuals lets users trade with leverage on Solana using JLP (Jupiter Liquidity Pool) as the counterparty. 2–100× leverage, no KYC, instant settlement at $0.001 gas.",
-    plain: "Like a comparison website for currency exchange \u2014 instead of checking Travelex, Post Office, and your bank separately, Jupiter checks all Solana DEXs simultaneously and sends your order to the best price.",
-    stars: [2044, 2516, 3145],
-    target: 3145,
-    coins: 56,
-    links: [{label: "Jupiter", url: "https://jup.ag"}, {label: "Jupiter Perps", url: "https://jup.ag/perps"}]
+    topic: "Alt-Chain Risks — What to Watch For",
+    fact: "Alt-chains carry risks mainnet Ethereum doesn't: bridge hacks ($2B+ stolen from bridges), lower decentralisation, smaller validator sets, and ecosystems that can die if the founding team loses interest.",
+    plain: "The higher the yield or speed on an alt-chain, usually the higher the risk. A bridge connecting two chains is only as secure as its weakest link. Always ask: who controls the bridge?",
+    stars: [1542, 1896, 2370],
+    target: 2370,
+    coins: 132,
+    simulatorLesson: "chainBridging"
   },
   228: {
     id: 228,
-    mechanic: "match3",
+    mechanic: "governance",
     tier: "pro",
-    topic: "JUP Token & Jupiter DAO",
-    fact: 'JUP is Jupiter\'s governance token. 40% of supply airdropped to Solana users in Jan 2024 (one of the largest airdrops ever: $700M+ at launch). JUP holders vote on: fee structure, new product launches, and DAO treasury allocation. Jupiter also runs a launchpad (LFG).',
-    plain: "",
-    stars: [2096, 2580, 3225],
-    target: 3225,
-    coins: 60,
-    links: [{label: "Jupiter DAO", url: "https://vote.jup.ag"}, {label: "JUP Airdrop Info", url: "https://jup.ag/jup"}]
+    topic: "Your Multi-Chain Wallet Setup",
+    fact: "Practical setup: MetaMask or Rabby for EVM chains (Ethereum, Base, Arbitrum, Polygon, Avalanche, Optimism). Phantom for Solana. TON Space for TON. Each has the same seed phrase warning: lose it = lose everything.",
+    plain: "One wallet app, many chains. MetaMask works on every EVM chain — just add the network in settings. Solana needs Phantom. You don't need a different wallet for every chain.",
+    stars: [1599, 1968, 2460],
+    target: 2460,
+    coins: 137,
+    simulatorLesson: "chainBridging"
   },
   229: {
     id: 229,
     mechanic: "match3",
     tier: "pro",
-    topic: "Ordinals \u2014 Minting & the Mempool",
-    fact: "Minting Bitcoin Ordinals: use a wallet like Xverse or Leather, connect to an Ordinals marketplace (Magic Eden BTC, Gamma.io, Ordinals.com). When fees spike during popular mints, transactions queue in the Bitcoin mempool \u2014 sometimes for hours.",
-    plain: "Like posting a letter during Christmas rush. The post office (Bitcoin miners) still processes everything, but your letter sits in the sorting depot (mempool) until the rush clears. Pay more (higher fee) and your letter moves to the front.",
-    stars: [2101, 2586, 3232],
-    target: 3232,
-    coins: 63,
-    links: [{label: "Xverse Wallet", url: "https://www.xverse.app"}, {label: "Magic Eden BTC", url: "https://magiceden.io/ordinals"}, {label: "Gamma.io", url: "https://gamma.io"}]
+    topic: "Choosing a Chain — The Practical Framework",
+    fact: "Ask: (1) Where is the liquidity? (2) What are the gas fees? (3) Is there bridge risk? (4) How established is the ecosystem? DeFi depth → Ethereum/Arbitrum. Speed + cost → Solana/Base. Telegram apps → TON.",
+    plain: "Stop asking 'which chain is best?' Start asking 'best for what?' Bitcoin for savings. Ethereum for security. Solana for speed. Base for easy onboarding. TON for Telegram. Different tools, different jobs.",
+    stars: [1657, 2040, 2550],
+    target: 2550,
+    coins: 142,
+    simulatorLesson: "chainComparison"
   },
   230: {
     id: 230,
     mechanic: "memory",
     tier: "pro",
-    topic: "Ordinals \u2014 RBF, Fee Bumping & Waiting It Out",
-    fact: "Stuck in the Bitcoin mempool? Options: (1) RBF (Replace-By-Fee) \u2014 resubmit with higher fee, replaces old tx. (2) CPFP (Child-Pays-For-Parent) \u2014 create a new tx spending the unconfirmed output at high fee, pulling the parent through. (3) Wait \u2014 if fee market cools, your tx eventually confirms.",
-    plain: "",
-    stars: [2210, 2720, 3400],
-    target: 3400,
-    coins: 66,
-    links: [{label: "Mempool.space", url: "https://mempool.space"}, {label: "Bitcoin Fees", url: "https://btc.com/stats/fee"}]
+    topic: "Alt-Chain Ecosystem Summary",
+    fact: "Polygon: brands + gaming. Arbitrum: DeFi depth (GMX, Pendle). Optimism: public goods + OP Stack. Avalanche: subnets + enterprise. Abstract: consumer crypto + gaming. Each carved a niche. None replaced Ethereum.",
+    plain: "Every chain thought it would kill Ethereum. None did. Each found a niche instead. Understanding each niche is what separates informed users from speculators chasing hype.",
+    stars: [1714, 2109, 2636],
+    target: 2636,
+    coins: 147,
+    simulatorLesson: "chainComparison"
   },
   231: {
     id: 231,
@@ -2773,7 +3247,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Address Poisoning \u2014 The Most Underrated Scam",
     fact: 'Address Poisoning: attacker sends a $0 transaction from an address starting and ending with the same characters as your frequent contacts. You copy the wrong address from your history and send funds there. Prevention: always verify the FULL address, not just first/last 4 characters.',
-    plain: "",
+    plain: "In 2023 a single trader lost $330,000 by copying a poisoned Binance deposit address from their transaction history. The scammer had sent 0 ETH from a look-alike address two weeks earlier. The poisoned address matched the first and last 6 characters of the real one.",
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 37,
@@ -2788,7 +3262,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like checking a bank IBAN digit by digit before a large transfer. Feels slow. Takes 30 seconds. Saves your life savings. One poisoned copy-paste has cost traders $70M in a single incident.",
     stars: [1230, 1514, 1893],
     target: 1893,
-    coins: 60
+    coins: 60,
+    simulatorLesson: "addressPoison"
   },
   233: {
     id: 233,
@@ -2796,7 +3271,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "MEV Bots & Sandwich Attacks",
     fact: "Sandwich attack: MEV bot sees your swap in the mempool, front-runs with a buy (pushing price up), lets your trade execute at the worse price, then sells (back-runs). You pay the spread. Bot profits.",
-    plain: "",
+    plain: "MEV bots extract $500M+ per year from Ethereum users. A sandwich attack: the bot sees your swap in the mempool, buys before you (pushing the price up), lets your swap execute at the worse price, then sells immediately after.",
     stars: [1356, 1669, 2087],
     target: 2087,
     coins: 75,
@@ -2808,10 +3283,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Protecting Yourself from MEV",
     fact: "MEV protection: (1) Use MEV-protected RPCs \u2014 Flashbots Protect, MEV Blocker. (2) Set lower slippage tolerance. (3) Use private transactions (Metamask Institutional, Flashbots). (4) Trade on-chain at off-peak times.",
-    plain: "",
+    plain: "Protection from MEV: use a private RPC endpoint (Flashbots Protect, MEV Blocker) to route transactions off the public mempool. Or use a DEX with MEV protection built in (CoW Protocol routes orders via batch auctions).",
     stars: [1482, 1824, 2281],
     target: 2281,
     coins: 30,
+    simulatorLesson: "mevSandwich",
     links: [{label: "Flashbots Protect", url: "https://protect.flashbots.net"}, {label: "MEV Blocker", url: "https://mevblocker.io"}]
   },
   235: {
@@ -2820,7 +3296,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Discord for Crypto Research",
     fact: "Discord is where early alpha lives. Every serious protocol has a Discord: announcements channel (official updates), general (community), alpha (gated for holders). Verify roles carefully \u2014 fake Discord links in DMs are a top attack vector.",
-    plain: "",
+    plain: "The best crypto signal is often someone showing their work, not claiming their call. On Discord, look for: verifiable contract analysis, on-chain transaction links, stated position (do they own the token?), and track record — not hype.",
     stars: [1608, 1980, 2475],
     target: 2475,
     coins: 45,
@@ -2832,10 +3308,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Discord Safety \u2014 Fakes, Mods & Scam Links",
     fact: "Discord scams: (1) Fake \"mod\" DMs (\"Your NFT needs verification \u2014 click here\"). Real mods never DM first. (2) Fake Discord links shared in Twitter. (3) Cloned servers with identical names. Always join via official website.",
-    plain: "",
+    plain: "Discord red flags: DM from 'official support' (they never DM first), moderator role that was granted yesterday, pinned message linking to an external site, 'urgent' notices requiring wallet connection. Real communities don't pressure you.",
     stars: [1734, 2134, 2668],
     target: 2668,
-    coins: 67
+    coins: 67,
+    simulatorLesson: "discordResearch"
   },
   237: {
     id: 237,
@@ -2846,7 +3323,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like tuning a radio to the right frequency. Raw Twitter is noise. A curated list of 30\u201350 serious accounts is signal. Spent 30 minutes building a list once = permanent quality filter.",
     stars: [1860, 2289, 2862],
     target: 2862,
-    coins: 55
+    coins: 55,
+    simulatorLesson: "discordResearch"
   },
   238: {
     id: 238,
@@ -2854,10 +3332,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Spotting Alpha vs Shilling on Twitter",
     fact: "Real alpha: specific on-chain data, reproducible reasoning, acknowledges risks. Shilling: \"this will 100x,\" urgency (\"buy NOW\"), paid promotion not disclosed, account created recently, lots of crypto emojis.",
-    plain: "",
+    plain: "Real alpha on Twitter/X: posts with transaction hashes, wallet cluster analysis, contract code screenshots. Shilling: posts with price targets, urgency language ('this is your last chance'), no verifiable on-chain backing.",
     stars: [1986, 2444, 3056],
     target: 3056,
-    coins: 82
+    coins: 82,
+    simulatorLesson: "discordResearch"
   },
   239: {
     id: 239,
@@ -2865,7 +3344,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Crypto OPSEC \u2014 Protecting Your Identity",
     fact: 'Crypto OPSEC (Operational Security): use a dedicated browser profile for DeFi. Never screenshot your seed phrase. Use hardware wallet for significant holdings. Keep your crypto holdings private — wealth display makes you a target for SIM swaps and physical attacks.',
-    plain: "",
+    plain: "Professional crypto OPSEC: dedicated browser profile for DeFi (no personal accounts), hardware wallet for anything over $1,000, unique email per exchange, VPN for sensitive searches, 2FA on everything — hardware key preferred.",
     stars: [2112, 2600, 3250],
     target: 3250,
     coins: 90,
@@ -2877,10 +3356,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BOSS: Security & Research Mastery",
     fact: "You understand: address poisoning, MEV/sandwich attacks, MEV protection (Flashbots, MEV Blocker), Discord and Twitter research methods, spotting shilling vs real alpha, and crypto OPSEC.",
-    plain: "",
+    plain: "Security in crypto is not optional — it is the product. You know address poisoning, MEV, Discord/Twitter scam patterns, and OPSEC. These are not edge cases. They are daily threats for active users.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "opsecCheck",
     isBoss: true
   },
   241: {
@@ -2889,10 +3369,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BNB Chain \u2014 The Third Largest Ecosystem",
     fact: 'BNB Chain is the 3rd largest blockchain ecosystem by TVL ($5B+). Consists of: BSC (main chain, 3-second blocks, ~$0.10 gas), opBNB (L2 for gaming/micro-transactions, $0.001 gas), and BNB Greenfield (decentralised storage). Validator set: 29 active validators.',
-    plain: "",
+    plain: "BNB Chain is the third-largest smart contract ecosystem by TVL and user count after Ethereum and Solana. Originally launched by Binance in 2020 as Binance Smart Chain. Rebranded to BNB Chain in 2022. Over 100 million unique addresses.",
     stars: [1105, 1360, 1700],
     target: 1700,
     coins: 30,
+    simulatorLesson: "bnbOverview",
     links: [{label: "BNB Chain", url: "https://www.bnbchain.org"}, {label: "BSCScan Explorer", url: "https://bscscan.com"}]
   },
   242: {
@@ -2904,7 +3385,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a company with three divisions: the main trading floor (BSC), a fast low-cost satellite office (opBNB), and a secure document vault (Greenfield). All connected, all under the BNB brand.",
     stars: [1182, 1455, 1819],
     target: 1819,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "bnbOverview"
   },
   243: {
     id: 243,
@@ -2951,10 +3433,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "PancakeSwap IFO \u2014 Initial Farm Offerings",
     fact: "PancakeSwap IFO (Initial Farm Offering): new projects launch on PancakeSwap by selling tokens to iCAKE holders. Commit CAKE-BNB LP tokens in a fixed sale window. Any excess committed is refunded. One of the most reliable early-access mechanisms.",
-    plain: "",
+    plain: "PancakeSwap IFO (Initial Farm Offering): new token launches where you commit CAKE or BNB to buy in before public listing. High demand IFOs are oversubscribed — you receive a proportional allocation, not your full commitment.",
     stars: [1492, 1836, 2296],
     target: 2296,
     coins: 66,
+    simulatorLesson: "bnbPancake",
     links: [{label: "PancakeSwap IFO", url: "https://pancakeswap.finance/ifo"}]
   },
   247: {
@@ -2963,7 +3446,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Binance Launchpool \u2014 Farm New Listings Before They Trade",
     fact: 'Binance Launchpool: stake BNB or FDUSD to farm newly listed tokens before they trade. Duration: typically 30 days. BNB is NOT locked — you can unstake and restake anytime. Returns vary widely: some Launchpools yield 50%+ APR on BNB during the farming period.',
-    plain: "",
+    plain: "Binance Launchpool lets you earn tokens of new projects before they list on Binance. Stake BNB or FDUSD in the Launchpool, earn new tokens for a set period (usually 10–30 days), then the token lists and you can sell.",
     stars: [1569, 1932, 2415],
     target: 2415,
     coins: 71,
@@ -2976,12 +3459,26 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Binance Alpha \u2014 Early Token Discovery",
     fact: 'Binance Alpha surfaces pre-listing tokens gaining traction on-chain. High Alpha score = Binance is monitoring for potential listing. Alpha tokens can be bought directly via the Binance app before official listing. Some Alpha tokens get listed within days of appearing on Alpha.',
-    plain: "",
+    plain: "Binance Alpha is a token discovery section within the Binance app. Projects listed here have passed Binance's preliminary review but are not yet on the main exchange. Often the first sign a token is targeting a Binance listing.",
     stars: [1647, 2027, 2534],
     target: 2534,
     coins: 76,
     simulatorLesson: "bnbAlpha",
-    links: [{label: "Binance Alpha", url: "https://www.binance.com/en/alpha"}]
+    links: [{label: "Binance Alpha", url: "https://www.binance.com/en/alpha",
+  lessonSimulations: [
+    {
+      type: `judgment-riskAssess`,
+      scenario: `A new token launches on PancakeSwap with 800% APY in its farm. You check: the LP is not locked, the contract is not verified, the deployer wallet has 40% of the supply, and the project has 200 Twitter followers. Assess.`,
+      scoringCriteria: [
+          `Unlocked LP = instant rug possible`,
+          `Unverified contract = hidden backdoor possible`,
+          `40% deployer supply = one wallet can crash price anytime`,
+          `200 followers = manufactured hype or very early stage`,
+          `All four red flags = maximum risk — avoid regardless of APY`
+      ],
+    }
+  ]
+  }]
   },
   249: {
     id: 249,
@@ -2989,7 +3486,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Binance Earn \u2014 Flexible, Locked & Dual Investment",
     fact: "Binance Earn products: (1) Simple Earn Flexible \u2014 withdraw anytime, lower APY (USDT: ~3-5%). (2) Simple Earn Locked \u2014 30/60/90 days, higher APY. (3) Dual Investment \u2014 earn higher yield by agreeing to buy/sell at a target price (structured product with downside risk).",
-    plain: "",
+    plain: "Binance Earn products: Flexible Savings (withdraw any time, lower rate), Locked Products (commit for 30/60/90 days, higher rate), Dual Investment (bet on price direction while earning yield), Auto-Invest (recurring DCA with yield on top).",
     stars: [1724, 2122, 2653],
     target: 2653,
     coins: 80,
@@ -3005,7 +3502,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "Like a standing order to buy index funds every month (Auto-Invest), versus sophisticated bank products where you bet on price staying within a range to earn a higher yield (Structured Products). Auto-Invest is for everyone. Structured Products need research.",
     stars: [1802, 2218, 2773],
     target: 2773,
-    coins: 62
+    coins: 62,
+    simulatorLesson: "bnbEarn"
   },
   251: {
     id: 251,
@@ -3017,6 +3515,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [2015, 2480, 3100],
     target: 3100,
     coins: 48,
+    simulatorLesson: "solanaPump",
     links: [{label: "Four.meme", url: "https://four.meme"}, {label: "BSC Scan", url: "https://bscscan.com"}]
   },
   252: {
@@ -3038,10 +3537,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BSC DeFi Ecosystem \u2014 Venus, Thena & Lista",
     fact: 'BSC DeFi ecosystem: Venus Protocol (lending, $1B TVL), Thena (concentrated liquidity DEX, ve(3,3) model), Lista DAO (liquid staking for BNB, issues slisBNB), Alpaca Finance (leveraged yield farming). Combined BSC DeFi TVL: ~$4B.',
-    plain: "",
+    plain: "BSC DeFi leaders: Venus Protocol (lending, $1B+ TVL), Lista DAO (liquid staking BNB), Thena (native DEX with ve(3,3) mechanics). All benefit from BSC's lower gas costs compared to Ethereum but carry higher centralisation risk.",
     stars: [2034, 2504, 3130],
     target: 3130,
     coins: 57,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Venus Protocol", url: "https://app.venus.io"}, {label: "Thena", url: "https://www.thena.fi"}, {label: "Lista DAO", url: "https://lista.org"}]
   },
   254: {
@@ -3050,10 +3550,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BSC Risks \u2014 Centralisation & Hack History",
     fact: 'BSC risks: (1) Centralisation — only 29 validators vs Ethereum\'s 800K+, making coordination easier. (2) Hack history — $600M+ lost to BSC exploits (PancakeBunny, Qubit, Elephant Money). (3) Many projects are forks of Ethereum DeFi without original audits.',
-    plain: "",
+    plain: "BSC risks: the 21 validators are selected by Binance, making it semi-centralised. Has been exploited for $700M+ in bridge and protocol hacks. High scam and honeypot token rate due to low deployment cost.",
     stars: [2112, 2600, 3250],
     target: 3250,
-    coins: 90
+    coins: 90,
+    simulatorLesson: "rugcheck"
   },
   255: {
     id: 255,
@@ -3061,10 +3562,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BOSS: BNB Chain Mastery",
     fact: "You understand BNB Chain: BSC architecture, BNB burns, PancakeSwap (DEX + farms + IFO), Binance Launchpool, Binance Alpha, Binance Earn products, Four.meme memecoins, BNB staking, Venus/Thena/Lista DeFi, and the centralisation trade-offs.",
-    plain: "",
+    plain: "BNB Chain is Binance's blockchain ecosystem — the regulated exchange's on-chain extension. Lower fees, high throughput, but centralised. The ecosystem around it (PancakeSwap, Launchpool, Alpha) is built around Binance's distribution power.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "bnbOverview",
     isBoss: true
   },
   256: {
@@ -3086,10 +3588,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Proof of History — Solana's Clock",
     fact: "Solana uses Proof of History (PoH): a cryptographic clock that timestamps every transaction before validators confirm it. This removes the need for validators to communicate block timing \u2014 they already agree on order. Result: near-instant finality.",
-    plain: "",
+    plain: "Proof of History is Solana's timekeeping mechanism. Validators create a cryptographic timestamp for every event. This allows parallel transaction processing without waiting for network-wide consensus on time. Result: 50,000+ TPS theoretical throughput.",
     stars: [1170, 1441, 2213],
     target: 2213,
-    coins: 33
+    coins: 33,
+    simulatorLesson: "solanaOverview"
   },
   258: {
     id: 258,
@@ -3100,7 +3603,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "SOL is like a metro card, a voting share, and a storage deposit combined. You use it to ride (fees), vote (staking), and hold a locker at the station (rent). Close unused lockers to get your deposit back \u2014 this is why wallet cleanup matters.",
     stars: [1235, 1521, 2338],
     target: 2338,
-    coins: 36
+    coins: 36,
+    simulatorLesson: "solanaOverview"
   },
   259: {
     id: 259,
@@ -3108,10 +3612,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Phantom Wallet \u2014 The Solana Standard",
     fact: 'Phantom is Solana\'s dominant wallet with 7M+ downloads. Features: in-wallet swaps (Jupiter-powered), NFT display with spam filter, SOL staking, multi-chain (ETH, Polygon, BTC). Phantom generates revenue from swap fees (0.85% on in-app swaps). Open-source core.',
-    plain: "",
+    plain: "Phantom supports Solana, Ethereum, Polygon, and Bitcoin in one app. Key features: built-in Jupiter swaps, NFT display, staking, and hardware wallet support. Private keys are stored locally — never sent to Phantom's servers.",
     stars: [1300, 1600, 2463],
     target: 2463,
     coins: 39,
+    simulatorLesson: "metamask",
     links: [{label: "Phantom Wallet", url: "https://phantom.app"}]
   },
   260: {
@@ -3123,7 +3628,8 @@ export const LEVELS: Record<number, Level> = {
     plain: "SPL tokens are the USDC, BONK, JUP, and WIF coins you trade on Solana. They work like ERC-20 tokens but each needs its own \"slot\" in your wallet that costs a small SOL deposit. Clear old empty token slots to get SOL back.",
     stars: [1365, 1680, 2588],
     target: 2588,
-    coins: 42
+    coins: 42,
+    simulatorLesson: "nftMint"
   },
   261: {
     id: 261,
@@ -3135,6 +3641,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1430, 1761, 2713],
     target: 2713,
     coins: 45,
+    simulatorLesson: "solanaCompare",
     links: [{label: "Raydium", url: "https://raydium.io"}]
   },
   262: {
@@ -3143,7 +3650,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "pump.fun \u2014 The Memecoin Machine",
     fact: "pump.fun is the Solana platform for launching memecoins in 30 seconds. Tokens launch on a bonding curve \u2014 price rises as people buy. When market cap hits ~$69K, it graduates to Raydium with real liquidity. Over 4 million tokens launched since 2024.",
-    plain: "",
+    plain: "pump.fun launched in January 2024 and became the dominant memecoin launchpad within months. Over 3 million tokens created. Mechanism: buy during the bonding curve phase (0 to $69K cap), and if it graduates to Raydium, early buyers often profit most.",
     stars: [1495, 1841, 2838],
     target: 2838,
     coins: 48,
@@ -3160,6 +3667,7 @@ export const LEVELS: Record<number, Level> = {
     stars: [1560, 1921, 2963],
     target: 2963,
     coins: 51,
+    simulatorLesson: "nftMint",
     links: [{label: "Magic Eden", url: "https://magiceden.io"}, {label: "Tensor", url: "https://tensor.trade"}]
   },
   264: {
@@ -3173,7 +3681,21 @@ export const LEVELS: Record<number, Level> = {
     target: 3088,
     coins: 55,
     simulatorLesson: "solanaJupiter",
-    links: [{label: "Jupiter", url: "https://jup.ag"}]
+    links: [{label: "Jupiter", url: "https://jup.ag",
+  lessonSimulations: [
+    {
+      type: `judgment-dataInterpret`,
+      scenario: `A token on pump.fun: 45 seconds old, market cap $32,000, top 3 wallets hold 68% combined, all three wallets funded from the same source 10 minutes ago, mint authority not revoked. What does this data tell you?`,
+      scoringCriteria: [
+          `10-minute-old funding = pre-planned sniper wallets, not organic buyers`,
+          `68% concentration = coordinated insider group controls the price`,
+          `Mint authority not revoked = they can print more tokens at any time`,
+          `Pattern: classic coordinated launch with intent to dump on retail`,
+          `Safe action: do not buy until mint is revoked and concentration drops below 30%`
+      ],
+    }
+  ]
+  }]
   },
   265: {
     id: 265,
@@ -3181,10 +3703,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Solana DeFi \u2014 Drift, Marinade & Kamino",
     fact: "Solana DeFi stack: Drift Protocol (perpetual futures, up to 10\u00d7 leverage, decentralised), Marinade Finance (liquid staking SOL \u2192 mSOL, ~7% APY), Kamino Finance (automated liquidity management + lending), Orca (concentrated liquidity AMM, white-label SDK).",
-    plain: "",
+    plain: "Solana DeFi leaders: Drift Protocol (perpetuals, $500M+ volume/day), Marinade (liquid staking, mSOL), Kamino (automated yield vaults), Raydium (largest Solana DEX). All benefit from Solana's near-zero gas and sub-second finality.",
     stars: [1690, 2081, 3213],
     target: 3213,
     coins: 58,
+    simulatorLesson: "onchainAnalysis",
     links: [{label: "Drift", url: "https://drift.trade"}, {label: "Marinade", url: "https://marinade.finance"}, {label: "Kamino", url: "https://kamino.finance"}]
   },
   266: {
@@ -3206,7 +3729,7 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Solana vs Ethereum \u2014 The Real Trade-offs",
     fact: "Solana: 65K TPS, <$0.001 fees, 400ms blocks, ~2,000 validators. Had 9 significant outages 2021\u20132023. Ethereum: ~30 TPS mainnet + L2s, $1\u201350 fees, 12 sec blocks, 500,000+ validators. No downtime in 9 years. Neither is objectively better \u2014 they optimise differently.",
-    plain: "",
+    plain: "Ethereum vs Solana: Ethereum has the deepest DeFi liquidity, the most institutional trust, and the strongest decentralisation. Solana has 100× lower fees, 100× higher throughput, and a more active memecoin ecosystem. Neither is winning; both are growing.",
     stars: [1820, 2241, 3325],
     target: 3325,
     coins: 65,
@@ -3218,10 +3741,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Solana Ecosystem Map — Key Protocols",
     fact: "Solana ecosystem pillars: Jupiter (DEX aggregator), Raydium (AMM), Orca (concentrated liquidity), Magic Eden (NFTs), Dialect (messaging), Squads (multisig), Tensor (NFT trading).",
-    plain: "",
+    plain: "Key Solana protocols: Jupiter (swap aggregator), Raydium (AMM), Drift (perps), Marinade (staking), Magic Eden (NFTs), Tensor (NFT trading), Jito (MEV + staking), pump.fun (memecoins), Metaplex (NFT standard).",
     stars: [1885, 2320, 3325],
     target: 3325,
     coins: 68,
+    simulatorLesson: "solanaCompare",
     links: [{label: "Firedancer", url: "https://jumpcrypto.com/firedancer"}]
   },
   269: {
@@ -3230,10 +3754,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "Solana Risks \u2014 Outages, Concentration & MEV",
     fact: 'Solana risks: (1) Outage history — 9+ major outages 2021–2023, most fixed by restart. (2) Validator concentration — top 20 validators control 33% of stake. (3) MEV is rampant — Jito bundles are used aggressively. (4) Monolithic design = harder to scale beyond current limits.',
-    plain: "",
+    plain: "Solana risks: network outages (4 major outages 2020-2022, improved since), high validator hardware requirements (increases centralisation pressure), MEV extraction via Jito bundles, and heavy VC token concentration in early validators.",
     stars: [1950, 2400, 3325],
     target: 3325,
-    coins: 72
+    coins: 72,
+    simulatorLesson: "solanaCompare"
   },
   270: {
     id: 270,
@@ -3241,10 +3766,11 @@ export const LEVELS: Record<number, Level> = {
     tier: "pro",
     topic: "BOSS: Solana Mastery",
     fact: "You understand Solana: Proof of History, SOL utility, Phantom wallet, SPL tokens, pump.fun bonding curves, Raydium/Jupiter/Orca DeFi, magic eden NFTs, liquid staking (mSOL/JitoSOL), Firedancer client diversity, and the honest trade-offs vs Ethereum.",
-    plain: "",
+    plain: "Solana is the fastest public blockchain for user-facing applications. Proof of History, 400ms block times, and near-zero fees make it the platform of choice for memecoins, high-frequency DeFi, and consumer apps.",
     stars: [2210, 2720, 3400],
     target: 3400,
     coins: 100,
+    simulatorLesson: "rugcheck",
     isBoss: true
   },
 };

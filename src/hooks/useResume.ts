@@ -15,6 +15,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API } from '../lib/api';
+import { saveProgressLocally, getLocalProgress, enqueueWrite } from '../lib/offlineStorage';
 
 const POSITION_KEY = 'sifter_last_position';
 
@@ -43,9 +44,16 @@ export function useResume() {
   // Load on mount
   useEffect(() => {
     AsyncStorage.getItem(POSITION_KEY)
-      .then(raw => {
+      .then(async raw => {
         if (raw) {
-          try { setLastPosition(JSON.parse(raw)); } catch {}
+          try { setLastPosition(JSON.parse(raw)); return; } catch {}
+        }
+        // Fallback: check offline progress store (restored from server on login)
+        const localProgress = await getLocalProgress();
+        if (localProgress.lastPosition) {
+          setLastPosition(localProgress.lastPosition as any);
+          // Restore to AsyncStorage for fast future reads
+          await AsyncStorage.setItem(POSITION_KEY, JSON.stringify(localProgress.lastPosition));
         }
       })
       .finally(() => setLoadedFromStorage(true));
@@ -60,8 +68,10 @@ export function useResume() {
     const full: LastPosition = { ...position, savedAt: new Date().toISOString() };
     setLastPosition(full);
     await AsyncStorage.setItem(POSITION_KEY, JSON.stringify(full));
-    // Non-blocking backend sync — position is already saved locally
-    API.saveLastPosition(full).catch(() => {});
+    // Also save to offline progress store so it survives device change
+    await saveProgressLocally({ lastPosition: full as any });
+    // Enqueue server sync
+    await enqueueWrite('/api/users/last-position', 'POST', { position: full }, 'high');
   }, []);
 
   /**
@@ -71,7 +81,8 @@ export function useResume() {
   const clearPosition = useCallback(async () => {
     setLastPosition(null);
     await AsyncStorage.removeItem(POSITION_KEY);
-    API.clearLastPosition().catch(() => {});
+    await saveProgressLocally({ lastPosition: null });
+    await enqueueWrite('/api/users/last-position', 'DELETE', {}, 'normal');
   }, []);
 
   /**
