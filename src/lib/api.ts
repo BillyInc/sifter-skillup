@@ -115,6 +115,38 @@ export const API = {
       body: JSON.stringify({ name, description, private: isPrivate ?? false }),
     }),
 
+  // Resume position
+  saveLastPosition: (position: Record<string, unknown>) =>
+    request<void>('/api/game/last-position', {
+      method: 'POST', body: JSON.stringify({ position }),
+    }),
+  clearLastPosition: () =>
+    request<void>('/api/game/last-position', { method: 'DELETE' }),
+
+  // Onboarding
+  completeOnboarding: (data: { active_track?: string; recommended_tracks?: string[] }) =>
+    request<any>('/api/users/onboarding-complete', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  // Interview Mode
+  startInterview: (trackId: string, level: string) =>
+    request<{ id: string; track_id: string; level: string; status: string }>('/api/interview/start', {
+      method: 'POST', body: JSON.stringify({ track_id: trackId, level }),
+    }),
+  submitInterviewAnswer: (interviewId: string, questionIndex: number, answer: string) =>
+    request<{ interview_id: string; answers_count: number }>('/api/interview/answer', {
+      method: 'POST', body: JSON.stringify({ interview_id: interviewId, question_index: questionIndex, answer }),
+    }),
+  getInterviewResult: (interviewId: string) =>
+    request<unknown>(`/api/interview/${interviewId}/result`),
+
+  // Push notifications
+  savePushToken: (token: string) =>
+    request<void>('/api/users/push-token', {
+      method: 'POST', body: JSON.stringify({ token }),
+    }),
+
   // Feedback & analytics
   submitFeedback: (data: any) =>
     request<any>('/api/feedback', { method: 'POST', body: JSON.stringify(data) }),

@@ -1,0 +1,33 @@
+[project]
+name = "sifter-skillup-backend"
+version = "1.0.0"
+description = "FastAPI backend for Sifter Skill_Up — crypto/quant learning platform"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.111.0",
+    "uvicorn[standard]==0.29.0",
+    "supabase>=2.4.0",
+    "python-jose[cryptography]==3.3.0",
+    "python-dotenv==1.0.1",
+    "pydantic>=2.7.1",
+    "pydantic-settings>=2.2.1",
+    "celery[redis]==5.3.6",
+    "redis>=5.0.4",
+    "eth-account>=0.11.0",
+    "httpx>=0.24.0",
+    "slowapi==0.1.9",
+    "structlog==24.1.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==8.1.1",
+    "pytest-asyncio==0.23.6",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest==8.1.1",
+    "pytest-asyncio==0.23.6",
+    "ruff>=0.4.0",
+]

@@ -26,18 +26,19 @@ npx prettier --check "src/**/*.{ts,tsx}"  # Check formatting
 npx prettier --write "src/**/*.{ts,tsx}"  # Auto-format
 ```
 
-### Backend (FastAPI)
+### Backend (FastAPI — uses uv)
 ```bash
 cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload    # dev server on :8000
+uv sync                      # install dependencies (creates .venv)
+uv run uvicorn main:app --reload  # dev server on :8000
+uv run pytest                # run tests
 ```
 
 ### Backend Lint / Format
 ```bash
 cd backend
-ruff check .                 # Python linting
-ruff format .                # Python formatting
+uv run ruff check .          # Python linting
+uv run ruff format .         # Python formatting
 ```
 
 ### Build
