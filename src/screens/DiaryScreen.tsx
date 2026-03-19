@@ -16,8 +16,8 @@ import {
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
-import {
 import DisclaimerFooter from '../components/DisclaimerFooter';
+import {
   DiaryNote, Bookmark, NoteCategory, NoteField,
   createNote, getAllNotes, updateNote, deleteNote,
   getBookmarks, deleteBookmark, convertImportedContent,
