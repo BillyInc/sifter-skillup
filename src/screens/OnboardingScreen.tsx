@@ -129,32 +129,7 @@ function scoreQuiz(answers: Record<string, number>): Array<{ trackId: string; na
     const opt = q.options[selectedIdx];
     opt.fields.forEach(field => {
       fieldScores[field] = (fieldScores[field] ?? 0) + opt.weight;
-      // Disclaimer
-  disclaimerBody: { padding: Spacing.xl, alignItems: 'center' },
-  disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.lg },
-  disclaimerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
-  disclaimerSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
-  disclaimerCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border },
-  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  disclaimerCardBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
-  disclaimerBullet: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 26, paddingLeft: 4 },
-  acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
-  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
-  learnMoreBtn: { padding: Spacing.md, alignItems: 'center' },
-  learnMoreBtnText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
-  disclaimerBody: { padding: Spacing.xl, alignItems: 'center', paddingBottom: 60 },
-  disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.xl },
-  disclaimerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
-  disclaimerSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
-  disclaimerCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border },
-  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  disclaimerCardBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
-  disclaimerBullet: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 28, paddingLeft: 4 },
-  acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
-  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
-  learnMoreLinkBtn: { padding: Spacing.md, alignItems: 'center' },
-  learnMoreLinkText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
-});
+    });
   });
 
   return Object.entries(fieldScores)
@@ -521,4 +496,18 @@ const styles = StyleSheet.create({
 
   browseLink: { padding: Spacing.lg, alignItems: 'center' },
   browseLinkText: { fontSize: FontSize.sm, color: Colors.textSoft, textDecorationLine: 'underline' },
+
+  // Disclaimer
+  disclaimerBody: { padding: Spacing.xl, alignItems: 'center', paddingBottom: 60 },
+  disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.xl },
+  disclaimerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
+  disclaimerSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
+  disclaimerCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border },
+  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
+  disclaimerCardBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  disclaimerBullet: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 28, paddingLeft: 4 },
+  acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
+  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
+  learnMoreLinkBtn: { padding: Spacing.md, alignItems: 'center' },
+  learnMoreLinkText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
 });
