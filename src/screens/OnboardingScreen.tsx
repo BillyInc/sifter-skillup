@@ -208,10 +208,7 @@ function CryptoStartStep({ onStart, onBrowse }: { onStart: (trackId: string) => 
 
       <View style={{ backgroundColor: 'rgba(247,147,26,0.1)', borderRadius: 12, padding: 16, marginBottom: 24 }}>
         <Text style={{ color: Colors.text, fontSize: 14, lineHeight: 22 }}>
-          {'🏝️  18 islands, 270 levels
-₿  Bitcoin → Ethereum → Wallets → DeFi → NFTs
-🛡️  Security and scam protection built in
-🔓  Unlock skill tracks as you progress'}
+          {`🏝️  18 islands, 270 levels\n₿  Bitcoin → Ethereum → Wallets → DeFi → NFTs\n🛡️  Security and scam protection built in\n🔓  Unlock skill tracks as you progress`}
         </Text>
       </View>
 
