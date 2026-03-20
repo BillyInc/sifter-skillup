@@ -25,6 +25,9 @@ interface AuthContextType {
   authTelegram: (initData: string) => Promise<void>;
   authBaseWallet: (address: string, signature: string, message: string) => Promise<void>;
   authGuest: () => Promise<void>;
+  signInGuest: () => Promise<void>;
+  signInEmail: (email: string, password: string) => Promise<void>;
+  signUpEmail: (email: string, password: string, username?: string) => Promise<void>;
   signOut: () => Promise<void>;
   refreshUser: () => Promise<void>;
   quantTraderUnlocked: boolean;
@@ -94,6 +97,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider value={{
       user, loading, authTelegram, authBaseWallet, authGuest,
+      signInGuest: authGuest,
+      signInEmail: async (_email: string, _password: string) => { throw new Error('Email auth not implemented'); },
+      signUpEmail: async (_email: string, _password: string, _username?: string) => { throw new Error('Email auth not implemented'); },
       signOut, refreshUser, quantTraderUnlocked, quantResearcherUnlocked, quantDeveloperUnlocked,
     }}>
       {children}
