@@ -24,6 +24,7 @@ export const futuresTradingTrack: SkillTrack = {
   totalLabs: 6,
 
   labs: [
+    {
       id: 'futures-foundations',
       title: `Lab 1: Futures Foundations — What You're Actually Trading`,
       subtitle: `Before you touch leverage, you need to understand what a futures contract is, why perpetuals exist, and exactly what happens when you open a position.`,

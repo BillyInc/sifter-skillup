@@ -16,6 +16,7 @@ import {
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
+import DisclaimerFooter from '../components/DisclaimerFooter';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -858,10 +859,10 @@ if __name__ == "__main__":
     paths = simulate_gbm(S0=100, mu=0.08, sigma=0.20, T=1.0, n_paths=5000, seed=42)
     final = paths[-1]
     print(f"1-year GBM simulation (5,000 paths):")
-    print(f"  Mean final price:   ${final.mean():.2f}")
-    print(f"  Median final price: ${np.median(final):.2f}")
-    print(f"  5th percentile:     ${np.percentile(final, 5):.2f}")
-    print(f"  95th percentile:    ${np.percentile(final, 95):.2f}")
+    print(f"  Mean final price:   \${final.mean():.2f}")
+    print(f"  Median final price: \${np.median(final):.2f}")
+    print(f"  5th percentile:     \${np.percentile(final, 5):.2f}")
+    print(f"  95th percentile:    \${np.percentile(final, 95):.2f}")
     print(f"  Simulation VaR 95%: {simulation_var(paths):.1%}")
 `;
 
@@ -872,7 +873,6 @@ Sifter Skill_Up — Lab 8: Applied Quant Python
 import pandas as pd
 import numpy as np
 import statsmodels.api as sm
-import DisclaimerFooter from '../components/DisclaimerFooter';
 try:
     import pandas_datareader.data as web
     HAS_DATAREADER = True

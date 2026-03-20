@@ -41,6 +41,8 @@ class Settings:
         "https://web.telegram.org",
         "http://localhost:5173",
         "http://localhost:8081",
+        "http://localhost:19006",
+        "http://localhost:8082",
     ]
 
     # Points System

@@ -295,7 +295,7 @@ function CbProductPickerSim({ onComplete, onSkip }: SimProps) {
   const scenarios = [
     { id: 0, scenario: 'You want to buy BTC and keep it on an exchange',      correct: 'coinbase',     hint: 'Coinbase.com = custodial exchange. They hold the keys.' },
     { id: 1, scenario: 'You want to use a DApp and hold your own keys',        correct: 'cbwallet',     hint: 'Coinbase Wallet = self-custody. You control the keys.' },
-    { id: 2, scenario: 'You want to send USDC directly to a friend's wallet',  correct: 'cbwallet',     hint: 'Coinbase Wallet lets you send to any wallet address directly.' },
+    { id: 2, scenario: `You want to send USDC directly to a friend's wallet`,  correct: 'cbwallet',     hint: 'Coinbase Wallet lets you send to any wallet address directly.' },
     { id: 3, scenario: 'You want to convert fiat to crypto quickly and safely', correct: 'coinbase',    hint: 'Coinbase.com is the regulated fiat on-ramp.' },
   ];
 

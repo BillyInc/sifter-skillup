@@ -19,10 +19,12 @@ const TOKEN_KEY = 'sifter_auth_token_v2';
 
 async function getToken(): Promise<string | null> {
   try {
-    return await SecureStore.getItemAsync(TOKEN_KEY);
-  } catch {
-    return null;
-  }
+    const token = await SecureStore.getItemAsync(TOKEN_KEY);
+    if (token) return token;
+  } catch {}
+  // Fallback for web
+  try { return localStorage.getItem(TOKEN_KEY); } catch {}
+  return null;
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -55,8 +57,21 @@ export const API = {
   authGuest: () =>
     request<{ token: string; user: any }>('/api/auth/guest', { method: 'POST' }),
 
-  saveToken: (token: string) => SecureStore.setItemAsync('sifter_auth_token_v2', token),
-  clearToken: () => SecureStore.deleteItemAsync('sifter_auth_token_v2'),
+  saveToken: async (token: string) => {
+    try {
+      await SecureStore.setItemAsync('sifter_auth_token_v2', token);
+    } catch {
+      // Fallback for web where SecureStore is unavailable
+      try { localStorage.setItem('sifter_auth_token_v2', token); } catch {}
+    }
+  },
+  clearToken: async () => {
+    try {
+      await SecureStore.deleteItemAsync('sifter_auth_token_v2');
+    } catch {
+      try { localStorage.removeItem('sifter_auth_token_v2'); } catch {}
+    }
+  },
   getToken,  // exported for offline sync engines
 
   // AI Scoring — routes through backend so API key never lives in client

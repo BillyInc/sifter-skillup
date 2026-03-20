@@ -233,7 +233,7 @@ async def complete_level(
         "new_points": new_points,
         "next_level": next_level,
         "python_chapters_completed": python_chapters,
-        "quant_unlocked": len(python_chapters) >= settings.QUANT_PYTHON_GATE_CHAPTERS,
+        "quant_unlocked": len(python_chapters) >= settings.QUANT_DEV_PYTHON_GATE_CHAPTERS,
     })
 
 

@@ -621,7 +621,7 @@ export const LEVELS: Record<number, Level> = {
     mechanic: "chain",
     tier: "beginner",
     topic: "Wallet Addresses",
-    fact: "Ethereum addresses follow a specific format. (1) All Ethereum addresses start with 0x. (2) Followed by 40 hexadecimal characters (0–9, a–f). (3) Case sensitivity: checksummed (mixed case) version catches copy errors. (4) The same private key generates the same address on all EVM chains."0x\" and are 42 characters. One wrong character = funds lost permanently. Always copy-paste.",
+    fact: "Ethereum addresses follow a specific format. (1) All Ethereum addresses start with 0x. (2) Followed by 40 hexadecimal characters (0-9, a-f). (3) Case sensitivity: checksummed (mixed case) version catches copy errors. (4) The same private key generates the same address on all EVM chains. Addresses start with 0x and are 42 characters. One wrong character = funds lost permanently. Always copy-paste.",
     plain: "Like a bank sort code and account number \u2014 except 42 characters long and one typo sends money to a random stranger forever.",
     stars: [614, 756, 946],
     target: 946,
@@ -3138,8 +3138,7 @@ export const LEVELS: Record<number, Level> = {
     target: 2647,
     coins: 86,
     simulatorLesson: "avaxStaking",
-    links: [{label: "AVAX Staking", url: "https://wallet.avax.network"}],
-    simulatorLesson: "avaxStaking"
+    links: [{label: "AVAX Staking", url: "https://wallet.avax.network"}]
   },
   223: {
     id: 223,
@@ -3165,7 +3164,6 @@ export const LEVELS: Record<number, Level> = {
     target: 1786,
     coins: 79,
     simulatorLesson: "smartWallet"
-  }]
   },
   225: {
     id: 225,
