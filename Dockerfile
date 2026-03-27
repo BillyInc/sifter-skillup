@@ -3,7 +3,7 @@ FROM python:3.11-slim
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+RUN groupadd -r appuser && useradd -r -g appuser -m appuser
 WORKDIR /app
 
 # Copy dependency files first for layer caching
@@ -15,7 +15,9 @@ RUN uv sync --frozen --no-dev --no-install-project
 # Copy application code
 COPY backend/ .
 
-RUN chown -R appuser:appuser /app
+RUN chown -R appuser:appuser /app \
+    && mkdir -p /home/appuser/.cache/uv \
+    && chown -R appuser:appuser /home/appuser
 USER appuser
 
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
