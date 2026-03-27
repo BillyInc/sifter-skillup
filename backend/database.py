@@ -2,15 +2,15 @@
 # Sifter Skill_Up — Database Layer
 # ============================================
 from supabase import create_client, Client
-from supabase.lib.client_options import ClientOptions
+from supabase.lib.client_options import SyncClientOptions
 from config import settings
 
 class Database:
     _anon_client: Client = None
     _service_client: Client = None
 
-    def _options(self) -> ClientOptions:
-        return ClientOptions(schema=settings.SUPABASE_SCHEMA)
+    def _options(self) -> SyncClientOptions:
+        return SyncClientOptions(schema=settings.SUPABASE_SCHEMA)
 
     def get_client(self) -> Client:
         if not self._anon_client:
