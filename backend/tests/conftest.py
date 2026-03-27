@@ -60,6 +60,7 @@ def auth_header():
 @pytest.fixture
 def client(mock_db):
     with patch("main.db", mock_db), \
+         patch("auth.db", mock_db), \
          patch("database.db", mock_db):
         from main import app
         yield TestClient(app)
