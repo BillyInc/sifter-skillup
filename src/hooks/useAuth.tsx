@@ -98,8 +98,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     <AuthContext.Provider value={{
       user, loading, authTelegram, authBaseWallet, authGuest,
       signInGuest: authGuest,
-      signInEmail: async (_email: string, _password: string) => { throw new Error('Email auth not implemented'); },
-      signUpEmail: async (_email: string, _password: string, _username?: string) => { throw new Error('Email auth not implemented'); },
+      signInEmail: async (email: string, password: string) => {
+        const data = await API.authLogin(email, password);
+        await _handleAuthResponse(data);
+      },
+      signUpEmail: async (email: string, password: string, username?: string) => {
+        const data = await API.authSignup(email, password, username);
+        await _handleAuthResponse(data);
+      },
       signOut, refreshUser, quantTraderUnlocked, quantResearcherUnlocked, quantDeveloperUnlocked,
     }}>
       {children}

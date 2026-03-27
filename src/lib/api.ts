@@ -57,6 +57,16 @@ export const API = {
   authGuest: () =>
     request<{ token: string; user: any }>('/api/auth/guest', { method: 'POST' }),
 
+  authSignup: (email: string, password: string, username?: string) =>
+    request<{ token: string; user: any }>('/api/auth/signup', {
+      method: 'POST', body: JSON.stringify({ email, password, username }),
+    }),
+
+  authLogin: (email: string, password: string) =>
+    request<{ token: string; user: any }>('/api/auth/login', {
+      method: 'POST', body: JSON.stringify({ email, password }),
+    }),
+
   saveToken: async (token: string) => {
     try {
       await SecureStore.setItemAsync('sifter_auth_token_v2', token);

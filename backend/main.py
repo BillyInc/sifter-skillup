@@ -3,6 +3,7 @@
 # Supports: Telegram Mini App, Base App, Web Dashboard
 # ============================================
 import uuid
+import bcrypt
 from contextlib import asynccontextmanager
 from datetime import datetime, date, timedelta
 from typing import Optional
@@ -97,11 +98,69 @@ async def auth_guest():
     return ResponseModel(data={"token": token, "user": user})
 
 
-def _create_user(telegram_id=None, wallet_address=None, username="Learner", avatar_url=None, auth_provider="guest") -> dict:
+@app.post("/api/auth/signup", response_model=ResponseModel)
+async def auth_signup(body: dict):
+    """Sign up with email and password."""
+    email = (body.get("email") or "").strip().lower()
+    password = body.get("password") or ""
+    username = body.get("username") or email.split("@")[0]
+
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Valid email is required")
+    if len(password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+
+    existing = db.get_service_client().table("users").select("id").eq("email", email).execute()
+    if existing.data:
+        raise HTTPException(status_code=409, detail="Email already registered")
+
+    password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+    user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash)
+    token = Auth.create_jwt(user["id"])
+    return ResponseModel(data={"token": token, "user": user})
+
+
+@app.post("/api/auth/login", response_model=ResponseModel)
+async def auth_login(body: dict):
+    """Sign in with email and password."""
+    email = (body.get("email") or "").strip().lower()
+    password = body.get("password") or ""
+
+    if not email or not password:
+        raise HTTPException(status_code=400, detail="Email and password are required")
+
+    result = db.get_service_client().table("users").select("*").eq("email", email).execute()
+    if not result.data:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    user = result.data[0]
+    if not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
+    token = Auth.create_jwt(user["id"])
+    # Don't send password_hash to client
+    user.pop("password_hash", None)
+    return ResponseModel(data={"token": token, "user": user})
+
+
+@app.post("/api/users/onboarding-complete", response_model=ResponseModel)
+async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_current_user)):
+    """Mark onboarding as complete and optionally set active track."""
+    updates = {"onboarding_completed": True}
+    if body.get("active_track"):
+        updates["active_track"] = body["active_track"]
+    result = db.get_service_client().table("users").update(updates).eq("id", current_user["id"]).execute()
+    return ResponseModel(data=result.data[0])
+
+
+def _create_user(telegram_id=None, wallet_address=None, username="Learner", avatar_url=None, auth_provider="guest", email=None, password_hash=None) -> dict:
     payload = {
         "id": str(uuid.uuid4()),
         "telegram_id": telegram_id,
         "wallet_address": wallet_address,
+        "email": email,
+        "password_hash": password_hash,
         "username": username,
         "avatar_url": avatar_url,
         "auth_provider": auth_provider,

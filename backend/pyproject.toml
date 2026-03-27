@@ -17,6 +17,7 @@ dependencies = [
     "httpx>=0.24.0",
     "slowapi==0.1.9",
     "structlog==24.1.0",
+    "bcrypt>=5.0.0",
 ]
 
 [project.optional-dependencies]
