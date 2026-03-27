@@ -4,5 +4,8 @@
     "strict": true,
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] }
-  }
+  },
+  "exclude": [
+    "src/data/tracks/supplyChainTrack.ts"
+  ]
 }

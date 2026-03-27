@@ -21,6 +21,8 @@ jobs:
 
       - name: Build web export
         run: npx expo export --platform web
+        env:
+          EXPO_PUBLIC_API_URL: https://sifter-skillup.onrender.com
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3
