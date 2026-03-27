@@ -18,12 +18,16 @@ const BASE_URL = API_BASE;
 const TOKEN_KEY = 'sifter_auth_token_v2';
 
 async function getToken(): Promise<string | null> {
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    // Web: use localStorage directly (SecureStore hangs on web)
+    try { return localStorage.getItem(TOKEN_KEY); } catch {}
+    return null;
+  }
+  // Native: use SecureStore
   try {
     const token = await SecureStore.getItemAsync(TOKEN_KEY);
     if (token) return token;
   } catch {}
-  // Fallback for web
-  try { return localStorage.getItem(TOKEN_KEY); } catch {}
   return null;
 }
 
@@ -68,11 +72,13 @@ export const API = {
     }),
 
   saveToken: async (token: string) => {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      try { localStorage.setItem('sifter_auth_token_v2', token); } catch {}
+      return;
+    }
     try {
       await SecureStore.setItemAsync('sifter_auth_token_v2', token);
     } catch {
-      // Fallback for web where SecureStore is unavailable
-      try { localStorage.setItem('sifter_auth_token_v2', token); } catch {}
     }
   },
   clearToken: async () => {

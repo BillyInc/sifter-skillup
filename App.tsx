@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -164,6 +164,16 @@ function AppNavigator() {
   if (!user) return <AuthScreen />;
 
   if (!user.onboarding_completed) {
+    if (Platform.OS === 'web') {
+      // Skip onboarding on web — auto-complete and proceed
+      API.completeOnboarding({}).then(() => refreshUser()).catch(() => refreshUser());
+      return (
+        <View style={styles.loading}>
+          <Text style={styles.loadingEmoji}>⚡</Text>
+          <ActivityIndicator color={Colors.accent} size="large" />
+        </View>
+      );
+    }
     return (
       <OnboardingScreen
         onComplete={async (trackId) => {
@@ -228,7 +238,7 @@ export default function App() {
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <NavigationContainer documentTitle={{ enabled: false }}>
+              <NavigationContainer>
                 <OfflineBanner />
                 <AppNavigator />
               </NavigationContainer>
