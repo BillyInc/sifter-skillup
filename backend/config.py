@@ -15,7 +15,7 @@ class Settings:
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
     SUPABASE_ANON_KEY: str = os.getenv("SUPABASE_ANON_KEY", "")
     SUPABASE_SERVICE_KEY: str = os.getenv("SUPABASE_SERVICE_KEY", "")
-    SUPABASE_SCHEMA: str = "sifter_dev"
+    SUPABASE_SCHEMA: str = "skillup_dev"
 
     # JWT
     JWT_SECRET: str = os.getenv("JWT_SECRET", "change-me-in-production")
