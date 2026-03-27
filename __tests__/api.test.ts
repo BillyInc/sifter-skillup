@@ -1,4 +1,4 @@
-import { ApiError, NetworkError } from '../src/lib/api';
+import { ApiError, NetworkError } from '../src/lib/errors';
 
 describe('ApiError', () => {
   it('creates error with status code', () => {

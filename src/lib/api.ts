@@ -11,22 +11,6 @@
  */
 import * as SecureStore from 'expo-secure-store';
 
-export class ApiError extends Error {
-  status: number;
-  constructor(message: string, status: number) {
-    super(message);
-    this.name = 'ApiError';
-    this.status = status;
-  }
-}
-
-export class NetworkError extends Error {
-  constructor(message = 'Network request failed') {
-    super(message);
-    this.name = 'NetworkError';
-  }
-}
-
 export const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
 /** @deprecated use API_BASE */
 const BASE_URL = API_BASE;
