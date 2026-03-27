@@ -228,7 +228,7 @@ export default function App() {
         <ErrorBoundary>
           <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <NavigationContainer>
+              <NavigationContainer documentTitle={{ formatter: () => 'Sifter Skill_Up' }}>
                 <OfflineBanner />
                 <AppNavigator />
               </NavigationContainer>
