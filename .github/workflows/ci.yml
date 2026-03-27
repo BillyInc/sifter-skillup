@@ -31,7 +31,7 @@ jobs:
           fi
 
       - name: Tests
-        run: pnpm test -- --ci --coverage --passWithNoTests
+        run: npx jest --ci --coverage --passWithNoTests
 
       - name: Web Build
         run: npx expo export --platform web
