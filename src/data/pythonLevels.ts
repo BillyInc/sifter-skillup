@@ -118,7 +118,7 @@ Common string methods:
 - s.count(sub) → occurrences
 - s.isdigit(), s.isalpha(), s.isspace()
 
-f-strings (Python 3.6+): f"Hello {name}, price is \${price:.2f}". Format specifiers: :.2f (2 decimal float), :,d (integer with commas), :.1% (percentage), :>10 (right-align width 10), :^10 (centre).
+f-strings (Python 3.6+): f"Hello {name}, price is \\${price:.2f}". Format specifiers: :.2f (2 decimal float), :,d (integer with commas), :.1% (percentage), :>10 (right-align width 10), :^10 (centre).
 
 In finance: f"Sharpe: {sharpe:.2f} | Max DD: {max_dd:.1%} | Ann Ret: {ann_ret:.1%}" — formatting performance reports. Parsing CSV ticker data uses split() and strip(). Ticker normalisation: ticker.upper().strip().`,
     plain: `f-strings replaced % formatting and .format() — use them exclusively. The two format specifiers you will use most in finance: :.2f for prices (two decimal places) and :.1% for returns and percentages (converts 0.05 to "5.0%"). Memorise those two and every performance report you write will look correct.`,
@@ -838,7 +838,7 @@ pairs = list(zip([1,2,3], ["a","b","c"]))  # [(1,"a"),(2,"b"),(3,"c")]
 
 enumerate(iterable, start=0): yields (index, element) tuples.
 for i, price in enumerate(prices, start=1):
-    print(f"Day {i}: ${price:.2f}")
+    print(f"Day {i}: \\${price:.2f}")
 
 any(iterable): True if at least one element is truthy.
 all(iterable): True if all elements are truthy.
