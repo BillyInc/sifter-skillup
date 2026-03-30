@@ -11,7 +11,7 @@ import {
 import { ALL_FIELDS, type Field } from '../data/fields';
 import { SKILL_TRACKS, type SkillTrack } from '../data/skills';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 
@@ -46,7 +46,7 @@ function FieldCard({ field, onPress }: { field: Field; onPress: () => void }) {
 // ─── Field Detail Modal ────────────────────────────────────────────────────────
 function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => void }) {
   const [tab, setTab] = useState<'overview' | 'salary' | 'tracks'>('overview');
-  const navigation = useNavigation<any>();
+  const router = useRouter();
 
   const relatedTracks = SKILL_TRACKS.filter(t => {
     if (field.id === 'crypto') return ['spot-trading','memecoin-trading','futures-trading','options-trading','onchain-analysis','token-research'].includes(t.id);
@@ -160,7 +160,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
                 const labCount = hasContent && 'sections' in track ? (track as any).sections?.length ?? 0 : (track as any).modules?.length ?? 0;
                 return (
                   <TouchableOpacity key={track.id} style={[styles.trackCard, { borderTopColor: field.color, borderTopWidth: 3 }]}
-                    onPress={() => { onClose(); if (['quant-trading','quant-research','quant-developer'].includes(track.id)) navigation.navigate('Quant'); }}
+                    onPress={() => { onClose(); if (['quant-trading','quant-research','quant-developer'].includes(track.id)) router.push('/skills/quant-map'); }}
                     activeOpacity={0.85}>
                     <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'flex-start', marginBottom: Spacing.sm }}>
                       <Text style={{ fontSize: 28 }}>{track.icon}</Text>

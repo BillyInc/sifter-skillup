@@ -1,0 +1,7 @@
+import LessonScreen from '@/screens/LessonScreen';
+import { useLocalSearchParams } from 'expo-router';
+
+export default function MapLessonScreen() {
+  const params = useLocalSearchParams();
+  return <LessonScreen route={{ params }} navigation={{}} />;
+}

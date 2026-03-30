@@ -10,6 +10,7 @@
  *    NOT directly to api.anthropic.com (would require exposing API key in client)
  */
 import * as SecureStore from 'expo-secure-store';
+import { logger, logApiCall } from './logger';
 
 export const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
 /** @deprecated use API_BASE */
@@ -20,30 +21,68 @@ const TOKEN_KEY = 'sifter_auth_token_v2';
 async function getToken(): Promise<string | null> {
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     // Web: use localStorage directly (SecureStore hangs on web)
-    try { return localStorage.getItem(TOKEN_KEY); } catch {}
+    try { return localStorage.getItem(TOKEN_KEY); } catch (e) {
+      logger.warn('Failed to get token from localStorage', { error: e });
+    }
     return null;
   }
   // Native: use SecureStore
   try {
     const token = await SecureStore.getItemAsync(TOKEN_KEY);
     if (token) return token;
-  } catch {}
+  } catch (e) {
+    logger.warn('Failed to get token from SecureStore', { error: e });
+  }
   return null;
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const startTime = Date.now();
   const token = await getToken();
-  const res = await fetch(`${BASE_URL}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
+
+  logger.debug('API request started', {
+    endpoint: path,
+    method: options.method || 'GET',
+    hasAuthorization: !!token,
   });
-  const json = await res.json();
-  if (!res.ok || !json.success) throw new Error(json.error ?? res.statusText);
-  return json.data;
+
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
+    const duration = Date.now() - startTime;
+    const json = await res.json();
+
+    if (!res.ok || !json.success) {
+      throw new Error(json.error ?? res.statusText);
+    }
+
+    logger.info('API request completed', {
+      endpoint: path,
+      method: options.method || 'GET',
+      duration,
+      status: res.status,
+      success: true,
+    });
+
+    return json.data;
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    logger.error('API request failed', error as Error);
+    logger.info('API request completed with error', {
+      endpoint: path,
+      method: options.method || 'GET',
+      duration,
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
+  }
 }
 
 export const API = {

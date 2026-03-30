@@ -16,15 +16,16 @@ from config import settings
 from database import db
 from models import *
 from auth import Auth
+from logger import log
 
 # ─────────────────────────────────────────────────────────────
 # App setup
 # ─────────────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
+    log.info(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
     yield
-    print("Shutdown.")
+    log.info("Application shutdown")
 
 app = FastAPI(title=settings.APP_NAME, version=settings.APP_VERSION, lifespan=lifespan)
 
@@ -36,11 +37,58 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# Logging middleware
+@app.middleware("http")
+async def logging_middleware(request: Request, call_next):
+    """Log all incoming requests with timing and status"""
+    start_time = datetime.now()
+    client_ip = request.client.host if request.client else "unknown"
+
+    # Log request start
+    log.info(
+        "Request started",
+        endpoint=request.url.path,
+        method=request.method,
+        client_ip=client_ip,
+        user_agent=request.headers.get("user-agent", "unknown"),
+    )
+
+    try:
+        response = await call_next(request)
+        duration = (datetime.now() - start_time).total_seconds() * 1000
+
+        # Log successful request
+        log.info(
+            "Request completed",
+            endpoint=request.url.path,
+            method=request.method,
+            duration=f"{duration:.2f}ms",
+            status=response.status_code,
+            success=True,
+        )
+
+        return response
+    except Exception as e:
+        duration = (datetime.now() - start_time).total_seconds() * 1000
+
+        # Log error
+        log.error(
+            "Request failed",
+            error=e,
+            endpoint=request.url.path,
+            method=request.method,
+            duration=f"{duration:.2f}ms",
+            success=False,
+        )
+        raise
+
 # ─────────────────────────────────────────────────────────────
 # Health
 # ─────────────────────────────────────────────────────────────
 @app.get("/health")
 async def health():
+    log.debug("Health check endpoint called")
     return {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now().isoformat()}
 
 # ─────────────────────────────────────────────────────────────
@@ -50,6 +98,8 @@ async def health():
 @app.post("/api/auth/telegram", response_model=ResponseModel)
 async def auth_telegram(body: dict):
     """Authenticate via Telegram WebApp initData."""
+    log.info("Telegram auth attempt started")
+
     init_data = body.get("initData", "")
     tg_user = Auth.verify_telegram_init_data(init_data)
 
@@ -62,10 +112,13 @@ async def auth_telegram(body: dict):
     if existing.data:
         user = existing.data[0]
         db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
+        log.info("Telegram user login successful", user_id=user["id"], telegram_id=telegram_id)
     else:
         user = _create_user(telegram_id=telegram_id, username=username, avatar_url=avatar_url, auth_provider="telegram")
+        log.info("New Telegram user created", user_id=user["id"], telegram_id=telegram_id, username=username)
 
     token = Auth.create_jwt(user["id"])
+    log.info("JWT token issued for Telegram user", user_id=user["id"])
     return ResponseModel(data={"token": token, "user": user})
 
 
@@ -240,6 +293,8 @@ async def complete_level(
     completed = current_user.get("completed_levels", [])
     perfect = current_user.get("perfect_levels", [])
 
+    log.info("Level completion started", user_id=user_id, level_id=level_id, track=level_data.track, score=level_data.score)
+
     is_new = str(level_id) not in completed
     xp = settings.LEVEL_COMPLETE_XP if is_new else 50
     if level_data.is_perfect and str(level_id) not in perfect:
@@ -286,6 +341,8 @@ async def complete_level(
     }).execute()
 
     background_tasks.add_task(_check_achievements, user_id, completed, current_user.get("streak", 1))
+
+    log.info("Level completion successful", user_id=user_id, level_id=level_id, xp_earned=xp, new_points=new_points, is_perfect=level_data.is_perfect)
 
     return ResponseModel(data={
         "xp_earned": xp,
