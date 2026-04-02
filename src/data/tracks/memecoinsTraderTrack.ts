@@ -2644,6 +2644,7 @@ Required: (1) Entry decision and exact SOL amount. (2) Profit ladder with specif
 
 
     // ── Junior Lab 4 ──────────────────────────────────────────────────────
+    {
       id: 'lab-4-charts-community',
       title: `Lab 4: Reading Charts and Community Signals`,
       subtitle: `Charts show what happened. Community signals show what will happen next.`,
@@ -2965,6 +2966,7 @@ Required: (1) Entry decision and exact SOL amount. (2) Profit ladder with specif
     },
 
     // ── Junior Labs 5 & 6 ────────────────────────────────────────────────
+    {
       id: 'lab-5-risk-journal',
       title: `Lab 5: Risk Management and Trading Journal`,
       subtitle: `The traders who last aren't the ones who win most. They're the ones who lose least when they're wrong.`,
