@@ -415,7 +415,7 @@ Value: 0 ETH
 Gas Fee: 0.0042 ETH
 
 Tokens Transferred:
-- From 0xSENDER → To 0xRECEIVER: 10,000 USDC
+- From 0xSENDER -> To 0xRECEIVER: 10,000 USDC
 
 Questions:
 1. How much value actually moved?
@@ -451,9 +451,9 @@ Do you agree? Which wallet would you investigate first and why?`,
           type: `judgment-riskAssess`,
           scenario: `A protocol has been hacked. The attacker wallet made 8 transactions in 10 minutes. Here's the summary:
 
-Tx 1: From 0xATTACKER → 0xPROTOCOL_CONTRACT. Value: 0 ETH. Tokens Transferred: 5,000,000 USDC drained.
-Tx 2-7: From 0xATTACKER → 6 different new wallets. Value: 0 ETH each. Tokens Transferred: ~833,000 USDC each.
-Tx 8: From 0xATTACKER → 0xBRIDGE_CONTRACT. Value: 0 ETH. Tokens Transferred: 200,000 USDC.
+Tx 1: From 0xATTACKER -> 0xPROTOCOL_CONTRACT. Value: 0 ETH. Tokens Transferred: 5,000,000 USDC drained.
+Tx 2-7: From 0xATTACKER -> 6 different new wallets. Value: 0 ETH each. Tokens Transferred: ~833,000 USDC each.
+Tx 8: From 0xATTACKER -> 0xBRIDGE_CONTRACT. Value: 0 ETH. Tokens Transferred: 200,000 USDC.
 
 What do you understand happened? What is the significance of Transaction 8?`,
           scoringCriteria: [
@@ -776,8 +776,8 @@ Without using technical terms, construct a brief argument for why gas price data
 </div>
 
 What the Tokens Transferred section shows:
-- From 0xPROTOCOL_VAULT → To 0xATTACKER: 18,440,000 USDC ($18.44M)
-- From 0xATTACKER → To 0xFLASHLOAN_PROVIDER: 18,000,000 USDC
+- From 0xPROTOCOL_VAULT -> To 0xATTACKER: 18,440,000 USDC ($18.44M)
+- From 0xATTACKER -> To 0xFLASHLOAN_PROVIDER: 18,000,000 USDC
 
 The protocol sent $18.44M to the attacker, and the attacker immediately sent $18M somewhere else. Something's very wrong here.
 
@@ -953,8 +953,8 @@ Value: 0 ETH
 Gas Price: 350 Gwei (network avg: 15 Gwei)
 
 Tokens Transferred:
-- 0xPROTOCOL → 0xATTACKER: 8,000,000 DAI
-- 0xATTACKER → 0xFLASHLOAN: 7,900,000 DAI
+- 0xPROTOCOL -> 0xATTACKER: 8,000,000 DAI
+- 0xATTACKER -> 0xFLASHLOAN: 7,900,000 DAI
 
 Internal Transactions: 42 calls
 Input Data (decoded): function "drain(address token, uint256 amount)"
@@ -977,10 +977,10 @@ Questions:
           type: `sandbox-dataModel`,
           scenario: `You're looking at the Internal Transactions tab of a hack. Here's what you see (simplified):
 
-Call 1: 0xATTACKER → 0xFLASHLOAN_PROVIDER — borrow 5,000,000 USDC
-Call 2: 0xATTACKER → 0xDEX — swap 5,000,000 USDC for token X (at manipulated price)
-Call 3: 0xATTACKER → 0xPROTOCOL — redeem token X for 6,200,000 USDC
-Call 4: 0xATTACKER → 0xFLASHLOAN_PROVIDER — repay 5,000,000 USDC
+Call 1: 0xATTACKER -> 0xFLASHLOAN_PROVIDER — borrow 5,000,000 USDC
+Call 2: 0xATTACKER -> 0xDEX — swap 5,000,000 USDC for token X (at manipulated price)
+Call 3: 0xATTACKER -> 0xPROTOCOL — redeem token X for 6,200,000 USDC
+Call 4: 0xATTACKER -> 0xFLASHLOAN_PROVIDER — repay 5,000,000 USDC
 
 Questions:
 1. What type of attack is this?
@@ -1026,7 +1026,7 @@ Let me explain what that means.
 > **[Image: Two columns. Left: Ethereum bank account ledger showing "Balance: 5 ETH." Right: Bitcoin showing a wallet containing three separate "bills" of different amounts. Caption: "Ethereum tracks your balance. Bitcoin tracks your cash bills."]**
 
 Ethereum transaction:
-`From: 0xABC → To: 0xXYZ: 5 ETH`
+`From: 0xABC -> To: 0xXYZ: 5 ETH`
 
 Bitcoin transaction:
 `Inputs: [0.5 BTC from previous tx, 0.3 BTC from another tx]`
@@ -1082,8 +1082,8 @@ Your transaction:
 - Total in: 0.8 BTC
 
 **Outputs (the new bills created):**
-- 0.75 BTC → payment to recipient
-- 0.04 BTC → your change address
+- 0.75 BTC -> payment to recipient
+- 0.04 BTC -> your change address
 - Total out: 0.79 BTC
 
 **Fee:** 0.8 - 0.79 = **0.01 BTC**
@@ -1106,7 +1106,7 @@ Normal people send round numbers (1 BTC, 0.5 BTC). Stolen amounts are odd (1.473
 | Feature | Ethereum | Bitcoin |
 |---------|----------|---------| 
 | Model | Account-based | UTXO-based |
-| Transaction shows | From → To | Inputs → Outputs |
+| Transaction shows | From -> To | Inputs -> Outputs |
 | Change | Not needed | Change address required |
 | Tracing | Follow account | Follow specific bills |
 
@@ -1204,7 +1204,7 @@ Normal people send round numbers (1 BTC, 0.5 BTC). Stolen amounts are odd (1.473
           ],
           correct: 1,
           hint: `If you started with an unusual specific amount, how does it appear after each fee deduction?`,
-          explanation: `B is correct. Unlike round numbers that could come from anywhere, an odd specific amount (1,847,329 satoshis) is statistically unique. After each hop, the amount decreases slightly by fees — but you can mathematically verify the chain: 1,847,329 → 1,846,000 → 1,845,200 etc. This is amount-based tracing.`,
+          explanation: `B is correct. Unlike round numbers that could come from anywhere, an odd specific amount (1,847,329 satoshis) is statistically unique. After each hop, the amount decreases slightly by fees — but you can mathematically verify the chain: 1,847,329 -> 1,846,000 -> 1,845,200 etc. This is amount-based tracing.`,
         },
       ],
 
@@ -1343,16 +1343,16 @@ All in one atomic package. All in one transaction you sign once.
 
 **🕵️ THE MOST DANGEROUS SOLANA TRANSACTION:**
 
-> **[Image: Solscan showing two instructions. Instruction 1: "SetDelegate → 0xSCAMMER". Instruction 2: "Transfer ALL USDC → 0xSCAMMER." Arrow connecting them labeled "victim signed both in one click." Caption: "Two instructions. One signature. Everything gone."]**
+> **[Image: Solscan showing two instructions. Instruction 1: "SetDelegate -> 0xSCAMMER". Instruction 2: "Transfer ALL USDC -> 0xSCAMMER." Arrow connecting them labeled "victim signed both in one click." Caption: "Two instructions. One signature. Everything gone."]**
 
 The #1 Solana scam pattern:
 
 **Instruction 1:** Token Program — SetDelegate
-- Accounts: [Victim Wallet → Scammer Wallet]
+- Accounts: [Victim Wallet -> Scammer Wallet]
 - Data: Grant delegate authority over victim's USDC account
 
 **Instruction 2:** Token Program — Transfer
-- Accounts: [Scammer Wallet (as delegate) → Scammer's USDC]
+- Accounts: [Scammer Wallet (as delegate) -> Scammer's USDC]
 - Data: Transfer all USDC
 
 The victim sees "Sign this transaction." They sign one thing. Both instructions execute simultaneously.
@@ -1456,7 +1456,7 @@ The victim sees "Sign this transaction." They sign one thing. Both instructions 
           explanation: `B is correct. On Solana, your main wallet (a public key) controls multiple token accounts — one per token type. USDC lives in a USDC token account. SOL lives in the main wallet. When investigating, you must check both the main wallet AND all associated token accounts. Missing token accounts means missing potentially millions in assets.`,
         },
         {
-          question: `An investigator sees this in a Solana transaction: "Instruction 1: SetDelegate → 0xATTACKER." Before even looking at Instruction 2, what do they know?`,
+          question: `An investigator sees this in a Solana transaction: "Instruction 1: SetDelegate -> 0xATTACKER." Before even looking at Instruction 2, what do they know?`,
           options: [
             `A — Nothing concerning — SetDelegate is used for legitimate DeFi`,
             `B — 0xATTACKER was just given permission to spend the signer's tokens — this is the mechanism for an imminent drain`,
@@ -1465,7 +1465,7 @@ The victim sees "Sign this transaction." They sign one thing. Both instructions 
           ],
           correct: 1,
           hint: `What does SetDelegate give the recipient?`,
-          explanation: `B is correct. SetDelegate grants spending authority to another wallet. The moment you see "SetDelegate → 0xATTACKER," you know the signing wallet just handed the attacker the keys to their token account. The actual transfer in Instruction 2 is almost a formality — the damage was done in Instruction 1. This is why you read instructions in order.`,
+          explanation: `B is correct. SetDelegate grants spending authority to another wallet. The moment you see "SetDelegate -> 0xATTACKER," you know the signing wallet just handed the attacker the keys to their token account. The actual transfer in Instruction 2 is almost a formality — the damage was done in Instruction 1. This is why you read instructions in order.`,
         },
       ],
 
@@ -1525,15 +1525,15 @@ What is most likely happening? What does the identical funding amount tell you? 
 
 Transaction A:
 - 1 instruction: Token Program Transfer
-- From: 0xUSER → To: 0xFRIEND
+- From: 0xUSER -> To: 0xFRIEND
 - Amount: 100 USDC
 - Normal user behavior
 
 Transaction B:
 - 3 instructions:
   1. System Program: Create Account (0xNEW)
-  2. Token Program: SetDelegate → 0xNEW
-  3. Token Program: Transfer from 0xVICTIM (via delegation) → 0xNEW: 45,000 USDC
+  2. Token Program: SetDelegate -> 0xNEW
+  3. Token Program: Transfer from 0xVICTIM (via delegation) -> 0xNEW: 45,000 USDC
 
 Which is higher risk? Walk through Transaction B instruction by instruction in plain English. What single word in Transaction B is the most important to flag?`,
           scoringCriteria: [
@@ -1747,7 +1747,7 @@ Questions:
           scenario: `You're following a stolen fund trail across chains:
 
 Step 1: 100 ETH stolen on Ethereum from wallet 0xHACK_ETH
-Step 2: 100 ETH bridged to BSC → becomes 100 WETH on BSC at wallet 0xHACK_BSC
+Step 2: 100 ETH bridged to BSC -> becomes 100 WETH on BSC at wallet 0xHACK_BSC
 Step 3: 100 WETH swapped to 100 BNB on a BSC DEX
 Step 4: 100 BNB split: 60 BNB to 0xHACK_BSC_A, 40 BNB to 0xHACK_BSC_B
 
@@ -1968,7 +1968,7 @@ Same investigation principles apply:
 Wallet T9HACKER received: 10,000,000 USDT (from Ethereum bridge)
 
 Then made these transactions over 48 hours:
-- 200 transfers of 50,000 USDT each → 200 different new Tron wallets
+- 200 transfers of 50,000 USDT each -> 200 different new Tron wallets
 - All transfers made over 48 hours, roughly 4 per hour
 
 Questions:
@@ -1987,7 +1987,7 @@ Questions:
           type: `sandbox-dataModel`,
           scenario: `You're building an evidence file for a $5M USDT theft. The trail crosses chains:
 
-Step 1 (Ethereum): 5,000,000 USDT stolen from protocol → 0xHACKER_ETH
+Step 1 (Ethereum): 5,000,000 USDT stolen from protocol -> 0xHACKER_ETH
 Step 2 (Ethereum): 0xHACKER_ETH bridges 5,000,000 USDT to Tron via bridge contract 0xBRIDGE
 Step 3 (Tron): THACKER_TRON receives 5,000,000 USDT
 Step 4 (Tron): THACKER_TRON sends 4,000,000 USDT to TSPLIT1 and 1,000,000 USDT to TSPLIT2
@@ -2143,10 +2143,10 @@ These six questions work on every chain. That's not a coincidence — it's the s
           ],
           correct: 1,
           hint: `Which instruction gives the attacker the ability to execute the Transfer?`,
-          explanation: `B is correct. SetDelegate is the permission-granting step — without it, the Transfer couldn't happen. Understanding the sequence (permission → action) is critical for explaining how the drain worked and for victim impact analysis. The Transfer is the symptom; SetDelegate is the cause.`,
+          explanation: `B is correct. SetDelegate is the permission-granting step — without it, the Transfer couldn't happen. Understanding the sequence (permission -> action) is critical for explaining how the drain worked and for victim impact analysis. The Transfer is the symptom; SetDelegate is the cause.`,
         },
         {
-          question: `You're asked to trace $5M in stolen USDT. Your investigation finds it moved from Ethereum → Tron. Which of the six questions most directly tells you to switch explorers?`,
+          question: `You're asked to trace $5M in stolen USDT. Your investigation finds it moved from Ethereum -> Tron. Which of the six questions most directly tells you to switch explorers?`,
           options: [
             `A — "Who sent?"`,
             `B — "How much?"`,
@@ -2191,7 +2191,7 @@ These six questions work on every chain. That's not a coincidence — it's the s
 Transaction format: 5kJmNVBu... (long alphanumeric, no 0x prefix)
 Fields shown: Signer, Instructions (6), Programs called: Token Program, Jupiter DEX, System Program
 
-Instruction 2 of 6 shows: "SetDelegate → 8xATTACKER..."
+Instruction 2 of 6 shows: "SetDelegate -> 8xATTACKER..."
 Instruction 3 of 6 shows: "Transfer: 20,000 USDC from signer's token account"
 
 Questions:
@@ -2293,7 +2293,7 @@ A smart contract is a self-executing program stored on the blockchain. If it's "
 | \`onlyOwner\` + backdoor functions (emergencyWithdraw, drain) | Hidden admin powers | Immediate exploit risk |
 
 **Real Investigator Workflow:**
-- Open contract → Check verified? → Search for "onlyOwner", "mint", "setTax", "selfdestruct".
+- Open contract -> Check verified? -> Search for "onlyOwner", "mint", "setTax", "selfdestruct".
 - Check transaction history for renounceOwnership or ownership transfers.
 - Look at Events tab for suspicious mints or fee changes.
 - Use "Read Contract" to query current owner and balances.
@@ -2601,7 +2601,7 @@ Drainer campaigns routinely hit thousands of victims per day. Top aggregators ha
       type: `judgment-dataInterpret`,
       scenario: `Victim wallet 0xVICTIM shows two transactions 4 minutes apart:
 
-Tx1 (to USDC contract): Value 0 ETH, Events → Approval(spender=0xDR4IN3R..., amount=unlimited)
+Tx1 (to USDC contract): Value 0 ETH, Events -> Approval(spender=0xDR4IN3R..., amount=unlimited)
 
 Tx2–6 (from 0xDR4IN3R...): Multiple transferFrom calls pulling all USDC, ETH, and other tokens to 0xDR4IN3R...
 
@@ -2612,7 +2612,7 @@ Questions:
 2. Who controls the funds now?
 3. What should you investigate next?`,
       scoringCriteria: [
-        `Step-by-step: Victim signed Approval granting unlimited permission → Drainer used transferFrom to pull assets`,
+        `Step-by-step: Victim signed Approval granting unlimited permission -> Drainer used transferFrom to pull assets`,
         `0xAGG1 is the current controller (aggregator)`,
         `Next steps: cluster activity around 0xDR4IN3R... and 0xAGG1, look for other victims, trace to Tron or exchange`,
       ],
@@ -2672,7 +2672,7 @@ A flash loan lets you borrow millions of dollars with zero collateral — as lon
 
 All of this happens in one atomic transaction, visible in Internal Transactions.
 
-> **[Image: Step-by-step diagram of a classic flash loan attack: 1. Flash loan borrow from Aave → 2. Massive swap on Uniswap to crash/pump price → 3. Drain lending protocol at manipulated price → 4. Repay flash loan + keep profit. All arrows inside one big transaction box. Caption: "Borrow millions, manipulate, drain, repay — all in one block. Nothing lost if it fails."]**
+> **[Image: Step-by-step diagram of a classic flash loan attack: 1. Flash loan borrow from Aave -> 2. Massive swap on Uniswap to crash/pump price -> 3. Drain lending protocol at manipulated price -> 4. Repay flash loan + keep profit. All arrows inside one big transaction box. Caption: "Borrow millions, manipulate, drain, repay — all in one block. Nothing lost if it fails."]**
 
 **Typical Attack Flow (what you will see on-chain):**
 1. Flash loan borrow (huge amount)
@@ -2695,7 +2695,7 @@ All of this happens in one atomic transaction, visible in Internal Transactions.
 
 | Attack Type | On-Chain Signature | What to Look For on Explorer |
 |-------------|--------------------|-----------------------------|
-| Flash Loan + Oracle | Flash loan + large Swap + immediate drain | Borrow event → Swap events → Drain event |
+| Flash Loan + Oracle | Flash loan + large Swap + immediate drain | Borrow event -> Swap events -> Drain event |
 | Liquidity Rug | Sudden large Burn from deployer | Burn event removing most liquidity |
 | Sandwich / MEV | Victim swap sandwiched by attacker transactions | Three swaps in same block with price impact |
 
@@ -2735,7 +2735,7 @@ All of this happens in one atomic transaction, visible in Internal Transactions.
       contextTag: `[Law Enforcement Analyst, Post-Hack Forensics Report]`,
       context: `Preparing evidence for a $37M DeFi hack case for prosecutors.`,
       scenario: `You document every step: flash loan hash, all 14 swap events that manipulated the oracle, the drain transaction, and the final profit movement. You include screenshots of the pool ratio before/after and the oracle price spike.`,
-      outcome: `Your report becomes the core technical exhibit in the case. The clear mapping of flash loan → oracle manipulation → drain helps secure international cooperation and asset freezes.`,
+      outcome: `Your report becomes the core technical exhibit in the case. The clear mapping of flash loan -> oracle manipulation -> drain helps secure international cooperation and asset freezes.`,
     },
   ],
 
@@ -2810,7 +2810,7 @@ All of this happens in one atomic transaction, visible in Internal Transactions.
       scenario: `You are given this simplified transaction summary:
 
 - Flash loan borrow: 10,000 ETH from Aave
-- Swap 1: 9,000 ETH → USDC on thin pool (price of ETH crashes 35%)
+- Swap 1: 9,000 ETH -> USDC on thin pool (price of ETH crashes 35%)
 - Borrow from lending protocol: 18,000 ETH worth of assets at the new low price
 - Swap 2: USDC back to ETH (price partially restored)
 - Repay flash loan + 0.1% fee
@@ -2892,12 +2892,12 @@ What is your risk assessment and recommended action?`,
       scenario: \`A hacker exploited a DeFi protocol for $4.7M using a hidden contract backdoor and then ran a secondary approval drain campaign against users who had interacted with the protocol.
 
 ─── PART 1: THE EXPLOIT TRANSACTION ───
-From: 0xHACKER → To: 0xPROTOCOL (contract)
+From: 0xHACKER -> To: 0xPROTOCOL (contract)
 Value: 0 ETH | Gas Price: 350 Gwei (network avg: 18 Gwei)
 Tokens Transferred:
-  - 0xPROTOCOL → 0xHACKER: 2,500,000 USDC
-  - 0xHACKER → 0xFLASHLOAN: 2,450,000 USDC
-Internal Transactions: 67 calls (flash loan borrow → oracle manipulation → drain)
+  - 0xPROTOCOL -> 0xHACKER: 2,500,000 USDC
+  - 0xHACKER -> 0xFLASHLOAN: 2,450,000 USDC
+Internal Transactions: 67 calls (flash loan borrow -> oracle manipulation -> drain)
 Input Data: function "emergencyWithdraw(uint256 amount)"
 
 ─── PART 2: THE PROTOCOL CONTRACT ───
@@ -2912,14 +2912,14 @@ Following the hack, 0xDRAINER runs a campaign against protocol users:
 - 147 victim wallets each have an Approval event: spender=0xDRAINER, amount=115792089237316195...935 (unlimited)
 - Approval txs all occurred in 48 hours post-hack (victims "verifying" their wallets via a fake recovery site)
 - 0xDRAINER's transferFrom calls emptied 147 wallets totalling 890,000 USDC
-- 0xDRAINER sends all proceeds to 0xAGGREGATOR → Tron USDT
+- 0xDRAINER sends all proceeds to 0xAGGREGATOR -> Tron USDT
 
 ─── PART 4: BITCOIN LAYER ───
 Inputs: 0.5 BTC from 1ABC (Binance withdrawal), 0.3 BTC from 1DEF
 Outputs: 0.78 BTC to 1RECEIVER, 0.01 BTC to 1CHANGE
 
 ─── PART 5: TRON EXIT ───
-Owner: THACKER → To: TBINANCE_DEPOSIT
+Owner: THACKER -> To: TBINANCE_DEPOSIT
 Token Transfer: 1,200,000 USDT
 
 Questions:
@@ -3007,11 +3007,11 @@ Questions:
         <strong>📝 REAL EXAMPLE:</strong>
 
         Master Wallet 0xMOM sends:
-        - Day 1: 0.1 ETH → 0xKID1
-        - Day 1: 0.1 ETH → 0xKID2
-        - Day 1: 0.1 ETH → 0xKID3
-        - Day 7: 0.1 ETH → 0xKID4
-        - Day 7: 0.1 ETH → 0xKID5
+        - Day 1: 0.1 ETH -> 0xKID1
+        - Day 1: 0.1 ETH -> 0xKID2
+        - Day 1: 0.1 ETH -> 0xKID3
+        - Day 7: 0.1 ETH -> 0xKID4
+        - Day 7: 0.1 ETH -> 0xKID5
 
         Three months later, 0xKID1-5 all interact with the same scam contract.
 
@@ -3021,9 +3021,9 @@ Questions:
       <div style="background:#e6f3ff; padding:15px; margin:20px 0; border-left:4px solid #1a56a0;">
         <strong>💰 THE DREAM SCENARIO:</strong>
 
-        Hack happens → you trace hacker wallets → you find master wallet that funded them all → master wallet was funded by Binance withdrawal → you document everything → law enforcement subpoenas Binance → Binance says: "That withdrawal belonged to John Doe, passport XYZ, address ABC."
+        Hack happens -> you trace hacker wallets -> you find master wallet that funded them all -> master wallet was funded by Binance withdrawal -> you document everything -> law enforcement subpoenas Binance -> Binance says: "That withdrawal belonged to John Doe, passport XYZ, address ABC."
 
-        Wallet cluster → Master wallet → Exchange → Real person. This is the whole game.
+        Wallet cluster -> Master wallet -> Exchange -> Real person. This is the whole game.
       </div>
 
       > **[Pop-up Glossary: Terms from earlier lessons used here.]**
@@ -3156,7 +3156,7 @@ Questions:
           4. What's the most important lead and why?`,
 
           scoringCriteria: [
-            `Cluster: 0xMOM → A/B/C (scam wallets) → 0xCOLLECT — all 5 wallets linked`,
+            `Cluster: 0xMOM -> A/B/C (scam wallets) -> 0xCOLLECT — all 5 wallets linked`,
             `0xMOM is the master wallet — funded the scam wallets initially`,
             `0xCOLLECT is the collection point — gathers all stolen funds`,
             `0xCOLLECT's Binance deposit is the most important — KYC lead, funds may still be freezable`,
@@ -3702,7 +3702,7 @@ Questions:
 
       Often: 0xFEEDER was funded by a master wallet. And that master wallet was funded by an exchange.
 
-      Refill wallet → Master wallet → Exchange → KYC. This is a common path to identity.
+      Refill wallet -> Master wallet -> Exchange -> KYC. This is a common path to identity.
 
       <strong>ON SOLANA:</strong>
 
@@ -3809,12 +3809,12 @@ Questions:
           type: `sandbox-dataModel`,
           scenario: `You have the following gas refill pattern:
 
-          Day 1: 0xFEEDER → 0xSCAM1: 0.05 ETH
-          Day 1: 0xFEEDER → 0xSCAM2: 0.05 ETH
-          Day 2: 0xFEEDER → 0xSCAM3: 0.05 ETH
-          Day 2: 0xFEEDER → 0xSCAM1: 0.02 ETH (refill)
-          Day 3: 0xFEEDER → 0xSCAM2: 0.02 ETH (refill)
-          Day 3: 0xFEEDER → 0xSCAM4: 0.05 ETH
+          Day 1: 0xFEEDER -> 0xSCAM1: 0.05 ETH
+          Day 1: 0xFEEDER -> 0xSCAM2: 0.05 ETH
+          Day 2: 0xFEEDER -> 0xSCAM3: 0.05 ETH
+          Day 2: 0xFEEDER -> 0xSCAM1: 0.02 ETH (refill)
+          Day 3: 0xFEEDER -> 0xSCAM2: 0.02 ETH (refill)
+          Day 3: 0xFEEDER -> 0xSCAM4: 0.05 ETH
 
           0xFEEDER received its ETH from 0xMASTER on Day 0 (2 ETH)
           0xMASTER received its ETH from Binance withdrawal (5 ETH)
@@ -3845,7 +3845,7 @@ Questions:
           How many clusters are here? What's the most valuable lead? What should the protocol do?`,
 
           scoringCriteria: [
-            `One cluster: 0xGAS → 200 farming wallets → 0xCOLLECT`,
+            `One cluster: 0xGAS -> 200 farming wallets -> 0xCOLLECT`,
             `Most valuable lead: Coinbase withdrawal has KYC — legal process can identify the account holder`,
             `Protocol should: block all 200 wallets + 0xGAS + 0xCOLLECT from rewards`,
             `Document all transaction hashes and report to Coinbase security`,
@@ -4020,7 +4020,7 @@ Questions:
 
           Step 1 (Ethereum):
           - 0xETH1 drains 500 ETH from a DeFi protocol
-          - 0xETH1 → Across Bridge (bridge event shows destination: Arbitrum address 0xARB1)
+          - 0xETH1 -> Across Bridge (bridge event shows destination: Arbitrum address 0xARB1)
 
           Step 2 (Arbitrum):
           - 0xARB1 receives funds (500 ETH equivalent)
@@ -4077,8 +4077,8 @@ Questions:
 
           scoringCriteria: [
             `Two alternative transactions weaken amount fingerprinting alone`,
-            `But bridge event (Step 1→2) is direct proof — that part is 100% confirmed`,
-            `Focus on strengthening Arbitrum→Solana link through behavioral matching (same gas strategy, split ratios)`,
+            `But bridge event (Step 1->2) is direct proof — that part is 100% confirmed`,
+            `Focus on strengthening Arbitrum->Solana link through behavioral matching (same gas strategy, split ratios)`,
             `Check if the two alternative Solana inflows match different patterns than yours`,
             `95% confidence: also find same behavioral fingerprint (identical DEX preference, same split ratio on Solana)`,
           ],
@@ -4218,7 +4218,7 @@ Questions:
           explanation: `B is correct. Bounties crowdsource the hardest attribution problems. When one investigator is stuck, posting a bounty brings many eyes to the case.`,
         },
         {
-          question: `MetaSleuth shows funds flowing from Ethereum → BSC → Solana. Why is MetaSleuth better than Etherscan alone for this?`,
+          question: `MetaSleuth shows funds flowing from Ethereum -> BSC -> Solana. Why is MetaSleuth better than Etherscan alone for this?`,
           options: [
             `A — MetaSleuth is more accurate`,
             `B — Etherscan only shows Ethereum data — MetaSleuth shows all three chains in one unified view`,
@@ -4288,7 +4288,7 @@ Questions:
           - MetaSleuth (multi-chain visual)
           - Arkham (labels)
 
-          A suspect moved funds: Ethereum → Solana (via Wormhole) → Bitcoin (via ThorChain) → Binance.
+          A suspect moved funds: Ethereum -> Solana (via Wormhole) -> Bitcoin (via ThorChain) -> Binance.
 
           For each step, which tool would you use and why? Create a tool-step mapping.`,
 
@@ -4352,7 +4352,7 @@ Pump.fun and Raydium launches often include bundled buys and insider wallets. Lo
 | Red Flag | What It Looks Like | Why It Matters |
 |----------|--------------------|----------------|
 | Tight wallet loops | Same 3–8 wallets trading one NFT repeatedly | Controlled by same entity (wash trading) |
-| Repeating prices | 0.42 ETH → 0.85 ETH → 0.42 ETH | Artificial price manipulation |
+| Repeating prices | 0.42 ETH -> 0.85 ETH -> 0.42 ETH | Artificial price manipulation |
 | Low unique buyers | 10,000 volume but only 12 unique addresses | Fake activity |
 | Sudden mint to team wallets | Large mint events right before hype | Insider dump preparation |
 | Stolen NFT moved quickly | Transfer from known victim wallet to fresh address then marketplace | Laundering attempt |
@@ -4393,7 +4393,7 @@ Pump.fun and Raydium launches often include bundled buys and insider wallets. Lo
       contextTag: `[Community Investigator, Stolen NFT Laundering Case]`,
       context: `A prominent collector reports 12 high-value NFTs stolen via approval drain.`,
       scenario: `You track the stolen token IDs. They appear on Blur listed by fresh wallets. The listing wallets received the NFTs directly from the victim via transferFrom. Those wallets then list and sell to new buyers quickly.`,
-      outcome: `You provide the full trail (victim → drainer → fresh listing wallets → buyers) to OpenSea/Blur support and law enforcement. 7 of the 12 NFTs are frozen before sale. Victims recover partial value.`,
+      outcome: `You provide the full trail (victim -> drainer -> fresh listing wallets -> buyers) to OpenSea/Blur support and law enforcement. 7 of the 12 NFTs are frozen before sale. Victims recover partial value.`,
     },
     {
       contextTag: `[Law Enforcement Analyst, Supporting Forfeiture]`,
@@ -4419,7 +4419,7 @@ Pump.fun and Raydium launches often include bundled buys and insider wallets. Lo
       explanation: `B is correct. This is classic wash trading. Real demand produces many unique buyers and sellers, not circular trading among a handful of wallets.`,
     },
     {
-      question: `You see the same NFT (token ID #421) transferred 14 times in 2 hours between wallets 0xA, 0xB, 0xC, and 0xD at prices 0.8 → 1.1 → 0.9 → 1.3 ETH. Net ETH movement between the wallets is near zero. What pattern is this?`,
+      question: `You see the same NFT (token ID #421) transferred 14 times in 2 hours between wallets 0xA, 0xB, 0xC, and 0xD at prices 0.8 -> 1.1 -> 0.9 -> 1.3 ETH. Net ETH movement between the wallets is near zero. What pattern is this?`,
       options: [
         `A — Normal trading`,
         `B — Coordinated wash trading to manipulate floor price and volume`,
@@ -4721,7 +4721,7 @@ Questions:
     description: 'Fifteen simulations across six lessons and the boss battle. Each builds clustering skills — from funding-source analysis to cross-chain behavioral fingerprinting.',
     scoringMode: 'cumulative',
     unlockCondition: 'Complete all lessons with 70%+ guided practice and 60%+ simulation scores',
-    difficultyRange: 'beginner → intermediate',
+    difficultyRange: 'beginner -> intermediate',
   },
 
       bossMode: {
@@ -4748,7 +4748,7 @@ OPERATION 2 — NFT WASH TRADING:
 Collection "MegaApesXYZ" shows 8,400 ETH volume in 24 hours. On inspection:
 - Only 18 unique buyers across the entire volume
 - Token IDs #1–#40 have been transferred 22 times between wallets 0xW1, 0xW2, 0xW3, 0xW4
-- Prices cycle: 0.4 ETH → 0.85 ETH → 0.4 ETH → 0.9 ETH (repeating)
+- Prices cycle: 0.4 ETH -> 0.85 ETH -> 0.4 ETH -> 0.9 ETH (repeating)
 - Net ETH flow between the 4 wallets: near zero
 - 0xW1 was funded by 0xALPHA 3 weeks ago
 
@@ -4785,10 +4785,10 @@ Questions:
 
 WALLET DATA:
 - 0xCONTROL: received 5 ETH from Coinbase withdrawal (Day 0). Sent 0.15 ETH each to 0xPHISH_DEV and 0xNFT_DEV (Day 0). Sent 0.08 ETH to 0xPOISON_OP (Day 1).
-- 0xPHISH_DEV: deployed 0xDRAINER contract (Day 1). 0xDRAINER collected approval-drain proceeds from 89 victims. All proceeds → 0xCOLLECT2
+- 0xPHISH_DEV: deployed 0xDRAINER contract (Day 1). 0xDRAINER collected approval-drain proceeds from 89 victims. All proceeds -> 0xCOLLECT2
 - 0xNFT_DEV: created collection "DiamondHandsNFT". Token IDs #1–#30 traded 19 times between 0xNFT_DEV + 4 wallets (all funded by 0xCONTROL). Volume: 6,200 ETH, unique buyers: 14. Deployer minted 60% of supply to self pre-launch.
 - 0xPOISON_OP: sent 0-value txs to 1,800 addresses mimicking 0xCOLLECT2 (first/last 6 chars match). 12 victims sent 940,000 USDC to the poisoned address.
-- 0xCOLLECT2: aggregated drainer proceeds + poisoning proceeds → bridged to Tron USDT → sent to OKX deposit address 0xOKX_DEP
+- 0xCOLLECT2: aggregated drainer proceeds + poisoning proceeds -> bridged to Tron USDT -> sent to OKX deposit address 0xOKX_DEP
 
 Produce:
 1. Complete cluster diagram showing all wallets and their relationships
@@ -4798,7 +4798,7 @@ Produce:
 5. Stablecoin freeze: funds are now sitting as USDT on Tron at 0xOKX_DEP — what do you do?\`,
 
           scoringCriteria: [
-            \`Cluster: 0xCONTROL → 0xPHISH_DEV (drainer) + 0xNFT_DEV (wash trading) + 0xPOISON_OP (poisoning) → all proceeds aggregate at 0xCOLLECT2 → Tron → 0xOKX_DEP\`,
+            \`Cluster: 0xCONTROL -> 0xPHISH_DEV (drainer) + 0xNFT_DEV (wash trading) + 0xPOISON_OP (poisoning) -> all proceeds aggregate at 0xCOLLECT2 -> Tron -> 0xOKX_DEP\`,
             \`NFT: 6,200 ETH / 14 unique buyers = 443 ETH/buyer; 4 control wallets all funded by 0xCONTROL = co-controlled; repeating token IDs + near-zero net ETH = wash trading confirmed; 60% pre-mint to deployer = rug setup\`,
             \`Approval drain: victims signed approve() to 0xDRAINER for unlimited tokens (likely via fake "portfolio verify" site); 0xDRAINER called transferFrom() to pull assets without further victim action — one signature = permanent access\`,
             \`Poisoning: 0xPOISON_OP created look-alike of 0xCOLLECT2 differing only in middle chars; sent dust to 1,800 wallets; victims copied the fake from recent history instead of official source. Prevention: always verify full address from official source\`,
@@ -4823,7 +4823,7 @@ Produce:
 Mapped a three-vector fraud operation: approval drain campaign (89 victims, 0xDRAINER), NFT wash trading ring (DiamondHandsNFT, 6,200 ETH fake volume, 14 unique buyers), and address poisoning campaign (1,800 targeted addresses, 12 victims, 940,000 USDC stolen). All three operations traced to single controller 0xCONTROL.
 
 ## Cluster Findings
-- Master controller: 0xCONTROL (Coinbase withdrawal → funded all three operation wallets)
+- Master controller: 0xCONTROL (Coinbase withdrawal -> funded all three operation wallets)
 - Approval drain: 0xPHISH_DEV deployed 0xDRAINER; unlimited approve() tricked 89 victims; proceeds to 0xCOLLECT2
 - NFT wash trading: 4 co-controlled wallets (all funded by 0xCONTROL) traded 6,200 ETH fake volume with 14 unique buyers
 - Address poisoning: 0xPOISON_OP sent dust to 1,800 addresses mimicking 0xCOLLECT2; 12 victims copied wrong address
@@ -4890,7 +4890,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
 
         That's a mixer.
 
-        You DEPOSIT dirty money → it gets mixed with everyone else's → you WITHDRAW "clean" money → no direct link between deposit and withdrawal.
+        You DEPOSIT dirty money -> it gets mixed with everyone else's -> you WITHDRAW "clean" money -> no direct link between deposit and withdrawal.
 
         <strong>That's the theory. Here's the reality.</strong>
       </div>
@@ -5042,10 +5042,10 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         {
           type: `sandbox-dataModel`,
           scenario: `A hacker steals 350 ETH. They split it:
-          - 100 ETH → Tornado (100 ETH pool)
-          - 100 ETH → Tornado (100 ETH pool)
-          - 100 ETH → Tornado (100 ETH pool)
-          - 50 ETH → held in wallet 0xHOLD
+          - 100 ETH -> Tornado (100 ETH pool)
+          - 100 ETH -> Tornado (100 ETH pool)
+          - 100 ETH -> Tornado (100 ETH pool)
+          - 50 ETH -> held in wallet 0xHOLD
 
           That week, the 100 ETH Tornado pool has 30 total depositors (including the hacker's 3 deposits).
 
@@ -5069,9 +5069,9 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
           Deposit C: 100 ETH at 14:11:33 UTC
 
           Then withdrawal logs:
-          Withdrawal 1: 100 ETH at 14:25:00 UTC → 0xW1
-          Withdrawal 2: 100 ETH at 18:33:00 UTC → 0xW2
-          Withdrawal 3: 100 ETH at 23:45:00 UTC → 0xW3
+          Withdrawal 1: 100 ETH at 14:25:00 UTC -> 0xW1
+          Withdrawal 2: 100 ETH at 18:33:00 UTC -> 0xW2
+          Withdrawal 3: 100 ETH at 23:45:00 UTC -> 0xW3
 
           Other depositors that week: 22 additional people.
 
@@ -5165,7 +5165,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         <strong>Most criminals are caught by what they do AFTER the mixer, not during.</strong>
       </div>
 
-      [Image: A timeline showing: "Hack wallet → Tornado deposit → Tornado withdrawal (fresh wallet) → MISTAKE: sends 0.1 ETH to old wallet → old wallet traced to exchange KYC." Caption: "One small transfer after the mixer undoes everything."]
+      [Image: A timeline showing: "Hack wallet -> Tornado deposit -> Tornado withdrawal (fresh wallet) -> MISTAKE: sends 0.1 ETH to old wallet -> old wallet traced to exchange KYC." Caption: "One small transfer after the mixer undoes everything."]
 
       <strong>HOW INVESTIGATORS USE THIS:</strong>
 
@@ -5471,7 +5471,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
           ],
           correct: 1,
           hint: `What does the webshop log, and what does that link to?`,
-          explanation: `B is correct. Post-mix behavior defeats mixing. The webshop logs IP → IP can be linked to identity → identity linked to post-mix wallet → chain traced back through the CoinJoin.`,
+          explanation: `B is correct. Post-mix behavior defeats mixing. The webshop logs IP -> IP can be linked to identity -> identity linked to post-mix wallet -> chain traced back through the CoinJoin.`,
         },
         {
           question: `You find a CoinJoin with 20 participants. After monitoring all 20 output addresses for 60 days, 18 have no activity. One sends to a Kraken deposit. One sends to an anonymous P2P exchange. Which is your better lead?`,
@@ -5585,10 +5585,10 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         <strong>🔍 HOW TO TRACE THORCHAIN:</strong>
 
         <strong>1. TIMING CORRELATION</strong>
-        BTC deposit at 2:03:22 PM → ETH withdrawal at 2:05:47 PM. Same time window = probable link.
+        BTC deposit at 2:03:22 PM -> ETH withdrawal at 2:05:47 PM. Same time window = probable link.
 
         <strong>2. AMOUNT CORRELATION</strong>
-        Deposit 1.47 BTC (odd amount) → receive 28.5 ETH (equivalent value at that moment). The exact match is a fingerprint.
+        Deposit 1.47 BTC (odd amount) -> receive 28.5 ETH (equivalent value at that moment). The exact match is a fingerprint.
 
         <strong>3. POOL ANALYSIS</strong>
         ThorChain has liquidity pools. Your BTC goes in and ETH comes out of the same pool. If 1.47 BTC enters and 28.5 ETH leaves at the same time, that's your transaction.
@@ -5600,9 +5600,9 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
       <strong>THE LAZARUS GROUP SPECIAL:</strong>
 
       North Korean hackers are masters of cross-chain mixing:
-      - Ethereum → ThorChain → Bitcoin
-      - Bitcoin → Wasabi → Bitcoin (clean)
-      - Bitcoin → Binance
+      - Ethereum -> ThorChain -> Bitcoin
+      - Bitcoin -> Wasabi -> Bitcoin (clean)
+      - Bitcoin -> Binance
 
       Each hop adds complexity. But each hop leaves timing and amount fingerprints.
 
@@ -5614,10 +5614,10 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         - Bitcoin through Wasabi CoinJoin
         - Bitcoin to Binance
 
-        Investigators: saw ThorChain timing match → identified CoinJoin → monitored all outputs → one output hit Binance → KYC lead. Cross-chain hops slowed them. Didn't stop them.
+        Investigators: saw ThorChain timing match -> identified CoinJoin -> monitored all outputs -> one output hit Binance -> KYC lead. Cross-chain hops slowed them. Didn't stop them.
       </div>
 
-      [Image: A four-step chain showing: Ethereum (hack) → ThorChain (timing arrow) → Bitcoin (Wasabi CoinJoin) → Binance (KYC). Caption: "Every hop leaves a timing and amount fingerprint."]
+      [Image: A four-step chain showing: Ethereum (hack) -> ThorChain (timing arrow) -> Bitcoin (Wasabi CoinJoin) -> Binance (KYC). Caption: "Every hop leaves a timing and amount fingerprint."]
 
       > **[Pop-up Glossary: Terms from earlier lessons used here.]**
       **Previous terms used in this lesson:**
@@ -5639,7 +5639,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         },
         {
           contextTag: `[The Lazarus Trail]`,
-          context: `North Korean hackers move funds: Ethereum → ThorChain → Bitcoin → Wasabi → Binance.`,
+          context: `North Korean hackers move funds: Ethereum -> ThorChain -> Bitcoin -> Wasabi -> Binance.`,
           scenario: `Investigators follow each hop: timing matches at ThorChain, equal I/O at Wasabi identifies CoinJoin, all outputs monitored for 30 days.`,
           outcome: `One output hits Binance. KYC data identifies the account holder — a money mule. Investigation continues up the chain.`,
         },
@@ -5691,7 +5691,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
           explanation: `B is correct. Timestamp (to the second) and exact amounts are your correlation tools. These are what you match across chains to build the link.`,
         },
         {
-          question: `A hacker's BTC → ETH swap via ThorChain happens in 2 minutes. But three other ThorChain swaps of similar amounts happened in the same 5-minute window. How does this affect your case?`,
+          question: `A hacker's BTC -> ETH swap via ThorChain happens in 2 minutes. But three other ThorChain swaps of similar amounts happened in the same 5-minute window. How does this affect your case?`,
           options: [
             `A — Case is destroyed — too many candidates`,
             `B — You now have multiple hypotheses. Check each candidate ETH wallet's subsequent behavior to narrow down.`,
@@ -5749,7 +5749,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         },
         {
           type: `judgment-dataInterpret`,
-          scenario: `You're tracing a $2M hack that went Ethereum → ThorChain → Bitcoin → three separate Wasabi CoinJoins → multiple exits.
+          scenario: `You're tracing a $2M hack that went Ethereum -> ThorChain -> Bitcoin -> three separate Wasabi CoinJoins -> multiple exits.
 
           You've identified 12 final output addresses after the three CoinJoin rounds. Over the next 60 days:
 
@@ -5765,7 +5765,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
             `Priority 2: Binance deposit — contact Binance with full transaction chain including all CoinJoin hops`,
             `Priority 3: Document the 3 P2P exchange deposits — some P2P exchanges do have partial records`,
             `Continue monitoring the 7 inactive addresses — they may move later`,
-            `Prepare full chain-of-custody document covering Ethereum → ThorChain → each CoinJoin → all exit addresses`,
+            `Prepare full chain-of-custody document covering Ethereum -> ThorChain -> each CoinJoin -> all exit addresses`,
           ],
         },
         {
@@ -5820,12 +5820,12 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         <strong>📝 HOW TO USE SANCTIONS:</strong>
 
         You trace stolen funds:
-        Hack wallet → Tornado Cash → Fresh wallet → Coinbase
+        Hack wallet -> Tornado Cash -> Fresh wallet -> Coinbase
 
         You contact Coinbase security with:
         - Transaction hash showing Tornado Cash deposit
         - Transaction hash showing withdrawal to Fresh wallet
-        - Transaction hash showing Fresh wallet → Coinbase
+        - Transaction hash showing Fresh wallet -> Coinbase
 
         Coinbase checks: "These funds have Tornado Cash provenance. They're on the SDN list. We will freeze them."
 
@@ -5953,7 +5953,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
         {
           type: `judgment-escalation`,
           scenario: `You've traced stolen funds:
-          Hack (0xHACK) → Tornado Cash (100 ETH pool, Day 1) → 0xFRESH (Day 4) → 0xFRESH2 (Day 5) → Kraken deposit (Day 6)
+          Hack (0xHACK) -> Tornado Cash (100 ETH pool, Day 1) -> 0xFRESH (Day 4) -> 0xFRESH2 (Day 5) -> Kraken deposit (Day 6)
 
           Total stolen: $850,000. You have all transaction hashes.
 
@@ -5972,9 +5972,9 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
           type: `sandbox-dataModel`,
           scenario: `You have three investigation cases. For each one, determine whether OFAC sanctions strengthen your position with the exchange and why:
 
-          Case A: Funds → Tornado Cash → Coinbase (US)
-          Case B: Funds → Wasabi CoinJoin → Binance (global, no US entity)
-          Case C: Funds → ThorChain → Kraken (US-regulated)
+          Case A: Funds -> Tornado Cash -> Coinbase (US)
+          Case B: Funds -> Wasabi CoinJoin -> Binance (global, no US entity)
+          Case C: Funds -> ThorChain -> Kraken (US-regulated)
 
           For each case: Does OFAC apply? What's your approach?`,
 
@@ -6051,7 +6051,7 @@ Freezes are **not automatic**. You must submit evidence to the issuer.
 - Issuers will not freeze without credible evidence — they protect their reputation.
 - Once frozen, the funds are effectively immobilized until a court order or issuer decision releases them.
 
-> **[Image: Flowchart: Theft Tx → Trace to Target Address → Evidence Package → Submit to Tether/Circle → Freeze Applied → Funds Stopped. Green checkmarks on successful steps. Caption: "From hack to freeze in under 24 hours when done right."]**
+> **[Image: Flowchart: Theft Tx -> Trace to Target Address -> Evidence Package -> Submit to Tether/Circle -> Freeze Applied -> Funds Stopped. Green checkmarks on successful steps. Caption: "From hack to freeze in under 24 hours when done right."]**
 
 | Stablecoin | Freeze Method | Typical Response Time | Best For |
 |------------|---------------|-----------------------|----------|
@@ -6238,7 +6238,7 @@ How do you prioritize and what action gives the highest chance of recovery?`,
 
             <strong>STEP 1 (Ethereum — Day 1, 14:00 UTC):</strong>
             0xHACK drains 2,500 ETH from Protocol X.
-            Splits to 5 wallets: 500 ETH each → 0xA, 0xB, 0xC, 0xD, 0xE
+            Splits to 5 wallets: 500 ETH each -> 0xA, 0xB, 0xC, 0xD, 0xE
 
             <strong>STEP 2 — Tornado Cash:</strong>
             - 0xA: 100 ETH × 5 deposits (Day 1, 14:30-20:00 UTC)
@@ -6247,7 +6247,7 @@ How do you prioritize and what action gives the highest chance of recovery?`,
 
             <strong>STEP 3 — ThorChain:</strong>
             - 0xD sends 500 ETH to ThorChain (Day 1, 15:30 UTC)
-            - At 15:33 UTC: 15.2 BTC leaves ThorChain → Bitcoin address 1BTC-A
+            - At 15:33 UTC: 15.2 BTC leaves ThorChain -> Bitcoin address 1BTC-A
 
             <strong>STEP 4 — Wasabi:</strong>
             - 1BTC-A participates in Wasabi CoinJoin (Day 2)
@@ -6282,14 +6282,14 @@ How do you prioritize and what action gives the highest chance of recovery?`,
               question: `What links the ThorChain BTC to the Wasabi CoinJoin?`,
               hint: `Think about what connects 1BTC-A to the CoinJoin.`,
               lessonPointer: `Review Lessons 3 and 4 (CoinJoin, ThorChain).`,
-              answer: `1BTC-A (ThorChain recipient) directly participates in the Wasabi CoinJoin as one of the 12 inputs. The timing (Day 1 → Day 2) and amount (15.2 BTC matching 500 ETH value) link the entire chain.`,
+              answer: `1BTC-A (ThorChain recipient) directly participates in the Wasabi CoinJoin as one of the 12 inputs. The timing (Day 1 -> Day 2) and amount (15.2 BTC matching 500 ETH value) link the entire chain.`,
             },
             {
               id: 'p1-q4',
               question: `What's the most important action RIGHT NOW?`,
               hint: `Where are there actionable leads? Think KYC and time sensitivity.`,
               lessonPointer: `Review Lessons 2 and 5 (post-mixer, sanctions, exchange contact).`,
-              answer: `Contact Binance IMMEDIATELY about the 1BTC-B → Binance deposit (Step 5). Funds may still be held. Include full transaction chain. Also note that Tornado Cash funds have OFAC sanction provenance — use that with US-regulated exchanges.`,
+              answer: `Contact Binance IMMEDIATELY about the 1BTC-B -> Binance deposit (Step 5). Funds may still be held. Include full transaction chain. Also note that Tornado Cash funds have OFAC sanction provenance — use that with US-regulated exchanges.`,
             },
             {
               id: 'p1-q5',
@@ -6315,19 +6315,19 @@ How do you prioritize and what action gives the highest chance of recovery?`,
             Day 1, 09:00 UTC: 0xBRIDGE_HACK drains 3,000 ETH from Bridge Protocol.
 
             Day 1, 09:15 UTC: Splits:
-            - 1,500 ETH → 0xTORNADO_BAG (immediately deposits 1 ETH × 1,500 into Tornado 1 ETH pool)
-            - 1,000 ETH → 0xTHOR_BAG (sends to ThorChain at 09:20 UTC)
-            - 500 ETH → 0xHOLD (sits idle)
+            - 1,500 ETH -> 0xTORNADO_BAG (immediately deposits 1 ETH × 1,500 into Tornado 1 ETH pool)
+            - 1,000 ETH -> 0xTHOR_BAG (sends to ThorChain at 09:20 UTC)
+            - 500 ETH -> 0xHOLD (sits idle)
 
             Day 1, 09:23 UTC: 30.5 BTC appears at 1BTC_NEW from ThorChain (≈ $1M, matching 1,000 ETH value)
 
             Day 1-7: 0xTORNADO_BAG's 1,500 deposits spread across 7 days.
             The 1 ETH pool has 12,000 depositors per week.
 
-            Day 2: 1BTC_NEW → Wasabi CoinJoin (8 inputs ~3.8 BTC, 8 outputs ~3.79 BTC)
+            Day 2: 1BTC_NEW -> Wasabi CoinJoin (8 inputs ~3.8 BTC, 8 outputs ~3.79 BTC)
             Identified output: 1BTC_OUT_3 (3.79 BTC)
 
-            Day 4: 1BTC_OUT_3 → Kraken deposit
+            Day 4: 1BTC_OUT_3 -> Kraken deposit
 
             Day 8: 0xHOLD sends 500 ETH to Coinbase deposit (Arkham label confirmed)
 
@@ -6340,12 +6340,12 @@ How do you prioritize and what action gives the highest chance of recovery?`,
             `1 ETH pool with 12,000 depositors = large anonymity set — much harder than 100 ETH pool`,
             `1,500 deposits over 7 days = significant effort to de-anonymize`,
             // ThorChain
-            `ThorChain link: 3 min timing gap (09:20→09:23) + amount match (1,000 ETH ≈ 30.5 BTC) connects 0xTHOR_BAG to 1BTC_NEW`,
+            `ThorChain link: 3 min timing gap (09:20->09:23) + amount match (1,000 ETH ≈ 30.5 BTC) connects 0xTHOR_BAG to 1BTC_NEW`,
             // Wasabi
             `CoinJoin identified by 8 equal inputs/outputs; 1BTC_OUT_3 is one of 8 addresses to monitor`,
             // Priority leads
             `Priority 1: 0xW_EARLY — sends to same Binance account as pre-hack wallet — DIRECT re-linking, strongest evidence`,
-            `Priority 2: 0xHOLD → Coinbase — 500 ETH direct trace, no mixing, contact Coinbase immediately`,
+            `Priority 2: 0xHOLD -> Coinbase — 500 ETH direct trace, no mixing, contact Coinbase immediately`,
             `Priority 3: Kraken deposit from 1BTC_OUT_3 — contact Kraken with full chain`,
             // Actions
             `Immediate: contact Binance (0xW_EARLY re-link) + Coinbase (0xHOLD) + Kraken (1BTC_OUT_3) with all hashes`,
@@ -6353,7 +6353,7 @@ How do you prioritize and what action gives the highest chance of recovery?`,
             `Monitor remaining Tornado 1 ETH withdrawals for more post-mixer mistakes`,
 
           // ADDED: stablecoin freeze scoring criterion
-          \`Stablecoin freeze opportunity: 0xHOLD sends 500 ETH → Coinbase; 0xTORNADO_BAG funds may eventually reach USDT. At any point where funds appear as USDC/USDT in identifiable wallets, the student must identify Circle/Tether freeze as the fastest recovery option before mixer/bridge movement.\`,
+          \`Stablecoin freeze opportunity: 0xHOLD sends 500 ETH -> Coinbase; 0xTORNADO_BAG funds may eventually reach USDT. At any point where funds appear as USDC/USDT in identifiable wallets, the student must identify Circle/Tether freeze as the fastest recovery option before mixer/bridge movement.\`,
           \`For the Coinbase deposit specifically: this is not a stablecoin freeze (it's ETH) but IS a KYC exchange — contact Coinbase compliance immediately with the full chain proving 0xHOLD received funds from 0xBRIDGE_HACK.\`,
           ],
 
@@ -6379,12 +6379,12 @@ Tornado Cash (1 ETH pool) + ThorChain (cross-chain swap) + Wasabi CoinJoin (Bitc
 ### Fund Flow Map
 \`\`\`
 0xBRIDGE_HACK (3,000 ETH stolen)
-├── 0xTORNADO_BAG → Tornado Cash 1 ETH pool (1,500 deposits)
+├── 0xTORNADO_BAG -> Tornado Cash 1 ETH pool (1,500 deposits)
 │   └── [Monitor 12,000-person pool for 30 days]
 │       └── ⚠️ 0xW_EARLY re-linked to Binance pre-hack account
-├── 0xTHOR_BAG → ThorChain (09:20 UTC) → 1BTC_NEW (09:23 UTC, 30.5 BTC)
-│   └── Wasabi CoinJoin → 1BTC_OUT_3 → Kraken deposit
-└── 0xHOLD → Coinbase deposit (Day 8, 500 ETH, no mixing)
+├── 0xTHOR_BAG -> ThorChain (09:20 UTC) -> 1BTC_NEW (09:23 UTC, 30.5 BTC)
+│   └── Wasabi CoinJoin -> 1BTC_OUT_3 -> Kraken deposit
+└── 0xHOLD -> Coinbase deposit (Day 8, 500 ETH, no mixing)
 \`\`\`
 
 ### Mixer Analysis
@@ -6397,18 +6397,18 @@ Tornado Cash (1 ETH pool) + ThorChain (cross-chain swap) + Wasabi CoinJoin (Bitc
 
 ### Priority Leads
 
-1. **0xW_EARLY → Binance** (CRITICAL)
+1. **0xW_EARLY -> Binance** (CRITICAL)
    - Post-mixer mistake: used same Binance account as pre-hack wallet
    - Transaction hash: [hash]
    - Action: Contact Binance security immediately — OFAC Tornado provenance
 
-2. **0xHOLD → Coinbase** (URGENT)
+2. **0xHOLD -> Coinbase** (URGENT)
    - No mixing — direct trace from hack wallet
    - Transaction hash: [hash]
    - Action: Contact Coinbase security — OFAC Tornado provenance applies
 
-3. **1BTC_OUT_3 → Kraken** (HIGH)
-   - Full chain: Ethereum → ThorChain → CoinJoin → Kraken
+3. **1BTC_OUT_3 -> Kraken** (HIGH)
+   - Full chain: Ethereum -> ThorChain -> CoinJoin -> Kraken
    - Transaction hashes: [all hashes]
    - Action: Contact Kraken with complete chain documentation
 
@@ -6458,7 +6458,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
 
       A hacker will carefully use Tornado Cash to hide their money, then post on Twitter from the same username they use on GitHub, which has their real email, which was in a data breach, which leads to their Facebook, which has their photos.
 
-      [Image: A chain of connected platform icons — blockchain address → Twitter bird → GitHub octocat → email envelope → data breach warning → LinkedIn profile → real person photo. Caption: "One username. Seven platforms. One real person."]
+      [Image: A chain of connected platform icons — blockchain address -> Twitter bird -> GitHub octocat -> email envelope -> data breach warning -> LinkedIn profile -> real person photo. Caption: "One username. Seven platforms. One real person."]
 
       <div style="background:#e6f3ff; padding:15px; margin:20px 0; border-left:4px solid #1a56a0;">
         <strong>🔍 OSINT = Open Source Intelligence</strong>
@@ -6524,20 +6524,20 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
         {
           contextTag: `[The Frosties Rug Pull]`,
           context: `Two people stole $1.1M from an NFT project.`,
-          scenario: `Investigators traced deployer wallet → ENS name → Twitter → website → email → data breach → forum with real names.`,
+          scenario: `Investigators traced deployer wallet -> ENS name -> Twitter -> website -> email -> data breach -> forum with real names.`,
           outcome: `Ethan Nguyen and Andre Llacuna arrested. First NFT fraud charges in the US. Six independent OSINT steps from wallet to names.`,
         },
         {
           contextTag: `[The GitHub Commit]`,
           context: `A phishing contract contains a comment in the Solidity code: "// built by @moondev — questions? moondev@protonmail.com"`,
           scenario: `Investigator searches "moondev" on GitHub — finds an account with the same email in the commit history. GitHub profile links to a personal site. Site has a real name in the "About" page.`,
-          outcome: `One comment in contract code → GitHub → real name in under 10 minutes. Criminals often build habit of documenting their work even when they shouldn't.`,
+          outcome: `One comment in contract code -> GitHub -> real name in under 10 minutes. Criminals often build habit of documenting their work even when they shouldn't.`,
         },
         {
           contextTag: `[The Discord Brag]`,
           context: `A hacker steals $800k and goes quiet — no social media activity that investigators can find.`,
           scenario: `An investigator joins 15 crypto Discord servers related to the hacked protocol. Two weeks later, someone in a trading channel brags: "imagine rug pulling for 800k lmao" from an account with the same username pattern as the deployer wallet's ENS.`,
-          outcome: `Discord username → Twitter search → old tweet linking to GitHub → email in GitHub commit → identity confirmed.`,
+          outcome: `Discord username -> Twitter search -> old tweet linking to GitHub -> email in GitHub commit -> identity confirmed.`,
         },
       ],
 
@@ -6624,7 +6624,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
           3. What single piece of evidence would make this 99%?`,
 
           scoringCriteria: [
-            `1. Wallet → Twitter (deleted but archived) → GitHub → email → breach → LinkedIn → Alex Chen, Toronto`,
+            `1. Wallet -> Twitter (deleted but archived) -> GitHub -> email -> breach -> LinkedIn -> Alex Chen, Toronto`,
             `2. High confidence (85%+) — multiple independent paths all converge on same name`,
             `3. Exchange KYC confirming the wallet belongs to Alex Chen (Binance/Coinbase records)`,
           ],
@@ -6767,20 +6767,20 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
         {
           contextTag: `[The Domain Mistake]`,
           context: `A phishing contract contains a comment: "// Deployed by cryptodev.eth"`,
-          scenario: `Investigator searches "cryptodev.eth" → finds ENS domain → resolves to wallet → traces wallet to exchange withdrawal → searches "cryptodev" on WHOIS for any registered domains → finds cryptodev.io → WHOIS shows registrant email.`,
+          scenario: `Investigator searches "cryptodev.eth" -> finds ENS domain -> resolves to wallet -> traces wallet to exchange withdrawal -> searches "cryptodev" on WHOIS for any registered domains -> finds cryptodev.io -> WHOIS shows registrant email.`,
           outcome: `One comment led to real email. Google Dorking the email finds a LinkedIn with real name. Complete attribution in under an hour.`,
         },
         {
           contextTag: `[The Deleted Account Find]`,
           context: `A Twitter account @scam_dev posted a wallet address, then deleted the account before the investigator found it.`,
           scenario: `Investigator uses Wayback Machine on twitter.com/@scam_dev — finds an archived version from 3 weeks ago. Profile had a link to a GitHub page. GitHub is still live.`,
-          outcome: `Deleted account → archived version → GitHub still live → email in commit history → real name confirmed.`,
+          outcome: `Deleted account -> archived version -> GitHub still live -> email in commit history -> real name confirmed.`,
         },
         {
           contextTag: `[The Breach Link]`,
           context: `Investigator has a ProtonMail address from a contract comment: dev@protonmail.com.`,
           scenario: `ProtonMail is anonymous by design. But the investigator checks breach databases. The same email appears in a 2019 gaming forum breach — paired with a username "devmaster99." That username on Twitter has a full real name in the bio.`,
-          outcome: `Anonymous email → 5-year-old breach → old username → real name. Criminals forget which emails they used where.`,
+          outcome: `Anonymous email -> 5-year-old breach -> old username -> real name. Criminals forget which emails they used where.`,
         },
       ],
 
@@ -6862,7 +6862,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
           Map the full evidence chain. What's missing for 90% confidence?`,
 
           scoringCriteria: [
-            `Chain: Wallet → Twitter (archived) → GitHub username → email → breach → old Reddit → Alex from Toronto`,
+            `Chain: Wallet -> Twitter (archived) -> GitHub username -> email -> breach -> old Reddit -> Alex from Toronto`,
             `Current confidence: ~70-75% — multiple steps but not all independently confirmed`,
             `Missing: a direct link between "Alex from Toronto blockchain dev" and a full name — no last name yet`,
             `Missing: any corroboration of the Toronto location (LinkedIn, company, university)`,
@@ -6873,11 +6873,11 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
           type: `judgment-dataInterpret`,
           scenario: `An investigator is tracing a $1.2M NFT rug pull. They have the deployer wallet and this OSINT trail:
 
-          Step 1: ENS "rugmaster.eth" → resolves to deployer wallet
+          Step 1: ENS "rugmaster.eth" -> resolves to deployer wallet
           Step 2: Twitter @rugmaster promotes the NFT project
-          Step 3: @rugmaster profile picture → Yandex reverse image search → same image on VK profile "Ivan Petrov, Moscow"
+          Step 3: @rugmaster profile picture -> Yandex reverse image search -> same image on VK profile "Ivan Petrov, Moscow"
           Step 4: Ivan Petrov's VK lists employer: "Crypto Solutions LLC"
-          Step 5: Google search "Crypto Solutions LLC" → shell company with no web presence
+          Step 5: Google search "Crypto Solutions LLC" -> shell company with no web presence
 
           Evaluate each step for strength of evidence. What's the weakest link? What would you verify next?`,
 
@@ -7093,7 +7093,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
           3. What would you do next?`,
 
           scoringCriteria: [
-            `1. Telegram → GitHub (email) → VK (real name + city + matching photo) → breach (location hint) → LinkedIn (corroborates name + city + profession)`,
+            `1. Telegram -> GitHub (email) -> VK (real name + city + matching photo) -> breach (location hint) -> LinkedIn (corroborates name + city + profession)`,
             `2. High confidence (90%+) — four independent sources all converge on Sergei Ivanov, Moscow`,
             `3. Contact Sergei via email (serg.dev@gmail.com) with 48-hour responsible disclosure notice before publishing`,
           ],
@@ -7144,7 +7144,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
       title: `The Holy Grail: Getting KYC Data from Exchanges`,
       explanation: `Here's the truth: on-chain evidence can point to a person. But KYC data from exchanges PROVES it.
 
-      [Image: A flowchart showing: "Hack wallet → trace → exchange deposit → legal process → KYC data → real name + ID + address." Caption: "This is the whole game. Every investigation ends here."]
+      [Image: A flowchart showing: "Hack wallet -> trace -> exchange deposit -> legal process -> KYC data -> real name + ID + address." Caption: "This is the whole game. Every investigation ends here."]
 
       <div style="background:#e6f3ff; padding:15px; margin:20px 0; border-left:4px solid #1a56a0;">
         <strong>🏦 WHAT EXCHANGES KNOW:</strong>
@@ -7187,7 +7187,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
       <strong>WHAT EXCHANGES NEED FROM YOU:</strong>
 
       1. Transaction hashes (not just wallet addresses)
-      2. Complete chain of custody (this wallet → that wallet → exchange)
+      2. Complete chain of custody (this wallet -> that wallet -> exchange)
       3. Timestamps
       4. Amounts
       5. Description of crime
@@ -7379,7 +7379,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
         In 2022, an inexperienced investigator named someone in a hack. They were wrong. The person was innocent — their username had been impersonated.
 
         The aftermath:
-        - Defamation lawsuit → $150,000 in damages
+        - Defamation lawsuit -> $150,000 in damages
         - Death threats from angry community
         - Permanent reputation damage
         - Left the space entirely
@@ -7602,14 +7602,14 @@ Once the victim sends money, the fake platform shows fake profits to encourage l
 - Wallet farms: many addresses created with identical tiny funding amounts (e.g., exact same 0.002 SOL rent on Solana or identical TRX top-ups on Tron) and automated sending patterns.
 
 **Typical Money Flow:**
-Victim wallets → Collector layer (aggregation) → Master laundry wallet → Tron USDT layer → Exchange deposits or further laundering.
+Victim wallets -> Collector layer (aggregation) -> Master laundry wallet -> Tron USDT layer -> Exchange deposits or further laundering.
 
 **Investigator Workflow for Pig Butchering Cases:**
 
 1. Start from the victim wallet(s) the person reports.
 2. Trace all outbound transfers — they usually go to the same collector address.
 3. Cluster multiple victim wallets by shared collectors or timing.
-4. Look at the collector wallets for aggregation spikes (many inflows in short time → large outflow).
+4. Look at the collector wallets for aggregation spikes (many inflows in short time -> large outflow).
 5. Trace the large outflows to the next layer (often another set of collectors or direct to Tron bridge).
 6. On Tron, look for USDT transfers with similar patterns.
 7. Monitor the final exchange deposit addresses for freezes.
@@ -7660,7 +7660,7 @@ Operations run 24/7 with shift workers following scripts. Wallet creation and tr
     },
   ],
 
-  keyTakeaway: `Pig butchering is factory work, not random crime. Look for aggregation patterns (many small inflows → few large outflows), wallet farms with identical funding, and heavy Tron USDT usage. Combine victim timelines and chat details with on-chain clustering to map entire operations from victims to the exit layer.`,
+  keyTakeaway: `Pig butchering is factory work, not random crime. Look for aggregation patterns (many small inflows -> few large outflows), wallet farms with identical funding, and heavy Tron USDT usage. Combine victim timelines and chat details with on-chain clustering to map entire operations from victims to the exit layer.`,
 
   guidedPractice: [
     {
@@ -7735,7 +7735,7 @@ Questions:
 2. What does the rapid aggregation tell you?
 3. What is your next recommended action?`,
       scoringCriteria: [
-        `Victim layer → Collector layer (3 addresses) → Laundry/Master layer → Tron exit layer → Exchange`,
+        `Victim layer -> Collector layer (3 addresses) -> Laundry/Master layer -> Tron exit layer -> Exchange`,
         `Rapid aggregation indicates coordinated campaign, not random transfers`,
         `Next: alert the exchange with full cluster and victim evidence for freeze; continue clustering more victims`,
       ],
@@ -7804,7 +7804,7 @@ A DeFi protocol was rugged. You have:
 - Twitter @moondev_sol (archived): 1,200 followers, deleted post-rug
 - GitHub "moondev_sol": same avatar, email moon.dev@protonmail.com, links to moondev.xyz
 - WHOIS moondev.xyz: "Alex Chen, alex.chen@gmail.com, Toronto"
-- alex.chen@gmail.com in breach DB → LinkedIn "Alex Chen, Blockchain Developer, Toronto" (independently found)
+- alex.chen@gmail.com in breach DB -> LinkedIn "Alex Chen, Blockchain Developer, Toronto" (independently found)
 - Confidence: 92% — three independent paths
 
 CASE B — PIG BUTCHERING CLUSTER:
@@ -7829,12 +7829,12 @@ Questions for CASE B:
 
           scoringCriteria: [
             // Case A
-            \`Case A — Path 1: On-chain (0xRUG → 0xPREP Binance) → @moondev_sol comment → Twitter → GitHub → ProtonMail email\`,
-            \`Case A — Path 2: WHOIS moondev.xyz → "Alex Chen" + alex.chen@gmail.com (found independently from Path 1)\`,
-            \`Case A — Path 3: alex.chen@gmail.com in breach DB → LinkedIn "Alex Chen, Blockchain Developer, Toronto" — independent search, not derived from Paths 1 or 2\`,
+            \`Case A — Path 1: On-chain (0xRUG -> 0xPREP Binance) -> @moondev_sol comment -> Twitter -> GitHub -> ProtonMail email\`,
+            \`Case A — Path 2: WHOIS moondev.xyz -> "Alex Chen" + alex.chen@gmail.com (found independently from Path 1)\`,
+            \`Case A — Path 3: alex.chen@gmail.com in breach DB -> LinkedIn "Alex Chen, Blockchain Developer, Toronto" — independent search, not derived from Paths 1 or 2\`,
             \`Case A confidence: 92% — three independent paths converging on same identity. State as "92% confidence — three independent attribution paths; 8% residual uncertainty acknowledges possibility of planted false trail or mistaken identity"\`,
             // Case B
-            \`Case B layers: Victim wallets → 3 Collector addresses → 0xMASTER_PIG (master laundry) → Tron bridge → 8 Tron sub-wallets → Huobi deposit\`,
+            \`Case B layers: Victim wallets -> 3 Collector addresses -> 0xMASTER_PIG (master laundry) -> Tron bridge -> 8 Tron sub-wallets -> Huobi deposit\`,
             \`Automation evidence: 8 Tron wallets created with identical 50 TRX gas funding from same source = wallet farm; 6-hour aggregation intervals = scripted not manual; uniform distribution to 8 sub-wallets = automated splitting\`,
             \`Immediate actions: (1) Contact Tether compliance with victim evidence package + full Tron chain requesting freeze of 0xHUOBI_DEP; (2) Alert Huobi compliance with deposit tx hash and full tracing chain for account hold\`,
             \`Chat logs: provide timing correlation (deposit dates match pressure points in scammer conversation); prove fraudulent intent (promised guaranteed returns = securities fraud); combine with on-chain to create multi-evidence package for law enforcement\`,
@@ -7868,9 +7868,9 @@ Produce:
 2. Case B: Full layer map from victims to exchange; wallet farm evidence; immediate actions; evidence package summary for law enforcement\`,
 
           scoringCriteria: [
-            \`Case A paths: (1) SOLRUG1 → IPFS → GitHub nftbuilder_sol → Twitter @nftbuilder_sol; (2) Twitter archive → SingaporeBlockchainWeek speaker → "Ryan Tan"; (3) LinkedIn independent search "Ryan Tan Singapore NFT developer" → avatar match\`,
+            \`Case A paths: (1) SOLRUG1 -> IPFS -> GitHub nftbuilder_sol -> Twitter @nftbuilder_sol; (2) Twitter archive -> SingaporeBlockchainWeek speaker -> "Ryan Tan"; (3) LinkedIn independent search "Ryan Tan Singapore NFT developer" -> avatar match\`,
             \`Case A confidence: 88–92% — three paths converge on Ryan Tan, Singapore. Note: LinkedIn Result 1 must be distinguished from Results 2 and 3 (field + location match only for Result 1)\`,
-            \`Case B layer map: 31 victims → 4 collectors → 0xPIG_MASTER → USDC → Arbitrum bridge → Tron USDT → 12 Tron sub-wallets → Binance deposit\`,
+            \`Case B layer map: 31 victims -> 4 collectors -> 0xPIG_MASTER -> USDC -> Arbitrum bridge -> Tron USDT -> 12 Tron sub-wallets -> Binance deposit\`,
             \`Wallet farm evidence: 12 Tron wallets with identical 0.5 TRX dust from same creator = automated farm; 8-hour aggregation intervals = scripted operation; Arbitrum bridge + Tron conversion = professional laundering not amateur\`,
             \`Immediate actions: (1) Tether freeze request for Tron USDT layer with full chain; (2) Binance compliance alert with deposit tx; (3) Circle freeze for USDC on Arbitrum before it bridges (if still there)\`,
             \`LE package: victim statements (31 victims = significant criminal exposure), LinkedIn platform used (evidence of systematic targeting), chat logs showing guaranteed-return fraud, full on-chain cluster from victims to exchange deposits\`,
@@ -7891,10 +7891,10 @@ Produce:
 ## Date: [Completion Date]
 
 ## Case A — NFT Rug Attribution
-Attributed $4.8M Solana NFT rug to Ryan Tan, Singapore-based NFT developer, at 88–92% confidence across three independent paths: (1) on-chain → IPFS → GitHub; (2) archived tweet → conference speaker list; (3) independent LinkedIn search with avatar match.
+Attributed $4.8M Solana NFT rug to Ryan Tan, Singapore-based NFT developer, at 88–92% confidence across three independent paths: (1) on-chain -> IPFS -> GitHub; (2) archived tweet -> conference speaker list; (3) independent LinkedIn search with avatar match.
 
 ## Case B — Pig Butchering ($890,000 / 31 victims)
-Mapped complete industrial pig butchering operation: 31 victims → 4 collectors → master laundry → USDC → Arbitrum → Tron wallet farm (12 automated addresses) → Binance deposit. Wallet farm confirmed by identical 0.5 TRX dust funding. Victims contacted via LinkedIn by "trading advisor" promising 25% monthly returns.
+Mapped complete industrial pig butchering operation: 31 victims -> 4 collectors -> master laundry -> USDC -> Arbitrum -> Tron wallet farm (12 automated addresses) -> Binance deposit. Wallet farm confirmed by identical 0.5 TRX dust funding. Victims contacted via LinkedIn by "trading advisor" promising 25% monthly returns.
 
 ## Recovery Actions
 - Tether freeze request filed for Tron USDT layer
@@ -8452,7 +8452,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
       <div style="background:#e6f3ff; padding:15px; margin:20px 0; border-left:4px solid #1a56a0;">
         <strong>🔑 STEP 1: GET AN API KEY</strong>
 
-        Go to etherscan.io → Create account → API Keys → Create new key.
+        Go to etherscan.io -> Create account -> API Keys -> Create new key.
 
         Free tier: 5 requests/second, 100,000 requests/day. More than enough.
 
@@ -8803,7 +8803,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
         },
         {
           contextTag: `[The Unified Cross-Chain Script]`,
-          context: `Funds move ETH → BSC → Polygon → Arbitrum.`,
+          context: `Funds move ETH -> BSC -> Polygon -> Arbitrum.`,
           scenario: `Investigator writes one script using the CHAIN_APIS dictionary, traces across all four chains with one function call per hop. Entire cross-chain fund flow printed in 2 minutes.`,
           outcome: `Full cross-chain attribution documented. Single Python file does what 4 separate manual investigations would have taken days to complete.`,
         },
@@ -8877,7 +8877,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
       lessonSimulations: [
         {
           type: `sandbox-dataModel`,
-          scenario: `You need to trace funds through: Ethereum → Arbitrum → Polygon.
+          scenario: `You need to trace funds through: Ethereum -> Arbitrum -> Polygon.
 
           Write the pseudocode for a function called trace_cross_chain(start_wallet, chains) that:
           1. Accepts a starting wallet and a list of chains to check
@@ -8953,7 +8953,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
 
       Every time you drew: "0xA sends money to 0xB, which sends to 0xC" — that's a graph.
 
-      [Image: A directed graph with nodes labeled 0xA, 0xB, 0xC, 0xD. Arrows: A→B (1 ETH), B→C (0.9 ETH), B→D (0.09 ETH), with the arrow to D labeled "change." Caption: "Nodes are wallets. Edges are transactions. Direction shows money flow."]
+      [Image: A directed graph with nodes labeled 0xA, 0xB, 0xC, 0xD. Arrows: A->B (1 ETH), B->C (0.9 ETH), B->D (0.09 ETH), with the arrow to D labeled "change." Caption: "Nodes are wallets. Edges are transactions. Direction shows money flow."]
 
       <button onclick="showDefinition('node')">🔍 Node</button>
       <div id="node" style="display:none; background:#f0f0f0; padding:10px; margin:10px 0;">
@@ -8967,15 +8967,15 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
 
       <button onclick="showDefinition('directed-graph')">🔍 Directed Graph</button>
       <div id="directed-graph" style="display:none; background:#f0f0f0; padding:10px; margin:10px 0;">
-        <strong>Directed graph:</strong> A graph where edges have direction — A→B is different from B→A. Blockchain transactions are naturally directed — sender to receiver. In a directed graph, you can follow the direction of money flow.
+        <strong>Directed graph:</strong> A graph where edges have direction — A->B is different from B->A. Blockchain transactions are naturally directed — sender to receiver. In a directed graph, you can follow the direction of money flow.
       </div>
 
       <div style="background:#e6f3ff; padding:15px; margin:20px 0; border-left:4px solid #1a56a0;">
         <strong>📊 WHY GRAPH THEORY MATTERS:</strong>
 
         Once you model a cluster as a graph, you can answer questions like:
-        - Which wallet is most connected? (highest degree) → likely the master wallet
-        - Is there a path from wallet A to wallet B? → are they linked?
+        - Which wallet is most connected? (highest degree) -> likely the master wallet
+        - Is there a path from wallet A to wallet B? -> are they linked?
         - Are there separate sub-clusters? (connected components)
         - Which wallet is a "bridge" between clusters?
 
@@ -8992,7 +8992,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
 
         You have 50 wallets in a suspected cluster. Manually, you can't tell which is most central.
 
-        Python builds the graph → calculates degree for every node → returns: 0xMASTER has out-degree 47 (sent money to 47 other wallets).
+        Python builds the graph -> calculates degree for every node -> returns: 0xMASTER has out-degree 47 (sent money to 47 other wallets).
 
         That's your master wallet. Found in 0.01 seconds.
       </div>
@@ -9096,13 +9096,13 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
         {
           type: `sandbox-dataModel`,
           scenario: `You have 6 wallets and these transactions:
-          A → B: 1 ETH
-          A → C: 1 ETH
-          A → D: 1 ETH
-          B → E: 0.9 ETH
-          C → E: 0.9 ETH
-          D → E: 0.9 ETH
-          E → Binance: 2.7 ETH
+          A -> B: 1 ETH
+          A -> C: 1 ETH
+          A -> D: 1 ETH
+          B -> E: 0.9 ETH
+          C -> E: 0.9 ETH
+          D -> E: 0.9 ETH
+          E -> Binance: 2.7 ETH
 
           Draw the graph as a node/edge list. Calculate in-degree and out-degree for each node. Identify the role of each node.`,
 
@@ -9111,7 +9111,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
             `B, C, D: in-degree 1, out-degree 1 — intermediate wallets (layering)`,
             `E: in-degree 3, out-degree 1 — collection wallet`,
             `Binance: in-degree 1, out-degree unknown — exchange (exit point)`,
-            `The graph shows classic layering: A → 3 middle wallets → E → exchange`,
+            `The graph shows classic layering: A -> 3 middle wallets -> E -> exchange`,
           ],
         },
         {
@@ -9314,7 +9314,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
             `A — G.add_node("0xA", "0xB", 1.5)`,
             `B — G.add_edge("0xA", "0xB", weight=1.5)`,
             `C — G.transaction("0xA", "0xB", 1.5)`,
-            `D — G.insert("0xA → 0xB", 1.5)`,
+            `D — G.insert("0xA -> 0xB", 1.5)`,
           ],
           correct: 1,
           hint: `add_edge creates a connection between two nodes.`,
@@ -9860,7 +9860,7 @@ Mapped complete industrial pig butchering operation: 31 victims → 4 collectors
     description: 'Fifteen simulations across eight lessons and the boss battle. Builds Python automation skills from first script through multi-chain APIs, graph theory, NetworkX clustering, and Dune Analytics SQL.',
     scoringMode: 'cumulative',
     unlockCondition: 'Complete all lessons with 70%+ guided practice and 60%+ simulation scores',
-    difficultyRange: 'intermediate → advanced',
+    difficultyRange: 'intermediate -> advanced',
   },
 
       bossMode: {
@@ -10549,7 +10549,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
 
           scoringCriteria: [
             `Risk 1: Discord account created 3 days ago — almost certainly a throwaway or impersonation account`,
-            `Risk 2: Single evidence source (ENS → Discord match) — far below 90% threshold`,
+            `Risk 2: Single evidence source (ENS -> Discord match) — far below 90% threshold`,
             `Risk 3: Publication would make you famous for 24 hours but potentially liable for a lifetime`,
             `Correct action: decline to publish a name, tell journalist "investigation ongoing, no attribution yet"`,
             `Safe to publish: wallet evidence, on-chain flow, victim alert — without naming anyone`,
@@ -10672,7 +10672,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
         {
           contextTag: `[The Three-Path Attribution]`,
           context: `Investigator has a wallet linked to a suspicious operation.`,
-          scenario: `Path 1: ENS → Twitter → GitHub (email: dev@protonmail.com). Path 2: Contract WHOIS → domain registrant "Alex Chen." Path 3: Breach database links protonmail email to LinkedIn "Alex Chen, Toronto." Three completely independent paths, same destination.`,
+          scenario: `Path 1: ENS -> Twitter -> GitHub (email: dev@protonmail.com). Path 2: Contract WHOIS -> domain registrant "Alex Chen." Path 3: Breach database links protonmail email to LinkedIn "Alex Chen, Toronto." Three completely independent paths, same destination.`,
           outcome: `90%+ confidence. Each path reached Alex Chen independently. This is corroboration. Publish with confidence level stated.`,
         },
         {
@@ -10702,7 +10702,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
           ],
           correct: 1,
           hint: `Does B rely on A? Does C rely on B?`,
-          explanation: `B is correct. A chain of A→B→C is one path, not three. Corroboration requires THREE INDEPENDENT PATHS that each reach the same conclusion without relying on the others.`,
+          explanation: `B is correct. A chain of A->B->C is one path, not three. Corroboration requires THREE INDEPENDENT PATHS that each reach the same conclusion without relying on the others.`,
         },
         {
           question: `You have: (1) WHOIS domain registration with real name "Sam Park." (2) Independently, breach database links the wallet-associated email to LinkedIn "Sam Park, Seoul." (3) GitHub commit email (not masked) independently resolves to a repo with "Sam Park" in the README. Are these three independent?`,
@@ -10771,7 +10771,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
           3. What's your confidence level and why?`,
 
           scoringCriteria: [
-            `Evidence 1+2+3: one chain (ENS→Twitter→GitHub) — counts as ONE path`,
+            `Evidence 1+2+3: one chain (ENS->Twitter->GitHub) — counts as ONE path`,
             `Evidence 4: independent — found by searching GitHub domain directly, leads to WHOIS with real name`,
             `Evidence 5: independent — breach database + LinkedIn found by searching GitHub email separately`,
             `Three independent paths: Chain (1+2+3), WHOIS (4), Breach/LinkedIn (5)`,
@@ -10786,7 +10786,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
           Investigator A: "We have 6 data points all pointing to the suspect. That's 90%+ confidence."
           Investigator B: "We have ONE path with 6 links. That's 60% confidence at best."
 
-          The evidence: wallet → ENS → Twitter → GitHub → email → LinkedIn → real name.
+          The evidence: wallet -> ENS -> Twitter -> GitHub -> email -> LinkedIn -> real name.
 
           Who is right? Write your assessment.`,
 
@@ -10803,9 +10803,9 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
           type: `judgment-riskAssess`,
           scenario: `An investigator has these independent paths to "Maria Santos, Brazil":
 
-          Path 1: Blockchain → exchange deposit → Binance KYC (confirmed via law enforcement subpoena)
-          Path 2: Contract comment email → WHOIS → "Maria Santos"
-          Path 3: GitHub → independent breach DB lookup → LinkedIn "Maria Santos, São Paulo"
+          Path 1: Blockchain -> exchange deposit -> Binance KYC (confirmed via law enforcement subpoena)
+          Path 2: Contract comment email -> WHOIS -> "Maria Santos"
+          Path 3: GitHub -> independent breach DB lookup -> LinkedIn "Maria Santos, São Paulo"
 
           But Maria Santos is a very common Brazilian name. There could be hundreds of "Maria Santos" in São Paulo alone.
 
@@ -11058,7 +11058,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
         Date, time, transaction hash for every key event. No gaps. No vague "then funds moved" — every single hop.
 
         <strong>3. EVIDENCE CHAIN</strong>
-        On-chain first: wallet → wallet → exchange. Then OSINT: wallet → ENS → Twitter → WHOIS → name.
+        On-chain first: wallet -> wallet -> exchange. Then OSINT: wallet -> ENS -> Twitter -> WHOIS -> name.
 
         <strong>4. ATTRIBUTION + CONFIDENCE LEVEL</strong>
         "High confidence (91%) that [name] controlled wallet cluster based on: [evidence 1], [evidence 2], [evidence 3] — all independent."
@@ -11216,7 +11216,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
             `"probably to Binance based on similar cases" — must have actual transaction hash, not probability based on patterns`,
             `"100% sure" — no investigation is 100%. This language invites defamation liability.`,
             `"guy from Discord who was bragging" — this is a single source, and Discord username matching is weak evidence`,
-            `"linked to his Twitter" — this is a chain (ENS→Twitter), not independent corroboration`,
+            `"linked to his Twitter" — this is a chain (ENS->Twitter), not independent corroboration`,
             `"Case closed" — there is no Unknowns section, no confidence level, no next steps`,
             `No transaction hashes cited anywhere in the excerpt`,
           ],
@@ -11651,7 +11651,7 @@ Before publishing, what OPSEC issues exist and how do you fix each one?`,
     {
   id: 'solana-meme-coin-investigation',
   title: `From Suspicion to Publication — A Complete Solana Meme Coin Investigation`,
-  subtitle: `This is how real investigators work in 2025–2026. Suspicion → On-chain proof → Cluster → OSINT → Publication. Follow along step by step.`,
+  subtitle: `This is how real investigators work in 2025–2026. Suspicion -> On-chain proof -> Cluster -> OSINT -> Publication. Follow along step by step.`,
   difficulty: 'intermediate',
 
   explanation: `The most common investigation a new sleuth will do in 2025–2026 is a Solana meme coin rug or insider dump on pump.fun / Raydium.
@@ -11689,7 +11689,7 @@ Here is the exact ZachXBT-style workflow, applied end-to-end to a realistic case
 
 **Step 5: Evidence Package**
 - Screenshots of deployer wallet buying early, large sells at peak, wallet cluster diagram, previous rugs by same deployer.
-- Timeline: launch → hype → dump → crash.
+- Timeline: launch -> hype -> dump -> crash.
 
 **Step 6: Publication**
 - Write a clear thread: "Token XYZ — Full On-Chain Investigation"
@@ -11702,7 +11702,7 @@ Here is the exact ZachXBT-style workflow, applied end-to-end to a realistic case
 - Liquidity pull or heavy sell after reaching certain market cap.
 - Funds moved to Tron USDT or direct to CEX.
 
-> **[Image: Full timeline graphic: pump.fun launch → sniper buys → Twitter hype → dev sell-off → liquidity crash. With transaction links and wallet clusters highlighted. Caption: "From first block to rug in under 45 minutes — and how to prove it."]**
+> **[Image: Full timeline graphic: pump.fun launch -> sniper buys -> Twitter hype -> dev sell-off -> liquidity crash. With transaction links and wallet clusters highlighted. Caption: "From first block to rug in under 45 minutes — and how to prove it."]**
 
 > **[Pop-up Glossary: New terms introduced in this lesson]**
 **New terms:**
@@ -11864,7 +11864,7 @@ What do you do?`,
     description: 'Eighteen simulations across six lessons, the Lab 6 boss battle, and the Junior Final Boss. Each builds professional judgment — from evidence standards through responsible disclosure, report writing, and reputation building.',
     scoringMode: 'cumulative',
     unlockCondition: 'Complete all lessons with 70%+ guided practice and 60%+ simulation scores',
-    difficultyRange: 'intermediate → advanced',
+    difficultyRange: 'intermediate -> advanced',
   },
 
       bossMode: {
@@ -11883,8 +11883,8 @@ What do you do?`,
           description: 'Three-part challenge: write a professional report, make correct OPSEC decisions, and complete a Solana meme coin investigation. Hints available.',
 
           scenario: \`PART 1 — PROFESSIONAL REPORT (MoonYield $3.2M rug):
-On-chain: March 15, 14:23 UTC — 0xRUG drains 1,050 ETH (tx: 0xAAA111). 0xRUG → 0xPREP → Binance deposit. 0xPREP funded by Binance withdrawal 2 weeks before launch.
-OSINT: Path 1: Contract "@moondev_sol" → Twitter (archived) → GitHub (moon.dev@protonmail.com) → moondev.xyz. Path 2: WHOIS → "Alex Chen, alex.chen@gmail.com, Toronto". Path 3: alex.chen@gmail.com breach DB → LinkedIn "Alex Chen, Blockchain Developer, Toronto" (independent search). Confidence: 92%.
+On-chain: March 15, 14:23 UTC — 0xRUG drains 1,050 ETH (tx: 0xAAA111). 0xRUG -> 0xPREP -> Binance deposit. 0xPREP funded by Binance withdrawal 2 weeks before launch.
+OSINT: Path 1: Contract "@moondev_sol" -> Twitter (archived) -> GitHub (moon.dev@protonmail.com) -> moondev.xyz. Path 2: WHOIS -> "Alex Chen, alex.chen@gmail.com, Toronto". Path 3: alex.chen@gmail.com breach DB -> LinkedIn "Alex Chen, Blockchain Developer, Toronto" (independent search). Confidence: 92%.
 Disclosure: Email sent March 16 to alex.chen@gmail.com. No response by March 18.
 
 Write: (a) executive summary, (b) timeline with all tx signatures, (c) evidence rating for each of the 3 paths, (d) confidence statement.
@@ -11902,7 +11902,7 @@ New token $RUGPUMP launches on pump.fun. Data:
 - First 45 seconds: 5 wallets buy 71% of supply. All 5 were funded from same source wallet 2 hours before launch.
 - Price reaches $1.6M market cap in 14 minutes.
 - At $1.6M: all 5 wallets sell simultaneously. Liquidity removed.
-- Profit: 380 SOL sent to aggregator → Tron USDT → OKX deposit.
+- Profit: 380 SOL sent to aggregator -> Tron USDT -> OKX deposit.
 - OSINT: deployer address has 6 previous tokens on pump.fun, all rugged. Same Telegram group promoted all 7 tokens.
 
 Write: (a) what makes this a confirmed insider rug (not speculation), (b) your thread headline and first 3 points, (c) is this a serial rugger — how do you know?\`,
@@ -11910,7 +11910,7 @@ Write: (a) what makes this a confirmed insider rug (not speculation), (b) your t
           scoringCriteria: [
             // Part 1
             \`Executive summary: states who (Alex Chen / @moondev_sol), what (MoonYield $3.2M rug), when (March 15 14:23 UTC), confidence (92%), disclosure result (no response by March 18)\`,
-            \`Timeline: includes tx 0xAAA111 (drain), 0xRUG→0xPREP, 0xPREP→Binance deposit — all with UTC timestamps and hash references\`,
+            \`Timeline: includes tx 0xAAA111 (drain), 0xRUG->0xPREP, 0xPREP->Binance deposit — all with UTC timestamps and hash references\`,
             \`Evidence rating: Path 1 (strong — two digital sources); Path 2 (strong — independent domain registration); Path 3 (strong and independent — separate search not derived from Paths 1/2). All three correctly identified as independent\`,
             \`Confidence statement: "92% — three independent attribution paths. Residual 8% acknowledges possibility of false trail or mistaken identity"\`,
             // Part 2
@@ -11934,13 +11934,13 @@ Write: (a) what makes this a confirmed insider rug (not speculation), (b) your t
 
 ON-CHAIN:
 April 8, 08:15 UTC: Deployer SOLRUG withdraws all liquidity (sig: SIG111)
-SOLRUG → SOL_MID → SOL_COLLECT → OKX deposit (sig: SIG222)
+SOLRUG -> SOL_MID -> SOL_COLLECT -> OKX deposit (sig: SIG222)
 SOLRUG funded by OKX withdrawal 1 month before (sig: SIG000)
 
 OSINT:
-Path 1: Discord admin → GitHub @cosmicdev → commit email cosdev@protonmail.com
-Path 2: cosdev@protonmail.com breach DB → username "cosmicbuilder2019" → Twitter @cosmicbuilder2019 — bio: "Solana developer, London" — real name "James Park" in bio
-Path 3: Google "James Park Solana developer London" → LinkedIn "James Park, Solana Developer, London" — profile pic matches Discord admin
+Path 1: Discord admin -> GitHub @cosmicdev -> commit email cosdev@protonmail.com
+Path 2: cosdev@protonmail.com breach DB -> username "cosmicbuilder2019" -> Twitter @cosmicbuilder2019 — bio: "Solana developer, London" — real name "James Park" in bio
+Path 3: Google "James Park Solana developer London" -> LinkedIn "James Park, Solana Developer, London" — profile pic matches Discord admin
 
 Disclosure: cosdev@protonmail.com contacted April 9 14:00 UTC. Response April 9 22:00: "Wrong person. I was hacked." No evidence provided.
 Confidence: 89% (response noted but unverified — no exculpatory evidence provided)
@@ -11980,7 +11980,7 @@ Produce:
 ## Date: [Completion Date]
 
 ## Case: CosmicApes $900,000 Solana NFT Rug
-Attributed to James Park, Solana Developer, London at 89% confidence (raised to 92% with pump.fun pattern evidence). Three independent paths: Discord→GitHub→email; breach DB→Twitter (real name "James Park"); independent LinkedIn search (avatar match).
+Attributed to James Park, Solana Developer, London at 89% confidence (raised to 92% with pump.fun pattern evidence). Three independent paths: Discord->GitHub->email; breach DB->Twitter (real name "James Park"); independent LinkedIn search (avatar match).
 
 ## Professional Report Delivered
 - Full Solana transaction timeline: SIG000 (funding), SIG111 (drain), SIG222 (OKX deposit)
@@ -12040,18 +12040,18 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
             0xFAST_HACK (Ethereum, April 20, 11:00 UTC) drains 2,500 ETH from FastBridge
 
             Step 2 — Split:
-            - 0xFAST_HACK → 0xTOR_BAG: 1,200 ETH (April 20, 11:05 UTC)
-            - 0xFAST_HACK → 0xCROSS_BAG: 1,000 ETH (April 20, 11:06 UTC)
-            - 0xFAST_HACK → 0xHOLD: 300 ETH (April 20, 11:06 UTC, sits idle)
+            - 0xFAST_HACK -> 0xTOR_BAG: 1,200 ETH (April 20, 11:05 UTC)
+            - 0xFAST_HACK -> 0xCROSS_BAG: 1,000 ETH (April 20, 11:06 UTC)
+            - 0xFAST_HACK -> 0xHOLD: 300 ETH (April 20, 11:06 UTC, sits idle)
 
             Step 3 — Tornado (0xTOR_BAG):
             100 ETH × 12 deposits (April 20-21)
             100 ETH pool had 65 total depositors that week
 
             Step 4 — Cross-chain (0xCROSS_BAG):
-            April 20, 11:10 UTC: 1,000 ETH → ThorChain
+            April 20, 11:10 UTC: 1,000 ETH -> ThorChain
             April 20, 11:13 UTC: 30.2 BTC appears at 1BTC_CROSS from ThorChain (3 min gap, matching value)
-            1BTC_CROSS → Wasabi CoinJoin (April 21)
+            1BTC_CROSS -> Wasabi CoinJoin (April 21)
             CoinJoin output: 1BTC_OUT (1.49 BTC of the 30.2 BTC — track this slice)
 
             Step 5 — Binance deposit:
@@ -12062,10 +12062,10 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
             <strong>OSINT TRAIL:</strong>
 
             0xFAST_HACK's ENS: fastbridgedev.eth
-            fastbridgedev.eth → Twitter @fastbridgedev (3 years old, 2,400 followers)
-            Twitter @fastbridgedev → GitHub @fastbridgedev → commit email fdev@gmail.com
-            fdev@gmail.com → breach DB → LinkedIn "Marcus Webb, DeFi Developer, Berlin"
-            WHOIS for fastbridgedev.io (linked in GitHub README) → independently: "Marcus Webb, m.webb@gmail.com, Berlin" — different email, same name, different path
+            fastbridgedev.eth -> Twitter @fastbridgedev (3 years old, 2,400 followers)
+            Twitter @fastbridgedev -> GitHub @fastbridgedev -> commit email fdev@gmail.com
+            fdev@gmail.com -> breach DB -> LinkedIn "Marcus Webb, DeFi Developer, Berlin"
+            WHOIS for fastbridgedev.io (linked in GitHub README) -> independently: "Marcus Webb, m.webb@gmail.com, Berlin" — different email, same name, different path
             Confidence: 93%
 
             Responsible Disclosure: sent April 21 to fdev@gmail.com — no response by April 23
@@ -12098,7 +12098,7 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
               question: `Are the two OSINT paths genuinely independent? What's the confidence?`,
               hint: `Does either path rely on the other to reach Marcus Webb?`,
               lessonPointer: `Lab 6, Lesson 2 (evidence standards).`,
-              answer: `Path 1: ENS → Twitter → GitHub → email (fdev@gmail.com) → breach DB → LinkedIn (Marcus Webb, Berlin). Path 2: WHOIS of fastbridgedev.io → "Marcus Webb, m.webb@gmail.com, Berlin" (found by independently searching the domain from GitHub README — different email, same name, different source). Yes — genuinely independent. Path 2 uses a different email and a different investigative starting point. Together: 93% confidence. Strong corroboration.`,
+              answer: `Path 1: ENS -> Twitter -> GitHub -> email (fdev@gmail.com) -> breach DB -> LinkedIn (Marcus Webb, Berlin). Path 2: WHOIS of fastbridgedev.io -> "Marcus Webb, m.webb@gmail.com, Berlin" (found by independently searching the domain from GitHub README — different email, same name, different source). Yes — genuinely independent. Path 2 uses a different email and a different investigative starting point. Together: 93% confidence. Strong corroboration.`,
             },
             {
               id: 'fb-q5',
@@ -12126,14 +12126,14 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
             <strong>ON-CHAIN TRAIL:</strong>
 
             09:00 UTC: 0xCLEAR_HACK drains 1,800 ETH from ClearBridge
-            09:05 UTC: 0xCLEAR_HACK → 0xCLEAR_MID (1,800 ETH)
+            09:05 UTC: 0xCLEAR_HACK -> 0xCLEAR_MID (1,800 ETH)
             09:10 UTC: 0xCLEAR_MID:
-            - 900 ETH → Tornado Cash (100 ETH pool, 9 deposits, pool had 80 depositors that week)
-            - 900 ETH → Across Bridge (tx event shows destination: Optimism address 0xOPT_1)
+            - 900 ETH -> Tornado Cash (100 ETH pool, 9 deposits, pool had 80 depositors that week)
+            - 900 ETH -> Across Bridge (tx event shows destination: Optimism address 0xOPT_1)
 
             Optimism side:
             09:14 UTC: 0xOPT_1 receives 900 ETH equivalent on Optimism
-            09:30 UTC: 0xOPT_1 → Binance deposit on Optimism (Arkham-confirmed, tx: OPT_TX_1)
+            09:30 UTC: 0xOPT_1 -> Binance deposit on Optimism (Arkham-confirmed, tx: OPT_TX_1)
 
             Tornado side (later):
             Day 3: One Tornado withdrawal (0xW_TORNADO) sends proceeds to Coinbase deposit (tx: ETH_TX_2)
@@ -12142,11 +12142,11 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
             <strong>OSINT:</strong>
 
             0xCLEAR_HACK has ENS: cleardev.eth
-            cleardev.eth → Twitter @cleardev_xyz → GitHub @cleardev_xyz (commit email: cleardev@outlook.com)
+            cleardev.eth -> Twitter @cleardev_xyz -> GitHub @cleardev_xyz (commit email: cleardev@outlook.com)
 
             cleardev.eth registered domain: cleardev.io — WHOIS: "Sofia Ramirez, s.ramirez@gmail.com, Mexico City" (found independently by searching cleardev.io directly)
 
-            s.ramirez@gmail.com → LinkedIn "Sofia Ramirez, Smart Contract Developer, Mexico City" (found independently)
+            s.ramirez@gmail.com -> LinkedIn "Sofia Ramirez, Smart Contract Developer, Mexico City" (found independently)
 
             Confidence: 91% — two fully independent corroborated paths to Sofia Ramirez
             Disclosure: sent to cleardev@outlook.com, April 16 — no response
@@ -12156,17 +12156,17 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
 
           scoringCriteria: [
             // Chain identification
-            `Correctly identifies: Ethereum hack → split to Tornado (9×100 ETH) + Across Bridge (→ Optimism → Binance)`,
+            `Correctly identifies: Ethereum hack -> split to Tornado (9×100 ETH) + Across Bridge (-> Optimism -> Binance)`,
             // Across bridge link
             `Bridge event in Across Bridge transaction links 0xCLEAR_MID to 0xOPT_1 — direct cross-chain proof`,
             // Tornado analysis
             `80 depositors in 100 ETH pool = medium anonymity set. 0xW_TORNADO priority because: (a) deposits to Coinbase AND (b) received gas from 0xCLEAR_HACK = DIRECT RE-LINKING`,
             // Priority leads
-            `Priority 1: 0xW_TORNADO → Coinbase + gas refill from hack wallet — strongest evidence (re-linked) — contact Coinbase immediately with ETH_TX_2`,
-            `Priority 2: 0xOPT_1 → Binance Optimism deposit — contact Binance security with OPT_TX_1`,
+            `Priority 1: 0xW_TORNADO -> Coinbase + gas refill from hack wallet — strongest evidence (re-linked) — contact Coinbase immediately with ETH_TX_2`,
+            `Priority 2: 0xOPT_1 -> Binance Optimism deposit — contact Binance security with OPT_TX_1`,
             `Priority 3: Tornado funds have OFAC sanction provenance — Coinbase and Binance (US-regulated) must freeze`,
             // OSINT
-            `Two independent OSINT paths: (Path 1) GitHub → email → LinkedIn; (Path 2) WHOIS cleardev.io → Sofia Ramirez, different email`,
+            `Two independent OSINT paths: (Path 1) GitHub -> email -> LinkedIn; (Path 2) WHOIS cleardev.io -> Sofia Ramirez, different email`,
             `Confidence correctly assessed at 91%`,
             // Optimism note
             `Correctly handles Optimism — uses Optimistic Etherscan (optimistic.etherscan.io) or equivalent for OPT_TX_1 verification`,
@@ -12194,46 +12194,46 @@ ZachXBT professional report standard: evidence-first, factual claims only, indep
 ## Confidence Level: HIGH (91%)
 
 ### Executive Summary
-On May 15, 2024, $5.4M (1,800 ETH) was exploited from ClearBridge Protocol. Funds were split between Tornado Cash (Ethereum, OFAC sanctioned) and Across Bridge (→ Optimism → Binance). Attribution with high confidence (91%) to Sofia Ramirez, Smart Contract Developer, Mexico City. Subject was contacted and did not respond. Two urgent exchange leads documented below.
+On May 15, 2024, $5.4M (1,800 ETH) was exploited from ClearBridge Protocol. Funds were split between Tornado Cash (Ethereum, OFAC sanctioned) and Across Bridge (-> Optimism -> Binance). Attribution with high confidence (91%) to Sofia Ramirez, Smart Contract Developer, Mexico City. Subject was contacted and did not respond. Two urgent exchange leads documented below.
 
 ### Fund Flow
 \`\`\`
 0xCLEAR_HACK (1,800 ETH stolen)
 ├── 0xCLEAR_MID
-│   ├── 900 ETH → Tornado Cash (100 ETH pool, 9 deposits)
+│   ├── 900 ETH -> Tornado Cash (100 ETH pool, 9 deposits)
 │   │   └── ⚠️ 0xW_TORNADO re-linked: gas from 0xCLEAR_HACK + Coinbase deposit (ETH_TX_2)
-│   └── 900 ETH → Across Bridge → 0xOPT_1 (Optimism)
-│       └── → Binance deposit Optimism (OPT_TX_1)
+│   └── 900 ETH -> Across Bridge -> 0xOPT_1 (Optimism)
+│       └── -> Binance deposit Optimism (OPT_TX_1)
 \`\`\`
 
 ### Timeline
 | UTC | Event | Tx/Sig |
 |-----|-------|--------|
 | May 15, 09:00 | 0xCLEAR_HACK exploits ClearBridge (1,800 ETH) | [tx hash] |
-| May 15, 09:05 | → 0xCLEAR_MID | [tx hash] |
+| May 15, 09:05 | -> 0xCLEAR_MID | [tx hash] |
 | May 15, 09:10 | Split: Tornado (900 ETH) + Across Bridge (900 ETH) | [tx hashes] |
 | May 15, 09:14 | 0xOPT_1 receives on Optimism | OPT_TX_1 |
-| May 15, 09:30 | 0xOPT_1 → Binance deposit (Optimism) | OPT_TX_1 |
-| Day 3+1 | 0xCLEAR_HACK → 0xW_TORNADO: 0.05 ETH gas refill | [tx hash] |
-| Day 3 | 0xW_TORNADO → Coinbase deposit | ETH_TX_2 |
+| May 15, 09:30 | 0xOPT_1 -> Binance deposit (Optimism) | OPT_TX_1 |
+| Day 3+1 | 0xCLEAR_HACK -> 0xW_TORNADO: 0.05 ETH gas refill | [tx hash] |
+| Day 3 | 0xW_TORNADO -> Coinbase deposit | ETH_TX_2 |
 
 ### Evidence Chain
 
 **On-Chain:** Across Bridge event in May 15 tx directly links 0xCLEAR_MID to 0xOPT_1 on Optimism.
 **On-Chain:** 0xCLEAR_HACK funded 0xW_TORNADO with gas — DIRECT RE-LINK.
 
-**OSINT Path 1:** cleardev.eth → @cleardev_xyz → GitHub → cleardev@outlook.com → LinkedIn "Sofia Ramirez, Mexico City"
-**OSINT Path 2 (independent):** cleardev.io WHOIS → "Sofia Ramirez, s.ramirez@gmail.com, Mexico City"
+**OSINT Path 1:** cleardev.eth -> @cleardev_xyz -> GitHub -> cleardev@outlook.com -> LinkedIn "Sofia Ramirez, Mexico City"
+**OSINT Path 2 (independent):** cleardev.io WHOIS -> "Sofia Ramirez, s.ramirez@gmail.com, Mexico City"
 
 ### Attribution
 **HIGH CONFIDENCE (91%)**: Sofia Ramirez, Smart Contract Developer, Mexico City, controlled wallet 0xCLEAR_HACK.
 
 ### Priority Leads
 
-1. **0xW_TORNADO → Coinbase (ETH_TX_2)** [CRITICAL — gas re-link + exchange deposit]
+1. **0xW_TORNADO -> Coinbase (ETH_TX_2)** [CRITICAL — gas re-link + exchange deposit]
    Contact: coinbase.com/legal/law-enforcement | OFAC Tornado provenance applies
 
-2. **0xOPT_1 → Binance Optimism (OPT_TX_1)** [URGENT]
+2. **0xOPT_1 -> Binance Optimism (OPT_TX_1)** [URGENT]
    Contact: binance.com/en/support/requests/law-enforcement
    Note: transaction is on Optimism — use optimistic.etherscan.io to verify
 
@@ -12575,11 +12575,11 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
       <strong>STEP 1: CREATE YOUR TELEGRAM BOT (2 minutes)</strong>
 
       \`\`\`
-      1. Open Telegram → search @BotFather
+      1. Open Telegram -> search @BotFather
       2. Send: /newbot
-      3. Follow prompts → get your BOT_TOKEN
+      3. Follow prompts -> get your BOT_TOKEN
          (looks like: 123456789:AAH-abc123defGHIjkl)
-      4. Message @userinfobot → get your CHAT_ID
+      4. Message @userinfobot -> get your CHAT_ID
          (a number like: 987654321)
       \`\`\`
 
@@ -12826,7 +12826,7 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
             `Recognizes: hacker scripted this — three transactions in 89 seconds is automated, not manual`,
             `Identifies: Binance deposit at end of chain is the critical endpoint`,
             `Priority action: immediately submit Binance security report with all three transaction hashes`,
-            `Notes: 2 ETH "missing" (500 → 498) is gas fees across hops — not a second destination`,
+            `Notes: 2 ETH "missing" (500 -> 498) is gas fees across hops — not a second destination`,
             `Do NOT waste time tracing 0xNEW1 and 0xNEW2 — they are throwaway hops, Binance deposit is what matters`,
           ],
         },
@@ -13117,9 +13117,9 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
           Interpret the full picture. What is the hacker doing on each chain? What is the single most time-critical action?`,
 
           scoringCriteria: [
-            `Ethereum → ThorChain: cross-chain swap converting ETH to BTC (confirmed by matching values at 04:20)`,
-            `BSC → Binance: direct exchange deposit — KYC exchange, time-critical`,
-            `Most time-critical: BSC → Binance deposit — contact Binance security immediately with transaction hash`,
+            `Ethereum -> ThorChain: cross-chain swap converting ETH to BTC (confirmed by matching values at 04:20)`,
+            `BSC -> Binance: direct exchange deposit — KYC exchange, time-critical`,
+            `Most time-critical: BSC -> Binance deposit — contact Binance security immediately with transaction hash`,
             `Secondary: monitor ThorChain BTC output for any exchange deposits or mixer activity`,
             `Do NOT publicly post yet — tipping off hacker could cause Binance withdrawal cancellation`,
             `The Ethereum/Bitcoin leg is moving through ThorChain — timing/amount correlation documented for evidence`,
@@ -13191,7 +13191,7 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
               print(f"Discord alert failed: {e}")
       \`\`\`
 
-      No bot token, no BotFather, no permissions setup. Just a webhook URL and one function. To create a Discord webhook: Server Settings → Integrations → Webhooks → New Webhook → Copy URL.
+      No bot token, no BotFather, no permissions setup. Just a webhook URL and one function. To create a Discord webhook: Server Settings -> Integrations -> Webhooks -> New Webhook -> Copy URL.
 
       <strong>EMAIL ALERTS — FOR CLIENTS:</strong>
 
@@ -13462,10 +13462,10 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
 
       \`\`\`
       1. Sign up at pythonanywhere.com
-      2. Go to "Files" tab → Upload your monitoring script
+      2. Go to "Files" tab -> Upload your monitoring script
       3. Upload requirements.txt with: requests, python-telegram-bot
-      4. Open a Bash console → pip install -r requirements.txt
-      5. Go to "Tasks" tab → Add scheduled task:
+      4. Open a Bash console -> pip install -r requirements.txt
+      5. Go to "Tasks" tab -> Add scheduled task:
          Command: python3 /home/yourusername/monitor.py
          Frequency: Daily (runs once — use a loop inside your script)
          OR use Always-On task (paid) for true always-on
@@ -13477,11 +13477,11 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
 
       \`\`\`
       1. Create a GitHub repo with your monitoring script
-      2. Sign up at render.com → New → Background Worker
+      2. Sign up at render.com -> New -> Background Worker
       3. Connect your GitHub repo
       4. Set Build Command: pip install -r requirements.txt
       5. Set Start Command: python monitor.py
-      6. Deploy → it runs forever (free tier spins down after inactivity)
+      6. Deploy -> it runs forever (free tier spins down after inactivity)
       \`\`\`
 
       <strong>OPTION 3: VPS (PROFESSIONAL STANDARD)</strong>
@@ -13932,9 +13932,9 @@ This creates unique tracing challenges and opportunities for investigators.
 5. **Compromise Detection** — If a Safe suddenly moves funds with fewer signatures or new owners appear, it may have been compromised (via signer key theft or malicious proposal).
 
 **Common Investigation Scenarios:**
-- Protocol treasury Safe drained → Check if all required signers approved or if there was a governance attack.
-- Funds sent to a Safe → Treat the Safe as a potential mixing or custody layer.
-- Safe used by a criminal group → Map the owners (sometimes linked to known addresses via clustering).
+- Protocol treasury Safe drained -> Check if all required signers approved or if there was a governance attack.
+- Funds sent to a Safe -> Treat the Safe as a potential mixing or custody layer.
+- Safe used by a criminal group -> Map the owners (sometimes linked to known addresses via clustering).
 
 **Tools:**
 - Safe Web App (app.safe.global) — best for viewing owners and history.
@@ -14150,7 +14150,7 @@ Answer:
 
       scoringCriteria: [
         \`WATCHLIST: {"ethereum": [4 hack addresses + safe address], "bsc": [2 hack addresses]} — safe address included in Ethereum list\`,
-        \`CHAIN_CHECKERS: ethereum → check_evm("ethereum"), bsc → check_evm("bsc") — correct mapping\`,
+        \`CHAIN_CHECKERS: ethereum -> check_evm("ethereum"), bsc -> check_evm("bsc") — correct mapping\`,
         \`Check interval: 10 minutes — justified by exchange withdrawal timing\`,
         \`dispatch_alert(): Telegram always + Discord always + email only at 8 AM\`,
         \`Mempool monitoring: subscribes to pending transactions via WebSocket (Alchemy/Infura) and filters for from_address in hack wallets OR to_address == Safe, where gas_price > 5 * network_average\`,
@@ -15148,11 +15148,11 @@ VPS + PM2 (pm2 start, pm2 save, pm2 startup). Tron monitoring via Tronscan API (
           type: `judgment-dataInterpret`,
           scenario: `Your Streamlit dashboard alerts tab shows these 5 alerts from the last 24 hours for a $5M hack you are investigating:
 
-          Alert 1: 0xHACK → 0xNEW1: 500 ETH (04:12 UTC)
-          Alert 2: 0xNEW1 → Tornado (100 ETH pool): 100 ETH (04:14 UTC)
-          Alert 3: 0xNEW1 → Tornado (100 ETH pool): 100 ETH (04:15 UTC)
-          Alert 4: 0xNEW1 → Tornado (100 ETH pool): 100 ETH (04:16 UTC)
-          Alert 5: 0xNEW1 → 0xRESIDUAL: 200 ETH (04:17 UTC)
+          Alert 1: 0xHACK -> 0xNEW1: 500 ETH (04:12 UTC)
+          Alert 2: 0xNEW1 -> Tornado (100 ETH pool): 100 ETH (04:14 UTC)
+          Alert 3: 0xNEW1 -> Tornado (100 ETH pool): 100 ETH (04:15 UTC)
+          Alert 4: 0xNEW1 -> Tornado (100 ETH pool): 100 ETH (04:16 UTC)
+          Alert 5: 0xNEW1 -> 0xRESIDUAL: 200 ETH (04:17 UTC)
 
           What is the hacker doing? What is missing from your monitoring? What should the graph tab show?`,
 
@@ -15160,7 +15160,7 @@ VPS + PM2 (pm2 start, pm2 save, pm2 startup). Tron monitoring via Tronscan API (
             `Hacker moved 500 ETH to 0xNEW1, then deposited 300 ETH into Tornado (3 × 100 ETH) within 3 minutes`,
             `200 ETH residual in 0xRESIDUAL — not yet mixed — this is a direct lead`,
             `Missing from monitoring: 0xRESIDUAL is not in the watchlist — need to add it immediately`,
-            `Graph tab should show: 0xHACK → 0xNEW1 → Tornado (×3) + 0xNEW1 → 0xRESIDUAL`,
+            `Graph tab should show: 0xHACK -> 0xNEW1 -> Tornado (×3) + 0xNEW1 -> 0xRESIDUAL`,
             `Most urgent action: add 0xRESIDUAL to watchlist AND check if it has made any exchange deposits`,
             `The 3-minute Tornado deposit sequence is scripted — consistent with automated laundering`,
           ],
@@ -15733,7 +15733,7 @@ Questions:
         \`Semaphore: 5 per chain (Etherscan/BscScan free tier rate limit) — explicitly justified by API constraints\`,
         \`Indexes: from_address (lookup speed), to_address (lookup speed), block_time (date range queries) — all three with rationale\`,
         \`@st.cache_resource on database connection function — prevents reconnection on every user interaction\`,
-        \`entry_points: monitor → cli:run_monitor, dashboard → cli:run_dashboard\`,
+        \`entry_points: monitor -> cli:run_monitor, dashboard -> cli:run_dashboard\`,
         \`Biggest risk: database performance at 5M rows — mitigated by indexes + partitioning by chain or month\`,
         // Professional report
         \`Independent verification: (1) manually trace the 3 Tornado hops on Etherscan to confirm; (2) check 0xSANCTIONED against OFAC SDN list directly; (3) pull 47 transactions yourself to confirm high-velocity pattern\`,
@@ -16111,8 +16111,8 @@ Recommended treating the 84/100 score as warranting investigation (based on high
       | Date/Time (UTC)      | Event                          | Tx Hash         | Amount    |
       |----------------------|--------------------------------|-----------------|-----------|
       | 2024-03-15 14:23:07  | Exploit transaction executed   | 0xEXPLOIT...   | 1,800 ETH |
-      | 2024-03-15 14:31:44  | Split: 900 ETH → 0xSPLIT1     | 0xSPLIT_A...   | 900 ETH   |
-      | 2024-03-15 14:31:52  | Split: 900 ETH → 0xSPLIT2     | 0xSPLIT_B...   | 900 ETH   |
+      | 2024-03-15 14:31:44  | Split: 900 ETH -> 0xSPLIT1     | 0xSPLIT_A...   | 900 ETH   |
+      | 2024-03-15 14:31:52  | Split: 900 ETH -> 0xSPLIT2     | 0xSPLIT_B...   | 900 ETH   |
       | 2024-03-15–16 14:45– | Tornado Cash deposits (×9)     | 0xTORN_1-9...  | 900 ETH   |
       | 2024-03-18 09:15:33  | Binance deposit — 0xBIN_DEP1  | 0xBIN_TX1...   | 287 ETH   |
       \`\`\`
@@ -16306,7 +16306,7 @@ Recommended treating the 84/100 score as warranting investigation (based on high
 
       For blockchain evidence, this is actually easier than physical evidence in one key way: the evidence is immutable and publicly verifiable. Transaction hashes on the blockchain cannot be altered. The challenge is proving that YOUR record of that evidence has not been altered.
 
-      [Image: A diagram showing four steps in sequence: "Evidence discovered" → "Evidence recorded (with timestamp)" → "Evidence hashed and stored" → "Evidence handed to law enforcement (with receipt)." Caption: "Documentation at each step is what makes evidence court-admissible."]
+      [Image: A diagram showing four steps in sequence: "Evidence discovered" -> "Evidence recorded (with timestamp)" -> "Evidence hashed and stored" -> "Evidence handed to law enforcement (with receipt)." Caption: "Documentation at each step is what makes evidence court-admissible."]
 
       <button onclick="showDefinition('chain-of-custody-def')">🔍 Chain of Custody</button>
       <div id="chain-of-custody-def" style="display:none; background:#f0f0f0; padding:10px; margin:10px 0;">
@@ -16787,9 +16787,9 @@ Recommended treating the 84/100 score as warranting investigation (based on high
           Suspect: "Marcus Webb, DeFi Developer, Berlin, Germany"
           Confidence: 93%
           Independent evidence paths:
-          Path 1: Contract comment "// dev: fastbridgedev.eth" → ENS resolves to deployer wallet → Twitter @fastbridgedev (archived) → GitHub @fastbridgedev → commit email fdev@gmail.com → breach DB → LinkedIn "Marcus Webb, Berlin" (Exhibit C through F)
-          Path 2: WHOIS fastbridgedev.io (linked in GitHub README) → "Marcus Webb, m.webb@gmail.com, Berlin" (Exhibit G — independent, different email)
-          Path 3: GitHub email fdev@gmail.com → breach DB → LinkedIn corroboration (Exhibit H)
+          Path 1: Contract comment "// dev: fastbridgedev.eth" -> ENS resolves to deployer wallet -> Twitter @fastbridgedev (archived) -> GitHub @fastbridgedev -> commit email fdev@gmail.com -> breach DB -> LinkedIn "Marcus Webb, Berlin" (Exhibit C through F)
+          Path 2: WHOIS fastbridgedev.io (linked in GitHub README) -> "Marcus Webb, m.webb@gmail.com, Berlin" (Exhibit G — independent, different email)
+          Path 3: GitHub email fdev@gmail.com -> breach DB -> LinkedIn corroboration (Exhibit H)
 
           Write the affidavit section with proper numbered paragraphs, exhibit references, and appropriate epistemic language.`,
 
@@ -17754,7 +17754,7 @@ Law enforcement evidence standards: chain of custody documentation, affidavit ep
       Tax is calculated on the USD fair market value at the time you receive it.
 
       If ETH appreciates after you receive it:
-      → Additional capital gains tax when you sell
+      -> Additional capital gains tax when you sell
 
       Example:
       - You receive 10 ETH as a bounty when ETH = $2,000 = $20,000 income
@@ -17950,7 +17950,7 @@ Law enforcement evidence standards: chain of custody documentation, affidavit ep
             `Now: sell enough ETH to cover the tax bill — you realise a capital loss (paid $200k, selling at $112.5k = $87.5k loss that can offset other gains)`,
             `Now: consult an accountant — there may be instalment payment options with the IRS`,
             `Lesson: never hold crypto received as income without setting aside the tax obligation in fiat immediately`,
-            `Rule: receive payment → immediately convert 35% to stablecoin or fiat → put in tax account`,
+            `Rule: receive payment -> immediately convert 35% to stablecoin or fiat -> put in tax account`,
           ],
         },
       ],
@@ -18177,7 +18177,7 @@ Small business formation, professional services pricing, client relationship man
 
         <strong>Signature on-chain patterns:</strong>
         - Entry via social engineering, not code exploits (fake LinkedIn job offers to developers)
-        - Hack → 5-10 equal-split wallets within the same block or 2-3 minutes
+        - Hack -> 5-10 equal-split wallets within the same block or 2-3 minutes
         - Rapid first-hop within 5 minutes: bridge to Arbitrum, Optimism, or BSC
         - Preferred mixing: 100 ETH Tornado Cash pool, then Wasabi CoinJoin on Bitcoin
         - Final cashout: Chinese OTC brokers via Huobi and smaller Asian exchanges
@@ -18249,7 +18249,7 @@ Small business formation, professional services pricing, client relationship man
         {
           contextTag: `[Intelligence Analyst, Harmony Horizon Bridge, $100M Lazarus Group, 2022]`,
           context: `In June 2022, $100M was stolen from the Harmony Horizon Bridge. Attribution to Lazarus was complicated by the use of multiple mixing layers before any exchange contact.`,
-          scenario: `An analyst reconstructed the laundering route: hack wallet → 14 equal splits (each ~$7M) → Tornado Cash 100 ETH pool over 5 days → fresh wallets → Bitcoin via ThorChain → Wasabi CoinJoin. The analyst identified that every Tornado Cash deposit was made between 00:15 and 07:45 UTC — consistent with Pyongyang working hours — and that the same ThorChain liquidity pool routing had been used in the KuCoin cashout 2 years earlier.`,
+          scenario: `An analyst reconstructed the laundering route: hack wallet -> 14 equal splits (each ~$7M) -> Tornado Cash 100 ETH pool over 5 days -> fresh wallets -> Bitcoin via ThorChain -> Wasabi CoinJoin. The analyst identified that every Tornado Cash deposit was made between 00:15 and 07:45 UTC — consistent with Pyongyang working hours — and that the same ThorChain liquidity pool routing had been used in the KuCoin cashout 2 years earlier.`,
           outcome: `The behavioral and temporal fingerprints — despite no direct wallet link to previous Lazarus hacks — were sufficient for the FBI to issue a public statement attributing the hack to Lazarus Group in January 2023. The 7-month gap between theft and attribution reflected the patience required to build the temporal evidence base.`,
         },
         {
@@ -18328,12 +18328,12 @@ Small business formation, professional services pricing, client relationship man
       lessonSimulations: [
         {
           type: 'judgment-riskAssess',
-          scenario: `You are analysing a $180M DeFi bridge hack. Transaction data shows: 10 equal splits within 6 minutes of the exploit; all movements occur between 23:50–07:45 UTC; the funding wallet for the hack address also funded a wallet used in a 2021 exchange hack where Lazarus attribution was confirmed by the FBI. The laundering route goes: Ethereum → ThorChain → Bitcoin → Wasabi CoinJoin → 3 unknown addresses.
+          scenario: `You are analysing a $180M DeFi bridge hack. Transaction data shows: 10 equal splits within 6 minutes of the exploit; all movements occur between 23:50–07:45 UTC; the funding wallet for the hack address also funded a wallet used in a 2021 exchange hack where Lazarus attribution was confirmed by the FBI. The laundering route goes: Ethereum -> ThorChain -> Bitcoin -> Wasabi CoinJoin -> 3 unknown addresses.
 
           You must produce an attribution assessment. State: (1) your confidence level (expressed as a percentage), (2) the three strongest evidence points, (3) what additional evidence would raise your confidence, and (4) your recommended immediate action (OFAC package, FBI referral, public publication, or hold).`,
           scoringCriteria: [
             `Confidence level stated as a percentage — not "high" or "medium" — with explicit reasoning`,
-            `Three fingerprint categories named correctly: infrastructure reuse (wallet link to 2021 hack), timing pattern (UTC window consistent with Pyongyang hours), laundering signature (ThorChain → Bitcoin → Wasabi — documented Lazarus route)`,
+            `Three fingerprint categories named correctly: infrastructure reuse (wallet link to 2021 hack), timing pattern (UTC window consistent with Pyongyang hours), laundering signature (ThorChain -> Bitcoin -> Wasabi — documented Lazarus route)`,
             `Additional evidence identified: code signatures in exploit contract, OTC broker identification at Bitcoin cashout end, secondary timing analysis`,
             `Recommended action: OFAC package + FBI referral simultaneously — justified by existing direct wallet link meeting sanction threshold`,
             `No public publication recommended at this stage — stated reason: early publication risks fund movement before freeze`,
@@ -18469,7 +18469,7 @@ Small business formation, professional services pricing, client relationship man
         - Rarely use 10 ETH or 1 ETH pools — they value anonymity set size over speed
 
         <strong>Phase 3c — Months 1–3: Bitcoin conversion</strong>
-        - ETH → BTC via ThorChain (most used) or RenBridge (pre-shutdown)
+        - ETH -> BTC via ThorChain (most used) or RenBridge (pre-shutdown)
         - Wasabi CoinJoin on Bitcoin
         - Multiple CoinJoin rounds on the same UTXO cluster
 
@@ -18552,13 +18552,13 @@ Small business formation, professional services pricing, client relationship man
           question: `You are monitoring a wallet that received Tornado Cash withdrawals with timing consistent with Lazarus hack deposits from 6 weeks ago. The wallet now sends all its ETH to ThorChain for BTC conversion. What does this post-withdrawal routing add to your attribution case?`,
           options: [
             `A — Nothing — ThorChain is used by millions of users`,
-            `B — It is a laundering signature fingerprint: ETH → ThorChain → BTC is a documented Lazarus laundering route used in the Harmony Horizon and KuCoin hacks`,
+            `B — It is a laundering signature fingerprint: ETH -> ThorChain -> BTC is a documented Lazarus laundering route used in the Harmony Horizon and KuCoin hacks`,
             `C — It proves the hack proceeds are now in Bitcoin`,
             `D — It indicates the hacker will soon use Wasabi CoinJoin`,
           ],
           correct: 1,
           hint: `Does the routing pattern match Lazarus's documented Stage 3c behaviour across multiple confirmed attributions?`,
-          explanation: `B is correct. The routing ETH → ThorChain → BTC is not generic behaviour — it is specifically documented as Lazarus's preferred cross-chain route in multiple confirmed attributions. While millions use ThorChain, the combination of: (1) withdrawal timing consistent with Lazarus deposits, (2) immediate ThorChain routing post-withdrawal, creates a compound fingerprint. Each individual element is probabilistic. Layered together — timing, routing, subsequent Wasabi CoinJoin — they form the laundering signature that supports attribution. D is a reasonable inference but is not the primary analytical value of this observation.`,
+          explanation: `B is correct. The routing ETH -> ThorChain -> BTC is not generic behaviour — it is specifically documented as Lazarus's preferred cross-chain route in multiple confirmed attributions. While millions use ThorChain, the combination of: (1) withdrawal timing consistent with Lazarus deposits, (2) immediate ThorChain routing post-withdrawal, creates a compound fingerprint. Each individual element is probabilistic. Layered together — timing, routing, subsequent Wasabi CoinJoin — they form the laundering signature that supports attribution. D is a reasonable inference but is not the primary analytical value of this observation.`,
         },
         {
           question: `A researcher says: "I've attributed this hack to Lazarus with 95% confidence based on timing alone — every transaction was in the 00:00–08:00 UTC window." What is the correct response to this attribution claim?`,
@@ -18726,7 +18726,7 @@ Small business formation, professional services pricing, client relationship man
         def lazarus_timing_score(transaction_timestamps_utc):
             """
             Calculate percentage of transactions in DPRK working hours window.
-            Pyongyang UTC+9 → 9 AM–5 PM Pyongyang = 00:00–08:00 UTC.
+            Pyongyang UTC+9 -> 9 AM–5 PM Pyongyang = 00:00–08:00 UTC.
             Sunday inactivity: North Korea treats Sunday as rest day.
             """
             if not transaction_timestamps_utc:
@@ -18754,9 +18754,9 @@ Small business formation, professional services pricing, client relationship man
 
         | Step | Lazarus Preferred Method | Alternative that would weaken attribution |
         |------|--------------------------|------------------------------------------|
-        | 1 | Cross-chain bridge (Ethereum → BSC/Arbitrum) | Staying on Ethereum |
+        | 1 | Cross-chain bridge (Ethereum -> BSC/Arbitrum) | Staying on Ethereum |
         | 2 | 100 ETH Tornado Cash pool | 10 ETH or 1 ETH pool |
-        | 3 | ThorChain ETH → BTC swap | RenBridge or direct exchange |
+        | 3 | ThorChain ETH -> BTC swap | RenBridge or direct exchange |
         | 4 | Wasabi CoinJoin (Bitcoin) | Bitcoin mixer or direct exchange |
         | 5 | Chinese OTC (Huobi, OKX) | Western exchange or P2P |
 
@@ -18824,7 +18824,7 @@ Small business formation, professional services pricing, client relationship man
           explanation: `B is correct. Proprietary algorithmic confidence scores cannot be independently verified — they cannot be challenged by a defense expert in court because the methodology is not disclosed. The spec's Verifiability Rule requires that every conclusion be defensible against published standards. If the vendor's 92% is based on infrastructure reuse linking to an OFAC SDN address, that is verifiable — you can confirm it independently. If it is solely based on a proprietary pattern-match algorithm, it is not actionable for OFAC or court proceedings without the underlying on-chain evidence.`,
         },
         {
-          question: `You are preparing a court-ready attribution report for a $400M hack. You want to present the laundering signature fingerprint. The laundering route is: ETH → ThorChain → BTC → Wasabi → Huobi. Which published standard or document should you cite as the reference for this being a Lazarus signature?`,
+          question: `You are preparing a court-ready attribution report for a $400M hack. You want to present the laundering signature fingerprint. The laundering route is: ETH -> ThorChain -> BTC -> Wasabi -> Huobi. Which published standard or document should you cite as the reference for this being a Lazarus signature?`,
           options: [
             `A — Your own previous investigation reports`,
             `B — The DOJ February 2021 DPRK indictment exhibits and the OFAC April 2022 Ronin Bridge sanction statement — both publicly filed and cite this route specifically`,
@@ -19120,7 +19120,7 @@ Small business formation, professional services pricing, client relationship man
             `Correctly computes existing_sdns_in_cluster: addresses in hack_cluster that ARE in confirmed_sanctions_db (set intersection)`,
             `has_direct_sdn_link: boolean — True only if existing_sdns_in_cluster is non-empty`,
             `nomination_count: len(wallets_to_nominate) — integer`,
-            `Handles empty inputs: both empty → all fields empty/zero/False — no exception raised`,
+            `Handles empty inputs: both empty -> all fields empty/zero/False — no exception raised`,
           ],
         },
       ],
@@ -19170,7 +19170,7 @@ Small business formation, professional services pricing, client relationship man
       - 0xORIGIN_1 appears in the DOJ's February 2021 DPRK indictment exhibits as "infrastructure wallet"
       - The hack produced 8 equal splits (47,500 ETH each) within 6 minutes
       - 91% of subsequent transactions occurred in the 00:00–08:00 UTC window
-      - Laundering route: Ethereum → BSC via Celer → Tornado 100 ETH pool (x38 deposits over 10 days) → ThorChain → Bitcoin → Wasabi CoinJoin → 12 unknown outputs
+      - Laundering route: Ethereum -> BSC via Celer -> Tornado 100 ETH pool (x38 deposits over 10 days) -> ThorChain -> Bitcoin -> Wasabi CoinJoin -> 12 unknown outputs
       - No code signature available (exploit was via compromised validator keys, not a smart contract)
 
       Produce:
@@ -20133,7 +20133,7 @@ Four-fingerprint attribution methodology: infrastructure reuse, code signatures,
       5. Launch readiness verdict and the specific conditions required`,
 
       scoringCriteria: [
-        `Critical finding 1: single-EOA admin — one compromised key = complete protocol control; PoC: attacker compromises admin key → calls release(attacker, totalBalance, validSig) → all funds drained`,
+        `Critical finding 1: single-EOA admin — one compromised key = complete protocol control; PoC: attacker compromises admin key -> calls release(attacker, totalBalance, validSig) -> all funds drained`,
         `Critical finding 2: signature replay attack — no nonce or chainId in message hash; PoC: attacker records a valid signed release message for amount X, replays it repeatedly to drain locked[user] to zero`,
         `Critical finding 3: no rate limiter on release — admin can release all locked funds in a single call`,
         `High finding: no events emitted — all operations dark; CDN Intercom = medium (supply chain risk)`,
@@ -20381,7 +20381,7 @@ Investigator's security review methodology: attacker perspective vulnerability a
           ],
           correct: 1,
           hint: `What does amount correlation add to timing correlation, and what is still missing for definitive attribution?`,
-          explanation: `B is correct. Timing plus amount (100 ZEC → 95 ZEC minus fees) is compelling circumstantial evidence. It is not definitive because other pool participants may have transacted similar amounts in the same period. The strongest next step is subpoenaing the exchange that received the t-address deposit — KYC confirmation converts this from circumstantial to attribution-grade.`,
+          explanation: `B is correct. Timing plus amount (100 ZEC -> 95 ZEC minus fees) is compelling circumstantial evidence. It is not definitive because other pool participants may have transacted similar amounts in the same period. The strongest next step is subpoenaing the exchange that received the t-address deposit — KYC confirmation converts this from circumstantial to attribution-grade.`,
         },
       ],
 
@@ -20589,7 +20589,7 @@ Investigator's security review methodology: attacker perspective vulnerability a
       lessonSimulations: [
         {
           type: 'judgment-riskAssess',
-          scenario: `You are investigating a $20M ransomware case. The attacker took these steps: (1) received BTC → converted to XMR via Kraken; (2) held XMR for 6 months; (3) sold XMR via LocalMonero (P2P, cash deal, no KYC); (4) withdrew cash.
+          scenario: `You are investigating a $20M ransomware case. The attacker took these steps: (1) received BTC -> converted to XMR via Kraken; (2) held XMR for 6 months; (3) sold XMR via LocalMonero (P2P, cash deal, no KYC); (4) withdrew cash.
 
           Assess what is traceable, what is not, and provide your recommended action sequence.`,
           scoringCriteria: [
@@ -20690,7 +20690,7 @@ Investigator's security review methodology: attacker perspective vulnerability a
         2. Change address tracking: 28% of transactions had identifiable change outputs
         3. Tracked change outputs through subsequent rounds
         4. After 4–6 rounds, change addresses appeared in exchange deposits
-        5. Subpoenaed 3 exchanges → KYC identified the group
+        5. Subpoenaed 3 exchanges -> KYC identified the group
 
         CoinJoin was not broken cryptographically. It was broken through change address persistence across multiple rounds.
       </div>
@@ -20869,9 +20869,9 @@ Investigator's security review methodology: attacker perspective vulnerability a
       1. Stole $50M ETH
       2. Five deposits of 100 ETH into Tornado Cash 100 ETH pool over 2 days
       3. Three wallets emerged from Tornado withdrawals over 14 days: 0xTC1, 0xTC2, 0xTC3
-      4. 0xTC1 → ThorChain → Monero (XMR address unknown)
-      5. 0xTC2 → ThorChain → BTC → Wasabi CoinJoin (8 rounds completed)
-      6. 0xTC3 → bridged to Optimism; currently holds $9M
+      4. 0xTC1 -> ThorChain -> Monero (XMR address unknown)
+      5. 0xTC2 -> ThorChain -> BTC -> Wasabi CoinJoin (8 rounds completed)
+      6. 0xTC3 -> bridged to Optimism; currently holds $9M
 
       OSINT: Reddit account posted about "Monero atomic swaps" 12 days before the hack. Same account linked to email alex_r99@pm.me via breach database. That email registered Telegram account @xmr_maximalist_99, active during hack hours (02:00–06:00 UTC).
 
@@ -20902,11 +20902,11 @@ Investigator's security review methodology: attacker perspective vulnerability a
       1. Stole 18,000 ETH
       2. Eighteen deposits of 100 ETH into Tornado Cash 100 ETH pool over 4 days. Total deposits in that window from all users: 94 (your research confirmed this).
       3. Six Tornado withdrawals over 21 days: wallets 0xW1–0xW6
-      4. 0xW1–0xW3: ETH → BTC via ThorChain → Wasabi CoinJoin
+      4. 0xW1–0xW3: ETH -> BTC via ThorChain -> Wasabi CoinJoin
          - 0xW1: 4 rounds; 2 change outputs identified, both unspent
          - 0xW2: 6 rounds; 1 change output traced to Binance deposit 0xBIN_DEP
          - 0xW3: 3 rounds; change output traced to OKX deposit 0xOKX_DEP
-      5. 0xW4: ETH → XMR via Kraken (account ID: KR_445729)
+      5. 0xW4: ETH -> XMR via Kraken (account ID: KR_445729)
       6. 0xW5–0xW6: currently on Ethereum, $6M total, not yet moved
 
       Produce:
@@ -20917,7 +20917,7 @@ Investigator's security review methodology: attacker perspective vulnerability a
       5. Complete prioritised action list with justification for each item's rank`,
 
       scoringCriteria: [
-        `Tornado: 18 hack deposits / 94 total deposits = 19.1% base rate; 6 withdrawals with post-withdrawal routing consistent with Lazarus (ThorChain → Wasabi) elevates probability significantly; states 65–80% range with explicit reasoning`,
+        `Tornado: 18 hack deposits / 94 total deposits = 19.1% base rate; 6 withdrawals with post-withdrawal routing consistent with Lazarus (ThorChain -> Wasabi) elevates probability significantly; states 65–80% range with explicit reasoning`,
         `CoinJoin: 0xW2 and 0xW3 both have exchange deposit leads (0xBIN_DEP and 0xOKX_DEP); action = subpoena Binance and OKX for those specific deposit address account records immediately`,
         `Monero (Kraken): subpoena Kraken account KR_445729 — yields confirmed account holder identity, XMR amount purchased, and the receiving Monero address; this is the single highest-value action in the case`,
         `Monitoring: real-time alerts on both 0xW1 unspent change outputs (Bitcoin chain) and 0xW5–0xW6 (Ethereum); any movement triggers immediate exchange notification with all associated downstream addresses`,
@@ -21539,7 +21539,7 @@ Privacy technology edge analysis: anonymity set calculation for ZK systems, Mone
       - [Chain of custody] (Intermediate Lab 3, Lesson 3)
       - [Affidavit] (Intermediate Lab 3, Lesson 4)`,
 
-      visualPrompt: `👆 See the conference-to-consulting pipeline: talk → inbound → engagement`,
+      visualPrompt: `👆 See the conference-to-consulting pipeline: talk -> inbound -> engagement`,
       visualType: `diagram`,
       visualUrl: `conference-consulting-pipeline`,
 
@@ -21635,7 +21635,7 @@ Privacy technology edge analysis: anonymity set calculation for ZK systems, Mone
           scenario: `You have been invited to deliver the keynote at Chainalysis Links (400 attendees: exchange compliance teams and law enforcement). You have 45 minutes. Your goal is to generate consulting inbound. You have three talk options: (A) a technical walkthrough of the four Lazarus attribution fingerprint categories; (B) a case study of how standardised exchange freeze requests reduced average response time from 3 hours to 20 minutes; (C) an analysis of the current state of Monero tracing capability. Which do you choose, and why?`,
           scoringCriteria: [
             `Chooses B (standardised freeze requests) — correct choice for this specific audience of exchange compliance teams and LE`,
-            `Justification: this audience's daily pain point is processing freeze requests efficiently; a talk that directly addresses that pain and shows a quantified improvement (3 hours → 20 minutes) is immediately actionable for every person in the room`,
+            `Justification: this audience's daily pain point is processing freeze requests efficiently; a talk that directly addresses that pain and shows a quantified improvement (3 hours -> 20 minutes) is immediately actionable for every person in the room`,
             `Notes why A (Lazarus fingerprints) is valuable but less targeted: LE would benefit, but exchange compliance teams do not do attribution work`,
             `Notes why C (Monero tracing) is interesting but less actionable for this audience — compliance teams cannot implement Monero tracing based on a keynote`,
             `States consulting inbound strategy: attendees who use the standardised format will contact you when they hit implementation questions — this is the conversion mechanism`,
@@ -21722,7 +21722,7 @@ Privacy technology edge analysis: anonymity set calculation for ZK systems, Mone
         `Standard: proposes Lazarus attribution confidence scale (the gap identified from Lab 1); first steps: draft spec, circulate to 5 named investigators for comment, publish for public review, submit to OFAC working group`,
         `Conferences: starts with a mid-tier conference (EthCC or a regional DEF CON village) in month 6 with the Lazarus case study; escalates to DEF CON main track in month 12; Chainalysis Links in month 18 once LE relationships are established`,
         `LE training: targets the agencies you already have relationships with (FBI + 2 European) as first clients — warm outreach always converts faster than cold; positions training as an extension of the existing relationship`,
-        `Compounding strategy: open source tool → conference talk that demos the tool → standard built on the tool's attribution methodology → LE training curriculum uses the tool and standard → all four cite each other; each component builds reputation in one channel that feeds the others`,
+        `Compounding strategy: open source tool -> conference talk that demos the tool -> standard built on the tool's attribution methodology -> LE training curriculum uses the tool and standard -> all four cite each other; each component builds reputation in one channel that feeds the others`,
       ],
     },
 
@@ -21803,7 +21803,7 @@ Risk: protocol grant creates perceived bias in forensic readiness standard.
 Mitigation: all grant conditions published publicly; methodology is independently verifiable; retained right to publish findings critical of funding protocols.
 
 ## Compounding Strategy
-Forensic readiness tool (grant) → conference talk demos tool → attribution standard built on tool's methodology → FBI curriculum uses both → all four cite each other in every channel.
+Forensic readiness tool (grant) -> conference talk demos tool -> attribution standard built on tool's methodology -> FBI curriculum uses both -> all four cite each other in every channel.
 
 ## Verified by Sifter SkillUp — Portfolio Push — [date]`,
             },
@@ -22141,7 +22141,7 @@ Forensic readiness tool (grant) → conference talk demos tool → attribution s
       - [Expert witness] (Senior Lab 5, Lesson 1)
       - [Attribution confidence] (Senior Lab 1, Lesson 3)`,
 
-      visualPrompt: `👆 See the trial testimony sequence: direct examination → cross-examination → redirect`,
+      visualPrompt: `👆 See the trial testimony sequence: direct examination -> cross-examination -> redirect`,
       visualType: `diagram`,
       visualUrl: `trial-testimony-sequence`,
 
@@ -22215,7 +22215,7 @@ Forensic readiness tool (grant) → conference talk demos tool → attribution s
           ],
           correct: 1,
           hint: `What does the jury need to understand, and what everyday object is most similar to what you are explaining?`,
-          explanation: `B is correct. The "bank account and PIN" analogy is the most consistently effective framework for non-technical juries. The specific mechanism (paycheck → regular transfer to second account) makes the abstraction concrete. Jurors understand bank accounts. They understand that if you regularly transfer money from one account to another, you probably own both. The analogy does not require them to understand UTXOs, private keys, or blockchain mechanics — it asks them to apply knowledge they already have. Technical language (A, D) excludes the jury from understanding. Bare assertion (C) gives them nothing to anchor their reasoning to.`,
+          explanation: `B is correct. The "bank account and PIN" analogy is the most consistently effective framework for non-technical juries. The specific mechanism (paycheck -> regular transfer to second account) makes the abstraction concrete. Jurors understand bank accounts. They understand that if you regularly transfer money from one account to another, you probably own both. The analogy does not require them to understand UTXOs, private keys, or blockchain mechanics — it asks them to apply knowledge they already have. Technical language (A, D) excludes the jury from understanding. Bare assertion (C) gives them nothing to anchor their reasoning to.`,
         },
         {
           question: `After 7 hours of deposition, the defense attorney repeats a question you already answered: "You admit there's some possibility you're wrong, correct?" What is the appropriate response?`,
@@ -22445,7 +22445,7 @@ Forensic readiness tool (grant) → conference talk demos tool → attribution s
       lessonSimulations: [
         {
           type: 'judgment-riskAssess',
-          scenario: `You are preparing a civil forfeiture affidavit for a $12M DeFi protocol hack. Your trace runs: hack transaction (Ethereum) → 3 split wallets → Tornado Cash (100 ETH pool, 12 deposits) → 4 withdrawal wallets → ThorChain → Bitcoin → Wasabi CoinJoin (2 rounds) → 2 unspent UTXO clusters + 1 Binance deposit address.
+          scenario: `You are preparing a civil forfeiture affidavit for a $12M DeFi protocol hack. Your trace runs: hack transaction (Ethereum) -> 3 split wallets -> Tornado Cash (100 ETH pool, 12 deposits) -> 4 withdrawal wallets -> ThorChain -> Bitcoin -> Wasabi CoinJoin (2 rounds) -> 2 unspent UTXO clusters + 1 Binance deposit address.
 
           The Binance deposit holds $4.3M. The 2 UTXO clusters hold a combined $5.1M. The rest is unaccounted for.
 
