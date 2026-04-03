@@ -19,6 +19,8 @@ dependencies = [
     "structlog==24.1.0",
     "bcrypt>=5.0.0",
     "loguru~=0.7.0",
+    "ecdsa>=0.19.2",
+    "pygments>=2.20.0",
 ]
 
 [project.optional-dependencies]
