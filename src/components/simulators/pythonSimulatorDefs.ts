@@ -3,7 +3,7 @@
  * 65 simulators covering every level that lacks one.
  * All feed into SimulatorFactory (mcq | build | match).
  */
-import type { SimulatorDef } from '../components/simulators/SimulatorFactory';
+import type { SimulatorDef } from './SimulatorFactory';
 
 export const PYTHON_SIM_DEFS: Record<string, SimulatorDef> = {
 

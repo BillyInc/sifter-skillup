@@ -9,14 +9,18 @@ import {
   SafeAreaView, StatusBar, Modal, Alert,
 } from 'react-native';
 import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIslands';
-import { getQuantLevel, quantLevelToLevel, QUANT_LEVELS } from '../data/quantLevels';
+import { QUANT_LEVELS } from '../data/quantLevels';
 import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import LessonScreen from './LessonScreen';
 import { VRBridge } from '../vr/VRBridge';
 import type { VRScenarioKey } from '../vr/VRBridge';
 import DisclaimerFooter from '../components/DisclaimerFooter';
+import {
+  WebShell, WebPageHeader, WebRow, WebCol, WebCard,
+  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+} from '../components/web/WebGrid';
 
 // ── Tier colour map ───────────────────────────────────────────
 const TIER_COLORS = {
@@ -202,6 +206,7 @@ function VRPromptModal({ visible, scenarioKey, labName, onDismiss }: {
 
 // ── Header stats ──────────────────────────────────────────────
 function QuantHeader({ completedLevels }: { completedLevels: number[] }) {
+  const { colors } = useTheme();
   const total = Object.keys(QUANT_LEVELS).length;
   const done  = completedLevels.filter(l => l >= 1001 && l <= 1090).length;
   const labsDone = QUANT_LABS.filter(lab =>
@@ -209,7 +214,7 @@ function QuantHeader({ completedLevels }: { completedLevels: number[] }) {
   ).length;
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
       <View style={styles.headerTop}>
         <Text style={styles.headerTitle}>⚡ Quant Program</Text>
         <Text style={styles.headerSub}>Trader Track</Text>
@@ -240,21 +245,21 @@ function QuantHeader({ completedLevels }: { completedLevels: number[] }) {
 
 // ── Main screen ───────────────────────────────────────────────
 export default function QuantMapScreen() {
+  const { colors, isDark } = useTheme();
   const { user } = useAuth();
   const { completeLevel } = useProgress();
+  const isWebWide = useIsWebWide();
   const [activeLevelId, setActiveLevelId] = useState<number | null>(null);
   const [vrPrompt, setVrPrompt] = useState<{ scenarioKey: VRScenarioKey; labName: string } | null>(null);
 
-  const completed = user?.completed_levels ?? [];
+  const completed: number[] = (user?.completed_levels ?? []).map(l => typeof l === 'string' ? parseInt(l, 10) : l).filter((n): n is number => !isNaN(n));
 
   const handleLevelPress = (id: number) => setActiveLevelId(id);
 
   const handleLevelComplete = async (stars: number, xp: number) => {
     if (!activeLevelId) return;
-    await completeLevel(activeLevelId, xp, stars === 3);
-
-    // Check if this was a boss with VR unlock
-    const ql = QUANT_LEVELS[activeLevelId];
+    await completeLevel(activeLevelId, 'quant-trader', xp, stars === 3);
+    const ql  = QUANT_LEVELS[activeLevelId];
     const lab = QUANT_LABS.find(l => l.bossLevel === activeLevelId);
     if (ql?.vrUnlock && lab?.vrScenario) {
       setTimeout(() => {
@@ -267,20 +272,128 @@ export default function QuantMapScreen() {
   if (activeLevelId) {
     const ql = QUANT_LEVELS[activeLevelId];
     if (!ql) { setActiveLevelId(null); return null; }
-    const level = quantLevelToLevel(ql);
     return (
       <LessonScreen
         levelId={activeLevelId}
         onExit={() => setActiveLevelId(null)}
         onComplete={handleLevelComplete}
-        overrideLevel={level}
       />
     );
   }
 
+  // ── WEB LAYOUT ──────────────────────────────────────────────────────────────
+  if (isWebWide) {
+    const completedCount = completed.length;
+    const totalLevels    = Object.keys(QUANT_LEVELS).length;
+    const labsUnlocked   = QUANT_LABS.filter(l => isQuantLabUnlocked(l, completed)).length;
+
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+        <WebShell>
+          <WebPageHeader
+            title="📊 Quant Quarter"
+            subtitle={`${completedCount} / ${totalLevels} levels complete · ${labsUnlocked} labs unlocked`}
+            accentColor={colors.accent}
+          />
+
+          <WebRow>
+            {/* Left: stats + lab jump list */}
+            <WebCol weight={1}>
+              <WebCard title="Your Progress" accentBar accentColor={colors.accent}>
+                <WebStatTile emoji="✅" label="Levels Done"   value={`${completedCount}`}    sub={`of ${totalLevels}`}          color={colors.xpGreen} />
+                <WebStatTile emoji="🔬" label="Labs Unlocked" value={`${labsUnlocked}`}       sub={`of ${QUANT_LABS.length}`}     color={colors.accent} />
+                <WebStatTile emoji="🏆" label="Bosses Beaten" value={`${QUANT_LABS.filter(l => completed.includes(l.bossLevel)).length}`} sub="boss completions" color={colors.gold} />
+              </WebCard>
+
+              <WebCard title="Jump to Lab" accentBar accentColor={colors.gold} style={{ marginTop: 20 }}>
+                {QUANT_LABS.map(lab => {
+                  const unlocked = isQuantLabUnlocked(lab, completed);
+                  const done     = completed.includes(lab.bossLevel);
+                  return (
+                    <WebListRow
+                      key={lab.id}
+                      icon={done ? '✅' : unlocked ? '⚡' : '🔒'}
+                      title={lab.name}
+                      sub={`${lab.end - lab.start + 1} levels${lab.vrScenario ? ' · VR unlock' : ''}`}
+                      onPress={() => unlocked ? handleLevelPress(lab.start) : undefined}
+                      right={
+                        <View style={{
+                          paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10,
+                          backgroundColor: done ? colors.xpGreen + '20' : unlocked ? colors.accent + '20' : colors.bgSecondary,
+                        }}>
+                          <Text style={{ fontSize: 10, fontWeight: '700', color: done ? colors.xpGreen : unlocked ? colors.accent : colors.textMuted }}>
+                            {done ? 'Done' : unlocked ? 'Open' : 'Locked'}
+                          </Text>
+                        </View>
+                      }
+                    />
+                  );
+                })}
+              </WebCard>
+            </WebCol>
+
+            {/* Right: 2-col lab grid */}
+            <WebCol weight={2}>
+              <WebSectionLabel label="All Labs" />
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
+                {QUANT_LABS.map(lab => {
+                  const unlocked = isQuantLabUnlocked(lab, completed);
+                  const done     = completed.includes(lab.bossLevel);
+                  const C        = done ? colors.xpGreen : unlocked ? colors.accent : colors.textMuted;
+                  return (
+                    <View key={lab.id} style={{ width: '48%' }}>
+                      <WebCard accentBar accentColor={C} style={{ opacity: unlocked ? 1 : 0.6 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                          <Text style={{ fontSize: 24 }}>{lab.icon ?? '📊'}</Text>
+                          <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{lab.name}</Text>
+                            <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 1 }}>
+                              {done ? '✅ Complete' : unlocked ? '⚡ In progress' : '🔒 Locked'}
+                            </Text>
+                          </View>
+                        </View>
+                        {lab.description ? (
+                          <Text style={{ fontSize: 12, color: colors.textSoft, lineHeight: 17, marginBottom: 10 }} numberOfLines={2}>
+                            {lab.description}
+                          </Text>
+                        ) : null}
+                        {lab.vrScenario && unlocked && (
+                          <View style={{ backgroundColor: colors.accent + '18', borderRadius: Radius.sm, padding: 7, marginBottom: 10 }}>
+                            <Text style={{ fontSize: 11, color: colors.accent, fontWeight: '700' }}>🥽 VR unlocks on boss</Text>
+                          </View>
+                        )}
+                        {unlocked && !done && (
+                          <TouchableOpacity
+                            style={{ backgroundColor: C, borderRadius: Radius.md, paddingVertical: 8, alignItems: 'center' }}
+                            onPress={() => handleLevelPress(lab.start)}
+                          >
+                            <Text style={{ color: '#FFF', fontSize: 12, fontWeight: '700' }}>Start Lab →</Text>
+                          </TouchableOpacity>
+                        )}
+                      </WebCard>
+                    </View>
+                  );
+                })}
+              </View>
+              <View style={{ height: 40 }} />
+            </WebCol>
+          </WebRow>
+        </WebShell>
+
+        <VRPromptModal
+          visible={!!vrPrompt}
+          scenarioKey={vrPrompt?.scenarioKey}
+          labName={vrPrompt?.labName ?? ''}
+          onDismiss={() => setVrPrompt(null)}
+        />
+      </SafeAreaView>
+    );
+  }
+
+  // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
+      <StatusBar barStyle={isDark ? "light-content" : "dark-content"} backgroundColor={Colors.bg} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}

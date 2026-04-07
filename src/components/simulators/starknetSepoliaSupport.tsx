@@ -1,0 +1,367 @@
+/**
+ * starknetSepoliaSupport.tsx
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Starknet Sepolia testnet helpers that work ALONGSIDE starkzap.
+ * starkzap remains the primary signing/transaction layer for Island 19.
+ * This file adds: balance fetching, explorer links, address display, and
+ * a Sepolia faucet prompt that shows BEFORE starkzap wallets need funds.
+ *
+ * Integration — add to StarkzapSimulatorCard.tsx:
+ *   import { useStarknetSepolia, StarknetAddressBanner } from './starknetSepoliaSupport';
+ *
+ * Usage in any starkzap sim:
+ *   const sepolia = useStarknetSepolia(starknetAddress);
+ *   // Shows address, balance, faucet link — starkzap handles all actual txs
+ *
+ * ⚡ STARKZAP STAYS PROMINENT — this file is support infrastructure only.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  View, Text, TouchableOpacity, StyleSheet, Clipboard, Linking, ActivityIndicator,
+} from 'react-native';
+import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
+
+// ── Starknet Sepolia constants ────────────────────────────────────────────────
+
+export const STARKNET_SEPOLIA = {
+  rpc:          'https://starknet-sepolia.public.blastapi.io',
+  rpc_backup:   'https://free-rpc.nethermind.io/sepolia-juno',
+  explorer:     'https://sepolia.voyager.online',
+  faucet:       'https://starknet-faucet.vercel.app',
+  faucet_strk:  'https://blastapi.io/faucets/starknet-sepolia-strk',
+  // Contract addresses on Sepolia
+  eth_contract:  '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7',
+  strk_contract: '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d',
+  usdc_contract: '0x053b40a647cedfca6ca84f542a0fe36736031905a9639a7f19a3c1e66bfd5080',
+  // Prominent DeFi on Sepolia
+  avnu_router:   '0x03f89c8a56b19fd4c27e6d2f577ba82f2b2f9e9cbec47a6f2b23c76ddb1d543d',
+  // Staking on Sepolia (test params: 1 STRK min, 5-min unstake)
+  staking:       'https://github.com/starkware-libs/starknet-staking',
+} as const;
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+export interface SepoliaBalance {
+  eth:  string;
+  strk: string;
+  loading: boolean;
+  error: boolean;
+}
+
+export interface SepoliaState {
+  address: string | null;
+  balance: SepoliaBalance;
+  shortAddress: string;
+  explorerUrl: string;
+  needsFaucet: boolean;
+  refreshBalance: () => void;
+  openExplorer: () => void;
+  openFaucet: (token?: 'eth' | 'strk') => void;
+  copyAddress: () => void;
+  copied: boolean;
+}
+
+// ── Balance fetcher ───────────────────────────────────────────────────────────
+
+async function fetchStarknetBalance(
+  address: string,
+  contractAddress: string,
+  rpc: string,
+): Promise<string> {
+  try {
+    const res = await fetch(rpc, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'starknet_call',
+        params: [{
+          contract_address: contractAddress,
+          entry_point_selector: '0x2e4263afad30923c891518314c3c95dbe2c1b44d0ba5a8e8fd75be60b7de5f', // balanceOf
+          calldata: [address],
+        }, 'latest'],
+      }),
+    });
+    const data = await res.json();
+    if (data.result && data.result[0]) {
+      const raw = BigInt(data.result[0]);
+      return (Number(raw) / 1e18).toFixed(4);
+    }
+    return '0.0000';
+  } catch {
+    return '0.0000';
+  }
+}
+
+// ── Hook ──────────────────────────────────────────────────────────────────────
+
+export function useStarknetSepolia(address: string | null): SepoliaState {
+  const [balance, setBalance] = useState<SepoliaBalance>({
+    eth: '0.0000', strk: '0.0000', loading: false, error: false,
+  });
+  const [copied, setCopied] = useState(false);
+
+  const fetchBalances = useCallback(async () => {
+    if (!address) return;
+    setBalance(b => ({ ...b, loading: true, error: false }));
+    try {
+      const [eth, strk] = await Promise.all([
+        fetchStarknetBalance(address, STARKNET_SEPOLIA.eth_contract, STARKNET_SEPOLIA.rpc),
+        fetchStarknetBalance(address, STARKNET_SEPOLIA.strk_contract, STARKNET_SEPOLIA.rpc),
+      ]);
+      setBalance({ eth, strk, loading: false, error: false });
+    } catch {
+      // Try backup RPC
+      try {
+        const [eth, strk] = await Promise.all([
+          fetchStarknetBalance(address, STARKNET_SEPOLIA.eth_contract, STARKNET_SEPOLIA.rpc_backup),
+          fetchStarknetBalance(address, STARKNET_SEPOLIA.strk_contract, STARKNET_SEPOLIA.rpc_backup),
+        ]);
+        setBalance({ eth, strk, loading: false, error: false });
+      } catch {
+        setBalance(b => ({ ...b, loading: false, error: true }));
+      }
+    }
+  }, [address]);
+
+  useEffect(() => { fetchBalances(); }, [fetchBalances]);
+
+  const shortAddress = address
+    ? `${address.slice(0, 10)}...${address.slice(-8)}`
+    : 'No wallet';
+
+  const needsFaucet = parseFloat(balance.eth) < 0.001 && parseFloat(balance.strk) < 1;
+
+  const openExplorer = () => {
+    if (address) Linking.openURL(`${STARKNET_SEPOLIA.explorer}/contract/${address}`);
+  };
+
+  const openFaucet = (token: 'eth' | 'strk' = 'eth') => {
+    Linking.openURL(token === 'strk' ? STARKNET_SEPOLIA.faucet_strk : STARKNET_SEPOLIA.faucet);
+  };
+
+  const copyAddress = () => {
+    if (address) {
+      Clipboard.setString(address);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return {
+    address,
+    balance,
+    shortAddress,
+    explorerUrl: address ? `${STARKNET_SEPOLIA.explorer}/contract/${address}` : '',
+    needsFaucet,
+    refreshBalance: fetchBalances,
+    openExplorer,
+    openFaucet,
+    copyAddress,
+    copied,
+  };
+}
+
+// ── StarknetAddressBanner ─────────────────────────────────────────────────────
+/**
+ * Drop this at the top of any starkzap simulator to show the user's
+ * Sepolia address, live balances, and faucet access.
+ * starkzap still handles all actual transactions.
+ *
+ * Usage:
+ *   <StarknetAddressBanner address={userStarknetAddress} />
+ */
+export function StarknetAddressBanner({ address }: { address: string | null }) {
+  const sepolia = useStarknetSepolia(address);
+
+  if (!address) return null;
+
+  return (
+    <View style={sty.banner}>
+      <View style={sty.bannerHeader}>
+        <Text style={sty.bannerIcon}>⚡</Text>
+        <Text style={sty.bannerLabel}>STARKNET SEPOLIA TESTNET</Text>
+        {sepolia.balance.loading && <ActivityIndicator size="small" color={Colors.accent} />}
+      </View>
+
+      {/* Address row — copyable */}
+      <TouchableOpacity onPress={sepolia.copyAddress} style={sty.addressRow} activeOpacity={0.8}>
+        <Text style={sty.addressText} numberOfLines={1}>{sepolia.shortAddress}</Text>
+        <Text style={[sty.copyHint, { color: sepolia.copied ? Colors.green : Colors.textSoft }]}>
+          {sepolia.copied ? '✓ Copied' : '📋'}
+        </Text>
+      </TouchableOpacity>
+
+      {/* Balances */}
+      {!sepolia.balance.error && (
+        <View style={sty.balanceRow}>
+          <View style={sty.balanceChip}>
+            <Text style={sty.balanceLabel}>ETH</Text>
+            <Text style={[sty.balanceValue, {
+              color: parseFloat(sepolia.balance.eth) > 0.001 ? Colors.green : Colors.red,
+            }]}>
+              {sepolia.balance.eth}
+            </Text>
+          </View>
+          <View style={sty.balanceChip}>
+            <Text style={sty.balanceLabel}>STRK</Text>
+            <Text style={[sty.balanceValue, {
+              color: parseFloat(sepolia.balance.strk) > 1 ? Colors.green : Colors.red,
+            }]}>
+              {sepolia.balance.strk}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={sepolia.refreshBalance} style={sty.refreshBtn}>
+            <Text style={{ color: Colors.accent, fontSize: FontSize.xs, fontWeight: '700' }}>🔄</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Faucet prompt when needed */}
+      {sepolia.needsFaucet && (
+        <View style={sty.faucetRow}>
+          <Text style={sty.faucetText}>Need testnet tokens to run this simulator:</Text>
+          <View style={{ flexDirection: 'row', gap: Spacing.sm, marginTop: 6 }}>
+            <TouchableOpacity onPress={() => sepolia.openFaucet('eth')} style={sty.faucetBtn}>
+              <Text style={sty.faucetBtnText}>Get ETH →</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => sepolia.openFaucet('strk')} style={sty.faucetBtn}>
+              <Text style={sty.faucetBtnText}>Get STRK →</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
+      {/* Explorer link */}
+      <TouchableOpacity onPress={sepolia.openExplorer} style={sty.explorerLink}>
+        <Text style={sty.explorerLinkText}>View on Voyager Sepolia Explorer →</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// ── FaucetSheet ───────────────────────────────────────────────────────────────
+/**
+ * Shows faucet instructions in a full card when user has no balance.
+ * Use at the start of starkzap sims that need real tokens.
+ */
+export function StarknetFaucetSheet({
+  address, onReady,
+}: { address: string | null; onReady?: () => void }) {
+  const sepolia = useStarknetSepolia(address);
+  const [checking, setChecking] = useState(false);
+
+  const handleCheck = async () => {
+    setChecking(true);
+    await sepolia.refreshBalance();
+    setChecking(false);
+    if (!sepolia.needsFaucet && onReady) onReady();
+  };
+
+  if (!address) return null;
+  if (!sepolia.needsFaucet) return null;
+
+  return (
+    <View style={sty.faucetSheet}>
+      <Text style={sty.faucetSheetTitle}>⚡ Fund Your Starknet Sepolia Wallet</Text>
+      <Text style={sty.faucetSheetSubtitle}>
+        This lesson uses your real Starknet Sepolia address. You need test tokens to interact with the network.
+      </Text>
+
+      <StarknetAddressBanner address={address} />
+
+      <View style={sty.faucetSteps}>
+        <Text style={sty.faucetStepTitle}>GET TEST TOKENS (FREE)</Text>
+        {[
+          { step: '1', label: 'Get Sepolia ETH', url: STARKNET_SEPOLIA.faucet, desc: 'starknet-faucet.vercel.app — paste your address above' },
+          { step: '2', label: 'Get Sepolia STRK', url: STARKNET_SEPOLIA.faucet_strk, desc: 'BlastAPI faucet — for STRK staking lessons' },
+        ].map(({ step, label, url, desc }) => (
+          <TouchableOpacity key={step} onPress={() => Linking.openURL(url)}
+            style={sty.faucetStepRow}>
+            <View style={sty.faucetStepNum}>
+              <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.xs }}>{step}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.sm }}>{label}</Text>
+              <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{desc}</Text>
+            </View>
+            <Text style={{ color: Colors.accent, fontWeight: '700' }}>→</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <TouchableOpacity onPress={handleCheck} style={sty.checkBtn} disabled={checking}>
+        {checking
+          ? <ActivityIndicator color="#fff" />
+          : <Text style={sty.checkBtnText}>I've Funded My Wallet — Check Balance →</Text>}
+      </TouchableOpacity>
+
+      <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, textAlign: 'center', marginTop: Spacing.sm }}>
+        Tokens arrive in ~30 seconds on Sepolia.
+      </Text>
+    </View>
+  );
+}
+
+// ── TxExplorerLink ────────────────────────────────────────────────────────────
+/**
+ * After starkzap completes a transaction, show an explorer link.
+ * Paste the txHash from starkzap's onComplete callback.
+ */
+export function StarknetTxLink({ txHash }: { txHash: string }) {
+  const url = `${STARKNET_SEPOLIA.explorer}/tx/${txHash}`;
+  return (
+    <TouchableOpacity onPress={() => Linking.openURL(url)} style={sty.txLink}>
+      <Text style={sty.txLinkText}>⚡ View transaction on Voyager Sepolia →</Text>
+      <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, fontFamily: 'monospace', marginTop: 2 }}>
+        {txHash.slice(0, 16)}…{txHash.slice(-8)}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+// ── Styles ────────────────────────────────────────────────────────────────────
+
+const sty = StyleSheet.create({
+  // Banner
+  banner:       { backgroundColor: '#0a0a14', borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm, borderWidth: 1.5, borderColor: '#f97316' + '40' },
+  bannerHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  bannerIcon:   { fontSize: 16 },
+  bannerLabel:  { fontSize: FontSize.xs, fontWeight: '800', color: '#f97316', textTransform: 'uppercase', letterSpacing: 0.8, flex: 1 },
+
+  addressRow:   { flexDirection: 'row', alignItems: 'center', backgroundColor: '#111120', borderRadius: Radius.sm, padding: Spacing.sm, gap: Spacing.sm },
+  addressText:  { fontFamily: 'monospace', fontSize: FontSize.xs, color: '#f97316', flex: 1 },
+  copyHint:     { fontSize: FontSize.xs, fontWeight: '700' },
+
+  balanceRow:   { flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' },
+  balanceChip:  { flex: 1, backgroundColor: '#111120', borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center' },
+  balanceLabel: { fontSize: 9, fontWeight: '800', color: '#888', textTransform: 'uppercase' },
+  balanceValue: { fontSize: FontSize.sm, fontWeight: '900', marginTop: 2 },
+  refreshBtn:   { padding: Spacing.sm },
+
+  faucetRow:    { backgroundColor: '#1a0a00', borderRadius: Radius.sm, padding: Spacing.md, borderWidth: 1, borderColor: '#f97316' + '30' },
+  faucetText:   { fontSize: FontSize.xs, color: '#f97316', fontWeight: '700' },
+  faucetBtn:    { backgroundColor: '#f97316', borderRadius: Radius.sm, paddingHorizontal: Spacing.md, paddingVertical: 6 },
+  faucetBtnText:{ fontSize: FontSize.xs, fontWeight: '900', color: '#fff' },
+
+  explorerLink: { alignItems: 'center', paddingVertical: 4 },
+  explorerLinkText: { fontSize: FontSize.xs, color: '#f97316', fontWeight: '700' },
+
+  // FaucetSheet
+  faucetSheet:      { gap: Spacing.md },
+  faucetSheetTitle: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, textAlign: 'center' },
+  faucetSheetSubtitle: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20 },
+  faucetSteps:      { gap: Spacing.sm },
+  faucetStepTitle:  { fontSize: FontSize.xs, fontWeight: '800', color: Colors.textSoft, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
+  faucetStepRow:    { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, padding: Spacing.md, backgroundColor: Colors.card, borderRadius: Radius.md, borderWidth: 1.5, borderColor: Colors.border },
+  faucetStepNum:    { width: 28, height: 28, borderRadius: 14, backgroundColor: '#f97316', alignItems: 'center', justifyContent: 'center' },
+  checkBtn:         { backgroundColor: '#f97316', borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center' },
+  checkBtnText:     { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
+
+  // TxLink
+  txLink:     { padding: Spacing.md, backgroundColor: '#0a0a14', borderRadius: Radius.md, borderWidth: 1, borderColor: '#f97316' + '40' },
+  txLinkText: { fontSize: FontSize.sm, fontWeight: '800', color: '#f97316' },
+});

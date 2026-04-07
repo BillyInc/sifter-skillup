@@ -664,7 +664,7 @@ const sr = StyleSheet.create({
 export default function CommunityScreen() {
   const { user } = useAuth();
   const userId = user?.id ?? 'guest';
-  const userTrack = user?.currentTrack;
+  const userTrack = user?.current_track_id;
 
   const {
     feed, feedMode, setFeedMode, loadMore, refresh,

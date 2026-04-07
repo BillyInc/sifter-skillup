@@ -1526,7 +1526,7 @@ function CentralLimitTheoremSim({ onComplete, onSkip }: SimProps) {
             ))}
           </View>
           <Text style={{fontSize:FontSize.xs,color:Colors.textSoft,textAlign:'center'}}>← {MIN}%   centre = 0%   {MAX}% →</Text>
-          <Text style={[s.body,{marginTop:Spacing.sm,fontWeight:'700',color: n===1?Colors.red:n===5?Colors.amber??Colors.accent:Colors.green}]}>
+          <Text style={[s.body,{marginTop:Spacing.sm,fontWeight:'700',color: n===1?Colors.red:n===5?(Colors as any).amber??Colors.accent:Colors.green}]}>
             {n===1?'Still skewed — each "mean" is just one raw value.':n===5?'Getting more symmetric. The skew is fading.':'🔔 Looks like a bell curve! Even though the raw data was skewed.'}
           </Text>
         </Card>
@@ -1594,7 +1594,7 @@ function PythonToolSelectorSim({ onComplete, onSkip }: SimProps) {
   };
 
   if (done) return (
-    <SimShell title="Python Tool Selector" icon="🛠️">
+    <SimShell title="Python Tool Selector" subtitle="Results" icon="🛠️">
       <View style={{ alignItems: 'center', padding: 20 }}>
         <Text style={{ fontSize: 48, marginBottom: 12 }}>{score >= 4 ? '🏆' : score >= 3 ? '✅' : '📚'}</Text>
         <Text style={{ fontSize: 22, fontWeight: '700', color: '#0f172a', marginBottom: 8 }}>
@@ -1609,7 +1609,7 @@ function PythonToolSelectorSim({ onComplete, onSkip }: SimProps) {
   );
 
   return (
-    <SimShell title="Python Tool Selector" icon="🛠️">
+    <SimShell title="Python Tool Selector" subtitle={`Scenario ${idx + 1}/${scenarios.length}`} icon="🛠️">
       <View style={{ marginBottom: 10 }}>
         <Text style={{ fontSize: 11, color: '#6366f1', fontWeight: '700', marginBottom: 6 }}>
           SCENARIO {idx + 1} OF {scenarios.length}

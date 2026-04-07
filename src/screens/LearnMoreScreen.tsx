@@ -145,7 +145,7 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
             </Text>
             {Object.entries(groupedResources).map(([type, items]) => (
               <View key={type}>
-                <Text style={styles.resourceGroupLabel}>{RESOURCE_TYPE_LABELS[type as any]}</Text>
+                <Text style={styles.resourceGroupLabel}>{RESOURCE_TYPE_LABELS[type as keyof typeof RESOURCE_TYPE_LABELS]}</Text>
                 {items.map((r, i) => <ResourceCard key={i} resource={r} />)}
               </View>
             ))}

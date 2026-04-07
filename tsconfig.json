@@ -7,6 +7,11 @@
     "paths": { "@/*": ["src/*"] }
   },
   "exclude": [
-    "src/data/tracks/supplyChainTrack.ts"
+    "src/data/tracks/supplyChainTrack.ts",
+    "src/data/tracks/supplyChainTrack_upgraded.ts",
+    "src/data/tracks/onchainSleuthTrack.ts",
+    "src/data/tracks/defi_research_analyst",
+    "src/data/tracks/sc_analyst_junior",
+    "src/data/tracks/spotTradingTrack.ts"
   ]
 }

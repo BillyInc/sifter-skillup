@@ -22,12 +22,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, StatusBar, Linking, ActivityIndicator, Alert,
+  Platform, useWindowDimensions,
 } from 'react-native';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import { shareOnPortfolioArtifact } from '../lib/shareEngine';
 import DisclaimerFooter from '../components/DisclaimerFooter';
+import {
+  WebShell, WebPageHeader, WebRow, WebCol, WebCard,
+  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+} from '../components/web/WebGrid';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -241,7 +246,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
             <Text style={styles.platformEmoji}>{cfg.emoji}</Text>
             <View style={{ flex: 1 }}>
               <View style={styles.platformNameRow}>
-                <Text style={styles.platformName}>{cfg.name}</Text>
+                <Text style={[styles.platformName, { color: Colors.text }]}>{cfg.name}</Text>
                 <Tag
                   text={cfg.isPrimary ? 'PRIMARY' : 'SECONDARY'}
                   color={cfg.isPrimary ? '#10b981' : '#6366f1'}
@@ -396,7 +401,7 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
         <Text style={styles.platformItemEmoji}>{cfg?.emoji ?? '🔗'}</Text>
         <View style={{ flex: 1 }}>
           <View style={styles.platformNameRow}>
-            <Text style={styles.platformName}>{ps.name}</Text>
+            <Text style={[styles.platformName, { color: Colors.text }]}>{ps.name}</Text>
             {ps.connected && <Tag text="Connected" color="#10b981" />}
           </View>
           {ps.connected && ps.username && (
@@ -702,7 +707,9 @@ function handleShareArtifact(artifact: any, userId: string) {
 }
 
 export default function PortfolioHubScreen() {
+  const { colors, isDark } = useTheme();
   const { user } = useAuth();
+  const isWebWide = useIsWebWide();
   const [activeTab, setActiveTab] = useState<HubTab>('overview');
   const [artifacts, setArtifacts] = useState<PortfolioArtifact[]>([]);
   const [platformStatuses, setPlatformStatuses] = useState<PlatformStatus[]>([]);
@@ -750,10 +757,10 @@ export default function PortfolioHubScreen() {
     const loadProgression = async () => {
       try {
         const [gate, agg, rem, retries] = await Promise.all([
-          API.getPhase2GateStatus(trackId, 'current').catch(() => null),
-          API.getAggregateSimStatus(trackId, 'current').catch(() => null),
-          API.getRemediationSets(trackId, 'current').catch(() => []),
-          API.getEndOfLevelRetries(trackId, 'junior').catch(() => []),
+          API.getPhase2GateStatus().catch(() => null),
+          API.getAggregateSimStatus().catch(() => null),
+          API.getRemediationSets().catch(() => []),
+          API.getEndOfLevelRetries().catch(() => []),
         ]);
         if (gate) setGateStatus(gate);
         if (agg) setAggSimStatus(agg);
@@ -768,7 +775,7 @@ export default function PortfolioHubScreen() {
     const key = `${artifact.id}-${platformId}`;
     setPushing(key);
     try {
-      await API.pushPortfolioArtifact(artifact.id, platformId);
+      await API.pushPortfolioArtifact({ artifactId: artifact.id, platformId });
       setArtifacts(prev =>
         prev.map(a =>
           a.id === artifact.id
@@ -806,14 +813,14 @@ export default function PortfolioHubScreen() {
 
   const handleEndOfLevelRetry = useCallback(async (simId: string) => {
     try {
-      const result = await API.submitEndOfLevelRetry('supply-chain-analyst', simId, '');
+      const result = await API.submitEndOfLevelRetry({ trackId: 'supply-chain-analyst', simId, answer: '' });
       if (result.passed) {
         setEndOfLevelRetries(prev => prev.filter(r => r.simId !== simId));
         Alert.alert('✅ Passed', result.phase2NowUnlocked
           ? 'Final retry passed. Phase 2 is now unlocked — go to the lab Boss Battle.'
           : 'Passed. Check gate status for remaining requirements.');
         // Refresh gate status
-        API.getPhase2GateStatus('supply-chain-analyst', 'current')
+        API.getPhase2GateStatus()
           .then(setGateStatus).catch(() => {});
       } else {
         Alert.alert('❌ Not passed', 'All criteria not met. Phase 2 is permanently blocked for this level. You will need to restart the level to earn portfolio artifacts.');
@@ -831,12 +838,117 @@ export default function PortfolioHubScreen() {
     { id: 'credibility', label: 'Interview', emoji: '🎤' },
   ];
 
+  // ── WEB LAYOUT ──────────────────────────────────────────────────────────────
+  if (isWebWide) {
+    const connectedCount = platformStatuses.filter(p => p.connected).length;
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+        <WebShell>
+          <WebPageHeader
+            title="⚡ Portfolio Hub"
+            subtitle={`${artifacts.length} artifacts · ${connectedCount} platforms connected`}
+            accentColor={colors.accent}
+          />
+
+          {/* Row 1: XP stats (3 col) */}
+          <WebRow cols={3}>
+            <WebCard accentBar accentColor={colors.accent}>
+              <WebStatTile emoji="⚡" label="Total XP" value={(user?.points ?? 0).toLocaleString()} color={colors.accent} />
+            </WebCard>
+            <WebCard accentBar accentColor={colors.orange}>
+              <WebStatTile emoji="🔥" label="Day Streak" value={`${user?.streak ?? 0} days`} color={colors.orange} />
+            </WebCard>
+            <WebCard accentBar accentColor={colors.xpGreen}>
+              <WebStatTile emoji="📚" label="Levels Done" value={`${(user?.completed_levels ?? []).length}`} color={colors.xpGreen} />
+            </WebCard>
+          </WebRow>
+
+          {/* Row 2: Tabs left (1) + content right (2) */}
+          <WebRow>
+            <WebCol weight={1}>
+              <WebCard title="Sections" accentBar accentColor={colors.accent}>
+                {TABS.map(tab => (
+                  <WebListRow
+                    key={tab.id}
+                    icon={tab.emoji}
+                    title={tab.label}
+                    onPress={() => setActiveTab(tab.id)}
+                    right={
+                      <View style={{
+                        width: 8, height: 8, borderRadius: 4,
+                        backgroundColor: activeTab === tab.id ? colors.accent : 'transparent',
+                        marginLeft: 8,
+                      }} />
+                    }
+                  />
+                ))}
+              </WebCard>
+
+              {/* Quick platform status */}
+              <WebCard title="Platforms" accentBar accentColor={colors.green} style={{ marginTop: 20 }}>
+                {platformStatuses.slice(0, 5).map(p => (
+                  <WebListRow
+                    key={p.id}
+                    icon={p.emoji}
+                    title={p.name}
+                    sub={p.connected ? '✓ Connected' : 'Not connected'}
+                    right={
+                      <View style={{
+                        paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12,
+                        backgroundColor: p.connected ? colors.xpGreen + '20' : colors.bgSecondary,
+                      }}>
+                        <Text style={{ fontSize: 10, fontWeight: '700', color: p.connected ? colors.xpGreen : colors.textMuted }}>
+                          {p.connected ? 'Live' : 'Off'}
+                        </Text>
+                      </View>
+                    }
+                  />
+                ))}
+              </WebCard>
+            </WebCol>
+
+            <WebCol weight={2}>
+              {loading ? (
+                <WebCard>
+                  <View style={{ alignItems: 'center', paddingVertical: 60 }}>
+                    <ActivityIndicator color={colors.accent} size="large" />
+                    <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 13 }}>Loading portfolio…</Text>
+                  </View>
+                </WebCard>
+              ) : (
+                <WebCard title={TABS.find(t => t.id === activeTab)?.label ?? ''} accentBar accentColor={colors.accent}>
+                  <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 600 }}>
+                    {activeTab === 'overview'     && <OverviewTab    artifacts={artifacts} platformStatuses={platformStatuses} />}
+                    {activeTab === 'artifacts'    && <ArtifactsTab   artifacts={artifacts} onPush={handlePush} />}
+                    {activeTab === 'platforms'    && <PlatformsTab   platformStatuses={platformStatuses} onConnect={handleConnect} onDisconnect={handleDisconnect} />}
+                    {activeTab === 'credibility'  && <CredibilityTab artifacts={artifacts} />}
+                    {activeTab === 'progression'  && (
+                      <ProgressionTab
+                        gateStatus={gateStatus}
+                        aggSimStatus={aggSimStatus}
+                        remediationSets={remediationSets}
+                        endOfLevelRetries={endOfLevelRetries}
+                        onSubmitEndOfLevelRetry={handleEndOfLevelRetry}
+                      />
+                    )}
+                    <View style={{ height: 32 }} />
+                  </ScrollView>
+                </WebCard>
+              )}
+            </WebCol>
+          </WebRow>
+        </WebShell>
+      </SafeAreaView>
+    );
+  }
+
+  // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
 
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <Text style={styles.headerTitle}>⚡ Portfolio Hub</Text>
         <Text style={styles.headerSub}>Supply Chain Analyst</Text>
       </View>
@@ -863,6 +975,27 @@ export default function PortfolioHubScreen() {
           <Text style={styles.loadingText}>Loading your portfolio…</Text>
         </View>
       ) : (
+        <>
+        {/* XP Hero Banner */}
+        <View style={[styles.xpBanner, { backgroundColor: colors.accent }]}>
+          <View style={styles.xpRow}>
+            <View style={styles.xpStat}>
+              <Text style={styles.xpStatVal}>⚡ {(user?.points ?? 0).toLocaleString()}</Text>
+              <Text style={styles.xpStatLabel}>Total XP</Text>
+            </View>
+            <View style={[styles.xpDivider, { backgroundColor: 'rgba(255,255,255,0.25)' }]} />
+            <View style={styles.xpStat}>
+              <Text style={styles.xpStatVal}>🔥 {user?.streak ?? 0}</Text>
+              <Text style={styles.xpStatLabel}>Day Streak</Text>
+            </View>
+            <View style={[styles.xpDivider, { backgroundColor: 'rgba(255,255,255,0.25)' }]} />
+            <View style={styles.xpStat}>
+              <Text style={styles.xpStatVal}>📚 {(user?.completed_levels ?? []).length}</Text>
+              <Text style={styles.xpStatLabel}>Levels Done</Text>
+            </View>
+          </View>
+        </View>
+
         <ScrollView contentContainerStyle={styles.scroll}>
           {activeTab === 'overview' && (
             <OverviewTab artifacts={artifacts} platformStatuses={platformStatuses} />
@@ -890,6 +1023,7 @@ export default function PortfolioHubScreen() {
             />
           )}
         </ScrollView>
+        </>
       )}
       <DisclaimerFooter />
     </SafeAreaView>
@@ -905,6 +1039,36 @@ const styles = StyleSheet.create({
   scroll: { padding: Spacing.md, paddingBottom: 48 },
   loadingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
   loadingText: { fontSize: FontSize.sm, color: Colors.textSoft },
+
+  xpBanner: {
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    marginHorizontal: Spacing.md,
+    marginTop: Spacing.md,
+  },
+  xpRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  xpStat: {
+    alignItems: 'center',
+  },
+  xpStatVal: {
+    fontSize: FontSize.md,
+    fontWeight: '800',
+    color: '#fff',
+  },
+  xpStatLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.8)',
+    marginTop: 2,
+  },
+  xpDivider: {
+    width: 1,
+    height: 32,
+  },
 
   header: {
     paddingHorizontal: Spacing.md,

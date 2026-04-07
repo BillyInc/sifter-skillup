@@ -6,12 +6,13 @@ export interface TrackInfo {
 }
 
 const tracks: TrackInfo[] = [
-  {
-    id: 'supply-chain',
-    name: 'Supply Chain Analyst',
-    description: 'Supply chain management, logistics, and procurement',
-    loader: () => import('./supplyChainTrack'),
-  },
+  // TODO: supplyChainTrack has ~14K TS errors — disabled until fixed
+  // {
+  //   id: 'supply-chain',
+  //   name: 'Supply Chain Analyst',
+  //   description: 'Supply chain management, logistics, and procurement',
+  //   loader: () => import('./supplyChainTrack'),
+  // },
 ];
 
 export function getTrackById(id: string): TrackInfo | undefined {

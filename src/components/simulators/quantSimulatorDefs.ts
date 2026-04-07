@@ -3,7 +3,7 @@
  * 68 simulators for all levels currently lacking one.
  * All feed into SimulatorFactory (mcq | build | match).
  */
-import type { SimulatorDef } from '../components/simulators/SimulatorFactory';
+import type { SimulatorDef } from './SimulatorFactory';
 
 export const QUANT_SIM_DEFS: Record<string, SimulatorDef> = {
 

@@ -7,10 +7,20 @@ import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLessonEngine, type Question } from '../hooks/useLessonEngine';
 import { useProgress } from '../hooks/useProgress';
+import { useAuth } from '../hooks/useAuth';
 import { getLevel, LEVELS } from '../data/levels';
+import { getIslandForLevel } from '../data/islands';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import SimulatorCard from '../components/simulators/SimulatorCard';
 import DisclaimerFooter from '../components/DisclaimerFooter';
+
+// ── Animated layer components ──────────────────────────────────
+import LessonXPBar, { type LessonMood } from '../components/LessonXPBar';
+import CharacterReaction, { type CharacterMood } from '../components/CharacterReaction';
+import CelebrationOverlay, { type CelebrationEventType } from '../components/CelebrationOverlay';
+import AIExplainer from '../components/AIExplainer';
+import LessonTransition from '../components/LessonTransition';
+import LabObject from '../components/LabObjects';
 
 // ── Types ─────────────────────────────────────────────────────
 interface Props {
@@ -186,20 +196,35 @@ function NotesPanel({ visible, levelId, topic, onClose }: {
   );
 }
 
-// ── Top bar ───────────────────────────────────────────────────
-function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport }: {
+// ── Top bar (upgraded with LessonXPBar) ──────────────────────
+function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport,
+  totalXp, sessionXp, correctStreak, mood, onAIExplainer }: {
   progress:number; hearts:number; onExit:()=>void;
   isBookmarked:boolean; onBookmark:()=>void; onNotes:()=>void; onExport:()=>void;
+  totalXp: number; sessionXp: number; correctStreak: number; mood: LessonMood;
+  onAIExplainer: () => void;
 }) {
   return (
     <View style={sty.topBar}>
       <TouchableOpacity onPress={onExit} style={sty.exitBtn} hitSlop={{top:10,bottom:10,left:10,right:10}}>
         <Text style={sty.exitTxt}>✕</Text>
       </TouchableOpacity>
-      <View style={sty.progressWrap}>
-        <View style={sty.progressBg}><View style={[sty.progressFill,{width:`${Math.min(100,progress)}%`}]}/></View>
+
+      {/* LessonXPBar replaces the plain progress bar */}
+      <View style={{ flex: 1 }}>
+        <LessonXPBar
+          totalXp={totalXp}
+          sessionXp={sessionXp}
+          correctStreak={correctStreak}
+          mood={mood}
+          compact
+        />
       </View>
+
       <View style={sty.topActions}>
+        <TouchableOpacity onPress={onAIExplainer} hitSlop={{top:8,bottom:8,left:8,right:8}}>
+          <Text style={{fontSize:20}}>💡</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={onBookmark} hitSlop={{top:8,bottom:8,left:8,right:8}}>
           <Text style={{fontSize:20,color:isBookmarked?Colors.gold:Colors.textSoft}}>{isBookmarked?'🔖':'🏷️'}</Text>
         </TouchableOpacity>
@@ -563,25 +588,80 @@ function FailScreen({ topic, onRetry, onQuit }: { topic:string; onRetry:()=>void
 // ── Main ──────────────────────────────────────────────────────
 export default function LessonScreen({ levelId, onExit, onComplete, onNavigateToLesson }: Props) {
   const level = getLevel(levelId);
+  const { user } = useAuth();
   const { state, startLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator } = useLessonEngine();
   const { completeLevel } = useProgress();
+
   const [showFeedback, setShowFeedback]       = useState(false);
   const [isBookmarked, setIsBookmarked]       = useState(false);
   const [showNotes, setShowNotes]             = useState(false);
   const [activeLink, setActiveLink]           = useState<TermLink|null>(null);
   const [termVisible, setTermVisible]         = useState(false);
   const [returnTopic, setReturnTopic]         = useState<string|null>(null);
+  // ── Animated layer ─────────────────────────────────────────
+  const [characterMood, setCharacterMood]     = useState<CharacterMood>('idle');
+  const [lessonMood, setLessonMood]           = useState<LessonMood>('idle');
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationType, setCelebType]       = useState<CelebrationEventType>('lesson');
+  const [showExplainer, setShowExplainer]     = useState(false);
+  const [explainerText, setExplainerText]     = useState('');
+  const [explainerUsed, setExplainerUsed]     = useState(0);
+  const [celebrationDone, setCelebrationDone] = useState(false);
+  // ── Lesson transition ──────────────────────────────────────
+  const [showTransition, setShowTransition]   = useState(false);
+  const [pendingLevelId, setPendingLevelId]   = useState<number|null>(null);
+
+  const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
+  const isBossLvl  = (level?.mechanic as string) === 'boss';
+  const nextLevelId = levelId + 1;
+  const nextLevel   = getLevel(nextLevelId);
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{ if(level) startLesson(level); }, [levelId]);
   useEffect(()=>{ if(state?.answered) setShowFeedback(true); }, [state?.answered]);
 
-  const handleNext    = () => { setShowFeedback(false); advance(); };
-  const handleFinish  = async () => {
-    if(!state||!level) return;
-    await completeLevel(levelId, state.xp, state.wrongCount===0);
-    onComplete(state.stars, state.xp);
+  const resetMood = useCallback(() => {
+    setTimeout(() => { setCharacterMood('idle'); setLessonMood('idle'); }, 1500);
+  }, []);
+
+  const handleNext = () => { setShowFeedback(false); advance(); };
+
+  const handleFinish = async () => {
+    if(!state||!level||celebrationDone) return;
+    await completeLevel(levelId, (level as any)?.track ?? 'crypto', state.xp, state.wrongCount===0);
+    setCelebType(isBossLvl ? 'boss' : 'lesson');
+    setShowCelebration(true);
+    setCharacterMood('celebrating');
   };
+
+  const handleCelebDismiss = () => {
+    setShowCelebration(false);
+    setCharacterMood('idle');
+    setCelebrationDone(true);
+    // Play portal transition when there is a next lesson in sequence;
+    // skip it and call onComplete directly at track/island end.
+    if (nextLevel) {
+      setPendingLevelId(nextLevelId);
+      setShowTransition(true);
+    } else {
+      if (state) onComplete(state.stars, state.xp);
+    }
+  };
+
+  const handleAnswerCorrect = () => {
+    setCharacterMood('correct');
+    setLessonMood((state?.combo ?? 0) >= 2 ? 'streak' : 'correct');
+    resetMood();
+    answerCorrect();
+  };
+
+  const handleAnswerWrong = () => {
+    setCharacterMood('wrong');
+    setLessonMood('wrong');
+    resetMood();
+    answerWrong();
+  };
+
   const handleBookmark = async () => {
     const bm = await loadBookmarks();
     if (isBookmarked) { await saveBookmarks(bm.filter(b=>b.levelId!==levelId)); setIsBookmarked(false); }
@@ -592,47 +672,132 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
   const handleGoToLinked = (id: number) => {
     if(onNavigateToLesson) { if(level) setReturnTopic(level.topic); onNavigateToLesson(id); }
   };
+  const handleAIExplainer = () => {
+    if (!state || !level) return;
+    const q = state.questions[state.qIndex];
+    const txt = q?.type === 'concept_card' ? `${q.fact ?? ''} ${q.plain ?? ''}` : q?.prompt ?? level.fact ?? '';
+    setExplainerText(txt);
+    setShowExplainer(true);
+  };
 
   if (!level || !state) return null;
   const q        = state.questions[state.qIndex];
   const progress = (state.qIndex / state.questions.length) * 100;
   const isLast   = state.qIndex + 1 >= state.questions.length;
+  const sessionXp = state.xp ?? 0;
 
-  if (state.finished) return <SafeAreaView style={sty.screen}><CompleteScreen stars={state.stars} xp={state.xp} topic={level.topic} onContinue={handleFinish}/></SafeAreaView>;
-  if (state.failed)   return <SafeAreaView style={sty.screen}><FailScreen topic={level.topic} onRetry={resetLesson} onQuit={onExit}/></SafeAreaView>;
+  // Finished — show celebration then hand off
+  if (state.finished) {
+    if (!showCelebration && !celebrationDone) handleFinish();
+    return (
+      <SafeAreaView style={sty.screen}>
+        <CelebrationOverlay
+          visible={showCelebration}
+          type={celebrationType}
+          xpEarned={sessionXp}
+          stageUp={false}
+          onDismiss={handleCelebDismiss}
+        />
+        {!showCelebration && (
+          <CompleteScreen stars={state.stars} xp={sessionXp} topic={level.topic} onContinue={handleCelebDismiss}/>
+        )}
+      </SafeAreaView>
+    );
+  }
+  if (state.failed) return <SafeAreaView style={sty.screen}><FailScreen topic={level.topic} onRetry={resetLesson} onQuit={onExit}/></SafeAreaView>;
 
   return (
     <SafeAreaView style={sty.screen}>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.bg}/>
-      <TopBar progress={progress} hearts={state.hearts} onExit={onExit}
-        isBookmarked={isBookmarked} onBookmark={handleBookmark}
-        onNotes={()=>setShowNotes(true)} onExport={exportAll}/>
+
+      <TopBar
+        progress={progress}
+        hearts={state.hearts}
+        onExit={onExit}
+        isBookmarked={isBookmarked}
+        onBookmark={handleBookmark}
+        onNotes={()=>setShowNotes(true)}
+        onExport={exportAll}
+        totalXp={totalXp}
+        sessionXp={sessionXp}
+        correctStreak={state.combo ?? 0}
+        mood={lessonMood}
+        onAIExplainer={handleAIExplainer}
+      />
 
       {returnTopic && <ReturnBanner topic={returnTopic} onReturn={()=>{setReturnTopic(null);onExit();}}/>}
 
-      {q?.type==='concept_card' && <ConceptCard q={q} onNext={()=>{answerCorrect();setTimeout(advance,200);}} levelId={levelId} onTermPress={handleTermPress}/>}
-      {q?.type==='simulator'    && <SimulatorCard simulatorType={q.simulatorType??''} onComplete={()=>{completeSimulator();advance();}} onSkip={()=>advance()}/>}
-      {q?.type==='mcq'          && <MCQQuestion q={q} onCorrect={answerCorrect} onWrong={answerWrong}/>}
-      {q?.type==='true_false'   && <TrueFalseQuestion q={q} onCorrect={answerCorrect} onWrong={answerWrong}/>}
-      {q?.type==='order'        && <OrderQuestion q={q} onCorrect={answerCorrect} onWrong={answerWrong}/>}
-      {q?.type==='multi_select' && <MultiSelectQuestion q={q} onCorrect={answerCorrect} onWrong={answerWrong}/>}
-      {q?.type==='match_pairs'  && <MatchPairsQuestion q={q} onCorrect={answerCorrect} onWrong={answerWrong}/>}
-      {q?.type==='fill_blank'   && <FillBlankQuestion q={q} onCorrect={answerCorrect} onWrong={answerWrong}/>}
+      {q?.type==='concept_card' && <ConceptCard q={q} onNext={()=>{handleAnswerCorrect();setTimeout(advance,200);}} levelId={levelId} onTermPress={handleTermPress}/>}
+      {q?.type==='simulator' && (
+        <>
+          <LabObject
+            simulatorType={q.simulatorType ?? ''}
+            fieldColor={(user as any)?.activeFieldColor}
+          />
+          <SimulatorCard
+            simulatorType={q.simulatorType ?? ''}
+            islandId={getIslandForLevel(levelId)}
+            onComplete={() => { completeSimulator(); advance(); }}
+            onSkip={() => advance()}
+          />
+        </>
+      )}
+      {q?.type==='mcq'          && <MCQQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='true_false'   && <TrueFalseQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='order'        && <OrderQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='multi_select' && <MultiSelectQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='match_pairs'  && <MatchPairsQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='fill_blank'   && <FillBlankQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
 
       {showFeedback&&state.answered&&q?.type!=='concept_card'&&q?.type!=='simulator'&&(
-        <FeedbackBar correct={state.lastCorrect??false} combo={state.combo} xp={state.xp} explanation={q?.explanation} onNext={handleNext} isLast={isLast}/>
+        <FeedbackBar correct={state.lastCorrect??false} combo={state.combo} xp={sessionXp} explanation={q?.explanation} onNext={handleNext} isLast={isLast}/>
+      )}
+
+      {/* Floating character — bottom-left, never blocks answers */}
+      <View style={sty.characterFloat} pointerEvents="none">
+        <CharacterReaction
+          mood={characterMood}
+          stage={(user as any)?.xp_stage ?? 1}
+          trackId={(user as any)?.currentTrackId ?? 'default'}
+          size={72}
+        />
+      </View>
+
+      {showExplainer && (
+        <AIExplainer
+          conceptText={explainerText}
+          lessonId={levelId}
+          trackId={(user as any)?.currentTrackId ?? 'default'}
+          trackName={(user as any)?.currentTrackName ?? 'Your Track'}
+          isBlocked={q?.type === 'simulator'}
+          sessionUsed={explainerUsed}
+          onClose={() => setShowExplainer(false)}
+          onUsed={() => setExplainerUsed(n => n + 1)}
+        />
       )}
 
       <TermLinkModal link={activeLink} visible={termVisible} onClose={()=>setTermVisible(false)} onGoToLesson={handleGoToLinked}/>
       <NotesPanel visible={showNotes} levelId={levelId} topic={level.topic} onClose={()=>setShowNotes(false)}/>
-          <DisclaimerFooter />
-      </SafeAreaView>
+      <LessonTransition
+        visible={showTransition}
+        fromTopic={level.topic}
+        toTopic={nextLevel?.topic ?? ''}
+        fieldColor={(user as any)?.activeFieldColor}
+        mechanic={nextLevel?.mechanic}
+        onDone={() => {
+          setShowTransition(false);
+          if (state) onComplete(state.stars, state.xp);
+        }}
+      />
+      <DisclaimerFooter />
+    </SafeAreaView>
   );
 }
 
 // ── Styles ────────────────────────────────────────────────────
 const sty = StyleSheet.create({
   screen:        {flex:1,backgroundColor:Colors.bg},
+  characterFloat:{position:'absolute',bottom:80,left:12,zIndex:10,opacity:0.92},
   topBar:        {flexDirection:'row',alignItems:'center',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,backgroundColor:'#fff',borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
   exitBtn:       {padding:Spacing.sm},
   exitTxt:       {fontSize:18,color:Colors.textSoft},

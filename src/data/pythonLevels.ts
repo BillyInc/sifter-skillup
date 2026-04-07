@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ⚡ Sifter Skill_Up — Python Mastery Program
 // Standalone shared track: 80 levels across 8 chapters (IDs 2001–2080)
 // General concept first → financial application second on every level

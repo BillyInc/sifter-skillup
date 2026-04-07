@@ -155,7 +155,7 @@ type OnboardingStep =
   | 'quiz-results'
   | 'browse';
 
-function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: () => void; onQuiz: () => void; onCryptoStart: () => void }) {
+function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: (initialFilter?: string) => void; onQuiz: () => void; onCryptoStart: () => void }) {
   return (
     <View style={styles.stepContainer}>
       <Text style={styles.welcomeEmoji}>⚡</Text>
@@ -351,7 +351,9 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
   };
 
   // Disclaimer step
-  if (step === -1) {
+  const handleDisclaimerAccept = () => setStep('welcome');
+
+  if (step === 'disclaimer') {
     return (
       <SafeAreaView style={styles.safe}>
         <ScrollView contentContainerStyle={styles.disclaimerBody}>
@@ -388,8 +390,8 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
             <Text style={styles.acceptBtnText}>I understand — Let's build skills</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.learnMoreBtn} onPress={() => setShowLearnMore(true)}>
-            <Text style={styles.learnMoreBtnText}>Read full terms and resources →</Text>
+          <TouchableOpacity style={styles.learnMoreLinkBtn} onPress={() => setShowLearnMore(true)}>
+            <Text style={styles.learnMoreLinkText}>Read full terms and resources →</Text>
           </TouchableOpacity>
         </ScrollView>
 

@@ -1,13 +1,29 @@
 /**
- * Sifter Skill_Up — Auth Screen
- * Telegram Mini App auto-auth, Base SIWE wallet, email/guest fallback
+ * Sifter Skill_Up — Auth Screen v3
+ *
+ * Three auth paths on one screen:
+ *  1. Email / Password (existing)
+ *  2. Base Wallet / SIWE (restored per roadmap)
+ *  3. ⚡ Starknet via Privy email (new — creates gasless wallet, routes to Island 19)
+ *
+ * Visual: animated circuit-board background, card entrance animation.
+ * Dark/light mode via useTheme().
  */
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, Platform, ActivityIndicator, ScrollView, Linking } from 'react-native';
-import { useAuth } from '../hooks/useAuth';
-import { Colors, Spacing, Radius, FontSize } from '../theme';
 
-type Mode = 'welcome' | 'login' | 'signup' | 'connecting';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  View, Text, StyleSheet, TextInput, TouchableOpacity,
+  SafeAreaView, KeyboardAvoidingView, Platform,
+  ActivityIndicator, ScrollView, Animated, Dimensions, Linking,
+} from 'react-native';
+import { useAuth } from '../hooks/useAuth';
+import { useTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
+
+const { width: W, height: H } = Dimensions.get('window');
+
+type Mode = 'welcome' | 'login' | 'signup' | 'connecting' | 'starknet';
+
+// ─── Telegram helpers ──────────────────────────────────────────────────────────
 
 function getTgInitData(): string | null {
   if (Platform.OS === 'web' && typeof window !== 'undefined') {
@@ -16,29 +32,21 @@ function getTgInitData(): string | null {
   }
   return null;
 }
-
 function isTelegram(): boolean { return !!getTgInitData(); }
-function isBase(): boolean {
-  if (Platform.OS === 'web' && typeof window !== 'undefined') {
-    const eth = (window as any).ethereum;
-    return !!(eth?.isCoinbaseWallet);
-  }
-  return false;
-}
-
 function setupTg() {
   if (Platform.OS !== 'web') return;
   const tg = (window as any).Telegram?.WebApp;
   if (!tg) return;
   tg.expand(); tg.enableClosingConfirmation();
-  tg.setHeaderColor?.('#0a0a0a'); tg.setBackgroundColor?.('#0a0a0a');
 }
+
+// ─── Base wallet helper ────────────────────────────────────────────────────────
 
 async function connectBaseWallet(): Promise<{ address: string; signature: string; message: string } | null> {
   if (Platform.OS !== 'web') return null;
   const eth = (window as any).ethereum;
   if (!eth) {
-    Linking.openURL('https://go.cb-w.com/dapp?cb_url=' + encodeURIComponent(typeof window !== 'undefined' ? window.location.href : ''));
+    Linking.openURL('https://go.cb-w.com/dapp?cb_url=' + encodeURIComponent(window.location.href));
     return null;
   }
   try {
@@ -49,16 +57,174 @@ async function connectBaseWallet(): Promise<{ address: string; signature: string
   } catch { return null; }
 }
 
-export default function AuthScreen() {
-  const { signInEmail, signUpEmail, signInGuest, authTelegram, authBaseWallet } = useAuth();
-  const [mode, setMode] = useState<Mode>('welcome');
+function isBaseAvailable(): boolean {
+  return Platform.OS === 'web' && typeof window !== 'undefined' && !!(window as any).ethereum;
+}
+
+// ─── Animated circuit background ──────────────────────────────────────────────
+
+function CircuitBackground({ isDark }: { isDark: boolean }) {
+  const pulse = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1, duration: 3000, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0, duration: 3000, useNativeDriver: true }),
+      ])
+    ).start();
+  }, []);
+  const dotColor = isDark ? 'rgba(99,102,241,0.18)' : 'rgba(99,102,241,0.10)';
+  const cols = Math.ceil(W / 40);
+  const rows = Math.ceil(H / 40);
+  const opacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });
+  return (
+    <Animated.View style={[StyleSheet.absoluteFillObject, { opacity }]} pointerEvents="none">
+      {Array.from({ length: rows }).map((_, r) =>
+        Array.from({ length: cols }).map((_, c) => (
+          <View key={`${r}-${c}`} style={{
+            position: 'absolute', left: c * 40 - 1, top: r * 40 - 1,
+            width: 3, height: 3, borderRadius: 1.5, backgroundColor: dotColor,
+          }} />
+        ))
+      )}
+    </Animated.View>
+  );
+}
+
+// ─── Shared button ─────────────────────────────────────────────────────────────
+
+function AuthButton({
+  label, onPress, loading, variant = 'primary', colors,
+}: {
+  label: string; onPress: () => void; loading?: boolean;
+  variant?: 'primary' | 'ghost' | 'base' | 'starknet'; colors: any;
+}) {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const handlePress = () => {
+    Animated.sequence([
+      Animated.timing(scaleAnim, { toValue: 0.97, duration: 80, useNativeDriver: true }),
+      Animated.timing(scaleAnim, { toValue: 1, duration: 120, useNativeDriver: true }),
+    ]).start();
+    onPress();
+  };
+
+  const bg    = variant === 'primary' ? colors.accent
+    : variant === 'base'    ? '#0052ff'
+    : variant === 'starknet'? '#ec4899'
+    : 'transparent';
+  const border = variant === 'ghost' ? colors.border : 'transparent';
+  const txtClr = variant === 'ghost' ? colors.accent : '#fff';
+
+  return (
+    <Animated.View style={{ transform: [{ scale: scaleAnim }], width: '100%' }}>
+      <TouchableOpacity
+        style={[s.btn, { backgroundColor: bg, borderColor: border, borderWidth: variant === 'ghost' ? 2 : 0 }]}
+        onPress={handlePress} disabled={loading} activeOpacity={0.85}
+      >
+        {loading
+          ? <ActivityIndicator color={txtClr} />
+          : <Text style={[s.btnText, { color: txtClr }]}>{label}</Text>}
+      </TouchableOpacity>
+    </Animated.View>
+  );
+}
+
+// ─── Input ─────────────────────────────────────────────────────────────────────
+
+function AuthInput({ placeholder, value, onChangeText, secureTextEntry, keyboardType, colors }: {
+  placeholder: string; value: string; onChangeText: (v: string) => void;
+  secureTextEntry?: boolean; keyboardType?: any; colors: any;
+}) {
+  return (
+    <TextInput
+      style={[s.input, { backgroundColor: colors.inputBg, borderColor: colors.inputBorder, color: colors.text }]}
+      placeholder={placeholder} placeholderTextColor={colors.textMuted}
+      value={value} onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry} keyboardType={keyboardType}
+      autoCapitalize="none" autoCorrect={false}
+    />
+  );
+}
+
+// ─── Starknet onboarding mode ─────────────────────────────────────────────────
+
+function StarknetMode({ colors, onBack, onSubmit, loading }: {
+  colors: any; onBack: () => void; onSubmit: (email: string) => void; loading: boolean;
+}) {
   const [email, setEmail] = useState('');
+  return (
+    <View style={[s.card, { backgroundColor: '#0a0a1f', borderColor: '#ec489940' }]}>
+      <TouchableOpacity onPress={onBack} style={s.backBtn}>
+        <Text style={[s.backText, { color: '#ec4899' }]}>← Back</Text>
+      </TouchableOpacity>
+
+      <View style={{ alignItems: 'center', marginBottom: Spacing.xl }}>
+        <Text style={{ fontSize: 48, marginBottom: Spacing.sm }}>⚡</Text>
+        <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' }}>
+          Starknet World
+        </Text>
+        <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.6)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
+          Enter your email. We create a gasless Starknet wallet in 10 seconds — no seed phrase, no browser extension.
+        </Text>
+      </View>
+
+      <View style={[s.starkBenefits, { borderColor: '#ec489930' }]}>
+        {[
+          ['⚡', 'Gasless — AVNU Paymaster covers all fees'],
+          ['🔐', 'No seed phrase — secured by Privy email auth'],
+          ['📍', 'Land directly on Starknet Island #19'],
+          ['🧪', 'Execute real Sepolia transactions as you learn'],
+        ].map(([icon, text]) => (
+          <View key={text} style={s.benefitRow}>
+            <Text style={{ fontSize: 16 }}>{icon}</Text>
+            <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: FontSize.sm, flex: 1 }}>{text}</Text>
+          </View>
+        ))}
+      </View>
+
+      <TextInput
+        style={[s.input, { backgroundColor: '#1e1e38', borderColor: '#334155', color: '#fff' }]}
+        placeholder="Email address" placeholderTextColor="rgba(255,255,255,0.35)"
+        value={email} onChangeText={setEmail}
+        keyboardType="email-address" autoCapitalize="none" autoCorrect={false}
+      />
+
+      <TouchableOpacity
+        style={[s.btn, { backgroundColor: '#ec4899', opacity: loading ? 0.7 : 1 }]}
+        onPress={() => onSubmit(email)} disabled={loading || !email} activeOpacity={0.85}
+      >
+        {loading
+          ? <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }}>
+              <ActivityIndicator color="#fff" size="small" />
+              <Text style={[s.btnText, { color: '#fff' }]}>Creating wallet…</Text>
+            </View>
+          : <Text style={[s.btnText, { color: '#fff' }]}>⚡ Create Starknet Wallet</Text>}
+      </TouchableOpacity>
+
+      <Text style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: Spacing.sm, lineHeight: 15 }}>
+        Powered by Privy × Starkzap · Sepolia testnet · No real funds involved
+      </Text>
+    </View>
+  );
+}
+
+// ─── Screen ────────────────────────────────────────────────────────────────────
+
+export default function AuthScreen() {
+  const { signInEmail, signUpEmail, signInGuest, authTelegram, authBaseWallet, authStarknet, starknetLoading } = useAuth();
+  const { colors, isDark } = useTheme();
+
+  const [mode,     setMode]     = useState<Mode>('welcome');
+  const [email,    setEmail]    = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [loading,  setLoading]  = useState(false);
+  const [error,    setError]    = useState('');
+
+  const cardAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    Animated.timing(cardAnim, { toValue: 1, duration: 480, useNativeDriver: true }).start();
     if (isTelegram()) {
       setupTg();
       const initData = getTgInitData();
@@ -66,94 +232,246 @@ export default function AuthScreen() {
     }
   }, []);
 
-  const run = async (fn: () => Promise<void>) => { setError(''); setLoading(true); try { await fn(); } catch (e: any) { setError(e.message || 'Something went wrong'); } finally { setLoading(false); } };
-  const handleBase = async () => { setError(''); setLoading(true); try { const r = await connectBaseWallet(); if (r) await authBaseWallet(r.address, r.signature, r.message); } catch (e: any) { setError(e.message || 'Wallet error'); } finally { setLoading(false); } };
+  const run = async (fn: () => Promise<void>) => {
+    setError(''); setLoading(true);
+    try { await fn(); } catch (e: any) { setError(e.message || 'Something went wrong'); } finally { setLoading(false); }
+  };
 
+  const handleBase = async () => {
+    setError(''); setLoading(true);
+    try {
+      const r = await connectBaseWallet();
+      if (r) await authBaseWallet(r.address, r.signature, r.message);
+    } catch (e: any) { setError(e.message || 'Wallet error'); } finally { setLoading(false); }
+  };
+
+  const handleStarknet = async (starkEmail: string) => {
+    setError('');
+    try { await authStarknet(starkEmail); }
+    catch (e: any) { setError(e.message || 'Starknet error'); setMode('welcome'); }
+  };
+
+  const cardStyle = {
+    opacity: cardAnim,
+    transform: [{ translateY: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [32, 0] }) }],
+  };
+
+  // ── Connecting ──
   if (mode === 'connecting') return (
-    <SafeAreaView style={s.screen}><View style={s.center}>
-      <Text style={{ fontSize: 56 }}>⚡</Text>
-      <ActivityIndicator color={Colors.accent} size="large" style={{ marginTop: Spacing.xl }} />
-      <Text style={{ color: Colors.textSoft, fontSize: FontSize.md, fontWeight: '600', marginTop: Spacing.lg }}>Signing you in…</Text>
-    </View></SafeAreaView>
+    <View style={[s.screen, { backgroundColor: colors.bg }]}>
+      <CircuitBackground isDark={isDark} />
+      <View style={s.center}>
+        <Text style={{ fontSize: 56 }}>⚡</Text>
+        <ActivityIndicator color={colors.accent} size="large" style={{ marginTop: Spacing.xl }} />
+        <Text style={[s.connectingText, { color: colors.textSoft }]}>Signing you in…</Text>
+      </View>
+    </View>
   );
 
-  if (mode === 'welcome') return (
-    <SafeAreaView style={s.screen}>
-      <ScrollView contentContainerStyle={s.welcome}>
-        <Text style={s.logo}>⚡</Text>
-        <Text style={s.appName}>Sifter Skill_Up</Text>
-        <Text style={s.tagline}>Master crypto, career skills, and quantitative finance.</Text>
-        <View style={s.features}>
-          {['270+ crypto levels across 18 islands','Supply Chain, Quant, Onchain career tracks','Guilds, streaks, portfolio & XP','Works offline — no signal needed'].map(f => (
-            <View key={f} style={s.featureRow}><Text style={s.check}>✓</Text><Text style={s.featureText}>{f}</Text></View>
-          ))}
-        </View>
-        <TouchableOpacity style={s.btn} onPress={() => setMode('signup')} activeOpacity={0.85}>
-          <Text style={s.btnText}>Get Started — Free</Text>
-        </TouchableOpacity>
-        {(isBase() || Platform.OS === 'web') && (
-          <TouchableOpacity style={[s.btn, { backgroundColor: '#0052ff', marginTop: Spacing.md }]} onPress={handleBase} disabled={loading} activeOpacity={0.85}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={s.btnText}>🔵 Connect Base Wallet</Text>}
-          </TouchableOpacity>
-        )}
-        <TouchableOpacity style={[s.btn, s.secondary, { marginTop: Spacing.md }]} onPress={() => setMode('login')} activeOpacity={0.85}>
-          <Text style={[s.btnText, { color: Colors.accent }]}>I already have an account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ marginTop: Spacing.xl }} onPress={() => run(signInGuest)} disabled={loading}>
-          <Text style={{ color: Colors.textSoft, fontWeight: '600', fontSize: FontSize.md }}>{loading ? 'Loading…' : 'Continue as guest'}</Text>
-        </TouchableOpacity>
-        {error ? <View style={s.error}><Text style={{ color: Colors.red, fontSize: FontSize.sm, fontWeight: '600' }}>{error}</Text></View> : null}
-        <Text style={s.legal}>By continuing you agree to our Terms and Privacy Policy. Sifter Skill_Up is an educational platform. Nothing here is financial advice.</Text>
+  // ── Starknet mode ──
+  if (mode === 'starknet') return (
+    <View style={[s.screen, { backgroundColor: '#020208' }]}>
+      <CircuitBackground isDark={true} />
+      <ScrollView contentContainerStyle={s.welcomeContent} showsVerticalScrollIndicator={false}>
+        <Animated.View style={cardStyle}>
+          <StarknetMode
+            colors={colors}
+            onBack={() => { setMode('welcome'); setError(''); }}
+            onSubmit={handleStarknet}
+            loading={starknetLoading}
+          />
+        </Animated.View>
+        {error ? <Text style={[s.errorText, { color: '#f87171' }]}>{error}</Text> : null}
+        <Text style={[s.legal, { color: 'rgba(255,255,255,0.2)' }]}>
+          Sifter Skill_Up is an educational platform. Nothing here is financial advice.
+        </Text>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 
-  return (
-    <SafeAreaView style={s.screen}>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <ScrollView contentContainerStyle={s.form} keyboardShouldPersistTaps="handled">
-          <TouchableOpacity onPress={() => setMode('welcome')} style={{ alignSelf: 'flex-start', marginBottom: Spacing.xl }}><Text style={{ fontSize: 24 }}>←</Text></TouchableOpacity>
-          <Text style={s.formTitle}>{mode === 'login' ? 'Welcome back' : 'Create account'}</Text>
-          <Text style={{ fontSize: FontSize.md, color: Colors.textSoft, marginBottom: Spacing.xxl }}>{mode === 'login' ? 'Sign in to continue your streak.' : 'Start your learning journey.'}</Text>
-          {error ? <View style={s.error}><Text style={{ color: Colors.red, fontSize: FontSize.sm, fontWeight: '600' }}>{error}</Text></View> : null}
-          {mode === 'signup' && <TextInput style={s.input} placeholder="Username" placeholderTextColor={Colors.textMuted} value={username} onChangeText={setUsername} autoCapitalize="none" />}
-          <TextInput style={s.input} placeholder="Email address" placeholderTextColor={Colors.textMuted} value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
-          <TextInput style={s.input} placeholder="Password" placeholderTextColor={Colors.textMuted} value={password} onChangeText={setPassword} secureTextEntry />
-          <TouchableOpacity style={[s.btn, loading && { opacity: 0.7 }]} onPress={() => run(mode === 'login' ? () => signInEmail(email, password) : () => signUpEmail(email, password, username))} disabled={loading} activeOpacity={0.85}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={s.btnText}>{mode === 'login' ? 'Sign In' : 'Create Account'}</Text>}
-          </TouchableOpacity>
-          <TouchableOpacity style={{ marginTop: Spacing.lg, alignSelf: 'center' }} onPress={() => setMode(mode === 'login' ? 'signup' : 'login')}>
-            <Text style={{ color: Colors.accent, fontWeight: '700', fontSize: FontSize.md }}>{mode === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}</Text>
-          </TouchableOpacity>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginVertical: Spacing.lg }}>
-            <View style={{ flex: 1, height: 1, backgroundColor: Colors.border }} /><Text style={{ color: Colors.textSoft, fontSize: FontSize.sm }}>or</Text><View style={{ flex: 1, height: 1, backgroundColor: Colors.border }} />
+  // ── Welcome ──
+  if (mode === 'welcome') return (
+    <View style={[s.screen, { backgroundColor: colors.bg }]}>
+      <CircuitBackground isDark={isDark} />
+      {Platform.OS === 'web' && (
+        <View style={[s.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+          <View style={s.statusDot} />
+          <Text style={[s.statusText, { color: colors.textSoft }]}>SERVER STATUS: OPTIMAL</Text>
+          <Text style={[{ color: colors.border }]}>│</Text>
+          <Text style={[s.statusText, { color: colors.textMuted }]}>SIFTER SKILL_UP</Text>
+        </View>
+      )}
+      <ScrollView contentContainerStyle={s.welcomeContent} showsVerticalScrollIndicator={false}>
+        <Animated.View style={[s.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
+          <Text style={s.logo}>⚡</Text>
+          <Text style={[s.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
+          <Text style={[s.tagline, { color: colors.textSoft }]}>
+            Master crypto, career skills, and quantitative finance.
+          </Text>
+
+          {/* Feature pills */}
+          <View style={s.pillRow}>
+            {[['📡','Offline Sync'], ['🌐','Global Guilds'], ['🔥','Skill Streaks']].map(([icon, label]) => (
+              <View key={label} style={[s.pill, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                <Text style={{ fontSize: 13 }}>{icon}</Text>
+                <Text style={[s.pillText, { color: colors.textSoft }]}>{label}</Text>
+              </View>
+            ))}
           </View>
-          <TouchableOpacity style={[s.btn, s.secondary]} onPress={() => run(signInGuest)} disabled={loading} activeOpacity={0.85}>
-            <Text style={[s.btnText, { color: Colors.accent }]}>Continue as Guest</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+
+          <View style={s.btnGroup}>
+            <AuthButton label="Get Started — Free" onPress={() => setMode('signup')} colors={colors} />
+
+            {/* ⚡ Starknet CTA — prominent secondary option */}
+            <TouchableOpacity
+              style={[s.starknetCTA, { borderColor: '#ec489950' }]}
+              onPress={() => setMode('starknet')}
+              activeOpacity={0.85}
+            >
+              <Text style={{ fontSize: 20 }}>⚡</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={[s.starknetCTATitle]}>Continue with Starknet</Text>
+                <Text style={[s.starknetCTASub]}>Gasless wallet · Real transactions · Island #19</Text>
+              </View>
+              <Text style={{ color: '#ec4899', fontSize: 18 }}>›</Text>
+            </TouchableOpacity>
+
+            {/* Base wallet (restored) */}
+            {(isBaseAvailable() || Platform.OS === 'web') && (
+              <AuthButton
+                label="🔵 Connect Base Wallet"
+                onPress={handleBase}
+                loading={loading}
+                variant="base"
+                colors={colors}
+              />
+            )}
+
+            <AuthButton
+              label="I already have an account"
+              onPress={() => setMode('login')}
+              variant="ghost"
+              colors={colors}
+            />
+
+            <TouchableOpacity style={s.guestBtn} onPress={() => run(signInGuest)} disabled={loading}>
+              {loading
+                ? <ActivityIndicator color={colors.textMuted} size="small" />
+                : <Text style={[s.guestText, { color: colors.textMuted }]}>Continue as guest</Text>}
+            </TouchableOpacity>
+          </View>
+
+          {error ? (
+            <View style={[s.errorBox, { backgroundColor: colors.redSoft }]}>
+              <Text style={[s.errorText, { color: colors.red }]}>{error}</Text>
+            </View>
+          ) : null}
+        </Animated.View>
+
+        <Text style={[s.legal, { color: colors.textMuted }]}>
+          By continuing you agree to our Terms and Privacy Policy.{'\n'}
+          Sifter Skill_Up is an educational platform. Nothing here is financial advice.
+        </Text>
+      </ScrollView>
+    </View>
+  );
+
+  // ── Login / Signup ──
+  return (
+    <View style={[s.screen, { backgroundColor: colors.bg }]}>
+      <CircuitBackground isDark={isDark} />
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ScrollView contentContainerStyle={s.formContent} keyboardShouldPersistTaps="handled">
+            <Animated.View style={[s.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
+              <TouchableOpacity onPress={() => setMode('welcome')} style={s.backBtn}>
+                <Text style={[s.backText, { color: colors.accent }]}>← Back</Text>
+              </TouchableOpacity>
+              <Text style={[s.formTitle, { color: colors.text }]}>
+                {mode === 'login' ? 'Welcome back' : 'Create account'}
+              </Text>
+              <Text style={[s.formSub, { color: colors.textSoft }]}>
+                {mode === 'login' ? 'Sign in to continue your streak.' : 'Start your learning journey.'}
+              </Text>
+
+              {error ? (
+                <View style={[s.errorBox, { backgroundColor: colors.redSoft }]}>
+                  <Text style={[s.errorText, { color: colors.red }]}>{error}</Text>
+                </View>
+              ) : null}
+
+              {mode === 'signup' && (
+                <AuthInput placeholder="Username" value={username} onChangeText={setUsername} colors={colors} />
+              )}
+              <AuthInput placeholder="Email address" value={email} onChangeText={setEmail} keyboardType="email-address" colors={colors} />
+              <AuthInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry colors={colors} />
+
+              <AuthButton
+                label={mode === 'login' ? 'Sign In' : 'Create Account'}
+                onPress={() => run(
+                  mode === 'login'
+                    ? () => signInEmail(email, password)
+                    : () => signUpEmail(email, password, username)
+                )}
+                loading={loading} colors={colors}
+              />
+
+              <TouchableOpacity style={{ alignSelf: 'center', paddingVertical: Spacing.sm }}
+                onPress={() => { setError(''); setMode(mode === 'login' ? 'signup' : 'login'); }}>
+                <Text style={[{ fontWeight: '700', fontSize: FontSize.md }, { color: colors.accent }]}>
+                  {mode === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+                </Text>
+              </TouchableOpacity>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginVertical: Spacing.md }}>
+                <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
+                <Text style={{ color: colors.textMuted, fontSize: FontSize.sm }}>or</Text>
+                <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
+              </View>
+
+              <AuthButton label="Continue as Guest" onPress={() => run(signInGuest)} loading={loading} variant="ghost" colors={colors} />
+            </Animated.View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </View>
   );
 }
 
+// ─── Styles ────────────────────────────────────────────────────────────────────
+
 const s = StyleSheet.create({
-  screen:    { flex: 1, backgroundColor: Colors.bg },
-  center:    { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  welcome:   { alignItems: 'center', padding: Spacing.xxl, paddingBottom: Spacing.xxxl },
-  logo:      { fontSize: 72, marginBottom: Spacing.md },
-  appName:   { fontSize: 32, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm },
-  tagline:   { fontSize: FontSize.lg, color: Colors.textSoft, textAlign: 'center', marginBottom: Spacing.xxxl },
-  features:  { width: '100%', gap: Spacing.md, marginBottom: Spacing.xxxl },
-  featureRow:{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
-  check:     { fontSize: FontSize.lg, color: Colors.green, fontWeight: '800', width: 24 },
-  featureText:{ fontSize: FontSize.md, color: Colors.text, fontWeight: '600', flex: 1 },
-  btn:       { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center', width: '100%' },
-  secondary: { backgroundColor: Colors.accentSoft, borderWidth: 2, borderColor: Colors.accent },
-  btnText:   { color: '#fff', fontSize: FontSize.lg, fontWeight: '800' },
-  error:     { backgroundColor: Colors.redSoft, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.md, width: '100%' },
-  legal:     { fontSize: 10, color: Colors.textMuted, textAlign: 'center', marginTop: Spacing.xl, lineHeight: 16, paddingHorizontal: Spacing.lg },
-  form:      { flexGrow: 1, padding: Spacing.xxl, justifyContent: 'center' },
-  formTitle: { fontSize: FontSize.xxxl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm },
-  input:     { backgroundColor: Colors.card, borderWidth: 2, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.lg, fontSize: FontSize.md, color: Colors.text, marginBottom: Spacing.md },
+  screen:         { flex: 1 },
+  center:         { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  connectingText: { fontSize: FontSize.md, fontWeight: '600', marginTop: Spacing.lg },
+  statusBar:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.xl, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
+  statusDot:      { width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' },
+  statusText:     { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 0.5 },
+  welcomeContent: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl, paddingBottom: Spacing.xxxl },
+  card:           { width: '100%', maxWidth: 440, borderRadius: Radius.xl, padding: Spacing.xxl, borderWidth: 1, gap: Spacing.md },
+  logo:           { fontSize: 52, textAlign: 'center' },
+  appName:        { fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' },
+  tagline:        { fontSize: FontSize.md, textAlign: 'center', lineHeight: 22 },
+  pillRow:        { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, justifyContent: 'center' },
+  pill:           { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs, borderRadius: Radius.full, borderWidth: 1 },
+  pillText:       { fontSize: FontSize.xs, fontWeight: '600' },
+  btnGroup:       { gap: Spacing.sm },
+  btn:            { borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center', width: '100%' },
+  btnText:        { fontSize: FontSize.lg, fontWeight: '800' },
+  starknetCTA:    { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#ec489908' },
+  starknetCTATitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#ec4899' },
+  starknetCTASub:   { fontSize: FontSize.xs, color: 'rgba(236,72,153,0.7)', marginTop: 2 },
+  guestBtn:       { alignItems: 'center', paddingVertical: Spacing.sm },
+  guestText:      { fontSize: FontSize.md, fontWeight: '600' },
+  errorBox:       { borderRadius: Radius.md, padding: Spacing.md },
+  errorText:      { fontSize: FontSize.sm, fontWeight: '600' },
+  legal:          { fontSize: 10, textAlign: 'center', marginTop: Spacing.xl, lineHeight: 16 },
+  formContent:    { flexGrow: 1, justifyContent: 'center', padding: Spacing.xl, paddingBottom: Spacing.xxxl, alignItems: 'center' },
+  backBtn:        { alignSelf: 'flex-start', marginBottom: Spacing.md },
+  backText:       { fontSize: FontSize.md, fontWeight: '700' },
+  formTitle:      { fontSize: FontSize.xxl, fontWeight: '900' },
+  formSub:        { fontSize: FontSize.md, lineHeight: 21 },
+  input:          { borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md + 2, fontSize: FontSize.md, width: '100%' },
+  starkBenefits:  { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm },
+  benefitRow:     { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 });
