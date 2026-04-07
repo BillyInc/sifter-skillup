@@ -2,14 +2,14 @@
 # Sifter Skill_Up — FastAPI Backend v2
 # All routers registered, all middleware wired
 # ============================================
-import uuid, bcrypt, base64, secrets, urllib.parse, httpx
+import uuid
+import bcrypt
 from contextlib import asynccontextmanager
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timezone
 from typing import Optional
 
 from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
 from config import settings
 from database import db
@@ -24,6 +24,14 @@ from session_middleware import DeviceSessionMiddleware
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     log.info(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
+    # Fail-fast warning: JWT secret must be sufficiently long. config.py raises
+    # in non-DEBUG mode; here we surface a loud warning regardless so dev
+    # environments don't quietly run with weak secrets.
+    if len(settings.JWT_SECRET or "") < 32:
+        log.warning(
+            "JWT_SECRET is shorter than 32 chars — REPLACE BEFORE PRODUCTION",
+            length=len(settings.JWT_SECRET or ""),
+        )
     yield
     log.info("Application shutdown")
 
@@ -42,16 +50,16 @@ app.add_middleware(DeviceSessionMiddleware)
 # ── Request logging ────────────────────────────────────────────
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next):
-    start_time = datetime.now()
+    start_time = datetime.now(timezone.utc)
     try:
         response = await call_next(request)
-        duration = (datetime.now() - start_time).total_seconds() * 1000
+        duration = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
         log.info("Request completed",
                  endpoint=request.url.path, method=request.method,
                  duration=f"{duration:.2f}ms", status=response.status_code)
         return response
     except Exception as e:
-        duration = (datetime.now() - start_time).total_seconds() * 1000
+        duration = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000
         log.error("Request failed", error=e, endpoint=request.url.path,
                   method=request.method, duration=f"{duration:.2f}ms")
         raise
@@ -62,37 +70,40 @@ async def logging_middleware(request: Request, call_next):
 # ─────────────────────────────────────────────────────────────
 @app.get("/health")
 async def health():
-    return {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now().isoformat()}
+    return {"status": "ok", "version": settings.APP_VERSION, "timestamp": datetime.now(timezone.utc).isoformat()}
 
 
 # ─────────────────────────────────────────────────────────────
 # AUTH ROUTES (unchanged from original)
 # ─────────────────────────────────────────────────────────────
 
+# NOTE: The inline auth/user/game handlers below are candidates for extraction
+# into routers/auth_router.py, routers/user_router.py, routers/game_router.py.
+# Out of scope for the current async/correctness pass — flagged for follow-up.
+
 @app.post("/api/auth/telegram", response_model=ResponseModel)
-async def auth_telegram(body: dict, request: Request):
-    init_data = body.get("initData", "")
-    tg_user = Auth.verify_telegram_init_data(init_data)
+async def auth_telegram(body: TelegramAuthRequest, request: Request):
+    tg_user = Auth.verify_telegram_init_data(body.initData)
     telegram_id = str(tg_user.get("id"))
     username = tg_user.get("username") or tg_user.get("first_name", f"user_{telegram_id}")
     avatar_url = tg_user.get("photo_url")
     existing = db.get_service_client().table("users").select("*").eq("telegram_id", telegram_id).execute()
     if existing.data:
         user = existing.data[0]
-        db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
+        db.get_service_client().table("users").update(
+            {"last_login": datetime.now(timezone.utc).isoformat()}
+        ).eq("id", user["id"]).execute()
     else:
         user = _create_user(telegram_id=telegram_id, username=username, avatar_url=avatar_url, auth_provider="telegram")
     token = Auth.create_jwt(user["id"])
-    await _post_auth_device_register(user["id"], body, request)
+    await _post_auth_device_register(user["id"], request)
     return ResponseModel(data={"token": token, "user": user})
 
 
 @app.post("/api/auth/base-wallet", response_model=ResponseModel)
-async def auth_base_wallet(body: dict, request: Request):
-    wallet_address = body.get("walletAddress", "").lower()
-    signature = body.get("signature", "")
-    message = body.get("message", "Sign in to Sifter Skill_Up")
-    if not Auth.verify_base_wallet(wallet_address, signature, message):
+async def auth_base_wallet(body: BaseWalletAuthRequest, request: Request):
+    wallet_address = body.walletAddress.lower()
+    if not Auth.verify_base_wallet(wallet_address, body.signature, body.message):
         raise HTTPException(status_code=401, detail="Invalid wallet signature")
     existing = db.get_service_client().table("users").select("*").eq("wallet_address", wallet_address).execute()
     if existing.data:
@@ -100,7 +111,7 @@ async def auth_base_wallet(body: dict, request: Request):
     else:
         user = _create_user(wallet_address=wallet_address, username=f"0x{wallet_address[2:6]}…{wallet_address[-4:]}", auth_provider="base")
     token = Auth.create_jwt(user["id"])
-    await _post_auth_device_register(user["id"], body, request)
+    await _post_auth_device_register(user["id"], request)
     return ResponseModel(data={"token": token, "user": user})
 
 
@@ -113,40 +124,36 @@ async def auth_guest(request: Request):
 
 
 @app.post("/api/auth/signup", response_model=ResponseModel)
-async def auth_signup(body: dict, request: Request):
-    email = (body.get("email") or "").strip().lower()
-    password = body.get("password") or ""
-    username = body.get("username") or email.split("@")[0]
-    if not email or "@" not in email:
+async def auth_signup(body: SignupRequest, request: Request):
+    email = body.email.strip().lower()
+    if "@" not in email:
         raise HTTPException(status_code=400, detail="Valid email is required")
-    if len(password) < 6:
-        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    username = body.username or email.split("@")[0]
     existing = db.get_service_client().table("users").select("id").eq("email", email).execute()
     if existing.data:
         raise HTTPException(status_code=409, detail="Email already registered")
-    password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+    password_hash = bcrypt.hashpw(body.password.encode(), bcrypt.gensalt()).decode()
     user = _create_user(username=username, auth_provider="email", email=email, password_hash=password_hash)
     token = Auth.create_jwt(user["id"])
-    await _post_auth_device_register(user["id"], body, request)
+    await _post_auth_device_register(user["id"], request)
     return ResponseModel(data={"token": token, "user": user})
 
 
 @app.post("/api/auth/login", response_model=ResponseModel)
-async def auth_login(body: dict, request: Request):
-    email = (body.get("email") or "").strip().lower()
-    password = body.get("password") or ""
-    if not email or not password:
-        raise HTTPException(status_code=400, detail="Email and password are required")
+async def auth_login(body: LoginRequest, request: Request):
+    email = body.email.strip().lower()
     result = db.get_service_client().table("users").select("*").eq("email", email).execute()
     if not result.data:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     user = result.data[0]
-    if not user.get("password_hash") or not bcrypt.checkpw(password.encode(), user["password_hash"].encode()):
+    if not user.get("password_hash") or not bcrypt.checkpw(body.password.encode(), user["password_hash"].encode()):
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    db.get_service_client().table("users").update({"last_login": datetime.now().isoformat()}).eq("id", user["id"]).execute()
+    db.get_service_client().table("users").update(
+        {"last_login": datetime.now(timezone.utc).isoformat()}
+    ).eq("id", user["id"]).execute()
     token = Auth.create_jwt(user["id"])
     user.pop("password_hash", None)
-    await _post_auth_device_register(user["id"], body, request)
+    await _post_auth_device_register(user["id"], request)
     return ResponseModel(data={"token": token, "user": user})
 
 
@@ -163,14 +170,18 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
 
 # ── Shared helper ──────────────────────────────────────────────
 
-async def _post_auth_device_register(user_id: str, body: dict, request: Request):
-    """Register/refresh device session after any successful auth."""
+async def _post_auth_device_register(user_id: str, request: Request):
+    """Register/refresh device session after any successful auth.
+
+    Reads device metadata exclusively from request headers — auth payloads are
+    now strict Pydantic models and no longer carry these fields.
+    """
     from device_sessions import register_device_for_user
-    device_id   = body.get("device_id") or request.headers.get("X-Device-Id", "")
-    device_name = body.get("device_name") or request.headers.get("X-Device-Name", "Unknown")
-    platform    = body.get("platform")   or request.headers.get("X-Platform", "unknown")
-    app_version = body.get("app_version") or request.headers.get("X-App-Version", "unknown")
-    push_token  = body.get("push_token")
+    device_id   = request.headers.get("X-Device-Id", "")
+    device_name = request.headers.get("X-Device-Name", "Unknown")
+    platform    = request.headers.get("X-Platform", "unknown")
+    app_version = request.headers.get("X-App-Version", "unknown")
+    push_token  = request.headers.get("X-Push-Token")
     if device_id:
         await register_device_for_user(user_id, device_id, device_name, platform, app_version, push_token)
 
@@ -186,7 +197,8 @@ def _create_user(telegram_id=None, wallet_address=None, username="Learner",
         "completed_levels": [], "perfect_levels": [], "python_chapters_completed": [],
         "active_track": "crypto", "boosters": {"hammer": 3, "lightning": 2, "shuffle": 5},
         "achievements": [], "settings": {"notifications": True, "sound": True, "haptics": True},
-        "created_at": datetime.now().isoformat(), "last_login": datetime.now().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "last_login": datetime.now(timezone.utc).isoformat(),
     }
     result = db.get_service_client().table("users").insert(payload).execute()
     return result.data[0]
@@ -207,7 +219,7 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
 @app.put("/api/users/me", response_model=ResponseModel)
 async def update_me(updates: UserUpdate, current_user: dict = Depends(Auth.get_current_user)):
     result = db.get_client().table("users").update(
-        updates.dict(exclude_unset=True)
+        updates.model_dump(exclude_unset=True)
     ).eq("id", current_user["id"]).execute()
     return ResponseModel(data=result.data[0])
 
@@ -283,7 +295,7 @@ async def get_game_state(current_user: dict = Depends(Auth.get_current_user)):
 async def save_game_state(game_state: GameState, current_user: dict = Depends(Auth.get_current_user)):
     existing = db.get_client().table("game_states").select("id").eq("user_id", current_user["id"]).execute()
     if existing.data:
-        db.get_client().table("game_states").update({"state": game_state.state, "updated_at": datetime.now().isoformat()}).eq("user_id", current_user["id"]).execute()
+        db.get_client().table("game_states").update({"state": game_state.state, "updated_at": datetime.now(timezone.utc).isoformat()}).eq("user_id", current_user["id"]).execute()
     else:
         db.get_client().table("game_states").insert({"user_id": current_user["id"], "state": game_state.state}).execute()
     return ResponseModel(success=True)

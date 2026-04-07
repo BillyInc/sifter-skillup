@@ -123,7 +123,6 @@ const STREAK_MOOD_THRESHOLD = 3; // correct streak needed to trigger streak glow
 
 export function useLessonMechanics({
   lessonType   = 'lesson',
-  totalQuestions = 1,
   guildRank    = 0,
   guildAbove   = null,
   guildBelow   = null,
@@ -139,7 +138,13 @@ export function useLessonMechanics({
   // ── Mood state ────────────────────────────────────────────────────────────
   const [characterMood, setCharacterMood] = useState<CharacterMood>('idle');
   const [xpBarMood,     setXpBarMood]     = useState<LessonMood>('idle');
-  const [correctStreak, setCorrectStreak] = useState(0);
+  const [correctStreak, setCorrectStreakState] = useState(0);
+  // Ref keeps the latest streak available inside callbacks (avoids stale closures)
+  const correctStreakRef = useRef(0);
+  const setCorrectStreak = useCallback((value: number) => {
+    correctStreakRef.current = value;
+    setCorrectStreakState(value);
+  }, []);
 
   // ── Celebration ───────────────────────────────────────────────────────────
   const [showCelebration, setShowCelebration] = useState(false);
@@ -177,7 +182,7 @@ export function useLessonMechanics({
     if (moodTimerRef.current) clearTimeout(moodTimerRef.current);
 
     if (isCorrect) {
-      const newStreak = correctStreak + 1;
+      const newStreak = correctStreakRef.current + 1;
       setCorrectStreak(newStreak);
 
       // Determine mood
@@ -199,7 +204,7 @@ export function useLessonMechanics({
       setXpBarMood('idle');
       setCharacterMood('idle');
     }, MOOD_RESET_MS);
-  }, [correctStreak]);
+  }, [setCorrectStreak]);
 
   // ── Lesson complete handler ───────────────────────────────────────────────
 
@@ -235,13 +240,13 @@ export function useLessonMechanics({
       result.stageUp            ? 'stage_up'
       : lessonType === 'boss'   ? 'boss'
       : lessonType === 'lab'    ? 'lab'
-      : freshStreak.completedToday && freshStreak.streak > 1 && correctStreak >= 3
+      : freshStreak.completedToday && freshStreak.streak > 1 && correctStreakRef.current >= 3
         ? 'daily_goal'
         : 'lesson';
 
     setCelebrationType(celebType);
     setShowCelebration(true);
-  }, [lessonType, correctStreak]);
+  }, [lessonType]);
 
   // ── Celebration dismiss ───────────────────────────────────────────────────
 

@@ -110,17 +110,25 @@ class Logger:
         """Log warning message"""
         logger.warning(message, **kwargs)
 
-    def error(self, message: str, error: Optional[Exception] = None, **kwargs):
-        """Log error message with optional exception"""
-        if error:
-            logger.exception(message, error, **kwargs)
+    def error(self, message: str, error: "Exception | str | None" = None, **kwargs):
+        """Log error message with optional exception or context string.
+
+        Accepts either an Exception (preferred — emits stack trace) or a
+        plain string (treated as additional context, merged into the message).
+        """
+        if isinstance(error, BaseException):
+            logger.opt(exception=error).error(message, **kwargs)
+        elif isinstance(error, str):
+            logger.error(f"{message} | {error}", **kwargs)
         else:
             logger.error(message, **kwargs)
 
-    def critical(self, message: str, error: Optional[Exception] = None, **kwargs):
-        """Log critical message with optional exception"""
-        if error:
-            logger.exception(message, error, **kwargs)
+    def critical(self, message: str, error: "Exception | str | None" = None, **kwargs):
+        """Log critical message with optional exception or context string."""
+        if isinstance(error, BaseException):
+            logger.opt(exception=error).critical(message, **kwargs)
+        elif isinstance(error, str):
+            logger.critical(f"{message} | {error}", **kwargs)
         else:
             logger.critical(message, **kwargs)
 

@@ -8,7 +8,7 @@ from celery import Celery
 from celery.schedules import crontab
 from config import settings
 from database import db
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 from logger import log
 
 celery = Celery(
@@ -66,7 +66,7 @@ def update_guild_ranks():
 @celery.task
 def cleanup_notifications():
     try:
-        cutoff = (datetime.now() - timedelta(days=30)).isoformat()
+        cutoff = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
         result = db.get_service_client().table("notifications").delete().lt("created_at", cutoff).execute()
         log.info("Old notifications cleaned", deleted=len(result.data or []))
         return {"status": "success", "deleted": len(result.data or [])}
@@ -82,7 +82,7 @@ def process_withdrawals():
         processed = 0
         for w in (pending.data or []):
             db.get_service_client().table("withdrawals").update({
-                "status": "completed", "completed_at": datetime.now().isoformat()
+                "status": "completed", "completed_at": datetime.now(timezone.utc).isoformat()
             }).eq("id", w["id"]).execute()
             processed += 1
         log.info("Withdrawals processed", count=processed)
@@ -101,8 +101,8 @@ def sync_airtable():
     """Pull content metadata from Airtable into Supabase content_cache."""
     try:
         from airtable_sync import run_airtable_sync
-        # Run the async function in a new event loop
-        results = asyncio.get_event_loop().run_until_complete(run_airtable_sync())
+        # Run the async function in a fresh event loop
+        results = asyncio.run(run_airtable_sync())
         total = sum(r.records_synced for r in results)
         errors = [r.table for r in results if r.error]
         log.info("Airtable sync complete", total_records=total, errors=errors)
@@ -120,7 +120,7 @@ def cleanup_expired_sessions():
     """
     try:
         cutoff = (
-            datetime.utcnow() - timedelta(minutes=settings.DEVICE_SESSION_TTL_MINUTES)
+            datetime.now(timezone.utc) - timedelta(minutes=settings.DEVICE_SESSION_TTL_MINUTES)
         ).isoformat()
         result = db.get_service_client() \
             .table("active_sessions") \
@@ -162,16 +162,14 @@ def ingest_track_feeds():
                         "url":          entry.get("link", ""),
                         "summary":      entry.get("summary", "")[:500],
                         "source":       feed.feed.get("title", url),
-                        "published_at": entry.get("published", datetime.utcnow().isoformat()),
+                        "published_at": entry.get("published", datetime.now(timezone.utc).isoformat()),
                     })
             except Exception as e:
                 log.warning("RSS fetch failed", url=url, error=str(e))
 
         if items:
             from feed_routes import ingest_feed_for_track
-            saved = asyncio.get_event_loop().run_until_complete(
-                ingest_feed_for_track(track_id, items)
-            )
+            saved = asyncio.run(ingest_feed_for_track(track_id, items))
             total += saved
 
     log.info("Feed ingestion complete", total_items=total)
@@ -186,7 +184,7 @@ def expire_old_sync_log():
     are beyond the MAX_ITEM_AGE_HOURS window so can be safely removed.
     """
     try:
-        cutoff = (datetime.utcnow() - timedelta(days=30)).isoformat()
+        cutoff = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
         result = db.get_service_client() \
             .table("sync_log") \
             .delete() \

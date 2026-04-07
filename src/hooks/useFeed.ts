@@ -67,8 +67,10 @@ export interface UseFeedReturn {
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useFeed(context: UserFeedContext): UseFeedReturn {
+  // Guard against missing primary track (e.g. during onboarding)
+  const safePrimaryTrackId = context.primaryTrackId ?? '';
   const [monitoredTracks, setMonitoredTracks] = useState<MonitoredTrack[]>([]);
-  const [activeTrackId, setActiveTrackId]     = useState<string>(context.primaryTrackId);
+  const [activeTrackId, setActiveTrackId]     = useState<string>(safePrimaryTrackId);
   const [sections, setSections]               = useState<SectionData[]>([]);
   const [loading, setLoading]                 = useState(true);
   const [comments, setComments]               = useState<Record<string, Comment[]>>({});
@@ -148,27 +150,27 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
   // ── Monitored track management ─────────────────────────────────────────────
 
   const addMonitoredTrack = useCallback(async (track: MonitoredTrack) => {
-    setMonitoredTracks(prev => {
-      if (prev.find(t => t.id === track.id)) return prev;
-      const updated = [...prev, { ...track, isPrimary: false }];
-      const ids = updated.filter(t => !t.isPrimary).map(t => t.id);
-      AsyncStorage.setItem(MONITORED_TRACKS_KEY, JSON.stringify(ids)).catch(() => {});
-      return updated;
-    });
-  }, []);
+    if (monitoredTracks.find(t => t.id === track.id)) return;
+    const updated = [...monitoredTracks, { ...track, isPrimary: false }];
+    setMonitoredTracks(updated);
+    const ids = updated.filter(t => !t.isPrimary).map(t => t.id);
+    try {
+      await AsyncStorage.setItem(MONITORED_TRACKS_KEY, JSON.stringify(ids));
+    } catch {}
+  }, [monitoredTracks]);
 
   const removeMonitoredTrack = useCallback(async (trackId: string) => {
-    setMonitoredTracks(prev => {
-      const updated = prev.filter(t => t.id !== trackId || t.isPrimary);
-      const ids = updated.filter(t => !t.isPrimary).map(t => t.id);
-      AsyncStorage.setItem(MONITORED_TRACKS_KEY, JSON.stringify(ids)).catch(() => {});
-      return updated;
-    });
+    const updated = monitoredTracks.filter(t => t.id !== trackId || t.isPrimary);
+    setMonitoredTracks(updated);
+    const ids = updated.filter(t => !t.isPrimary).map(t => t.id);
+    try {
+      await AsyncStorage.setItem(MONITORED_TRACKS_KEY, JSON.stringify(ids));
+    } catch {}
     // If removed track was active, switch to primary
     if (activeTrackId === trackId) {
       setActiveTrackId(context.primaryTrackId);
     }
-  }, [activeTrackId, context.primaryTrackId]);
+  }, [monitoredTracks, activeTrackId, context.primaryTrackId]);
 
   // ── Comments ────────────────────────────────────────────────────────────────
 

@@ -1,14 +1,60 @@
+import importlib
+
 import pytest
 from unittest.mock import MagicMock, patch
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture
-def mock_db():
+@pytest.fixture(autouse=True)
+def patch_all_db_modules(monkeypatch):
+    """
+    Patch the module-level `db` reference in every backend module that does
+    `from database import db`. New route modules capture the reference at
+    import time, so simply patching `database.db` is not enough.
+    Also disables SINGLE_DEVICE_ENFORCEMENT so middleware doesn't 401 on
+    requests without an X-Device-Id header.
+    """
+    import database
     mock = MagicMock()
     mock.get_client.return_value = MagicMock()
     mock.get_service_client.return_value = MagicMock()
+    monkeypatch.setattr(database, "db", mock)
+    for mod_name in [
+        "main",
+        "auth",
+        "starknet_routes",
+        "device_sessions",
+        "phase5_routes",
+        "feed_routes",
+        "social_rewards_routes",
+        "interview_routes",
+        "content_routes",
+        "game_extra_routes",
+        "offline_sync",
+        "airtable_sync",
+        "session_middleware",
+        "portfolio_routes",
+        "community_routes",
+        "missing_routes",
+    ]:
+        try:
+            mod = importlib.import_module(mod_name)
+        except ImportError:
+            continue
+        if hasattr(mod, "db"):
+            monkeypatch.setattr(f"{mod_name}.db", mock, raising=False)
+    # Disable single-device enforcement for tests so middleware lets us through
+    try:
+        import session_middleware
+        monkeypatch.setattr(session_middleware.settings, "SINGLE_DEVICE_ENFORCEMENT", False, raising=False)
+    except Exception:
+        pass
     return mock
+
+
+@pytest.fixture
+def mock_db(patch_all_db_modules):
+    return patch_all_db_modules
 
 
 @pytest.fixture

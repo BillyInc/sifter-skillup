@@ -1,3 +1,6 @@
+-- BEGIN/COMMIT wrapper added so partial failures roll back.
+BEGIN;
+
 -- ============================================================
 -- SIFTER SKILL_UP — COMPLETE MIGRATION v2
 -- Run AFTER existing supabase-schema.sql
@@ -343,3 +346,5 @@ CREATE POLICY "public_read_challenges" ON skillup_dev.challenges           FOR S
 CREATE POLICY "public_read_feed"       ON skillup_dev.feed_items           FOR SELECT USING (is_published = true);
 CREATE POLICY "public_read_merch"      ON skillup_dev.merchandise_items    FOR SELECT USING (available = true);
 CREATE POLICY "public_read_content"    ON skillup_dev.content_cache        FOR SELECT USING (true);
+
+COMMIT;

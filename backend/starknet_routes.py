@@ -12,21 +12,43 @@
 #   - Starknet email auth (Privy integration)
 # ============================================
 import itertools
+import re
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from auth import Auth
 from config import settings
 from database import db
 from logger import log
-from models import ResponseModel, StarknetAuthRequest, StarknetRPCRequest
+from models import (
+    ResponseModel,
+    StarknetAuthRequest,
+    StarknetRPCRequest,
+    StarknetTransactionLog,
+)
 
 router = APIRouter(prefix="/api/starknet", tags=["starknet"])
+
+
+# ─────────────────────────────────────────────────────────────
+# Rate limiter — per authenticated user, falls back to IP
+# ─────────────────────────────────────────────────────────────
+
+def _user_or_ip_key(request: Request) -> str:
+    user_id = getattr(request.state, "user_id", None)
+    if user_id:
+        return f"user:{user_id}"
+    return f"ip:{get_remote_address(request)}"
+
+
+limiter = Limiter(key_func=_user_or_ip_key)
+
 
 # ─────────────────────────────────────────────────────────────
 # RPC endpoint pool — round-robin
@@ -39,12 +61,18 @@ def _next_rpc(network: str) -> str:
     return next(_sepolia_pool) if network == "sepolia" else next(_mainnet_pool)
 
 
+# Tx hash format: 0x followed by 1..64 hex chars
+_TX_HASH_RE = re.compile(r"^0x[0-9a-fA-F]{1,64}$")
+
+
 # ─────────────────────────────────────────────────────────────
 # RPC Proxy
 # ─────────────────────────────────────────────────────────────
 
 @router.post("/rpc", response_model=ResponseModel)
+@limiter.limit("30/minute")
 async def starknet_rpc(
+    request: Request,
     body: StarknetRPCRequest,
     current_user: dict = Depends(Auth.get_current_user),
 ):
@@ -53,6 +81,9 @@ async def starknet_rpc(
     Client sends { network, method, params }.
     We pick the next healthy RPC endpoint and forward.
     """
+    # Make user_id available to the rate-limiter key function
+    request.state.user_id = current_user["id"]
+
     rpc_url = _next_rpc(body.network)
 
     rpc_payload = {
@@ -70,28 +101,28 @@ async def starknet_rpc(
         rpc_url=rpc_url,
     )
 
-    # Try up to 3 endpoints on failure
+    # Try up to 3 endpoints on failure (single client for the lifetime of the request)
     last_error: Optional[str] = None
-    for _ in range(3):
-        try:
-            async with httpx.AsyncClient(timeout=15.0) as client:
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        for _ in range(3):
+            try:
                 resp = await client.post(
                     rpc_url,
                     json=rpc_payload,
                     headers={"Content-Type": "application/json"},
                 )
-            if resp.status_code == 200:
-                data = resp.json()
-                return ResponseModel(data=data.get("result"), message=None)
-            last_error = f"RPC {rpc_url} returned {resp.status_code}"
-        except httpx.TimeoutException:
-            last_error = f"RPC {rpc_url} timed out"
-        except Exception as e:
-            last_error = str(e)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    return ResponseModel(data=data.get("result"), message=None)
+                last_error = f"RPC {rpc_url} returned {resp.status_code}"
+            except httpx.TimeoutException:
+                last_error = f"RPC {rpc_url} timed out"
+            except Exception as e:
+                last_error = str(e)
 
-        # Try next endpoint in pool
-        rpc_url = _next_rpc(body.network)
-        log.warning("RPC failed, trying next", error=last_error, next_rpc=rpc_url)
+            # Try next endpoint in pool
+            rpc_url = _next_rpc(body.network)
+            log.warning("RPC failed, trying next", error=last_error, next_rpc=rpc_url)
 
     log.error("All RPC endpoints failed", method=body.method, network=body.network, error=last_error)
     raise HTTPException(503, f"Starknet RPC unavailable: {last_error}")
@@ -101,41 +132,88 @@ async def starknet_rpc(
 # Starknet email auth (Privy integration)
 # ─────────────────────────────────────────────────────────────
 
+async def _verify_privy_token(privy_token: str) -> Optional[str]:
+    """
+    Verify a Privy access token against Privy's API and return the
+    associated Starknet wallet address (or None if not found).
+    Raises on transport / verification errors.
+    """
+    if not settings.PRIVY_APP_ID:
+        raise RuntimeError("PRIVY_APP_ID not configured")
+
+    headers = {
+        "Authorization": f"Bearer {privy_token}",
+        "privy-app-id":  settings.PRIVY_APP_ID,
+    }
+    if getattr(settings, "PRIVY_APP_SECRET", ""):
+        # Privy supports basic auth with app-id:app-secret as well; harmless to send both.
+        headers["privy-app-secret"] = settings.PRIVY_APP_SECRET
+
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        resp = await client.get("https://auth.privy.io/api/v1/users/me", headers=headers)
+
+    if resp.status_code != 200:
+        raise RuntimeError(f"Privy verification failed: HTTP {resp.status_code}")
+
+    data = resp.json() or {}
+    # Look for a Starknet wallet in the linked accounts
+    accounts = data.get("linked_accounts") or data.get("linkedAccounts") or []
+    for acc in accounts:
+        chain_type = (acc.get("chain_type") or acc.get("chainType") or "").lower()
+        wallet_type = (acc.get("type") or "").lower()
+        if "starknet" in chain_type or "starknet" in wallet_type:
+            addr = acc.get("address") or acc.get("wallet_address")
+            if addr:
+                return addr
+    # Fallback: top-level wallet field
+    wallet = data.get("wallet") or {}
+    if isinstance(wallet, dict) and wallet.get("address"):
+        return wallet["address"]
+    return None
+
+
 @router.post("/auth/email", response_model=ResponseModel)
 async def starknet_auth_email(
+    request: Request,
     body: StarknetAuthRequest,
     background_tasks: BackgroundTasks,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
-    Register Starknet address for authenticated user.
-    Called AFTER the user has a JWT (via email signup or any other auth method).
-    The client generates the wallet address (via Privy SDK or demo generation).
-    """
-
-    """
     Complete Starknet onboarding for an authenticated user.
-    Client has already gone through Privy email flow and received
-    a starknet_address. This endpoint records that address on the user.
-
-    Flow on client:
-      1. Privy.createWallet(email) → starknet_address
-      2. POST /api/starknet/auth/email { email, starknet_address }
-      3. Server records address, returns updated user
-
-    This is NOT a primary auth endpoint. The user must already
-    have a JWT from the standard auth flow.
+    Client has gone through Privy email flow and provides a Privy access token.
+    Backend verifies the token with Privy and extracts the wallet address.
     """
+    request.state.user_id = current_user["id"]
+
     email = body.email.strip().lower()
     if not email or "@" not in email:
         raise HTTPException(400, "Valid email required")
 
-    # In production: verify privy_token against Privy's API
-    # For now: trust the authenticated user, just record the association
-    starknet_address = body.privy_token  # client sends address as privy_token field
+    starknet_address: Optional[str] = None
+
+    if not settings.PRIVY_APP_ID:
+        if settings.DEBUG:
+            log.warning(
+                "PRIVY_APP_ID not set — falling back to trust-the-client mode (DEBUG only)",
+                user_id=current_user["id"],
+            )
+            starknet_address = body.privy_token  # legacy demo behavior
+        else:
+            raise HTTPException(503, "Starknet auth not configured (PRIVY_APP_ID missing)")
+    else:
+        try:
+            starknet_address = await _verify_privy_token(body.privy_token)
+        except Exception as e:
+            log.error("Privy verification error", user_id=current_user["id"], error=str(e))
+            if settings.DEBUG:
+                log.warning("DEBUG fallback: trusting client-provided address", user_id=current_user["id"])
+                starknet_address = body.privy_token
+            else:
+                raise HTTPException(503, "Starknet auth verification unavailable")
 
     if not starknet_address:
-        raise HTTPException(400, "starknet_address required (pass as privy_token)")
+        raise HTTPException(400, "No Starknet wallet found for this Privy account")
 
     db.get_service_client().table("users").update({
         "starknet_address": starknet_address,
@@ -190,23 +268,26 @@ async def starknet_status(current_user: dict = Depends(Auth.get_current_user)):
 
 @router.post("/transactions", response_model=ResponseModel)
 async def log_starknet_transaction(
-    body: dict,
+    request: Request,
+    body: StarknetTransactionLog,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
     Client calls this after every successful StarkZap SDK transaction
     to persist the explorer-verifiable hash. Used for portfolio evidence.
     """
-    tx_hash    = body.get("hash", "")
-    network    = body.get("network", "sepolia")
-    tx_type    = body.get("type", "unknown")    # swap, stake, lend, dca, bridge
-    lesson_id  = body.get("lesson_id")
-    lab_id     = body.get("lab_id")
-    amount     = body.get("amount")
-    token      = body.get("token")
+    request.state.user_id = current_user["id"]
 
-    if not tx_hash:
-        raise HTTPException(400, "tx hash required")
+    tx_hash = body.hash
+    if not _TX_HASH_RE.match(tx_hash):
+        raise HTTPException(400, "Invalid tx hash format (expected 0x + up to 64 hex chars)")
+
+    network   = body.network
+    tx_type   = body.type
+    lesson_id = body.lessonId
+    lab_id    = body.labId
+    amount    = body.amount
+    token     = body.token
 
     db.get_service_client().table("starknet_transactions").insert({
         "id":         str(uuid.uuid4()),
@@ -219,7 +300,7 @@ async def log_starknet_transaction(
         "amount":     str(amount) if amount else None,
         "token":      token,
         "explorer_url": f"https://{'sepolia.' if network == 'sepolia' else ''}voyager.online/tx/{tx_hash}",
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
     log.info(

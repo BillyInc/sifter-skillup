@@ -5,36 +5,64 @@
 # /api/interview/{id}/result GET
 # ============================================================
 import uuid
-from datetime import datetime
-from typing import Optional, List
+from datetime import datetime, timezone, timedelta
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
 
 from auth import Auth
 from config import settings
 from database import db
 from logger import log
-from models import ResponseModel
+from models import (
+    InterviewAnswerRequest,
+    InterviewStartRequest,
+    ResponseModel,
+)
 
 router = APIRouter(prefix="/api/interview", tags=["interview"])
 
+# Reject /answer if the session was started more than this long ago
+_SESSION_TIMEOUT = timedelta(minutes=30)
 
-class InterviewStart(BaseModel):
-    track_id:  str
-    level:     str   # 'junior' | 'intermediate' | 'senior'
-    topic:     Optional[str] = None
+# Field-name prefixes/keys that must never leak to the client in /result
+_SENSITIVE_FIELD_PREFIXES = ("expected_", "rubric", "answer_key")
 
-class InterviewAnswer(BaseModel):
-    interview_id: str
-    question_id:  str
-    answer:       str
-    time_taken_s: Optional[int] = None
+
+def _now_utc() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _now_iso() -> str:
+    return _now_utc().isoformat()
+
+
+def _strip_sensitive(obj: Any) -> Any:
+    """Recursively drop rubric / expected / answer_key fields from question payloads."""
+    if isinstance(obj, dict):
+        return {
+            k: _strip_sensitive(v)
+            for k, v in obj.items()
+            if not any(k.startswith(p) or k == p for p in _SENSITIVE_FIELD_PREFIXES)
+        }
+    if isinstance(obj, list):
+        return [_strip_sensitive(item) for item in obj]
+    return obj
+
+
+def _parse_started_at(raw: Optional[str]) -> Optional[datetime]:
+    if not raw:
+        return None
+    try:
+        # Postgres may return "...+00:00" or "...Z"
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
 
 
 @router.post("/start", response_model=ResponseModel)
 async def start_interview(
-    body: InterviewStart,
+    body: InterviewStartRequest,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
@@ -54,38 +82,38 @@ async def start_interview(
         .execute()
 
     if not questions.data:
-        # Fallback: generate a generic set if no questions in DB yet
         question_bank = _default_questions(body.track_id, body.level)
     else:
         question_bank = questions.data
 
-    # Store session
+    # Store session (full bank including any rubric/expected fields kept server-side)
     db.get_service_client().table("interview_sessions").insert({
-        "id":           session_id,
-        "user_id":      current_user["id"],
-        "track_id":     body.track_id,
-        "level":        body.level,
-        "questions":    question_bank,
-        "answers":      [],
-        "status":       "in_progress",
-        "started_at":   datetime.utcnow().isoformat(),
+        "id":         session_id,
+        "user_id":    current_user["id"],
+        "track_id":   body.track_id,
+        "level":      body.level,
+        "questions":  question_bank,
+        "answers":    [],
+        "status":     "in_progress",
+        "started_at": _now_iso(),
     }).execute()
 
     log.info("Interview started", user_id=current_user["id"], track=body.track_id, level=body.level)
 
+    first_question = _strip_sensitive(question_bank[0]) if question_bank else None
     return ResponseModel(data={
         "id":           session_id,
         "track_id":     body.track_id,
         "level":        body.level,
         "status":       "in_progress",
         "question_count": len(question_bank),
-        "current_question": question_bank[0] if question_bank else None,
+        "current_question": first_question,
     })
 
 
 @router.post("/answer", response_model=ResponseModel)
 async def submit_answer(
-    body: InterviewAnswer,
+    body: InterviewAnswerRequest,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Submit an answer and get the next question."""
@@ -103,33 +131,52 @@ async def submit_answer(
     if s["status"] != "in_progress":
         raise HTTPException(400, "Interview already completed")
 
-    answers = s.get("answers", [])
+    # 30-minute session timeout
+    started_at = _parse_started_at(s.get("started_at"))
+    if started_at and _now_utc() - started_at > _SESSION_TIMEOUT:
+        db.get_service_client().table("interview_sessions").update({
+            "status": "expired",
+        }).eq("id", body.interview_id).execute()
+        raise HTTPException(410, "Interview session expired")
+
+    questions = s.get("questions", []) or []
+    answers = s.get("answers", []) or []
+
+    # Validate question_index is within bounds and matches expected progress
+    if body.question_index < 0 or body.question_index >= len(questions):
+        raise HTTPException(400, "question_index out of range")
+    if body.question_index != len(answers):
+        raise HTTPException(
+            400,
+            f"unexpected question_index {body.question_index}; expected {len(answers)}",
+        )
+
     answers.append({
-        "question_id": body.question_id,
-        "answer":      body.answer,
-        "time_taken_s": body.time_taken_s,
-        "answered_at": datetime.utcnow().isoformat(),
+        "question_index": body.question_index,
+        "answer":         body.answer,
+        "answered_at":    _now_iso(),
     })
 
-    questions = s.get("questions", [])
     answered_count = len(answers)
-
-    # Determine if interview is complete
     status = "completed" if answered_count >= len(questions) else "in_progress"
-    next_question = questions[answered_count] if answered_count < len(questions) else None
+    next_question = (
+        _strip_sensitive(questions[answered_count])
+        if answered_count < len(questions)
+        else None
+    )
 
     db.get_service_client().table("interview_sessions").update({
         "answers": answers,
         "status":  status,
-        **({"completed_at": datetime.utcnow().isoformat()} if status == "completed" else {}),
+        **({"completed_at": _now_iso()} if status == "completed" else {}),
     }).eq("id", body.interview_id).execute()
 
     return ResponseModel(data={
-        "interview_id":   body.interview_id,
-        "answers_count":  answered_count,
-        "status":         status,
-        "next_question":  next_question,
-        "is_complete":    status == "completed",
+        "interview_id":  body.interview_id,
+        "answers_count": answered_count,
+        "status":        status,
+        "next_question": next_question,
+        "is_complete":   status == "completed",
     })
 
 
@@ -150,24 +197,27 @@ async def get_result(
         raise HTTPException(404, "Interview session not found")
 
     s = session.data[0]
-    answers = s.get("answers", [])
-    questions = s.get("questions", [])
+    answers = s.get("answers", []) or []
+    questions = s.get("questions", []) or []
 
     # Basic scoring: completion percentage
     completion = len(answers) / max(len(questions), 1)
     score = round(completion * 100)
 
+    # Strip rubric / expected_answers from any question payload before returning
+    safe_questions = _strip_sensitive(questions)
+
     return ResponseModel(data={
-        "interview_id":   interview_id,
-        "track_id":       s["track_id"],
-        "level":          s["level"],
-        "score":          score,
-        "answers_count":  len(answers),
+        "interview_id":    interview_id,
+        "track_id":        s["track_id"],
+        "level":           s["level"],
+        "score":           score,
+        "answers_count":   len(answers),
         "questions_count": len(questions),
-        "status":         s["status"],
-        "started_at":     s.get("started_at"),
-        "completed_at":   s.get("completed_at"),
-        # Full AI scoring happens client-side via /api/ai/score per answer
+        "questions":       safe_questions,
+        "status":          s["status"],
+        "started_at":      s.get("started_at"),
+        "completed_at":    s.get("completed_at"),
         "note": "Per-answer AI scoring available via POST /api/ai/score",
     })
 

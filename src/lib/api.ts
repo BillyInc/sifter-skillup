@@ -13,10 +13,53 @@ import * as SecureStore from 'expo-secure-store';
 import { logger, logApiCall } from './logger';
 
 export const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
-/** @deprecated use API_BASE */
-const BASE_URL = API_BASE;
 
 const TOKEN_KEY = 'sifter_auth_token_v2';
+
+// ─── Shared response types ────────────────────────────────────────────────────
+
+export interface UserProfile {
+  id: string;
+  email?: string | null;
+  username?: string | null;
+  points: number;
+  streak: number;
+  current_level: number;
+  completed_levels: string[];
+  perfect_levels: string[];
+  active_track: string;
+  active_field_id?: string | null;
+  current_track_id?: string | null;
+  current_track_name?: string | null;
+  starknet_address?: string | null;
+  merch_credits: number;
+  xp_stage: number;
+  created_at?: string;
+}
+
+export interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  xp_reward: number;
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  sort_order: number;
+}
+
+export interface FeedItem {
+  id: string;
+  track_id: string;
+  title: string;
+  summary?: string | null;
+  url: string;
+  source?: string | null;
+  image_url?: string | null;
+  published_at: string;
+  like_count: number;
+  bookmark_count: number;
+  share_count: number;
+}
 
 async function getToken(): Promise<string | null> {
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -47,7 +90,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   });
 
   try {
-    const res = await fetch(`${BASE_URL}${path}`, {
+    const res = await fetch(`${API_BASE}${path}`, {
       ...options,
       headers: {
         'Content-Type': 'application/json',
@@ -121,10 +164,18 @@ export const API = {
     }
   },
   clearToken: async () => {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      // Web: clear localStorage directly (SecureStore is shimmed and may no-op)
+      try { localStorage.removeItem(TOKEN_KEY); } catch (e) {
+        logger.warn('Failed to clear token from localStorage', { error: e });
+      }
+      return;
+    }
+    // Native: use SecureStore
     try {
-      await SecureStore.deleteItemAsync('sifter_auth_token_v2');
-    } catch {
-      try { localStorage.removeItem('sifter_auth_token_v2'); } catch {}
+      await SecureStore.deleteItemAsync(TOKEN_KEY);
+    } catch (e) {
+      logger.warn('Failed to clear token from SecureStore', { error: e });
     }
   },
   getToken,  // exported for offline sync engines
@@ -134,7 +185,10 @@ export const API = {
     request<{ criteriaResults: Array<{ criterion: string; passed: boolean; feedback: string }>; overallFeedback: string; score: number; total: number; xpEarned: number }>('/api/ai/score', { method: 'POST', body: JSON.stringify(body) }),
 
   // User
-  getMe: () => request<any>('/api/users/me'),
+  // NOTE: returns `any` for call-site compatibility — several stores extend
+  // UserProfile with additional fields. The exported `UserProfile` interface
+  // above still documents the canonical shape returned by the backend.
+  getMe: (): Promise<any> => request<UserProfile>('/api/users/me'),
   updateMe: (updates: any) => request<any>('/api/users/me', { method: 'PUT', body: JSON.stringify(updates) }),
   checkStreak: () => request<any>('/api/users/streak', { method: 'POST' }),
 
@@ -254,7 +308,7 @@ export const API = {
   // OAuth
   portfolioGetOAuthUrl: (platformId: string) =>
     request<{ url: string }>(`/api/portfolio/oauth/${platformId}/url`)
-      .then(r => (r as any)?.url ?? null),
+      .then(r => r?.url ?? null),
 
   // Portfolio Items
   portfolioGetItems: () =>
@@ -332,9 +386,9 @@ export const API = {
   feedGetSubscriptions: () => request<any>('/api/feed/subscriptions'),
 
   feedGetItems: (trackId?: string) =>
-    request<any[]>(`/api/feed/${trackId ? `?track_id=${trackId}` : ''}`),
+    request<FeedItem[]>(`/api/feed/${trackId ? `?track_id=${trackId}` : ''}`),
 
-  feedGetItem: (itemId: string) => request<any>(`/api/feed/${itemId}`),
+  feedGetItem: (itemId: string) => request<FeedItem>(`/api/feed/${itemId}`),
 
   feedReact: (itemId: string, reaction: string) =>
     request<any>('/api/feed/react', {
@@ -349,8 +403,8 @@ export const API = {
 
   xpGetHistory: () => request<any[]>('/api/v2/xp/history'),
 
-  getBadges: () => request<any[]>('/api/v2/badges'),
-  getMyBadges: () => request<any[]>('/api/v2/badges/me'),
+  getBadges: () => request<Badge[]>('/api/v2/badges'),
+  getMyBadges: () => request<Badge[]>('/api/v2/badges/me'),
 
   getChallenges: (status?: string) =>
     request<any[]>(`/api/v2/challenges${status ? `?status=${status}` : ''}`),
@@ -437,14 +491,31 @@ export const API = {
   getPortfolioPlatformStatuses: () =>
     request<any[]>('/api/portfolio/accounts'),
 
-  pushPortfolioArtifact: (data: { itemId?: string; artifactId?: string; platformId?: string; platformIds?: string[]; caption?: string }) =>
-    request<any[]>('/api/portfolio/items/push', {
-      method: 'POST', body: JSON.stringify({
-        item_id: data.itemId ?? data.artifactId,
-        platform_ids: data.platformIds ?? (data.platformId ? [data.platformId] : []),
+  pushPortfolioArtifact: (
+    data:
+      | { itemId: string; platformIds: string[]; caption?: string }
+      | { artifactId: string; platformId: string; caption?: string },
+  ) => {
+    let item_id: string;
+    let platform_ids: string[];
+    if ('itemId' in data && Array.isArray(data.platformIds)) {
+      item_id = data.itemId;
+      platform_ids = data.platformIds;
+    } else if ('artifactId' in data && typeof data.platformId === 'string') {
+      item_id = data.artifactId;
+      platform_ids = [data.platformId];
+    } else {
+      throw new Error('invalid pushPortfolioArtifact payload');
+    }
+    return request<any[]>('/api/portfolio/items/push', {
+      method: 'POST',
+      body: JSON.stringify({
+        item_id,
+        platform_ids,
         caption: data.caption ?? '',
       }),
-    }),
+    });
+  },
 
   getPlatformAuthUrl: (platformId: string) =>
     request<{ url: string }>(`/api/portfolio/oauth/${platformId}/url`),
@@ -501,8 +572,16 @@ export const API = {
     }),
 
   // ── Challenges ─────────────────────────────────────────────────────────────
-  challengesList: (filters?: Record<string, unknown>) =>
-    request<any>('/api/challenges'),
+  challengesList: (filters?: Record<string, unknown>) => {
+    const qs = filters
+      ? new URLSearchParams(
+          Object.entries(filters)
+            .filter(([, v]) => v !== undefined && v !== null)
+            .map(([k, v]) => [k, String(v)]),
+        ).toString()
+      : '';
+    return request<any>(`/api/challenges${qs ? `?${qs}` : ''}`);
+  },
 
   challengeGetTeam: (challengeId: string) =>
     request<any>(`/api/challenges/${challengeId}/team`),
@@ -518,6 +597,10 @@ export const API = {
     }),
 
   // ── Leaderboard ────────────────────────────────────────────────────────────
-  leaderboardGet: (scope: string, fieldId?: string, trackId?: string) =>
-    request<any>(`/api/leaderboard?scope=${scope}${fieldId ? `&field_id=${fieldId}` : ''}${trackId ? `&track_id=${trackId}` : ''}`),
+  leaderboardGet: (scope: string, fieldId?: string, trackId?: string) => {
+    const params = new URLSearchParams({ scope });
+    if (fieldId) params.set('field_id', fieldId);
+    if (trackId) params.set('track_id', trackId);
+    return request<any>(`/api/leaderboard?${params.toString()}`);
+  },
 };

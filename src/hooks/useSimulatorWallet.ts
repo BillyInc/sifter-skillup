@@ -16,6 +16,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
+import * as Clipboard from 'expo-clipboard';
 import { Linking, Platform } from 'react-native';
 
 // ── Chain config (mirrors TESTNET_CHAINS_CONFIG in SimulatorCard_ADDITIONS) ──
@@ -131,7 +132,10 @@ function walletKey(chain: string): string {
   return `sifter_sim_wallet_${chain}`;
 }
 
-// Generate a deterministic demo address (no real private key)
+// Generate a fresh demo address (no real private key).
+// NOTE: not deterministic — each call produces a new address because the seed
+// uses Date.now(). The address only appears stable across reads because the
+// first generated value is persisted to SecureStore/localStorage and reused.
 async function generateDemoAddress(chain: string): Promise<string> {
   const seed = `sifter_demo_${chain}_${Date.now()}`;
   const hash = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, seed);
@@ -222,8 +226,7 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   const copyAddress = useCallback(async () => {
     if (!address) return;
     try {
-      const { Clipboard } = require('react-native');
-      Clipboard.setString(address);
+      await Clipboard.setStringAsync(address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
