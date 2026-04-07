@@ -16,14 +16,15 @@
  *   })
  */
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, SafeAreaView,
-  Animated, Dimensions, ScrollView, Platform,
+  View, Text, StyleSheet, TouchableOpacity,
+  Animated, Dimensions, ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, type WorldTheme } from '../theme';
-import { getFieldDetail, isTrackLive } from '../data/fieldDetails';
+import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
+import { getFieldDetail } from '../data/fieldDetails';
 import { getField } from '../data/fields';
 
 const { width: W, height: H } = Dimensions.get('window');
@@ -169,7 +170,7 @@ export default function WorldScreen() {
   return (
     <View style={[styles.screen, { backgroundColor: bg0 }]}>
       {/* Gradient background simulation (two-tone) */}
-      <View style={[StyleSheet.absoluteFillObject, { backgroundColor: bg1, top: H * 0.4 }]} />
+      <View style={[StyleSheet.absoluteFill, { backgroundColor: bg1, top: H * 0.4 }]} />
 
       {/* Particles */}
       {Array.from({ length: NUM_PARTICLES }).map((_, i) => (

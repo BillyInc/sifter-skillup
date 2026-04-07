@@ -17,7 +17,7 @@
 import React, { useState, useMemo } from 'react';
 import {
   View, Text, StyleSheet, Dimensions, Platform,
-  ScrollView, KeyboardAvoidingView, TextInput,
+  KeyboardAvoidingView, TextInput,
 } from 'react-native';
 import Svg, { Rect, Line, Text as SvgText, G } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';

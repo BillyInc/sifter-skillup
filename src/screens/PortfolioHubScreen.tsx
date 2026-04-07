@@ -21,9 +21,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, StatusBar, Linking, ActivityIndicator, Alert,
-  Platform, useWindowDimensions,
+  StatusBar, Linking, ActivityIndicator, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
@@ -31,7 +31,7 @@ import { shareOnPortfolioArtifact } from '../lib/shareEngine';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebStatTile, WebListRow, useIsWebWide,
 } from '../components/web/WebGrid';
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -14,7 +14,6 @@
  */
 
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
 import { offlineWrite } from './offlineQueue';
 
 // ─── Role-specific notification copy ─────────────────────────────────────────

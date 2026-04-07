@@ -8,8 +8,9 @@
 import React, { useState, useMemo } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, TextInput,
-  Modal, FlatList, SafeAreaView,
+  Modal, FlatList,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';

@@ -8,11 +8,12 @@
  *   Mobile      → full-width, credits strip at top, 2-column grid
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity,
-  SafeAreaView, Platform, useWindowDimensions, Linking, Modal,
+  Platform, useWindowDimensions, Linking, Modal,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { rewardsEngine } from '../lib/rewardsEngine';
@@ -179,7 +180,7 @@ export default function MerchandiseScreen(_props: any) {
     return (
       <Modal visible={showDetail} animationType="slide" transparent presentationStyle="pageSheet">
         <View style={[styles.modalBg, { backgroundColor: 'rgba(0,0,0,0.6)' }]}>
-          <TouchableOpacity style={StyleSheet.absoluteFillObject} onPress={() => setShowDetail(false)} />
+          <TouchableOpacity style={StyleSheet.absoluteFill} onPress={() => setShowDetail(false)} />
           <View style={[styles.modalCard, { backgroundColor: colors.card }]}>
             <View style={[styles.modalImgBox, { backgroundColor: colors.goldSoft }]}>
               <Text style={styles.modalEmoji}>
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
   itemCard:         { borderRadius: Radius.xl, borderWidth: 1, overflow: 'hidden' },
   itemImgBox:       { height: 130, alignItems: 'center', justifyContent: 'center', position: 'relative' },
   itemEmoji:        { fontSize: 52 },
-  lockedOverlay:    { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
+  lockedOverlay:    { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   lockIcon:         { fontSize: 28 },
   unlockedBadge:    { position: 'absolute', bottom: 6, left: 6, paddingHorizontal: 6, paddingVertical: 2, borderRadius: Radius.full },
   unlockedBadgeText:{ fontSize: 9, fontWeight: FontWeight.black, color: '#fff' },

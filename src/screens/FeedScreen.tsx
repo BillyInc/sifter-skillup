@@ -13,9 +13,10 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, SectionList, RefreshControl,
+  SectionList, RefreshControl,
   Platform, useWindowDimensions,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import FeedWebLayout from '../components/FeedWebLayout';

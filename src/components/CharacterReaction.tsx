@@ -18,7 +18,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Animated, View, StyleSheet } from 'react-native';
 import { WorkerCharacter } from './CharacterSystem';
-import { useTheme, AnimPreset, Shadow } from '../theme';
+import { useTheme, AnimPreset } from '../theme';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -203,7 +203,7 @@ export default function CharacterReaction({
       <Animated.View
         pointerEvents="none"
         style={[
-          StyleSheet.absoluteFillObject,
+          StyleSheet.absoluteFill,
           {
             borderRadius: size / 2,
             backgroundColor: glowColor as any,

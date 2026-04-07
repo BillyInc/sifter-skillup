@@ -11,9 +11,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, FlatList, TouchableOpacity,
-  SafeAreaView, Platform, useWindowDimensions, ActivityIndicator, ScrollView,
+  Platform, useWindowDimensions, ActivityIndicator, ScrollView,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { leaderboardEngine, type LeaderboardScope } from '../lib/leaderboardEngine';
 import type { Leaderboard, LeaderboardEntry } from '../types/social';

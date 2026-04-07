@@ -17,7 +17,7 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import {
   View, Text, StyleSheet, Modal, TouchableOpacity,
-  Animated, Dimensions, Platform,
+  Animated, Dimensions,
 } from 'react-native';
 import { TheBolt } from './CharacterSystem';
 import {
@@ -260,7 +260,7 @@ export default function CelebrationOverlay({
       >
         {/* Backdrop tint */}
         <TouchableOpacity
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
           activeOpacity={1}
           onPress={onDismiss}
         >
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backdropFill: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(10,10,30,0.75)',
   },
   card: {

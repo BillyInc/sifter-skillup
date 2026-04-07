@@ -86,25 +86,25 @@ describe('StreakEngine', () => {
   });
 
   it('status() returns isAtRisk=true when in last 4h window with no play today', async () => {
-    // Seed a state where last activity was yesterday → still in window, not lost.
+    // Pin the clock at 22:30 today (1.5h until midnight, < 4h warningHours).
+    // Use useFakeTimers().setSystemTime() — it cleanly mocks every `new Date()`
+    // call without the mutation hazards of jest.spyOn(global, 'Date').
+    const fakeNow = new Date();
+    fakeNow.setHours(22, 30, 0, 0);
+
+    // Compute yesterday relative to fakeNow (so the seed matches the engine's
+    // mocked-time view of "yesterday", regardless of the real wall clock).
+    const yesterday = new Date(fakeNow);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayIso = yesterday.toISOString().slice(0, 10);
+
     await seedState({
       currentStreak: 2,
-      lastActivityDate: isoDay(-1),
+      lastActivityDate: yesterdayIso,
     });
 
-    // Mock Date so "now" is 22:30 today → ~1.5h until midnight (< 4h warningHours)
-    const RealDate = Date;
-    const fakeNow = new RealDate();
-    fakeNow.setHours(22, 30, 0, 0);
-    const spy = jest.spyOn(global, 'Date').mockImplementation(((...args: unknown[]) => {
-      if (args.length === 0) return fakeNow;
-      // @ts-expect-error spread to real Date
-      return new RealDate(...args);
-    }) as unknown as DateConstructor);
-    // Restore static methods
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (global.Date as any).now = RealDate.now;
-
+    jest.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate', 'queueMicrotask'] });
+    jest.setSystemTime(fakeNow);
     try {
       const status = await streakEngine.status();
       expect(status.completedToday).toBe(false);
@@ -112,7 +112,7 @@ describe('StreakEngine', () => {
       expect(status.isLost).toBe(false);
       expect(status.isAtRisk).toBe(true);
     } finally {
-      spy.mockRestore();
+      jest.useRealTimers();
     }
   });
 });

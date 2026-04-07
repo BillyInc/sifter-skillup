@@ -13,10 +13,11 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Share, Clipboard, ActivityIndicator,
+  Share, ActivityIndicator,
 } from 'react-native';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
-import { useAuth } from '../hooks/useAuth';
+import * as Clipboard from 'expo-clipboard';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors, Spacing, Radius, FontSize } from '../theme';
 import { API } from '../lib/api';
 import { offlineRead } from '../lib/offlineQueue';
 
@@ -44,7 +45,6 @@ const REWARD_TIERS = [
 ];
 
 export default function ReferralScreen() {
-  const { user } = useAuth();
   const [stats,   setStats]   = useState<ReferralStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied,  setCopied]  = useState(false);
@@ -66,7 +66,7 @@ export default function ReferralScreen() {
 
   const handleCopy = async () => {
     if (!stats) return;
-    Clipboard.setString(stats.referralUrl);
+    await Clipboard.setStringAsync(stats.referralUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

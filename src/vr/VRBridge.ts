@@ -9,8 +9,6 @@
 // vrScenario key. LessonScreen checks for a vrScenario on boss completion
 // and offers the VR experience. The bridge handles the handoff.
 
-import { Platform } from 'react-native';
-
 // ── VR Scenario Keys ──────────────────────────────────────────────────────
 // These keys are referenced in quantLevels.ts vrScenario fields.
 // Each key maps to a Unity scene in the VR build.

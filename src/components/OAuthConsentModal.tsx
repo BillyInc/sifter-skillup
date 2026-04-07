@@ -7,9 +7,10 @@
 
 import React from 'react';
 import {
-  Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView,
+  Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView,
 } from 'react-native';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors, Spacing, Radius, FontSize } from '../theme';
 
 interface Props {
   visible: boolean;

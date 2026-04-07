@@ -15,17 +15,17 @@
  * Replace StarkzapSimulatorCard.tsx with this file.
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  ActivityIndicator, Animated, Linking,
+  ActivityIndicator, Linking,
 } from 'react-native';
 import { useAuth } from '../../../../hooks/useAuth';
 import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../../../../theme';
+import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 
 // ── Lab 8 bridge simulators ────────────────────────────────────────────────────
 import {

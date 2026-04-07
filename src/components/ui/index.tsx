@@ -27,8 +27,8 @@
 
 import React, { useRef, useEffect, type ReactNode } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet,
-  Animated, ViewStyle, TextStyle, type StyleProp,
+  View, Text, TouchableOpacity,
+  Animated, ViewStyle, type StyleProp,
 } from 'react-native';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight,

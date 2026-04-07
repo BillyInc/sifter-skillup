@@ -8,13 +8,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Modal, TextInput, ActivityIndicator,
+  Modal, TextInput, ActivityIndicator,
   Alert, Linking, RefreshControl, KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../hooks/useAuth';
 import { API } from '../lib/api';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
+import { Colors, Spacing, Radius, FontSize, useTheme } from '../theme';
 import {
   getPlatformsForField,
   PLATFORMS,
@@ -23,7 +24,7 @@ import {
 } from '../data/portfolioPlatforms';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebSectionLabel, WebListRow, useIsWebWide,
 } from '../components/web/WebGrid';
 
 // ─────────────────────────────────────────────────────────────

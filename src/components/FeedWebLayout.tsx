@@ -23,9 +23,8 @@ import {
   Linking, Platform,
 } from 'react-native';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
+  useTheme, Spacing, Radius, FontSize, FontWeight,
 } from '../theme';
-import { getTrackFeedConfig } from '../lib/trackFeedConfig';
 import { FeedCard } from './FeedCard';
 import type { FeedItem, ReactionType, TrackFeedSection, MonitoredTrack } from '../types/feed';
 

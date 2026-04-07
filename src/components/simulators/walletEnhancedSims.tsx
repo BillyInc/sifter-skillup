@@ -28,7 +28,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput, Animated, Clipboard, Linking, Platform,
+  TextInput, Animated, Linking, Platform,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 import { useSimulatorWallet } from '../../hooks/useSimulatorWallet';

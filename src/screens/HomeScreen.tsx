@@ -7,9 +7,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Animated, RefreshControl,
-  Platform, useWindowDimensions, Easing,
+  Animated, RefreshControl,
+  Easing,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import {
@@ -23,7 +24,7 @@ import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/Fiel
 import { useAuth } from '../hooks/useAuth';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebDivider, WebListRow, useIsWebWide, GRID_GAP,
+  WebSectionLabel, WebStatTile, WebListRow, useIsWebWide, GRID_GAP,
 } from '../components/web/WebGrid';
 
 function getGreeting(): string {
@@ -578,7 +579,7 @@ const styles = StyleSheet.create({
 
 const activeHero = StyleSheet.create({
   wrap:            { marginBottom: Spacing.lg },
-  glowBorder:      { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl, borderWidth: 2, zIndex: 1 },
+  glowBorder:      { ...StyleSheet.absoluteFill, borderRadius: Radius.xl, borderWidth: 2, zIndex: 1 },
   card:            { borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: 'transparent' },
   fieldPill:       { flexDirection: 'row', alignItems: 'center', gap: 6, margin: Spacing.md, marginBottom: 0, alignSelf: 'flex-start', borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 5 },
   fieldPillEmoji:  { fontSize: 14 },

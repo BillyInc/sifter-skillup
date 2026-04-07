@@ -6,13 +6,13 @@
 import React, { useState, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, FlatList, TextInput, Modal,
+  TextInput, Modal,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { ALL_FIELDS, type Field } from '../data/fields';
-import { SKILL_TRACKS, type SkillTrack } from '../data/skills';
+import { SKILL_TRACKS } from '../data/skills';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useRouter } from 'expo-router';
-import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 
 type MainTab = 'browse' | 'search';

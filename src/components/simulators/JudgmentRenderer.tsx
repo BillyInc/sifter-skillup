@@ -14,7 +14,7 @@
  *   'judgment-communication': (props) => <JudgmentRenderer type="judgment-communication" {...props} />
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TextInput,
   KeyboardAvoidingView, Platform, ScrollView,

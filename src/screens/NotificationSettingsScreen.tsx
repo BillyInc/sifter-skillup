@@ -3,11 +3,12 @@
  * Push, SMS, Email preferences + reminder time picker.
  * Accessible from Profile. Settings saved to server (queued offline).
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Switch, Platform,
+  Switch,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { requestPushPermission, scheduleDailyReminder } from '../lib/notificationEngine';
 import { enqueueWrite } from '../lib/offlineStorage';

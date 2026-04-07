@@ -6,8 +6,9 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, StatusBar, Modal, Alert,
+  StatusBar, Modal, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIslands';
 import { QUANT_LEVELS } from '../data/quantLevels';
 import { useAuth } from '../hooks/useAuth';
@@ -19,7 +20,7 @@ import type { VRScenarioKey } from '../vr/VRBridge';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebSectionLabel, WebStatTile, WebListRow, useIsWebWide,
 } from '../components/web/WebGrid';
 
 // ── Tier colour map ───────────────────────────────────────────

@@ -11,15 +11,13 @@
  * field-affinity matrix and surfaces the top 3 matches with reasoning.
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Animated, Dimensions,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import LearnMoreScreen from './LearnMoreScreen';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
-
-const { width: SCREEN_W } = Dimensions.get('window');
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Career interest quiz

@@ -22,11 +22,12 @@
  * runtime. No hard-coded structures beyond Supply Chain Analyst reference.
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, TextInput, ActivityIndicator, Alert, Animated,
+  TextInput, ActivityIndicator, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { API } from '../lib/api';
 import DisclaimerFooter from '../components/DisclaimerFooter';

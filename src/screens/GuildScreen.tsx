@@ -11,16 +11,16 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, FlatList, TextInput, ActivityIndicator,
-  Platform, useWindowDimensions,
+  TextInput, ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import { API } from '../lib/api';
 import { offlineRead, offlineWrite } from '../lib/offlineQueue';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebSectionLabel, WebStatTile, WebDivider, useIsWebWide,
 } from '../components/web/WebGrid';
 
 type GuildTab = 'my-guild' | 'discover' | 'projects' | 'members';

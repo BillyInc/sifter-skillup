@@ -9,9 +9,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, Easing, Dimensions, SafeAreaView, Modal,
+  Animated, Easing, Dimensions, Modal,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
@@ -377,7 +378,7 @@ const iso = StyleSheet.create({
 });
 
 const gate = StyleSheet.create({
-  overlay:   { ...StyleSheet.absoluteFillObject, backgroundColor: '#000000C0' },
+  overlay:   { ...StyleSheet.absoluteFill, backgroundColor: '#000000C0' },
   sheet:     { position: 'absolute', top: '12%', left: '8%', right: '8%', borderRadius: 28, overflow: 'hidden' },
   inner:     { padding: 28, alignItems: 'center' },
   islandBig: { width: 100, height: 100, borderRadius: 50, alignItems: 'center', justifyContent: 'center', borderWidth: 2, shadowOpacity: 0.9, shadowRadius: 24, shadowOffset: { width: 0, height: 0 }, zIndex: 2 },
