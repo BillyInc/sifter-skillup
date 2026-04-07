@@ -54,13 +54,15 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - run: uv sync --frozen
+          python-version: '3.13'
+      - run: uv sync --extra test
       - name: Tests
-        run: uv run pytest -v
+        run: uv run pytest tests/test_offline_sync.py tests/test_device_sessions.py tests/test_starknet_routes.py tests/test_phase5_routes.py tests/test_migration_smoke.py -v
         env:
-          JWT_SECRET: test-secret-for-ci
+          DEBUG: 'true'
+          JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
           SUPABASE_URL: https://placeholder.supabase.co
           SUPABASE_ANON_KEY: placeholder
           SUPABASE_SERVICE_KEY: placeholder
           REDIS_URL: redis://localhost:6379/0
+          SINGLE_DEVICE_ENFORCEMENT: 'false'
