@@ -12,16 +12,17 @@
  *   - Crypto special case: shows island chain pathway
  */
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, Easing, Dimensions, SafeAreaView, Modal,
-  TouchableWithoutFeedback, FlatList, Platform,
+  Animated, Easing, Dimensions, Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
-import { useTheme, Radius, FontSize, FontWeight, Shadow, Spacing } from '../theme';
+import { useTheme, Radius, FontSize, FontWeight, Spacing } from '../theme';
 import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
@@ -510,7 +511,7 @@ const screen = StyleSheet.create({
 const card = StyleSheet.create({
   wrap:         { marginHorizontal: Spacing.sm },
   card:         { borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: '#FFFFFF10' },
-  glowBorder:   { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl, borderWidth: 2 },
+  glowBorder:   { ...StyleSheet.absoluteFill, borderRadius: Radius.xl, borderWidth: 2 },
   artworkArea:  { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.lg },
   infoPanel:    { paddingHorizontal: Spacing.lg, paddingBottom: Spacing.lg, gap: Spacing.sm },
   nameRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
@@ -529,7 +530,7 @@ const card = StyleSheet.create({
 });
 
 const portal = StyleSheet.create({
-  overlay:      { ...StyleSheet.absoluteFillObject, backgroundColor: '#000000BB' },
+  overlay:      { ...StyleSheet.absoluteFill, backgroundColor: '#000000BB' },
   sheet:        {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     height: SH * 0.88,

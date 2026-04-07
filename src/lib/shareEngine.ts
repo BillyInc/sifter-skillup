@@ -9,7 +9,7 @@
  * Deep links back to the user's public Sifter profile.
  */
 
-import { Share, Platform } from 'react-native';
+import { Share } from 'react-native';
 import { offlineWrite } from './offlineQueue';
 
 export interface SharePayload {

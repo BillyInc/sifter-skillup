@@ -8,7 +8,7 @@
 import React, { useState } from 'react';
 import {
   Modal, View, Text, StyleSheet, TouchableOpacity,
-  TextInput, SafeAreaView, Linking,
+  TextInput, Linking,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize } from '../theme';
 import { offlineWrite } from '../lib/offlineQueue';

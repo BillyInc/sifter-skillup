@@ -37,7 +37,7 @@ import uuid
 import json
 import os
 import httpx
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional, List
 from contextlib import asynccontextmanager
 
@@ -156,7 +156,7 @@ async def get_feed(
         q = q.in_("user_id", following_ids)
     elif mode == "discover":
         # Trending posts: last 48h, sorted by engagement
-        cutoff = (datetime.utcnow() - timedelta(hours=48)).isoformat()
+        cutoff = (datetime.now(timezone.utc) - timedelta(hours=48)).isoformat()
         q = q.gte("created_at", cutoff)
         if track:
             q = q.eq("track_context", track)
@@ -266,7 +266,7 @@ async def get_trending():
         topics = result.data or []
     except Exception:
         # Fallback: query post_hashtags directly
-        cutoff = (datetime.utcnow() - timedelta(hours=48)).isoformat()
+        cutoff = (datetime.now(timezone.utc) - timedelta(hours=48)).isoformat()
         result = (
             db.get_service_client()
             .table("post_hashtags")
@@ -396,7 +396,7 @@ async def react_to_post(body: ReactionCreate, current_user: dict = Depends(Auth.
             "post_id": post_id,
             "user_id": user_id,
             "reaction_type": body.reaction,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         try:
             db.get_service_client().rpc("increment_reaction", {
@@ -437,7 +437,7 @@ async def vote_poll(body: PollVote, current_user: dict = Depends(Auth.get_curren
 
     poll_id = poll_res.data[0]["id"]
     ends_at = poll_res.data[0].get("ends_at")
-    if ends_at and datetime.fromisoformat(ends_at.replace("Z", "")) < datetime.utcnow():
+    if ends_at and datetime.fromisoformat(ends_at.replace("Z", "+00:00")) < datetime.now(timezone.utc):
         raise HTTPException(400, "Poll has ended")
 
     # Check already voted
@@ -452,7 +452,7 @@ async def vote_poll(body: PollVote, current_user: dict = Depends(Auth.get_curren
         "post_id": body.postId,
         "user_id": user_id,
         "option_id": body.optionId,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
     # Increment option vote count and total
@@ -478,7 +478,7 @@ async def report_post(body: PostReport, current_user: dict = Depends(Auth.get_cu
         "reporter_id": current_user["id"],
         "reason": body.reason,
         "status": "pending",
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }
     db.get_service_client().table("post_reports").insert(record).execute()
     return ResponseModel(data={"reported": True})
@@ -506,7 +506,7 @@ async def get_privacy(current_user: dict = Depends(Auth.get_current_user)):
 async def update_privacy(body: PrivacyUpdate, current_user: dict = Depends(Auth.get_current_user)):
     db.get_service_client().table("users").update({
         "is_private": body.isPrivate,
-        "updated_at": datetime.utcnow().isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
     }).eq("id", current_user["id"]).execute()
     return ResponseModel(data={"isPrivate": body.isPrivate})
 
@@ -530,7 +530,7 @@ async def follow_user(body: FollowAction, current_user: dict = Depends(Auth.get_
         "id": str(uuid.uuid4()),
         "follower_id": user_id,
         "following_id": body.targetId,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
     _create_notification(body.targetId, user_id, "follow")
@@ -550,7 +550,7 @@ async def request_follow(body: FollowAction, current_user: dict = Depends(Auth.g
         "requester_id": user_id,
         "target_id": body.targetId,
         "status": "pending",
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
     _create_notification(body.targetId, user_id, "follow_request")
@@ -582,7 +582,7 @@ async def respond_follow_request(body: FollowRequestRespond, current_user: dict 
             "id": str(uuid.uuid4()),
             "follower_id": body.requesterId,
             "following_id": user_id,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         _create_notification(body.requesterId, user_id, "follow")
 
@@ -604,7 +604,7 @@ async def block_user(body: BlockAction, current_user: dict = Depends(Auth.get_cu
     user_id = current_user["id"]
     db.get_service_client().table("user_blocks").upsert({
         "id": str(uuid.uuid4()), "user_id": user_id, "target_id": body.targetId,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
     # Also remove any follow relationship
     db.get_service_client().table("follows").delete().or_(
@@ -624,7 +624,7 @@ async def unblock_user(body: BlockAction, current_user: dict = Depends(Auth.get_
 async def mute_user(body: BlockAction, current_user: dict = Depends(Auth.get_current_user)):
     db.get_service_client().table("user_mutes").upsert({
         "id": str(uuid.uuid4()), "user_id": current_user["id"], "target_id": body.targetId,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
     return ResponseModel(data={"muted": True})
 
@@ -731,8 +731,8 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
     else:
         thread_id = str(uuid.uuid4())
         db.get_service_client().table("dm_threads").insert({
-            "id": thread_id, "created_at": datetime.utcnow().isoformat(),
-            "updated_at": datetime.utcnow().isoformat(),
+            "id": thread_id, "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         db.get_service_client().table("thread_participants").insert([
             {"id": str(uuid.uuid4()), "thread_id": thread_id, "user_id": sender_id},
@@ -747,10 +747,10 @@ async def send_dm(body: DMSend, current_user: dict = Depends(Auth.get_current_us
         "sender_id": sender_id,
         "content": body.content[:2000],
         "is_read": False,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
     }
     db.get_service_client().table("dm_messages").insert(message).execute()
-    db.get_service_client().table("dm_threads").update({"updated_at": datetime.utcnow().isoformat()}).eq("id", thread_id).execute()
+    db.get_service_client().table("dm_threads").update({"updated_at": datetime.now(timezone.utc).isoformat()}).eq("id", thread_id).execute()
 
     return ResponseModel(data={"messageId": msg_id, "threadId": thread_id})
 
@@ -826,7 +826,7 @@ def _create_notification(recipient_id: str, actor_id: str, notif_type: str, post
             "post_snippet": snippet,
             "extra_data": extra or {},
             "is_read": False,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
     except Exception:
         pass  # Notification failure should never break the main action
@@ -922,6 +922,6 @@ async def record_seen_scenario(body: SeenScenarioRecord, current_user: dict = De
         "id": str(uuid.uuid4()),
         "user_id": current_user["id"],
         "scenario_id": body.scenarioId,
-        "seen_at": datetime.utcnow().isoformat(),
+        "seen_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
     return ResponseModel(data={"recorded": True})

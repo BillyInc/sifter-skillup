@@ -30,7 +30,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput, Animated, Clipboard, Linking,
+  TextInput, Animated, Linking,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 import { useSimulatorWallet } from '../../hooks/useSimulatorWallet';

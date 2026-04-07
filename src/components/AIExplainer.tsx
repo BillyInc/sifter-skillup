@@ -20,7 +20,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, TextInput,
   ScrollView, Animated, Platform, useWindowDimensions,
-  ActivityIndicator, KeyboardAvoidingView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 
@@ -135,7 +135,7 @@ Respond ONLY with a JSON object — no markdown, no preamble — in this exact s
   if (isBlocked) {
     return (
       <Animated.View style={[styles.backdrop, { opacity: backdropOp }]}>
-        <TouchableOpacity style={StyleSheet.absoluteFillObject} onPress={dismiss} activeOpacity={1} />
+        <TouchableOpacity style={StyleSheet.absoluteFill} onPress={dismiss} activeOpacity={1} />
         <View style={[
           isWebWide ? styles.webModal : styles.sheet,
           { backgroundColor: colors.card },
@@ -161,7 +161,7 @@ Respond ONLY with a JSON object — no markdown, no preamble — in this exact s
 
   return (
     <Animated.View style={[styles.backdrop, { opacity: backdropOp }]}>
-      <TouchableOpacity style={StyleSheet.absoluteFillObject} onPress={dismiss} activeOpacity={1} />
+      <TouchableOpacity style={StyleSheet.absoluteFill} onPress={dismiss} activeOpacity={1} />
 
       <Animated.View
         style={[
@@ -302,7 +302,7 @@ Respond ONLY with a JSON object — no markdown, no preamble — in this exact s
 // ─── Styles ────────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  backdrop:         { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.55)', zIndex: 999, justifyContent: 'flex-end', alignItems: 'center' },
+  backdrop:         { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.55)', zIndex: 999, justifyContent: 'flex-end', alignItems: 'center' },
   sheet:            { width: '100%', maxHeight: '85%', borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, overflow: 'hidden' },
   webModal:         { width: 560, maxHeight: '80%', borderRadius: Radius.xl, marginBottom: 'auto' as any, marginTop: 'auto' as any, ...Shadow.lg },
   scrollContent:    { padding: Spacing.xl, gap: Spacing.md },

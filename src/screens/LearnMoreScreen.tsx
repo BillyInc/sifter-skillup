@@ -13,8 +13,9 @@
 import React, { useState } from 'react';
 import {
   View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Linking,
+  Linking,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import TermsScreen from './TermsScreen';
 import PrivacyScreen from './PrivacyScreen';

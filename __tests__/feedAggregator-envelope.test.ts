@@ -14,8 +14,7 @@ describe('feedAggregator envelope unwrapping', () => {
 
   beforeEach(() => {
     fetchMock.mockReset();
-    // @ts-expect-error - assigning mock
-    global.fetch = fetchMock;
+    (global as any).fetch = fetchMock;
   });
 
   afterAll(() => {

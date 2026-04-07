@@ -6,7 +6,7 @@
 import React, { useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  Animated, Platform,
+  Animated,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 
@@ -285,13 +285,6 @@ export interface ScoringResult {
 }
 
 // ── Claude scoring helper ─────────────────────────────────────────────────────
-
-const SCORE_SYSTEM = `You are a professional skills evaluator for Sifter Skill_Up. Be direct, specific, and demanding — this builds real-world competence.
-
-Respond ONLY with valid JSON. No preamble, no markdown fences. Exactly this shape:
-{"criteriaResults":[{"criterion":"exact text copied verbatim","passed":true,"feedback":"one specific sentence"}],"overallFeedback":"2-3 direct, actionable sentences referencing the actual response.","score":4,"total":6,"xpEarned":100}
-
-Rules: Each criterion is binary. Vague answers do not pass. xpEarned = round((score/total)*150/10)*10, cap 150.`;
 
 /**
  * SECURITY NOTE: All AI scoring goes through the Sifter backend at /api/ai/score.

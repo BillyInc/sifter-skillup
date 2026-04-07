@@ -20,21 +20,21 @@
  *  - Trending topics by field
  */
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput,
-  SafeAreaView, KeyboardAvoidingView, Platform, Modal, Share,
+  KeyboardAvoidingView, Platform, Modal, Share,
   ActivityIndicator, ScrollView, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import {
   useCommunity, useDMs,
-  REACTIONS, highlightContent, parseContent,
-  type Post, type Comment, type ReactionType, type Notification, type Author,
+  REACTIONS, highlightContent,
+  type Post, type Comment, type ReactionType, type Author,
 } from '../hooks/useCommunity';
 import { useAuth } from '../hooks/useAuth';
-import DisclaimerFooter from '../components/DisclaimerFooter';
 
 type MainTab = 'feed' | 'discover' | 'search' | 'notifications' | 'dms';
 

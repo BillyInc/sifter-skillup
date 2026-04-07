@@ -11,9 +11,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, TextInput, Modal, Alert, ActivityIndicator,
-  Clipboard,
+  TextInput, Modal, Alert, ActivityIndicator,
 } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -130,7 +131,7 @@ function ImportTab({ userId }: { userId: string }) {
   const [result,  setResult]  = useState<{ title: string; content: string } | null>(null);
 
   const handlePasteFromClipboard = async () => {
-    const text = await Clipboard.getString();
+    const text = await Clipboard.getStringAsync();
     setRawText(text);
   };
 

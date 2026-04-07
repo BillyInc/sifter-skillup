@@ -4,13 +4,14 @@
  * live XP, and lab completion tracking.
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Animated, Linking, RefreshControl, Alert,
+  Linking, RefreshControl, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, Colors } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { API, API_BASE } from '../lib/api';

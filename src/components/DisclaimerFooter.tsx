@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import { Colors, Spacing, FontSize } from '../theme';
+import { Colors, Spacing } from '../theme';
 import LearnMoreScreen from '../screens/LearnMoreScreen';
 
 interface Props {

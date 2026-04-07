@@ -7,8 +7,9 @@
 import React, { useState } from 'react';
 import {
   Modal, View, Text, StyleSheet, TouchableOpacity,
-  TextInput, SafeAreaView, ScrollView,
+  TextInput, ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize } from '../theme';
 import { offlineWrite } from '../lib/offlineQueue';
 

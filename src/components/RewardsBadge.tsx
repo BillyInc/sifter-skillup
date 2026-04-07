@@ -61,7 +61,7 @@ export function RewardsBadge({ badge, size = 'md', onPress, locked = false }: Re
         <Animated.View
           pointerEvents="none"
           style={[
-            StyleSheet.absoluteFillObject,
+            StyleSheet.absoluteFill,
             { borderRadius: dim / 4, backgroundColor: glowColor, opacity: shimmerOpacity },
           ]}
         />

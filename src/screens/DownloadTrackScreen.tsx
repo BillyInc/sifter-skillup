@@ -6,8 +6,9 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Animated,
+  View, Text, StyleSheet, TouchableOpacity, Animated,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { downloadTrackContent, isTrackDownloaded } from '../lib/offlineStorage';
 import { API_BASE, API } from '../lib/api';

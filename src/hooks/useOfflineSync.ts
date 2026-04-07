@@ -11,7 +11,7 @@
  * can show a progress bar during first-launch or track switch.
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 // withObservables requires @nozbe/with-observables - using polling fallback
 // WatermelonDB Q - imported conditionally

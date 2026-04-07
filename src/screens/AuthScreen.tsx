@@ -13,11 +13,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity,
-  SafeAreaView, KeyboardAvoidingView, Platform,
+  KeyboardAvoidingView, Platform,
   ActivityIndicator, ScrollView, Animated, Dimensions, Linking,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
+import { useTheme, Spacing, Radius, FontSize } from '../theme';
 
 const { width: W, height: H } = Dimensions.get('window');
 
@@ -78,7 +79,7 @@ function CircuitBackground({ isDark }: { isDark: boolean }) {
   const rows = Math.ceil(H / 40);
   const opacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });
   return (
-    <Animated.View style={[StyleSheet.absoluteFillObject, { opacity }]} pointerEvents="none">
+    <Animated.View style={[StyleSheet.absoluteFill, { opacity }]} pointerEvents="none">
       {Array.from({ length: rows }).map((_, r) =>
         Array.from({ length: cols }).map((_, c) => (
           <View key={`${r}-${c}`} style={{

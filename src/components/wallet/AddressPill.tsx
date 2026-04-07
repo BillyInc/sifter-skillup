@@ -13,7 +13,8 @@ import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Linking, Platform,
 } from 'react-native';
-import { Colors, Spacing, Radius, FontSize, FontWeight, Shadow } from '../../theme';
+import * as Clipboard from 'expo-clipboard';
+import { Colors, Spacing, Radius, FontSize, FontWeight } from '../../theme';
 
 export interface AddressPillProps {
   label:          string;           // e.g. "Your Wallet", "Your Staking Wallet"
@@ -56,8 +57,7 @@ export default function AddressPill({
   const copy = () => {
     if (!address) return;
     try {
-      const { Clipboard } = require('react-native');
-      Clipboard.setString(address);
+      Clipboard.setStringAsync(address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}

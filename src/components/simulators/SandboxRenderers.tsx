@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TextInput,
-  ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity,
+  KeyboardAvoidingView, Platform, TouchableOpacity,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import {

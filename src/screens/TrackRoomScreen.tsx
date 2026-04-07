@@ -11,12 +11,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity,
-  SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions,
+  KeyboardAvoidingView, Platform, useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 import { useAuth } from '../hooks/useAuth';
-import RoomMessage, { QuickReactBar } from '../components/RoomMessage';
+import RoomMessage from '../components/RoomMessage';
 import { API } from '../lib/api';
 import type { RoomMessage as Msg, Room } from '../types/social';
 

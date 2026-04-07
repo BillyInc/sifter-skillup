@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, AnimPreset,
+  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
 import { xpEngine }     from '../lib/XPEngine';
 import { streakEngine }  from '../lib/StreakEngine';

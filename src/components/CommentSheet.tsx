@@ -8,11 +8,12 @@ import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, TextInput,
   Modal, FlatList, Image, KeyboardAvoidingView, Platform,
-  SafeAreaView, ActivityIndicator,
+  ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
+  useTheme, Spacing, Radius, FontSize, FontWeight,
 } from '../theme';
 import type { FeedItem, Comment } from '../types/feed';
 

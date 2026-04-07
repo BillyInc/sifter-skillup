@@ -25,10 +25,10 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput, Animated, Linking,
+  TextInput,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 

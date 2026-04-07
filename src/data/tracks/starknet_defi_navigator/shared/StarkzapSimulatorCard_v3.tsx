@@ -26,7 +26,7 @@ import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { Colors, Spacing, Radius, FontSize, useTheme } from '../../../../theme';
+import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 
 // ── Lab-specific simulator imports ────────────────────────────────────────────
 import {

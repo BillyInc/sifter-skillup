@@ -34,8 +34,7 @@ describe('API.pushPortfolioArtifact', () => {
       statusText: 'OK',
       json: async () => ({ success: true, data: [{ ok: true }] }),
     });
-    // @ts-expect-error - assigning mock
-    global.fetch = fetchMock;
+    (global as any).fetch = fetchMock;
   });
 
   afterAll(() => {

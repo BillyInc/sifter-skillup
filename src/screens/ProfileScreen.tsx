@@ -7,8 +7,9 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Animated,
+  Animated,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import {
@@ -18,7 +19,7 @@ import {
 import { WorkerCharacter, DeskScene } from '../components/CharacterSystem';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebStatTile, WebListRow, WebDivider, useIsWebWide,
 } from '../components/web/WebGrid';
 import { xpEngine, type XPSnapshot }      from '../lib/XPEngine';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
@@ -429,7 +430,7 @@ const styles = StyleSheet.create({
   skillBarRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   skillBarLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, width: 130 },
   skillBarTrack:    { flex: 1, height: 7, borderRadius: Radius.full, position: 'relative', overflow: 'hidden' },
-  skillBarBg:       { ...StyleSheet.absoluteFillObject },
+  skillBarBg:       { ...StyleSheet.absoluteFill },
   skillBarFill:     { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: Radius.full },
   skillBarPct:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, width: 34, textAlign: 'right' },
 
