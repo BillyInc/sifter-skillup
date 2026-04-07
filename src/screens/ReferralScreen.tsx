@@ -51,7 +51,7 @@ export default function ReferralScreen() {
 
   useEffect(() => {
     offlineRead('referral_stats', () => API.getReferralStats(), 5 * 60 * 1000)
-      .then(data => setStats(data))
+      .then(data => setStats(data as ReferralStats))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);

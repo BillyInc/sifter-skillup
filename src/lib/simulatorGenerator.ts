@@ -101,7 +101,7 @@ export interface GeneratorOptions {
 //   Category 2: Decision/Judgment → all tracks but especially professional/management
 //   Category 3: Procedural/Technical → coding/data/blockchain tracks
 
-const TRACK_TYPE_POOLS: Record<string, SimType[][]> = {
+export const TRACK_TYPE_POOLS: Record<string, SimType[][]> = {
   // Trading tracks — mix of chart and judgment
   'spot-trading': [
     ['chartReplay-pattern', 'chartReplay-riskManage', 'judgment-riskAssess'],

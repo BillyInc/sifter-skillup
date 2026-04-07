@@ -71,12 +71,11 @@ function NoteEditor({
 
         <ScrollView contentContainerStyle={styles.editorBody} keyboardShouldPersistTaps="handled">
           <TextInput
-            style={styles.titleInput}
+            style={[styles.titleInput, { fontWeight: '800' }]}
             value={title}
             onChangeText={setTitle}
             placeholder="Title..."
             placeholderTextColor={Colors.textMuted}
-            fontWeight="800"
           />
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.chipRow}>

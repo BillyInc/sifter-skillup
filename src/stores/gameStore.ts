@@ -58,7 +58,7 @@ export const useGameStore = create<GameState>((set) => ({
     const full: LastPosition = { ...position, savedAt: new Date().toISOString() };
     set({ lastPosition: full, hasPosition: true });
     await AsyncStorage.setItem(POSITION_KEY, JSON.stringify(full));
-    API.saveLastPosition(full).catch(() => {});
+    API.saveLastPosition(full as unknown as Record<string, unknown>).catch(() => {});
   },
 
   clearPosition: async () => {

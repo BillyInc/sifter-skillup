@@ -365,8 +365,17 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
 
   const startInterview = async () => {
     try {
-      const sess = await API.startInterviewSession(trackId, level);
-      setSession(sess);
+      const sess = await API.startInterview(trackId, level);
+      setSession({
+        sessionId: sess.id,
+        trackId: sess.track_id,
+        level: sess.level as InterviewLevel,
+        roleName: trackName,
+        totalQuestions: INTERVIEW_STRUCTURE[level].totalQuestions,
+        currentQuestion: null,
+        questionsAnswered: 0,
+        complete: false,
+      });
       setPhase('question');
     } catch (e: any) {
       Alert.alert('Error', e.message ?? 'Could not start interview. Please try again.');
@@ -379,17 +388,18 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
     try {
       const next = await API.submitInterviewAnswer(
         session.sessionId,
-        session.currentQuestion.id,
+        session.questionsAnswered,
         currentAnswer.trim(),
       );
       setCurrentAnswer('');
-      if (next.complete) {
+      const answeredCount = next.answers_count ?? (session.questionsAnswered + 1);
+      if (answeredCount >= session.totalQuestions) {
         setPhase('reviewing');
-        const res = await API.getInterviewResult(session.sessionId);
+        const res = await API.getInterviewResult(session.sessionId) as InterviewResult;
         setResult(res);
         setPhase('result');
       } else {
-        setSession(prev => prev ? { ...prev, currentQuestion: next.nextQuestion, questionsAnswered: prev.questionsAnswered + 1 } : prev);
+        setSession(prev => prev ? { ...prev, questionsAnswered: answeredCount } : prev);
       }
     } catch (e: any) {
       Alert.alert('Error', e.message ?? 'Submission failed. Please try again.');

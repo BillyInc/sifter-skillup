@@ -1,207 +1,393 @@
-import React, { useState } from 'react';
+/**
+ * Sifter Skill_Up — Animated Island Map
+ *
+ * Each island is a distinct visual object — not a card.
+ * Islands float, pulse, glow. Boss islands have fire rings.
+ * Tap → spring zoom → lesson gateway opens.
+ */
+
+import React, { useRef, useEffect, useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, StatusBar, Modal,
+  Animated, Easing, Dimensions, SafeAreaView, Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { ISLANDS, isIslandUnlocked, type Island } from '../data/islands';
-import { getLevel } from '../data/levels';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
+import { useRouter } from 'expo-router';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
+import { ISLANDS, getIsland, type Island } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
-import { useProgress } from '../hooks/useProgress';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
-import LessonScreen from './LessonScreen';
-import DisclaimerFooter from '../components/DisclaimerFooter';
 
-// ── Level dot ─────────────────────────────────────────────────
-function LevelDot({ levelId, islandColor, onPress, completed, isBoss, locked }: {
-  levelId: number; islandColor: string; onPress: () => void;
-  completed: boolean; isBoss: boolean; locked: boolean;
-}) {
-  const size = isBoss ? 52 : 42;
-  const bg   = locked ? Colors.border : completed ? islandColor : '#fff';
-  const border = locked ? Colors.borderDark : islandColor;
+const { width: SW } = Dimensions.get('window');
 
+// ─── Sea background ───────────────────────────────────────────────────────────
+
+function SeaBackground() {
+  const waves = [useRef(new Animated.Value(0)).current, useRef(new Animated.Value(0)).current, useRef(new Animated.Value(0)).current];
+  useEffect(() => {
+    waves.forEach((w, i) => Animated.loop(Animated.sequence([
+      Animated.delay(i * 500),
+      Animated.timing(w, { toValue: 1, duration: 3000 + i * 300, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+      Animated.timing(w, { toValue: 0, duration: 3000 + i * 300, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+    ])).start());
+  }, []);
   return (
-    <TouchableOpacity
-      onPress={locked ? undefined : onPress}
-      style={[
-        styles.levelDot,
-        { width: size, height: size, borderRadius: size / 2, backgroundColor: bg, borderColor: border },
-        !locked && Shadow.sm,
-      ]}
-      activeOpacity={locked ? 1 : 0.8}
-    >
-      <Text style={[styles.levelDotText, { color: locked ? Colors.textMuted : completed ? '#fff' : islandColor, fontSize: isBoss ? 18 : 14 }]}>
-        {locked ? '🔒' : isBoss ? '⭐' : String(levelId)}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
-// ── Island card ───────────────────────────────────────────────
-function IslandCard({ island, completedLevels, onLevelPress, unlocked }: {
-  island: Island; completedLevels: number[]; onLevelPress: (id: number) => void; unlocked: boolean;
-}) {
-  const total    = island.end - island.start + 1;
-  const done     = completedLevels.filter(l => l >= island.start && l <= island.end).length;
-  const pct      = Math.round((done / total) * 100);
-  const tierColor = island.tier === 'beginner' ? Colors.beginner : island.tier === 'intermediate' ? Colors.intermediate : Colors.pro;
-
-  // Build level grid (5 per row)
-  const levels = Array.from({ length: total }, (_, i) => island.start + i);
-  const rows: number[][] = [];
-  for (let i = 0; i < levels.length; i += 5) rows.push(levels.slice(i, i + 5));
-
-  return (
-    <View style={[styles.islandCard, !unlocked && styles.islandCardLocked, Shadow.md]}>
-      {/* Header */}
-      <View style={[styles.islandHeader, { backgroundColor: island.color }]}>
-        <Text style={styles.islandIcon}>{island.icon}</Text>
-        <View style={{ flex: 1 }}>
-          <View style={[styles.tierPill, { backgroundColor: tierColor + '30' }]}>
-            <Text style={[styles.tierPillText, { color: tierColor }]}>{island.tier.toUpperCase()}</Text>
-          </View>
-          <Text style={styles.islandName}>{island.name}</Text>
-          <Text style={styles.islandDesc} numberOfLines={2}>{island.description}</Text>
-        </View>
-      </View>
-
-      {/* Progress bar */}
-      <View style={styles.islandProgress}>
-        <View style={styles.progressTrack}>
-          <View style={[styles.progressFill, { width: `${pct}%`, backgroundColor: island.color }]} />
-        </View>
-        <Text style={styles.progressLabel}>{done}/{total} levels · {pct}%</Text>
-      </View>
-
-      {/* Level dots grid */}
-      {unlocked ? (
-        <View style={styles.levelGrid}>
-          {rows.map((row, ri) => (
-            <View key={ri} style={styles.levelRow}>
-              {row.map(lvl => (
-                <LevelDot
-                  key={lvl}
-                  levelId={lvl}
-                  islandColor={island.color}
-                  completed={completedLevels.includes(lvl)}
-                  isBoss={lvl === island.bossLevel}
-                  locked={false}
-                  onPress={() => onLevelPress(lvl)}
-                />
-              ))}
-            </View>
-          ))}
-        </View>
-      ) : (
-        <View style={styles.lockedOverlay}>
-          <Text style={styles.lockedIcon}>🔒</Text>
-          <Text style={styles.lockedText}>
-            Complete Level {island.requiredLevel} to unlock
-          </Text>
-        </View>
-      )}
+    <View style={StyleSheet.absoluteFill}>
+      <LinearGradient colors={['#020812', '#041020', '#060F22']} style={StyleSheet.absoluteFill} />
+      {waves.map((w, i) => (
+        <Animated.View key={i} style={{
+          position: 'absolute', top: `${20 + i * 28}%`,
+          left: 0, right: 0, height: 1.5,
+          backgroundColor: '#4AB0F030',
+          opacity: w.interpolate({ inputRange: [0, 1], outputRange: [0.04, 0.16] }),
+          transform: [{ scaleX: w.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1.05] }) }],
+        }} />
+      ))}
     </View>
   );
 }
 
-// ── Main screen ───────────────────────────────────────────────
-export default function IslandMapScreen() {
-  const { user } = useAuth();
-  const [activeLevelId, setActiveLevelId] = useState<number | null>(null);
+// ─── Island object ────────────────────────────────────────────────────────────
 
-  const completed = user?.completed_levels || [];
+function IslandObject({ island, unlocked, completed, current, onPress }: {
+  island: Island; unlocked: boolean; completed: boolean; current: boolean; onPress: () => void;
+}) {
+  const floatAnim = useRef(new Animated.Value(0)).current;
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const glowAnim  = useRef(new Animated.Value(0)).current;
+  const pressAnim = useRef(new Animated.Value(1)).current;
+  const orbitAnim = useRef(new Animated.Value(0)).current;
 
-  // Sort islands by narrative order
-  const orderedIslands = [...ISLANDS].sort((a, b) => {
-    // Beginner first, then intermediate, then pro
-    const tierOrder = { beginner: 0, intermediate: 1, pro: 2 };
-    if (tierOrder[a.tier] !== tierOrder[b.tier]) return tierOrder[a.tier] - tierOrder[b.tier];
-    return a.start - b.start;
-  });
+  const isBoss  = island.id % 5 === 0;
+  const isStark = island.id === 19;
+  const SIZE    = isStark ? 110 : isBoss ? 96 : 82;
+  const C       = island.color;
+  const locked  = !unlocked;
 
-  const handleLevelPress = (levelId: number) => setActiveLevelId(levelId);
+  useEffect(() => {
+    Animated.loop(Animated.sequence([
+      Animated.timing(floatAnim, { toValue: -(5 + (island.id % 4)), duration: 2000 + island.id * 90, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+      Animated.timing(floatAnim, { toValue: (5 + (island.id % 4)), duration: 2000 + island.id * 90, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
+    ])).start();
+    if (current) {
+      Animated.loop(Animated.sequence([
+        Animated.timing(glowAnim, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
+        Animated.timing(glowAnim, { toValue: 0.25, duration: 900, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
+      ])).start();
+      Animated.loop(Animated.sequence([
+        Animated.spring(pulseAnim, { toValue: 1.07, tension: 80, friction: 5, useNativeDriver: true }),
+        Animated.spring(pulseAnim, { toValue: 0.96, tension: 80, friction: 5, useNativeDriver: true }),
+      ])).start();
+    }
+    if ((isBoss || isStark) && unlocked) {
+      Animated.loop(Animated.timing(orbitAnim, { toValue: 1, duration: 3500, easing: Easing.linear, useNativeDriver: true })).start();
+    }
+  }, [current, unlocked]);
 
-  const handleLessonComplete = (stars: number, xp: number) => {
-    setActiveLevelId(null);
-    // refreshUser handled inside useProgress
+  const handlePress = () => {
+    if (!unlocked) { Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning); return; }
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Animated.sequence([
+      Animated.timing(pressAnim, { toValue: 0.88, duration: 80, useNativeDriver: true }),
+      Animated.spring(pressAnim, { toValue: 1, tension: 100, friction: 5, useNativeDriver: true }),
+    ]).start(onPress);
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
+    <TouchableOpacity onPress={handlePress} activeOpacity={1} style={iso.container}>
+      <Animated.View style={{ alignItems: 'center', transform: [{ translateY: floatAnim }, { scale: pulseAnim }, { scale: pressAnim }] }}>
 
-      {/* Header */}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.headerTitle}>⚡ Sifter Skill_Up</Text>
-          <Text style={styles.headerSub}>Crypto · {completed.length}/270 levels</Text>
-        </View>
-        <View style={styles.headerStats}>
-          <Text style={styles.statItem}>🔥 {user?.streak ?? 0}</Text>
-          <Text style={styles.statItem}>⚡ {user?.points?.toLocaleString() ?? 0}</Text>
-        </View>
-      </View>
-
-      {/* Island list */}
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {orderedIslands.map(island => (
-          <IslandCard
-            key={island.id}
-            island={island}
-            completedLevels={completed}
-            unlocked={isIslandUnlocked(island, completed)}
-            onLevelPress={handleLevelPress}
-          />
-        ))}
-        <View style={{ height: 40 }} />
-      </ScrollView>
-
-      {/* Lesson modal */}
-      <Modal visible={activeLevelId !== null} animationType="slide" presentationStyle="fullScreen">
-        {activeLevelId !== null && (
-          <LessonScreen
-            levelId={activeLevelId}
-            onExit={() => setActiveLevelId(null)}
-            onComplete={handleLessonComplete}
-          />
+        {/* Orbit ring for boss/starknet */}
+        {(isBoss || isStark) && unlocked && (
+          <Animated.View style={[iso.orbit, {
+            width: SIZE + 36, height: SIZE + 36,
+            borderRadius: (SIZE + 36) / 2,
+            borderColor: isStark ? C + '90' : '#FF6B0080',
+            borderStyle: isStark ? 'dashed' : 'solid',
+            transform: [{ rotate: orbitAnim.interpolate({ inputRange: [0, 1], outputRange: [isStark ? '0deg' : '0deg', isStark ? '-360deg' : '360deg'] }) }],
+          }]}>
+            <Text style={[iso.orbitDot]}>{isStark ? '⚡' : '🔥'}</Text>
+          </Animated.View>
         )}
-      </Modal>
-          <DisclaimerFooter />
-      </SafeAreaView>
+
+        {/* Current island glow */}
+        {current && (
+          <Animated.View style={[iso.glowRing, {
+            width: SIZE + 26, height: SIZE + 26,
+            borderRadius: (SIZE + 26) / 2,
+            borderColor: glowAnim.interpolate({ inputRange: [0, 1], outputRange: [C + '35', C + 'CC'] }) as any,
+          }]} />
+        )}
+
+        {/* Island body */}
+        <View style={[iso.body, {
+          width: SIZE, height: SIZE * 0.7,
+          borderRadius: SIZE * 0.5,
+          backgroundColor: locked ? '#0D0D20' : C + '20',
+          borderColor: locked ? '#2A2A40' : C,
+          shadowColor: locked ? 'transparent' : C,
+        }]}>
+          {/* Water shimmer */}
+          <View style={[iso.water, { backgroundColor: locked ? '#1A1A30' : C + '18' }]} />
+
+          {/* Terrain details */}
+          {!locked && (
+            <>
+              {island.tier === 'beginner' && <><Text style={[iso.tree, { left: '10%', fontSize: 11 }]}>🌴</Text><Text style={[iso.tree, { right: '10%', fontSize: 11 }]}>🌴</Text></>}
+              {island.tier === 'intermediate' && <Text style={[iso.tree, { left: '30%', fontSize: 13 }]}>🏛️</Text>}
+              {island.tier === 'pro' && <Text style={[iso.tree, { left: '28%', fontSize: 15 }]}>🗼</Text>}
+            </>
+          )}
+
+          {/* Icon */}
+          <View style={[iso.icon, { backgroundColor: locked ? '#2A2A3E' : C }]}>
+            <Text style={{ fontSize: SIZE * 0.2 }}>{locked ? '🔒' : island.icon}</Text>
+          </View>
+
+          {/* Completion */}
+          {completed && (
+            <View style={[iso.check, { backgroundColor: '#10B981' }]}>
+              <Text style={{ fontSize: 8, color: '#fff', fontWeight: '900' }}>✓</Text>
+            </View>
+          )}
+        </View>
+
+        {/* Label */}
+        <Text style={[iso.name, { color: locked ? '#FFFFFF35' : '#FFFC' }]} numberOfLines={1}>{island.name}</Text>
+        <Text style={[iso.meta, { color: locked ? '#FFFFFF20' : C + '90' }]}>
+          {island.end - island.start + 1} lvls{isBoss ? ' 🔥' : ''}
+        </Text>
+      </Animated.View>
+    </TouchableOpacity>
   );
 }
 
-const styles = StyleSheet.create({
-  screen:           { flex: 1, backgroundColor: Colors.bg },
-  header:           { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
-  headerTitle:      { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
-  headerSub:        { fontSize: FontSize.sm, color: Colors.textSoft, marginTop: 2 },
-  headerStats:      { flexDirection: 'row', gap: Spacing.md },
-  statItem:         { fontSize: FontSize.md, fontWeight: '700', color: Colors.text },
+// ─── Lesson gateway modal ─────────────────────────────────────────────────────
 
-  scroll:           { flex: 1 },
-  scrollContent:    { padding: Spacing.lg, gap: Spacing.lg },
+function LessonGateway({ island, onClose, onEnter }: { island: Island; onClose: () => void; onEnter: () => void; }) {
+  const entrance = useRef(new Animated.Value(0)).current;
+  const scale    = useRef(new Animated.Value(0.88)).current;
+  const spark    = useRef(new Animated.Value(0)).current;
+  const C = island.color;
 
-  islandCard:       { backgroundColor: Colors.card, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1.5, borderColor: Colors.border },
-  islandCardLocked: { opacity: 0.6 },
-  islandHeader:     { flexDirection: 'row', alignItems: 'flex-start', padding: Spacing.lg, gap: Spacing.md },
-  islandIcon:       { fontSize: 36, lineHeight: 44 },
-  tierPill:         { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 2, marginBottom: 4 },
-  tierPillText:     { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 0.5 },
-  islandName:       { fontSize: FontSize.xl, fontWeight: '900', color: '#fff', lineHeight: 26 },
-  islandDesc:       { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.8)', marginTop: 3, lineHeight: 18 },
+  useEffect(() => {
+    Animated.parallel([
+      Animated.spring(entrance, { toValue: 1, tension: 70, friction: 10, useNativeDriver: true }),
+      Animated.spring(scale,    { toValue: 1, tension: 70, friction: 10, useNativeDriver: true }),
+    ]).start();
+    Animated.loop(Animated.sequence([
+      Animated.timing(spark, { toValue: 1, duration: 700, useNativeDriver: true }),
+      Animated.timing(spark, { toValue: 0.3, duration: 700, useNativeDriver: true }),
+    ])).start();
+  }, []);
 
-  islandProgress:   { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, gap: Spacing.sm },
-  progressTrack:    { height: 8, backgroundColor: Colors.border, borderRadius: 99, overflow: 'hidden' },
-  progressFill:     { height: 8, borderRadius: 99 },
-  progressLabel:    { fontSize: FontSize.xs, color: Colors.textSoft, fontWeight: '600' },
+  return (
+    <Modal transparent animationType="none" statusBarTranslucent>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={gate.overlay} />
+      </TouchableWithoutFeedback>
+      <Animated.View style={[gate.sheet, { opacity: entrance, transform: [{ scale }] }]}>
+        <LinearGradient colors={['#06060F', '#0C0C22', '#06060F']} style={gate.inner}>
+          <Animated.View style={[gate.islandBig, { backgroundColor: C + '20', borderColor: C, shadowColor: C, opacity: spark.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) }]}>
+            <Text style={{ fontSize: 52 }}>{island.icon}</Text>
+          </Animated.View>
+          <Animated.View style={[gate.glow, { backgroundColor: C, opacity: spark.interpolate({ inputRange: [0, 1], outputRange: [0.06, 0.15] }) }]} />
+          <Text style={gate.name}>{island.name}</Text>
+          <Text style={[gate.tier, { color: C }]}>{island.tier.toUpperCase()} · {island.end - island.start + 1} LEVELS</Text>
+          <Text style={gate.desc}>{island.description}</Text>
+          <View style={gate.meta}>
+            <Text style={[gate.metaText, { color: C }]}>Levels {island.start}–{island.end}</Text>
+            <Text style={gate.boss}>🔥 Boss: {island.bossLevel}</Text>
+          </View>
+          <TouchableOpacity style={[gate.btn, { backgroundColor: C }]} onPress={onEnter} activeOpacity={0.85}>
+            <Text style={gate.btnText}>Enter Island ›</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onClose} style={{ marginTop: 10 }}>
+            <Text style={{ color: '#FFFFFF35', fontSize: 13, textAlign: 'center' }}>← Back to map</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </Animated.View>
+    </Modal>
+  );
+}
 
-  levelGrid:        { paddingHorizontal: Spacing.lg, paddingBottom: Spacing.lg, gap: Spacing.sm },
-  levelRow:         { flexDirection: 'row', gap: Spacing.sm, justifyContent: 'flex-start' },
-  levelDot:         { alignItems: 'center', justifyContent: 'center', borderWidth: 2.5 },
-  levelDotText:     { fontWeight: '800' },
+// ─── Starknet connector ───────────────────────────────────────────────────────
 
-  lockedOverlay:    { alignItems: 'center', paddingVertical: Spacing.xxl, gap: Spacing.sm },
-  lockedIcon:       { fontSize: 32 },
-  lockedText:       { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '600' },
+function StarknetConnector() {
+  const flow = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.loop(Animated.timing(flow, { toValue: 1, duration: 2200, easing: Easing.linear, useNativeDriver: true })).start();
+  }, []);
+  return (
+    <View style={{ height: 48, alignItems: 'center', justifyContent: 'center', marginVertical: 4 }}>
+      <View style={{ height: 2, width: SW * 0.5, backgroundColor: '#EC489930' }} />
+      <Animated.View style={{
+        position: 'absolute', left: SW * 0.25,
+        width: 10, height: 10, borderRadius: 5, backgroundColor: '#EC4899',
+        transform: [{ translateX: flow.interpolate({ inputRange: [0, 1], outputRange: [0, SW * 0.5] }) }],
+      }} />
+      <Text style={{ position: 'absolute', bottom: 0, fontSize: 10, color: '#EC489960', fontWeight: '700' }}>
+        → Continue to Starknet after Island 18
+      </Text>
+    </View>
+  );
+}
+
+// ─── Screen ───────────────────────────────────────────────────────────────────
+
+
+// ── Next Track CTA (shown after island boss completion) ────────────────────────
+function NextTrackBanner({
+  islandId,
+  onNavigateToTrack,
+}: {
+  islandId: number;
+  onNavigateToTrack: (trackId: string) => void;
+}) {
+  const island = getIsland(islandId);
+  if (!island?.nextTracks?.length) return null;
+  return (
+    <View style={ntb.wrap}>
+      <Text style={ntb.title}>🎉 Island Complete!</Text>
+      <Text style={ntb.sub}>You unlocked the next track:</Text>
+      {island.nextTracks!.map((trackId: string) => (
+        <TouchableOpacity
+          key={trackId}
+          style={ntb.btn}
+          onPress={() => onNavigateToTrack(trackId)}
+        >
+          <Text style={ntb.btnText}>
+            {trackId === 'starknet-defi-navigator' ? '🧭 Start DeFi Navigator →' : `Start ${trackId} →`}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+}
+const ntb = StyleSheet.create({
+  wrap:    { margin: 16, backgroundColor: '#EC489915', borderRadius: 16, borderWidth: 1.5, borderColor: '#EC489940', padding: 16, alignItems: 'center', gap: 8 },
+  title:   { fontSize: 18, fontWeight: '900', color: '#1A1A2E' },
+  sub:     { fontSize: 13, color: '#4A4A6A' },
+  btn:     { backgroundColor: '#EC4899', borderRadius: 12, paddingHorizontal: 20, paddingVertical: 12, marginTop: 4 },
+  btnText: { color: '#fff', fontSize: 15, fontWeight: '800' },
+});
+
+export default function IslandMapScreen({ route }: any) {
+  const navigation = useRouter();
+  const { user }   = useAuth();
+  const completedLevels: number[] = (user?.completed_levels ?? []).map(Number);
+  const currentLevel = user?.current_level ?? 1;
+  const starknetUnlocked = !!(user?.starknet_address || user?.starknet_auth);
+  const [selected, setSelected] = useState<Island | null>(null);
+
+  const handleEnter = (island: Island) => {
+    setSelected(null);
+    setTimeout(() => navigation.push({ pathname: '/Lesson', params: { islandId: String(island.id), levelNum: String(island.start) } }), 200);
+  };
+
+  const mainIslands   = ISLANDS.filter(i => i.id !== 19);
+  const starkIsland   = ISLANDS.find(i => i.id === 19);
+  const tiers: Array<'beginner'|'intermediate'|'pro'> = ['beginner','intermediate','pro'];
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#020812' }}>
+      <SeaBackground />
+
+      {/* Header */}
+      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 }}>
+        <TouchableOpacity onPress={() => navigation.back()} style={{ marginRight: 12 }}>
+          <Text style={{ fontSize: 28, color: '#FFF', fontWeight: '300' }}>‹</Text>
+        </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontSize: 18, fontWeight: '900', color: '#FFF' }}>Crypto Onboarding</Text>
+          <Text style={{ fontSize: 12, color: '#FFFFFF55', marginTop: 1 }}>{ISLANDS.length} islands · Level {currentLevel}</Text>
+        </View>
+        <View style={{ backgroundColor: '#5B5FCF25', borderRadius: 20, borderWidth: 1, borderColor: '#5B5FCF50', paddingHorizontal: 12, paddingVertical: 6 }}>
+          <Text style={{ fontSize: 12, color: '#5B5FCF', fontWeight: '700' }}>{completedLevels.length}/310</Text>
+        </View>
+      </View>
+
+      {/* Progress bar */}
+      <View style={{ height: 2, backgroundColor: '#1A1A30', marginHorizontal: 20, marginBottom: 16 }}>
+        <View style={[{ height: '100%', borderRadius: 1, backgroundColor: '#5B5FCF', width: `${Math.min(100, completedLevels.length / 310 * 100)}%` }]} />
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 80 }}>
+        {tiers.map(tier => {
+          const tierIslands = mainIslands.filter(i => i.tier === tier);
+          return (
+            <View key={tier} style={{ marginBottom: 32 }}>
+              <Text style={{ fontSize: 10, fontWeight: '900', letterSpacing: 1.1, color: '#FFFFFF40', marginLeft: 12, marginBottom: 12 }}>
+                {tier === 'beginner' ? '🌱 BEGINNER' : tier === 'intermediate' ? '⚡ INTERMEDIATE' : '🔥 PRO'} ISLANDS
+              </Text>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                {tierIslands.map(island => (
+                  <IslandObject
+                    key={island.id}
+                    island={island}
+                    unlocked={island.requiredLevel === 0 || completedLevels.includes(island.requiredLevel)}
+                    completed={completedLevels.includes(island.bossLevel)}
+                    current={currentLevel >= island.start && currentLevel <= island.end}
+                    onPress={() => setSelected(island)}
+                  />
+                ))}
+              </View>
+            </View>
+          );
+        })}
+
+        {starknetUnlocked && starkIsland && (
+          <View style={{ alignItems: 'center' }}>
+            <StarknetConnector />
+            <IslandObject
+              island={starkIsland}
+              unlocked
+              completed={completedLevels.includes(310)}
+              current={currentLevel >= 291 && currentLevel <= 310}
+              onPress={() => setSelected(starkIsland)}
+            />
+          </View>
+        )}
+      </ScrollView>
+
+      {selected && <LessonGateway island={selected} onClose={() => setSelected(null)} onEnter={() => handleEnter(selected)} />}
+    </SafeAreaView>
+  );
+}
+
+// ─── Styles ───────────────────────────────────────────────────────────────────
+
+const iso = StyleSheet.create({
+  container: { alignItems: 'center', width: (SW - 16) / 4, marginBottom: 12 },
+  orbit:     { position: 'absolute', borderWidth: 1.5, alignSelf: 'center' },
+  orbitDot:  { fontSize: 13, position: 'absolute', top: -7, left: '42%' },
+  glowRing:  { position: 'absolute', borderWidth: 2, alignSelf: 'center' },
+  body:      {
+    alignItems: 'center', justifyContent: 'center',
+    borderWidth: 2, overflow: 'hidden', position: 'relative',
+    shadowOpacity: 0.7, shadowRadius: 14, shadowOffset: { width: 0, height: 0 }, elevation: 6,
+  },
+  water:     { position: 'absolute', bottom: 0, left: 0, right: 0, height: '28%' },
+  tree:      { position: 'absolute', top: 3 },
+  icon:      { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center', zIndex: 2 },
+  check:     { position: 'absolute', top: 3, right: 3, width: 15, height: 15, borderRadius: 7.5, alignItems: 'center', justifyContent: 'center' },
+  name:      { fontSize: 9, fontWeight: '700', textAlign: 'center', marginTop: 5, paddingHorizontal: 2 },
+  meta:      { fontSize: 8, textAlign: 'center', marginTop: 1 },
+});
+
+const gate = StyleSheet.create({
+  overlay:   { ...StyleSheet.absoluteFillObject, backgroundColor: '#000000C0' },
+  sheet:     { position: 'absolute', top: '12%', left: '8%', right: '8%', borderRadius: 28, overflow: 'hidden' },
+  inner:     { padding: 28, alignItems: 'center' },
+  islandBig: { width: 100, height: 100, borderRadius: 50, alignItems: 'center', justifyContent: 'center', borderWidth: 2, shadowOpacity: 0.9, shadowRadius: 24, shadowOffset: { width: 0, height: 0 }, zIndex: 2 },
+  glow:      { position: 'absolute', width: 140, height: 140, borderRadius: 70, top: '12%' },
+  name:      { fontSize: 22, fontWeight: '900', color: '#FFF', marginTop: 16, marginBottom: 4, textAlign: 'center' },
+  tier:      { fontSize: 11, fontWeight: '900', letterSpacing: 1, marginBottom: 12 },
+  desc:      { fontSize: 13, lineHeight: 20, color: '#FFFFFF65', textAlign: 'center', marginBottom: 16 },
+  meta:      { flexDirection: 'row', gap: 20, marginBottom: 22 },
+  metaText:  { fontSize: 13, fontWeight: '700' },
+  boss:      { fontSize: 13, fontWeight: '700', color: '#FF6B00' },
+  btn:       { borderRadius: 50, paddingVertical: 14, paddingHorizontal: 44 },
+  btnText:   { color: '#FFF', fontSize: 16, fontWeight: '900' },
 });

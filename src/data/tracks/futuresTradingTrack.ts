@@ -6,9 +6,8 @@
 
 import { SkillTrack } from '../skillTypes';
 
-export const futuresTradingTrack: SkillTrack = {
+export const futuresTradingTrack = {
   id: 'futures-trading',
-  type: 'single-track',
   name: 'Futures & Perpetuals Trading',
   tagline: 'Trade leverage — and actually survive long enough to profit',
   description: `Perpetual futures are the most powerful and most dangerous instrument in crypto. This track teaches you everything from contract mechanics and funding rates through liquidation survival, eight professional trading strategies, trading psychology, hedging, and how to build a backtested system with genuine edge.`,

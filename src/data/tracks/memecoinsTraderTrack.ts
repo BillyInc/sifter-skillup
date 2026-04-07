@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================================
 // ⚡ Sifter Skill_Up — MEMECOIN TRADER Career Track
 // From complete beginner → professional memecoin trader

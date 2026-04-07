@@ -205,11 +205,11 @@ export const API = {
       method: 'POST', body: JSON.stringify({ track_id: trackId, level }),
     }),
   submitInterviewAnswer: (interviewId: string, questionIndex: number, answer: string) =>
-    request<{ interview_id: string; answers_count: number }>('/api/interview/answer', {
+    request<{ interview_id: string; answers_count: number; complete?: boolean; nextQuestion?: any }>('/api/interview/answer', {
       method: 'POST', body: JSON.stringify({ interview_id: interviewId, question_index: questionIndex, answer }),
     }),
   getInterviewResult: (interviewId: string) =>
-    request<unknown>(`/api/interview/${interviewId}/result`),
+    request<any>(`/api/interview/${interviewId}/result`),
 
   // Push notifications
   savePushToken: (token: string) =>
@@ -254,11 +254,11 @@ export const API = {
   // OAuth
   portfolioGetOAuthUrl: (platformId: string) =>
     request<{ url: string }>(`/api/portfolio/oauth/${platformId}/url`)
-      .then(r => r?.data?.url ?? null),
+      .then(r => (r as any)?.url ?? null),
 
   // Portfolio Items
   portfolioGetItems: () =>
-    request<any[]>('/api/portfolio/items').then(r => r?.data ?? []),
+    request<any>('/api/portfolio/items').then(r => r?.items ?? r ?? []),
 
   portfolioAddItem: (data: {
     title: string;
@@ -284,11 +284,240 @@ export const API = {
   }) =>
     request<any[]>('/api/portfolio/items/push', {
       method: 'POST', body: JSON.stringify(data),
-    }).then(r => r?.data ?? []),
+    }),
 
   // Submission package (for manual-upload platforms)
   portfolioGeneratePackage: (data: { itemId: string; platformId: string }) =>
     request<any>('/api/portfolio/items/package', {
       method: 'POST', body: JSON.stringify(data),
-    }).then(r => r?.data ?? null),
+    }),
+
+  // ── Starknet DeFi Navigator ──────────────────────────────────────────────────
+  navigatorLabComplete: (labNumber: number) =>
+    request<any>('/api/game/navigator-lab-complete', {
+      method: 'POST', body: JSON.stringify({ lab_number: labNumber }),
+    }),
+
+  starknetTxLog: (tx: { hash: string; network: string; type: string; lessonId?: string; labId?: string; amount?: string; token?: string }) =>
+    request<any>('/api/starknet/transactions', {
+      method: 'POST', body: JSON.stringify(tx),
+    }),
+
+  starknetStatus: () => request<any>('/api/starknet/status'),
+
+  syncDrain: (items: any[], deviceId: string) =>
+    request<any>('/api/sync/drain', {
+      method: 'POST', body: JSON.stringify({ device_id: deviceId, items, client_time: new Date().toISOString() }),
+    }),
+
+  syncStatus: () => request<any>('/api/sync/status'),
+
+  // ── Starknet RPC ────────────────────────────────────────────────────────────
+  starknetRpc: (method: string, params: any[]) =>
+    request<any>('/api/starknet/rpc', {
+      method: 'POST', body: JSON.stringify({ method, params }),
+    }),
+
+  starknetAuthEmail: (email: string, privy_token: string) =>
+    request<any>('/api/starknet/auth/email', {
+      method: 'POST', body: JSON.stringify({ email, privy_token }),
+    }),
+
+  // ── Feed ────────────────────────────────────────────────────────────────────
+  feedSubscribe: (tracks: string[]) =>
+    request<any>('/api/feed/subscribe', {
+      method: 'POST', body: JSON.stringify({ tracks }),
+    }),
+
+  feedGetSubscriptions: () => request<any>('/api/feed/subscriptions'),
+
+  feedGetItems: (trackId?: string) =>
+    request<any[]>(`/api/feed/${trackId ? `?track_id=${trackId}` : ''}`),
+
+  feedGetItem: (itemId: string) => request<any>(`/api/feed/${itemId}`),
+
+  feedReact: (itemId: string, reaction: string) =>
+    request<any>('/api/feed/react', {
+      method: 'POST', body: JSON.stringify({ item_id: itemId, reaction }),
+    }),
+
+  // ── Phase 5 (XP, Badges, Challenges, Merch) ────────────────────────────────
+  xpRecordEvent: (data: { event_type: string; xp: number; source?: string; metadata?: any }) =>
+    request<any>('/api/v2/xp/event', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  xpGetHistory: () => request<any[]>('/api/v2/xp/history'),
+
+  getBadges: () => request<any[]>('/api/v2/badges'),
+  getMyBadges: () => request<any[]>('/api/v2/badges/me'),
+
+  getChallenges: (status?: string) =>
+    request<any[]>(`/api/v2/challenges${status ? `?status=${status}` : ''}`),
+
+  joinChallenge: (challengeId: string) =>
+    request<any>('/api/v2/challenges/join', {
+      method: 'POST', body: JSON.stringify({ challenge_id: challengeId }),
+    }),
+
+  submitChallenge: (challengeId: string, proof?: any) =>
+    request<any>('/api/v2/challenges/submit', {
+      method: 'POST', body: JSON.stringify({ challenge_id: challengeId, proof }),
+    }),
+
+  getMerchandise: () => request<any[]>('/api/v2/merch'),
+
+  redeemMerchandise: (itemId: string, shippingAddress?: any) =>
+    request<any>('/api/v2/merch/redeem', {
+      method: 'POST', body: JSON.stringify({ item_id: itemId, shipping_address: shippingAddress }),
+    }),
+
+  // ── Social Rewards ──────────────────────────────────────────────────────────
+  socialShare: (data: { platform: string; content_type: string; content_id?: string; url?: string }) =>
+    request<any>('/api/social/share', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  socialGetShares: () => request<any[]>('/api/social/shares/me'),
+
+  socialPortfolioAttribution: (data: { item_id: string; platform: string; url: string }) =>
+    request<any>('/api/social/portfolio/attribution', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  socialBlast: (data: { platforms: string[]; content_type: string; content_id: string; caption: string }) =>
+    request<any>('/api/social/blast', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  socialApplyReferral: (code: string) =>
+    request<any>('/api/social/referral/apply', {
+      method: 'POST', body: JSON.stringify({ code }),
+    }),
+
+  // ── Content (Offline) ───────────────────────────────────────────────────────
+  contentGetManifest: () => request<any>('/api/content/manifest'),
+
+  contentGetTrackVersion: (trackId: string) =>
+    request<any>(`/api/content/${trackId}/version`),
+
+  contentGetTrack: (trackId: string) => request<any>(`/api/content/${trackId}`),
+
+  // ── Device Sessions ─────────────────────────────────────────────────────────
+  deviceRegister: (data: { device_id: string; device_name?: string; platform?: string; push_token?: string }) =>
+    request<any>('/api/devices/register', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  deviceGetMe: () => request<any>('/api/devices/me'),
+
+  deviceRevokeAll: () =>
+    request<any>('/api/devices/revoke', { method: 'POST' }),
+
+  deviceUpdatePushToken: (pushToken: string) =>
+    request<any>('/api/devices/push-token', {
+      method: 'PUT', body: JSON.stringify({ push_token: pushToken }),
+    }),
+
+  // ── Game Extra ──────────────────────────────────────────────────────────────
+  getLastPosition: () => request<any>('/api/game/last-position'),
+
+  getUserProgress: () => request<any>('/api/users/progress'),
+
+  setActiveField: (fieldId: string, fieldColor?: string) =>
+    request<any>('/api/users/active-field', {
+      method: 'POST', body: JSON.stringify({ field_id: fieldId, field_color: fieldColor }),
+    }),
+
+  // ── Portfolio Hub (extended) ────────────────────────────────────────────────
+  portfolioGetAccounts: () => request<any>('/api/portfolio/accounts'),
+
+  getPortfolioArtifacts: () => request<any[]>('/api/portfolio/items'),
+
+  getPortfolioPlatformStatuses: () =>
+    request<any[]>('/api/portfolio/accounts'),
+
+  pushPortfolioArtifact: (data: { itemId?: string; artifactId?: string; platformId?: string; platformIds?: string[]; caption?: string }) =>
+    request<any[]>('/api/portfolio/items/push', {
+      method: 'POST', body: JSON.stringify({
+        item_id: data.itemId ?? data.artifactId,
+        platform_ids: data.platformIds ?? (data.platformId ? [data.platformId] : []),
+        caption: data.caption ?? '',
+      }),
+    }),
+
+  getPlatformAuthUrl: (platformId: string) =>
+    request<{ url: string }>(`/api/portfolio/oauth/${platformId}/url`),
+
+  disconnectPlatform: (platformId: string) =>
+    request<any>(`/api/portfolio/accounts/${platformId}`, { method: 'DELETE' }),
+
+  // ── Gate / Progression ──────────────────────────────────────────────────────
+  getPhase2GateStatus: () => request<any>('/api/game/quant-gate'),
+
+  getAggregateSimStatus: () => request<any>('/api/game/state'),
+
+  getRemediationSets: () => request<any[]>('/api/v2/challenges?status=remediation'),
+
+  getEndOfLevelRetries: () => request<any[]>('/api/v2/xp/history'),
+
+  submitEndOfLevelRetry: (data: { levelId?: number; trackId?: string; simId?: string; answer?: any; answers?: any }) =>
+    request<any>('/api/game/complete-level', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  // ── Admin ───────────────────────────────────────────────────────────────────
+  adminSyncAirtable: () =>
+    request<any>('/api/admin/sync/airtable', { method: 'POST' }),
+
+  adminSyncAirtableStatus: () => request<any>('/api/admin/sync/airtable/status'),
+
+  // ── Rooms ──────────────────────────────────────────────────────────────────
+  roomGetMessages: (roomId: string, limit = 50) =>
+    request<any[]>(`/api/rooms/${roomId}/messages?limit=${limit}`),
+
+  roomPostMessage: (roomId: string, data: Record<string, unknown>) =>
+    request<any>(`/api/rooms/${roomId}/messages`, {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  roomReactToMessage: (messageId: string, emoji: string) =>
+    request<any>(`/api/rooms/messages/${messageId}/react`, {
+      method: 'POST', body: JSON.stringify({ emoji }),
+    }),
+
+  // ── Referrals ──────────────────────────────────────────────────────────────
+  getReferralStats: () => request<any>('/api/referrals/stats'),
+
+  // ── Rewards / Badges ───────────────────────────────────────────────────────
+  rewardsAward: (data: Record<string, unknown>) =>
+    request<any>('/api/rewards/award', {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  rewardsBadgesGrant: (userId: string, badges: unknown[]) =>
+    request<any>('/api/rewards/badges/grant', {
+      method: 'POST', body: JSON.stringify({ userId, badges }),
+    }),
+
+  // ── Challenges ─────────────────────────────────────────────────────────────
+  challengesList: (filters?: Record<string, unknown>) =>
+    request<any>('/api/challenges'),
+
+  challengeGetTeam: (challengeId: string) =>
+    request<any>(`/api/challenges/${challengeId}/team`),
+
+  challengeAcceptInvite: (challengeId: string, inviteCode: string) =>
+    request<any>(`/api/challenges/${challengeId}/accept-invite`, {
+      method: 'POST', body: JSON.stringify({ invite_code: inviteCode }),
+    }),
+
+  challengeSubmit: (challengeId: string, data: Record<string, unknown>) =>
+    request<any>(`/api/challenges/${challengeId}/submit`, {
+      method: 'POST', body: JSON.stringify(data),
+    }),
+
+  // ── Leaderboard ────────────────────────────────────────────────────────────
+  leaderboardGet: (scope: string, fieldId?: string, trackId?: string) =>
+    request<any>(`/api/leaderboard?scope=${scope}${fieldId ? `&field_id=${fieldId}` : ''}${trackId ? `&track_id=${trackId}` : ''}`),
 };

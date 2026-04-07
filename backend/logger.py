@@ -25,25 +25,22 @@ class Logger:
         logger.remove()
 
         # Console output with JSON format
+        # Note: serialize=True auto-formats as JSON; custom format= conflicts with it
         logger.add(
             sys.stdout,
-            format=self._json_formatter,
             level="DEBUG" if os.getenv("ENVIRONMENT") == "development" else "INFO",
             serialize=True,
             backtrace=True,
             diagnose=True,
-            colorize=True,
         )
 
         # Console output for errors
         logger.add(
             sys.stderr,
-            format=self._json_formatter,
             level="ERROR",
             serialize=True,
             backtrace=True,
             diagnose=True,
-            colorize=True,
         )
 
         # Create logs directory if it doesn't exist
@@ -53,7 +50,6 @@ class Logger:
         # Main application log with rotation
         logger.add(
             os.path.join(logs_dir, "app.log"),
-            format=self._json_formatter,
             level="DEBUG",
             rotation="500 MB",  # Rotate when file reaches 500MB
             retention="10 days",  # Keep logs for 10 days
@@ -67,7 +63,6 @@ class Logger:
         # Error-only log
         logger.add(
             os.path.join(logs_dir, "error.log"),
-            format=self._json_formatter,
             level="ERROR",
             rotation="100 MB",  # Rotate when file reaches 100MB
             retention="30 days",  # Keep error logs longer

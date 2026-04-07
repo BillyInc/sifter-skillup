@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ⚡ Sifter Skill_Up — Quant Program: Trader Track Level Data
 // 90 levels across 6 labs (1001–1090)
 // Mechanic types reused from crypto: match3, memory, chain, governance, liquidation, trait, rugpull

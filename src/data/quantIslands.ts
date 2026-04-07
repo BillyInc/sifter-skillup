@@ -138,7 +138,7 @@ export const QUANT_LABS: QuantLab[] = [
     end: 1105,
     bossLevel: 1105,
     requiredLevel: 1090,
-    vrScenario: null,
+    vrScenario: undefined,
   },
 ];
 

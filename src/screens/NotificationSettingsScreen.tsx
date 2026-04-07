@@ -36,8 +36,8 @@ export default function NotificationSettingsScreen() {
       if (token) {
         await scheduleDailyReminder({
           userId: user.id,
-          trackId: user.current_track ?? 'default',
-          userName: user.name ?? 'there',
+          trackId: user.current_track_id ?? 'default',
+          userName: user.username ?? 'there',
           progress: 0,
           streak: user.streak ?? 0,
           hourLocal,

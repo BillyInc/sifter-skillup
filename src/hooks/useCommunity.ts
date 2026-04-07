@@ -163,7 +163,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
       const qs = new URLSearchParams(params).toString();
       // Backend returns posts sorted newest-first, with next_cursor for pagination
       const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/community/feed?${qs}`, {
-        headers: { Authorization: `Bearer ${await import('./api').then(m => m.API.getToken())}` },
+        headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` },
       });
       if (!res.ok) throw new Error('Feed load failed');
       const data = await res.json();
@@ -372,7 +372,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
     try {
       const res = await fetch(
         `${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/community/search?q=${encodeURIComponent(q)}&userId=${currentUserId}`,
-        { headers: { Authorization: `Bearer ${await import('./api').then(m => m.API.getToken())}` } }
+        { headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` } }
       );
       if (res.ok) { const d = await res.json(); setSearchResults(d.posts ?? []); }
     } catch {} finally { setSearchLoading(false); }
@@ -384,7 +384,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
       try {
         const res = await fetch(
           `${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/notifications?userId=${currentUserId}`,
-          { headers: { Authorization: `Bearer ${await import('./api').then(m => m.API.getToken())}` } }
+          { headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` } }
         );
         if (res.ok) {
           const d = await res.json();
@@ -444,7 +444,7 @@ export function useDMs(currentUserId: string) {
     try {
       const res = await fetch(
         `${process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000'}/api/dms/threads`,
-        { headers: { Authorization: `Bearer ${await import('./api').then(m => m.API.getToken())}` } }
+        { headers: { Authorization: `Bearer ${await import('../lib/api').then(m => m.API.getToken())}` } }
       );
       if (res.ok) { const d = await res.json(); setThreads(d.threads ?? []); }
     } catch {} finally { setLoading(false); }

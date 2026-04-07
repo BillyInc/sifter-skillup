@@ -1,9 +1,9 @@
-import { logger as rnLogger, consoleSync } from 'react-native-logs';
+import { logger as rnLogger, consoleTransport } from 'react-native-logs';
 
 // Default configuration for the logger
 const DEFAULT_CONFIG = {
   // Output to console with custom format
-  transport: consoleSync,
+  transport: consoleTransport,
   // Format: JSON with timestamp, level, message, context
   transportOptions: {
     colors: {
@@ -57,9 +57,7 @@ interface Logger {
 }
 
 // Create the main logger instance
-const loggerInstance = rnLogger.createLogger<
-  Record<string, unknown>
->(DEFAULT_CONFIG);
+const loggerInstance = rnLogger.createLogger<'debug' | 'info' | 'warn' | 'error'>(DEFAULT_CONFIG);
 
 // Create a wrapper with typed methods and context handling
 const createLogger = (baseContext: Record<string, unknown> = {}): Logger => {

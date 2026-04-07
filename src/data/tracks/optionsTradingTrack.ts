@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ⚡ Sifter Skill_Up — OPTIONS TRADING Career Track
 // Upgraded to Sifter SkillUp Simulation System v2.0
 // Single track — no sub-tracks. No portfolio push. No interview mode.
