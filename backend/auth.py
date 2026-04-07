@@ -6,12 +6,13 @@ import hashlib
 import hmac
 import json
 import urllib.parse
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from fastapi import Depends, HTTPException, status
+import jwt
+from jwt import PyJWTError
+from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from jose import JWTError, jwt
 
 from config import settings
 from database import db
@@ -66,31 +67,36 @@ class Auth:
     # ── JWT ─────────────────────────────────────────────────────
     @staticmethod
     def create_jwt(user_id: str) -> str:
-        expire = datetime.utcnow() + timedelta(hours=settings.JWT_EXPIRE_HOURS)
+        expire = datetime.now(timezone.utc) + timedelta(hours=settings.JWT_EXPIRE_HOURS)
         return jwt.encode(
             {"sub": user_id, "exp": expire},
             settings.JWT_SECRET,
-            algorithm=settings.JWT_ALGORITHM
+            algorithm=settings.JWT_ALGORITHM,
+        )
+
+    @staticmethod
+    def decode_jwt(token: str) -> dict:
+        return jwt.decode(
+            token,
+            settings.JWT_SECRET,
+            algorithms=[settings.JWT_ALGORITHM],
+            options={"require": ["exp", "sub"]},
         )
 
     @staticmethod
     async def get_current_user(
-        credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
+        credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     ) -> dict:
         if not credentials:
             raise HTTPException(status_code=401, detail="Not authenticated")
         try:
-            payload = jwt.decode(
-                credentials.credentials,
-                settings.JWT_SECRET,
-                algorithms=[settings.JWT_ALGORITHM]
-            )
+            payload = Auth.decode_jwt(credentials.credentials)
             user_id = payload.get("sub")
             if not user_id:
                 raise HTTPException(status_code=401, detail="Invalid token")
-            result = db.get_client().table("users").select("*").eq("id", user_id).single().execute()
+            result = db.get_service_client().table("users").select("*").eq("id", user_id).single().execute()
             if not result.data:
                 raise HTTPException(status_code=401, detail="User not found")
             return result.data
-        except JWTError:
+        except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")

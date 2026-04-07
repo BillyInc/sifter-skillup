@@ -8,7 +8,7 @@
 #   POST /api/users/active-field — set active field + color
 # ============================================================
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -16,20 +16,38 @@ from fastapi import APIRouter, Depends, HTTPException
 from auth import Auth
 from database import db
 from logger import log
-from models import ResponseModel
+from models import (
+    ActiveFieldUpdate,
+    LastPositionUpdate,
+    NavigatorLabComplete,
+    PushTokenUpdate,
+    ResponseModel,
+)
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _increment_points(user_id: str, delta: int) -> Optional[int]:
+    res = db.get_service_client().rpc(
+        "increment_user_points",
+        {"p_user_id": user_id, "p_delta": delta},
+    ).execute()
+    return res.data
+
 
 # ── /api/game/last-position (matches what api.ts actually calls) ──
 game_extra_router = APIRouter(prefix="/api/game", tags=["game-extra"])
 
 @game_extra_router.post("/last-position", response_model=ResponseModel)
 async def save_last_position_game(
-    body: dict,
+    body: LastPositionUpdate,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Save resume position. Called by useResume.savePosition()."""
-    position = body.get("position", body)
     db.get_service_client().table("users").update({
-        "last_position": position,
+        "last_position": body.position,
     }).eq("id", current_user["id"]).execute()
     return ResponseModel(data={"saved": True})
 
@@ -70,7 +88,7 @@ async def get_full_progress(current_user: dict = Depends(Auth.get_current_user))
         "achievements":      current_user.get("achievements", []),
         "guildId":           current_user.get("guild_id"),
         "settings":          current_user.get("settings", {}),
-        "updatedAt":         current_user.get("last_login", datetime.utcnow().isoformat()),
+        "updatedAt":         current_user.get("last_login", _now_iso()),
         "xpStage":           current_user.get("xp_stage", 1),
         "activeFieldId":     current_user.get("active_field_id"),
         "starknetAddress":   current_user.get("starknet_address"),
@@ -80,34 +98,28 @@ async def get_full_progress(current_user: dict = Depends(Auth.get_current_user))
 
 @users_extra_router.post("/active-field", response_model=ResponseModel)
 async def set_active_field(
-    body: dict,
+    body: ActiveFieldUpdate,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Set the user's active field and field color. Drives HomeScreen artwork."""
-    updates = {}
-    if body.get("active_field_id"):
-        updates["active_field_id"] = body["active_field_id"]
-    if body.get("active_field_color"):
-        updates["active_field_color"] = body["active_field_color"]
-    if body.get("current_track_id"):
-        updates["current_track_id"] = body["current_track_id"]
-    if body.get("current_track_name"):
-        updates["current_track_name"] = body["current_track_name"]
+    # Pydantic model already validates field_id against `^[a-z0-9_-]+$`
+    updates = {"active_field_id": body.field_id}
+    if body.field_color:
+        updates["active_field_color"] = body.field_color
 
-    if updates:
-        db.get_service_client().table("users").update(updates) \
-            .eq("id", current_user["id"]).execute()
+    db.get_service_client().table("users").update(updates) \
+        .eq("id", current_user["id"]).execute()
 
     return ResponseModel(data={"updated": True, **updates})
 
 
 @users_extra_router.post("/push-token", response_model=ResponseModel)
 async def register_push_token(
-    body: dict,
+    body: PushTokenUpdate,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Register/update push notification token. Called on app open."""
-    token = body.get("token", "")
+    token = body.token
     if not token:
         raise HTTPException(400, "token required")
 
@@ -115,8 +127,8 @@ async def register_push_token(
     db.get_service_client().table("push_tokens").upsert({
         "user_id":    current_user["id"],
         "token":      token,
-        "platform":   body.get("platform", "unknown"),
-        "updated_at": datetime.utcnow().isoformat(),
+        "platform":   "unknown",
+        "updated_at": _now_iso(),
     }).execute()
 
     # Also update device session push_token if exists
@@ -136,23 +148,20 @@ async def register_push_token(
 
 @game_extra_router.post("/navigator-lab-complete", response_model=ResponseModel)
 async def navigator_lab_complete(
-    body: dict,
+    body: NavigatorLabComplete,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
     Record completion of a DeFi Navigator lab.
-    lab_number: 1-11
+    lab_number: 1-11 (validated by Pydantic)
     Awards XP and registers boss level ID 3000 + lab_number.
     """
-    lab_number = int(body.get("lab_number", 0))
-    if lab_number < 1 or lab_number > 11:
-        raise HTTPException(400, "lab_number must be 1-11")
-
+    lab_number = body.lab_number
     boss_level_id = 3000 + lab_number
     user_id = current_user["id"]
 
     # Add boss level to completed
-    completed = current_user.get("completed_levels", [])
+    completed = current_user.get("completed_levels", []) or []
     if str(boss_level_id) not in completed:
         completed.append(str(boss_level_id))
 
@@ -160,12 +169,12 @@ async def navigator_lab_complete(
     xp_map = {1:200,2:200,3:200,4:200,5:200, 6:300,7:300,8:300,9:300, 10:500,11:1000}
     xp = xp_map.get(lab_number, 200)
 
-    fresh = db.get_service_client().table("users").select("points").eq("id", user_id).single().execute().data
-    new_pts = (fresh["points"] if fresh else current_user["points"]) + xp
+    # Atomic XP grant (no read-modify-write race)
+    new_pts = _increment_points(user_id, xp)
 
+    # Persist completed_levels separately (last-write-wins is fine here for arrays)
     db.get_service_client().table("users").update({
         "completed_levels": completed,
-        "points": new_pts,
     }).eq("id", user_id).execute()
 
     # Record XP event
@@ -176,7 +185,7 @@ async def navigator_lab_complete(
         "xp_amount": xp,
         "source_id": f"navigator-lab-{lab_number}",
         "metadata": {"lab_number": lab_number, "track": "starknet-defi-navigator"},
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": _now_iso(),
     }).execute()
 
     log.info("Navigator lab completed", user_id=user_id, lab=lab_number, xp=xp)

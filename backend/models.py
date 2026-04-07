@@ -3,10 +3,11 @@
 # Extended: offline sync, device sessions,
 #           Starknet, feed, badges, challenges
 # ============================================
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr, field_validator
 from typing import Optional, List, Dict, Any, Literal
 from datetime import datetime, date
 from enum import Enum
+import re
 
 
 # ── Enums ─────────────────────────────────────────────────────
@@ -110,14 +111,82 @@ class DeviceRegister(BaseModel):
 # ── Starknet ──────────────────────────────────────────────────
 
 class StarknetAuthRequest(BaseModel):
-    email:      str
-    # Privy creates the wallet server-side — client just sends email
-    privy_token: Optional[str] = None
+    email:        str
+    privy_token:  str = Field(..., min_length=10, max_length=4096,
+                              description="Verified Privy access token; backend exchanges it for the wallet address.")
 
 class StarknetRPCRequest(BaseModel):
     network:  Literal["sepolia", "mainnet"] = "sepolia"
-    method:   str
-    params:   List[Any] = []
+    method:   str  = Field(..., max_length=64)
+    params:   List[Any] = Field(default_factory=list, max_length=32)
+
+    @field_validator("method")
+    @classmethod
+    def validate_method(cls, v: str) -> str:
+        # Allowlist of safe Starknet RPC methods (read-only / standard)
+        allowed = {
+            "starknet_blockNumber", "starknet_blockHashAndNumber", "starknet_chainId",
+            "starknet_getBlockWithTxHashes", "starknet_getBlockWithTxs",
+            "starknet_getStateUpdate", "starknet_getStorageAt",
+            "starknet_getTransactionByHash", "starknet_getTransactionByBlockIdAndIndex",
+            "starknet_getTransactionReceipt", "starknet_getTransactionStatus",
+            "starknet_getClass", "starknet_getClassHashAt", "starknet_getClassAt",
+            "starknet_getBlockTransactionCount", "starknet_call",
+            "starknet_estimateFee", "starknet_estimateMessageFee",
+            "starknet_getNonce", "starknet_getEvents",
+            "starknet_specVersion", "starknet_syncing",
+        }
+        if v not in allowed:
+            raise ValueError(f"method '{v}' not in RPC allowlist")
+        return v
+
+class StarknetTransactionLog(BaseModel):
+    hash:        str = Field(..., min_length=10, max_length=128)
+    network:     Literal["sepolia", "mainnet"] = "sepolia"
+    type:        str = Field(..., max_length=32)
+    lessonId:    Optional[str] = Field(None, max_length=64)
+    labId:       Optional[str] = Field(None, max_length=64)
+    amount:      Optional[str] = Field(None, max_length=64)
+    token:       Optional[str] = Field(None, max_length=32)
+
+
+# ── Auth (signup/login) ───────────────────────────────────────
+
+class SignupRequest(BaseModel):
+    email:    str = Field(..., max_length=320)
+    password: str = Field(..., min_length=8, max_length=128)
+    username: Optional[str] = Field(None, max_length=64)
+
+class LoginRequest(BaseModel):
+    email:    str = Field(..., max_length=320)
+    password: str = Field(..., min_length=1, max_length=128)
+
+class TelegramAuthRequest(BaseModel):
+    initData: str = Field(..., max_length=4096)
+
+class BaseWalletAuthRequest(BaseModel):
+    walletAddress: str = Field(..., min_length=10, max_length=128)
+    signature:     str = Field(..., min_length=10, max_length=512)
+    message:       str = Field(..., max_length=4096)
+
+class PushTokenUpdate(BaseModel):
+    token: str = Field(..., min_length=1, max_length=4096)
+    push_token: Optional[str] = Field(None, max_length=4096)
+
+
+# ── Game Extra ───────────────────────────────────────────────
+
+class LastPositionUpdate(BaseModel):
+    position: Dict[str, Any]
+
+class NavigatorLabComplete(BaseModel):
+    lab_number: int = Field(..., ge=1, le=11)
+
+class ActiveFieldUpdate(BaseModel):
+    field_id:    str = Field(..., max_length=64,
+                             pattern=r"^[a-z0-9_-]+$")
+    field_color: Optional[str] = Field(None, max_length=9,
+                                       pattern=r"^#?[0-9a-fA-F]{3,8}$")
 
 
 # ── Guilds ────────────────────────────────────────────────────
@@ -198,11 +267,68 @@ class ChallengeSubmit(BaseModel):
 
 # ── Social / Portfolio Attribution ───────────────────────────
 
+_SOCIAL_PLATFORMS = {
+    "twitter", "linkedin", "github", "medium", "reddit",
+    "instagram", "facebook", "behance", "dribbble", "youtube",
+}
+
 class SocialShare(BaseModel):
-    platform:     str             # 'twitter' | 'linkedin' | 'github' | etc.
-    content_type: str             # 'level_complete' | 'badge' | 'portfolio'
-    content_id:   str
-    url:          Optional[str]   = None
+    platform:     str = Field(..., max_length=32)
+    content_type: str = Field(..., max_length=32)
+    content_id:   str = Field(..., max_length=128)
+    url:          Optional[str] = Field(None, max_length=2048)
+
+    @field_validator("platform")
+    @classmethod
+    def _validate_platform(cls, v: str) -> str:
+        if v not in _SOCIAL_PLATFORMS:
+            raise ValueError(f"unknown platform: {v}")
+        return v
+
+
+class SocialBlast(BaseModel):
+    platforms:    List[str] = Field(..., min_length=1, max_length=10)
+    content_type: str = Field(..., max_length=32)
+    content_id:   str = Field(..., max_length=128)
+    caption:      str = Field("", max_length=4096)
+
+    @field_validator("platforms")
+    @classmethod
+    def _validate_platforms(cls, v: list[str]) -> list[str]:
+        for p in v:
+            if p not in _SOCIAL_PLATFORMS:
+                raise ValueError(f"unknown platform: {p}")
+        return v
+
+
+class PortfolioAttribution(BaseModel):
+    item_id:  str = Field(..., max_length=128)
+    platform: str = Field(..., max_length=32)
+    url:      str = Field(..., max_length=2048)
+
+
+class ReferralApply(BaseModel):
+    code: str = Field(..., min_length=4, max_length=64)
+
+
+class MerchRedeemRequest(BaseModel):
+    item_id:          str = Field(..., max_length=128)
+    shipping_address: Optional[Dict[str, Any]] = None
+
+
+class FeedItemSubscribe(BaseModel):
+    tracks: List[str] = Field(default_factory=list, max_length=32)
+
+
+class InterviewStartRequest(BaseModel):
+    track_id: str = Field(..., max_length=64)
+    level:    str = Field(..., max_length=32)
+
+
+class InterviewAnswerRequest(BaseModel):
+    interview_id:   str = Field(..., max_length=128)
+    question_index: int = Field(..., ge=0, le=64)
+    answer:         str = Field(..., max_length=10000)
 
 
 # ── Airtable Sync (internal, used by Celery task) ─────────────

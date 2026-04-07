@@ -4,17 +4,22 @@
 # Social blast · Referral bonuses
 # ============================================
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
-import httpx
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 
 from auth import Auth
 from config import settings
 from database import db
 from logger import log
-from models import ResponseModel, SocialShare
+from models import (
+    PortfolioAttribution,
+    ReferralApply,
+    ResponseModel,
+    SocialBlast,
+    SocialShare,
+)
 
 router = APIRouter(prefix="/api/social", tags=["social-rewards"])
 
@@ -28,8 +33,33 @@ _SHARE_XP = {
     "default":  50,
 }
 
-# Max share XP per user per day (anti-farm)
+# Max share XP per user per day (anti-farm) — enforced atomically server-side
 _MAX_SHARE_XP_DAILY = 300
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _try_award_social(user_id: str, request: int) -> int:
+    """Atomic, daily-capped social XP grant. Returns actual XP granted."""
+    res = db.get_service_client().rpc(
+        "try_award_social_xp",
+        {
+            "p_user_id": user_id,
+            "p_request": request,
+            "p_max":     _MAX_SHARE_XP_DAILY,
+        },
+    ).execute()
+    return int(res.data or 0)
+
+
+def _increment_points(user_id: str, delta: int) -> Optional[int]:
+    res = db.get_service_client().rpc(
+        "increment_user_points",
+        {"p_user_id": user_id, "p_delta": delta},
+    ).execute()
+    return res.data
 
 
 # ─────────────────────────────────────────────────────────────
@@ -39,7 +69,6 @@ _MAX_SHARE_XP_DAILY = 300
 @router.post("/share", response_model=ResponseModel)
 async def record_share(
     body: SocialShare,
-    background_tasks: BackgroundTasks,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
@@ -47,18 +76,10 @@ async def record_share(
     Called by the app after the user taps share and the OS share sheet fires.
     """
     user_id = current_user["id"]
-    today   = datetime.utcnow().date().isoformat()
+    xp_rate = _SHARE_XP.get(body.platform.lower(), _SHARE_XP["default"])
 
-    # Check daily share XP cap
-    today_shares = db.get_service_client().table("social_shares") \
-        .select("xp_awarded") \
-        .eq("user_id", user_id) \
-        .gte("created_at", f"{today}T00:00:00") \
-        .execute()
-
-    today_xp = sum(s.get("xp_awarded", 0) for s in (today_shares.data or []))
-    xp_rate  = _SHARE_XP.get(body.platform.lower(), _SHARE_XP["default"])
-    xp_to_award = min(xp_rate, max(0, _MAX_SHARE_XP_DAILY - today_xp))
+    # Atomic daily-capped grant — single round-trip, no race
+    xp_to_award = _try_award_social(user_id, xp_rate)
 
     share_id = str(uuid.uuid4())
     db.get_service_client().table("social_shares").insert({
@@ -69,42 +90,30 @@ async def record_share(
         "content_id":   body.content_id,
         "url":          body.url,
         "xp_awarded":   xp_to_award,
-        "created_at":   datetime.utcnow().isoformat(),
+        "created_at":   _now_iso(),
     }).execute()
 
     if xp_to_award > 0:
-        background_tasks.add_task(_apply_share_xp, user_id, xp_to_award, share_id)
+        db.get_service_client().table("xp_events").insert({
+            "id":         str(uuid.uuid4()),
+            "user_id":    user_id,
+            "event_type": "social_share",
+            "xp_amount":  xp_to_award,
+            "source_id":  share_id,
+            "created_at": _now_iso(),
+        }).execute()
+        log.info("Share XP applied", user_id=user_id, xp=xp_to_award)
 
     return ResponseModel(data={
-        "share_id":    share_id,
-        "xp_awarded":  xp_to_award,
-        "capped":      xp_to_award < xp_rate,
+        "share_id":   share_id,
+        "xp_awarded": xp_to_award,
+        "capped":     xp_to_award < xp_rate,
     })
-
-
-async def _apply_share_xp(user_id: str, xp: int, share_id: str):
-    fresh = db.get_service_client().table("users").select("points") \
-        .eq("id", user_id).single().execute().data
-    if not fresh:
-        return
-    new_pts = fresh["points"] + xp
-    db.get_service_client().table("users") \
-        .update({"points": new_pts}).eq("id", user_id).execute()
-
-    db.get_service_client().table("xp_events").insert({
-        "id":         str(uuid.uuid4()),
-        "user_id":    user_id,
-        "event_type": "social_share",
-        "xp_amount":  xp,
-        "source_id":  share_id,
-        "created_at": datetime.utcnow().isoformat(),
-    }).execute()
-    log.info("Share XP applied", user_id=user_id, xp=xp)
 
 
 @router.get("/shares/me", response_model=ResponseModel)
 async def my_shares(
-    limit: int = 20,
+    limit: int = Query(20, ge=1, le=100),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     result = db.get_service_client().table("social_shares") \
@@ -121,8 +130,7 @@ async def my_shares(
 
 @router.post("/portfolio/attribution", response_model=ResponseModel)
 async def record_portfolio_attribution(
-    body: dict,
-    background_tasks: BackgroundTasks,
+    body: PortfolioAttribution,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
@@ -130,17 +138,17 @@ async def record_portfolio_attribution(
     Awards XP, records the attribution event, unlocks badge.
     """
     user_id  = current_user["id"]
-    platform = body.get("platform", "github")
-    url      = body.get("url", "")
-    track_id = body.get("track_id", current_user.get("active_track", "unknown"))
+    platform = body.platform
+    url      = body.url
+    track_id = current_user.get("active_track", "unknown")
 
     db.get_service_client().table("portfolio_attributions").insert({
-        "id":          str(uuid.uuid4()),
-        "user_id":     user_id,
-        "platform":    platform,
-        "url":         url,
-        "track_id":    track_id,
-        "created_at":  datetime.utcnow().isoformat(),
+        "id":         str(uuid.uuid4()),
+        "user_id":    user_id,
+        "platform":   platform,
+        "url":        url,
+        "track_id":   track_id,
+        "created_at": _now_iso(),
     }).execute()
 
     # Award 200 XP for first push to each platform
@@ -150,25 +158,16 @@ async def record_portfolio_attribution(
     first_push = len(existing.data) == 1  # the one we just inserted
 
     xp = 200 if first_push else 50
-    background_tasks.add_task(_apply_attribution_xp, user_id, xp, platform)
+    new_pts = _increment_points(user_id, xp)
+    log.info("Portfolio attribution XP applied", user_id=user_id, platform=platform, xp=xp)
 
     return ResponseModel(data={
         "attribution_recorded": True,
-        "platform": platform,
+        "platform":   platform,
         "xp_awarded": xp,
         "first_push": first_push,
+        "new_points": new_pts,
     })
-
-
-async def _apply_attribution_xp(user_id: str, xp: int, platform: str):
-    fresh = db.get_service_client().table("users").select("points") \
-        .eq("id", user_id).single().execute().data
-    if not fresh:
-        return
-    new_pts = fresh["points"] + xp
-    db.get_service_client().table("users") \
-        .update({"points": new_pts}).eq("id", user_id).execute()
-    log.info("Portfolio attribution XP applied", user_id=user_id, platform=platform, xp=xp)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -177,45 +176,51 @@ async def _apply_attribution_xp(user_id: str, xp: int, platform: str):
 
 @router.post("/blast", response_model=ResponseModel)
 async def social_blast(
-    body: dict,
-    background_tasks: BackgroundTasks,
+    body: SocialBlast,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
     Share a portfolio artifact or achievement to multiple platforms.
     The client handles the actual OAuth posting; this records it server-side.
     """
-    platforms  = body.get("platforms", [])
-    content    = body.get("content", "")
-    content_id = body.get("content_id", "")
-    content_type = body.get("content_type", "achievement")
+    user_id = current_user["id"]
 
-    if not platforms:
-        raise HTTPException(400, "At least one platform required")
+    # Compute requested XP (sum across platforms) — RPC enforces daily cap atomically
+    requested = sum(
+        _SHARE_XP.get(p.lower(), _SHARE_XP["default"]) for p in body.platforms
+    )
+    granted = _try_award_social(user_id, requested)
 
-    total_xp = 0
-    for platform in platforms:
-        xp_per = _SHARE_XP.get(platform.lower(), _SHARE_XP["default"])
+    # Insert one share row per platform; xp_awarded distributed proportionally
+    per_platform_xp = (granted // len(body.platforms)) if body.platforms else 0
+    leftover = granted - per_platform_xp * len(body.platforms)
+
+    for idx, platform in enumerate(body.platforms):
+        share_xp = per_platform_xp + (leftover if idx == 0 else 0)
         db.get_service_client().table("social_shares").insert({
             "id":           str(uuid.uuid4()),
-            "user_id":      current_user["id"],
+            "user_id":      user_id,
             "platform":     platform,
-            "content_type": content_type,
-            "content_id":   content_id,
-            "xp_awarded":   xp_per,
-            "created_at":   datetime.utcnow().isoformat(),
+            "content_type": body.content_type,
+            "content_id":   body.content_id,
+            "xp_awarded":   share_xp,
+            "created_at":   _now_iso(),
         }).execute()
-        total_xp += xp_per
 
-    # Cap total blast XP at 200
-    total_xp = min(total_xp, 200)
-    background_tasks.add_task(
-        _apply_share_xp, current_user["id"], total_xp, f"blast-{content_id}"
-    )
+    if granted > 0:
+        db.get_service_client().table("xp_events").insert({
+            "id":         str(uuid.uuid4()),
+            "user_id":    user_id,
+            "event_type": "social_blast",
+            "xp_amount":  granted,
+            "source_id":  f"blast-{body.content_id}",
+            "created_at": _now_iso(),
+        }).execute()
 
     return ResponseModel(data={
-        "platforms_blasted": platforms,
-        "xp_awarded":        total_xp,
+        "platforms_blasted": body.platforms,
+        "xp_awarded":        granted,
+        "capped":             granted < requested,
     })
 
 
@@ -225,11 +230,12 @@ async def social_blast(
 
 @router.post("/referral/apply", response_model=ResponseModel)
 async def apply_referral(
-    body: dict,
+    body: ReferralApply,
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """Apply a referral code. Awards XP to both referrer and referee."""
-    code = (body.get("code") or "").strip().upper()
+    # Normalize to lowercase — DB stores referral codes lowercase (UUID-style)
+    code = body.code.strip().lower()
     if not code:
         raise HTTPException(400, "Referral code required")
 
@@ -251,26 +257,22 @@ async def apply_referral(
 
     # Record referral
     db.get_service_client().table("referrals").insert({
-        "id":           str(uuid.uuid4()),
-        "referrer_id":  referrer_user["id"],
-        "referee_id":   current_user["id"],
-        "code":         code,
-        "created_at":   datetime.utcnow().isoformat(),
+        "id":          str(uuid.uuid4()),
+        "referrer_id": referrer_user["id"],
+        "referee_id":  current_user["id"],
+        "code":        code,
+        "created_at":  _now_iso(),
     }).execute()
 
-    # Award XP to both
+    # Award XP to both — atomic via RPC
     REFERRER_XP = 500
     REFEREE_XP  = 250
 
-    for uid, xp in [(referrer_user["id"], REFERRER_XP), (current_user["id"], REFEREE_XP)]:
-        fresh = db.get_service_client().table("users").select("points") \
-            .eq("id", uid).single().execute().data
-        if fresh:
-            db.get_service_client().table("users") \
-                .update({"points": fresh["points"] + xp}).eq("id", uid).execute()
+    _increment_points(referrer_user["id"], REFERRER_XP)
+    _increment_points(current_user["id"], REFEREE_XP)
 
     return ResponseModel(data={
         "referral_applied": True,
-        "xp_awarded": REFEREE_XP,
+        "xp_awarded":  REFEREE_XP,
         "referrer_xp": REFERRER_XP,
     })

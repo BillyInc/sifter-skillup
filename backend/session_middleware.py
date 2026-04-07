@@ -10,25 +10,27 @@
 # Skipped routes (no auth needed):
 #   /health, /api/auth/*, /api/github/callback
 # ============================================
-from datetime import datetime
 from typing import Optional
 
 from fastapi import Request
 from fastapi.responses import JSONResponse
+from jwt import PyJWTError
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from auth import Auth
 from config import settings
 from device_sessions import validate_device_header
 from logger import log
 
-# Routes that bypass device validation entirely
+# Routes that bypass device validation entirely.
+# NOTE: /api/sync/drain was previously here but is a high-value mutation
+# route, so it now goes through full device enforcement.
 _SKIP_PREFIXES = (
     "/health",
     "/docs",
     "/openapi",
     "/api/auth/",
     "/api/github/callback",
-    "/api/sync/drain",  # offline sync must always work on reconnect
 )
 
 
@@ -42,20 +44,16 @@ def _extract_user_id_from_bearer(request: Request) -> Optional[str]:
     Full JWT validation still happens in Auth.get_current_user —
     this is just for correlation with the device table.
     """
-    from jose import jwt, JWTError
     auth = request.headers.get("Authorization", "")
     if not auth.startswith("Bearer "):
         return None
     token = auth[7:]
     try:
-        payload = jwt.decode(
-            token,
-            settings.JWT_SECRET,
-            algorithms=[settings.JWT_ALGORITHM],
-            options={"verify_exp": True},
-        )
+        payload = Auth.decode_jwt(token)
         return payload.get("sub")
-    except JWTError:
+    except PyJWTError:
+        return None
+    except Exception:
         return None
 
 
@@ -82,11 +80,25 @@ class DeviceSessionMiddleware(BaseHTTPMiddleware):
         if not user_id:
             return await call_next(request)
 
+        # Cache for downstream handlers (rate limiters, etc.)
+        request.state.user_id = user_id
+
         device_id = request.headers.get("X-Device-Id", "").strip()
 
-        # No device_id header = old client version, let it through
         if not device_id:
-            return await call_next(request)
+            log.warning(
+                "Missing X-Device-Id on authenticated request",
+                user_id=user_id,
+                path=path,
+            )
+            return JSONResponse(
+                status_code=401,
+                content={
+                    "success": False,
+                    "error":   "device_required",
+                    "message": "X-Device-Id header is required for this request.",
+                },
+            )
 
         if not validate_device_header(user_id, device_id):
             log.warning(
@@ -108,4 +120,5 @@ class DeviceSessionMiddleware(BaseHTTPMiddleware):
                 },
             )
 
+        request.state.device_id = device_id
         return await call_next(request)

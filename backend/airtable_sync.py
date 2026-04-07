@@ -19,11 +19,11 @@
 # Airtable only manages descriptive/editorial metadata.
 # ============================================
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException
 
 from auth import Auth
 from config import settings
@@ -53,14 +53,30 @@ async def _fetch_airtable_table(table_name: str) -> List[Dict[str, Any]]:
     records = []
     offset  = None
 
+    MAX_PAGES = 100
+    pages = 0
+
     async with httpx.AsyncClient(timeout=30.0) as client:
         while True:
+            pages += 1
+            if pages > MAX_PAGES:
+                raise RuntimeError(
+                    f"Airtable {table_name} pagination exceeded MAX_PAGES={MAX_PAGES}"
+                )
+
             params = {"offset": offset} if offset else {}
             resp   = await client.get(url, headers=headers, params=params)
 
             if resp.status_code != 200:
+                # Log full upstream body for ops, but never expose it to callers.
+                log.error(
+                    "Airtable fetch failed",
+                    table=table_name,
+                    status=resp.status_code,
+                    body=resp.text[:1000],
+                )
                 raise RuntimeError(
-                    f"Airtable {table_name} fetch failed: {resp.status_code} {resp.text[:200]}"
+                    f"Airtable upstream error: HTTP {resp.status_code}"
                 )
 
             data    = resp.json()
@@ -99,7 +115,7 @@ async def _sync_tracks(records: List[dict]) -> int:
                 "color":         f.get("color"),
                 "icon":          f.get("icon"),
             },
-            "synced_at": datetime.utcnow().isoformat(),
+            "synced_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         synced += 1
     return synced
@@ -127,7 +143,7 @@ async def _sync_labs(records: List[dict]) -> int:
                 "prerequisites":   f.get("prerequisites", []),
                 "portfolio_push":  f.get("portfolio_push", False),
             },
-            "synced_at": datetime.utcnow().isoformat(),
+            "synced_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         synced += 1
     return synced
@@ -154,7 +170,7 @@ async def _sync_lesson_metadata(records: List[dict]) -> int:
                 "xp_value":   f.get("xp_value", 100),
                 "is_boss":    f.get("is_boss", False),
             },
-            "synced_at": datetime.utcnow().isoformat(),
+            "synced_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         synced += 1
     return synced
@@ -179,7 +195,7 @@ async def _sync_field_descriptions(records: List[dict]) -> int:
                 "requirements":     f.get("requirements", []),
                 "tagline":          f.get("tagline"),
             },
-            "synced_at": datetime.utcnow().isoformat(),
+            "synced_at": datetime.now(timezone.utc).isoformat(),
         }).execute()
         synced += 1
     return synced
@@ -207,7 +223,7 @@ async def run_airtable_sync(tables: Optional[List[str]] = None) -> List[Airtable
     results = []
 
     for table in tables_to_sync:
-        start = datetime.utcnow()
+        start = datetime.now(timezone.utc)
         try:
             records = await _fetch_airtable_table(table)
             handler = _TABLE_HANDLERS.get(table)
@@ -222,11 +238,11 @@ async def run_airtable_sync(tables: Optional[List[str]] = None) -> List[Airtable
                 continue
 
             count = await handler(records)
-            duration = (datetime.utcnow() - start).total_seconds()
+            duration = (datetime.now(timezone.utc) - start).total_seconds()
             log.info("Airtable table synced", table=table, records=count, duration_s=f"{duration:.1f}")
             results.append(AirtableSyncStatus(
                 table=table, records_synced=count,
-                synced_at=datetime.utcnow().isoformat()
+                synced_at=datetime.now(timezone.utc).isoformat()
             ))
 
         except Exception as e:
@@ -239,8 +255,8 @@ async def run_airtable_sync(tables: Optional[List[str]] = None) -> List[Airtable
     # Record last sync time
     db.get_service_client().table("sync_meta").upsert({
         "key":        "airtable_last_sync",
-        "value":      datetime.utcnow().isoformat(),
-        "updated_at": datetime.utcnow().isoformat(),
+        "value":      datetime.now(timezone.utc).isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
     }).execute()
 
     return results
@@ -252,17 +268,17 @@ async def run_airtable_sync(tables: Optional[List[str]] = None) -> List[Airtable
 
 @router.post("/airtable", response_model=ResponseModel)
 async def trigger_airtable_sync(
-    body: dict = {},
+    body: Optional[dict] = Body(default=None),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     """
     Manually trigger an Airtable sync.
-    Only admins (is_verified=True for now) can call this.
+    Only admins (is_admin=True) can call this.
     """
-    if not current_user.get("is_verified"):
+    if not current_user.get("is_admin"):
         raise HTTPException(403, "Admin access required")
 
-    tables = body.get("tables")  # None = sync all
+    tables = (body or {}).get("tables")  # None = sync all
     results = await run_airtable_sync(tables)
 
     return ResponseModel(data={

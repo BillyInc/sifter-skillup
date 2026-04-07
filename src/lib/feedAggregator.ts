@@ -19,8 +19,28 @@ import {
   getFacebookPagesForField,
   TRACK_TO_FIELD,
 } from './socialSources';
+import { API_BASE } from './api';
 
-const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'https://api.sifter.app';
+// ─── Envelope helper ──────────────────────────────────────────────────────────
+// Backend wraps every response as { success, data, error? }. This helper
+// mirrors the behavior of `request()` in api.ts for the few endpoints below
+// that hit non-API-client URLs (RSS proxies, sentiment feeds, comments, etc.).
+async function _envelope<T>(url: string, init?: RequestInit): Promise<T | null> {
+  try {
+    const res = await fetch(url, init);
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (json && typeof json === 'object' && 'success' in json) {
+      return json.success ? (json.data as T) : null;
+    }
+    // Some legacy endpoints return raw JSON — fall through.
+    return json as T;
+  } catch {
+    return null;
+  }
+}
+
+const _jsonHeaders = { 'Content-Type': 'application/json' } as const;
 
 // ─── Main router ──────────────────────────────────────────────────────────────
 
@@ -64,12 +84,12 @@ async function fetchRSSSection(trackId: string, sectionId: string): Promise<Feed
 
   if (!rssUrls.length) return [];
 
-  const res = await fetch(`${API_BASE}/feed/rss`, {
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/rss`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: _jsonHeaders,
     body: JSON.stringify({ urls: rssUrls, trackId, section: sectionId, limit: 10 }),
   });
-  return res.ok ? res.json() : [];
+  return data ?? [];
 }
 
 // ─── API ──────────────────────────────────────────────────────────────────────
@@ -101,46 +121,46 @@ async function fetchSocialSection(trackId: string, sectionId: string): Promise<F
   if (sectionId === 'social_twitter') {
     const handles = getTwitterHandlesForTrack(trackId, fieldId);
     if (!handles.length) return [];
-    const res = await fetch(`${API_BASE}/feed/social/twitter`, {
+    const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/social/twitter`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: _jsonHeaders,
       body: JSON.stringify({ handles, trackId, limit: 20 }),
     });
-    return res.ok ? res.json() : [];
+    return data ?? [];
   }
 
   if (sectionId === 'social_medium') {
     // Medium + blogs have public RSS — route through RSS parser
     const rssUrls = getMediumRSSForField(fieldId);
     if (!rssUrls.length) return [];
-    const res = await fetch(`${API_BASE}/feed/rss`, {
+    const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/rss`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: _jsonHeaders,
       body: JSON.stringify({ urls: rssUrls, trackId, section: 'social_medium', limit: 10 }),
     });
-    return res.ok ? res.json() : [];
+    return data ?? [];
   }
 
   if (sectionId === 'social_instagram') {
     const handles = getInstagramHandlesForField(fieldId);
     if (!handles.length) return [];
-    const res = await fetch(`${API_BASE}/feed/social/instagram`, {
+    const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/social/instagram`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: _jsonHeaders,
       body: JSON.stringify({ handles, trackId, limit: 10 }),
     });
-    return res.ok ? res.json() : [];
+    return data ?? [];
   }
 
   if (sectionId === 'social_facebook') {
     const pages = getFacebookPagesForField(fieldId);
     if (!pages.length) return [];
-    const res = await fetch(`${API_BASE}/feed/social/facebook`, {
+    const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/social/facebook`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: _jsonHeaders,
       body: JSON.stringify({ pages, trackId, limit: 10 }),
     });
-    return res.ok ? res.json() : [];
+    return data ?? [];
   }
 
   return [];
@@ -149,35 +169,35 @@ async function fetchSocialSection(trackId: string, sectionId: string): Promise<F
 // ─── Data helpers ─────────────────────────────────────────────────────────────
 
 async function fetchDeFiLlamaData(trackId: string): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/api`, {
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/api`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: _jsonHeaders,
     body: JSON.stringify({ source: 'defillama', trackId }),
   });
-  return res.ok ? res.json() : [];
+  return data ?? [];
 }
 
 async function fetchSnapshotProposals(trackId: string): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/api`, {
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/api`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: _jsonHeaders,
     body: JSON.stringify({ source: 'snapshot', trackId, status: 'active' }),
   });
-  return res.ok ? res.json() : [];
+  return data ?? [];
 }
 
 async function fetchCampaigns(trackId: string): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/campaigns/${trackId}`);
-  return res.ok ? res.json() : [];
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/campaigns/${trackId}`);
+  return data ?? [];
 }
 
 async function fetchMarketData(trackId: string): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/api`, {
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/api`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: _jsonHeaders,
     body: JSON.stringify({ source: 'market_data', trackId }),
   });
-  return res.ok ? res.json() : [];
+  return data ?? [];
 }
 
 async function fetchCryptoSentiment(): Promise<FeedItem[]> {
@@ -209,13 +229,13 @@ async function fetchCryptoSentiment(): Promise<FeedItem[]> {
 }
 
 async function fetchEquitiesSentiment(): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/sentiment/equities`);
-  return res.ok ? res.json() : [];
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/sentiment/equities`);
+  return data ?? [];
 }
 
 async function fetchSupplyChainSentiment(): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/sentiment/supply-chain`);
-  return res.ok ? res.json() : [];
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/sentiment/supply-chain`);
+  return data ?? [];
 }
 
 async function fetchJobsRSS(trackId: string): Promise<FeedItem[]> {
@@ -223,54 +243,54 @@ async function fetchJobsRSS(trackId: string): Promise<FeedItem[]> {
   if (!sources) return [];
   const rssUrls = sources.jobs.filter(j => j.rssUrl).map(j => j.rssUrl!);
   if (!rssUrls.length) return [];
-  const res = await fetch(`${API_BASE}/feed/rss`, {
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/rss`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: _jsonHeaders,
     body: JSON.stringify({ urls: rssUrls, trackId, section: 'jobs', limit: 8 }),
   });
-  return res.ok ? res.json() : [];
+  return data ?? [];
 }
 
 export async function fetchSifterSkills(trackId: string): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/sifter/${trackId}`);
-  return res.ok ? res.json() : [];
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/sifter/${trackId}`);
+  return data ?? [];
 }
 
 async function fetchCuratedSection(trackId: string, sectionId: string): Promise<FeedItem[]> {
-  const res = await fetch(`${API_BASE}/feed/curated/${trackId}/${sectionId}`);
-  return res.ok ? res.json() : [];
+  const data = await _envelope<FeedItem[]>(`${API_BASE}/feed/curated/${trackId}/${sectionId}`);
+  return data ?? [];
 }
 
 // ─── Comments + engagement ────────────────────────────────────────────────────
 
 export async function fetchComments(feedItemId: string): Promise<Comment[]> {
-  const res = await fetch(`${API_BASE}/feed/comments/${feedItemId}`);
-  return res.ok ? res.json() : [];
+  const data = await _envelope<Comment[]>(`${API_BASE}/feed/comments/${feedItemId}`);
+  return data ?? [];
 }
 
 export async function postComment(
   feedItemId: string, content: string,
   parentId: string | null, imageUrl?: string,
 ): Promise<Comment> {
-  const res = await fetch(`${API_BASE}/feed/comments`, {
+  const data = await _envelope<Comment>(`${API_BASE}/feed/comments`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: _jsonHeaders,
     body: JSON.stringify({ feedItemId, content, parentId, imageUrl }),
   });
-  if (!res.ok) throw new Error('Failed to post comment');
-  return res.json();
+  if (!data) throw new Error('Failed to post comment');
+  return data;
 }
 
 export async function reactToItem(feedItemId: string, reaction: string): Promise<void> {
-  await fetch(`${API_BASE}/feed/reactions`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+  await _envelope<void>(`${API_BASE}/feed/reactions`, {
+    method: 'POST', headers: _jsonHeaders,
     body: JSON.stringify({ feedItemId, reaction }),
-  }).catch(() => {});
+  });
 }
 
 export async function toggleBookmark(feedItemId: string): Promise<void> {
-  await fetch(`${API_BASE}/feed/bookmarks`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+  await _envelope<void>(`${API_BASE}/feed/bookmarks`, {
+    method: 'POST', headers: _jsonHeaders,
     body: JSON.stringify({ feedItemId }),
-  }).catch(() => {});
+  });
 }

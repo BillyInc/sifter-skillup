@@ -3,10 +3,10 @@
 # XP Events · Badges · Challenges · Merch
 # ============================================
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 
 from auth import Auth
 from config import settings
@@ -14,10 +14,26 @@ from database import db
 from logger import log
 from models import (
     BadgeAward, ChallengeJoin, ChallengeSubmit,
-    ResponseModel, XPEvent,
+    MerchRedeemRequest, ResponseModel, XPEvent,
 )
 
 router = APIRouter(prefix="/api/v2", tags=["phase5"])
+
+# Defense-in-depth: never trust the client to grant more than this in a single event
+_MAX_XP_PER_EVENT = 1000
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _increment_points(user_id: str, delta: int) -> Optional[int]:
+    """Atomic XP increment via Postgres RPC. Returns new total."""
+    res = db.get_service_client().rpc(
+        "increment_user_points",
+        {"p_user_id": user_id, "p_delta": delta},
+    ).execute()
+    return res.data
 
 
 # ─────────────────────────────────────────────────────────────
@@ -36,15 +52,15 @@ async def record_xp_event(
     """
     user_id = current_user["id"]
 
-    # Fetch fresh points to prevent stale-read race
-    fresh = db.get_service_client().table("users").select("points") \
-        .eq("id", user_id).single().execute().data
-    current_points = fresh["points"] if fresh else current_user["points"]
-    new_points = current_points + event.xp_amount
+    if event.xp_amount < 0:
+        raise HTTPException(400, "xp_amount must be non-negative")
+    if event.xp_amount > _MAX_XP_PER_EVENT:
+        raise HTTPException(
+            400,
+            f"xp_amount exceeds per-event cap of {_MAX_XP_PER_EVENT}",
+        )
 
-    db.get_service_client().table("users") \
-        .update({"points": new_points}) \
-        .eq("id", user_id).execute()
+    new_points = _increment_points(user_id, event.xp_amount)
 
     db.get_service_client().table("xp_events").insert({
         "id":         str(uuid.uuid4()),
@@ -53,7 +69,7 @@ async def record_xp_event(
         "xp_amount":  event.xp_amount,
         "source_id":  event.source_id,
         "metadata":   event.metadata,
-        "created_at": datetime.utcnow().isoformat(),
+        "created_at": _now_iso(),
     }).execute()
 
     background_tasks.add_task(_check_badge_triggers, user_id, event.event_type, event.metadata)
@@ -66,7 +82,7 @@ async def record_xp_event(
 
 @router.get("/xp/history", response_model=ResponseModel)
 async def xp_history(
-    limit: int = 50,
+    limit: int = Query(50, ge=1, le=100),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     result = db.get_service_client().table("xp_events") \
@@ -99,7 +115,7 @@ async def my_badges(current_user: dict = Depends(Auth.get_current_user)):
     return ResponseModel(data=result.data)
 
 
-async def award_badge(user_id: str, badge_id: str, reason: str = None):
+async def award_badge(user_id: str, badge_id: str, reason: Optional[str] = None):
     """Internal helper — award a badge if not already awarded."""
     existing = db.get_service_client().table("user_badges") \
         .select("id").eq("user_id", user_id).eq("badge_id", badge_id).execute()
@@ -111,19 +127,15 @@ async def award_badge(user_id: str, badge_id: str, reason: str = None):
         "user_id":   user_id,
         "badge_id":  badge_id,
         "reason":    reason,
-        "earned_at": datetime.utcnow().isoformat(),
+        "earned_at": _now_iso(),
     }).execute()
 
-    # XP bonus for badge
+    # XP bonus for badge — atomic via RPC
     badge = db.get_service_client().table("badges").select("xp_reward") \
         .eq("id", badge_id).execute()
     if badge.data and badge.data[0].get("xp_reward"):
-        xp = badge.data[0]["xp_reward"]
-        fresh = db.get_service_client().table("users").select("points") \
-            .eq("id", user_id).single().execute().data
-        new_pts = (fresh["points"] if fresh else 0) + xp
-        db.get_service_client().table("users") \
-            .update({"points": new_pts}).eq("id", user_id).execute()
+        xp = min(int(badge.data[0]["xp_reward"]), _MAX_XP_PER_EVENT)
+        _increment_points(user_id, xp)
 
     log.info("Badge awarded", user_id=user_id, badge_id=badge_id)
 
@@ -183,7 +195,7 @@ async def join_challenge(
         "id":           str(uuid.uuid4()),
         "challenge_id": body.challenge_id,
         "user_id":      current_user["id"],
-        "joined_at":    datetime.utcnow().isoformat(),
+        "joined_at":    _now_iso(),
         "status":       "in_progress",
     }).execute()
 
@@ -206,7 +218,7 @@ async def submit_challenge(
         .update({
             "status":       "submitted",
             "submission":   body.submission,
-            "submitted_at": datetime.utcnow().isoformat(),
+            "submitted_at": _now_iso(),
         }) \
         .eq("id", participant.data[0]["id"]).execute()
 
@@ -218,12 +230,8 @@ async def _award_challenge_xp(user_id: str, challenge_id: str):
     challenge = db.get_service_client().table("challenges") \
         .select("xp_reward").eq("id", challenge_id).execute()
     if challenge.data and challenge.data[0].get("xp_reward"):
-        xp = challenge.data[0]["xp_reward"]
-        fresh = db.get_service_client().table("users").select("points") \
-            .eq("id", user_id).single().execute().data
-        new_pts = (fresh["points"] if fresh else 0) + xp
-        db.get_service_client().table("users") \
-            .update({"points": new_pts}).eq("id", user_id).execute()
+        xp = min(int(challenge.data[0]["xp_reward"]), _MAX_XP_PER_EVENT)
+        _increment_points(user_id, xp)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -239,44 +247,38 @@ async def list_merch():
 
 @router.post("/merch/redeem", response_model=ResponseModel)
 async def redeem_merch(
-    body: dict,
+    body: MerchRedeemRequest,
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    item_id = body.get("item_id")
-    if not item_id:
-        raise HTTPException(400, "item_id required")
-
     item = db.get_service_client().table("merchandise_items") \
-        .select("*").eq("id", item_id).eq("available", True).execute()
+        .select("*").eq("id", body.item_id).eq("available", True).execute()
     if not item.data:
         raise HTTPException(404, "Item not found or unavailable")
 
     item = item.data[0]
-    cost = item["credit_cost"]
+    cost = int(item["credit_cost"])
 
-    fresh = db.get_service_client().table("users").select("merch_credits") \
-        .eq("id", current_user["id"]).single().execute().data
-    current_credits = fresh["merch_credits"] if fresh else 0
-
-    if current_credits < cost:
-        raise HTTPException(400, f"Insufficient credits: need {cost}, have {current_credits}")
-
-    new_credits = current_credits - cost
-    db.get_service_client().table("users") \
-        .update({"merch_credits": new_credits}).eq("id", current_user["id"]).execute()
+    # Atomic decrement: returns NULL if user has insufficient credits
+    res = db.get_service_client().rpc(
+        "decrement_merch_credits",
+        {"p_user_id": current_user["id"], "p_amount": cost},
+    ).execute()
+    new_credits = res.data
+    if new_credits is None:
+        raise HTTPException(400, "insufficient credits")
 
     order = db.get_service_client().table("merchandise_orders").insert({
         "id":           str(uuid.uuid4()),
         "user_id":      current_user["id"],
-        "item_id":      item_id,
+        "item_id":      body.item_id,
         "credits_used": cost,
         "status":       "pending",
-        "shipping_info": body.get("shipping_info"),
-        "created_at":   datetime.utcnow().isoformat(),
+        "shipping_info": body.shipping_address,
+        "created_at":   _now_iso(),
     }).execute()
 
     return ResponseModel(data={
-        "order_id":       order.data[0]["id"],
-        "credits_spent":  cost,
+        "order_id":          order.data[0]["id"],
+        "credits_spent":     cost,
         "credits_remaining": new_credits,
     })

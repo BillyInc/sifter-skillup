@@ -295,7 +295,7 @@ function ReactionBar({
 
 // ─── FeedCard ────────────────────────────────────────────────────────────────
 
-export function FeedCard({ item, accentColor, onReact, onComment, onBookmark }: FeedCardProps) {
+function FeedCardImpl({ item, accentColor, onReact, onComment, onBookmark }: FeedCardProps) {
   const { colors } = useTheme();
   const meta = item.metadata as any;
 
@@ -357,6 +357,24 @@ export function FeedCard({ item, accentColor, onReact, onComment, onBookmark }: 
     </View>
   );
 }
+
+// Memoized export — only re-renders when engagement counts or identity change.
+// Custom equality avoids re-rendering when parent re-renders with the same item.
+export const FeedCard = React.memo(FeedCardImpl, (prev, next) => {
+  const a = prev.item as any;
+  const b = next.item as any;
+  return (
+    a.id === b.id &&
+    a.like_count === b.like_count &&
+    a.bookmark_count === b.bookmark_count &&
+    a.share_count === b.share_count &&
+    a.myReaction === b.myReaction &&
+    a.commentCount === b.commentCount &&
+    a.isBookmarked === b.isBookmarked
+  );
+});
+
+export default FeedCard;
 
 // ─── Styles ────────────────────────────────────────────────────────────────────
 
