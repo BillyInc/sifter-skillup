@@ -149,7 +149,7 @@ function AuthInput({ placeholder, value, onChangeText, secureTextEntry, keyboard
 
 // ─── Starknet onboarding mode ─────────────────────────────────────────────────
 
-function StarknetMode({ colors, onBack, onSubmit, loading }: {
+function StarknetMode({ colors: _colors, onBack, onSubmit, loading }: {
   colors: any; onBack: () => void; onSubmit: (email: string) => void; loading: boolean;
 }) {
   const [email, setEmail] = useState('');

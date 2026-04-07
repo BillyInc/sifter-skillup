@@ -144,7 +144,6 @@ export const withTiming = async <T>(
     });
     return result;
   } catch (error) {
-    const duration = Date.now() - startTime;
     logger.error(`${operation} failed`, error as Error);
     throw error;
   }

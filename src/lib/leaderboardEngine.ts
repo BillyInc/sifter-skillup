@@ -14,7 +14,7 @@ export const leaderboardEngine = {
     scope: LeaderboardScope,
     fieldId?: string,
     trackId?: string,
-    weekOffset = 0,
+    _weekOffset = 0,
   ): Promise<Leaderboard | null> {
     try {
       return await API.leaderboardGet(scope, fieldId, trackId);

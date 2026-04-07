@@ -174,7 +174,7 @@ function DataPanel({
 
 function SentimentPanel({
   sections,
-  accentColor,
+  accentColor: _accentColor,
 }: {
   sections: SectionData[];
   accentColor: string;
@@ -321,7 +321,7 @@ function SkillsPanel({
 
 function JobsPanel({
   sections,
-  accentColor,
+  accentColor: _accentColor,
 }: {
   sections: SectionData[];
   accentColor: string;
@@ -510,7 +510,7 @@ export default function FeedWebLayout({
   onComment,
   onBookmark,
   onRefresh,
-  loading,
+  loading: _loading,
 }: FeedWebLayoutProps) {
   const { colors } = useTheme();
 

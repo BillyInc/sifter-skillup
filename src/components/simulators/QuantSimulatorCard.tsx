@@ -1382,7 +1382,6 @@ function NormalDistributionSim({ onComplete, onSkip }: SimProps) {
   const [stage, setStage] = useState(0);
   const [qIdx, setQIdx] = useState(0);
   const [ans, setAns] = useState<number|null>(null);
-  const sigma=1.5;
   const bands=[
     {pct:68,range:'±1σ = -1.5% to +1.5%',bg:'#d1fae5'},
     {pct:95,range:'±2σ = -3.0% to +3.0%',bg:'#dbeafe'},
@@ -1494,14 +1493,6 @@ function CentralLimitTheoremSim({ onComplete, onSkip }: SimProps) {
   const hist=Array(BUCKETS).fill(0);
   means.forEach(m=>{const idx=Math.floor((Math.min(Math.max(m,MIN),MAX-0.001)-MIN)/((MAX-MIN)/BUCKETS));if(idx>=0&&idx<BUCKETS)hist[idx]++;});
   const maxH=Math.max(...hist,1);
-  const isNormal=(stdev: number[])=>{
-    if(stdev.length<10)return false;
-    const m=stdev.reduce((a,b)=>a+b,0)/stdev.length;
-    const v=stdev.reduce((a,b)=>a+Math.pow(b-m,2),0)/stdev.length;
-    const s=Math.sqrt(v);
-    const within1=stdev.filter(x=>Math.abs(x-m)<s).length/stdev.length;
-    return within1>0.60&&within1<0.75;
-  };
   return(
     <SimShell icon="🔔" title="Central Limit Theorem" subtitle="Why bell curves appear everywhere">
       <Card>
@@ -2361,7 +2352,7 @@ function RiskSystemCodeSim({ onComplete, onSkip }: SimProps) {
     const var95 = 1.645 * varDaily;
     const cvar95 = 2.063 * varDaily;
     // Risk contributions (marginal * weight)
-    const marginals = weights.map((wi, i) => {
+    const marginals = weights.map((_wi, i) => {
       let marg = 0;
       for (let j=0; j<3; j++) {
         const rho = i===j ? 1 : corr;

@@ -26,7 +26,7 @@ import React, {
 } from 'react';
 import {
   View, Text, StyleSheet, Animated, TouchableOpacity,
-  Platform, Dimensions,
+  Platform,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 
@@ -79,8 +79,6 @@ export function triggerInAppToast(msg: Omit<ToastMessage, 'id'>) {
 // ─────────────────────────────────────────────────────────────
 // Single Toast Component
 // ─────────────────────────────────────────────────────────────
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const TYPE_STYLES: Record<ToastType, { bg: string; border: string; textColor: string }> = {
   success: { bg: Colors.greenSoft,   border: Colors.green,      textColor: '#166534' },

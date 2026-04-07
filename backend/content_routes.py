@@ -11,10 +11,9 @@
 from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import ResponseModel
@@ -95,7 +94,7 @@ def _get_content_versions() -> Dict[str, int]:
 
 @router.get("/manifest", response_model=ResponseModel)
 async def content_manifest(
-    current_user: dict = Depends(Auth.get_current_user),
+    _current_user: dict = Depends(Auth.get_current_user),
 ):
     """Return version numbers for all tracks. Client uses this to decide what to download."""
     return ResponseModel(data={
@@ -107,7 +106,7 @@ async def content_manifest(
 @router.get("/{track_id}/version", response_model=ResponseModel)
 async def content_version(
     track_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    _current_user: dict = Depends(Auth.get_current_user),
 ):
     """Return the current server version for a track."""
     version = _get_content_versions().get(track_id, 1)

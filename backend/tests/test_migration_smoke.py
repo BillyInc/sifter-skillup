@@ -5,8 +5,6 @@ and verify structure (transaction wrappers, expected tables/functions).
 import os
 import re
 
-import pytest
-
 BACKEND_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 V2_SQL = os.path.join(BACKEND_DIR, "migration_v2.sql")
 V2_DOWN_SQL = os.path.join(BACKEND_DIR, "migration_v2_down.sql")

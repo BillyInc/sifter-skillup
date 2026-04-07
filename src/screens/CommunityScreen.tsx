@@ -158,7 +158,6 @@ function PostCard({ post, onReact, onComment, onQuote, onBookmark, onShare, onAu
   onMute: (userId: string) => void;
 }) {
   const [showMenu, setShowMenu] = useState(false);
-  const totalReactions = Object.values(post.reactions).reduce((a, b) => a + (b ?? 0), 0);
 
   return (
     <View style={pc.card}>
@@ -210,7 +209,7 @@ function PostCard({ post, onReact, onComment, onQuote, onBookmark, onShare, onAu
       <RichText text={post.content} style={pc.content} />
 
       {/* Image attachment */}
-      {post.attachments?.filter(a => a.type === 'image').map((att, i) => (
+      {post.attachments?.filter(a => a.type === 'image').map((_att, i) => (
         <View key={i} style={pc.imageBox}>
           <Text style={{ fontSize: 40 }}>🖼️</Text>
         </View>
@@ -405,7 +404,6 @@ const cs = StyleSheet.create({
 function CommentSheet({ post, onClose }: { post: Post; onClose: () => void }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [text, setText] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const submit = async () => {
     if (!text.trim()) return;
@@ -565,7 +563,7 @@ const nt = StyleSheet.create({
 
 // ── DM tab ────────────────────────────────────────────────────────────────────
 
-function DMTab({ threads, onOpenThread, onNewDM }: { threads: any[]; onOpenThread: (t: any) => void; onNewDM: () => void }) {
+function DMTab({ threads, onOpenThread, onNewDM: _onNewDM }: { threads: any[]; onOpenThread: (t: any) => void; onNewDM: () => void }) {
   return (
     <View style={{ flex: 1 }}>
       <View style={dm.header}>

@@ -805,7 +805,6 @@ export function FlashbotsProtectSim({ onComplete, onSkip }: SimProps) {
 
   const amt = parseFloat(swapAmount) || 2000;
   const mevLoss    = (amt * 0.008).toFixed(2); // ~0.8% MEV loss without protection
-  const flashbotsLoss = 0;
 
   const FLASHBOTS_RPC = 'https://rpc.flashbots.net';
 

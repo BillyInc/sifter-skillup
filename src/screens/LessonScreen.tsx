@@ -198,7 +198,7 @@ function NotesPanel({ visible, levelId, topic, onClose }: {
 }
 
 // ── Top bar (upgraded with LessonXPBar) ──────────────────────
-function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport,
+function TopBar({ progress: _progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport,
   totalXp, sessionXp, correctStreak, mood, onAIExplainer }: {
   progress:number; hearts:number; onExit:()=>void;
   isBookmarked:boolean; onBookmark:()=>void; onNotes:()=>void; onExport:()=>void;
@@ -536,7 +536,7 @@ function FillBlankQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:()
 }
 
 // ── Feedback bar ──────────────────────────────────────────────
-function FeedbackBar({ correct, combo, xp, explanation, onNext, isLast }: {
+function FeedbackBar({ correct, combo, xp: _xp, explanation, onNext, isLast }: {
   correct:boolean; combo:number; xp:number; explanation?:string; onNext:()=>void; isLast:boolean;
 }) {
   return (

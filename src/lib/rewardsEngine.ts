@@ -9,7 +9,7 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { REWARD_TABLE, type RewardEvent, BADGE_RARITY_COLORS } from '../theme/rewards';
+import { REWARD_TABLE, type RewardEvent } from '../theme/rewards';
 import type { Badge, UserProfile, MerchandiseItem } from '../types/social';
 import { badgeDefinitions } from '../data/badgeDefinitions';
 import { API } from './api';

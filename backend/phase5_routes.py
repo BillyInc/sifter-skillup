@@ -9,11 +9,10 @@ from typing import Optional
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import (
-    BadgeAward, ChallengeJoin, ChallengeSubmit,
+    ChallengeJoin, ChallengeSubmit,
     MerchRedeemRequest, ResponseModel, XPEvent,
 )
 
@@ -140,7 +139,7 @@ async def award_badge(user_id: str, badge_id: str, reason: Optional[str] = None)
     log.info("Badge awarded", user_id=user_id, badge_id=badge_id)
 
 
-async def _check_badge_triggers(user_id: str, event_type: str, metadata: dict):
+async def _check_badge_triggers(user_id: str, event_type: str, _metadata: dict):
     """Background: check if any event_type triggers a badge."""
     triggers = {
         "first_share":       "social_sharer",

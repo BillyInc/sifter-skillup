@@ -26,8 +26,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import {
-  isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
-  type StarkzapWallet,
+  isStarkzapAvailable, STARKNET_TOKENS, MOCK,
 } from '../../lib/starkzap';
 import { Spacing, Radius, FontSize, useTheme } from '../../theme';
 
@@ -141,22 +140,6 @@ const dB = StyleSheet.create({
   wrap: { borderRadius: Radius.md, padding: Spacing.sm, borderWidth: 1, marginBottom: Spacing.md },
   text: { fontSize: FontSize.xs, fontWeight: '600', textAlign: 'center' },
 });
-
-// ─── Helper — get or create wallet ────────────────────────────────────────────
-
-async function getWallet(starknetWallet: any): Promise<StarkzapWallet | null> {
-  if (starknetWallet) return starknetWallet as StarkzapWallet;
-  if (!isStarkzapAvailable()) return null;
-  try {
-    const { StarkSigner } = require('starkzap-native');
-    const key = process.env.EXPO_PUBLIC_DEMO_STARK_KEY ?? '0x1';
-    return await starkzapSdk.connectWallet({
-      account: { signer: new StarkSigner(key) },
-      deploy: 'if_needed',
-      feeMode: 'sponsored',
-    });
-  } catch { return null; }
-}
 
 async function simulateDelay(ms = 2000) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -504,7 +487,6 @@ function BuildSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Boss (combined challenge) ────────────────────────────────────────────────
 
 function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
   const [step, setStep] = useState<'swap' | 'stake' | 'lend' | 'done'>('swap');
   const [loading, setLoading] = useState(false);
   const [txHashes, setTxHashes] = useState<Record<string, string>>({});

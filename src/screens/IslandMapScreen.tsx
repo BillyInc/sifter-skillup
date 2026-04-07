@@ -16,8 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
-import { ISLANDS, getIsland, type Island } from '../data/islands';
+import { ISLANDS, type Island } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
 
 const { width: SW } = Dimensions.get('window');
@@ -238,43 +237,7 @@ function StarknetConnector() {
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
 
-// ── Next Track CTA (shown after island boss completion) ────────────────────────
-function NextTrackBanner({
-  islandId,
-  onNavigateToTrack,
-}: {
-  islandId: number;
-  onNavigateToTrack: (trackId: string) => void;
-}) {
-  const island = getIsland(islandId);
-  if (!island?.nextTracks?.length) return null;
-  return (
-    <View style={ntb.wrap}>
-      <Text style={ntb.title}>🎉 Island Complete!</Text>
-      <Text style={ntb.sub}>You unlocked the next track:</Text>
-      {island.nextTracks!.map((trackId: string) => (
-        <TouchableOpacity
-          key={trackId}
-          style={ntb.btn}
-          onPress={() => onNavigateToTrack(trackId)}
-        >
-          <Text style={ntb.btnText}>
-            {trackId === 'starknet-defi-navigator' ? '🧭 Start DeFi Navigator →' : `Start ${trackId} →`}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-}
-const ntb = StyleSheet.create({
-  wrap:    { margin: 16, backgroundColor: '#EC489915', borderRadius: 16, borderWidth: 1.5, borderColor: '#EC489940', padding: 16, alignItems: 'center', gap: 8 },
-  title:   { fontSize: 18, fontWeight: '900', color: '#1A1A2E' },
-  sub:     { fontSize: 13, color: '#4A4A6A' },
-  btn:     { backgroundColor: '#EC4899', borderRadius: 12, paddingHorizontal: 20, paddingVertical: 12, marginTop: 4 },
-  btnText: { color: '#fff', fontSize: 15, fontWeight: '800' },
-});
-
-export default function IslandMapScreen({ route }: any) {
+export default function IslandMapScreen({ route: _route }: any) {
   const navigation = useRouter();
   const { user }   = useAuth();
   const completedLevels: number[] = (user?.completed_levels ?? []).map(Number);

@@ -35,8 +35,6 @@ function StageRing({ progress, color, size = 140 }: { progress: number; color: s
 
   // Simple progress arc via border trick
   const borderWidth = 5;
-  const r = (size - borderWidth * 2) / 2;
-  const circumference = 2 * Math.PI * r;
 
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
@@ -332,7 +330,7 @@ export default function ProfileScreen() {
 
         {/* ── Stage progress ── */}
         <SectionCard title="CAREER STAGES">
-          {allStages.map((s, i) => {
+          {allStages.map((s) => {
             const isActive   = s.stage === stage;
             const isComplete = s.stage < stage;
             return (

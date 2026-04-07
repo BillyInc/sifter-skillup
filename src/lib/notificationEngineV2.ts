@@ -13,7 +13,7 @@
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
-import { NOTIFICATION_CONFIG, STREAK } from '../theme';
+import { NOTIFICATION_CONFIG } from '../theme';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

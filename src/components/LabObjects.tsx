@@ -307,7 +307,7 @@ function StakeObject({ color }: { color: string }) {
 
       {/* Validator dots */}
       <View style={styles.validatorRow}>
-        {validators.map((v, i) => (
+        {validators.map((_v, i) => (
           <Animated.View key={i} style={[styles.validatorDot, {
             backgroundColor: i === 2 ? color : color + '50',
             transform: [{ translateY: float1.interpolate({
@@ -568,7 +568,6 @@ function TradingTerminalObject({ color }: { color: string }) {
 
 function DeFiResearchObject({ color }: { color: string }) {
   const float1 = useFloat(4, 2000);
-  const tvlBar = useBarFill(0.82, 2200, 0);
 
   const protocols = [
     { name: 'Uniswap', tvl: 0.9,  c: '#FF6B8A' },
@@ -627,7 +626,7 @@ function QuantBacktestObject({ color }: { color: string }) {
           }]} />
         ))}
         {/* Connecting line approximation */}
-        {points.slice(1).map((p, i) => (
+        {points.slice(1).map((_p, i) => (
           <View key={i} style={[styles.equityLine, {
             left: `${(i / (points.length - 1)) * 100}%`,
             bottom: `${(points[i] + 0.02) * 80}%`,

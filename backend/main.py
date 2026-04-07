@@ -22,7 +22,7 @@ from session_middleware import DeviceSessionMiddleware
 # App setup
 # ─────────────────────────────────────────────────────────────
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):
     log.info(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
     # Fail-fast warning: JWT secret must be sufficiently long. config.py raises
     # in non-DEBUG mode; here we surface a loud warning regardless so dev
@@ -116,7 +116,7 @@ async def auth_base_wallet(body: BaseWalletAuthRequest, request: Request):
 
 
 @app.post("/api/auth/guest", response_model=ResponseModel)
-async def auth_guest(request: Request):
+async def auth_guest(_request: Request):
     uid = uuid.uuid4().hex[:8]
     user = _create_user(username=f"Guest_{uid}", auth_provider="guest")
     token = Auth.create_jwt(user["id"])

@@ -14,7 +14,7 @@ CREATE OR REPLACE FUNCTION skillup_dev.increment_user_points(
        SET points = points + p_delta
      WHERE id = p_user_id
     RETURNING points;
-$$ LANGUAGE SQL VOLATILE SECURITY DEFINER;
+$$ LANGUAGE SQL VOLATILE SECURITY DEFINER SET search_path = '';
 
 -- Atomic merch credit decrement (returns NULL if insufficient)
 CREATE OR REPLACE FUNCTION skillup_dev.decrement_merch_credits(
@@ -26,7 +26,7 @@ CREATE OR REPLACE FUNCTION skillup_dev.decrement_merch_credits(
      WHERE id = p_user_id
        AND merch_credits >= p_amount
     RETURNING merch_credits;
-$$ LANGUAGE SQL VOLATILE SECURITY DEFINER;
+$$ LANGUAGE SQL VOLATILE SECURITY DEFINER SET search_path = '';
 
 -- Atomic feed counter increment
 CREATE OR REPLACE FUNCTION skillup_dev.increment_feed_counter(
@@ -42,7 +42,7 @@ BEGIN
         p_column, p_column
     ) USING p_item_id;
 END;
-$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = '';
 
 CREATE OR REPLACE FUNCTION skillup_dev.decrement_feed_counter(
     p_item_id UUID,
@@ -57,7 +57,7 @@ BEGIN
         p_column, p_column
     ) USING p_item_id;
 END;
-$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = '';
 
 -- Atomic streak update with server-side date enforcement
 CREATE OR REPLACE FUNCTION skillup_dev.touch_user_streak(
@@ -88,7 +88,7 @@ BEGIN
 
     RETURN QUERY SELECT v_streak, v_today;
 END;
-$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = '';
 
 -- Add is_admin column for proper admin gating (replaces is_verified misuse)
 ALTER TABLE skillup_dev.users
@@ -141,7 +141,7 @@ BEGIN
 
     RETURN v_grant;
 END;
-$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = '';
 
 CREATE OR REPLACE FUNCTION skillup_dev.try_award_social_xp(
     p_user_id UUID,
@@ -179,7 +179,7 @@ BEGIN
 
     RETURN v_grant;
 END;
-$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = '';
 
 -- Drop the broken RLS policies that referenced auth.uid()
 -- (which never matches custom HS256 JWT sub)
