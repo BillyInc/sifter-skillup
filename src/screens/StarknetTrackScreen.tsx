@@ -55,7 +55,7 @@ const LEVEL_COLORS = { junior: '#58CC02', intermediate: '#F59E0B', senior: '#EC4
 // Privy install: npm install @privy-io/react-auth (requires Privy dashboard setup)
 // For now: generates a deterministic demo address stored in SecureStore
 
-async function createPrivyStarknetWallet(email: string): Promise<string> {
+async function createPrivyStarknetWallet(_email: string): Promise<string> {
   // PRODUCTION: const privy = usePrivy(); const { address } = await privy.createWallet({ type: 'starknet' });
   // The Privy SDK handles key generation, storage, and gasless sponsorship.
   // Set up at: https://dashboard.privy.io → Create App → Add Starknet → Copy App ID
@@ -163,7 +163,7 @@ const lc_s = StyleSheet.create({
 
 // ─── Main Screen ──────────────────────────────────────────────
 
-export default function StarknetTrackScreen({ route }: any) {
+export default function StarknetTrackScreen({ route: _route }: any) {
   const { colors }       = useTheme();
   const { user, authStarknet, starknetLoading, refreshUser } = useAuth();
   const navigation       = useRouter();

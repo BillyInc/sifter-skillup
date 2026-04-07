@@ -5,7 +5,7 @@ All external calls (DB, RPCs) are mocked. We override
 auth.Auth.get_current_user via FastAPI dependency override.
 """
 from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient

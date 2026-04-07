@@ -26,7 +26,6 @@ import { useTheme, Radius, FontSize, FontWeight, Spacing } from '../theme';
 import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
-import { useIsWebWide } from '../components/web/WebGrid';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 
@@ -54,7 +53,6 @@ function getFieldGradient(id: string): [string, string, string] {
 // ─── Island chain (Crypto special case) ──────────────────────────────────────
 
 function IslandChain({ onIslandPress }: { onIslandPress: (island: any) => void }) {
-  const { colors } = useTheme();
   const scrollRef  = useRef<ScrollView>(null);
 
   const floats = ISLANDS.slice(0, 8).map((_, i) =>
@@ -186,7 +184,6 @@ function FieldPortal({
   fieldColor: string;
 }) {
   const navigation = useRouter();
-  const { colors } = useTheme();
   const entrance   = useRef(new Animated.Value(0)).current;
   const slideY     = useRef(new Animated.Value(40)).current;
   const isCrypto   = field.id === 'crypto';
@@ -297,7 +294,6 @@ function FieldPortal({
 // ─── Single field card ─────────────────────────────────────────────────────────
 
 function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail | null; index: number }) {
-  const { colors } = useTheme();
   const C          = fieldColor(field.id);
   const gradient   = getFieldGradient(field.id);
   const [open, setOpen] = useState(false);
@@ -433,8 +429,6 @@ function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail |
 // ─── Screen ────────────────────────────────────────────────────────────────────
 
 export default function FieldsScreen() {
-  const { colors } = useTheme();
-  const isWebWide  = useIsWebWide();
 
   const allDetails = getAllFieldDetails();
 

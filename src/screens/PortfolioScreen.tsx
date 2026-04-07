@@ -517,7 +517,7 @@ function PushItemModal({
 // ─────────────────────────────────────────────────────────────
 
 export default function PortfolioScreen() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const [tab, setTab]                       = useState<TabId>('my-track');

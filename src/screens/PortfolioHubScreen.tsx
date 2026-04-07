@@ -27,7 +27,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
-import { shareOnPortfolioArtifact } from '../lib/shareEngine';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
@@ -443,7 +442,7 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
 // Credibility tab — interview prep
 // ─────────────────────────────────────────────────────────────────────────────
 
-function CredibilityTab({ artifacts }: { artifacts: PortfolioArtifact[] }) {
+function CredibilityTab({ artifacts: _artifacts }: { artifacts: PortfolioArtifact[] }) {
   return (
     <>
       <Card>
@@ -694,20 +693,8 @@ function ProgressionTab({
 // Main screen
 // ─────────────────────────────────────────────────────────────────────────────
 
-function handleShareArtifact(artifact: any, userId: string) {
-  shareOnPortfolioArtifact({
-    type: 'portfolio_artifact',
-    userName: 'you',
-    trackName: artifact.track ?? artifact.trackId ?? 'Sifter',
-    artifactName: artifact.name ?? artifact.title,
-    portfolioUrl: artifact.portfolioUrl ?? `https://sifter.app/u/${userId}/portfolio`,
-    verificationUrl: `https://sifter.app/verify/${artifact.id}`,
-    userId,
-  }).catch(() => {});
-}
-
 export default function PortfolioHubScreen() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const [activeTab, setActiveTab] = useState<HubTab>('overview');
@@ -753,7 +740,6 @@ export default function PortfolioHubScreen() {
   // Load progression data when progression tab is opened
   useEffect(() => {
     if (activeTab !== 'progression') return;
-    const trackId = 'supply-chain-analyst';
     const loadProgression = async () => {
       try {
         const [gate, agg, rem, retries] = await Promise.all([

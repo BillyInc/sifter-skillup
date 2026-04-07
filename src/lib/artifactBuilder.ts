@@ -179,7 +179,6 @@ function buildBadgeSummary(input: ArtifactInput): string {
 
 export function buildArtifact(input: ArtifactInput, repoName?: string): BuiltArtifact {
   const safeTrack  = input.trackName.toLowerCase().replace(/[^a-z0-9]/g, '-');
-  const safeSkill  = input.skill.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 40);
   const date       = new Date(input.completedAt).toISOString().slice(0, 10);
   const folderPath = `${input.level}/${input.labTitle.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 30)}`;
   const repoUrl    = `https://github.com/${input.userId}/${repoName ?? `${safeTrack}-portfolio`}`;

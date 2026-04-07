@@ -1,7 +1,7 @@
 """
 Tests for starknet_routes.py.
 """
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient

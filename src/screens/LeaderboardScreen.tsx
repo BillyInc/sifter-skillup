@@ -28,7 +28,7 @@ const SCOPE_TABS: { scope: LeaderboardScope; label: string; emoji: string }[] = 
 ];
 const RANK_MEDALS: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
 
-export default function LeaderboardScreen({ navigation }: any) {
+export default function LeaderboardScreen({ navigation: _navigation }: any) {
   const { colors } = useTheme();
   const { user }   = useAuth();
   const { width }  = useWindowDimensions();
@@ -51,7 +51,6 @@ export default function LeaderboardScreen({ navigation }: any) {
 
   useEffect(() => { load(); }, [load]);
 
-  const userSlice = board && user ? leaderboardEngine.getUserSlice(board, user.id) : null;
 
   // ── Single row ─────────────────────────────────────────────────────────────
 

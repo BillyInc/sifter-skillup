@@ -260,7 +260,7 @@ function JudgmentPortal({ color, pulse }: { color: string; pulse: Animated.Value
 
 export default function LessonTransition({
   visible,
-  fromTopic,
+  fromTopic: _fromTopic,
   toTopic,
   fieldColor,
   mechanic,

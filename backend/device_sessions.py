@@ -333,7 +333,7 @@ async def revoke_all_sessions(current_user: dict = Depends(Auth.get_current_user
 async def update_push_token(
     body: PushTokenUpdate,
     current_user: dict = Depends(Auth.get_current_user),
-    x_device_id: Optional[str] = Header(None, alias="X-Device-Id"),
+    _x_device_id: Optional[str] = Header(None, alias="X-Device-Id"),
 ):
     """Update the FCM push token for the current device (tokens rotate)."""
     token = (body.push_token or body.token or "").strip()

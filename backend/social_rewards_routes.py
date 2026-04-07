@@ -7,10 +7,9 @@ import uuid
 from datetime import datetime, timezone
 from typing import Optional
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import (

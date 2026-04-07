@@ -6,12 +6,11 @@
 # ============================================================
 import uuid
 from datetime import datetime, timezone, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 
 from auth import Auth
-from config import settings
 from database import db
 from logger import log
 from models import (

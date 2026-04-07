@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
-import { ALL_MONITORABLE_TRACKS, searchTracks } from '../lib/trackFeedConfig';
+import { searchTracks } from '../lib/trackFeedConfig';
 import type { MonitoredTrack } from '../types/feed';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -189,7 +189,7 @@ export function TrackSearch({ monitoredTracks, onAdd, onRemove, onClose }: Track
         {/* Results */}
         <FlatList
           data={listData}
-          keyExtractor={(item, i) =>
+          keyExtractor={(item) =>
             item.type === 'header' ? `h-${item.fieldId}` : `t-${item.track.id}`
           }
           contentContainerStyle={styles.list}

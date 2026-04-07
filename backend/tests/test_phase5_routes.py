@@ -6,7 +6,6 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-import phase5_routes
 from auth import Auth
 from main import app
 

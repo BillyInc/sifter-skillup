@@ -14,8 +14,6 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Crypto from 'expo-crypto';
-import { API } from './api';
 
 const DIARY_KEY_PREFIX  = 'sifter_diary_';
 const DIARY_INDEX_KEY   = 'sifter_diary_index';
@@ -137,7 +135,7 @@ export async function updateNote(
   await AsyncStorage.setItem(DIARY_KEY_PREFIX + noteId, encrypted);
 }
 
-export async function deleteNote(userId: string, noteId: string): Promise<void> {
+export async function deleteNote(_userId: string, noteId: string): Promise<void> {
   await AsyncStorage.removeItem(DIARY_KEY_PREFIX + noteId);
   const index = await getDiaryIndex();
   index.ids = index.ids.filter(id => id !== noteId);

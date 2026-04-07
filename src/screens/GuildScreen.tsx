@@ -157,7 +157,7 @@ function PostCard({ post, onLike }: { post: Post; onLike: (id: string) => void }
 }
 
 export default function GuildScreen() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const isWebWide = useIsWebWide();
   const [tab, setTab] = useState<GuildTab>('my-guild');
   const [guilds, setGuilds] = useState<Guild[]>([]);

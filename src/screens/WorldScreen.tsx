@@ -23,7 +23,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
+import { getWorldTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
 import { getFieldDetail } from '../data/fieldDetails';
 import { getField } from '../data/fields';
 
@@ -118,13 +118,11 @@ function GlowOrb({ color, size, delay }: { color: string; size: number; delay: n
 export default function WorldScreen() {
   const navigation     = useRouter();
   const params         = useLocalSearchParams<{ worldId?: string; trackId?: string; fieldId?: string; trackName?: string; live?: string }>();
-  const { colors }     = useTheme();
 
   const {
     worldId   = 'default',
     trackId   = '',
     fieldId   = '',
-    trackName = 'World',
   } = params;
   const live = params.live === 'true';
 

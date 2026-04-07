@@ -28,8 +28,7 @@
  *   never re-serves the same scenario_id to the same user.
  */
 
-import { TRACK_TYPE_POOLS } from './simulatorGenerator';
-import type { SimType, LessonInput, GeneratedSimulation } from './simulatorGenerator';
+import type { SimType, GeneratedSimulation } from './simulatorGenerator';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -509,7 +508,7 @@ export async function generateLabContent(params: {
   verbose?:         boolean;
 }): Promise<GeneratedLabContent> {
   const {
-    labId, labTitle, trackId, trackName, level,
+    labId, labTitle, trackId: _trackId, trackName, level,
     labIndex, totalLabsInLevel, hasPhase2, lessons, apiKey, verbose,
   } = params;
 

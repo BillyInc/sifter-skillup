@@ -202,7 +202,7 @@ export default function CelebrationOverlay({
   onDismiss,
   autoDismissMs = 3500,
 }: CelebrationOverlayProps) {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
 
   const containerScale = useRef(new Animated.Value(0.9)).current;
   const containerAlpha = useRef(new Animated.Value(0)).current;

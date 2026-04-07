@@ -151,7 +151,7 @@ function NewProjectWidget({ metadata, accent }: { metadata: any; accent: string 
   );
 }
 
-function MarketSentimentWidget({ metadata, accent }: { metadata: any; accent: string }) {
+function MarketSentimentWidget({ metadata, accent: _accent }: { metadata: any; accent: string }) {
   const { colors } = useTheme();
   const color =
     metadata.index >= 75 ? colors.red

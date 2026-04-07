@@ -505,8 +505,8 @@ const styles = StyleSheet.create({
 // ── Python Gate Banner (shown on Quant Trader map after Lab 7, before Lab 8) ──
 // This is appended as a named export for use wherever the gate status matters
 export function PythonGateBanner({ chaptersCompleted, required }: { chaptersCompleted: number; required: number }) {
-  const { Colors, Spacing, Radius, FontSize } = require('../theme');
-  const { View, Text, StyleSheet } = require('react-native');
+  const { Spacing, Radius, FontSize } = require('../theme');
+  const { View, Text } = require('react-native');
   const done = chaptersCompleted >= required;
   return (
     <View style={{

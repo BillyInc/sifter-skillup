@@ -18,7 +18,6 @@
 # TypeScript files and is bundled with the app.
 # Airtable only manages descriptive/editorial metadata.
 # ============================================
-import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 

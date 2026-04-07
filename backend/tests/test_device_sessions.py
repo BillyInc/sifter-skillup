@@ -2,8 +2,7 @@
 Tests for device_sessions.py and session_middleware.py.
 """
 import asyncio
-import importlib
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from fastapi.testclient import TestClient
@@ -199,7 +198,7 @@ class TestForceLogoutPayload:
         monkeypatch.setattr(device_sessions.settings, "FCM_PROJECT_ID", "", raising=False)
         monkeypatch.setattr(device_sessions.settings, "FCM_SERVER_KEY", "fake-key", raising=False)
 
-        asyncio.get_event_loop().run_until_complete(
+        asyncio.run(
             device_sessions._send_logout_push(
                 push_token="device-fcm-token",
                 new_device_name="iPhone 15",

@@ -53,8 +53,8 @@ const BLOCKED_MESSAGE =
 
 export default function AIExplainer({
   conceptText,
-  lessonId,
-  trackId,
+  lessonId: _lessonId,
+  trackId: _trackId,
   trackName = 'this track',
   isBlocked = false,
   sessionUsed = 0,

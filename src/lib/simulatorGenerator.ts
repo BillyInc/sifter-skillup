@@ -223,27 +223,6 @@ export const TRACK_TYPE_POOLS: Record<string, SimType[][]> = {
   ],
 };
 
-// ── Island levels type mapping (by topic keywords) ────────────────────────────
-
-const ISLAND_KEYWORD_MAP: Array<{ keywords: string[]; types: SimType[] }> = [
-  { keywords: ['bitcoin', 'btc', 'lightning', 'wallet', 'seed', 'private key'],
-    types: ['judgment-riskAssess', 'sandbox-dataModel', 'judgment-dataInterpret'] },
-  { keywords: ['ethereum', 'eth', 'erc20', 'gas', 'validator', 'layer 2'],
-    types: ['sandbox-dataModel', 'judgment-riskAssess', 'judgment-dataInterpret'] },
-  { keywords: ['defi', 'uniswap', 'liquidity', 'impermanent', 'yield', 'lending'],
-    types: ['sandbox-dataModel', 'judgment-riskAssess', 'judgment-dataInterpret'] },
-  { keywords: ['nft', 'token', 'contract', 'solidity', 'smart'],
-    types: ['sandbox-dataModel', 'judgment-riskAssess', 'sandbox-code'] },
-  { keywords: ['security', 'phishing', 'scam', 'opsec', 'approval', 'rug'],
-    types: ['judgment-riskAssess', 'sandbox-dataModel', 'judgment-ethicalChoice'] },
-  { keywords: ['mev', 'sandwich', 'frontrun', 'arb', 'bot'],
-    types: ['sandbox-dataModel', 'judgment-riskAssess', 'judgment-dataInterpret'] },
-  { keywords: ['python', 'code', 'script', 'function', 'loop', 'pandas'],
-    types: ['sandbox-python', 'judgment-dataInterpret', 'sandbox-dataModel'] },
-  { keywords: ['sql', 'query', 'database', 'table', 'select'],
-    types: ['sandbox-sql', 'judgment-dataInterpret', 'sandbox-dataModel'] },
-];
-
 // ── Type selection logic ───────────────────────────────────────────────────────
 
 export function selectSimulatorTypes(
@@ -267,18 +246,6 @@ export function selectSimulatorTypes(
   }
 
   return candidates;
-}
-
-function selectIslandTypes(lesson: LessonInput): SimType[] {
-  const text = (lesson.title + ' ' + lesson.explanation + ' ' + (lesson.keyTakeaway ?? '')).toLowerCase();
-
-  for (const mapping of ISLAND_KEYWORD_MAP) {
-    if (mapping.keywords.some(k => text.includes(k))) {
-      return mapping.types;
-    }
-  }
-
-  return ['judgment-riskAssess', 'sandbox-dataModel', 'judgment-dataInterpret'];
 }
 
 // ── Generation prompt builder ─────────────────────────────────────────────────
