@@ -10,14 +10,14 @@ import { OfflineBanner } from '../src/components/OfflineBanner';
 import { DatabaseProvider } from '../src/components/DatabaseProvider';
 import { ThemeProvider } from '../src/theme';
 import { queryClient } from '../src/lib/queryClient';
-import { privyConfig } from '../src/config/privy';
+import { PRIVY_APP_ID } from '../src/config/privy';
 
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ErrorBoundary>
-          <PrivyProvider appId={privyConfig.appId}>
+          <PrivyProvider appId={PRIVY_APP_ID}>
             <DatabaseProvider>
               <ThemeProvider>
                 <QueryClientProvider client={queryClient}>
