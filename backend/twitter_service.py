@@ -3,7 +3,6 @@
 # Fetches curated crypto/quant tweets for feed
 # ============================================
 
-from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import tweepy
 from logger import log
