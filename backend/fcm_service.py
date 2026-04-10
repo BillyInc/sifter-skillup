@@ -37,7 +37,7 @@ class FCMService:
             cls._initialized = False
 
     @classmethod
-    async def send_device_logout_notification(
+    def send_device_logout_notification(
         cls,
         fcm_token: str,
         new_device_name: str,
@@ -76,7 +76,7 @@ class FCMService:
             return False
 
     @classmethod
-    async def send_generic_notification(
+    def send_generic_notification(
         cls,
         fcm_token: str,
         title: str,
@@ -99,7 +99,3 @@ class FCMService:
         except Exception as e:
             log.error(f"Failed to send generic notification: {e}")
             return False
-
-
-# Initialize on import
-FCMService.init()
