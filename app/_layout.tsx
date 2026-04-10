@@ -14,7 +14,7 @@ import { PRIVY_APP_ID } from '../src/config/privy';
 
 // Conditionally import Privy only on native platforms (iOS/Android)
 // On web, use a no-op provider to avoid bundling mobile-only dependencies
-const PrivyProviderComponent = Platform.select({
+const PrivyProvider = Platform.select({
   native: require('@privy-io/expo').PrivyProvider,
   default: ({ children, appId }: any) => children, // No-op for web
 });
@@ -24,7 +24,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ErrorBoundary>
-          <PrivyProviderComponent appId={PRIVY_APP_ID}>
+          <PrivyProvider appId={PRIVY_APP_ID}>
             <DatabaseProvider>
               <ThemeProvider>
                 <QueryClientProvider client={queryClient}>
@@ -43,7 +43,7 @@ export default function RootLayout() {
                 </QueryClientProvider>
               </ThemeProvider>
             </DatabaseProvider>
-          </PrivyProviderComponent>
+          </PrivyProvider>
         </ErrorBoundary>
       </SafeAreaProvider>
     </GestureHandlerRootView>
