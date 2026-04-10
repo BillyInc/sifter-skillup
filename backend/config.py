@@ -83,6 +83,9 @@ class Settings:
     TWITTER_CLIENT_ID: str     = os.getenv("TWITTER_CLIENT_ID", "")
     TWITTER_CLIENT_SECRET: str = os.getenv("TWITTER_CLIENT_SECRET", "")
 
+    # ── Twitter API v2 (Bearer token) ────────────────────────
+    TWITTER_API_BEARER_TOKEN: str = os.getenv("TWITTER_API_BEARER_TOKEN", "")
+
     INSTAGRAM_CLIENT_ID: str     = os.getenv("INSTAGRAM_CLIENT_ID", "")
     INSTAGRAM_CLIENT_SECRET: str = os.getenv("INSTAGRAM_CLIENT_SECRET", "")
     FACEBOOK_APP_ID: str         = os.getenv("FACEBOOK_APP_ID", "")

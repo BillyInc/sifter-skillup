@@ -23,6 +23,7 @@ dependencies = [
     "feedparser>=6.0.0",
     "google-auth>=2.30.0",
     "firebase-admin>=7.4.0",
+    "tweepy>=4.16.0",
 ]
 
 [project.optional-dependencies]
