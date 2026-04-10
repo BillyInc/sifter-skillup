@@ -1,0 +1,12 @@
+{
+  "typeCheckingMode": "basic",
+  "pythonVersion": "3.13",
+  "pythonPlatform": "Linux",
+  "venvPath": ".",
+  "venv": ".venv",
+  "include": ["*.py"],
+  "exclude": [".venv", "__pycache__", ".pytest_cache", ".ruff_cache"],
+  "stubPath": ".venv/lib/python3.13/site-packages",
+  "reportMissingImports": false,
+  "reportMissingTypeStubs": false
+}
