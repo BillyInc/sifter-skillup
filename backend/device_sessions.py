@@ -10,18 +10,16 @@
 # Device ID is generated once on first install (expo-device or
 # expo-crypto UUID), stored in expo-secure-store, never changes.
 # ============================================
-import hashlib
-import hmac
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
 
-import httpx
 from fastapi import APIRouter, Depends, Header, HTTPException
 
 from auth import Auth
 from config import settings
 from database import db
+from fcm_service import FCMService
 from logger import log
 from models import DeviceRegister, PushTokenUpdate, ResponseModel
 
@@ -45,115 +43,6 @@ def _sanitize_session(session: Optional[dict]) -> Optional[dict]:
     return safe
 
 
-def _force_logout_hmac(user_id: str, device_id: str, timestamp: str) -> str:
-    """HMAC-SHA256 of (user_id|device_id|timestamp) signed with JWT_SECRET."""
-    msg = f"{user_id}|{device_id}|{timestamp}".encode("utf-8")
-    key = (settings.JWT_SECRET or "").encode("utf-8")
-    return hmac.new(key, msg, hashlib.sha256).hexdigest()
-
-
-# ─────────────────────────────────────────────────────────────
-# FCM helpers
-# ─────────────────────────────────────────────────────────────
-
-def _get_fcm_v1_access_token() -> Optional[str]:
-    """
-    Mint an OAuth2 access token for FCM HTTP v1 from a service-account JSON file.
-    Returns None if google-auth isn't installed or the file isn't readable.
-    """
-    try:
-        from google.oauth2 import service_account  # type: ignore
-        from google.auth.transport.requests import Request as GAuthRequest  # type: ignore
-    except ImportError:
-        log.warning("google-auth not installed; cannot use FCM HTTP v1")
-        return None
-
-    try:
-        creds = service_account.Credentials.from_service_account_file(
-            settings.FCM_SERVICE_ACCOUNT_PATH,
-            scopes=["https://www.googleapis.com/auth/firebase.messaging"],
-        )
-        creds.refresh(GAuthRequest())
-        return creds.token
-    except Exception as e:
-        log.error("Failed to mint FCM v1 access token", error=str(e))
-        return None
-
-
-async def _send_logout_push(
-    push_token: str,
-    new_device_name: str,
-    user_id: str,
-    old_device_id: str,
-):
-    """Send FCM push to the old device telling it to clear local session."""
-    if not push_token:
-        return
-
-    timestamp = _now_iso()
-    sig = _force_logout_hmac(user_id, old_device_id, timestamp)
-
-    data_payload = {
-        "type":        "FORCE_LOGOUT",
-        "reason":      "new_device_login",
-        "new_device":  new_device_name,
-        "timestamp":   timestamp,
-        "user_id":     user_id,
-        "device_id":   old_device_id,
-        "hmac":        sig,
-        "message":     f"Your account was accessed on '{new_device_name}'. You've been signed out here.",
-    }
-
-    use_v1 = bool(settings.FCM_SERVICE_ACCOUNT_PATH and settings.FCM_PROJECT_ID)
-    use_legacy = (not use_v1) and bool(settings.FCM_SERVER_KEY)
-
-    if not (use_v1 or use_legacy):
-        log.debug("No FCM credentials configured; skipping logout push")
-        return
-
-    try:
-        async with httpx.AsyncClient(timeout=5.0) as client:
-            if use_v1:
-                token = _get_fcm_v1_access_token()
-                if not token:
-                    log.warning("FCM v1 token unavailable; not sending push")
-                    return
-                url = (
-                    f"https://fcm.googleapis.com/v1/projects/"
-                    f"{settings.FCM_PROJECT_ID}/messages:send"
-                )
-                payload = {
-                    "message": {
-                        "token": push_token,
-                        "data":  data_payload,
-                        "android": {"priority": "high"},
-                    }
-                }
-                await client.post(
-                    url,
-                    headers={
-                        "Authorization": f"Bearer {token}",
-                        "Content-Type":  "application/json",
-                    },
-                    json=payload,
-                )
-            else:
-                # Legacy fallback
-                await client.post(
-                    "https://fcm.googleapis.com/fcm/send",
-                    headers={
-                        "Authorization": f"key={settings.FCM_SERVER_KEY}",
-                        "Content-Type":  "application/json",
-                    },
-                    json={
-                        "to":       push_token,
-                        "priority": "high",
-                        "data":     data_payload,
-                    },
-                )
-        log.info("Logout push sent", push_token=push_token[:10] + "…")
-    except Exception as e:
-        log.warning("Logout push failed (non-fatal)", error=str(e))
 
 
 # ─────────────────────────────────────────────────────────────
@@ -244,7 +133,10 @@ async def register_device_for_user(
             new_device=device_id[:8],
         )
         _revoke_session(existing["id"])
-        await _send_logout_push(old_push, device_name, user_id, old_device_id)
+
+        # Send FCM logout notification to old device
+        if old_push:
+            FCMService.send_device_logout_notification(old_push, device_name)
 
     _create_session(user_id, device_id, device_name, platform, app_version, push_token)
     log.info("New device session created", user_id=user_id, device_id=device_id[:8])
