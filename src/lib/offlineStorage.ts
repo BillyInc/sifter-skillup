@@ -40,8 +40,14 @@ try {
 }
 
 import { Platform } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+let NetInfo: any = null;
+if (Platform.OS !== 'web') {
+  try {
+    NetInfo = require('@react-native-community/netinfo').default;
+  } catch {}
+}
 import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
 
@@ -438,7 +444,8 @@ export async function initOfflineStorage(
   apiBase: string,
   getToken: () => Promise<string | null>,
 ) {
-  _netUnsub = NetInfo.addEventListener(async state => {
+  if (!NetInfo) return;
+  _netUnsub = NetInfo.addEventListener(async (state: any) => {
     if (state.isConnected && state.isInternetReachable) {
       await _drainToServer(apiBase, getToken);
     }
@@ -553,6 +560,7 @@ export async function downloadTrackContent(
   onProgress?: (pct: number) => void,
 ): Promise<boolean> {
   try {
+    if (!NetInfo) return true;
     const net = await NetInfo.fetch();
     if (!net.isConnected) return false;
 
@@ -592,6 +600,7 @@ export async function onLoginSync(
   getToken: () => Promise<string | null>,
 ): Promise<void> {
   try {
+    if (!NetInfo) return;
     const net = await NetInfo.fetch();
     if (!net.isConnected) return;
 
