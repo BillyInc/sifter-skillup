@@ -505,7 +505,7 @@ const screen = StyleSheet.create({
 const card = StyleSheet.create({
   wrap:         { marginHorizontal: Spacing.sm },
   card:         { borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: '#FFFFFF10' },
-  glowBorder:   { ...StyleSheet.absoluteFill, borderRadius: Radius.xl, borderWidth: 2 },
+  glowBorder:   { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl, borderWidth: 2 },
   artworkArea:  { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.lg },
   infoPanel:    { paddingHorizontal: Spacing.lg, paddingBottom: Spacing.lg, gap: Spacing.sm },
   nameRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
@@ -524,7 +524,7 @@ const card = StyleSheet.create({
 });
 
 const portal = StyleSheet.create({
-  overlay:      { ...StyleSheet.absoluteFill, backgroundColor: '#000000BB' },
+  overlay:      { ...StyleSheet.absoluteFillObject, backgroundColor: '#000000BB' },
   sheet:        {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     height: SH * 0.88,

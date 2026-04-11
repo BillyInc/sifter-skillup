@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
   itemCard:         { borderRadius: Radius.xl, borderWidth: 1, overflow: 'hidden' },
   itemImgBox:       { height: 130, alignItems: 'center', justifyContent: 'center', position: 'relative' },
   itemEmoji:        { fontSize: 52 },
-  lockedOverlay:    { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
+  lockedOverlay:    { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
   lockIcon:         { fontSize: 28 },
   unlockedBadge:    { position: 'absolute', bottom: 6, left: 6, paddingHorizontal: 6, paddingVertical: 2, borderRadius: Radius.full },
   unlockedBadgeText:{ fontSize: 9, fontWeight: FontWeight.black, color: '#fff' },
