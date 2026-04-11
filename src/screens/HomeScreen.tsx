@@ -579,7 +579,7 @@ const styles = StyleSheet.create({
 
 const activeHero = StyleSheet.create({
   wrap:            { marginBottom: Spacing.lg },
-  glowBorder:      { ...StyleSheet.absoluteFill, borderRadius: Radius.xl, borderWidth: 2, zIndex: 1 },
+  glowBorder:      { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl, borderWidth: 2, zIndex: 1 },
   card:            { borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: 'transparent' },
   fieldPill:       { flexDirection: 'row', alignItems: 'center', gap: 6, margin: Spacing.md, marginBottom: 0, alignSelf: 'flex-start', borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 5 },
   fieldPillEmoji:  { fontSize: 14 },

@@ -302,7 +302,7 @@ Respond ONLY with a JSON object — no markdown, no preamble — in this exact s
 // ─── Styles ────────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  backdrop:         { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.55)', zIndex: 999, justifyContent: 'flex-end', alignItems: 'center' },
+  backdrop:         { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.55)', zIndex: 999, justifyContent: 'flex-end', alignItems: 'center' },
   sheet:            { width: '100%', maxHeight: '85%', borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, overflow: 'hidden' },
   webModal:         { width: 560, maxHeight: '80%', borderRadius: Radius.xl, marginBottom: 'auto' as any, marginTop: 'auto' as any, ...Shadow.lg },
   scrollContent:    { padding: Spacing.xl, gap: Spacing.md },
