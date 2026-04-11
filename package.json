@@ -82,6 +82,9 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.ts"
     ],
+    "moduleNameMapper": {
+      "^react-native/Libraries/BatchedBridge/NativeModules$": "<rootDir>/__mocks__/nativeModules.js"
+    },
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@supabase/.*|@tanstack/.*|zustand)"
     ]
