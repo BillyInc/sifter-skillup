@@ -39,6 +39,7 @@ try {
   // Install: npx expo install @nozbe/watermelondb
 }
 
+import { Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
@@ -105,6 +106,21 @@ export interface SyncQueueItem {
 const DEVICE_ID_KEY = 'sifter_device_id_v2';
 
 export async function getOrCreateDeviceId(): Promise<string> {
+  // Web: use localStorage instead of SecureStore (which hangs on web)
+  if (Platform.OS === 'web') {
+    try {
+      let id = localStorage.getItem('sifter_device_id');
+      if (!id) {
+        id = `web_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+        localStorage.setItem('sifter_device_id', id);
+      }
+      return id;
+    } catch {
+      return `web_${Date.now()}`;
+    }
+  }
+
+  // Native: use SecureStore
   try {
     let id = await SecureStore.getItemAsync(DEVICE_ID_KEY);
     if (!id) {
@@ -117,7 +133,7 @@ export async function getOrCreateDeviceId(): Promise<string> {
     }
     return id;
   } catch {
-    // SecureStore unavailable (web) — fall back to in-memory
+    // SecureStore unavailable — fall back to in-memory
     return `web_${Date.now()}`;
   }
 }
@@ -125,6 +141,7 @@ export async function getOrCreateDeviceId(): Promise<string> {
 // ─── Progress Store ───────────────────────────────────────────
 
 export async function saveProgressLocally(progress: Partial<LocalProgress>): Promise<void> {
+  if (!database) return; // WatermelonDB not available (web)
   const existing = await _getProgressRecord();
 
   await database.write(async () => {
@@ -162,6 +179,7 @@ export async function saveProgressLocally(progress: Partial<LocalProgress>): Pro
 }
 
 export async function getLocalProgress(): Promise<LocalProgress> {
+  if (!database) return _emptyProgress(); // WatermelonDB not available (web)
   const record = await _getProgressRecord();
   const position = await getLastPosition();
 
@@ -196,6 +214,7 @@ export async function restoreProgressFromServer(serverProgress: LocalProgress): 
 // ─── Last Position ────────────────────────────────────────────
 
 export async function saveLastPosition(position: LastPosition | null): Promise<void> {
+  if (!database) return; // WatermelonDB not available (web)
   const existing = await _getPositionRecord();
 
   await database.write(async () => {
@@ -236,6 +255,7 @@ export async function saveLastPosition(position: LastPosition | null): Promise<v
 }
 
 export async function getLastPosition(): Promise<LastPosition | null> {
+  if (!database) return null; // WatermelonDB not available (web)
   const record = await _getPositionRecord();
   if (!record) return null;
   return {
@@ -256,6 +276,7 @@ export async function getLastPosition(): Promise<LastPosition | null> {
 // ─── Content Store ────────────────────────────────────────────
 
 export async function getContentManifest(): Promise<ContentManifest | null> {
+  if (!database) return null; // WatermelonDB not available (web)
   const records = await database.get('content_manifest').query().fetch();
   if (!records.length) return null;
 
@@ -281,6 +302,7 @@ export async function getContentManifest(): Promise<ContentManifest | null> {
 }
 
 export async function saveTrackContent(trackId: string, content: any, version: number): Promise<void> {
+  if (!database) return; // WatermelonDB not available (web)
   const contentStr = JSON.stringify(content);
   const sizeKb = Math.round(contentStr.length / 1024);
 
@@ -330,6 +352,7 @@ export async function saveTrackContent(trackId: string, content: any, version: n
 }
 
 export async function getTrackContent(trackId: string): Promise<any | null> {
+  if (!database) return null; // WatermelonDB not available (web)
   const records = await database
     .get('cached_content')
     .query(Q.where('track_id', trackId))
@@ -368,6 +391,7 @@ export async function enqueueWrite(
   body: any,
   priority: SyncQueueItem['priority'] = 'normal',
 ): Promise<void> {
+  if (!database) return; // WatermelonDB not available (web)
   const itemId = `sq_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 
   await database.write(async () => {
@@ -399,6 +423,7 @@ export async function enqueueWrite(
 }
 
 export async function getPendingSyncCount(): Promise<number> {
+  if (!database) return 0; // WatermelonDB not available (web)
   return database.get('sync_queue')
     .query(Q.where('status', 'pending'))
     .fetchCount();
@@ -428,6 +453,7 @@ async function _drainToServer(
   apiBase: string,
   getToken: () => Promise<string | null>,
 ): Promise<void> {
+  if (!database) return; // WatermelonDB not available (web)
   if (_syncing) return;
   _syncing = true;
 
@@ -598,11 +624,13 @@ export async function onLoginSync(
 // ─── Private helpers ─────────────────────────────────────────
 
 async function _getProgressRecord(): Promise<any> {
+  if (!database) return null; // WatermelonDB not available (web)
   const records = await database.get('local_progress').query().fetch();
   return records.length ? records[0] : null;
 }
 
 async function _getPositionRecord(): Promise<any> {
+  if (!database) return null; // WatermelonDB not available (web)
   const records = await database.get('last_position').query().fetch();
   return records.length ? records[0] : null;
 }
