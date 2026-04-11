@@ -13,8 +13,15 @@
  *   - Level-aware — references where the user actually is
  */
 
-import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 import { offlineWrite } from './offlineQueue';
+
+let Notifications: any = null;
+if (Platform.OS !== 'web') {
+  try {
+    Notifications = require('expo-notifications');
+  } catch {}
+}
 
 // ─── Role-specific notification copy ─────────────────────────────────────────
 
@@ -121,6 +128,7 @@ function getRoleCopy(trackId: string): RoleCopy {
 // ─── Push notification setup ──────────────────────────────────────────────────
 
 export async function requestPushPermission(): Promise<string | null> {
+  if (!Notifications) return null;
   try {
     const { status: existing } = await Notifications.getPermissionsAsync();
     const finalStatus = existing === 'granted'
@@ -142,6 +150,7 @@ export async function scheduleDailyReminder(params: {
   streak: number;
   hourLocal?: number; // default 19:00 local time
 }) {
+  if (!Notifications) return;
   const { trackId, userName, progress, streak, hourLocal = 19 } = params;
   const copy = getRoleCopy(trackId);
 
@@ -185,14 +194,16 @@ export async function triggerServerNotification(params: {
 
 // ─── In-app notification display config ──────────────────────────────────────
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
+if (Notifications) {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
+}
 
 export { getRoleCopy, fillTemplate, pickRandom };
