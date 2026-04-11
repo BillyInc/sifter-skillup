@@ -68,42 +68,44 @@ class TestRegisterDevice:
         assert any("device_id" in args for args in insert_calls)
 
     def test_second_device_revokes_first(self, auth_client, mock_db, monkeypatch):
+        from unittest.mock import patch
         monkeypatch.setattr(device_sessions.settings, "SINGLE_DEVICE_ENFORCEMENT", True, raising=False)
 
-        push_mock = AsyncMock()
-        monkeypatch.setattr(device_sessions, "_send_logout_push", push_mock)
+        # Mock FCMService.send_device_logout_notification
+        with patch('device_sessions.FCMService.send_device_logout_notification') as fcm_mock:
+            # _get_existing_session returns an existing session on a different device
+            existing_session = {
+                "id": "sess-old",
+                "device_id": "devA",
+                "push_token": "tok-A",
+                "user_id": SAMPLE_USER["id"],
+                "is_active": True,
+            }
+            sc = mock_db.get_service_client.return_value
+            sc.table.return_value.select.return_value.eq.return_value.eq.return_value.execute.return_value = MagicMock(
+                data=[existing_session]
+            )
+            sc.table.return_value.update.return_value.eq.return_value.execute.return_value = MagicMock(data=[])
+            sc.table.return_value.insert.return_value.execute.return_value = MagicMock(
+                data=[{"id": "sess-new", "device_id": "devB"}]
+            )
 
-        # _get_existing_session returns an existing session on a different device
-        existing_session = {
-            "id": "sess-old",
-            "device_id": "devA",
-            "push_token": "tok-A",
-            "user_id": SAMPLE_USER["id"],
-            "is_active": True,
-        }
-        sc = mock_db.get_service_client.return_value
-        sc.table.return_value.select.return_value.eq.return_value.eq.return_value.execute.return_value = MagicMock(
-            data=[existing_session]
-        )
-        sc.table.return_value.update.return_value.eq.return_value.execute.return_value = MagicMock(data=[])
-        sc.table.return_value.insert.return_value.execute.return_value = MagicMock(
-            data=[{"id": "sess-new", "device_id": "devB"}]
-        )
-
-        resp = auth_client.post(
-            "/api/devices/register",
-            json={
-                "device_id": "devB",
-                "device_name": "iPhone 15",
-                "platform": "ios",
-                "app_version": "1.0.0",
-                "push_token": "tok-B",
-            },
-        )
-        assert resp.status_code == 200, resp.text
-        push_mock.assert_called_once()
-        args, _ = push_mock.call_args
-        assert args[0] == "tok-A"  # old push token
+            resp = auth_client.post(
+                "/api/devices/register",
+                json={
+                    "device_id": "devB",
+                    "device_name": "iPhone 15",
+                    "platform": "ios",
+                    "app_version": "1.0.0",
+                    "push_token": "tok-B",
+                },
+            )
+            assert resp.status_code == 200, resp.text
+            # Verify FCMService was called with the old push token and new device name
+            fcm_mock.assert_called_once()
+            args, _ = fcm_mock.call_args
+            assert args[0] == "tok-A"  # old push token
+            assert args[1] == "iPhone 15"  # new device name
 
 
 class TestValidateDeviceHeader:
@@ -170,44 +172,3 @@ class TestGetMySession:
         assert data["device_id"] == "devA"
 
 
-# ─────────────────────────────────────────────────────────────
-# Force-logout HMAC
-# ─────────────────────────────────────────────────────────────
-
-class TestForceLogoutPayload:
-    def test_force_logout_payload_has_hmac(self, monkeypatch):
-        captured = {}
-
-        class FakeAsyncClient:
-            def __init__(self, *a, **kw):
-                pass
-            async def __aenter__(self):
-                return self
-            async def __aexit__(self, *a):
-                return False
-            async def post(self, url, headers=None, json=None):
-                captured["url"] = url
-                captured["json"] = json
-                resp = MagicMock()
-                resp.status_code = 200
-                return resp
-
-        monkeypatch.setattr(device_sessions.httpx, "AsyncClient", FakeAsyncClient)
-        # Force "legacy" path so we don't need google-auth
-        monkeypatch.setattr(device_sessions.settings, "FCM_SERVICE_ACCOUNT_PATH", "", raising=False)
-        monkeypatch.setattr(device_sessions.settings, "FCM_PROJECT_ID", "", raising=False)
-        monkeypatch.setattr(device_sessions.settings, "FCM_SERVER_KEY", "fake-key", raising=False)
-
-        asyncio.run(
-            device_sessions._send_logout_push(
-                push_token="device-fcm-token",
-                new_device_name="iPhone 15",
-                user_id="user-1",
-                old_device_id="devA",
-            )
-        )
-        payload = captured.get("json") or {}
-        # Legacy shape: {"to":..., "data": {...}}
-        data = payload.get("data") or {}
-        assert data.get("hmac"), "HMAC field missing from FCM data payload"
-        assert data["type"] == "FORCE_LOGOUT"

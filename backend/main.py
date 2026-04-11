@@ -17,6 +17,7 @@ from models import *
 from auth import Auth
 from logger import log
 from session_middleware import DeviceSessionMiddleware
+from fcm_service import FCMService
 
 # ─────────────────────────────────────────────────────────────
 # App setup
@@ -32,6 +33,7 @@ async def lifespan(_app: FastAPI):
             "JWT_SECRET is shorter than 32 chars — REPLACE BEFORE PRODUCTION",
             length=len(settings.JWT_SECRET or ""),
         )
+    FCMService.init()
     yield
     log.info("Application shutdown")
 

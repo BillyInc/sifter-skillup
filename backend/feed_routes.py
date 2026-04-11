@@ -11,9 +11,11 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 
 from auth import Auth
+from config import settings
 from database import db
 from logger import log
 from models import FeedItemReact, FeedItemSubscribe, ResponseModel
+from twitter_service import TwitterService
 
 router = APIRouter(prefix="/api/feed", tags=["feed"])
 
@@ -69,6 +71,7 @@ async def get_feed(
     """
     Return personalised feed for the current user.
     Filters by track_id if provided, otherwise uses subscriptions.
+    Combines database feed items with Twitter feed if available.
     """
     # Clamp pagination
     limit = max(1, min(limit, _MAX_LIMIT))
@@ -83,15 +86,35 @@ async def get_feed(
     else:
         track_ids = [track_id]
 
+    # Fetch database feed items
     result = db.get_service_client().table("feed_items") \
         .select("*") \
         .in_("track_id", track_ids) \
         .eq("is_published", True) \
-        .order("published_at", desc=True) \
-        .range(offset, offset + limit - 1) \
         .execute()
 
-    return ResponseModel(data=result.data)
+    feed_items = result.data if result.data else []
+
+    # Fetch Twitter feed items if track_id is provided and Twitter API is configured
+    if track_id and settings.TWITTER_API_BEARER_TOKEN:
+        try:
+            twitter_items = await TwitterService.fetch_feed_for_track(track_id)
+            feed_items.extend(twitter_items)
+        except Exception as e:
+            log.error(f"Failed to fetch Twitter feed for {track_id}: {e}")
+            # Gracefully degrade — return database items only
+
+    # Sort by published_at or created_at descending (most recent first)
+    feed_items = sorted(
+        feed_items,
+        key=lambda x: x.get("published_at") or x.get("created_at", ""),
+        reverse=True
+    )
+
+    # Apply pagination after combining all sources
+    paginated_items = feed_items[offset : offset + limit]
+
+    return ResponseModel(data=paginated_items)
 
 
 @router.get("/{item_id}", response_model=ResponseModel)
