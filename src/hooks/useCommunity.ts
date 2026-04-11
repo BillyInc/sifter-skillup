@@ -14,9 +14,16 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Platform } from 'react-native';
 import { supabase } from '../lib/supabase';
 import { offlineWrite } from '../lib/offlineQueue';
-import * as Haptics from 'expo-haptics';
+
+let Haptics: any = null;
+if (Platform.OS !== 'web') {
+  try {
+    Haptics = require('expo-haptics');
+  } catch {}
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -254,7 +261,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
         const notif = payload.new as Notification;
         setNotifications(prev => [notif, ...prev]);
         setUnreadCount(n => n + 1);
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        if (Haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       })
       .subscribe();
 
@@ -268,7 +275,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
   // ── Actions ─────────────────────────────────────────────────────────────────
 
   const react = useCallback(async (postId: string, reaction: ReactionType) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (Haptics) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setFeed(s => ({
       ...s,
       posts: s.posts.map(p => {
@@ -312,7 +319,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
       };
     }
     setFeed(s => ({ ...s, posts: [optimistic, ...s.posts] }));
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    if (Haptics) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     await offlineWrite('/api/posts', 'POST', { ...params, hashtags, mentions }, 'high');
   }, [currentUserId, currentUserTrack]);
 
