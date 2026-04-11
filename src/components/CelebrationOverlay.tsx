@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backdropFill: {
-    ...StyleSheet.absoluteFill,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(10,10,30,0.75)',
   },
   card: {

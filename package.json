@@ -51,7 +51,7 @@
     "expo-updates": "~55.0.18",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-native": "0.83.4",
+    "react-native": "~0.76.7",
     "react-native-gesture-handler": "~2.30.0",
     "react-native-logs": "~5.0.0",
     "react-native-reanimated": "4.2.1",
@@ -82,6 +82,9 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.ts"
     ],
+    "moduleNameMapper": {
+      "^react-native/Libraries/BatchedBridge/NativeModules$": "<rootDir>/__mocks__/nativeModules.js"
+    },
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@supabase/.*|@tanstack/.*|zustand)"
     ]

@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
   skillBarRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   skillBarLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, width: 130 },
   skillBarTrack:    { flex: 1, height: 7, borderRadius: Radius.full, position: 'relative', overflow: 'hidden' },
-  skillBarBg:       { ...StyleSheet.absoluteFill },
+  skillBarBg:       { ...StyleSheet.absoluteFillObject },
   skillBarFill:     { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: Radius.full },
   skillBarPct:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, width: 34, textAlign: 'right' },
 
