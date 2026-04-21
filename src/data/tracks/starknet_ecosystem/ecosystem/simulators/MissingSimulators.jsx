@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef, useEffect, useReducer } from "react";
+// MissingSimulators placeholder - all simulators defined in ecosystemSimulators.tsx
+export const MissingSimulators = null as unknown as React.ComponentType;
 
 // ─── DESIGN TOKENS ────────────────────────────────────────────────────────────
 const C = {

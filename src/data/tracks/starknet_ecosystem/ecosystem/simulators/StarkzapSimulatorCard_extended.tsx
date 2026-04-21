@@ -1,6 +1,3 @@
-// Legacy wrapper retained for backward compatibility with docs/imports.
-// Canonical implementation is centralized in src/components/simulators.
-export { default } from '../../../../components/simulators/StarkzapSimulatorCard';
 /**
  * StarkzapSimulatorCard — Extended v2.2
  *
@@ -32,7 +29,6 @@ import {
   ActivityIndicator, Animated, Linking, TextInput,
   KeyboardAvoidingView, Platform,
 } from 'react-native';
-import { useAuth } from '../../hooks/useAuth';
 import {
   isStarkzapAvailable, starkzapSdk, starkzapMainnet,
   STARKNET_TOKENS, MOCK,
