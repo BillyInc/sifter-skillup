@@ -1,4 +1,4 @@
-﻿// âš¡ Sifter SkillUp â€” Starknet Ecosystem Deep Dive
+// âš¡ Sifter SkillUp â€” Starknet Ecosystem Deep Dive
 // SENIOR Â· LAB 9 â€” STRATEGIC ECOSYSTEM ANALYSIS
 // Part 1 of 2: SQL Primer Micro-Lessons (L0-SQL1 through L0-SQL4) + L9.1 + L9.2
 //
@@ -422,7 +422,7 @@ This is called schema fluency. The failure mode is schema confusion: trying to g
     {
       contextTag: '[token_transfers for staking flow analysis]',
       context: 'A researcher tracks how much STRK flowed into the staking contract each month since January 2024.',
-      scenario: 'He uses starknet.token_transfers WHERE contract_address = \'0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d\' (STRK token contract) AND to_address = \'0x[staking_contract]\'. Monthly SUM(amount)/1e18 shows: Jan $8M, Feb $22M, Mar $41M, Apr $67M â€” accelerating adoption.',
+      scenario: 'He uses starknet.token_transfers WHERE contract_address = \'0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d\' (STRK token contract) AND to_address = \'0x[staking_contract]\'. Monthly SUM(amount)/1e18 shows: Jan $8M, Feb $22M, Mar $41M, Apr $67M - accelerating adoption.',
       outcome: 'token_transfers is the correct choice for tracking a specific token\'s inflow to a contract. The token contract address goes in contract_address. The staking contract goes in to_address. Mixing these up produces zero results or counts all STRK transfers ecosystem-wide.',
     },
     {
@@ -980,4 +980,33 @@ If results show that AVNU, Vesu, Nostra, and Extended all call the same Pragma o
       scoringCriteria: ['Correctly ranks oracle concentration (Pragma single feed, 6 protocols) as highest risk â€” over Ekubo concentration â€” with correct reasoning: oracle failure creates incorrect price data which enables incorrect protocol state (silent bad debt accumulation) whereas Ekubo failure creates visible operational disruption (users cannot trade) that protocols can respond to', 'Ekubo concentration correctly ranked second: high impact but visible and recoverable once Ekubo restores. Protocols pause, oracle prices stabilise, normal operation resumes', 'Distinguishes silent risk (oracle) from visible risk (DEX liquidity) as the key criterion for priority ranking'],
     },
   ],
+};
+export const LAB9_SQL_PRIMER_META = {
+  id: 'l9-sql-primer',
+  title: 'SQL Primer',
+  trackId: 'starknet-ecosystem-deep-dive',
+  level: 'senior' as const,
+  lessonCount: 4,
+  prerequisite: 'Labs 1-8 complete. Intermediate certified.',
+  description: 'SQL primer: four micro-lessons covering database fundamentals, four SQL statements, Dune schema, and sandbox-sql workflow.',
+};
+
+export const LAB9_LESSON_1_META = {
+  id: 'l9-1',
+  title: 'On-Chain Data as Competitive Intelligence',
+  trackId: 'starknet-ecosystem-deep-dive',
+  level: 'senior' as const,
+  lessonNumber: 1,
+  prerequisite: 'Labs 1-8 complete. SQL Primer recommended.',
+  description: 'L9.1: SQL query writing for on-chain data. Four exit-criteria queries: DAU, volume trend, user rankings, staking inflows.',
+};
+
+export const LAB9_LESSON_2_META = {
+  id: 'l9-2',
+  title: 'Systemic Risk Mapping',
+  trackId: 'starknet-ecosystem-deep-dive',
+  level: 'senior' as const,
+  lessonNumber: 2,
+  prerequisite: 'LAB9_LESSON_1 complete.',
+  description: 'L9.2: Dependency graphs, contagion chains, oracle concentration risk analysis.',
 };
