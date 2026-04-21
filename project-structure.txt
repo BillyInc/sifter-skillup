@@ -1,0 +1,43 @@
+SifterSkillUp/                   ← Expo project root
+├── app.json                     ← Expo config
+├── package.json
+├── babel.config.js
+├── tsconfig.json
+├── assets/
+│   ├── icon.png
+│   └── splash.png
+└── src/
+    ├── App.tsx                  ← Root navigator
+    ├── data/
+    │   ├── levels.ts            ← All 270 levels (converted from levels.js)
+    │   ├── islands.ts           ← 18 islands
+    │   └── config.ts            ← App config
+    ├── lib/
+    │   ├── supabase.ts          ← Supabase client
+    │   └── storage.ts           ← AsyncStorage helpers
+    ├── screens/
+    │   ├── AuthScreen.tsx       ← Login / guest
+    │   ├── OnboardingScreen.tsx ← First run flow
+    │   ├── IslandMapScreen.tsx  ← Main map (scrollable island list)
+    │   ├── LessonScreen.tsx     ← Duolingo question flow ← CORE
+    │   ├── ProfileScreen.tsx    ← XP, streak, character
+    │   ├── LeaderboardScreen.tsx
+    │   └── GuildsScreen.tsx
+    ├── components/
+    │   ├── lesson/
+    │   │   ├── ConceptCard.tsx
+    │   │   ├── MCQQuestion.tsx
+    │   │   ├── TrueFalseQuestion.tsx
+    │   │   ├── OrderQuestion.tsx
+    │   │   ├── MatchPairsQuestion.tsx
+    │   │   ├── FeedbackBar.tsx
+    │   │   └── ProgressBar.tsx
+    │   ├── IslandCard.tsx
+    │   ├── LevelDot.tsx
+    │   └── CharacterAvatar.tsx
+    ├── hooks/
+    │   ├── useAuth.ts
+    │   ├── useLessonEngine.ts   ← All lesson logic
+    │   └── useProgress.ts
+    └── theme/
+        └── index.ts             ← Colors, fonts, spacing

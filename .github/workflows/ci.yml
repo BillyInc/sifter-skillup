@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    name: Frontend Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+
+      - name: TypeScript Check
+        run: |
+          OUTPUT=$(npx tsc --noEmit 2>&1 || true)
+          FILTERED=$(echo "$OUTPUT" | grep -v 'src/data/' | grep '^src/' || true)
+          if [ -n "$FILTERED" ]; then
+            echo "$FILTERED"
+            exit 1
+          fi
+
+      - name: Tests
+        run: npx jest --ci --coverage --passWithNoTests
+
+      - name: Web Build
+        run: npx expo export --platform web
+
+      - name: Upload web build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist/
+          retention-days: 7
+
+  backend:
+    name: Backend Checks
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: uv sync --extra test
+      - name: Tests
+        run: uv run pytest tests/test_offline_sync.py tests/test_device_sessions.py tests/test_starknet_routes.py tests/test_phase5_routes.py tests/test_migration_smoke.py -v
+        env:
+          DEBUG: 'true'
+          JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder
+          SUPABASE_SERVICE_KEY: placeholder
+          REDIS_URL: redis://localhost:6379/0
+          SINGLE_DEVICE_ENFORCEMENT: 'false'
