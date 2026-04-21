@@ -54,7 +54,7 @@ export function useOrientation(): OrientationState {
 
     // Also subscribe to expo-screen-orientation for locked orientations
     // (some devices/tablets report Dimensions changes late)
-    let orientationSub: any;
+    let orientationSub: ScreenOrientation.Subscription;
 
     if (ScreenOrientation) {
       ScreenOrientation.getOrientationAsync().then((o: any) => {

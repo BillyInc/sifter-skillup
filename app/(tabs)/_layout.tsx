@@ -36,7 +36,7 @@ export default function TabsLayout() {
         <Tabs.Screen name="map"       options={{ title: 'Home',      tabBarIcon: ({ focused }) => <TabIcon emoji="🏠" label="Home"      focused={focused} /> }} />
         <Tabs.Screen name="fields"    options={{ title: 'Fields',    tabBarIcon: ({ focused }) => <TabIcon emoji="🌐" label="Fields"    focused={focused} /> }} />
         <Tabs.Screen name="feed"      options={{ title: 'Feed',      tabBarIcon: ({ focused }) => <TabIcon emoji="📰" label="Feed"      focused={focused} /> }} />
-        <Tabs.Screen name="community" options={{ title: 'Community', tabBarIcon: ({ focused }) => <TabIcon emoji="👥" label="Community" focused={focused} /> }} />
+        <Tabs.Screen name="guild" options={{ title: 'Guilds', tabBarIcon: ({ focused }) => <TabIcon emoji="⚔️" label="Guilds" focused={focused} /> }} />
         <Tabs.Screen name="profile"   options={{ title: 'Profile',   tabBarIcon: ({ focused }) => <TabIcon emoji="👤" label="Profile"   focused={focused} /> }} />
         {/* Hidden from tab bar — existing screens */}
         <Tabs.Screen name="skills"    options={{ href: null }} />

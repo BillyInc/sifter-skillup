@@ -11,7 +11,7 @@
  * can show a progress bar during first-launch or track switch.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 // withObservables requires @nozbe/with-observables - using polling fallback
 // WatermelonDB Q - imported conditionally
@@ -63,13 +63,9 @@ export function useOfflineSync(): SyncStatus & {
     return unsub;
   }, []);
 
-  // Sync count: prefer push-based subscription; fall back to polling if it
-  // can't attach. Running both in parallel duplicates work and races state.
+  // Sync count polling (WatermelonDB observable when installed, fallback to interval)
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | null = null;
-    let subscribed = false;
-    let unsub: (() => void) | undefined;
-
+    let interval: ReturnType<typeof setInterval>;
     const poll = async () => {
       try {
         const count = await getPendingSyncCount();
@@ -78,31 +74,15 @@ export function useOfflineSync(): SyncStatus & {
         if (count === 0) setLastSyncedAt(new Date().toISOString());
       } catch {}
     };
-
-    // Initial fetch so the UI has a value immediately.
     poll();
-
-    // Try the push-based subscription first.
-    try {
-      unsub = onSyncUpdate(count => {
-        setPendingCount(count);
-        setIsSyncing(count > 0);
-        if (count === 0) setLastSyncedAt(new Date().toISOString());
-      });
-      subscribed = typeof unsub === 'function';
-    } catch {
-      subscribed = false;
-    }
-
-    // Only fall back to polling when the subscription isn't active.
-    if (!subscribed) {
-      interval = setInterval(poll, 5000);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-      if (unsub) unsub();
-    };
+    interval = setInterval(poll, 5000); // poll every 5s as fallback
+    // Also subscribe to manual sync updates
+    const unsub = onSyncUpdate(count => {
+      setPendingCount(count);
+      setIsSyncing(count > 0);
+      if (count === 0) setLastSyncedAt(new Date().toISOString());
+    });
+    return () => { clearInterval(interval); unsub(); };
   }, []);
 
   const downloadCurrentTrack = useCallback(async (trackId: string): Promise<boolean> => {

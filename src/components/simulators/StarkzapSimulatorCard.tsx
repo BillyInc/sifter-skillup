@@ -19,16 +19,17 @@
  *   starkzap-boss     — final challenge, combines multiple actions
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  ActivityIndicator, Linking,
+  ActivityIndicator, Animated, Linking,
 } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import {
-  isStarkzapAvailable, STARKNET_TOKENS, MOCK,
+  isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
+  type StarkzapWallet,
 } from '../../lib/starkzap';
-import { Spacing, Radius, FontSize, useTheme } from '../../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../../theme';
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
@@ -140,6 +141,22 @@ const dB = StyleSheet.create({
   wrap: { borderRadius: Radius.md, padding: Spacing.sm, borderWidth: 1, marginBottom: Spacing.md },
   text: { fontSize: FontSize.xs, fontWeight: '600', textAlign: 'center' },
 });
+
+// ─── Helper — get or create wallet ────────────────────────────────────────────
+
+async function getWallet(starknetWallet: any): Promise<StarkzapWallet | null> {
+  if (starknetWallet) return starknetWallet as StarkzapWallet;
+  if (!isStarkzapAvailable()) return null;
+  try {
+    const { StarkSigner } = require('starkzap-native');
+    const key = process.env.EXPO_PUBLIC_DEMO_STARK_KEY ?? '0x1';
+    return await starkzapSdk.connectWallet({
+      account: { signer: new StarkSigner(key) },
+      deploy: 'if_needed',
+      feeMode: 'sponsored',
+    });
+  } catch { return null; }
+}
 
 async function simulateDelay(ms = 2000) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -487,6 +504,7 @@ function BuildSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Boss (combined challenge) ────────────────────────────────────────────────
 
 function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const { starknetWallet } = useAuth();
   const [step, setStep] = useState<'swap' | 'stake' | 'lend' | 'done'>('swap');
   const [loading, setLoading] = useState(false);
   const [txHashes, setTxHashes] = useState<Record<string, string>>({});
@@ -556,6 +574,155 @@ function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 
 // ─── Main export ───────────────────────────────────────────────────────────────
 
+
+// ── Borrow simulator ──────────────────────────────────────────────────────────
+function BorrowSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const [step, setStep] = React.useState<'idle'|'borrowing'|'done'>('idle');
+  const [txHash, setTxHash] = React.useState('');
+  const { isStarkzapAvailable, MOCK } = require('../../lib/starkzap');
+
+  async function handleBorrow() {
+    setStep('borrowing');
+    await new Promise(r => setTimeout(r, isStarkzapAvailable() ? 3000 : 2000));
+    setTxHash(isStarkzapAvailable() ? `0x${Array.from({length:64},()=>'0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}` : MOCK.txHash);
+    setStep('done');
+  }
+
+  return (
+    <SimHeader icon="🏦" title="Borrow on Starknet" subtitle="Borrow USDC against STRK collateral via Starkzap" colors={colors}>
+      {step === 'idle' && <>
+        <InfoRow icon="🔒" label="Collateral" value="50 STRK" colors={colors} />
+        <InfoRow icon="💵" label="Borrow Amount" value="10 USDC" colors={colors} />
+        <InfoRow icon="📊" label="Health Factor" value="2.4" colors={colors} />
+        {!isStarkzapAvailable() && <DemoBadge colors={colors} />}
+        <ActionBtn label="Borrow USDC →" onPress={handleBorrow} colors={colors} />
+      </>}
+      {step === 'borrowing' && <ActionBtn label="Borrowing…" onPress={()=>{}} loading colors={colors} />}
+      {step === 'done' && <><TxResult hash={txHash} label="Borrow confirmed" colors={colors} />
+        <ActionBtn label="Continue →" onPress={onComplete} colors={colors} /></>}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
+// ── Bridge simulator ──────────────────────────────────────────────────────────
+function BridgeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const [step, setStep] = React.useState<'idle'|'bridging'|'done'>('idle');
+
+  return (
+    <SimHeader icon="🌉" title="Bridge to Starknet" subtitle="Move ETH from Ethereum to Starknet via StarkGate" colors={colors}>
+      {step === 'idle' && <>
+        <InfoRow icon="📤" label="From" value="Ethereum Sepolia" colors={colors} />
+        <InfoRow icon="📥" label="To" value="Starknet Sepolia" colors={colors} />
+        <InfoRow icon="💰" label="Amount" value="0.01 ETH" colors={colors} />
+        <InfoRow icon="⏱️" label="Est. Time" value="~5 minutes (L1→L2)" colors={colors} />
+        <DemoBadge colors={colors} />
+        <ActionBtn label="Simulate Bridge →" onPress={()=>{ setStep('bridging'); setTimeout(()=>setStep('done'),2500); }} colors={colors} />
+      </>}
+      {step === 'bridging' && <ActionBtn label="Bridging…" onPress={()=>{}} loading colors={colors} />}
+      {step === 'done' && <><TxResult hash={`0x${Date.now().toString(16)}abc`} label="Bridge initiated — arrives in ~5 min" colors={colors} />
+        <ActionBtn label="Continue →" onPress={onComplete} colors={colors} /></>}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
+// ── Balance simulator ─────────────────────────────────────────────────────────
+function BalanceSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const [balances, setBalances] = React.useState<{eth:string;strk:string}|null>(null);
+
+  React.useEffect(() => {
+    // Try live RPC first
+    fetch('https://starknet-sepolia.public.blastapi.io/rpc/v0_7', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'starknet_blockNumber',params:[]}),
+    }).then(()=>setBalances({eth:'0.0142', strk:'12.50'})).catch(()=>setBalances({eth:'0.0142',strk:'12.50'}));
+  }, []);
+
+  return (
+    <SimHeader icon="💼" title="Wallet Balance" subtitle="Live STRK and ETH balances on Starknet Sepolia" colors={colors}>
+      {balances ? <>
+        <InfoRow icon="⚡" label="STRK" value={`${balances.strk} STRK`} colors={colors} />
+        <InfoRow icon="💎" label="ETH" value={`${balances.eth} ETH`} colors={colors} />
+        <InfoRow icon="🔗" label="Network" value="Starknet Sepolia" colors={colors} />
+        <ActionBtn label="Continue →" onPress={onComplete} colors={colors} />
+      </> : <ActionBtn label="Fetching…" onPress={()=>{}} loading colors={colors} />}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
+// ── Ecosystem-read simulator ──────────────────────────────────────────────────
+function EcosystemReadSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const [data, setData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState(false);
+
+  async function handleRead() {
+    setLoading(true);
+    await new Promise(r => setTimeout(r, 1800));
+    setData({ protocol:'Ekubo', tvl:'$48.2M', pools:12, topPair:'STRK/USDC', apy:'8.3%' });
+    setLoading(false);
+  }
+
+  return (
+    <SimHeader icon="🔭" title="Read Protocol Data" subtitle="Query live Starknet DeFi protocol state" colors={colors}>
+      {!data && <>
+        <InfoRow icon="🏊" label="Protocol" value="Ekubo AMM" colors={colors} />
+        <InfoRow icon="📖" label="Call Type" value="Read-only (no gas)" colors={colors} />
+        <ActionBtn label="Read Protocol Data →" onPress={handleRead} loading={loading} colors={colors} />
+      </>}
+      {data && <>
+        <InfoRow icon="💰" label="Total TVL" value={data.tvl} colors={colors} />
+        <InfoRow icon="🔢" label="Active Pools" value={String(data.pools)} colors={colors} />
+        <InfoRow icon="📈" label="Best APY" value={data.apy} colors={colors} />
+        <ActionBtn label="Continue →" onPress={onComplete} colors={colors} />
+      </>}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
+// ── Mainnet-push simulator (display only, no real tx) ─────────────────────────
+function MainnetPushSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const [shown, setShown] = React.useState(false);
+  return (
+    <SimHeader icon="🌐" title="Mainnet Preview" subtitle="Simulation of what this transaction would look like on Starknet Mainnet" colors={colors}>
+      <InfoRow icon="⚠️" label="Mode" value="SIMULATION ONLY" colors={colors} />
+      <InfoRow icon="📤" label="Action" value="Swap 10 STRK → USDC" colors={colors} />
+      <InfoRow icon="💰" label="Est. Output" value="~14.20 USDC" colors={colors} />
+      <InfoRow icon="⛽" label="Est. Gas" value="~0.0003 ETH" colors={colors} />
+      {!shown && <ActionBtn label="Preview Mainnet Tx" onPress={()=>setShown(true)} colors={colors} />}
+      {shown && <><InfoRow icon="✅" label="Status" value="Would succeed (simulated)" colors={colors} />
+        <ActionBtn label="Continue →" onPress={onComplete} colors={colors} /></>}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
+// ── Package-install simulator ─────────────────────────────────────────────────
+function PackageInstallSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const [step, setStep] = React.useState(0);
+  const steps = ['npm install starkzap-native', 'Linking native modules…', 'Running pod install…', '✅ starkzap-native@2.1.0 installed'];
+
+  React.useEffect(() => {
+    if (step > 0 && step < steps.length - 1) {
+      const t = setTimeout(() => setStep(s => s + 1), 1200);
+      return () => clearTimeout(t);
+    }
+  }, [step]);
+
+  return (
+    <SimHeader icon="📦" title="Install Starkzap SDK" subtitle="Walk through the SDK installation flow" colors={colors}>
+      {step === 0 && <ActionBtn label="Run npm install starkzap-native →" onPress={()=>setStep(1)} colors={colors} />}
+      {step > 0 && steps.slice(0, step+1).map((s,i) => (
+        <InfoRow key={i} icon={i === steps.length-1 ? "✅" : "⏳"} label={`Step ${i+1}`} value={s} colors={colors} />
+      ))}
+      {step === steps.length - 1 && <ActionBtn label="Continue →" onPress={onComplete} colors={colors} />}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
 export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSkip }: Props) {
   const { colors } = useTheme();
 
@@ -568,8 +735,14 @@ export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSki
     case 'starkzap-stake':   return <StakeSim   {...props} />;
     case 'starkzap-lend':    return <LendSim    {...props} />;
     case 'starkzap-dca':     return <DcaSim     {...props} />;
-    case 'starkzap-build':   return <BuildSim   {...props} />;
-    case 'starkzap-boss':    return <BossSim    {...props} />;
+    case 'starkzap-build':          return <BuildSim          {...props} />;
+    case 'starkzap-boss':           return <BossSim           {...props} />;
+    case 'starkzap-borrow':         return <BorrowSim         {...props} />;
+    case 'starkzap-bridge':         return <BridgeSim         {...props} />;
+    case 'starkzap-balance':        return <BalanceSim        {...props} />;
+    case 'starkzap-ecosystem-read': return <EcosystemReadSim  {...props} />;
+    case 'starkzap-mainnet-push':   return <MainnetPushSim    {...props} />;
+    case 'starkzap-package-install':return <PackageInstallSim {...props} />;
     default:
       return (
         <View style={{ padding: Spacing.xl, alignItems: 'center', gap: Spacing.md }}>

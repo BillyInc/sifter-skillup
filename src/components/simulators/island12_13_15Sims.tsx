@@ -25,10 +25,10 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput,
+  TextInput, Animated, Linking,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 
@@ -453,8 +453,8 @@ export function BaseMemecultureSim({ onComplete, onSkip }: SimProps) {
               const isCo = opt.id === correct[t.name];
               let bg = Colors.card, border = Colors.border;
               if (checked && isCh && isCo)  { bg = '#d1fae5'; border = Colors.green; }
-              if (checked && isCh && !isCo) { bg = '#fee2e2'; border = Colors.red; }
-              if (checked && !isCh && isCo)  { bg = '#d1fae5'; border = Colors.green; }
+              if (checked && isCh && !iCo) { bg = '#fee2e2'; border = Colors.red; }
+              if (checked && !iCh && iCo)  { bg = '#d1fae5'; border = Colors.green; }
               return (
                 <TouchableOpacity key={opt.id} disabled={checked} onPress={() => setAnswers(a => ({ ...a, [t.name]: opt.id }))}
                   style={{ flex: 1, padding: Spacing.sm, borderRadius: Radius.md, borderWidth: 2, backgroundColor: bg, borderColor: border, alignItems: 'center' }}>

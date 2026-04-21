@@ -9,14 +9,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, Easing, Dimensions, Modal,
+  Animated, Easing, Dimensions, SafeAreaView, Modal,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
+import { TrackChoiceScreen } from './PostIslandTrackSelection';
 import { useRouter } from 'expo-router';
-import { ISLANDS, type Island } from '../data/islands';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
+import { ISLANDS, getIsland, type Island } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
 
 const { width: SW } = Dimensions.get('window');
@@ -60,7 +61,7 @@ function IslandObject({ island, unlocked, completed, current, onPress }: {
   const orbitAnim = useRef(new Animated.Value(0)).current;
 
   const isBoss  = island.id % 5 === 0;
-  const isStark = island.id === 19;
+  const isStark = island.id === 18;
   const SIZE    = isStark ? 110 : isBoss ? 96 : 82;
   const C       = island.color;
   const locked  = !unlocked;
@@ -237,21 +238,64 @@ function StarknetConnector() {
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
 
-export default function IslandMapScreen({ route: _route }: any) {
-  const navigation = useRouter();
-  const { user }   = useAuth();
-  const completedLevels: number[] = (user?.completed_levels ?? []).map(Number);
-  const currentLevel = user?.current_level ?? 1;
+// ── Next Track CTA — all 3 Starknet tracks shown after Island 18 boss ─────────
+function NextTrackBanner({
+  islandId,
+}: {
+  islandId: number;
+  onNavigateToTrack?: (trackId: string) => void;
+}) {
+  const island = getIsland(islandId);
+  // Only show the full three-track selector for Island 18 (Starknet World)
+  if (islandId === 18 && island?.nextTracks?.length) {
+    return <TrackChoiceScreen />;
+  }
+  if (!island?.nextTracks?.length) return null;
+  // Generic fallback for other islands with a single next track
+  return (
+    <View style={ntb.wrap}>
+      <Text style={ntb.title}>🎉 Island Complete!</Text>
+      {island.nextTracks.map(trackId => (
+        <TouchableOpacity key={trackId} style={ntb.btn}>
+          <Text style={ntb.btnText}>Start {trackId} →</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+}
+const ntb = StyleSheet.create({
+  wrap:    { margin: 16, backgroundColor: '#EC489915', borderRadius: 16, borderWidth: 1.5, borderColor: '#EC489940', padding: 16, alignItems: 'center', gap: 8 },
+  title:   { fontSize: 18, fontWeight: '900', color: '#1A1A2E' },
+  btn:     { backgroundColor: '#EC4899', borderRadius: 12, paddingHorizontal: 20, paddingVertical: 12, marginTop: 4 },
+  btnText: { color: '#fff', fontSize: 15, fontWeight: '800' },
+});
+
+export default function IslandMapScreen({ route }: any) {
+  const router = useRouter();
+  const { user } = useAuth();
+  // completed_levels from server is string[], convert to number[] for .includes(number) checks
+  const completedLevels: number[] = (user?.completedLevels ?? user?.completed_levels ?? []).map(Number);
+  const currentLevel: number = user?.current_level ?? 1;
   const starknetUnlocked = !!(user?.starknet_address || user?.starknet_auth);
   const [selected, setSelected] = useState<Island | null>(null);
 
+  // Auto-open gateway if routed here with a specific initialIsland (e.g. after Starknet auth)
+  const initialIsland = route?.params?.initialIsland;
+  useEffect(() => {
+    if (initialIsland) {
+      const target = ISLANDS.find(i => i.id === Number(initialIsland));
+      if (target) setSelected(target);
+    }
+  }, [initialIsland]);
+
   const handleEnter = (island: Island) => {
     setSelected(null);
-    setTimeout(() => navigation.push({ pathname: '/Lesson', params: { islandId: String(island.id), levelNum: String(island.start) } }), 200);
+    // Use expo-router push with the correct file-based route path
+    setTimeout(() => router.push(`/(tabs)/map/lesson?levelId=${island.start}` as any), 200);
   };
 
-  const mainIslands   = ISLANDS.filter(i => i.id !== 19);
-  const starkIsland   = ISLANDS.find(i => i.id === 19);
+  const mainIslands = ISLANDS.filter(i => i.id !== 18);
+  const starkIsland = ISLANDS.find(i => i.id === 18);
   const tiers: Array<'beginner'|'intermediate'|'pro'> = ['beginner','intermediate','pro'];
 
   return (
@@ -260,7 +304,7 @@ export default function IslandMapScreen({ route: _route }: any) {
 
       {/* Header */}
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingTop: 12, paddingBottom: 8 }}>
-        <TouchableOpacity onPress={() => navigation.back()} style={{ marginRight: 12 }}>
+        <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 12 }}>
           <Text style={{ fontSize: 28, color: '#FFF', fontWeight: '300' }}>‹</Text>
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
@@ -314,6 +358,11 @@ export default function IslandMapScreen({ route: _route }: any) {
           </View>
         )}
       </ScrollView>
+
+      {/* Three-track choice: shown after Island 18 boss (level 310) is completed */}
+      {completedLevels.includes(310) && (
+        <NextTrackBanner islandId={18} />
+      )}
 
       {selected && <LessonGateway island={selected} onClose={() => setSelected(null)} onEnter={() => handleEnter(selected)} />}
     </SafeAreaView>

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * SimulatorCard.tsx — INTEGRATION PATCH
  * ═══════════════════════════════════════════════════════════════

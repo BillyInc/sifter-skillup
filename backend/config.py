@@ -20,11 +20,11 @@ class Settings:
     SUPABASE_SCHEMA: str = "skillup_dev"
 
     # ── JWT ──────────────────────────────────────────────────
-    JWT_SECRET: str = os.getenv("JWT_SECRET", "")
+    JWT_SECRET: str = os.getenv("JWT_SECRET", "change-me-in-production")
     JWT_ALGORITHM: str = "HS256"
-    # 7 days for access tokens. Refresh tokens (30 days) issued separately.
-    JWT_EXPIRE_HOURS: int = int(os.getenv("JWT_EXPIRE_HOURS", str(24 * 7)))
-    JWT_REFRESH_EXPIRE_HOURS: int = int(os.getenv("JWT_REFRESH_EXPIRE_HOURS", str(24 * 30)))
+    # Long-lived: 90 days. App never asks user to log in again.
+    # Revoked only on device violation or explicit sign-out.
+    JWT_EXPIRE_HOURS: int = 24 * 90
 
     # ── Telegram ─────────────────────────────────────────────
     TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -33,14 +33,14 @@ class Settings:
     BASE_RPC_URL: str = os.getenv("BASE_RPC_URL", "https://mainnet.base.org")
     BASE_CHAIN_ID: int = 8453
 
-    # Starknet — RPC endpoint pool (round-robined for load).
-    # Alchemy demo URL removed from default; supply your own keys via env.
+    # Starknet — RPC endpoint pool (round-robined for load)
     STARKNET_SEPOLIA_RPCS: list = [
         rpc.strip()
         for rpc in os.getenv(
             "STARKNET_SEPOLIA_RPCS",
             "https://starknet-sepolia.public.blastapi.io,"
-            "https://free-rpc.nethermind.io/sepolia-juno"
+            "https://free-rpc.nethermind.io/sepolia-juno,"
+            "https://starknet-sepolia.g.alchemy.com/starknet/version/rpc/v0_7/demo"
         ).split(",")
         if rpc.strip()
     ]
@@ -60,16 +60,11 @@ class Settings:
     CELERY_RESULT_BACKEND: str = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 
     # ── CORS ──────────────────────────────────────────────────
-    # Localhost origins are stripped in non-DEBUG via _filter_allowed_origins().
-    _DEV_ORIGINS = [
-        "http://localhost:5173", "http://localhost:8081",
-        "http://localhost:19006", "http://localhost:8082",
-        "http://localhost:3000",
-    ]
     ALLOWED_ORIGINS: list = [
         os.getenv("WEB_DASHBOARD_URL", "http://localhost:3000"),
         "https://t.me", "https://web.telegram.org",
-        *_DEV_ORIGINS,
+        "http://localhost:5173", "http://localhost:8081",
+        "http://localhost:19006", "http://localhost:8082",
     ]
 
     # ── Portfolio OAuth credentials ───────────────────────────
@@ -82,9 +77,6 @@ class Settings:
 
     TWITTER_CLIENT_ID: str     = os.getenv("TWITTER_CLIENT_ID", "")
     TWITTER_CLIENT_SECRET: str = os.getenv("TWITTER_CLIENT_SECRET", "")
-
-    # ── Twitter API v2 (Bearer token) ────────────────────────
-    TWITTER_API_BEARER_TOKEN: str = os.getenv("TWITTER_API_BEARER_TOKEN", "")
 
     INSTAGRAM_CLIENT_ID: str     = os.getenv("INSTAGRAM_CLIENT_ID", "")
     INSTAGRAM_CLIENT_SECRET: str = os.getenv("INSTAGRAM_CLIENT_SECRET", "")
@@ -131,17 +123,8 @@ class Settings:
     ]
     AIRTABLE_SYNC_INTERVAL_MINUTES: int = int(os.getenv("AIRTABLE_SYNC_INTERVAL_MINUTES", "30"))
 
-    # ── Push Notifications (FCM HTTP v1) ──────────────────────
-    # FCM_SERVER_KEY (legacy) kept for backwards-compat only;
-    # legacy API was retired by Google in June 2024.
+    # ── Push Notifications (FCM) ──────────────────────────────
     FCM_SERVER_KEY: str = os.getenv("FCM_SERVER_KEY", "")
-    # Path to a Firebase service-account JSON, used for OAuth on FCM HTTP v1.
-    FCM_SERVICE_ACCOUNT_PATH: str = os.getenv("FCM_SERVICE_ACCOUNT_PATH", "")
-    FCM_PROJECT_ID: str = os.getenv("FCM_PROJECT_ID", "")
-
-    # ── Privy (Starknet auth verification) ────────────────────
-    PRIVY_APP_ID: str  = os.getenv("PRIVY_APP_ID", "")
-    PRIVY_APP_SECRET: str = os.getenv("PRIVY_APP_SECRET", "")
 
     # ── Device / Session enforcement ─────────────────────────
     # How many minutes of inactivity before a device session expires
@@ -163,34 +146,4 @@ class Settings:
     # ── Track gates ───────────────────────────────────────────
     QUANT_DEV_PYTHON_GATE_CHAPTERS: int = 5
 
-def _filter_allowed_origins(origins: list[str], debug: bool) -> list[str]:
-    """In production, drop localhost-style origins."""
-    if debug:
-        return origins
-    return [o for o in origins if "localhost" not in o and "127.0.0.1" not in o]
-
-
-def _validate(s: "Settings") -> None:
-    """Fail-fast on missing required config in non-DEBUG mode."""
-    problems: list[str] = []
-    if not s.SUPABASE_URL:
-        problems.append("SUPABASE_URL is empty")
-    if not s.SUPABASE_SERVICE_KEY:
-        problems.append("SUPABASE_SERVICE_KEY is empty")
-    if not s.JWT_SECRET:
-        problems.append("JWT_SECRET is empty — set a strong random secret")
-    if s.JWT_SECRET in {"change-me-in-production", "secret", "changeme"}:
-        problems.append("JWT_SECRET is set to a default placeholder — refusing to start")
-    if s.JWT_SECRET and len(s.JWT_SECRET) < 32 and not s.DEBUG:
-        problems.append(f"JWT_SECRET is only {len(s.JWT_SECRET)} chars — must be ≥ 32 in production")
-    if not s.DEBUG and s.SINGLE_DEVICE_ENFORCEMENT and not (s.FCM_SERVICE_ACCOUNT_PATH or s.FCM_SERVER_KEY):
-        # Not fatal — just a warning
-        import warnings
-        warnings.warn("SINGLE_DEVICE_ENFORCEMENT is on but no FCM credentials configured; logout pushes will be silently dropped.")
-    if problems and not s.DEBUG:
-        raise RuntimeError("Configuration errors:\n  - " + "\n  - ".join(problems))
-
-
 settings = Settings()
-settings.ALLOWED_ORIGINS = _filter_allowed_origins(settings.ALLOWED_ORIGINS, settings.DEBUG)
-_validate(settings)

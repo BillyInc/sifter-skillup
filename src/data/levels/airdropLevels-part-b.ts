@@ -416,7 +416,8 @@ One more consideration: time cost. Airdrop farming takes time to research, execu
     },
     {
       question: 'Your realistic EV calculation shows $50 positive. You estimate 6 hours of farming time. Your effective hourly rate is $25. What is the time-adjusted EV?',
-      options: ['$50 — time is not a monetary cost', '−$100 — EV minus time cost is negative', '$−100', '−$100 net'],
+      options: ['$50 — time is not a monetary cost', '−$100 — EV minus time cost is negative', '$−100', '−$100 net'),
+      ],
       correct: 1,
       hint: '6 hours × $25/hour = time cost. $50 EV − time cost = ?',
       explanation: '6 hours × $25/hour = $150 time cost. $50 EV − $150 time cost = −$100 time-adjusted EV. Negative. The opportunity appears marginally positive before accounting for time, but when your time has real value (either professional opportunity cost or simply your enjoyment value), the adjusted return is negative. Activities with positive gas EV but negative time-adjusted EV are not worth pursuing unless the protocol provides independent utility.',

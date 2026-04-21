@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * walletEnhancedSims.tsx
  * ─────────────────────────────────────────────────────────────────────────────
@@ -28,7 +27,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput, Animated, Linking, Platform,
+  TextInput, Animated, Clipboard, Linking, Platform,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 import { useSimulatorWallet } from '../../hooks/useSimulatorWallet';

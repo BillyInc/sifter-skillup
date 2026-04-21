@@ -20,10 +20,10 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput,
+  TextInput, Animated, Platform, Linking,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 
@@ -889,7 +889,7 @@ export function AirdropExpectedValueSim({ onComplete, onSkip }: SimProps) {
         <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
           {[['Low ($)', lowEst, setLowEst, probLow, setProbLow], ['Mid ($)', midEst, setMidEst, probMid, setProbMid], ['High ($)', highEst, setHighEst, null, null]].map(([label, val, setVal, prob, setProb]) => (
             <View key={label as string} style={{ flex: 1 }}>
-              <Text style={s.fl}>{label as string}</Text>
+              <Text style={s.fl}>{label}</Text>
               <TextInput style={s.inp} value={val as string} onChangeText={setVal as any} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} editable={!confirmed} />
               {setProb && <><Text style={s.fl}>Prob %</Text>
                 <TextInput style={s.inp} value={prob as string} onChangeText={setProb as any} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} editable={!confirmed} /></>}

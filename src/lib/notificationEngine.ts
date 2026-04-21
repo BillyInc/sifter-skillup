@@ -1,209 +1,283 @@
 /**
  * Sifter Skill_Up — Notification Engine
+ * Push notifications via Expo Push API.
+ * Email notifications via Resend.
+ * Rate-limited, streak-aware, personalised.
  *
- * Three channels:
- *   1. Push (Expo Notifications) — primary, works when app is backgrounded
- *   2. SMS  (Twilio via backend webhook) — for offline-primary users
- *   3. Email (SendGrid via backend webhook) — daily digest + milestones
- *
- * Notifications are:
- *   - Personalised by role (Supply Chain Analyst, Quant Trader, etc.)
- *   - Hyped and motivational — Duolingo energy, Sifter voice
- *   - Streak-aware — tone escalates from gentle reminder to urgent
- *   - Level-aware — references where the user actually is
+ * Usage:
+ *   await notificationEngine.requestPermission();
+ *   await notificationEngine.scheduleStreakWarning(hoursLeft);
+ *   await notificationEngine.sendEmail('weeklyDigest', { name, streak, xp });
  */
 
+import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
-import { offlineWrite } from './offlineQueue';
+import { NOTIFICATION_CONFIG } from '../theme';
 
-let Notifications: any = null;
-if (Platform.OS !== 'web') {
-  try {
-    Notifications = require('expo-notifications');
-  } catch {}
+// ─── Types ─────────────────────────────────────────────────────────────────────
+
+export type PushTriggerType =
+  | 'streak_warning'        // 4h before midnight, no lesson today
+  | 'streak_lost'           // window expired
+  | 'streak_milestone'      // 7, 30, 100 day milestones
+  | 'daily_reminder'        // gentle daily nudge if no activity
+  | 'lesson_complete'       // positive reinforcement (optional / opt-in)
+  | 'stage_up';             // worker character evolved
+
+export type EmailTriggerType =
+  | 'weeklyDigest'
+  | 'streakLost'
+  | 'inactivity_7days'
+  | 'stageUp'
+  | 'welcomeBack';
+
+export interface NotificationState {
+  expoPushToken: string | null;
+  lastSentAt: Record<PushTriggerType | EmailTriggerType, number>;
+  scheduledIds: string[];
+  emailOptIn: boolean;
+  pushOptIn: boolean;
 }
 
-// ─── Role-specific notification copy ─────────────────────────────────────────
+// ─── Storage key ───────────────────────────────────────────────────────────────
 
-interface RoleCopy {
-  streakReminder: string[];   // day 1 miss
-  streakUrgent: string[];     // day 2+ miss
-  levelComplete: string[];
-  bossApproaching: string[];
-  portfolioEarned: string[];
-  weeklyProgress: string[];
+const STORAGE_KEY = '@sifter_notifications_v1';
+
+// ─── Default handler (show alert style) ───────────────────────────────────────
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+// ─── Helpers ───────────────────────────────────────────────────────────────────
+
+function nowMs(): number {
+  return Date.now();
 }
 
-const ROLE_COPY: Record<string, RoleCopy> = {
-  'supply-chain-analyst': {
-    streakReminder: [
-      "⚡ {name}, your supply chain isn't going to optimise itself. 5 minutes. Let's go.",
-      "🔗 Supply chain analysts earn $75k+ — and you're {progress}% of the way there. Don't stop now.",
-      "📦 One stockout happened somewhere in the world while you weren't practising. Fix that.",
-      "🚢 Real supply chains don't pause. Neither should you. Back to it, {name}.",
-    ],
-    streakUrgent: [
-      "🚨 {name}! {streak} days without practice. Your future employer is interviewing someone who didn't stop.",
-      "⚠️ Your supply chain portfolio is sitting unfinished. Every day counts towards the job that changes everything.",
-      "🔥 You were on a {streak}-day streak. That's not gone — come back and reclaim it right now.",
-    ],
-    levelComplete: [
-      "🏆 {name} just cleared {level}. Supply chain analysts who reach this level earn {salary}. You're getting there.",
-      "⚡ Level complete! You just learned what most supply chain teams don't teach for 6 months on the job.",
-    ],
-    bossApproaching: [
-      "🎯 Boss Battle tomorrow. This is the one that earns you a portfolio artifact. Don't walk in cold.",
-      "⚡ Your Boss Battle is unlocked. This is what separates you from every candidate who just did coursework.",
-    ],
-    portfolioEarned: [
-      "🏆 Portfolio artifact earned and pushed to LinkedIn. Recruiters can see this right now.",
-      "📊 Your Supply Chain portfolio just grew. One more artifact closer to hire-ready.",
-    ],
-    weeklyProgress: [
-      "📈 This week: {lessons} lessons, {xp} XP, {streak} day streak. You're building something real, {name}.",
-    ],
-  },
-  'quant-trading': {
-    streakReminder: [
-      "📈 {name}, markets don't wait. Neither does your edge. 5 minutes.",
-      "⚡ Every quant trader you're competing with practised today. Did you?",
-      "₿ The gap between knowing and doing is practice. Come back.",
-    ],
-    streakUrgent: [
-      "🚨 {name}, {streak} days off. The quant skills you're building fade faster than most. Back to it.",
-      "📉 Your streak broke. Your edge doesn't have to. One session right now.",
-    ],
-    levelComplete: [
-      "🏆 {name} just cleared {level}. Quant traders at this level command serious compensation.",
-      "⚡ Level complete. You just learned what prop desks spend weeks teaching new hires.",
-    ],
-    bossApproaching: [
-      "🎯 Boss Battle unlocked. Pass this and it's on your portfolio. Real proof of skill.",
-    ],
-    portfolioEarned: [
-      "🏆 Portfolio artifact live. This is verified proof of trading skill — not just a certificate.",
-    ],
-    weeklyProgress: [
-      "📈 {name}: {lessons} lessons, {xp} XP this week. Edge compounds like interest. Keep going.",
-    ],
-  },
-  default: {
-    streakReminder: [
-      "⚡ {name}, 5 minutes today builds the career you want. Let's go.",
-      "🎯 You're {progress}% through your track. Don't stop here.",
-      "🔥 Your streak is alive. Keep it going — you're closer than you think.",
-    ],
-    streakUrgent: [
-      "🚨 {name}, {streak} days since your last lesson. The skill you're building is still worth it.",
-      "⚠️ Don't let a gap become a habit. One lesson. Right now.",
-    ],
-    levelComplete: [
-      "🏆 Level complete, {name}! You're building something real.",
-      "⚡ That's another level done. The skills you're earning can't be taken away.",
-    ],
-    bossApproaching: [
-      "🎯 Your Boss Battle is ready. This is what puts real proof on your portfolio.",
-    ],
-    portfolioEarned: [
-      "🏆 Portfolio artifact earned. Employers can verify this. It's real.",
-    ],
-    weeklyProgress: [
-      "📈 {name}: {lessons} lessons, {xp} XP this week. Consistent beats talented every time.",
-    ],
-  },
+function hoursAgo(ms: number): number {
+  return (nowMs() - ms) / 3_600_000;
+}
+
+function defaultState(): NotificationState {
+  return {
+    expoPushToken: null,
+    lastSentAt: {} as Record<PushTriggerType | EmailTriggerType, number>,
+    scheduledIds: [],
+    emailOptIn: true,
+    pushOptIn: true,
+  };
+}
+
+// ─── Copy: notification text ───────────────────────────────────────────────────
+
+const PUSH_COPY: Record<PushTriggerType, (ctx?: any) => { title: string; body: string }> = {
+  streak_warning: (ctx: { hoursLeft: number; streak: number }) => ({
+    title: `🔥 ${ctx.streak}-day streak at risk`,
+    body: `${Math.floor(ctx.hoursLeft)}h left today. One lesson keeps it alive.`,
+  }),
+  streak_lost: (ctx: { streak: number }) => ({
+    title: `Streak lost (${ctx.streak} days)`,
+    body: 'Start again today — your progress is still here.',
+  }),
+  streak_milestone: (ctx: { streak: number }) => ({
+    title: `🎉 ${ctx.streak}-day streak!`,
+    body: "You're building real consistency. Keep it up.",
+  }),
+  daily_reminder: (_ctx) => ({
+    title: '⚡ Your desk is waiting',
+    body: 'A 5-minute lesson today keeps the streak alive.',
+  }),
+  lesson_complete: (ctx: { xp: number }) => ({
+    title: `+${ctx.xp} XP earned`,
+    body: 'Great work. Come back tomorrow to keep the streak.',
+  }),
+  stage_up: (ctx: { stageName: string }) => ({
+    title: `🎉 You evolved: ${ctx.stageName}`,
+    body: 'Your worker character has a new look. Check your profile.',
+  }),
 };
 
-function fillTemplate(template: string, vars: Record<string, string>) {
-  return template.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
-}
+// ─── Engine ────────────────────────────────────────────────────────────────────
 
-function pickRandom<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+class NotificationEngineClass {
+  private state: NotificationState | null = null;
+  private loading: Promise<void> | null = null;
 
-function getRoleCopy(trackId: string): RoleCopy {
-  return ROLE_COPY[trackId] ?? ROLE_COPY.default;
-}
+  // ── Bootstrap ─────────────────────────────────────────────────────────────
 
-// ─── Push notification setup ──────────────────────────────────────────────────
+  private async load(): Promise<void> {
+    try {
+      const raw = await AsyncStorage.getItem(STORAGE_KEY);
+      this.state = raw ? (JSON.parse(raw) as NotificationState) : defaultState();
+    } catch {
+      this.state = defaultState();
+    }
+  }
 
-export async function requestPushPermission(): Promise<string | null> {
-  if (!Notifications) return null;
-  try {
+  async ready(): Promise<void> {
+    if (this.state) return;
+    if (!this.loading) this.loading = this.load();
+    await this.loading;
+    this.loading = null;
+  }
+
+  private async save(): Promise<void> {
+    if (!this.state) return;
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+    } catch {}
+  }
+
+  // ── Rate limit check ───────────────────────────────────────────────────────
+
+  private canSend(type: PushTriggerType | EmailTriggerType): boolean {
+    const last = this.state?.lastSentAt?.[type] ?? 0;
+    return hoursAgo(last) >= NOTIFICATION_CONFIG.minIntervalHours;
+  }
+
+  private markSent(type: PushTriggerType | EmailTriggerType): void {
+    if (!this.state) return;
+    this.state.lastSentAt[type] = nowMs();
+  }
+
+  // ── Permissions ───────────────────────────────────────────────────────────
+
+  async requestPermission(): Promise<boolean> {
+    if (Platform.OS === 'web') return false;
+
     const { status: existing } = await Notifications.getPermissionsAsync();
-    const finalStatus = existing === 'granted'
-      ? existing
-      : (await Notifications.requestPermissionsAsync()).status;
+    let finalStatus = existing;
 
-    if (finalStatus !== 'granted') return null;
+    if (existing !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
 
-    const token = await Notifications.getExpoPushTokenAsync();
-    return token.data;
-  } catch { return null; }
-}
+    if (finalStatus !== 'granted') return false;
 
-export async function scheduleDailyReminder(params: {
-  userId: string;
-  trackId: string;
-  userName: string;
-  progress: number;
-  streak: number;
-  hourLocal?: number; // default 19:00 local time
-}) {
-  if (!Notifications) return;
-  const { trackId, userName, progress, streak, hourLocal = 19 } = params;
-  const copy = getRoleCopy(trackId);
+    await this.ready();
+    try {
+      const token = await Notifications.getExpoPushTokenAsync();
+      this.state!.expoPushToken = token.data;
+      this.state!.pushOptIn = true;
+      await this.save();
+    } catch {}
 
-  const isUrgent = streak === 0; // missed yesterday
-  const templates = isUrgent ? copy.streakUrgent : copy.streakReminder;
-  const body = fillTemplate(pickRandom(templates), {
-    name: userName,
-    streak: String(streak),
-    progress: String(Math.round(progress)),
-  });
+    return true;
+  }
 
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: isUrgent ? '🚨 Come back!' : '⚡ Sifter Skill_Up',
-      body,
-      sound: true,
-      badge: isUrgent ? 1 : 0,
+  getExpoPushToken(): string | null {
+    return this.state?.expoPushToken ?? null;
+  }
+
+  // ── Push: schedule local ───────────────────────────────────────────────────
+
+  /** Schedule a local notification N seconds from now */
+  async scheduleLocal(
+    type: PushTriggerType,
+    secondsFromNow: number,
+    ctx?: any,
+  ): Promise<void> {
+    await this.ready();
+    if (!this.state!.pushOptIn) return;
+    if (!this.canSend(type)) return;
+    if (Platform.OS === 'web') return;
+
+    const copy = PUSH_COPY[type](ctx);
+    try {
+      const id = await Notifications.scheduleNotificationAsync({
+        content: { title: copy.title, body: copy.body },
+        trigger: { seconds: secondsFromNow } as any,
+      });
+      this.state!.scheduledIds.push(id);
+      this.markSent(type);
+      await this.save();
+    } catch {}
+  }
+
+  /** Called by StreakEngine when hoursLeft < STREAK.warningHours */
+  async scheduleStreakWarning(hoursLeft: number, streak: number): Promise<void> {
+    if (hoursLeft <= 0) return;
+    const secondsFromNow = Math.max(10, (hoursLeft - 0.25) * 3600); // fire 15min before
+    await this.scheduleLocal('streak_warning', secondsFromNow, { hoursLeft, streak });
+  }
+
+  async sendStreakLost(streak: number): Promise<void> {
+    await this.scheduleLocal('streak_lost', 5, { streak });
+  }
+
+  async sendMilestone(streak: number): Promise<void> {
+    await this.scheduleLocal('streak_milestone', 2, { streak });
+  }
+
+  async sendStageUp(stageName: string): Promise<void> {
+    await this.scheduleLocal('stage_up', 2, { stageName });
+  }
+
+  /** Cancel all pending local notifications */
+  async cancelAll(): Promise<void> {
+    await this.ready();
+    try {
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      this.state!.scheduledIds = [];
+      await this.save();
+    } catch {}
+  }
+
+  // ── Email: Resend ──────────────────────────────────────────────────────────
+  // Fires against your Flask backend which holds the Resend API key.
+  // The backend endpoint should accept POST /notifications/email
+
+  async sendEmail(
+    type: EmailTriggerType,
+    payload: {
+      email: string;
+      name: string;
+      streak?: number;
+      xp?: number;
+      stageName?: string;
+      trackName?: string;
     },
-    trigger: {
-      hour: hourLocal,
-      minute: 0,
-      repeats: true,
-    } as any,
-  });
+    backendBaseUrl: string,
+  ): Promise<void> {
+    await this.ready();
+    if (!this.state!.emailOptIn) return;
+    if (!this.canSend(type)) return;
+
+    try {
+      const res = await fetch(`${backendBaseUrl}/notifications/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, ...payload }),
+      });
+      if (res.ok) {
+        this.markSent(type);
+        await this.save();
+      }
+    } catch {}
+  }
+
+  // ── Settings ───────────────────────────────────────────────────────────────
+
+  async setEmailOptIn(v: boolean): Promise<void> {
+    await this.ready();
+    this.state!.emailOptIn = v;
+    await this.save();
+  }
+
+  async setPushOptIn(v: boolean): Promise<void> {
+    await this.ready();
+    this.state!.pushOptIn = v;
+    await this.save();
+  }
 }
 
-// ─── Server-side notification triggers (SMS + Email via backend) ──────────────
-
-export async function triggerServerNotification(params: {
-  userId: string;
-  type: 'streak_reminder' | 'streak_urgent' | 'level_complete' | 'boss_approaching' | 'portfolio_earned' | 'weekly_progress' | 'monthly_leaderboard';
-  trackId: string;
-  userName: string;
-  data?: Record<string, string>;
-  channels?: Array<'push' | 'sms' | 'email'>;
-}) {
-  // Queued as offline-aware write — sends when connection available
-  await offlineWrite('/api/notifications/trigger', 'POST', params, 'normal');
-}
-
-// ─── In-app notification display config ──────────────────────────────────────
-
-if (Notifications) {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldShowBanner: true,
-      shouldShowList: true,
-      shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
-  });
-}
-
-export { getRoleCopy, fillTemplate, pickRandom };
+export const notificationEngine = new NotificationEngineClass();

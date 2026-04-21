@@ -53,9 +53,6 @@ export interface IslandLevel {
   links?:           Array<{ label: string; url: string }>;
   contextTag?:      string;
 
-  // Lesson simulations
-  lessonSimulations?: Array<Record<string, unknown>>;
-
   // Island-specific
   islandId?:        number;
   chain?:           string;

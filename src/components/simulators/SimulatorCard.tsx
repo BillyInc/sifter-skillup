@@ -8,6 +8,16 @@ import { MemeTokenProfileSim, BundleDetectorSim, MemeExitStrategySim, MemePortfo
 import { CbBtcExplainerSim, AerodromeSwapSim, AgentKitDemoSim, BaseMemecultureSim, BaseBossSim, TonMiniAppDexSim, FragmentTradingSim, TonBossSim, CbCdpStablecoinSim, CbPrimeVsRetailSim, CoinbaseBossSim } from './island12_13_15Sims';
 import { PolygonVsArbitrumSim, AbstractAASim, ChainEvaluatorSim, L2FeeWarsSim, AltChainBossSim, ZkSnarksVsStarksSim, RwaEvaluatorSim, WalletDrainerDrillSim, FlashbotsProtectSim, OpsecBuilderSim, SecurityBossSim, StablecoinRiskSim, AdvancedCryptoBossSim } from './island14_16_17_18Sims';
 import { TonWalletEnhancedSim, TonStakingEnhancedSim, SolanaPumpEnhancedSim, NftMintEnhancedSim, SendBitcoinEnhancedSim, BnbPancakeEnhancedSim, AirdropFarmEnhancedSim } from './walletEnhancedSims';
+import StarkzapSimulatorCard from './StarkzapSimulatorCard';
+import { default as CairoBuilderSimulators } from './CairoBuilderSimulators';
+import JudgmentRenderer from './JudgmentRenderer';
+import BranchingInterviewRenderer from './BranchingInterviewRenderer';
+import Phase1BossRenderer from './Phase1BossRenderer';
+import ResearchWriterSandbox from './ResearchWriterSandbox';
+import CairoBuilderPhase2Scorer from './CairoBuilderPhase2Scorer';
+import { CairoBuilderCodeSandbox } from './CairoBuilderSimulators';
+import { getBossEntry } from '../../data/phase1BossRegistry';
+import { ECOSYSTEM_FINAL_BOSS } from '../../data/tracks/starknet_ecosystem_deep_dive/lab9/ecosystemLab9_part2';
 
  * SimulatorCard — inline "test what you just learnt" interactive exercises.
  *
@@ -22,7 +32,7 @@ import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
   TextInput, Animated, Platform,
 } from 'react-native';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
+import { useTheme, Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 
 // ── Shared types ─────────────────────────────────────────────────────────────
 interface SimProps {
@@ -4745,6 +4755,65 @@ function SolanaCompareSim({ onComplete, onSkip }: SimProps) {
 }
 
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BRANCHING INTERVIEW WRAPPER
+// Ecosystem Deep Dive Final Boss (level 4009) — feeds real coreQuestions from
+// ECOSYSTEM_FINAL_BOSS into BranchingInterviewRenderer.
+// ─────────────────────────────────────────────────────────────────────────────
+function BranchingInterviewWrapper({ onComplete, onSkip }: SimProps) {
+  return (
+    <BranchingInterviewRenderer
+      interviewTitle={ECOSYSTEM_FINAL_BOSS.id}
+      interviewDescription={ECOSYSTEM_FINAL_BOSS.description.trim()}
+      coreQuestions={ECOSYSTEM_FINAL_BOSS.coreQuestions as any}
+      passRequirement={3}
+      onComplete={onComplete}
+      onSkip={onSkip}
+    />
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 1 BOSS WRAPPER
+// Reads the registry to supply Phase1BossRenderer with the correct lab data.
+// islandId here is actually the track boss levelId (3001-3011, 4001-4009, 5001-5013)
+// passed through from LessonScreen via SimulatorCard.
+// ─────────────────────────────────────────────────────────────────────────────
+function Phase1BossWrapper({ onComplete, onSkip, islandId }: SimProps & { islandId?: number }) {
+  const { colors } = useTheme();
+  const entry = getBossEntry(islandId ?? 0);
+
+  if (!entry) {
+    // Should never happen in production — means a boss level ID is missing from registry
+    return (
+      <SimShell icon="⚡" title="Boss Challenge" subtitle="Loading boss data…">
+        <Card>
+          <Text style={{ color: colors.text, fontSize: FontSize.md, textAlign: 'center' }}>
+            Boss data not found for level {islandId}.{'\n'}
+            Check that this level ID is registered in phase1BossRegistry.ts.
+          </Text>
+        </Card>
+        <GhostBtn label="Skip" onPress={onSkip} />
+      </SimShell>
+    );
+  }
+
+  return (
+    <Phase1BossRenderer
+      labId={entry.labId}
+      labTitle={entry.labTitle}
+      taskPool={entry.taskPool}
+      drawPerAttempt={entry.drawPerAttempt}
+      passThreshold={entry.passThreshold}
+      hintsEnabled={entry.hintsEnabled}
+      onComplete={onComplete}
+      onSkip={onSkip}
+      onPhase2Unlock={onComplete}
+    />
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // DISPATCHER — ALL SIMULATORS
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4862,6 +4931,50 @@ const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
   solanaJupiter:        SolanaJupiterSim,
   solanaStaking:        SolanaStakingSim,
   solanaCompare:        SolanaCompareSim,
+
+  // ── Starkzap / Navigator simulators ─────────────────────────────────────────
+  // All starkzap-* types route through StarkzapSimulatorCard which handles
+  // the actual SDK calls to Starknet Sepolia.
+  'starkzap-swap':              (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-swap" />,
+  'starkzap-stake':             (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-stake" />,
+  'starkzap-lend':              (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-lend" />,
+  'starkzap-borrow':            (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-borrow" />,
+  'starkzap-dca':               (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-dca" />,
+  'starkzap-bridge':            (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-bridge" />,
+  'starkzap-balance':           (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-balance" />,
+  'starkzap-ecosystem-read':    (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-ecosystem-read" />,
+  'starkzap-mainnet-push':      (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-mainnet-push" />,
+  'starkzap-package-install':   (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-package-install" />,
+  'starkzap-wallet':            (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-wallet" />,
+  'starkzap-gasless':           (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-gasless" />,
+  'starkzap-build':             (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-build" />,
+  'starkzap-boss':              (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-boss" />,
+
+  // ── Cairo Builder simulator types (8 types) ──────────────────────────────────
+  'cairo-typecheck':  (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-typecheck" />,
+  'cairo-invoke':     (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-invoke" />,
+  'cairo-deploy':     (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-deploy" />,
+  'cairo-snforge':    (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-snforge" />,
+  'cairo-starkzap':   (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-starkzap" />,
+  'cairo-audit':      (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-audit" />,
+  'cairo-build':      (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-build" />,
+  'cairo-boss':       (p: any) => <CairoBuilderSimulators {...p} simulatorType="cairo-boss" />,
+
+  // ── Deterministic scoring simulator types ────────────────────────────────────
+  // These replace the old AI-scored judgment simulations
+  'judgment-communication':  (p: any) => <JudgmentRenderer type="judgment-communication" {...p} />,
+  'judgment-dataInterpret':  (p: any) => <JudgmentRenderer type="judgment-dataInterpret" {...p} />,
+  'judgment-riskAssess':     (p: any) => <JudgmentRenderer type="judgment-riskAssess" {...p} />,
+  'judgment-prioritisation': (p: any) => <JudgmentRenderer type="judgment-prioritisation" {...p} />,
+  'judgment-escalation':     (p: any) => <JudgmentRenderer type="judgment-escalation" {...p} />,
+  'judgment-ethicalChoice':  (p: any) => <JudgmentRenderer type="judgment-ethicalChoice" {...p} />,
+  'judgment-negotiation':    (p: any) => <JudgmentRenderer type="judgment-negotiation" {...p} />,
+  'phase1-boss':             (p: any) => <Phase1BossWrapper {...p} />,
+  'branching-interview':     (p: any) => <BranchingInterviewWrapper {...p} />,
+  'sandbox-research-writer': (p: any) => <ResearchWriterSandbox {...p} />,
+  'cairo-phase2':            (p: any) => <CairoBuilderPhase2Scorer {...p} />,
+  'sandbox-sql':             (p: any) => <CairoBuilderCodeSandbox {...p} simulatorType={p.simulatorType ?? 'sandbox-sql'} />,
+
 };
 
 interface SimulatorCardProps {
@@ -4884,7 +4997,7 @@ export default function SimulatorCard({ simulatorType, islandId = 1, onComplete,
       </SimShell>
     );
   }
-  return <Sim onComplete={onComplete} onSkip={onSkip} islandId={islandId} />;
+  return <Sim onComplete={onComplete} onSkip={onSkip} islandId={islandId} simulatorType={simulatorType} />;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

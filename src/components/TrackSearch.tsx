@@ -8,13 +8,12 @@
 import React, { useState, useMemo } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, TextInput,
-  Modal, FlatList,
+  Modal, FlatList, SafeAreaView,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
-import { searchTracks } from '../lib/trackFeedConfig';
+import { ALL_MONITORABLE_TRACKS, searchTracks } from '../lib/trackFeedConfig';
 import type { MonitoredTrack } from '../types/feed';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -189,7 +188,7 @@ export function TrackSearch({ monitoredTracks, onAdd, onRemove, onClose }: Track
         {/* Results */}
         <FlatList
           data={listData}
-          keyExtractor={(item) =>
+          keyExtractor={(item, i) =>
             item.type === 'header' ? `h-${item.fieldId}` : `t-${item.track.id}`
           }
           contentContainerStyle={styles.list}

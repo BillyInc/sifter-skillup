@@ -1,5 +1,6 @@
 import FieldsScreen from '@/screens/FieldsScreen';
-
+import { useLocalSearchParams } from 'expo-router';
 export default function FieldsTab() {
-  return <FieldsScreen />;
+  const params = useLocalSearchParams();
+  return <FieldsScreen route={{ params }} navigation={{}} />;
 }

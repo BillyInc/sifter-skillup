@@ -12,20 +12,20 @@
  *   - Crypto special case: shows island chain pathway
  */
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, Easing, Dimensions, Modal,
-  TouchableWithoutFeedback,
+  Animated, Easing, Dimensions, SafeAreaView, Modal,
+  TouchableWithoutFeedback, FlatList, Platform,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
-import { useTheme, Radius, FontSize, FontWeight, Spacing } from '../theme';
+import { useTheme, Radius, FontSize, FontWeight, Shadow, Spacing } from '../theme';
 import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
+import { useIsWebWide } from '../components/web/WebGrid';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 
@@ -53,6 +53,7 @@ function getFieldGradient(id: string): [string, string, string] {
 // ─── Island chain (Crypto special case) ──────────────────────────────────────
 
 function IslandChain({ onIslandPress }: { onIslandPress: (island: any) => void }) {
+  const { colors } = useTheme();
   const scrollRef  = useRef<ScrollView>(null);
 
   const floats = ISLANDS.slice(0, 8).map((_, i) =>
@@ -183,7 +184,8 @@ function FieldPortal({
   onClose: () => void;
   fieldColor: string;
 }) {
-  const navigation = useRouter();
+  const navigation = useNavigation<any>();
+  const { colors } = useTheme();
   const entrance   = useRef(new Animated.Value(0)).current;
   const slideY     = useRef(new Animated.Value(40)).current;
   const isCrypto   = field.id === 'crypto';
@@ -207,14 +209,14 @@ function FieldPortal({
     setTimeout(() => {
       if (track.navigateTo === 'Quant') navigation.push('/skills/quant-map');
       else if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') navigation.push('/map/island');
-      else if (track.navigateTo === 'StarknetTrack') navigation.push({ pathname: '/starknet-track', params: { trackId: track.id, fieldId: field.id, trackName: track.name } } as any);
-      else navigation.push({ pathname: '/world', params: {
+      else if (track.navigateTo === 'StarknetTrack') navigation.push('/starknet-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
+      else navigation.push('/world', {
         worldId: track.worldThemeId,
         trackId: track.id,
         fieldId: field.id,
         trackName: track.name,
-        live: String(track.status === 'live'),
-      }} as any);
+        live: track.status === 'live',
+      });
     }, 220);
   };
 
@@ -294,6 +296,7 @@ function FieldPortal({
 // ─── Single field card ─────────────────────────────────────────────────────────
 
 function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail | null; index: number }) {
+  const { colors } = useTheme();
   const C          = fieldColor(field.id);
   const gradient   = getFieldGradient(field.id);
   const [open, setOpen] = useState(false);
@@ -429,6 +432,8 @@ function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail |
 // ─── Screen ────────────────────────────────────────────────────────────────────
 
 export default function FieldsScreen() {
+  const { colors } = useTheme();
+  const isWebWide  = useIsWebWide();
 
   const allDetails = getAllFieldDetails();
 
@@ -457,7 +462,7 @@ export default function FieldsScreen() {
         contentContainerStyle={{ paddingBottom: PEEK_HEIGHT + 20 }}
       >
         {fields.map((field, i) => {
-          const detail = getFieldDetail(field.id) ?? null;
+          const detail = getFieldDetail(field.id);
           return (
             <View key={field.id} style={[screen.cardWrap, { marginBottom: Spacing.sm }]}>
               <FieldCard field={field} detail={detail} index={i} />

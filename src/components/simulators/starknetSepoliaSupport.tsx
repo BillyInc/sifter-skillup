@@ -19,10 +19,9 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, Linking, ActivityIndicator,
+  View, Text, TouchableOpacity, StyleSheet, Clipboard, Linking, ActivityIndicator,
 } from 'react-native';
-import * as Clipboard from 'expo-clipboard';
-import { Colors, Spacing, Radius, FontSize } from '../../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 
 // ── Starknet Sepolia constants ────────────────────────────────────────────────
 
@@ -146,7 +145,7 @@ export function useStarknetSepolia(address: string | null): SepoliaState {
 
   const copyAddress = () => {
     if (address) {
-      Clipboard.setStringAsync(address);
+      Clipboard.setString(address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }

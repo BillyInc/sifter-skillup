@@ -880,6 +880,7 @@ export function BridgeEvalSim({ onComplete, onSkip }: SimProps) {
   type Rating = 'green' | 'yellow' | 'red';
   const [ratings, setRatings] = useState<Record<string, Rating>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [revealTrap, setRevealTrap] = useState(false);
 
   const bridge = {
     name: 'StarBridge',
@@ -1407,6 +1408,8 @@ export function SafeBridgingDrillSim({ onComplete, onSkip }: SimProps) {
 // ─────────────────────────────────────────────────────────────────────────────
 export function BridgeAggregatorSim({ onComplete, onSkip }: SimProps) {
   const [amount, setAmount] = useState('5000');
+  const [from, setFrom]     = useState('Ethereum');
+  const [to, setTo]         = useState('Arbitrum');
   const [routes, setRoutes] = useState<null | typeof ROUTE_DATA>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
@@ -1550,11 +1553,13 @@ export function BridgeAggregatorSim({ onComplete, onSkip }: SimProps) {
 export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
   const [mode, setMode] = useState<'analogy' | 'batch' | 'recursive'>('analogy');
   const [waldoFound, setWaldoFound] = useState(false);
+  const [proofGenerated, setProofGenerated] = useState(false);
   const [batchSize, setBatchSize] = useState(1000);
   const [recursionDepth, setRecursionDepth] = useState(1);
   const [confirmed, setConfirmed] = useState(false);
 
   const proofSizeBytes = { 1000: 288, 5000: 288, 10000: 288 }; // ZK proof is constant size!
+  const verificationCost = { 1: 50, 2: 50, 3: 50 }; // Same Ethereum call regardless
   const txsCovered = { 1: batchSize, 2: batchSize * 10, 3: batchSize * 100 };
 
   return (

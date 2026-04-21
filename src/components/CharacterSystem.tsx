@@ -10,13 +10,16 @@
  */
 
 import React, { useRef, useEffect } from 'react';
-import { Animated } from 'react-native';
+import { View, Animated, StyleSheet, Platform } from 'react-native';
 import Svg, {
   Circle, Rect, Ellipse, Path, G, Defs, LinearGradient, Stop,
   Text as SvgText, Line, Polygon,
 } from 'react-native-svg';
 import {
+  useTheme,
+  Spacing,
   AnimPreset,
+  TRACK_TOOLS,
   getTrackTools,
   XP_STAGES,
 } from '../theme';

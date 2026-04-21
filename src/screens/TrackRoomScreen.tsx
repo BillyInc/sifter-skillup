@@ -11,15 +11,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity,
-  KeyboardAvoidingView, Platform, useWindowDimensions,
+  SafeAreaView, KeyboardAvoidingView, Platform, useWindowDimensions,
   ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
-import RoomMessage from '../components/RoomMessage';
+import RoomMessage, { QuickReactBar } from '../components/RoomMessage';
 import { API } from '../lib/api';
-import type { RoomMessage as Msg } from '../types/social';
+import type { RoomMessage as Msg, Room } from '../types/social';
 
 const POLL_MS = 10000;
 
@@ -34,6 +33,7 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
   const { width }   = useWindowDimensions();
   const isWebWide   = Platform.OS === 'web' && width >= 768;
 
+  const trackId   = route?.params?.trackId   ?? 'defi-research-analyst';
   const trackName = route?.params?.trackName ?? 'Track';
   const roomId    = route?.params?.roomId;
 
@@ -43,7 +43,7 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
   const [sending,     setSending]     = useState(false);
   const [reactTarget, setReactTarget] = useState<string | null>(null);
   const flatRef = useRef<FlatList>(null);
-  const pollRef = useRef<ReturnType<typeof setInterval>>(undefined);
+  const pollRef = useRef<ReturnType<typeof setInterval>>();
 
   const fetchMessages = useCallback(async () => {
     if (!roomId) { setLoading(false); return; }

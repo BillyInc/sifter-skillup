@@ -1,4 +1,3 @@
-// @ts-nocheck
 // ⚡ Sifter SkillUp — Island 6 Solana Simulators
 // File: island06SolanaSimulatorDefs.tsx
 //
@@ -30,7 +29,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput, Animated, Linking,
+  TextInput, Animated, Clipboard, Linking,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
 import { useSimulatorWallet } from '../../hooks/useSimulatorWallet';

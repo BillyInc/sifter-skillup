@@ -13,12 +13,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {
   View, Text, StyleSheet, TextInput, TouchableOpacity,
-  KeyboardAvoidingView, Platform,
+  SafeAreaView, KeyboardAvoidingView, Platform,
   ActivityIndicator, ScrollView, Animated, Dimensions, Linking,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme, Spacing, Radius, FontSize } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
 
 const { width: W, height: H } = Dimensions.get('window');
 
@@ -79,7 +79,7 @@ function CircuitBackground({ isDark }: { isDark: boolean }) {
   const rows = Math.ceil(H / 40);
   const opacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });
   return (
-    <Animated.View style={[StyleSheet.absoluteFill, { opacity }]} pointerEvents="none">
+    <Animated.View style={[StyleSheet.absoluteFillObject, { opacity }]} pointerEvents="none">
       {Array.from({ length: rows }).map((_, r) =>
         Array.from({ length: cols }).map((_, c) => (
           <View key={`${r}-${c}`} style={{
@@ -149,7 +149,7 @@ function AuthInput({ placeholder, value, onChangeText, secureTextEntry, keyboard
 
 // ─── Starknet onboarding mode ─────────────────────────────────────────────────
 
-function StarknetMode({ colors: _colors, onBack, onSubmit, loading }: {
+function StarknetMode({ colors, onBack, onSubmit, loading }: {
   colors: any; onBack: () => void; onSubmit: (email: string) => void; loading: boolean;
 }) {
   const [email, setEmail] = useState('');
@@ -173,7 +173,7 @@ function StarknetMode({ colors: _colors, onBack, onSubmit, loading }: {
         {[
           ['⚡', 'Gasless — AVNU Paymaster covers all fees'],
           ['🔐', 'No seed phrase — secured by Privy email auth'],
-          ['📍', 'Land directly on Starknet Island #19'],
+          ['📍', 'Land directly on Starknet Island #18'],
           ['🧪', 'Execute real Sepolia transactions as you learn'],
         ].map(([icon, text]) => (
           <View key={text} style={s.benefitRow}>
@@ -246,10 +246,22 @@ export default function AuthScreen() {
     } catch (e: any) { setError(e.message || 'Wallet error'); } finally { setLoading(false); }
   };
 
+  const router = useRouter();
+
   const handleStarknet = async (starkEmail: string) => {
     setError('');
-    try { await authStarknet(starkEmail); }
-    catch (e: any) { setError(e.message || 'Starknet error'); setMode('welcome'); }
+    setMode('connecting');
+    try {
+      await authStarknet(starkEmail);
+      // Route directly to Starknet Island (Island 18, levels 291-310)
+      router.replace({
+        pathname: '/(tabs)/map/island' as any,
+        params: { initialIsland: '18' },
+      });
+    } catch (e: any) {
+      setError(e.message || 'Starknet error');
+      setMode('starknet');
+    }
   };
 
   const cardStyle = {

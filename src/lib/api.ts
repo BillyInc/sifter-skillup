@@ -11,6 +11,7 @@
  */
 import * as SecureStore from 'expo-secure-store';
 import { logger, logApiCall } from './logger';
+import { API_BASE } from './config';
 import type {
   UserProfile, AuthResponse, LevelCompletePayload, LevelCompleteResult,
   GameState, UserProgress, LastPosition, Badge, UserBadge,
@@ -27,7 +28,7 @@ import type {
 // Re-export types for call sites that import { UserProfile, Badge, FeedItem } from './api'
 export type { UserProfile, Badge, FeedItem } from '../types/api';
 
-export const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
+export { API_BASE } from './config';
 
 const TOKEN_KEY = 'sifter_auth_token_v2';
 

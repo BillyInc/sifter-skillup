@@ -1,36 +1,24 @@
 /**
- * Sifter Skill_Up — World Screen (NEW)
- *
- * Full-screen immersive world for each skill track.
- * Used for both:
- *  - Coming-soon tracks (shows the world + lock message)
- *  - Live tracks with their own world identity before entering content
- *
- * Navigation:
- *   navigation.navigate('World', {
- *     worldId: 'quant-quarter',
- *     trackId: 'quant-trader',
- *     fieldId: 'quant',
- *     trackName: 'Quant Trader',
- *     live: false,
- *   })
+ * Sifter Skill_Up — World Screen (fixed)
+ * Fixes:
+ *   Bug #1: WorldScreen now reads labId and loads Navigator/Ecosystem/Cairo lab content
+ *   Bug #3: routeParams was undefined — now uses useLocalSearchParams() correctly
  */
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  Animated, Dimensions, ScrollView,
+  View, Text, StyleSheet, TouchableOpacity, SafeAreaView,
+  Animated, Dimensions, ScrollView, Platform, ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { getWorldTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
-import { getFieldDetail } from '../data/fieldDetails';
+import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, type WorldTheme } from '../theme';
+import { getFieldDetail, isTrackLive } from '../data/fieldDetails';
 import { getField } from '../data/fields';
 
 const { width: W, height: H } = Dimensions.get('window');
 const NUM_PARTICLES = 18;
 
-// ─── Floating particle ────────────────────────────────────────────────────────
+// ─── Floating particle ─────────────────────────────────────────────────────────
 
 function Particle({ color, delay, index }: { color: string; delay: number; index: number }) {
   const x     = useRef(new Animated.Value(Math.random() * W)).current;
@@ -47,7 +35,6 @@ function Particle({ color, delay, index }: { color: string; delay: number; index
       x.setValue(startX + (Math.random() - 0.5) * 80);
       y.setValue(H + 20);
       alpha.setValue(0);
-
       Animated.sequence([
         Animated.delay(delay + index * 200),
         Animated.parallel([
@@ -63,77 +50,269 @@ function Particle({ color, delay, index }: { color: string; delay: number; index
   }, []);
 
   return (
-    <Animated.View
-      pointerEvents="none"
-      style={{
-        position: 'absolute',
-        width: size, height: size, borderRadius: size / 2,
-        backgroundColor: color,
-        opacity: alpha,
-        transform: [{ translateX: x }, { translateY: y }, { scale }],
-      }}
+    <Animated.View pointerEvents="none"
+      style={{ position: 'absolute', width: size, height: size, borderRadius: size / 2,
+        backgroundColor: color, opacity: alpha,
+        transform: [{ translateX: x }, { translateY: y }, { scale }] }}
     />
   );
 }
-
-// ─── Animated glow orb ────────────────────────────────────────────────────────
 
 function GlowOrb({ color, size, delay }: { color: string; size: number; delay: number }) {
   const scale = useRef(new Animated.Value(0.85)).current;
   const alpha = useRef(new Animated.Value(0.3)).current;
-
   useEffect(() => {
     Animated.delay(delay).start(() => {
-      Animated.loop(
-        Animated.parallel([
-          Animated.sequence([
-            Animated.timing(scale, { toValue: 1.15, ...AnimPreset.pulse }),
-            Animated.timing(scale, { toValue: 0.85, ...AnimPreset.pulse }),
-          ]),
-          Animated.sequence([
-            Animated.timing(alpha, { toValue: 0.55, ...AnimPreset.pulse }),
-            Animated.timing(alpha, { toValue: 0.2,  ...AnimPreset.pulse }),
-          ]),
-        ])
-      ).start();
+      Animated.loop(Animated.parallel([
+        Animated.sequence([
+          Animated.timing(scale, { toValue: 1.15, ...AnimPreset.pulse }),
+          Animated.timing(scale, { toValue: 0.85, ...AnimPreset.pulse }),
+        ]),
+        Animated.sequence([
+          Animated.timing(alpha, { toValue: 0.55, ...AnimPreset.pulse }),
+          Animated.timing(alpha, { toValue: 0.2,  ...AnimPreset.pulse }),
+        ]),
+      ])).start();
     });
   }, [delay]);
-
   return (
-    <Animated.View
-      pointerEvents="none"
-      style={{
-        width: size, height: size, borderRadius: size / 2,
-        backgroundColor: color,
-        opacity: alpha,
-        transform: [{ scale }],
-        position: 'absolute',
-      }}
+    <Animated.View pointerEvents="none"
+      style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: color,
+        opacity: alpha, transform: [{ scale }], position: 'absolute' }}
     />
   );
 }
 
-// ─── Screen ────────────────────────────────────────────────────────────────────
+// ─── Lab content loader ────────────────────────────────────────────────────────
+// Dynamically load lab data based on labId and trackId
+
+async function loadLabLessons(trackId: string, labId: string): Promise<any[] | null> {
+  const labNum = parseInt(labId, 10);
+  try {
+    if (trackId === 'starknet-defi-navigator') {
+      const mod = await import(`../data/tracks/starknet_defi_navigator/lab${labNum}/navigatorLab${labNum}_lessons1to4`);
+      return mod.default ?? mod.lessons ?? null;
+    }
+    if (trackId === 'starknet-ecosystem-deep-dive') {
+      const mod = await import(`../data/tracks/starknet_ecosystem_deep_dive/lab${labNum}/ecosystemLab${labNum}_lessons1to3`);
+      return mod.default ?? mod.lessons ?? null;
+    }
+    if (trackId === 'cairo-builder') {
+      const mod = await import(`../data/tracks/cairo_builder/cairoBuilderLab${labNum}`);
+      return mod.default ?? mod.lessons ?? null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// ─── Lab World Screen (when labId is present) ─────────────────────────────────
+
+function LabWorldScreen({
+  trackId, trackName, labId, labNumber, accentColor,
+}: {
+  trackId: string; trackName: string; labId: string;
+  labNumber: string; accentColor: string;
+}) {
+  const router = useRouter();
+  const { colors } = useTheme();
+  const [loading, setLoading] = useState(true);
+  const [lessonCount, setLessonCount] = useState(0);
+  const enterAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    loadLabLessons(trackId, labId).then(lessons => {
+      setLessonCount(lessons?.length ?? 0);
+      setLoading(false);
+    });
+    Animated.timing(enterAnim, { toValue: 1, duration: 600, useNativeDriver: true }).start();
+  }, [labId, trackId]);
+
+  const labNum = parseInt(labNumber || labId, 10);
+
+  // Navigator boss IDs: lab N boss = level 3000 + N
+  // Ecosystem boss IDs: lab N boss = level 4000 + N
+  // Cairo boss IDs:     lab N boss = level 5000 + N
+  const bossLevelId =
+    trackId === 'starknet-defi-navigator'     ? 3000 + labNum :
+    trackId === 'starknet-ecosystem-deep-dive' ? 4000 + labNum :
+    trackId === 'cairo-builder'               ? 5000 + labNum :
+    3000 + labNum;
+
+  function handleStartLab() {
+    // Navigate to lesson with first lesson of this lab
+    router.push({
+      pathname: '/(tabs)/map/lesson' as any,
+      params: { levelId: bossLevelId - 1, trackId, labId, labNumber },
+    });
+  }
+
+  function handleStartBoss() {
+    router.push({
+      pathname: '/(tabs)/map/lesson' as any,
+      params: { levelId: bossLevelId, trackId, labId, labNumber, isBoss: 'true' },
+    });
+  }
+
+  const contentStyle = {
+    opacity: enterAnim,
+    transform: [{ translateY: enterAnim.interpolate({ inputRange: [0,1], outputRange: [30, 0] }) }],
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#0D0D1A' }}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+        <Text style={styles.backBtnText}>← Back</Text>
+      </TouchableOpacity>
+
+      <ScrollView contentContainerStyle={{ padding: Spacing.lg, gap: Spacing.lg }}>
+        <Animated.View style={[{ alignItems: 'center', gap: Spacing.md }, contentStyle]}>
+          <View style={{ backgroundColor: `${accentColor}20`, borderRadius: Radius.full,
+            paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm,
+            borderWidth: 1, borderColor: `${accentColor}50` }}>
+            <Text style={{ color: accentColor, fontWeight: '800', fontSize: FontSize.sm }}>
+              {trackName.toUpperCase()}
+            </Text>
+          </View>
+
+          <Text style={{ color: '#fff', fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' }}>
+            Lab {labNum}
+          </Text>
+
+          {loading ? (
+            <ActivityIndicator color={accentColor} size="large" />
+          ) : (
+            <Text style={{ color: '#aaa', fontSize: FontSize.md, textAlign: 'center' }}>
+              {lessonCount > 0 ? `${lessonCount} lessons + boss challenge` : 'Ready to begin'}
+            </Text>
+          )}
+        </Animated.View>
+
+        {/* Lab info cards */}
+        <Animated.View style={[{ gap: Spacing.md }, contentStyle]}>
+          <View style={{ backgroundColor: '#1A1A2E', borderRadius: Radius.lg, padding: Spacing.lg,
+            borderWidth: 1, borderColor: `${accentColor}30`, gap: Spacing.sm }}>
+            <Text style={{ color: accentColor, fontWeight: '800', fontSize: FontSize.sm }}>
+              📚 LESSONS
+            </Text>
+            <Text style={{ color: '#ddd', fontSize: FontSize.md, lineHeight: 22 }}>
+              Work through all lessons to master the concepts before the boss challenge.
+              Each lesson is scored deterministically — your answers are checked against
+              Starknet industry standards curated by the platform.
+            </Text>
+          </View>
+
+          <View style={{ backgroundColor: '#1A1A2E', borderRadius: Radius.lg, padding: Spacing.lg,
+            borderWidth: 1, borderColor: '#FF6B0030', gap: Spacing.sm }}>
+            <Text style={{ color: '#FF6B00', fontWeight: '800', fontSize: FontSize.sm }}>
+              🔥 BOSS CHALLENGE
+            </Text>
+            <Text style={{ color: '#ddd', fontSize: FontSize.md, lineHeight: 22 }}>
+              Phase 1: Platform-scored MCQ (15 questions, 80% pass threshold).{'\n'}
+              Phase 2: Practical implementation verified by Starknet Sepolia or snforge test output.
+            </Text>
+          </View>
+
+          {/* Sepolia / Starkzap indicator */}
+          {(trackId === 'starknet-defi-navigator' || trackId === 'cairo-builder') && (
+            <View style={{ backgroundColor: '#0A2A1A', borderRadius: Radius.lg, padding: Spacing.md,
+              borderWidth: 1, borderColor: '#00FF8830', flexDirection: 'row', gap: Spacing.sm,
+              alignItems: 'center' }}>
+              <Text style={{ fontSize: 20 }}>⚡</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: '#00FF88', fontWeight: '800', fontSize: FontSize.xs }}>
+                  STARKNET SEPOLIA ACTIVE
+                </Text>
+                <Text style={{ color: '#aaa', fontSize: FontSize.xs, marginTop: 2 }}>
+                  Transactions verified on-chain via Starkzap + BlastAPI RPC
+                </Text>
+              </View>
+            </View>
+          )}
+        </Animated.View>
+
+        {/* CTAs */}
+        <Animated.View style={[{ gap: Spacing.md }, contentStyle]}>
+          <TouchableOpacity
+            style={{ backgroundColor: accentColor, borderRadius: Radius.xl,
+              paddingVertical: Spacing.lg, alignItems: 'center' }}
+            onPress={handleStartLab}
+            activeOpacity={0.85}
+          >
+            <Text style={{ color: '#fff', fontSize: FontSize.lg, fontWeight: '900' }}>
+              Start Lab {labNum} →
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{ backgroundColor: '#FF6B00', borderRadius: Radius.xl,
+              paddingVertical: Spacing.md, alignItems: 'center',
+              borderWidth: 1.5, borderColor: '#FF6B0060' }}
+            onPress={handleStartBoss}
+            activeOpacity={0.85}
+          >
+            <Text style={{ color: '#fff', fontSize: FontSize.md, fontWeight: '900' }}>
+              🔥 Go Straight to Boss Challenge
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+// ─── Main WorldScreen ──────────────────────────────────────────────────────────
 
 export default function WorldScreen() {
-  const navigation     = useRouter();
-  const params         = useLocalSearchParams<{ worldId?: string; trackId?: string; fieldId?: string; trackName?: string; live?: string }>();
+  const router = useRouter();
+  const { colors } = useTheme();
 
-  const {
-    worldId   = 'default',
-    trackId   = '',
-    fieldId   = '',
-  } = params;
-  const live = params.live === 'true';
+  // Bug #3 fix: use useLocalSearchParams() — not useRoute() which gives undefined routeParams
+  const params = useLocalSearchParams<{
+    worldId?: string;
+    trackId?: string;
+    fieldId?: string;
+    trackName?: string;
+    live?: string;
+    labId?: string;
+    labNumber?: string;
+  }>();
 
-  const worldTheme  = getWorldTheme(worldId);
-  const field       = fieldId ? getField(fieldId) : null;
-  const detail      = fieldId ? getFieldDetail(fieldId) : null;
-  const track       = detail
-    ? [...(detail.generalTracks), ...(detail.specificTracks)].find(t => t.id === trackId)
+  const worldId   = params.worldId   ?? 'default';
+  const trackId   = params.trackId   ?? '';
+  const fieldId   = params.fieldId   ?? '';
+  const trackName = params.trackName ?? 'World';
+  const live      = params.live === 'true' || params.live === '1';
+  const labId     = params.labId     ?? '';
+  const labNumber = params.labNumber ?? '';
+
+  // Bug #1 fix: if labId provided, render LabWorldScreen directly
+  if (labId) {
+    const accentColor =
+      trackId === 'starknet-defi-navigator'      ? '#EC4899' :
+      trackId === 'starknet-ecosystem-deep-dive'  ? '#6366F1' :
+      trackId === 'cairo-builder'                 ? '#F97316' :
+      '#EC4899';
+
+    return (
+      <LabWorldScreen
+        trackId={trackId}
+        trackName={trackName}
+        labId={labId}
+        labNumber={labNumber}
+        accentColor={accentColor}
+      />
+    );
+  }
+
+  const worldTheme = getWorldTheme(worldId);
+  const field      = fieldId ? getField(fieldId) : null;
+  const detail     = fieldId ? getFieldDetail(fieldId) : null;
+  const track      = detail
+    ? [...(detail.generalTracks ?? []), ...(detail.specificTracks ?? [])].find(t => t.id === trackId)
     : null;
 
-  // Entrance animations
   const headerAnim  = useRef(new Animated.Value(0)).current;
   const contentAnim = useRef(new Animated.Value(0)).current;
 
@@ -154,28 +333,24 @@ export default function WorldScreen() {
   };
 
   const handleCTA = () => {
-    if (!live) return; // do nothing for coming-soon
-    // Navigate based on track type
-    if (trackId.startsWith('quant'))         { navigation.navigate('QuantMap', {}); return; }
-    if (trackId.startsWith('defi') || trackId.startsWith('onchain')) {
-      navigation.push('/map/island'); return;
-    }
-    navigation.push('/map/island');
+    if (!live) return;
+    if (trackId.startsWith('quant'))      { router.push('/quant-map' as any); return; }
+    if (trackId === 'starknet-defi-navigator')      { router.push('/starknet-track' as any); return; }
+    if (trackId === 'starknet-ecosystem-deep-dive') { router.push('/ecosystem-track' as any); return; }
+    if (trackId === 'cairo-builder')                { router.push('/cairo-builder-track' as any); return; }
+    router.push('/(tabs)/map/island' as any);
   };
 
   const [bg0, bg1] = worldTheme.bgGradient;
 
   return (
     <View style={[styles.screen, { backgroundColor: bg0 }]}>
-      {/* Gradient background simulation (two-tone) */}
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: bg1, top: H * 0.4 }]} />
+      <View style={[StyleSheet.absoluteFillObject, { backgroundColor: bg1, top: H * 0.4 }]} />
 
-      {/* Particles */}
       {Array.from({ length: NUM_PARTICLES }).map((_, i) => (
         <Particle key={i} color={worldTheme.particleColor} delay={i * 300} index={i} />
       ))}
 
-      {/* Glow orbs */}
       <View style={styles.orbContainer} pointerEvents="none">
         <GlowOrb color={worldTheme.glowColor} size={320} delay={0} />
       </View>
@@ -184,137 +359,49 @@ export default function WorldScreen() {
       </View>
 
       <SafeAreaView style={{ flex: 1 }}>
-        {/* Back button */}
-        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.back()}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Text style={styles.backBtnText}>←</Text>
         </TouchableOpacity>
 
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* World header */}
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <Animated.View style={[styles.worldHeader, headerStyle]}>
             <Text style={styles.worldEmoji}>{worldTheme.emoji}</Text>
             <Text style={styles.worldName}>{worldTheme.name}</Text>
-            {track && (
-              <Text style={styles.trackName}>{track.name}</Text>
-            )}
-            {track && (
-              <Text style={[styles.trackTagline, { color: worldTheme.primaryColor }]}>
-                {track.tagline}
-              </Text>
+            {trackName !== 'World' && (
+              <Text style={styles.worldSub}>{trackName}</Text>
             )}
           </Animated.View>
 
-          {/* Content card */}
-          <Animated.View style={[
-            styles.contentCard,
-            { backgroundColor: 'rgba(255,255,255,0.07)', borderColor: worldTheme.primaryColor + '40' },
-            contentStyle,
-          ]}>
-            {track && (
-              <>
-                <Text style={styles.contentLabel}>About this track</Text>
-                <Text style={styles.contentDesc}>{track.description}</Text>
-              </>
-            )}
-
-            {/* Type badge */}
-            {track && (
-              <View style={styles.badgeRow}>
-                <View style={[styles.typeBadge, {
-                  backgroundColor: track.type === 'GENERAL' ? '#052e16' : '#1e1b4b',
-                }]}>
-                  <Text style={[styles.typeBadgeText, {
-                    color: track.type === 'GENERAL' ? '#4ade80' : '#818cf8',
-                  }]}>
-                    {track.type} TRACK
-                  </Text>
-                </View>
-                {field && (
-                  <View style={[styles.fieldBadge, { backgroundColor: field.color + '20', borderColor: field.color + '40' }]}>
-                    <Text style={{ fontSize: 13 }}>{field.emoji}</Text>
-                    <Text style={[styles.fieldBadgeText, { color: field.color }]}>{field.name}</Text>
-                  </View>
-                )}
-              </View>
-            )}
-
-            {/* Status block */}
+          <Animated.View style={[styles.worldContent, contentStyle]}>
             {live ? (
-              <View style={[styles.statusBlock, { backgroundColor: '#052e16', borderColor: '#4ade8040' }]}>
-                <Text style={styles.statusEmoji}>⚡</Text>
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.statusTitle, { color: '#4ade80' }]}>Live — Content Available</Text>
-                  <Text style={[styles.statusBody, { color: 'rgba(255,255,255,0.7)' }]}>
-                    Content is ready. Tap below to start your journey in this world.
-                  </Text>
-                </View>
-              </View>
-            ) : (
-              <View style={[styles.statusBlock, { backgroundColor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)' }]}>
-                <Text style={styles.statusEmoji}>🔒</Text>
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.statusTitle, { color: 'rgba(255,255,255,0.9)' }]}>Coming Soon</Text>
-                  <Text style={[styles.statusBody, { color: 'rgba(255,255,255,0.55)' }]}>
-                    This world is under construction. Complete the active tracks to prepare — the skills carry over directly when this launches.
-                  </Text>
-                </View>
-              </View>
-            )}
-          </Animated.View>
-
-          {/* CTA */}
-          <Animated.View style={[styles.ctaWrap, contentStyle]}>
-            {live ? (
-              <TouchableOpacity
-                style={[styles.ctaBtn, { backgroundColor: worldTheme.primaryColor }]}
-                onPress={handleCTA}
-                activeOpacity={0.85}
-              >
-                <Text style={styles.ctaBtnText}>Enter World →</Text>
+              <TouchableOpacity style={styles.ctaBtn} onPress={handleCTA} activeOpacity={0.85}>
+                <Text style={styles.ctaBtnText}>Enter {trackName} →</Text>
               </TouchableOpacity>
             ) : (
-              <View style={[styles.ctaBtn, { backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.15)' }]}>
-                <Text style={[styles.ctaBtnText, { color: 'rgba(255,255,255,0.5)' }]}>🔒 Coming Soon</Text>
+              <View style={styles.lockedBadge}>
+                <Text style={styles.lockedText}>🔒 Coming Soon</Text>
               </View>
             )}
           </Animated.View>
-
-          <View style={{ height: 40 }} />
         </ScrollView>
       </SafeAreaView>
     </View>
   );
 }
 
-// ─── Styles ────────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
   screen:       { flex: 1 },
-  orbContainer: { position: 'absolute', left: -80, top: H * 0.1, alignItems: 'center', justifyContent: 'center' },
-  backBtn:      { position: 'absolute', top: 52, left: Spacing.lg, zIndex: 10, width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
-  backBtnText:  { color: '#fff', fontSize: FontSize.xl, fontWeight: '700' },
-  scrollContent:{ paddingTop: 96, paddingHorizontal: Spacing.xl, paddingBottom: Spacing.xxxl, alignItems: 'center' },
-  worldHeader:  { alignItems: 'center', marginBottom: Spacing.xxl },
-  worldEmoji:   { fontSize: 72, marginBottom: Spacing.md },
-  worldName:    { fontSize: FontSize.lg, fontWeight: '700', color: 'rgba(255,255,255,0.6)', letterSpacing: 1.5, marginBottom: Spacing.sm },
-  trackName:    { fontSize: FontSize.xxxl, fontWeight: '900', color: '#fff', textAlign: 'center', marginBottom: Spacing.sm },
-  trackTagline: { fontSize: FontSize.lg, fontWeight: '700', textAlign: 'center' },
-  contentCard:  { width: '100%', maxWidth: 480, borderRadius: Radius.xl, padding: Spacing.xl, borderWidth: 1, marginBottom: Spacing.xl, gap: Spacing.lg },
-  contentLabel: { fontSize: FontSize.sm, fontWeight: '900', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.8 },
-  contentDesc:  { fontSize: FontSize.md, color: 'rgba(255,255,255,0.8)', lineHeight: 22 },
-  badgeRow:     { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
-  typeBadge:    { paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs, borderRadius: Radius.full },
-  typeBadgeText:{ fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 0.5 },
-  fieldBadge:   { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs, borderRadius: Radius.full, borderWidth: 1 },
-  fieldBadgeText:{ fontSize: FontSize.xs, fontWeight: '700' },
-  statusBlock:  { flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, borderRadius: Radius.lg, borderWidth: 1, alignItems: 'flex-start' },
-  statusEmoji:  { fontSize: 24 },
-  statusTitle:  { fontSize: FontSize.md, fontWeight: '900', marginBottom: 4 },
-  statusBody:   { fontSize: FontSize.sm, lineHeight: 19 },
-  ctaWrap:      { width: '100%', maxWidth: 480 },
-  ctaBtn:       { borderRadius: Radius.lg, paddingVertical: Spacing.xl, alignItems: 'center' },
-  ctaBtnText:   { fontSize: FontSize.lg, fontWeight: '900', color: '#fff' },
+  orbContainer: { position: 'absolute', left: -80, top: -60 },
+  scrollContent:{ padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.xl },
+  backBtn:      { margin: Spacing.md, padding: Spacing.sm, alignSelf: 'flex-start' },
+  backBtnText:  { color: '#fff', fontSize: FontSize.lg, fontWeight: '700' },
+  worldHeader:  { alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.xl },
+  worldEmoji:   { fontSize: 64 },
+  worldName:    { fontSize: 28, fontWeight: '900', color: '#fff', textAlign: 'center' },
+  worldSub:     { fontSize: FontSize.md, color: 'rgba(255,255,255,0.7)', textAlign: 'center' },
+  worldContent: { gap: Spacing.lg },
+  ctaBtn:       { backgroundColor: '#EC4899', borderRadius: Radius.xl, paddingVertical: Spacing.lg, alignItems: 'center' },
+  ctaBtnText:   { color: '#fff', fontSize: FontSize.lg, fontWeight: '900' },
+  lockedBadge:  { backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' },
+  lockedText:   { color: 'rgba(255,255,255,0.6)', fontSize: FontSize.lg, fontWeight: '700' },
 });

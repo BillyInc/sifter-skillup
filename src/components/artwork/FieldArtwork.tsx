@@ -7,7 +7,9 @@
  */
 
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Animated, Easing, StyleSheet } from 'react-native';
+import { View, Text, Animated, Easing, StyleSheet, Dimensions } from 'react-native';
+
+const { width: SW } = Dimensions.get('window');
 
 // ─── Shared helpers ────────────────────────────────────────────────────────────
 
@@ -94,6 +96,8 @@ function useTravel(fromX: number, toX: number, duration = 3000, delay = 0) {
 // Blockchain nodes floating in a network with electric data packets
 
 export function CryptoArtwork({ size = 200 }: { size?: number }) {
+  const scale = size / 200;
+
   // Floating nodes
   const float1 = useFloat(6, 2200, 0);
   const float2 = useFloat(8, 1900, 400);
@@ -250,6 +254,7 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
   const bar3      = usePulse(0.6, 1.0, 750, 400);
   const bar4      = usePulse(0.3, 0.8, 1000, 100);
   const bar5      = usePulse(0.7, 1.0, 850, 300);
+  const numAnim   = useLoop(1500, 0);
   const float1    = useFloat(4, 2000, 0);
   const float2    = useFloat(5, 1800, 400);
   const spin      = useSpin(20000);
@@ -461,6 +466,9 @@ export function SupplyChainArtwork({ size = 200 }: { size?: number }) {
   const pkg1 = useTravel(-10, DIM * 0.6, 2400, 0);
   const pkg2 = useTravel(DIM * 0.6, DIM * 0.1, 2800, 600);
   const pkg3 = useTravel(-10, DIM * 0.5, 2000, 400);
+  const float1 = useFloat(5, 2000, 0);
+  const float2 = useFloat(4, 2200, 300);
+  const float3 = useFloat(6, 1900, 600);
   const spin   = useSpin(15000);
   const pulse1 = usePulse(0.85, 1.15, 1400, 0);
   const pulse2 = usePulse(0.80, 1.20, 1600, 300);
@@ -556,6 +564,7 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
   const DIM = size;
 
   const lines = ['{  }', 'fn()', '[ ]', '===', '=>', '++', '</>'];
+  const anims = lines.map((_, i) => useTravel(-DIM * 0.3, DIM * 1.3, 2000 + i * 300, i * 200));
   const falls = lines.map((_, i) => useTravel(-20, DIM + 20, 3000 + i * 200, i * 300));
   const pulse1 = usePulse(0.8, 1.2, 1200);
   const spin   = useSpin(14000);

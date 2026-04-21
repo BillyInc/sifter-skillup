@@ -8,20 +8,9 @@
  */
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import * as Crypto from 'expo-crypto';
 import { API } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
 import { API_BASE } from '../lib/api';
-
-const STARKNET_SALT = 'sifter-starknet-v1';
-
-function _bytesToHex(bytes: Uint8Array): string {
-  let hex = '';
-  for (let i = 0; i < bytes.length; i++) {
-    hex += bytes[i].toString(16).padStart(2, '0');
-  }
-  return hex;
-}
 
 // ─── UserProfile ─────────────────────────────────────────────
 
@@ -96,7 +85,6 @@ interface AuthContextType {
   signUpEmail:              (email: string, password: string, username?: string) => Promise<void>;
   authStarknet:             (email: string, starknetAddress?: string) => Promise<void>;
   starknetLoading:          boolean;
-  starknetWallet?:          string | null;
   signOut:                  () => Promise<void>;
   refreshUser:              () => Promise<void>;
   updateActiveField:        (fieldId: string, color: string, trackId?: string, trackName?: string) => Promise<void>;
@@ -120,7 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function _tryLoadSavedSession() {
     try {
-      const profile = (await API.getMe()) as unknown as UserProfile;
+      const profile = await API.getMe() as UserProfile;
       setUser(_normalise(profile));
       API.checkStreak().catch(() => {});
       // Offline sync: restore progress from server on app open
@@ -178,43 +166,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function authStarknet(email: string, starknetAddress?: string) {
     setStarknetLoading(true);
     try {
-      // Step 1: Derive a deterministic password for this email + salt so the
-      // user can come back later. Production swaps this for a real Privy flow.
-      const derivedPassword = await Crypto.digestStringAsync(
-        Crypto.CryptoDigestAlgorithm.SHA256,
-        email + STARKNET_SALT,
-      );
-
-      // Try logging in first; if that fails (404/401 for new users), sign up.
+      // Step 1: Sign up or log in with email (creates account if needed)
       let authData: any;
       try {
-        authData = await API.authLogin(email, derivedPassword);
+        authData = await API.authSignup(email, `stark_${Date.now()}`, email.split('@')[0]);
       } catch {
-        authData = await API.authSignup(email, derivedPassword, undefined);
+        // Account exists — log in with stored credentials instead
+        // In production Privy handles this — for now email flow suffices
+        throw new Error('Email already registered. Use "Sign In" instead, or log in with email/password.');
       }
       await API.saveToken(authData.token);
       const profile = _normalise(authData.user);
       setUser(profile);
 
-      // Step 2: Resolve a Starknet address.
-      // Production: const { address } = await privy.createWallet({ type: 'starknet' });
-      // Dev fallback: derive a random demo address using a CSPRNG.
-      let demoAddr = starknetAddress;
-      if (!demoAddr) {
-        if (__DEV__) {
-          const rand = await Crypto.getRandomBytesAsync(32);
-          demoAddr = `0x${_bytesToHex(rand)}`;
-        } else {
-          throw new Error('Starknet address required in production');
-        }
-      }
+      // Step 2: Generate a demo Starknet address (Privy would do this in production)
+      // In production: const { address } = await privy.createWallet({ type: 'starknet' });
+      const demoAddr = starknetAddress || `0x0${Array.from({length: 63}, () =>
+        '0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}`;
 
       // Step 3: Register the Starknet address on the backend
       await fetch(`${API_BASE}/api/starknet/auth/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authData.token}`,
+          'Authorization': \`Bearer \${authData.token}\`,
         },
         body: JSON.stringify({ email, privy_token: demoAddr }),
       });
@@ -233,7 +208,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function refreshUser() {
     try {
-      const profile = (await API.getMe()) as unknown as UserProfile;
+      const profile = await API.getMe() as UserProfile;
       setUser(_normalise(profile));
     } catch {}
   }
@@ -256,7 +231,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Also hit the dedicated endpoint
     try {
-      await API.setActiveField(fieldId, color);
+      await (API as any).post('/api/users/active-field', updates);
     } catch {}
   }
 
@@ -273,7 +248,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signInGuest: authGuest,
       signInEmail, signUpEmail, authStarknet,
       signOut, refreshUser, updateActiveField, starknetLoading,
-      starknetWallet: user?.starknet_address ?? null,
       quantTraderUnlocked, quantResearcherUnlocked, quantDeveloperUnlocked,
     }}>
       {children}

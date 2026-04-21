@@ -285,7 +285,7 @@ The cumulative slashing risk is the critical risk management consideration. Each
         'An AVS is an additional Ethereum validator providing node redundancy',
         'An AVS is a new protocol (bridge, oracle, DA network, sequencer) that needs economic security — it uses EigenLayer restaked ETH as its security collateral, paying restakers rewards in exchange for slashing rights over misbehaviour',
         'An AVS is an automated value strategy managed by EigenLayer',
-        "AVSs are EigenLayer's governance token distribution mechanisms",
+        'AVSs are EigenLayer\\'s governance token distribution mechanisms',
       ],
       correct: 1,
       hint: 'What does a new protocol need to be secure? What does EigenLayer provide that the new protocol can use?',
@@ -450,7 +450,7 @@ The realistic timeline: fully trust-minimised, instant, zero-cost cross-chain in
       ],
       correct: 1,
       hint: 'What does the $50 fee purchase in each scenario? Is it worth it at $100,000?',
-      explanation: "The analysis: canonical bridge: 2-hour wait, no trust in third parties, ZK proof security backed by Ethereum. Solver bridge: 2-minute settlement, $50 fee (0.05%), trust that the solver is solvent and the solver protocol has no critical bugs. For $100,000: the canonical bridge's security is maximally appropriate — no bridge protocol has unlimited historical track record at this size, and $50 saved is not significant relative to the transfer. For $1,000: the 0.05% fee ($0.50) and 2-minute settlement makes the solver bridge clearly preferable. Size-based security analysis: the larger the transfer, the more the canonical bridge's security advantage outweighs the time cost.",
+      explanation: 'The analysis: canonical bridge: 2-hour wait, no trust in third parties, ZK proof security backed by Ethereum. Solver bridge: 2-minute settlement, $50 fee (0.05%), trust that the solver is solvent and the solver protocol has no critical bugs. For $100,000: the canonical bridge\\'s security is maximally appropriate — no bridge protocol has unlimited historical track record at this size, and $50 saved is not significant relative to the transfer. For $1,000: the 0.05% fee ($0.50) and 2-minute settlement makes the solver bridge clearly preferable. Size-based security analysis: the larger the transfer, the more the canonical bridge\'s security advantage outweighs the time cost.',
     },
   ],
 };

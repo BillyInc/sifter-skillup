@@ -1,19 +1,20 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  StatusBar, Modal, TextInput, Share,
+  SafeAreaView, StatusBar, Platform, Modal, TextInput, Share,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLessonEngine, type Question } from '../hooks/useLessonEngine';
 import { useProgress } from '../hooks/useProgress';
 import { useAuth } from '../hooks/useAuth';
+import { API, API_BASE } from '../lib/api';
 import { getLevel, LEVELS } from '../data/levels';
 import { getIslandForLevel } from '../data/islands';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import SimulatorCard from '../components/simulators/SimulatorCard';
 import DisclaimerFooter from '../components/DisclaimerFooter';
+import { shuffleOptionsWithCorrectTracking } from '../lib/shuffleOptions';
 
 // ── Animated layer components ──────────────────────────────────
 import LessonXPBar, { type LessonMood } from '../components/LessonXPBar';
@@ -198,7 +199,7 @@ function NotesPanel({ visible, levelId, topic, onClose }: {
 }
 
 // ── Top bar (upgraded with LessonXPBar) ──────────────────────
-function TopBar({ progress: _progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport,
+function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport,
   totalXp, sessionXp, correctStreak, mood, onAIExplainer }: {
   progress:number; hearts:number; onExit:()=>void;
   isBookmarked:boolean; onBookmark:()=>void; onNotes:()=>void; onExport:()=>void;
@@ -302,10 +303,20 @@ function ConceptCard({ q, onNext, levelId, onTermPress }: {
 function MCQQuestion({ q, onCorrect, onWrong }: { q: Question; onCorrect:()=>void; onWrong:()=>void }) {
   const [chosen, setChosen] = useState<number|null>(null);
   const opts = q.options || [];
+  
+  // Shuffle options at render time
+  const shuffled = useMemo(() => {
+    if (!opts.length) return { shuffledOptions: [], newCorrectIndex: 0 };
+    return shuffleOptionsWithCorrectTracking(opts.map(o => o.text), q.correct);
+  }, [opts, q.correct]);
+  
+  const shuffledOptions = shuffled.shuffledOptions;
+  const correctIndex = shuffled.newCorrectIndex;
+  
   const handleTap = async (i: number) => {
     if (chosen !== null) return;
     setChosen(i);
-    const ok = i === q.correct;
+    const ok = i === correctIndex;
     await Haptics.impactAsync(ok ? Haptics.ImpactFeedbackStyle.Medium : Haptics.ImpactFeedbackStyle.Heavy);
     setTimeout(() => ok ? onCorrect() : onWrong(), 800);
   };
@@ -316,8 +327,8 @@ function MCQQuestion({ q, onCorrect, onWrong }: { q: Question; onCorrect:()=>voi
         <Text style={sty.qPrompt}>{q.prompt}</Text>
       </View>
       <View style={{marginTop:Spacing.lg,gap:Spacing.sm}}>
-        {opts.map((opt,i)=>{
-          const isCh=chosen===i, isOk=i===q.correct, rev=chosen!==null;
+        {shuffledOptions.map((opt,i)=>{
+          const isCh=chosen===i, isOk=i===correctIndex, rev=chosen!==null;
           let bg=Colors.card, bc=Colors.border, tc=Colors.text;
           if(rev&&isOk){bg=Colors.greenSoft;bc=Colors.green;}
           if(rev&&isCh&&!isOk){bg=Colors.redSoft;bc=Colors.red;tc=Colors.red;}
@@ -327,7 +338,7 @@ function MCQQuestion({ q, onCorrect, onWrong }: { q: Question; onCorrect:()=>voi
               <View style={[sty.optLetter,{backgroundColor:rev&&isOk?Colors.green:rev&&isCh?Colors.red:Colors.border}]}>
                 <Text style={[sty.optLetterTxt,{color:rev&&(isOk||isCh)?'#fff':Colors.textSoft}]}>{'ABCD'[i]}</Text>
               </View>
-              <Text style={[sty.optTxt,{color:tc}]}>{opt.text}</Text>
+              <Text style={[sty.optTxt,{color:tc}]}>{opt}</Text>
             </TouchableOpacity>
           );
         })}
@@ -413,9 +424,21 @@ function OrderQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:()=>vo
 function MultiSelectQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:()=>void; onWrong:()=>void }) {
   const [selected,setSelected]=useState<Set<number>>(new Set());
   const opts=q.options||[];
+  
+  // Shuffle options at render time
+  const shuffled = useMemo(() => {
+    if (!opts.length) return { shuffledOptions: [], correctIndices: [] };
+    const correctIndices = opts.map((o, i) => o.correct ? i : -1).filter(i => i >= 0);
+    const { shuffledOptions, newCorrectIndex } = shuffleOptionsWithCorrectTracking(
+      opts.map(o => o.text), 
+      correctIndices[0] || 0
+    );
+    return { shuffledOptions, correctIndices };
+  }, [opts]);
+  
   const toggle=(i:number)=>setSelected(prev=>{const s=new Set(prev);s.has(i)?s.delete(i):s.add(i);return s;});
   const check=async()=>{
-    const cIdx=opts.map((o,i)=>o.correct?i:-1).filter(i=>i>=0);
+    const cIdx = shuffled.correctIndices;
     const ok=cIdx.every(i=>selected.has(i))&&selected.size===cIdx.length;
     await Haptics.impactAsync(ok?Haptics.ImpactFeedbackStyle.Medium:Haptics.ImpactFeedbackStyle.Heavy);
     ok?onCorrect():onWrong();
@@ -424,7 +447,7 @@ function MultiSelectQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:
     <View style={sty.body}>
       <View style={[sty.card,Shadow.md]}><Text style={sty.qPrompt}>{q.prompt}</Text></View>
       <View style={{marginTop:Spacing.lg,gap:Spacing.sm}}>
-        {opts.map((opt,i)=>{
+        {shuffled.shuffledOptions.map((opt,i)=>{
           const sel=selected.has(i);
           return (
             <TouchableOpacity key={i} onPress={()=>toggle(i)}
@@ -432,7 +455,7 @@ function MultiSelectQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:
               <View style={[sty.checkbox,{backgroundColor:sel?Colors.accent:'transparent',borderColor:sel?Colors.accent:Colors.border}]}>
                 {sel&&<Text style={{color:'#fff',fontSize:12,fontWeight:'800'}}>✓</Text>}
               </View>
-              <Text style={[sty.optTxt,{color:sel?Colors.accent:Colors.text}]}>{opt.text}</Text>
+              <Text style={[sty.optTxt,{color:sel?Colors.accent:Colors.text}]}>{opt}</Text>
             </TouchableOpacity>
           );
         })}
@@ -536,7 +559,7 @@ function FillBlankQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:()
 }
 
 // ── Feedback bar ──────────────────────────────────────────────
-function FeedbackBar({ correct, combo, xp: _xp, explanation, onNext, isLast }: {
+function FeedbackBar({ correct, combo, xp, explanation, onNext, isLast }: {
   correct:boolean; combo:number; xp:number; explanation?:string; onNext:()=>void; isLast:boolean;
 }) {
   return (
@@ -613,7 +636,7 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
   const [pendingLevelId, setPendingLevelId]   = useState<number|null>(null);
 
   const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
-  const isBossLvl  = (level?.mechanic as string) === 'boss';
+  const isBossLvl  = level?.mechanic === 'boss';
   const nextLevelId = levelId + 1;
   const nextLevel   = getLevel(nextLevelId);
 
@@ -629,7 +652,57 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
 
   const handleFinish = async () => {
     if(!state||!level||celebrationDone) return;
-    await completeLevel(levelId, (level as any)?.track ?? 'crypto', state.xp, state.wrongCount===0);
+    await completeLevel(levelId, state.xp, state.wrongCount===0);
+
+    // ── Navigator boss completion (levels 3001–3011) ──────────────────────────
+    // Fires POST /api/game/navigator-lab-complete which unlocks next Navigator lab.
+    if (levelId >= 3001 && levelId <= 3011) {
+      const labNum = levelId - 3000;
+      try {
+        const tok = await API.getToken();
+        await fetch(`${API_BASE}/api/game/navigator-lab-complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${tok}` },
+          body: JSON.stringify({ lab: labNum }),
+        });
+      } catch (e) {
+        console.warn('navigator-lab-complete failed (non-fatal):', e);
+      }
+    }
+
+    // ── Cairo Builder boss completion (levels 5001–5020) ─────────────────────
+    if (levelId >= 5001 && levelId <= 5020) {
+      const labNum = levelId - 5000;
+      try {
+        const tok2 = await API.getToken();
+        await fetch(`${API_BASE}/api/game/cairo-lab-complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${tok2}` },
+          body: JSON.stringify({ lab: labNum }),
+        });
+      } catch (e) {
+        console.warn('cairo-lab-complete failed (non-fatal):', e);
+      }
+    }
+
+    // ── Ecosystem Deep Dive boss completion (levels 4001–4015) ───────────────
+    if (levelId >= 4001 && levelId <= 4015) {
+      const labNum = levelId - 4000;
+      try {
+        const tok3 = await API.getToken();
+        await fetch(`${API_BASE}/api/game/ecosystem-lab-complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${tok3}` },
+          body: JSON.stringify({ lab: labNum }),
+        });
+      } catch (e) {
+        console.warn('ecosystem-lab-complete failed (non-fatal):', e);
+      }
+    }
+
+    // ── Starknet Island boss (level 310) — show two-track selection ──────────
+    // Handled by onComplete callback → IslandMapScreen reads stars and routes.
+
     setCelebType(isBossLvl ? 'boss' : 'lesson');
     setShowCelebration(true);
     setCharacterMood('celebrating');

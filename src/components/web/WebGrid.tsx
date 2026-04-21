@@ -21,7 +21,7 @@ import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity,
   Platform, useWindowDimensions,
 } from 'react-native';
-import { useTheme, Radius, FontSize, FontWeight, Shadow } from '../../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../../theme';
 
 // ─── Constants ──────────────────────────────────────────────────────────────────
 

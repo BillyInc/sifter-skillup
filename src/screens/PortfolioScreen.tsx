@@ -8,14 +8,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Modal, TextInput, ActivityIndicator,
+  SafeAreaView, Modal, TextInput, ActivityIndicator,
   Alert, Linking, RefreshControl, KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../hooks/useAuth';
 import { API } from '../lib/api';
-import { Colors, Spacing, Radius, FontSize, useTheme } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import {
   getPlatformsForField,
   PLATFORMS,
@@ -24,7 +23,7 @@ import {
 } from '../data/portfolioPlatforms';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebListRow, useIsWebWide,
+  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
 } from '../components/web/WebGrid';
 
 // ─────────────────────────────────────────────────────────────
@@ -54,61 +53,6 @@ interface PortfolioItem {
 }
 
 type TabId = 'my-track' | 'my-work' | 'all-platforms';
-
-// ─────────────────────────────────────────────────────────────
-// PlatformCard
-// ─────────────────────────────────────────────────────────────
-
-function PlatformCard({
-  platform,
-  connected,
-  badge,
-  onPress,
-}: {
-  platform: PortfolioPlatform;
-  connected?: ConnectedAccount;
-  badge?: 'primary';
-  onPress: () => void;
-}) {
-  const isConnected = !!connected;
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.7}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: isConnected ? '#f0fdf4' : '#fff',
-        borderWidth: 1,
-        borderColor: isConnected ? '#86efac' : '#e5e7eb',
-        borderRadius: 12,
-        padding: 14,
-        marginBottom: 10,
-        ...(badge === 'primary' ? { borderLeftWidth: 4, borderLeftColor: platform.color || '#6366f1' } : {}),
-      }}
-    >
-      <Text style={{ fontSize: 28, marginRight: 12 }}>{platform.icon}</Text>
-      <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ fontSize: 16, fontWeight: '600', color: '#1f2937' }}>
-            {platform.name}
-          </Text>
-          {badge === 'primary' && (
-            <Text style={{ marginLeft: 6, fontSize: 11, color: '#6366f1', fontWeight: '600' }}>
-              ESSENTIAL
-            </Text>
-          )}
-        </View>
-        <Text style={{ fontSize: 13, color: '#6b7280', marginTop: 2 }} numberOfLines={1}>
-          {isConnected ? `@${connected.username}` : platform.what_to_post}
-        </Text>
-      </View>
-      <Text style={{ fontSize: 13, color: isConnected ? '#16a34a' : '#9ca3af', fontWeight: '500' }}>
-        {isConnected ? '✓ Connected' : 'Connect'}
-      </Text>
-    </TouchableOpacity>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────
 // PlatformConnectModal
@@ -517,7 +461,49 @@ function PushItemModal({
 // ─────────────────────────────────────────────────────────────
 
 export default function PortfolioScreen() {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
+  const { user } = useAuth();
+  const [tab, setTab]                       = useState<TabId>('my-track');
+  const [connectedAccounts, setConnected]   = useState<ConnectedAccount[]>([]);
+  const [portfolioItems, setItems]          = useState<PortfolioItem[]>([]);
+  const [loading, setLoading]               = useState(true);
+  const [refreshing, setRefreshing]         = useState(false);
+  const [connectModal, setConnectModal]     = useState<PortfolioPlatform | null>(null);
+  const [pushModal, setPushModal]           = useState<PortfolioItem | null>(null);
+  const [expandedField, setExpandedField]   = useState<string | null>(null);
+
+  // User's active skill track drives "My Track" tab
+  const activeTrack = user?.active_track ?? 'crypto-onboarding';
+  const trackPlatforms = getPlatformsForField(activeTrack);
+
+  const load = useCallback(async (refresh = false) => {
+    if (refresh) setRefreshing(true); else setLoading(true);
+    try {
+      const [accs, items] = await Promise.all([
+        API.portfolioGetAccounts().catch(() => ({ accounts: [] })),
+        API.portfolioGetItems().catch(() => ({ items: [] })),
+      ]);
+      setConnected(accs.accounts ?? []);
+      setItems(items.items ?? []);
+    } catch {}
+    finally { setLoading(false); setRefreshing(false); }
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const connMap: Record<string, ConnectedAccount> =
+    Object.fromEntries(connectedAccounts.map(a => [a.platformId, a]));
+
+  if (loading) {
+    return (
+      <SafeAreaView style={s.screen}>
+        <ActivityIndicator color={Colors.accent} style={{ marginTop: 80 }} />
+      </SafeAreaView>
+    );
+  }
+
+export default function PortfolioScreen() {
+  const { colors, isDark } = useTheme();
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const [tab, setTab]                       = useState<TabId>('my-track');

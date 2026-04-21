@@ -171,7 +171,7 @@ export function stackCol(): ViewStyle {
  *     <ScrollView style={layout.main}>...</ScrollView>
  *   </View>
  */
-export function sidebarLayout(sidebarWidth = 240, _gap = 0): {
+export function sidebarLayout(sidebarWidth = 240, gap = 0): {
   container: ViewStyle;
   sidebar: ViewStyle;
   main: ViewStyle;

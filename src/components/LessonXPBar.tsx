@@ -13,7 +13,7 @@
  *   />
  */
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight,
@@ -152,7 +152,7 @@ export default function LessonXPBar({
           <Animated.View
             pointerEvents="none"
             style={[
-              StyleSheet.absoluteFill,
+              StyleSheet.absoluteFillObject,
               { backgroundColor: barColor, borderRadius: Radius.full, opacity: glowAlpha },
             ]}
           />
@@ -200,7 +200,7 @@ export default function LessonXPBar({
           <Animated.View
             pointerEvents="none"
             style={[
-              StyleSheet.absoluteFill,
+              StyleSheet.absoluteFillObject,
               { backgroundColor: barColor, borderRadius: Radius.full, opacity: glowAlpha },
             ]}
           />

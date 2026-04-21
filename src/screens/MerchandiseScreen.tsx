@@ -8,16 +8,15 @@
  *   Mobile      → full-width, credits strip at top, 2-column grid
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity,
-  Platform, useWindowDimensions, Linking, Modal,
+  SafeAreaView, Platform, useWindowDimensions, Linking, Modal,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { rewardsEngine } from '../lib/rewardsEngine';
-import { creditsToUSD } from '../theme/rewards';
+import { creditsToUSD, MERCH_CREDITS_PER_DOLLAR } from '../theme/rewards';
 import { merchandiseItems } from '../data/merchandiseItems';
 import type { MerchandiseItem } from '../types/social';
 
@@ -27,17 +26,19 @@ const CATEGORIES = [
   { id: 'accessory', label: 'Accessories' },
 ];
 
-export default function MerchandiseScreen(_props: any) {
+export default function MerchandiseScreen({ navigation }: any) {
   const { colors } = useTheme();
   const { user }   = useAuth();
   const { width }  = useWindowDimensions();
   const isWebWide  = Platform.OS === 'web' && width >= 768;
+  const isMobile   = Platform.OS !== 'web';
+  const numCols    = isWebWide ? 3 : 2;
 
   const [category,    setCategory]    = useState('all');
   const [selected,    setSelected]    = useState<MerchandiseItem | null>(null);
   const [showDetail,  setShowDetail]  = useState(false);
 
-  const credits = user ? rewardsEngine.getMerchCreditsBalance(user as any) : 0;
+  const credits = user ? rewardsEngine.getMerchCreditsBalance(user) : 0;
 
   const items = merchandiseItems.filter(item => {
     const catMatch = category === 'all' || item.category === category;
@@ -45,7 +46,7 @@ export default function MerchandiseScreen(_props: any) {
   });
 
   const isUnlocked = (item: MerchandiseItem) =>
-    user ? rewardsEngine.isMerchandiseUnlocked(item, user as any) : item.unlock_condition.type === 'open';
+    user ? rewardsEngine.isMerchandiseUnlocked(item, user) : item.unlock_condition.type === 'open';
 
   const creditsDiscount = (item: MerchandiseItem): number => {
     const maxDiscount = item.price_usd * 0.5;              // 50% cap
@@ -180,7 +181,7 @@ export default function MerchandiseScreen(_props: any) {
     return (
       <Modal visible={showDetail} animationType="slide" transparent presentationStyle="pageSheet">
         <View style={[styles.modalBg, { backgroundColor: 'rgba(0,0,0,0.6)' }]}>
-          <TouchableOpacity style={StyleSheet.absoluteFill} onPress={() => setShowDetail(false)} />
+          <TouchableOpacity style={StyleSheet.absoluteFillObject} onPress={() => setShowDetail(false)} />
           <View style={[styles.modalCard, { backgroundColor: colors.card }]}>
             <View style={[styles.modalImgBox, { backgroundColor: colors.goldSoft }]}>
               <Text style={styles.modalEmoji}>
@@ -285,30 +286,27 @@ export default function MerchandiseScreen(_props: any) {
             <WalletPanel vertical />
           </ScrollView>
 
-          {/* Right: grid with page header (single FlatList — virtualized) */}
-          <FlatList
-            style={{ flex: 1 }}
-            data={items}
-            keyExtractor={i => i.id}
-            numColumns={3}
-            key="web3"
-            columnWrapperStyle={{ gap: Spacing.md }}
-            contentContainerStyle={{ maxWidth: 960, alignSelf: 'center', width: '100%', paddingHorizontal: 28, paddingTop: 28, paddingBottom: 64 }}
-            ListHeaderComponent={
-              <>
-                <View style={{ marginBottom: 24, paddingBottom: 16, position: 'relative' }}>
-                  <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>👕 Sifter Apparel</Text>
-                  <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
-                    {credits.toLocaleString()} merch credits · Earn by completing labs
-                  </Text>
-                  <View style={{ position: 'absolute', bottom: 0, left: 0, height: 3, width: 48, borderRadius: Radius.full, backgroundColor: colors.gold }} />
-                </View>
-                <CategoryChips />
-              </>
-            }
-            renderItem={({ item }) => <View style={{ flex: 1 }}><ItemCard item={item} /></View>}
-            showsVerticalScrollIndicator={false}
-          />
+          {/* Right: grid with page header */}
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 960, alignSelf: 'center', width: '100%', paddingHorizontal: 28, paddingTop: 28, paddingBottom: 64 }}>
+            <View style={{ marginBottom: 24, paddingBottom: 16, position: 'relative' }}>
+              <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>👕 Sifter Apparel</Text>
+              <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
+                {credits.toLocaleString()} merch credits · Earn by completing labs
+              </Text>
+              <View style={{ position: 'absolute', bottom: 0, left: 0, height: 3, width: 48, borderRadius: Radius.full, backgroundColor: colors.gold }} />
+            </View>
+            <CategoryChips />
+            <FlatList
+              data={items}
+              keyExtractor={i => i.id}
+              numColumns={3}
+              key="web3"
+              columnWrapperStyle={{ gap: Spacing.md }}
+              contentContainerStyle={styles.gridContent}
+              renderItem={({ item }) => <View style={{ flex: 1 }}><ItemCard item={item} /></View>}
+              showsVerticalScrollIndicator={false}
+            />
+          </ScrollView>
           <DetailModal />
         </View>
       </SafeAreaView>

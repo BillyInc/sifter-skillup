@@ -55,7 +55,7 @@ import {
   View, Text, StyleSheet, Animated, Easing,
   Dimensions, Modal,
 } from 'react-native';
-import { useTheme, Spacing, FontSize, FontWeight } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 
@@ -260,7 +260,7 @@ function JudgmentPortal({ color, pulse }: { color: string; pulse: Animated.Value
 
 export default function LessonTransition({
   visible,
-  fromTopic: _fromTopic,
+  fromTopic,
   toTopic,
   fieldColor,
   mechanic,

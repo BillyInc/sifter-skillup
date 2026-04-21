@@ -1,23 +1,8 @@
 import { create } from 'zustand';
 import { API } from '../lib/api';
+import type { UserProfile } from '../types/api';
 
-interface UserProfile {
-  id: string;
-  username: string;
-  avatar_url: string | null;
-  points: number;
-  streak: number;
-  current_level: number;
-  completed_levels: string[];
-  python_chapters_completed: string[];
-  active_track: string;
-  boosters: Record<string, number>;
-  achievements: string[];
-  guild_id: string | null;
-  is_verified: boolean;
-  settings: Record<string, boolean>;
-  onboarding_completed?: boolean;
-}
+export type { UserProfile } from '../types/api';
 
 function computeGates(user: UserProfile | null) {
   return {

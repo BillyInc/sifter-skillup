@@ -15,8 +15,8 @@ import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
 import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 import LessonScreen from './LessonScreen';
-import { VRBridge } from '../vr/VRBridge';
-import type { VRScenarioKey } from '../vr/VRBridge';
+import { VRBridge } from '../lib/vrBridge';
+import type { VRScenarioKey } from '../lib/vrBridge';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,

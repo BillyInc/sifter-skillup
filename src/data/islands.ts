@@ -134,14 +134,13 @@ export const ISLANDS: Island[] = [
     id: 17, tier: 'pro', name: 'Advanced Crypto',
     description: 'ZK proofs · Web3 Identity · DAO Governance · Stablecoins · DeFi Yield · On-Chain Analysis · Tokenomics · RWA · AI × Crypto · Account Abstraction · Final Boss',
     icon: '⚡', color: '#6366f1', start: 121, end: 135, bossLevel: 135, requiredLevel: 240,
-    nextTracks: ['starknet-defi-navigator'],
   },
   {
     id: 18, tier: 'pro', name: 'Starknet World',
     description: 'Account abstraction · Gasless transactions · STRK swaps · Staking · Lending · DCA · Powered by StarkZap SDK. Execute real Sepolia transactions as you learn.',
     icon: '⚡', color: '#ec4899', start: 291, end: 310, bossLevel: 310, requiredLevel: 135,
     chain: 'starknet-sepolia',
-    nextTracks: ['starknet-defi-navigator'],
+    nextTracks: ['starknet-defi-navigator', 'starknet-ecosystem-deep-dive', 'cairo-builder'],
   },
 ];
 

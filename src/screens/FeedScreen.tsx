@@ -10,14 +10,14 @@
  * - Tap 💬 on any card → CommentSheet (threaded + image upload)
  */
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SectionList, RefreshControl,
+  SafeAreaView, FlatList, ActivityIndicator, RefreshControl,
   Platform, useWindowDimensions,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
+import { useFocusEffect } from 'expo-router';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import FeedWebLayout from '../components/FeedWebLayout';
 import { useFeed } from '../hooks/useFeed';
@@ -134,8 +134,8 @@ export default function FeedScreen() {
   const isWebWide   = Platform.OS === 'web' && width >= 768;
 
   const userContext: UserFeedContext = {
-    primaryTrackId: user?.current_track_id ?? 'defi-research-analyst',
-    primaryFieldId: user?.active_field_id ?? 'crypto',
+    primaryTrackId: user?.currentTrackId ?? 'defi-research-analyst',
+    primaryFieldId: user?.currentFieldId ?? 'crypto',
     monitoredTrackIds: [],
   };
 
@@ -185,41 +185,12 @@ export default function FeedScreen() {
   // Section filter chips (from current track config)
   const sectionOptions = [
     { id: 'all', label: 'All', icon: '📡' },
-    // Use the section's icon field instead of stripping emojis from the title
-    // (multi-codepoint emoji like flags break the previous regex).
-    ...sections.map(s => ({ id: s.section.id, label: s.section.title, icon: s.section.icon })),
+    ...sections.map(s => ({ id: s.section.id, label: s.section.title.replace(/^[^\s]+\s/, ''), icon: s.section.icon })),
   ];
 
   const visibleSections = sectionFilter === 'all'
     ? sections
     : sections.filter(s => s.section.id === sectionFilter);
-
-  // Build SectionList-shaped sections. When a section is collapsed we still
-  // pass an empty data array so the header is rendered (and can be tapped).
-  const listSections = useMemo(
-    () =>
-      visibleSections.map(({ section, items, loading: sectionLoading }) => {
-        const isCollapsed = collapsed[section.id] ?? false;
-        let data: any[] = [];
-        if (!isCollapsed) {
-          if (sectionLoading) {
-            data = [{ id: `${section.id}__loading`, __placeholder: 'loading' }];
-          } else if (items.length === 0) {
-            data = [{ id: `${section.id}__empty`, __placeholder: 'empty' }];
-          } else {
-            data = items;
-          }
-        }
-        return {
-          sectionId: section.id,
-          title: section.title,
-          icon: section.icon,
-          totalCount: items.length,
-          data,
-        };
-      }),
-    [visibleSections, collapsed],
-  );
 
   return (
     // ── Web wide: two-column layout ──────────────────────────────────────────
@@ -307,62 +278,61 @@ export default function FeedScreen() {
         })}
       </ScrollView>
 
-      {/* ── Feed (virtualized SectionList) ── */}
-      {loading ? (
-        <ScrollView contentContainerStyle={styles.feedContent} showsVerticalScrollIndicator={false}>
-          {[1, 2, 3].map(i => <SkeletonCard key={i} />)}
-        </ScrollView>
-      ) : (
-        <SectionList
-          sections={listSections}
-          keyExtractor={(item) => item.id}
-          stickySectionHeadersEnabled={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.feedContent}
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={refresh} tintColor={accentColor} />
-          }
-          renderSectionHeader={({ section }) => {
-            const isCollapsed = collapsed[section.sectionId] ?? false;
+      {/* ── Feed ── */}
+      <ScrollView
+        contentContainerStyle={styles.feedContent}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refresh} tintColor={accentColor} />
+        }
+      >
+        {loading ? (
+          // Skeleton state
+          <>
+            {[1, 2, 3].map(i => <SkeletonCard key={i} />)}
+          </>
+        ) : (
+          visibleSections.map(({ section, items, loading: sectionLoading }) => {
+            const isCollapsed = collapsed[section.id] ?? false;
             return (
-              <SectionHeader
-                title={section.title}
-                icon={section.icon}
-                count={section.totalCount}
-                collapsed={isCollapsed}
-                onToggle={() => toggleSection(section.sectionId)}
-                color={accentColor}
-              />
+              <View key={section.id} style={styles.sectionBlock}>
+                <SectionHeader
+                  title={section.title}
+                  icon={section.icon}
+                  count={items.length}
+                  collapsed={isCollapsed}
+                  onToggle={() => toggleSection(section.id)}
+                  color={accentColor}
+                />
+
+                {!isCollapsed && (
+                  sectionLoading ? (
+                    <SkeletonCard />
+                  ) : items.length === 0 ? (
+                    <View style={[styles.emptySection, { backgroundColor: colors.card }]}>
+                      <Text style={[styles.emptySectionText, { color: colors.textMuted }]}>
+                        Loading {section.title.replace(/^[^\s]+\s/, '').toLowerCase()}…
+                      </Text>
+                    </View>
+                  ) : (
+                    items.map(item => (
+                      <FeedCard
+                        key={item.id}
+                        item={item}
+                        accentColor={accentColor}
+                        onReact={react}
+                        onComment={handleComment}
+                        onBookmark={bookmark}
+                      />
+                    ))
+                  )
+                )}
+              </View>
             );
-          }}
-          renderItem={({ item, section }) => {
-            const isCollapsed = collapsed[section.sectionId] ?? false;
-            if (isCollapsed) return null;
-            if ((item as any).__placeholder === 'empty') {
-              return (
-                <View style={[styles.emptySection, { backgroundColor: colors.card }]}>
-                  <Text style={[styles.emptySectionText, { color: colors.textMuted }]}>
-                    Loading {section.title.toLowerCase()}…
-                  </Text>
-                </View>
-              );
-            }
-            if ((item as any).__placeholder === 'loading') {
-              return <SkeletonCard />;
-            }
-            return (
-              <FeedCard
-                item={item as FeedItem}
-                accentColor={accentColor}
-                onReact={react}
-                onComment={handleComment}
-                onBookmark={bookmark}
-              />
-            );
-          }}
-          ListFooterComponent={<View style={{ height: Spacing.xxxl }} />}
-        />
-      )}
+          })
+        )}
+        <View style={{ height: Spacing.xxxl }} />
+      </ScrollView>
 
       {/* ── Comment sheet ── */}
       {commentItem && (

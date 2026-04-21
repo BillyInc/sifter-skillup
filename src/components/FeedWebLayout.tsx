@@ -23,8 +23,9 @@ import {
   Linking, Platform,
 } from 'react-native';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight,
+  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
+import { getTrackFeedConfig } from '../lib/trackFeedConfig';
 import { FeedCard } from './FeedCard';
 import type { FeedItem, ReactionType, TrackFeedSection, MonitoredTrack } from '../types/feed';
 
@@ -174,7 +175,7 @@ function DataPanel({
 
 function SentimentPanel({
   sections,
-  accentColor: _accentColor,
+  accentColor,
 }: {
   sections: SectionData[];
   accentColor: string;
@@ -321,7 +322,7 @@ function SkillsPanel({
 
 function JobsPanel({
   sections,
-  accentColor: _accentColor,
+  accentColor,
 }: {
   sections: SectionData[];
   accentColor: string;
@@ -510,7 +511,7 @@ export default function FeedWebLayout({
   onComment,
   onBookmark,
   onRefresh,
-  loading: _loading,
+  loading,
 }: FeedWebLayoutProps) {
   const { colors } = useTheme();
 

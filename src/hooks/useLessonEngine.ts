@@ -81,7 +81,7 @@ function extractPairs(fact: string): Array<{ term: string; def: string }> | null
 }
 
 // Extract key terms from a fact string for fill-in-the-blank
-function extractKeyTerm(fact: string, _topic: string): { sentence: string; blank: string; distractors: string[] } | null {
+function extractKeyTerm(fact: string, topic: string): { sentence: string; blank: string; distractors: string[] } | null {
   const words = fact.split(/\s+/);
   if (words.length < 10) return null;
 
@@ -340,6 +340,12 @@ function buildLesson(level: Level): Question[] {
       });
       break;
     }
+
+    // ── simulator / boss: entire level is a simulator — no extra questions ──
+    case 'simulator':
+    case 'boss':
+      // simulatorLesson already pushed above; nothing else to add
+      break;
 
     default:
       questions.push(buildMCQ(level));

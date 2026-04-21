@@ -10,9 +10,9 @@
 
 import React from 'react';
 import {
-  View, Text, StyleSheet,
+  View, Text, StyleSheet, TouchableOpacity, Animated,
 } from 'react-native';
-import { Colors } from '../theme';
+import { Colors, FontSize, Spacing, Radius } from '../theme';
 import { useOfflineSync } from '../hooks/useOfflineSync';
 
 export default function SyncIndicator() {

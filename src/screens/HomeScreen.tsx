@@ -7,10 +7,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, RefreshControl,
-  Easing,
+  SafeAreaView, Animated, RefreshControl,
+  Platform, useWindowDimensions, Easing,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import {
@@ -24,7 +23,7 @@ import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/Fiel
 import { useAuth } from '../hooks/useAuth';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, useIsWebWide, GRID_GAP,
+  WebSectionLabel, WebStatTile, WebDivider, WebListRow, useIsWebWide, GRID_GAP,
 } from '../components/web/WebGrid';
 
 function getGreeting(): string {
@@ -192,11 +191,11 @@ function QuickAction({ emoji, label, sub, color, onPress }: {
 
 function StreakBanner({ status }: { status: StreakStatus }) {
   const { colors } = useTheme();
-  if (!status.isAtRisk && status.streak < 2) return null;
-  const bg  = status.isAtRisk ? colors.orange + '18' : colors.xpGreen + '18';
-  const fg  = status.isAtRisk ? colors.orange : colors.xpGreen;
-  const msg = status.isAtRisk
-    ? `⚠️ Streak at risk! ${status.hoursLeft?.toFixed(0)}h left — do a lesson now.`
+  if (!status.atRisk && status.streak < 2) return null;
+  const bg  = status.atRisk ? colors.orange + '18' : colors.xpGreen + '18';
+  const fg  = status.atRisk ? colors.orange : colors.xpGreen;
+  const msg = status.atRisk
+    ? `⚠️ Streak at risk! ${status.hoursUntilLoss?.toFixed(0)}h left — do a lesson now.`
     : `🔥 ${status.streak}-day streak! Keep it up.`;
   return (
     <View style={[styles.streakBanner, { backgroundColor: bg }]}>
@@ -222,14 +221,14 @@ function WebMiniChart({ color, values }: { color: string; values: number[] }) {
 }
 
 export default function HomeScreen() {
-  const navigation  = useRouter();
+  const navigation  = useNavigation<any>();
   const { colors }  = useTheme();
   const { user }    = useAuth();
   const isWebWide   = useIsWebWide();
 
   // Active track — drives the animated hero on home
-  const activeFieldId  = user?.active_field_id  ?? user?.current_track_id?.split('-').slice(0, -1).join('-') ?? null;
-  const activeTrackName = user?.current_track_name ?? user?.current_track_id ?? null;
+  const activeFieldId  = user?.activeFieldId  ?? user?.currentTrackId?.split('-').slice(0, -1).join('-') ?? null;
+  const activeTrackName = user?.currentTrackName ?? user?.currentTrackId ?? null;
 
   const [xp,     setXp]     = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
