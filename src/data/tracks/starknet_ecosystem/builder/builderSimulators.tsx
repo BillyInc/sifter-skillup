@@ -20,7 +20,7 @@
  *   import {
  *     isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
  *     type StarkzapWallet,
- *   } from '../../lib/starkzap';
+ *   } from '../../../../lib/starkzap';
  *
  * Starkzap is used in the following simulator types:
  *
@@ -121,20 +121,16 @@
  *   cairo-boss                    — multi-step: invoke → audit → deploy → verify
  */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  ActivityIndicator, Linking, TextInput, Animated,
+  ActivityIndicator, Linking, TextInput,
 } from 'react-native';
 import {
-  isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
+  isStarkzapAvailable,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../../../../theme';
-
-function useAuth() {
-  return { starknetWallet: null as StarkzapWallet | null };
-}
+import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 
 // ─── Starknet Sepolia ──────────────────────────────────────────────────────────
 
@@ -170,10 +166,14 @@ async function rpcCall(method: string, params: any[] = []): Promise<any> {
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
-interface Props {
+interface CardProps {
   simulatorType: string;
   onComplete: () => void;
   onSkip: () => void;
+}
+
+function useAuth() {
+  return { starknetWallet: null as StarkzapWallet | null };
 }
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
@@ -1012,6 +1012,257 @@ const STARKZAP_SCENARIOS: Record<string, {
   title: string; scenario: string; options: string[]; correct: number; explanation: string;
   resultCode: string;
 }> = {
+
+  // ── Scenario 1: connect-and-balance ──────────────────────────────────────
+  // Lab 5 L5.1 — first Starkzap call: connect wallet and read STRK balance
+  'connect-and-balance': {
+    title: 'Connect Wallet and Read STRK Balance',
+    scenario: 'You are writing the first screen in your DeFi frontend. When the app loads, it should connect the user wallet via Starkzap and then display their STRK balance. The balance must be shown in human-readable form (e.g. "42.5 STRK"), not raw base units.',
+    options: [
+      `// Option A
+const wallet = await starkzapSdk.connectWallet({ feeMode: 'sponsored', deploy: 'if_needed' });
+const balance = await starkzapSdk.getBalance(wallet.address, STARKNET_TOKENS.STRK);
+console.log(balance.toFormatted()); // → "42.5 STRK"`,
+      `// Option B
+const wallet = await starkzapSdk.connectWallet();
+const balance = await wallet.getBalance(STARKNET_TOKENS.STRK.address);
+console.log(balance); // raw u256 bigint`,
+      `// Option C
+const balance = await starkzapSdk.getBalance(userAddress, STARKNET_TOKENS.STRK);
+console.log(balance.toUnit()); // → "42500000000000000000"`,
+      `// Option D — no SDK
+const provider = new starknet.RpcProvider({ nodeUrl: 'https://starknet-sepolia...' });
+const result = await provider.callContract({ contractAddress: STRK, entrypoint: 'balance_of', calldata: [address] });`,
+    ],
+    correct: 0,
+    explanation: 'Option A is correct. starkzapSdk.connectWallet() handles wallet detection and AA deployment. starkzapSdk.getBalance() returns a TokenAmount object. toFormatted() converts the raw u256 into human-readable form with the correct decimal places (18 for STRK). Option B calls getBalance on the wallet itself — this method does not exist; getBalance is on starkzapSdk. Option C calls toUnit() which returns the raw base-unit string — not human-readable. Option D is raw starknet.js — it works but returns a raw felt array that needs manual decoding and skips the Starkzap convenience layer.',
+    resultCode: `// ✓ Correct Starkzap connect-and-balance pattern
+const wallet = await starkzapSdk.connectWallet({
+  feeMode: 'sponsored',  // paymaster pays gas for future txs
+  deploy: 'if_needed',   // auto-deploys AA wallet if new user
+});
+
+const balance = await starkzapSdk.getBalance(
+  wallet.address,
+  STARKNET_TOKENS.STRK
+);
+
+// balance is a TokenAmount — two representations:
+console.log(balance.toFormatted()); // → "42.5 STRK"  ← show this to user
+console.log(balance.toUnit());      // → "42500000000000000000" ← use in contract calls`,
+  },
+
+  // ── Scenario 2: execute-stake-tx ─────────────────────────────────────────
+  // Lab 5 L5.3 — write a transaction that stakes via a deployed contract
+  'execute-stake-tx': {
+    title: 'Execute a Staking Transaction',
+    scenario: 'Your DeFi screen has a "Stake" button. When the user taps it, you must approve 100 STRK to the staking contract, then call stake(amount) on it — all gasless, all in one multicall. The staking contract is at 0xstaking...abcd.',
+    options: [
+      `// Option A — single wallet.execute() multicall
+const wallet = await starkzapSdk.connectWallet({ feeMode: 'sponsored', deploy: 'if_needed' });
+const amount = { toUnit: () => String(100n * 10n**18n), toFormatted: () => '100 STRK', isZero: () => false };
+const tx = await wallet.execute([
+  { contractAddress: STARKNET_TOKENS.STRK.address, entrypoint: 'approve',
+    calldata: ['0xstaking...abcd', amount.toUnit(), '0'] },
+  { contractAddress: '0xstaking...abcd', entrypoint: 'stake',
+    calldata: [amount.toUnit(), '0'] },
+]);
+await tx.wait();`,
+      `// Option B — two separate transactions
+const wallet = await starkzapSdk.connectWallet({ feeMode: 'sponsored' });
+await wallet.execute([{ contractAddress: STRK, entrypoint: 'approve', calldata: ['0xstaking...abcd', '100'] }]);
+await wallet.execute([{ contractAddress: '0xstaking...abcd', entrypoint: 'stake', calldata: ['100'] }]);`,
+      `// Option C — wallet.stake() shortcut
+const wallet = await starkzapSdk.connectWallet({ feeMode: 'sponsored' });
+await wallet.stake('0xstaking...abcd', { toUnit: () => '100', toFormatted: () => '100 STRK', isZero: () => false });`,
+      `// Option D — missing feeMode
+const wallet = await starkzapSdk.connectWallet();
+const tx = await wallet.execute([...]);`,
+    ],
+    correct: 0,
+    explanation: 'Option A is correct. A single wallet.execute([...]) with two entries is a multicall — approve and stake execute atomically. If stake fails, approve is also rolled back. The toUnit() value includes full 18-decimal precision as a string to avoid JavaScript BigInt truncation. Option B uses two separate transactions — if the second fails, the approval is left dangling (ERC-20 allowance stuck at 100 STRK). Option C uses wallet.stake() which is a helper for the native Starknet staking pool, not for custom staking contracts. Option D omits feeMode: "sponsored" so the user pays gas — contradicting the gasless requirement.',
+    resultCode: `// ✓ Atomic approve + stake multicall via Starkzap
+const wallet = await starkzapSdk.connectWallet({
+  feeMode: 'sponsored',
+  deploy: 'if_needed',
+});
+
+const amount = {
+  toUnit:      () => String(100n * 10n**18n),
+  toFormatted: () => '100 STRK',
+  isZero:      () => false,
+};
+
+const tx = await wallet.execute([
+  {
+    contractAddress: STARKNET_TOKENS.STRK.address,
+    entrypoint: 'approve',
+    calldata: ['0xstaking...abcd', amount.toUnit(), '0'],  // u256 = [low, high]
+  },
+  {
+    contractAddress: '0xstaking...abcd',
+    entrypoint: 'stake',
+    calldata: [amount.toUnit(), '0'],
+  },
+]);
+
+await tx.wait();
+console.log('Staked — tx:', tx.hash);`,
+  },
+
+  // ── Scenario 3: multicall-approve-stake ──────────────────────────────────
+  // Lab 3 L3.3 / Lab 5 — multicall pattern with session keys
+  'multicall-approve-stake': {
+    title: 'Session Key Multicall',
+    scenario: 'You are building a trading bot screen. The user grants a session key valid for 24 hours. During that window the bot must execute approve + swap atomically without asking for wallet approval each time. The swap router is at 0xrouter...5678.',
+    options: [
+      `// Option A — session key execute
+const session = await starkzapSdk.requestSessionKey({
+  allowedContracts: ['0xrouter...5678', STARKNET_TOKENS.STRK.address],
+  expiresInSeconds: 86400,
+});
+const tx = await session.execute([
+  { contractAddress: STARKNET_TOKENS.STRK.address, entrypoint: 'approve',
+    calldata: ['0xrouter...5678', swapAmount.toUnit(), '0'] },
+  { contractAddress: '0xrouter...5678', entrypoint: 'swap', calldata: [...swapCalldata] },
+]);`,
+      `// Option B — full wallet connect each time
+const wallet = await starkzapSdk.connectWallet({ feeMode: 'sponsored' });
+const tx = await wallet.execute([{ contractAddress: '0xrouter...5678', entrypoint: 'swap', calldata: [...] }]);`,
+      `// Option C — session key without allowedContracts
+const session = await starkzapSdk.requestSessionKey({ expiresInSeconds: 86400 });
+const tx = await session.execute([...]);`,
+      `// Option D — sign message instead of execute
+const session = await starkzapSdk.requestSessionKey({ allowedContracts: ['0xrouter...5678'] });
+const sig = await session.signMessage({ message: 'execute swap' });`,
+    ],
+    correct: 0,
+    explanation: 'Option A is correct. requestSessionKey() with allowedContracts restricts the session key to only the specified contracts — this limits blast radius if the key is compromised. session.execute() sends a multicall with no user interaction after the initial grant. Option B re-connects the full wallet each time — defeats the purpose of session keys (the user would need to approve every call). Option C omits allowedContracts — the session key can call any contract, which is a security risk. Option D signs a message but never executes anything on-chain.',
+    resultCode: `// ✓ Session key multicall — no per-tx user approval
+const session = await starkzapSdk.requestSessionKey({
+  allowedContracts: [
+    STARKNET_TOKENS.STRK.address,  // ← approve calls
+    '0xrouter...5678',             // ← swap calls
+  ],
+  expiresInSeconds: 86400,         // 24-hour session
+  feeMode: 'sponsored',
+});
+
+// Later — no wallet popup, automatic:
+const tx = await session.execute([
+  { contractAddress: STARKNET_TOKENS.STRK.address,
+    entrypoint: 'approve',
+    calldata: ['0xrouter...5678', swapAmount.toUnit(), '0'] },
+  { contractAddress: '0xrouter...5678',
+    entrypoint: 'swap',
+    calldata: swapCalldata },
+]);
+await tx.wait();`,
+  },
+
+  // ── Scenario 4: event-subscription-starkzap ──────────────────────────────
+  // Lab 5 L5.4 — subscribe to contract events via Starkzap
+  'event-subscription-starkzap': {
+    title: 'Subscribe to Contract Events',
+    scenario: 'Your DeFi dashboard needs to update the UI in real time when a Swap event fires from the Ekubo router. Write the Starkzap subscription call. The event selector for Swap is 0xswap...event. Update a React state variable called lastSwap when the event arrives.',
+    options: [
+      `// Option A
+const sub = await starkzapSdk.subscribeToEvents({
+  contractAddress: EKUBO_ROUTER,
+  eventSelector: '0xswap...event',
+  onEvent: (event) => {
+    setLastSwap({
+      amount: event.data[0],
+      token:  event.keys[1],
+      ts:     Date.now(),
+    });
+  },
+});
+// cleanup: sub.unsubscribe()`,
+      `// Option B — polling
+useEffect(() => {
+  const interval = setInterval(async () => {
+    const events = await provider.getEvents({ address: EKUBO_ROUTER, from_block: lastBlock });
+    if (events.length) setLastSwap(events[events.length - 1]);
+  }, 5000);
+  return () => clearInterval(interval);
+}, []);`,
+      `// Option C — wrong method
+const sub = await starkzapSdk.listenToContract(EKUBO_ROUTER, 'Swap', (e) => setLastSwap(e));`,
+      `// Option D — missing eventSelector
+const sub = await starkzapSdk.subscribeToEvents({
+  contractAddress: EKUBO_ROUTER,
+  onEvent: (event) => setLastSwap(event),
+});`,
+    ],
+    correct: 0,
+    explanation: 'Option A is correct. subscribeToEvents() creates a persistent WebSocket or SSE connection to the Starkzap event relay. eventSelector filters to exactly the Swap event. The onEvent callback runs in real time — no polling delay. sub.unsubscribe() cleans up on component unmount. Option B is polling — it adds latency, is less efficient, and requires manual block tracking. Option C uses listenToContract() which does not exist in the Starkzap SDK. Option D omits eventSelector — the subscription receives ALL events from the contract, creating unnecessary data load and requiring client-side filtering.',
+    resultCode: `// ✓ Real-time event subscription via Starkzap
+const [lastSwap, setLastSwap] = useState(null);
+
+useEffect(() => {
+  let sub;
+  (async () => {
+    sub = await starkzapSdk.subscribeToEvents({
+      contractAddress: EKUBO_ROUTER,
+      eventSelector:   '0xswap...event',  // keccak256('Swap') equivalent
+      onEvent: (event) => {
+        setLastSwap({
+          amountIn:  BigInt(event.data[0]),
+          amountOut: BigInt(event.data[1]),
+          token:     event.keys[1],
+          timestamp: Date.now(),
+        });
+      },
+    });
+  })();
+  return () => sub?.unsubscribe();  // cleanup on unmount
+}, []);`,
+  },
+
+  // ── Scenario 5: production-read-state ────────────────────────────────────
+  // Lab 10 — production frontend reads contract state
+  'production-read-state': {
+    title: 'Production: Read Live Contract State',
+    scenario: 'Your production app needs to read the current totalLiquidity from a deployed Vesu pool (view function, no transaction needed). The pool is at 0xvesu...pool. The value is a u256 and must be formatted for display. This is a read-only call — no wallet connection needed.',
+    options: [
+      `// Option A — starkzapSdk read-only call
+const result = await starkzapSdk.readContract({
+  contractAddress: '0xvesu...pool',
+  entrypoint: 'get_total_liquidity',
+  calldata: [],
+});
+const formatted = result.toFormatted(); // → "1,247,832.50 USDC"`,
+      `// Option B — connect wallet just to read
+const wallet = await starkzapSdk.connectWallet({ feeMode: 'sponsored' });
+const result = await wallet.readContract({ contractAddress: '0xvesu...pool', entrypoint: 'get_total_liquidity' });`,
+      `// Option C — raw provider call
+const provider = new starknet.RpcProvider({ nodeUrl: STARKNET_RPC });
+const result = await provider.callContract({
+  contractAddress: '0xvesu...pool', entrypoint: 'get_total_liquidity', calldata: []
+});
+// result is a raw felt array — must decode manually`,
+      `// Option D — wrong method name
+const result = await starkzapSdk.callView('0xvesu...pool', 'get_total_liquidity', []);`,
+    ],
+    correct: 0,
+    explanation: 'Option A is correct. starkzapSdk.readContract() makes a starknet_call (view function) without a wallet or transaction. The result is a TokenAmount — toFormatted() gives the human-readable form. No gas. No signing. Option B connects a wallet before a read — unnecessary overhead; wallet connections should be reserved for transactions. Option C is raw starknet.js — it works but returns a raw felt array that needs manual u256 decoding (BigInt([low, high * 2n**128n])). Option D uses callView() which does not exist in the Starkzap SDK.',
+    resultCode: `// ✓ Read-only contract state via Starkzap (no wallet needed)
+const totalLiquidity = await starkzapSdk.readContract({
+  contractAddress: '0xvesu...pool',
+  entrypoint:      'get_total_liquidity',
+  calldata:        [],
+});
+
+// TokenAmount result — two representations:
+const display = totalLiquidity.toFormatted();    // → "1,247,832.50 USDC"
+const raw     = totalLiquidity.toUnit();         // → "1247832500000" (6 decimals USDC)
+
+// Display in React Native:
+<Text>{display}</Text>`,
+  },
+
+  // ── Scenario 6 (original): stake-after-connect ────────────────────────────
   'stake-after-connect': {
     title: 'Auto-Stake on Wallet Connect',
     scenario: 'You are building a DeFi dashboard. When a user connects their wallet, your app should automatically stake 50 STRK into the Starknet validator pool at address 0xabcd...1234. The transaction must be gasless — the user pays no fees.',
@@ -1302,7 +1553,6 @@ Write the fn increment(current: u64) -> u64 body.`;
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [blockNumber, setBlockNumber] = useState<string | null>(null);
@@ -1426,7 +1676,7 @@ function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 
 // ─── Main Export ───────────────────────────────────────────────────────────────
 
-export default function CairoBuilderSimulatorCard({ simulatorType, onComplete, onSkip }: Props) {
+export default function CairoBuilderSimulatorCard({ simulatorType, onComplete, onSkip }: CardProps) {
   const { colors } = useTheme();
   const props = { onComplete, onSkip, colors };
 
@@ -1447,6 +1697,7 @@ export default function CairoBuilderSimulatorCard({ simulatorType, onComplete, o
         <View style={{ padding: Spacing.xl, alignItems: 'center', gap: Spacing.md }}>
           <Text style={{ fontSize: 32 }}>🔷</Text>
           <Text style={{ color: colors.text, fontSize: FontSize.md, fontWeight: '800' }}>Cairo Builder Simulator</Text>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <Text style={{ color: colors.textSoft, fontSize: FontSize.sm, textAlign: 'center' }}>Simulator "{simulatorType}" — check the type string.</Text>
           <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
         </View>
@@ -1575,7 +1826,7 @@ export interface StructuralValidation {
   results: { check: StructuralCheck; passed: boolean }[];
 }
 
-function runStructuralValidation(code: string, checks: StructuralCheck[]): StructuralValidation {
+export function runStructuralValidation(code: string, checks: StructuralCheck[]): StructuralValidation {
   const results = checks.map(check => {
     let passed = false;
     const c = code;
@@ -2600,7 +2851,7 @@ TOTAL_SUPPLY = 10_000_000_000
 
 def model_supply(team_quarters: int, foundation_quarters: int, quarters: int = 16):
     """
-    Returns cumulative supply array of length quarters.
+    Returns cumulative supply array of length \`quarters\`.
     team_quarters: how many quarters the team tranche vests over
     foundation_quarters: how many quarters foundation vests over
     """
@@ -3301,13 +3552,13 @@ function ConfigSandboxSim({ scenarioId, onComplete, onSkip, colors }: {
 // Usage: <CairoBuilderCodeSandbox simulatorType="sandbox-cairo:first-function" ... />
 // ═══════════════════════════════════════════════════════════════════════════════
 
-interface Props {
+interface SandboxProps {
   simulatorType: string;   // e.g. "sandbox-cairo:first-function"
   onComplete: () => void;
   onSkip: () => void;
 }
 
-export function CairoBuilderCodeSandbox({ simulatorType, onComplete, onSkip }: Props) {
+export function CairoBuilderCodeSandbox({ simulatorType, onComplete, onSkip }: SandboxProps) {
   const { colors } = useTheme();
   const props = { onComplete, onSkip, colors };
 
@@ -3336,4 +3587,3 @@ export function CairoBuilderCodeSandbox({ simulatorType, onComplete, onSkip }: P
       );
   }
 }
-

@@ -40,12 +40,12 @@ import {
   SimShell, PrimaryBtn, GhostBtn, SectionLabel,
   type SimBaseProps,
 } from './SimulatorShared';
-import { Colors, Spacing, Radius, FontSize } from '../../theme';
+import { Colors, Spacing, Radius } from '../../theme';
 import {
   runStructuralValidation,
   type StructuralCheck,
   type StructuralValidation,
-} from '../CairoBuilderCodeSandbox';
+} from './CairoBuilderCodeSandbox';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -92,8 +92,6 @@ export interface SnforgeResult {
 }
 
 const SCARB_RESULT_PATTERN = /test result:\s*(ok|FAILED|IGNORED)\.\s*(\d+)\s+passed;\s*(\d+)\s+failed/i;
-const FAILED_TEST_PATTERN = /^\s*(FAIL|FAILED)\s+(.+)$/m;
-
 export function parseSnforgeOutput(output: string): SnforgeResult {
   if (!output || output.trim().length < 10) {
     return {
