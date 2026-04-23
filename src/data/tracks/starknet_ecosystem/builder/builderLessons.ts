@@ -1192,10 +1192,10 @@ Create README.md and add this content:
 
   Requires Scarb 2.8+ and Starknet Foundry 0.27+.
 
-  ```bash
+  \`\`\`bash
   scarb build    # compile
   scarb test     # run tests
-  ```
+  \`\`\`
 
   ## Structure
 
@@ -12859,7 +12859,7 @@ Required tests (minimum):
 // LESSON TYPES: All Type C (procedural / pipeline-first)
 // SIMULATOR TYPES: cairo-snforge, sandbox-cairo, sandbox-config, judgment types
 
-export const CAIRO_LAB4_LESSONS = [
+export const CAIRO_LAB4_LESSONS_V2 = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LESSON 4.1 — SNFORGE TEST ANATOMY
@@ -14747,7 +14747,7 @@ jobs:
 // No portfolio push (Lab 5 is next push)
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const CAIRO_LAB4_BUILD_TASK = {
+export const CAIRO_LAB4_BUILD_TASK_V2 = {
   id: 'lab4-build-task',
   title: 'Complete Test Suite + CI Pipeline for the ERC-20',
   description: `
@@ -16883,7 +16883,7 @@ Required features:
 // BUILD TASK: Full React Native screen connecting to the ERC-20 from Lab 2
 // PORTFOLIO PUSH: Phase 3 ■
 
-export const CAIRO_LAB5_LESSONS = [
+export const CAIRO_LAB5_LESSONS_V2 = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LESSON 5.1 — THE STARKZAP SDK
@@ -18860,7 +18860,7 @@ export default function DeFiScreen() {
 // Portfolio push: Phase 3 ■
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const CAIRO_LAB5_BUILD_TASK = {
+export const CAIRO_LAB5_BUILD_TASK_V2 = {
   id: 'lab5-build-task',
   title: 'Full DeFi Screen: ERC-20 + Staking + Live Feed',
   description: `
@@ -21712,7 +21712,7 @@ Build a production-quality USDC vault that:
 // LESSON TYPES: Mix of Type B (mechanism) and Type C (pattern-first)
 // CODE TASKS: write/debug alternating per lesson
 
-export const CAIRO_LAB6_LESSONS = [
+export const CAIRO_LAB6_LESSONS_V2 = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LESSON 6.1 — THE VAULT PATTERN: SHARE ACCOUNTING
@@ -24414,7 +24414,7 @@ fn initialize_v2(
 // Portfolio push: Phase 3 ■
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const CAIRO_LAB6_BUILD_TASK = {
+export const CAIRO_LAB6_BUILD_TASK_V2 = {
   id: 'lab6-build-task',
   title: 'Production Vault with OZ Components and Oracle Validation',
   description: `
@@ -26114,7 +26114,7 @@ useEffect(() => {
     eventName: 'Swapped',
     onEvent: (ev) => {
       setRecentSwaps(prev => [{
-        trader: `${ev.trader.slice(0,6)}...`,
+        trader: \`\${ev.trader.slice(0,6)}...\`,
         amountIn: formatUnits(BigInt(ev.amount_in), 18),
         amountOut: formatUnits(BigInt(ev.amount_out), 6),
         direction: ev.a_to_b ? 'STRK→USDC' : 'USDC→STRK',
@@ -28973,7 +28973,7 @@ Combine three Lab 9 techniques on the Lab 7 protocol:
 // SQL TIER: Server (PostgreSQL via asyncpg, DuckDB for analytics)
 // PORTFOLIO PUSH: Phase 3 ■ (full stack deployed)
 
-export const CAIRO_LAB10_LESSONS = [
+export const CAIRO_LAB10_LESSONS_V2 = [
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LESSON 10.1 — PRODUCTION ARCHITECTURE: THE FOUR-TIER STACK
@@ -30882,7 +30882,7 @@ fn raise_tvl_cap(ref self: ContractState, new_cap: u256) {
 // Portfolio push: Phase 3 ■
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const CAIRO_LAB10_BUILD_TASK = {
+export const CAIRO_LAB10_BUILD_TASK_V2 = {
   id: 'lab10-build-task',
   title: 'Full-Stack Protocol: AMM + Apibara + FastAPI + Analytics Dashboard',
   description: `
@@ -33699,7 +33699,7 @@ for years in [0.5, 1, 2, 3, 4]:
     weekly = total_weekly_return(years)
     annualized = weekly * 52
     boost = compute_boost(years)
-    print(f"  {years:.1f} yr lock (boost {boost:.2f}×): ${weekly:.0f}/week | ${annualized:,.0f}/yr")
+    print(f"  {years:.1f} yr lock (boost {boost:.2f}×): \${weekly:.0f}/week | \${annualized:,.0f}/yr")
 \`\`\`
 
 LAYER 3 — OPTIMAL LOCK DURATION
@@ -33735,7 +33735,7 @@ def net_present_value_of_lock(lock_years, tokens=10_000, discount_rate=0.20):
 print("\\nNPV by lock duration (accounting for opportunity cost):")
 for years in [0.5, 1, 2, 3, 4]:
     npv = net_present_value_of_lock(years)
-    print(f"  {years:.1f} yr lock: NPV = ${npv:,.0f}")
+    print(f"  {years:.1f} yr lock: NPV = \${npv:,.0f}")
 
 # Find the optimal lock duration
 result = minimize_scalar(
@@ -33744,7 +33744,7 @@ result = minimize_scalar(
     method='bounded'
 )
 print(f"\\nOptimal lock duration: {result.x:.2f} years")
-print(f"Maximum NPV: ${-result.fun:,.0f}")
+print(f"Maximum NPV: \${-result.fun:,.0f}")
 \`\`\`
 
 New term: minimize_scalar — scipy's optimizer for single-variable minimization. We negate the NPV to convert maximization to minimization (scipy always minimizes). bounds=(0.1, 4.0) restricts the search to valid lock durations.
@@ -33770,8 +33770,8 @@ def convex_model(aggregated_tokens, total_market_tokens):
     return individual_yield, aggregated_yield
 
 ind, agg = convex_model(1_000_000, 10_000_000)
-print(f"\\nIndividual: ${ind:,.0f}/week")
-print(f"Aggregated (Convex-style): ${agg:,.0f}/week — {agg/ind:.1f}× advantage")
+print(f"\\nIndividual: \${ind:,.0f}/week")
+print(f"Aggregated (Convex-style): \${agg:,.0f}/week — {agg/ind:.1f}× advantage")
 \`\`\`
   `.trim(),
 
@@ -33876,7 +33876,7 @@ result = minimize_scalar(
 )
 
 print(f"Optimal lock: {result.x:.2f} years")
-print(f"Weekly return at optimal: ${-result.fun:.2f}")`,
+print(f"Weekly return at optimal: \${-result.fun:.2f}")`,
     sampleAnswer: `def total_weekly_return(lock_years, tokens=10_000):
     boost = compute_boost(lock_years)
     effective = tokens * boost
@@ -33891,7 +33891,7 @@ result = minimize_scalar(
     method='bounded'
 )
 print(f"Optimal lock: {result.x:.2f} years")
-print(f"Weekly return at optimal: ${-result.fun:.2f}")`,
+print(f"Weekly return at optimal: \${-result.fun:.2f}")`,
     scoringCriteria: [
       'compute_boost(lock_years) called',
       'effective = tokens × boost',
@@ -38067,7 +38067,7 @@ export const CAIRO_LAB12_OUTLINE = {
 // FINAL BOSS
 // =============================================================================
 
-export const CAIRO_FINAL_BOSS = {
+export const CAIRO_FINAL_BOSS_V2 = {
   id: 'final-boss',
   title: 'Final Boss: Build, Audit, and Launch Your Original Protocol',
 
@@ -38296,8 +38296,8 @@ services:
     build: ./indexer    # build from ./indexer/Dockerfile
     environment:
       DATABASE_URL:     postgresql://user:password@postgres:5432/protocol_db
-      STARKNET_RPC_URL: ${STARKNET_RPC_URL}   # from host .env
-      AMM_ADDRESS:      ${AMM_CONTRACT_ADDRESS}
+      STARKNET_RPC_URL: \${STARKNET_RPC_URL}   # from host .env
+      AMM_ADDRESS:      \${AMM_CONTRACT_ADDRESS}
     depends_on:
       postgres:
         condition: service_healthy    # wait for postgres to be ready
@@ -38736,7 +38736,7 @@ fn update_price_accumulator(ref self: ContractState) {
 
 fn get_twap(self: @ContractState, period_seconds: u64) -> u256 {
     let now_accum = self.price_a_cumulative.read();
-    let past_accum = self.price_a_snapshot.read();  // snapshot taken `period_seconds` ago
+    let past_accum = self.price_a_snapshot.read();  // snapshot taken \`period_seconds\` ago
     let period: u256 = period_seconds.into();
     (now_accum - past_accum) / period  // average price over the period
 }
@@ -39869,7 +39869,7 @@ print(swap.exchange_rate())  # 5e-13 (1 STRK = 0.5 USDC at base units)
 print(swap)                  # SwapEvent(STRK→USDC, 1.00 in)
 \`\`\`
 
-Note: Python classes are rarely needed in this track's code. The `dataclass` decorator (Lab P4) covers most use cases more concisely.
+Note: Python classes are rarely needed in this track's code. The \`dataclass\` decorator (Lab P4) covers most use cases more concisely.
 
 LAYER 3 — THE MODULE SYSTEM
 
@@ -42221,8 +42221,8 @@ services:
   fastapi:
     environment:
       - DATABASE_URL=postgresql://user:password@postgres:5432/protocol_db
-      - STARKNET_RPC_URL=${STARKNET_RPC_URL}  # from host .env file
-      - AMM_CONTRACT_ADDRESS=${AMM_CONTRACT_ADDRESS}
+      - STARKNET_RPC_URL=\${STARKNET_RPC_URL}  # from host .env file
+      - AMM_CONTRACT_ADDRESS=\${AMM_CONTRACT_ADDRESS}
     env_file:
       - .env  # reads the .env file automatically
 \`\`\`
@@ -42235,8 +42235,8 @@ jobs:
     steps:
       - name: Run tests
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}  # from GitHub Secrets
-          STARKNET_RPC_URL: ${{ vars.STARKNET_RPC_URL }}  # from GitHub Variables
+          DATABASE_URL: \${{ secrets.DATABASE_URL }}  # from GitHub Secrets
+          STARKNET_RPC_URL: \${{ vars.STARKNET_RPC_URL }}  # from GitHub Variables
         run: pytest
 \`\`\`
 

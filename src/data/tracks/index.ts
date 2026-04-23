@@ -21,7 +21,7 @@ const tracks: TrackInfo[] = [
     fieldId: 'starknet',
     accentColor: '#ec4899',
     route: '/world',
-    loader: () => import('./starknet_ecosystem/island/levels'),
+    loader: () => import('./starknet_ecosystem/island'),
   },
   {
     id: 'starknet-defi-navigator',
@@ -30,7 +30,7 @@ const tracks: TrackInfo[] = [
     fieldId: 'starknet',
     accentColor: '#EC4899',
     route: '/starknet-track',
-    loader: () => import('./starknet_ecosystem/navigator/navigatorTrack'),
+    loader: () => import('./starknet_ecosystem/navigator'),
   },
   {
     id: 'starknet-ecosystem-deep-dive',
@@ -39,7 +39,7 @@ const tracks: TrackInfo[] = [
     fieldId: 'starknet',
     accentColor: '#6366F1',
     route: '/ecosystem-track',
-    loader: () => import('./starknet_ecosystem/ecosystem/ecosystemTrack'),
+    loader: () => import('./starknet_ecosystem/ecosystem'),
   },
   {
     id: 'cairo-builder',

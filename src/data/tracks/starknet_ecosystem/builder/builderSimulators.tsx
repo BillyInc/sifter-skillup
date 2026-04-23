@@ -121,17 +121,20 @@
  *   cairo-boss                    — multi-step: invoke → audit → deploy → verify
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  ActivityIndicator, Linking, TextInput,
+  ActivityIndicator, Linking, TextInput, Animated,
 } from 'react-native';
-import { useAuth } from '../../hooks/useAuth';
 import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
-} from '../../lib/starkzap';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../../theme';
+} from '../../../../lib/starkzap';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../../../../theme';
+
+function useAuth() {
+  return { starknetWallet: null as StarkzapWallet | null };
+}
 
 // ─── Starknet Sepolia ──────────────────────────────────────────────────────────
 
@@ -1488,13 +1491,6 @@ export default function CairoBuilderSimulatorCard({ simulatorType, onComplete, o
  *   sandbox-config     → Lab 4 (GitHub Actions YAML), Lab 10 (Apibara TOML)
  */
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import {
-  View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  TextInput, ActivityIndicator, Animated,
-} from 'react-native';
-import { Spacing, Radius, FontSize, useTheme } from '../../theme';
-
 // ─── Platform execution API ────────────────────────────────────────────────────
 // Replace BASE_URL with the platform's actual sandbox API endpoint
 
@@ -2604,7 +2600,7 @@ TOTAL_SUPPLY = 10_000_000_000
 
 def model_supply(team_quarters: int, foundation_quarters: int, quarters: int = 16):
     """
-    Returns cumulative supply array of length `quarters`.
+    Returns cumulative supply array of length quarters.
     team_quarters: how many quarters the team tranche vests over
     foundation_quarters: how many quarters foundation vests over
     """
@@ -3340,3 +3336,4 @@ export function CairoBuilderCodeSandbox({ simulatorType, onComplete, onSkip }: P
       );
   }
 }
+
