@@ -14,6 +14,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, type WorldTheme } from '../theme';
 import { getFieldDetail, isTrackLive } from '../data/fieldDetails';
 import { getField } from '../data/fields';
+import { ECOSYSTEM_LAB_LESSON_COUNTS } from '../data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
 
 const { width: W, height: H } = Dimensions.get('window');
 const NUM_PARTICLES = 18;
@@ -86,25 +87,65 @@ function GlowOrb({ color, size, delay }: { color: string; size: number; delay: n
 // ─── Lab content loader ────────────────────────────────────────────────────────
 // Dynamically load lab data based on labId and trackId
 
-async function loadLabLessons(trackId: string, labId: string): Promise<any[] | null> {
-  const labNum = parseInt(labId, 10);
-  try {
-    if (trackId === 'starknet-defi-navigator') {
-      const mod = await import(`../data/tracks/starknet_defi_navigator/lab${labNum}/navigatorLab${labNum}_lessons1to4`);
-      return mod.default ?? mod.lessons ?? null;
-    }
-    if (trackId === 'starknet-ecosystem-deep-dive') {
-      const mod = await import(`../data/tracks/starknet_ecosystem_deep_dive/lab${labNum}/ecosystemLab${labNum}_lessons1to3`);
-      return mod.default ?? mod.lessons ?? null;
-    }
-    if (trackId === 'cairo-builder') {
-      const mod = await import(`../data/tracks/cairo_builder/cairoBuilderLab${labNum}`);
-      return mod.default ?? mod.lessons ?? null;
-    }
-    return null;
-  } catch {
-    return null;
+const NAVIGATOR_LAB_LESSON_COUNTS: Record<number, number> = {
+  1: 8,
+  2: 5,
+  3: 5,
+  4: 5,
+  5: 5,
+  6: 5,
+  7: 5,
+  8: 5,
+  9: 5,
+  10: 5,
+  11: 5,
+};
+
+const CAIRO_LAB_LESSON_COUNTS: Record<number, number> = {
+  0: 6,
+  1: 8,
+  2: 5,
+  3: 5,
+  4: 5,
+  5: 5,
+  6: 8,
+  7: 7,
+  8: 5,
+  9: 8,
+  10: 5,
+  11: 5,
+  12: 5,
+};
+
+function getLabNumber(labId: string, labNumber?: string): number | null {
+  const rawValue = labNumber && labNumber.length > 0 ? labNumber : labId;
+  if (rawValue === 'primer') return 0;
+
+  const parsed = Number.parseInt(rawValue, 10);
+  if (Number.isFinite(parsed)) return parsed;
+
+  const match = rawValue.match(/\d+/);
+  if (!match) return null;
+
+  const extracted = Number.parseInt(match[0], 10);
+  return Number.isFinite(extracted) ? extracted : null;
+}
+
+function getLabLessonCount(trackId: string, labId: string, labNumber?: string): number | null {
+  const normalizedLabNumber = getLabNumber(labId, labNumber);
+  if (normalizedLabNumber === null) return null;
+
+  if (trackId === 'starknet-defi-navigator') {
+    return NAVIGATOR_LAB_LESSON_COUNTS[normalizedLabNumber] ?? null;
   }
+  if (trackId === 'starknet-ecosystem-deep-dive') {
+    return ECOSYSTEM_LAB_LESSON_COUNTS[normalizedLabNumber] ?? null;
+  }
+  if (trackId === 'cairo-builder') {
+    return CAIRO_LAB_LESSON_COUNTS[normalizedLabNumber] ?? null;
+  }
+
+  return null;
 }
 
 // ─── Lab World Screen (when labId is present) ─────────────────────────────────
@@ -122,12 +163,10 @@ function LabWorldScreen({
   const enterAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    loadLabLessons(trackId, labId).then(lessons => {
-      setLessonCount(lessons?.length ?? 0);
-      setLoading(false);
-    });
+    setLessonCount(getLabLessonCount(trackId, labId, labNumber) ?? 0);
+    setLoading(false);
     Animated.timing(enterAnim, { toValue: 1, duration: 600, useNativeDriver: true }).start();
-  }, [labId, trackId]);
+  }, [enterAnim, labId, labNumber, trackId]);
 
   const labNum = parseInt(labNumber || labId, 10);
 

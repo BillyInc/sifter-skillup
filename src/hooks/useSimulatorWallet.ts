@@ -7,7 +7,7 @@
  * wallets are created in-app and stored in SecureStore.
  *
  * Works on mobile (iOS/Android) AND web without any wallet extension.
- * Uses the chain mapping from SimulatorCard_ADDITIONS.tsx.
+ * Uses the shared chain mapping maintained in this hook.
  *
  * On first call for an island: generates a deterministic demo wallet.
  * On subsequent calls: returns the same wallet (stable across sessions).

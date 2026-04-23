@@ -14,13 +14,13 @@ import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
-import { API, API_BASE } from '../lib/api';
+import { API_BASE } from '../lib/api';
 import {
   ECOSYSTEM_LABS,
   ECOSYSTEM_LEVEL_COLORS,
   ECOSYSTEM_TRACK,
   type EcosystemLabDef,
-} from '../data/tracks/starknet_ecosystem_deep_dive/ecosystemTrack';
+} from '../data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
 
 // ─── Accent color for this track ─────────────────────────────
 const ACCENT = '#6366F1'; // indigo
@@ -227,7 +227,7 @@ export default function EcosystemTrackScreen() {
   };
 
   const isLabComplete = (lab: EcosystemLabDef): boolean => {
-    if (lab.id === 'primer') return completedBossIds.includes(4000);
+    if (lab.number === 0) return completedBossIds.includes(4000);
     const bossId = ECOSYSTEM_TRACK.bossLevelIds[`lab${lab.number}` as keyof typeof ECOSYSTEM_TRACK.bossLevelIds];
     return bossId ? completedBossIds.includes(bossId) : false;
   };
@@ -244,13 +244,19 @@ export default function EcosystemTrackScreen() {
       return;
     }
     router.push({
-      pathname: '/ecosystem-track/lab',
-      params: { labId: lab.id, labNumber: String(lab.number) },
+      pathname: '/world' as any,
+      params: {
+        worldId: 'starknet-realm',
+        trackId: ECOSYSTEM_TRACK.id,
+        trackName: ECOSYSTEM_TRACK.name,
+        labId: lab.id,
+        labNumber: String(lab.number),
+      },
     });
   };
 
   const handleConfigureDune = () => {
-    router.push('/ecosystem-track/settings');
+    Linking.openURL('https://docs.dune.com/api-reference/overview/introduction');
   };
 
   // Group labs by level
