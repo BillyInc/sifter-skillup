@@ -281,3 +281,29 @@ class NotificationEngineClass {
 }
 
 export const notificationEngine = new NotificationEngineClass();
+
+export async function requestPushPermission(): Promise<string | null> {
+  const granted = await notificationEngine.requestPermission();
+  return granted ? notificationEngine.getExpoPushToken() : null;
+}
+
+export async function scheduleDailyReminder({
+  hourLocal,
+}: {
+  userId: string;
+  trackId: string;
+  userName: string;
+  progress: number;
+  streak: number;
+  hourLocal: number;
+}): Promise<void> {
+  const now = new Date();
+  const next = new Date(now);
+  next.setHours(hourLocal, 0, 0, 0);
+  if (next.getTime() <= now.getTime()) {
+    next.setDate(next.getDate() + 1);
+  }
+
+  const secondsFromNow = Math.max(5, Math.round((next.getTime() - now.getTime()) / 1000));
+  await notificationEngine.scheduleLocal('daily_reminder', secondsFromNow);
+}

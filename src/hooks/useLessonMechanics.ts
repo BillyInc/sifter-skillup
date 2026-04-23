@@ -60,11 +60,11 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { xpEngine }     from '../lib/xpEngine';
-import { streakEngine } from '../lib/streakEngine';
+import { xpEngine }     from '../lib/XPEngine';
+import { streakEngine } from '../lib/StreakEngine';
 import { getStageForXp } from '../theme';
-import type { StreakStatus }  from '../lib/streakEngine';
-import type { XPSnapshot }    from '../lib/xpEngine';
+import type { StreakStatus }  from '../lib/StreakEngine';
+import type { XPSnapshot }    from '../lib/XPEngine';
 import type { CelebrationEventType } from '../components/CelebrationOverlay';
 import type { CharacterMood }        from '../components/CharacterReaction';
 import type { LessonMood }           from '../components/LessonXPBar';

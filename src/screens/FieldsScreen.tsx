@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import { useTheme, Radius, FontSize, FontWeight, Shadow, Spacing } from '../theme';
 import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
@@ -462,7 +462,7 @@ export default function FieldsScreen() {
         contentContainerStyle={{ paddingBottom: PEEK_HEIGHT + 20 }}
       >
         {fields.map((field, i) => {
-          const detail = getFieldDetail(field.id);
+          const detail = getFieldDetail(field.id) ?? null;
           return (
             <View key={field.id} style={[screen.cardWrap, { marginBottom: Spacing.sm }]}>
               <FieldCard field={field} detail={detail} index={i} />

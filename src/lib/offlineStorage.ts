@@ -548,7 +548,7 @@ async function drainQueueToServer(
     const remaining: SyncQueueItem[] = [];
 
     for (const item of queue) {
-      const result = byId.get(item.id);
+      const result: any = byId.get(item.id);
       if (!result) {
         remaining.push(item);
         continue;
