@@ -1,6 +1,5 @@
-import WorldScreen from '@/screens/WorldScreen';
-import { useLocalSearchParams } from 'expo-router';
-export default function WorldRoute() {
-  const params = useLocalSearchParams();
-  return <WorldScreen route={{ params }} navigation={{}} />;
+import { Stack } from 'expo-router';
+
+export default function WorldLayout() {
+  return <Stack screenOptions={{ headerShown: false }} />;
 }

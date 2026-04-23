@@ -11,6 +11,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { API } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
 import { API_BASE } from '../lib/api';
+import type { StarkzapWallet } from '../lib/starkzap';
 
 // ─── UserProfile ─────────────────────────────────────────────
 
@@ -36,6 +37,11 @@ export interface UserProfile {
   active_field_color?:      string;
   current_track_id?:        string;
   current_track_name?:      string;
+  activeFieldId?:           string;
+  activeFieldColor?:        string;
+  currentTrackId?:          string;
+  currentTrackName?:        string;
+  currentFieldId?:          string;
   xp_stage:                 number;
 
   // New: Starknet
@@ -85,6 +91,7 @@ interface AuthContextType {
   signUpEmail:              (email: string, password: string, username?: string) => Promise<void>;
   authStarknet:             (email: string, starknetAddress?: string) => Promise<void>;
   starknetLoading:          boolean;
+  starknetWallet:           StarkzapWallet | null;
   signOut:                  () => Promise<void>;
   refreshUser:              () => Promise<void>;
   updateActiveField:        (fieldId: string, color: string, trackId?: string, trackName?: string) => Promise<void>;
@@ -103,6 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser]               = useState<UserProfile | null>(null);
   const [loading, setLoading]         = useState(true);
   const [starknetLoading, setStarknetLoading] = useState(false);
+  const [starknetWallet] = useState<StarkzapWallet | null>(null);
 
   useEffect(() => { _tryLoadSavedSession(); }, []);
 
@@ -189,7 +197,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': \`Bearer \${authData.token}\`,
+          'Authorization': `Bearer ${authData.token}`,
         },
         body: JSON.stringify({ email, privy_token: demoAddr }),
       });
@@ -247,7 +255,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       authTelegram, authBaseWallet, authGuest,
       signInGuest: authGuest,
       signInEmail, signUpEmail, authStarknet,
-      signOut, refreshUser, updateActiveField, starknetLoading,
+      signOut, refreshUser, updateActiveField, starknetLoading, starknetWallet,
       quantTraderUnlocked, quantResearcherUnlocked, quantDeveloperUnlocked,
     }}>
       {children}
@@ -265,6 +273,15 @@ export function useAuth() {
 // Maps server field names to the canonical UserProfile shape
 
 function _normalise(raw: any): UserProfile {
+  const currentTrackId = raw.current_track_id ?? raw.currentTrackId ?? raw.active_track ?? raw.activeTrack ?? 'crypto';
+  const currentTrackName = raw.current_track_name ?? raw.currentTrackName ?? currentTrackId;
+  const activeFieldId = raw.active_field_id
+    ?? raw.activeFieldId
+    ?? raw.current_field_id
+    ?? raw.currentFieldId
+    ?? (typeof currentTrackId === 'string' ? currentTrackId.split('-').slice(0, -1).join('-') || currentTrackId : undefined);
+  const activeFieldColor = raw.active_field_color ?? raw.activeFieldColor;
+
   return {
     id:                       raw.id ?? '',
     username:                 raw.username ?? 'Learner',
@@ -277,11 +294,16 @@ function _normalise(raw: any): UserProfile {
     completed_levels:         raw.completed_levels ?? [],
     perfect_levels:           raw.perfect_levels ?? [],
     python_chapters_completed: raw.python_chapters_completed ?? [],
-    active_track:             raw.active_track ?? 'crypto',
-    active_field_id:          raw.active_field_id,
-    active_field_color:       raw.active_field_color,
-    current_track_id:         raw.current_track_id,
-    current_track_name:       raw.current_track_name,
+    active_track:             raw.active_track ?? currentTrackId ?? 'crypto',
+    active_field_id:          activeFieldId,
+    active_field_color:       activeFieldColor,
+    current_track_id:         currentTrackId,
+    current_track_name:       currentTrackName,
+    activeFieldId,
+    activeFieldColor,
+    currentTrackId,
+    currentTrackName,
+    currentFieldId:           activeFieldId,
     xp_stage:                 raw.xp_stage ?? 1,
     starknet_address:         raw.starknet_address,
     starknet_auth:            raw.starknet_auth ?? false,

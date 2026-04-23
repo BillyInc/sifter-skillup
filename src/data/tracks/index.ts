@@ -66,7 +66,7 @@ const tracks: TrackInfo[] = [
     fieldId: 'crypto',
     accentColor: '#8B5CF6',
     route: '/world',
-    loader: () => import('./onchainSleuthTrack'),
+    loader: () => import('./onchainSleuthTrackPlaceholder'),
   },
   {
     id: 'memecoin-trader',
