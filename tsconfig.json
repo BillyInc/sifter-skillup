@@ -7,6 +7,10 @@
     "paths": { "@/*": ["src/*"] }
   },
   "exclude": [
+    "src/components/simulators/SimulatorCard_ADDITIONS.tsx",
+    "src/lib/database.ts",
+    "src/lib/watermelonModels.ts",
+    "src/lib/watermelonSchema.ts",
     "src/data/tracks/supplyChainTrack.ts",
     "src/data/tracks/supplyChainTrack_upgraded.ts",
     "src/data/tracks/onchainSleuthTrack.ts",

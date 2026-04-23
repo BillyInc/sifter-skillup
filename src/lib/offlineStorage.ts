@@ -1,62 +1,39 @@
-/**
- * Sifter Skill_Up — Offline Storage Engine v2
- * ─────────────────────────────────────────────────────────────
- * REPLACES: src/lib/offlineStorage.ts
- *
- * Upgraded from AsyncStorage → WatermelonDB.
- *
- * WHY WATERMELONDB:
- *   AsyncStorage is a flat key/value store — fine for simple prefs,
- *   wrong for relational progress data. WatermelonDB gives us:
- *     • Lazy loading — only reads what's needed, never floods memory
- *     • Reactive queries — UI updates automatically when data changes
- *     • Transactional writes — no partial saves, no corrupted state
- *     • Observable collections — no polling needed
- *     • WAL-mode SQLite on device — survives crashes
- *
- * API surface is intentionally identical to the old offlineStorage.ts
- * so nothing that imports from here needs to change.
- *
- * ARCHITECTURE:
- *   Server is the source of truth for PROGRESS.
- *   Device (WatermelonDB) is the source of truth for CONTENT.
- *   Every write is local-first, server receives it whenever online.
- */
-
-// WatermelonDB — import with fallback for environments where it's not yet installed
-let Q: any, database: any;
-let CachedContentModel: any, ContentManifestModel: any, LastPositionModel: any,
-    LocalProgressModel: any, SyncQueueModel: any;
-let _watermelonAvailable = false;
-
-try {
-  const wml = require('@nozbe/watermelondb');
-  Q = wml.Q;
-  const db = require('./database');
-  database = db.database;
-  const models = require('./watermelonModels');
-  CachedContentModel    = models.CachedContentModel;
-  ContentManifestModel  = models.ContentManifestModel;
-  LastPositionModel     = models.LastPositionModel;
-  LocalProgressModel    = models.LocalProgressModel;
-  SyncQueueModel        = models.SyncQueueModel;
-  _watermelonAvailable  = true;
-} catch {
-  // WatermelonDB not installed yet — will use AsyncStorage fallback
-  // Install: npx expo install @nozbe/watermelondb
-}
-
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
 
-// ─── AsyncStorage fallback when WatermelonDB not installed ────
-const AS_PROGRESS_KEY = 'ss_progress_v2';
-const AS_POSITION_KEY = 'ss_last_position_v2';
-const AS_QUEUE_KEY    = 'ss_sync_queue_v2';
+const PROGRESS_KEY = 'ss_progress_v2';
+const POSITION_KEY = 'ss_last_position_v2';
+const QUEUE_KEY = 'ss_sync_queue_v2';
+const MANIFEST_KEY = 'ss_content_manifest_v2';
+const TRACK_CONTENT_PREFIX = 'ss_track_content_v2:';
+const DEVICE_ID_KEY = 'sifter_device_id_v2';
 
-// ─── Types (kept identical to old API) ───────────────────────
+const PRIORITY_ORDER = {
+  critical: 0,
+  high: 1,
+  normal: 2,
+} as const;
+
+let syncing = false;
+let netUnsub: (() => void) | null = null;
+let syncListeners: Array<(pending: number) => void> = [];
+
+interface StoredProgress {
+  userId: string;
+  completedLevels: string[];
+  currentTrack: string;
+  xp: number;
+  streak: number;
+  lastActiveDate: string;
+  achievements: string[];
+  portfolioArtifacts: any[];
+  guildId: string | null;
+  referralCode: string | null;
+  settings: Record<string, any>;
+  updatedAt: string;
+}
 
 export interface ContentManifest {
   version: number;
@@ -105,268 +82,382 @@ export interface SyncQueueItem {
   attempts: number;
 }
 
-// ─── Device ID ────────────────────────────────────────────────
-// Stored in SecureStore (encrypted) — survives reinstalls if backup restored.
-// Used as the device fingerprint for session enforcement.
+function isWebStorageAvailable() {
+  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+}
 
-const DEVICE_ID_KEY = 'sifter_device_id_v2';
+async function getStoredString(key: string): Promise<string | null> {
+  if (isWebStorageAvailable()) {
+    try {
+      return window.localStorage.getItem(key);
+    } catch {}
+  }
 
-export async function getOrCreateDeviceId(): Promise<string> {
   try {
-    let id = await SecureStore.getItemAsync(DEVICE_ID_KEY);
-    if (!id) {
-      const rand = await Crypto.digestStringAsync(
-        Crypto.CryptoDigestAlgorithm.SHA256,
-        `${Date.now()}_${Math.random()}`,
-      );
-      id = `dev_${rand.slice(0, 24)}`;
-      await SecureStore.setItemAsync(DEVICE_ID_KEY, id);
-    }
-    return id;
+    return await AsyncStorage.getItem(key);
   } catch {
-    // SecureStore unavailable (web) — fall back to in-memory
-    return `web_${Date.now()}`;
+    return null;
   }
 }
 
-// ─── Progress Store ───────────────────────────────────────────
+async function setStoredString(key: string, value: string): Promise<void> {
+  if (isWebStorageAvailable()) {
+    try {
+      window.localStorage.setItem(key, value);
+      return;
+    } catch {}
+  }
+
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch {}
+}
+
+async function removeStoredString(key: string): Promise<void> {
+  if (isWebStorageAvailable()) {
+    try {
+      window.localStorage.removeItem(key);
+      return;
+    } catch {}
+  }
+
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch {}
+}
+
+async function getStoredJson<T>(key: string, fallback: T): Promise<T> {
+  const raw = await getStoredString(key);
+  if (!raw) return fallback;
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
+  }
+}
+
+async function setStoredJson(key: string, value: unknown): Promise<void> {
+  await setStoredString(key, JSON.stringify(value));
+}
+
+function unwrapData(payload: any) {
+  return payload?.data ?? payload;
+}
+
+function isNetworkAvailable(state: { isConnected?: boolean | null; isInternetReachable?: boolean | null }) {
+  if (state.isConnected === false) return false;
+  if (state.isInternetReachable === false) return false;
+  return true;
+}
+
+function trackContentKey(trackId: string) {
+  return `${TRACK_CONTENT_PREFIX}${trackId}`;
+}
+
+function emptyStoredProgress(): StoredProgress {
+  return {
+    userId: '',
+    completedLevels: [],
+    currentTrack: '',
+    xp: 0,
+    streak: 0,
+    lastActiveDate: new Date().toISOString(),
+    achievements: [],
+    portfolioArtifacts: [],
+    guildId: null,
+    referralCode: null,
+    settings: {},
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function emptyProgress(): LocalProgress {
+  return {
+    ...emptyStoredProgress(),
+    lastPosition: null,
+  };
+}
+
+async function getStoredProgress(): Promise<StoredProgress> {
+  const stored = await getStoredJson<Partial<StoredProgress> | null>(PROGRESS_KEY, null);
+  if (!stored) return emptyStoredProgress();
+
+  return {
+    ...emptyStoredProgress(),
+    ...stored,
+    completedLevels: Array.isArray(stored.completedLevels) ? stored.completedLevels : [],
+    achievements: Array.isArray(stored.achievements) ? stored.achievements : [],
+    portfolioArtifacts: Array.isArray(stored.portfolioArtifacts) ? stored.portfolioArtifacts : [],
+    settings: stored.settings ?? {},
+  };
+}
+
+function normaliseLastPosition(raw: any): LastPosition | null {
+  if (!raw || typeof raw !== 'object') return null;
+
+  return {
+    trackId: String(raw.trackId ?? raw.track_id ?? ''),
+    trackName: String(raw.trackName ?? raw.track_name ?? ''),
+    level: String(raw.level ?? ''),
+    labId: String(raw.labId ?? raw.lab_id ?? ''),
+    labTitle: String(raw.labTitle ?? raw.lab_title ?? ''),
+    lessonId: String(raw.lessonId ?? raw.lesson_id ?? ''),
+    lessonTitle: String(raw.lessonTitle ?? raw.lesson_title ?? ''),
+    lessonIndex: Number(raw.lessonIndex ?? raw.lesson_index ?? 0),
+    labIndex: Number(raw.labIndex ?? raw.lab_index ?? 0),
+    simulatorState: raw.simulatorState ?? raw.simulator_state ?? null,
+    savedAt: String(raw.savedAt ?? raw.saved_at ?? new Date().toISOString()),
+  };
+}
+
+function normaliseServerProgress(userId: string, raw: any): LocalProgress {
+  const position = normaliseLastPosition(raw?.lastPosition ?? raw?.last_position);
+
+  return {
+    ...emptyProgress(),
+    userId,
+    completedLevels: Array.isArray(raw?.completedLevels)
+      ? raw.completedLevels
+      : Array.isArray(raw?.completed_levels)
+        ? raw.completed_levels
+        : [],
+    currentTrack: String(
+      raw?.currentTrack ??
+      raw?.current_track ??
+      raw?.current_track_id ??
+      raw?.active_track ??
+      '',
+    ),
+    lastPosition: position,
+    xp: Number(raw?.xp ?? raw?.points ?? 0),
+    streak: Number(raw?.streak ?? 0),
+    lastActiveDate: String(raw?.lastActiveDate ?? raw?.last_active_date ?? new Date().toISOString()),
+    achievements: Array.isArray(raw?.achievements) ? raw.achievements : [],
+    portfolioArtifacts: Array.isArray(raw?.portfolioArtifacts)
+      ? raw.portfolioArtifacts
+      : Array.isArray(raw?.portfolio_artifacts)
+        ? raw.portfolio_artifacts
+        : [],
+    guildId: raw?.guildId ?? raw?.guild_id ?? null,
+    referralCode: raw?.referralCode ?? raw?.referral_code ?? null,
+    settings: raw?.settings ?? {},
+    updatedAt: String(raw?.updatedAt ?? raw?.updated_at ?? new Date().toISOString()),
+  };
+}
+
+function sortQueue(items: SyncQueueItem[]) {
+  return [...items].sort((a, b) => {
+    const priorityDelta = PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority];
+    if (priorityDelta !== 0) return priorityDelta;
+    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+  });
+}
+
+function trimQueue(items: SyncQueueItem[]) {
+  const normalItems = items
+    .filter(item => item.priority === 'normal')
+    .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
+  if (normalItems.length <= 1500) return items;
+
+  const toDrop = new Set(normalItems.slice(0, normalItems.length - 1500).map(item => item.id));
+  return items.filter(item => !toDrop.has(item.id));
+}
+
+async function getSyncQueue(): Promise<SyncQueueItem[]> {
+  const queue = await getStoredJson<SyncQueueItem[]>(QUEUE_KEY, []);
+  return Array.isArray(queue) ? queue : [];
+}
+
+async function setSyncQueue(queue: SyncQueueItem[]): Promise<void> {
+  await setStoredJson(QUEUE_KEY, queue);
+  notifyListeners(queue.length);
+}
+
+function notifyListeners(pending?: number) {
+  if (typeof pending === 'number') {
+    syncListeners.forEach(listener => listener(pending));
+    return;
+  }
+
+  getPendingSyncCount().then(count => {
+    syncListeners.forEach(listener => listener(count));
+  });
+}
+
+async function parseJsonResponse(res: Response) {
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+async function buildHeaders(getToken: () => Promise<string | null>) {
+  const token = await getToken();
+  const deviceId = await getOrCreateDeviceId();
+
+  return {
+    deviceId,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Device-Id': deviceId,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    } as Record<string, string>,
+  };
+}
+
+export async function getOrCreateDeviceId(): Promise<string> {
+  try {
+    if (!isWebStorageAvailable()) {
+      const secureId = await SecureStore.getItemAsync(DEVICE_ID_KEY);
+      if (secureId) return secureId;
+    }
+  } catch {}
+
+  const storedId = await getStoredString(DEVICE_ID_KEY);
+  if (storedId) return storedId;
+
+  const digest = await Crypto.digestStringAsync(
+    Crypto.CryptoDigestAlgorithm.SHA256,
+    `${Date.now()}_${Math.random()}`,
+  );
+  const prefix = isWebStorageAvailable() ? 'web' : 'dev';
+  const nextId = `${prefix}_${digest.slice(0, 24)}`;
+
+  try {
+    if (!isWebStorageAvailable()) {
+      await SecureStore.setItemAsync(DEVICE_ID_KEY, nextId);
+    }
+  } catch {}
+
+  await setStoredString(DEVICE_ID_KEY, nextId);
+  return nextId;
+}
 
 export async function saveProgressLocally(progress: Partial<LocalProgress>): Promise<void> {
-  const existing = await _getProgressRecord();
+  const existing = await getStoredProgress();
 
-  await database.write(async () => {
-    if (existing) {
-      await existing.update(r => {
-        if (progress.userId)          r.userId           = progress.userId;
-        if (progress.completedLevels) r._completedLevels = JSON.stringify(progress.completedLevels);
-        if (progress.currentTrack)    r.currentTrack     = progress.currentTrack;
-        if (progress.xp !== undefined) r.xp              = progress.xp;
-        if (progress.streak !== undefined) r.streak      = progress.streak;
-        if (progress.lastActiveDate)  r.lastActiveDate   = progress.lastActiveDate;
-        if (progress.achievements)    r._achievements    = JSON.stringify(progress.achievements);
-        r.updatedAt = Date.now();
-      });
-    } else {
-      await database.get<LocalProgressModel>('local_progress').create(r => {
-        r.userId           = progress.userId ?? '';
-        r._completedLevels = JSON.stringify(progress.completedLevels ?? []);
-        r._perfectLevels   = JSON.stringify([]);
-        r.currentTrack     = progress.currentTrack ?? '';
-        r.currentLevelNum  = 1;
-        r.xp               = progress.xp ?? 0;
-        r.streak           = progress.streak ?? 0;
-        r.lastActiveDate   = progress.lastActiveDate ?? new Date().toISOString();
-        r._achievements    = JSON.stringify(progress.achievements ?? []);
-        r.updatedAt        = Date.now();
-      });
-    }
-  });
+  const next: StoredProgress = {
+    ...existing,
+    userId: progress.userId ?? existing.userId,
+    completedLevels: progress.completedLevels ?? existing.completedLevels,
+    currentTrack: progress.currentTrack ?? existing.currentTrack,
+    xp: progress.xp ?? existing.xp,
+    streak: progress.streak ?? existing.streak,
+    lastActiveDate: progress.lastActiveDate ?? existing.lastActiveDate,
+    achievements: progress.achievements ?? existing.achievements,
+    portfolioArtifacts: progress.portfolioArtifacts ?? existing.portfolioArtifacts,
+    guildId: progress.guildId !== undefined ? progress.guildId : existing.guildId,
+    referralCode: progress.referralCode !== undefined ? progress.referralCode : existing.referralCode,
+    settings: progress.settings ? { ...existing.settings, ...progress.settings } : existing.settings,
+    updatedAt: new Date().toISOString(),
+  };
 
-  // Save position separately if provided
-  if (progress.lastPosition !== undefined) {
-    await saveLastPosition(progress.lastPosition);
+  await setStoredJson(PROGRESS_KEY, next);
+
+  if ('lastPosition' in progress) {
+    await saveLastPosition(progress.lastPosition ?? null);
   }
 }
 
 export async function getLocalProgress(): Promise<LocalProgress> {
-  const record = await _getProgressRecord();
-  const position = await getLastPosition();
-
-  if (!record) {
-    return _emptyProgress();
-  }
+  const stored = await getStoredProgress();
+  const lastPosition = await getLastPosition();
 
   return {
-    userId:             record.userId,
-    completedLevels:    record.completedLevels,
-    currentTrack:       record.currentTrack,
-    lastPosition:       position,
-    xp:                 record.xp,
-    streak:             record.streak,
-    lastActiveDate:     record.lastActiveDate,
-    achievements:       record.achievements,
-    portfolioArtifacts: [],
-    guildId:            null,
-    referralCode:       null,
-    settings:           {},
-    updatedAt:          new Date(record.updatedAt).toISOString(),
+    ...emptyProgress(),
+    ...stored,
+    lastPosition,
   };
 }
 
 export async function restoreProgressFromServer(serverProgress: LocalProgress): Promise<void> {
   await saveProgressLocally(serverProgress);
-  if (serverProgress.lastPosition) {
-    await saveLastPosition(serverProgress.lastPosition);
+  if ('lastPosition' in serverProgress) {
+    await saveLastPosition(serverProgress.lastPosition ?? null);
   }
 }
 
-// ─── Last Position ────────────────────────────────────────────
-
 export async function saveLastPosition(position: LastPosition | null): Promise<void> {
-  const existing = await _getPositionRecord();
+  if (!position) {
+    await removeStoredString(POSITION_KEY);
+    return;
+  }
 
-  await database.write(async () => {
-    if (position === null) {
-      if (existing) await existing.destroyPermanently();
-      return;
-    }
-    if (existing) {
-      await existing.update(r => {
-        r.trackId         = position.trackId;
-        r.trackName       = position.trackName;
-        r.level           = position.level;
-        r.labId           = position.labId;
-        r.labTitle        = position.labTitle;
-        r.lessonId        = position.lessonId;
-        r.lessonTitle     = position.lessonTitle;
-        r.lessonIndex     = position.lessonIndex;
-        r.labIndex        = position.labIndex;
-        r._simulatorState = position.simulatorState ? JSON.stringify(position.simulatorState) : '';
-        r.savedAt         = Date.now();
-      });
-    } else {
-      await database.get<LastPositionModel>('last_position').create(r => {
-        r.trackId         = position.trackId;
-        r.trackName       = position.trackName;
-        r.level           = position.level;
-        r.labId           = position.labId;
-        r.labTitle        = position.labTitle;
-        r.lessonId        = position.lessonId;
-        r.lessonTitle     = position.lessonTitle;
-        r.lessonIndex     = position.lessonIndex;
-        r.labIndex        = position.labIndex;
-        r._simulatorState = position.simulatorState ? JSON.stringify(position.simulatorState) : '';
-        r.savedAt         = Date.now();
-      });
-    }
-  });
+  const next = normaliseLastPosition(position);
+  if (!next) return;
+  await setStoredJson(POSITION_KEY, next);
 }
 
 export async function getLastPosition(): Promise<LastPosition | null> {
-  const record = await _getPositionRecord();
-  if (!record) return null;
-  return {
-    trackId:         record.trackId,
-    trackName:       record.trackName,
-    level:           record.level as any,
-    labId:           record.labId,
-    labTitle:        record.labTitle,
-    lessonId:        record.lessonId,
-    lessonTitle:     record.lessonTitle,
-    lessonIndex:     record.lessonIndex,
-    labIndex:        record.labIndex,
-    simulatorState:  record.simulatorState,
-    savedAt:         new Date(record.savedAt).toISOString(),
-  };
+  const stored = await getStoredJson<any | null>(POSITION_KEY, null);
+  return normaliseLastPosition(stored);
 }
 
-// ─── Content Store ────────────────────────────────────────────
-
 export async function getContentManifest(): Promise<ContentManifest | null> {
-  const records = await database.get<ContentManifestModel>('content_manifest').query().fetch();
-  if (!records.length) return null;
-
-  const tracks: ContentManifest['tracks'] = {};
-  let totalSizeKb = 0;
-  let latestVersion = 0;
-  let latestAt = '';
-
-  for (const r of records) {
-    tracks[r.trackId] = {
-      version:      r.version,
-      downloadedAt: new Date(r.downloadedAt).toISOString(),
-      sizeKb:       r.sizeKb,
-    };
-    totalSizeKb += r.sizeKb;
-    if (r.version > latestVersion) {
-      latestVersion = r.version;
-      latestAt = new Date(r.downloadedAt).toISOString();
-    }
-  }
-
-  return { version: latestVersion, downloadedAt: latestAt, tracks, totalSizeKb };
+  const manifest = await getStoredJson<ContentManifest | null>(MANIFEST_KEY, null);
+  if (!manifest || typeof manifest !== 'object' || !manifest.tracks) return null;
+  return manifest;
 }
 
 export async function saveTrackContent(trackId: string, content: any, version: number): Promise<void> {
-  const contentStr = JSON.stringify(content);
-  const sizeKb = Math.round(contentStr.length / 1024);
+  const downloadedAt = new Date().toISOString();
+  const raw = JSON.stringify(content);
+  const sizeKb = Math.max(1, Math.round(raw.length / 1024));
+  const currentManifest = (await getContentManifest()) ?? {
+    version: 0,
+    downloadedAt,
+    tracks: {},
+    totalSizeKb: 0,
+  };
 
-  await database.write(async () => {
-    // Upsert manifest row
-    const existingManifest = await database
-      .get<ContentManifestModel>('content_manifest')
-      .query(Q.where('track_id', trackId))
-      .fetch();
+  const tracks = {
+    ...currentManifest.tracks,
+    [trackId]: {
+      version,
+      downloadedAt,
+      sizeKb,
+    },
+  };
 
-    if (existingManifest.length) {
-      await existingManifest[0].update(r => {
-        r.version      = version;
-        r.downloadedAt = Date.now();
-        r.sizeKb       = sizeKb;
-      });
-    } else {
-      await database.get<ContentManifestModel>('content_manifest').create(r => {
-        r.trackId      = trackId;
-        r.version      = version;
-        r.downloadedAt = Date.now();
-        r.sizeKb       = sizeKb;
-      });
-    }
+  const entries = Object.values(tracks);
+  const totalSizeKb = entries.reduce((sum, entry) => sum + entry.sizeKb, 0);
+  const latestVersion = entries.reduce((max, entry) => Math.max(max, entry.version), 0);
+  const latestDownloadedAt = entries
+    .slice()
+    .sort((a, b) => new Date(b.downloadedAt).getTime() - new Date(a.downloadedAt).getTime())[0]?.downloadedAt ?? downloadedAt;
 
-    // Upsert content blob
-    const existingContent = await database
-      .get<CachedContentModel>('cached_content')
-      .query(Q.where('track_id', trackId))
-      .fetch();
-
-    if (existingContent.length) {
-      await existingContent[0].update(r => {
-        r._content = contentStr;
-        r.version  = version;
-        r.savedAt  = Date.now();
-      });
-    } else {
-      await database.get<CachedContentModel>('cached_content').create(r => {
-        r.trackId  = trackId;
-        r._content = contentStr;
-        r.version  = version;
-        r.savedAt  = Date.now();
-      });
-    }
-  });
+  await setStoredJson(trackContentKey(trackId), content);
+  await setStoredJson(MANIFEST_KEY, {
+    version: latestVersion,
+    downloadedAt: latestDownloadedAt,
+    tracks,
+    totalSizeKb,
+  } satisfies ContentManifest);
 }
 
 export async function getTrackContent(trackId: string): Promise<any | null> {
-  const records = await database
-    .get<CachedContentModel>('cached_content')
-    .query(Q.where('track_id', trackId))
-    .fetch();
-  return records.length ? records[0].content : null;
+  return getStoredJson<any | null>(trackContentKey(trackId), null);
 }
 
 export async function isTrackDownloaded(trackId: string): Promise<boolean> {
   const manifest = await getContentManifest();
-  return !!manifest?.tracks[trackId];
+  return Boolean(manifest?.tracks?.[trackId]);
 }
 
 export async function isTrackUpdateAvailable(trackId: string, serverVersion: number): Promise<boolean> {
   const manifest = await getContentManifest();
-  const local = manifest?.tracks[trackId];
-  return !local || local.version < serverVersion;
+  const localVersion = manifest?.tracks?.[trackId]?.version;
+  return typeof localVersion !== 'number' || localVersion < serverVersion;
 }
-
-// ─── Sync Queue ───────────────────────────────────────────────
-
-const _PRIORITY_ORDER = { critical: 0, high: 1, normal: 2 };
-let _syncListeners: Array<(pending: number) => void> = [];
 
 export function onSyncUpdate(cb: (pending: number) => void) {
-  _syncListeners.push(cb);
-  return () => { _syncListeners = _syncListeners.filter(l => l !== cb); };
-}
-
-function _notifyListeners() {
-  getPendingSyncCount().then(count => _syncListeners.forEach(l => l(count)));
+  syncListeners.push(cb);
+  return () => {
+    syncListeners = syncListeners.filter(listener => listener !== cb);
+  };
 }
 
 export async function enqueueWrite(
@@ -375,157 +466,119 @@ export async function enqueueWrite(
   body: any,
   priority: SyncQueueItem['priority'] = 'normal',
 ): Promise<void> {
-  const itemId = `sq_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  const queue = await getSyncQueue();
+  const item: SyncQueueItem = {
+    id: `sq_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+    endpoint,
+    method,
+    body,
+    priority,
+    createdAt: new Date().toISOString(),
+    attempts: 0,
+  };
 
-  await database.write(async () => {
-    await database.get<SyncQueueModel>('sync_queue').create(r => {
-      r.itemId    = itemId;
-      r.priority  = priority;
-      r.endpoint  = endpoint;
-      r.method    = method;
-      r._body     = JSON.stringify(body);
-      r.createdAt = Date.now();
-      r.attempts  = 0;
-      r.status    = 'pending';
-    });
-  });
-
-  _notifyListeners();
-
-  // Trim old normal-priority items if queue exceeds 2000
-  const allNormal = await database
-    .get<SyncQueueModel>('sync_queue')
-    .query(Q.where('priority', 'normal'), Q.sortBy('created_at', Q.asc))
-    .fetch();
-  if (allNormal.length > 1500) {
-    const toDelete = allNormal.slice(0, allNormal.length - 1500);
-    await database.write(async () => {
-      for (const item of toDelete) await item.destroyPermanently();
-    });
-  }
+  await setSyncQueue(trimQueue([...queue, item]));
 }
 
 export async function getPendingSyncCount(): Promise<number> {
-  return database.get<SyncQueueModel>('sync_queue')
-    .query(Q.where('status', 'pending'))
-    .fetchCount();
+  return (await getSyncQueue()).length;
 }
-
-// ─── Sync Engine ──────────────────────────────────────────────
-
-let _syncing = false;
-let _netUnsub: (() => void) | null = null;
 
 export async function initOfflineStorage(
   apiBase: string,
   getToken: () => Promise<string | null>,
 ) {
-  _netUnsub = NetInfo.addEventListener(async state => {
-    if (state.isConnected && state.isInternetReachable) {
-      await _drainToServer(apiBase, getToken);
+  destroyOfflineStorage();
+
+  netUnsub = NetInfo.addEventListener(async state => {
+    if (isNetworkAvailable(state)) {
+      await drainSyncQueue(apiBase, getToken);
     }
   });
+
   const net = await NetInfo.fetch();
-  if (net.isConnected && net.isInternetReachable) {
-    _drainToServer(apiBase, getToken).catch(() => {});
+  if (isNetworkAvailable(net)) {
+    drainSyncQueue(apiBase, getToken).catch(() => {});
   }
 }
 
-async function _drainToServer(
+async function drainQueueToServer(
   apiBase: string,
   getToken: () => Promise<string | null>,
 ): Promise<void> {
-  if (_syncing) return;
-  _syncing = true;
+  if (syncing) return;
+  syncing = true;
 
   try {
-    const pending = await database
-      .get<SyncQueueModel>('sync_queue')
-      .query(Q.where('status', 'pending'))
-      .fetch();
+    const queue = sortQueue(await getSyncQueue());
+    if (!queue.length) return;
 
-    if (!pending.length) return;
-
-    // Sort in memory: critical → high → normal, then by createdAt
-    const sorted = [...pending].sort((a, b) => {
-      const pa = _PRIORITY_ORDER[a.priority as keyof typeof _PRIORITY_ORDER] ?? 2;
-      const pb = _PRIORITY_ORDER[b.priority as keyof typeof _PRIORITY_ORDER] ?? 2;
-      if (pa !== pb) return pa - pb;
-      return a.createdAt - b.createdAt;
-    });
-
-    const token    = await getToken();
-    const deviceId = await getOrCreateDeviceId();
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'X-Device-Id': deviceId,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
-
-    // Use the batch drain endpoint — one request, server handles ordering
-    const batchPayload = {
-      device_id:   deviceId,
-      client_time: new Date().toISOString(),
-      items: sorted.map(item => ({
-        id:         item.itemId,
-        priority:   item.priority,
-        endpoint:   item.endpoint,
-        method:     item.method,
-        body:       item.body,
-        created_at: new Date(item.createdAt).toISOString(),
-        attempts:   item.attempts,
-        device_id:  deviceId,
-      })),
-    };
-
+    const { deviceId, headers } = await buildHeaders(getToken);
     const res = await fetch(`${apiBase}/api/sync/drain`, {
-      method:  'POST',
+      method: 'POST',
       headers,
-      body:    JSON.stringify(batchPayload),
+      body: JSON.stringify({
+        device_id: deviceId,
+        client_time: new Date().toISOString(),
+        items: queue.map(item => ({
+          id: item.id,
+          priority: item.priority,
+          endpoint: item.endpoint,
+          method: item.method,
+          body: item.body,
+          created_at: item.createdAt,
+          attempts: item.attempts,
+          device_id: deviceId,
+        })),
+      }),
     });
 
-    if (!res.ok) {
-      // Server error — leave queue, retry next connection
-      return;
+    if (!res.ok) return;
+
+    const payload = unwrapData(await parseJsonResponse(res));
+    const results = Array.isArray(payload?.results)
+      ? payload.results
+      : Array.isArray(payload)
+        ? payload
+        : [];
+
+    if (!results.length) return;
+
+    const byId = new Map(results.map((result: any) => [String(result.id), result]));
+    const remaining: SyncQueueItem[] = [];
+
+    for (const item of queue) {
+      const result = byId.get(item.id);
+      if (!result) {
+        remaining.push(item);
+        continue;
+      }
+
+      if (result.status === 'conflict' || result.status === 'retry') {
+        remaining.push({
+          ...item,
+          attempts: item.attempts + 1,
+        });
+      }
     }
 
-    const { results } = await res.json();
-
-    // Remove successfully applied items; increment attempts on conflicts
-    await database.write(async () => {
-      for (const result of results) {
-        const match = sorted.find(i => i.itemId === result.id);
-        if (!match) continue;
-        if (result.status === 'applied') {
-          await match.destroyPermanently();
-        } else if (result.status === 'conflict') {
-          await match.update(r => { r.attempts = r.attempts + 1; });
-        } else if (result.status === 'rejected') {
-          // Server will never accept this — drop it
-          await match.destroyPermanently();
-        }
-      }
-    });
-
-    _notifyListeners();
+    await setSyncQueue(remaining);
   } finally {
-    _syncing = false;
+    syncing = false;
   }
 }
 
-// Kept for compatibility with useOfflineSync hook
 export async function drainSyncQueue(
   apiBase: string,
   getToken: () => Promise<string | null>,
 ): Promise<void> {
-  return _drainToServer(apiBase, getToken);
+  await drainQueueToServer(apiBase, getToken);
 }
 
 export function destroyOfflineStorage() {
-  _netUnsub?.();
+  netUnsub?.();
+  netUnsub = null;
 }
-
-// ─── Content Download Manager ────────────────────────────────
 
 export async function downloadTrackContent(
   trackId: string,
@@ -535,31 +588,28 @@ export async function downloadTrackContent(
 ): Promise<boolean> {
   try {
     const net = await NetInfo.fetch();
-    if (!net.isConnected) return false;
+    if (!isNetworkAvailable(net)) return false;
 
-    const token    = await getToken();
-    const deviceId = await getOrCreateDeviceId();
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'X-Device-Id':  deviceId,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
+    const { headers } = await buildHeaders(getToken);
 
-    // Check version
     const versionRes = await fetch(`${apiBase}/api/content/${trackId}/version`, { headers });
     if (!versionRes.ok) return false;
-    const { version } = await versionRes.json();
+
+    const versionPayload = unwrapData(await parseJsonResponse(versionRes));
+    const version = Number(versionPayload?.version ?? 0);
+    if (!Number.isFinite(version)) return false;
 
     if (!(await isTrackUpdateAvailable(trackId, version))) return true;
 
     onProgress?.(10);
+
     const contentRes = await fetch(`${apiBase}/api/content/${trackId}`, { headers });
     if (!contentRes.ok) return false;
 
+    const contentPayload = unwrapData(await parseJsonResponse(contentRes));
     onProgress?.(60);
-    const content = await contentRes.json();
-    await saveTrackContent(trackId, content, version);
 
+    await saveTrackContent(trackId, contentPayload, version);
     onProgress?.(100);
     return true;
   } catch {
@@ -574,51 +624,21 @@ export async function onLoginSync(
 ): Promise<void> {
   try {
     const net = await NetInfo.fetch();
-    if (!net.isConnected) return;
+    if (!isNetworkAvailable(net)) return;
 
-    const token    = await getToken();
-    const deviceId = await getOrCreateDeviceId();
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'X-Device-Id':  deviceId,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
+    const { headers } = await buildHeaders(getToken);
 
-    // 1. Restore full progress from server
     const progressRes = await fetch(`${apiBase}/api/users/progress`, { headers });
     if (progressRes.ok) {
-      const serverProgress = await progressRes.json();
-      await restoreProgressFromServer({ ...serverProgress, userId });
+      const payload = unwrapData(await parseJsonResponse(progressRes));
+      await restoreProgressFromServer(normaliseServerProgress(userId, payload));
     }
 
-    // 2. Download active track content in background
     const progress = await getLocalProgress();
     if (progress.currentTrack) {
       downloadTrackContent(progress.currentTrack, apiBase, getToken).catch(() => {});
     }
 
-    // 3. Drain any pending queue
-    await _drainToServer(apiBase, getToken);
+    await drainQueueToServer(apiBase, getToken);
   } catch {}
-}
-
-// ─── Private helpers ─────────────────────────────────────────
-
-async function _getProgressRecord(): Promise<LocalProgressModel | null> {
-  const records = await database.get<LocalProgressModel>('local_progress').query().fetch();
-  return records.length ? records[0] : null;
-}
-
-async function _getPositionRecord(): Promise<LastPositionModel | null> {
-  const records = await database.get<LastPositionModel>('last_position').query().fetch();
-  return records.length ? records[0] : null;
-}
-
-function _emptyProgress(): LocalProgress {
-  return {
-    userId: '', completedLevels: [], currentTrack: '', lastPosition: null,
-    xp: 0, streak: 0, lastActiveDate: new Date().toISOString(),
-    achievements: [], portfolioArtifacts: [], guildId: null,
-    referralCode: null, settings: {}, updatedAt: new Date().toISOString(),
-  };
 }

@@ -34,7 +34,7 @@ The practical implication for developers: if your project aligns with Coinbase V
     {
       contextTag: '[Investment thesis alignment]',
       scenario: 'Priya is building a compliance layer for DeFi — a protocol that allows institutions to interact with DEXes while maintaining KYC/AML records. She evaluates funding sources.',
-      outcome: 'Coinbase Ventures fits her thesis perfectly: compliance infrastructure bridges institutional demand (Coinbase Prime clients) with DeFi. Coinbase benefits directly if her protocol enables institutional capital to flow through DeFi on Base. She pitches: "Every institutional client who can now use DeFi through our compliance layer is a potential Coinbase Prime client." Coinbase Ventures' strategic interest aligns with her business model — they are investing for ecosystem reasons, not just return.',
+      outcome: "Coinbase Ventures fits her thesis perfectly: compliance infrastructure bridges institutional demand (Coinbase Prime clients) with DeFi. Coinbase benefits directly if her protocol enables institutional capital to flow through DeFi on Base. She pitches: \"Every institutional client who can now use DeFi through our compliance layer is a potential Coinbase Prime client.\" Coinbase Ventures' strategic interest aligns with her business model — they are investing for ecosystem reasons, not just return.",
     },
     {
       contextTag: '[Portfolio as signal]',

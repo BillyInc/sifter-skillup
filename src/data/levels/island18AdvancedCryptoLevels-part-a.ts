@@ -46,7 +46,7 @@ Beyond scaling, ZK proofs enable privacy credentials (prove you're over 18 witho
     {
       contextTag: '[Investor, evaluating ZK projects]',
       scenario: 'Priya is evaluating three ZK ecosystem projects: Polygon zkEVM, zkSync Era, and Starknet. She wants to understand their fundamental differences.',
-      outcome: 'Polygon zkEVM: Type 2 zkEVM (high Ethereum compatibility), uses SNARK-based proof system, targets existing Ethereum dApps with minimal migration. zkSync Era: Type 4 zkEVM (transpiles Solidity to ZK-compatible format), SNARK-based, fastest growing ecosystem, native account abstraction. Starknet: not a zkEVM at all — uses Cairo language and STARKs, requires learning Cairo for development but gains STARK transparency advantages and no trusted setup. Trade-offs are real: Starknet's superior theoretical security requires a new developer ecosystem.',
+      outcome: "Polygon zkEVM: Type 2 zkEVM (high Ethereum compatibility), uses SNARK-based proof system, targets existing Ethereum dApps with minimal migration. zkSync Era: Type 4 zkEVM (transpiles Solidity to ZK-compatible format), SNARK-based, fastest growing ecosystem, native account abstraction. Starknet: not a zkEVM at all — uses Cairo language and STARKs, requires learning Cairo for development but gains STARK transparency advantages and no trusted setup. Trade-offs are real: Starknet's superior theoretical security requires a new developer ecosystem.",
     },
   ],
 
