@@ -43,7 +43,7 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
   const [sending,     setSending]     = useState(false);
   const [reactTarget, setReactTarget] = useState<string | null>(null);
   const flatRef = useRef<FlatList>(null);
-  const pollRef = useRef<ReturnType<typeof setInterval>>();
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const fetchMessages = useCallback(async () => {
     if (!roomId) { setLoading(false); return; }
@@ -57,7 +57,9 @@ export default function TrackRoomScreen({ route, navigation }: TrackRoomScreenPr
   useEffect(() => {
     fetchMessages();
     pollRef.current = setInterval(fetchMessages, POLL_MS);
-    return () => clearInterval(pollRef.current);
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
   }, [fetchMessages]);
 
   useEffect(() => {

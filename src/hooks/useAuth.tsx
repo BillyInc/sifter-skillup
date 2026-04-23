@@ -21,7 +21,7 @@ export interface UserProfile {
   username:                 string;
   avatar_url:               string | null;
   auth_provider:            string;
-  email?:                   string;
+  email:                    string;
 
   // Progress
   points:                   number;
@@ -37,11 +37,11 @@ export interface UserProfile {
   active_field_color?:      string;
   current_track_id?:        string;
   current_track_name?:      string;
-  activeFieldId?:           string;
+  activeFieldId:            string;
   activeFieldColor?:        string;
-  currentTrackId?:          string;
-  currentTrackName?:        string;
-  currentFieldId?:          string;
+  currentTrackId:           string;
+  currentTrackName:         string;
+  currentFieldId:           string;
   xp_stage:                 number;
 
   // New: Starknet
@@ -56,6 +56,10 @@ export interface UserProfile {
 
   // Monetisation
   merch_credits:            number;
+  token_balance:            number;
+  token_currency:           string;
+  cash_balance_cents:       number;
+  badges:                   any[];
   boosters:                 Record<string, number>;
   is_verified:              boolean;
 
@@ -273,13 +277,14 @@ export function useAuth() {
 // Maps server field names to the canonical UserProfile shape
 
 function _normalise(raw: any): UserProfile {
-  const currentTrackId = raw.current_track_id ?? raw.currentTrackId ?? raw.active_track ?? raw.activeTrack ?? 'crypto';
-  const currentTrackName = raw.current_track_name ?? raw.currentTrackName ?? currentTrackId;
-  const activeFieldId = raw.active_field_id
+  const currentTrackId = String(raw.current_track_id ?? raw.currentTrackId ?? raw.active_track ?? raw.activeTrack ?? 'crypto');
+  const currentTrackName = String(raw.current_track_name ?? raw.currentTrackName ?? currentTrackId);
+  const activeFieldId = String(raw.active_field_id
     ?? raw.activeFieldId
     ?? raw.current_field_id
     ?? raw.currentFieldId
-    ?? (typeof currentTrackId === 'string' ? currentTrackId.split('-').slice(0, -1).join('-') || currentTrackId : undefined);
+    ?? (currentTrackId.split('-').slice(0, -1).join('-') || currentTrackId)
+    ?? currentTrackId);
   const activeFieldColor = raw.active_field_color ?? raw.activeFieldColor;
 
   return {
@@ -287,7 +292,7 @@ function _normalise(raw: any): UserProfile {
     username:                 raw.username ?? 'Learner',
     avatar_url:               raw.avatar_url ?? null,
     auth_provider:            raw.auth_provider ?? 'guest',
-    email:                    raw.email,
+    email:                    raw.email ?? '',
     points:                   raw.points ?? 0,
     streak:                   raw.streak ?? 0,
     current_level:            raw.current_level ?? 1,
@@ -312,6 +317,10 @@ function _normalise(raw: any): UserProfile {
     guild_role:               raw.guild_role,
     achievements:             raw.achievements ?? [],
     merch_credits:            raw.merch_credits ?? 0,
+    token_balance:            raw.token_balance ?? 0,
+    token_currency:           raw.token_currency ?? 'USD',
+    cash_balance_cents:       raw.cash_balance_cents ?? 0,
+    badges:                   raw.badges ?? [],
     boosters:                 raw.boosters ?? {},
     is_verified:              raw.is_verified ?? false,
     settings:                 raw.settings ?? {},

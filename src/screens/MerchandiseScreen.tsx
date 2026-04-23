@@ -38,7 +38,14 @@ export default function MerchandiseScreen({ navigation }: any) {
   const [selected,    setSelected]    = useState<MerchandiseItem | null>(null);
   const [showDetail,  setShowDetail]  = useState(false);
 
-  const credits = user ? rewardsEngine.getMerchCreditsBalance(user) : 0;
+  const rewardsUser = user
+    ? ({
+        ...user,
+        completed_levels: (user.completed_levels ?? []).map(level => Number(level)),
+      } as any)
+    : null;
+
+  const credits = rewardsUser ? rewardsEngine.getMerchCreditsBalance(rewardsUser) : 0;
 
   const items = merchandiseItems.filter(item => {
     const catMatch = category === 'all' || item.category === category;
@@ -46,7 +53,7 @@ export default function MerchandiseScreen({ navigation }: any) {
   });
 
   const isUnlocked = (item: MerchandiseItem) =>
-    user ? rewardsEngine.isMerchandiseUnlocked(item, user) : item.unlock_condition.type === 'open';
+    rewardsUser ? rewardsEngine.isMerchandiseUnlocked(item, rewardsUser) : item.unlock_condition.type === 'open';
 
   const creditsDiscount = (item: MerchandiseItem): number => {
     const maxDiscount = item.price_usd * 0.5;              // 50% cap

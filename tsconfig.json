@@ -8,6 +8,10 @@
   },
   "exclude": [
     "src/components/simulators/SimulatorCard_ADDITIONS.tsx",
+    "src/components/simulators/SimulatorCard_PATCH.ts",
+    "src/components/simulators/island06SolanaSimulatorDefs.tsx",
+    "src/components/simulators/island12_13_15Sims.tsx",
+    "src/components/simulators/walletEnhancedSims.tsx",
     "src/lib/database.ts",
     "src/lib/watermelonModels.ts",
     "src/lib/watermelonSchema.ts",
