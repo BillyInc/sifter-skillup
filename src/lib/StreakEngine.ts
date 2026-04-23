@@ -25,8 +25,10 @@ export interface StreakStatus {
   streak: number;
   longestStreak: number;
   isAtRisk: boolean;          // < 4h remaining in window
+  atRisk?: boolean;
   isLost: boolean;            // window expired with no activity
   hoursLeft: number;          // hours until midnight deadline
+  hoursUntilLoss?: number;
   minutesLeft: number;
   freezesAvailable: number;
   completedToday: boolean;
@@ -186,8 +188,10 @@ class StreakEngineClass {
       streak: isLost ? 0 : state.currentStreak,
       longestStreak: state.longestStreak,
       isAtRisk,
+      atRisk: isAtRisk,
       isLost,
       hoursLeft,
+      hoursUntilLoss: hoursLeft,
       minutesLeft,
       freezesAvailable: state.freezesAvailable,
       completedToday,

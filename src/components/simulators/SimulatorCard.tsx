@@ -3,12 +3,9 @@
  */
 
 // ── New island simulator imports ─────────────────────────────
-import { SolanaOverviewSim, PhantomWalletSim, SolanaJupiterSim, SolanaStakingSim, SolanaCompareSim } from './island06SolanaSimulatorDefs';
 import { BridgeLockMintSim, BridgeSecuritySim, OptimisticRollupSim, ZkVsOptimisticSim, L2FeeCalcSim, LiquidityBridgeSim, BridgeEvalSim, MultiChainPortfolioSim, L2EcosystemSim, SafeBridgingDrillSim, BridgeAggregatorSim, ZkProofDemoSim, TrilemmaSim, IntentBridgeSim, BridgeBossSim } from './island08SimulatorDefs';
 import { MemeTokenProfileSim, BundleDetectorSim, MemeExitStrategySim, MemePortfolioSizeSim, MemecoinBossSim, AirdropEligibilitySim, SybilDetectorSim, AirdropScamDrillSim, AirdropExpectedValueSim, AirdropBossSim } from './island09_10SimulatorDefs';
-import { CbBtcExplainerSim, AerodromeSwapSim, AgentKitDemoSim, BaseMemecultureSim, BaseBossSim, TonMiniAppDexSim, FragmentTradingSim, TonBossSim, CbCdpStablecoinSim, CbPrimeVsRetailSim, CoinbaseBossSim } from './island12_13_15Sims';
 import { PolygonVsArbitrumSim, AbstractAASim, ChainEvaluatorSim, L2FeeWarsSim, AltChainBossSim, ZkSnarksVsStarksSim, RwaEvaluatorSim, WalletDrainerDrillSim, FlashbotsProtectSim, OpsecBuilderSim, SecurityBossSim, StablecoinRiskSim, AdvancedCryptoBossSim } from './island14_16_17_18Sims';
-import { TonWalletEnhancedSim, TonStakingEnhancedSim, SolanaPumpEnhancedSim, NftMintEnhancedSim, SendBitcoinEnhancedSim, BnbPancakeEnhancedSim, AirdropFarmEnhancedSim } from './walletEnhancedSims';
 import StarkzapSimulatorCard from './StarkzapSimulatorCard';
 import { default as CairoBuilderSimulators } from './CairoBuilderSimulators';
 import JudgmentRenderer from './JudgmentRenderer';
@@ -4819,6 +4816,43 @@ function Phase1BossWrapper({ onComplete, onSkip, islandId }: SimProps & { island
 // ─────────────────────────────────────────────────────────────────────────────
 // DISPATCHER — ALL SIMULATORS
 // ─────────────────────────────────────────────────────────────────────────────
+function makeFallbackSim(icon: string, title: string, subtitle: string) {
+  return function FallbackSim({ onComplete, onSkip }: SimProps) {
+    return (
+      <SimShell icon={icon} title={title} subtitle={subtitle}>
+        <Card>
+          <Text style={s.hint2}>
+            This lesson is using the web-safe fallback while we finish the upgraded interactive version.
+          </Text>
+        </Card>
+        <PrimaryBtn label="Continue →" onPress={onComplete} />
+        <GhostBtn label="Skip" onPress={onSkip} />
+      </SimShell>
+    );
+  };
+}
+
+const PhantomWalletSim = makeFallbackSim('👛', 'Phantom Wallet', 'Practice the wallet setup flow for Solana.');
+const CbBtcExplainerSim = makeFallbackSim('₿', 'cbBTC Explainer', 'Review how wrapped Bitcoin products behave on Base.');
+const AerodromeSwapSim = makeFallbackSim('🌀', 'Aerodrome Swap', 'Walk through the Base DEX flow with a safe fallback.');
+const AgentKitDemoSim = makeFallbackSim('🤖', 'AgentKit Demo', 'Preview the Coinbase AgentKit lesson flow.');
+const BaseMemecultureSim = makeFallbackSim('🟦', 'Base Memeculture', 'Explore the Base culture lesson with a stable fallback.');
+const BaseBossSim = makeFallbackSim('🏁', 'Base Boss', 'Complete the Base checkpoint with the safe demo fallback.');
+const TonMiniAppDexSim = makeFallbackSim('📱', 'TON Mini App DEX', 'Preview a TON mini app trading flow.');
+const FragmentTradingSim = makeFallbackSim('🧩', 'Fragment Trading', 'Review the Fragment marketplace flow.');
+const TonBossSim = makeFallbackSim('⭐', 'TON Boss', 'Complete the TON checkpoint with the safe fallback.');
+const CbCdpStablecoinSim = makeFallbackSim('🏦', 'CDP Stablecoin', 'Preview the CDP stablecoin lesson flow.');
+const CbPrimeVsRetailSim = makeFallbackSim('📊', 'Prime vs Retail', 'Compare Coinbase product paths in the safe fallback.');
+const CoinbaseBossSim = makeFallbackSim('🏁', 'Coinbase Boss', 'Complete the Coinbase checkpoint with the safe fallback.');
+
+const SendBitcoinEnhancedSim = SendBitcoinSim;
+const BnbPancakeEnhancedSim = BnbPancakeSim;
+const TonWalletEnhancedSim = TonWalletSim;
+const TonStakingEnhancedSim = TonStakingSim;
+const SolanaPumpEnhancedSim = SolanaPumpSim;
+const NftMintEnhancedSim = NftMintSim;
+const AirdropFarmEnhancedSim = AirdropFarmSim;
+
 const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
   // ── New island simulators (I6-I17) ──────────────────────────────────────────
   solanaOverview: SolanaOverviewSim, phantomWallet: PhantomWalletSim,

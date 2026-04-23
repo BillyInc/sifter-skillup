@@ -42,6 +42,7 @@ export interface IslandLevel {
 
   // Simulator
   simulatorLesson?: string;
+  lessonSimulations?: any[];
 
   // Rich lesson content
   examples?:        WorkedExample[];

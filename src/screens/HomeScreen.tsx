@@ -10,7 +10,7 @@ import {
   SafeAreaView, Animated, RefreshControl,
   Platform, useWindowDimensions, Easing,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
@@ -191,10 +191,10 @@ function QuickAction({ emoji, label, sub, color, onPress }: {
 
 function StreakBanner({ status }: { status: StreakStatus }) {
   const { colors } = useTheme();
-  if (!status.atRisk && status.streak < 2) return null;
-  const bg  = status.atRisk ? colors.orange + '18' : colors.xpGreen + '18';
-  const fg  = status.atRisk ? colors.orange : colors.xpGreen;
-  const msg = status.atRisk
+  if (!(status as any).isAtRisk && status.streak < 2) return null;
+  const bg  = (status as any).isAtRisk ? colors.orange + '18' : colors.xpGreen + '18';
+  const fg  = (status as any).isAtRisk ? colors.orange : colors.xpGreen;
+  const msg = (status as any).isAtRisk
     ? `⚠️ Streak at risk! ${status.hoursUntilLoss?.toFixed(0)}h left — do a lesson now.`
     : `🔥 ${status.streak}-day streak! Keep it up.`;
   return (

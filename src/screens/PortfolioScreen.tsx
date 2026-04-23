@@ -54,6 +54,83 @@ interface PortfolioItem {
 
 type TabId = 'my-track' | 'my-work' | 'all-platforms';
 
+function PlatformCard({
+  platform,
+  connected,
+  badge,
+  onPress,
+}: {
+  platform: PortfolioPlatform;
+  connected?: ConnectedAccount;
+  badge?: 'primary';
+  onPress: () => void;
+}) {
+  const { colors } = useTheme();
+  const isConnected = Boolean(connected);
+
+  return (
+    <TouchableOpacity
+      style={{
+        backgroundColor: colors.card,
+        borderRadius: Radius.lg,
+        padding: Spacing.md,
+        borderWidth: 1.5,
+        borderColor: isConnected ? platform.color : colors.border,
+        gap: Spacing.sm,
+      }}
+      onPress={onPress}
+      activeOpacity={0.85}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md }}>
+        <View
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 16,
+            backgroundColor: platform.color + '18',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={{ fontSize: 24 }}>{platform.icon}</Text>
+        </View>
+
+        <View style={{ flex: 1, gap: 4 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <Text style={{ fontSize: FontSize.sm, fontWeight: '800', color: colors.text }}>{platform.name}</Text>
+            {badge === 'primary' && (
+              <View style={{ backgroundColor: colors.accentSoft, borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2 }}>
+                <Text style={{ fontSize: 10, fontWeight: '800', color: colors.accent }}>Essential</Text>
+              </View>
+            )}
+            {isConnected && (
+              <View style={{ backgroundColor: Colors.greenSoft, borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2 }}>
+                <Text style={{ fontSize: 10, fontWeight: '800', color: Colors.green }}>Connected</Text>
+              </View>
+            )}
+          </View>
+
+          <Text style={{ fontSize: FontSize.xs, color: colors.textSoft, lineHeight: 17 }}>
+            {platform.what_to_post}
+          </Text>
+
+          <Text style={{ fontSize: FontSize.xs, color: isConnected ? platform.color : colors.textMuted, fontWeight: '700' }}>
+            {isConnected
+              ? `@${connected?.username}`
+              : platform.integration === 'oauth' || platform.integration === 'api_key'
+                ? 'Tap to connect'
+                : 'Tap to add your profile'}
+          </Text>
+        </View>
+
+        <Text style={{ fontSize: FontSize.xs, color: platform.color, fontWeight: '800' }}>
+          {isConnected ? 'Manage' : 'Connect'}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────
 // PlatformConnectModal
 // Mode picker: Create new account  |  Connect existing  |  Open browser

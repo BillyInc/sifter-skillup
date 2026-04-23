@@ -19,7 +19,7 @@
  *   starkzap-boss     — final challenge, combines multiple actions
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, type ReactNode } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
   ActivityIndicator, Animated, Linking,
@@ -41,17 +41,20 @@ interface Props {
 
 // ─── Shared UI components ──────────────────────────────────────────────────────
 
-function SimHeader({ icon, title, subtitle, colors }: {
-  icon: string; title: string; subtitle: string; colors: any;
+function SimHeader({ icon, title, subtitle, colors, children }: {
+  icon: string; title: string; subtitle: string; colors: any; children?: ReactNode;
 }) {
   return (
-    <View style={[sH.wrap, { backgroundColor: colors.accentSoft }]}>
-      <Text style={sH.icon}>{icon}</Text>
-      <View style={{ flex: 1 }}>
+    <View style={{ gap: Spacing.md }}>
+      <View style={[sH.wrap, { backgroundColor: colors.accentSoft }]}>
+        <Text style={sH.icon}>{icon}</Text>
+        <View style={{ flex: 1 }}>
         <Text style={[sH.label, { color: colors.accent }]}>⚡ STARKNET LIVE</Text>
         <Text style={[sH.title, { color: colors.text }]}>{title}</Text>
         <Text style={[sH.sub, { color: colors.textSoft }]}>{subtitle}</Text>
       </View>
+      </View>
+      {children}
     </View>
   );
 }

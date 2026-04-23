@@ -307,7 +307,7 @@ function MCQQuestion({ q, onCorrect, onWrong }: { q: Question; onCorrect:()=>voi
   // Shuffle options at render time
   const shuffled = useMemo(() => {
     if (!opts.length) return { shuffledOptions: [], newCorrectIndex: 0 };
-    return shuffleOptionsWithCorrectTracking(opts.map(o => o.text), q.correct);
+    return shuffleOptionsWithCorrectTracking(opts.map(o => o.text), Number(q.correct ?? 0));
   }, [opts, q.correct]);
   
   const shuffledOptions = shuffled.shuffledOptions;
@@ -652,7 +652,12 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
 
   const handleFinish = async () => {
     if(!state||!level||celebrationDone) return;
-    await completeLevel(levelId, state.xp, state.wrongCount===0);
+    await completeLevel(
+      levelId,
+      (user as any)?.currentTrackId ?? (user as any)?.active_track ?? 'default',
+      state.xp,
+      state.wrongCount===0,
+    );
 
     // ── Navigator boss completion (levels 3001–3011) ──────────────────────────
     // Fires POST /api/game/navigator-lab-complete which unlocks next Navigator lab.
