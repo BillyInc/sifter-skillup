@@ -1,2 +1,3 @@
 export * from './builderLessons';
-export { default } from './builderSimulators';
+export * from './builderSimulators';
+export { default as CairoBuilderSimulatorCard } from './builderSimulators';
