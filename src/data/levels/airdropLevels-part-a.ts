@@ -387,8 +387,7 @@ The one scenario where the math strongly works: if you would use the protocol an
   guidedPractice: [
     {
       question: 'You estimate: 50% chance of airdrop, 60% chance of qualifying at meaningful tier, $500 expected value, $150 gas cost. What is your expected value?',
-      options: ['$150', '$0', '$0 (breakeven — EV is zero)', '$−0'),
-      ],
+      options: ['$150', '$0', '$0 (breakeven — EV is zero)', '$−0'],
       correct: 0,
       hint: '0.50 × 0.60 × $500 − $150 = ?',
       explanation: '0.50 × 0.60 = 0.30. 0.30 × $500 = $150 expected return. $150 − $150 gas = $0. This farming opportunity is exactly breakeven in expectation — neither positive nor negative EV. Whether to proceed depends on your risk tolerance: you might receive $500 (positive outcome) or $0 (negative outcome from probability failing). Expected value of $0 does not mean you get $0 — it means the probability-weighted outcome is neutral.',

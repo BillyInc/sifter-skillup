@@ -462,7 +462,7 @@ export function AltChainBossSim({ onComplete, onSkip }: SimProps) {
                 let bg = Colors.card, border = Colors.border;
                 if (checked && isCh && isCo)  { bg = '#d1fae5'; border = Colors.green; }
                 if (checked && isCh && !isCo) { bg = '#fee2e2'; border = Colors.red; }
-                if (checked && !iCh && iCo)   { bg = '#d1fae5'; border = Colors.green; }
+                if (checked && !isCh && isCo) { bg = '#d1fae5'; border = Colors.green; }
                 return (
                   <TouchableOpacity key={opt} disabled={checked} onPress={() => setAnswers(a => ({ ...a, [i]: opt }))}
                     style={{ paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.md, borderWidth: 2, backgroundColor: bg, borderColor: border }}>
@@ -477,7 +477,7 @@ export function AltChainBossSim({ onComplete, onSkip }: SimProps) {
       })}
       {!checked
         ? <PB label="Submit Boss Answers →" onPress={() => setChecked(true)} disabled={Object.keys(answers).length < questions.length} />
-        : <><Res ok={score >= 3} msg={`${score}/4 — ${score >= 3 ? 'Alt-chain mastery! Each chain has a genuine niche — knowing which to use is the skill.' : 'Review: Arbitrum (DeFi+Rust), Avalanche (enterprise subnets), Abstract (gaming AA), OP Stack (Superchain).`} />
+        : <><Res ok={score >= 3} msg={`${score}/4 — ${score >= 3 ? 'Alt-chain mastery! Each chain has a genuine niche — knowing which to use is the skill.' : 'Review: Arbitrum (DeFi+Rust), Avalanche (enterprise subnets), Abstract (gaming AA), OP Stack (Superchain).'}`} />
           <PB label="Return to Island Map →" onPress={onComplete} /></>}
       <GB label="Skip simulator" onPress={onSkip} />
     </SimShell>
@@ -619,9 +619,9 @@ export function RwaEvaluatorSim({ onComplete, onSkip }: SimProps) {
             {[{ id: 'low_risk', l: '🟢 Low Risk' }, { id: 'medium_risk', l: '🟡 Medium Risk' }, { id: 'high_risk', l: '🔴 High Risk' }].map(opt => {
               const isCh = ratings[p.name] === opt.id; const isCo = opt.id === correct[p.name];
               let bg = Colors.card, border = Colors.border;
-              if (checked && iCh && iCo)   { bg = riskBg(opt.id); border = riskColor(opt.id); }
-              if (checked && iCh && !iCo)  { bg = '#fee2e2'; border = Colors.red; }
-              if (checked && !iCh && iCo)  { bg = riskBg(opt.id); border = riskColor(opt.id); }
+              if (checked && isCh && isCo) { bg = riskBg(opt.id); border = riskColor(opt.id); }
+              if (checked && isCh && !isCo) { bg = '#fee2e2'; border = Colors.red; }
+              if (checked && !isCh && isCo) { bg = riskBg(opt.id); border = riskColor(opt.id); }
               return (
                 <TouchableOpacity key={opt.id} disabled={checked} onPress={() => setRatings(r => ({ ...r, [p.name]: opt.id }))}
                   style={{ flex: 1, padding: Spacing.sm, borderRadius: Radius.md, borderWidth: 2, backgroundColor: bg, borderColor: border, alignItems: 'center' }}>
@@ -1136,9 +1136,9 @@ export function StablecoinRiskSim({ onComplete, onSkip }: SimProps) {
             {[{ id: 'safe', l: '🟢 Safe' }, { id: 'moderate', l: '🟡 Moderate' }, { id: 'risky', l: '🔴 Risky' }].map(opt => {
               const isCh = ratings[sc.name] === opt.id; const isCo = opt.id === correct[sc.name];
               let bg = Colors.card, border = Colors.border;
-              if (checked && isCh && iCo)   { bg = riskBg(opt.id); border = riskColor(opt.id); }
-              if (checked && iCh && !iCo)   { bg = '#fee2e2'; border = Colors.red; }
-              if (checked && !iCh && iCo)   { bg = riskBg(opt.id); border = riskColor(opt.id); }
+              if (checked && isCh && isCo) { bg = riskBg(opt.id); border = riskColor(opt.id); }
+              if (checked && isCh && !isCo) { bg = '#fee2e2'; border = Colors.red; }
+              if (checked && !isCh && isCo) { bg = riskBg(opt.id); border = riskColor(opt.id); }
               return (
                 <TouchableOpacity key={opt.id} disabled={checked} onPress={() => setRatings(r => ({ ...r, [sc.name]: opt.id }))}
                   style={{ flex: 1, padding: Spacing.sm, borderRadius: Radius.md, borderWidth: 2, backgroundColor: bg, borderColor: border, alignItems: 'center' }}>

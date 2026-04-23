@@ -463,48 +463,6 @@ function PushItemModal({
 export default function PortfolioScreen() {
   const { colors, isDark } = useTheme();
   const { user } = useAuth();
-  const [tab, setTab]                       = useState<TabId>('my-track');
-  const [connectedAccounts, setConnected]   = useState<ConnectedAccount[]>([]);
-  const [portfolioItems, setItems]          = useState<PortfolioItem[]>([]);
-  const [loading, setLoading]               = useState(true);
-  const [refreshing, setRefreshing]         = useState(false);
-  const [connectModal, setConnectModal]     = useState<PortfolioPlatform | null>(null);
-  const [pushModal, setPushModal]           = useState<PortfolioItem | null>(null);
-  const [expandedField, setExpandedField]   = useState<string | null>(null);
-
-  // User's active skill track drives "My Track" tab
-  const activeTrack = user?.active_track ?? 'crypto-onboarding';
-  const trackPlatforms = getPlatformsForField(activeTrack);
-
-  const load = useCallback(async (refresh = false) => {
-    if (refresh) setRefreshing(true); else setLoading(true);
-    try {
-      const [accs, items] = await Promise.all([
-        API.portfolioGetAccounts().catch(() => ({ accounts: [] })),
-        API.portfolioGetItems().catch(() => ({ items: [] })),
-      ]);
-      setConnected(accs.accounts ?? []);
-      setItems(items.items ?? []);
-    } catch {}
-    finally { setLoading(false); setRefreshing(false); }
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
-
-  const connMap: Record<string, ConnectedAccount> =
-    Object.fromEntries(connectedAccounts.map(a => [a.platformId, a]));
-
-  if (loading) {
-    return (
-      <SafeAreaView style={s.screen}>
-        <ActivityIndicator color={Colors.accent} style={{ marginTop: 80 }} />
-      </SafeAreaView>
-    );
-  }
-
-export default function PortfolioScreen() {
-  const { colors, isDark } = useTheme();
-  const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const [tab, setTab]                       = useState<TabId>('my-track');
   const [connectedAccounts, setConnected]   = useState<ConnectedAccount[]>([]);
