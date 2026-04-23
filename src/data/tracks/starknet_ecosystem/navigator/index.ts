@@ -9,5 +9,3 @@
 
 export * from './navigatorLessons';
 export * from './navigatorSimulators';
-export { NAVIGATOR_TRACK_META } from './navigatorLessons';
-export type { NavigatorLesson, NavigatorLabMeta } from './navigatorLessons';
