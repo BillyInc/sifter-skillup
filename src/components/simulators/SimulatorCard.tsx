@@ -1,5 +1,6 @@
 // @ts-nocheck
 /**
+ */
 
 // ── New island simulator imports ─────────────────────────────
 import { SolanaOverviewSim, PhantomWalletSim, SolanaJupiterSim, SolanaStakingSim, SolanaCompareSim } from './island06SolanaSimulatorDefs';
@@ -17,8 +18,9 @@ import ResearchWriterSandbox from './ResearchWriterSandbox';
 import CairoBuilderPhase2Scorer from './CairoBuilderPhase2Scorer';
 import { CairoBuilderCodeSandbox } from './CairoBuilderSimulators';
 import { getBossEntry } from '../../data/phase1BossRegistry';
-import { ECOSYSTEM_FINAL_BOSS } from '../../data/tracks/starknet_ecosystem_deep_dive/lab9/ecosystemLab9_part2';
+import { ECOSYSTEM_FINAL_BOSS } from '../../data/tracks/starknet_ecosystem/ecosystem/ecosystemAllLessons';
 
+/**
  * SimulatorCard — inline "test what you just learnt" interactive exercises.
  *
  * Each simulator is a focused mini-task that uses the exact concept taught

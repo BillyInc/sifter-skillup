@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { ISLAND_LEVELS } from './islandLevels';
 // Re-export from tracks folder
-import { STARKNET_LEVELS } from './tracks/starknet_island/levels';
+import { STARKNET_LEVELS } from './tracks/starknet_ecosystem/island/levels';
 // ⚡ Sifter Skill_Up — Level Data (270 levels, auto-converted)
 // DO NOT EDIT MANUALLY — edit the source levels.js and reconvert
 
