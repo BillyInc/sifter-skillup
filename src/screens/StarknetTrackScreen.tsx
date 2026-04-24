@@ -10,10 +10,12 @@ import {
   SafeAreaView, Animated, Linking, RefreshControl, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { usePrivy } from '@privy-io/expo';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, Colors } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { API, API_BASE } from '../lib/api';
+import { PRIVY_CONFIGURED } from '../lib/config';
 
 // ─── Lab definitions with locking rules ──────────────────────
 
@@ -49,20 +51,25 @@ const LABS: LabDef[] = [
 
 const LEVEL_COLORS = { junior: '#58CC02', intermediate: '#F59E0B', senior: '#EC4899' };
 
-// ─── Privy-style wallet creation ─────────────────────────────
-// In production: replace with actual Privy SDK
-// Privy install: npm install @privy-io/react-auth (requires Privy dashboard setup)
-// For now: generates a deterministic demo address stored in SecureStore
+// ─── Wallet helpers ──────────────────────────────────────────
+// Real Starknet wallets are created by Privy via @privy-io/expo's extended-chains
+// API on the AuthScreen Starknet flow (src/hooks/useStarknetPrivyLogin.ts). These
+// helpers handle two edge cases inside the track screen:
+//   1. pickStarknetAddressFromPrivy — returning user who already has a Privy
+//      session, reads the Starknet linked_account off privy.user.
+//   2. generateDemoStarknetAddress — fallback when PRIVY_CONFIGURED is false so
+//      the app still boots for local testing without a real Privy app.
 
-async function createPrivyStarknetWallet(email: string): Promise<string> {
-  // PRODUCTION: const privy = usePrivy(); const { address } = await privy.createWallet({ type: 'starknet' });
-  // The Privy SDK handles key generation, storage, and gasless sponsorship.
-  // Set up at: https://dashboard.privy.io → Create App → Add Starknet → Copy App ID
-
-  // DEMO FALLBACK (no Privy SDK installed):
+function generateDemoStarknetAddress(): string {
   const chars = '0123456789abcdef';
   const rand = Array.from({ length: 63 }, () => chars[Math.floor(Math.random() * 16)]).join('');
   return `0x0${rand}`;
+}
+
+function pickStarknetAddressFromPrivy(privyUser: any): string | null {
+  const linked = privyUser?.linked_accounts ?? [];
+  const match = linked.find((a: any) => a?.chain_type === 'starknet' && a?.address);
+  return match?.address ?? null;
 }
 
 // ─── Sub-components ───────────────────────────────────────────
@@ -166,6 +173,10 @@ export default function StarknetTrackScreen({ route }: any) {
   const { colors }       = useTheme();
   const { user, authStarknet, starknetLoading, refreshUser } = useAuth();
   const navigation       = useRouter();
+  // Privy hooks are safe to call even when Privy isn't configured — the
+  // provider returns a non-authenticated default, so usePrivy() simply yields
+  // { user: null, isReady: ... }. We gate actual usage on PRIVY_CONFIGURED.
+  const privy            = usePrivy();
 
   const [trackXP,    setTrackXP]    = useState(0);
   const [completedLabs, setCompleted] = useState<Set<string>>(new Set());
@@ -239,10 +250,48 @@ export default function StarknetTrackScreen({ route }: any) {
       Alert.alert('Email needed', 'Add an email to your account to create a Starknet wallet.');
       return;
     }
+
+    // Preferred path: user is already authenticated with Privy and has a Starknet
+    // embedded wallet on linked_accounts — just register it on the backend.
+    if (PRIVY_CONFIGURED && privy.user) {
+      const privyAddr = pickStarknetAddressFromPrivy(privy.user);
+      if (privyAddr) {
+        setCreating(true);
+        try {
+          const token = await privy.getAccessToken();
+          if (!token) throw new Error('Privy session expired. Please sign out and back in.');
+          await authStarknet(user.email, privyAddr, token);
+          await refreshUser();
+        } catch (e: any) {
+          Alert.alert('Wallet Error', e.message || 'Could not link wallet. Please try again.');
+        } finally {
+          setCreating(false);
+        }
+        return;
+      }
+    }
+
+    // Privy is configured but user isn't authenticated with Privy yet — route them
+    // through the AuthScreen Starknet flow, which handles email OTP / OAuth + wallet
+    // provisioning and lands them back here.
+    if (PRIVY_CONFIGURED) {
+      Alert.alert(
+        'Sign in with Starknet',
+        'To connect a real Starknet wallet you need to sign in through the Starknet flow. Continue?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Continue', onPress: () => navigation.push('/(auth)') },
+        ],
+      );
+      return;
+    }
+
+    // Demo fallback: no Privy app configured → use a synthetic address so the app
+    // still boots and the UI flows work for local testing.
     setCreating(true);
     try {
-      const walletAddr = await createPrivyStarknetWallet(user.email);
-      await authStarknet(user.email, walletAddr);
+      const demoAddr = generateDemoStarknetAddress();
+      await authStarknet(user.email, demoAddr);
       await refreshUser();
     } catch (e: any) {
       Alert.alert('Wallet Error', e.message || 'Could not create wallet. Please try again.');
