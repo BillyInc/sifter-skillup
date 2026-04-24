@@ -11,6 +11,11 @@ import { useAuth } from '../hooks/useAuth';
 import { API, API_BASE } from '../lib/api';
 import { getLevel, LEVELS } from '../data/levels';
 import { getIslandForLevel } from '../data/islands';
+import {
+  isStarknetTrack,
+  getStarknetLesson,
+  type StarknetTrackId,
+} from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import SimulatorCard from '../components/simulators/SimulatorCard';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -30,6 +35,15 @@ interface Props {
   onExit: () => void;
   onComplete: (stars: number, xp: number) => void;
   onNavigateToLesson?: (levelId: number) => void;
+  // Starknet lab lessons: when these are provided AND it's not a boss, the
+  // lesson is resolved from starknetLessonRegistry instead of the flat
+  // numeric LEVELS table. Boss levels (3001-3011, 4001-4015, 5001-5020 etc.)
+  // still fall through to the numeric lookup for backward compat.
+  trackId?: string;
+  labId?: string;
+  labNumber?: number;
+  lessonIndex?: number;
+  isBoss?: boolean;
 }
 
 interface TermLink {
@@ -610,10 +624,54 @@ function FailScreen({ topic, onRetry, onQuit }: { topic:string; onRetry:()=>void
 }
 
 // ── Main ──────────────────────────────────────────────────────
-export default function LessonScreen({ levelId, onExit, onComplete, onNavigateToLesson }: Props) {
-  const level = getLevel(levelId);
+export default function LessonScreen({
+  levelId,
+  onExit,
+  onComplete,
+  onNavigateToLesson,
+  trackId,
+  labId,
+  labNumber,
+  lessonIndex,
+  isBoss,
+}: Props) {
+  // ── Resolve lesson source ─────────────────────────────────────────────
+  // A Starknet lab lesson is addressed by (trackId, labNumber, lessonIndex).
+  // Boss levels — which have real numeric IDs that are registered in the
+  // backend (3001-3011 navigator, 4001-4015 ecosystem, 5001-5020 cairo, and
+  // island boss 310) — continue to use the flat numeric LEVELS table so the
+  // existing completion / scoring / API paths still work.
+  const isStarknetLabLesson = Boolean(
+    !isBoss
+    && trackId
+    && isStarknetTrack(trackId)
+    && labNumber !== undefined
+    && lessonIndex !== undefined,
+  );
+  const starknetLesson = isStarknetLabLesson
+    ? getStarknetLesson(trackId as StarknetTrackId, labNumber as number, lessonIndex as number)
+    : null;
+
+  const classicLevel = getLevel(levelId);
+  const level = starknetLesson
+    ? ({
+        // Light Level-shaped wrapper so existing reads like `level.topic`,
+        // `level.mechanic === 'boss'`, and `level.fact` keep working when the
+        // actual lesson data lives in the Starknet registry.
+        id: levelId,
+        mechanic: 'memory',
+        tier: 'intermediate',
+        topic: starknetLesson.title ?? 'Starknet Lesson',
+        fact: (starknetLesson.keyTakeaway as string) ?? ((starknetLesson.explanation as string) ?? '').slice(0, 400),
+        plain: (starknetLesson.keyTakeaway as string) ?? ((starknetLesson.explanation as string) ?? '').slice(0, 240),
+        stars: [1, 1, 1] as [number, number, number],
+        target: 1,
+        coins: 0,
+      } as any)
+    : classicLevel;
+
   const { user } = useAuth();
-  const { state, startLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator } = useLessonEngine();
+  const { state, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator } = useLessonEngine();
   const { completeLevel } = useProgress();
 
   const [showFeedback, setShowFeedback]       = useState(false);
@@ -641,7 +699,16 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
   const nextLevel   = getLevel(nextLevelId);
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
-  useEffect(()=>{ if(level) startLesson(level); }, [levelId]);
+  useEffect(()=>{
+    if (starknetLesson) {
+      // Starknet lab lesson — build questions from the authored content
+      // (key takeaway, simulator, guidedPractice MCQs).
+      startStarknetLesson(starknetLesson);
+    } else if (classicLevel) {
+      startLesson(classicLevel);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [levelId, trackId, labId, labNumber, lessonIndex]);
   useEffect(()=>{ if(state?.answered) setShowFeedback(true); }, [state?.answered]);
 
   const resetMood = useCallback(() => {
@@ -654,14 +721,18 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
     if(!state||!level||celebrationDone) return;
     await completeLevel(
       levelId,
-      (user as any)?.currentTrackId ?? (user as any)?.active_track ?? 'default',
+      trackId ?? (user as any)?.currentTrackId ?? (user as any)?.active_track ?? 'default',
       state.xp,
       state.wrongCount===0,
     );
 
     // ── Navigator boss completion (levels 3001–3011) ──────────────────────────
     // Fires POST /api/game/navigator-lab-complete which unlocks next Navigator lab.
-    if (levelId >= 3001 && levelId <= 3011) {
+    // Only fire when this is actually a boss — a Starknet lab lesson can reuse
+    // a numeric `levelId` that happens to land in the boss range (e.g. Lab 2
+    // lesson 0 previously routed with levelId=3001), and we do NOT want those
+    // to wrongly register a lab completion.
+    if (!isStarknetLabLesson && levelId >= 3001 && levelId <= 3011) {
       const labNum = levelId - 3000;
       try {
         const tok = await API.getToken();
@@ -676,7 +747,7 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
     }
 
     // ── Cairo Builder boss completion (levels 5001–5020) ─────────────────────
-    if (levelId >= 5001 && levelId <= 5020) {
+    if (!isStarknetLabLesson && levelId >= 5001 && levelId <= 5020) {
       const labNum = levelId - 5000;
       try {
         const tok2 = await API.getToken();
@@ -691,7 +762,7 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
     }
 
     // ── Ecosystem Deep Dive boss completion (levels 4001–4015) ───────────────
-    if (levelId >= 4001 && levelId <= 4015) {
+    if (!isStarknetLabLesson && levelId >= 4001 && levelId <= 4015) {
       const labNum = levelId - 4000;
       try {
         const tok3 = await API.getToken();

@@ -23,6 +23,7 @@ import {
 } from '../components/web/WebGrid';
 import { xpEngine, type XPSnapshot }      from '../lib/XPEngine';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
+import { useAuth } from '../hooks/useAuth';
 
 // ─── XP stage ring ─────────────────────────────────────────────────────────────
 
@@ -139,6 +140,15 @@ function AccountRow({ emoji, label, sub, onPress, color }: {
 export default function ProfileScreen() {
   const navigation = useRouter();
   const { colors } = useTheme();
+  const { signOut } = useAuth();
+
+  const handleSignOut = useCallback(async () => {
+    try {
+      await signOut();
+    } finally {
+      navigation.replace('/(auth)');
+    }
+  }, [signOut, navigation]);
 
   const [xp, setXp]         = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
@@ -256,7 +266,7 @@ export default function ProfileScreen() {
                 <WebListRow icon="🏝️" title="Continue Learning" sub="Resume island journey" onPress={() => navigation.navigate('Map')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebListRow icon="⚙️" title="Settings" sub="Theme, notifications, wallet" onPress={() => navigation.navigate('Settings')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebDivider />
-                <WebListRow icon="🔴" title="Sign Out" sub="" onPress={() => navigation.navigate('Auth')}
+                <WebListRow icon="🔴" title="Sign Out" sub="" onPress={handleSignOut}
                   right={<Text style={{ color: colors.red }}>›</Text>} />
               </WebCard>
             </WebCol>
@@ -381,7 +391,7 @@ export default function ProfileScreen() {
           />
           <AccountRow
             emoji="🔴" label="Sign Out"
-            onPress={() => navigation.navigate('Auth')}
+            onPress={handleSignOut}
             color={colors.red}
           />
         </SectionCard>

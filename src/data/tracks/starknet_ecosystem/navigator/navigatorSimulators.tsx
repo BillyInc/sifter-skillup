@@ -53,6 +53,7 @@ import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
+import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
 import {
   StarknetAddressBanner, StarknetTxLink,
   STARKNET_SEPOLIA_CONFIG,
@@ -115,7 +116,8 @@ function InfoRow({ icon, label, value, colors, valueColor }: {
 }
 
 function useAuth() {
-  return { starknetWallet: null as StarkzapWallet | null };
+  const { wallet, address } = useStarkzapWallet();
+  return { starknetWallet: (wallet as StarkzapWallet | null) ?? null, starknetAddress: address };
 }
 
 function mockTxHash() {

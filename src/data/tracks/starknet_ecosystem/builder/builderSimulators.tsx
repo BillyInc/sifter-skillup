@@ -130,6 +130,7 @@ import {
   isStarkzapAvailable,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
+import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
 import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 
 // ─── Starknet Sepolia ──────────────────────────────────────────────────────────
@@ -173,7 +174,8 @@ interface CardProps {
 }
 
 function useAuth() {
-  return { starknetWallet: null as StarkzapWallet | null };
+  const { wallet, address } = useStarkzapWallet();
+  return { starknetWallet: (wallet as StarkzapWallet | null) ?? null, starknetAddress: address };
 }
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
