@@ -4,7 +4,7 @@
  * Three auth paths on one screen:
  *  1. Email / Password (existing)
  *  2. Base Wallet / SIWE (restored per roadmap)
- *  3. ⚡ Starknet via Privy email (new — creates gasless wallet, routes to Island 19)
+ *  3. ⚡ Starknet via Privy email (new — creates gasless wallet, routes to Island 18)
  *
  * Visual: animated circuit-board background, card entrance animation.
  * Dark/light mode via useTheme().
@@ -511,7 +511,7 @@ export default function AuthScreen() {
               <Text style={{ fontSize: 20 }}>⚡</Text>
               <View style={{ flex: 1 }}>
                 <Text style={[s.starknetCTATitle]}>Continue with Starknet</Text>
-                <Text style={[s.starknetCTASub]}>Gasless wallet · Real transactions · Island #19</Text>
+                <Text style={[s.starknetCTASub]}>Gasless wallet · Real transactions · Island #18</Text>
               </View>
               <Text style={{ color: '#ec4899', fontSize: 18 }}>›</Text>
             </TouchableOpacity>
