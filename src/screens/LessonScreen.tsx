@@ -668,7 +668,7 @@ export default function LessonScreen({ levelId, onExit, onComplete, onNavigateTo
         await fetch(`${API_BASE}/api/game/navigator-lab-complete`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${tok}` },
-          body: JSON.stringify({ lab: labNum }),
+          body: JSON.stringify({ lab_number: labNum }),
         });
       } catch (e) {
         console.warn('navigator-lab-complete failed (non-fatal):', e);

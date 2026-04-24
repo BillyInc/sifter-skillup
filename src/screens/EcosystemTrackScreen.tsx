@@ -14,7 +14,7 @@ import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
-import { API_BASE } from '../lib/api';
+import { API, API_BASE } from '../lib/api';
 import {
   ECOSYSTEM_LABS,
   ECOSYSTEM_LEVEL_COLORS,
@@ -203,9 +203,15 @@ export default function EcosystemTrackScreen() {
   const fetchProgress = async () => {
     if (!user?.id) return;
     try {
-      const res = await fetch(`${API_BASE}/api/progress/${user.id}`);
+      const token = await API.getToken();
+      const res = await fetch(`${API_BASE}/api/users/progress`, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
       const data = await res.json();
-      setCompletedBossIds(data.completed_levels ?? []);
+      setCompletedBossIds(data.completedLevels ?? []);
       setHasDuneKey(data.dune_api_configured ?? false);
     } catch {
       // offline — keep existing state

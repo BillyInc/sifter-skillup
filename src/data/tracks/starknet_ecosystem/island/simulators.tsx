@@ -1,13 +1,13 @@
 /**
  * islandSimulators.tsx
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚡ Sifter SkillUp — Starknet Island (Island 19, Levels 291–310)
+ * ⚡ Sifter SkillUp — Starknet Island (Island 18, Levels 291–310)
  *
  * All simulator components and config for the Starknet Islands track.
  * Re-exports the core StarkzapSimulatorCard from the central components
  * directory, and the Sepolia infrastructure from starknetSharedSimulators.
  *
- * Island 19 uses starkzap-* simulator types only. No cairo-* or sandbox-*.
+ * Island 18 uses starkzap-* simulator types only. No cairo-* or sandbox-*.
  * The Sepolia testnet is the execution environment for all island simulators.
  *
  * Simulator types used by this island:
