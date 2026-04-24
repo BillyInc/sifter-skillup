@@ -1,6 +1,91 @@
 import { useState, useCallback, useRef } from 'react';
 import type { Level } from '../data/levels';
 
+// ── Starknet lesson adapter ────────────────────────────────────
+// Starknet lab lessons (from starknetLessonRegistry) have a different shape
+// than classic Level objects — they carry `title`, `explanation`,
+// `keyTakeaway`, `guidedPractice` (MCQs), `lessonSimulations`, and
+// `interactiveSimulator`. We build a Question[] directly from that richer
+// structure so we preserve the authored practice questions instead of
+// regenerating them from a stripped-down Level summary.
+interface StarknetLesson {
+  id?: string;
+  title?: string;
+  explanation?: string;
+  keyTakeaway?: string;
+  guidedPractice?: Array<{
+    question: string;
+    options?: string[];
+    correct?: number;
+    explanation?: string;
+    hint?: string;
+  }>;
+  interactiveSimulator?: { componentId?: string; title?: string };
+}
+
+function truncatePlain(s: string, max: number): string {
+  const trimmed = s.trim();
+  if (trimmed.length <= max) return trimmed;
+  return trimmed.slice(0, max - 1).trimEnd() + '…';
+}
+
+function buildStarknetLessonQuestions(lesson: StarknetLesson): Question[] {
+  const questions: Question[] = [];
+  const topic = lesson.title ?? 'Starknet Lesson';
+  const explanation = (lesson.explanation ?? '').trim();
+  const firstParagraph = explanation.split(/\n\n+/)[0] ?? explanation;
+  const fact = lesson.keyTakeaway ?? truncatePlain(firstParagraph, 400);
+  const plain = lesson.keyTakeaway ?? truncatePlain(firstParagraph, 240);
+
+  // 1. Concept card — from the lesson explanation / key takeaway.
+  questions.push({
+    type: 'concept_card',
+    topic,
+    tier: 'intermediate',
+    fact,
+    plain,
+  });
+
+  // 2. Interactive simulator — if the lesson has one.
+  const simId = lesson.interactiveSimulator?.componentId;
+  if (simId) {
+    questions.push({ type: 'simulator', simulatorType: simId });
+  }
+
+  // 3. Guided-practice MCQs — authored by content team.
+  for (const gp of lesson.guidedPractice ?? []) {
+    const options = gp.options ?? [];
+    if (options.length < 2 || typeof gp.correct !== 'number') continue;
+
+    // Guided-practice options start with "A. ", "B. " prefixes — strip them
+    // so the MCQ renderer (which already adds A/B/C/D) doesn't double up.
+    const cleaned = options.map((o) => o.replace(/^\s*[A-D][.)]\s*/, '').trim());
+
+    questions.push({
+      type: 'mcq',
+      prompt: gp.question,
+      context: null,
+      options: cleaned.map((text, idx) => ({ text, correct: idx === gp.correct })),
+      correct: gp.correct,
+      explanation: gp.explanation,
+    });
+  }
+
+  // If the lesson had no guided-practice entries, fall back to a single
+  // concept-check true/false so the engine still has something to advance on.
+  const hasInteractive = questions.some((q) => q.type !== 'concept_card');
+  if (!hasInteractive && fact.length > 20) {
+    questions.push({
+      type: 'true_false',
+      prompt: truncatePlain(fact, 180),
+      correct: true,
+      explanation: fact,
+    });
+  }
+
+  return questions;
+}
+
 // ── Question types ──────────────────────────────────────────
 export type QuestionType =
   | 'concept_card'
@@ -380,11 +465,51 @@ function buildLesson(level: Level): Question[] {
 export function useLessonEngine() {
   const [state, setState] = useState<LessonState | null>(null);
   const levelRef = useRef<Level | null>(null);
+  const starknetLessonRef = useRef<StarknetLesson | null>(null);
 
   const startLesson = useCallback((level: Level) => {
     levelRef.current = level;
+    starknetLessonRef.current = null;
     setState({
       questions:   buildLesson(level),
+      qIndex:      0,
+      hearts:      5,
+      xp:          0,
+      combo:       0,
+      wrongCount:  0,
+      answered:    false,
+      lastCorrect: null,
+      finished:    false,
+      failed:      false,
+      stars:       0,
+    });
+  }, []);
+
+  /**
+   * Start a lesson from a Starknet-track lesson object (from the starknet
+   * lesson registry). Builds questions directly from the authored content —
+   * key takeaway, simulator, guided-practice MCQs — rather than regenerating
+   * from a Level summary.
+   */
+  const startStarknetLesson = useCallback((lesson: unknown) => {
+    const typed = (lesson ?? {}) as StarknetLesson;
+    starknetLessonRef.current = typed;
+    // Synthesize a Level-shaped stub so consumers that read `level.topic` etc.
+    // (e.g. LessonScreen completion/bookmark code) still have something.
+    const stubLevel = {
+      id: 0,
+      mechanic: 'memory',
+      tier: 'intermediate',
+      topic: typed.title ?? 'Starknet Lesson',
+      fact: typed.keyTakeaway ?? truncatePlain(typed.explanation ?? '', 400),
+      plain: typed.keyTakeaway ?? truncatePlain(typed.explanation ?? '', 240),
+      stars: [1, 1, 1],
+      target: 1,
+      coins: 0,
+    } as unknown as Level;
+    levelRef.current = stubLevel;
+    setState({
+      questions:   buildStarknetLessonQuestions(typed),
       qIndex:      0,
       hearts:      5,
       xp:          0,
@@ -443,8 +568,12 @@ export function useLessonEngine() {
   }, []);
 
   const resetLesson = useCallback(() => {
-    if (levelRef.current) startLesson(levelRef.current);
-  }, [startLesson]);
+    if (starknetLessonRef.current) {
+      startStarknetLesson(starknetLessonRef.current);
+    } else if (levelRef.current) {
+      startLesson(levelRef.current);
+    }
+  }, [startLesson, startStarknetLesson]);
 
-  return { state, level: levelRef.current, startLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator };
+  return { state, level: levelRef.current, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator };
 }

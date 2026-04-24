@@ -215,9 +215,10 @@ async def starknet_auth_email(
        `privy_token` does not look like a JWT (fewer than two dots or
        under 100 chars).
 
-    On success the user row is upserted (keyed by email since the
-    schema has no `privy_did` column) and a Sifter JWT is issued so the
-    client can call other authenticated routes immediately.
+    On success the user row is upserted (keyed by `privy_did` when a
+    verified DID is available, falling back to email for legacy rows)
+    and a Sifter JWT is issued so the client can call other
+    authenticated routes immediately.
     """
     email = body.email.strip().lower()
     if not email or "@" not in email:
@@ -265,23 +266,39 @@ async def starknet_auth_email(
             raise HTTPException(400, "starknet_address required")
 
     # ── Upsert the user ────────────────────────────────────────
-    # Schema has no privy_did column; we key by email (the v2 migration
-    # adds a UNIQUE index on users.email). If an authenticated Sifter
-    # session already exists on the request, prefer that row so we don't
-    # accidentally fork identities.
+    # Lookup order (when we have a verified Privy DID):
+    #   1. privy_did — returning-user fast path
+    #   2. email     — legacy / manual account upgrade; attach the DID
+    #   3. create    — brand new row with privy_did populated
+    # When there's no DID (legacy/demo flow) we fall back to the old
+    # email-keyed behavior. If an authenticated Sifter session already
+    # exists on the request, prefer that row so we don't fork identities.
     service = db.get_service_client()
     user_row: Optional[dict] = existing_user
+    matched_by_did = False
+
+    if user_row is None and privy_did:
+        did_lookup = (
+            service.table("users")
+            .select("*")
+            .eq("privy_did", privy_did)
+            .limit(1)
+            .execute()
+        )
+        if did_lookup.data:
+            user_row = did_lookup.data[0]
+            matched_by_did = True
 
     if user_row is None:
-        lookup = (
+        email_lookup = (
             service.table("users")
             .select("*")
             .eq("email", email)
             .limit(1)
             .execute()
         )
-        if lookup.data:
-            user_row = lookup.data[0]
+        if email_lookup.data:
+            user_row = email_lookup.data[0]
 
     if user_row is None:
         # New user — match the shape used by _create_user in main.py so
@@ -309,6 +326,8 @@ async def starknet_auth_email(
             "created_at": datetime.now().isoformat(),
             "last_login": datetime.now().isoformat(),
         }
+        if privy_did:
+            new_payload["privy_did"] = privy_did
         inserted = service.table("users").insert(new_payload).execute()
         user_row = inserted.data[0] if inserted.data else new_payload
     else:
@@ -324,6 +343,19 @@ async def starknet_auth_email(
         current_provider = user_row.get("auth_provider")
         if current_provider in _OVERWRITABLE_AUTH_PROVIDERS:
             update_fields["auth_provider"] = "privy_starknet"
+
+        # Attach the DID on the email-lookup path, but refuse to
+        # overwrite an existing, *different* DID — that would let a
+        # second Privy account hijack the row.
+        if privy_did:
+            existing_did = user_row.get("privy_did")
+            if existing_did and existing_did != privy_did:
+                raise HTTPException(
+                    409,
+                    "Email is linked to a different Privy account",
+                )
+            if not existing_did:
+                update_fields["privy_did"] = privy_did
 
         service.table("users").update(update_fields).eq("id", user_row["id"]).execute()
 
@@ -349,7 +381,8 @@ async def starknet_auth_email(
         "Starknet auth completed",
         user_id=user_id,
         verified_via_jwt=verified_via_jwt,
-        privy_did=privy_did,
+        privy_did_fp=privy_did[:12] if privy_did else None,
+        matched_by_did=matched_by_did,
         address=(starknet_address[:10] + "…") if starknet_address else None,
     )
 

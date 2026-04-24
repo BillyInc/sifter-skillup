@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
@@ -82,8 +83,14 @@ export interface SyncQueueItem {
   attempts: number;
 }
 
+const IS_WEB = Platform.OS === 'web';
+
 function isWebStorageAvailable() {
-  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+  return (
+    IS_WEB &&
+    typeof window !== 'undefined' &&
+    typeof window.localStorage !== 'undefined'
+  );
 }
 
 async function getStoredString(key: string): Promise<string | null> {
@@ -310,7 +317,7 @@ async function buildHeaders(getToken: () => Promise<string | null>) {
 
 export async function getOrCreateDeviceId(): Promise<string> {
   try {
-    if (!isWebStorageAvailable()) {
+    if (!IS_WEB) {
       const secureId = await SecureStore.getItemAsync(DEVICE_ID_KEY);
       if (secureId) return secureId;
     }
@@ -319,15 +326,20 @@ export async function getOrCreateDeviceId(): Promise<string> {
   const storedId = await getStoredString(DEVICE_ID_KEY);
   if (storedId) return storedId;
 
-  const digest = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    `${Date.now()}_${Math.random()}`,
-  );
-  const prefix = isWebStorageAvailable() ? 'web' : 'dev';
+  let digest: string;
+  try {
+    digest = await Crypto.digestStringAsync(
+      Crypto.CryptoDigestAlgorithm.SHA256,
+      `${Date.now()}_${Math.random()}`,
+    );
+  } catch {
+    digest = `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
+  }
+  const prefix = IS_WEB ? 'web' : 'dev';
   const nextId = `${prefix}_${digest.slice(0, 24)}`;
 
   try {
-    if (!isWebStorageAvailable()) {
+    if (!IS_WEB) {
       await SecureStore.setItemAsync(DEVICE_ID_KEY, nextId);
     }
   } catch {}
@@ -490,15 +502,28 @@ export async function initOfflineStorage(
 ) {
   destroyOfflineStorage();
 
-  netUnsub = NetInfo.addEventListener(async state => {
-    if (isNetworkAvailable(state)) {
-      await drainSyncQueue(apiBase, getToken);
-    }
-  });
+  try {
+    netUnsub = NetInfo.addEventListener(async state => {
+      if (isNetworkAvailable(state)) {
+        await drainSyncQueue(apiBase, getToken).catch(() => {});
+      }
+    });
+  } catch (err) {
+    if (__DEV__) console.warn('[offlineStorage] NetInfo listener unavailable:', err);
+    netUnsub = null;
+  }
 
-  const net = await NetInfo.fetch();
-  if (isNetworkAvailable(net)) {
-    drainSyncQueue(apiBase, getToken).catch(() => {});
+  try {
+    const net = await NetInfo.fetch();
+    if (isNetworkAvailable(net)) {
+      drainSyncQueue(apiBase, getToken).catch(() => {});
+    }
+  } catch (err) {
+    if (__DEV__) console.warn('[offlineStorage] NetInfo.fetch unavailable:', err);
+    // On web, assume online and try to drain once
+    if (IS_WEB) {
+      drainSyncQueue(apiBase, getToken).catch(() => {});
+    }
   }
 }
 
