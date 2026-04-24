@@ -113,6 +113,7 @@ class StarknetAuthRequest(BaseModel):
     email:      str
     # Privy creates the wallet server-side — client just sends email
     privy_token: Optional[str] = None
+    starknet_address: Optional[str] = None
 
 class StarknetRPCRequest(BaseModel):
     network:  Literal["sepolia", "mainnet"] = "sepolia"

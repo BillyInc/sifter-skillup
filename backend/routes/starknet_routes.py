@@ -13,12 +13,14 @@
 # ============================================
 import itertools
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 from typing import Optional
 
 import httpx
+import jwt
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from auth import Auth
 from config import settings
@@ -27,6 +29,76 @@ from logger import log
 from models import ResponseModel, StarknetAuthRequest, StarknetRPCRequest
 
 router = APIRouter(prefix="/api/starknet", tags=["starknet"])
+
+# Optional-auth helper: returns the user dict when a valid Bearer JWT is
+# present, otherwise None. Used by /auth/email so unauthenticated callers
+# (primary auth via Privy) can hit it while legacy/demo callers still work.
+_optional_security = HTTPBearer(auto_error=False)
+
+
+async def _optional_current_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_optional_security),
+) -> Optional[dict]:
+    if not credentials:
+        return None
+    try:
+        payload = Auth.decode_jwt(credentials.credentials)
+        user_id = payload.get("sub")
+        if not user_id:
+            return None
+        result = (
+            db.get_service_client()
+            .table("users")
+            .select("*")
+            .eq("id", user_id)
+            .single()
+            .execute()
+        )
+        return result.data or None
+    except Exception:
+        return None
+
+
+# Cached Privy JWKS client — lazily constructed so missing PRIVY_APP_ID
+# doesn't crash startup.
+_privy_jwk_client: Optional[jwt.PyJWKClient] = None
+
+
+def _get_privy_jwk_client() -> Optional[jwt.PyJWKClient]:
+    global _privy_jwk_client
+    if not settings.PRIVY_APP_ID:
+        return None
+    if _privy_jwk_client is None:
+        jwks_url = settings.PRIVY_JWKS_URL.format(app_id=settings.PRIVY_APP_ID)
+        _privy_jwk_client = jwt.PyJWKClient(jwks_url)
+    return _privy_jwk_client
+
+
+def _verify_privy_token(token: str) -> Optional[dict]:
+    """
+    Verify a Privy access token (JWT signed with ES256 via JWKS).
+    Returns the decoded claims dict on success, or None on any failure.
+    A token with fewer than two dots is not a JWT — return None early so
+    the caller can fall through to the legacy/demo path.
+    """
+    if not token or token.count(".") != 2:
+        return None
+    client = _get_privy_jwk_client()
+    if client is None:
+        return None
+    try:
+        signing_key = client.get_signing_key_from_jwt(token).key
+        claims = jwt.decode(
+            token,
+            signing_key,
+            algorithms=["ES256"],
+            audience=settings.PRIVY_APP_ID,
+            issuer="privy.io",
+        )
+        return claims
+    except Exception as e:
+        log.warning("Privy JWT verification failed", error=str(e))
+        return None
 
 # ─────────────────────────────────────────────────────────────
 # RPC endpoint pool — round-robin
@@ -159,7 +231,7 @@ async def starknet_auth_email(
 
 
 async def _unlock_starknet_island(user_id: str):
-    """Background: ensure Starknet Island (Island 19) is accessible."""
+    """Background: ensure Starknet Island (Island 18) is accessible."""
     try:
         db.get_service_client().table("users").update({
             "active_track":   "crypto",

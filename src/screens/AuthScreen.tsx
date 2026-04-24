@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
+import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetPrivyLogin';
+import { PRIVY_CONFIGURED } from '../lib/config';
 import { useTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
 
 const { width: W, height: H } = Dimensions.get('window');
@@ -149,7 +151,180 @@ function AuthInput({ placeholder, value, onChangeText, secureTextEntry, keyboard
 
 // ─── Starknet onboarding mode ─────────────────────────────────────────────────
 
-function StarknetMode({ colors, onBack, onSubmit, loading }: {
+type StarknetOnReady = (
+  email: string,
+  starknetAddress?: string,
+  privyAccessToken?: string,
+) => void;
+
+function StarknetHeader() {
+  return (
+    <View style={{ alignItems: 'center', marginBottom: Spacing.xl }}>
+      <Text style={{ fontSize: 48, marginBottom: Spacing.sm }}>⚡</Text>
+      <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' }}>
+        Starknet World
+      </Text>
+      <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.6)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
+        Sign in to spin up your Starknet account. Gasless on Sepolia — no seed phrase needed.
+      </Text>
+    </View>
+  );
+}
+
+function StarknetBenefits() {
+  return (
+    <View style={[s.starkBenefits, { borderColor: '#ec489930' }]}>
+      {[
+        ['⚡', 'Gasless — AVNU Paymaster covers all fees'],
+        ['🔐', 'No seed phrase — secured by Privy'],
+        ['📍', 'Land directly on Starknet Island #18'],
+        ['🧪', 'Execute real Sepolia transactions as you learn'],
+      ].map(([icon, text]) => (
+        <View key={text} style={s.benefitRow}>
+          <Text style={{ fontSize: 16 }}>{icon}</Text>
+          <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: FontSize.sm, flex: 1 }}>{text}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: StarknetOnReady }) {
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [localError, setLocalError] = useState('');
+  const privyLogin = useStarknetPrivyLogin();
+
+  const status = privyLogin.state.kind;
+  const busy = status === 'sending-code' || status === 'verifying' || status === 'provisioning-wallet';
+
+  async function handleSendCode() {
+    setLocalError('');
+    if (!email) return;
+    try {
+      await privyLogin.startEmail(email);
+    } catch (e: any) {
+      setLocalError(e?.message ?? 'Could not send code');
+    }
+  }
+
+  async function handleSubmitCode() {
+    setLocalError('');
+    try {
+      const ready = await privyLogin.submitEmailCode(email, code);
+      onReady(ready.email, ready.starknetAddress, ready.privyAccessToken);
+    } catch (e: any) {
+      setLocalError(e?.message ?? 'Login failed');
+    }
+  }
+
+  async function handleOAuth(provider: OAuthProvider) {
+    setLocalError('');
+    try {
+      const ready = await privyLogin.startOAuth(provider, email);
+      onReady(ready.email, ready.starknetAddress, ready.privyAccessToken);
+    } catch (e: any) {
+      setLocalError(e?.message ?? 'OAuth failed');
+    }
+  }
+
+  const showCodeInput = status === 'awaiting-code' || status === 'verifying' || status === 'provisioning-wallet';
+  const displayError = localError || (privyLogin.state.kind === 'error' ? privyLogin.state.message : '');
+
+  return (
+    <View style={[s.card, { backgroundColor: '#0a0a1f', borderColor: '#ec489940' }]}>
+      <TouchableOpacity onPress={onBack} style={s.backBtn}>
+        <Text style={[s.backText, { color: '#ec4899' }]}>← Back</Text>
+      </TouchableOpacity>
+
+      <StarknetHeader />
+      <StarknetBenefits />
+
+      {!showCodeInput && (
+        <TextInput
+          style={[s.input, { backgroundColor: '#1e1e38', borderColor: '#334155', color: '#fff' }]}
+          placeholder="Email address" placeholderTextColor="rgba(255,255,255,0.35)"
+          value={email} onChangeText={setEmail}
+          keyboardType="email-address" autoCapitalize="none" autoCorrect={false}
+          editable={!busy}
+        />
+      )}
+
+      {showCodeInput && (
+        <>
+          <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: FontSize.sm, marginBottom: Spacing.sm, textAlign: 'center' }}>
+            Enter the 6-digit code we sent to {email}
+          </Text>
+          <TextInput
+            style={[s.input, { backgroundColor: '#1e1e38', borderColor: '#334155', color: '#fff', letterSpacing: 4, textAlign: 'center' }]}
+            placeholder="000000" placeholderTextColor="rgba(255,255,255,0.35)"
+            value={code} onChangeText={setCode}
+            keyboardType="number-pad" autoCapitalize="none" autoCorrect={false}
+            maxLength={6}
+            editable={!busy}
+          />
+        </>
+      )}
+
+      <TouchableOpacity
+        style={[s.btn, { backgroundColor: '#ec4899', opacity: busy ? 0.7 : 1 }]}
+        onPress={showCodeInput ? handleSubmitCode : handleSendCode}
+        disabled={busy || (!showCodeInput ? !email : code.length < 6)}
+        activeOpacity={0.85}
+      >
+        {busy ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }}>
+            <ActivityIndicator color="#fff" size="small" />
+            <Text style={[s.btnText, { color: '#fff' }]}>
+              {status === 'provisioning-wallet' ? 'Creating Starknet wallet…' :
+               status === 'verifying' ? 'Verifying…' :
+               'Sending code…'}
+            </Text>
+          </View>
+        ) : (
+          <Text style={[s.btnText, { color: '#fff' }]}>
+            {showCodeInput ? '⚡ Verify & Create Wallet' : 'Send login code'}
+          </Text>
+        )}
+      </TouchableOpacity>
+
+      {!showCodeInput && (
+        <View style={{ marginTop: Spacing.md }}>
+          <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: FontSize.xs, textAlign: 'center', marginBottom: Spacing.sm }}>
+            or continue with
+          </Text>
+          <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
+            {(['google', 'apple', 'twitter'] as OAuthProvider[]).map((p) => (
+              <TouchableOpacity
+                key={p}
+                style={{ flex: 1, borderColor: '#334155', borderWidth: 1, borderRadius: Radius.md, paddingVertical: Spacing.md, alignItems: 'center', backgroundColor: '#1e1e38', opacity: busy ? 0.5 : 1 }}
+                onPress={() => handleOAuth(p)}
+                disabled={busy}
+                activeOpacity={0.85}
+              >
+                <Text style={{ color: '#fff', fontWeight: '700', fontSize: FontSize.sm }}>
+                  {p === 'google' ? 'Google' : p === 'apple' ? 'Apple' : 'X'}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      )}
+
+      {displayError ? (
+        <Text style={{ color: '#f87171', fontSize: FontSize.xs, marginTop: Spacing.md, textAlign: 'center' }}>
+          {displayError}
+        </Text>
+      ) : null}
+
+      <Text style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: Spacing.md, lineHeight: 15 }}>
+        Powered by Privy × Starkzap · Sepolia testnet · No real funds involved
+      </Text>
+    </View>
+  );
+}
+
+function StarknetDemoMode({ colors, onBack, onSubmit, loading }: {
   colors: any; onBack: () => void; onSubmit: (email: string) => void; loading: boolean;
 }) {
   const [email, setEmail] = useState('');
@@ -159,29 +334,8 @@ function StarknetMode({ colors, onBack, onSubmit, loading }: {
         <Text style={[s.backText, { color: '#ec4899' }]}>← Back</Text>
       </TouchableOpacity>
 
-      <View style={{ alignItems: 'center', marginBottom: Spacing.xl }}>
-        <Text style={{ fontSize: 48, marginBottom: Spacing.sm }}>⚡</Text>
-        <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' }}>
-          Starknet World
-        </Text>
-        <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.6)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
-          Enter your email. We create a gasless Starknet wallet in 10 seconds — no seed phrase, no browser extension.
-        </Text>
-      </View>
-
-      <View style={[s.starkBenefits, { borderColor: '#ec489930' }]}>
-        {[
-          ['⚡', 'Gasless — AVNU Paymaster covers all fees'],
-          ['🔐', 'No seed phrase — secured by Privy email auth'],
-          ['📍', 'Land directly on Starknet Island #18'],
-          ['🧪', 'Execute real Sepolia transactions as you learn'],
-        ].map(([icon, text]) => (
-          <View key={text} style={s.benefitRow}>
-            <Text style={{ fontSize: 16 }}>{icon}</Text>
-            <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: FontSize.sm, flex: 1 }}>{text}</Text>
-          </View>
-        ))}
-      </View>
+      <StarknetHeader />
+      <StarknetBenefits />
 
       <TextInput
         style={[s.input, { backgroundColor: '#1e1e38', borderColor: '#334155', color: '#fff' }]}
@@ -203,10 +357,19 @@ function StarknetMode({ colors, onBack, onSubmit, loading }: {
       </TouchableOpacity>
 
       <Text style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: Spacing.sm, lineHeight: 15 }}>
-        Powered by Privy × Starkzap · Sepolia testnet · No real funds involved
+        Demo mode — Privy not configured. Running with simulated address.
       </Text>
     </View>
   );
+}
+
+function StarknetMode({ colors, onBack, onReady, loading }: {
+  colors: any; onBack: () => void; onReady: StarknetOnReady; loading: boolean;
+}) {
+  if (PRIVY_CONFIGURED) {
+    return <StarknetPrivyMode onBack={onBack} onReady={onReady} />;
+  }
+  return <StarknetDemoMode colors={colors} onBack={onBack} onSubmit={(email) => onReady(email)} loading={loading} />;
 }
 
 // ─── Screen ────────────────────────────────────────────────────────────────────
@@ -248,11 +411,15 @@ export default function AuthScreen() {
 
   const router = useRouter();
 
-  const handleStarknet = async (starkEmail: string) => {
+  const handleStarknet = async (
+    starkEmail: string,
+    starknetAddress?: string,
+    privyAccessToken?: string,
+  ) => {
     setError('');
     setMode('connecting');
     try {
-      await authStarknet(starkEmail);
+      await authStarknet(starkEmail, starknetAddress, privyAccessToken);
       // Route directly to Starknet Island (Island 18, levels 291-310)
       router.replace({
         pathname: '/(tabs)/map/island' as any,
@@ -290,7 +457,7 @@ export default function AuthScreen() {
           <StarknetMode
             colors={colors}
             onBack={() => { setMode('welcome'); setError(''); }}
-            onSubmit={handleStarknet}
+            onReady={handleStarknet}
             loading={starknetLoading}
           />
         </Animated.View>

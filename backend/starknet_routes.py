@@ -221,7 +221,7 @@ async def starknet_auth_email(
         "starknet_email":   email,
     }).eq("id", current_user["id"]).execute()
 
-    # Unlock Island 19 immediately
+    # Unlock Island 18 immediately
     background_tasks.add_task(_unlock_starknet_island, current_user["id"])
 
     log.info(
@@ -237,7 +237,7 @@ async def starknet_auth_email(
 
 
 async def _unlock_starknet_island(user_id: str):
-    """Background: ensure Starknet Island (Island 19) is accessible."""
+    """Background: ensure Starknet Island (Island 18) is accessible."""
     try:
         db.get_service_client().table("users").update({
             "active_track":   "crypto",
@@ -258,7 +258,7 @@ async def starknet_status(current_user: dict = Depends(Auth.get_current_user)):
     return ResponseModel(data={
         "connected":         bool(current_user.get("starknet_auth")),
         "address":           current_user.get("starknet_address"),
-        "island_19_unlocked": bool(current_user.get("starknet_auth")),
+        "island_18_unlocked": bool(current_user.get("starknet_auth")),
     })
 
 
