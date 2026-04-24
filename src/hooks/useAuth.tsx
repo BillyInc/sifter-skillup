@@ -93,7 +93,7 @@ interface AuthContextType {
   signInGuest:              () => Promise<void>;
   signInEmail:              (email: string, password: string) => Promise<void>;
   signUpEmail:              (email: string, password: string, username?: string) => Promise<void>;
-  authStarknet:             (email: string, starknetAddress?: string) => Promise<void>;
+  authStarknet:             (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<void>;
   starknetLoading:          boolean;
   starknetWallet:           StarkzapWallet | null;
   signOut:                  () => Promise<void>;
@@ -175,35 +175,60 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await _handleAuthResponse(data);
   }
 
-  async function authStarknet(email: string, starknetAddress?: string) {
+  async function authStarknet(email: string, starknetAddress?: string, privyAccessToken?: string) {
     setStarknetLoading(true);
     try {
-      // Step 1: Sign up or log in with email (creates account if needed)
+      // Real-Privy path: POST the Privy access token + verified Starknet address.
+      // Backend verifies the Privy JWT, upserts the user by Privy DID / email, and issues a Sifter JWT.
+      if (privyAccessToken && starknetAddress) {
+        const res = await fetch(`${API_BASE}/api/starknet/auth/email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            privy_token: privyAccessToken,
+            starknet_address: starknetAddress,
+          }),
+        });
+        if (!res.ok) {
+          const txt = await res.text().catch(() => '');
+          throw new Error(`Starknet auth failed (${res.status}): ${txt.slice(0, 200)}`);
+        }
+        const data = await res.json();
+        // Backend returns { token, user } under data or top-level depending on ResponseModel shape
+        const payload = data.data ?? data;
+        if (payload.token) {
+          await _handleAuthResponse({ token: payload.token, user: payload.user });
+        } else {
+          // Older response shape — fall back to refreshing via whatever JWT we already had
+          await refreshUser();
+        }
+        API.checkStreak().catch(() => {});
+        return;
+      }
+
+      // Demo fallback (no Privy token): legacy fake-password + fake-address flow.
+      // This path remains so the app still boots and smoke-tests without a real Privy app.
       let authData: any;
       try {
         authData = await API.authSignup(email, `stark_${Date.now()}`, email.split('@')[0]);
       } catch {
-        // Account exists — log in with stored credentials instead
-        // In production Privy handles this — for now email flow suffices
         throw new Error('Email already registered. Use "Sign In" instead, or log in with email/password.');
       }
       await API.saveToken(authData.token);
       const profile = _normalise(authData.user);
       setUser(profile);
 
-      // Step 2: Generate a demo Starknet address (Privy would do this in production)
-      // In production: const { address } = await privy.createWallet({ type: 'starknet' });
       const demoAddr = starknetAddress || `0x0${Array.from({length: 63}, () =>
         '0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}`;
 
-      // Step 3: Register the Starknet address on the backend
       await fetch(`${API_BASE}/api/starknet/auth/email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authData.token}`,
         },
-        body: JSON.stringify({ email, privy_token: demoAddr }),
+        body: JSON.stringify({ email, privy_token: demoAddr, starknet_address: demoAddr }),
       });
 
       await refreshUser();

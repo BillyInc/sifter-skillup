@@ -68,14 +68,14 @@ docker-compose up -d   # starts api, celery worker, celery beat, redis
 ### Backend (`backend/`)
 - **FastAPI** with Pydantic v2 models (`models.py`)
 - Auth (`auth.py`): Telegram initData HMAC, Base wallet EIP-191 signatures, guest auto-create — all issue JWTs
-- Database (`database.py`): Supabase client, schema `sifter_dev`
+- Database (`database.py`): Supabase client, schema `skillup_dev`
 - Config (`config.py`): pydantic-settings, reads from `.env`
 - Background jobs: Celery + Redis (`celery_worker.py`)
 - Portfolio routes split into `portfolio_routes.py`
 
 ### Database (Supabase)
 - Schema lives in `supabase-schema.sql` (+ `portfolio-schema.sql` for portfolio tables)
-- All tables under the `sifter_dev` schema
+- All tables under the `skillup_dev` schema
 - Key tables: `users`, `game_states`, `level_scores`, `transactions`
 - User progress tracked via `completed_levels`, `perfect_levels`, `python_chapters_completed` arrays on the users table
 

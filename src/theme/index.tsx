@@ -10,7 +10,7 @@
  *      animation presets, notification config, font stacks.
  *
  * Extra tokens added for Starknet:
- *   Colors.starknet = '#EC4899' (pink, matches Island 19 orbit)
+ *   Colors.starknet = '#EC4899' (pink, matches Island 18 orbit)
  */
 
 import React, {

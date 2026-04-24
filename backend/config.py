@@ -26,6 +26,11 @@ class Settings:
     # Revoked only on device violation or explicit sign-out.
     JWT_EXPIRE_HOURS: int = 24 * 90
 
+    # ── Privy (Starknet embedded wallet auth) ────────────────
+    PRIVY_APP_ID: str = os.getenv("PRIVY_APP_ID", "")
+    PRIVY_APP_SECRET: str = os.getenv("PRIVY_APP_SECRET", "")
+    PRIVY_JWKS_URL: str = "https://auth.privy.io/api/v1/apps/{app_id}/jwks.json"
+
     # ── Telegram ─────────────────────────────────────────────
     TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
 
