@@ -25,6 +25,7 @@ import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
   WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
 } from '../components/web/WebGrid';
+import { startPortfolioOAuth, isOAuthLive } from '../lib/portfolioOAuth';
 
 // ─────────────────────────────────────────────────────────────
 // Types
@@ -141,19 +142,56 @@ function PlatformConnectModal({
   existing,
   onClose,
   onConnected,
+  onOauthConnected,
 }: {
   platform: PortfolioPlatform;
   existing?: ConnectedAccount;
   onClose: () => void;
   onConnected: (account: ConnectedAccount) => void;
+  onOauthConnected?: () => void | Promise<void>;
 }) {
   const [mode, setMode] = useState<'choose' | 'create' | 'link'>(existing ? 'link' : 'choose');
   const [username, setUsername] = useState(existing?.username ?? '');
   const [email, setEmail]       = useState('');
   const [loading, setLoading]   = useState(false);
   const [done, setDone]         = useState(false);
+  const [oauthBusy, setOauthBusy] = useState(false);
+  const cancelOauthRef = React.useRef<null | (() => void)>(null);
 
-  const canCreate = platform.integration === 'oauth' || platform.integration === 'api_key';
+  // Live-OAuth is restricted to platforms with real credentials (demo: GitHub).
+  // Other platforms fall through to manual-link / package, even if their
+  // integration type is 'oauth'.
+  const oauthLive = isOAuthLive(platform.id);
+  const canCreate = !oauthLive && platform.integration === 'api_key';
+
+  React.useEffect(() => () => cancelOauthRef.current?.(), []);
+
+  async function handleOAuth() {
+    setOauthBusy(true);
+    try {
+      cancelOauthRef.current = await startPortfolioOAuth({
+        platformId: platform.id,
+        onConnected: async () => {
+          setOauthBusy(false);
+          await onOauthConnected?.();
+          onClose();
+        },
+        onCancel: () => {
+          setOauthBusy(false);
+          Alert.alert(
+            'OAuth cancelled',
+            Platform.OS === 'web'
+              ? 'The OAuth window was closed before we saw a connection. Try again, or use the manual link option.'
+              : 'OAuth did not complete. Try again.',
+          );
+        },
+      });
+    } catch (e: unknown) {
+      setOauthBusy(false);
+      const msg = e instanceof Error ? e.message : 'Could not start OAuth.';
+      Alert.alert('OAuth unavailable', msg);
+    }
+  }
 
   async function handleCreate() {
     if (!username.trim() || !email.trim()) {

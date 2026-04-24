@@ -15,6 +15,11 @@ import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, type Wo
 import { getFieldDetail, isTrackLive } from '../data/fieldDetails';
 import { getField } from '../data/fields';
 import { ECOSYSTEM_LAB_LESSON_COUNTS } from '../data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
+import {
+  isStarknetTrack,
+  getStarknetLab,
+  type StarknetTrackId,
+} from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
 const { width: W, height: H } = Dimensions.get('window');
 const NUM_PARTICLES = 18;
@@ -180,7 +185,32 @@ function LabWorldScreen({
     3000 + labNum;
 
   function handleStartLab() {
-    // Navigate to lesson with first lesson of this lab
+    // Starknet tracks: look up the first real lesson in the registry instead of
+    // guessing `bossLevelId - 1` (which collides with boss IDs of the previous
+    // lab — e.g. Navigator lab 2 "first lesson" would resolve to 3001, the
+    // Lab 1 boss). We pass a stable (trackId, labId, labNumber, lessonIndex=0)
+    // tuple and let LessonScreen resolve the lesson object from the registry.
+    if (isStarknetTrack(trackId)) {
+      const lab = getStarknetLab(trackId as StarknetTrackId, labNum);
+      if (lab && lab.lessons.length > 0) {
+        router.push({
+          pathname: '/(tabs)/map/lesson' as any,
+          params: {
+            // levelId still sent for legacy/compat; LessonScreen prefers the
+            // (trackId, labId, lessonIndex) tuple when present.
+            levelId: bossLevelId - 1,
+            trackId,
+            labId,
+            labNumber,
+            lessonIndex: '0',
+          },
+        });
+        return;
+      }
+    }
+
+    // Fallback for non-Starknet tracks (or unmapped Starknet labs): keep the
+    // previous behaviour — assume the first lesson's numeric id is boss - 1.
     router.push({
       pathname: '/(tabs)/map/lesson' as any,
       params: { levelId: bossLevelId - 1, trackId, labId, labNumber },

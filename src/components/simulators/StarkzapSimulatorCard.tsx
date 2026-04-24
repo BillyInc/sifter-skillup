@@ -24,7 +24,7 @@ import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
   ActivityIndicator, Animated, Linking,
 } from 'react-native';
-import { useAuth } from '../../hooks/useAuth';
+import { useStarkzapWallet } from '../../lib/starkzapPrivyAdapter';
 import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
@@ -168,12 +168,12 @@ async function simulateDelay(ms = 2000) { return new Promise(r => setTimeout(r, 
 // ── Wallet ──────────────────────────────────────────────────────────────────
 
 function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet, address: starknetAddress } = useStarkzapWallet();
   const [balance, setBalance] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
-  const address = (starknetWallet as any)?.address ?? MOCK.walletAddress;
+  const address = starknetAddress ?? (starknetWallet as any)?.address ?? MOCK.walletAddress;
 
   const handleCheck = async () => {
     setLoading(true);
@@ -216,7 +216,7 @@ function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onS
 // ── Gasless ─────────────────────────────────────────────────────────────────
 
 function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet } = useStarkzapWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
 
@@ -257,7 +257,7 @@ function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; on
 // ── Swap ────────────────────────────────────────────────────────────────────
 
 function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet } = useStarkzapWallet();
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -329,7 +329,7 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 const STAKE_POOL = '0x028d709c875c0ceac3dce7065bec5328186dc89fe254527084d1689910954b0a';
 
 function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet } = useStarkzapWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
 
@@ -371,7 +371,7 @@ function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Lend ────────────────────────────────────────────────────────────────────
 
 function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet } = useStarkzapWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
 
@@ -417,7 +417,7 @@ function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 // ── DCA ─────────────────────────────────────────────────────────────────────
 
 function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet } = useStarkzapWallet();
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -507,7 +507,7 @@ function BuildSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Boss (combined challenge) ────────────────────────────────────────────────
 
 function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { wallet: starknetWallet } = useStarkzapWallet();
   const [step, setStep] = useState<'swap' | 'stake' | 'lend' | 'done'>('swap');
   const [loading, setLoading] = useState(false);
   const [txHashes, setTxHashes] = useState<Record<string, string>>({});

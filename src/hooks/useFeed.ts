@@ -1,21 +1,28 @@
 /**
  * Sifter Skill_Up — useFeed hook
- * Manages monitored tracks, feed loading per section, and engagement.
- * Primary track auto-loaded from user context.
- * Additional tracks can be added via addMonitoredTrack().
+ *
+ * Wired to the real backend at `/api/feed/*` via the `API.*` helpers in
+ * `src/lib/api.ts`. The old per-section aggregator (which hit nonexistent
+ * `/feed/*` endpoints) has been replaced with a single
+ * `API.feedGetItems(trackId?)` call plus client-side grouping via
+ * `groupItemsIntoSections()`.
+ *
+ * When the API returns no items (empty list, error, or offline) we fall back
+ * to `SEEDED_FEED_ITEMS` so the Feed tab is never blank on demo day.
  */
 
 import { useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type {
-  FeedItem, Comment, ReactionType,
+  FeedItem as UiFeedItem, Comment, ReactionType,
   MonitoredTrack, UserFeedContext, TrackFeedConfig,
 } from '../types/feed';
-import { getTrackFeedConfig, ALL_MONITORABLE_TRACKS } from '../lib/trackFeedConfig';
+import { ALL_MONITORABLE_TRACKS } from '../lib/trackFeedConfig';
+import { API } from '../lib/api';
 import {
-  fetchSectionItems, fetchComments,
-  postComment, reactToItem, toggleBookmark,
+  groupItemsIntoSections, uiReactionToApi, DEMO_SECTIONS,
 } from '../lib/feedAggregator';
+import { SEEDED_FEED_ITEMS } from '../lib/feedFallback';
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
@@ -25,14 +32,8 @@ const MONITORED_TRACKS_KEY = '@sifter_monitored_tracks_v1';
 
 export interface SectionData {
   section: TrackFeedConfig['sections'][number];
-  items: FeedItem[];
+  items: UiFeedItem[];
   loading: boolean;
-}
-
-export interface TrackFeedData {
-  track: MonitoredTrack;
-  config: TrackFeedConfig;
-  sections: SectionData[];
 }
 
 export interface UseFeedReturn {
@@ -48,7 +49,7 @@ export interface UseFeedReturn {
   loading: boolean;
   refresh: () => void;
 
-  // Comments
+  // Comments (no backend endpoint yet — local-only stubs)
   comments: Record<string, Comment[]>;
   commentsLoading: Record<string, boolean>;
   loadComments: (feedItemId: string) => Promise<void>;
@@ -82,7 +83,6 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
         const stored = await AsyncStorage.getItem(MONITORED_TRACKS_KEY);
         const saved: string[] = stored ? JSON.parse(stored) : [];
 
-        // Always include primary track first
         const primary = ALL_MONITORABLE_TRACKS.find(t => t.id === context.primaryTrackId);
         const primaryTrack: MonitoredTrack = primary
           ? { ...primary, isPrimary: true }
@@ -102,38 +102,32 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
 
         setMonitoredTracks([primaryTrack, ...additional]);
       } catch {
-        // Fallback to primary only
         const primary = ALL_MONITORABLE_TRACKS.find(t => t.id === context.primaryTrackId);
         if (primary) setMonitoredTracks([{ ...primary, isPrimary: true }]);
       }
     })();
+    // Pull subscription list from backend; non-fatal if it fails.
+    API.feedGetSubscriptions().catch(() => undefined);
   }, [context.primaryTrackId]);
 
   // ── Load feed for active track ──────────────────────────────────────────────
 
   const loadFeed = useCallback(async (trackId: string) => {
-    const config = getTrackFeedConfig(trackId);
-    if (!config) return;
-
-    // Set loading skeletons
-    setSections(config.sections.map(s => ({ section: s, items: [], loading: true })));
+    // Placeholder skeleton sections while the request is in flight.
+    setSections(DEMO_SECTIONS.map(s => ({ section: s, items: [], loading: true })));
     setLoading(true);
 
-    // Load all sections in parallel
-    const results = await Promise.allSettled(
-      config.sections.map(async section => {
-        const items = await fetchSectionItems(trackId, section);
-        return { section, items, loading: false };
-      }),
-    );
+    let apiItems: Awaited<ReturnType<typeof API.feedGetItems>> = [];
+    try {
+      apiItems = await API.feedGetItems(trackId);
+    } catch {
+      apiItems = [];
+    }
 
-    setSections(
-      results.map((result, i) =>
-        result.status === 'fulfilled'
-          ? result.value
-          : { section: config.sections[i], items: [], loading: false },
-      ),
-    );
+    const useFallback = !Array.isArray(apiItems) || apiItems.length === 0;
+    const grouped = groupItemsIntoSections(useFallback ? SEEDED_FEED_ITEMS : apiItems);
+
+    setSections(grouped);
     setLoading(false);
   }, []);
 
@@ -153,6 +147,8 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
       const updated = [...prev, { ...track, isPrimary: false }];
       const ids = updated.filter(t => !t.isPrimary).map(t => t.id);
       AsyncStorage.setItem(MONITORED_TRACKS_KEY, JSON.stringify(ids)).catch(() => {});
+      // Push to backend subscription endpoint; non-fatal on failure.
+      API.feedSubscribe(updated.map(t => t.id)).catch(() => undefined);
       return updated;
     });
   }, []);
@@ -162,24 +158,20 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
       const updated = prev.filter(t => t.id !== trackId || t.isPrimary);
       const ids = updated.filter(t => !t.isPrimary).map(t => t.id);
       AsyncStorage.setItem(MONITORED_TRACKS_KEY, JSON.stringify(ids)).catch(() => {});
+      API.feedSubscribe(updated.map(t => t.id)).catch(() => undefined);
       return updated;
     });
-    // If removed track was active, switch to primary
     if (activeTrackId === trackId) {
       setActiveTrackId(context.primaryTrackId);
     }
   }, [activeTrackId, context.primaryTrackId]);
 
-  // ── Comments ────────────────────────────────────────────────────────────────
+  // ── Comments (local-only — no backend endpoint yet) ────────────────────────
 
   const loadComments = useCallback(async (feedItemId: string) => {
     setCommentsLoading(prev => ({ ...prev, [feedItemId]: true }));
-    try {
-      const items = await fetchComments(feedItemId);
-      setComments(prev => ({ ...prev, [feedItemId]: items }));
-    } finally {
-      setCommentsLoading(prev => ({ ...prev, [feedItemId]: false }));
-    }
+    setComments(prev => (prev[feedItemId] ? prev : { ...prev, [feedItemId]: [] }));
+    setCommentsLoading(prev => ({ ...prev, [feedItemId]: false }));
   }, []);
 
   const submitComment = useCallback(async (
@@ -188,12 +180,21 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
     parentId: string | null,
     imageUrl?: string,
   ) => {
-    const newComment = await postComment(feedItemId, content, parentId, imageUrl);
+    const newComment: Comment = {
+      id: `local-${Date.now()}`,
+      feedItemId,
+      parentId,
+      author: { id: 'me', name: 'You', avatar: '' },
+      content,
+      imageUrl,
+      createdAt: new Date().toISOString(),
+      upvotes: 0,
+      myUpvote: false,
+    };
     setComments(prev => ({
       ...prev,
       [feedItemId]: [newComment, ...(prev[feedItemId] ?? [])],
     }));
-    // Increment comment count optimistically
     setSections(prev =>
       prev.map(sec => ({
         ...sec,
@@ -209,7 +210,8 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
   // ── Engagement ──────────────────────────────────────────────────────────────
 
   const react = useCallback((feedItemId: string, reaction: ReactionType) => {
-    reactToItem(feedItemId, reaction);
+    // Fire-and-forget to backend; optimistic UI update below.
+    API.feedReact(feedItemId, uiReactionToApi(reaction)).catch(() => undefined);
     setSections(prev =>
       prev.map(sec => ({
         ...sec,
@@ -230,7 +232,7 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
   }, []);
 
   const bookmark = useCallback((feedItemId: string) => {
-    toggleBookmark(feedItemId);
+    API.feedReact(feedItemId, 'bookmark').catch(() => undefined);
     setSections(prev =>
       prev.map(sec => ({
         ...sec,

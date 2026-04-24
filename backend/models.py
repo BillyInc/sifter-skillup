@@ -18,6 +18,8 @@ class TrackType(str, Enum):
     QUANT_DEVELOPER   = "quant-developer"
     PYTHON            = "python"
     DEFI_NAVIGATOR    = "starknet-defi-navigator"
+    STARKNET_ECOSYSTEM = "starknet-ecosystem-deep-dive"
+    CAIRO_BUILDER     = "cairo-builder"
     SUPPLY_CHAIN      = "supply-chain"
     DEFI_RESEARCH     = "defi-research-analyst"
 

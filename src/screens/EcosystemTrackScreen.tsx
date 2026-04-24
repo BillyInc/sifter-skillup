@@ -5,7 +5,7 @@
  * Place at: src/screens/EcosystemTrackScreen.tsx
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, Animated, Linking, RefreshControl, Alert,
@@ -14,7 +14,7 @@ import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
-import { API, API_BASE } from '../lib/api';
+import { API } from '../lib/api';
 import {
   ECOSYSTEM_LABS,
   ECOSYSTEM_LEVEL_COLORS,
@@ -193,36 +193,39 @@ const lc = StyleSheet.create({
 
 export default function EcosystemTrackScreen() {
   const { colors } = useTheme();
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const router = useRouter();
 
-  const [completedBossIds, setCompletedBossIds] = useState<number[]>([]);
   const [hasDuneKey, setHasDuneKey] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  const fetchProgress = async () => {
+  // Canonical completion source: user.completed_levels from the auth context.
+  // Aligns with StarknetTrackScreen so both screens read the same truth — a bug
+  // where this screen fetched a non-existent /api/progress/:userId endpoint is
+  // fixed here too. The API call survives only to pick up dune_api_configured.
+  const completedBossIds = useMemo(() => {
+    const src = user?.completed_levels ?? [];
+    return src
+      .map((x) => Number(x))
+      .filter((n) => Number.isFinite(n));
+  }, [user?.completed_levels]);
+
+  const fetchSupplementary = async () => {
     if (!user?.id) return;
     try {
-      const token = await API.getToken();
-      const res = await fetch(`${API_BASE}/api/users/progress`, {
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-      });
-      const data = await res.json();
-      setCompletedBossIds(data.completedLevels ?? []);
-      setHasDuneKey(data.dune_api_configured ?? false);
+      const data: any = await API.getUserProgress();
+      setHasDuneKey(data?.dune_api_configured ?? false);
     } catch {
       // offline — keep existing state
     }
   };
 
-  useEffect(() => { fetchProgress(); }, [user?.id]);
+  useEffect(() => { fetchSupplementary(); }, [user?.id]);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchProgress();
+    await refreshUser();
+    await fetchSupplementary();
     setRefreshing(false);
   };
 

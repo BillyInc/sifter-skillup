@@ -90,6 +90,7 @@ import {
   STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
+import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
 import { Colors, Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 import {
   STARKNET_SEPOLIA_CONFIG,
@@ -116,7 +117,8 @@ interface SimProps {
 }
 
 function useAuth() {
-  return { starknetWallet: null as StarkzapWallet | null };
+  const { wallet, address } = useStarkzapWallet();
+  return { starknetWallet: (wallet as StarkzapWallet | null) ?? null, starknetAddress: address };
 }
 
 // ─── Shared UI (unchanged from original) ──────────────────────────────────────
