@@ -147,6 +147,7 @@ export default function FeedScreen() {
     removeMonitoredTrack,
     sections,
     loading,
+    isUsingFallback,
     refresh,
     comments,
     commentsLoading,
@@ -209,6 +210,7 @@ export default function FeedScreen() {
           onBookmark={bookmark}
           onRefresh={refresh}
           loading={loading}
+          isUsingFallback={isUsingFallback}
         />
         {commentItem && (
           <CommentSheet
@@ -277,6 +279,14 @@ export default function FeedScreen() {
           );
         })}
       </ScrollView>
+
+      {isUsingFallback && (
+        <View style={[styles.fallbackBanner, { backgroundColor: colors.goldSoft, borderColor: colors.gold + '40' }]}>
+          <Text style={[styles.fallbackBannerText, { color: colors.gold }]}>
+            Seeded fallback content is showing right now. Track subscriptions still work, but this feed snapshot is demo data until live items load.
+          </Text>
+        </View>
+      )}
 
       {/* ── Feed ── */}
       <ScrollView
@@ -385,6 +395,8 @@ const styles = StyleSheet.create({
   sectionFilterChip:  { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full, borderWidth: 1 },
   sectionFilterIcon:  { fontSize: 12 },
   sectionFilterLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  fallbackBanner:     { margin: Spacing.md, marginTop: 0, borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.md },
+  fallbackBannerText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, lineHeight: 18 },
 
   feedContent:        { padding: Spacing.md, gap: Spacing.md },
 

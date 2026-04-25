@@ -6,11 +6,12 @@
  * pipeline in `feedAggregator.ts` can consume these items identically to live data.
  */
 
-import type { FeedItem as ApiFeedItem } from '../types/api';
+import type { FeedItem as ApiFeedItem, ISODateString } from '../types/api';
 
 // Rough, plausible fixed dates so "time ago" renders realistically on demo day.
 const NOW = Date.now();
-const hoursAgo = (h: number): string => new Date(NOW - h * 3600 * 1000).toISOString();
+const hoursAgo = (h: number): ISODateString =>
+  new Date(NOW - h * 3600 * 1000).toISOString() as unknown as ISODateString;
 
 export const SEEDED_FEED_ITEMS: ApiFeedItem[] = [
   {

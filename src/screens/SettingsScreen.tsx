@@ -1,0 +1,236 @@
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme } from '../theme';
+import { useAuth } from '../hooks/useAuth';
+
+function SettingsCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  const { colors } = useTheme();
+
+  return (
+    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+      <Text style={[styles.cardTitle, { color: colors.textMuted }]}>{title}</Text>
+      {children}
+    </View>
+  );
+}
+
+function Row({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  const { colors } = useTheme();
+
+  return (
+    <View style={[styles.row, { borderTopColor: colors.border }]}>
+      <Text style={[styles.rowLabel, { color: colors.textSoft }]}>{label}</Text>
+      <Text style={[styles.rowValue, { color: colors.text }]}>{value}</Text>
+    </View>
+  );
+}
+
+export default function SettingsScreen() {
+  const router = useRouter();
+  const { colors, isDark, toggle } = useTheme();
+  const { user, signOut, starknetReady, starknetWalletAddress, starknetWalletStatus } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace('/(auth)');
+  };
+
+  return (
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <View style={[styles.hero, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+          <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>Settings</Text>
+          <Text style={[styles.heroTitle, { color: colors.text }]}>Light mode is the default. Dark mode is opt-in.</Text>
+          <Text style={[styles.heroBody, { color: colors.textSoft }]}>
+            Your preferences, account state, and Starknet readiness are collected here so the shell stays honest about what is live and what still needs setup.
+          </Text>
+        </View>
+
+        <SettingsCard title="APPEARANCE">
+          <Text style={[styles.cardHeadline, { color: colors.text }]}>Theme</Text>
+          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+            The app now starts in light mode and only changes to dark mode when you toggle it yourself.
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={toggle}
+            style={[styles.toggleBtn, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
+          >
+            <Text style={[styles.toggleBtnText, { color: colors.text }]}>
+              Switch to {isDark ? 'Light' : 'Dark'} Mode
+            </Text>
+          </TouchableOpacity>
+        </SettingsCard>
+
+        <SettingsCard title="ACCOUNT">
+          <Row label="Username" value={user?.username ?? 'Learner'} />
+          <Row label="Email" value={user?.email || 'Not set'} />
+          <Row label="Auth Provider" value={user?.auth_provider ?? 'guest'} />
+          <Row label="Active Track" value={user?.currentTrackName ?? user?.currentTrackId ?? 'Not selected'} />
+        </SettingsCard>
+
+        <SettingsCard title="STARKNET">
+          <Text style={[styles.cardHeadline, { color: colors.text }]}>
+            {starknetReady ? 'Sepolia wallet ready' : 'Wallet not ready yet'}
+          </Text>
+          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+            {starknetReady
+              ? `Connected through the shared StarkZap bridge as ${starknetWalletAddress?.slice(0, 10)}...${starknetWalletAddress?.slice(-6)}.`
+              : `Current bridge state: ${starknetWalletStatus}.`}
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={() => router.push('/starknet-track')}
+            style={[styles.toggleBtn, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
+          >
+            <Text style={[styles.toggleBtnText, { color: colors.text }]}>Open Starknet Tracks</Text>
+          </TouchableOpacity>
+        </SettingsCard>
+
+        <SettingsCard title="NOTIFICATIONS">
+          <Text style={[styles.cardHeadline, { color: colors.text }]}>Reminder delivery</Text>
+          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+            Provider: {NOTIFICATION_CONFIG.provider}. Weekly digest day: {NOTIFICATION_CONFIG.weeklyDigestDay}. Default reminder hour: {NOTIFICATION_CONFIG.weeklyDigestHour}:00.
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={() => router.push('/(tabs)/streaks')}
+            style={[styles.linkBtn, { borderColor: colors.border }]}
+          >
+            <Text style={[styles.linkBtnText, { color: colors.text }]}>Review streak timing</Text>
+          </TouchableOpacity>
+        </SettingsCard>
+
+        <SettingsCard title="LEGAL">
+          <Text style={[styles.cardHeadline, { color: colors.text }]}>Privacy and terms</Text>
+          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+            Privacy contact: privacy@sifter.app. Legal contact: legal@sifter.app. Governing jurisdiction remains Nigeria per the app’s existing legal copy.
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={() => Linking.openURL('mailto:privacy@sifter.app')}
+            style={[styles.linkBtn, { borderColor: colors.border }]}
+          >
+            <Text style={[styles.linkBtnText, { color: colors.text }]}>Email privacy team</Text>
+          </TouchableOpacity>
+        </SettingsCard>
+
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={handleSignOut}
+          style={[styles.signOutBtn, { backgroundColor: colors.red }]}
+        >
+          <Text style={styles.signOutBtnText}>Sign Out</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: { flex: 1 },
+  scroll: {
+    padding: Spacing.lg,
+    paddingBottom: Spacing.xxxl,
+    gap: Spacing.lg,
+  },
+  hero: {
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+    padding: Spacing.xl,
+    gap: Spacing.sm,
+  },
+  heroEyebrow: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  heroTitle: {
+    fontSize: FontSize.xxl,
+    fontWeight: FontWeight.black,
+  },
+  heroBody: {
+    fontSize: FontSize.sm,
+    lineHeight: 20,
+  },
+  card: {
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  cardTitle: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  cardHeadline: {
+    fontSize: FontSize.lg,
+    fontWeight: FontWeight.black,
+  },
+  cardBody: {
+    fontSize: FontSize.sm,
+    lineHeight: 20,
+  },
+  row: {
+    paddingTop: Spacing.sm,
+    borderTopWidth: 1,
+    gap: 4,
+  },
+  rowLabel: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+    letterSpacing: 0.4,
+    textTransform: 'uppercase',
+  },
+  rowValue: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.bold,
+  },
+  toggleBtn: {
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+    paddingVertical: Spacing.md,
+    alignItems: 'center',
+  },
+  toggleBtnText: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  linkBtn: {
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+    paddingVertical: Spacing.md,
+    alignItems: 'center',
+  },
+  linkBtnText: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  signOutBtn: {
+    borderRadius: Radius.xl,
+    paddingVertical: Spacing.lg,
+    alignItems: 'center',
+  },
+  signOutBtnText: {
+    color: '#fff',
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.black,
+  },
+});

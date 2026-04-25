@@ -42,6 +42,7 @@ interface FeedWebLayoutProps {
   monitoredTracks: MonitoredTrack[];
   sections: SectionData[];
   sectionFilter: string;
+  isUsingFallback: boolean;
   onSectionFilterChange: (id: string) => void;
   onTrackChange: (id: string) => void;
   onManageTracks: () => void;
@@ -504,6 +505,7 @@ export default function FeedWebLayout({
   monitoredTracks,
   sections,
   sectionFilter,
+  isUsingFallback,
   onSectionFilterChange,
   onTrackChange,
   onManageTracks,
@@ -544,6 +546,14 @@ export default function FeedWebLayout({
             <Text style={[styles.refreshText, { color: colors.textMuted }]}>↻ Refresh</Text>
           </TouchableOpacity>
         </View>
+
+        {isUsingFallback && (
+          <View style={[styles.fallbackBanner, { backgroundColor: colors.goldSoft, borderColor: colors.gold + '40' }]}>
+            <Text style={[styles.fallbackBannerText, { color: colors.gold }]}>
+              Seeded fallback content is active. You can still switch tracks and interact, but this snapshot is demo content until live feed items arrive.
+            </Text>
+          </View>
+        )}
 
         {/* Section filter */}
         <SectionFilter
@@ -610,6 +620,8 @@ const styles = StyleSheet.create({
   feedSub:          { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginTop: 2 },
   refreshBtn:       { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.lg, borderWidth: 1 },
   refreshText:      { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  fallbackBanner:   { marginHorizontal: Spacing.lg, marginTop: Spacing.md, borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.md },
+  fallbackBannerText:{ fontSize: FontSize.xs, fontWeight: FontWeight.bold, lineHeight: 18 },
   filterScroll:     { borderBottomWidth: 1, maxHeight: 50 },
   filterRow:        { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row', alignItems: 'center' },
   filterChip:       { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full, borderWidth: 1 },

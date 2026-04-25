@@ -1,19 +1,9 @@
 /**
- * Starkzap ↔ Privy signer bridge.
+ * Starkzap <-> Privy signer bridge.
  *
- * When both Privy (auth + Starknet wallet) and Starkzap (Starknet SDK) are
- * available at runtime, this hook returns a connected Starkzap Wallet whose
- * signing operations are delegated to Privy's rawSign API. Simulators and
- * track-level actions can use this wallet to execute real Sepolia transactions.
- *
- * Usage:
- *   const { wallet, status, error } = useStarkzapWallet();
- *   if (wallet) await wallet.execute([...calls]);
- *
- * Returns { wallet: null, status: 'unavailable' } when:
- *   - starkzap-native isn't installed (isStarkzapAvailable() === false)
- *   - user isn't Privy-authenticated
- *   - user has no Starknet linked account on Privy
+ * This bridge prefers the Starknet address already synced into the app user
+ * profile, so it can keep working even when the wallet was created on the
+ * backend and Privy's local user object has not refreshed yet.
  */
 
 import { useEffect, useMemo, useState } from 'react';
@@ -33,8 +23,10 @@ interface StarknetLinkedAccount {
 
 function pickStarknetAccount(privyUser: any): StarknetLinkedAccount | null {
   const linked = privyUser?.linked_accounts ?? [];
-  const match = linked.find((a: any) => a?.chain_type === 'starknet' && a?.address);
-  if (!match) return null;
+  const match = linked.find((account: any) => account?.chain_type === 'starknet' && account?.address);
+  if (!match) {
+    return null;
+  }
   return {
     id: match.id ?? match.wallet_id ?? match.address,
     address: match.address,
@@ -43,53 +35,71 @@ function pickStarknetAccount(privyUser: any): StarknetLinkedAccount | null {
   };
 }
 
-export function useStarkzapWallet() {
+export function useStarkzapWallet(preferredAddress: string | null = null) {
   const privy = usePrivy();
   const { signRawHash } = useSignRawHash();
   const [wallet, setWallet] = useState<any | null>(null);
   const [status, setStatus] = useState<Status>('unavailable');
   const [error, setError] = useState<Error | null>(null);
 
-  const account = useMemo(() => pickStarknetAccount(privy.user), [privy.user]);
+  const linkedAccount = useMemo(() => pickStarknetAccount(privy.user), [privy.user]);
   const sdkReady = isStarkzapAvailable() && !!starkzapSdk;
+  const address = preferredAddress ?? linkedAccount?.address ?? null;
+  const walletId = linkedAccount?.id ?? address ?? null;
+  const publicKey = linkedAccount?.public_key ?? address ?? undefined;
 
   useEffect(() => {
-    if (!sdkReady) { setStatus('unavailable'); setWallet(null); return; }
-    if (!privy.user || !account) { setStatus('waiting-for-user'); setWallet(null); return; }
+    if (!sdkReady) {
+      setStatus('unavailable');
+      setWallet(null);
+      return;
+    }
+    if (!privy.user || !address || !walletId) {
+      setStatus('waiting-for-user');
+      setWallet(null);
+      return;
+    }
 
     let cancelled = false;
     setStatus('connecting');
     setError(null);
 
-    (async () => {
+    void (async () => {
       try {
         const signer = new PrivySigner({
-          walletId: account.id,
-          publicKey: account.public_key ?? account.address,
+          walletId,
+          publicKey: publicKey ?? address,
           rawSign: async (_walletId: string, hash: string) => {
             const normalizedHash = (hash.startsWith('0x') ? hash : `0x${hash}`) as `0x${string}`;
-            const res = await signRawHash({
-              address: account.address,
+            const result = await signRawHash({
+              address,
               chainType: 'starknet',
               hash: normalizedHash,
             });
-            return res.signature;
+            return result.signature;
           },
         });
+
         const connected = await starkzapSdk.connectWallet({ account: { signer } });
-        if (cancelled) return;
+        if (cancelled) {
+          return;
+        }
         setWallet(connected);
         setStatus('ready');
-      } catch (e: any) {
-        if (cancelled) return;
-        setError(e instanceof Error ? e : new Error(String(e)));
+      } catch (cause: any) {
+        if (cancelled) {
+          return;
+        }
+        setError(cause instanceof Error ? cause : new Error(String(cause)));
         setStatus('error');
         setWallet(null);
       }
     })();
 
-    return () => { cancelled = true; };
-  }, [sdkReady, privy.user, account?.address, account?.id, signRawHash]);
+    return () => {
+      cancelled = true;
+    };
+  }, [address, privy.user, publicKey, sdkReady, signRawHash, walletId]);
 
-  return { wallet, status, error, address: account?.address ?? null };
+  return { wallet, status, error, address };
 }

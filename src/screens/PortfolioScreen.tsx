@@ -266,6 +266,29 @@ function PlatformConnectModal({
               <>
                 <Text style={mStyle.sectionLabel}>How would you like to connect?</Text>
 
+                {oauthLive && (
+                  <TouchableOpacity
+                    style={[mStyle.modeCard, oauthBusy && { opacity: 0.6 }]}
+                    onPress={handleOAuth}
+                    disabled={oauthBusy}
+                    activeOpacity={0.85}>
+                    <Text style={{ fontSize: 26 }}>🔐</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={mStyle.modeTitle}>
+                        {oauthBusy ? `Connecting to ${platform.name}…` : `Connect with ${platform.name} OAuth`}
+                      </Text>
+                      <Text style={mStyle.modeSub}>
+                        {Platform.OS === 'web'
+                          ? `We'll open a popup for ${platform.name}. Leave it open until you see "Connected".`
+                          : `Opens ${platform.name} in your browser to authorise. Returns automatically.`}
+                      </Text>
+                    </View>
+                    {oauthBusy
+                      ? <ActivityIndicator color={Colors.accent} />
+                      : <Text style={mStyle.chevron}>›</Text>}
+                  </TouchableOpacity>
+                )}
+
                 {canCreate && (
                   <TouchableOpacity style={mStyle.modeCard} onPress={() => setMode('create')} activeOpacity={0.85}>
                     <Text style={{ fontSize: 26 }}>✨</Text>
@@ -282,9 +305,13 @@ function PlatformConnectModal({
                 <TouchableOpacity style={mStyle.modeCard} onPress={() => setMode('link')} activeOpacity={0.85}>
                   <Text style={{ fontSize: 26 }}>🔗</Text>
                   <View style={{ flex: 1 }}>
-                    <Text style={mStyle.modeTitle}>Connect existing account</Text>
+                    <Text style={mStyle.modeTitle}>
+                      {oauthLive ? 'Add manual link instead' : `Add your ${platform.name} link`}
+                    </Text>
                     <Text style={mStyle.modeSub}>
-                      Already on {platform.name}? Enter your username or profile URL.
+                      {oauthLive
+                        ? `Paste your ${platform.name} profile URL if you'd rather not OAuth.`
+                        : `Paste your ${platform.name} profile URL — we'll save it to your portfolio.`}
                     </Text>
                   </View>
                   <Text style={mStyle.chevron}>›</Text>
@@ -298,6 +325,14 @@ function PlatformConnectModal({
                   </View>
                   <Text style={mStyle.chevron}>↗</Text>
                 </TouchableOpacity>
+
+                {!oauthLive && (
+                  <View style={mStyle.attributionBox}>
+                    <Text style={mStyle.attributionText}>
+                      ℹ️ Live OAuth posting for {platform.name} is not wired up for this demo. Use the manual link or the "Get package" option under My Work to share items here.
+                    </Text>
+                  </View>
+                )}
               </>
             )}
 
@@ -807,6 +842,7 @@ export default function PortfolioScreen() {
               setConnected(prev => [account, ...prev.filter(a => a.platformId !== account.platformId)]);
               setConnectModal(null);
             }}
+            onOauthConnected={() => load(true)}
           />
         )}
         {pushModal && (
@@ -1053,6 +1089,7 @@ export default function PortfolioScreen() {
             });
             setConnectModal(null);
           }}
+          onOauthConnected={() => load(true)}
         />
       )}
 

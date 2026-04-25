@@ -1,5 +1,5 @@
-import PortfolioHubScreen from '@/screens/PortfolioHubScreen';
+import PortfolioScreen from '@/screens/PortfolioScreen';
 
 export default function PortfolioHubTabScreen() {
-  return <PortfolioHubScreen />;
+  return <PortfolioScreen />;
 }

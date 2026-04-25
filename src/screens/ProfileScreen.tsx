@@ -141,6 +141,7 @@ export default function ProfileScreen() {
   const navigation = useRouter();
   const { colors } = useTheme();
   const { signOut } = useAuth();
+  const go = useCallback((href: string) => navigation.push(href as any), [navigation]);
 
   const handleSignOut = useCallback(async () => {
     try {
@@ -191,7 +192,7 @@ export default function ProfileScreen() {
         <WebShell>
           <WebPageHeader title="Your Profile" subtitle={`${stageName} · Stage ${stage}/8`} accentColor={colors.accent}
             right={
-              <TouchableOpacity onPress={() => navigation.navigate('Settings')}
+              <TouchableOpacity onPress={() => go('/(tabs)/settings')}
                 style={{ padding: 8, borderRadius: Radius.md, backgroundColor: colors.card }}>
                 <Text style={{ fontSize: 20 }}>⚙️</Text>
               </TouchableOpacity>
@@ -260,11 +261,11 @@ export default function ProfileScreen() {
 
             <WebCol weight={1}>
               <WebCard title="Portfolio & Account" accentBar accentColor={colors.gold}>
-                <WebListRow icon="💼" title="View Portfolio" sub="Work samples, achievements" onPress={() => navigation.navigate('PortfolioHub')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🏅" title="Badges & Rewards" sub="Your earned badges" onPress={() => navigation.navigate('Leaderboard')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🛍️" title="Merchandise" sub="Redeem merch credits" onPress={() => navigation.navigate('Merchandise')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🏝️" title="Continue Learning" sub="Resume island journey" onPress={() => navigation.navigate('Map')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="⚙️" title="Settings" sub="Theme, notifications, wallet" onPress={() => navigation.navigate('Settings')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="💼" title="View Portfolio" sub="Work samples, achievements" onPress={() => go('/(tabs)/portfolio')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="🏅" title="Badges & Rewards" sub="Your earned badges" onPress={() => go('/(tabs)/guild')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="🛍️" title="Merchandise" sub="Redeem merch credits" onPress={() => go('/merchandise')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="🏝️" title="Continue Learning" sub="Resume island journey" onPress={() => go('/(tabs)/map')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="⚙️" title="Settings" sub="Theme, notifications, wallet" onPress={() => go('/(tabs)/settings')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebDivider />
                 <WebListRow icon="🔴" title="Sign Out" sub="" onPress={handleSignOut}
                   right={<Text style={{ color: colors.red }}>›</Text>} />
@@ -292,7 +293,7 @@ export default function ProfileScreen() {
           ]}
         >
           {/* Settings gear */}
-          <TouchableOpacity style={styles.settingsBtn} onPress={() => navigation.navigate('Settings')}>
+          <TouchableOpacity style={styles.settingsBtn} onPress={() => go('/(tabs)/settings')}>
             <Text style={[styles.settingsBtnText, { color: colors.textMuted }]}>⚙️</Text>
           </TouchableOpacity>
 
@@ -377,17 +378,17 @@ export default function ProfileScreen() {
           <AccountRow
             emoji="💼" label="View Portfolio"
             sub="Work samples, achievements, resume"
-            onPress={() => navigation.navigate('PortfolioHub')}
+            onPress={() => go('/(tabs)/portfolio')}
           />
           <AccountRow
             emoji="🏝️" label="Continue Learning"
             sub="Resume your island journey"
-            onPress={() => navigation.navigate('Map')}
+            onPress={() => go('/(tabs)/map')}
           />
           <AccountRow
             emoji="⚙️" label="Settings"
             sub="Theme, notifications, wallet"
-            onPress={() => navigation.navigate('Settings')}
+            onPress={() => go('/(tabs)/settings')}
           />
           <AccountRow
             emoji="🔴" label="Sign Out"

@@ -411,6 +411,21 @@ export const API = {
       method: 'POST', body: JSON.stringify({ item_id: itemId, reaction }),
     }),
 
+  feedAddComment: (postId: string, content: string) =>
+    request<Record<string, unknown>>('/api/posts/comment', {
+      method: 'POST',
+      body: JSON.stringify({ postId, content }),
+    }),
+
+  feedToggleBookmark: (postId: string, folderId = 'default') =>
+    request<{ bookmarked: boolean }>('/api/bookmarks', {
+      method: 'POST',
+      body: JSON.stringify({ postId, folderId }),
+    }),
+
+  feedGetBookmarks: () =>
+    request<Array<Record<string, unknown>>>('/api/bookmarks') as Promise<CompatAny[]>,
+
   // ── Phase 5 (XP, Badges, Challenges, Merch) ────────────────────────────────
   xpRecordEvent: (data: { event_type: string; xp: number; source?: string; metadata?: Record<string, unknown> }) =>
     request<XPEvent>('/api/v2/xp/event', {
