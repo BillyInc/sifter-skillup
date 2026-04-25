@@ -1,32 +1,44 @@
 # Sifter SkillUp — Demo Day Setup Guide
-## Starkzap Builder Bounty | Complete Integration
+## Starkzap Builder Bounty | Integration v2.1
 
 ---
 
-## STEP 0 — Before Anything Else (Do This First)
+## Demo-Day Checklist (run in order)
+
+- [ ] **(a)** Apply Supabase migrations in order (see STEP 2) — **including `supabase/privy_did_migration.sql`**.
+- [ ] **(b)** Privy dashboard configured: app ID copied, Starknet extended chain added, OAuth providers (Google / Apple / Twitter) + email OTP enabled.
+- [ ] **(c)** Env vars set: `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_PRIVY_APP_ID`, backend `PRIVY_APP_ID` + `PRIVY_APP_SECRET` (see STEP 1).
+- [ ] **(d)** `pnpm build:web` (or `npx expo export --platform web`) is green.
+- [ ] **(e)** Backend boots clean (`uv run uvicorn main:app --reload` — no missing-env errors).
+- [ ] **(f)** Fresh-signup test: new email → Privy OTP → Starknet wallet created → routed to Island 18 → Level 291 loads.
+
+---
+
+## STEP 0 — Install
 
 ```bash
-# Clone / unzip this project
-cd sifter-skillup-integrated
+# Root
+npm install          # Installs everything including starkzap-native (already in package.json)
 
-# Install dependencies
-npm install
-
-# Install Starkzap SDK (CRITICAL — without this, all simulators run in MOCK mode)
-npm install starkzap-native
-
-# iOS native rebuild
-cd ios && pod install && cd ..
-
-# Android native rebuild
-cd android && ./gradlew clean && cd ..
+# Backend uses uv
+cd backend
+uv sync
 ```
+
+> `starkzap-native` is a **real dependency** in `package.json` — no extra install step. Simulators run live, not mocked.
 
 ---
 
 ## STEP 1 — Environment Variables
 
-Create `backend/.env` with ALL of these:
+### Frontend `.env` (repo root)
+
+```env
+EXPO_PUBLIC_API_URL=http://localhost:8000
+EXPO_PUBLIC_PRIVY_APP_ID=your_privy_app_id
+```
+
+### Backend `backend/.env`
 
 ```env
 # Supabase
@@ -34,259 +46,204 @@ SUPABASE_URL=https://YOUR_PROJECT.supabase.co
 SUPABASE_ANON_KEY=your_anon_key
 SUPABASE_SERVICE_KEY=your_service_role_key
 
-# Auth
-JWT_SECRET=your_jwt_secret_min_32_chars
+# Privy (backend verifies Privy JWTs via JWKS — no shared secret with frontend)
+PRIVY_APP_ID=your_privy_app_id
+PRIVY_APP_SECRET=your_privy_app_secret
 
-# Starknet RPC (round-robin pool — add more for resilience)
+# Legacy auth (still used for guest flow + backend-issued session JWTs)
+JWT_SECRET=min_32_char_secret
+
+# Starknet RPCs (round-robin pool)
 STARKNET_SEPOLIA_RPCS=["https://starknet-sepolia.public.blastapi.io/rpc/v0_7","https://free-rpc.nethermind.io/sepolia-juno/rpc/v0_7"]
 STARKNET_MAINNET_RPCS=["https://starknet-mainnet.public.blastapi.io/rpc/v0_7"]
 
-# AI (only needed for AI Explainer hints — NOT for scoring)
-ANTHROPIC_API_KEY=your_key_optional
+# Optional
+ANTHROPIC_API_KEY=       # only for AI Explainer hints; scoring is deterministic
+TWITTER_BEARER_TOKEN=    # RSS feeds work without this
 
-# Feed (optional — RSS works without this)
-TWITTER_BEARER_TOKEN=your_token_optional
-
-# Portfolio OAuth (optional for demo)
+# Portfolio OAuth (GitHub only for demo — others fall back to manual-link UI)
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
-LINKEDIN_CLIENT_ID=
-LINKEDIN_CLIENT_SECRET=
+API_BASE_URL=http://localhost:8000   # used to build OAuth callback URL
 ```
 
 ---
 
 ## STEP 2 — Database Migrations (Supabase SQL Editor)
 
-Run these SQL files **in order** in the Supabase SQL Editor:
+Run in this order:
 
-### 2a. Core tables
-```
-supabase/migration_v2.sql
-```
+1. `supabase/migration_v2.sql` — core 16 tables
+2. `supabase/skillup_new_tables.sql` — Starknet + scoring tables
+3. `supabase/guild_tables.sql` — guilds, guild_messages, guild_challenges
+4. `supabase/interview_questions_seed_v2.sql` — deterministic question bank
+5. `supabase/privy_did_migration.sql` — **NEW** — `users.privy_did` column, unique index, RLS policy
 
-### 2b. New scoring + starknet tables
-```
-supabase/skillup_new_tables.sql
-```
+Verify:
 
-### 2c. Guild + supporting tables
-```
-supabase/guild_tables.sql
-```
-
-### 2d. Question bank (deterministic scoring)
-```
-supabase/interview_questions_seed_v2.sql
-```
-
-### 2e. Verify
 ```sql
--- Should return rows for each track/level
-SELECT track_id, level, COUNT(*) as q_count
-FROM interview_questions
-GROUP BY track_id, level
-ORDER BY track_id, level;
-
--- Should show starknet columns exist
+-- Privy DID column present
 SELECT column_name FROM information_schema.columns
-WHERE table_name = 'users'
-AND column_name IN ('starknet_address','starknet_auth','guild_id','xp_stage');
+WHERE table_name='users' AND column_name='privy_did';
+
+-- Question bank populated
+SELECT track_id, level, COUNT(*) FROM interview_questions
+GROUP BY track_id, level ORDER BY track_id, level;
 ```
 
 ---
 
-## STEP 3 — Start Backend
+## STEP 3 — Privy Dashboard
+
+1. Create a Privy app → copy the **App ID** into both `EXPO_PUBLIC_PRIVY_APP_ID` and backend `PRIVY_APP_ID`.
+2. Copy the **App Secret** into backend `PRIVY_APP_SECRET`.
+3. Login methods: enable **Email (OTP)**, **Google**, **Apple**, **Twitter**.
+4. Embedded wallets → enable **Starknet** as an extended chain (Sepolia for demo).
+5. Allowed origins: add your web origin (e.g. `http://localhost:8081`) and your production domain.
+
+The frontend uses `useCreateWallet({ chainType: 'starknet' })` via Privy's extended-chains API. The backend verifies incoming Privy ID tokens against Privy's JWKS — no shared secret on the wire.
+
+---
+
+## STEP 4 — Start Services
 
 ```bash
+# Backend
 cd backend
+uv run uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
-# Install Python dependencies
-pip install -r requirements.txt
+# Optional: Celery (feed ingest)
+uv run celery -A celery_worker worker --beat --loglevel=info
 
-# Start FastAPI
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-
-# In a SEPARATE terminal: start Celery (for feed ingestion)
-celery -A celery_worker worker --beat --loglevel=info
-
-# Trigger first feed ingest manually
-celery -A celery_worker call celery_worker.ingest_track_feeds
+# Frontend (from repo root)
+npx expo start                # dev client
+npx expo start --web          # web build
+npx expo run:ios --device     # iOS
+npx expo run:android --device # Android
 ```
 
 ---
 
-## STEP 4 — Pre-Fund Demo Wallet (CRITICAL)
+## STEP 5 — Pre-Fund Demo Wallet
 
-Before demo, fund the wallet you'll use so the faucet banner doesn't appear:
+Before demo, fund the Starknet wallet Privy mints for your demo account:
 
-1. Complete Starknet auth in the app to generate your demo wallet address
-2. Copy the wallet address from the AddressPill
-3. Go to **https://starknet-faucet.vercel.app** → request ETH
-4. Go to **https://blastapi.io/faucets/starknet-sepolia-strk** → request STRK
-5. Verify: open app, confirm ETH > 0.001 and STRK > 1
-
----
-
-## STEP 5 — Start the App
-
-```bash
-# Development
-npx expo start
-
-# iOS device
-npx expo run:ios --device
-
-# Android device
-npx expo run:android --device
-```
+1. Sign in → copy the wallet address from the AddressPill in the app.
+2. ETH → https://starknet-faucet.vercel.app
+3. STRK → https://blastapi.io/faucets/starknet-sepolia-strk
+4. Verify ETH > 0.001 and STRK > 1.
 
 ---
 
-## THE DEMO SEQUENCE (practise this 10 times)
+## The Demo Sequence
 
-### 🎯 Money Shot Flow
-1. Open app → tap **"Continue with Starknet ⚡"**
-2. Enter fresh email → wallet address generated → routed to **Island 18**
-3. Complete any Island 18 level (Level 291 recommended)
-4. Simulator shows Starkzap SDK call → **real tx hash** → tap Voyager link
-5. Complete Level 310 boss → **THREE track cards appear** (Navigator / Ecosystem / Cairo)
-6. Choose **DeFi Navigator** → Lab 1 → Swap simulator
-7. Tap "Get Quote" → **real STRK/USDC quote from Sepolia**
-8. Execute swap → unique tx hash → Voyager link opens ✅
+1. Open app → **Privy sheet** (email OTP or Google / Apple / Twitter).
+2. Fresh account → **Starknet embedded wallet created** (extended chain). User routed to **Island 18**.
+3. Complete any Island 18 level (Level 291 recommended).
+4. Simulator calls **starkzap-native** → real Sepolia tx hash → Voyager link opens.
+5. Complete **Level 310 boss** → **three track cards appear** (Navigator / Ecosystem / Cairo).
+6. Choose **DeFi Navigator** → Lab 1 swap sim → live STRK/USDC quote → execute → tx on Voyager.
 
 ---
 
-## SCORING — FULLY DETERMINISTIC (No AI Required)
+## Scoring — 100% Deterministic
 
-All question types across all tracks are scored by the platform, not AI:
+All question types scored by the platform, not AI.
 
-| Question Type | Scoring Method | Source of Truth |
+| Type | Engine | Source of truth |
 |---|---|---|
-| MCQ (multiple choice) | `correct: number` index match | Platform-authored answer keys |
-| Match3 / Memory | Exact pair matching | Platform-authored pairs |
-| Fill-in / Judgment | `deterministicScorer.ts` | Keyword + number extraction from criteria |
-| Boss Phase 1 MCQ | `Phase1BossRenderer.tsx` 80% threshold | Platform question bank (Supabase) |
-| Boss Phase 2 | Structural code validation + snforge output parsing | Platform test files |
-| Sepolia deployment | `starknet_getTransactionReceipt` RPC call | Blockchain (immutable) |
-| Cairo audit | `AuditSim` answer key | Platform-curated security criteria |
-| Branching interview | `BranchingInterviewRenderer.tsx` | Keyword + number scoring per branch |
+| MCQ / Match / Memory | index / pair match | Platform answer keys |
+| Fill-in / Judgment | `deterministicScorer.ts` | Keywords + numbers from criteria |
+| Boss Phase 1 MCQ | `Phase1BossRenderer` (80% threshold) | Supabase question bank |
+| Boss Phase 2 | snforge output + structural validation | Platform test files |
+| Sepolia deploy | `starknet_getTransactionReceipt` | Chain (immutable) |
+| Cairo audit | `AuditSim` answer key | Curated security criteria |
+| Branching interview | `BranchingInterviewRenderer` | Per-branch keyword + number |
 
-**Zero Anthropic API calls in the scoring path.** `/api/ai/score` now uses `deterministic_score.py`.
-
-### Scoring Criteria are Industry-Standard:
-- Starknet STRK token address: `0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d` ✓
-- Gas math: actual Starknet fee structure (STRK for gas, not ETH) ✓
-- Protocol names: Ekubo, Vesu, AVNU, Nostra, Argent, Braavos ✓
-- Cairo syntax: felt252, ContractState, #[storage], #[event] ✓
-- STARK proof verification: real proof sizes and cost calculations ✓
+Zero Anthropic calls in the scoring path. `/api/ai/score` → `deterministic_score.py`.
 
 ---
 
-## ARCHITECTURE — What Was Built
+## Architecture
 
-### Frontend (React Native / Expo Router)
+### Frontend (`src/`)
 ```
-src/
-├── screens/
-│   ├── AuthScreen.tsx           — Starknet auth → routes to Island 18
-│   ├── StarknetTrackScreen.tsx  — DeFi Navigator (pink #EC4899)
-│   ├── EcosystemTrackScreen.tsx — Ecosystem Deep Dive (indigo #6366F1)
-│   ├── CairoBuilderTrackScreen.tsx — Cairo Builder (orange #F97316) ← NEW
-│   ├── WorldScreen.tsx          — Fixed: reads labId, loads lab content
-│   ├── IslandMapScreen.tsx      — Fixed: shows 3-track choice after boss 310
-│   ├── LessonScreen.tsx         — Fixed: boss completion fires for all 3 tracks
-│   ├── GuildScreen.tsx          — NEW: replaces CommunityScreen
-│   └── PostIslandTrackSelection.tsx — Updated: 3 tracks (was 2)
-│
-├── components/simulators/
-│   ├── SimulatorCard.tsx        — Fixed: all 20+ types registered
-│   ├── StarkzapSimulatorCard.tsx — Fixed: all 9 modes including borrow/bridge/balance
-│   ├── CairoBuilderSimulators.tsx — 8 Cairo types (typecheck/invoke/deploy/snforge/starkzap/audit/build/boss)
-│   ├── JudgmentRenderer.tsx     — Deterministic scoring
-│   ├── Phase1BossRenderer.tsx   — 15-question boss MCQ
-│   ├── BranchingInterviewRenderer.tsx — Adaptive interview scoring
-│   ├── ResearchWriterSandbox.tsx — Lab 6 research writer
-│   ├── CairoBuilderPhase2Scorer.tsx — snforge output parser
-│   └── starknetSepoliaSupport.tsx — Balance/explorer/faucet
-│
-├── lib/
-│   ├── deterministicScorer.ts   — Zero-AI scoring engine
-│   ├── starkzap.ts              — Starkzap SDK singleton + mock fallback
-│   └── starknetFeed.ts          — 24 curated Starknet Twitter accounts
-│
-└── data/tracks/
-    ├── starknet_defi_navigator/ — 11 labs, simulators, boss modes
-    ├── starknet_ecosystem_deep_dive/ — 9 labs + primer, simulators
-    └── cairo_builder/           — 12 labs, ALL_LABS, ALL_SIMULATORS
+screens/
+  AuthScreen.tsx              Privy sheet → Starknet wallet → Island 18
+  StarknetTrackScreen.tsx     DeFi Navigator
+  EcosystemTrackScreen.tsx    Ecosystem Deep Dive
+  CairoBuilderTrackScreen.tsx Cairo Builder
+  WorldScreen.tsx             Island / lab map
+  LessonScreen.tsx            Level runner + boss
+  GuildScreen.tsx             Guild tab
+  PortfolioScreen.tsx         Portfolio hub (OAuth + manual-link fallback)
+components/simulators/
+  StarkzapSimulatorCard.tsx   9 modes (swap / borrow / bridge / balance / …)
+  CairoBuilderSimulators.tsx  8 Cairo types
+  Phase1BossRenderer.tsx      15-question boss MCQ
+  BranchingInterviewRenderer.tsx
+lib/
+  starkzap.ts                 starkzap-native singleton
+  portfolioOAuth.ts           Web/native OAuth branch (web: popup + poll)
+  deterministicScorer.ts      Zero-AI scoring
+data/tracks/
+  starknet_defi_navigator/    11 labs
+  starknet_ecosystem_deep_dive/ 9 labs + primer
+  cairo_builder/              12 labs
 ```
 
-### Backend (FastAPI / Python)
+### Backend (`backend/`)
 ```
-backend/
-├── main.py                  — Router registration (all routes wired)
-├── starknet_routes.py       — RPC proxy, wallet auth, tx logging
-├── game_extra_routes.py     — navigator/cairo/ecosystem lab-complete
-├── boss_routes.py           — Boss phase scoring endpoints
-├── interview_routes.py      — v2: deterministic question scoring
-├── deterministic_score.py   — Python port of deterministicScorer.ts
-├── guild_routes.py          — NEW: Guild system (replaces community social)
-└── community_routes.py      — /api/ai/score now uses deterministic_score.py
+main.py                Router registration
+auth.py                Privy JWKS verification + legacy guest/wallet auth
+starknet_routes.py     RPC proxy, tx logging
+game_extra_routes.py   lab-complete endpoints
+boss_routes.py         Boss scoring
+interview_routes.py    Deterministic question scoring
+deterministic_score.py Python port of deterministicScorer.ts
+guild_routes.py        Guild API
+portfolio_routes.py    OAuth + manual-link + submission packages
 ```
 
-### Database (Supabase)
+### Database (`supabase/`)
 ```
-supabase/
-├── migration_v2.sql               — Core 16 tables
-├── skillup_new_tables.sql         — Starknet + scoring tables
-├── guild_tables.sql               — NEW: guilds, guild_messages, guild_challenges
-└── interview_questions_seed_v2.sql — Question bank for deterministic scoring
+migration_v2.sql               Core 16 tables
+skillup_new_tables.sql         Starknet + scoring
+guild_tables.sql               Guilds
+interview_questions_seed_v2.sql Question bank
+privy_did_migration.sql        Privy DID column + RLS
 ```
 
 ---
 
-## KNOWN DEMO MODE BEHAVIOUR
+## Portfolio Hub — OAuth Status
 
-When `starkzap-native` is NOT installed (npm not run):
-- All Starkzap simulators run in MOCK mode
-- Swap quotes show static values (not live Sepolia prices)
-- Tx hashes are generated client-side (not on-chain)
-- A "Demo Mode" badge shows in each simulator
-- **This is acceptable for first-run testing. Run `npm install starkzap-native` to go live.**
+- **GitHub** — live OAuth end-to-end on web and native. On web the app opens the Privy / GitHub consent flow in a popup and polls `/api/portfolio/accounts` to detect completion (the backend issues a `sifter://` redirect at the end that a browser can't reach, but the account row is already written by that point).
+- **All other platforms (LinkedIn, Twitter, Medium, Reddit, Behance, Dribbble, YouTube, Vimeo, …)** — show a **manual-link** UI ("Paste your profile URL") and, for package-only platforms, a **Get package** button under My Work. No OAuth is attempted for these in demo.
 
-When `starkzap-native` IS installed:
-- Live Sepolia prices and pool data
-- Real tx hashes verifiable on voyager.online
-- `isStarkzapAvailable()` returns `true`
-- No "Demo Mode" badge
+Add credentials later by setting the matching `*_CLIENT_ID` / `*_CLIENT_SECRET` pair in `backend/.env` and expanding `OAUTH_LIVE_PLATFORMS` in `src/lib/portfolioOAuth.ts`.
 
 ---
 
-## QA CHECKLIST — Run Before Demo Day
+## QA Checklist — Demo Day
 
-Copy from `SifterSkillUp_QA_TestingProtocol.docx` and tick each item.
-Critical path:
-
-- [ ] `isStarkzapAvailable()` logs `true` in console
-- [ ] Starknet auth button visible and distinct on AuthScreen
-- [ ] Auth generates 0x... wallet address (63-64 hex chars)
-- [ ] App routes to Island 18 map (NOT generic home) after auth
-- [ ] Supabase: user row shows `starknet_auth: true` and address
-- [ ] Level 291 loads and is completable
-- [ ] Starkzap simulator in Island 18 shows real or mock tx hash (NOT a crash)
-- [ ] Boss 310 completion shows **THREE** track cards
-- [ ] DeFi Navigator Lab 1 content loads (NOT blank screen)
-- [ ] Navigator Lab 1 boss (3001) fires → Lab 2 unlocks
-- [ ] Cairo Builder track accessible and Lab 1 opens
-- [ ] `cairo-invoke` shows a real, changing Sepolia block number
-- [ ] `cairo-boss` completes all 3 steps
-- [ ] Ecosystem track Primer unlocked on entry
-- [ ] Feed tab shows content after Celery ingest
-- [ ] Demo wallet pre-funded (needsFaucet = false)
-- [ ] Guild tab loads (replaces Community tab)
-- [ ] Portfolio push prompt appears after any boss completion
-- [ ] Zero crashes in full demo run
+- [ ] Privy sheet opens, email OTP + at least one OAuth provider visible
+- [ ] New sign-in creates Starknet wallet (0x… address, 63–64 hex chars)
+- [ ] User lands on **Island 18** after signup
+- [ ] Supabase `users` row: `privy_did` set, `starknet_address` set
+- [ ] Level 291 loads and completes
+- [ ] `isStarkzapAvailable()` returns `true` in console
+- [ ] Starkzap simulator produces a real Sepolia tx hash
+- [ ] Level 310 boss completion reveals **three** track cards
+- [ ] Navigator Lab 1 swap returns a live quote and executes
+- [ ] Cairo Builder `cairo-invoke` shows a changing Sepolia block number
+- [ ] Ecosystem track Primer unlocks on entry
+- [ ] Guild tab loads
+- [ ] Feed tab populates after Celery ingest (or mock feed)
+- [ ] Portfolio → GitHub → OAuth completes on web and native
+- [ ] Portfolio → any other platform shows manual-link UI (no OAuth attempt)
+- [ ] Zero crashes in full run-through
 
 ---
 
-*Sifter SkillUp — Integration v2.0 | Starkzap Builder Bounty | April 2026*
+*Sifter SkillUp — Integration v2.1 | Starkzap Builder Bounty | April 2026*

@@ -10,7 +10,7 @@ import {
   SafeAreaView, Animated, RefreshControl,
   Platform, useWindowDimensions, Easing,
 } from 'react-native';
-import { useNavigation, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
@@ -221,10 +221,11 @@ function WebMiniChart({ color, values }: { color: string; values: number[] }) {
 }
 
 export default function HomeScreen() {
-  const navigation  = useNavigation<any>();
+  const router      = useRouter();
   const { colors }  = useTheme();
   const { user }    = useAuth();
   const isWebWide   = useIsWebWide();
+  const go = useCallback((href: string) => router.push(href as any), [router]);
 
   // Active track — drives the animated hero on home
   const activeFieldId  = user?.activeFieldId  ?? user?.currentTrackId?.split('-').slice(0, -1).join('-') ?? null;
@@ -269,7 +270,7 @@ export default function HomeScreen() {
             accentColor={accentColor}
             right={
               <TouchableOpacity
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => go('/(tabs)/profile')}
                 style={[styles.webBoltBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
               >
                 <TheBolt size={32} animate />
@@ -328,14 +329,14 @@ export default function HomeScreen() {
           </WebRow>
 
           {/* Row 2: 3-col career tracks */}
-          <WebSectionLabel label="Career Tracks Overview" action="Explore All →" onAction={() => navigation.navigate('Tracks')} />
+          <WebSectionLabel label="Career Tracks Overview" action="Explore All →" onAction={() => go('/(tabs)/fields')} />
           <WebRow cols={3}>
             {[
               { id: 'quant',   name: 'Quant Track',        emoji: '📊', color: colors.accent, keys: ['Derivatives Trading', 'Sharpe Ratio Analysis', 'Algo Strategy Building'] },
               { id: 'supply',  name: 'Supply Chain Track',  emoji: '🔗', color: colors.green,  keys: ['Supply Coin Trading', 'Chain Structures', 'Inventory Optimisation'] },
               { id: 'onchain', name: 'Onchain Track',       emoji: '🔍', color: colors.orange, keys: ['Wallet Analytics', 'Protocol Research', 'On-chain Trading Tracks'] },
             ].map(track => (
-              <WebCard key={track.id} accentBar accentColor={track.color} onPress={() => navigation.navigate('Tracks')} style={{ height: '100%' }}>
+              <WebCard key={track.id} accentBar accentColor={track.color} onPress={() => go('/(tabs)/fields')} style={{ height: '100%' }}>
                 <View style={styles.webTrackHeader}>
                   <Text style={styles.webTrackEmoji}>{track.emoji}</Text>
                   <Text style={[styles.webTrackName, { color: colors.text }]}>{track.name}</Text>
@@ -346,7 +347,7 @@ export default function HomeScreen() {
                   {track.keys.map(k => <Text key={k} style={[styles.webTrackKey, { color: colors.textSoft }]}>✓ {k}</Text>)}
                 </View>
                 <TouchableOpacity
-                  onPress={() => navigation.push('/map/island')}
+                  onPress={() => go('/(tabs)/map/island')}
                   style={[styles.webTrackBtn, { backgroundColor: track.color }]}
                 >
                   <Text style={styles.webTrackBtnText}>Continue Track ›</Text>
@@ -358,15 +359,15 @@ export default function HomeScreen() {
           {/* Row 3: Guilds (2) + Streak & Challenges (1) */}
           <WebRow>
             <WebCol weight={2}>
-              <WebCard title="Guilds & Community" accentBar accentColor={colors.accent}>
-                <WebListRow icon="🛡️" title="Alpha Seekers Forum" sub="Active · 1 hr ago" onPress={() => navigation.navigate('Community')} />
+              <WebCard title="Guilds" accentBar accentColor={colors.accent}>
+                <WebListRow icon="🛡️" title="Alpha Seekers Guild" sub="Active · 1 hr ago" onPress={() => go('/(tabs)/guild')} />
                 <View style={[styles.webDiscussionCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
                   <Text style={[styles.webDiscTitle, { color: colors.textMuted }]}>ACTIVE DISCUSSIONS</Text>
                   <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>💬 Machine Learning in Alpha Generation</Text>
                   <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>💬 Optimal Portfolio Rebalancing Frequency</Text>
                 </View>
                 <WebListRow icon="⚡" title="Upcoming Challenges" sub="Evaluating HFT latency effects with your guild…"
-                  badge={3} badgeColor={colors.orange} onPress={() => navigation.navigate('Community')} />
+                  badge={3} badgeColor={colors.orange} onPress={() => go('/(tabs)/guild')} />
               </WebCard>
             </WebCol>
 
@@ -379,8 +380,8 @@ export default function HomeScreen() {
                 </Text>
               </WebCard>
               <WebCard title="Upcoming Challenges" accentBar accentColor={colors.xpGreen}>
-                <WebListRow icon="🏆" title="Vol Arb Challenge"    sub="Trading Competition"    onPress={() => navigation.navigate('Community')} />
-                <WebListRow icon="📈" title="HFT Latency Analysis" sub="Research · 3 days left" badge="3d" badgeColor={colors.accent} onPress={() => navigation.navigate('Community')} />
+                <WebListRow icon="🏆" title="Vol Arb Challenge"    sub="Trading Competition"    onPress={() => go('/(tabs)/guild')} />
+                <WebListRow icon="📈" title="HFT Latency Analysis" sub="Research · 3 days left" badge="3d" badgeColor={colors.accent} onPress={() => go('/(tabs)/guild')} />
               </WebCard>
             </WebCol>
           </WebRow>
@@ -390,7 +391,7 @@ export default function HomeScreen() {
             <WebCol weight={2}>
               <WebCard
                 title="Portfolio & XP"
-                titleRight={<View style={[styles.webBadge, { backgroundColor: colors.xpGreen + '18' }]}><Text style={[styles.webBadgeText, { color: colors.xpGreen }]}>+19.3% YTD</Text></View>}
+                titleRight={<View style={[styles.webBadge, { backgroundColor: colors.xpGreen + '18' }]}><Text style={[styles.webBadgeText, { color: colors.xpGreen }]}>{artifactsEarned(xp?.totalXp ?? 0)} artifacts earned</Text></View>}
                 accentBar accentColor={colors.xpGreen}
               >
                 <View style={[styles.webChartArea, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
@@ -402,8 +403,8 @@ export default function HomeScreen() {
                     <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Total XP</Text>
                   </View>
                   <View>
-                    <Text style={[styles.webMetricVal, { color: colors.xpGreen }]}>$43,534</Text>
-                    <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Portfolio YTD</Text>
+                    <Text style={[styles.webMetricVal, { color: colors.xpGreen }]}>{platformsConnected(user?.settings)}</Text>
+                    <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Platforms connected</Text>
                   </View>
                 </View>
               </WebCard>
@@ -412,13 +413,13 @@ export default function HomeScreen() {
             <WebCol weight={1}>
               <WebCard title="Quick Actions" accentBar accentColor={colors.accent}>
                 {[
-                  { emoji: '🏝️', label: 'Continue Learning', sub: 'Resume island journey', screen: 'Map' },
-                  { emoji: '🌐', label: 'Explore Tracks',    sub: 'Browse career fields',  screen: 'Tracks' },
-                  { emoji: '📡', label: 'Information Hub',   sub: 'News, data, jobs',       screen: 'Hub' },
-                  { emoji: '💼', label: 'Portfolio',         sub: 'Work & achievements',    screen: 'PortfolioHub' },
+                  { emoji: '🏝️', label: 'Continue Learning', sub: 'Resume island journey', route: '/(tabs)/map/island' },
+                  { emoji: '🌐', label: 'Explore Tracks',    sub: 'Browse career fields',  route: '/(tabs)/fields' },
+                  { emoji: '📰', label: 'Open Feed',         sub: 'News, data, jobs',      route: '/(tabs)/feed' },
+                  { emoji: '💼', label: 'Portfolio & XP',    sub: 'Tasks, artifacts, pushes', route: '/(tabs)/portfolio' },
                 ].map(a => (
-                  <WebListRow key={a.screen} icon={a.emoji} title={a.label} sub={a.sub}
-                    onPress={() => navigation.navigate(a.screen)}
+                  <WebListRow key={a.route} icon={a.emoji} title={a.label} sub={a.sub}
+                    onPress={() => go(a.route)}
                     right={<Text style={{ color: colors.textMuted, fontSize: 16 }}>›</Text>} />
                 ))}
               </WebCard>
@@ -446,7 +447,7 @@ export default function HomeScreen() {
             <Text style={[styles.greeting, { color: colors.textMuted }]}>{getGreeting()}</Text>
             <Text style={[styles.headline, { color: colors.text }]}>Your desk awaits.</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')} activeOpacity={0.85}>
+          <TouchableOpacity onPress={() => go('/(tabs)/profile')} activeOpacity={0.85}>
             <TheBolt size={64} animate />
           </TouchableOpacity>
         </Animated.View>
@@ -459,7 +460,7 @@ export default function HomeScreen() {
             <ActiveTrackHero
               fieldId={activeFieldId}
               trackName={activeTrackName}
-              onPress={() => navigation.push('/map/island')}
+              onPress={() => go('/(tabs)/map/island')}
             />
           ) : (
             /* New user — show worker character */
@@ -489,10 +490,10 @@ export default function HomeScreen() {
 
         <Animated.View style={[styles.actionsSection, contentStyle]}>
           <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>QUICK ACTIONS</Text>
-          <QuickAction emoji="🏝️" label="Continue Learning" sub="Resume your island journey"      color={colors.accent} onPress={() => navigation.push('/map/island')} />
-          <QuickAction emoji="🌐" label="Explore Tracks"    sub="Browse career fields"            color={colors.green}  onPress={() => navigation.navigate('Tracks')} />
-          <QuickAction emoji="📡" label="Information Hub"   sub="News, data, jobs for your track" color={colors.orange} onPress={() => navigation.navigate('Hub')} />
-          <QuickAction emoji="💼" label="Portfolio"         sub="View your work and achievements"  color={colors.gold}   onPress={() => navigation.navigate('PortfolioHub')} />
+          <QuickAction emoji="🏝️" label="Continue Learning" sub="Resume your island journey"      color={colors.accent} onPress={() => go('/(tabs)/map/island')} />
+          <QuickAction emoji="🌐" label="Explore Tracks"    sub="Browse career fields"            color={colors.green}  onPress={() => go('/(tabs)/fields')} />
+          <QuickAction emoji="📰" label="Open Feed"         sub="News, data, jobs for your track" color={colors.orange} onPress={() => go('/(tabs)/feed')} />
+          <QuickAction emoji="💼" label="Portfolio & XP"    sub="View tasks, artifacts, and pushes"  color={colors.gold}   onPress={() => go('/(tabs)/portfolio')} />
         </Animated.View>
 
         <View style={{ height: Spacing.xxxl }} />
@@ -591,3 +592,15 @@ const activeHero = StyleSheet.create({
   resumeBtn:       { borderRadius: Radius.full, paddingHorizontal: 18, paddingVertical: 10 },
   resumeBtnText:   { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#FFF' },
 });
+
+function artifactsEarned(totalXp: number) {
+  return Math.max(1, Math.floor(totalXp / 120));
+}
+
+function platformsConnected(settings: Record<string, unknown> | undefined) {
+  const connected = Array.isArray((settings as any)?.connected_platforms)
+    ? (settings as any).connected_platforms.length
+    : 0;
+
+  return `${connected || 1}`;
+}

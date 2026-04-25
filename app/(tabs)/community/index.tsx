@@ -1,5 +1,5 @@
-import CommunityScreen from '@/screens/CommunityScreen';
+import { Redirect } from 'expo-router';
 
 export default function CommunityTabScreen() {
-  return <CommunityScreen />;
+  return <Redirect href="/(tabs)/guild" />;
 }

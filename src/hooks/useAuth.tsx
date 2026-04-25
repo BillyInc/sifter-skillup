@@ -1,133 +1,147 @@
 /**
- * Sifter Skill_Up — useAuth (v2)
- * REPLACES: src/hooks/useAuth.tsx
+ * Sifter Skill_Up - useAuth
  *
  * Full UserProfile with all upgrade fields.
  * Adds: starknet auth, active field, track context,
- *       device registration, xp_stage, merch_credits.
+ * device registration, xp_stage, merch_credits.
  */
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { API } from '../lib/api';
+import { API, API_BASE } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
-import { API_BASE } from '../lib/api';
 import type { StarkzapWallet } from '../lib/starkzap';
-
-// ─── UserProfile ─────────────────────────────────────────────
+import {
+  StarknetWalletBridgeProvider,
+  useStarknetWalletBridge,
+} from '../components/auth/StarknetWalletBridge';
+import { PrivyStarknetBootstrap } from '../components/auth/PrivyStarknetBootstrap';
+import { PRIVY_CONFIGURED } from '../lib/config';
 
 export interface UserProfile {
-  // Core
-  id:                       string;
-  username:                 string;
-  avatar_url:               string | null;
-  auth_provider:            string;
-  email:                    string;
-
-  // Progress
-  points:                   number;
-  streak:                   number;
-  current_level:            number;
-  completed_levels:         string[];
-  perfect_levels:           string[];
+  id: string;
+  username: string;
+  avatar_url: string | null;
+  auth_provider: string;
+  email: string;
+  points: number;
+  streak: number;
+  current_level: number;
+  completed_levels: string[];
+  perfect_levels: string[];
   python_chapters_completed: string[];
-  active_track:             string;
-
-  // New: Track/field context (drives HomeScreen artwork)
-  active_field_id?:         string;
-  active_field_color?:      string;
-  current_track_id?:        string;
-  current_track_name?:      string;
-  activeFieldId:            string;
-  activeFieldColor?:        string;
-  currentTrackId:           string;
-  currentTrackName:         string;
-  currentFieldId:           string;
-  xp_stage:                 number;
-
-  // New: Starknet
-  starknet_address?:        string;
-  starknet_auth?:           boolean;
-  starknet_email?:          string;
-
-  // Social / community
-  guild_id:                 string | null;
-  guild_role?:              string;
-  achievements:             string[];
-
-  // Monetisation
-  merch_credits:            number;
-  token_balance:            number;
-  token_currency:           string;
-  cash_balance_cents:       number;
-  badges:                   any[];
-  boosters:                 Record<string, number>;
-  is_verified:              boolean;
-
-  // Settings
-  settings:                 Record<string, any>;
-  onboarding_completed?:    boolean;
-
-  // Resume
-  last_position?:           any;
-
-  // Meta
-  created_at?:              string;
-  last_login?:              string;
-  last_played?:             string;
-
-  // Compatibility aliases (some screens use these)
-  totalXp?:                 number;
-  completedLevels?:         string[];
-  active_challenge_id?:     string;
-  challenge_room_ids?:      string[];
+  active_track: string;
+  active_field_id?: string;
+  active_field_color?: string;
+  current_track_id?: string;
+  current_track_name?: string;
+  activeFieldId: string;
+  activeFieldColor?: string;
+  currentTrackId: string;
+  currentTrackName: string;
+  currentFieldId: string;
+  xp_stage: number;
+  starknet_address?: string;
+  starknet_auth?: boolean;
+  starknet_email?: string;
+  guild_id: string | null;
+  guild_role?: string;
+  achievements: string[];
+  merch_credits: number;
+  token_balance: number;
+  token_currency: string;
+  cash_balance_cents: number;
+  badges: any[];
+  boosters: Record<string, number>;
+  is_verified: boolean;
+  settings: Record<string, any>;
+  onboarding_completed?: boolean;
+  last_position?: any;
+  created_at?: string;
+  last_login?: string;
+  last_played?: string;
+  totalXp?: number;
+  completedLevels?: string[];
+  active_challenge_id?: string;
+  challenge_room_ids?: string[];
 }
-
-// ─── Auth context ─────────────────────────────────────────────
 
 interface AuthContextType {
-  user:                     UserProfile | null;
-  loading:                  boolean;
-  authTelegram:             (initData: string) => Promise<void>;
-  authBaseWallet:           (address: string, signature: string, message: string) => Promise<void>;
-  authGuest:                () => Promise<void>;
-  signInGuest:              () => Promise<void>;
-  signInEmail:              (email: string, password: string) => Promise<void>;
-  signUpEmail:              (email: string, password: string, username?: string) => Promise<void>;
-  authStarknet:             (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<void>;
-  starknetLoading:          boolean;
-  starknetWallet:           StarkzapWallet | null;
-  signOut:                  () => Promise<void>;
-  refreshUser:              () => Promise<void>;
-  updateActiveField:        (fieldId: string, color: string, trackId?: string, trackName?: string) => Promise<void>;
-
-  // Track gates
-  quantTraderUnlocked:      boolean;
-  quantResearcherUnlocked:  boolean;
-  quantDeveloperUnlocked:   boolean;
+  user: UserProfile | null;
+  loading: boolean;
+  authTelegram: (initData: string) => Promise<void>;
+  authBaseWallet: (address: string, signature: string, message: string) => Promise<void>;
+  authGuest: () => Promise<void>;
+  signInGuest: () => Promise<void>;
+  signInEmail: (email: string, password: string) => Promise<void>;
+  signUpEmail: (email: string, password: string, username?: string) => Promise<void>;
+  authStarknet: (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<void>;
+  starknetLoading: boolean;
+  starknetWallet: StarkzapWallet | null;
+  starknetReady: boolean;
+  starknetWalletAddress: string | null;
+  starknetWalletStatus: string;
+  signOut: () => Promise<void>;
+  refreshUser: () => Promise<void>;
+  updateActiveField: (fieldId: string, color: string, trackId?: string, trackName?: string) => Promise<void>;
+  quantTraderUnlocked: boolean;
+  quantResearcherUnlocked: boolean;
+  quantDeveloperUnlocked: boolean;
 }
+
+type BridgeState = {
+  wallet: StarkzapWallet | null;
+  address: string | null;
+  status: string;
+  ready: boolean;
+};
+
+const EMPTY_BRIDGE_STATE: BridgeState = {
+  wallet: null,
+  address: null,
+  status: 'unavailable',
+  ready: false,
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// ─── Provider ─────────────────────────────────────────────────
+function StarknetBridgeStateSync({
+  onChange,
+}: {
+  onChange: (state: BridgeState) => void;
+}) {
+  const bridge = useStarknetWalletBridge();
+
+  useEffect(() => {
+    onChange({
+      wallet: bridge.wallet,
+      address: bridge.address,
+      status: bridge.status,
+      ready: bridge.ready,
+    });
+  }, [bridge.address, bridge.ready, bridge.status, bridge.wallet, onChange]);
+
+  return null;
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser]               = useState<UserProfile | null>(null);
-  const [loading, setLoading]         = useState(true);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
   const [starknetLoading, setStarknetLoading] = useState(false);
-  const [starknetWallet] = useState<StarkzapWallet | null>(null);
+  const [bridgeState, setBridgeState] = useState<BridgeState>(EMPTY_BRIDGE_STATE);
 
-  useEffect(() => { _tryLoadSavedSession(); }, []);
+  useEffect(() => {
+    void _tryLoadSavedSession();
+  }, []);
 
   async function _tryLoadSavedSession() {
     try {
       const profile = await API.getMe() as UserProfile;
       setUser(_normalise(profile));
       API.checkStreak().catch(() => {});
-      // Offline sync: restore progress from server on app open
       const token = await API.getToken();
       onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
     } catch {
-      // No saved session — user needs to log in
+      // No saved session.
     } finally {
       setLoading(false);
     }
@@ -139,16 +153,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(profile);
     API.checkStreak().catch(() => {});
 
-    // Register device for session enforcement
     const deviceId = await getOrCreateDeviceId();
     API.updateMe({ device_id: deviceId }).catch(() => {});
 
-    // Start offline sync
     const token = await API.getToken();
     onLoginSync(profile.id, API_BASE, () => Promise.resolve(token)).catch(() => {});
   }
-
-  // ── Auth methods ────────────────────────────────────────────
 
   async function authTelegram(initData: string) {
     const data = await API.authTelegram(initData);
@@ -176,63 +186,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function authStarknet(email: string, starknetAddress?: string, privyAccessToken?: string) {
+    if (!privyAccessToken) {
+      throw new Error('Privy Starknet auth requires a live Privy session.');
+    }
+
     setStarknetLoading(true);
     try {
-      // Real-Privy path: POST the Privy access token + verified Starknet address.
-      // Backend verifies the Privy JWT, upserts the user by Privy DID / email, and issues a Sifter JWT.
-      if (privyAccessToken && starknetAddress) {
-        const res = await fetch(`${API_BASE}/api/starknet/auth/email`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            privy_token: privyAccessToken,
-            starknet_address: starknetAddress,
-          }),
-        });
-        if (!res.ok) {
-          const txt = await res.text().catch(() => '');
-          throw new Error(`Starknet auth failed (${res.status}): ${txt.slice(0, 200)}`);
-        }
-        const data = await res.json();
-        // Backend returns { token, user } under data or top-level depending on ResponseModel shape
-        const payload = data.data ?? data;
-        if (payload.token) {
-          await _handleAuthResponse({ token: payload.token, user: payload.user });
-        } else {
-          // Older response shape — fall back to refreshing via whatever JWT we already had
-          await refreshUser();
-        }
-        API.checkStreak().catch(() => {});
-        return;
-      }
-
-      // Demo fallback (no Privy token): legacy fake-password + fake-address flow.
-      // This path remains so the app still boots and smoke-tests without a real Privy app.
-      let authData: any;
-      try {
-        authData = await API.authSignup(email, `stark_${Date.now()}`, email.split('@')[0]);
-      } catch {
-        throw new Error('Email already registered. Use "Sign In" instead, or log in with email/password.');
-      }
-      await API.saveToken(authData.token);
-      const profile = _normalise(authData.user);
-      setUser(profile);
-
-      const demoAddr = starknetAddress || `0x0${Array.from({length: 63}, () =>
-        '0123456789abcdef'[Math.floor(Math.random()*16)]).join('')}`;
-
-      await fetch(`${API_BASE}/api/starknet/auth/email`, {
+      const res = await fetch(`${API_BASE}/api/starknet/auth/email`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authData.token}`,
-        },
-        body: JSON.stringify({ email, privy_token: demoAddr, starknet_address: demoAddr }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          privy_token: privyAccessToken,
+          ...(starknetAddress ? { starknet_address: starknetAddress } : {}),
+        }),
       });
 
-      await refreshUser();
-      API.checkStreak().catch(() => {});
+      if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        throw new Error(`Starknet auth failed (${res.status}): ${text.slice(0, 200)}`);
+      }
+
+      const data = await res.json();
+      const payload = data.data ?? data;
+      if (!payload?.token || !payload?.user) {
+        throw new Error('Starknet auth response was missing the Sifter session payload.');
+      }
+
+      await _handleAuthResponse({ token: payload.token, user: payload.user });
     } finally {
       setStarknetLoading(false);
     }
@@ -247,7 +228,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const profile = await API.getMe() as UserProfile;
       setUser(_normalise(profile));
-    } catch {}
+    } catch {
+      // Ignore transient refresh failures.
+    }
   }
 
   async function updateActiveField(
@@ -257,107 +240,139 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     trackName?: string,
   ) {
     const updates: Partial<UserProfile> = {
-      active_field_id:    fieldId,
+      active_field_id: fieldId,
       active_field_color: color,
     };
-    if (trackId)   updates.current_track_id   = trackId;
-    if (trackName) updates.current_track_name = trackName;
+    if (trackId) {
+      updates.current_track_id = trackId;
+    }
+    if (trackName) {
+      updates.current_track_name = trackName;
+    }
 
     await API.updateMe(updates);
-    setUser(prev => prev ? { ...prev, ...updates } : prev);
+    setUser((prev) => (prev ? { ...prev, ...updates } : prev));
 
-    // Also hit the dedicated endpoint
     try {
       await (API as any).post('/api/users/active-field', updates);
-    } catch {}
+    } catch {
+      // Best effort only.
+    }
   }
 
-  // ── Gates ────────────────────────────────────────────────────
-
-  const quantTraderUnlocked    = true;
+  const quantTraderUnlocked = true;
   const quantResearcherUnlocked = true;
-  const quantDeveloperUnlocked  = (user?.python_chapters_completed?.length ?? 0) >= 5;
+  const quantDeveloperUnlocked = (user?.python_chapters_completed?.length ?? 0) >= 5;
+  const resolvedUser = user && bridgeState.address && user.starknet_address !== bridgeState.address
+    ? {
+        ...user,
+        starknet_address: bridgeState.address,
+        starknet_auth: true,
+      }
+    : user;
 
   return (
-    <AuthContext.Provider value={{
-      user, loading,
-      authTelegram, authBaseWallet, authGuest,
-      signInGuest: authGuest,
-      signInEmail, signUpEmail, authStarknet,
-      signOut, refreshUser, updateActiveField, starknetLoading, starknetWallet,
-      quantTraderUnlocked, quantResearcherUnlocked, quantDeveloperUnlocked,
-    }}>
-      {children}
+    <AuthContext.Provider
+      value={{
+        user: resolvedUser,
+        loading,
+        authTelegram,
+        authBaseWallet,
+        authGuest,
+        signInGuest: authGuest,
+        signInEmail,
+        signUpEmail,
+        authStarknet,
+        signOut,
+        refreshUser,
+        updateActiveField,
+        starknetLoading,
+        starknetWallet: bridgeState.wallet,
+        starknetReady: bridgeState.ready,
+        starknetWalletAddress: bridgeState.address,
+        starknetWalletStatus: bridgeState.status,
+        quantTraderUnlocked,
+        quantResearcherUnlocked,
+        quantDeveloperUnlocked,
+      }}
+    >
+      <StarknetWalletBridgeProvider preferredAddress={user?.starknet_address ?? null}>
+        <StarknetBridgeStateSync onChange={setBridgeState} />
+        {PRIVY_CONFIGURED ? <PrivyStarknetBootstrap user={resolvedUser} refreshUser={refreshUser} /> : null}
+        {children}
+      </StarknetWalletBridgeProvider>
     </AuthContext.Provider>
   );
 }
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
+  if (!ctx) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
   return ctx;
 }
 
-// ─── Normalise server response ─────────────────────────────────
-// Maps server field names to the canonical UserProfile shape
-
 function _normalise(raw: any): UserProfile {
-  const currentTrackId = String(raw.current_track_id ?? raw.currentTrackId ?? raw.active_track ?? raw.activeTrack ?? 'crypto');
+  const currentTrackId = String(
+    raw.current_track_id ?? raw.currentTrackId ?? raw.active_track ?? raw.activeTrack ?? 'crypto',
+  );
   const currentTrackName = String(raw.current_track_name ?? raw.currentTrackName ?? currentTrackId);
-  const activeFieldId = String(raw.active_field_id
-    ?? raw.activeFieldId
-    ?? raw.current_field_id
-    ?? raw.currentFieldId
-    ?? (currentTrackId.split('-').slice(0, -1).join('-') || currentTrackId)
-    ?? currentTrackId);
+  const activeFieldId = String(
+    raw.active_field_id
+      ?? raw.activeFieldId
+      ?? raw.current_field_id
+      ?? raw.currentFieldId
+      ?? (currentTrackId.split('-').slice(0, -1).join('-') || currentTrackId)
+      ?? currentTrackId,
+  );
   const activeFieldColor = raw.active_field_color ?? raw.activeFieldColor;
 
   return {
-    id:                       raw.id ?? '',
-    username:                 raw.username ?? 'Learner',
-    avatar_url:               raw.avatar_url ?? null,
-    auth_provider:            raw.auth_provider ?? 'guest',
-    email:                    raw.email ?? '',
-    points:                   raw.points ?? 0,
-    streak:                   raw.streak ?? 0,
-    current_level:            raw.current_level ?? 1,
-    completed_levels:         raw.completed_levels ?? [],
-    perfect_levels:           raw.perfect_levels ?? [],
+    id: raw.id ?? '',
+    username: raw.username ?? 'Learner',
+    avatar_url: raw.avatar_url ?? null,
+    auth_provider: raw.auth_provider ?? 'guest',
+    email: raw.email ?? '',
+    points: raw.points ?? 0,
+    streak: raw.streak ?? 0,
+    current_level: raw.current_level ?? 1,
+    completed_levels: raw.completed_levels ?? [],
+    perfect_levels: raw.perfect_levels ?? [],
     python_chapters_completed: raw.python_chapters_completed ?? [],
-    active_track:             raw.active_track ?? currentTrackId ?? 'crypto',
-    active_field_id:          activeFieldId,
-    active_field_color:       activeFieldColor,
-    current_track_id:         currentTrackId,
-    current_track_name:       currentTrackName,
+    active_track: raw.active_track ?? currentTrackId ?? 'crypto',
+    active_field_id: activeFieldId,
+    active_field_color: activeFieldColor,
+    current_track_id: currentTrackId,
+    current_track_name: currentTrackName,
     activeFieldId,
     activeFieldColor,
     currentTrackId,
     currentTrackName,
-    currentFieldId:           activeFieldId,
-    xp_stage:                 raw.xp_stage ?? 1,
-    starknet_address:         raw.starknet_address,
-    starknet_auth:            raw.starknet_auth ?? false,
-    starknet_email:           raw.starknet_email,
-    guild_id:                 raw.guild_id ?? null,
-    guild_role:               raw.guild_role,
-    achievements:             raw.achievements ?? [],
-    merch_credits:            raw.merch_credits ?? 0,
-    token_balance:            raw.token_balance ?? 0,
-    token_currency:           raw.token_currency ?? 'USD',
-    cash_balance_cents:       raw.cash_balance_cents ?? 0,
-    badges:                   raw.badges ?? [],
-    boosters:                 raw.boosters ?? {},
-    is_verified:              raw.is_verified ?? false,
-    settings:                 raw.settings ?? {},
-    onboarding_completed:     raw.onboarding_completed ?? false,
-    last_position:            raw.last_position,
-    created_at:               raw.created_at,
-    last_login:               raw.last_login,
-    last_played:              raw.last_played,
-    // Compatibility aliases
-    totalXp:                  raw.points ?? 0,
-    completedLevels:          raw.completed_levels ?? [],
-    active_challenge_id:      raw.active_challenge_id,
-    challenge_room_ids:       raw.challenge_room_ids ?? [],
+    currentFieldId: activeFieldId,
+    xp_stage: raw.xp_stage ?? 1,
+    starknet_address: raw.starknet_address,
+    starknet_auth: raw.starknet_auth ?? false,
+    starknet_email: raw.starknet_email,
+    guild_id: raw.guild_id ?? null,
+    guild_role: raw.guild_role,
+    achievements: raw.achievements ?? [],
+    merch_credits: raw.merch_credits ?? 0,
+    token_balance: raw.token_balance ?? 0,
+    token_currency: raw.token_currency ?? 'USD',
+    cash_balance_cents: raw.cash_balance_cents ?? 0,
+    badges: raw.badges ?? [],
+    boosters: raw.boosters ?? {},
+    is_verified: raw.is_verified ?? false,
+    settings: raw.settings ?? {},
+    onboarding_completed: raw.onboarding_completed ?? false,
+    last_position: raw.last_position,
+    created_at: raw.created_at,
+    last_login: raw.last_login,
+    last_played: raw.last_played,
+    totalXp: raw.points ?? 0,
+    completedLevels: raw.completed_levels ?? [],
+    active_challenge_id: raw.active_challenge_id,
+    challenge_room_ids: raw.challenge_room_ids ?? [],
   };
 }
