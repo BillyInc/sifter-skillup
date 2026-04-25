@@ -1,9 +1,3 @@
-/**
- * Tests that addMonitoredTrack writes to AsyncStorage exactly once per call.
- * Regression test for the case where setItem could be invoked from inside a
- * setState updater (causing double-writes under StrictMode/dev).
- */
-
 import { renderHook, act, waitFor } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { MonitoredTrack, UserFeedContext } from '../src/types/feed';
@@ -12,13 +6,16 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
-// Stub feed aggregator so loadFeed doesn't make network calls.
-jest.mock('../src/lib/feedAggregator', () => ({
-  fetchSectionItems: jest.fn().mockResolvedValue([]),
-  fetchComments: jest.fn().mockResolvedValue([]),
-  postComment: jest.fn().mockResolvedValue({}),
-  reactToItem: jest.fn().mockResolvedValue(undefined),
-  toggleBookmark: jest.fn().mockResolvedValue(undefined),
+jest.mock('../src/lib/api', () => ({
+  API: {
+    feedGetSubscriptions: jest.fn().mockResolvedValue({ tracks: [] }),
+    feedGetItems: jest.fn().mockResolvedValue([]),
+    feedGetBookmarks: jest.fn().mockResolvedValue([]),
+    feedSubscribe: jest.fn().mockResolvedValue({ tracks: [] }),
+    feedAddComment: jest.fn().mockResolvedValue({}),
+    feedReact: jest.fn().mockResolvedValue({ success: true }),
+    feedToggleBookmark: jest.fn().mockResolvedValue({ bookmarked: true }),
+  },
 }));
 
 import { useFeed } from '../src/hooks/useFeed';
@@ -40,7 +37,6 @@ describe('useFeed.addMonitoredTrack', () => {
 
     const { result } = renderHook(() => useFeed(ctx));
 
-    // Wait until bootstrap effect (monitored tracks load) settles
     await waitFor(() => {
       expect(result.current.monitoredTracks.length).toBeGreaterThan(0);
     });

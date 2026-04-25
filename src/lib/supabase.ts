@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // ────────────────────────────────────────────────────────────
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
 const SUPABASE_ANON = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '';
-const SCHEMA = 'sifter_dev';
+const SCHEMA = 'skillup_dev';
 
 function isPlaceholder(value: string) {
   if (!value) return true;
@@ -33,7 +33,7 @@ if (!SUPABASE_CONFIGURED) {
 // Create the real client only when configured. Otherwise export `null` so
 // callers can probe `SUPABASE_CONFIGURED` (or `supabase == null`) before
 // dereferencing — importing this module must NOT throw or Metro crashes.
-export const supabase: SupabaseClient | null = SUPABASE_CONFIGURED
+export const supabase: SupabaseClient<any, any, any> | null = SUPABASE_CONFIGURED
   ? createClient(SUPABASE_URL, SUPABASE_ANON, {
       db: { schema: SCHEMA },
       auth: {

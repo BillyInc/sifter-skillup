@@ -16,7 +16,7 @@
 import React, {
   createContext, useContext, useState, useEffect, type ReactNode,
 } from 'react';
-import { Appearance, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // ─── Spacing ──────────────────────────────────────────────────
@@ -154,26 +154,33 @@ interface ThemeContextValue {
 const STORAGE_KEY = '@sifter_theme_mode_v3';
 
 const ThemeCtx = createContext<ThemeContextValue>({
-  mode: 'system', isDark: false, colors: LightColors,
+  mode: 'light', isDark: false, colors: LightColors,
   setMode: () => {}, toggle: () => {},
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>('system');
+  const [mode, setModeState] = useState<ThemeMode>('light');
 
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY).then(v => {
-      if (v === 'light' || v === 'dark' || v === 'system') setModeState(v as ThemeMode);
+      if (v === 'light' || v === 'dark') {
+        setModeState(v);
+        return;
+      }
+      if (v === 'system') {
+        setModeState('light');
+        AsyncStorage.setItem(STORAGE_KEY, 'light').catch(() => {});
+      }
     }).catch(() => {});
   }, []);
 
   const setMode = (m: ThemeMode) => {
-    setModeState(m);
-    AsyncStorage.setItem(STORAGE_KEY, m).catch(() => {});
+    const nextMode = m === 'system' ? 'light' : m;
+    setModeState(nextMode);
+    AsyncStorage.setItem(STORAGE_KEY, nextMode).catch(() => {});
   };
 
-  const systemDark = Appearance.getColorScheme() === 'dark';
-  const isDark = mode === 'dark' || (mode === 'system' && systemDark);
+  const isDark = mode === 'dark';
   const colors = isDark ? DarkColors : LightColors;
   const toggle = () => setMode(isDark ? 'light' : 'dark');
 

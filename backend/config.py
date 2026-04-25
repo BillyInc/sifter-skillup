@@ -43,8 +43,7 @@ class Settings:
         for rpc in os.getenv(
             "STARKNET_SEPOLIA_RPCS",
             "https://starknet-sepolia.public.blastapi.io,"
-            "https://free-rpc.nethermind.io/sepolia-juno,"
-            "https://starknet-sepolia.g.alchemy.com/starknet/version/rpc/v0_7/demo"
+            "https://free-rpc.nethermind.io/sepolia-juno"
         ).split(",")
         if rpc.strip()
     ]

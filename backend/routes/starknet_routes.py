@@ -1,16 +1,3 @@
-# ============================================
-# Sifter Skill_Up — Starknet RPC Proxy
-#
-# All Starknet RPC calls from the app go through
-# here — never directly from the client.
-# Benefits:
-#   - API keys never exposed in client bundle
-#   - Round-robin across multiple RPC endpoints
-#     (no single provider becomes a bottleneck)
-#   - Rate limit shielding
-#   - Request logging for debugging simulator failures
-#   - Starknet email auth (Privy integration)
-# ============================================
 import itertools
 import uuid
 from datetime import date, datetime
@@ -18,8 +5,7 @@ from typing import Optional
 
 import httpx
 import jwt
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from auth import Auth
@@ -27,23 +13,80 @@ from config import settings
 from database import db
 from logger import log
 from models import ResponseModel, StarknetAuthRequest, StarknetRPCRequest
+from services.privy_starknet import create_starknet_wallet, get_user_wallets
 
-# Auth providers that are safe to overwrite when a user completes Privy-backed
-# Starknet login (e.g. a guest session upgrading to a real identity). Anything
-# not in this set is preserved so we don't clobber a legitimate existing login.
+
 _OVERWRITABLE_AUTH_PROVIDERS = {"", "guest", None}
+_privy_bearer = HTTPBearer(auto_error=True)
+_optional_security = HTTPBearer(auto_error=False)
 
-router = APIRouter(prefix="/api/starknet", tags=["starknet"])
+starknet_router = APIRouter(prefix="/api/starknet", tags=["starknet"])
+wallets_router = APIRouter(prefix="/api/wallets", tags=["wallets"])
+router = APIRouter()
+router.include_router(starknet_router)
+router.include_router(wallets_router)
 
 
 def _build_privy_jwks_url(app_id: str) -> str:
-    """Privy JWKS URL is derived from the app id at call time — no config constant."""
     return f"https://auth.privy.io/api/v1/apps/{app_id}/jwks.json"
 
-# Optional-auth helper: returns the user dict when a valid Bearer JWT is
-# present, otherwise None. Used by /auth/email so unauthenticated callers
-# (primary auth via Privy) can hit it while legacy/demo callers still work.
-_optional_security = HTTPBearer(auto_error=False)
+
+_privy_jwk_clients: dict[str, jwt.PyJWKClient] = {}
+
+
+def _get_privy_jwk_client() -> Optional[jwt.PyJWKClient]:
+    if not settings.PRIVY_APP_ID:
+        return None
+    client = _privy_jwk_clients.get(settings.PRIVY_APP_ID)
+    if client is None:
+        client = jwt.PyJWKClient(_build_privy_jwks_url(settings.PRIVY_APP_ID))
+        _privy_jwk_clients[settings.PRIVY_APP_ID] = client
+    return client
+
+
+def _looks_like_jwt(token: Optional[str]) -> bool:
+    return bool(token) and token.count(".") == 2 and len(token) > 100
+
+
+def _verify_privy_token(token: str) -> Optional[dict]:
+    if not _looks_like_jwt(token):
+        return None
+    client = _get_privy_jwk_client()
+    if client is None:
+        return None
+    try:
+        signing_key = client.get_signing_key_from_jwt(token).key
+        return jwt.decode(
+            token,
+            signing_key,
+            algorithms=["ES256"],
+            audience=settings.PRIVY_APP_ID,
+            issuer="privy.io",
+        )
+    except Exception as exc:
+        log.warning("Privy JWT verification failed", error=str(exc))
+        return None
+
+
+def _extract_starknet_wallet(wallets: list[dict]) -> Optional[dict]:
+    for wallet in wallets:
+        if wallet.get("chain_type") == "starknet" and wallet.get("address"):
+            return wallet
+    return None
+
+
+async def _verified_privy_claims(
+    credentials: HTTPAuthorizationCredentials = Depends(_privy_bearer),
+) -> dict:
+    if not settings.PRIVY_APP_ID or not settings.PRIVY_APP_SECRET:
+        raise HTTPException(503, "Privy Starknet wallet creation is not configured")
+
+    claims = _verify_privy_token(credentials.credentials)
+    if not claims:
+        raise HTTPException(401, "Invalid Privy token")
+    if not claims.get("sub"):
+        raise HTTPException(401, "Privy token missing subject (DID)")
+    return claims
 
 
 async def _optional_current_user(
@@ -69,86 +112,110 @@ async def _optional_current_user(
         return None
 
 
-# Cached Privy JWKS client — lazily constructed so missing PRIVY_APP_ID
-# doesn't crash startup. Keyed by app_id to survive unlikely app_id changes
-# (e.g. tests that monkeypatch settings.PRIVY_APP_ID) without restart.
-_privy_jwk_clients: dict = {}
+def _wallet_response(wallet: dict, created: bool) -> dict:
+    return {
+        "created": created,
+        "address": wallet.get("address"),
+        "wallet_id": wallet.get("id"),
+        "public_key": wallet.get("public_key"),
+        "chain_type": wallet.get("chain_type"),
+    }
 
 
-def _get_privy_jwk_client() -> Optional[jwt.PyJWKClient]:
-    if not settings.PRIVY_APP_ID:
-        return None
-    client = _privy_jwk_clients.get(settings.PRIVY_APP_ID)
-    if client is None:
-        jwks_url = _build_privy_jwks_url(settings.PRIVY_APP_ID)
-        client = jwt.PyJWKClient(jwks_url)
-        _privy_jwk_clients[settings.PRIVY_APP_ID] = client
-    return client
+def _update_user_wallet_fields(service, user_id: str, wallet: dict, email: Optional[str] = None) -> None:
+    update_fields = {
+        "starknet_address": wallet.get("address"),
+        "starknet_auth": True,
+        "last_login": datetime.now().isoformat(),
+    }
+    if email:
+        update_fields["starknet_email"] = email
 
-
-def _looks_like_jwt(token: Optional[str]) -> bool:
-    """Heuristic gate: real Privy tokens are ES256 JWTs — three segments, > 100 chars."""
-    return bool(token) and token.count(".") == 2 and len(token) > 100
-
-
-def _verify_privy_token(token: str) -> Optional[dict]:
-    """
-    Verify a Privy access token (JWT signed with ES256 via JWKS).
-    Returns the decoded claims dict on success, or None on any failure.
-    A token that doesn't look like a JWT returns None so the caller can
-    fall through to the legacy/demo path.
-    """
-    if not _looks_like_jwt(token):
-        return None
-    client = _get_privy_jwk_client()
-    if client is None:
-        return None
     try:
-        signing_key = client.get_signing_key_from_jwt(token).key
-        claims = jwt.decode(
-            token,
-            signing_key,
-            algorithms=["ES256"],
-            audience=settings.PRIVY_APP_ID,
-            issuer="privy.io",
-        )
-        return claims
-    except Exception as e:
-        log.warning("Privy JWT verification failed", error=str(e))
-        return None
+        extended_fields = {
+            **update_fields,
+            "starknet_wallet_id": wallet.get("id"),
+            "starknet_public_key": wallet.get("public_key"),
+        }
+        service.table("users").update(extended_fields).eq("id", user_id).execute()
+    except Exception as exc:
+        log.warning("Falling back to minimal Starknet wallet field update", user_id=user_id, error=str(exc))
+        service.table("users").update(update_fields).eq("id", user_id).execute()
 
-# ─────────────────────────────────────────────────────────────
-# RPC endpoint pool — round-robin
-# ─────────────────────────────────────────────────────────────
 
-_sepolia_pool  = itertools.cycle(settings.STARKNET_SEPOLIA_RPCS)
-_mainnet_pool  = itertools.cycle(settings.STARKNET_MAINNET_RPCS)
+async def _ensure_privy_starknet_wallet(privy_user_id: str) -> tuple[dict, bool]:
+    try:
+        existing_wallets = await get_user_wallets(privy_user_id)
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code != 404:
+            raise
+        existing_wallets = []
+
+    existing_wallet = _extract_starknet_wallet(existing_wallets)
+    if existing_wallet:
+        return existing_wallet, False
+
+    wallet = await create_starknet_wallet(privy_user_id)
+    return wallet, True
+
+
+_sepolia_pool = itertools.cycle(settings.STARKNET_SEPOLIA_RPCS)
+_mainnet_pool = itertools.cycle(settings.STARKNET_MAINNET_RPCS)
+
 
 def _next_rpc(network: str) -> str:
     return next(_sepolia_pool) if network == "sepolia" else next(_mainnet_pool)
 
 
-# ─────────────────────────────────────────────────────────────
-# RPC Proxy
-# ─────────────────────────────────────────────────────────────
+@wallets_router.post("/create-starknet", response_model=ResponseModel)
+async def create_starknet(
+    claims: dict = Depends(_verified_privy_claims),
+):
+    privy_user_id = claims["sub"]
+    service = db.get_service_client()
 
-@router.post("/rpc", response_model=ResponseModel)
+    user_lookup = (
+        service.table("users")
+        .select("*")
+        .eq("privy_did", privy_user_id)
+        .limit(1)
+        .execute()
+    )
+    user_row = user_lookup.data[0] if user_lookup.data else None
+
+    if user_row and user_row.get("starknet_address") and user_row.get("starknet_wallet_id"):
+        return ResponseModel(data={
+            "created": False,
+            "address": user_row.get("starknet_address"),
+            "wallet_id": user_row.get("starknet_wallet_id"),
+            "public_key": user_row.get("starknet_public_key"),
+            "chain_type": "starknet",
+        })
+
+    try:
+        wallet, created = await _ensure_privy_starknet_wallet(privy_user_id)
+    except httpx.HTTPStatusError as exc:
+        raise HTTPException(500, f"Failed to ensure Starknet wallet: {exc.response.text}") from exc
+    except Exception as exc:
+        raise HTTPException(500, f"Failed to ensure Starknet wallet: {exc}") from exc
+
+    if user_row:
+        _update_user_wallet_fields(service, user_row["id"], wallet, user_row.get("email"))
+
+    return ResponseModel(data=_wallet_response(wallet, created))
+
+
+@starknet_router.post("/rpc", response_model=ResponseModel)
 async def starknet_rpc(
     body: StarknetRPCRequest,
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    """
-    Proxy a Starknet JSON-RPC call.
-    Client sends { network, method, params }.
-    We pick the next healthy RPC endpoint and forward.
-    """
     rpc_url = _next_rpc(body.network)
-
     rpc_payload = {
         "jsonrpc": "2.0",
-        "id":      1,
-        "method":  body.method,
-        "params":  body.params,
+        "id": 1,
+        "method": body.method,
+        "params": body.params,
     }
 
     log.debug(
@@ -159,7 +226,6 @@ async def starknet_rpc(
         rpc_url=rpc_url,
     )
 
-    # Try up to 3 endpoints on failure
     last_error: Optional[str] = None
     for _ in range(3):
         try:
@@ -175,10 +241,9 @@ async def starknet_rpc(
             last_error = f"RPC {rpc_url} returned {resp.status_code}"
         except httpx.TimeoutException:
             last_error = f"RPC {rpc_url} timed out"
-        except Exception as e:
-            last_error = str(e)
+        except Exception as exc:
+            last_error = str(exc)
 
-        # Try next endpoint in pool
         rpc_url = _next_rpc(body.network)
         log.warning("RPC failed, trying next", error=last_error, next_rpc=rpc_url)
 
@@ -186,98 +251,43 @@ async def starknet_rpc(
     raise HTTPException(503, f"Starknet RPC unavailable: {last_error}")
 
 
-# ─────────────────────────────────────────────────────────────
-# Starknet email auth (Privy integration)
-# ─────────────────────────────────────────────────────────────
-
-@router.post("/auth/email", response_model=ResponseModel)
+@starknet_router.post("/auth/email", response_model=ResponseModel)
 async def starknet_auth_email(
     body: StarknetAuthRequest,
     background_tasks: BackgroundTasks,
     existing_user: Optional[dict] = Depends(_optional_current_user),
 ):
-    """
-    PRIMARY auth entry point for Privy-backed Starknet sessions.
-
-    Two supported call shapes:
-
-    1. Real flow (production):
-         { email, privy_token: <ES256 JWT>, starknet_address: "0x..." }
-       The JWT is verified against Privy's JWKS; audience must equal our
-       PRIVY_APP_ID and issuer must be "privy.io". The Privy user DID is
-       extracted from the `sub` claim. The client-provided Starknet
-       address is trusted once the JWT is verified (Privy binds the
-       wallet to the DID on its side; the JWT itself does not embed it).
-
-    2. Legacy/demo flow:
-         { email, privy_token: <opaque address> }
-       Preserved so existing demo builds keep booting. Triggered when
-       `privy_token` does not look like a JWT (fewer than two dots or
-       under 100 chars).
-
-    On success the user row is upserted (keyed by `privy_did` when a
-    verified DID is available, falling back to email for legacy rows)
-    and a Sifter JWT is issued so the client can call other
-    authenticated routes immediately.
-    """
     email = body.email.strip().lower()
     if not email or "@" not in email:
         raise HTTPException(400, "Valid email required")
 
     privy_token = body.privy_token or ""
-    starknet_address: Optional[str] = None
-    privy_did: Optional[str] = None
-    verified_via_jwt = False
+    if not _looks_like_jwt(privy_token):
+        raise HTTPException(400, "A valid Privy access token is required")
 
-    if _looks_like_jwt(privy_token):
-        # ── Real verify path ───────────────────────────────────
-        if not settings.PRIVY_APP_ID:
-            raise HTTPException(503, "Starknet auth not configured (PRIVY_APP_ID missing)")
+    if not settings.PRIVY_APP_ID or not settings.PRIVY_APP_SECRET:
+        raise HTTPException(503, "Starknet auth is not configured")
 
-        claims = _verify_privy_token(privy_token)
-        if not claims:
-            raise HTTPException(401, "Invalid Privy token")
+    claims = _verify_privy_token(privy_token)
+    if not claims:
+        raise HTTPException(401, "Invalid Privy token")
 
-        privy_did = claims.get("sub")
-        if not privy_did:
-            raise HTTPException(401, "Privy token missing subject (DID)")
+    privy_did = claims.get("sub")
+    if not privy_did:
+        raise HTTPException(401, "Privy token missing subject (DID)")
 
-        verified_via_jwt = True
+    try:
+        wallet, _ = await _ensure_privy_starknet_wallet(privy_did)
+    except httpx.HTTPStatusError as exc:
+        raise HTTPException(500, f"Failed to ensure Starknet wallet: {exc.response.text}") from exc
+    except Exception as exc:
+        raise HTTPException(500, f"Failed to ensure Starknet wallet: {exc}") from exc
 
-        # Client-supplied address required in the real flow — Privy's JWT
-        # doesn't embed the wallet, but the wallet is bound to the DID on
-        # Privy's side so we accept whatever the client sends alongside a
-        # valid JWT.
-        supplied = (body.starknet_address or "").strip()
-        if not supplied or not supplied.startswith("0x") or len(supplied) < 3:
-            raise HTTPException(400, "Valid starknet_address (0x…) required")
-        # Basic hex sanity check on the 0x-stripped tail.
-        try:
-            int(supplied[2:], 16)
-        except ValueError:
-            raise HTTPException(400, "starknet_address must be hex")
-        starknet_address = supplied
-    else:
-        # ── Legacy/demo path ───────────────────────────────────
-        # The client historically sent its generated address in the
-        # privy_token field. Keep that working so old builds don't break.
-        starknet_address = (body.starknet_address or privy_token or "").strip() or None
-        if not starknet_address:
-            raise HTTPException(400, "starknet_address required")
-
-    # ── Upsert the user ────────────────────────────────────────
-    # Lookup order (when we have a verified Privy DID):
-    #   1. privy_did — returning-user fast path
-    #   2. email     — legacy / manual account upgrade; attach the DID
-    #   3. create    — brand new row with privy_did populated
-    # When there's no DID (legacy/demo flow) we fall back to the old
-    # email-keyed behavior. If an authenticated Sifter session already
-    # exists on the request, prefer that row so we don't fork identities.
     service = db.get_service_client()
     user_row: Optional[dict] = existing_user
     matched_by_did = False
 
-    if user_row is None and privy_did:
+    if user_row is None:
         did_lookup = (
             service.table("users")
             .select("*")
@@ -301,15 +311,13 @@ async def starknet_auth_email(
             user_row = email_lookup.data[0]
 
     if user_row is None:
-        # New user — match the shape used by _create_user in main.py so
-        # downstream code that reads these columns keeps working.
         user_id = str(uuid.uuid4())
         new_payload = {
             "id": user_id,
             "email": email,
             "username": email.split("@")[0] or f"Learner_{user_id[:6]}",
             "auth_provider": "privy_starknet",
-            "starknet_address": starknet_address,
+            "starknet_address": wallet.get("address"),
             "starknet_auth": True,
             "starknet_email": email,
             "points": settings.WELCOME_BONUS,
@@ -325,41 +333,31 @@ async def starknet_auth_email(
             "settings": {"notifications": True, "sound": True, "haptics": True},
             "created_at": datetime.now().isoformat(),
             "last_login": datetime.now().isoformat(),
+            "privy_did": privy_did,
         }
-        if privy_did:
-            new_payload["privy_did"] = privy_did
         inserted = service.table("users").insert(new_payload).execute()
         user_row = inserted.data[0] if inserted.data else new_payload
+        _update_user_wallet_fields(service, user_row["id"], wallet, email)
     else:
-        # Existing user — update Starknet fields. Only claim auth_provider
-        # when the existing value is guest/empty/null so we don't clobber
-        # a returning Telegram/Base/email user.
-        update_fields: dict = {
-            "starknet_address": starknet_address,
-            "starknet_auth": True,
-            "starknet_email": email,
+        update_fields = {
             "last_login": datetime.now().isoformat(),
         }
         current_provider = user_row.get("auth_provider")
         if current_provider in _OVERWRITABLE_AUTH_PROVIDERS:
             update_fields["auth_provider"] = "privy_starknet"
 
-        # Attach the DID on the email-lookup path, but refuse to
-        # overwrite an existing, *different* DID — that would let a
-        # second Privy account hijack the row.
-        if privy_did:
-            existing_did = user_row.get("privy_did")
-            if existing_did and existing_did != privy_did:
-                raise HTTPException(
-                    409,
-                    "Email is linked to a different Privy account",
-                )
-            if not existing_did:
-                update_fields["privy_did"] = privy_did
+        existing_did = user_row.get("privy_did")
+        if existing_did and existing_did != privy_did:
+            raise HTTPException(409, "Email is linked to a different Privy account")
 
-        service.table("users").update(update_fields).eq("id", user_row["id"]).execute()
+        if not existing_did:
+            update_fields["privy_did"] = privy_did
 
-    # Re-read so we return the canonical row (including any DB defaults).
+        if update_fields:
+            service.table("users").update(update_fields).eq("id", user_row["id"]).execute()
+
+        _update_user_wallet_fields(service, user_row["id"], wallet, email)
+
     fresh = (
         service.table("users")
         .select("*")
@@ -368,87 +366,68 @@ async def starknet_auth_email(
         .execute()
     )
     updated_user = fresh.data or user_row
-
     user_id = updated_user["id"]
 
-    # ── Unlock Starknet Island (Island 18) immediately ─────────
     background_tasks.add_task(_unlock_starknet_island, user_id)
-
-    # ── Issue Sifter JWT ───────────────────────────────────────
     sifter_jwt = Auth.create_jwt(user_id)
 
     log.info(
         "Starknet auth completed",
         user_id=user_id,
-        verified_via_jwt=verified_via_jwt,
-        privy_did_fp=privy_did[:12] if privy_did else None,
+        privy_did_fp=privy_did[:12],
         matched_by_did=matched_by_did,
-        address=(starknet_address[:10] + "…") if starknet_address else None,
+        address=(wallet.get("address", "")[:10] + "...") if wallet.get("address") else None,
     )
 
     return ResponseModel(data={"token": sifter_jwt, "user": updated_user})
 
 
 async def _unlock_starknet_island(user_id: str):
-    """Background: ensure Starknet Island (Island 18) is accessible."""
     try:
         db.get_service_client().table("users").update({
-            "active_track":   "crypto",
+            "active_track": "crypto",
             "active_field_id": "starknet",
         }).eq("id", user_id).execute()
         log.info("Starknet island unlocked", user_id=user_id)
-    except Exception as e:
-        log.error("Starknet island unlock failed", user_id=user_id, error=str(e))
+    except Exception as exc:
+        log.error("Starknet island unlock failed", user_id=user_id, error=str(exc))
 
 
-# ─────────────────────────────────────────────────────────────
-# Starknet session status
-# ─────────────────────────────────────────────────────────────
-
-@router.get("/status", response_model=ResponseModel)
+@starknet_router.get("/status", response_model=ResponseModel)
 async def starknet_status(current_user: dict = Depends(Auth.get_current_user)):
-    """Return whether the user has a connected Starknet wallet."""
     return ResponseModel(data={
-        "connected":         bool(current_user.get("starknet_auth")),
-        "address":           current_user.get("starknet_address"),
+        "connected": bool(current_user.get("starknet_auth")),
+        "address": current_user.get("starknet_address"),
         "island_18_unlocked": bool(current_user.get("starknet_auth")),
     })
 
 
-# ─────────────────────────────────────────────────────────────
-# Transaction logging (simulator lessons record tx hashes)
-# ─────────────────────────────────────────────────────────────
-
-@router.post("/transactions", response_model=ResponseModel)
+@starknet_router.post("/transactions", response_model=ResponseModel)
 async def log_starknet_transaction(
     body: dict,
     current_user: dict = Depends(Auth.get_current_user),
 ):
-    """
-    Client calls this after every successful StarkZap SDK transaction
-    to persist the explorer-verifiable hash. Used for portfolio evidence.
-    """
-    tx_hash    = body.get("hash", "")
-    network    = body.get("network", "sepolia")
-    tx_type    = body.get("type", "unknown")    # swap, stake, lend, dca, bridge
-    lesson_id  = body.get("lesson_id")
-    lab_id     = body.get("lab_id")
-    amount     = body.get("amount")
-    token      = body.get("token")
+    tx_hash = body.get("hash", "")
+    network = body.get("network", "sepolia")
+    tx_type = body.get("type", "unknown")
+    lesson_id = body.get("lesson_id")
+    lab_id = body.get("lab_id")
+    amount = body.get("amount")
+    token = body.get("token")
 
     if not tx_hash:
         raise HTTPException(400, "tx hash required")
 
     db.get_service_client().table("starknet_transactions").insert({
-        "id":         str(uuid.uuid4()),
-        "user_id":    current_user["id"],
-        "tx_hash":    tx_hash,
-        "network":    network,
-        "tx_type":    tx_type,
-        "lesson_id":  lesson_id,
-        "lab_id":     lab_id,
-        "amount":     str(amount) if amount else None,
-        "token":      token,
+        "id": str(uuid.uuid4()),
+        "user_id": current_user["id"],
+        "tx_hash": tx_hash,
+        "network": network,
+        "tx_type": tx_type,
+        "lesson_id": lesson_id,
+        "lab_id": lab_id,
+        "amount": str(amount) if amount else None,
+        "token": token,
         "explorer_url": f"https://{'sepolia.' if network == 'sepolia' else ''}voyager.online/tx/{tx_hash}",
         "created_at": datetime.utcnow().isoformat(),
     }).execute()
@@ -458,7 +437,7 @@ async def log_starknet_transaction(
         user_id=current_user["id"],
         tx_type=tx_type,
         network=network,
-        hash=tx_hash[:16] + "…",
+        hash=tx_hash[:16] + "...",
     )
 
     return ResponseModel(data={

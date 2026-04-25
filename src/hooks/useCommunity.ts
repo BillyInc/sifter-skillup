@@ -216,7 +216,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
   // ── Supabase Realtime ───────────────────────────────────────────────────────
 
   useEffect(() => {
-    if (!currentUserId) return;
+    if (!currentUserId || !supabase) return;
 
     // Subscribe to new posts in feed
     const postChannel = supabase
@@ -267,6 +267,7 @@ export function useCommunity(currentUserId: string, currentUserTrack?: string) {
 
     realtimeRef.current = { postChannel, notifChannel };
     return () => {
+      if (!supabase) return;
       supabase.removeChannel(postChannel);
       supabase.removeChannel(notifChannel);
     };
@@ -467,7 +468,7 @@ export function useDMs(currentUserId: string) {
 
   // Realtime for DMs
   useEffect(() => {
-    if (!currentUserId) return;
+    if (!currentUserId || !supabase) return;
     const channel = supabase
       .channel(`dms:${currentUserId}`)
       .on('postgres_changes', {
@@ -477,7 +478,10 @@ export function useDMs(currentUserId: string) {
         filter: `recipient_id=eq.${currentUserId}`,
       }, () => { loadThreads(); })
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      if (!supabase) return;
+      supabase.removeChannel(channel);
+    };
   }, [currentUserId, loadThreads]);
 
   return { threads, loading, loadThreads, sendMessage };
