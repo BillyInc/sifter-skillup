@@ -15,7 +15,7 @@ import {
   useStarknetWalletBridge,
 } from '../components/auth/StarknetWalletBridge';
 import { PrivyStarknetBootstrap } from '../components/auth/PrivyStarknetBootstrap';
-import { PRIVY_CONFIGURED } from '../lib/config';
+import { PRIVY_ENABLED } from '../lib/config';
 
 export interface UserProfile {
   id: string;
@@ -298,7 +298,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     >
       <StarknetWalletBridgeProvider preferredAddress={user?.starknet_address ?? null}>
         <StarknetBridgeStateSync onChange={setBridgeState} />
-        {PRIVY_CONFIGURED ? <PrivyStarknetBootstrap user={resolvedUser} refreshUser={refreshUser} /> : null}
+        {PRIVY_ENABLED ? <PrivyStarknetBootstrap user={resolvedUser} refreshUser={refreshUser} /> : null}
         {children}
       </StarknetWalletBridgeProvider>
     </AuthContext.Provider>

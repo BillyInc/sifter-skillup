@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { usePrivy } from '@privy-io/expo';
+import { useAppPrivy } from '../../lib/privy';
 import { ensureStarknetWallet } from '../../services/starknetWallet';
 
 export function PrivyStarknetBootstrap({
@@ -9,7 +9,7 @@ export function PrivyStarknetBootstrap({
   user: { email?: string; starknet_address?: string } | null;
   refreshUser: () => Promise<void>;
 }) {
-  const privy = usePrivy();
+  const privy = useAppPrivy();
   const lastSyncedPrivyUser = useRef<string | null>(null);
   const inFlight = useRef(false);
 

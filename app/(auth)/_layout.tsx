@@ -16,9 +16,9 @@ export default function AuthLayout() {
     );
   }
 
-  // If user is authenticated and completed onboarding, redirect to tabs
+  // If user is authenticated and completed onboarding, redirect to the default tab screen
   if (user && user.onboarding_completed) {
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href="/(tabs)/map" />;
   }
 
   // If authenticated but not onboarded, show onboarding (except handled in onboarding screen)

@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
-import { PRIVY_CONFIGURED } from '../../lib/config';
-import { useStarkzapWallet } from '../../lib/starkzapPrivyAdapter';
+import { Platform } from 'react-native';
 import type { StarkzapWallet } from '../../lib/starkzap';
+import { PRIVY_NATIVE_ENABLED } from '../../lib/config';
 
 type StarknetWalletBridgeStatus = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error';
 
@@ -30,6 +30,15 @@ function StarknetWalletBridgeInner({
   children: React.ReactNode;
   preferredAddress?: string | null;
 }) {
+  if (Platform.OS === 'web') {
+    return (
+      <StarknetWalletBridgeContext.Provider value={DEFAULT_VALUE}>
+        {children}
+      </StarknetWalletBridgeContext.Provider>
+    );
+  }
+
+  const { useStarkzapWallet } = require('../../lib/starkzapPrivyAdapter') as typeof import('../../lib/starkzapPrivyAdapter');
   const { wallet, address, status, error } = useStarkzapWallet(preferredAddress ?? null);
 
   return (
@@ -54,7 +63,7 @@ export function StarknetWalletBridgeProvider({
   children: React.ReactNode;
   preferredAddress?: string | null;
 }) {
-  if (!PRIVY_CONFIGURED) {
+  if (!PRIVY_NATIVE_ENABLED) {
     return (
       <StarknetWalletBridgeContext.Provider value={DEFAULT_VALUE}>
         {children}

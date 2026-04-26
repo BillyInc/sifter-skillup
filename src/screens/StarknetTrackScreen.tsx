@@ -10,12 +10,12 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { usePrivy } from '@privy-io/expo';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { API, API_BASE } from '../lib/api';
-import { PRIVY_CONFIGURED } from '../lib/config';
+import { PRIVY_ENABLED } from '../lib/config';
+import { useAppPrivy } from '../lib/privy';
 
 interface LabDef {
   id: string;
@@ -158,7 +158,7 @@ export default function StarknetTrackScreen() {
   const { colors } = useTheme();
   const { user, authStarknet, starknetLoading, refreshUser } = useAuth();
   const navigation = useRouter();
-  const privy = usePrivy();
+  const privy = useAppPrivy();
 
   const [trackXP, setTrackXP] = useState(0);
   const [completedLabs, setCompletedLabs] = useState<Set<string>>(new Set());
@@ -224,7 +224,7 @@ export default function StarknetTrackScreen() {
       Alert.alert('Email needed', 'Add an email to your account to create a Starknet wallet.');
       return;
     }
-    if (!PRIVY_CONFIGURED) {
+    if (!PRIVY_ENABLED) {
       Alert.alert('Privy required', 'Live Starknet auth is disabled until Privy is configured.');
       return;
     }
