@@ -12,6 +12,13 @@ const hyperlaneAliases = new Map([
   ['isows', path.resolve(__dirname, 'node_modules/isows')],
   ['ox', path.resolve(__dirname, 'node_modules/ox')],
   ['viem', path.resolve(__dirname, 'node_modules/viem')],
+  ['proxy-compare', path.resolve(__dirname, 'node_modules/proxy-compare/dist/cjs/index.js')],
+  ['valtio', path.resolve(__dirname, 'node_modules/valtio/index.js')],
+  ['valtio/react', path.resolve(__dirname, 'node_modules/valtio/react.js')],
+  ['valtio/vanilla', path.resolve(__dirname, 'node_modules/valtio/vanilla.js')],
+  ['valtio/vanilla/utils', path.resolve(__dirname, 'node_modules/valtio/vanilla/utils.js')],
+  ['valtio/utils', path.resolve(__dirname, 'node_modules/valtio/utils.js')],
+  ['zustand', path.resolve(__dirname, 'node_modules/zustand/index.js')],
 ]);
 
 config.resolver = config.resolver || {};

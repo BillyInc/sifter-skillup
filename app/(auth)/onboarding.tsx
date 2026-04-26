@@ -11,7 +11,7 @@ export default function OnboardingPage() {
   if (Platform.OS === 'web') {
     // Auto-complete and redirect
     API.completeOnboarding({}).then(() => refreshUser()).catch(() => refreshUser());
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href="/(tabs)/map" />;
   }
 
   return (
