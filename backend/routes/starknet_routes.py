@@ -5,6 +5,7 @@ from typing import Optional
 
 import httpx
 import jwt
+from cryptography.hazmat.primitives import serialization
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
@@ -23,8 +24,6 @@ _optional_security = HTTPBearer(auto_error=False)
 starknet_router = APIRouter(prefix="/api/starknet", tags=["starknet"])
 wallets_router = APIRouter(prefix="/api/wallets", tags=["wallets"])
 router = APIRouter()
-router.include_router(starknet_router)
-router.include_router(wallets_router)
 
 
 def _build_privy_jwks_url(app_id: str) -> str:
@@ -32,6 +31,7 @@ def _build_privy_jwks_url(app_id: str) -> str:
 
 
 _privy_jwk_clients: dict[str, jwt.PyJWKClient] = {}
+_privy_public_keys: dict[str, object] = {}
 
 
 def _get_privy_jwk_client() -> Optional[jwt.PyJWKClient]:
@@ -44,6 +44,39 @@ def _get_privy_jwk_client() -> Optional[jwt.PyJWKClient]:
     return client
 
 
+def _normalise_verification_key(raw_key: str) -> str:
+    key = raw_key.strip()
+    if not key:
+        return key
+    if "BEGIN PUBLIC KEY" in key:
+        return key
+
+    compact = "".join(key.split())
+    lines = [compact[i:i + 64] for i in range(0, len(compact), 64)]
+    return "-----BEGIN PUBLIC KEY-----\n" + "\n".join(lines) + "\n-----END PUBLIC KEY-----"
+
+
+def _get_privy_public_key() -> Optional[object]:
+    raw_key = settings.PRIVY_VERIFICATION_KEY.strip()
+    if not raw_key:
+        return None
+
+    cache_key = raw_key
+    cached = _privy_public_keys.get(cache_key)
+    if cached is not None:
+        return cached
+
+    try:
+        key = serialization.load_pem_public_key(
+            _normalise_verification_key(raw_key).encode("utf-8"),
+        )
+        _privy_public_keys[cache_key] = key
+        return key
+    except Exception as exc:
+        log.warning("Failed to load Privy verification key", error=str(exc))
+        return None
+
+
 def _looks_like_jwt(token: Optional[str]) -> bool:
     return bool(token) and token.count(".") == 2 and len(token) > 100
 
@@ -51,20 +84,38 @@ def _looks_like_jwt(token: Optional[str]) -> bool:
 def _verify_privy_token(token: str) -> Optional[dict]:
     if not _looks_like_jwt(token):
         return None
-    client = _get_privy_jwk_client()
-    if client is None:
-        return None
     try:
-        signing_key = client.get_signing_key_from_jwt(token).key
+        header = jwt.get_unverified_header(token)
+        alg = header.get("alg", "ES256")
+        if alg not in {"ES256", "EdDSA"}:
+            log.warning("Unsupported Privy JWT alg", alg=alg)
+            return None
+
+        signing_key = _get_privy_public_key()
+        if signing_key is None:
+            client = _get_privy_jwk_client()
+            if client is None:
+                return None
+            signing_key = client.get_signing_key_from_jwt(token).key
+
         return jwt.decode(
             token,
             signing_key,
-            algorithms=["ES256"],
+            algorithms=[alg],
             audience=settings.PRIVY_APP_ID,
             issuer="privy.io",
         )
     except Exception as exc:
-        log.warning("Privy JWT verification failed", error=str(exc))
+        try:
+            header = jwt.get_unverified_header(token)
+        except Exception:
+            header = {}
+        log.warning(
+            "Privy JWT verification failed",
+            error=str(exc),
+            alg=header.get("alg"),
+            kid=header.get("kid"),
+        )
         return None
 
 
@@ -444,3 +495,7 @@ async def log_starknet_transaction(
         "logged": True,
         "explorer_url": f"https://{'sepolia.' if network == 'sepolia' else ''}voyager.online/tx/{tx_hash}",
     })
+
+
+router.include_router(starknet_router)
+router.include_router(wallets_router)
