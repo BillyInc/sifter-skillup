@@ -17,7 +17,8 @@ import {
 import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
 import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetPrivyLogin';
-import { PRIVY_CONFIGURED } from '../lib/config';
+import { PRIVY_CONFIGURED, PRIVY_ENABLED } from '../lib/config';
+import { readPendingPrivyWebLogin } from '../lib/privyShared';
 import { useTheme, Spacing, Radius, FontSize } from '../theme';
 
 const { width: W, height: H } = Dimensions.get('window');
@@ -74,6 +75,10 @@ async function connectBaseWallet(): Promise<{ address: string; signature: string
 
 function isBaseAvailable(): boolean {
   return Platform.OS === 'web' && typeof window !== 'undefined' && !!(window as any).ethereum;
+}
+
+function hasPendingPrivyWebLogin(): boolean {
+  return Platform.OS === 'web' && !!readPendingPrivyWebLogin();
 }
 
 function CircuitBackground({ isDark }: { isDark: boolean }) {
@@ -225,11 +230,30 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
   const [code, setCode] = useState('');
   const [localError, setLocalError] = useState('');
   const privyLogin = useStarknetPrivyLogin();
+  const submittedReadyToken = useRef<string | null>(null);
 
   const status = privyLogin.state.kind;
   const busy = status === 'sending-code' || status === 'verifying';
   const showCodeInput = status === 'awaiting-code' || status === 'verifying';
   const displayError = localError || (privyLogin.state.kind === 'error' ? privyLogin.state.message : '');
+
+  useEffect(() => {
+    if (privyLogin.state.kind !== 'ready') {
+      return;
+    }
+
+    const readyKey = `${privyLogin.state.email}:${privyLogin.state.privyAccessToken}`;
+    if (submittedReadyToken.current === readyKey) {
+      return;
+    }
+
+    submittedReadyToken.current = readyKey;
+    onReady(
+      privyLogin.state.email,
+      privyLogin.state.starknetAddress,
+      privyLogin.state.privyAccessToken,
+    );
+  }, [onReady, privyLogin.state]);
 
   async function handleSendCode() {
     setLocalError('');
@@ -246,8 +270,7 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
   async function handleSubmitCode() {
     setLocalError('');
     try {
-      const ready = await privyLogin.submitEmailCode(email, code);
-      onReady(ready.email, ready.starknetAddress, ready.privyAccessToken);
+      await privyLogin.submitEmailCode(email, code);
     } catch (error: any) {
       setLocalError(error?.message ?? 'Login failed');
     }
@@ -256,8 +279,7 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
   async function handleOAuth(provider: OAuthProvider) {
     setLocalError('');
     try {
-      const ready = await privyLogin.startOAuth(provider, email);
-      onReady(ready.email, ready.starknetAddress, ready.privyAccessToken);
+      await privyLogin.startOAuth(provider, email);
     } catch (error: any) {
       setLocalError(error?.message ?? 'OAuth failed');
     }
@@ -366,6 +388,10 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
 }
 
 function StarknetUnavailableMode({ onBack }: { onBack: () => void }) {
+  const message = !PRIVY_CONFIGURED
+    ? 'Starknet auth is unavailable until Privy is configured. Demo-mode Starknet wallet creation has been disabled.'
+    : 'Starknet auth is currently unavailable on this device.';
+
   return (
     <View style={[styles.card, { backgroundColor: '#0a0a1f', borderColor: '#ec489940' }]}>
       <TouchableOpacity onPress={onBack} style={styles.backBtn}>
@@ -374,7 +400,7 @@ function StarknetUnavailableMode({ onBack }: { onBack: () => void }) {
       <StarknetHeader />
       <StarknetBenefits />
       <Text style={{ color: 'rgba(255,255,255,0.75)', textAlign: 'center', lineHeight: 20 }}>
-        Starknet auth is unavailable until Privy is configured. Demo-mode Starknet wallet creation has been disabled.
+        {message}
       </Text>
     </View>
   );
@@ -387,7 +413,7 @@ function StarknetMode({
   onBack: () => void;
   onReady: StarknetOnReady;
 }) {
-  if (PRIVY_CONFIGURED) {
+  if (PRIVY_ENABLED) {
     return <StarknetPrivyMode onBack={onBack} onReady={onReady} />;
   }
   return <StarknetUnavailableMode onBack={onBack} />;
@@ -406,7 +432,7 @@ export default function AuthScreen() {
   const { colors, isDark } = useTheme();
   const router = useRouter();
 
-  const [mode, setMode] = useState<Mode>('welcome');
+  const [mode, setMode] = useState<Mode>(() => (hasPendingPrivyWebLogin() ? 'starknet' : 'welcome'));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');

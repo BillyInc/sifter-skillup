@@ -31,9 +31,10 @@ from config import settings
 from database import db
 from logger import log
 from models import ResponseModel
-from deterministic_score import score_response, extract_criteria_from_task
+from utils.deterministic_score import score_response, extract_criteria_from_task
 
 router = APIRouter(prefix="/api/boss", tags=["boss"])
+boss_router = router
 
 
 # ─── Models ────────────────────────────────────────────────────────────────────
