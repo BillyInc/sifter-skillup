@@ -109,6 +109,11 @@ class DeviceRegister(BaseModel):
     push_token:      Optional[str] = None  # FCM token for logout notification
 
 
+class PushTokenUpdate(BaseModel):
+    push_token:      Optional[str] = None
+    token:           Optional[str] = None
+
+
 # ── Starknet ──────────────────────────────────────────────────
 
 class StarknetAuthRequest(BaseModel):

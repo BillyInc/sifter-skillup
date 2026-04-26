@@ -8,12 +8,16 @@
  *      idempotently creates the Starknet wallet via Privy's server API.
  */
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Platform } from 'react-native';
+import { useAppLoginWithEmail, useAppLoginWithOAuth, useAppPrivy } from '../lib/privy';
 import {
-  useLoginWithEmail,
-  useLoginWithOAuth,
-  usePrivy,
-} from '@privy-io/expo';
+  clearPendingPrivyWebLogin,
+  getPrivyEmail,
+  getPrivyLinkedAccounts,
+  readPendingPrivyWebLogin,
+  writePendingPrivyWebLogin,
+} from '../lib/privyShared';
 
 type LinkedStarknetAccount = {
   id: string;
@@ -37,8 +41,12 @@ export type StarknetLoginState =
 export type OAuthProvider = 'google' | 'twitter' | 'apple';
 
 function pickStarknetAccount(privyUser: any): LinkedStarknetAccount | null {
-  const linked = privyUser?.linked_accounts ?? [];
-  const match = linked.find((account: any) => account?.chain_type === 'starknet' && account?.address);
+  const linked = getPrivyLinkedAccounts(privyUser);
+  const match = linked.find(
+    (account: any) =>
+      (account?.chain_type === 'starknet' || account?.chainType === 'starknet') &&
+      account?.address,
+  );
   if (!match?.address) {
     return null;
   }
@@ -50,13 +58,14 @@ function pickStarknetAccount(privyUser: any): LinkedStarknetAccount | null {
 
 export function useStarknetPrivyLogin() {
   const [state, setState] = useState<StarknetLoginState>({ kind: 'idle' });
+  const completedUserId = useRef<string | null>(null);
 
-  const privy = usePrivy();
-  const { sendCode, loginWithCode } = useLoginWithEmail({
-    onError: (err) => setState({ kind: 'error', message: err?.message ?? 'Email login failed' }),
+  const privy = useAppPrivy();
+  const { sendCode, loginWithCode } = useAppLoginWithEmail({
+    onError: (err: any) => setState({ kind: 'error', message: err?.message ?? 'Email login failed' }),
   });
-  const oauth = useLoginWithOAuth({
-    onError: (err) => setState({ kind: 'error', message: err?.message ?? 'OAuth login failed' }),
+  const oauth = useAppLoginWithOAuth({
+    onError: (err: any) => setState({ kind: 'error', message: err?.message ?? 'OAuth login failed' }),
   });
 
   const reset = useCallback(() => setState({ kind: 'idle' }), []);
@@ -74,6 +83,8 @@ export function useStarknetPrivyLogin() {
       starknetWalletId: account?.id,
       privyAccessToken: token,
     };
+    completedUserId.current = privy.user?.id ?? null;
+    clearPendingPrivyWebLogin();
     setState({ kind: 'ready', ...ready });
     return ready;
   }, [privy]);
@@ -92,11 +103,28 @@ export function useStarknetPrivyLogin() {
 
   const startOAuth = useCallback(async (provider: OAuthProvider, emailFallback: string) => {
     setState({ kind: 'verifying' });
+    if (Platform.OS === 'web') {
+      writePendingPrivyWebLogin(emailFallback);
+    }
     await oauth.login({ provider });
-    const email = ((privy.user as any)?.linked_accounts
-      ?.find((account: any) => account.type === 'email')?.address as string | undefined) ?? emailFallback;
+    const email = getPrivyEmail(privy.user, emailFallback);
     return finalize(email);
   }, [finalize, oauth, privy.user]);
+
+  useEffect(() => {
+    const pendingOAuth = Platform.OS === 'web' ? readPendingPrivyWebLogin() : null;
+    if (!privy.isReady || !privy.user?.id || !pendingOAuth) {
+      return;
+    }
+    if (completedUserId.current === privy.user.id) {
+      clearPendingPrivyWebLogin();
+      return;
+    }
+
+    void finalize(getPrivyEmail(privy.user, pendingOAuth.emailFallback)).catch((error: any) => {
+      setState({ kind: 'error', message: error?.message ?? 'OAuth failed' });
+    });
+  }, [finalize, privy.isReady, privy.user]);
 
   return useMemo(() => ({
     state,
@@ -105,6 +133,6 @@ export function useStarknetPrivyLogin() {
     startOAuth,
     reset,
     isReady: privy.isReady,
-    authenticated: !!privy.user,
-  }), [state, startEmail, submitEmailCode, startOAuth, reset, privy.isReady, privy.user]);
+    authenticated: privy.authenticated,
+  }), [state, startEmail, submitEmailCode, startOAuth, reset, privy.authenticated, privy.isReady, privy.user]);
 }
