@@ -21,6 +21,11 @@ interface StarknetLesson {
     hint?: string;
   }>;
   interactiveSimulator?: { componentId?: string; title?: string };
+  lessonSimulations?: Array<{
+    type: 'judgment-riskAssess' | 'judgment-dataInterpret' | 'judgment-escalation';
+    scenario: string;
+    scoringCriteria: string[];
+  }>;
 }
 
 function truncatePlain(s: string, max: number): string {
@@ -71,6 +76,20 @@ function buildStarknetLessonQuestions(lesson: StarknetLesson): Question[] {
     });
   }
 
+  // 4. Authored lesson simulations - preserve the scenario + rubric exactly as written.
+  for (const sim of lesson.lessonSimulations ?? []) {
+    if (!sim?.type || !sim?.scenario || !Array.isArray(sim.scoringCriteria) || sim.scoringCriteria.length === 0) {
+      continue;
+    }
+
+    questions.push({
+      type: 'simulator',
+      simulatorType: sim.type,
+      scenario: sim.scenario,
+      scoringCriteria: sim.scoringCriteria,
+    });
+  }
+
   // If the lesson had no guided-practice entries, fall back to a single
   // concept-check true/false so the engine still has something to advance on.
   const hasInteractive = questions.some((q) => q.type !== 'concept_card');
@@ -113,6 +132,8 @@ export interface Question {
   pairs?: Array<{ term: string; def: string }>;
   // simulator
   simulatorType?: string;
+  scenario?: string;
+  scoringCriteria?: string[];
   // fill_blank
   sentence?: string; blank?: string; distractors?: string[];
 }

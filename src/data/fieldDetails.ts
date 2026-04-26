@@ -756,6 +756,28 @@ const registry: FieldDetail[] = [
         status: 'live',
         navigateTo: 'StarknetTrack',
       },
+      {
+        id: 'starknet-ecosystem-deep-dive',
+        name: 'Starknet Ecosystem Deep Dive',
+        type: 'SPECIFIC',
+        worldThemeId: 'starknet-realm',
+        worldLabel: '🔬 Ecosystem Deep Dive',
+        tagline: 'Research protocols, map incentives, and publish ecosystem-grade analysis',
+        description: '9 labs covering Starknet protocol structure, tokenomics, governance, grants, analytics, SQL, and protocol comparison. Built for researchers, analysts, and ecosystem contributors.',
+        status: 'live',
+        navigateTo: 'World',
+      },
+      {
+        id: 'cairo-builder',
+        name: 'Cairo Builder',
+        type: 'SPECIFIC',
+        worldThemeId: 'starknet-realm',
+        worldLabel: '🏗️ Cairo Builder',
+        tagline: 'Write, test, deploy, and audit Cairo smart contracts on Starknet',
+        description: 'A developer-first track covering Scarb, snforge, account abstraction, deployments, full-stack indexing, and production audit flows on Starknet Sepolia.',
+        status: 'live',
+        navigateTo: 'World',
+      },
     ],
   },
 ];
@@ -779,6 +801,10 @@ export const LIVE_TRACK_IDS = new Set([
   'quant-researcher',
   'supply-chain-analyst',
   'supply-chain-analyst-sc',
+  'starknet-islands',
+  'starknet-defi-navigator',
+  'starknet-ecosystem-deep-dive',
+  'cairo-builder',
 ]);
 
 export function isTrackLive(trackId: string): boolean {

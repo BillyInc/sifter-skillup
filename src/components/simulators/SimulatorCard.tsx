@@ -37,6 +37,10 @@ import { useTheme, Colors, Spacing, Radius, FontSize, Shadow } from '../../theme
 interface SimProps {
   onComplete: () => void;   // called when user passes
   onSkip:     () => void;   // always available as escape hatch
+  islandId?: number;
+  simulatorType?: string;
+  scenario?: string;
+  scoringCriteria?: string[];
 }
 
 // ── Shared UI helpers ─────────────────────────────────────────────────────────
@@ -5016,11 +5020,20 @@ const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
 interface SimulatorCardProps {
   islandId?: number;
   simulatorType: string;
+  scenario?: string;
+  scoringCriteria?: string[];
   onComplete: () => void;
   onSkip:     () => void;
 }
 
-export default function SimulatorCard({ simulatorType, islandId = 1, onComplete, onSkip }: SimulatorCardProps) {
+export default function SimulatorCard({
+  simulatorType,
+  islandId = 1,
+  scenario,
+  scoringCriteria,
+  onComplete,
+  onSkip,
+}: SimulatorCardProps) {
   const Sim = SIMULATORS[simulatorType];
   if (!Sim) {
     return (
@@ -5033,7 +5046,16 @@ export default function SimulatorCard({ simulatorType, islandId = 1, onComplete,
       </SimShell>
     );
   }
-  return <Sim onComplete={onComplete} onSkip={onSkip} islandId={islandId} simulatorType={simulatorType} />;
+  return (
+    <Sim
+      onComplete={onComplete}
+      onSkip={onSkip}
+      islandId={islandId}
+      simulatorType={simulatorType}
+      scenario={scenario}
+      scoringCriteria={scoringCriteria}
+    />
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
