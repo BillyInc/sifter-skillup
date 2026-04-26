@@ -1,5 +1,11 @@
 import LessonScreen from '@/screens/LessonScreen';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  getStarknetLab,
+  getStarknetLessonRuntimeId,
+  isStarknetTrack,
+  type StarknetTrackId,
+} from '@/data/tracks/starknet_ecosystem/starknetLessonRegistry';
 export default function LessonRoute() {
   const params = useLocalSearchParams<{
     levelId?: string;
@@ -31,6 +37,45 @@ export default function LessonRoute() {
   // IslandMapScreen will then show the 3-track banner if boss 310 is done,
   // or the next island in sequence for any other completion.
   const handleDone = () => {
+    if (
+      !isBoss
+      && trackId
+      && isStarknetTrack(trackId)
+      && labNumber !== undefined
+      && lessonIndex !== undefined
+    ) {
+      const lab = getStarknetLab(trackId as StarknetTrackId, labNumber);
+      if (lab) {
+        const nextLessonIndex = lessonIndex + 1;
+
+        if (nextLessonIndex < lab.lessons.length) {
+          router.replace({
+            pathname: '/(tabs)/map/lesson' as any,
+            params: {
+              levelId: String(getStarknetLessonRuntimeId(trackId as StarknetTrackId, labNumber, nextLessonIndex)),
+              trackId,
+              labId,
+              labNumber: String(labNumber),
+              lessonIndex: String(nextLessonIndex),
+            },
+          });
+          return;
+        }
+
+        router.replace({
+          pathname: '/(tabs)/map/lesson' as any,
+          params: {
+            levelId: String(lab.bossLevelId),
+            trackId,
+            labId,
+            labNumber: String(labNumber),
+            isBoss: 'true',
+          },
+        });
+        return;
+      }
+    }
+
     if (router.canGoBack()) {
       router.back();
     } else {

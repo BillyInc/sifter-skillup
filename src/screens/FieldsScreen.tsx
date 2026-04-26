@@ -189,6 +189,7 @@ function FieldPortal({
   const entrance   = useRef(new Animated.Value(0)).current;
   const slideY     = useRef(new Animated.Value(40)).current;
   const isCrypto   = field.id === 'crypto';
+  const starknetDetail = isCrypto ? getFieldDetail('starknet') : null;
 
   useEffect(() => {
     Animated.parallel([
@@ -209,7 +210,9 @@ function FieldPortal({
     setTimeout(() => {
       if (track.navigateTo === 'Quant') navigation.push('/skills/quant-map');
       else if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') navigation.push('/map/island');
-      else if (track.navigateTo === 'StarknetTrack') navigation.push('/starknet-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
+      else if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') navigation.push('/starknet-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
+      else if (track.id === 'starknet-ecosystem-deep-dive') navigation.push('/ecosystem-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
+      else if (track.id === 'cairo-builder') navigation.push('/cairo-builder-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
       else navigation.push('/world', {
         worldId: track.worldThemeId,
         trackId: track.id,
@@ -279,14 +282,24 @@ function FieldPortal({
           <View style={[portal.divider, { backgroundColor: C + '30' }]} />
 
           {/* Content */}
-          <Text style={[portal.sectionLabel, { color: C }]}>
-            {isCrypto ? 'ONBOARDING ISLANDS' : 'SKILL TRACKS'}
-          </Text>
-
-          {isCrypto
-            ? <IslandChain onIslandPress={() => { close(); setTimeout(() => navigation.push('/map/island'), 220); }} />
-            : <TrackPath detail={detail} fieldColor={C} onTrackPress={handleTrack} />
-          }
+          {isCrypto ? (
+            <>
+              <Text style={[portal.sectionLabel, { color: C }]}>ONBOARDING ISLANDS</Text>
+              <IslandChain onIslandPress={() => { close(); setTimeout(() => navigation.push('/map/island'), 220); }} />
+              {starknetDetail ? (
+                <>
+                  <View style={[portal.divider, { backgroundColor: '#EC489930', marginTop: Spacing.md }]} />
+                  <Text style={[portal.sectionLabel, { color: '#EC4899' }]}>STARKNET TRACKS</Text>
+                  <TrackPath detail={starknetDetail} fieldColor="#EC4899" onTrackPress={handleTrack} />
+                </>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <Text style={[portal.sectionLabel, { color: C }]}>SKILL TRACKS</Text>
+              <TrackPath detail={detail} fieldColor={C} onTrackPress={handleTrack} />
+            </>
+          )}
         </LinearGradient>
       </Animated.View>
     </Modal>

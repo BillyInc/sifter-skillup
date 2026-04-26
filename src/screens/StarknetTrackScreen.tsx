@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
+  Linking,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -16,6 +17,7 @@ import DisclaimerFooter from '../components/DisclaimerFooter';
 import { API, API_BASE } from '../lib/api';
 import { PRIVY_ENABLED } from '../lib/config';
 import { useAppPrivy } from '../lib/privy';
+import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
 interface LabDef {
   id: string;
@@ -24,23 +26,41 @@ interface LabDef {
   lessonCount: number;
   level: 'junior' | 'intermediate' | 'senior';
   estimatedH: number;
+  bossLevelId: number;
   requiresLevelId: number | null;
   portfolioPush: boolean;
 }
 
-const LABS: LabDef[] = [
-  { id: 'lab1', number: 1, title: 'DeFi Mental Models', lessonCount: 8, level: 'junior', estimatedH: 4, requiresLevelId: null, portfolioPush: false },
-  { id: 'lab2', number: 2, title: 'Token Swaps and AMMs', lessonCount: 5, level: 'junior', estimatedH: 3, requiresLevelId: 3001, portfolioPush: true },
-  { id: 'lab3', number: 3, title: 'Staking and Delegation', lessonCount: 5, level: 'junior', estimatedH: 3, requiresLevelId: 3002, portfolioPush: false },
-  { id: 'lab4', number: 4, title: 'Lending and Borrowing', lessonCount: 5, level: 'junior', estimatedH: 3, requiresLevelId: 3003, portfolioPush: true },
-  { id: 'lab5', number: 5, title: 'DCA and Automation', lessonCount: 5, level: 'junior', estimatedH: 3, requiresLevelId: 3004, portfolioPush: false },
-  { id: 'lab6', number: 6, title: 'Portfolio Strategy', lessonCount: 5, level: 'intermediate', estimatedH: 4, requiresLevelId: 3005, portfolioPush: true },
-  { id: 'lab7', number: 7, title: 'Advanced Liquidity Provision', lessonCount: 5, level: 'intermediate', estimatedH: 4, requiresLevelId: 3006, portfolioPush: false },
-  { id: 'lab8', number: 8, title: 'Bridging & Cross-Chain', lessonCount: 5, level: 'intermediate', estimatedH: 4, requiresLevelId: 3007, portfolioPush: false },
-  { id: 'lab9', number: 9, title: 'Advanced DeFi Primitives', lessonCount: 5, level: 'intermediate', estimatedH: 5, requiresLevelId: 3008, portfolioPush: true },
-  { id: 'lab10', number: 10, title: 'Institutional DeFi Ops', lessonCount: 5, level: 'senior', estimatedH: 6, requiresLevelId: 3009, portfolioPush: false },
-  { id: 'lab11', number: 11, title: 'Research & Certification', lessonCount: 5, level: 'senior', estimatedH: 8, requiresLevelId: 3010, portfolioPush: true },
-];
+const NAVIGATOR_LAB_UI: Record<number, Omit<LabDef, 'id' | 'number' | 'lessonCount' | 'bossLevelId' | 'requiresLevelId'>> = {
+  1: { title: 'DeFi Mental Models', level: 'junior', estimatedH: 4, portfolioPush: false },
+  2: { title: 'Token Swaps and AMMs', level: 'junior', estimatedH: 3, portfolioPush: true },
+  3: { title: 'Staking and Delegation', level: 'junior', estimatedH: 3, portfolioPush: false },
+  4: { title: 'Lending and Borrowing', level: 'junior', estimatedH: 3, portfolioPush: true },
+  5: { title: 'DCA and Automation', level: 'junior', estimatedH: 3, portfolioPush: false },
+  6: { title: 'Portfolio Strategy', level: 'intermediate', estimatedH: 4, portfolioPush: true },
+  7: { title: 'Advanced Liquidity Provision', level: 'intermediate', estimatedH: 4, portfolioPush: false },
+  8: { title: 'Bridging & Cross-Chain', level: 'intermediate', estimatedH: 4, portfolioPush: false },
+  9: { title: 'Advanced DeFi Primitives', level: 'intermediate', estimatedH: 5, portfolioPush: true },
+  10: { title: 'Institutional DeFi Ops', level: 'senior', estimatedH: 6, portfolioPush: false },
+  11: { title: 'Research & Certification', level: 'senior', estimatedH: 8, portfolioPush: true },
+};
+
+const LABS: LabDef[] = getStarknetLabs('starknet-defi-navigator').map((lab, index, allLabs) => {
+  const ui = NAVIGATOR_LAB_UI[lab.labNumber];
+  const previousLab = index > 0 ? allLabs[index - 1] : null;
+
+  return {
+    id: lab.labId,
+    number: lab.labNumber,
+    title: ui?.title ?? `Lab ${lab.labNumber}`,
+    lessonCount: lab.lessons.length,
+    level: ui?.level ?? 'junior',
+    estimatedH: ui?.estimatedH ?? Math.max(1, Math.ceil(lab.lessons.length / 2)),
+    bossLevelId: lab.bossLevelId,
+    requiresLevelId: previousLab?.bossLevelId ?? null,
+    portfolioPush: ui?.portfolioPush ?? false,
+  };
+});
 
 const LEVEL_COLORS = {
   junior: '#58CC02',
@@ -75,8 +95,17 @@ function WalletBanner({
       <View style={[walletStyles.wrap, { backgroundColor: '#EC489915', borderColor: '#EC489940' }]}>
         <View style={{ flex: 1 }}>
           <Text style={[walletStyles.label, { color: '#EC4899' }]}>STARKNET WALLET CONNECTED</Text>
-          <Text style={[walletStyles.addr, { color: colors.text }]}>{address.slice(0, 10)}...{address.slice(-6)}</Text>
+          <Text style={[walletStyles.addr, { color: colors.text }]} selectable>{address}</Text>
+          <Text style={[walletStyles.help, { color: colors.textSoft }]}>
+            Verify this address on Starknet Sepolia Voyager to confirm it is live and funded by real transactions.
+          </Text>
         </View>
+        <TouchableOpacity
+          style={[walletStyles.btn, { backgroundColor: '#EC4899' }]}
+          onPress={() => Linking.openURL(`https://sepolia.voyager.online/contract/${address}`)}
+        >
+          <Text style={walletStyles.btnTxt}>Verify</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -98,6 +127,7 @@ const walletStyles = StyleSheet.create({
   wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, borderWidth: 1.5, padding: Spacing.md },
   label: { fontSize: 9, fontWeight: FontWeight.black, letterSpacing: 0.8 },
   addr: { fontSize: FontSize.sm, fontWeight: FontWeight.medium, marginTop: 2 },
+  help: { fontSize: FontSize.xs, lineHeight: 16, marginTop: 4 },
   btn: { borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs },
   btnTxt: { color: '#fff', fontSize: FontSize.xs, fontWeight: FontWeight.black },
 });
@@ -196,8 +226,7 @@ export default function StarknetTrackScreen() {
       const completed = new Set<string>();
       const userLevels = new Set(user?.completed_levels || []);
       LABS.forEach((lab) => {
-        const bossId = 3000 + lab.number;
-        if (userLevels.has(String(bossId))) {
+        if (userLevels.has(String(lab.bossLevelId))) {
           completed.add(lab.id);
         }
       });
@@ -299,7 +328,7 @@ export default function StarknetTrackScreen() {
         <View style={styles.stats}>
           {[
             { label: 'XP Earned', value: trackXP.toLocaleString() },
-            { label: 'Labs Done', value: `${labsDone}/11` },
+            { label: 'Labs Done', value: `${labsDone}/${LABS.length}` },
             { label: 'Status', value: islandDone ? 'Island Complete' : address ? 'Wallet Ready' : 'Connect Wallet' },
           ].map((item) => (
             <View key={item.label} style={[styles.stat, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
@@ -318,7 +347,7 @@ export default function StarknetTrackScreen() {
         ) : null}
 
         <View style={{ paddingHorizontal: Spacing.lg }}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>11 Labs · Junior to Senior</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>{LABS.length} Labs · Junior to Senior</Text>
           <View style={{ gap: Spacing.sm, marginTop: Spacing.md }}>
             {LABS.map((lab) => (
               <LabCard

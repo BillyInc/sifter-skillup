@@ -14,6 +14,7 @@ import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { API } from '../lib/api';
+import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
 const ACCENT = '#F97316';
 
@@ -23,25 +24,39 @@ interface LabDef {
   title: string;
   description: string;
   bossLevelId: number;
-  simulator: string;
   tags: string[];
+  lessonCount: number;
 }
 
-const CAIRO_LABS: LabDef[] = [
-  { id:'cairo-lab-0', number:0, title:'Setup & Scarb', description:'Install Scarb, create your first Cairo project, run `scarb build`.', bossLevelId:5000, simulator:'cairo-typecheck', tags:['Tooling','Scarb','Setup'] },
-  { id:'cairo-lab-1', number:1, title:'Cairo Basics & ERC-20', description:'Felt252 types, storage variables, events. Deploy a full ERC-20 to Sepolia.', bossLevelId:5001, simulator:'cairo-deploy', tags:['Cairo','ERC-20','Sepolia'] },
-  { id:'cairo-lab-2', number:2, title:'Account Abstraction', description:'Custom account contracts, ECDSA signatures, multi-sig patterns.', bossLevelId:5002, simulator:'cairo-build', tags:['AA','Signatures','Multi-sig'] },
-  { id:'cairo-lab-3', number:3, title:'snforge Testing', description:'Write 20 unit tests for a provided Vault contract using snforge_std.', bossLevelId:5003, simulator:'cairo-snforge', tags:['Testing','snforge','TDD'] },
-  { id:'cairo-lab-4', number:4, title:'Starkzap SDK Integration', description:'Connect your Cairo contract to the Starkzap SDK for front-end interaction.', bossLevelId:5004, simulator:'cairo-starkzap', tags:['Starkzap','SDK','Integration'] },
-  { id:'cairo-lab-5', number:5, title:'DeFi Primitives: Vault & AMM', description:'Build a lending protocol with 20 comprehensive tests.', bossLevelId:5005, simulator:'cairo-build', tags:['DeFi','Vault','AMM'] },
-  { id:'cairo-lab-6', number:6, title:'Perpetuals Exchange', description:'Full perpetuals exchange with 25 snforge tests. Deploy to Sepolia.', bossLevelId:5006, simulator:'cairo-build', tags:['Perps','Advanced','Deploy'] },
-  { id:'cairo-lab-7', number:7, title:'Cairo Architecture Patterns', description:'Dispatcher pattern, component libraries, upgradeable contracts.', bossLevelId:5007, simulator:'cairo-audit', tags:['Architecture','Patterns'] },
-  { id:'cairo-lab-8', number:8, title:'Full Stack: Apibara + FastAPI', description:'Index Starknet events with Apibara, expose via FastAPI.', bossLevelId:5008, simulator:'cairo-invoke', tags:['Indexer','Apibara','API'] },
-  { id:'cairo-lab-9', number:9, title:'LendingPool Full Stack', description:'End-to-end lending protocol: Cairo contract + indexer + UI.', bossLevelId:5009, simulator:'cairo-build', tags:['Full Stack','Lending'] },
-  { id:'cairo-lab-10', number:10, title:'Security Audit I', description:'STRIDE threat modelling, identify vulnerabilities in provided contracts.', bossLevelId:5010, simulator:'cairo-audit', tags:['Security','STRIDE','Audit'] },
-  { id:'cairo-lab-11', number:11, title:'Security Audit II + Fork Tests', description:'Audit an undisclosed Sepolia contract. Run snforge fork tests.', bossLevelId:5011, simulator:'cairo-audit', tags:['Fork Tests','Advanced Audit'] },
-  { id:'cairo-lab-12', number:12, title:'Final Boss: Reverse Engineer', description:'Reverse engineer, STRIDE audit, and find 3 vulnerabilities. Push to GitHub.', bossLevelId:5012, simulator:'cairo-boss', tags:['Final Boss','GitHub','Certification'] },
-];
+const CAIRO_LAB_UI: Record<number, Omit<LabDef, 'id' | 'number' | 'bossLevelId' | 'lessonCount'>> = {
+  0: { title:'Setup & Scarb', description:'Install Scarb, create your first Cairo project, run `scarb build`.', tags:['Tooling','Scarb','Setup'] },
+  1: { title:'Cairo Basics & ERC-20', description:'Felt252 types, storage variables, events. Deploy a full ERC-20 to Sepolia.', tags:['Cairo','ERC-20','Sepolia'] },
+  2: { title:'Account Abstraction', description:'Custom account contracts, ECDSA signatures, multi-sig patterns.', tags:['AA','Signatures','Multi-sig'] },
+  3: { title:'snforge Testing', description:'Write contract tests with snforge_std and a local Starknet test harness.', tags:['Testing','snforge','TDD'] },
+  4: { title:'Starkzap SDK Integration', description:'Connect your Cairo contract to the Starkzap SDK for front-end interaction.', tags:['Starkzap','SDK','Integration'] },
+  5: { title:'DeFi Primitives: Vault & AMM', description:'Build lending and AMM primitives with Cairo state machines and tests.', tags:['DeFi','Vault','AMM'] },
+  6: { title:'Perpetuals Exchange', description:'Model a perpetuals venue with order logic, margin rules, and Sepolia deployment.', tags:['Perps','Advanced','Deploy'] },
+  7: { title:'Cairo Architecture Patterns', description:'Dispatcher pattern, component libraries, and upgrade-safe contract structure.', tags:['Architecture','Patterns'] },
+  8: { title:'Full Stack: Apibara + FastAPI', description:'Index Starknet events with Apibara and expose them through a FastAPI service.', tags:['Indexer','Apibara','API'] },
+  9: { title:'LendingPool Full Stack', description:'Ship an end-to-end lending protocol with contracts, indexing, and UI.', tags:['Full Stack','Lending'] },
+  10: { title:'Security Audit I', description:'Use STRIDE and code review to identify concrete vulnerabilities in Cairo systems.', tags:['Security','STRIDE','Audit'] },
+  11: { title:'Security Audit II + Fork Tests', description:'Audit a live-style deployment path and validate assumptions with fork-style tests.', tags:['Fork Tests','Advanced Audit'] },
+  12: { title:'Final Boss: Reverse Engineer', description:'Reverse engineer, audit, and package a complete Starknet protocol case study.', tags:['Final Boss','GitHub','Certification'] },
+};
+
+const CAIRO_LABS: LabDef[] = getStarknetLabs('cairo-builder').map((lab) => {
+  const ui = CAIRO_LAB_UI[lab.labNumber];
+
+  return {
+    id: lab.labId,
+    number: lab.labNumber,
+    title: ui?.title ?? `Lab ${lab.labNumber}`,
+    description: ui?.description ?? `Complete ${lab.lessons.length} lessons and the boss for Lab ${lab.labNumber}.`,
+    bossLevelId: lab.bossLevelId,
+    tags: ui?.tags ?? ['Cairo'],
+    lessonCount: lab.lessons.length,
+  };
+});
 
 function LabCard({ lab, unlocked, completed, onPress }: {
   lab: LabDef; unlocked: boolean; completed: boolean; onPress: () => void;
@@ -105,11 +120,11 @@ export default function CairoBuilderTrackScreen() {
 
   const completedLevels: string[] = (user?.completed_levels ?? user?.completedLevels ?? []).map(String);
 
-  // Lab N is unlocked if boss of lab N-1 is completed (or it's lab 0)
+  // Lab N is unlocked if the previous registry-backed lab boss is completed (or it's lab 0).
   function isLabUnlocked(lab: LabDef): boolean {
     if (lab.number === 0) return true;
-    const prevBoss = String(lab.bossLevelId - 1); // boss of previous lab
-    return completedLevels.includes(prevBoss) || completedLevels.includes(String(5000 + lab.number - 1));
+    const previousLab = CAIRO_LABS.find((candidate) => candidate.number === lab.number - 1);
+    return previousLab ? completedLevels.includes(String(previousLab.bossLevelId)) : false;
   }
   function isLabCompleted(lab: LabDef): boolean {
     return completedLevels.includes(String(lab.bossLevelId));

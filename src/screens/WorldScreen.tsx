@@ -14,10 +14,11 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, type WorldTheme } from '../theme';
 import { getFieldDetail, isTrackLive } from '../data/fieldDetails';
 import { getField } from '../data/fields';
-import { ECOSYSTEM_LAB_LESSON_COUNTS } from '../data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
 import {
   isStarknetTrack,
   getStarknetLab,
+  getStarknetLessonCount,
+  getStarknetLessonRuntimeId,
   type StarknetTrackId,
 } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
@@ -92,36 +93,6 @@ function GlowOrb({ color, size, delay }: { color: string; size: number; delay: n
 // ─── Lab content loader ────────────────────────────────────────────────────────
 // Dynamically load lab data based on labId and trackId
 
-const NAVIGATOR_LAB_LESSON_COUNTS: Record<number, number> = {
-  1: 8,
-  2: 5,
-  3: 5,
-  4: 5,
-  5: 5,
-  6: 5,
-  7: 5,
-  8: 5,
-  9: 5,
-  10: 5,
-  11: 5,
-};
-
-const CAIRO_LAB_LESSON_COUNTS: Record<number, number> = {
-  0: 6,
-  1: 8,
-  2: 5,
-  3: 5,
-  4: 5,
-  5: 5,
-  6: 8,
-  7: 7,
-  8: 5,
-  9: 8,
-  10: 5,
-  11: 5,
-  12: 5,
-};
-
 function getLabNumber(labId: string, labNumber?: string): number | null {
   const rawValue = labNumber && labNumber.length > 0 ? labNumber : labId;
   if (rawValue === 'primer') return 0;
@@ -140,14 +111,9 @@ function getLabLessonCount(trackId: string, labId: string, labNumber?: string): 
   const normalizedLabNumber = getLabNumber(labId, labNumber);
   if (normalizedLabNumber === null) return null;
 
-  if (trackId === 'starknet-defi-navigator') {
-    return NAVIGATOR_LAB_LESSON_COUNTS[normalizedLabNumber] ?? null;
-  }
-  if (trackId === 'starknet-ecosystem-deep-dive') {
-    return ECOSYSTEM_LAB_LESSON_COUNTS[normalizedLabNumber] ?? null;
-  }
-  if (trackId === 'cairo-builder') {
-    return CAIRO_LAB_LESSON_COUNTS[normalizedLabNumber] ?? null;
+  if (isStarknetTrack(trackId)) {
+    const count = getStarknetLessonCount(trackId as StarknetTrackId, normalizedLabNumber);
+    return count > 0 ? count : null;
   }
 
   return null;
@@ -173,7 +139,7 @@ function LabWorldScreen({
     Animated.timing(enterAnim, { toValue: 1, duration: 600, useNativeDriver: true }).start();
   }, [enterAnim, labId, labNumber, trackId]);
 
-  const labNum = parseInt(labNumber || labId, 10);
+  const labNum = getLabNumber(labId, labNumber) ?? 0;
 
   // Navigator boss IDs: lab N boss = level 3000 + N
   // Ecosystem boss IDs: lab N boss = level 4000 + N
@@ -198,7 +164,7 @@ function LabWorldScreen({
           params: {
             // levelId still sent for legacy/compat; LessonScreen prefers the
             // (trackId, labId, lessonIndex) tuple when present.
-            levelId: bossLevelId - 1,
+            levelId: getStarknetLessonRuntimeId(trackId as StarknetTrackId, labNum, 0),
             trackId,
             labId,
             labNumber,
@@ -214,13 +180,6 @@ function LabWorldScreen({
     router.push({
       pathname: '/(tabs)/map/lesson' as any,
       params: { levelId: bossLevelId - 1, trackId, labId, labNumber },
-    });
-  }
-
-  function handleStartBoss() {
-    router.push({
-      pathname: '/(tabs)/map/lesson' as any,
-      params: { levelId: bossLevelId, trackId, labId, labNumber, isBoss: 'true' },
     });
   }
 
@@ -278,8 +237,8 @@ function LabWorldScreen({
               🔥 BOSS CHALLENGE
             </Text>
             <Text style={{ color: '#ddd', fontSize: FontSize.md, lineHeight: 22 }}>
-              Phase 1: Platform-scored MCQ (15 questions, 80% pass threshold).{'\n'}
-              Phase 2: Practical implementation verified by Starknet Sepolia or snforge test output.
+              The boss unlocks automatically after you finish every lesson in this lab.{'\n'}
+              Phase 1 uses platform-scored questions and Phase 2 verifies practical work against the correct Starknet toolchain.
             </Text>
           </View>
 
@@ -314,17 +273,6 @@ function LabWorldScreen({
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={{ backgroundColor: '#FF6B00', borderRadius: Radius.xl,
-              paddingVertical: Spacing.md, alignItems: 'center',
-              borderWidth: 1.5, borderColor: '#FF6B0060' }}
-            onPress={handleStartBoss}
-            activeOpacity={0.85}
-          >
-            <Text style={{ color: '#fff', fontSize: FontSize.md, fontWeight: '900' }}>
-              🔥 Go Straight to Boss Challenge
-            </Text>
-          </TouchableOpacity>
         </Animated.View>
       </ScrollView>
     </SafeAreaView>
