@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { PRIVY_APP_ID, PRIVY_CLIENT_ID } from './config';
+import { PRIVY_APP_ID, PRIVY_NATIVE_CLIENT_ID, PRIVY_WEB_CLIENT_ID } from './config';
 import type {
   AppLoginCallbacks,
   AppLoginWithEmailLike,
@@ -22,8 +22,8 @@ export function AppPrivyProvider({ children }: { children: React.ReactNode }) {
       },
     };
 
-    if (PRIVY_CLIENT_ID) {
-      privyProps.clientId = PRIVY_CLIENT_ID;
+    if (PRIVY_WEB_CLIENT_ID) {
+      privyProps.clientId = PRIVY_WEB_CLIENT_ID;
     }
 
     return <PrivyProvider {...privyProps}>{children}</PrivyProvider>;
@@ -35,8 +35,8 @@ export function AppPrivyProvider({ children }: { children: React.ReactNode }) {
     config: { embedded: { ethereum: { createOnLogin: 'users-without-wallets' } } },
   };
 
-  if (PRIVY_CLIENT_ID) {
-    privyProps.clientId = PRIVY_CLIENT_ID;
+  if (PRIVY_NATIVE_CLIENT_ID) {
+    privyProps.clientId = PRIVY_NATIVE_CLIENT_ID;
   }
 
   return <PrivyProvider {...privyProps}>{children}</PrivyProvider>;

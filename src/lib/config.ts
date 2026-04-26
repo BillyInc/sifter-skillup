@@ -9,6 +9,10 @@ export const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:800
 
 export const PRIVY_APP_ID = process.env.EXPO_PUBLIC_PRIVY_APP_ID || '';
 export const PRIVY_CLIENT_ID = process.env.EXPO_PUBLIC_PRIVY_CLIENT_ID || '';
+export const PRIVY_WEB_CLIENT_ID =
+  process.env.EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID || PRIVY_CLIENT_ID;
+export const PRIVY_NATIVE_CLIENT_ID =
+  process.env.EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID || PRIVY_CLIENT_ID;
 
 export const PRIVY_CONFIGURED =
   PRIVY_APP_ID.length > 0 && PRIVY_APP_ID !== 'your_privy_app_id_here';

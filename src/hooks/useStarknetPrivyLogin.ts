@@ -40,6 +40,25 @@ export type StarknetLoginState =
 
 export type OAuthProvider = 'google' | 'twitter' | 'apple';
 
+async function waitForPrivyAccessToken(
+  getAccessToken: () => Promise<string | null | undefined>,
+  attempts = 10,
+  delayMs = 250,
+): Promise<string> {
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const token = await getAccessToken();
+    if (token) {
+      return token;
+    }
+
+    if (attempt < attempts - 1) {
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+
+  throw new Error('Privy access token unavailable after login.');
+}
+
 function pickStarknetAccount(privyUser: any): LinkedStarknetAccount | null {
   const linked = getPrivyLinkedAccounts(privyUser);
   const match = linked.find(
@@ -71,10 +90,7 @@ export function useStarknetPrivyLogin() {
   const reset = useCallback(() => setState({ kind: 'idle' }), []);
 
   const finalize = useCallback(async (email: string) => {
-    const token = await privy.getAccessToken();
-    if (!token) {
-      throw new Error('Privy access token unavailable after login.');
-    }
+    const token = await waitForPrivyAccessToken(() => privy.getAccessToken());
 
     const account = pickStarknetAccount(privy.user);
     const ready = {
