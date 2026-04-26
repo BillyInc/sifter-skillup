@@ -414,6 +414,10 @@ export function getStarknetLab(
   return match ?? null;
 }
 
+export function getStarknetLabs(trackId: StarknetTrackId): StarknetLabRef[] {
+  return [...getLabsForTrack(trackId)];
+}
+
 export function getStarknetLesson(
   trackId: StarknetTrackId,
   labNumber: number,
@@ -423,4 +427,26 @@ export function getStarknetLesson(
   if (!lab) return null;
   if (lessonIndex < 0 || lessonIndex >= lab.lessons.length) return null;
   return lab.lessons[lessonIndex] ?? null;
+}
+
+export function getStarknetLessonCount(
+  trackId: StarknetTrackId,
+  labNumber: number,
+): number {
+  return getStarknetLab(trackId, labNumber)?.lessons.length ?? 0;
+}
+
+export function getStarknetLessonRuntimeId(
+  trackId: StarknetTrackId,
+  labNumber: number,
+  lessonIndex: number,
+): number {
+  const trackBase =
+    trackId === 'starknet-defi-navigator'
+      ? 31000
+      : trackId === 'starknet-ecosystem-deep-dive'
+        ? 41000
+        : 51000;
+
+  return trackBase + (labNumber * 100) + lessonIndex;
 }

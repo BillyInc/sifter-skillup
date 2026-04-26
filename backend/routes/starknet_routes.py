@@ -48,6 +48,8 @@ def _normalise_verification_key(raw_key: str) -> str:
     key = raw_key.strip()
     if not key:
         return key
+    if len(key) >= 2 and key[0] == key[-1] and key[0] in {'"', "'"}:
+        key = key[1:-1].strip()
     if "BEGIN PUBLIC KEY" in key:
         return key
 
@@ -81,6 +83,17 @@ def _looks_like_jwt(token: Optional[str]) -> bool:
     return bool(token) and token.count(".") == 2 and len(token) > 100
 
 
+def _decode_privy_jwt(token: str, signing_key: object, alg: str) -> dict:
+    return jwt.decode(
+        token,
+        signing_key,
+        algorithms=[alg],
+        audience=settings.PRIVY_APP_ID,
+        issuer="privy.io",
+        leeway=60,
+    )
+
+
 def _verify_privy_token(token: str) -> Optional[dict]:
     if not _looks_like_jwt(token):
         return None
@@ -91,20 +104,24 @@ def _verify_privy_token(token: str) -> Optional[dict]:
             log.warning("Unsupported Privy JWT alg", alg=alg)
             return None
 
-        signing_key = _get_privy_public_key()
-        if signing_key is None:
-            client = _get_privy_jwk_client()
-            if client is None:
-                return None
-            signing_key = client.get_signing_key_from_jwt(token).key
+        configured_key = _get_privy_public_key()
+        if configured_key is not None:
+            try:
+                return _decode_privy_jwt(token, configured_key, alg)
+            except Exception as exc:
+                log.warning(
+                    "Privy JWT verification with configured key failed; falling back to JWKS",
+                    error=str(exc),
+                    alg=alg,
+                    kid=header.get("kid"),
+                )
 
-        return jwt.decode(
-            token,
-            signing_key,
-            algorithms=[alg],
-            audience=settings.PRIVY_APP_ID,
-            issuer="privy.io",
-        )
+        client = _get_privy_jwk_client()
+        if client is None:
+            return None
+
+        signing_key = client.get_signing_key_from_jwt(token).key
+        return _decode_privy_jwt(token, signing_key, alg)
     except Exception as exc:
         try:
             header = jwt.get_unverified_header(token)

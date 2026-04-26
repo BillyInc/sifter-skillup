@@ -13,6 +13,8 @@
 from datetime import datetime
 from typing import Optional
 
+import jwt
+from jwt import PyJWTError
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -42,7 +44,6 @@ def _extract_user_id_from_bearer(request: Request) -> Optional[str]:
     Full JWT validation still happens in Auth.get_current_user —
     this is just for correlation with the device table.
     """
-    from jose import jwt, JWTError
     auth = request.headers.get("Authorization", "")
     if not auth.startswith("Bearer "):
         return None
@@ -55,7 +56,7 @@ def _extract_user_id_from_bearer(request: Request) -> Optional[str]:
             options={"verify_exp": True},
         )
         return payload.get("sub")
-    except JWTError:
+    except PyJWTError:
         return None
 
 

@@ -13,7 +13,9 @@ import { getLevel, LEVELS } from '../data/levels';
 import { getIslandForLevel } from '../data/islands';
 import {
   isStarknetTrack,
+  getStarknetLab,
   getStarknetLesson,
+  getStarknetLessonRuntimeId,
   type StarknetTrackId,
 } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
@@ -695,8 +697,41 @@ export default function LessonScreen({
 
   const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
   const isBossLvl  = level?.mechanic === 'boss';
-  const nextLevelId = levelId + 1;
-  const nextLevel   = getLevel(nextLevelId);
+  const starknetLab = isStarknetLabLesson
+    ? getStarknetLab(trackId as StarknetTrackId, labNumber as number)
+    : null;
+  const hasNextStarknetLesson = Boolean(
+    starknetLab
+    && lessonIndex !== undefined
+    && lessonIndex + 1 < starknetLab.lessons.length,
+  );
+  const nextTarget = hasNextStarknetLesson
+    ? {
+        levelId: getStarknetLessonRuntimeId(
+          trackId as StarknetTrackId,
+          labNumber as number,
+          (lessonIndex as number) + 1,
+        ),
+        topic: starknetLab?.lessons[(lessonIndex as number) + 1]?.title ?? 'Next Lesson',
+        mechanic: 'memory',
+      }
+    : isStarknetLabLesson && starknetLab
+      ? {
+          levelId: starknetLab.bossLevelId,
+          topic: getLevel(starknetLab.bossLevelId)?.topic ?? 'Boss Challenge',
+          mechanic: getLevel(starknetLab.bossLevelId)?.mechanic ?? 'simulator',
+        }
+      : (() => {
+          const nextLevelId = levelId + 1;
+          const nextLevel = getLevel(nextLevelId);
+          return nextLevel
+            ? {
+                levelId: nextLevelId,
+                topic: nextLevel.topic,
+                mechanic: nextLevel.mechanic,
+              }
+            : null;
+        })();
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{
@@ -790,8 +825,8 @@ export default function LessonScreen({
     setCelebrationDone(true);
     // Play portal transition when there is a next lesson in sequence;
     // skip it and call onComplete directly at track/island end.
-    if (nextLevel) {
-      setPendingLevelId(nextLevelId);
+    if (nextTarget) {
+      setPendingLevelId(nextTarget.levelId);
       setShowTransition(true);
     } else {
       if (state) onComplete(state.stars, state.xp);
@@ -835,6 +870,7 @@ export default function LessonScreen({
   const progress = (state.qIndex / state.questions.length) * 100;
   const isLast   = state.qIndex + 1 >= state.questions.length;
   const sessionXp = state.xp ?? 0;
+  const simulatorIslandId = q?.simulatorType === 'phase1-boss' ? levelId : getIslandForLevel(levelId);
 
   // Finished — show celebration then hand off
   if (state.finished) {
@@ -886,7 +922,9 @@ export default function LessonScreen({
           />
           <SimulatorCard
             simulatorType={q.simulatorType ?? ''}
-            islandId={getIslandForLevel(levelId)}
+            islandId={simulatorIslandId}
+            scenario={q.scenario}
+            scoringCriteria={q.scoringCriteria}
             onComplete={() => { completeSimulator(); advance(); }}
             onSkip={() => advance()}
           />
@@ -931,9 +969,9 @@ export default function LessonScreen({
       <LessonTransition
         visible={showTransition}
         fromTopic={level.topic}
-        toTopic={nextLevel?.topic ?? ''}
+        toTopic={nextTarget?.topic ?? ''}
         fieldColor={(user as any)?.activeFieldColor}
-        mechanic={nextLevel?.mechanic}
+        mechanic={nextTarget?.mechanic}
         onDone={() => {
           setShowTransition(false);
           if (state) onComplete(state.stars, state.xp);

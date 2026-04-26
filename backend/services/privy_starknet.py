@@ -24,6 +24,16 @@ def _pick_wallet(payload: Any) -> Optional[dict]:
                 if isinstance(wallet, dict) and wallet.get("chain_type") == "starknet":
                     return wallet
 
+        linked_accounts = payload.get("linked_accounts")
+        if isinstance(linked_accounts, list):
+            for account in linked_accounts:
+                if (
+                    isinstance(account, dict)
+                    and account.get("chain_type") == "starknet"
+                    and account.get("address")
+                ):
+                    return account
+
         if payload.get("chain_type") == "starknet" and payload.get("address"):
             return payload
 
@@ -43,12 +53,15 @@ def _pick_wallet(payload: Any) -> Optional[dict]:
 async def create_starknet_wallet(privy_user_id: str) -> dict:
     async with httpx.AsyncClient(timeout=15.0) as client:
         response = await client.post(
-            f"{PRIVY_BASE_URL}/wallets",
+            f"{PRIVY_BASE_URL}/users/{privy_user_id}/wallets",
             auth=(PRIVY_APP_ID, PRIVY_APP_SECRET),
             headers=_headers(),
             json={
-                "chain_type": "starknet",
-                "user_id": privy_user_id,
+                "wallets": [
+                    {
+                        "chain_type": "starknet",
+                    }
+                ],
             },
         )
         response.raise_for_status()
@@ -61,11 +74,15 @@ async def create_starknet_wallet(privy_user_id: str) -> dict:
 async def get_user_wallets(privy_user_id: str) -> list[dict]:
     async with httpx.AsyncClient(timeout=15.0) as client:
         response = await client.get(
-            f"{PRIVY_BASE_URL}/users/{privy_user_id}/wallets",
+            f"{PRIVY_BASE_URL}/users/{privy_user_id}",
             auth=(PRIVY_APP_ID, PRIVY_APP_SECRET),
             headers={"privy-app-id": PRIVY_APP_ID},
         )
         response.raise_for_status()
         data = response.json()
-        wallets = data.get("wallets", [])
-        return [wallet for wallet in wallets if isinstance(wallet, dict)]
+        linked_accounts = data.get("linked_accounts", [])
+        return [
+            account
+            for account in linked_accounts
+            if isinstance(account, dict) and account.get("chain_type") == "starknet"
+        ]
