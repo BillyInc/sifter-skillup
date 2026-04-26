@@ -73,7 +73,7 @@ export function useAppLoginWithEmail(callbacks?: AppLoginCallbacks): AppLoginWit
 
     return {
       sendCode: ({ email: address }) => email.sendCode({ email: address }),
-      loginWithCode: ({ code }) => email.loginWithCode({ code }),
+      loginWithCode: ({ email: address, code }) => email.loginWithCode({ email: address, code } as any),
       state: email.state,
     };
   }

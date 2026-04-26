@@ -80,12 +80,8 @@ export function useStarknetPrivyLogin() {
   const completedUserId = useRef<string | null>(null);
 
   const privy = useAppPrivy();
-  const { sendCode, loginWithCode } = useAppLoginWithEmail({
-    onError: (err: any) => setState({ kind: 'error', message: err?.message ?? 'Email login failed' }),
-  });
-  const oauth = useAppLoginWithOAuth({
-    onError: (err: any) => setState({ kind: 'error', message: err?.message ?? 'OAuth login failed' }),
-  });
+  const { sendCode, loginWithCode } = useAppLoginWithEmail();
+  const oauth = useAppLoginWithOAuth();
 
   const reset = useCallback(() => setState({ kind: 'idle' }), []);
 
@@ -107,24 +103,39 @@ export function useStarknetPrivyLogin() {
 
   const startEmail = useCallback(async (email: string) => {
     setState({ kind: 'sending-code', email });
-    await sendCode({ email });
-    setState({ kind: 'awaiting-code', email });
+    try {
+      await sendCode({ email });
+      setState({ kind: 'awaiting-code', email });
+    } catch (error: any) {
+      setState({ kind: 'idle' });
+      throw error;
+    }
   }, [sendCode]);
 
   const submitEmailCode = useCallback(async (email: string, code: string) => {
     setState({ kind: 'verifying' });
-    await loginWithCode({ email, code });
-    return finalize(email);
+    try {
+      await loginWithCode({ email, code });
+      return await finalize(email);
+    } catch (error) {
+      setState({ kind: 'awaiting-code', email });
+      throw error;
+    }
   }, [finalize, loginWithCode]);
 
   const startOAuth = useCallback(async (provider: OAuthProvider, emailFallback: string) => {
     setState({ kind: 'verifying' });
-    if (Platform.OS === 'web') {
-      writePendingPrivyWebLogin(emailFallback);
+    try {
+      if (Platform.OS === 'web') {
+        writePendingPrivyWebLogin(emailFallback);
+      }
+      await oauth.login({ provider });
+      const email = getPrivyEmail(privy.user, emailFallback);
+      return await finalize(email);
+    } catch (error) {
+      setState({ kind: 'idle' });
+      throw error;
     }
-    await oauth.login({ provider });
-    const email = getPrivyEmail(privy.user, emailFallback);
-    return finalize(email);
   }, [finalize, oauth, privy.user]);
 
   useEffect(() => {
@@ -138,7 +149,7 @@ export function useStarknetPrivyLogin() {
     }
 
     void finalize(getPrivyEmail(privy.user, pendingOAuth.emailFallback)).catch((error: any) => {
-      setState({ kind: 'error', message: error?.message ?? 'OAuth failed' });
+      setState({ kind: 'idle' });
     });
   }, [finalize, privy.isReady, privy.user]);
 
