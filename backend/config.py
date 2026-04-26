@@ -29,6 +29,7 @@ class Settings:
     # ── Privy (Starknet embedded wallet auth) ────────────────
     PRIVY_APP_ID: str = os.getenv("PRIVY_APP_ID", "")
     PRIVY_APP_SECRET: str = os.getenv("PRIVY_APP_SECRET", "")
+    PRIVY_VERIFICATION_KEY: str = os.getenv("PRIVY_VERIFICATION_KEY", "")
 
     # ── Telegram ─────────────────────────────────────────────
     TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
