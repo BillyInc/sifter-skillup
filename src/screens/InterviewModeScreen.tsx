@@ -136,9 +136,12 @@ function InterviewIntro({
 
   return (
     <ScrollView contentContainerStyle={styles.introContainer}>
-      <Text style={styles.introEmoji}>🎤</Text>
-      <Text style={styles.introTitle}>{structure.description}</Text>
-      <Text style={styles.introSub}>{trackName}</Text>
+      <View style={styles.heroCard}>
+        <Text style={styles.introEmoji}>🎤</Text>
+        <Text style={styles.kicker}>Sifter Interview Loop</Text>
+        <Text style={styles.introTitle}>{structure.description}</Text>
+        <Text style={styles.introSub}>{trackName}</Text>
+      </View>
 
       <View style={styles.industryNoteBox}>
         <Text style={styles.industryNoteLabel}>WHAT INTERVIEWERS ARE LOOKING FOR</Text>
@@ -293,8 +296,8 @@ function ResultView({
         <View style={styles.portfolioPushedBox}>
           <Text style={styles.portfolioPushedTitle}>Portfolio artifact pushed</Text>
           <Text style={styles.portfolioPushedText}>
-            "Interview Performance — {level.charAt(0).toUpperCase() + level.slice(1)} Supply Chain Analyst"
-            has been added to your portfolio.
+            &quot;Interview Performance — {level.charAt(0).toUpperCase() + level.slice(1)} Supply Chain Analyst&quot;
+            {' '}has been added to your portfolio.
           </Text>
           {result.portfolioArtifact.platforms.map(p => (
             <Text key={p} style={styles.platformPushed}>✅ {p}</Text>
@@ -424,7 +427,8 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
           <Text style={styles.backBtnText}>←</Text>
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
-          <Text style={styles.headerTitle}>🎤 Interview Mode</Text>
+          <Text style={styles.headerEyebrow}>Sifter Runtime</Text>
+          <Text style={styles.headerTitle}>Interview Mode</Text>
           <Text style={styles.headerSub}>{trackName} · {level.charAt(0).toUpperCase() + level.slice(1)}</Text>
         </View>
       </View>
@@ -470,30 +474,33 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  header: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: '#fff' },
+  header: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.card },
   backBtn: { padding: Spacing.sm, marginRight: Spacing.sm },
   backBtnText: { fontSize: 22, color: Colors.text },
+  headerEyebrow: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
   headerTitle: { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
   headerSub: { fontSize: FontSize.xs, color: Colors.textSoft },
 
   // Intro
-  introContainer: { padding: Spacing.xl },
+  introContainer: { padding: Spacing.xl, paddingBottom: Spacing.xxxl },
+  heroCard: { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: Colors.border, marginBottom: Spacing.lg },
   introEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.md },
+  kicker: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: Spacing.xs },
   introTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xs },
-  introSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', marginBottom: Spacing.xl },
+  introSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center' },
 
-  industryNoteBox: { backgroundColor: Colors.accentSoft, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.xl },
+  industryNoteBox: { backgroundColor: Colors.accentSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: Colors.border },
   industryNoteLabel: { fontSize: 9, fontWeight: '800', color: Colors.accent, letterSpacing: 1, marginBottom: Spacing.xs },
   industryNoteText: { fontSize: FontSize.sm, color: Colors.navy, lineHeight: 20 },
 
   structureTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  structureRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: 6, borderTopWidth: 1, borderTopColor: Colors.border },
+  structureRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: 10, paddingHorizontal: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, backgroundColor: Colors.card },
   structureNum: { width: 24, height: 24, borderRadius: 12, backgroundColor: Colors.accent, alignItems: 'center', justifyContent: 'center' },
   structureNumText: { color: '#fff', fontSize: 11, fontWeight: '800' },
   structureEmoji: { fontSize: 16, width: 24 },
   structureLabel: { fontSize: FontSize.sm, color: Colors.text, fontWeight: '600' },
 
-  rulesBox: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginVertical: Spacing.xl, borderWidth: 1, borderColor: Colors.border },
+  rulesBox: { backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginVertical: Spacing.xl, borderWidth: 1, borderColor: Colors.border },
   ruleRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: 3 },
   ruleDot: { color: Colors.textMuted },
   ruleText: { fontSize: FontSize.sm, color: Colors.textSoft, flex: 1 },
@@ -502,29 +509,29 @@ const styles = StyleSheet.create({
   startBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
 
   // Question
-  questionContainer: { padding: Spacing.xl },
+  questionContainer: { padding: Spacing.xl, paddingBottom: Spacing.xxxl },
   progressBar: { height: 4, backgroundColor: Colors.border, borderRadius: 2, marginBottom: Spacing.xs },
   progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
   progressLabel: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'right', marginBottom: Spacing.lg },
 
-  typeBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: Spacing.md, flexWrap: 'wrap' },
+  typeBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: Spacing.md, flexWrap: 'wrap', backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: Colors.border },
   typeEmoji: { fontSize: 20 },
   typeLabel: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
   fromArtifactBadge: { backgroundColor: Colors.goldSoft, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
   fromArtifactText: { fontSize: 10, color: Colors.gold, fontWeight: '700' },
 
-  contextBox: { backgroundColor: '#f8fafc', borderRadius: Radius.sm, padding: Spacing.md, marginBottom: Spacing.md, borderLeftWidth: 3, borderLeftColor: Colors.accent },
+  contextBox: { backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border, borderLeftWidth: 3, borderLeftColor: Colors.accent },
   contextLabel: { fontSize: 9, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1, marginBottom: 4 },
   contextText: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
 
   questionText: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text, lineHeight: 26, marginBottom: Spacing.md },
 
-  guidanceBox: { backgroundColor: Colors.greenSoft, borderRadius: Radius.sm, padding: Spacing.md, marginBottom: Spacing.md },
+  guidanceBox: { backgroundColor: Colors.greenSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border },
   guidanceLabel: { fontSize: 9, fontWeight: '800', color: '#166534', letterSpacing: 1, marginBottom: 4 },
   guidanceText: { fontSize: FontSize.sm, color: '#166534', lineHeight: 18 },
   timingText: { fontSize: FontSize.xs, color: '#166534', marginTop: 4, fontStyle: 'italic' },
 
-  answerInput: { backgroundColor: '#fff', borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text, minHeight: 180, lineHeight: 22 },
+  answerInput: { backgroundColor: Colors.card, borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.lg, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text, minHeight: 180, lineHeight: 22 },
   wordCount: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'right', marginTop: 4, marginBottom: Spacing.lg },
 
   submitBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' },
@@ -532,22 +539,22 @@ const styles = StyleSheet.create({
   submitBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
 
   // Reviewing
-  reviewingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.md },
+  reviewingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.md, paddingHorizontal: Spacing.xl },
   reviewingText: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text },
   reviewingSub: { fontSize: FontSize.sm, color: Colors.textSoft },
 
   // Result
-  resultContainer: { padding: Spacing.xl },
+  resultContainer: { padding: Spacing.xl, paddingBottom: Spacing.xxxl },
   resultEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.md },
   resultTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xl },
 
-  portfolioPushedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.xl },
+  portfolioPushedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: '#86efac' },
   portfolioPushedTitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#065f46', marginBottom: 4 },
   portfolioPushedText: { fontSize: FontSize.sm, color: '#065f46', lineHeight: 18, marginBottom: Spacing.sm },
   platformPushed: { fontSize: FontSize.xs, color: '#065f46', fontWeight: '600' },
 
   criteriaTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  qCriteriaBlock: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
+  qCriteriaBlock: { backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
   qCriteriaHeader: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
   criterionRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: 4 },
   criterionIcon: { fontSize: 14, width: 20 },

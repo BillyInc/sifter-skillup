@@ -1,6 +1,6 @@
 /**
  * Sifter Skill_Up — Base Component Library
- * Stitch visual language + Duolingo energy
+ * Shared component primitives for the Sifter platform.
  *
  * Components:
  *   SifterCard        — primary card shell (all variants)
@@ -27,8 +27,8 @@
 
 import React, { useRef, useEffect, type ReactNode } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet,
-  Animated, ViewStyle, TextStyle, type StyleProp,
+  View, Text, TouchableOpacity,
+  Animated, ViewStyle, type StyleProp,
 } from 'react-native';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight,
@@ -53,12 +53,12 @@ export function SifterCard({
   const { colors } = useTheme();
   const scale = useRef(new Animated.Value(1)).current;
 
-  const onPressIn  = () => onPress && Animated.spring(scale, { toValue: 0.98, ...AnimPreset.spring }).start();
-  const onPressOut = () => onPress && Animated.spring(scale, { toValue: 1,    ...AnimPreset.spring }).start();
+  const onPressIn  = () => onPress && Animated.spring(scale, { toValue: 0.985, ...AnimPreset.springGentle }).start();
+  const onPressOut = () => onPress && Animated.spring(scale, { toValue: 1, ...AnimPreset.springGentle }).start();
 
   const cardStyle: ViewStyle = {
     backgroundColor: elevated ? colors.cardElevated : colors.card,
-    borderRadius: Radius.xl,
+    borderRadius: Radius.lg,
     padding: noPadding ? 0 : Spacing.lg,
     ...(elevated ? Shadow.md : Shadow.sm),
     ...(accent ? { borderLeftWidth: 3, borderLeftColor: accent } : {}),
@@ -109,7 +109,7 @@ export function PressableCard({
 
   const onPressIn = () => {
     Animated.parallel([
-      Animated.spring(scale, { toValue: 0.96, ...AnimPreset.spring }),
+      Animated.spring(scale, { toValue: 0.985, ...AnimPreset.springGentle }),
       Animated.timing(glow,  { toValue: 1, duration: 100, useNativeDriver: false }),
     ]).start();
   };
@@ -128,8 +128,8 @@ export function PressableCard({
     <Animated.View style={[
       {
         backgroundColor: colors.card,
-        borderRadius: Radius.xl,
-        borderWidth: 1.5,
+        borderRadius: Radius.lg,
+        borderWidth: 1,
         borderColor,
         ...Shadow.sm,
         transform: [{ scale }],
@@ -175,19 +175,18 @@ export function SifterButton({
   const { colors } = useTheme();
   const scale = useRef(new Animated.Value(1)).current;
 
-  const onPressIn  = () => Animated.spring(scale, { toValue: 0.96, ...AnimPreset.spring }).start();
+  const onPressIn  = () => Animated.spring(scale, { toValue: 0.985, ...AnimPreset.springGentle }).start();
   const onPressOut = () => Animated.spring(scale, { toValue: 1,    ...AnimPreset.springGentle }).start();
 
-  const bg = variant === 'primary'  ? (color ?? colors.accent)
+  const bg = variant === 'primary'  ? '#111111'
     : variant === 'danger'          ? colors.red
     : variant === 'success'         ? colors.xpGreen
     : variant === 'track'           ? (color ?? colors.accent)
-    : 'transparent';
+    : colors.bgSecondary;
 
-  const borderColor = variant === 'ghost' ? colors.accent : 'transparent';
-  const txtColor    = variant === 'ghost' ? colors.accent : '#fff';
+  const borderColor = variant === 'ghost' ? colors.border : 'transparent';
+  const txtColor    = variant === 'ghost' ? colors.text : '#fff';
 
-  const paddingV = size === 'sm' ? Spacing.sm : size === 'lg' ? Spacing.xl : Spacing.lg;
   const fontSize = size === 'sm' ? FontSize.sm : size === 'lg' ? FontSize.lg : FontSize.md;
 
   return (
@@ -204,17 +203,17 @@ export function SifterButton({
         activeOpacity={1}
         style={{
           backgroundColor: bg,
-          borderWidth: variant === 'ghost' ? 2 : 0,
+          borderWidth: variant === 'ghost' ? 1 : 0,
           borderColor,
-          borderRadius: Radius.xl,
-          paddingVertical: paddingV,
+          borderRadius: Radius.lg,
+          paddingVertical: size === 'sm' ? 10 : size === 'lg' ? 15 : 12,
           paddingHorizontal: Spacing.xl,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
           gap: Spacing.sm,
           opacity: (loading || disabled) ? 0.5 : 1,
-          ...Shadow.sm,
+          ...(variant === 'ghost' ? {} : Shadow.sm),
         }}
       >
         {icon && <Text style={{ fontSize: fontSize + 2 }}>{icon}</Text>}
@@ -440,7 +439,7 @@ export function StatChip({ icon, value, label, valueColor, style }: StatChipProp
 // 2x2 grid of StatChips — used on HomeScreen and ProfileScreen
 
 interface StatGridProps {
-  stats: Array<{ icon: string; value: string | number; label: string; valueColor?: string }>;
+  stats: { icon: string; value: string | number; label: string; valueColor?: string }[];
   style?: StyleProp<ViewStyle>;
 }
 

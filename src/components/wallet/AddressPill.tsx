@@ -1,7 +1,5 @@
 /**
  * Sifter Skill_Up — AddressPill
- * NEW FILE: src/components/wallet/AddressPill.tsx
- *
  * Reusable wallet address display with copy, explorer link,
  * balance, and faucet button. Works for ALL chains without
  * any browser extension.
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
   shell: {
     borderRadius: Radius.lg,
     borderWidth: 1.5,
-    backgroundColor: Colors.bgSecondary ?? '#EBEBF5',
+    backgroundColor: Colors.bgSecondary,
     padding: Spacing.md,
     gap: Spacing.sm,
   },

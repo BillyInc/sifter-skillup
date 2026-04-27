@@ -1,14 +1,7 @@
-/**
- * Sifter SkillUp — EcosystemTrackScreen
- * Starknet Ecosystem Deep Dive track screen.
- * Mirrors StarknetTrackScreen pattern and locking logic.
- * Place at: src/screens/EcosystemTrackScreen.tsx
- */
-
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Animated, Linking, RefreshControl, Alert,
+  SafeAreaView, Linking, RefreshControl, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
@@ -22,65 +15,48 @@ import {
   type EcosystemLabDef,
 } from '../data/tracks/starknet_ecosystem/ecosystem/ecosystemTrack';
 
-// ─── Accent color for this track ─────────────────────────────
-const ACCENT = '#6366F1'; // indigo
-
-// ─── Sub-components ───────────────────────────────────────────
+const ACCENT = '#6366F1';
 
 function DuneStatusBanner({ hasDuneKey, onConfigure }: {
   hasDuneKey: boolean; onConfigure: () => void;
 }) {
   const { colors } = useTheme();
-  if (hasDuneKey) {
-    return (
-      <View style={[db.wrap, { backgroundColor: `${ACCENT}15`, borderColor: `${ACCENT}40` }]}>
-        <Text style={db.icon}>🔭</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={[db.label, { color: ACCENT }]}>DUNE API CONNECTED</Text>
-          <Text style={[db.sub, { color: colors.textSoft }]}>Lab 9 SQL queries run on live Starknet data</Text>
-        </View>
-      </View>
-    );
-  }
+  const stateLabel = hasDuneKey ? 'Continue' : 'Configure';
+
   return (
     <TouchableOpacity
-      style={[db.wrap, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
-      onPress={onConfigure}
+      style={[styles.bannerCard, { backgroundColor: colors.card, borderColor: hasDuneKey ? `${ACCENT}35` : colors.border }]}
+      onPress={hasDuneKey ? undefined : onConfigure}
+      disabled={hasDuneKey}
+      activeOpacity={hasDuneKey ? 1 : 0.86}
     >
-      <Text style={db.icon}>🔭</Text>
-      <View style={{ flex: 1 }}>
-        <Text style={[db.label, { color: colors.textMuted }]}>DUNE API NOT CONFIGURED</Text>
-        <Text style={[db.sub, { color: colors.textSoft }]}>Labs 1–8 work without it. Lab 9 uses demo data until configured.</Text>
-      </View>
-      <View style={[db.btn, { backgroundColor: ACCENT }]}>
-        <Text style={db.btnTxt}>Configure</Text>
+      <View style={styles.bannerHeader}>
+        <View style={styles.bannerCopy}>
+          <Text style={[styles.bannerEyebrow, { color: hasDuneKey ? ACCENT : colors.textMuted }]}>Dune API</Text>
+          <Text style={[styles.bannerTitle, { color: colors.text }]}>{hasDuneKey ? 'Live analytics connected' : 'Dune API not configured'}</Text>
+          <Text style={[styles.bannerBody, { color: colors.textSoft }]}>
+            {hasDuneKey
+              ? 'Lab 9 SQL work now runs against live Starknet data.'
+              : 'Labs 1-8 still work without it. Lab 9 will use demo data until you configure a key.'}
+          </Text>
+        </View>
+        <View style={[styles.statePill, { backgroundColor: `${ACCENT}14` }]}>
+          <Text style={[styles.statePillText, { color: ACCENT }]}>{stateLabel}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 }
-const db = StyleSheet.create({
-  wrap:   { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, borderWidth: 1.5, padding: Spacing.md },
-  icon:   { fontSize: 26 },
-  label:  { fontSize: 9, fontWeight: FontWeight.black, letterSpacing: 0.8 },
-  sub:    { fontSize: FontSize.sm, fontWeight: FontWeight.medium, marginTop: 2 },
-  btn:    { borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs },
-  btnTxt: { color: '#fff', fontSize: FontSize.xs, fontWeight: FontWeight.black },
-});
 
 function LevelHeader({ label, color }: { label: string; color: string }) {
   return (
-    <View style={lh.wrap}>
-      <View style={[lh.line, { backgroundColor: color }]} />
-      <Text style={[lh.txt, { color }]}>{label.toUpperCase()}</Text>
-      <View style={[lh.line, { backgroundColor: color }]} />
+    <View style={styles.levelHeader}>
+      <View style={[styles.levelHeaderLine, { backgroundColor: color }]} />
+      <Text style={[styles.levelHeaderText, { color }]}>{label.toUpperCase()}</Text>
+      <View style={[styles.levelHeaderLine, { backgroundColor: color }]} />
     </View>
   );
 }
-const lh = StyleSheet.create({
-  wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginVertical: Spacing.md },
-  line: { flex: 1, height: 1 },
-  txt:  { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2 },
-});
 
 function LabCard({
   lab, isLocked, isComplete, isCurrent,
@@ -94,102 +70,60 @@ function LabCard({
 }) {
   const { colors } = useTheme();
   const levelColor = ECOSYSTEM_LEVEL_COLORS[lab.level];
-  const pulse = React.useRef(new Animated.Value(1)).current;
-
-  React.useEffect(() => {
-    if (!isCurrent) return;
-    const anim = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulse, { toValue: 1.02, duration: 900, useNativeDriver: true }),
-        Animated.timing(pulse, { toValue: 1, duration: 900, useNativeDriver: true }),
-      ])
-    );
-    anim.start();
-    return () => anim.stop();
-  }, [isCurrent]);
-
-  const borderColor = isComplete ? levelColor : isCurrent ? ACCENT : colors.border;
-  const bg = isComplete
-    ? `${levelColor}10`
-    : isCurrent
-    ? `${ACCENT}10`
-    : colors.bgSecondary;
+  const accent = isComplete ? '#10B981' : isCurrent ? ACCENT : levelColor;
+  const stateLabel = isLocked ? 'Locked' : isCurrent ? 'Continue' : isComplete ? 'Review' : 'Start';
 
   return (
-    <Animated.View style={{ transform: [{ scale: isCurrent ? pulse : 1 }] }}>
-      <TouchableOpacity
-        style={[lc.card, { backgroundColor: bg, borderColor, opacity: isLocked ? 0.45 : 1 }]}
-        onPress={onPress}
-        disabled={isLocked}
-        activeOpacity={0.75}
-      >
-        {/* Header row */}
-        <View style={lc.header}>
-          <View style={[lc.numBadge, { backgroundColor: isComplete ? levelColor : `${levelColor}25` }]}>
-            <Text style={[lc.numTxt, { color: isComplete ? '#fff' : levelColor }]}>
-              {lab.number === 0 ? 'PRIMER' : `LAB ${lab.number}`}
-            </Text>
-          </View>
-          <View style={{ flex: 1 }} />
-          {lab.portfolioPush && !isLocked && (
-            <View style={[lc.badge, { backgroundColor: `${ACCENT}20` }]}>
-              <Text style={[lc.badgeTxt, { color: ACCENT }]}>💼 PORTFOLIO</Text>
-            </View>
-          )}
-          {isComplete && <Text style={{ fontSize: 18 }}>✅</Text>}
-          {isLocked  && <Text style={{ fontSize: 18 }}>🔒</Text>}
-          {isCurrent && !isComplete && <Text style={{ fontSize: 18 }}>▶️</Text>}
+    <TouchableOpacity
+      style={[styles.labCard, {
+        backgroundColor: colors.card,
+        borderColor: isCurrent ? `${ACCENT}52` : isComplete ? '#10B98145' : isLocked ? colors.border : `${levelColor}26`,
+        opacity: isLocked ? 0.56 : 1,
+      }]}
+      onPress={onPress}
+      disabled={isLocked}
+      activeOpacity={0.82}
+    >
+      <View style={styles.labHeader}>
+        <View style={[styles.labNumberBadge, { backgroundColor: isComplete ? '#10B981' : `${levelColor}18`, borderColor: `${levelColor}34` }]}>
+          <Text style={[styles.labNumberText, { color: isComplete ? '#fff' : levelColor }]}>
+            {lab.number === 0 ? 'P' : lab.number}
+          </Text>
         </View>
-
-        {/* Title */}
-        <Text style={[lc.title, { color: isLocked ? colors.textMuted : colors.text }]}>
-          {lab.title}
-        </Text>
-
-        {/* Meta row */}
-        <View style={lc.meta}>
-          <Text style={[lc.metaTxt, { color: colors.textMuted }]}>
+        <View style={styles.labCopy}>
+          <Text style={[styles.labEyebrow, { color: levelColor }]}>{lab.level}</Text>
+          <Text style={[styles.labTitle, { color: isLocked ? colors.textMuted : colors.text }]}>{lab.title}</Text>
+          <Text style={[styles.labMeta, { color: colors.textMuted }]}>
             {lab.lessonCount} lessons · ~{lab.estimatedH}h
           </Text>
-          {lab.sqlPrimerRequired && (
-            <View style={[lc.badge, { backgroundColor: '#F59E0B20', marginLeft: Spacing.sm }]}>
-              <Text style={[lc.badgeTxt, { color: '#F59E0B' }]}>INCLUDES SQL PRIMER</Text>
-            </View>
-          )}
         </View>
+        <View style={[styles.statePill, { backgroundColor: `${accent}14` }]}>
+          <Text style={[styles.statePillText, { color: accent }]}>{stateLabel}</Text>
+        </View>
+      </View>
 
-        {/* Simulator type chips */}
-        {lab.simulatorTypes.length > 0 && (
-          <View style={lc.chips}>
-            {lab.simulatorTypes.slice(0, 3).map(t => (
-              <View key={t} style={[lc.chip, { backgroundColor: `${levelColor}15` }]}>
-                <Text style={[lc.chipTxt, { color: levelColor }]}>
-                  {t.replace('starkzap-', '').replace('judgment-', '').replace('sandbox-', '')}
-                </Text>
-              </View>
-            ))}
+      <View style={styles.chipRow}>
+        {lab.portfolioPush ? (
+          <View style={[styles.chip, { backgroundColor: `${ACCENT}12` }]}>
+            <Text style={[styles.chipText, { color: ACCENT }]}>Portfolio</Text>
           </View>
-        )}
-      </TouchableOpacity>
-    </Animated.View>
+        ) : null}
+        {lab.sqlPrimerRequired ? (
+          <View style={[styles.chip, { backgroundColor: '#F59E0B18' }]}>
+            <Text style={[styles.chipText, { color: '#F59E0B' }]}>SQL Primer</Text>
+          </View>
+        ) : null}
+        {lab.simulatorTypes.slice(0, 2).map(type => (
+          <View key={type} style={[styles.chip, { backgroundColor: `${levelColor}12` }]}>
+            <Text style={[styles.chipText, { color: levelColor }]}>
+              {type.replace('starkzap-', '').replace('judgment-', '').replace('sandbox-', '')}
+            </Text>
+          </View>
+        ))}
+      </View>
+    </TouchableOpacity>
   );
 }
-const lc = StyleSheet.create({
-  card:     { borderWidth: 1.5, borderRadius: Radius.xl, padding: Spacing.lg, gap: Spacing.sm, ...Shadow.sm },
-  header:   { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  numBadge: { borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 3 },
-  numTxt:   { fontSize: 9, fontWeight: FontWeight.black, letterSpacing: 0.8 },
-  title:    { fontSize: FontSize.md, fontWeight: FontWeight.bold, lineHeight: 22 },
-  meta:     { flexDirection: 'row', alignItems: 'center' },
-  metaTxt:  { fontSize: FontSize.sm },
-  badge:    { borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 2 },
-  badgeTxt: { fontSize: 8, fontWeight: FontWeight.black, letterSpacing: 0.6 },
-  chips:    { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
-  chip:     { borderRadius: Radius.sm, paddingHorizontal: Spacing.sm, paddingVertical: 2 },
-  chipTxt:  { fontSize: 9, fontWeight: FontWeight.semibold },
-});
-
-// ─── Main Screen ──────────────────────────────────────────────
 
 export default function EcosystemTrackScreen() {
   const { colors } = useTheme();
@@ -199,10 +133,6 @@ export default function EcosystemTrackScreen() {
   const [hasDuneKey, setHasDuneKey] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Canonical completion source: user.completed_levels from the auth context.
-  // Aligns with StarknetTrackScreen so both screens read the same truth — a bug
-  // where this screen fetched a non-existent /api/progress/:userId endpoint is
-  // fixed here too. The API call survives only to pick up dune_api_configured.
   const completedBossIds = useMemo(() => {
     const src = user?.completed_levels ?? [];
     return src
@@ -210,17 +140,19 @@ export default function EcosystemTrackScreen() {
       .filter((n) => Number.isFinite(n));
   }, [user?.completed_levels]);
 
-  const fetchSupplementary = async () => {
+  const fetchSupplementary = useCallback(async () => {
     if (!user?.id) return;
     try {
       const data: any = await API.getUserProgress();
       setHasDuneKey(data?.dune_api_configured ?? false);
     } catch {
-      // offline — keep existing state
+      // Best effort only.
     }
-  };
+  }, [user?.id]);
 
-  useEffect(() => { fetchSupplementary(); }, [user?.id]);
+  useEffect(() => {
+    void fetchSupplementary();
+  }, [fetchSupplementary]);
 
   useEffect(() => {
     if (!user?.id || user.currentTrackId === 'starknet-ecosystem-deep-dive') {
@@ -242,7 +174,6 @@ export default function EcosystemTrackScreen() {
     setRefreshing(false);
   };
 
-  /** Is this lab unlocked for the current user? */
   const isLabUnlocked = (lab: EcosystemLabDef): boolean => {
     if (lab.requiresLevelId === null) return true;
     return completedBossIds.includes(lab.requiresLevelId);
@@ -254,14 +185,13 @@ export default function EcosystemTrackScreen() {
     return bossId ? completedBossIds.includes(bossId) : false;
   };
 
-  /** The first lab that is unlocked but not complete */
   const currentLabId = ECOSYSTEM_LABS.find(l => isLabUnlocked(l) && !isLabComplete(l))?.id;
 
   const handleLabPress = (lab: EcosystemLabDef) => {
     if (!isLabUnlocked(lab)) {
       Alert.alert(
         'Lab Locked',
-        `Complete the previous lab's boss battle to unlock ${lab.title}.`
+        `Complete the previous lab boss to unlock ${lab.title}.`
       );
       return;
     }
@@ -281,49 +211,44 @@ export default function EcosystemTrackScreen() {
     Linking.openURL('https://docs.dune.com/api-reference/overview/introduction');
   };
 
-  // Group labs by level
-  const juniorLabs       = ECOSYSTEM_LABS.filter(l => l.level === 'junior');
+  const juniorLabs = ECOSYSTEM_LABS.filter(l => l.level === 'junior');
   const intermediateLabs = ECOSYSTEM_LABS.filter(l => l.level === 'intermediate');
-  const seniorLabs       = ECOSYSTEM_LABS.filter(l => l.level === 'senior');
+  const seniorLabs = ECOSYSTEM_LABS.filter(l => l.level === 'senior');
+  const completedCount = ECOSYSTEM_LABS.filter(isLabComplete).length;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
       <ScrollView
-        contentContainerStyle={{ padding: Spacing.lg, gap: Spacing.lg, paddingBottom: 60 }}
+        contentContainerStyle={styles.scrollContent}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={ACCENT} />}
+        showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
-        <View style={{ gap: Spacing.xs }}>
-          <Text style={{ fontSize: 10, fontWeight: FontWeight.black, color: ACCENT, letterSpacing: 1 }}>
-            STARKNET ECOSYSTEM DEEP DIVE
+        <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <TouchableOpacity onPress={() => router.back()} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
+            <Text style={[styles.backButtonText, { color: colors.text }]}>{'<'} Back</Text>
+          </TouchableOpacity>
+          <Text style={[styles.heroEyebrow, { color: ACCENT }]}>Analyst Workspace</Text>
+          <Text style={[styles.heroTitle, { color: colors.text }]}>Ecosystem Deep Dive</Text>
+          <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+            Research protocols, write reports, and build a Starknet analyst portfolio with the proper lab sequence intact.
           </Text>
-          <Text style={{ fontSize: FontSize.xxl, fontWeight: FontWeight.black, color: colors.text }}>
-            Ecosystem Analysis
-          </Text>
-          <Text style={{ fontSize: FontSize.sm, color: colors.textSoft, lineHeight: 20 }}>
-            Research protocols. Publish findings. Write grants. Build a Senior analyst portfolio.
-          </Text>
+
+          <View style={styles.statsRow}>
+            {[
+              { label: 'Labs cleared', value: `${completedCount}/${ECOSYSTEM_LABS.length}`, accent: ACCENT },
+              { label: 'Track state', value: currentLabId ? 'Continue' : 'Review', accent: currentLabId ? ACCENT : '#10B981' },
+              { label: 'Dune', value: hasDuneKey ? 'Ready' : 'Pending', accent: hasDuneKey ? '#10B981' : colors.text },
+            ].map(item => (
+              <View key={item.label} style={[styles.statCard, { backgroundColor: colors.bgSecondary }]}>
+                <Text style={[styles.statValue, { color: item.accent }]}>{item.value}</Text>
+                <Text style={[styles.statLabel, { color: colors.textMuted }]}>{item.label}</Text>
+              </View>
+            ))}
+          </View>
         </View>
 
-        {/* Track stats strip */}
-        <View style={s.statsRow}>
-          {[
-            { label: 'Labs', value: '9' },
-            { label: 'Lessons', value: '55+' },
-            { label: 'Est. Hours', value: '120' },
-            { label: 'Level', value: 'Junior → Senior' },
-          ].map(({ label, value }) => (
-            <View key={label} style={[s.statBox, { backgroundColor: colors.bgSecondary }]}>
-              <Text style={[s.statVal, { color: ACCENT }]}>{value}</Text>
-              <Text style={[s.statLbl, { color: colors.textMuted }]}>{label}</Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Dune API banner */}
         <DuneStatusBanner hasDuneKey={hasDuneKey} onConfigure={handleConfigureDune} />
 
-        {/* Junior Labs */}
         <LevelHeader label="Junior Level" color={ECOSYSTEM_LEVEL_COLORS.junior} />
         {juniorLabs.map(lab => (
           <LabCard
@@ -336,7 +261,6 @@ export default function EcosystemTrackScreen() {
           />
         ))}
 
-        {/* Intermediate Labs */}
         <LevelHeader label="Intermediate Level" color={ECOSYSTEM_LEVEL_COLORS.intermediate} />
         {intermediateLabs.map(lab => (
           <LabCard
@@ -349,7 +273,6 @@ export default function EcosystemTrackScreen() {
           />
         ))}
 
-        {/* Senior Labs */}
         <LevelHeader label="Senior Level" color={ECOSYSTEM_LEVEL_COLORS.senior} />
         {seniorLabs.map(lab => (
           <LabCard
@@ -368,9 +291,45 @@ export default function EcosystemTrackScreen() {
   );
 }
 
-const s = StyleSheet.create({
-  statsRow: { flexDirection: 'row', gap: Spacing.sm },
-  statBox:  { flex: 1, borderRadius: Radius.lg, padding: Spacing.sm, alignItems: 'center', gap: 2 },
-  statVal:  { fontSize: FontSize.sm, fontWeight: FontWeight.black },
-  statLbl:  { fontSize: 9, fontWeight: FontWeight.medium, letterSpacing: 0.4 },
+const styles = StyleSheet.create({
+  scrollContent: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: 60 },
+  heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
+  backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
+  backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
+  heroEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  heroSub: { fontSize: FontSize.sm, lineHeight: 20 },
+  statsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
+  statCard: { flex: 1, minWidth: 96, borderRadius: Radius.lg, padding: Spacing.md, gap: 2 },
+  statValue: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  statLabel: { fontSize: 10, fontWeight: FontWeight.medium },
+  bannerCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.sm },
+  bannerHeader: { flexDirection: 'row', gap: Spacing.sm, alignItems: 'flex-start' },
+  bannerCopy: { flex: 1 },
+  bannerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
+  bannerTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginTop: 2 },
+  bannerBody: { fontSize: FontSize.sm, lineHeight: 20, marginTop: 2 },
+  levelHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Spacing.sm },
+  levelHeaderLine: { flex: 1, height: 1 },
+  levelHeaderText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2 },
+  labCard: { borderWidth: 1.5, borderRadius: Radius.xl, padding: Spacing.md, gap: Spacing.sm, ...Shadow.sm },
+  labHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  labNumberBadge: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  labNumberText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  labCopy: { flex: 1 },
+  labEyebrow: { fontSize: 10, fontWeight: FontWeight.black, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
+  labTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, lineHeight: 22 },
+  labMeta: { fontSize: FontSize.xs },
+  statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
+  statePillText: { fontSize: 10, fontWeight: FontWeight.black },
+  chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
+  chip: { borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 4 },
+  chipText: { fontSize: 9, fontWeight: FontWeight.black },
 });

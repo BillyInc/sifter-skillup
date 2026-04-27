@@ -13,7 +13,7 @@ import {
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
 } from '../theme';
-import { ALL_MONITORABLE_TRACKS, searchTracks } from '../lib/trackFeedConfig';
+import { searchTracks } from '../lib/trackFeedConfig';
 import type { MonitoredTrack } from '../types/feed';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -29,7 +29,7 @@ interface TrackSearchProps {
 
 const FIELD_META: Record<string, { label: string; emoji: string; color: string }> = {
   'crypto':        { label: 'Crypto & DeFi',   emoji: '₿',  color: '#F7931A' },
-  'quant':         { label: 'Quantitative',     emoji: '📊', color: '#5B5FCF' },
+  'quant':         { label: 'Quantitative',     emoji: '📊', color: '#6366F1' },
   'supply-chain':  { label: 'Supply Chain',     emoji: '🔗', color: '#0EA5E9' },
 };
 
@@ -217,7 +217,7 @@ export function TrackSearch({ monitoredTracks, onAdd, onRemove, onClose }: Track
           }}
           ListEmptyComponent={
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>
-              No tracks found for "{query}"
+              {`No tracks found for "${query}"`}
             </Text>
           }
         />

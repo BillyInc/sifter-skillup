@@ -15,7 +15,7 @@ export const POST_ISLAND_TRACKS = [
   {
     id: 'starknet-defi-navigator',
     route: '/starknet-track',
-    icon: '⚡',
+    icon: 'SN',
     name: 'DeFi Navigator',
     subtitle: 'Practitioner Track',
     description: 'Execute swaps, staking, lending, and DCA on Starknet Sepolia with an artifact-first workflow.',
@@ -25,7 +25,7 @@ export const POST_ISLAND_TRACKS = [
   {
     id: 'starknet-ecosystem-deep-dive',
     route: '/ecosystem-track',
-    icon: '🔭',
+    icon: 'EC',
     name: 'Ecosystem Deep Dive',
     subtitle: 'Analyst Track',
     description: 'Research protocols, analyze on-chain data, publish reports, and work through grant-grade ecosystem analysis.',
@@ -35,7 +35,7 @@ export const POST_ISLAND_TRACKS = [
   {
     id: 'cairo-builder',
     route: '/cairo-builder-track',
-    icon: '🏗️',
+    icon: 'CB',
     name: 'Cairo Builder',
     subtitle: 'Developer Track',
     description: 'Write, test, deploy, and audit Cairo smart contracts on Starknet with a production-style flow.',
@@ -55,35 +55,40 @@ function TrackCard({
 
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.card, borderColor: `${track.accentColor}35` }]}
+      style={[styles.card, { backgroundColor: colors.card, borderColor: `${track.accentColor}24` }]}
       onPress={onPress}
       activeOpacity={0.88}
     >
       <View style={styles.cardHeader}>
-        <View style={[styles.iconWrap, { backgroundColor: `${track.accentColor}16`, borderColor: `${track.accentColor}30` }]}>
-          <Text style={styles.icon}>{track.icon}</Text>
+        <View style={[styles.iconWrap, { backgroundColor: `${track.accentColor}14`, borderColor: `${track.accentColor}30` }]}>
+          <Text style={[styles.icon, { color: track.accentColor }]}>{track.icon}</Text>
         </View>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.name, { color: colors.text }]}>{track.name}</Text>
+        <View style={styles.cardHeaderText}>
           <Text style={[styles.subtitle, { color: track.accentColor }]}>{track.subtitle}</Text>
+          <Text style={[styles.name, { color: colors.text }]}>{track.name}</Text>
         </View>
-        <Text style={[styles.arrow, { color: colors.textMuted }]}>›</Text>
+        <View style={[styles.statePill, { backgroundColor: `${track.accentColor}14` }]}>
+          <Text style={[styles.statePillText, { color: track.accentColor }]}>Continue</Text>
+        </View>
       </View>
 
       <Text style={[styles.desc, { color: colors.textSoft }]}>{track.description}</Text>
 
       <View style={styles.tags}>
         {track.tags.map(tag => (
-          <View key={tag} style={[styles.tag, { backgroundColor: `${track.accentColor}12` }]}>
+          <View key={tag} style={[styles.tag, { backgroundColor: `${track.accentColor}10` }]}>
             <Text style={[styles.tagText, { color: track.accentColor }]}>{tag}</Text>
           </View>
         ))}
       </View>
 
       <View style={[styles.ctaRow, { borderTopColor: colors.border }]}>
-        <Text style={[styles.ctaCopy, { color: colors.textMuted }]}>Track-first return experience enabled</Text>
+        <View>
+          <Text style={[styles.ctaLabel, { color: colors.textMuted }]}>Workspace</Text>
+          <Text style={[styles.ctaCopy, { color: colors.textSoft }]}>Return to this track&apos;s own room, labs, and lessons.</Text>
+        </View>
         <View style={[styles.ctaButton, { backgroundColor: track.accentColor }]}>
-          <Text style={styles.ctaText}>Start</Text>
+          <Text style={styles.ctaText}>Open</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -113,10 +118,10 @@ export function TrackChoiceScreen({ compact = false }: { compact?: boolean }) {
       showsVerticalScrollIndicator={false}
     >
       <View style={[styles.header, compact ? styles.headerCompact : null]}>
-        <Text style={styles.trophy}>🏆</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Starknet Islands Complete</Text>
+        <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>Track Routing</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Choose Your Starknet Workspace</Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Pick the exact track you want to continue. Returning users should always land back in this track’s own workspace.
+          Island completion now hands you back to the exact track surface you should continue in.
         </Text>
       </View>
 
@@ -132,11 +137,11 @@ export default TrackChoiceScreen;
 const styles = StyleSheet.create({
   container: { padding: Spacing.lg, gap: Spacing.md },
   containerCompact: { paddingHorizontal: 0, paddingBottom: 0 },
-  header: { alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.lg },
+  header: { gap: Spacing.xs, paddingVertical: Spacing.lg },
   headerCompact: { paddingTop: 0, paddingBottom: Spacing.md },
-  trophy: { fontSize: 40 },
-  title: { fontSize: FontSize.xl, fontWeight: FontWeight.black, textAlign: 'center' },
-  sub: { fontSize: FontSize.sm, lineHeight: 19, textAlign: 'center', maxWidth: 620 },
+  headerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1 },
+  title: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  sub: { fontSize: FontSize.sm, lineHeight: 19, maxWidth: 620 },
   card: {
     borderRadius: Radius.xl,
     borderWidth: 1,
@@ -145,6 +150,7 @@ const styles = StyleSheet.create({
     ...Shadow.sm,
   },
   cardHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  cardHeaderText: { flex: 1 },
   iconWrap: {
     width: 48,
     height: 48,
@@ -153,10 +159,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  icon: { fontSize: 24 },
-  name: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
-  subtitle: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase', letterSpacing: 0.8 },
-  arrow: { fontSize: 24, fontWeight: FontWeight.medium },
+  icon: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  subtitle: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
+  name: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
+  statePillText: { fontSize: 10, fontWeight: FontWeight.bold },
   desc: { fontSize: FontSize.sm, lineHeight: 18 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
   tag: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
@@ -169,7 +176,8 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.sm,
     borderTopWidth: 1,
   },
-  ctaCopy: { fontSize: 11, fontWeight: FontWeight.medium, flex: 1 },
+  ctaLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.6, marginBottom: 2 },
+  ctaCopy: { fontSize: 11, fontWeight: FontWeight.medium, flex: 1, maxWidth: 240 },
   ctaButton: { borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 8 },
   ctaText: { color: '#fff', fontSize: FontSize.xs, fontWeight: FontWeight.black },
 });

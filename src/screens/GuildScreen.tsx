@@ -13,6 +13,7 @@ import { useTheme, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { API, API_BASE } from '../lib/api';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
+import { resolveTrackContext } from '../lib/trackContext';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard, useIsWebWide,
 } from '../components/web/WebGrid';
@@ -111,6 +112,7 @@ type Tab = 'my-guild' | 'browse' | 'leaderboard' | 'chat';
 export default function GuildScreen() {
   const { colors } = useTheme();
   const { user, refreshUser } = useAuth();
+  const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
   const isWebWide = useIsWebWide();
   const [tab, setTab] = useState<Tab>('my-guild');
   const [guilds, setGuilds] = useState<GuildDef[]>([]);
@@ -197,10 +199,10 @@ export default function GuildScreen() {
   }
 
   const TABS: { id: Tab; label: string }[] = [
-    { id: 'my-guild', label: userGuildId ? '⚔️ My Guild' : '🏠 Home' },
-    { id: 'browse', label: '🔍 Browse' },
-    { id: 'leaderboard', label: '🏆 Rankings' },
-    { id: 'chat', label: '💬 Chat' },
+    { id: 'my-guild', label: userGuildId ? 'My Guild' : 'Overview' },
+    { id: 'browse', label: 'Browse' },
+    { id: 'leaderboard', label: 'Rankings' },
+    { id: 'chat', label: 'Chat' },
   ];
 
   if (loading) {
@@ -220,7 +222,9 @@ export default function GuildScreen() {
         <WebShell>
           <WebPageHeader
             title="Guilds"
-            subtitle="Compete, collaborate, level up"
+            subtitle={trackContext.mode === 'track'
+              ? `${trackContext.trackName} workspace · compete, collaborate, and stay accountable`
+              : 'Compete, collaborate, and stay accountable'}
             accentColor={colors.accent}
             right={
               <View style={s.webTabRow}>
@@ -311,7 +315,7 @@ export default function GuildScreen() {
                       <Text style={{ fontSize: 48 }}>Guilds</Text>
                       <Text style={[s.emptyTitle, { color: colors.text }]}>Join a Guild</Text>
                       <Text style={[s.emptySub, { color: colors.textSoft, maxWidth: 520 }]}>
-                        Guilds pool XP, coordinate boss challenges, and give you a shared place to compete and collaborate.
+                        Guilds keep your workspace social with shared XP, rankings, and team accountability.
                       </Text>
                       <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accent }]} onPress={() => setTab('browse')}>
                         <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.md }}>Browse Guilds</Text>
@@ -356,7 +360,7 @@ export default function GuildScreen() {
                       <View style={s.chatMessages}>
                         {chat.length === 0 ? (
                           <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
-                            No messages yet. Start the conversation!
+                            No messages yet. Start the workspace conversation.
                           </Text>
                         ) : (
                           chat.map(msg => (
@@ -392,7 +396,7 @@ export default function GuildScreen() {
                     </>
                   ) : (
                     <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
-                      Join a guild to access guild chat.
+                      Join a guild to unlock guild chat.
                     </Text>
                   )}
                 </WebCard>
@@ -436,7 +440,7 @@ export default function GuildScreen() {
       <View style={[s.header, { borderBottomColor: colors.border, backgroundColor: colors.card }]}>
         <View>
           <Text style={[s.eyebrow, { color: colors.textMuted }]}>GUILDS</Text>
-          <Text style={[s.title, { color: colors.text }]}>⚔️ Guilds</Text>
+          <Text style={[s.title, { color: colors.text }]}>Guilds</Text>
         </View>
         {userGuildId && myGuild && (
           <View style={[s.guildChip, { backgroundColor: `${myGuild.accent}20`, borderColor: `${myGuild.accent}40` }]}>
@@ -513,11 +517,11 @@ export default function GuildScreen() {
                 <Text style={{ fontSize: 48 }}>⚔️</Text>
                 <Text style={[s.emptyTitle, { color: colors.text }]}>Join a Guild</Text>
                 <Text style={[s.emptySub, { color: colors.textSoft }]}>
-                  Guilds pool XP, coordinate boss challenges, and compete on global leaderboards.
+                  Guilds keep your workspace social with shared XP, rankings, and team accountability.
                 </Text>
                 <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accent }]}
                   onPress={() => setTab('browse')}>
-                  <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.md }}>Browse Guilds →</Text>
+                  <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.md }}>Browse Guilds</Text>
                 </TouchableOpacity>
               </View>
             )
@@ -576,7 +580,7 @@ export default function GuildScreen() {
                 <View style={s.chatMessages}>
                   {chat.length === 0 ? (
                     <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
-                      No messages yet. Start the conversation!
+                      No messages yet. Start the workspace conversation.
                     </Text>
                   ) : (
                     chat.map(msg => (
@@ -614,7 +618,7 @@ export default function GuildScreen() {
               </>
             ) : (
               <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
-                Join a guild to access guild chat.
+                Join a guild to unlock guild chat.
               </Text>
             )
           )}

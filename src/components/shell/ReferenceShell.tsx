@@ -13,9 +13,10 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
 import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '../../theme';
 import { useAuth } from '../../hooks/useAuth';
-import { resolveTrackContext } from '../../lib/trackContext';
+import { resolveTrackContext, type TrackContext } from '../../lib/trackContext';
 
 type NavId =
   | 'dashboard'
@@ -45,10 +46,10 @@ interface ShellSearchItem {
 }
 
 const PRIMARY_NAV: ShellNavItem[] = [
-  { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/home',         sub: 'Overview' },
-  { id: 'islands',   label: 'My Islands',     icon: '🗺️', href: '/(tabs)/map/island',  sub: 'Island 18 and beyond' },
+  { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/home',        sub: 'Overview' },
+  { id: 'islands',   label: 'My Islands',     icon: '🗺', href: '/(tabs)/map/island',  sub: 'Island 18 and beyond' },
   { id: 'tracks',    label: 'Career Tracks',  icon: '🧭', href: '/(tabs)/fields',      sub: 'Skill paths' },
-  { id: 'guilds',    label: 'Guilds',         icon: '🛡️', href: '/(tabs)/guild',       sub: 'Leaderboard and chat' },
+  { id: 'guilds',    label: 'Guilds',         icon: '🛡', href: '/(tabs)/guild',       sub: 'Leaderboard and chat' },
   { id: 'portfolio', label: 'Portfolio & XP', icon: '💼', href: '/(tabs)/portfolio',   sub: 'Artifacts and XP' },
   { id: 'streaks',   label: 'Streaks',        icon: '🔥', href: '/(tabs)/streaks',     sub: 'Consistency' },
   { id: 'settings',  label: 'Settings',       icon: '⚙', href: '/(tabs)/settings',    sub: 'Theme and preferences' },
@@ -57,9 +58,63 @@ const PRIMARY_NAV: ShellNavItem[] = [
 const MOBILE_NAV: { id: NavId; label: string; icon: string; href: string }[] = [
   { id: 'dashboard', label: 'Home', icon: '⊞', href: '/(tabs)/home' },
   { id: 'tracks', label: 'Tracks', icon: '🧭', href: '/(tabs)/fields' },
-  { id: 'feed', label: 'Feeds', icon: '📰', href: '/(tabs)/feed' },
+  { id: 'feed', label: 'Feed', icon: '📺', href: '/(tabs)/feed' },
   { id: 'profile', label: 'Profile', icon: '👤', href: '/(tabs)/profile' },
 ];
+
+function isIslandWorkspace(trackContext: TrackContext): boolean {
+  return trackContext.continueHref.includes('/map/island');
+}
+
+function buildPrimaryNav(trackContext: TrackContext): ShellNavItem[] {
+  if (trackContext.mode !== 'track') {
+    return PRIMARY_NAV;
+  }
+
+  const workspaceNav: ShellNavItem = isIslandWorkspace(trackContext)
+    ? {
+        id: 'islands',
+        label: 'My Islands',
+        icon: '🗺',
+        href: trackContext.continueHref,
+        sub: `${trackContext.trackName} map and lessons`,
+      }
+    : {
+        id: 'islands',
+        label: 'My Track',
+        icon: '🧭',
+        href: trackContext.continueHref,
+        sub: `${trackContext.trackName} workspace`,
+      };
+
+  return [
+    PRIMARY_NAV[0],
+    workspaceNav,
+    { ...PRIMARY_NAV[2], label: 'All Tracks', sub: 'Switch paths' },
+    ...PRIMARY_NAV.slice(3),
+  ];
+}
+
+function getPageMeta(trackContext: TrackContext, activeId: NavId, activeItem: ShellNavItem) {
+  if (trackContext.mode === 'track' && activeId === 'dashboard') {
+    return {
+      eyebrow: trackContext.heroEyebrow,
+      title: trackContext.trackName,
+    };
+  }
+
+  if (trackContext.mode === 'track' && activeId === 'islands') {
+    return {
+      eyebrow: isIslandWorkspace(trackContext) ? trackContext.heroEyebrow : activeItem.label,
+      title: isIslandWorkspace(trackContext) ? activeItem.label : trackContext.trackName,
+    };
+  }
+
+  return {
+    eyebrow: 'Sifter Workspace',
+    title: activeItem.label,
+  };
+}
 
 function getActiveNavId(pathname: string | null): NavId {
   if (!pathname) return 'dashboard';
@@ -69,9 +124,14 @@ function getActiveNavId(pathname: string | null): NavId {
   if (pathname.includes('/streaks')) return 'streaks';
   if (pathname.includes('/portfolio')) return 'portfolio';
   if (pathname.includes('/guild') || pathname.includes('/community')) return 'guilds';
+  if (pathname.includes('/quant-map')) return 'islands';
+  if (pathname.includes('/world')) return 'islands';
+  if (pathname.includes('/starknet-track')) return 'islands';
+  if (pathname.includes('/ecosystem-track')) return 'islands';
+  if (pathname.includes('/cairo-builder-track')) return 'islands';
+  if (pathname.includes('/map')) return 'islands';
   if (pathname.includes('/skills')) return 'tracks';
   if (pathname.includes('/fields')) return 'tracks';
-  if (pathname.includes('/map')) return 'dashboard';
   if (pathname.includes('/home')) return 'dashboard';
   return 'dashboard';
 }
@@ -93,9 +153,11 @@ function readParam(value: string | string[] | undefined): string | null {
 }
 
 function NavList({
+  items,
   activeId,
   onNavigate,
 }: {
+  items: ShellNavItem[];
   activeId: NavId;
   onNavigate: (item: ShellNavItem) => void;
 }) {
@@ -103,7 +165,7 @@ function NavList({
 
   return (
     <View style={styles.navList}>
-      {PRIMARY_NAV.map(item => {
+      {items.map(item => {
         const active = item.id === activeId;
         return (
           <TouchableOpacity
@@ -155,16 +217,38 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
     trackName: routeTrackName,
   }), [routeTrackId, routeTrackName, user]);
 
+  const primaryNav = useMemo(() => buildPrimaryNav(trackContext), [trackContext]);
   const activeId = useMemo(() => getActiveNavId(pathname), [pathname]);
   const activeMobileId = useMemo(() => getActiveMobileNavId(activeId), [activeId]);
-  const activeItem = PRIMARY_NAV.find(item => item.id === activeId) ?? PRIMARY_NAV[0];
+  const activeItem = primaryNav.find(item => item.id === activeId) ?? primaryNav[0];
+  const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
   const isWide = Platform.OS === 'web' && width >= 1100;
 
   const searchItems = useMemo<ShellSearchItem[]>(() => {
+    const workspaceLabel = trackContext.mode === 'track'
+      ? (isIslandWorkspace(trackContext) ? 'My Islands' : 'My Track')
+      : 'My Islands';
+    const workspaceHint = trackContext.mode === 'track'
+      ? (isIslandWorkspace(trackContext)
+          ? `${trackContext.trackName} map and island lessons`
+          : `${trackContext.trackName} workspace`)
+      : 'Island map and lessons';
     const base: ShellSearchItem[] = [
       { id: 'dashboard', label: 'Dashboard', hint: 'Overview and workspace', href: '/(tabs)/home', keywords: ['dashboard', 'home', 'overview', 'workspace'] },
-      { id: 'islands', label: 'My Islands', hint: 'Island map and lessons', href: '/(tabs)/map/island', keywords: ['islands', 'map', 'lessons', 'levels', 'starknet island'] },
-      { id: 'tracks', label: 'Career Tracks', hint: 'Browse skill paths', href: '/(tabs)/fields', keywords: ['tracks', 'skills', 'fields', 'career'] },
+      {
+        id: 'islands',
+        label: workspaceLabel,
+        hint: workspaceHint,
+        href: trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/map/island',
+        keywords: ['islands', 'map', 'lessons', 'levels', 'workspace', 'current track', trackContext.trackName.toLowerCase(), trackContext.worldName.toLowerCase()],
+      },
+      {
+        id: 'tracks',
+        label: trackContext.mode === 'track' ? 'All Tracks' : 'Career Tracks',
+        hint: trackContext.mode === 'track' ? 'Switch to another path' : 'Browse skill paths',
+        href: '/(tabs)/fields',
+        keywords: ['tracks', 'skills', 'fields', 'career', 'switch track'],
+      },
       { id: 'guilds', label: 'Guilds', hint: 'Guild hub, rankings, and chat', href: '/(tabs)/guild', keywords: ['guilds', 'guild', 'rankings', 'leaderboard', 'chat', 'community'] },
       { id: 'feed', label: 'Feeds', hint: 'Track news, jobs, and signals', href: '/(tabs)/feed', keywords: ['feeds', 'feed', 'news', 'jobs', 'signals'] },
       { id: 'portfolio', label: 'Portfolio & XP', hint: 'Artifacts, tasks, and XP', href: '/(tabs)/portfolio', keywords: ['portfolio', 'artifacts', 'xp', 'projects', 'work samples'] },
@@ -238,7 +322,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         >
           <View style={styles.brandRow}>
             <View style={[styles.brandBadge, { backgroundColor: colors.gold }]}>
-              <Text style={styles.brandBadgeText}>⚡</Text>
+              <Text style={styles.brandBadgeText}>S</Text>
             </View>
             <View>
               <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
@@ -246,7 +330,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             </View>
           </View>
 
-          <NavList activeId={activeId} onNavigate={goTo} />
+          <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
           <View style={[styles.sidebarFooter, { borderTopColor: colors.border }]}>
             <TouchableOpacity
@@ -255,7 +339,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               style={[styles.profileMini, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
             >
               <View style={[styles.profileMiniAvatar, { backgroundColor: colors.accent }]}>
-                <Text style={styles.profileMiniAvatarText}>U</Text>
+                <Text style={styles.profileMiniAvatarText}>👤</Text>
               </View>
               <View>
                 <Text style={[styles.profileMiniLabel, { color: colors.text }]}>Profile</Text>
@@ -284,13 +368,13 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                 onPress={() => setDrawerOpen(true)}
                 style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
               >
-                <Text style={[styles.topbarIconText, { color: colors.text }]}>☰</Text>
+                <Feather name="menu" size={18} color={colors.text} />
               </TouchableOpacity>
             )}
 
             <View>
-              <Text style={[styles.pageEyebrow, { color: colors.textMuted }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.heroEyebrow : 'Reference Shell'}</Text>
-              <Text style={[styles.pageTitle, { color: colors.text }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.trackName : activeItem.label}</Text>
+              <Text style={[styles.pageEyebrow, { color: colors.textMuted }]}>{pageMeta.eyebrow}</Text>
+              <Text style={[styles.pageTitle, { color: colors.text }]}>{pageMeta.title}</Text>
             </View>
           </View>
 
@@ -298,14 +382,14 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             {isWide && (
               <View style={styles.searchWrap}>
                 <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-                  <Text style={[styles.searchIcon, { color: colors.textMuted }]}>⌕</Text>
+                  <Feather name="search" size={14} color={colors.textMuted} />
                   <TextInput
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                     onFocus={() => setSearchFocused(true)}
                     onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
                     onSubmitEditing={handleSearchSubmit}
-                    placeholder={trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.searchPlaceholder : 'Search screens, tracks, and tools'}
+                    placeholder={trackContext.mode === 'track' && (activeId === 'dashboard' || activeId === 'islands') ? trackContext.searchPlaceholder : 'Search screens, tracks, and tools'}
                     placeholderTextColor={colors.textMuted}
                     style={[styles.searchInput, { color: colors.text }]}
                     returnKeyType="search"
@@ -334,7 +418,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               onPress={() => router.push('/(tabs)/feed' as any)}
               style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
             >
-              <Text style={[styles.topbarActionLabel, { color: colors.text }]}>📰</Text>
+              <Text style={[styles.topbarActionLabel, { color: colors.text }]}>📺</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -342,7 +426,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               onPress={toggle}
               style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
             >
-              <Text style={[styles.topbarActionLabel, { color: colors.text }]}>{isDark ? '☀' : '☾'}</Text>
+              <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.text} />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -350,7 +434,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               onPress={() => router.push('/(tabs)/profile' as any)}
               style={[styles.avatarBtn, { backgroundColor: colors.text }]}
             >
-              <Text style={styles.avatarBtnText}>U</Text>
+              <Text style={styles.avatarBtnText}>👤</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -404,7 +488,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             <View style={styles.drawerHeader}>
               <View style={styles.brandRow}>
                 <View style={[styles.brandBadge, { backgroundColor: colors.gold }]}>
-                  <Text style={styles.brandBadgeText}>⚡</Text>
+                  <Text style={styles.brandBadgeText}>S</Text>
                 </View>
                 <View>
                   <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
@@ -412,12 +496,12 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                 </View>
               </View>
               <TouchableOpacity onPress={() => setDrawerOpen(false)}>
-                <Text style={[styles.closeText, { color: colors.textMuted }]}>✕</Text>
+                <Feather name="x" size={18} color={colors.textMuted} />
               </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-              <NavList activeId={activeId} onNavigate={goTo} />
+              <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
               <View style={[styles.drawerSecondary, { borderTopColor: colors.border }]}>
                 <TouchableOpacity
@@ -428,7 +512,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                   }}
                   style={[styles.secondaryBtn, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
                 >
-                  <Text style={styles.secondaryBtnIcon}>📰</Text>
+                  <Text style={styles.secondaryBtnIcon}>📺</Text>
                   <Text style={[styles.secondaryBtnLabel, { color: colors.text }]}>Open Feed</Text>
                 </TouchableOpacity>
 
@@ -738,3 +822,4 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
 });
+

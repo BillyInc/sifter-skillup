@@ -76,7 +76,7 @@ function TrackChips({
         onPress={onManage}
         style={[styles.chip, styles.manageChip, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
       >
-        <Text style={[styles.chipLabel, { color: colors.textMuted }]}>+ Monitor</Text>
+        <Text style={[styles.chipLabel, { color: colors.textMuted }]}>Manage</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -235,8 +235,11 @@ export default function FeedScreen() {
       {/* ── Header ── */}
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
-          <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>FEEDS</Text>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>📰 Feed Hub</Text>
+          <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>COMMUNITY FEED</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>Feed</Text>
+          <Text style={[styles.headerCopy, { color: colors.textSoft }]}>
+            Track activity, learner signals, and workspace updates in one compact stream.
+          </Text>
           <Text style={[styles.headerSub, { color: accentColor }]}>
             {activeTrack?.label ?? 'Your track'}
           </Text>
@@ -283,7 +286,7 @@ export default function FeedScreen() {
       {isUsingFallback && (
         <View style={[styles.fallbackBanner, { backgroundColor: colors.goldSoft, borderColor: colors.gold + '40' }]}>
           <Text style={[styles.fallbackBannerText, { color: colors.gold }]}>
-            Seeded fallback content is showing right now. Track subscriptions still work, but this feed snapshot is demo data until live items load.
+            Fallback content is showing right now. Your subscriptions still work, but this snapshot is temporary until live items load.
           </Text>
         </View>
       )}
@@ -381,6 +384,7 @@ const styles = StyleSheet.create({
   header:             { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   headerEyebrow:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 2 },
   headerTitle:        { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  headerCopy:         { fontSize: FontSize.xs, lineHeight: 18, marginTop: 4 },
   headerSub:          { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginTop: 2 },
 
   chipsScroll:        { borderBottomWidth: 1, maxHeight: 52 },

@@ -141,7 +141,12 @@ export default function StreakUrgencyBanner({
     <Animated.View
       style={[
         styles.banner,
-        { backgroundColor: bgColor, opacity: alphaAnim, transform: [{ translateX: shakeAnim }, { scale: scaleAnim }] },
+        {
+          backgroundColor: bgColor,
+          borderColor: textColor + '22',
+          opacity: alphaAnim,
+          transform: [{ translateX: shakeAnim }, { scale: scaleAnim }],
+        },
       ]}
     >
       <Text style={[styles.bannerEmoji]}>{status.isAtRisk ? '⚠️' : '🔥'}</Text>
@@ -180,16 +185,17 @@ const styles = StyleSheet.create({
     marginHorizontal: Spacing.md,
     marginVertical: Spacing.sm,
     borderRadius: Radius.xl,
+    borderWidth: 1,
   },
   bannerEmoji:    { fontSize: 24 },
   bannerText:     { fontSize: FontSize.sm, fontWeight: FontWeight.black, lineHeight: 18 },
   bannerSub:      { fontSize: FontSize.xs, marginTop: 2, opacity: 0.8 },
   bannerActions:  { alignItems: 'flex-end', gap: Spacing.xs },
-  ctaBtn:         { paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full },
+  ctaBtn:         { paddingHorizontal: Spacing.md, paddingVertical: 8, borderRadius: Radius.full },
   ctaBtnText:     { fontSize: FontSize.xs, fontWeight: FontWeight.black, color: '#fff' },
   dismissBtn:     { paddingHorizontal: 4, paddingVertical: 2 },
   dismissText:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, opacity: 0.7 },
 
-  compactPill:    { paddingHorizontal: Spacing.sm, paddingVertical: 4, borderRadius: Radius.full },
+  compactPill:    { paddingHorizontal: Spacing.sm, paddingVertical: 6, borderRadius: Radius.full, borderWidth: 1 },
   compactText:    { fontSize: 11, fontWeight: FontWeight.black },
 });
