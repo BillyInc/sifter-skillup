@@ -151,4 +151,12 @@ export const merchandiseItems: MerchandiseItem[] = [
     image_url: '', shopify_product_id: '', available: true,
     unlock_condition: { type: 'open', description: 'Available to all learners' },
   },
+  {
+    id: 'sifter-runner-01', name: 'Sifter Runner Sneakers', field_id: 'crypto',
+    category: 'footwear', tier: 'foundation', price_usd: 95, merch_credits_cost: 1900,
+    technical_embedding: 'Progress compounds daily.',
+    description: 'Low-profile trainers with Sifter detailing for learners who want the merch line to extend beyond apparel.',
+    image_url: '', shopify_product_id: '', available: true,
+    unlock_condition: { type: 'open', description: 'Available to all learners' },
+  },
 ];

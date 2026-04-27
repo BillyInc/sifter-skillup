@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { useNavigation } from 'expo-router';
+import { useRouter } from 'expo-router';
 import {
   FontSize,
   FontWeight,
@@ -65,14 +65,17 @@ function TrackRow({
     <TouchableOpacity
       activeOpacity={0.82}
       onPress={() => {
+        if (!isLive) return;
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         onPress(track);
       }}
+      disabled={!isLive}
       style={[
         styles.trackRow,
         {
           backgroundColor: colors.bgSecondary,
           borderColor: isLive ? `${accentColor}33` : colors.border,
+          opacity: isLive ? 1 : 0.62,
         },
       ]}
     >
@@ -115,7 +118,7 @@ function IslandStrip({ onIslandPress }: { onIslandPress: () => void }) {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.islandScroll}
     >
-      {ISLANDS.slice(0, 18).map((island) => (
+      {ISLANDS.filter((island) => island.id === 18).map((island) => (
         <TouchableOpacity
           key={island.id}
           activeOpacity={0.82}
@@ -159,8 +162,7 @@ function FieldCard({
 }) {
   const { colors } = useTheme();
   const accentColor = fieldColor(field.id);
-  const isCrypto = field.id === 'crypto';
-  const starknetDetail = isCrypto ? getFieldDetail('starknet') : null;
+  const isStarknet = field.id === 'starknet';
   const tracks = [...detail.generalTracks, ...detail.specificTracks];
   const liveCount = tracks.filter((track) => track.status === 'live').length;
 
@@ -228,36 +230,32 @@ function FieldCard({
 
       {expanded ? (
         <View style={[styles.expandedSection, { borderTopColor: colors.border }]}>
-          {isCrypto ? (
+          {isStarknet ? (
             <>
               <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>Onboarding islands</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet islands</Text>
                 <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
-                  Open the map to begin the crypto path.
+                  Open the Starknet realm and continue from Island 18.
                 </Text>
               </View>
               <IslandStrip onIslandPress={onIslandPress} />
 
-              {starknetDetail ? (
-                <>
-                  <View style={styles.sectionHeader}>
-                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet advanced tracks</Text>
-                    <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
-                      Continue into the Starknet routes after the island sequence.
-                    </Text>
-                  </View>
-                  <View style={styles.trackList}>
-                    {[...starknetDetail.generalTracks, ...starknetDetail.specificTracks].map((track) => (
-                      <TrackRow
-                        key={track.id}
-                        track={track}
-                        accentColor={colors.starknet}
-                        onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
-                      />
-                    ))}
-                  </View>
-                </>
-              ) : null}
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet tracks</Text>
+                <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
+                  Only Starknet-related tracks are currently open.
+                </Text>
+              </View>
+              <View style={styles.trackList}>
+                {tracks.map((track) => (
+                  <TrackRow
+                    key={track.id}
+                    track={track}
+                    accentColor={colors.starknet}
+                    onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
+                  />
+                ))}
+              </View>
             </>
           ) : (
             <>
@@ -287,24 +285,35 @@ function FieldCard({
 
 export default function FieldsScreen() {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const router = useRouter();
   const { updateActiveField } = useAuth();
   const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
 
   const fields = useMemo<FieldSummary[]>(() => {
-    return getAllFieldDetails().map((detail) => ({
-      id: detail.fieldId,
-      name: detail.worldName.replace(
-        /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
-        '',
-      ) || detail.worldName,
-      status: [...detail.generalTracks, ...detail.specificTracks].some((track) => track.status === 'live')
-        ? 'live'
-        : 'coming_soon',
-    }));
+    return getAllFieldDetails()
+      .map((detail) => ({
+        id: detail.fieldId,
+        name: detail.worldName.replace(
+          /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
+          '',
+        ) || detail.worldName,
+        status: [...detail.generalTracks, ...detail.specificTracks].some((track) => track.status === 'live')
+          ? 'live'
+          : 'coming_soon',
+      }))
+      .sort((a, b) => {
+        if (a.id === 'starknet') return -1;
+        if (b.id === 'starknet') return 1;
+        if (a.status !== b.status) return a.status === 'live' ? -1 : 1;
+        return a.name.localeCompare(b.name);
+      });
   }, []);
 
   const handleTrackPress = async (fieldId: string, track: FieldSkillTrack) => {
+    if (track.status !== 'live') {
+      return;
+    }
+
     try {
       await updateActiveField(fieldId, fieldColor(fieldId), track.id, track.name);
     } catch {
@@ -312,41 +321,59 @@ export default function FieldsScreen() {
     }
 
     if (track.navigateTo === 'Quant') {
-      navigation.push('/skills/quant-map');
+      router.push('/skills/quant-map' as any);
       return;
     }
 
     if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') {
-      navigation.push('/(tabs)/map/island');
+      router.push({
+        pathname: '/map/island' as any,
+        params: { initialIsland: '18' },
+      });
       return;
     }
 
     if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') {
-      navigation.push('/starknet-track', { trackId: track.id, fieldId, trackName: track.name });
+      router.push({
+        pathname: '/starknet-track' as any,
+        params: { trackId: track.id, fieldId, trackName: track.name },
+      });
       return;
     }
 
     if (track.id === 'starknet-ecosystem-deep-dive') {
-      navigation.push('/ecosystem-track', { trackId: track.id, fieldId, trackName: track.name });
+      router.push({
+        pathname: '/ecosystem-track' as any,
+        params: { trackId: track.id, fieldId, trackName: track.name },
+      });
       return;
     }
 
     if (track.id === 'cairo-builder') {
-      navigation.push('/cairo-builder-track', { trackId: track.id, fieldId, trackName: track.name });
+      router.push({
+        pathname: '/cairo-builder-track' as any,
+        params: { trackId: track.id, fieldId, trackName: track.name },
+      });
       return;
     }
 
-    navigation.push('/world', {
-      worldId: track.worldThemeId,
-      trackId: track.id,
-      fieldId,
-      trackName: track.name,
-      live: track.status === 'live',
+    router.push({
+      pathname: '/world' as any,
+      params: {
+        worldId: track.worldThemeId,
+        trackId: track.id,
+        fieldId,
+        trackName: track.name,
+        live: String(track.status === 'live'),
+      },
     });
   };
 
   const handleIslandPress = () => {
-    navigation.push('/(tabs)/map/island');
+    router.push({
+      pathname: '/map/island' as any,
+      params: { initialIsland: '18' },
+    });
   };
 
   return (

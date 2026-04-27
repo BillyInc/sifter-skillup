@@ -7,7 +7,7 @@ import { buildTrackResumeHref } from '../../src/lib/resumeNavigation';
 
 function getOnboardingNextHref(trackId: string) {
   if (trackId === 'island-map') {
-    return '/(tabs)/map/island';
+    return '/map/island';
   }
 
   return buildTrackResumeHref(trackId) ?? '/(tabs)/home';

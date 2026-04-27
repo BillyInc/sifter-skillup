@@ -33,6 +33,13 @@ export default function LessonRoute() {
     : undefined;
   const isBoss = params.isBoss === 'true' || params.isBoss === '1';
 
+  const handleNavigateToLesson = (nextLevelId: number) => {
+    router.replace({
+      pathname: '/map/lesson' as any,
+      params: { levelId: String(nextLevelId) },
+    });
+  };
+
   // On lesson/boss completion, navigate back to the island map.
   // IslandMapScreen will then show the 3-track banner if boss 310 is done,
   // or the next island in sequence for any other completion.
@@ -50,7 +57,7 @@ export default function LessonRoute() {
 
         if (nextLessonIndex < lab.lessons.length) {
           router.replace({
-            pathname: '/(tabs)/map/lesson' as any,
+            pathname: '/map/lesson' as any,
             params: {
               levelId: String(getStarknetLessonRuntimeId(trackId as StarknetTrackId, labNumber, nextLessonIndex)),
               trackId,
@@ -63,7 +70,7 @@ export default function LessonRoute() {
         }
 
         router.replace({
-          pathname: '/(tabs)/map/lesson' as any,
+          pathname: '/map/lesson' as any,
           params: {
             levelId: String(lab.bossLevelId),
             trackId,
@@ -79,7 +86,7 @@ export default function LessonRoute() {
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.replace('/(tabs)/map' as any);
+      router.replace('/map' as any);
     }
   };
 
@@ -93,6 +100,7 @@ export default function LessonRoute() {
       isBoss={isBoss}
       onExit={handleDone}
       onComplete={handleDone}
+      onNavigateToLesson={handleNavigateToLesson}
     />
   );
 }

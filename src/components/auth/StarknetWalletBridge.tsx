@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import { Platform } from 'react-native';
 import type { StarkzapWallet } from '../../lib/starkzap';
 import { PRIVY_NATIVE_ENABLED } from '../../lib/config';
+import { useStarkzapWallet } from '../../lib/starkzapPrivyAdapter';
 
 type StarknetWalletBridgeStatus = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error';
 
@@ -23,22 +24,35 @@ const DEFAULT_VALUE: StarknetWalletBridgeValue = {
 
 const StarknetWalletBridgeContext = createContext<StarknetWalletBridgeValue>(DEFAULT_VALUE);
 
-function StarknetWalletBridgeInner({
+function StarknetWalletBridgeWeb({
   children,
   preferredAddress,
 }: {
   children: React.ReactNode;
   preferredAddress?: string | null;
 }) {
-  if (Platform.OS === 'web') {
-    return (
-      <StarknetWalletBridgeContext.Provider value={DEFAULT_VALUE}>
-        {children}
-      </StarknetWalletBridgeContext.Provider>
-    );
-  }
+  const fallbackAddress = preferredAddress?.trim() || null;
 
-  const { useStarkzapWallet } = require('../../lib/starkzapPrivyAdapter') as typeof import('../../lib/starkzapPrivyAdapter');
+  return (
+    <StarknetWalletBridgeContext.Provider value={{
+      wallet: null,
+      address: fallbackAddress,
+      status: fallbackAddress ? 'ready' : 'waiting-for-user',
+      ready: Boolean(fallbackAddress),
+      error: null,
+    }}>
+      {children}
+    </StarknetWalletBridgeContext.Provider>
+  );
+}
+
+function StarknetWalletBridgeNative({
+  children,
+  preferredAddress,
+}: {
+  children: React.ReactNode;
+  preferredAddress?: string | null;
+}) {
   const { wallet, address, status, error } = useStarkzapWallet(preferredAddress ?? null);
 
   return (
@@ -63,6 +77,10 @@ export function StarknetWalletBridgeProvider({
   children: React.ReactNode;
   preferredAddress?: string | null;
 }) {
+  if (Platform.OS === 'web') {
+    return <StarknetWalletBridgeWeb preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeWeb>;
+  }
+
   if (!PRIVY_NATIVE_ENABLED) {
     return (
       <StarknetWalletBridgeContext.Provider value={DEFAULT_VALUE}>
@@ -71,7 +89,7 @@ export function StarknetWalletBridgeProvider({
     );
   }
 
-  return <StarknetWalletBridgeInner preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeInner>;
+  return <StarknetWalletBridgeNative preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeNative>;
 }
 
 export function useStarknetWalletBridge() {

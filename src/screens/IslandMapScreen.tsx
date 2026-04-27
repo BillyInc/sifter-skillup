@@ -228,8 +228,8 @@ export default function IslandMapScreen({ route }: any) {
     if (target) setSelected(target);
   }, [initialIsland]);
 
-  const tiers: Tier[] = ['beginner', 'intermediate', 'pro'];
-  const mainIslands = useMemo(() => ISLANDS.filter(i => i.id !== 18), []);
+  const tiers: Tier[] = [];
+  const mainIslands = useMemo(() => ISLANDS.filter(i => i.id === -1), []);
   const starkIsland = useMemo(() => ISLANDS.find(i => i.id === 18) ?? null, []);
   const starkIslandUnlocked = starkIsland ? isIslandUnlocked(starkIsland, completedLevels) : false;
   const progressPct = Math.min(100, (completedLevels.length / 310) * 100);
@@ -237,7 +237,12 @@ export default function IslandMapScreen({ route }: any) {
 
   const handleEnter = (island: Island) => {
     setSelected(null);
-    setTimeout(() => router.push(`/(tabs)/map/lesson?levelId=${island.start}` as any), 160);
+    setTimeout(() => {
+      router.push({
+        pathname: '/map/lesson' as any,
+        params: { levelId: String(island.start) },
+      });
+    }, 160);
   };
 
   return (

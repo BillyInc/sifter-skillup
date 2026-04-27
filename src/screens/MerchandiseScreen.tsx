@@ -8,7 +8,7 @@
  *   Mobile      → full-width, credits strip at top, 2-column grid
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity,
   SafeAreaView, Platform, useWindowDimensions, Linking, Modal,
@@ -16,13 +16,14 @@ import {
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { rewardsEngine } from '../lib/rewardsEngine';
-import { creditsToUSD, MERCH_CREDITS_PER_DOLLAR } from '../theme/rewards';
+import { creditsToUSD } from '../theme/rewards';
 import { merchandiseItems } from '../data/merchandiseItems';
 import type { MerchandiseItem } from '../types/social';
 
 const CATEGORIES = [
   { id: 'all', label: 'All' }, { id: 'hoodie', label: 'Hoodies' },
   { id: 'tee', label: 'Tees' }, { id: 'cap', label: 'Caps' },
+  { id: 'footwear', label: 'Shoes' },
   { id: 'accessory', label: 'Accessories' },
 ];
 
@@ -31,9 +32,6 @@ export default function MerchandiseScreen({ navigation }: any) {
   const { user }   = useAuth();
   const { width }  = useWindowDimensions();
   const isWebWide  = Platform.OS === 'web' && width >= 768;
-  const isMobile   = Platform.OS !== 'web';
-  const numCols    = isWebWide ? 3 : 2;
-
   const [category,    setCategory]    = useState('all');
   const [selected,    setSelected]    = useState<MerchandiseItem | null>(null);
   const [showDetail,  setShowDetail]  = useState(false);
@@ -84,7 +82,7 @@ export default function MerchandiseScreen({ navigation }: any) {
         <Text style={[styles.walletTitle, { color: colors.textMuted }]}>MERCH CREDITS</Text>
         <Text style={[styles.walletBalance, { color: colors.gold }]}>{credits.toLocaleString()}</Text>
         <Text style={[styles.walletValue, { color: colors.textSoft }]}>
-          ≈ ${creditsToUSD(credits).toFixed(0)} toward any item
+          Approx. ${creditsToUSD(credits).toFixed(0)} toward any item
         </Text>
       </View>
       {vertical && (
@@ -131,7 +129,8 @@ export default function MerchandiseScreen({ navigation }: any) {
             {item.category === 'hoodie' ? '🧥'
               : item.category === 'tee'  ? '👕'
               : item.category === 'cap'  ? '🧢'
-              : '👟'}
+              : item.category === 'footwear' ? '👟'
+              : '🎒'}
           </Text>
           {!unlocked && (
             <View style={styles.lockedOverlay}>
@@ -169,7 +168,7 @@ export default function MerchandiseScreen({ navigation }: any) {
 
           {!unlocked && (
             <Text style={[styles.unlockHint, { color: colors.textMuted }]} numberOfLines={2}>
-              🔒 {item.unlock_condition.description}
+              Locked: {item.unlock_condition.description}
             </Text>
           )}
         </View>
@@ -192,7 +191,7 @@ export default function MerchandiseScreen({ navigation }: any) {
           <View style={[styles.modalCard, { backgroundColor: colors.card }]}>
             <View style={[styles.modalImgBox, { backgroundColor: colors.goldSoft }]}>
               <Text style={styles.modalEmoji}>
-                {selected.category === 'hoodie' ? '🧥' : selected.category === 'tee' ? '👕' : '🧢'}
+                {selected.category === 'hoodie' ? '🧥' : selected.category === 'tee' ? '👕' : selected.category === 'footwear' ? '👟' : '🧢'}
               </Text>
             </View>
 
@@ -228,7 +227,7 @@ export default function MerchandiseScreen({ navigation }: any) {
               {/* Unlock state */}
               {!unlocked && (
                 <View style={[styles.unlockBlock, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-                  <Text style={[styles.unlockBlockTitle, { color: colors.text }]}>🔒 Locked</Text>
+                  <Text style={[styles.unlockBlockTitle, { color: colors.text }]}>Locked</Text>
                   <Text style={[styles.unlockBlockSub, { color: colors.textMuted }]}>
                     {selected.unlock_condition.description}
                   </Text>
@@ -242,12 +241,12 @@ export default function MerchandiseScreen({ navigation }: any) {
                 disabled={!unlocked}
               >
                 <Text style={[styles.shopBtnText, { color: unlocked ? '#fff' : colors.textMuted }]}>
-                  {unlocked ? 'Shop Now →' : 'Complete track to unlock'}
+                  {unlocked ? 'Shop now' : 'Complete track to unlock'}
                 </Text>
               </TouchableOpacity>
 
               <Text style={[styles.comingSoon, { color: colors.textMuted }]}>
-                Sifter Apparel Store — launching 2026. Notify me when available.
+                Sifter Apparel Store, launching 2026. Notify me when available.
               </Text>
             </ScrollView>
 
@@ -296,7 +295,7 @@ export default function MerchandiseScreen({ navigation }: any) {
           {/* Right: grid with page header */}
           <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 960, alignSelf: 'center', width: '100%', paddingHorizontal: 28, paddingTop: 28, paddingBottom: 64 }}>
             <View style={{ marginBottom: 24, paddingBottom: 16, position: 'relative' }}>
-              <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>👕 Sifter Apparel</Text>
+              <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Sifter Apparel</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
                 {credits.toLocaleString()} merch credits · Earn by completing labs
               </Text>
@@ -323,7 +322,7 @@ export default function MerchandiseScreen({ navigation }: any) {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <View style={[styles.header, { borderBottomColor: colors.border, backgroundColor: colors.card }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>👕 Sifter Apparel</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>Sifter Apparel</Text>
       </View>
       <WalletPanel />
       <CategoryChips />

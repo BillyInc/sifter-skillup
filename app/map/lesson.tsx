@@ -5,11 +5,18 @@ export default function LessonRoute() {
   const router = useRouter();
   const levelId = Number(params.levelId) || 1;
 
+  const handleNavigateToLesson = (nextLevelId: number) => {
+    router.replace({
+      pathname: '/map/lesson' as any,
+      params: { levelId: String(nextLevelId) },
+    });
+  };
+
   const handleDone = () => {
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.replace('/(tabs)/map' as any);
+      router.replace('/map' as any);
     }
   };
 
@@ -18,6 +25,7 @@ export default function LessonRoute() {
       levelId={levelId}
       onExit={handleDone}
       onComplete={handleDone}
+      onNavigateToLesson={handleNavigateToLesson}
     />
   );
 }
