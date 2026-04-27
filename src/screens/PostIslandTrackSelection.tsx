@@ -18,9 +18,9 @@ export const POST_ISLAND_TRACKS = [
     icon: '⚡',
     name: 'DeFi Navigator',
     subtitle: 'Practitioner Track',
-    description: 'Execute swaps, staking, lending, and DCA on Starknet Sepolia with a portfolio-first workflow.',
+    description: 'Execute swaps, staking, lending, and DCA on Starknet Sepolia with an artifact-first workflow.',
     accentColor: '#EC4899',
-    tags: ['Hands-On', 'Transactions', 'Portfolio', '80h'],
+    tags: ['Hands-On', 'Transactions', 'Artifacts', '80h'],
   },
   {
     id: 'starknet-ecosystem-deep-dive',

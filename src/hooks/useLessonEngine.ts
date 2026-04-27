@@ -56,12 +56,28 @@ function truncatePlain(s: string, max: number): string {
 }
 
 */
+function isPrimaryInteractiveSimulationType(type?: string): boolean {
+  if (!type) return false;
+  return (
+    type.startsWith('starkzap-')
+    || type.startsWith('sandbox-')
+    || type.startsWith('opp-')
+    || type === 'forum'
+    || type === 'aggregate'
+  );
+}
+
 function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
   const questions: Question[] = [];
   const topic = getAuthoredLessonTopic(lesson);
   const explanation = (lesson.explanation ?? '').trim();
   const fact = getAuthoredLessonSummary(lesson);
   const plain = getAuthoredLessonPlain(lesson);
+  const lessonSimulations = (lesson.lessonSimulations ?? []).filter(
+    (sim) => sim?.type && sim?.scenario && Array.isArray(sim.scoringCriteria) && sim.scoringCriteria.length > 0,
+  );
+  const primaryLessonSimulations = lessonSimulations.filter((sim) => isPrimaryInteractiveSimulationType(sim.type));
+  const secondaryLessonSimulations = lessonSimulations.filter((sim) => !isPrimaryInteractiveSimulationType(sim.type));
 
   // 1. Concept card — from the lesson explanation / key takeaway.
   questions.push({
@@ -79,6 +95,14 @@ function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
   const simId = lesson.interactiveSimulator?.componentId ?? lesson.simulatorLesson;
   if (simId) {
     questions.push({ type: 'simulator', simulatorType: simId });
+  } else if (primaryLessonSimulations.length > 0) {
+    const [primarySim] = primaryLessonSimulations;
+    questions.push({
+      type: 'simulator',
+      simulatorType: primarySim.type,
+      scenario: primarySim.scenario,
+      scoringCriteria: primarySim.scoringCriteria,
+    });
   }
 
   // 3. Guided-practice MCQs — authored by content team.
@@ -100,12 +124,11 @@ function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
     });
   }
 
-  // 4. Authored lesson simulations - preserve the scenario + rubric exactly as written.
-  for (const sim of lesson.lessonSimulations ?? []) {
-    if (!sim?.type || !sim?.scenario || !Array.isArray(sim.scoringCriteria) || sim.scoringCriteria.length === 0) {
-      continue;
-    }
-
+  // 4. Authored lesson simulations - keep tool practice ahead of judgment-only follow-ups.
+  const deferredPrimarySimulations = simId
+    ? primaryLessonSimulations
+    : primaryLessonSimulations.slice(1);
+  for (const sim of [...deferredPrimarySimulations, ...secondaryLessonSimulations]) {
     questions.push({
       type: 'simulator',
       simulatorType: sim.type,

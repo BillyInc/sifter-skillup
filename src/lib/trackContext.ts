@@ -1,5 +1,6 @@
 import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
 import { getField } from '../data/fields';
+import { getFieldVisualTheme, getTrackVisualTheme } from './visualThemes';
 
 type UserLike = {
   activeFieldId?: string;
@@ -280,6 +281,8 @@ export function resolveTrackContext(
   const detail = getFieldDetail(fallbackTrack.fieldId) as FieldDetail | undefined;
   const trackName = currentTrackName || fallbackTrack.name;
   const challenge = buildChallenge(fallbackTrack.fieldId, trackName);
+  const fieldTheme = getFieldVisualTheme(fallbackTrack.fieldId);
+  const trackTheme = getTrackVisualTheme(fallbackTrack.id, fallbackTrack.fieldId, trackName);
   const fallbackTheme = FALLBACK_FIELD_THEME[fallbackTrack.fieldId];
   const color = field?.color ?? fallbackTheme?.color ?? '#111111';
   const emoji = field?.emoji ?? fallbackTheme?.emoji ?? '⚡';
@@ -292,9 +295,9 @@ export function resolveTrackContext(
     worldName: fallbackTrack.worldName || detail?.worldName || field?.name || 'Track World',
     tagline: fallbackTrack.tagline,
     description: fallbackTrack.description,
-    color,
-    emoji,
-    artFieldId: fallbackTrack.fieldId === 'starknet' ? 'crypto' : fallbackTrack.fieldId,
+    color: trackTheme.palette.primary ?? fieldTheme.palette.primary ?? color,
+    emoji: trackTheme.icon ?? fieldTheme.icon ?? emoji,
+    artFieldId: fallbackTrack.fieldId,
     continueHref: getTrackHref(fallbackTrack),
     continueLabel: `Continue ${trackName}`,
     shellTitle: trackName,

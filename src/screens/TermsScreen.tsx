@@ -15,7 +15,7 @@ const SECTIONS = [
   },
   {
     num: '2', title: 'What This Platform Is',
-    body: 'Sifter Skill_Up is an educational tool. We provide lessons, simulations, portfolio tools, and career skill development content. We are not a recruitment agency, career counsellor, job placement service, financial adviser, legal adviser, or professional licensing body.',
+    body: 'Sifter Skill_Up is an educational tool. We provide lessons, simulations, artifact tools, and career skill development content. We are not a recruitment agency, career counsellor, job placement service, financial adviser, legal adviser, or professional licensing body.',
   },
   {
     num: '3', title: 'No Employment Guarantee',
@@ -30,12 +30,12 @@ const SECTIONS = [
     body: 'Our lessons are designed against industry frameworks (APICS, CSCMP, CFA, and others) to be as accurate and current as possible. However, we do not guarantee the accuracy, completeness, or timeliness of any content. Industry standards and best practices change. Always verify critical information with official sources and qualified professionals.',
   },
   {
-    num: '6', title: 'You Own Your Portfolio Content',
-    body: 'You retain full ownership of all projects, work, and materials you create while using Sifter Skill_Up. By storing content on our platform, you grant us a non-exclusive, worldwide, royalty-free licence to host and display it within the app, enable the portfolio push features you initiate, and generate previews of your work. We do not claim ownership of your work. You may delete it at any time. We will not use your portfolio content to train AI models without your explicit written permission.',
+    num: '6', title: 'You Own Your Artifact Content',
+    body: 'You retain full ownership of all projects, work, and materials you create while using Sifter Skill_Up. By storing content on our platform, you grant us a non-exclusive, worldwide, royalty-free licence to host and display it within the app, enable the artifact push features you initiate, and generate previews of your work. We do not claim ownership of your work. You may delete it at any time. We will not use your artifact content to train AI models without your explicit written permission.',
   },
   {
     num: '7', title: 'Authorised Agent for Third-Party Platforms',
-    body: 'By using our profile creation and portfolio push features, you expressly authorise Sifter Skill_Up to act as your limited agent for the purpose of: (a) creating accounts on platforms you designate; (b) populating profile information based on your learning progress; (c) pushing portfolio work you approve; (d) updating profiles with achievements you earn.\n\nYou acknowledge that: you are solely responsible for the accuracy of submitted information; you retain full control and may modify content directly on third-party platforms; we act only at your direction; you may revoke access at any time.',
+    body: 'By using our profile creation and artifact push features, you expressly authorise Sifter Skill_Up to act as your limited agent for the purpose of: (a) creating accounts on platforms you designate; (b) populating profile information based on your learning progress; (c) pushing artifact work you approve; (d) updating profiles with achievements you earn.\n\nYou acknowledge that: you are solely responsible for the accuracy of submitted information; you retain full control and may modify content directly on third-party platforms; we act only at your direction; you may revoke access at any time.',
   },
   {
     num: '8', title: 'OAuth and Credential Security',

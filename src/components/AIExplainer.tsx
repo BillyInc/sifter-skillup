@@ -47,7 +47,7 @@ interface ExplainerResult {
 const MAX_PER_SESSION = 3;
 
 const BLOCKED_MESSAGE =
-  "AI can help you learn — but your portfolio and challenge work must be genuinely yours.\nYour work is what employers see.";
+  "AI can help you learn — but your artifact and challenge work must be genuinely yours.\nYour work is what employers see.";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -79,7 +79,7 @@ export default function AIExplainer({
       Animated.spring(slideAnim, { toValue: 1, useNativeDriver: true, damping: 20, stiffness: 250 }),
       Animated.timing(backdropOp, { toValue: 1, duration: 250, useNativeDriver: true }),
     ]).start();
-  }, []);
+  }, [backdropOp, slideAnim]);
 
   const dismiss = () => {
     Animated.parallel([
@@ -102,7 +102,7 @@ export default function AIExplainer({
           system: `You are a patient, expert tutor on Sifter Skill_Up, a professional career learning platform.
 The user is studying ${trackName} and has encountered a concept they don't understand.
 Break it down simply. Use a real-world analogy. Keep your explanation under 200 words.
-Never give answers to exercises or portfolio tasks — only explain the underlying concept.
+Never give answers to exercises or artifact tasks — only explain the underlying concept.
 Respond ONLY with a JSON object — no markdown, no preamble — in this exact shape:
 {
   "explanation": "string",
@@ -121,7 +121,7 @@ Respond ONLY with a JSON object — no markdown, no preamble — in this exact s
       const parsed: ExplainerResult = JSON.parse(raw.replace(/```json|```/g, '').trim());
       setResult(parsed);
       onUsed?.();
-    } catch (e) {
+    } catch {
       setError("Couldn't get an explanation right now. Try again.");
     } finally {
       setLoading(false);

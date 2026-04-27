@@ -58,7 +58,7 @@ export default function NotificationSettingsScreen() {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>🔔 Notifications</Text>
         <Text style={styles.sub}>
-          We'll remind you to keep learning — personalised to your track and streak.
+          We&apos;ll remind you to keep learning — personalised to your track and streak.
           Never spammy. Always opt-outable.
         </Text>
 
@@ -68,7 +68,7 @@ export default function NotificationSettingsScreen() {
         {[
           { key: 'push', label: 'Push Notifications', sub: 'Daily reminder on your device', value: push, set: setPush, recommended: true },
           { key: 'sms',  label: 'SMS',                sub: 'For urgent streak alerts (2+ days missed)', value: sms, set: setSms, recommended: false },
-          { key: 'email',label: 'Email',              sub: 'Weekly progress + portfolio milestones', value: email, set: setEmail, recommended: true },
+          { key: 'email',label: 'Email',              sub: 'Weekly progress + artifact milestones', value: email, set: setEmail, recommended: true },
         ].map(ch => (
           <View key={ch.key} style={styles.channelRow}>
             <View style={{ flex: 1 }}>
@@ -112,13 +112,13 @@ export default function NotificationSettingsScreen() {
         <View style={styles.exampleCard}>
           <Text style={styles.exampleTitle}>⚡ Sifter Skill_Up</Text>
           <Text style={styles.exampleBody}>
-            "Supply chain analysts earn $75k+ — and you're 40% of the way there. 5 minutes. Let's go."
+            &quot;Supply chain analysts earn $75k+ — and you&apos;re 40% of the way there. 5 minutes. Let&apos;s go.&quot;
           </Text>
         </View>
         <View style={styles.exampleCard}>
           <Text style={styles.exampleTitle}>🚨 Come back!</Text>
           <Text style={styles.exampleBody}>
-            "2 days since your last lesson. Your future employer is interviewing someone who didn't stop."
+            &quot;2 days since your last lesson. Your future employer is interviewing someone who didn&apos;t stop.&quot;
           </Text>
         </View>
 

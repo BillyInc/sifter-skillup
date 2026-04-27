@@ -12,21 +12,21 @@
  *   - Crypto special case: shows island chain pathway
  */
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   Animated, Easing, Dimensions, SafeAreaView, Modal,
-  TouchableWithoutFeedback, FlatList, Platform,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { useNavigation, useRouter } from 'expo-router';
-import { useTheme, Radius, FontSize, FontWeight, Shadow, Spacing } from '../theme';
+import { useNavigation } from 'expo-router';
+import { Radius, FontSize, FontWeight, Spacing } from '../theme';
 import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
-import { useIsWebWide } from '../components/web/WebGrid';
 import { useAuth } from '../hooks/useAuth';
+import { getFieldGradient as resolveFieldGradient } from '../lib/visualThemes';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 
@@ -35,31 +35,24 @@ const PEEK_HEIGHT = SH * 0.11;  // how much of next card peeks
 
 // ─── Field background gradients ────────────────────────────────────────────────
 
-const FIELD_GRADIENTS: Record<string, [string, string, string]> = {
-  'crypto':               ['#1A0800', '#2D1200', '#3D1A00'],
-  'quant':                ['#05030F', '#0D0A25', '#161240'],
-  'ai-ml':                ['#020B18', '#051830', '#091E3C'],
-  'supply-chain':         ['#021208', '#041A0C', '#062012'],
-  'software-engineering': ['#010E12', '#02161C', '#031E26'],
-  'data-analysis':        ['#120A00', '#1E1000', '#2A1600'],
-  'finance-banking':      ['#0A0518', '#120A28', '#1A0E36'],
-  'healthcare':           ['#12031A', '#1E0628', '#2A0A38'],
-  'marketing-growth':     ['#180305', '#240608', '#300A0C'],
-};
-
 function getFieldGradient(id: string): [string, string, string] {
-  return FIELD_GRADIENTS[id] ?? ['#050510', '#0A0A20', '#0F0F30'];
+  return resolveFieldGradient(id);
 }
 
 // ─── Island chain (Crypto special case) ──────────────────────────────────────
 
 function IslandChain({ onIslandPress }: { onIslandPress: (island: any) => void }) {
-  const { colors } = useTheme();
   const scrollRef  = useRef<ScrollView>(null);
-
-  const floats = ISLANDS.slice(0, 8).map((_, i) =>
-    useAnimatedFloat(5, 2000 + i * 150, i * 200)
-  );
+  const floats = [
+    useAnimatedFloat(5, 2000, 0),
+    useAnimatedFloat(5, 2150, 200),
+    useAnimatedFloat(5, 2300, 400),
+    useAnimatedFloat(5, 2450, 600),
+    useAnimatedFloat(5, 2600, 800),
+    useAnimatedFloat(5, 2750, 1000),
+    useAnimatedFloat(5, 2900, 1200),
+    useAnimatedFloat(5, 3050, 1400),
+  ];
 
   return (
     <View style={chain.root}>
@@ -186,7 +179,6 @@ function FieldPortal({
   fieldColor: string;
 }) {
   const navigation = useNavigation<any>();
-  const { colors } = useTheme();
   const { updateActiveField } = useAuth();
   const entrance   = useRef(new Animated.Value(0)).current;
   const slideY     = useRef(new Animated.Value(40)).current;
@@ -198,7 +190,7 @@ function FieldPortal({
       Animated.spring(entrance, { toValue: 1, tension: 60, friction: 10, useNativeDriver: true }),
       Animated.spring(slideY,   { toValue: 0,  tension: 50, friction: 10, useNativeDriver: true }),
     ]).start();
-  }, []);
+  }, [entrance, slideY]);
 
   const close = () => {
     Animated.parallel([
@@ -317,7 +309,6 @@ function FieldPortal({
 // ─── Single field card ─────────────────────────────────────────────────────────
 
 function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail | null; index: number }) {
-  const { colors } = useTheme();
   const C          = fieldColor(field.id);
   const gradient   = getFieldGradient(field.id);
   const [open, setOpen] = useState(false);
@@ -334,7 +325,7 @@ function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail |
       Animated.spring(entranceY, { toValue: 0, tension: 50, friction: 9, delay: index * 80, useNativeDriver: true }),
       Animated.timing(entranceO, { toValue: 1, duration: 400, delay: index * 80, useNativeDriver: true }),
     ]).start();
-  }, []);
+  }, [entranceO, entranceY, index]);
 
   // Live field glow loop
   useEffect(() => {
@@ -346,7 +337,7 @@ function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail |
         ])
       ).start();
     }
-  }, []);
+  }, [field.status, glowAnim]);
 
   const onPress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -453,9 +444,6 @@ function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail |
 // ─── Screen ────────────────────────────────────────────────────────────────────
 
 export default function FieldsScreen() {
-  const { colors } = useTheme();
-  const isWebWide  = useIsWebWide();
-
   const allDetails = getAllFieldDetails();
 
   // Build merged field list from ALL_FIELDS + fieldDetails
@@ -512,7 +500,7 @@ function useAnimatedFloat(range: number, duration: number, delay: number) {
         Animated.timing(v, { toValue: range,  duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
       ])
     ).start();
-  }, []);
+  }, [delay, duration, range, v]);
   return v;
 }
 

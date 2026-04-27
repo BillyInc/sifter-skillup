@@ -13,11 +13,10 @@
 import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, FlatList, ActivityIndicator, RefreshControl,
+  SafeAreaView, RefreshControl,
   Platform, useWindowDimensions,
 } from 'react-native';
-import { useFocusEffect } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import FeedWebLayout from '../components/FeedWebLayout';
 import { useFeed } from '../hooks/useFeed';
@@ -236,8 +235,8 @@ export default function FeedScreen() {
       {/* ── Header ── */}
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
-          <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>TRACK FEED</Text>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>📰 Feed</Text>
+          <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>FEEDS</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>📰 Feed Hub</Text>
           <Text style={[styles.headerSub, { color: accentColor }]}>
             {activeTrack?.label ?? 'Your track'}
           </Text>

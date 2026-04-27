@@ -400,7 +400,7 @@ function MCQQuestion({ q, onCorrect, onWrong }: { q: Question; onCorrect:()=>voi
     setTimeout(() => ok ? onCorrect() : onWrong(), 800);
   };
   return (
-    <View style={sty.body}>
+    <ScrollView style={sty.body} contentContainerStyle={sty.bodyContent} showsVerticalScrollIndicator={false}>
       <View style={[sty.card, Shadow.md]}>
         {q.context ? <Text style={sty.qCtx}>{q.context}</Text> : null}
         <Text style={sty.qPrompt}>{q.prompt}</Text>
@@ -422,7 +422,7 @@ function MCQQuestion({ q, onCorrect, onWrong }: { q: Question; onCorrect:()=>voi
           );
         })}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -662,7 +662,9 @@ function FeedbackBar({ correct, combo, xp, explanation, onNext, isLast }: {
 }
 
 // ── Complete / Fail screens ───────────────────────────────────
-function CompleteScreen({ stars, xp, topic, onContinue }: { stars:number; xp:number; topic:string; onContinue:()=>void }) {
+function CompleteScreen({ stars, xp, topic, onContinue, warning }: {
+  stars:number; xp:number; topic:string; onContinue:()=>void; warning?: string | null;
+}) {
   return (
     <View style={sty.fullCenter}>
       <Text style={sty.stars}>{'★'.repeat(stars)+'☆'.repeat(3-stars)}</Text>
@@ -670,6 +672,7 @@ function CompleteScreen({ stars, xp, topic, onContinue }: { stars:number; xp:num
       <Text style={sty.subtopic}>{topic}</Text>
       <Text style={sty.xpNum}>+{xp} XP</Text>
       {stars===3&&<View style={sty.perfectBadge}><Text style={sty.perfectTxt}>⚡ Perfect!</Text></View>}
+      {warning ? <Text style={sty.completionWarning}>{warning}</Text> : null}
       <TouchableOpacity style={[sty.primaryBtn,{marginTop:Spacing.xxxl}]} onPress={onContinue} activeOpacity={0.85}>
         <Text style={sty.primaryBtnTxt}>Continue →</Text>
       </TouchableOpacity>
@@ -746,6 +749,8 @@ export default function LessonScreen({
   const [showTransition, setShowTransition]   = useState(false);
   const [pendingLevelId, setPendingLevelId]   = useState<number|null>(null);
   const [showFlag, setShowFlag]               = useState(false);
+  const [isFinishing, setIsFinishing]         = useState(false);
+  const [completionWarning, setCompletionWarning] = useState<string | null>(null);
 
   const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
   const isBossLvl  = Boolean(isBoss || classicLevel?.isBoss || classicLevel?.mechanic === 'boss');
@@ -846,17 +851,23 @@ export default function LessonScreen({
   const handleNext = () => { setShowFeedback(false); advance(); };
 
   const handleFinish = async () => {
-    if(!state || celebrationDone) return;
+    if(!state || celebrationDone || isFinishing) return;
+    setIsFinishing(true);
     const requestedTrack = trackId ?? userTrackId;
-    const completionTrack = requestedTrack === 'starknet-islands' || (levelId >= 291 && levelId <= 310)
-      ? 'crypto'
-      : requestedTrack;
-    await completeLevel(
-      levelId,
-      completionTrack,
-      state.xp,
-      state.wrongCount===0,
-    );
+    let completionSaved = false;
+    try {
+      await completeLevel(
+        levelId,
+        requestedTrack,
+        state.xp,
+        state.wrongCount===0,
+      );
+      completionSaved = true;
+      setCompletionWarning(null);
+    } catch (error) {
+      console.warn('completeLevel failed (non-fatal):', error);
+      setCompletionWarning('Lesson complete, but progress could not be synced to the server yet.');
+    }
 
     // ── Navigator boss completion (levels 3001–3011) ──────────────────────────
     // Fires POST /api/game/navigator-lab-complete which unlocks next Navigator lab.
@@ -864,7 +875,7 @@ export default function LessonScreen({
     // a numeric `levelId` that happens to land in the boss range (e.g. Lab 2
     // lesson 0 previously routed with levelId=3001), and we do NOT want those
     // to wrongly register a lab completion.
-    if (!isStarknetLabLesson && levelId >= 3001 && levelId <= 3011) {
+    if (completionSaved && !isStarknetLabLesson && levelId >= 3001 && levelId <= 3011) {
       const labNum = levelId - 3000;
       try {
         const tok = await API.getToken();
@@ -879,7 +890,7 @@ export default function LessonScreen({
     }
 
     // ── Cairo Builder boss completion (levels 5001–5020) ─────────────────────
-    if (!isStarknetLabLesson && levelId >= 5001 && levelId <= 5020) {
+    if (completionSaved && !isStarknetLabLesson && levelId >= 5001 && levelId <= 5020) {
       const labNum = levelId - 5000;
       try {
         const tok2 = await API.getToken();
@@ -894,7 +905,7 @@ export default function LessonScreen({
     }
 
     // ── Ecosystem Deep Dive boss completion (levels 4001–4015) ───────────────
-    if (!isStarknetLabLesson && levelId >= 4001 && levelId <= 4015) {
+    if (completionSaved && !isStarknetLabLesson && levelId >= 4001 && levelId <= 4015) {
       const labNum = levelId - 4000;
       try {
         const tok3 = await API.getToken();
@@ -913,6 +924,7 @@ export default function LessonScreen({
 
     setCelebType(isBossLvl ? 'boss' : 'lesson');
     setShowCelebration(true);
+    setIsFinishing(false);
   };
 
   const handleCelebDismiss = () => {
@@ -998,7 +1010,7 @@ export default function LessonScreen({
 
   // Finished — show celebration then hand off
   if (state.finished) {
-    if (!showCelebration && !celebrationDone) handleFinish();
+    if (!showCelebration && !celebrationDone && !isFinishing) handleFinish();
     return (
       <SafeAreaView style={sty.screen}>
         <CelebrationOverlay
@@ -1009,7 +1021,13 @@ export default function LessonScreen({
           onDismiss={handleCelebDismiss}
         />
         {!showCelebration && (
-          <CompleteScreen stars={state.stars} xp={sessionXp} topic={lessonTopic} onContinue={handleCelebDismiss}/>
+          <CompleteScreen
+            stars={state.stars}
+            xp={sessionXp}
+            topic={lessonTopic}
+            warning={completionWarning}
+            onContinue={handleCelebDismiss}
+          />
         )}
       </SafeAreaView>
     );
@@ -1248,6 +1266,7 @@ const sty = StyleSheet.create({
   xpNum:         {fontSize:38,fontWeight:'900',color:Colors.accent,marginTop:Spacing.lg},
   perfectBadge:  {backgroundColor:Colors.gold,borderRadius:Radius.full,paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm,marginTop:Spacing.md},
   perfectTxt:    {fontSize:FontSize.sm,fontWeight:'800',color:'#fff',letterSpacing:0.5},
+  completionWarning:{marginTop:Spacing.lg,paddingHorizontal:Spacing.lg,color:Colors.textSoft,textAlign:'center',lineHeight:20,maxWidth:320},
   primaryBtn:    {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:Spacing.lg,alignItems:'center',width:'100%'},
   primaryBtnTxt: {color:'#fff',fontSize:FontSize.lg,fontWeight:'800',letterSpacing:0.3},
   ghostBtn:      {borderRadius:Radius.md,paddingVertical:Spacing.lg,alignItems:'center',borderWidth:2,borderColor:Colors.border},

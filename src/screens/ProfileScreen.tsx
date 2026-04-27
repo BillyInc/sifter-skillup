@@ -10,8 +10,7 @@ import {
   Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
   AnimPreset, XP_STAGES,
@@ -32,7 +31,7 @@ function StageRing({ progress, color, size = 140 }: { progress: number; color: s
 
   useEffect(() => {
     Animated.timing(fillAnim, { toValue: progress, duration: 800, useNativeDriver: false }).start();
-  }, [progress]);
+  }, [fillAnim, progress]);
 
   // Simple progress arc via border trick
   const borderWidth = 5;
@@ -88,7 +87,7 @@ function SkillBar({ label, value, color }: { label: string; value: number; color
 
   useEffect(() => {
     Animated.timing(widthAnim, { toValue: value / 100, duration: 700, useNativeDriver: false }).start();
-  }, [value]);
+  }, [value, widthAnim]);
 
   return (
     <View style={styles.skillBarRow}>
@@ -168,7 +167,7 @@ export default function ProfileScreen() {
 
     entranceAnim.setValue(0);
     Animated.timing(entranceAnim, { toValue: 1, ...AnimPreset.enter }).start();
-  }, []));
+  }, [entranceAnim]));
 
   const stage     = xp?.stage.stage ?? 1;
   const stageName = xp?.stage.name  ?? 'Raw Recruit';
@@ -260,8 +259,8 @@ export default function ProfileScreen() {
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Portfolio & Account" accentBar accentColor={colors.gold}>
-                <WebListRow icon="💼" title="View Portfolio" sub="Work samples, achievements" onPress={() => go('/(tabs)/portfolio')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+              <WebCard title="Artifacts + Account" accentBar accentColor={colors.gold}>
+                <WebListRow icon="💼" title="View Artifacts + XP" sub="Work samples, achievements" onPress={() => go('/(tabs)/portfolio')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebListRow icon="🏅" title="Badges & Rewards" sub="Your earned badges" onPress={() => go('/(tabs)/guild')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebListRow icon="🛍️" title="Merchandise" sub="Redeem merch credits" onPress={() => go('/merchandise')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebListRow icon="🏝️" title="Continue Learning" sub="Resume island journey" onPress={() => go('/(tabs)/map')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
@@ -374,9 +373,9 @@ export default function ProfileScreen() {
         </SectionCard>
 
         {/* ── Portfolio + Account ── */}
-        <SectionCard title="PORTFOLIO & ACCOUNT">
+        <SectionCard title="ARTIFACTS + ACCOUNT">
           <AccountRow
-            emoji="💼" label="View Portfolio"
+            emoji="💼" label="View Artifacts + XP"
             sub="Work samples, achievements, resume"
             onPress={() => go('/(tabs)/portfolio')}
           />

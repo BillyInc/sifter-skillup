@@ -98,13 +98,13 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
           <>
             <View style={styles.heroCard}>
               <Text style={styles.heroEmoji}>🚀</Text>
-              <Text style={styles.heroTitle}>We're your launchpad, not your only source.</Text>
+              <Text style={styles.heroTitle}>We&apos;re your launchpad, not your only source.</Text>
               <Text style={styles.heroBody}>
-                Sifter Skill_Up is built to give you the foundation, practice, and verified portfolio
+                Sifter Skill_Up is built to give you the foundation, practice, and verified
                 artifacts that real employers look for. But the best professionals combine multiple
                 sources — books, mentors, communities, real projects, and experience.
                 {'\n\n'}
-                We'll help you build the skills. You take them into the world.
+                We&apos;ll help you build the skills. You take them into the world.
               </Text>
             </View>
 
@@ -126,12 +126,12 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
             ))}
 
             <View style={styles.honestBox}>
-              <Text style={styles.honestTitle}>What we don't guarantee</Text>
+              <Text style={styles.honestTitle}>What we don&apos;t guarantee</Text>
               <Text style={styles.honestBody}>
-                We can't promise you'll get a job. We can promise you'll build real, verifiable skills
+                We can&apos;t promise you&apos;ll get a job. We can promise you&apos;ll build real, verifiable skills
                 that make you a stronger candidate.{'\n\n'}
                 Your success depends on your effort, your network, local market conditions, and factors
-                outside anyone's control. We're honest about that because we respect you.
+                outside anyone&apos;s control. We&apos;re honest about that because we respect you.
               </Text>
             </View>
           </>
@@ -153,7 +153,7 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
             <View style={styles.noEndorseNote}>
               <Text style={styles.noEndorseText}>
                 🔗 These links open external sites. Sifter Skill_Up is not affiliated with or
-                endorsed by any of these platforms. We link to them because they're genuinely useful.
+                endorsed by any of these platforms. We link to them because they&apos;re genuinely useful.
               </Text>
             </View>
           </>
@@ -163,14 +163,14 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
         {tab === 'terms' && (
           <>
             <Text style={styles.termsIntro}>
-              We've written this in plain English. A lawyer reviewed it.
+              We&apos;ve written this in plain English. A lawyer reviewed it.
               Full legal text is at sifter.app/terms — this is the human version.
             </Text>
 
             {[
               {
                 title: 'What Sifter Skill_Up is',
-                body: 'An educational platform. We teach career skills through lessons, simulations, and portfolio projects. We are not a recruitment agency, career counsellor, or job placement service.',
+                body: 'An educational platform. We teach career skills through lessons, simulations, and artifact-driven projects. We are not a recruitment agency, career counsellor, or job placement service.',
               },
               {
                 title: 'No job guarantee',
@@ -182,11 +182,11 @@ export default function LearnMoreScreen({ trackId = 'supply-chain-analyst', onCl
               },
               {
                 title: 'Your portfolio content is yours',
-                body: 'You own everything you create on Sifter. We license it only to display it in-app and to power the portfolio push feature you initiate. We will never sell your work or use it to train AI models without your explicit permission.',
+                body: 'You own everything you create on Sifter. We license it only to display it in-app and to power the artifact push feature you initiate. We will never sell your work or use it to train AI models without your explicit permission.',
               },
               {
                 title: 'Profile push and third-party platforms',
-                body: 'When you push your portfolio to LinkedIn, GitHub, or other platforms, you authorise us to act as your limited agent for that specific action. You are responsible for maintaining those accounts and complying with their terms. We are not responsible for third-party platform decisions.',
+                body: 'When you push your artifacts to LinkedIn, GitHub, or other platforms, you authorise us to act as your limited agent for that specific action. You are responsible for maintaining those accounts and complying with their terms. We are not responsible for third-party platform decisions.',
               },
               {
                 title: 'OAuth and account security',

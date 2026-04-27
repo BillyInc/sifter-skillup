@@ -264,6 +264,9 @@ export function WebListRow({
   right?: React.ReactNode;
 }) {
   const { colors } = useTheme();
+  const rightNode = typeof right === 'string' || typeof right === 'number'
+    ? <Text style={[styles.listRowRightText, { color: colors.textMuted }]}>{right}</Text>
+    : right;
   return (
     <TouchableOpacity
       style={[styles.listRow, { borderBottomColor: colors.border }]}
@@ -280,7 +283,7 @@ export function WebListRow({
           <Text style={styles.listRowBadgeText}>{badge}</Text>
         </View>
       )}
-      {right}
+      {rightNode ? <View style={styles.listRowRight}>{rightNode}</View> : null}
     </TouchableOpacity>
   );
 }
@@ -426,6 +429,8 @@ const styles = StyleSheet.create({
   listRowSub:       { fontSize: FontSize.xs, marginTop: 2 },
   listRowBadge:     { minWidth: 22, height: 22, borderRadius: 11, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 6 },
   listRowBadgeText: { fontSize: 11, fontWeight: FontWeight.black, color: '#fff' },
+  listRowRight:     { marginLeft: Spacing.sm, alignItems: 'center', justifyContent: 'center' },
+  listRowRightText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
 
   emptyState:   { alignItems: 'center', paddingVertical: 40, gap: 10 },
   emptyEmoji:   { fontSize: 36 },
