@@ -44,7 +44,7 @@ function SimShell({ title, subtitle, icon, children }: { title: string; subtitle
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md }} showsVerticalScrollIndicator={false}>
       <View style={{ flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' }}>
-        <Text style={{ fontSize: 36, lineHeight: 44 }}>{icon}</Text>
+        <Text style={{ fontSize: 18, lineHeight: 22 }}>{icon}</Text>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 }}>⚡ TRY IT NOW</Text>
           <Text style={{ fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 }}>{title}</Text>
@@ -187,7 +187,7 @@ export function AbstractAASim({ onComplete, onSkip }: SimProps) {
           <Text style={s.h2}>Abstract wallets are smart contracts. Your biometric IS the wallet — stored on your device, never leaves it.</Text>
           <TouchableOpacity onPress={() => setPasskeyCreated(true)} style={{ marginTop: Spacing.md, padding: Spacing.xl, borderRadius: Radius.xl,
             backgroundColor: passkeyCreated ? '#d1fae5' : Colors.accentSoft, alignItems: 'center', borderWidth: 2, borderColor: passkeyCreated ? Colors.green : Colors.accent }}>
-            <Text style={{ fontSize: 48 }}>{passkeyCreated ? '✅' : '👆'}</Text>
+            <Text style={{ fontSize: 18 }}>{passkeyCreated ? '✅' : '👆'}</Text>
             <Text style={{ fontWeight: '800', color: passkeyCreated ? Colors.green : Colors.accent, marginTop: Spacing.sm }}>
               {passkeyCreated ? 'Passkey Created — No Seed Phrase!' : 'Tap to Create with FaceID'}
             </Text>
@@ -206,7 +206,7 @@ export function AbstractAASim({ onComplete, onSkip }: SimProps) {
           </View>
           <TouchableOpacity onPress={() => setSessionKeySet(true)} style={{ marginTop: Spacing.md, padding: Spacing.md, borderRadius: Radius.md,
             backgroundColor: sessionKeySet ? '#d1fae5' : Colors.accent, alignItems: 'center' }}>
-            <Text style={{ color: '#fff', fontWeight: '900' }}>
+            <Text style={{ color: '#fff', fontWeight: '800' }}>
               {sessionKeySet ? '✅ Session Key Active' : 'Approve Session Key'}
             </Text>
           </TouchableOpacity>
@@ -220,10 +220,10 @@ export function AbstractAASim({ onComplete, onSkip }: SimProps) {
           <Text style={s.h2}>The paymaster contract pays gas on your behalf. You never need ETH to transact.</Text>
           <View style={{ gap: Spacing.sm, marginTop: Spacing.md }}>
             <View style={{ padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ fontWeight: '700' }}>Game action (mint item)</Text><Text style={{ fontWeight: '900', color: Colors.accent }}>0.05 USDC</Text>
+              <Text style={{ fontWeight: '700' }}>Game action (mint item)</Text><Text style={{ fontWeight: '800', color: Colors.accent }}>0.05 USDC</Text>
             </View>
             <View style={{ padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ fontWeight: '700' }}>Gas fee</Text><Text style={{ fontWeight: '900', color: Colors.green }}>$0.00 (paymaster)</Text>
+              <Text style={{ fontWeight: '700' }}>Gas fee</Text><Text style={{ fontWeight: '800', color: Colors.green }}>$0.00 (paymaster)</Text>
             </View>
             <View style={{ padding: Spacing.md, backgroundColor: '#f0fdf4', borderRadius: Radius.md }}>
               <Text style={{ fontWeight: '700', color: Colors.green }}>✅ Transaction auto-signed by session key — no popup</Text>
@@ -375,13 +375,13 @@ export function L2FeeWarsSim({ onComplete, onSkip }: SimProps) {
         <Text style={s.fl}>COST PER TRANSACTION</Text>
         <View style={{ padding: Spacing.md, backgroundColor: '#fff0f0', borderRadius: Radius.md, marginBottom: Spacing.md }}>
           <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.red }}>🔷 Ethereum L1</Text>
-          <Text style={{ fontWeight: '900', fontSize: 28, color: Colors.red }}>${ethFee.toFixed(2)}</Text>
+          <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.red }}>${ethFee.toFixed(2)}</Text>
         </View>
         {chains.map(([name, fee]) => (
           <View key={name} style={{ padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md, marginBottom: Spacing.sm }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
               <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent }}>{name}</Text>
-              <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.accent }}>${fee < 0.01 ? fee.toFixed(4) : fee.toFixed(3)}</Text>
+              <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.accent }}>${fee < 0.01 ? fee.toFixed(4) : fee.toFixed(3)}</Text>
             </View>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>
               {(ethFee / fee).toFixed(0)}× cheaper than Ethereum L1
@@ -389,7 +389,7 @@ export function L2FeeWarsSim({ onComplete, onSkip }: SimProps) {
           </View>
         ))}
         <View style={{ padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md }}>
-          <Text style={{ fontWeight: '900', color: Colors.green }}>
+          <Text style={{ fontWeight: '800', color: Colors.green }}>
             🏆 Cheapest: {cheapest[0]} at ${Number(cheapest[1]) < 0.01 ? Number(cheapest[1]).toFixed(4) : Number(cheapest[1]).toFixed(3)}
           </Text>
         </View>
@@ -676,8 +676,8 @@ export function WalletDrainerDrillSim({ onComplete, onSkip }: SimProps) {
     return (
       <SimShell icon="💀" title="Wallet Drained" subtitle="You signed a drainer transaction. See what happened.">
         <View style={{ padding: Spacing.xl, backgroundColor: '#fff0f0', borderRadius: Radius.lg, borderWidth: 2, borderColor: Colors.red, alignItems: 'center' }}>
-          <Text style={{ fontSize: 64 }}>💸</Text>
-          <Text style={{ fontWeight: '900', color: Colors.red, fontSize: FontSize.xl, marginTop: Spacing.md }}>EVERYTHING GONE</Text>
+          <Text style={{ fontSize: 18 }}>💸</Text>
+          <Text style={{ fontWeight: '800', color: Colors.red, fontSize: FontSize.xl, marginTop: Spacing.md }}>EVERYTHING GONE</Text>
           <Text style={{ color: Colors.textSoft, textAlign: 'center', marginTop: Spacing.sm, lineHeight: 20 }}>
             The contract was a drainer. One approval/signature gave it permission to transfer all your tokens and NFTs simultaneously.
           </Text>
@@ -822,13 +822,13 @@ export function FlashbotsProtectSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card style={{ borderColor: Colors.red }}>
             <Text style={[s.fl, { color: Colors.red }]}>OPTION A — PUBLIC MEMPOOL (DEFAULT)</Text>
-            <View style={s.row}><Text style={s.rk}>MEV sandwich loss</Text><Text style={[s.rv, { color: Colors.red, fontWeight: '900' }]}>-${mevLoss}</Text></View>
+            <View style={s.row}><Text style={s.rk}>MEV sandwich loss</Text><Text style={[s.rv, { color: Colors.red, fontWeight: '800' }]}>-${mevLoss}</Text></View>
             <View style={s.row}><Text style={s.rk}>Slippage</Text><Text style={s.rv}>Up to 1% extra</Text></View>
             <View style={s.row}><Text style={s.rk}>Bot visibility</Text><Text style={[s.rv, { color: Colors.red }]}>Visible to all bots</Text></View>
           </Card>
           <Card style={{ borderColor: Colors.green }}>
             <Text style={[s.fl, { color: Colors.green }]}>OPTION B — FLASHBOTS PROTECT</Text>
-            <View style={s.row}><Text style={s.rk}>MEV loss</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '900' }]}>$0.00</Text></View>
+            <View style={s.row}><Text style={s.rk}>MEV loss</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '800' }]}>$0.00</Text></View>
             <View style={s.row}><Text style={s.rk}>RPC endpoint</Text><Text style={{ fontSize: 10, fontFamily: 'monospace', color: Colors.accent }}>rpc.flashbots.net</Text></View>
             <View style={s.row}><Text style={s.rk}>Bot visibility</Text><Text style={[s.rv, { color: Colors.green }]}>Private — bots can't see it</Text></View>
           </Card>
@@ -945,7 +945,7 @@ export function OpsecBuilderSim({ onComplete, onSkip }: SimProps) {
                 style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1, borderBottomColor: Colors.border }}>
                 <View style={{ width: 24, height: 24, borderRadius: 6, borderWidth: 2, alignItems: 'center', justifyContent: 'center',
                   borderColor: isApplied ? Colors.green : Colors.red, backgroundColor: isApplied ? '#d1fae5' : 'transparent' }}>
-                  {isApplied && <Text style={{ color: Colors.green, fontWeight: '900' }}>✓</Text>}
+                  {isApplied && <Text style={{ color: Colors.green, fontWeight: '800' }}>✓</Text>}
                 </View>
                 <Text style={{ flex: 1, fontSize: FontSize.sm, fontWeight: '600', color: Colors.text }}>{m.label}</Text>
                 <Text style={{ fontSize: FontSize.xs, color: Colors.accent, fontWeight: '800' }}>+{m.pts}</Text>
@@ -965,7 +965,7 @@ export function OpsecBuilderSim({ onComplete, onSkip }: SimProps) {
                 style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1, borderBottomColor: Colors.border }}>
                 <View style={{ width: 24, height: 24, borderRadius: 6, borderWidth: 2, alignItems: 'center', justifyContent: 'center',
                   borderColor: isApplied ? Colors.green : '#f59e0b', backgroundColor: isApplied ? '#d1fae5' : 'transparent' }}>
-                  {isApplied && <Text style={{ color: Colors.green, fontWeight: '900' }}>✓</Text>}
+                  {isApplied && <Text style={{ color: Colors.green, fontWeight: '800' }}>✓</Text>}
                 </View>
                 <Text style={{ flex: 1, fontSize: FontSize.sm, fontWeight: '600', color: Colors.text }}>{m.label}</Text>
                 <Text style={{ fontSize: FontSize.xs, color: Colors.accent, fontWeight: '800' }}>+{m.pts}</Text>
@@ -1057,8 +1057,8 @@ export function SecurityBossSim({ onComplete, onSkip }: SimProps) {
       ) : (
         <>
           <Card style={{ borderColor: score >= 3 ? Colors.green : Colors.red }}>
-            <Text style={{ textAlign: 'center', fontSize: 48 }}>{score >= 3 ? '🏆' : '📚'}</Text>
-            <Text style={{ fontWeight: '900', textAlign: 'center', color: score >= 3 ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>{score >= 3 ? '🏆' : '📚'}</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', color: score >= 3 ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
               {score >= 3 ? 'SECURITY BOSS CLEARED!' : 'Review & Stay Safe'}
             </Text>
             <Text style={{ textAlign: 'center', color: Colors.textSoft }}>{score}/4 correct</Text>
@@ -1221,8 +1221,8 @@ export function AdvancedCryptoBossSim({ onComplete, onSkip }: SimProps) {
       ) : (
         <>
           <Card style={{ borderColor: score >= 3 ? Colors.green : Colors.red }}>
-            <Text style={{ textAlign: 'center', fontSize: 48 }}>{score >= 3 ? '🏆' : '📚'}</Text>
-            <Text style={{ fontWeight: '900', textAlign: 'center', color: score >= 3 ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>{score >= 3 ? '🏆' : '📚'}</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', color: score >= 3 ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
               {score >= 3 ? 'ADVANCED CRYPTO MASTERED!' : 'Keep Studying'}
             </Text>
             <Text style={{ textAlign: 'center', color: Colors.textSoft }}>{score}/4 correct</Text>

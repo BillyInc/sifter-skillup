@@ -300,18 +300,18 @@ function MascotModal({ mascot, speech, event, xp, labTitle, labPreview, onDismis
 
 const md = StyleSheet.create({
   backdrop:   { flex: 1, backgroundColor: 'rgba(0,0,0,0.56)', alignItems: 'center', justifyContent: 'center' },
-  card:       { backgroundColor: '#fff', borderRadius: 24, width: W * 0.84, alignItems: 'center', overflow: 'hidden', ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.26, shadowRadius: 24 }, android: { elevation: 16 } }) },
+  card:       { backgroundColor: '#fff', borderRadius: 14, width: W * 0.84, alignItems: 'center', overflow: 'hidden', ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.26, shadowRadius: 24 }, android: { elevation: 16 } }) },
   stripe:     { height: 6, width: '100%' },
   iconWrap:   { width: 96, height: 96, borderRadius: 48, alignItems: 'center', justifyContent: 'center', marginVertical: Spacing.lg },
   badge:      { borderRadius: Radius.full, paddingHorizontal: Spacing.lg, paddingVertical: 5, marginBottom: Spacing.md },
-  badgeText:  { fontSize: 11, fontWeight: '900', color: '#fff', textTransform: 'uppercase', letterSpacing: 1.2 },
-  speech:     { fontSize: 18, fontWeight: '800', color: '#0f172a', textAlign: 'center', paddingHorizontal: Spacing.xl, lineHeight: 27, marginBottom: Spacing.md },
+  badgeText:  { fontSize: 11, fontWeight: '800', color: '#fff', textTransform: 'uppercase', letterSpacing: 1.2 },
+  speech:     { fontSize: 18, fontWeight: '800', color: '#0f172a', textAlign: 'center', paddingHorizontal: Spacing.xl, lineHeight: 22, marginBottom: Spacing.md },
   labBox:     { backgroundColor: '#f8fafc', borderRadius: Radius.lg, padding: Spacing.md, marginHorizontal: Spacing.lg, marginBottom: Spacing.md, width: W * 0.72 },
   labTitle:   { fontSize: 11, fontWeight: '800', color: Colors.textSoft, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
   labPreview: { fontSize: FontSize.sm, color: '#334155', lineHeight: 20 },
   xpBadge:    { borderRadius: Radius.full, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, marginBottom: Spacing.md },
-  xpText:     { fontSize: FontSize.xl, fontWeight: '900' },
-  btn:        { borderRadius: Radius.lg, paddingVertical: Spacing.lg, paddingHorizontal: 40, marginBottom: Spacing.xl },
+  xpText:     { fontSize: FontSize.xl, fontWeight: '800' },
+  btn:        { borderRadius: Radius.lg, paddingVertical: Spacing.lg, paddingHorizontal: 18, marginBottom: Spacing.xl },
   btnText:    { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
 });
 

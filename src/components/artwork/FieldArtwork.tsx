@@ -195,7 +195,7 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
           }}>
             {/* Bitcoin symbol */}
             {n.s >= 18 && (
-              <Text style={{ color: '#fff', fontSize: n.s * 0.55, textAlign: 'center', lineHeight: n.s, fontWeight: '900' }}>₿</Text>
+              <Text style={{ color: '#fff', fontSize: n.s * 0.55, textAlign: 'center', lineHeight: n.s, fontWeight: '800' }}>₿</Text>
             )}
           </View>
         </Animated.View>
@@ -232,7 +232,7 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
         transform: [{ scale: pulse1 }],
         shadowColor: C, shadowOpacity: 0.8, shadowRadius: 12, elevation: 8,
       }}>
-        <Text style={{ color: '#fff', fontSize: DIM * 0.1, fontWeight: '900' }}>₿</Text>
+        <Text style={{ color: '#fff', fontSize: DIM * 0.1, fontWeight: '800' }}>₿</Text>
       </Animated.View>
     </View>
   );
@@ -339,7 +339,7 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
         transform: [{ translateY: float1 }],
       }}>
         <View style={{ backgroundColor: '#10B981', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
-          <Text style={{ color: '#fff', fontSize: DIM * 0.07, fontWeight: '900' }}>+2.81</Text>
+          <Text style={{ color: '#fff', fontSize: DIM * 0.07, fontWeight: '800' }}>+2.81</Text>
         </View>
       </Animated.View>
 
@@ -365,7 +365,7 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
         alignItems: 'center', justifyContent: 'center',
         shadowColor: C, shadowOpacity: 0.7, shadowRadius: 10,
       }}>
-        <Text style={{ color: '#fff', fontSize: DIM * 0.14, fontWeight: '900' }}>Σ</Text>
+        <Text style={{ color: '#fff', fontSize: DIM * 0.14, fontWeight: '800' }}>Σ</Text>
       </View>
     </View>
   );

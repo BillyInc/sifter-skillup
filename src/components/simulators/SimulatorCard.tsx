@@ -78,7 +78,7 @@ const shell = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  icon:     { fontSize: 30, lineHeight: 36 },
+  icon:     { fontSize: 18, lineHeight: 22 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
   title:    { fontSize: 11, fontWeight: '800', color: Colors.text, lineHeight: 17, marginTop: 1 },
   subtitle: { fontSize: 11, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
@@ -185,7 +185,7 @@ function TonWalletSim({ onComplete, onSkip }: SimProps) {
             <View style={s.row}><Text style={s.rowKey}>Network Fee</Text><Text style={s.rowVal}>~0.01 TON</Text></View>
             <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, marginTop: Spacing.sm, paddingTop: Spacing.sm }]}>
               <Text style={s.rowKey}>Total</Text>
-              <Text style={[s.rowVal, { fontWeight: '900', color: Colors.text }]}>{(parseFloat(amount) + 0.01).toFixed(2)} TON</Text>
+              <Text style={[s.rowVal, { fontWeight: '800', color: Colors.text }]}>{(parseFloat(amount) + 0.01).toFixed(2)} TON</Text>
             </View>
           </Card>
           <PrimaryBtn label="✓ Confirm & Send" onPress={handleConfirm} />
@@ -266,7 +266,7 @@ function TonTapEarnSim({ onComplete, onSkip }: SimProps) {
 }
 const tapBtn = StyleSheet.create({
   btn:   { alignSelf: 'center', width: 119, height: 119, borderRadius: 60, backgroundColor: '#0088cc', alignItems: 'center', justifyContent: 'center', ...Shadow.md as object },
-  coin:  { fontSize: 52 },
+  coin:  { fontSize: 18 },
   label: { color: '#fff', fontSize: 11, fontWeight: '800', letterSpacing: 1, marginTop: 4 },
 });
 
@@ -301,7 +301,7 @@ function TonStakingSim({ onComplete, onSkip }: SimProps) {
         <Text style={s.fieldLabel}>PROJECTED REWARDS (5.4% APY)</Text>
         <View style={s.row}><Text style={s.rowKey}>Per Month</Text><Text style={s.rowVal}>+{monthly} TON</Text></View>
         <View style={s.row}><Text style={s.rowKey}>After {period} Month{period > 1 ? 's' : ''}</Text>
-          <Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>+{yearly} TON</Text></View>
+          <Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>+{yearly} TON</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Validator</Text><Text style={s.rowVal}>Whales.io (99.9% uptime)</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Lock-up Risk</Text><Text style={s.rowVal}>Funds locked during period</Text></View>
       </Card>
@@ -417,10 +417,10 @@ function CbAdvancedTradeSim({ onComplete, onSkip }: SimProps) {
       <Card>
         <View style={s.row}>
           <Text style={s.rowKey}>ETH Market Price</Text>
-          <Text style={[s.rowVal, { color: Colors.text, fontWeight: '900' }]}>${MARKET.toLocaleString()}</Text>
+          <Text style={[s.rowVal, { color: Colors.text, fontWeight: '800' }]}>${MARKET.toLocaleString()}</Text>
         </View>
         <Text style={[s.hint2, { marginTop: Spacing.sm }]}>
-          💡 A limit buy executes only when price drops to your target. Set a price <Text style={{ fontWeight: '900' }}>below</Text> ${MARKET}.
+          💡 A limit buy executes only when price drops to your target. Set a price <Text style={{ fontWeight: '800' }}>below</Text> ${MARKET}.
         </Text>
       </Card>
 
@@ -529,7 +529,7 @@ function AccountAbstractionSim({ onComplete, onSkip }: SimProps) {
 
       {step > 0 && step < 3 && (
         <Card>
-          <Text style={{ fontSize: 36, textAlign: 'center', marginBottom: Spacing.sm }}>{steps[step - 1].icon}</Text>
+          <Text style={{ fontSize: 18, textAlign: 'center', marginBottom: Spacing.sm }}>{steps[step - 1].icon}</Text>
           <Text style={[s.fieldLabel, { textAlign: 'center' }]}>STEP {step}</Text>
           <Text style={[s2.scenario, { textAlign: 'center' }]}>{steps[step - 1].label}</Text>
           <Text style={[s.hint2, { textAlign: 'center', marginTop: Spacing.sm }]}>{steps[step - 1].sub}</Text>
@@ -589,7 +589,7 @@ function DepinSim({ onComplete, onSkip }: SimProps) {
     <SimShell icon="📡" title="Share Bandwidth — Earn Tokens" subtitle="Simulate contributing to a DePIN network (like Helium Mobile).">
       <Card>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ fontSize: 64 }}>{done ? '📡' : active ? '🟢' : '⚫'}</Text>
+          <Text style={{ fontSize: 18 }}>{done ? '📡' : active ? '🟢' : '⚫'}</Text>
           <Text style={[s.fieldLabel, { marginTop: Spacing.sm }]}>
             {done ? 'CONTRIBUTION COMPLETE' : active ? 'SHARING BANDWIDTH…' : 'DEVICE OFFLINE'}
           </Text>
@@ -661,7 +661,7 @@ function OpsecIdentitySim({ onComplete, onSkip }: SimProps) {
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: FontSize.xs, color: Colors.accent, fontWeight: '800' }}>+{c.xp}</Text>
               <View style={[{ width: 28, height: 28, borderRadius: 8, borderWidth: 2, alignItems: 'center', justifyContent: 'center', borderColor: isAdded ? Colors.accent : Colors.border, backgroundColor: isAdded ? Colors.accentSoft : 'transparent' }]}>
-                {isAdded && <Text style={{ color: Colors.accent, fontWeight: '900', fontSize: 14 }}>✓</Text>}
+                {isAdded && <Text style={{ color: Colors.accent, fontWeight: '800', fontSize: 14 }}>✓</Text>}
               </View>
             </View>
           </TouchableOpacity>
@@ -739,7 +739,7 @@ function ChainBridgingSim({ onComplete, onSkip }: SimProps) {
       {step === 'confirm' && (
         <>
           <Card>
-            <Text style={{ fontSize: 36, textAlign: 'center' }}>🌉</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>🌉</Text>
             <Text style={[s.fieldLabel, { textAlign: 'center', marginTop: Spacing.sm }]}>CONFIRM BRIDGE</Text>
             <View style={s.row}><Text style={s.rowKey}>From</Text><Text style={s.rowVal}>{fromChain}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>To</Text><Text style={s.rowVal}>{toChain}</Text></View>
@@ -804,7 +804,7 @@ function AvaxStakingSim({ onComplete, onSkip }: SimProps) {
       <Card>
         <Text style={s.fieldLabel}>PROJECTED REWARDS (~7% APY)</Text>
         <View style={s.row}><Text style={s.rowKey}>Per Day</Text><Text style={[s.rowVal, { color: Colors.green }]}>+{dailyEarnings} AVAX</Text></View>
-        <View style={s.row}><Text style={s.rowKey}>After {period} days</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>+{periodEarnings} AVAX (+${(parseFloat(periodEarnings) * AVAX_PRICE).toFixed(2)})</Text></View>
+        <View style={s.row}><Text style={s.rowKey}>After {period} days</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>+{periodEarnings} AVAX (+${(parseFloat(periodEarnings) * AVAX_PRICE).toFixed(2)})</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Slashing Risk</Text><Text style={s.rowVal}>❌ None for delegators</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Your AVAX locked until</Text>
           <Text style={s.rowVal}>{new Date(Date.now() + period * 86400000).toLocaleDateString()}</Text></View>
@@ -993,7 +993,7 @@ function MevSandwichSim({ onComplete, onSkip }: SimProps) {
           <View style={{ gap: Spacing.sm }}>
             <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' }}>
               <View style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: Colors.red, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900', fontSize: 12 }}>1</Text>
+                <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>1</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontWeight: '800', fontSize: FontSize.sm }}>Front-run:</Text>
@@ -1002,7 +1002,7 @@ function MevSandwichSim({ onComplete, onSkip }: SimProps) {
             </View>
             <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' }}>
               <View style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: '#f59e0b', alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900', fontSize: 12 }}>2</Text>
+                <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>2</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontWeight: '800', fontSize: FontSize.sm }}>Your swap:</Text>
@@ -1011,7 +1011,7 @@ function MevSandwichSim({ onComplete, onSkip }: SimProps) {
             </View>
             <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' }}>
               <View style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: Colors.green, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900', fontSize: 12 }}>3</Text>
+                <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>3</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontWeight: '800', fontSize: FontSize.sm }}>Back-run:</Text>
@@ -1034,7 +1034,7 @@ function MevSandwichSim({ onComplete, onSkip }: SimProps) {
               <TouchableOpacity key={i} onPress={() => { if (i === 0 || i === 1) setUsedProtection(true); }}
                 style={[chip.base, (usedProtection && i === 0) && chip.active, { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }]}>
                 <Text style={[chip.text, (usedProtection && i === 0) && chip.activeText]}>{opt}</Text>
-                {usedProtection && i === 0 && <Text style={{ marginLeft: 'auto' as any, color: Colors.green, fontWeight: '900' }}>✓</Text>}
+                {usedProtection && i === 0 && <Text style={{ marginLeft: 'auto' as any, color: Colors.green, fontWeight: '800' }}>✓</Text>}
               </TouchableOpacity>
             ))}
           </View>
@@ -1092,7 +1092,7 @@ function DiscordResearchSim({ onComplete, onSkip }: SimProps) {
               <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: Colors.accentSoft, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 14 }}>👤</Text>
               </View>
-              <Text style={{ fontWeight: '900', fontSize: FontSize.sm, color: Colors.text }}>{msg.sender}</Text>
+              <Text style={{ fontWeight: '800', fontSize: FontSize.sm, color: Colors.text }}>{msg.sender}</Text>
             </View>
             <Text style={{ fontSize: FontSize.sm, color: Colors.text, lineHeight: 20, marginBottom: Spacing.md }}>"{msg.content}"</Text>
             <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
@@ -1165,7 +1165,7 @@ function OpsecCheckSim({ onComplete, onSkip }: SimProps) {
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>+{c.points}</Text>
               <View style={[{ width: 28, height: 28, borderRadius: 8, borderWidth: 2, alignItems: 'center', justifyContent: 'center', borderColor: isOn ? Colors.green : Colors.border, backgroundColor: isOn ? '#d1fae5' : 'transparent' }]}>
-                {isOn && <Text style={{ color: Colors.green, fontWeight: '900', fontSize: 14 }}>✓</Text>}
+                {isOn && <Text style={{ color: Colors.green, fontWeight: '800', fontSize: 14 }}>✓</Text>}
               </View>
             </View>
           </TouchableOpacity>
@@ -1214,7 +1214,7 @@ function SendBitcoinSim({ onComplete, onSkip }: SimProps) {
       {step === 'form' && (<>
         <Card>
           <Text style={s.fieldLabel}>YOUR BALANCE</Text>
-          <Text style={{ fontSize: 26, fontWeight: '900', color: Colors.text, marginBottom: Spacing.md }}>{BALANCE} BTC</Text>
+          <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.text, marginBottom: Spacing.md }}>{BALANCE} BTC</Text>
           <Text style={s.fieldLabel}>RECIPIENT ADDRESS</Text>
           <TextInput style={s.input} value={to} onChangeText={setTo} placeholder="bc1q... or 3... or 1..." placeholderTextColor={Colors.textSoft} autoCapitalize="none" />
           <Text style={s.fieldLabel}>AMOUNT (BTC)</Text>
@@ -1232,7 +1232,7 @@ function SendBitcoinSim({ onComplete, onSkip }: SimProps) {
             ))}
           </View>
           <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>Fee rate</Text><Text style={s.rowVal}>{fee.sat}</Text></View>
-          {amt > 0 && <View style={s.row}><Text style={s.rowKey}>Total out</Text><Text style={[s.rowVal, { color: Colors.text, fontWeight: '900' }]}>{total.toFixed(5)} BTC</Text></View>}
+          {amt > 0 && <View style={s.row}><Text style={s.rowKey}>Total out</Text><Text style={[s.rowVal, { color: Colors.text, fontWeight: '800' }]}>{total.toFixed(5)} BTC</Text></View>}
         </Card>
         <PrimaryBtn label="Review Transaction →" onPress={() => setStep('confirm')} disabled={!valid} />
       </>)}
@@ -1242,7 +1242,7 @@ function SendBitcoinSim({ onComplete, onSkip }: SimProps) {
           <View style={s.row}><Text style={s.rowKey}>To</Text><Text style={s.rowVal}>{to.slice(0,12)}…{to.slice(-6)}</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Amount</Text><Text style={s.rowVal}>{amount} BTC</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Fee ({feeLevel})</Text><Text style={s.rowVal}>{fee.btc} BTC · {fee.time}</Text></View>
-          <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, marginTop: Spacing.sm, paddingTop: Spacing.sm }]}><Text style={s.rowKey}>Total deducted</Text><Text style={[s.rowVal, { color: Colors.red, fontWeight: '900' }]}>{total.toFixed(5)} BTC</Text></View>
+          <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, marginTop: Spacing.sm, paddingTop: Spacing.sm }]}><Text style={s.rowKey}>Total deducted</Text><Text style={[s.rowVal, { color: Colors.red, fontWeight: '800' }]}>{total.toFixed(5)} BTC</Text></View>
         </Card>
         <View style={{ backgroundColor: '#fef3c7', borderRadius: Radius.md, padding: Spacing.md }}>
           <Text style={{ color: '#92400e', fontWeight: '700', fontSize: FontSize.sm }}>⚠️ Bitcoin transactions are IRREVERSIBLE. Verify the address character by character.</Text>
@@ -1333,7 +1333,7 @@ function LightningSim({ onComplete, onSkip }: SimProps) {
         <View style={s.row}><Text style={s.rowKey}>Speed</Text><Text style={[s.rowVal, { color: Colors.green }]}>Instant</Text></View>
       </Card>}
       {step === 2 && <Card>
-        <Text style={{ fontSize: 36, textAlign: 'center' }}>⚡</Text>
+        <Text style={{ fontSize: 18, textAlign: 'center' }}>⚡</Text>
         <Text style={[s.fieldLabel, { textAlign: 'center', marginTop: Spacing.sm }]}>PAYMENT ROUTING</Text>
         <Text style={[s.hint2, { textAlign: 'center', marginTop: 4 }]}>Your node finds a path through existing channels to the merchant. No mining. Settles atomically — either works completely or nothing moves.</Text>
       </Card>}
@@ -1514,7 +1514,7 @@ function MetamaskSim({ onComplete, onSkip }: SimProps) {
         <Text style={s.fieldLabel}>CONNECT TO UNISWAP</Text>
         <Text style={s.hint2}>A dApp requests connection. MetaMask shows exactly what it can access — read it before approving.</Text>
         <View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#f9fafb', borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.border }}>
-          <Text style={{ fontWeight: '900', fontSize: FontSize.md, color: Colors.text, marginBottom: Spacing.sm }}>app.uniswap.org wants to:</Text>
+          <Text style={{ fontWeight: '800', fontSize: FontSize.md, color: Colors.text, marginBottom: Spacing.sm }}>app.uniswap.org wants to:</Text>
           <Text style={s.bullet}>✓ See your wallet address</Text>
           <Text style={s.bullet}>✓ See your token balances</Text>
           <Text style={[s.bullet, { color: Colors.green }]}>✗ Cannot move funds without your signature per transaction</Text>
@@ -1610,7 +1610,7 @@ function TokenApprovalsSim({ onComplete, onSkip }: SimProps) {
           <Card key={i} style={{ borderColor: isRevoked ? Colors.border : riskColor[r] }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontWeight: '900', color: Colors.text }}>{ap.protocol}</Text>
+                <Text style={{ fontWeight: '800', color: Colors.text }}>{ap.protocol}</Text>
                 <Text style={s.hint2}>{ap.token} · {ap.amount} · {ap.age}</Text>
               </View>
               <View style={{ paddingHorizontal: Spacing.sm, paddingVertical: 2, borderRadius: Radius.full, backgroundColor: riskBg[r] }}>
@@ -1703,8 +1703,8 @@ function UniswapSim({ onComplete, onSkip }: SimProps) {
           <TextInput style={s.input} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" placeholderTextColor={Colors.textSoft} />
           <Text style={s.fieldLabel}>BUY (USDC)</Text>
           <View style={{ padding: Spacing.md, backgroundColor: '#f9fafb', borderRadius: Radius.md, flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ fontWeight: '900', fontSize: FontSize.xl, color: Colors.green }}>{received.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
-            <Text style={{ fontWeight: '900', color: Colors.text }}>USDC</Text>
+            <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: Colors.green }}>{received.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+            <Text style={{ fontWeight: '800', color: Colors.text }}>USDC</Text>
           </View>
         </Card>
         <Card>
@@ -1813,11 +1813,11 @@ function ImpermanentLossSim({ onComplete, onSkip }: SimProps) {
         </View>
       </Card>
       <Card>
-        <View style={s.row}><Text style={s.rowKey}>If you HODLED</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>${hodlValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</Text></View>
+        <View style={s.row}><Text style={s.rowKey}>If you HODLED</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>${hodlValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</Text></View>
         <View style={s.row}><Text style={s.rowKey}>As LP provider</Text><Text style={s.rowVal}>${poolValue.toFixed(0)}</Text></View>
         <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, marginTop: Spacing.sm, paddingTop: Spacing.sm }]}>
           <Text style={s.rowKey}>Impermanent loss</Text>
-          <Text style={[s.rowVal, { color: parseFloat(ilPct) < 0 ? Colors.red : Colors.green, fontWeight: '900' }]}>{ilPct}% (${ilAbs})</Text>
+          <Text style={[s.rowVal, { color: parseFloat(ilPct) < 0 ? Colors.red : Colors.green, fontWeight: '800' }]}>{ilPct}% (${ilAbs})</Text>
         </View>
         {priceChange === 1 && <Text style={{ color: Colors.green, fontSize: FontSize.xs, marginTop: 4 }}>No price change = no IL. Fee income is pure profit here.</Text>}
         {priceChange !== 1 && <Text style={{ color: Colors.red, fontSize: FontSize.xs, marginTop: 4 }}>The further price moves, the worse the IL. Trading fees must cover this to make LP profitable.</Text>}
@@ -1849,10 +1849,10 @@ function LiquidationSim({ onComplete, onSkip }: SimProps) {
       </Card>
       <Card>
         <View style={s.row}><Text style={s.rowKey}>Collateral value</Text><Text style={s.rowVal}>${colUsd.toLocaleString()}</Text></View>
-        <View style={s.row}><Text style={s.rowKey}>Health Factor</Text><Text style={[s.rowVal, { color: hfColor, fontWeight: '900' }]}>{healthFactor.toFixed(2)} {isRekt ? '💀 LIQUIDATED' : isDanger ? '⚠️ DANGER' : '✅ HEALTHY'}</Text></View>
+        <View style={s.row}><Text style={s.rowKey}>Health Factor</Text><Text style={[s.rowVal, { color: hfColor, fontWeight: '800' }]}>{healthFactor.toFixed(2)} {isRekt ? '💀 LIQUIDATED' : isDanger ? '⚠️ DANGER' : '✅ HEALTHY'}</Text></View>
         <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, marginTop: Spacing.sm, paddingTop: Spacing.sm }]}>
           <Text style={s.rowKey}>Liquidation triggers at ETH</Text>
-          <Text style={[s.rowVal, { color: Colors.red, fontWeight: '900' }]}>${liquidationPrice.toFixed(0)}</Text>
+          <Text style={[s.rowVal, { color: Colors.red, fontWeight: '800' }]}>${liquidationPrice.toFixed(0)}</Text>
         </View>
       </Card>
       <Card style={{ borderColor: hfColor }}>
@@ -1957,9 +1957,9 @@ function AirdropFarmSim({ onComplete, onSkip }: SimProps) {
                 <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.sm }}>{task.label}</Text>
                 {submitted && <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2, lineHeight: 16 }}>💡 {task.tip}</Text>}
               </View>
-              <Text style={{ fontWeight: '900', color: task.points > 0 ? Colors.green : Colors.red, fontSize: FontSize.md }}>{task.points > 0 ? '+' : ''}{task.points}</Text>
+              <Text style={{ fontWeight: '800', color: task.points > 0 ? Colors.green : Colors.red, fontSize: FontSize.md }}>{task.points > 0 ? '+' : ''}{task.points}</Text>
               <View style={{ width: 24, height: 24, borderRadius: 6, borderWidth: 2, alignItems: 'center', justifyContent: 'center', borderColor: isSel ? (task.sybil ? Colors.red : Colors.green) : Colors.border, backgroundColor: isSel ? (task.sybil ? '#fee2e2' : '#d1fae5') : 'transparent' }}>
-                {isSel && <Text style={{ color: task.sybil ? Colors.red : Colors.green, fontWeight: '900', fontSize: 12 }}>✓</Text>}
+                {isSel && <Text style={{ color: task.sybil ? Colors.red : Colors.green, fontWeight: '800', fontSize: 12 }}>✓</Text>}
               </View>
             </View>
           </TouchableOpacity>
@@ -1982,7 +1982,7 @@ function P2PTradeSim({ onComplete, onSkip }: SimProps) {
       {step === 0 && <Card><Text style={s.hint2}>P2P trading lets you buy crypto directly from people. The exchange holds crypto in escrow until payment is confirmed — protecting both sides.</Text><View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#fef3c7', borderRadius: Radius.md }}><Text style={{ color: '#92400e', fontWeight: '700', fontSize: FontSize.sm }}>⚠️ The #1 scam: releasing escrow before your bank confirms funds received.</Text></View></Card>}
       {step === 1 && <Card>
         <Text style={s.fieldLabel}>YOUR ORDER</Text>
-        <View style={s.row}><Text style={s.rowKey}>Buying</Text><Text style={[s.rowVal, { fontWeight: '900', color: Colors.text }]}>$500 USDT</Text></View>
+        <View style={s.row}><Text style={s.rowKey}>Buying</Text><Text style={[s.rowVal, { fontWeight: '800', color: Colors.text }]}>$500 USDT</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Rate</Text><Text style={s.rowVal}>$1.001 per USDT</Text></View>
         <View style={s.row}><Text style={s.rowKey}>You pay</Text><Text style={[s.rowVal, { color: Colors.red }]}>$500.50 via bank transfer</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Escrow status</Text><Text style={[s.rowVal, { color: Colors.green }]}>✓ LOCKED by Binance</Text></View>
@@ -2088,7 +2088,7 @@ function DaoVoteSim({ onComplete, onSkip }: SimProps) {
     <SimShell icon="🗳️" title="DAO Governance Vote" subtitle="Cast your votes as a UNI token holder. Token balance = voting power.">
       <Card>
         <Text style={s.fieldLabel}>YOUR VOTING POWER</Text>
-        <Text style={{ fontSize: 26, fontWeight: '900', color: Colors.accent }}>1,250 UNI</Text>
+        <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.accent }}>1,250 UNI</Text>
         <Text style={s.hint2}>Voting is free — it's an off-chain signature on Snapshot.</Text>
       </Card>
       {proposals.map(prop => (
@@ -2199,7 +2199,7 @@ function ContractAuditSim({ onComplete, onSkip }: SimProps) {
         return (
           <Card key={f.id} style={{ borderColor: checked ? (isCo ? Colors.green : Colors.red) : Colors.border }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: Spacing.sm }}>
-              {checked && <View style={{ paddingHorizontal: Spacing.sm, paddingVertical: 2, borderRadius: Radius.full, backgroundColor: sevBg[f.severity] }}><Text style={{ fontSize: 10, fontWeight: '900', color: sevColor[f.severity] }}>{f.severity}</Text></View>}
+              {checked && <View style={{ paddingHorizontal: Spacing.sm, paddingVertical: 2, borderRadius: Radius.full, backgroundColor: sevBg[f.severity] }}><Text style={{ fontSize: 10, fontWeight: '800', color: sevColor[f.severity] }}>{f.severity}</Text></View>}
               <Text style={{ fontWeight: '900', color: Colors.text, flex: 1 }}>{f.title}</Text>
             </View>
             <Text style={s.address}>{f.code}</Text>
@@ -2251,7 +2251,7 @@ function TokenomicsSim({ onComplete, onSkip }: SimProps) {
         <TextInput style={s.input} value={pubPct} onChangeText={setPubPct} keyboardType="decimal-pad" placeholderTextColor={Colors.textSoft} />
         <Text style={s.fieldLabel}>ECOSYSTEM / TREASURY (%)</Text>
         <View style={{ padding: Spacing.md, backgroundColor: '#f9fafb', borderRadius: Radius.md, marginBottom: Spacing.md }}>
-          <Text style={{ fontWeight: '900', color: Colors.text }}>{Math.max(0, ecosystem).toFixed(0)}% (auto-calculated)</Text>
+          <Text style={{ fontWeight: '800', color: Colors.text }}>{Math.max(0, ecosystem).toFixed(0)}% (auto-calculated)</Text>
         </View>
         <Text style={s.fieldLabel}>TEAM VESTING PERIOD (MONTHS)</Text>
         <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
@@ -2327,7 +2327,7 @@ function HalvingSim({ onComplete, onSkip }: SimProps) {
         </ScrollView>
         <View style={{ marginTop: Spacing.md, gap: 4 }}>
           <View style={s.row}><Text style={s.rowKey}>Era</Text><Text style={[s.rowVal, { color: Colors.accent }]}>{h.era}</Text></View>
-          <View style={s.row}><Text style={s.rowKey}>Block reward</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>{h.reward} BTC</Text></View>
+          <View style={s.row}><Text style={s.rowKey}>Block reward</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>{h.reward} BTC</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Supply mined so far</Text><Text style={s.rowVal}>{h.totalMined} of 21M</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Annual new BTC</Text><Text style={s.rowVal}>~{(h.reward * 52560).toLocaleString()} BTC</Text></View>
         </View>
@@ -2417,7 +2417,7 @@ function GasSim({ onComplete, onSkip }: SimProps) {
           </View>
           <View style={[s.row, { backgroundColor: '#f0f4ff', borderRadius: Radius.md, padding: Spacing.sm }]}>
             <Text style={{ fontWeight: '800', color: Colors.accent }}>Total fee</Text>
-            <Text style={{ fontWeight: '900', color: Colors.accent, fontSize: FontSize.lg }}>{totalEth} ETH ≈ ${totalUsd}</Text>
+            <Text style={{ fontWeight: '800', color: Colors.accent, fontSize: FontSize.lg }}>{totalEth} ETH ≈ ${totalUsd}</Text>
           </View>
         </View>
       </Card>
@@ -2463,7 +2463,7 @@ function StakingSim({ onComplete, onSkip }: SimProps) {
           ]}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={{ fontWeight: '800', color: selected === o.id ? Colors.accent : Colors.text }}>{o.label}</Text>
-              <Text style={{ fontWeight: '900', color: Colors.green }}>{o.apy}% APY</Text>
+              <Text style={{ fontWeight: '800', color: Colors.green }}>{o.apy}% APY</Text>
             </View>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>Min: {o.min} ETH · Liquid: {o.liquid ? '✅' : '❌ Locked'}</Text>
           </TouchableOpacity>
@@ -2592,8 +2592,8 @@ function CexDepositSim({ onComplete, onSkip }: SimProps) {
             <View style={{ padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md, marginBottom: Spacing.md }}>
               <Text style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: '800', color: Colors.accent }}>{addr}</Text>
             </View>
-            <View style={s.row}><Text style={s.rowKey}>Token</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>{token}</Text></View>
-            <View style={s.row}><Text style={s.rowKey}>Network</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '900' }]}>{network}</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Token</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>{token}</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Network</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '800' }]}>{network}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Amount</Text><Text style={s.rowVal}>{amount} {token}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Network fee</Text><Text style={s.rowVal}>{fees[network] || 'varies'}</Text></View>
             <View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#fef3c7', borderRadius: Radius.md }}>
@@ -2755,7 +2755,7 @@ function LendingSim({ onComplete, onSkip }: SimProps) {
             </View>
             <Text style={[s.fieldLabel, { marginTop: Spacing.md }]}>AMOUNT TO SUPPLY</Text>
             <TextInput style={s.input} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} />
-            <View style={s.row}><Text style={s.rowKey}>Supply APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{rate.supply}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Supply APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{rate.supply}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Monthly earnings</Text><Text style={[s.rowVal, { color: Colors.green }]}>+${monthlyEarn}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={s.rowVal}>a{asset} (Aave interest-bearing token)</Text></View>
           </Card>
@@ -2782,7 +2782,7 @@ function LendingSim({ onComplete, onSkip }: SimProps) {
             <View style={s.row}><Text style={s.rowKey}>Borrow APY</Text><Text style={[s.rowVal, { color: Colors.red }]}>{rate.borrow}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Monthly interest</Text><Text style={[s.rowVal, { color: Colors.red }]}>-${monthlyPay}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Health factor</Text>
-              <Text style={[s.rowVal, { color: parseFloat(healthFactor||'2') > 1.5 ? Colors.green : parseFloat(healthFactor||'1') > 1.0 ? '#f59e0b' : Colors.red, fontWeight: '900' }]}>
+              <Text style={[s.rowVal, { color: parseFloat(healthFactor||'2') > 1.5 ? Colors.green : parseFloat(healthFactor||'1') > 1.0 ? '#f59e0b' : Colors.red, fontWeight: '800' }]}>
                 {healthFactor} {parseFloat(healthFactor||'2') < 1.0 ? '💀 LIQUIDATED' : parseFloat(healthFactor||'2') < 1.5 ? '⚠️ Danger' : '✅ Safe'}
               </Text>
             </View>
@@ -2857,7 +2857,7 @@ function LeverageSim({ onComplete, onSkip }: SimProps) {
           <View style={s.row}><Text style={s.rowKey}>Liquidation at</Text><Text style={[s.rowVal, { color: Colors.red }]}>{direction === 'long' ? '-' : '+'}{(100 / leverage).toFixed(1)}% move</Text></View>
           <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm, marginTop: 4 }]}>
             <Text style={[s.rowKey, { fontWeight: '800' }]}>Your P&L</Text>
-            <Text style={[s.rowVal, { fontWeight: '900', fontSize: FontSize.lg, color: isLiquidated ? Colors.red : pnl >= 0 ? Colors.green : Colors.red }]}>
+            <Text style={[s.rowVal, { fontWeight: '800', fontSize: FontSize.lg, color: isLiquidated ? Colors.red : pnl >= 0 ? Colors.green : Colors.red }]}>
               {isLiquidated ? '💀 LIQUIDATED (-$' + margin + ')' : `${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${pnlPct}%)`}
             </Text>
           </View>
@@ -2913,13 +2913,13 @@ function FdvSim({ onComplete, onSkip }: SimProps) {
           ))}
         </View>
         <View style={{ marginTop: Spacing.md, gap: 4 }}>
-          <View style={s.row}><Text style={s.rowKey}>Price</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>${tok.price}</Text></View>
+          <View style={s.row}><Text style={s.rowKey}>Price</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>${tok.price}</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Circ. Supply</Text><Text style={s.rowVal}>{(tok.circSupply / 1e6).toFixed(0)}M</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Total Supply</Text><Text style={s.rowVal}>{(tok.totalSupply / 1e9).toFixed(1)}B</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Market Cap</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>${(mcap / 1e6).toFixed(1)}M</Text></View>
           <View style={[s.row, { backgroundColor: fdvRatio > 20 ? '#fee2e2' : fdvRatio > 5 ? '#fef3c7' : '#d1fae5', borderRadius: Radius.md, padding: Spacing.sm }]}>
             <Text style={{ fontWeight: '800' }}>FDV</Text>
-            <Text style={[{ fontWeight: '900', fontSize: FontSize.md }, { color: fdvRatio > 20 ? Colors.red : fdvRatio > 5 ? '#92400e' : Colors.green }]}>
+            <Text style={[{ fontWeight: '800', fontSize: FontSize.md }, { color: fdvRatio > 20 ? Colors.red : fdvRatio > 5 ? '#92400e' : Colors.green }]}>
               ${(fdv / 1e9).toFixed(2)}B ({fdvRatio.toFixed(0)}× market cap)
             </Text>
           </View>
@@ -2991,10 +2991,10 @@ function NftMintSim({ onComplete, onSkip }: SimProps) {
       {step === 'select' && (
         <>
           <Card>
-            <Text style={{ fontWeight: '900', fontSize: FontSize.xl, color: Colors.text }}>PixelPunks Collection</Text>
+            <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: Colors.text }}>PixelPunks Collection</Text>
             <Text style={s.hint2}>10,000 unique PFPs. 4,200 remaining.</Text>
             <View style={{ height: 1, backgroundColor: Colors.border, marginVertical: Spacing.md }} />
-            <View style={s.row}><Text style={s.rowKey}>Mint price</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>{MINT_PRICE} ETH</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Mint price</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>{MINT_PRICE} ETH</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Max per wallet</Text><Text style={s.rowVal}>{MAX_PER_WALLET}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Est. gas</Text><Text style={s.rowVal}>~{GAS} ETH</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Network</Text><Text style={s.rowVal}>Ethereum</Text></View>
@@ -3010,7 +3010,7 @@ function NftMintSim({ onComplete, onSkip }: SimProps) {
             </View>
             <View style={[s.row, { marginTop: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm }]}>
               <Text style={{ fontWeight: '800', color: Colors.text }}>Total (mint + gas)</Text>
-              <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.accent }}>{total} ETH</Text>
+              <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.accent }}>{total} ETH</Text>
             </View>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 4 }}>≈ ${(parseFloat(total) * 3247).toFixed(0)} USD</Text>
           </Card>
@@ -3022,7 +3022,7 @@ function NftMintSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={s.fieldLabel}>MetaMask — CONFIRM TRANSACTION</Text>
-            <Text style={{ fontWeight: '900', color: Colors.text, fontSize: FontSize.md, marginBottom: Spacing.sm }}>PixelPunks.mint()</Text>
+            <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.md, marginBottom: Spacing.sm }}>PixelPunks.mint()</Text>
             <View style={s.row}><Text style={s.rowKey}>Contract</Text><Text style={{ fontSize: 11, fontFamily: 'monospace', color: Colors.accent }}>0x58cB...dF3a</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Function</Text><Text style={s.rowVal}>mint(uint256 qty)</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Value sent</Text><Text style={s.rowVal}>{(qty * MINT_PRICE).toFixed(3)} ETH</Text></View>
@@ -3265,7 +3265,7 @@ function RugcheckSim({ onComplete, onSkip }: SimProps) {
       {phase === 'setup' && (
         <>
           <Card>
-            <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.text, marginBottom: Spacing.sm }}>🚀 ROCKETCOIN — New token trending!</Text>
+            <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.text, marginBottom: Spacing.sm }}>🚀 ROCKETCOIN — New token trending!</Text>
             <Text style={s.hint2}>"Dev is doxxed, LP locked, 100x incoming! Partnered with a major CEX (rumoured)."</Text>
             <Text style={[s.fieldLabel, { marginTop: Spacing.md }]}>You're about to ape in. But did you run Rugcheck.xyz first?</Text>
             <View style={{ gap: Spacing.sm }}>
@@ -3282,7 +3282,7 @@ function RugcheckSim({ onComplete, onSkip }: SimProps) {
             <TextInput style={s.input} value={invested} onChangeText={setInvested} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} placeholder="USD" />
             <TouchableOpacity onPress={() => setSawWarnings(!sawWarnings)} style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }}>
               <View style={{ width: 24, height: 24, borderRadius: 6, borderWidth: 2, borderColor: sawWarnings ? Colors.green : Colors.border, backgroundColor: sawWarnings ? '#d1fae5' : 'transparent', alignItems: 'center', justifyContent: 'center' }}>
-                {sawWarnings && <Text style={{ color: Colors.green, fontWeight: '900' }}>✓</Text>}
+                {sawWarnings && <Text style={{ color: Colors.green, fontWeight: '800' }}>✓</Text>}
               </View>
               <Text style={{ fontSize: FontSize.sm, color: Colors.textSoft }}>I saw the Rugcheck warnings and ignored them</Text>
             </TouchableOpacity>
@@ -3294,16 +3294,16 @@ function RugcheckSim({ onComplete, onSkip }: SimProps) {
       {phase === 'rugpull' && (
         <>
           <Card style={{ borderColor: Colors.red }}>
-            <Text style={{ fontSize: 48, textAlign: 'center' }}>💥</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>💥</Text>
             <Text style={[s.fieldLabel, { textAlign: 'center', color: Colors.red }]}>RUG PULL DETECTED</Text>
             <Text style={{ textAlign: 'center', color: Colors.text, fontSize: FontSize.md, fontWeight: '700', marginBottom: Spacing.md }}>
               Dev drained the LP pool 6 hours after launch
             </Text>
             <View style={s.row}><Text style={s.rowKey}>You invested</Text><Text style={s.rowVal}>${inv.toFixed(2)}</Text></View>
-            <View style={s.row}><Text style={s.rowKey}>Current value</Text><Text style={[s.rowVal, { color: Colors.red, fontWeight: '900' }]}>${(inv * 0.03).toFixed(2)}</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Current value</Text><Text style={[s.rowVal, { color: Colors.red, fontWeight: '800' }]}>${(inv * 0.03).toFixed(2)}</Text></View>
             <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm, marginTop: 4 }]}>
               <Text style={{ fontWeight: '800', color: Colors.red }}>You lost</Text>
-              <Text style={{ fontWeight: '900', fontSize: FontSize.xl, color: Colors.red }}>-${lostAmount}</Text>
+              <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: Colors.red }}>-${lostAmount}</Text>
             </View>
           </Card>
           <Card>
@@ -3366,8 +3366,8 @@ function BondingCurveSim({ onComplete, onSkip }: SimProps) {
         </View>
         <View style={{ marginTop: Spacing.md, gap: 4 }}>
           <View style={s.row}><Text style={s.rowKey}>SOL raised</Text><Text style={s.rowVal}>{solRaised} SOL (≈${(solRaised * SOL_PRICE).toLocaleString()})</Text></View>
-          <View style={s.row}><Text style={s.rowKey}>Token price</Text><Text style={[s.rowVal, { fontWeight: '900', color: Colors.accent }]}>${price}</Text></View>
-          <View style={s.row}><Text style={s.rowKey}>Market cap</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>${parseInt(marketCap).toLocaleString()}</Text></View>
+          <View style={s.row}><Text style={s.rowKey}>Token price</Text><Text style={[s.rowVal, { fontWeight: '800', color: Colors.accent }]}>${price}</Text></View>
+          <View style={s.row}><Text style={s.rowKey}>Market cap</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>${parseInt(marketCap).toLocaleString()}</Text></View>
           {isGraduated ? (
             <View style={{ padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md, marginTop: Spacing.sm }}>
               <Text style={{ fontWeight: '800', color: Colors.green }}>🎓 GRADUATED! Token migrates to Raydium. Now trades on open market with real LP.</Text>
@@ -3420,7 +3420,7 @@ function LpSeedSim({ onComplete, onSkip }: SimProps) {
         <TextInput style={s.input} value={solAmt} onChangeText={setSolAmt} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} />
         <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm, marginTop: 4 }]}>
           <Text style={{ fontWeight: '800' }}>Starting price</Text>
-          <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.accent }}>
+          <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.accent }}>
             ${startPrice > 0 ? startPrice.toFixed(startPrice < 0.01 ? 8 : 4) : '—'}
           </Text>
         </View>
@@ -3545,11 +3545,11 @@ function BaseGasSim({ onComplete, onSkip }: SimProps) {
         <View style={{ gap: Spacing.md }}>
           <View style={{ padding: Spacing.md, backgroundColor: '#fff0f0', borderRadius: Radius.md }}>
             <Text style={{ fontWeight: '800', color: Colors.red, marginBottom: 4 }}>🔷 Ethereum Mainnet</Text>
-            <Text style={{ fontWeight: '900', fontSize: 28, color: Colors.red }}>${tx.ethFeeUsd.toFixed(2)}</Text>
+            <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.red }}>${tx.ethFeeUsd.toFixed(2)}</Text>
           </View>
           <View style={{ padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md }}>
             <Text style={{ fontWeight: '800', color: Colors.accent, marginBottom: 4 }}>🔵 Base</Text>
-            <Text style={{ fontWeight: '900', fontSize: 28, color: Colors.accent }}>${tx.baseFeeUsd.toFixed(2)}</Text>
+            <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.accent }}>${tx.baseFeeUsd.toFixed(2)}</Text>
           </View>
           <View style={{ padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md }}>
             <Text style={{ fontWeight: '800', color: Colors.green }}>💰 You save: ${savings.toFixed(2)} ({savingsPct}% cheaper on Base)</Text>
@@ -3602,7 +3602,7 @@ function SmartWalletSim({ onComplete, onSkip }: SimProps) {
           <Text style={s.fieldLabel}>STEP 1 — CREATE WITH PASSKEY</Text>
           <Text style={s.hint2}>Instead of a seed phrase, your wallet is secured by a passkey — your biometrics stored on your device (FaceID, fingerprint). Apple/Google never see it.</Text>
           <TouchableOpacity onPress={() => setPasskey(true)} style={{ marginTop: Spacing.md, padding: Spacing.xl, borderRadius: Radius.xl, backgroundColor: passkey ? '#d1fae5' : Colors.accentSoft, alignItems: 'center', borderWidth: 2, borderColor: passkey ? Colors.green : Colors.accent }}>
-            <Text style={{ fontSize: 48 }}>{passkey ? '✅' : '👆'}</Text>
+            <Text style={{ fontSize: 18 }}>{passkey ? '✅' : '👆'}</Text>
             <Text style={{ fontWeight: '800', color: passkey ? Colors.green : Colors.accent, marginTop: Spacing.sm }}>
               {passkey ? 'Passkey Created!' : 'Tap to Create Passkey (FaceID)'}
             </Text>
@@ -3614,8 +3614,8 @@ function SmartWalletSim({ onComplete, onSkip }: SimProps) {
         <Card>
           <Text style={s.fieldLabel}>STEP 2 — YOUR WALLET IS READY</Text>
           <View style={{ alignItems: 'center', padding: Spacing.md }}>
-            <Text style={{ fontSize: 48 }}>🔵</Text>
-            <Text style={{ fontWeight: '900', color: Colors.text, marginTop: Spacing.sm }}>base:0xA3f2...1c</Text>
+            <Text style={{ fontSize: 18 }}>🔵</Text>
+            <Text style={{ fontWeight: '800', color: Colors.text, marginTop: Spacing.sm }}>base:0xA3f2...1c</Text>
             <Text style={{ color: Colors.textSoft, fontSize: FontSize.sm, marginTop: 4 }}>Your Base Smart Wallet</Text>
           </View>
           <View style={s.row}><Text style={s.rowKey}>No seed phrase</Text><Text style={[s.rowVal, { color: Colors.green }]}>✅ None needed</Text></View>
@@ -3631,10 +3631,10 @@ function SmartWalletSim({ onComplete, onSkip }: SimProps) {
           <Text style={s.hint2}>Watch: you're sending USDC with zero ETH in your wallet. The app's paymaster covers gas.</Text>
           <View style={{ gap: Spacing.sm, marginTop: Spacing.md }}>
             <View style={{ padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ fontWeight: '700' }}>Sending</Text><Text style={{ fontWeight: '900', color: Colors.accent }}>10 USDC</Text>
+              <Text style={{ fontWeight: '700' }}>Sending</Text><Text style={{ fontWeight: '800', color: Colors.accent }}>10 USDC</Text>
             </View>
             <View style={{ padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={{ fontWeight: '700' }}>Gas fee</Text><Text style={{ fontWeight: '900', color: Colors.green }}>$0.00 (sponsored)</Text>
+              <Text style={{ fontWeight: '700' }}>Gas fee</Text><Text style={{ fontWeight: '800', color: Colors.green }}>$0.00 (sponsored)</Text>
             </View>
           </View>
         </Card>
@@ -3702,7 +3702,7 @@ function PaymasterSim({ onComplete, onSkip }: SimProps) {
               <Text style={{ fontWeight: '700', color: Colors.red }}>User must:</Text>
               <Text style={{ fontSize: FontSize.sm, color: Colors.text, marginTop: 4 }}>1. Buy ETH from a CEX{'\n'}2. Bridge ETH to Base{'\n'}3. Wait for confirmations{'\n'}4. THEN do their transaction</Text>
             </View>
-            <View style={s.row}><Text style={s.rowKey}>Gas cost</Text><Text style={[s.rowVal, { color: Colors.red, fontWeight: '900' }]}>${(gas * 3247).toFixed(2)} ({gas} ETH)</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Gas cost</Text><Text style={[s.rowVal, { color: Colors.red, fontWeight: '800' }]}>${(gas * 3247).toFixed(2)} ({gas} ETH)</Text></View>
             <Text style={s.hint2}>This kills conversion. Most users abandon before step 2.</Text>
           </View>
         </Card>
@@ -3717,7 +3717,7 @@ function PaymasterSim({ onComplete, onSkip }: SimProps) {
                 <Text style={{ fontWeight: '700', color: Colors.green }}>User experience:</Text>
                 <Text style={{ fontSize: FontSize.sm, color: Colors.text, marginTop: 4 }}>Open app → Tap action → Done ✅{'\n'}No ETH needed. No friction.</Text>
               </View>
-              <View style={s.row}><Text style={s.rowKey}>User pays</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>$0.00</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>User pays</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>$0.00</Text></View>
               <View style={s.row}><Text style={s.rowKey}>App pays</Text><Text style={s.rowVal}>${(gas * 3247).toFixed(2)} (from paymaster balance)</Text></View>
               <View style={s.row}><Text style={s.rowKey}>Coinbase free gas credits</Text><Text style={[s.rowVal, { color: Colors.green }]}>$15/month (new apps)</Text></View>
             </View>
@@ -3776,7 +3776,7 @@ function MiniAppSim({ onComplete, onSkip }: SimProps) {
               flexDirection: 'row', alignItems: 'center', gap: Spacing.md,
               borderColor: selected === i ? Colors.accent : Colors.border
             }]}>
-              <Text style={{ fontSize: 32 }}>{app.icon}</Text>
+              <Text style={{ fontSize: 18 }}>{app.icon}</Text>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontWeight: '900', color: Colors.text }}>{app.name}</Text>
                 <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{app.category} · {app.users} users</Text>
@@ -3792,7 +3792,7 @@ function MiniAppSim({ onComplete, onSkip }: SimProps) {
       {step === 'open' && app && (
         <>
           <Card>
-            <Text style={{ fontSize: 48, textAlign: 'center' }}>{app.icon}</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>{app.icon}</Text>
             <Text style={{ fontWeight: '900', fontSize: FontSize.xxl, textAlign: 'center', color: Colors.text }}>{app.name}</Text>
             <Text style={{ color: Colors.textSoft, textAlign: 'center', marginTop: 4 }}>{app.category}</Text>
             <View style={{ height: 1, backgroundColor: Colors.border, marginVertical: Spacing.md }} />
@@ -3882,7 +3882,7 @@ function MiniAppBuildSim({ onComplete, onSkip }: SimProps) {
               </View>}
             </View>
             <View style={{ width: 28, height: 28, borderRadius: 8, borderWidth: 2, alignItems: 'center', justifyContent: 'center', borderColor: isDone ? Colors.green : Colors.border, backgroundColor: isDone ? '#d1fae5' : 'transparent' }}>
-              {isDone && <Text style={{ color: Colors.green, fontWeight: '900' }}>✓</Text>}
+              {isDone && <Text style={{ color: Colors.green, fontWeight: '800' }}>✓</Text>}
             </View>
           </TouchableOpacity>
         );
@@ -4002,7 +4002,7 @@ function BnbPancakeSim({ onComplete, onSkip }: SimProps) {
             <Text style={s.fieldLabel}>SWAP BNB → CAKE</Text>
             <TextInput style={s.input} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} placeholder="BNB amount" />
             <View style={s.row}><Text style={s.rowKey}>Rate</Text><Text style={s.rowVal}>1 BNB = ~64 CAKE</Text></View>
-            <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>~{(amtF * 64).toFixed(0)} CAKE</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>~{(amtF * 64).toFixed(0)} CAKE</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Fee (0.25%)</Text><Text style={s.rowVal}>{(amtF * 0.0025).toFixed(4)} BNB</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Gas cost</Text><Text style={[s.rowVal, { color: Colors.green }]}>~$0.10 (BNB Chain)</Text></View>
           </Card>
@@ -4022,7 +4022,7 @@ function BnbPancakeSim({ onComplete, onSkip }: SimProps) {
             <Text style={s.fieldLabel}>CAKE-BNB LP FARM</Text>
             <Text style={s.hint2}>Add CAKE + BNB liquidity, receive LP tokens, stake them in the farm to earn CAKE rewards on top of trading fees.</Text>
             <TextInput style={s.input} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" placeholder="LP token value (USD)" placeholderTextColor={Colors.textMuted} />
-            <View style={s.row}><Text style={s.rowKey}>Farm APR</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{farmApy}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Farm APR</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{farmApy}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Trading fee APR</Text><Text style={[s.rowVal, { color: Colors.green }]}>+~12%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Daily CAKE earned</Text><Text style={[s.rowVal, { color: Colors.green }]}>~${dailyFarm}</Text></View>
             <Text style={{ fontSize: FontSize.xs, color: '#92400e', marginTop: Spacing.sm }}>⚠️ IL risk: if CAKE/BNB ratio changes significantly, you may earn less than just holding.</Text>
@@ -4047,7 +4047,7 @@ function BnbPancakeSim({ onComplete, onSkip }: SimProps) {
               <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>APR: {poolApy}% · Duration: 60 days · Total reward: 1,000,000 XYZ</Text>
             </View>
             <TextInput style={s.input} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" placeholder="CAKE to stake (USD)" placeholderTextColor={Colors.textMuted} />
-            <View style={s.row}><Text style={s.rowKey}>APR</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{poolApy}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>APR</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{poolApy}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Daily XYZ earned</Text><Text style={[s.rowVal, { color: Colors.green }]}>~${dailyPool}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Lock period</Text><Text style={s.rowVal}>Flexible (withdraw anytime)</Text></View>
           </Card>
@@ -4083,7 +4083,7 @@ function BnbLaunchSim({ onComplete, onSkip }: SimProps) {
       <Card>
         <Text style={s.fieldLabel}>ACTIVE LAUNCHPOOL</Text>
         <View style={{ padding: Spacing.md, backgroundColor: '#fffbeb', borderRadius: Radius.md, marginBottom: Spacing.md }}>
-          <Text style={{ fontWeight: '900', fontSize: FontSize.md, color: Colors.text }}>⭐ NEWTOKEN (NTK)</Text>
+          <Text style={{ fontWeight: '800', fontSize: FontSize.md, color: Colors.text }}>⭐ NEWTOKEN (NTK)</Text>
           <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>Lists on Binance in {daysLeft} days · Total pool: 10M NTK</Text>
         </View>
         <Text style={s.fieldLabel}>BNB TO STAKE</Text>
@@ -4102,7 +4102,7 @@ function BnbLaunchSim({ onComplete, onSkip }: SimProps) {
             </TouchableOpacity>
           ))}
         </View>
-        <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>NTK earned so far</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{totalReward} NTK</Text></View>
+        <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>NTK earned so far</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{totalReward} NTK</Text></View>
         <Text style={s.hint2}>💡 The earlier you stake, the more days you farm. BNB is never locked — you can withdraw mid-farm, just stop earning.</Text>
       </Card>
 
@@ -4245,7 +4245,7 @@ function BnbEarnSim({ onComplete, onSkip }: SimProps) {
 
         {product === 'flexible' && (
           <>
-            <View style={s.row}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{flexApy}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{flexApy}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Daily interest</Text><Text style={[s.rowVal, { color: Colors.green }]}>${flexDaily}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Withdraw anytime</Text><Text style={[s.rowVal, { color: Colors.green }]}>✅ No lock</Text></View>
           </>
@@ -4261,8 +4261,8 @@ function BnbEarnSim({ onComplete, onSkip }: SimProps) {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{lockedApy}%</Text></View>
-            <View style={s.row}><Text style={s.rowKey}>You earn (locked)</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>${lockedEarn} {asset}</Text></View>
+            <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{lockedApy}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>You earn (locked)</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>${lockedEarn} {asset}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Early withdrawal</Text><Text style={[s.rowVal, { color: Colors.red }]}>❌ Forfeit all interest</Text></View>
           </>
         )}
@@ -4273,7 +4273,7 @@ function BnbEarnSim({ onComplete, onSkip }: SimProps) {
             <View style={{ padding: Spacing.md, backgroundColor: '#fef3c7', borderRadius: Radius.md, marginTop: Spacing.sm }}>
               <Text style={{ fontWeight: '700', color: '#92400e' }}>⚠️ Risk: you may receive the other asset at expiry. If BNB falls below strike, you receive BNB instead of USDT.</Text>
             </View>
-            <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>APY (enhanced)</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>22–45%</Text></View>
+            <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>APY (enhanced)</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>22–45%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Strike price ({asset})</Text><Text style={s.rowVal}>${dualTarget}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Duration</Text><Text style={s.rowVal}>1–7 days</Text></View>
           </>
@@ -4325,7 +4325,7 @@ function BnbStakingSim({ onComplete, onSkip }: SimProps) {
 
         {method === 'native' && (
           <>
-            <View style={s.row}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{nativeApy}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{nativeApy}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Annual rewards</Text><Text style={[s.rowVal, { color: Colors.green }]}>+{nativeYearly} BNB (${(parseFloat(nativeYearly) * BNB_PRICE).toFixed(2)})</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Delegation to</Text><Text style={s.rowVal}>Validator node on BSC</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Unbonding period</Text><Text style={[s.rowVal, { color: '#f59e0b' }]}>7 days</Text></View>
@@ -4336,7 +4336,7 @@ function BnbStakingSim({ onComplete, onSkip }: SimProps) {
 
         {method === 'lista' && (
           <>
-            <View style={s.row}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{listaApy}%</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>APY</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{listaApy}%</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Annual rewards</Text><Text style={[s.rowVal, { color: Colors.green }]}>+{listaYearly} BNB (+${listaUsd})</Text></View>
             <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { color: Colors.accent }]}>slisBNB (liquid token)</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Use slisBNB for</Text><Text style={s.rowVal}>DeFi collateral, LP farming</Text></View>
@@ -4465,8 +4465,8 @@ function SolanaPumpSim({ onComplete, onSkip }: SimProps) {
       {step === 'launch' && (
         <>
           <Card>
-            <Text style={{ fontSize: 48, textAlign: 'center' }}>🚀</Text>
-            <Text style={{ fontWeight: '900', fontSize: FontSize.xl, textAlign: 'center', color: Colors.accent }}>${ticker || 'TOKEN'}</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>🚀</Text>
+            <Text style={{ fontWeight: '800', fontSize: FontSize.xl, textAlign: 'center', color: Colors.accent }}>${ticker || 'TOKEN'}</Text>
             <Text style={{ color: Colors.textSoft, textAlign: 'center', marginTop: 4 }}>{tokenName || 'My Token'} is LIVE on pump.fun</Text>
             <View style={{ height: 1, backgroundColor: Colors.border, marginVertical: Spacing.md }} />
             <View style={s.row}><Text style={s.rowKey}>Initial price</Text><Text style={s.rowVal}>$0.000001</Text></View>
@@ -4488,8 +4488,8 @@ function SolanaPumpSim({ onComplete, onSkip }: SimProps) {
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, textAlign: 'right' }}>{pct.toFixed(0)}% to graduation ($69K MC)</Text>
             <View style={{ marginTop: Spacing.sm, gap: 4 }}>
               <View style={s.row}><Text style={s.rowKey}>Buy events</Text><Text style={s.rowVal}>{buys} traders</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Current price</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '900' }]}>${price}</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Market cap</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>${marketCap.toLocaleString()}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Current price</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '800' }]}>${price}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Market cap</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>${marketCap.toLocaleString()}</Text></View>
             </View>
             {graduated ? (
               <View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md }}>
@@ -4497,7 +4497,7 @@ function SolanaPumpSim({ onComplete, onSkip }: SimProps) {
               </View>
             ) : (
               <TouchableOpacity onPress={handleBuy} style={{ marginTop: Spacing.md, paddingVertical: 7, paddingHorizontal: 14, backgroundColor: Colors.accent, borderRadius: Radius.lg, alignItems: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900', fontSize: 11 }}>🟢 Simulate a Buy (+1 trader)</Text>
+                <Text style={{ color: '#fff', fontWeight: '800', fontSize: 11 }}>🟢 Simulate a Buy (+1 trader)</Text>
               </TouchableOpacity>
             )}
           </Card>
@@ -4593,7 +4593,7 @@ function SolanaJupiterSim({ onComplete, onSkip }: SimProps) {
                   ))}
                 </View>
               </View>
-              <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { fontWeight: '900', color: Colors.green, fontSize: FontSize.lg }]}>{received} {toToken}</Text></View>
+              <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { fontWeight: '800', color: Colors.green, fontSize: FontSize.lg }]}>{received} {toToken}</Text></View>
               <View style={s.row}><Text style={s.rowKey}>Price impact</Text><Text style={[s.rowVal, { color: amtF > 10 ? '#f59e0b' : Colors.green }]}>{amtF > 100 ? '1.2%' : amtF > 10 ? '0.3%' : '0.05%'}</Text></View>
               <View style={s.row}><Text style={s.rowKey}>Fee</Text><Text style={s.rowVal}>0.3% (split to LPs)</Text></View>
               <View style={s.row}><Text style={s.rowKey}>Network fee</Text><Text style={[s.rowVal, { color: Colors.green }]}>~$0.001</Text></View>
@@ -4653,7 +4653,7 @@ function SolanaStakingSim({ onComplete, onSkip }: SimProps) {
               <Text style={{ fontWeight: '800', color: method === k ? Colors.accent : Colors.text }}>
                 {k === 'native' ? '🏛️ Native Delegation' : k === 'msol' ? '🌊 Marinade (mSOL)' : '⚡ Jito (JitoSOL)'}
               </Text>
-              <Text style={{ fontWeight: '900', color: Colors.green }}>{v.apy}% APY</Text>
+              <Text style={{ fontWeight: '800', color: Colors.green }}>{v.apy}% APY</Text>
             </View>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>
               {v.liquid ? '✅ Liquid' : '🔒 Locked'} · Unstake: {v.unstake}
@@ -4668,7 +4668,7 @@ function SolanaStakingSim({ onComplete, onSkip }: SimProps) {
         <Text style={s.hint2}>{m.desc}</Text>
         <View style={{ marginTop: Spacing.sm, gap: 4 }}>
           <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '800' }]}>{amtF.toFixed(2)} {m.token}</Text></View>
-          <View style={s.row}><Text style={s.rowKey}>Annual rewards</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>+{yearly} SOL (+${yearlyUsd})</Text></View>
+          <View style={s.row}><Text style={s.rowKey}>Annual rewards</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>+{yearly} SOL (+${yearlyUsd})</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Smart contract risk</Text><Text style={s.rowVal}>{method === 'native' ? '❌ None' : '⚠️ Protocol risk'}</Text></View>
         </View>
         {method === 'jito' && (
@@ -5222,7 +5222,7 @@ export default function SimulatorCard({
 // ─────────────────────────────────────────────────────────────────────────────
 const s = StyleSheet.create({
   fieldLabel: { fontSize: 11, fontWeight: '800', color: Colors.textSoft, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
-  bigNumber:  { fontSize: 32, fontWeight: '900', color: Colors.text },
+  bigNumber:  { fontSize: 18, fontWeight: '800', color: Colors.text },
   address:    { fontSize: 11, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: Colors.text, backgroundColor: Colors.border, borderRadius: Radius.sm, padding: Spacing.sm, marginBottom: Spacing.md, lineHeight: 17 },
   input:      { height: 36, borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.md, paddingHorizontal: Spacing.md, fontSize: 12, fontWeight: '700', color: Colors.text, marginBottom: Spacing.md, backgroundColor: Colors.card },
   row:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 4 },

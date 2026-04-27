@@ -276,7 +276,7 @@ const sc = StyleSheet.create({
   locked:        { opacity: 0.55 },
   header:        { padding: Spacing.md, flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
   titleRow:      { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6, marginBottom: 3 },
-  checkmark:     { fontSize: 13, color: Colors.green, fontWeight: '900' },
+  checkmark:     { fontSize: 13, color: Colors.green, fontWeight: '800' },
   title:         { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
   lockedText:    { color: Colors.textSoft },
   subtitle:      { fontSize: 12, color: Colors.textSoft, lineHeight: 17, marginBottom: 4 },
@@ -286,7 +286,7 @@ const sc = StyleSheet.create({
   chevron:       { fontSize: 18, color: Colors.textSoft, marginTop: 2 },
   lockIcon:      { fontSize: 16 },
   bossRow:       { flexDirection: 'row', alignItems: 'center', gap: 10, padding: Spacing.md, borderTopWidth: 1, borderTopColor: '#e2e8f0' },
-  bossIcon:      { fontSize: 22 },
+  bossIcon:      { fontSize: 18 },
   bossTitle:     { fontSize: 13, fontWeight: '800' },
   bossSub:       { fontSize: 11, color: Colors.textSoft, lineHeight: 16, marginTop: 1 },
 });
@@ -408,7 +408,7 @@ const hd = StyleSheet.create({
   wrap:     { flexDirection: 'row', alignItems: 'center', gap: 10, padding: Spacing.lg, borderBottomWidth: 3 },
   closeBtn: { padding: 4 },
   closeTxt: { fontSize: 18, color: Colors.textSoft, fontWeight: '800' },
-  icon:     { fontSize: 32 },
+  icon:     { fontSize: 18 },
   name:     { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
   tagline:  { fontSize: FontSize.sm, color: Colors.textSoft, marginTop: 1 },
 });
@@ -416,7 +416,7 @@ const hd = StyleSheet.create({
 const st = StyleSheet.create({
   row:   { flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: Colors.border },
   item:  { flex: 1, alignItems: 'center', paddingVertical: 12 },
-  num:   { fontSize: 22, fontWeight: '900' },
+  num:   { fontSize: 18, fontWeight: '800' },
   label: { fontSize: 10, color: Colors.textSoft, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.5, marginTop: 2 },
 });
 
@@ -429,7 +429,7 @@ const oc = StyleSheet.create({
   wrap:    { backgroundColor: '#f0fdf4', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.lg },
   heading: { fontSize: 12, fontWeight: '800', color: Colors.green, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 },
   row:     { flexDirection: 'row', gap: 8, marginBottom: 6 },
-  tick:    { fontSize: 14, fontWeight: '900', lineHeight: 20 },
+  tick:    { fontSize: 14, fontWeight: '800', lineHeight: 20 },
   text:    { flex: 1, fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
 });
 

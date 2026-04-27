@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
     borderBottomWidth: 1,
   },
-  brandEmoji:   { fontSize: 28 },
+  brandEmoji:   { fontSize: 18 },
   brandName:    { fontSize: FontSize.lg, fontWeight: FontWeight.black, lineHeight: 20 },
   brandSub:     { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 1 },
 

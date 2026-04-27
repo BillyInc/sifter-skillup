@@ -55,7 +55,7 @@ const shell = StyleSheet.create({
   wrap: { flex: 1 },
   content: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
   header: { flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' },
-  icon: { fontSize: 36, lineHeight: 44 },
+  icon: { fontSize: 18, lineHeight: 22 },
   label: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
   title: { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 },
   subtitle: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18, marginTop: 2 },
@@ -227,7 +227,7 @@ export function BridgeLockMintSim({ onComplete, onSkip }: SimProps) {
                 The bridge contract now holds {amtF} ETH (plus everyone else's). If an attacker finds a vulnerability in the bridge contract, they can drain ALL locked funds. Your wETH becomes worthless.
               </Text>
               <TouchableOpacity onPress={doHack} style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: Colors.red, borderRadius: Radius.md, alignItems: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900' }}>💥 Simulate Bridge Hack</Text>
+                <Text style={{ color: '#fff', fontWeight: '800' }}>💥 Simulate Bridge Hack</Text>
               </TouchableOpacity>
             </Card>
           )}
@@ -238,8 +238,8 @@ export function BridgeLockMintSim({ onComplete, onSkip }: SimProps) {
       {step === 'hacked' && (
         <>
           <Card style={{ borderColor: Colors.red, backgroundColor: '#fff5f5' }}>
-            <Text style={{ fontSize: 36, textAlign: 'center' }}>💀</Text>
-            <Text style={{ fontWeight: '900', color: Colors.red, textAlign: 'center', fontSize: FontSize.lg }}>BRIDGE HACKED</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>💀</Text>
+            <Text style={{ fontWeight: '800', color: Colors.red, textAlign: 'center', fontSize: FontSize.lg }}>BRIDGE HACKED</Text>
             <Text style={[s.hint2, { textAlign: 'center', marginTop: Spacing.sm }]}>
               The bridge contract was drained. Your ETH on Ethereum is gone. Your wETH on Arbitrum is now an IOU for nothing — worthless.
             </Text>
@@ -470,7 +470,7 @@ export function OptimisticRollupSim({ onComplete, onSkip }: SimProps) {
         <Card>
           <Text style={s.fieldLabel}>STEP 4 — 7-DAY CHALLENGE WINDOW</Text>
           <View style={{ alignItems: 'center', padding: Spacing.lg }}>
-            <Text style={{ fontSize: 48, fontWeight: '900', color: daysLeft > 2 ? '#f59e0b' : Colors.red }}>
+            <Text style={{ fontSize: 18, fontWeight: '800', color: daysLeft > 2 ? '#f59e0b' : Colors.red }}>
               {daysLeft}
             </Text>
             <Text style={{ fontWeight: '800', color: Colors.textSoft }}>days remaining</Text>
@@ -495,8 +495,8 @@ export function OptimisticRollupSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card style={{ borderColor: Colors.green }}>
             <Text style={[s.fieldLabel, { color: Colors.green }]}>STEP 5 — FINALITY ACHIEVED</Text>
-            <Text style={{ fontSize: 36, textAlign: 'center' }}>✅</Text>
-            <Text style={{ fontWeight: '900', textAlign: 'center', color: Colors.text, marginTop: Spacing.sm }}>7 days passed. No fraud proof submitted.</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>✅</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', color: Colors.text, marginTop: Spacing.sm }}>7 days passed. No fraud proof submitted.</Text>
             <Text style={[s.hint2, { textAlign: 'center', marginTop: 4 }]}>
               Your withdrawal is now final on Ethereum mainnet. The sequencer's state root is permanently accepted.
             </Text>
@@ -572,16 +572,16 @@ export function ZkVsOptimisticSim({ onComplete, onSkip }: SimProps) {
         <View style={{ flex: 1, padding: Spacing.md, borderRadius: Radius.lg, borderWidth: 2,
           borderColor: opFinished ? Colors.green : '#f59e0b',
           backgroundColor: opFinished ? '#d1fae5' : '#fffbeb' }}>
-          <Text style={{ fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm }}>
+          <Text style={{ fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm }}>
             🔄 Optimistic
           </Text>
           <Text style={{ textAlign: 'center', fontSize: FontSize.xs, color: Colors.textSoft, marginBottom: Spacing.md }}>Arbitrum</Text>
           {!started ? (
-            <Text style={{ textAlign: 'center', fontSize: 32, fontWeight: '900', color: '#f59e0b' }}>7d</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '800', color: '#f59e0b' }}>7d</Text>
           ) : opFinished ? (
-            <Text style={{ textAlign: 'center', fontSize: 32 }}>✅</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>✅</Text>
           ) : (
-            <Text style={{ textAlign: 'center', fontSize: 32, fontWeight: '900', color: '#f59e0b' }}>{opDays}d</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '800', color: '#f59e0b' }}>{opDays}d</Text>
           )}
           <Text style={{ textAlign: 'center', fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 4 }}>
             {opFinished ? 'Finalised!' : started ? 'Challenge window…' : 'Challenge window'}
@@ -592,16 +592,16 @@ export function ZkVsOptimisticSim({ onComplete, onSkip }: SimProps) {
         <View style={{ flex: 1, padding: Spacing.md, borderRadius: Radius.lg, borderWidth: 2,
           borderColor: zkFinished ? Colors.green : Colors.accent,
           backgroundColor: zkFinished ? '#d1fae5' : Colors.accentSoft }}>
-          <Text style={{ fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm }}>
+          <Text style={{ fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm }}>
             ⚡ ZK Proof
           </Text>
           <Text style={{ textAlign: 'center', fontSize: FontSize.xs, color: Colors.textSoft, marginBottom: Spacing.md }}>Starknet</Text>
           {!started ? (
-            <Text style={{ textAlign: 'center', fontSize: 32, fontWeight: '900', color: Colors.accent }}>~4h</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '800', color: Colors.accent }}>~4h</Text>
           ) : zkFinished ? (
-            <Text style={{ textAlign: 'center', fontSize: 32 }}>✅</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>✅</Text>
           ) : (
-            <Text style={{ textAlign: 'center', fontSize: 32, fontWeight: '900', color: Colors.accent }}>{zkHours}h</Text>
+            <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '800', color: Colors.accent }}>{zkHours}h</Text>
           )}
           <Text style={{ textAlign: 'center', fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 4 }}>
             {zkFinished ? 'Proof verified!' : started ? 'Proof generating…' : 'Proof generation'}
@@ -709,16 +709,16 @@ export function L2FeeCalcSim({ onComplete, onSkip }: SimProps) {
         <View style={{ gap: Spacing.md }}>
           <View style={{ padding: Spacing.md, backgroundColor: '#fff0f0', borderRadius: Radius.md }}>
             <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.red, marginBottom: 4 }}>🔷 Ethereum Mainnet</Text>
-            <Text style={{ fontWeight: '900', fontSize: 28, color: Colors.red }}>${ethYear}/year</Text>
+            <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.red }}>${ethYear}/year</Text>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{n} × ${f.eth} per tx</Text>
           </View>
           <View style={{ padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md }}>
             <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, marginBottom: 4 }}>🔵 Arbitrum (post-EIP-4844)</Text>
-            <Text style={{ fontWeight: '900', fontSize: 28, color: Colors.accent }}>${arbYear}/year</Text>
+            <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.accent }}>${arbYear}/year</Text>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{n} × ${f.arb} per tx</Text>
           </View>
           <View style={{ padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md }}>
-            <Text style={{ fontWeight: '900', color: Colors.green }}>💰 You save: ${savings}/year ({factor}× cheaper)</Text>
+            <Text style={{ fontWeight: '800', color: Colors.green }}>💰 You save: ${savings}/year ({factor}× cheaper)</Text>
           </View>
         </View>
       </Card>
@@ -905,7 +905,7 @@ export function BridgeEvalSim({ onComplete, onSkip }: SimProps) {
   return (
     <SimShell icon="📋" title="Bridge Security Scorecard" subtitle="Rate all 7 factors for StarBridge. One factor is a hidden critical flaw — can you find it?">
       <Card>
-        <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.text, marginBottom: Spacing.sm }}>🌟 StarBridge</Text>
+        <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.text, marginBottom: Spacing.sm }}>🌟 StarBridge</Text>
         <Text style={s.hint2}>Bridge $100,000 USDC from Ethereum to Arbitrum. Evaluate all 7 factors before deciding.</Text>
       </Card>
 
@@ -1015,17 +1015,17 @@ export function MultiChainPortfolioSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={s.fieldLabel}>TOTAL PORTFOLIO VALUE</Text>
-            <Text style={{ fontSize: 32, fontWeight: '900', color: Colors.accent }}>${totalValue.toLocaleString()}</Text>
+            <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.accent }}>${totalValue.toLocaleString()}</Text>
             <Text style={s.hint2}>Across {positions.length} chains. This is what DeBank/Zerion aggregates in one view.</Text>
           </Card>
           {positions.map(p => (
             <Card key={p.chain}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                 <View>
-                  <Text style={{ fontWeight: '900', color: Colors.text }}>{p.icon} {p.chain}</Text>
+                  <Text style={{ fontWeight: '800', color: Colors.text }}>{p.icon} {p.chain}</Text>
                   <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{p.protocol} · {p.type}</Text>
                 </View>
-                <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.text }}>{p.value}</Text>
+                <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.text }}>{p.value}</Text>
               </View>
             </Card>
           ))}
@@ -1044,7 +1044,7 @@ export function MultiChainPortfolioSim({ onComplete, onSkip }: SimProps) {
             const chosen = exitPlans[p.chain];
             return (
               <Card key={p.chain}>
-                <Text style={{ fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm }}>{p.icon} {p.chain} — {p.value}</Text>
+                <Text style={{ fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm }}>{p.icon} {p.chain} — {p.value}</Text>
                 <Text style={[s.fieldLabel, { marginBottom: Spacing.sm }]}>PRIMARY EXIT ROUTE</Text>
                 {opts.map(opt => (
                   <TouchableOpacity key={opt} onPress={() => !planSubmitted && setExitPlans(e => ({ ...e, [p.chain]: opt }))}
@@ -1080,7 +1080,7 @@ export function MultiChainPortfolioSim({ onComplete, onSkip }: SimProps) {
               keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} />
             <View style={s.row}><Text style={s.rowKey}>Pool depth (Arbitrum)</Text><Text style={s.rowVal}>${poolDepth.toLocaleString()}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Your impact</Text>
-              <Text style={[s.rowVal, { color: isHighImpact ? Colors.red : Colors.green, fontWeight: '900' }]}>{poolImpact}% of pool</Text>
+              <Text style={[s.rowVal, { color: isHighImpact ? Colors.red : Colors.green, fontWeight: '800' }]}>{poolImpact}% of pool</Text>
             </View>
             <View style={[{ marginTop: Spacing.sm, padding: Spacing.md, borderRadius: Radius.md, backgroundColor: isHighImpact ? '#fee2e2' : '#d1fae5' }]}>
               <Text style={{ fontWeight: '800', color: isHighImpact ? Colors.red : Colors.green }}>
@@ -1233,8 +1233,8 @@ export function SafeBridgingDrillSim({ onComplete, onSkip }: SimProps) {
     return (
       <SimShell icon="💀" title="Wallet Drained!" subtitle="You missed a critical check. See what went wrong.">
         <Card style={{ borderColor: Colors.red, backgroundColor: '#fff5f5' }}>
-          <Text style={{ fontSize: 48, textAlign: 'center' }}>💸</Text>
-          <Text style={{ fontWeight: '900', color: Colors.red, textAlign: 'center', fontSize: FontSize.lg }}>
+          <Text style={{ fontSize: 18, textAlign: 'center' }}>💸</Text>
+          <Text style={{ fontWeight: '800', color: Colors.red, textAlign: 'center', fontSize: FontSize.lg }}>
             {urlChoice === 'fake' ? 'Phishing Site!' : 'Unlimited Approval!'}
           </Text>
           <Text style={[s.hint2, { textAlign: 'center', marginTop: Spacing.sm }]}>
@@ -1308,7 +1308,7 @@ export function SafeBridgingDrillSim({ onComplete, onSkip }: SimProps) {
             <Text style={s.fieldLabel}>STEP 2 — TOKEN APPROVAL REQUEST</Text>
             <Text style={s.hint2}>MetaMask shows a token approval. The bridge needs permission to move your USDC. What approval amount do you set?</Text>
             <View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#f9fafb', borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.border }}>
-              <Text style={{ fontWeight: '900', color: Colors.text }}>bridge.arbitrum.io wants to:</Text>
+              <Text style={{ fontWeight: '800', color: Colors.text }}>bridge.arbitrum.io wants to:</Text>
               <Text style={{ marginTop: Spacing.sm, color: Colors.text }}>Spend your USDC</Text>
             </View>
           </Card>
@@ -1490,8 +1490,8 @@ export function BridgeAggregatorSim({ onComplete, onSkip }: SimProps) {
                 borderWidth: selected === r.id ? 2 : 1.5,
               }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm }}>
-                  <Text style={{ fontWeight: '900', color: Colors.text }}>{r.bridge}</Text>
-                  <Text style={{ fontWeight: '900', color: Colors.green, fontSize: FontSize.sm }}>{r.fee}</Text>
+                  <Text style={{ fontWeight: '800', color: Colors.text }}>{r.bridge}</Text>
+                  <Text style={{ fontWeight: '800', color: Colors.green, fontSize: FontSize.sm }}>{r.fee}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap', marginBottom: Spacing.sm }}>
                   <Text style={{ fontSize: 10, color: Colors.textSoft }}>⏱ {r.time}</Text>
@@ -1584,7 +1584,7 @@ export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
           </Card>
           <Card>
             <View style={{ alignItems: 'center', padding: Spacing.lg }}>
-              <Text style={{ fontSize: 64 }}>🔍</Text>
+              <Text style={{ fontSize: 18 }}>🔍</Text>
               <Text style={{ fontWeight: '700', color: Colors.text, marginTop: Spacing.sm, textAlign: 'center' }}>
                 You cut a hole in a large sheet of cardboard and hold it over the page
               </Text>
@@ -1596,7 +1596,7 @@ export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
               padding: Spacing.lg, borderRadius: Radius.md, alignItems: 'center', marginTop: Spacing.md,
               backgroundColor: waldoFound ? '#d1fae5' : Colors.accent,
             }]}>
-              <Text style={{ color: '#fff', fontWeight: '900' }}>
+              <Text style={{ color: '#fff', fontWeight: '800' }}>
                 {waldoFound ? '✅ Waldo found — proof given!' : '🔍 Find Waldo (generate proof)'}
               </Text>
             </TouchableOpacity>
@@ -1631,12 +1631,12 @@ export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
           <Card>
             <Text style={s.fieldLabel}>THE KEY INSIGHT</Text>
             <View style={{ gap: 4 }}>
-              <View style={s.row}><Text style={s.rowKey}>Transactions in batch</Text><Text style={[s.rowVal, { color: Colors.text, fontWeight: '900' }]}>{batchSize.toLocaleString()}</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Proof size</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>{proofSizeBytes[batchSize as keyof typeof proofSizeBytes]} bytes</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Transactions in batch</Text><Text style={[s.rowVal, { color: Colors.text, fontWeight: '800' }]}>{batchSize.toLocaleString()}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Proof size</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>{proofSizeBytes[batchSize as keyof typeof proofSizeBytes]} bytes</Text></View>
               <View style={s.row}><Text style={s.rowKey}>Ethereum verification cost</Text><Text style={[s.rowVal, { color: Colors.green }]}>~$50 (always constant!)</Text></View>
               <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm, marginTop: 4 }]}>
                 <Text style={s.rowKey}>Cost per tx</Text>
-                <Text style={[s.rowVal, { color: Colors.green, fontWeight: '900', fontSize: FontSize.md }]}>${(50 / batchSize).toFixed(5)}</Text>
+                <Text style={[s.rowVal, { color: Colors.green, fontWeight: '800', fontSize: FontSize.md }]}>${(50 / batchSize).toFixed(5)}</Text>
               </View>
             </View>
             <View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.md }}>
@@ -1669,10 +1669,10 @@ export function ZkProofDemoSim({ onComplete, onSkip }: SimProps) {
                'Level 3: One "proof of proofs of proofs" covers 100 proofs = 100,000 transactions.'}
             </Text>
             <View style={{ gap: 4, marginTop: Spacing.md }}>
-              <View style={s.row}><Text style={s.rowKey}>Transactions covered</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '900', fontSize: FontSize.lg }]}>{txsCovered[recursionDepth as keyof typeof txsCovered].toLocaleString()}</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Ethereum verifications</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>1 (always!)</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Transactions covered</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '800', fontSize: FontSize.lg }]}>{txsCovered[recursionDepth as keyof typeof txsCovered].toLocaleString()}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Ethereum verifications</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>1 (always!)</Text></View>
               <View style={s.row}><Text style={s.rowKey}>Verification cost</Text><Text style={[s.rowVal, { color: Colors.green }]}>$50</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Cost per tx</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>${(50 / txsCovered[recursionDepth as keyof typeof txsCovered]).toFixed(6)}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Cost per tx</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>${(50 / txsCovered[recursionDepth as keyof typeof txsCovered]).toFixed(6)}</Text></View>
             </View>
           </Card>
           {!confirmed ? (
@@ -1732,7 +1732,7 @@ export function TrilemmaSim({ onComplete, onSkip }: SimProps) {
         <>
           {/* Triangle visual */}
           <Card>
-            <Text style={{ textAlign: 'center', fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm }}>THE TRILEMMA TRIANGLE</Text>
+            <Text style={{ textAlign: 'center', fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm }}>THE TRILEMMA TRIANGLE</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm }}>
               <View style={{ alignItems: 'center', flex: 1 }}>
                 <Text style={{ fontSize: 20 }}>🔒</Text>
@@ -1759,7 +1759,7 @@ export function TrilemmaSim({ onComplete, onSkip }: SimProps) {
             const isWrong = checked && chosen && chosen !== c.correct;
             return (
               <Card key={c.id} style={{ borderColor: isCorrect ? Colors.green : isWrong ? Colors.red : Colors.border }}>
-                <Text style={{ fontWeight: '900', color: Colors.text, marginBottom: Spacing.md }}>
+                <Text style={{ fontWeight: '800', color: Colors.text, marginBottom: Spacing.md }}>
                   {c.icon} {c.name}
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -1813,7 +1813,7 @@ export function TrilemmaSim({ onComplete, onSkip }: SimProps) {
               { layer: 'DA — Blobs (EIP-4844)', role: 'Data Availability (cheap)', tps: 'N/A', cost: '90% cheaper', icon: '💾', color: Colors.accent },
             ].map(layer => (
               <View key={layer.layer} style={{ padding: Spacing.md, borderRadius: Radius.lg, borderWidth: 2, borderColor: layer.color + '80', backgroundColor: layer.color + '15' }}>
-                <Text style={{ fontWeight: '900', color: Colors.text }}>{layer.icon} {layer.layer}</Text>
+                <Text style={{ fontWeight: '800', color: Colors.text }}>{layer.icon} {layer.layer}</Text>
                 <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>Role: {layer.role}</Text>
                 <View style={{ flexDirection: 'row', gap: Spacing.md, marginTop: 4 }}>
                   <Text style={{ fontSize: 10, fontWeight: '800', color: layer.color }}>⚡ {layer.tps}</Text>
@@ -1896,7 +1896,7 @@ export function IntentBridgeSim({ onComplete, onSkip }: SimProps) {
               <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' }}>
                 <View style={{ width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center',
                   backgroundColor: oldStep > i ? Colors.green : oldStep === i ? Colors.accent : Colors.border }}>
-                  <Text style={{ color: '#fff', fontWeight: '900', fontSize: 11 }}>{i + 1}</Text>
+                  <Text style={{ color: '#fff', fontWeight: '800', fontSize: 11 }}>{i + 1}</Text>
                 </View>
                 <Text style={{ flex: 1, fontSize: FontSize.sm, fontWeight: oldStep === i ? '800' : '600', color: Colors.text }}>{step}</Text>
                 {oldStep > i && <Text style={{ color: Colors.green }}>✓</Text>}
@@ -1944,7 +1944,7 @@ export function IntentBridgeSim({ onComplete, onSkip }: SimProps) {
                 <TouchableOpacity key={s_.id} onPress={() => setSolverSelected(s_.id)} style={[card.box, Shadow.sm]}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm }}>
                     <Text style={{ fontWeight: '900', color: Colors.text }}>{s_.name}</Text>
-                    <Text style={{ fontWeight: '900', color: Colors.green }}>{s_.output} USDC</Text>
+                    <Text style={{ fontWeight: '800', color: Colors.green }}>{s_.output} USDC</Text>
                   </View>
                   <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
                     <View style={{ backgroundColor: '#f3f4f6', borderRadius: Radius.sm, paddingHorizontal: 6, paddingVertical: 2 }}>
@@ -1960,7 +1960,7 @@ export function IntentBridgeSim({ onComplete, onSkip }: SimProps) {
           ) : !intentDone ? (
             <>
               <Card style={{ borderColor: Colors.green }}>
-                <Text style={{ fontWeight: '900', color: Colors.green, marginBottom: Spacing.sm }}>✅ Solver Selected</Text>
+                <Text style={{ fontWeight: '800', color: Colors.green, marginBottom: Spacing.sm }}>✅ Solver Selected</Text>
                 <Text style={s.hint2}>You accepted. The solver handles everything: approve, bridge, swap. You just wait.</Text>
                 <View style={{ marginTop: Spacing.md, gap: 4 }}>
                   {['Solver approves token on your behalf', 'Routes through Stargate bridge', 'Verifies arrival', 'Delivers USDC to your Arbitrum wallet'].map((action, i) => (
@@ -2048,7 +2048,7 @@ export function BridgeBossSim({ onComplete, onSkip }: SimProps) {
         {[1, 2, 3].map(n => (
           <View key={n} style={{ flex: 1, padding: Spacing.sm, borderRadius: Radius.md, alignItems: 'center',
             backgroundColor: stage === n ? Colors.accent : n < stage ? '#d1fae5' : Colors.border }}>
-            <Text style={{ fontWeight: '900', color: stage === n ? '#fff' : n < stage ? Colors.green : Colors.textSoft, fontSize: FontSize.xs }}>
+            <Text style={{ fontWeight: '800', color: stage === n ? '#fff' : n < stage ? Colors.green : Colors.textSoft, fontSize: FontSize.xs }}>
               {n < stage ? '✓' : `Stage ${n}`}
             </Text>
           </View>
@@ -2178,8 +2178,8 @@ export function BridgeBossSim({ onComplete, onSkip }: SimProps) {
       {allDone && (
         <>
           <Card style={{ borderColor: passed ? Colors.green : Colors.red }}>
-            <Text style={{ textAlign: 'center', fontSize: 48 }}>{passed ? '🏆' : '📚'}</Text>
-            <Text style={{ fontWeight: '900', textAlign: 'center', fontSize: FontSize.xl, color: passed ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>{passed ? '🏆' : '📚'}</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', fontSize: FontSize.xl, color: passed ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
               {passed ? 'BOSS DEFEATED!' : 'Keep Learning'}
             </Text>
             <Text style={{ textAlign: 'center', color: Colors.textSoft, marginTop: 4 }}>

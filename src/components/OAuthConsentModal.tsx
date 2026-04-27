@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
   body: { padding: Spacing.xl, alignItems: 'center' },
   hero: { width: '100%', backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: Colors.border, marginTop: Spacing.lg, marginBottom: Spacing.lg },
-  emoji: { fontSize: 48, marginBottom: Spacing.md },
+  emoji: { fontSize: 18, marginBottom: Spacing.md },
   eyebrow: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: Spacing.xs },
   title: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm, textAlign: 'center' },
   sub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20, marginBottom: Spacing.xl },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   agentText: { fontSize: FontSize.xs, color: Colors.text, lineHeight: 18 },
   agentLink: { color: Colors.accent, fontWeight: '700', textDecorationLine: 'underline' },
   acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.xl },
-  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.sm },
+  acceptBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.sm },
   declineBtn: { padding: Spacing.lg, alignItems: 'center' },
   declineBtnText: { fontSize: FontSize.sm, color: Colors.textMuted },
 });

@@ -42,14 +42,14 @@ export function SimShell({
 
 const sh = StyleSheet.create({
   wrap:     { flex: 1 },
-  content:  { padding: Spacing.md, paddingBottom: 72, gap: Spacing.sm },
+  content:  { padding: Spacing.md, paddingBottom: 18, gap: Spacing.sm },
   header:   {
     flexDirection: 'row', gap: Spacing.sm,
     borderRadius: Radius.xl,
     padding: Spacing.md, alignItems: 'flex-start',
     borderWidth: 1,
   },
-  icon:     { fontSize: 30, lineHeight: 36 },
+  icon:     { fontSize: 18, lineHeight: 22 },
   label:    {
     fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent,
     textTransform: 'uppercase', letterSpacing: 0.8,
@@ -182,11 +182,11 @@ export function ScoreScreen({
 
 const sc = StyleSheet.create({
   wrap:        { alignItems: 'center', padding: Spacing.lg, gap: Spacing.sm },
-  emoji:       { fontSize: 48 },
-  fraction:    { fontSize: 24, fontWeight: '900' },
+  emoji:       { fontSize: 18 },
+  fraction:    { fontSize: 18, fontWeight: '800' },
   label:       { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '600' },
   xpBadge:    { borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: 6 },
-  xpText:     { fontSize: FontSize.lg, fontWeight: '900' },
+  xpText:     { fontSize: FontSize.lg, fontWeight: '800' },
   feedbackBox: {
     backgroundColor: '#f8fafc', borderRadius: Radius.md,
     padding: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border,
@@ -229,7 +229,7 @@ const cr = StyleSheet.create({
   },
   pass:      { backgroundColor: '#f0fdf4', borderColor: '#bbf7d0' },
   fail:      { backgroundColor: '#fef2f2', borderColor: '#fecaca' },
-  icon:      { fontSize: 15, fontWeight: '900', marginTop: 1, width: 16 },
+  icon:      { fontSize: 15, fontWeight: '800', marginTop: 1, width: 16 },
   criterion: { fontSize: 13, fontWeight: '700', color: '#0f172a', lineHeight: 18, marginBottom: 2 },
   feedback:  { fontSize: 12, lineHeight: 17 },
 });

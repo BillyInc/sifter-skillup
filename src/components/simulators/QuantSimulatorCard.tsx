@@ -43,7 +43,7 @@ const sh = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  icon:     { fontSize: 30, lineHeight: 36 },
+  icon:     { fontSize: 18, lineHeight: 22 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
   title:    { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, lineHeight: 21, marginTop: 1 },
   subtitle: { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
@@ -119,11 +119,11 @@ function ProbSlider({ value, onChange, label }: { value: number; onChange: (v: n
   return (
     <View style={{ gap: Spacing.sm }}>
       {label ? <Text style={s.fieldLabel}>{label}</Text> : null}
-      <Text style={{ fontSize: 40, fontWeight: '900', color: Colors.accent, textAlign: 'center' }}>{(value * 100).toFixed(0)}%</Text>
+      <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.accent, textAlign: 'center' }}>{(value * 100).toFixed(0)}%</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, justifyContent: 'center' }}>
         {steps.map(step => (
           <TouchableOpacity key={step} onPress={() => onChange(step / 100)}
-            style={[{ width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
+            style={[{ width: 34, height: 34, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
               Math.round(value * 100) === step ? { backgroundColor: Colors.accent } : { backgroundColor: Colors.border }]}>
             <Text style={{ fontSize: 8, color: Math.round(value * 100) === step ? '#fff' : Colors.textSoft, fontWeight: '600' }}>
               {step % 20 === 0 ? `${step}%` : ''}
@@ -554,7 +554,7 @@ function MarkowitzOptimiserSim({ onComplete, onSkip }: SimProps) {
         <Card key={i}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 }}>
             <Text style={{ fontWeight: '800', color: Colors.text }}>{a.name}</Text>
-            <Text style={{ fontWeight: '900', color: Colors.accent, fontSize: FontSize.lg }}>{weights[i]}%</Text>
+            <Text style={{ fontWeight: '800', color: Colors.accent, fontSize: FontSize.lg }}>{weights[i]}%</Text>
           </View>
           <Text style={{ color: Colors.textSoft, fontSize: FontSize.sm, marginBottom: 6 }}>Ret: {a.ret}% | Vol: {a.vol}%</Text>
           <View style={{ flexDirection: 'row', gap: 4 }}>
@@ -982,7 +982,7 @@ function MentalMathsSim({ onComplete, onSkip }: SimProps) {
   return (
     <SimShell icon="🧮" title="Mental Maths" subtitle={`Problem ${cur+1}/${probs.length} · Score: ${score}`}>
       <Card>
-        <Text style={{ fontSize: 30, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: 16 }}>{probs[cur].q}</Text>
+        <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: 16 }}>{probs[cur].q}</Text>
         <TextInput style={s.input} placeholder="Answer" keyboardType="numeric" value={input} onChangeText={setInput}
           placeholderTextColor={Colors.textMuted} returnKeyType="done" onSubmitEditing={submit} autoFocus />
         {fb && <Text style={{ textAlign: 'center', fontWeight: '700', color: fb.startsWith('✅') ? Colors.green : Colors.red }}>{fb}</Text>}
@@ -1376,7 +1376,7 @@ function DistributionShapeSim({ onComplete, onSkip }: SimProps) {
         return(
           <TouchableOpacity key={i} onPress={()=>chosen===null&&setChosen(i)} disabled={chosen!==null}
             style={[{borderRadius:Radius.md,borderWidth:1.5,padding:Spacing.md,backgroundColor:bg,borderColor:border}]}>
-            <Text style={{fontSize:22,marginBottom:4}}>{opt.emoji}</Text>
+            <Text style={{fontSize: 18,marginBottom:4}}>{opt.emoji}</Text>
             <Text style={{fontWeight:'700',color:Colors.text}}>{opt.label}</Text>
             {rev&&<Text style={{color:Colors.textSoft,fontSize:FontSize.sm,marginTop:4,lineHeight:18}}>{opt.exp}</Text>}
           </TouchableOpacity>
@@ -1407,7 +1407,7 @@ function NormalDistributionSim({ onComplete, onSkip }: SimProps) {
         <Text style={s.body}>Strategy: mean daily return μ = 0%, standard deviation σ = 1.5%. Under the normal distribution, here is exactly what that means:</Text>
         {bands.map((b2,i)=>(
           <View key={i} style={{borderRadius:Radius.sm,padding:Spacing.sm,marginTop:6,backgroundColor:b2.bg}}>
-            <Text style={{fontWeight:'900',color:Colors.text,fontSize:FontSize.lg}}>{b2.pct}% of days</Text>
+            <Text style={{fontWeight: '800',color:Colors.text,fontSize:FontSize.lg}}>{b2.pct}% of days</Text>
             <Text style={{color:Colors.textSoft,fontSize:FontSize.sm}}>Returns in range: {b2.range}</Text>
           </View>
         ))}
@@ -1597,11 +1597,11 @@ function PythonToolSelectorSim({ onComplete, onSkip }: SimProps) {
   if (done) return (
     <SimShell title="Python Tool Selector" subtitle="Results" icon="🛠️">
       <View style={{ alignItems: 'center', padding: 20 }}>
-        <Text style={{ fontSize: 48, marginBottom: 12 }}>{score >= 4 ? '🏆' : score >= 3 ? '✅' : '📚'}</Text>
-        <Text style={{ fontSize: 22, fontWeight: '700', color: '#0f172a', marginBottom: 8 }}>
+        <Text style={{ fontSize: 18, marginBottom: 12 }}>{score >= 4 ? '🏆' : score >= 3 ? '✅' : '📚'}</Text>
+        <Text style={{ fontSize: 18, fontWeight: '700', color: '#0f172a', marginBottom: 8 }}>
           {score}/{scenarios.length} correct
         </Text>
-        <Text style={{ fontSize: 14, color: '#64748b', textAlign: 'center', marginBottom: 24 }}>
+        <Text style={{ fontSize: 14, color: '#64748b', textAlign: 'center', marginBottom: 14 }}>
           {score === 5 ? 'Perfect. You know your toolkit.' : score >= 3 ? 'Solid. Review the ones you missed.' : 'Revisit the tool overview levels before moving on.'}
         </Text>
         <GBtn label="Complete" onPress={onComplete} />
@@ -1913,7 +1913,7 @@ function BayesianUpdaterCodeSim({ onComplete, onSkip }: SimProps) {
       </Card>
       <Card>
         <Text style={s.sectionLabel}>CURRENT BELIEF</Text>
-        <Text style={{ fontSize: 36, fontWeight: '900', color: Colors.accent, textAlign: 'center' }}>{(currentBelief * 100).toFixed(1)}%</Text>
+        <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.accent, textAlign: 'center' }}>{(currentBelief * 100).toFixed(1)}%</Text>
         <Text style={[s.body, { textAlign: 'center', marginTop: 4 }]}>after {updates} update{updates !== 1 ? 's' : ''}</Text>
         {beliefs.length > 0 && <View style={{ marginTop: 12 }}>{beliefs.map((b, i) => <Row key={i} label={`Update ${i+1}`} value={`${(b*100).toFixed(1)}%`} accent={i === beliefs.length - 1} />)}</View>}
       </Card>
@@ -2613,8 +2613,8 @@ function Lab8BossSim({ onComplete, onSkip }: SimProps) {
   if (done) return (
     <SimShell icon="👑" title="Lab 8 Boss Complete" subtitle="Full Stack Quant Gauntlet">
       <Card>
-        <Text style={{ fontSize: 48, textAlign:'center' }}>{score >= 4 ? '🏆' : score >= 3 ? '✅' : '📖'}</Text>
-        <Text style={[s.body, { textAlign:'center', fontSize: FontSize.lg, fontWeight:'900' }]}>{score}/{questions.length}</Text>
+        <Text style={{ fontSize: 18, textAlign:'center' }}>{score >= 4 ? '🏆' : score >= 3 ? '✅' : '📖'}</Text>
+        <Text style={[s.body, { textAlign:'center', fontSize: FontSize.lg, fontWeight: '800' }]}>{score}/{questions.length}</Text>
         <Text style={[s.body, { textAlign:'center', marginTop:8 }]}>{grade}</Text>
       </Card>
       <Card>

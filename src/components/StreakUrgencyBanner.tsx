@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.xl,
     borderWidth: 1,
   },
-  bannerEmoji:    { fontSize: 24 },
+  bannerEmoji:    { fontSize: 18 },
   bannerText:     { fontSize: FontSize.sm, fontWeight: FontWeight.black, lineHeight: 18 },
   bannerSub:      { fontSize: FontSize.xs, marginTop: 2, opacity: 0.8 },
   bannerActions:  { alignItems: 'flex-end', gap: Spacing.xs },

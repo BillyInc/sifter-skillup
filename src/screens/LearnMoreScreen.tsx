@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: FontSize.xl,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   headerSub: {
     fontSize: FontSize.sm,
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   heroTitle: {
     color: '#fff',
     fontSize: FontSize.lg,
-    fontWeight: '900',
+    fontWeight: '800',
     marginBottom: Spacing.sm,
   },
   heroBody: {

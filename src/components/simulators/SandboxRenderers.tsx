@@ -295,7 +295,7 @@ export function SandboxCodeRenderer({
 const sc = StyleSheet.create({
   taskText:    { fontSize: FontSize.sm, color: Colors.text, lineHeight: 21 },
   reqRow:      { flexDirection: 'row', gap: 8, marginBottom: 6 },
-  reqBullet:   { fontSize: 16, lineHeight: 20, fontWeight: '900' },
+  reqBullet:   { fontSize: 16, lineHeight: 20, fontWeight: '800' },
   reqText:     { flex: 1, fontSize: 13, color: Colors.textSoft, lineHeight: 19 },
   editorWrap:  { borderWidth: 1.5, borderRadius: Radius.xl, overflow: 'hidden', backgroundColor: '#0f172a' },
   editorHeader:{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.md, paddingVertical: 8 },
@@ -427,7 +427,7 @@ export function SandboxReportRenderer({
 const rp = StyleSheet.create({
   taskText:   { fontSize: FontSize.sm, color: Colors.text, lineHeight: 21 },
   crit:       { flexDirection: 'row', gap: 8, marginBottom: 5 },
-  critBullet: { fontSize: 14, lineHeight: 19, fontWeight: '900' },
+  critBullet: { fontSize: 14, lineHeight: 19, fontWeight: '800' },
   critText:   { flex: 1, fontSize: 13, color: Colors.textSoft, lineHeight: 18 },
   toolbar:    { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
   fmtBtn:     { backgroundColor: Colors.bgSecondary, borderRadius: Radius.md, paddingHorizontal: 10, paddingVertical: 6, borderWidth: 1, borderColor: Colors.border },

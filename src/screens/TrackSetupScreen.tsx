@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerIcon: { fontSize: 24 },
+  headerIcon: { fontSize: 18 },
   headerEyebrow: {
     fontSize: FontSize.xs,
     fontWeight: FontWeight.bold,
@@ -563,10 +563,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  toolEmoji: { fontSize: 22 },
+  toolEmoji: { fontSize: 18 },
   toolName: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
   toolSummary: { fontSize: FontSize.xs, lineHeight: 17, marginTop: 2 },
-  toolChevron: { fontSize: 22, fontWeight: FontWeight.heavy },
+  toolChevron: { fontSize: 18, fontWeight: FontWeight.heavy },
   toolBody: { paddingHorizontal: Spacing.md, paddingBottom: Spacing.md, gap: Spacing.sm },
   analogyBox: {
     borderLeftWidth: 3,

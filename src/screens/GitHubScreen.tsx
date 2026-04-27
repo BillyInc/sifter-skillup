@@ -250,7 +250,7 @@ function LearnModule({ onClose }: { onClose: () => void }) {
             <GhostBtn label="← Back" onPress={onClose} />
           </View>
           <Card>
-            <Text style={{ fontSize: 64, textAlign: 'center', marginBottom: 12 }}>🏆</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center', marginBottom: 12 }}>🏆</Text>
             <Text style={[styles.lessonTitle, { textAlign: 'center' }]}>Module Complete!</Text>
             <Text style={[styles.body, { textAlign: 'center', marginTop: 8 }]}>
               {score}/{LESSONS.length} correct
@@ -1047,7 +1047,7 @@ const styles = StyleSheet.create({
   learnLink:       { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
   card:            { backgroundColor: Colors.card, borderRadius: Radius.lg, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.lg, gap: Spacing.sm },
   heroCard:        { alignItems: 'center', paddingVertical: Spacing.xl },
-  heroIcon:        { fontSize: 64, marginBottom: 12 },
+  heroIcon:        { fontSize: 18, marginBottom: 12 },
   heroTitle:       { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: 8 },
   heroSub:         { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22 },
   sectionLabel:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 },
@@ -1062,11 +1062,11 @@ const styles = StyleSheet.create({
   dividerLine:     { flex: 1, height: 1, backgroundColor: Colors.border },
   dividerText:     { fontSize: FontSize.xs, color: Colors.textSoft, fontWeight: '600' },
   featureRow:      { flexDirection: 'row', gap: 12, paddingVertical: 8, alignItems: 'flex-start', borderBottomWidth: 1, borderBottomColor: Colors.border },
-  featureIcon:     { fontSize: 24, width: 36, textAlign: 'center' },
+  featureIcon:     { fontSize: 18, width: 36, textAlign: 'center' },
   featureTitle:    { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
   featureDesc:     { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2, lineHeight: 17 },
   connectedBadge:  { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  ghAvatar:        { fontSize: 40 },
+  ghAvatar:        { fontSize: 18 },
   connectedLabel:  { fontSize: FontSize.sm, fontWeight: '800', color: '#16a34a' },
   connectedUser:   { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
   viewLink:        { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
@@ -1081,7 +1081,7 @@ const styles = StyleSheet.create({
   progressTrack:   { height: 6, backgroundColor: '#e2e8f0', borderRadius: 3, marginHorizontal: Spacing.md, marginBottom: 4 },
   progressFill:    { height: 6, backgroundColor: Colors.accent, borderRadius: 3 },
   progressLabel:   { fontSize: FontSize.xs, color: Colors.textSoft, textAlign: 'center', marginBottom: Spacing.md },
-  lessonIcon:      { fontSize: 48, textAlign: 'center', marginBottom: 8 },
+  lessonIcon:      { fontSize: 18, textAlign: 'center', marginBottom: 8 },
   lessonTitle:     { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, marginBottom: 8 },
   optionBtn:       { borderRadius: Radius.md, padding: Spacing.md, marginBottom: 8 },
   optionText:      { fontSize: FontSize.sm, fontWeight: '700' },

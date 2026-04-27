@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   webModal:         { width: 560, maxHeight: '80%', borderRadius: Radius.xl, marginBottom: 'auto' as any, marginTop: 'auto' as any, ...Shadow.lg },
   scrollContent:    { padding: Spacing.xl, gap: Spacing.md },
   sheetHeader:      { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
-  lightbulb:        { fontSize: 26 },
+  lightbulb:        { fontSize: 18 },
   sheetTitle:       { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   rateBadge:        { fontSize: FontSize.xs, marginTop: 2 },
   xBtn:             { padding: Spacing.xs },
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
   gotItBtn:         { borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center' },
   gotItText:        { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#fff' },
 
-  blockedIcon:      { fontSize: 36, textAlign: 'center' },
+  blockedIcon:      { fontSize: 18, textAlign: 'center' },
   blockedTitle:     { fontSize: FontSize.lg, fontWeight: FontWeight.black, textAlign: 'center' },
   blockedMsg:       { fontSize: FontSize.sm, lineHeight: 20, textAlign: 'center' },
   closeBtn:         { borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center' },
