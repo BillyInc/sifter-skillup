@@ -246,6 +246,14 @@ export default function IslandMapScreen({ route }: any) {
     }, 160);
   };
 
+  const handleBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.replace('/(tabs)/map' as any);
+  };
+
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <LinearGradient colors={[colors.bg, colors.bgSecondary, colors.bg]} style={StyleSheet.absoluteFill} />
@@ -259,7 +267,7 @@ export default function IslandMapScreen({ route }: any) {
             style={styles.heroGradient}
           >
             <View style={styles.heroTop}>
-              <TouchableOpacity onPress={() => router.back()} style={[styles.backBtn, { backgroundColor: colors.bgSecondary }]}>
+              <TouchableOpacity onPress={handleBack} style={[styles.backBtn, { backgroundColor: colors.bgSecondary }]}>
                 <Text style={[styles.backBtnText, { color: colors.text }]}>{'<'}</Text>
               </TouchableOpacity>
               <View style={styles.heroHeaderText}>
