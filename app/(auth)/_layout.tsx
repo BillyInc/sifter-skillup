@@ -3,9 +3,11 @@ import { useAuth } from '../../src/hooks/useAuth';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { Colors } from '../../src/theme';
 import { Redirect } from 'expo-router';
+import { consumePendingPostAuthRedirect } from '../../src/lib/postAuthRedirect';
 
 export default function AuthLayout() {
   const { user, loading } = useAuth();
+  const pendingRedirect = user?.onboarding_completed ? consumePendingPostAuthRedirect() : null;
 
   if (loading) {
     return (
@@ -16,17 +18,18 @@ export default function AuthLayout() {
     );
   }
 
-  // If user is authenticated and completed onboarding, redirect to the default tab screen
-  if (user && user.onboarding_completed) {
-    return <Redirect href="/(tabs)/map" />;
-  }
-
-  // If authenticated but not onboarded, show onboarding (except handled in onboarding screen)
   if (user && !user.onboarding_completed) {
     return <Redirect href="/(auth)/onboarding" />;
   }
 
-  // Not authenticated, show auth stack
+  if (user && pendingRedirect) {
+    return <Redirect href={pendingRedirect as any} />;
+  }
+
+  if (user && user.onboarding_completed) {
+    return <Redirect href="/(tabs)/home" />;
+  }
+
   return (
     <Stack screenOptions={{ headerShown: false }} />
   );

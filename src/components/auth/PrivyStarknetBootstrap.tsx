@@ -30,7 +30,7 @@ export function PrivyStarknetBootstrap({
         }
 
         const wallet = await ensureStarknetWallet(token);
-        if (wallet) {
+        if (wallet?.persisted) {
           lastSyncedPrivyUser.current = privy.user?.id ?? null;
           if (!user.starknet_address || user.starknet_address !== wallet.address) {
             await refreshUser();

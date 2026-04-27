@@ -10,7 +10,8 @@
 - [ ] **(c)** Env vars set: `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_PRIVY_APP_ID`, backend `PRIVY_APP_ID` + `PRIVY_APP_SECRET` (see STEP 1).
 - [ ] **(d)** `pnpm build:web` (or `npx expo export --platform web`) is green.
 - [ ] **(e)** Backend boots clean (`uv run uvicorn main:app --reload` — no missing-env errors).
-- [ ] **(f)** Fresh-signup test: new email → Privy OTP → Starknet wallet created → routed to Island 18 → Level 291 loads.
+- [ ] **(f)** Fresh-signup test: new email → Privy OTP → Starknet wallet created and saved to Supabase → routed to Island 18 → Level 291 loads.
+- [ ] **(g)** Returning Starknet login test: same account → lands on Home → `Continue Where You Left Off` opens the exact saved Starknet lesson.
 
 ---
 
@@ -79,12 +80,14 @@ Run in this order:
 4. `supabase/interview_questions_seed_v2.sql` — deterministic question bank
 5. `supabase/privy_did_migration.sql` — **NEW** — `users.privy_did` column, unique index, RLS policy
 
+All repo migrations now target the `skillup_dev` schema. If your Supabase project still has an older `sifter_dev` copy, migrate or rename it before demo day.
+
 Verify:
 
 ```sql
 -- Privy DID column present
 SELECT column_name FROM information_schema.columns
-WHERE table_name='users' AND column_name='privy_did';
+WHERE table_schema='skillup_dev' AND table_name='users' AND column_name='privy_did';
 
 -- Question bank populated
 SELECT track_id, level, COUNT(*) FROM interview_questions
@@ -122,11 +125,24 @@ npx expo run:ios --device     # iOS
 npx expo run:android --device # Android
 ```
 
+### PowerShell-Friendly Launchers
+
+```powershell
+# Frontend
+.\scripts\start-frontend.ps1
+.\scripts\start-frontend.ps1 -Web
+
+# Backend
+.\scripts\start-backend.ps1
+```
+
 ---
 
-## STEP 5 — Pre-Fund Demo Wallet
+## STEP 5 — Fund the Demo Wallet
 
-Before demo, fund the Starknet wallet Privy mints for your demo account:
+The app now exposes an in-app Starknet faucet button on the DeFi Navigator wallet panel. It attempts a real Sepolia faucet claim unless `EXPO_PUBLIC_DEMO_MODE=true`.
+
+If the public faucet is rate-limited or unavailable, use the manual backup flow below:
 
 1. Sign in → copy the wallet address from the AddressPill in the app.
 2. ETH → https://starknet-faucet.vercel.app
@@ -138,11 +154,12 @@ Before demo, fund the Starknet wallet Privy mints for your demo account:
 ## The Demo Sequence
 
 1. Open app → **Privy sheet** (email OTP or Google / Apple / Twitter).
-2. Fresh account → **Starknet embedded wallet created** (extended chain). User routed to **Island 18**.
+2. Fresh account → **Starknet embedded wallet created + persisted in Supabase**. User routed to **Island 18**.
 3. Complete any Island 18 level (Level 291 recommended).
-4. Simulator calls **starkzap-native** → real Sepolia tx hash → Voyager link opens.
-5. Complete **Level 310 boss** → **three track cards appear** (Navigator / Ecosystem / Cairo).
-6. Choose **DeFi Navigator** → Lab 1 swap sim → live STRK/USDC quote → execute → tx on Voyager.
+4. Log out and back in with the same Starknet account → user lands on **Home** with a Starknet-aware `Continue Where You Left Off` action.
+5. Simulator calls **starkzap-native** when live Starknet is available → real Sepolia tx hash → Voyager link opens.
+6. Complete **Level 310 boss** → **three track cards appear** (Navigator / Ecosystem / Cairo).
+7. Choose **DeFi Navigator** → Lab 1 swap sim → live STRK/USDC quote → execute → tx on Voyager.
 
 ---
 
@@ -230,8 +247,10 @@ Add credentials later by setting the matching `*_CLIENT_ID` / `*_CLIENT_SECRET` 
 - [ ] Privy sheet opens, email OTP + at least one OAuth provider visible
 - [ ] New sign-in creates Starknet wallet (0x… address, 63–64 hex chars)
 - [ ] User lands on **Island 18** after signup
-- [ ] Supabase `users` row: `privy_did` set, `starknet_address` set
+- [ ] Returning Starknet login lands on **Home**, not Island 18
+- [ ] Supabase `users` row: `privy_did` set, `starknet_address` set, `current_track_id` reflects the latest Starknet context
 - [ ] Level 291 loads and completes
+- [ ] Home `Continue Where You Left Off` opens the exact saved Starknet lesson
 - [ ] `isStarkzapAvailable()` returns `true` in console
 - [ ] Starkzap simulator produces a real Sepolia tx hash
 - [ ] Level 310 boss completion reveals **three** track cards

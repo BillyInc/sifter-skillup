@@ -8,7 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLessonEngine, type Question } from '../hooks/useLessonEngine';
 import { useProgress } from '../hooks/useProgress';
 import { useAuth } from '../hooks/useAuth';
+import { useResume } from '../hooks/useResume';
 import { API, API_BASE } from '../lib/api';
+import { findTrackById } from '../lib/trackContext';
 import { getLevel, LEVELS } from '../data/levels';
 import { getIslandForLevel } from '../data/islands';
 import {
@@ -20,6 +22,7 @@ import {
 } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import SimulatorCard from '../components/simulators/SimulatorCard';
+import StarknetFaucetButton from '../components/StarknetFaucetButton';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { shuffleOptionsWithCorrectTracking } from '../lib/shuffleOptions';
 import FlagModal from '../components/FlagModal';
@@ -684,6 +687,7 @@ export default function LessonScreen({
     : classicLevel;
 
   const { user } = useAuth();
+  const { savePosition } = useResume();
   const { state, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator } = useLessonEngine();
   const { completeLevel } = useProgress();
 
@@ -743,6 +747,48 @@ export default function LessonScreen({
               }
             : null;
         })();
+
+  useEffect(() => {
+    if (!level) {
+      return;
+    }
+
+    const userTrackId =
+      (user as any)?.currentTrackId
+      ?? (user as any)?.current_track_id
+      ?? (user as any)?.active_track
+      ?? 'crypto';
+    const inferredTrackId = trackId
+      ?? (
+        ((user as any)?.activeFieldId === 'starknet')
+        || ((user as any)?.active_field_id === 'starknet')
+        || (levelId >= 291 && levelId <= 310)
+          ? 'starknet-islands'
+          : userTrackId
+      );
+    const inferredTrack = findTrackById(inferredTrackId);
+    const inferredTrackName =
+      inferredTrack?.name
+      ?? ((user as any)?.currentTrackName)
+      ?? ((user as any)?.current_track_name)
+      ?? inferredTrackId;
+    const resolvedLabIndex = labNumber ?? labIndexFromLegacyId(labId) ?? (inferredTrackId === 'starknet-islands' ? 18 : 0);
+    const resolvedLabTitle = starknetLab?.title
+      ?? (inferredTrackId === 'starknet-islands' ? 'Starknet Islands' : inferredTrackName);
+
+    void savePosition({
+      trackId: inferredTrackId,
+      trackName: inferredTrackName,
+      level: inferResumeLevel(resolvedLabIndex),
+      labId: labId ?? (inferredTrackId === 'starknet-islands' ? 'island-18' : inferredTrackId),
+      labTitle: resolvedLabTitle,
+      lessonId: String(levelId),
+      lessonTitle: level.topic ?? 'Lesson',
+      lessonIndex: lessonIndex ?? 0,
+      labIndex: resolvedLabIndex,
+      simulatorState: null,
+    }).catch(() => {});
+  }, [labId, labNumber, level, levelId, lessonIndex, savePosition, starknetLab?.title, trackId, user]);
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{
@@ -900,6 +946,13 @@ export default function LessonScreen({
   const isLast   = state.qIndex + 1 >= state.questions.length;
   const sessionXp = state.xp ?? 0;
   const simulatorIslandId = q?.simulatorType === 'phase1-boss' ? levelId : getIslandForLevel(levelId);
+  const showStarknetFaucet = Boolean(
+    user?.starknet_address
+    && (
+      (trackId && isStarknetTrack(trackId as StarknetTrackId))
+      || (levelId >= 291 && levelId <= 310)
+    ),
+  );
 
   // Finished — show celebration then hand off
   if (state.finished) {
@@ -940,6 +993,18 @@ export default function LessonScreen({
         mood={lessonMood}
         onAIExplainer={handleAIExplainer}
       />
+
+      {showStarknetFaucet && user?.starknet_address ? (
+        <View style={sty.faucetBanner}>
+          <Text style={sty.faucetBannerTitle}>Need fresh STRK for this Starknet lesson?</Text>
+          <Text style={sty.faucetBannerSub}>
+            Claim Sepolia test STRK here before you run a live wallet step.
+          </Text>
+          <View style={{ marginTop: Spacing.sm }}>
+            <StarknetFaucetButton walletAddress={user.starknet_address} compact />
+          </View>
+        </View>
+      ) : null}
 
       {returnTopic && <ReturnBanner topic={returnTopic} onReturn={()=>{setReturnTopic(null);onExit();}}/>}
 
@@ -1014,6 +1079,25 @@ export default function LessonScreen({
   );
 }
 
+function labIndexFromLegacyId(labId?: string) {
+  if (!labId) {
+    return null;
+  }
+
+  const match = labId.match(/(\d+)/);
+  return match ? Number(match[1]) : null;
+}
+
+function inferResumeLevel(labIndex: number): 'junior' | 'intermediate' | 'senior' {
+  if (labIndex >= 8) {
+    return 'senior';
+  }
+  if (labIndex >= 4) {
+    return 'intermediate';
+  }
+  return 'junior';
+}
+
 // ── Styles ────────────────────────────────────────────────────
 const sty = StyleSheet.create({
   screen:        {flex:1,backgroundColor:Colors.bg},
@@ -1067,6 +1151,9 @@ const sty = StyleSheet.create({
   noteContent:   {fontSize:FontSize.sm,lineHeight:20,color:Colors.text},
   noteFooter:    {flexDirection:'row',justifyContent:'space-between',marginTop:Spacing.sm},
   noteDate:      {fontSize:FontSize.xs,color:Colors.textMuted},
+  faucetBanner:  {marginHorizontal:Spacing.lg, marginTop:Spacing.md, borderRadius:Radius.lg, borderWidth:1, borderColor:'#ec489940', backgroundColor:'#fff6fb', padding:Spacing.md},
+  faucetBannerTitle:{fontSize:FontSize.sm,fontWeight:'800',color:'#9d174d'},
+  faucetBannerSub:{fontSize:FontSize.xs,lineHeight:18,color:Colors.textSoft,marginTop:4},
   // questions
   qCtx:          {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:Spacing.sm},
   qPrompt:       {fontSize:FontSize.lg,fontWeight:'800',color:Colors.text,lineHeight:26},

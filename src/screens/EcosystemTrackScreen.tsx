@@ -193,7 +193,7 @@ const lc = StyleSheet.create({
 
 export default function EcosystemTrackScreen() {
   const { colors } = useTheme();
-  const { user, refreshUser } = useAuth();
+  const { user, refreshUser, updateActiveField } = useAuth();
   const router = useRouter();
 
   const [hasDuneKey, setHasDuneKey] = useState(false);
@@ -221,6 +221,19 @@ export default function EcosystemTrackScreen() {
   };
 
   useEffect(() => { fetchSupplementary(); }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id || user.currentTrackId === 'starknet-ecosystem-deep-dive') {
+      return;
+    }
+
+    void updateActiveField(
+      'starknet',
+      '#EC4899',
+      'starknet-ecosystem-deep-dive',
+      'Starknet Ecosystem Deep Dive',
+    ).catch(() => {});
+  }, [updateActiveField, user?.currentTrackId, user?.id]);
 
   const onRefresh = async () => {
     setRefreshing(true);

@@ -9,6 +9,8 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { API, API_BASE } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
+import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
+import { resolvePostAuthHref } from '../lib/resumeNavigation';
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
   StarknetWalletBridgeProvider,
@@ -74,7 +76,10 @@ interface AuthContextType {
   signInGuest: () => Promise<void>;
   signInEmail: (email: string, password: string) => Promise<void>;
   signUpEmail: (email: string, password: string, username?: string) => Promise<void>;
-  authStarknet: (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<void>;
+  authStarknet: (email: string, starknetAddress?: string, privyAccessToken?: string) => Promise<{
+    isNewUser: boolean;
+    nextPath: string;
+  }>;
   starknetLoading: boolean;
   starknetWallet: StarkzapWallet | null;
   starknetReady: boolean;
@@ -192,9 +197,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setStarknetLoading(true);
     try {
+      const currentToken = user?.id ? await API.getToken() : null;
       const res = await fetch(`${API_BASE}/api/starknet/auth/email`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(currentToken ? { Authorization: `Bearer ${currentToken}` } : {}),
+        },
         body: JSON.stringify({
           email,
           privy_token: privyAccessToken,
@@ -213,7 +222,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error('Starknet auth response was missing the Sifter session payload.');
       }
 
+      const isNewUser = Boolean(payload.is_new_user);
+      const nextPath = resolvePostAuthHref(payload.user, 'starknet-islands');
+      setPendingPostAuthRedirect(nextPath);
       await _handleAuthResponse({ token: payload.token, user: payload.user });
+      return { isNewUser, nextPath };
+    } catch (error) {
+      setPendingPostAuthRedirect(null);
+      throw error;
     } finally {
       setStarknetLoading(false);
     }
@@ -263,18 +279,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const quantTraderUnlocked = true;
   const quantResearcherUnlocked = true;
   const quantDeveloperUnlocked = (user?.python_chapters_completed?.length ?? 0) >= 5;
-  const resolvedUser = user && bridgeState.address && user.starknet_address !== bridgeState.address
-    ? {
-        ...user,
-        starknet_address: bridgeState.address,
-        starknet_auth: true,
-      }
-    : user;
 
   return (
     <AuthContext.Provider
       value={{
-        user: resolvedUser,
+        user,
         loading,
         authTelegram,
         authBaseWallet,
@@ -298,7 +307,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     >
       <StarknetWalletBridgeProvider preferredAddress={user?.starknet_address ?? null}>
         <StarknetBridgeStateSync onChange={setBridgeState} />
-        {PRIVY_ENABLED ? <PrivyStarknetBootstrap user={resolvedUser} refreshUser={refreshUser} /> : null}
+        {PRIVY_ENABLED ? <PrivyStarknetBootstrap user={user} refreshUser={refreshUser} /> : null}
         {children}
       </StarknetWalletBridgeProvider>
     </AuthContext.Provider>
