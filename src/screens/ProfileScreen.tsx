@@ -18,7 +18,7 @@ import {
 import { WorkerCharacter, DeskScene } from '../components/CharacterSystem';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebStatTile, WebDivider, useIsWebWide,
 } from '../components/web/WebGrid';
 import { xpEngine, type XPSnapshot }      from '../lib/XPEngine';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
@@ -223,7 +223,12 @@ export default function ProfileScreen() {
                   </Text>
                 </View>
                 <WebDivider />
-                <WebListRow icon="👕" title="Merchandise" sub="Spend merch credits on apparel and shoes" onPress={() => go('/merchandise')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <AccountRow
+                  emoji="M"
+                  label="Merchandise"
+                  sub="Spend merch credits on apparel and shoes"
+                  onPress={() => go('/merchandise')}
+                />
                 <WebStatTile emoji="⚡" label="Total XP"  value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to Stage ${stage + 1}`} color={colors.accent} />
                 <WebStatTile emoji="🔥" label="Streak"    value={`${streak?.streak ?? 0} days`} sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} color={colors.orange} />
                 <WebStatTile emoji="🏝️" label="Levels"    value={`${(xp?.totalXp ?? 0) > 0 ? Math.floor((xp?.totalXp ?? 0) / 10) : 0}`} sub="Total lessons completed" color={colors.green} />
@@ -276,13 +281,37 @@ export default function ProfileScreen() {
                 <Text style={[styles.workspaceTitle, { color: colors.text }]}>{workspaceLabel}</Text>
                 <Text style={[styles.workspaceBody, { color: colors.textSoft }]}>{workspaceBody}</Text>
                 <WebDivider />
-                <WebListRow icon="💼" title="Portfolio" sub="Artifacts, linked platforms, and XP" onPress={() => go('/(tabs)/portfolio')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🏝️" title="Open Workspace" sub="Continue from your active learning surface" onPress={() => go(workspaceHref)} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="👥" title="Guilds + Community" sub="Group progress, rankings, and chat" onPress={() => go('/(tabs)/guild')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="⚙️" title="Settings" sub="Theme, notifications, and account state" onPress={() => go('/(tabs)/settings')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <AccountRow
+                  emoji="P"
+                  label="Portfolio"
+                  sub="Artifacts, linked platforms, and XP"
+                  onPress={() => go('/(tabs)/portfolio')}
+                />
+                <AccountRow
+                  emoji="W"
+                  label="Open Workspace"
+                  sub="Continue from your active learning surface"
+                  onPress={() => go(workspaceHref)}
+                />
+                <AccountRow
+                  emoji="G"
+                  label="Guilds + Community"
+                  sub="Group progress, rankings, and chat"
+                  onPress={() => go('/(tabs)/guild')}
+                />
+                <AccountRow
+                  emoji="S"
+                  label="Settings"
+                  sub="Theme, notifications, and account state"
+                  onPress={() => go('/(tabs)/settings')}
+                />
                 <WebDivider />
-                <WebListRow icon="🔴" title="Sign Out" sub="" onPress={handleSignOut}
-                  right={<Text style={{ color: colors.red }}>›</Text>} />
+                <AccountRow
+                  emoji="O"
+                  label="Sign Out"
+                  onPress={handleSignOut}
+                  color={colors.red}
+                />
               </WebCard>
             </WebCol>
           </WebRow>

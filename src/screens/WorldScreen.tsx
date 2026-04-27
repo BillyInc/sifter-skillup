@@ -180,6 +180,14 @@ function LabWorldScreen({
     });
   }
 
+  function handleBack() {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.replace('/map/island' as any);
+  }
+
   const contentStyle = {
     opacity: enterAnim,
     transform: [{ translateY: enterAnim.interpolate({ inputRange: [0, 1], outputRange: [30, 0] }) }],
@@ -189,7 +197,7 @@ function LabWorldScreen({
     <SafeAreaView style={[styles.labScreen, { backgroundColor: colors.bg }]}>
       <ScrollView contentContainerStyle={styles.labScroll} showsVerticalScrollIndicator={false}>
         <Animated.View style={[styles.labHeroCard, { backgroundColor: colors.card, borderColor: `${accentColor}30` }, contentStyle]}>
-          <TouchableOpacity style={[styles.backChip, { backgroundColor: colors.bgSecondary }]} onPress={() => router.back()}>
+          <TouchableOpacity style={[styles.backChip, { backgroundColor: colors.bgSecondary }]} onPress={handleBack}>
             <Text style={[styles.backChipText, { color: colors.text }]}>{'<'} Back</Text>
           </TouchableOpacity>
 
@@ -337,6 +345,14 @@ export default function WorldScreen() {
     ? 'This track is live in the new shell and routes directly to the correct workspace.'
     : 'The world stays visible for orientation, but entry is still gated until the track is live.';
 
+  const handleBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.replace('/map/island' as any);
+  };
+
   return (
     <View style={[styles.screen, { backgroundColor: bg0 }]}>
       <View style={[StyleSheet.absoluteFillObject, { backgroundColor: bg1, top: H * 0.4 }]} />
@@ -355,7 +371,7 @@ export default function WorldScreen() {
       <SafeAreaView style={styles.safe}>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <Animated.View style={[styles.worldHeroCard, headerStyle]}>
-            <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+            <TouchableOpacity style={styles.backBtn} onPress={handleBack}>
               <Text style={styles.backBtnText}>{'<'} Back</Text>
             </TouchableOpacity>
             <Text style={[styles.surfaceEyebrow, { color: accentColor }]}>
