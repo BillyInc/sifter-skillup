@@ -22,20 +22,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // ─── Spacing ──────────────────────────────────────────────────
 
 export const Spacing = {
-  xs: 4, sm: 8, md: 12, lg: 16, xl: 20, xxl: 24, xxxl: 32, huge: 48,
+  xs: 3, sm: 6, md: 10, lg: 14, xl: 18, xxl: 22, xxxl: 28, huge: 40,
 } as const;
 
 // ─── Radius ───────────────────────────────────────────────────
 
 export const Radius = {
-  sm: 8, md: 12, lg: 14, xl: 18, xxl: 24, xxxl: 32, full: 99,
+  sm: 6, md: 9, lg: 11, xl: 14, xxl: 18, xxxl: 24, full: 99,
 } as const;
 
 // ─── Typography ───────────────────────────────────────────────
 
 export const FontSize = {
-  xs: 10, sm: 12, md: 14, lg: 16, xl: 18, xxl: 22, xxxl: 26,
-  display: 32, hero: 38,
+  xs: 9, sm: 11, md: 13, lg: 15, xl: 17, xxl: 19, xxxl: 22,
+  display: 26, hero: 30,
 } as const;
 
 export const FontWeight = {
