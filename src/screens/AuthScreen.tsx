@@ -14,7 +14,6 @@ import {
   Dimensions,
   Linking,
 } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
 import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetPrivyLogin';
 import { PRIVY_CONFIGURED, PRIVY_ENABLED } from '../lib/config';
@@ -430,8 +429,6 @@ export default function AuthScreen() {
     starknetLoading,
   } = useAuth();
   const { colors, isDark } = useTheme();
-  const router = useRouter();
-
   const [mode, setMode] = useState<Mode>(() => (hasPendingPrivyWebLogin() ? 'starknet' : 'welcome'));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -489,7 +486,6 @@ export default function AuthScreen() {
     setMode('connecting');
     try {
       await authStarknet(starkEmail, starknetAddress, privyAccessToken);
-      router.replace('/(tabs)/map/island?initialIsland=18' as any);
     } catch (cause: any) {
       setError(cause.message || 'Starknet error');
       setMode('starknet');

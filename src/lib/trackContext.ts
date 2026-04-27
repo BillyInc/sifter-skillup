@@ -12,6 +12,12 @@ type UserLike = {
   starknet_address?: string;
 };
 
+type TrackContextOptions = {
+  trackId?: string | null;
+  trackName?: string | null;
+  hasStarknetWallet?: boolean;
+};
+
 type TrackMetric = {
   label: string;
   value: string;
@@ -254,11 +260,14 @@ function buildChallenge(fieldId: string, trackName: string): { title: string; su
   }
 }
 
-export function resolveTrackContext(user: UserLike | null | undefined): TrackContext {
+export function resolveTrackContext(
+  user: UserLike | null | undefined,
+  options?: TrackContextOptions,
+): TrackContext {
   const activeFieldId = getUserFieldId(user);
-  const currentTrackId = getUserTrackId(user);
-  const currentTrackName = getUserTrackName(user);
-  const starknetFallback = Boolean(user?.starknet_auth || user?.starknet_address);
+  const currentTrackId = options?.trackId ?? getUserTrackId(user);
+  const currentTrackName = options?.trackName ?? getUserTrackName(user);
+  const starknetFallback = options?.hasStarknetWallet ?? Boolean(user?.starknet_auth || user?.starknet_address);
 
   const exactTrack = findTrackById(currentTrackId);
   const fallbackTrack = exactTrack ?? findFallbackTrack(activeFieldId, starknetFallback);

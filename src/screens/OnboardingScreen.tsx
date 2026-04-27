@@ -1,11 +1,11 @@
 /**
  * Sifter Skill_Up — Onboarding Screen
  *
- * Shown once to new users immediately after account creation.
- * Three paths:
+ * Shown once for users who still need onboarding.
+ * Returning-user resume now happens before this screen via shared auth/resume routing.
+ * Two paths:
  *   1. "I know what I want"   → Browse fields → pick role → straight to track
  *   2. "Help me figure it out" → Career interest quiz → platform suggests 3 tracks
- *   3. Returning user          → Resume from exact last position (lesson + lab + level)
  *
  * The quiz is 6 fast questions. Platform scores answers against a
  * field-affinity matrix and surfaces the top 3 matches with reasoning.

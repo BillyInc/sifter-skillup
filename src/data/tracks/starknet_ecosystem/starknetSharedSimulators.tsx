@@ -29,6 +29,7 @@ import {
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { Colors, Spacing, Radius, FontSize } from '../../../theme';
+import StarknetFaucetButton from '../../../components/StarknetFaucetButton';
 
 export const STARKNET_SEPOLIA = {
   rpc:          'https://starknet-sepolia.public.blastapi.io',
@@ -63,7 +64,6 @@ export interface SepoliaState {
   needsFaucet: boolean;
   refreshBalance: () => void;
   openExplorer: () => void;
-  openFaucet: (token?: 'eth' | 'strk') => void;
   copyAddress: () => void;
   copied: boolean;
 }
@@ -144,10 +144,6 @@ export function useStarknetSepolia(address: string | null): SepoliaState {
     if (address) Linking.openURL(`${STARKNET_SEPOLIA.explorer}/contract/${address}`);
   };
 
-  const openFaucet = (token: 'eth' | 'strk' = 'eth') => {
-    Linking.openURL(token === 'strk' ? STARKNET_SEPOLIA.faucet_strk : STARKNET_SEPOLIA.faucet);
-  };
-
   const copyAddress = async () => {
     if (address) {
       await Clipboard.setStringAsync(address);
@@ -164,7 +160,6 @@ export function useStarknetSepolia(address: string | null): SepoliaState {
     needsFaucet,
     refreshBalance: fetchBalances,
     openExplorer,
-    openFaucet,
     copyAddress,
     copied,
   };
@@ -229,14 +224,10 @@ export function StarknetAddressBanner({ address }: { address: string | null }) {
       {sepolia.needsFaucet && (
         <View style={sty.faucetRow}>
           <Text style={sty.faucetText}>Need testnet tokens to run this simulator:</Text>
-          <View style={{ flexDirection: 'row', gap: Spacing.sm, marginTop: 6 }}>
-            <TouchableOpacity onPress={() => sepolia.openFaucet('eth')} style={sty.faucetBtn}>
-              <Text style={sty.faucetBtnText}>Get ETH →</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => sepolia.openFaucet('strk')} style={sty.faucetBtn}>
-              <Text style={sty.faucetBtnText}>Get STRK →</Text>
-            </TouchableOpacity>
+          <View style={{ marginTop: 6 }}>
+            <StarknetFaucetButton walletAddress={address} compact onSuccess={() => { void sepolia.refreshBalance(); }} />
           </View>
+          <Text style={sty.faucetHint}>ETH may still be required for some Sepolia flows.</Text>
         </View>
       )}
 
@@ -279,23 +270,11 @@ export function StarknetFaucetSheet({
       <StarknetAddressBanner address={address} />
 
       <View style={sty.faucetSteps}>
-        <Text style={sty.faucetStepTitle}>GET TEST TOKENS (FREE)</Text>
-        {[
-          { step: '1', label: 'Get Sepolia ETH', url: STARKNET_SEPOLIA.faucet, desc: 'starknet-faucet.vercel.app — paste your address above' },
-          { step: '2', label: 'Get Sepolia STRK', url: STARKNET_SEPOLIA.faucet_strk, desc: 'BlastAPI faucet — for STRK staking lessons' },
-        ].map(({ step, label, url, desc }) => (
-          <TouchableOpacity key={step} onPress={() => Linking.openURL(url)}
-            style={sty.faucetStepRow}>
-            <View style={sty.faucetStepNum}>
-              <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.xs }}>{step}</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.sm }}>{label}</Text>
-              <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{desc}</Text>
-            </View>
-            <Text style={{ color: Colors.accent, fontWeight: '700' }}>→</Text>
-          </TouchableOpacity>
-        ))}
+        <Text style={sty.faucetStepTitle}>CLAIM TEST STRK IN APP</Text>
+        <StarknetFaucetButton walletAddress={address} onSuccess={() => { void sepolia.refreshBalance(); }} />
+        <Text style={sty.faucetHint}>
+          If a lesson also needs Sepolia ETH for gas, use your preferred public faucet after the STRK claim succeeds.
+        </Text>
       </View>
 
       <TouchableOpacity onPress={handleCheck} style={sty.checkBtn} disabled={checking}>
@@ -349,8 +328,7 @@ const sty = StyleSheet.create({
 
   faucetRow:    { backgroundColor: '#1a0a00', borderRadius: Radius.sm, padding: Spacing.md, borderWidth: 1, borderColor: '#f97316' + '30' },
   faucetText:   { fontSize: FontSize.xs, color: '#f97316', fontWeight: '700' },
-  faucetBtn:    { backgroundColor: '#f97316', borderRadius: Radius.sm, paddingHorizontal: Spacing.md, paddingVertical: 6 },
-  faucetBtnText:{ fontSize: FontSize.xs, fontWeight: '900', color: '#fff' },
+  faucetHint:   { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: Spacing.sm, lineHeight: 16 },
 
   explorerLink: { alignItems: 'center', paddingVertical: 4 },
   explorerLinkText: { fontSize: FontSize.xs, color: '#f97316', fontWeight: '700' },

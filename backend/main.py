@@ -155,6 +155,7 @@ async def complete_onboarding(body: dict, current_user: dict = Depends(Auth.get_
     updates = {"onboarding_completed": True}
     if body.get("active_track"):
         updates["active_track"] = body["active_track"]
+        updates["current_track_id"] = body["active_track"]
     if body.get("active_field_id"):
         updates["active_field_id"] = body["active_field_id"]
     result = db.get_service_client().table("users").update(updates).eq("id", current_user["id"]).execute()
