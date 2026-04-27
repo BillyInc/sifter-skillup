@@ -1020,7 +1020,8 @@ export default function LessonScreen({
           stageUp={false}
           onDismiss={handleCelebDismiss}
         />
-        {!showCelebration && (
+        {/* CompleteScreen is hidden while the portal transition is playing */}
+        {!showCelebration && !showTransition && (
           <CompleteScreen
             stars={state.stars}
             xp={sessionXp}
@@ -1029,6 +1030,33 @@ export default function LessonScreen({
             onContinue={handleCelebDismiss}
           />
         )}
+        {/*
+          LessonTransition MUST live here, not only in the main return.
+          When state.finished is true the main return is never reached, so
+          the component was already unmounted before handleCelebDismiss ever
+          called setShowTransition(true) - making the transition a no-op and
+          leaving the user stuck on CompleteScreen with no way to advance.
+          Starknet lab lessons always have a non-null nextTarget (next lesson
+          or boss within the same lab), so they always hit this path.
+        */}
+        <LessonTransition
+          visible={showTransition}
+          fromTopic={lessonTopic}
+          toTopic={nextTarget?.topic ?? ''}
+          fieldColor={(user as any)?.activeFieldColor}
+          mechanic={nextTarget?.mechanic}
+          onDone={() => {
+            setShowTransition(false);
+            if (pendingLevelId != null && !isStarknetLabLesson && onNavigateToLesson) {
+              const nextLevelId = pendingLevelId;
+              setPendingLevelId(null);
+              onNavigateToLesson(nextLevelId);
+              return;
+            }
+            setPendingLevelId(null);
+            if (state) onComplete(state.stars, state.xp);
+          }}
+        />
       </SafeAreaView>
     );
   }
@@ -1123,24 +1151,9 @@ export default function LessonScreen({
         userId={String((user as any)?.id ?? 'local')}
         onClose={() => setShowFlag(false)}
       />
-      <LessonTransition
-        visible={showTransition}
-        fromTopic={lessonTopic}
-        toTopic={nextTarget?.topic ?? ''}
-        fieldColor={(user as any)?.activeFieldColor}
-        mechanic={nextTarget?.mechanic}
-        onDone={() => {
-          setShowTransition(false);
-          if (pendingLevelId != null && !isStarknetLabLesson && onNavigateToLesson) {
-            const nextLevelId = pendingLevelId;
-            setPendingLevelId(null);
-            onNavigateToLesson(nextLevelId);
-            return;
-          }
-          setPendingLevelId(null);
-          if (state) onComplete(state.stars, state.xp);
-        }}
-      />
+      {/* LessonTransition moved into the finished-state branch above.
+          showTransition is only ever set true after state.finished === true,
+          so this position in the main return could never fire it anyway. */}
       <DisclaimerFooter />
     </SafeAreaView>
   );
