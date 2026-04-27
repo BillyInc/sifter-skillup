@@ -48,8 +48,8 @@ interface PortfolioArtifact {
   commitMessage: string;
   folderPath: string;
   platforms: {
-    primary: Array<{ id: string; type: string }>;
-    secondary: Array<{ id: string; type: string; condition?: string }>;
+    primary: { id: string; type: string }[];
+    secondary: { id: string; type: string; condition?: string }[];
   };
   caseStudyContent: string; // interview-ready markdown
   pushedTo: string[]; // platform IDs already pushed
@@ -57,7 +57,7 @@ interface PortfolioArtifact {
 
 interface Phase2GateStatus {
   unlocked: boolean;
-  blockers: Array<{ requirement: string; status: string; met: boolean }>;
+  blockers: { requirement: string; status: string; met: boolean }[];
 }
 
 interface AggSimStatus {
@@ -66,7 +66,7 @@ interface AggSimStatus {
   passed: number;
   passRate: number;
   meetsThreshold: boolean;
-  failedSims: Array<{ simId: string; attemptsUsed: number; endOfLevelRetryAvailable: boolean }>;
+  failedSims: { simId: string; attemptsUsed: number; endOfLevelRetryAvailable: boolean }[];
 }
 
 interface RemediationSet {
@@ -214,7 +214,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
     <>
       {/* Stats row */}
       <Card>
-        <SectionLabel text="PORTFOLIO SUMMARY" />
+        <SectionLabel text="ARTIFACTS SUMMARY" />
         <View style={styles.statsRow}>
           {[
             { label: 'Junior', value: juniorCount, color: '#10b981' },
@@ -241,7 +241,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
       <Card>
         <SectionLabel text="SUPPLY CHAIN ANALYST — PLATFORM PRIORITY" />
         <Text style={styles.body}>
-          Based on how Supply Chain Analyst roles are hired, your portfolio destinations are ranked below.
+          Based on how Supply Chain Analyst roles are hired, your artifact destinations are ranked below.
           Recruiters check these platforms in this order.
         </Text>
         {Object.entries(PLATFORM_CONFIG).map(([id, cfg]) => (
@@ -356,7 +356,7 @@ function ArtifactsTab({ artifacts, onPush }: {
       <Card>
         <Text style={styles.emptyTitle}>No artifacts yet</Text>
         <Text style={styles.emptyBody}>
-          Complete a Boss Battle Certification Attempt to earn your first portfolio artifact.
+          Complete a Boss Battle Certification Attempt to earn your first artifact.
           Each artifact requires passing 100% of scoring criteria on an unseen scenario.
         </Text>
       </Card>
@@ -452,13 +452,13 @@ function CredibilityTab({ artifacts: _artifacts }: { artifacts: PortfolioArtifac
       <Card>
         <SectionLabel text="HOW TO USE YOUR PORTFOLIO IN INTERVIEWS" />
         <Text style={styles.body}>
-          Every artifact in your portfolio is a pre-written answer to a behavioural interview question.
+          Every artifact here is a pre-written answer to a behavioural interview question.
           You have already handled these scenarios under timed, unguided, framework-verified conditions.
         </Text>
         {[
           {
             q: '"Tell me about a time you handled a supplier failure."',
-            a: 'Open your portfolio. Show the case study. Walk the interviewer through the scenario, your decision, and the framework you applied. The artifact proves it happened.',
+            a: 'Open your artifact hub. Show the case study. Walk the interviewer through the scenario, your decision, and the framework you applied. The artifact proves it happened.',
           },
           {
             q: '"How do you approach inventory risk?"',
@@ -529,7 +529,7 @@ function ProgressionTab({
   gateStatus: Phase2GateStatus | null;
   aggSimStatus: AggSimStatus | null;
   remediationSets: RemediationSet[];
-  endOfLevelRetries: Array<{ simId: string; labId: string; concept: string }>;
+  endOfLevelRetries: { simId: string; labId: string; concept: string }[];
   onSubmitEndOfLevelRetry: (simId: string) => void;
 }) {
   return (
@@ -676,7 +676,7 @@ function ProgressionTab({
           { step: '3', label: 'Complete aggregate sims', detail: 'All 15 aggregate sims attempted. Max 2 attempts each.' },
           { step: '4', label: 'Pass 90% of aggregate sims', detail: '≥14/15 passed within attempt budget. Fail limit: 1.' },
           { step: '5', label: 'End-of-level retry if needed', detail: 'One final attempt for any sim failed twice. Must pass or Phase 2 blocked.' },
-          { step: '6', label: 'Phase 2 Certification Attempt unlocks', detail: 'One unseen scenario. No hints. 100% criteria = portfolio push.' },
+          { step: '6', label: 'Phase 2 Certification Attempt unlocks', detail: 'One unseen scenario. No hints. 100% criteria = artifact push.' },
         ].map(s => (
           <View key={s.step} style={styles.stepRow}>
             <View style={styles.stepNum}>
@@ -705,13 +705,11 @@ export default function PortfolioHubScreen() {
   const [artifacts, setArtifacts] = useState<PortfolioArtifact[]>([]);
   const [platformStatuses, setPlatformStatuses] = useState<PlatformStatus[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pushing, setPushing] = useState<string | null>(null);
-
   // Progression state
   const [gateStatus, setGateStatus] = useState<Phase2GateStatus | null>(null);
   const [aggSimStatus, setAggSimStatus] = useState<AggSimStatus | null>(null);
   const [remediationSets, setRemediationSets] = useState<RemediationSet[]>([]);
-  const [endOfLevelRetries, setEndOfLevelRetries] = useState<Array<{ simId: string; labId: string; concept: string }>>([]);
+  const [endOfLevelRetries, setEndOfLevelRetries] = useState<{ simId: string; labId: string; concept: string }[]>([]);
 
   // Load portfolio and progression data
   useEffect(() => {
@@ -762,8 +760,6 @@ export default function PortfolioHubScreen() {
   }, [activeTab]);
 
   const handlePush = useCallback(async (artifact: PortfolioArtifact, platformId: string) => {
-    const key = `${artifact.id}-${platformId}`;
-    setPushing(key);
     try {
       await API.pushPortfolioArtifact({ artifactId: artifact.id, platformId });
       setArtifacts(prev =>
@@ -776,8 +772,6 @@ export default function PortfolioHubScreen() {
       Alert.alert('✅ Pushed', `${artifact.skill} pushed to ${PLATFORM_CONFIG[platformId]?.name ?? platformId}`);
     } catch (e: any) {
       Alert.alert('Error', e.message ?? 'Push failed. Please try again.');
-    } finally {
-      setPushing(null);
     }
   }, []);
 
@@ -785,7 +779,7 @@ export default function PortfolioHubScreen() {
     try {
       const { url } = await API.getPlatformAuthUrl(platformId);
       await Linking.openURL(url);
-    } catch (e: any) {
+    } catch {
       Alert.alert('Error', `Could not open ${platformId} auth. Please try again.`);
     }
   }, []);
@@ -820,7 +814,7 @@ export default function PortfolioHubScreen() {
     }
   }, []);
 
-  const TABS: Array<{ id: HubTab; label: string; emoji: string }> = [
+  const TABS: { id: HubTab; label: string; emoji: string }[] = [
     { id: 'overview', label: 'Overview', emoji: '🗺️' },
     { id: 'artifacts', label: `Artifacts${artifacts.length > 0 ? ` (${artifacts.length})` : ''}`, emoji: '🏆' },
     { id: 'platforms', label: 'Platforms', emoji: '🔗' },
@@ -835,7 +829,7 @@ export default function PortfolioHubScreen() {
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
         <WebShell>
           <WebPageHeader
-            title="⚡ Portfolio Hub"
+            title="⚡ Artifacts Hub"
             subtitle={`${artifacts.length} artifacts · ${connectedCount} platforms connected`}
             accentColor={colors.accent}
           />
@@ -902,7 +896,7 @@ export default function PortfolioHubScreen() {
                 <WebCard>
                   <View style={{ alignItems: 'center', paddingVertical: 60 }}>
                     <ActivityIndicator color={colors.accent} size="large" />
-                    <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 13 }}>Loading portfolio…</Text>
+                    <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 13 }}>Loading artifacts…</Text>
                   </View>
                 </WebCard>
               ) : (
@@ -939,7 +933,7 @@ export default function PortfolioHubScreen() {
 
       {/* Header */}
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>⚡ Portfolio Hub</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>⚡ Artifacts Hub</Text>
         <Text style={[styles.headerSub, { color: colors.textSoft }]}>Supply Chain Analyst</Text>
       </View>
 
@@ -962,7 +956,7 @@ export default function PortfolioHubScreen() {
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator color={Colors.accent} size="large" />
-          <Text style={styles.loadingText}>Loading your portfolio…</Text>
+          <Text style={styles.loadingText}>Loading your artifacts…</Text>
         </View>
       ) : (
         <>

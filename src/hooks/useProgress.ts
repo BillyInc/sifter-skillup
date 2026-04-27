@@ -2,6 +2,10 @@ import { useCallback } from 'react';
 import { API } from '../lib/api';
 import { useAuth } from './useAuth';
 
+function normalizeCompletionTrack(track: string): string {
+  return track === 'starknet-islands' ? 'crypto' : track;
+}
+
 export function useProgress() {
   const { user, refreshUser } = useAuth();
 
@@ -14,7 +18,7 @@ export function useProgress() {
     if (!user) return;
     const result = await API.completeLevel({
       level_id: levelId,
-      track,
+      track: normalizeCompletionTrack(track),
       score,
       is_perfect: perfect,
     });

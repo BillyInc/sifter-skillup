@@ -138,7 +138,7 @@ function LessonRow({
         }},
       ]
     );
-  }, [lesson.id, trackId]);
+  }, [lesson.title]);
 
   return (
     <TouchableOpacity
@@ -230,7 +230,7 @@ function SectionCard({
             <Text style={[sc.title, !isUnlocked && sc.lockedText]}>{section.title}</Text>
             {section.hasPhase2 && (
               <View style={sc.portfolio}>
-                <Text style={sc.portfolioText}>📂 Portfolio</Text>
+                <Text style={sc.portfolioText}>📂 Artifact</Text>
               </View>
             )}
           </View>
@@ -259,7 +259,7 @@ function SectionCard({
                 <Text style={[sc.bossTitle, { color }]}>Boss Battle</Text>
                 <Text style={sc.bossSub}>
                   {section.hasPhase2
-                    ? 'Two phases — Learning Loop + Certification. Portfolio artifact on Phase 2 pass.'
+                    ? 'Two phases — Learning Loop + Certification. Artifact unlock on Phase 2 pass.'
                     : 'Learning Loop only — practice with full feedback.'}
                 </Text>
               </View>
@@ -327,7 +327,7 @@ export default function CurriculumPreview({
             { n: sections.length,   label: 'Labs' },
             { n: totalLessons,      label: 'Lessons' },
             { n: totalSims,         label: 'Exercises' },
-            { n: portfolioLabs,     label: 'Portfolio' },
+            { n: portfolioLabs,     label: 'Artifacts' },
           ].map((item, i) => (
             <View key={i} style={st.item}>
               <Text style={[st.num, { color }]}>{item.n}</Text>
@@ -346,10 +346,10 @@ export default function CurriculumPreview({
             </Text>
           </View>
 
-          {/* What you'll be able to do */}
+          {/* What you&apos;ll be able to do */}
           {track.realWorldOutcomes?.length > 0 && (
             <View style={oc.wrap}>
-              <Text style={oc.heading}>What you'll be able to do</Text>
+              <Text style={oc.heading}>What you&apos;ll be able to do</Text>
               {track.realWorldOutcomes.map((o, i) => (
                 <View key={i} style={oc.row}>
                   <Text style={[oc.tick, { color }]}>✓</Text>

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import { API } from '../lib/api';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
+import { Colors, Spacing, Radius, FontSize, useTheme } from '../theme';
 import {
   getPlatformsForField,
   PLATFORMS,
@@ -23,7 +23,7 @@ import {
 } from '../data/portfolioPlatforms';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebListRow, WebDivider, useIsWebWide,
+  WebSectionLabel, WebListRow, useIsWebWide,
 } from '../components/web/WebGrid';
 import { startPortfolioOAuth, isOAuthLive } from '../lib/portfolioOAuth';
 
@@ -48,7 +48,7 @@ interface PortfolioItem {
   type: 'project' | 'writeup' | 'certificate' | 'code' | 'design' | 'video';
   tags: string[];
   createdAt: string;
-  pushedTo: Array<{ platformId: string; postUrl: string; pushedAt: string }>;
+  pushedTo: { platformId: string; postUrl: string; pushedAt: string }[];
   sourceLesson?: string;
   sourceTrack?: string;
 }
@@ -311,7 +311,7 @@ function PlatformConnectModal({
                     <Text style={mStyle.modeSub}>
                       {oauthLive
                         ? `Paste your ${platform.name} profile URL if you'd rather not OAuth.`
-                        : `Paste your ${platform.name} profile URL — we'll save it to your portfolio.`}
+                        : `Paste your ${platform.name} profile URL — we'll save it to your artifact hub.`}
                     </Text>
                   </View>
                   <Text style={mStyle.chevron}>›</Text>
@@ -329,7 +329,7 @@ function PlatformConnectModal({
                 {!oauthLive && (
                   <View style={mStyle.attributionBox}>
                     <Text style={mStyle.attributionText}>
-                      ℹ️ Live OAuth posting for {platform.name} is not wired up for this demo. Use the manual link or the "Get package" option under My Work to share items here.
+                      ℹ️ Live OAuth posting for {platform.name} is not wired up for this demo. Use the manual link or the {'"'}Get package{'"'} option under Artifacts to share items here.
                     </Text>
                   </View>
                 )}
@@ -375,7 +375,7 @@ function PlatformConnectModal({
 
                     <View style={mStyle.attributionBox}>
                       <Text style={mStyle.attributionText}>
-                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '900' }}>"Trained via Sifter Skill_Up"</Text> — so recruiters know where your skills came from.
+                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '900' }}>{'"'}Trained via Sifter Skill_Up{'"'}</Text> — so recruiters know where your skills came from.
                       </Text>
                     </View>
 
@@ -545,7 +545,7 @@ function PushItemModal({
                 />
                 <View style={pushSt.attributionNote}>
                   <Text style={pushSt.attributionNoteText}>
-                    ⚡ "Sifter Skill_Up · sifter.app" is always included in the attribution field.
+                    ⚡ {'"'}Sifter Skill_Up · sifter.app{'"'} is always included in the attribution field.
                   </Text>
                 </View>
               </>
@@ -611,7 +611,7 @@ function PushItemModal({
 // ─────────────────────────────────────────────────────────────
 
 export default function PortfolioScreen() {
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const [tab, setTab]                       = useState<TabId>('my-track');
@@ -659,7 +659,7 @@ export default function PortfolioScreen() {
       <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
         <WebShell>
           <WebPageHeader
-            title="💼 Portfolio"
+            title="💼 Artifacts + XP"
             subtitle={`${connectedCount} platform${connectedCount !== 1 ? 's' : ''} connected · ${portfolioItems.length} item${portfolioItems.length !== 1 ? 's' : ''}`}
             accentColor={colors.accent}
           />
@@ -667,10 +667,10 @@ export default function PortfolioScreen() {
           <WebRow>
             {/* Left: tab nav + platform summary */}
             <WebCol weight={1}>
-              <WebCard title="My Portfolio" accentBar accentColor={colors.accent}>
+              <WebCard title="Artifacts Hub" accentBar accentColor={colors.accent}>
                 {([
-                  { id: 'my-track',      label: '🎯 My Track',    sub: 'Platforms for your track' },
-                  { id: 'my-work',       label: '📂 My Work',     sub: `${portfolioItems.length} items earned` },
+                  { id: 'my-track',      label: '🎯 Track Platforms',    sub: 'Platforms for your track' },
+                  { id: 'my-work',       label: '📂 Artifacts',     sub: `${portfolioItems.length} items earned` },
                   { id: 'all-platforms', label: '🌐 All Platforms', sub: 'Browse all 28 fields' },
                 ] as { id: TabId; label: string; sub: string }[]).map(t => (
                   <WebListRow
@@ -714,7 +714,7 @@ export default function PortfolioScreen() {
             {/* Right: tab content */}
             <WebCol weight={2}>
               <WebCard
-                title={tab === 'my-track' ? '🎯 My Track Platforms' : tab === 'my-work' ? '📂 My Work' : '🌐 All Platforms'}
+                title={tab === 'my-track' ? '🎯 Track Platforms' : tab === 'my-work' ? '📂 Artifacts' : '🌐 All Platforms'}
                 accentBar accentColor={colors.accent}
               >
                 <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 640 }}>
@@ -723,7 +723,7 @@ export default function PortfolioScreen() {
                   {tab === 'my-track' && (
                     <>
                       <View style={[s.trackBanner, { backgroundColor: colors.accentSoft, borderRadius: Radius.md, marginBottom: 16 }]}>
-                        <Text style={[s.trackBannerTitle, { color: colors.accent }]}>Your track's platforms</Text>
+                        <Text style={[s.trackBannerTitle, { color: colors.accent }]}>Your track platforms</Text>
                         <Text style={[s.trackBannerBody, { color: colors.textSoft }]}>
                           Connect these. Your work gets pushed automatically when you complete labs.
                         </Text>
@@ -753,7 +753,7 @@ export default function PortfolioScreen() {
                       <View style={[s.autoSaveBanner, { backgroundColor: colors.accentSoft, borderRadius: Radius.md, marginBottom: 16 }]}>
                         <Text style={{ fontSize: 22 }}>⚡</Text>
                         <Text style={[s.autoSaveText, { color: colors.textSoft }]}>
-                          Portfolio items are created automatically when you complete lessons and labs.
+                          Artifacts are created automatically when you complete lessons and labs.
                         </Text>
                       </View>
                       {portfolioItems.length === 0 ? (
@@ -870,7 +870,7 @@ export default function PortfolioScreen() {
       {/* ── Header ── */}
       <View style={s.header}>
         <View>
-          <Text style={s.headerTitle}>💼 Portfolio</Text>
+          <Text style={s.headerTitle}>💼 Artifacts + XP</Text>
           <Text style={s.headerSub}>
             {connectedAccounts.length} platform{connectedAccounts.length !== 1 ? 's' : ''} connected · {portfolioItems.length} item{portfolioItems.length !== 1 ? 's' : ''}
           </Text>
@@ -880,8 +880,8 @@ export default function PortfolioScreen() {
       {/* ── Tab bar ── */}
       <View style={s.tabBar}>
         {([
-          { id: 'my-track',      label: '🎯 My Track' },
-          { id: 'my-work',       label: '📂 My Work'  },
+          { id: 'my-track',      label: '🎯 Track Platforms' },
+          { id: 'my-work',       label: '📂 Artifacts'  },
           { id: 'all-platforms', label: '🌐 Explore'  },
         ] as { id: TabId; label: string }[]).map(t => (
           <TouchableOpacity
@@ -907,7 +907,7 @@ export default function PortfolioScreen() {
         {tab === 'my-track' && (
           <>
             <View style={s.trackBanner}>
-              <Text style={s.trackBannerTitle}>Your track's platforms</Text>
+              <Text style={s.trackBannerTitle}>Your track platforms</Text>
               <Text style={s.trackBannerBody}>
                 Connect these platforms. When you complete lessons and labs, your work will be pushed here automatically — credited to Sifter Skill_Up.
               </Text>
@@ -962,7 +962,7 @@ export default function PortfolioScreen() {
             <View style={s.autoSaveBanner}>
               <Text style={{ fontSize: 22 }}>⚡</Text>
               <Text style={s.autoSaveText}>
-                Portfolio items are created automatically when you complete lessons, labs, and boss battles. Tap any item to push it to your connected platforms.
+                Artifacts are created automatically when you complete lessons, labs, and boss battles. Tap any item to push it to your connected platforms.
               </Text>
             </View>
 

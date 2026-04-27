@@ -7,9 +7,8 @@
  */
 
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Animated, Easing, StyleSheet, Dimensions } from 'react-native';
-
-const { width: SW } = Dimensions.get('window');
+import { View, Text, Animated, Easing, StyleSheet } from 'react-native';
+import { getFieldColor, getFieldIcon } from '../../lib/visualThemes';
 
 // ─── Shared helpers ────────────────────────────────────────────────────────────
 
@@ -25,7 +24,7 @@ function useLoop(duration: number, delay = 0) {
     );
     loop.start();
     return () => loop.stop();
-  }, []);
+  }, [delay, duration, v]);
   return v;
 }
 
@@ -40,7 +39,7 @@ function useSpin(duration = 8000, delay = 0) {
     );
     spin.start();
     return () => spin.stop();
-  }, []);
+  }, [delay, duration, v]);
   return v.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] });
 }
 
@@ -56,7 +55,7 @@ function usePulse(min = 0.85, max = 1.1, duration = 1200, delay = 0) {
     );
     loop.start();
     return () => loop.stop();
-  }, []);
+  }, [delay, duration, max, min, v]);
   return v;
 }
 
@@ -72,7 +71,7 @@ function useFloat(range = 8, duration = 2000, delay = 0) {
     );
     loop.start();
     return () => loop.stop();
-  }, []);
+  }, [delay, duration, range, v]);
   return v;
 }
 
@@ -88,7 +87,7 @@ function useTravel(fromX: number, toX: number, duration = 3000, delay = 0) {
     );
     loop.start();
     return () => loop.stop();
-  }, []);
+  }, [delay, duration, fromX, toX, v]);
   return v;
 }
 
@@ -96,8 +95,6 @@ function useTravel(fromX: number, toX: number, duration = 3000, delay = 0) {
 // Blockchain nodes floating in a network with electric data packets
 
 export function CryptoArtwork({ size = 200 }: { size?: number }) {
-  const scale = size / 200;
-
   // Floating nodes
   const float1 = useFloat(6, 2200, 0);
   const float2 = useFloat(8, 1900, 400);
@@ -254,7 +251,6 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
   const bar3      = usePulse(0.6, 1.0, 750, 400);
   const bar4      = usePulse(0.3, 0.8, 1000, 100);
   const bar5      = usePulse(0.7, 1.0, 850, 300);
-  const numAnim   = useLoop(1500, 0);
   const float1    = useFloat(4, 2000, 0);
   const float2    = useFloat(5, 1800, 400);
   const spin      = useSpin(20000);
@@ -266,7 +262,7 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
         Animated.timing(chartAnim, { toValue: 0, duration: 0, useNativeDriver: false }),
       ])
     ).start();
-  }, []);
+  }, [chartAnim]);
 
   const lineWidth = chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0, DIM * 0.75] });
 
@@ -389,8 +385,36 @@ export function AIArtwork({ size = 200 }: { size?: number }) {
     [0.9, 0.45],
   ];
 
-  const pulses = nodes.map((_, i) => usePulse(0.6, 1.2, 800 + i * 80, i * 120));
-  const float  = nodes.map((_, i) => useFloat(3, 2000 + i * 100, i * 150));
+  const pulses = [
+    usePulse(0.6, 1.2, 800, 0),
+    usePulse(0.6, 1.2, 880, 120),
+    usePulse(0.6, 1.2, 960, 240),
+    usePulse(0.6, 1.2, 1040, 360),
+    usePulse(0.6, 1.2, 1120, 480),
+    usePulse(0.6, 1.2, 1200, 600),
+    usePulse(0.6, 1.2, 1280, 720),
+    usePulse(0.6, 1.2, 1360, 840),
+    usePulse(0.6, 1.2, 1440, 960),
+    usePulse(0.6, 1.2, 1520, 1080),
+    usePulse(0.6, 1.2, 1600, 1200),
+    usePulse(0.6, 1.2, 1680, 1320),
+    usePulse(0.6, 1.2, 1760, 1440),
+  ];
+  const float = [
+    useFloat(3, 2000, 0),
+    useFloat(3, 2100, 150),
+    useFloat(3, 2200, 300),
+    useFloat(3, 2300, 450),
+    useFloat(3, 2400, 600),
+    useFloat(3, 2500, 750),
+    useFloat(3, 2600, 900),
+    useFloat(3, 2700, 1050),
+    useFloat(3, 2800, 1200),
+    useFloat(3, 2900, 1350),
+    useFloat(3, 3000, 1500),
+    useFloat(3, 3100, 1650),
+    useFloat(3, 3200, 1800),
+  ];
   const spinBig = useSpin(18000);
 
   return (
@@ -466,9 +490,6 @@ export function SupplyChainArtwork({ size = 200 }: { size?: number }) {
   const pkg1 = useTravel(-10, DIM * 0.6, 2400, 0);
   const pkg2 = useTravel(DIM * 0.6, DIM * 0.1, 2800, 600);
   const pkg3 = useTravel(-10, DIM * 0.5, 2000, 400);
-  const float1 = useFloat(5, 2000, 0);
-  const float2 = useFloat(4, 2200, 300);
-  const float3 = useFloat(6, 1900, 600);
   const spin   = useSpin(15000);
   const pulse1 = usePulse(0.85, 1.15, 1400, 0);
   const pulse2 = usePulse(0.80, 1.20, 1600, 300);
@@ -564,8 +585,15 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
   const DIM = size;
 
   const lines = ['{  }', 'fn()', '[ ]', '===', '=>', '++', '</>'];
-  const anims = lines.map((_, i) => useTravel(-DIM * 0.3, DIM * 1.3, 2000 + i * 300, i * 200));
-  const falls = lines.map((_, i) => useTravel(-20, DIM + 20, 3000 + i * 200, i * 300));
+  const falls = [
+    useTravel(-20, DIM + 20, 3000, 0),
+    useTravel(-20, DIM + 20, 3200, 300),
+    useTravel(-20, DIM + 20, 3400, 600),
+    useTravel(-20, DIM + 20, 3600, 900),
+    useTravel(-20, DIM + 20, 3800, 1200),
+    useTravel(-20, DIM + 20, 4000, 1500),
+    useTravel(-20, DIM + 20, 4200, 1800),
+  ];
   const pulse1 = usePulse(0.8, 1.2, 1200);
   const spin   = useSpin(14000);
 
@@ -763,8 +791,8 @@ const EMOJIS: Record<string, string> = {
   'writing-content':        '✍️',
 };
 
-export const fieldColor = (id: string) => COLORS[id] ?? '#5B5FCF';
-export const fieldEmoji = (id: string) => EMOJIS[id] ?? '⚡';
+export const fieldColor = (id: string) => getFieldColor(id) || COLORS[id] || '#5B5FCF';
+export const fieldEmoji = (id: string) => getFieldIcon(id) || EMOJIS[id] || '⚡';
 
 // ─── Shared styles ─────────────────────────────────────────────────────────────
 

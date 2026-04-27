@@ -26,7 +26,7 @@ import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 interface QuizQuestion {
   id: string;
   question: string;
-  options: Array<{ label: string; fields: string[]; weight: number }>;
+  options: { label: string; fields: string[]; weight: number }[];
 }
 
 const QUIZ_QUESTIONS: QuizQuestion[] = [
@@ -118,7 +118,7 @@ const FIELD_TO_TRACK: Record<string, { name: string; emoji: string; why: string 
   'computational-science':  { name: 'Computational Science',       emoji: '🔬', why: 'You want to use computing to solve scientific problems.' },
 };
 
-function scoreQuiz(answers: Record<string, number>): Array<{ trackId: string; name: string; emoji: string; why: string; score: number }> {
+function scoreQuiz(answers: Record<string, number>): { trackId: string; name: string; emoji: string; why: string; score: number }[] {
   const fieldScores: Record<string, number> = {};
 
   QUIZ_QUESTIONS.forEach(q => {
@@ -161,7 +161,7 @@ function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: (initialFilter
         <Text style={styles.welcomeEmoji}>⚡</Text>
         <Text style={[styles.welcomeTitle, { color: colors.text }]}>What do you want to learn?</Text>
         <Text style={[styles.welcomeSub, { color: colors.textSoft }]}>
-        We have 28 career fields and 800+ roles. Let's find the right one for you.
+        We have 28 career fields and 800+ roles. Let&apos;s find the right one for you.
         </Text>
       </View>
 
@@ -206,7 +206,7 @@ function CryptoStartStep({ onStart, onBrowse }: { onStart: (trackId: string) => 
         <Text style={styles.welcomeEmoji}>₿</Text>
         <Text style={[styles.welcomeTitle, { color: colors.text }]}>Start from the beginning</Text>
         <Text style={[styles.welcomeSub, { color: colors.textSoft }]}>
-        You'll start at Bitcoin Bay — 18 islands that take you from complete beginner to confident crypto user. No experience needed.
+        You&apos;ll start at Bitcoin Bay — 18 islands that take you from complete beginner to confident crypto user. No experience needed.
         </Text>
       </View>
 
@@ -297,7 +297,7 @@ function QuizResultsStep({
   onSelect,
   onBrowse,
 }: {
-  results: Array<{ trackId: string; name: string; emoji: string; why: string; score: number }>;
+  results: { trackId: string; name: string; emoji: string; why: string; score: number }[];
   onSelect: (trackId: string) => void;
   onBrowse: () => void;
 }) {
@@ -371,11 +371,11 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
           <Text style={styles.disclaimerEmoji}>⚡</Text>
           <Text style={[styles.disclaimerTitle, { color: colors.text }]}>Welcome to Sifter Skill_Up</Text>
           <Text style={[styles.disclaimerSub, { color: colors.textSoft }]}>
-            We're here to help you build real career skills — from foundation to senior level.
+            We&apos;re here to help you build real career skills — from foundation to senior level.
           </Text>
 
           <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>But mastery isn't built in one place.</Text>
+            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>But mastery isn&apos;t built in one place.</Text>
             <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>We encourage you to:</Text>
             {[
               '📚 Cross-reference with books and other learning materials',
@@ -389,16 +389,16 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
 
           <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
             <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we promise:</Text>
-            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>Real, verifiable skills. A portfolio that proves what you can do. Honest, high-quality lessons built against industry standards.</Text>
+            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>Real, verifiable skills. An artifact trail that proves what you can do. Honest, high-quality lessons built against industry standards.</Text>
           </View>
 
           <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we don't promise:</Text>
-            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>A job. Completing a path does not guarantee employment. Your outcomes depend on your effort, your network, and market conditions we can't control.</Text>
+            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we don&apos;t promise:</Text>
+            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>A job. Completing a path does not guarantee employment. Your outcomes depend on your effort, your network, and market conditions we can&apos;t control.</Text>
           </View>
 
           <TouchableOpacity style={[styles.acceptBtn, { backgroundColor: colors.accent }]} onPress={handleDisclaimerAccept}>
-            <Text style={styles.acceptBtnText}>I understand — Let's build skills</Text>
+            <Text style={styles.acceptBtnText}>I understand — Let&apos;s build skills</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.learnMoreLinkBtn} onPress={() => setShowLearnMore(true)}>

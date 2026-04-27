@@ -21,6 +21,7 @@ export interface FaucetResult {
   amount?: string;
   token?: FaucetToken;
   error?: string;
+  fallbackUrl?: string;
   cooldownEnds?: Date;   // when user can claim again
 }
 
@@ -39,6 +40,7 @@ const ETH_FAUCET_AMOUNT    = '0.001'; // 0.001 testnet ETH per claim
 
 // Starknet Foundation public Sepolia faucet endpoint
 const STARKNET_FAUCET_URL = 'https://faucet.starknet.io/api/claim';
+export const STARKNET_FAUCET_PAGE_URL = 'https://faucet.starknet.io/';
 
 // ── Local claim tracking (AsyncStorage key) ───────────────────────────────────
 // We track claims locally so we don't need a backend for rate limiting.
@@ -130,6 +132,7 @@ export async function claimFaucet(
       return {
         success: false,
         error: errorBody?.message ?? `Faucet error (${response.status})`,
+        fallbackUrl: STARKNET_FAUCET_PAGE_URL,
       };
     }
 
@@ -143,7 +146,7 @@ export async function claimFaucet(
       token,
     };
 
-  } catch (err: any) {
+  } catch {
     // Network error — try Alchemy as fallback
     return await claimAlchemyFaucet(walletAddress, token);
   }
@@ -192,6 +195,7 @@ async function claimAlchemyFaucet(
     return {
       success: false,
       error: 'Both faucets are unavailable. Visit faucet.starknet.io directly.',
+      fallbackUrl: STARKNET_FAUCET_PAGE_URL,
     };
   }
 }

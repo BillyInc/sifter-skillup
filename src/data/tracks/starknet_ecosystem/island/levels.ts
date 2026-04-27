@@ -465,6 +465,7 @@ The Starkzap SDK uses account abstraction to create wallets that feel like Web2 
 const L294: StarknetIslandLevel = {
   id: 294, mechanic: 'match3', tier: 'pro',
   topic: 'The STRK Token: Fuel, Stake, and Vote',
+  simulatorLesson: 'starkzap-stake',
 
   explanation: `
 When Ethereum launched in 2015, its native token ETH served three purposes: pay transaction fees, reward validators securing the network, and act as collateral in DeFi. STRK plays the same role on Starknet.
@@ -1598,6 +1599,7 @@ In Starkzap: wallet.dca().create() sets up the order. wallet.dca().previewCycle(
 const L304: StarknetIslandLevel = {
   id: 304, mechanic: 'memory', tier: 'pro',
   topic: 'Bridging to Starknet',
+  simulatorLesson: 'starkzap-bridge',
   explanation: `Moving money internationally used to require a SWIFT wire transfer — 3 to 5 business days, high fees, and a bank on both ends. Crypto bridging is the blockchain equivalent: moving tokens from one network to another. It is faster than SWIFT but still has costs, risks, and speed trade-offs you must understand.
 
 Moving assets to Starknet from Ethereum has four main routes. The canonical Starkgate bridge is the official, most secure option — your tokens lock on Ethereum and equivalent tokens appear on Starknet. Takes approximately 12 hours. Zero counterparty risk beyond the bridge contract itself. Use this for large amounts.
@@ -1727,6 +1729,7 @@ Third-party bridges like Orbiter and Layerswap are fastest (often under 2 minute
 const L305: StarknetIslandLevel = {
   id: 305, mechanic: 'chain', tier: 'pro',
   topic: 'Confidential Transfers with Tongo',
+  simulatorLesson: 'starkzap-confidential',
   explanation: `When you make a bank transfer, only you and your bank see the amount. The public does not. On a standard blockchain, the opposite is true — every transaction is public: sender, receiver, and amount are permanently visible to anyone on Earth.
 
 This transparency is often a feature, but sometimes a liability. A business paying suppliers doesn't want competitors knowing their supplier prices. A charity donor may want privacy. A fund moving large positions doesn't want traders front-running their transfers.
@@ -1854,6 +1857,7 @@ Viewing keys allow selective disclosure: you can share a viewing key with an aud
 const L306: StarknetIslandLevel = {
   id: 306, mechanic: 'match3', tier: 'pro',
   topic: 'Gaming on Starknet',
+  simulatorLesson: 'starkzap-ecosystem-read',
   explanation: `Most online games have a hidden problem: the game company owns everything. Your items, your progress, your character — all stored on their servers. If the company shuts down, your 2,000 hours vanish. If they decide your character should be worthless, it is. You have no recourse.
 
 Fully on-chain games flip this. Every game state — character stats, item ownership, world events — is stored on the blockchain. No server can alter it. No company can take it back. The game continues existing even after the studio closes, because the rules are in immutable smart contracts.
@@ -1983,6 +1987,7 @@ Top games: Loot Survivor 2, Ponziland, Influence, Realms of Eternal.`,
 const L307: StarknetIslandLevel = {
   id: 307, mechanic: 'memory', tier: 'pro',
   topic: 'The Starknet Ecosystem Map',
+  simulatorLesson: 'starkzap-ecosystem-read',
   explanation: `Every mature blockchain ecosystem is a city — protocol layer (the roads), infrastructure (utilities), applications (buildings), and users. Starknet is a city in construction: the roads are built, utilities are running, the first buildings are occupied, but most of the skyline is not yet there.
 
 The core infrastructure: StarkWare built and maintains the Starknet protocol. Nethermind runs the node client — the software that validators use to participate. Pragma is the oracle — it feeds real-world data (asset prices, timestamps) to smart contracts that need external information. Without an oracle, a lending protocol cannot know the current price of ETH.
@@ -2242,6 +2247,7 @@ Starkzap is how SkillUp integrates with Starknet. Every simulator in this island
 const L309: StarknetIslandLevel = {
   id: 309, mechanic: 'match3', tier: 'pro',
   topic: 'Governance & Grants',
+  simulatorLesson: 'daoVote',
   explanation: `When Ethereum wants to change how it works, Vitalik can propose an idea — but it doesn't happen automatically. The proposal goes through the EIP (Ethereum Improvement Proposal) process: community discussion, developer review, reference implementation, and eventually hard fork if consensus is reached. Starknet uses the same model with SNIPs.
 
 SNIP stands for Starknet Improvement Proposal. Any community member can write one. It goes through: draft → community discussion on the Starknet forum → formal vote on Snapshot (the governance voting platform). Votes are weighted by STRK balance — more STRK = more voting weight. Approved SNIPs are implemented by StarkWare in subsequent protocol upgrades.

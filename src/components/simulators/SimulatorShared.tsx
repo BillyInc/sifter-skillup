@@ -9,15 +9,17 @@ import {
   Animated,
 } from 'react-native';
 import { Colors, Spacing, Radius, FontSize, Shadow } from '../../theme';
+import { getSimulatorVisualTheme, type SimulatorVisualTheme } from '../../lib/visualThemes';
 
 // ── Shell ─────────────────────────────────────────────────────────────────────
 
 export function SimShell({
-  title, subtitle, icon, label, children,
+  title, subtitle, icon, label, children, theme,
 }: {
   title: string; subtitle: string; icon: string;
-  label?: string; children: React.ReactNode;
+  label?: string; children: React.ReactNode; theme?: Partial<SimulatorVisualTheme>;
 }) {
+  const visualTheme = { ...getSimulatorVisualTheme({}), ...theme };
   return (
     <ScrollView
       style={sh.wrap}
@@ -25,10 +27,10 @@ export function SimShell({
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
-      <View style={sh.header}>
+      <View style={[sh.header, { backgroundColor: visualTheme.soft, borderColor: visualTheme.border }]}>
         <Text style={sh.icon}>{icon}</Text>
         <View style={{ flex: 1 }}>
-          <Text style={sh.label}>{label ?? '⚡ SIFTER SKILL_UP'}</Text>
+          <Text style={[sh.label, { color: visualTheme.accent }]}>{label ?? visualTheme.label}</Text>
           <Text style={sh.title}>{title}</Text>
           <Text style={sh.subtitle}>{subtitle}</Text>
         </View>
@@ -43,10 +45,9 @@ const sh = StyleSheet.create({
   content:  { padding: Spacing.md, paddingBottom: 72, gap: Spacing.sm },
   header:   {
     flexDirection: 'row', gap: Spacing.sm,
-    backgroundColor: '#eef2ff', borderRadius: Radius.xl,
+    borderRadius: Radius.xl,
     padding: Spacing.md, alignItems: 'flex-start',
     borderWidth: 1,
-    borderColor: '#dbe3ff',
   },
   icon:     { fontSize: 30, lineHeight: 36 },
   label:    {
@@ -152,7 +153,7 @@ export function ScoreScreen({
       Animated.spring(scaleAnim, { toValue: 1, tension: 60, friction: 8, useNativeDriver: true }),
       Animated.timing(opacityAnim, { toValue: 1, duration: 300, useNativeDriver: true }),
     ]).start();
-  }, []);
+  }, [opacityAnim, scaleAnim]);
 
   const pct = score / total;
   const emoji = pct === 1 ? '🏆' : pct >= 0.8 ? '⭐' : pct >= 0.6 ? '📈' : '🔄';
@@ -206,7 +207,7 @@ export function CriterionRow({
       Animated.timing(opacity, { toValue: 1, duration: 280, delay, useNativeDriver: true }),
       Animated.spring(translateX, { toValue: 0, tension: 80, friction: 10, delay, useNativeDriver: true }),
     ]).start();
-  }, []);
+  }, [delay, opacity, translateX]);
 
   return (
     <Animated.View style={[cr.row, passed ? cr.pass : cr.fail, { opacity, transform: [{ translateX }] }]}>
@@ -253,7 +254,7 @@ export function TypingIndicator({ label = 'Evaluating your response…' }: { lab
     animate(dot1, 0);
     animate(dot2, 200);
     animate(dot3, 400);
-  }, []);
+  }, [dot1, dot2, dot3]);
 
   return (
     <View style={ty.wrap}>
@@ -279,7 +280,7 @@ export interface SimBaseProps {
 }
 
 export interface ScoringResult {
-  criteriaResults: Array<{ criterion: string; passed: boolean; feedback: string }>;
+  criteriaResults: { criterion: string; passed: boolean; feedback: string }[];
   overallFeedback: string;
   score: number;
   total: number;
