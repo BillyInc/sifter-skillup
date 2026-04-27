@@ -1,5 +1,5 @@
-import ReferralScreen from '@/screens/ReferralScreen';
+import { Redirect } from 'expo-router';
 
 export default function ReferralTabScreen() {
-  return <ReferralScreen />;
+  return <Redirect href="/(tabs)/guild" />;
 }

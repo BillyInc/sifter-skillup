@@ -25,9 +25,10 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, Clipboard, Linking, ActivityIndicator,
+  View, Text, TouchableOpacity, StyleSheet, Linking, ActivityIndicator,
 } from 'react-native';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../../../theme';
+import * as Clipboard from 'expo-clipboard';
+import { Colors, Spacing, Radius, FontSize } from '../../../theme';
 
 export const STARKNET_SEPOLIA = {
   rpc:          'https://starknet-sepolia.public.blastapi.io',
@@ -147,9 +148,9 @@ export function useStarknetSepolia(address: string | null): SepoliaState {
     Linking.openURL(token === 'strk' ? STARKNET_SEPOLIA.faucet_strk : STARKNET_SEPOLIA.faucet);
   };
 
-  const copyAddress = () => {
+  const copyAddress = async () => {
     if (address) {
-      Clipboard.setString(address);
+      await Clipboard.setStringAsync(address);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }

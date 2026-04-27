@@ -1,5 +1,5 @@
-import GuildScreen from '@/screens/GuildScreen';
+import { Redirect } from 'expo-router';
 
 export default function GuildTabScreen() {
-  return <GuildScreen />;
+  return <Redirect href="/(tabs)/guild" />;
 }

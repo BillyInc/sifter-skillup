@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme } from '../theme';
-import { ISLANDS, getIsland, type Island } from '../data/islands';
+import { ISLANDS, getIsland, isIslandUnlocked, type Island } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
 import { TrackChoiceScreen } from './PostIslandTrackSelection';
 
@@ -189,7 +189,7 @@ export default function IslandMapScreen({ route }: any) {
   const { colors } = useTheme();
   const completedLevels: number[] = (user?.completedLevels ?? user?.completed_levels ?? []).map(Number);
   const currentLevel: number = user?.current_level ?? 1;
-  const starknetUnlocked = !!(user?.starknet_address || user?.starknet_auth);
+  const starknetWalletReady = !!(user?.starknet_address || user?.starknet_auth);
   const [selected, setSelected] = useState<Island | null>(null);
 
   const initialIsland = route?.params?.initialIsland;
@@ -202,6 +202,7 @@ export default function IslandMapScreen({ route }: any) {
   const tiers: Tier[] = ['beginner', 'intermediate', 'pro'];
   const mainIslands = useMemo(() => ISLANDS.filter(i => i.id !== 18), []);
   const starkIsland = useMemo(() => ISLANDS.find(i => i.id === 18) ?? null, []);
+  const starkIslandUnlocked = starkIsland ? isIslandUnlocked(starkIsland, completedLevels) : false;
   const progressPct = Math.min(100, (completedLevels.length / 310) * 100);
 
   const handleEnter = (island: Island) => {
@@ -245,7 +246,11 @@ export default function IslandMapScreen({ route }: any) {
               <View style={styles.heroProgressMeta}>
                 <Text style={[styles.heroProgressText, { color: colors.textSoft }]}>Level {currentLevel}</Text>
                 <Text style={[styles.heroProgressText, { color: colors.textMuted }]}>
-                  {starknetUnlocked ? 'Starknet unlocked' : 'Unlock Starknet at Island 18'}
+                  {starkIslandUnlocked
+                    ? 'Island 18 unlocked'
+                    : starknetWalletReady
+                      ? 'Wallet ready for Island 18'
+                      : 'Unlock Island 18 after Island 17'}
                 </Text>
               </View>
             </View>
@@ -267,7 +272,7 @@ export default function IslandMapScreen({ route }: any) {
                   <IslandCard
                     key={island.id}
                     island={island}
-                    unlocked={island.requiredLevel === 0 || completedLevels.includes(island.requiredLevel)}
+                    unlocked={isIslandUnlocked(island, completedLevels)}
                     completed={completedLevels.includes(island.bossLevel)}
                     current={currentLevel >= island.start && currentLevel <= island.end}
                     onPress={() => setSelected(island)}
@@ -278,15 +283,15 @@ export default function IslandMapScreen({ route }: any) {
           );
         })}
 
-        {starknetUnlocked && starkIsland ? (
+        {starkIsland ? (
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet Realm</Text>
             <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>
-              Returning Starknet users should continue straight into the Starknet island experience.
+              Island 18 now unlocks strictly after Island 17, while your Starknet wallet stays ready as soon as you connect it.
             </Text>
             <IslandCard
               island={starkIsland}
-              unlocked
+              unlocked={starkIslandUnlocked}
               completed={completedLevels.includes(310)}
               current={currentLevel >= 291 && currentLevel <= 310}
               onPress={() => setSelected(starkIsland)}

@@ -13,6 +13,7 @@ interface StarknetLesson {
   title?: string;
   explanation?: string;
   keyTakeaway?: string;
+  simulatorLesson?: string;
   guidedPractice?: Array<{
     question: string;
     options?: string[];
@@ -22,7 +23,7 @@ interface StarknetLesson {
   }>;
   interactiveSimulator?: { componentId?: string; title?: string };
   lessonSimulations?: Array<{
-    type: 'judgment-riskAssess' | 'judgment-dataInterpret' | 'judgment-escalation';
+    type: string;
     scenario: string;
     scoringCriteria: string[];
   }>;
@@ -52,7 +53,7 @@ function buildStarknetLessonQuestions(lesson: StarknetLesson): Question[] {
   });
 
   // 2. Interactive simulator — if the lesson has one.
-  const simId = lesson.interactiveSimulator?.componentId;
+  const simId = lesson.interactiveSimulator?.componentId ?? lesson.simulatorLesson;
   if (simId) {
     questions.push({ type: 'simulator', simulatorType: simId });
   }
@@ -464,17 +465,19 @@ function buildLesson(level: Level): Question[] {
 
   // 5. Harder MCQ for boss/pro levels
   if (level.isBoss || level.tier === 'pro') {
+    const harderOptions = shuffle([
+      { text: trunc(level.plain || level.fact, 90), correct: true },
+      { text: `${level.topic} is only for institutional investors.`, correct: false },
+      { text: `${level.topic} has no real-world use cases yet.`, correct: false },
+      { text: `${level.topic} requires a centralised authority to function.`, correct: false },
+    ]);
+
     questions.push({
       type: 'mcq',
       prompt: `Best description of ${level.topic}:`,
       context: null,
-      options: shuffle([
-        { text: trunc(level.plain || level.fact, 90), correct: true },
-        { text: `${level.topic} is only for institutional investors.`, correct: false },
-        { text: `${level.topic} has no real-world use cases yet.`, correct: false },
-        { text: `${level.topic} requires a centralised authority to function.`, correct: false },
-      ]),
-      correct: 0,
+      options: harderOptions,
+      correct: harderOptions.findIndex(o => o.correct),
       explanation: level.fact,
     });
   }
