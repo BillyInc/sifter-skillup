@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 
 const SECTIONS = [
   {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   body: {
-    padding: Spacing.lg,
+    ...webContainer,
     paddingBottom: Spacing.xxxl,
   },
   note: {

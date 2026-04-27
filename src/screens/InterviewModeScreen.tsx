@@ -28,7 +28,7 @@ import {
   TextInput, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 import { API } from '../lib/api';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
   headerSub: { fontSize: FontSize.xs, color: Colors.textSoft },
 
   // Intro
-  introContainer: { padding: Spacing.xl, paddingBottom: Spacing.xxxl },
+  introContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
   heroCard: { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: Colors.border, marginBottom: Spacing.lg },
   introEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.md },
   kicker: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: Spacing.xs },
@@ -509,7 +509,7 @@ const styles = StyleSheet.create({
   startBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
 
   // Question
-  questionContainer: { padding: Spacing.xl, paddingBottom: Spacing.xxxl },
+  questionContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
   progressBar: { height: 4, backgroundColor: Colors.border, borderRadius: 2, marginBottom: Spacing.xs },
   progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
   progressLabel: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'right', marginBottom: Spacing.lg },
@@ -544,7 +544,7 @@ const styles = StyleSheet.create({
   reviewingSub: { fontSize: FontSize.sm, color: Colors.textSoft },
 
   // Result
-  resultContainer: { padding: Spacing.xl, paddingBottom: Spacing.xxxl },
+  resultContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
   resultEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.md },
   resultTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xl },
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme } from '../theme';
+import { FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { resolveTrackContext } from '../lib/trackContext';
 
@@ -155,7 +155,7 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: {
-    padding: Spacing.md,
+    ...webContainer,
     paddingBottom: Spacing.xxxl,
     gap: Spacing.md,
   },

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
+  Platform,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -18,6 +19,7 @@ import {
   Spacing,
   XP_DAILY_GOALS,
   useTheme,
+  webContainer,
 } from '../theme';
 import { Badge, SifterButton, SifterCard } from '../components/ui';
 import { WorkerCharacter, TheBolt } from '../components/CharacterSystem';
@@ -727,15 +729,15 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  scroll: { padding: Spacing.lg, paddingBottom: Spacing.xxxl },
+  scroll: { ...webContainer, paddingBottom: Spacing.xxxl },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.md },
   headerLeft: { flex: 1 },
   greeting: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, marginBottom: 2 },
-  headline: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  headline: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   mobileHeaderSub: { fontSize: FontSize.sm, lineHeight: 18, marginTop: 6, maxWidth: 280 },
-  mobileBoltBtn: { borderWidth: 1, borderRadius: Radius.xl, padding: 10 },
+  mobileBoltBtn: { borderWidth: 1, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14 },
 
-  streakBanner: { borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.lg },
+  streakBanner: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, marginBottom: Spacing.lg },
   streakBannerText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, textAlign: 'center' },
 
   progressLabelRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
@@ -750,8 +752,8 @@ const styles = StyleSheet.create({
 
   referenceBadgeWrap: { alignSelf: 'flex-start', marginBottom: 10 },
 
-  webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: Radius.lg, padding: 10, borderWidth: 1 },
-  webBoltLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, maxWidth: 180 },
+  webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, borderWidth: 1 },
+  webBoltLabel: { fontSize: 11, fontWeight: '700', maxWidth: 180 },
 
   webProgressCard: { flexDirection: 'row', gap: 16, alignItems: 'flex-start' },
   webStageName: { fontSize: FontSize.xl, fontWeight: FontWeight.black, marginBottom: 4 },
@@ -759,14 +761,14 @@ const styles = StyleSheet.create({
 
   heroPanel: { flexDirection: 'row', minHeight: 260 },
   heroPanelCopy: { flex: 1, padding: 24, justifyContent: 'center' },
-  heroPanelTitle: { fontSize: 32, fontWeight: '900', letterSpacing: -0.7, marginBottom: 10 },
+  heroPanelTitle: { fontSize: 24, fontWeight: '900', letterSpacing: -0.7, marginBottom: 10 },
   heroPanelSummary: { fontSize: FontSize.md, lineHeight: 22, marginBottom: 16, maxWidth: 520 },
   heroPanelTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 18 },
-  heroTag: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 6 },
-  heroTagText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  heroTag: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  heroTagText: { fontSize: 9, fontWeight: '700' },
   heroPanelBtn: { alignSelf: 'flex-start' },
   heroPanelVisual: { width: 290, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24 },
-  heroPanelMiniCard: { borderWidth: 1, borderRadius: Radius.lg, padding: 12, width: '100%' },
+  heroPanelMiniCard: { borderWidth: 1, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, width: '100%' },
   heroPanelMiniLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginBottom: 8 },
 
   overviewTrackCard: { height: '100%' },
@@ -774,28 +776,28 @@ const styles = StyleSheet.create({
   trackIconBadge: {
     minWidth: 40,
     height: 32,
-    borderRadius: Radius.md,
+    borderRadius: 5,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 7,
   },
-  trackIconBadgeText: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.4 },
+  trackIconBadgeText: { fontSize: 9, fontWeight: '700', letterSpacing: 0.4 },
   webTrackName: { fontSize: FontSize.md, fontWeight: FontWeight.bold, flex: 1 },
   webTrackArrow: { fontSize: 18 },
   overviewTrackSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 10 },
   webTrackKey: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
   webTrackBtn: { marginTop: 12 },
 
-  trackFeatureTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 8 },
+  trackFeatureTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
   trackFeatureSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 14 },
   trackFeatureGrid: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
-  trackFeatureItem: { width: '31%', minWidth: 160, borderRadius: Radius.lg, borderWidth: 1, padding: 14, gap: 8 },
+  trackFeatureItem: { width: '31%', minWidth: 160, borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, gap: 8 },
   trackFeatureIndex: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   trackFeatureItemText: { fontSize: FontSize.sm, lineHeight: 18 },
   primaryActionBtn: { marginTop: 12 },
 
-  webDiscussionCard: { borderRadius: Radius.md, padding: 12, borderWidth: 1, marginVertical: 8 },
+  webDiscussionCard: { borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, marginVertical: 8 },
   webDiscTitle: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 6 },
   webDiscItem: { fontSize: FontSize.sm, marginBottom: 4 },
   webStreakLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2, marginBottom: 4 },
@@ -807,7 +809,7 @@ const styles = StyleSheet.create({
   webMetricVal: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   webMetricLbl: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
 
-  mobileHeroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, marginBottom: Spacing.lg, gap: Spacing.md },
+  mobileHeroCard: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, marginBottom: Spacing.lg, gap: Spacing.md },
   mobileHeroHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   mobileHeroTrackPill: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
   mobileHeroBody: { flexDirection: 'row', gap: Spacing.md, alignItems: 'center' },
@@ -817,25 +819,25 @@ const styles = StyleSheet.create({
 
   statsGrid: { gap: Spacing.sm, marginBottom: Spacing.lg },
   statsRow: { flexDirection: 'row', gap: Spacing.sm },
-  statCard: { flex: 1, borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start', gap: 4, borderWidth: 1 },
+  statCard: { flex: 1, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, alignItems: 'flex-start', gap: 4, borderWidth: 1 },
   statBadge: {
     minWidth: 38,
     height: 26,
-    borderRadius: Radius.md,
+    borderRadius: 5,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 7,
     marginBottom: 4,
   },
-  statBadgeText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.6 },
+  statBadgeText: { fontSize: 9, fontWeight: '700', letterSpacing: 0.6 },
   statValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   statLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
   statSub: { fontSize: 10, fontWeight: FontWeight.medium, textAlign: 'left' },
 
   actionsSection: { gap: Spacing.sm },
   sectionLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
-  quickAction: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1 },
+  quickAction: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1 },
   quickActionIcon: { width: 44, height: 44, borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
   quickActionIconText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.7 },
   quickActionLabel: { fontSize: FontSize.md, fontWeight: FontWeight.bold },

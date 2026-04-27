@@ -1,4 +1,5 @@
 import { Tabs, useRouter } from 'expo-router';
+import { Platform } from 'react-native';
 import { ScreenErrorBoundary } from '../../src/components/ScreenErrorBoundary';
 import { ReferenceShell } from '../../src/components/shell/ReferenceShell';
 
@@ -11,7 +12,7 @@ export default function TabsLayout() {
         <Tabs
           screenOptions={{
             headerShown: false,
-            tabBarStyle: { display: 'none' },
+            tabBarStyle: Platform.OS === 'web' ? { display: 'none' } : undefined,
           }}
         >
           <Tabs.Screen name="map" options={{ href: null }} />

@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '../theme';
+import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
 import { resolveTrackContext } from '../lib/trackContext';
@@ -246,7 +246,7 @@ export default function StreaksScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: {
-    padding: Spacing.md,
+    ...webContainer,
     paddingBottom: Spacing.xxxl,
     gap: Spacing.md,
   },
@@ -258,13 +258,13 @@ const styles = StyleSheet.create({
   },
   heroBadge: {
     alignSelf: 'flex-start',
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs,
+    borderRadius: 5,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
   },
   heroBadgeText: {
-    fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
+    fontSize: 9,
+    fontWeight: '700',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
@@ -286,18 +286,18 @@ const styles = StyleSheet.create({
   topGridMain: {
     flex: 1,
     minHeight: 220,
-    borderRadius: Radius.xl,
+    borderRadius: 11,
     borderWidth: 1,
-    padding: Spacing.lg,
+    padding: Platform.OS === 'web' ? 14 : 12,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 4,
   },
   topGridPanel: {
     flex: 1,
-    borderRadius: Radius.xl,
+    borderRadius: 11,
     borderWidth: 1,
-    padding: Spacing.md,
+    padding: Platform.OS === 'web' ? 14 : 12,
     gap: Spacing.sm,
   },
   bigGlyph: {
@@ -318,8 +318,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
   },
   sectionTitle: {
-    fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 10,
   },
   weekRow: {
     flexDirection: 'row',
@@ -377,9 +378,9 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   statCard: {
-    borderRadius: Radius.lg,
+    borderRadius: 11,
     borderWidth: 1,
-    padding: Spacing.md,
+    padding: Platform.OS === 'web' ? 14 : 12,
     gap: 4,
   },
   statLabel: {
@@ -404,9 +405,9 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   panel: {
-    borderRadius: Radius.lg,
+    borderRadius: 11,
     borderWidth: 1,
-    padding: Spacing.md,
+    padding: Platform.OS === 'web' ? 14 : 12,
     gap: Spacing.sm,
   },
   flexPanel: {
@@ -419,8 +420,9 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   panelTitle: {
-    fontSize: FontSize.lg,
-    fontWeight: FontWeight.black,
+    fontSize: 13,
+    fontWeight: '800',
+    marginBottom: 10,
   },
   panelBody: {
     fontSize: FontSize.sm,
@@ -435,23 +437,25 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   primaryBtn: {
-    borderRadius: Radius.xl,
-    paddingVertical: Spacing.md,
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
     alignItems: 'center',
   },
   primaryBtnText: {
     color: '#fff',
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
+    fontSize: 11,
+    fontWeight: '700',
   },
   secondaryBtn: {
-    borderRadius: Radius.xl,
+    borderRadius: 8,
     borderWidth: 1,
-    paddingVertical: Spacing.md,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
     alignItems: 'center',
   },
   secondaryBtnText: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontSize: 11,
+    fontWeight: '700',
   },
 });

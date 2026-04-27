@@ -13,7 +13,7 @@ import {
   View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity,
   SafeAreaView, Platform, useWindowDimensions, Linking, Modal,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { rewardsEngine } from '../lib/rewardsEngine';
 import { creditsToUSD } from '../theme/rewards';
@@ -293,7 +293,7 @@ export default function MerchandiseScreen({ navigation }: any) {
           </ScrollView>
 
           {/* Right: grid with page header */}
-          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 960, alignSelf: 'center', width: '100%', paddingHorizontal: 28, paddingTop: 28, paddingBottom: 64 }}>
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 64 }}>
             <View style={{ marginBottom: 24, paddingBottom: 16, position: 'relative' }}>
               <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Sifter Apparel</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>

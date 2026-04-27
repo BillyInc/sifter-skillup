@@ -26,7 +26,7 @@ import { streakEngine }  from '../lib/StreakEngine';
 export function useSidebar() {
   const { width } = useWindowDimensions();
   const showSidebar = Platform.OS === 'web' && width >= 768;
-  return { showSidebar, sidebarWidth: 220 };
+  return { showSidebar, sidebarWidth: 210 };
 }
 
 // ─── Nav items ────────────────────────────────────────────────────────────────
@@ -75,7 +75,7 @@ function NavRow({
 
   const bgColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['transparent', colors.accentSoft],
+    outputRange: ['transparent', '#111111'],
   });
 
   return (
@@ -98,8 +98,8 @@ function NavRow({
 
         <Text style={[
           styles.navLabel,
-          { color: isActive ? colors.accent : colors.textSoft },
-          isActive && { fontWeight: FontWeight.bold },
+          { color: isActive ? '#ffffff' : '#374151' },
+          isActive && styles.navLabelActive,
         ]}>
           {item.label}
         </Text>
@@ -263,8 +263,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.lg,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
     marginBottom: Spacing.md,
     borderBottomWidth: 1,
   },
@@ -276,8 +276,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.lg,
-    borderRadius: Radius.lg,
-    padding: Spacing.sm,
+    borderRadius: 11,
+    borderWidth: 1,
+    padding: Platform.OS === 'web' ? 14 : 12,
   },
   statPillItem:     { flex: 1, alignItems: 'center' },
   statPillValue:    { fontSize: FontSize.md, fontWeight: FontWeight.black },
@@ -290,30 +291,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.md,
-    borderRadius: Radius.lg,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 8,
     position: 'relative',
     overflow: 'hidden',
   },
-  navRowActive: {},
+  navRowActive: { backgroundColor: '#111111', borderRadius: 8 },
   activeBar: {
     position: 'absolute',
     left: 0,
     top: '20%' as any,
     bottom: '20%' as any,
-    width: 3,
+    width: 0,
     borderRadius: Radius.full,
   },
-  navEmoji:   { fontSize: 18, opacity: 0.7 },
-  navLabel:   { fontSize: FontSize.sm, fontWeight: FontWeight.medium },
+  navEmoji:   { fontSize: 13, opacity: 0.7 },
+  navLabel:   { fontSize: 12, fontWeight: '500' },
+  navLabelActive: { fontWeight: '700' },
   badge: {
     marginLeft: 'auto' as any,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: Radius.full,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 5,
   },
-  badgeText:  { fontSize: 9, fontWeight: FontWeight.black, color: '#fff' },
+  badgeText:  { fontSize: 9, fontWeight: '700', color: '#fff' },
 
   bottomSection: {
     borderTopWidth: 1,
@@ -324,11 +326,12 @@ const styles = StyleSheet.create({
   learnBtn: {
     marginHorizontal: Spacing.sm,
     marginBottom: Spacing.sm,
-    paddingVertical: Spacing.sm,
-    borderRadius: Radius.lg,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
     alignItems: 'center',
   },
-  learnBtnText:     { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#fff' },
+  learnBtnText:     { fontSize: 11, fontWeight: '700', color: '#fff' },
   themeToggle: {
     flexDirection: 'row',
     alignItems: 'center',
