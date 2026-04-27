@@ -6,7 +6,7 @@ export default function TabsLayout() {
   const router = useRouter();
 
   return (
-    <ScreenErrorBoundary screenName="Tabs" onGoHome={() => router.replace('/(tabs)/map')}>
+    <ScreenErrorBoundary screenName="Tabs" onGoHome={() => router.replace('/(tabs)/home')}>
       <ReferenceShell>
         <Tabs
           screenOptions={{

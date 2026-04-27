@@ -6,7 +6,7 @@ export default function ProfileStack() {
   const router = useRouter();
 
   return (
-    <ScreenErrorBoundary screenName="Profile" onGoHome={() => router.replace('/profile')}>
+    <ScreenErrorBoundary screenName="Profile" onGoHome={() => router.replace('/(tabs)/profile')}>
       <Stack screenOptions={{ headerShown: false }} />
     </ScreenErrorBoundary>
   );

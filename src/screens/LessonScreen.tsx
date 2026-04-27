@@ -952,6 +952,8 @@ export default function LessonScreen({
             islandId={simulatorIslandId}
             scenario={q.scenario}
             scoringCriteria={q.scoringCriteria}
+            trackId={trackId}
+            labNumber={labNumber}
             onComplete={() => { completeSimulator(); advance(); }}
             onSkip={() => advance()}
           />

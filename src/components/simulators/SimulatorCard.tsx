@@ -16,6 +16,8 @@ import CairoBuilderPhase2Scorer from './CairoBuilderPhase2Scorer';
 import { CairoBuilderCodeSandbox } from './CairoBuilderSimulators';
 import { getBossEntry } from '../../data/phase1BossRegistry';
 import { ECOSYSTEM_FINAL_BOSS } from '../../data/tracks/starknet_ecosystem/ecosystem/ecosystemAllLessons';
+import * as NavigatorSims from '../../data/tracks/starknet_ecosystem/navigator';
+import EcosystemSimulatorCard from '../../data/tracks/starknet_ecosystem/ecosystem/ecosystemSimulators';
 
 /**
  * SimulatorCard — inline "test what you just learnt" interactive exercises.
@@ -5026,11 +5028,103 @@ const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
 
 };
 
+const NAVIGATOR_TRACK_SIMULATORS: Record<string, React.ComponentType<any>> = {
+  'starkzap-defi-contrast':       NavigatorSims.DefiContrastSim,
+  'starkzap-token-classifier':    NavigatorSims.TokenClassifierSim,
+  'starkzap-pool-depth':          NavigatorSims.PoolDepthSim,
+  'starkzap-yield-audit':         NavigatorSims.YieldAuditSim,
+  'starkzap-risk-matrix':         NavigatorSims.RiskMatrixSim,
+  'starkzap-settlement-trace':    NavigatorSims.SettlementTraceSim,
+  'starkzap-protocol-reader':     NavigatorSims.ProtocolReaderSim,
+  'starkzap-wallet-flow':         NavigatorSims.WalletFlowSim,
+  'starkzap-amm-pool':            NavigatorSims.AmmPoolSim,
+  'starkzap-range-selector':      NavigatorSims.RangeSelectorSim,
+  'starkzap-route-inspector':     NavigatorSims.RouteInspectorSim,
+  'starkzap-slippage-calc':       NavigatorSims.SlippageCalcSim,
+  'starkzap-split-order':         NavigatorSims.SplitOrderSim,
+  'starkzap-pos-overview':        NavigatorSims.PosOverviewSim,
+  'starkzap-validator-picker':    NavigatorSims.ValidatorPickerSim,
+  'starkzap-stake-tracker':       NavigatorSims.StakeTrackerSim,
+  'starkzap-stake-exit':          NavigatorSims.StakeExitSim,
+  'starkzap-staking-calc':        NavigatorSims.StakingCalcSim,
+  'starkzap-utilisation-curve':   NavigatorSims.UtilisationCurveSim,
+  'starkzap-supply-demo':         NavigatorSims.SupplyDemoSim,
+  'starkzap-health-factor':       NavigatorSims.HealthFactorSim,
+  'starkzap-borrow':              NavigatorSims.BorrowSim,
+  'starkzap-liquidation-watch':   NavigatorSims.LiquidationWatchSim,
+  'starkzap-dca-calc':            NavigatorSims.DcaCalcSim,
+  'starkzap-dca-setup':           NavigatorSims.DcaSetupSim,
+  'starkzap-twamm-viz':           NavigatorSims.TwammVizSim,
+  'starkzap-yield-dca':           NavigatorSims.YieldDcaSim,
+  'starkzap-auto-portfolio':      NavigatorSims.AutoPortfolioSim,
+  'starkzap-junior-allocator':    NavigatorSims.JuniorAllocatorSim,
+  'starkzap-yield-stack':         NavigatorSims.YieldStackSim,
+  'starkzap-risk-scorecard':      NavigatorSims.RiskScorecardSim,
+  'starkzap-loop-builder':        NavigatorSims.LoopBuilderSim,
+  'starkzap-drift-rebalancer':    NavigatorSims.DriftRebalancerSim,
+  'starkzap-fee-tracker':         NavigatorSims.FeeTrackerSim,
+  'starkzap-il-calculator':       NavigatorSims.ILCalculatorSim,
+  'starkzap-range-builder':       NavigatorSims.RangeBuilderSim,
+  'starkzap-lp-sizer':            NavigatorSims.LpSizerSim,
+  'starkzap-multi-range':         NavigatorSims.MultiRangeSim,
+  'starkzap-bridge-lockmint':     NavigatorSims.BridgeLockMintSim,
+  'starkzap-bridge-selector':     NavigatorSims.BridgeSelectorSim,
+  'starkzap-bridge-route':        NavigatorSims.BridgeRouteSim,
+  'starkzap-bridge-calc':         NavigatorSims.BridgeCalcSim,
+  'starkzap-bridge-register':     NavigatorSims.BridgeRegisterSim,
+  'starkzap-perps-position':      NavigatorSims.PerpPositionSim,
+  'starkzap-confidential':        NavigatorSims.ConfidentialSim,
+  'starkzap-flashloan-defence':   NavigatorSims.FlashLoanDefenceSim,
+  'starkzap-mev-defence':         NavigatorSims.MEVDefenceSim,
+  'starkzap-liquid-stake':        NavigatorSims.LiquidStakeSim,
+  'starkzap-treasury-allocator':  NavigatorSims.TreasuryAllocatorSim,
+  'starkzap-tax-ledger':          NavigatorSims.TaxLedgerSim,
+  'starkzap-correlation-manager': NavigatorSims.CorrelationManagerSim,
+  'starkzap-concentration-risk':  NavigatorSims.ConcentrationRiskSim,
+  'starkzap-ops-monitor':         NavigatorSims.OpsMonitorSim,
+  'starkzap-onchain-query':       NavigatorSims.OnchainQuerySim,
+  'starkzap-research-checklist':  NavigatorSims.ResearchChecklistSim,
+  'starkzap-dependency-mapper':   NavigatorSims.DependencyMapperSim,
+  'starkzap-backtest':            NavigatorSims.BacktestSim,
+  'starkzap-report-builder':      NavigatorSims.ReportBuilderSim,
+};
+
+const BUILDER_SANDBOX_TYPES = new Set([
+  'sandbox-cairo',
+  'sandbox-typescript',
+  'sandbox-python',
+  'sandbox-sql',
+  'sandbox-config',
+]);
+
+function isEcosystemTrackSimulator(simulatorType: string) {
+  return (
+    simulatorType === 'aggregate' ||
+    simulatorType === 'forum' ||
+    simulatorType === 'boss-p1' ||
+    simulatorType === 'boss-p2' ||
+    simulatorType === 'final-boss' ||
+    simulatorType === 'sandbox-sql' ||
+    simulatorType.startsWith('sandbox-sql-') ||
+    simulatorType === 'sandbox-research-writer' ||
+    simulatorType.startsWith('sandbox-research-writer-') ||
+    simulatorType === 'starkzap-ecosystem-read' ||
+    simulatorType.startsWith('starkzap-ecosystem-read-') ||
+    simulatorType === 'starkzap-package-install' ||
+    simulatorType === 'starkzap-mainnet-push' ||
+    simulatorType === 'starkzap-portfolio-push' ||
+    simulatorType.startsWith('starkzap-portfolio-push-') ||
+    simulatorType.startsWith('opp-')
+  );
+}
+
 interface SimulatorCardProps {
   islandId?: number;
   simulatorType: string;
   scenario?: string;
   scoringCriteria?: string[];
+  trackId?: string;
+  labNumber?: number;
   onComplete: () => void;
   onSkip:     () => void;
 }
@@ -5040,15 +5134,70 @@ export default function SimulatorCard({
   islandId = 1,
   scenario,
   scoringCriteria,
+  trackId,
+  labNumber,
   onComplete,
   onSkip,
 }: SimulatorCardProps) {
+  const { colors } = useTheme();
+  const baseSimulatorType = simulatorType.split(':')[0];
+
+  if (trackId === 'cairo-builder') {
+    if (baseSimulatorType.startsWith('cairo-')) {
+      return (
+        <CairoBuilderSimulators
+          onComplete={onComplete}
+          onSkip={onSkip}
+          simulatorType={simulatorType}
+        />
+      );
+    }
+
+    if (BUILDER_SANDBOX_TYPES.has(baseSimulatorType)) {
+      return (
+        <CairoBuilderCodeSandbox
+          onComplete={onComplete}
+          onSkip={onSkip}
+          simulatorType={simulatorType}
+        />
+      );
+    }
+  }
+
+  if (trackId === 'starknet-ecosystem-deep-dive' && isEcosystemTrackSimulator(simulatorType)) {
+    return (
+      <EcosystemSimulatorCard
+        onComplete={onComplete}
+        onSkip={onSkip}
+        simulatorType={simulatorType}
+        simulatorId={labNumber ? String(labNumber) : undefined}
+      />
+    );
+  }
+
+  if (trackId === 'starknet-defi-navigator') {
+    const NavigatorSim = NAVIGATOR_TRACK_SIMULATORS[simulatorType];
+    if (NavigatorSim) {
+      return (
+        <NavigatorSim
+          onComplete={onComplete}
+          onSkip={onSkip}
+          colors={colors}
+          islandId={islandId}
+          simulatorType={simulatorType}
+          scenario={scenario}
+          scoringCriteria={scoringCriteria}
+        />
+      );
+    }
+  }
+
   const Sim = SIMULATORS[simulatorType];
   if (!Sim) {
     return (
       <SimShell icon="⚡" title="Interactive Exercise" subtitle="Practice what you just learnt.">
         <Card>
-          <Text style={s.hint2}>This simulator ({simulatorType}) is coming soon. Keep going!</Text>
+          <Text style={s.hint2}>This simulator ({simulatorType}) is not registered in the app yet.</Text>
         </Card>
         <PrimaryBtn label="Continue →" onPress={onComplete} />
         <GhostBtn label="Skip" onPress={onSkip} />

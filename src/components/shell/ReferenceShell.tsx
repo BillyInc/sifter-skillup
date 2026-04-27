@@ -23,7 +23,9 @@ type NavId =
   | 'guilds'
   | 'portfolio'
   | 'streaks'
-  | 'settings';
+  | 'settings'
+  | 'feed'
+  | 'profile';
 
 interface ShellNavItem {
   id: NavId;
@@ -34,7 +36,7 @@ interface ShellNavItem {
 }
 
 const PRIMARY_NAV: ShellNavItem[] = [
-  { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/map',         sub: 'Overview' },
+  { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/home',         sub: 'Overview' },
   { id: 'islands',   label: 'My Islands',     icon: '🗺️', href: '/(tabs)/map/island',  sub: 'Island 18 and beyond' },
   { id: 'tracks',    label: 'Career Tracks',  icon: '🧭', href: '/(tabs)/fields',      sub: 'Skill paths' },
   { id: 'guilds',    label: 'Guilds',         icon: '🛡️', href: '/(tabs)/guild',       sub: 'Leaderboard and chat' },
@@ -43,14 +45,34 @@ const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'settings',  label: 'Settings',       icon: '⚙', href: '/(tabs)/settings',    sub: 'Theme and preferences' },
 ];
 
+const MOBILE_NAV: Array<{ id: NavId; label: string; icon: string; href: string }> = [
+  { id: 'dashboard', label: 'Home', icon: '⊞', href: '/(tabs)/home' },
+  { id: 'tracks', label: 'Tracks', icon: '🧭', href: '/(tabs)/fields' },
+  { id: 'feed', label: 'Feeds', icon: '📰', href: '/(tabs)/feed' },
+  { id: 'profile', label: 'Profile', icon: '👤', href: '/(tabs)/profile' },
+];
+
 function getActiveNavId(pathname: string | null): NavId {
   if (!pathname) return 'dashboard';
+  if (pathname.includes('/profile')) return 'profile';
+  if (pathname.includes('/feed')) return 'feed';
   if (pathname.includes('/settings')) return 'settings';
   if (pathname.includes('/streaks')) return 'streaks';
   if (pathname.includes('/portfolio')) return 'portfolio';
   if (pathname.includes('/guild') || pathname.includes('/community')) return 'guilds';
+  if (pathname.includes('/skills')) return 'tracks';
   if (pathname.includes('/fields')) return 'tracks';
-  if (pathname.includes('/map/island')) return 'islands';
+  if (pathname.includes('/map')) return 'dashboard';
+  if (pathname.includes('/home')) return 'dashboard';
+  return 'dashboard';
+}
+
+function getActiveMobileNavId(activeId: NavId): NavId {
+  if (activeId === 'tracks') return 'tracks';
+  if (activeId === 'feed') return 'feed';
+  if (activeId === 'profile' || activeId === 'settings' || activeId === 'portfolio' || activeId === 'streaks') {
+    return 'profile';
+  }
   return 'dashboard';
 }
 
@@ -110,6 +132,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const trackContext = useMemo(() => resolveTrackContext(user), [user]);
 
   const activeId = useMemo(() => getActiveNavId(pathname), [pathname]);
+  const activeMobileId = useMemo(() => getActiveMobileNavId(activeId), [activeId]);
   const activeItem = PRIMARY_NAV.find(item => item.id === activeId) ?? PRIMARY_NAV[0];
   const isWide = Platform.OS === 'web' && width >= 1100;
 
@@ -190,9 +213,11 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           </View>
 
           <View style={styles.topbarActions}>
-            <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-              <Text style={[styles.searchStubText, { color: colors.textMuted }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.searchPlaceholder : 'Search is routed next through Feed and Guilds'}</Text>
-            </View>
+            {isWide && (
+              <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                <Text style={[styles.searchStubText, { color: colors.textMuted }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.searchPlaceholder : 'Search is routed next through Feed and Guilds'}</Text>
+              </View>
+            )}
 
             <TouchableOpacity
               activeOpacity={0.85}
@@ -220,7 +245,37 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           </View>
         </View>
 
-        <View style={styles.content}>{children}</View>
+        <View style={[styles.content, !isWide && { paddingBottom: 88 }]}>{children}</View>
+
+        {!isWide && (
+          <View
+            style={[
+              styles.mobileTabbar,
+              {
+                paddingBottom: Math.max(insets.bottom, Spacing.sm),
+                backgroundColor: colors.card,
+                borderTopColor: colors.border,
+              },
+            ]}
+          >
+            {MOBILE_NAV.map(item => {
+              const active = item.id === activeMobileId;
+              return (
+                <TouchableOpacity
+                  key={item.id}
+                  activeOpacity={0.85}
+                  onPress={() => router.push(item.href as any)}
+                  style={styles.mobileTab}
+                >
+                  <View style={[styles.mobileTabIconWrap, { backgroundColor: active ? colors.text : colors.bgSecondary }]}>
+                    <Text style={[styles.mobileTabIcon, { color: active ? '#fff' : colors.text }]}>{item.icon}</Text>
+                  </View>
+                  <Text style={[styles.mobileTabLabel, { color: active ? colors.text : colors.textMuted }]}>{item.label}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
       </View>
 
       <Modal visible={drawerOpen && !isWide} animationType="fade" transparent onRequestClose={() => setDrawerOpen(false)}>
@@ -462,6 +517,38 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  mobileTabbar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderTopWidth: 1,
+    paddingHorizontal: Spacing.md,
+    paddingTop: Spacing.sm,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: Spacing.xs,
+  },
+  mobileTab: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 4,
+  },
+  mobileTabIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mobileTabIcon: {
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  },
+  mobileTabLabel: {
+    fontSize: 11,
+    fontWeight: FontWeight.bold,
   },
   drawerOverlay: {
     flex: 1,

@@ -752,7 +752,7 @@ export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSki
           <Text style={{ fontSize: 32 }}>⚡</Text>
           <Text style={{ color: colors.text, fontSize: FontSize.md, fontWeight: '800' }}>Starknet Simulator</Text>
           <Text style={{ color: colors.textSoft, fontSize: FontSize.sm, textAlign: 'center' }}>
-            Simulator type "{simulatorType}" coming soon.
+            No live simulator is configured for "{simulatorType}".
           </Text>
           <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
         </View>
