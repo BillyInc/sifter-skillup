@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.lg,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   sub: {
     fontSize: FontSize.xs,

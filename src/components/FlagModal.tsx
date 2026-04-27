@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   submitBtnDisabled: { opacity: 0.4 },
   submitBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
   thankYou: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xxxl },
-  thankEmoji: { fontSize: 56, marginBottom: Spacing.lg },
+  thankEmoji: { fontSize: 18, marginBottom: Spacing.lg },
   thankTitle: { fontSize: FontSize.xl, fontWeight: '800', marginBottom: Spacing.sm },
   thankSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xxl },
   doneBtn: { borderRadius: Radius.xl, paddingVertical: Spacing.md, paddingHorizontal: Spacing.xxxl },

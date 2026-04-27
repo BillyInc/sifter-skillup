@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.14)',
   },
-  worldName: { fontSize: 28, fontWeight: '900', color: '#fff' },
+  worldName: { fontSize: 18, fontWeight: '900', color: '#fff' },
   worldSub: { fontSize: FontSize.md, color: 'rgba(255,255,255,0.72)' },
   worldBodyText: { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.76)', lineHeight: 19, maxWidth: 540 },
   worldMetaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.sm, flexWrap: 'wrap' },
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-  worldMetaValue: { fontSize: FontSize.sm, fontWeight: '900', color: '#fff', marginBottom: 2 },
+  worldMetaValue: { fontSize: FontSize.sm, fontWeight: '800', color: '#fff', marginBottom: 2 },
   worldMetaLabel: { fontSize: 10, fontWeight: '700', color: 'rgba(255,255,255,0.52)' },
   worldContent: { gap: Spacing.lg },
   worldInfoCard: {
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
   worldInfoTitle: { fontSize: FontSize.lg, fontWeight: '900', color: '#fff', marginBottom: 4 },
   worldInfoText: { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.72)', lineHeight: 19 },
   ctaBtn: { borderRadius: Radius.xl, paddingVertical: 14, alignItems: 'center' },
-  ctaBtnText: { color: '#fff', fontSize: FontSize.md, fontWeight: '900' },
+  ctaBtnText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
   lockedBadge: {
     backgroundColor: 'rgba(255,255,255,0.1)',
     borderRadius: Radius.lg,
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
   labHeroCopy: { fontSize: 11, lineHeight: 17 },
   labStatsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap', marginTop: Spacing.sm },
   labStatCard: { borderRadius: Radius.lg, paddingHorizontal: 12, paddingVertical: 10, minWidth: 98 },
-  labStatValue: { fontSize: FontSize.sm, fontWeight: '900', marginBottom: 2 },
+  labStatValue: { fontSize: FontSize.sm, fontWeight: '800', marginBottom: 2 },
   labStatLabel: { fontSize: 11, fontWeight: '700' },
   labInfoStack: { gap: Spacing.md },
   infoCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.xs },
@@ -478,5 +478,5 @@ const styles = StyleSheet.create({
   infoTitle: { fontSize: FontSize.md, fontWeight: '900' },
   infoBody: { fontSize: FontSize.sm, lineHeight: 20 },
   primaryButton: { borderRadius: Radius.xl, paddingVertical: 10, alignItems: 'center', width: Platform.OS === 'web' ? 480 : undefined, maxWidth: '100%', alignSelf: 'center' },
-  primaryButtonText: { color: '#fff', fontSize: 12, fontWeight: '900' },
+  primaryButtonText: { color: '#fff', fontSize: 12, fontWeight: '800' },
 });

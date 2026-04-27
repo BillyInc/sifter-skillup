@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   rarityDot:     { fontSize: 8, marginTop: 2 },
   detailCard:    { borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', gap: Spacing.md, maxWidth: 320, alignSelf: 'center' },
   detailGlow:    { width: 100, height: 100, borderRadius: 50, alignItems: 'center', justifyContent: 'center' },
-  detailEmoji:   { fontSize: 48 },
+  detailEmoji:   { fontSize: 18 },
   detailEyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase', letterSpacing: 0.8 },
   detailName:    { fontSize: FontSize.xl, fontWeight: FontWeight.black, textAlign: 'center' },
   rarityTag:     { paddingHorizontal: Spacing.md, paddingVertical: 4, borderRadius: Radius.full },

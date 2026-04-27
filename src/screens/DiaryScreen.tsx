@@ -463,8 +463,8 @@ const styles = StyleSheet.create({
   emptyTitle: { fontSize: FontSize.md, fontWeight: '800' },
   emptyBody: { fontSize: FontSize.sm, lineHeight: 20 },
 
-  fab: { position: 'absolute', bottom: 24, right: 24, width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center' },
-  fabText: { color: '#fff', fontSize: 28, fontWeight: '300', lineHeight: 30 },
+  fab: { position: 'absolute', bottom: 24, right: 24, width: 56, height: 56, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+  fabText: { color: '#fff', fontSize: 18, fontWeight: '300', lineHeight: 22 },
 
   // Editor
   editorHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: Spacing.md, borderBottomWidth: 1 },

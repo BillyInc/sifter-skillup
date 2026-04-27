@@ -293,9 +293,9 @@ export default function MerchandiseScreen({ navigation }: any) {
           </ScrollView>
 
           {/* Right: grid with page header */}
-          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 64 }}>
-            <View style={{ marginBottom: 24, paddingBottom: 16, position: 'relative' }}>
-              <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Sifter Apparel</Text>
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 18 }}>
+            <View style={{ marginBottom: 14, paddingBottom: 16, position: 'relative' }}>
+              <Text style={{ fontSize: 18, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Sifter Apparel</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
                 {credits.toLocaleString()} merch credits · Earn by completing labs
               </Text>
@@ -350,8 +350,8 @@ const styles = StyleSheet.create({
 
   walletVertical:   { padding: Spacing.lg, gap: Spacing.md, borderBottomWidth: 1 },
   walletHorizontal: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, padding: Spacing.md, margin: Spacing.md, borderRadius: Radius.lg, borderWidth: 1 },
-  walletGlow:       { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
-  walletIcon:       { fontSize: 24 },
+  walletGlow:       { width: 48, height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+  walletIcon:       { fontSize: 18 },
   walletTitle:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
   walletBalance:    { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
   walletValue:      { fontSize: FontSize.xs },
@@ -366,12 +366,12 @@ const styles = StyleSheet.create({
   chip:             { paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full, borderWidth: 1 },
   chipText:         { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
 
-  gridContent:      { padding: Spacing.md, gap: Spacing.md, paddingBottom: 100 },
+  gridContent:      { padding: Spacing.md, gap: Spacing.md, paddingBottom: 18 },
   itemCard:         { borderRadius: Radius.xl, borderWidth: 1, overflow: 'hidden' },
   itemImgBox:       { height: 130, alignItems: 'center', justifyContent: 'center', position: 'relative' },
-  itemEmoji:        { fontSize: 52 },
+  itemEmoji:        { fontSize: 18 },
   lockedOverlay:    { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center' },
-  lockIcon:         { fontSize: 28 },
+  lockIcon:         { fontSize: 18 },
   unlockedBadge:    { position: 'absolute', bottom: 6, left: 6, paddingHorizontal: 6, paddingVertical: 2, borderRadius: Radius.full },
   unlockedBadgeText:{ fontSize: 9, fontWeight: FontWeight.black, color: '#fff' },
   itemInfo:         { padding: Spacing.md, gap: Spacing.xs },
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   modalBg:          { flex: 1, justifyContent: 'flex-end' },
   modalCard:        { borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, overflow: 'hidden', maxHeight: '90%' },
   modalImgBox:      { height: 180, alignItems: 'center', justifyContent: 'center' },
-  modalEmoji:       { fontSize: 72 },
+  modalEmoji:       { fontSize: 18 },
   modalContent:     { padding: Spacing.xl, gap: Spacing.md },
   modalName:        { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   modalDesc:        { fontSize: FontSize.sm, lineHeight: 22 },

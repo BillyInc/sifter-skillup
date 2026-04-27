@@ -41,7 +41,7 @@ function SimShell({ title, subtitle, icon, children }: {
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md }} showsVerticalScrollIndicator={false}>
       <View style={{ flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' }}>
-        <Text style={{ fontSize: 36, lineHeight: 44 }}>{icon}</Text>
+        <Text style={{ fontSize: 18, lineHeight: 22 }}>{icon}</Text>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 }}>⚡ TRY IT NOW</Text>
           <Text style={{ fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 }}>{title}</Text>
@@ -194,9 +194,9 @@ export function AerodromeSwapSim({ onComplete, onSkip }: SimProps) {
             <Text style={s.fl}>AMOUNT (USDC)</Text>
             <TextInput style={s.inp} value={amount} onChangeText={setAmount}
               keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} />
-            <View style={s.row}><Text style={s.rk}>You receive</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '900' }]}>{received} {poolType === 'stable' ? 'USDC' : 'ETH equiv.'}</Text></View>
+            <View style={s.row}><Text style={s.rk}>You receive</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '800' }]}>{received} {poolType === 'stable' ? 'USDC' : 'ETH equiv.'}</Text></View>
             <View style={s.row}><Text style={s.rk}>LP fee APR</Text><Text style={[s.rv, { color: Colors.accent }]}>{feeApr}</Text></View>
-            <View style={s.row}><Text style={s.rk}>AERO emissions APR</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '900' }]}>{aeroEmissions}</Text></View>
+            <View style={s.row}><Text style={s.rk}>AERO emissions APR</Text><Text style={[s.rv, { color: Colors.green, fontWeight: '800' }]}>{aeroEmissions}</Text></View>
             <View style={s.row}><Text style={s.rk}>Gas cost (Base)</Text><Text style={[s.rv, { color: Colors.green }]}>~$0.02</Text></View>
           </Card>
           <PB label="Swap →" onPress={() => setStep('ve')} disabled={amtF <= 0} />
@@ -227,7 +227,7 @@ export function AerodromeSwapSim({ onComplete, onSkip }: SimProps) {
             <TouchableOpacity onPress={() => setVeAeroLocked(true)}
               style={{ marginTop: Spacing.md, padding: Spacing.md, borderRadius: Radius.md,
                 backgroundColor: veAeroLocked ? '#d1fae5' : Colors.accent, alignItems: 'center' }}>
-              <Text style={{ color: '#fff', fontWeight: '900' }}>
+              <Text style={{ color: '#fff', fontWeight: '800' }}>
                 {veAeroLocked ? '✅ 100 AERO Locked for 6 months' : '🔒 Lock 100 AERO → Get veAERO'}
               </Text>
             </TouchableOpacity>
@@ -578,7 +578,7 @@ export function TonMiniAppDexSim({ onComplete, onSkip }: SimProps) {
               style={{ marginTop: Spacing.md, padding: Spacing.md, borderRadius: Radius.md,
                 backgroundColor: openedApp ? '#d1fae5' : '#0088cc', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: Spacing.sm }}>
               <Text style={{ fontSize: 20 }}>💬</Text>
-              <Text style={{ color: '#fff', fontWeight: '900' }}>{openedApp ? '✅ STON.fi Mini App Open' : 'Open STON.fi in Telegram'}</Text>
+              <Text style={{ color: '#fff', fontWeight: '800' }}>{openedApp ? '✅ STON.fi Mini App Open' : 'Open STON.fi in Telegram'}</Text>
             </TouchableOpacity>
           </Card>
           <PB label="Proceed to Swap →" onPress={() => setStep('swap')} disabled={!openedApp} />
@@ -594,8 +594,8 @@ export function TonMiniAppDexSim({ onComplete, onSkip }: SimProps) {
               keyboardType="decimal-pad" placeholder="TON amount" placeholderTextColor={Colors.textMuted} />
             <View style={{ padding: Spacing.md, backgroundColor: '#f3f4f6', borderRadius: Radius.md, marginBottom: Spacing.md }}>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ fontWeight: '900', fontSize: FontSize.xl, color: Colors.green }}>{received}</Text>
-                <Text style={{ fontWeight: '900', color: Colors.text }}>USDT</Text>
+                <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: Colors.green }}>{received}</Text>
+                <Text style={{ fontWeight: '800', color: Colors.text }}>USDT</Text>
               </View>
             </View>
             <View style={s.row}><Text style={s.rk}>Rate</Text><Text style={s.rv}>1 TON ≈ 6.8 USDT</Text></View>
@@ -610,8 +610,8 @@ export function TonMiniAppDexSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={s.fl}>CONFIRM — FROM TON SPACE (TELEGRAM WALLET)</Text>
-            <View style={s.row}><Text style={s.rk}>Selling</Text><Text style={[s.rv, { fontWeight: '900' }]}>{amount} TON</Text></View>
-            <View style={s.row}><Text style={s.rk}>Receiving</Text><Text style={[s.rv, { fontWeight: '900', color: Colors.green }]}>{received} USDT</Text></View>
+            <View style={s.row}><Text style={s.rk}>Selling</Text><Text style={[s.rv, { fontWeight: '800' }]}>{amount} TON</Text></View>
+            <View style={s.row}><Text style={s.rk}>Receiving</Text><Text style={[s.rv, { fontWeight: '800', color: Colors.green }]}>{received} USDT</Text></View>
             <View style={s.row}><Text style={s.rk}>All inside</Text><Text style={[s.rv, { color: '#0088cc' }]}>Telegram</Text></View>
           </Card>
           <PB label="✓ Confirm in Telegram" onPress={() => setStep('done')} />
@@ -672,7 +672,7 @@ export function FragmentTradingSim({ onComplete, onSkip }: SimProps) {
               </Text>
             </View>
             <View style={{ alignItems: 'flex-end' }}>
-              <Text style={{ fontWeight: '900', color: Colors.accent }}>{l.price}</Text>
+              <Text style={{ fontWeight: '800', color: Colors.accent }}>{l.price}</Text>
               <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>
                 {l.lastSold === 'Never' ? 'Never sold' : `Last: ${l.lastSold}`}
               </Text>
@@ -801,7 +801,7 @@ export function CbCdpStablecoinSim({ onComplete, onSkip }: SimProps) {
       <Card>
         <Text style={s.fl}>COLLATERAL (ETH @ $3,247)</Text>
         <TextInput style={s.inp} value={collateral} onChangeText={setCollateral} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} />
-        <View style={s.row}><Text style={s.rk}>Collateral value</Text><Text style={[s.rv, { fontWeight: '900' }]}>${colUsd.toLocaleString()}</Text></View>
+        <View style={s.row}><Text style={s.rk}>Collateral value</Text><Text style={[s.rv, { fontWeight: '800' }]}>${colUsd.toLocaleString()}</Text></View>
         <View style={s.row}><Text style={s.rk}>Max borrow (75% LTV)</Text><Text style={[s.rv, { color: Colors.accent }]}>${(colUsd * 0.75).toFixed(0)} cbUSD</Text></View>
       </Card>
       <Card>
@@ -809,10 +809,10 @@ export function CbCdpStablecoinSim({ onComplete, onSkip }: SimProps) {
         <TextInput style={s.inp} value={borrowAmt} onChangeText={setBorrowAmt} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} />
         {borF > colUsd * 0.75 && <Text style={{ color: Colors.red, fontSize: FontSize.xs, marginBottom: 4 }}>Exceeds 75% LTV — not allowed</Text>}
         <View style={s.row}><Text style={s.rk}>Current LTV</Text><Text style={[s.rv, { color: parseFloat(ltv) > 65 ? Colors.red : Colors.green }]}>{ltv}%</Text></View>
-        <View style={s.row}><Text style={s.rk}>Health Factor</Text><Text style={[s.rv, { color: isRisky ? Colors.red : Colors.green, fontWeight: '900' }]}>{healthFactor} {isRisky ? '⚠️' : '✅'}</Text></View>
+        <View style={s.row}><Text style={s.rk}>Health Factor</Text><Text style={[s.rv, { color: isRisky ? Colors.red : Colors.green, fontWeight: '800' }]}>{healthFactor} {isRisky ? '⚠️' : '✅'}</Text></View>
         <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm, marginTop: 4 }]}>
           <Text style={s.rk}>Liquidation at ETH</Text>
-          <Text style={[s.rv, { color: Colors.red, fontWeight: '900' }]}>${liquidationPrice}</Text>
+          <Text style={[s.rv, { color: Colors.red, fontWeight: '800' }]}>${liquidationPrice}</Text>
         </View>
       </Card>
 

@@ -358,7 +358,7 @@ export default function QuantMapScreen() {
                     <View key={lab.id} style={{ width: '48%' }}>
                       <WebCard accentBar accentColor={accent} style={{ opacity: state === 'locked' ? 0.6 : 1 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                          <Text style={{ fontSize: 24 }}>{lab.icon ?? 'Q'}</Text>
+                          <Text style={{ fontSize: 18 }}>{lab.icon ?? 'Q'}</Text>
                           <View style={{ flex: 1 }}>
                             <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{lab.name}</Text>
                             <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 1 }}>
@@ -447,7 +447,7 @@ export default function QuantMapScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
   scroll: { flex: 1 },
-  scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: 40 },
+  scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: 18 },
   header: { backgroundColor: Colors.navy, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
   headerTop: { gap: 2 },
   headerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
   headerSub: { fontSize: FontSize.sm, color: '#94a3b8', fontWeight: '600' },
   headerStats: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
   stat: { alignItems: 'center' },
-  statVal: { fontSize: FontSize.xl, fontWeight: '900', color: '#fff' },
+  statVal: { fontSize: FontSize.xl, fontWeight: '800', color: '#fff' },
   statLabel: { fontSize: FontSize.xs, color: '#94a3b8', fontWeight: '600' },
   statDivider: { width: 1, height: 32, backgroundColor: '#334155' },
   overallBar: { height: 6, backgroundColor: '#334155', borderRadius: 3, overflow: 'hidden' },
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
   labCard: { backgroundColor: Colors.card, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: Colors.border },
   labCardLocked: { opacity: 0.65 },
   labHeader: { flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, alignItems: 'flex-start' },
-  labIcon: { fontSize: 32, lineHeight: 40 },
+  labIcon: { fontSize: 18, lineHeight: 22 },
   labName: { fontSize: FontSize.lg, fontWeight: '900', color: '#fff', marginTop: 2 },
   labSubtitle: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)', fontWeight: '600', marginTop: 2 },
   tierPill: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2, marginBottom: 4 },
@@ -486,11 +486,11 @@ const styles = StyleSheet.create({
   dot: { borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
   dotText: { fontWeight: '800' },
   lockedOverlay: { padding: Spacing.xl, alignItems: 'center', gap: Spacing.sm },
-  lockedIcon: { fontSize: 16, fontWeight: '900' },
+  lockedIcon: { fontSize: 16, fontWeight: '800' },
   lockedText: { fontSize: FontSize.sm, color: Colors.textMuted, fontWeight: '600', textAlign: 'center' },
   vrOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.7)', justifyContent: 'center', alignItems: 'center', padding: Spacing.xl },
   vrModal: { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, width: '100%', maxWidth: 380, gap: Spacing.md },
-  vrModalIcon: { fontSize: 28, fontWeight: '900', textAlign: 'center' },
+  vrModalIcon: { fontSize: 18, fontWeight: '800', textAlign: 'center' },
   vrModalTitle: { fontSize: FontSize.lg, fontWeight: '900', color: Colors.accent, textAlign: 'center' },
   vrModalLab: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', fontWeight: '600' },
   vrModalName: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, textAlign: 'center' },

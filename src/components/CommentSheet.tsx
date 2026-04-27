@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
 
   commentItem:     { gap: Spacing.xs, marginBottom: Spacing.md },
   commentHeader:   { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
-  commentAvatar:   { fontSize: 28 },
+  commentAvatar:   { fontSize: 18 },
   commentMeta:     { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
   commentAuthor:   { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   commentTrack:    { fontSize: FontSize.xs },

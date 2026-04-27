@@ -57,7 +57,7 @@ const sh = StyleSheet.create({
   wrap: { flex: 1 },
   content: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
   header: { flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' },
-  icon: { fontSize: 36, lineHeight: 44 },
+  icon: { fontSize: 18, lineHeight: 22 },
   label: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
   title: { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 },
   subtitle: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18, marginTop: 2 },
@@ -112,7 +112,7 @@ function WalletPromptBanner({ wallet }: { wallet: ReturnType<typeof useSimulator
         <Text style={{ fontWeight: '800', color: Colors.accent }}>Create your wallet to use your real address</Text>
         <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>Tap to create a testnet wallet in 15 seconds</Text>
       </View>
-      <Text style={{ color: Colors.accent, fontWeight: '900' }}>→</Text>
+      <Text style={{ color: Colors.accent, fontWeight: '800' }}>→</Text>
     </TouchableOpacity>
   );
   if (wallet.status === 'needs_faucet') return (
@@ -123,7 +123,7 @@ function WalletPromptBanner({ wallet }: { wallet: ReturnType<typeof useSimulator
         <Text style={{ fontWeight: '800', color: '#92400e' }}>Get test tokens from faucet</Text>
         <Text style={{ fontSize: FontSize.xs, color: '#92400e', marginTop: 2 }}>{wallet.chain.faucetLabel}</Text>
       </View>
-      <Text style={{ color: '#92400e', fontWeight: '900' }}>Get →</Text>
+      <Text style={{ color: '#92400e', fontWeight: '800' }}>Get →</Text>
     </TouchableOpacity>
   );
   if (wallet.isDemoMode) return (
@@ -167,7 +167,7 @@ export function TonWalletEnhancedSim({ onComplete, onSkip, islandId }: SimProps)
 
       <Card>
         <Text style={s.fieldLabel}>YOUR BALANCE</Text>
-        <Text style={{ fontSize: 26, fontWeight: '900', color: Colors.text }}>{balance.toFixed(4)} TON</Text>
+        <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.text }}>{balance.toFixed(4)} TON</Text>
         <Text style={s.fieldLabel}>≈ ${(balance * 5.2).toFixed(2)} USD</Text>
       </Card>
 
@@ -197,7 +197,7 @@ export function TonWalletEnhancedSim({ onComplete, onSkip, islandId }: SimProps)
             <View style={s.row}><Text style={s.rowKey}>Network Fee</Text><Text style={s.rowVal}>~0.01 TON</Text></View>
             <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, marginTop: Spacing.sm, paddingTop: Spacing.sm }]}>
               <Text style={s.rowKey}>Total</Text>
-              <Text style={[s.rowVal, { fontWeight: '900', color: Colors.text }]}>{(parseFloat(amount) + 0.01).toFixed(2)} TON</Text>
+              <Text style={[s.rowVal, { fontWeight: '800', color: Colors.text }]}>{(parseFloat(amount) + 0.01).toFixed(2)} TON</Text>
             </View>
           </Card>
           <Btn label="✓ Confirm & Send" onPress={() => setStep('done')} />
@@ -257,7 +257,7 @@ export function TonStakingEnhancedSim({ onComplete, onSkip, islandId }: SimProps
         <Text style={s.fieldLabel}>PROJECTED REWARDS (5.4% APY)</Text>
         <View style={s.row}><Text style={s.rowKey}>Per Month</Text><Text style={s.rowVal}>+{monthly} TON</Text></View>
         <View style={s.row}><Text style={s.rowKey}>After {period} Month{period > 1 ? 's' : ''}</Text>
-          <Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>+{yearly} TON</Text></View>
+          <Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>+{yearly} TON</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Validator</Text><Text style={s.rowVal}>Whales.io (99.9% uptime)</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Testnet Contract</Text><Text style={s.rowVal}>testnet.tonscan.org</Text></View>
       </Card>
@@ -318,8 +318,8 @@ export function SolanaPumpEnhancedSim({ onComplete, onSkip, islandId }: SimProps
       {step === 'launch' && (
         <>
           <Card>
-            <Text style={{ fontSize: 48, textAlign: 'center' }}>🚀</Text>
-            <Text style={{ fontWeight: '900', fontSize: FontSize.xl, textAlign: 'center', color: Colors.accent }}>${ticker || 'TOKEN'}</Text>
+            <Text style={{ fontSize: 18, textAlign: 'center' }}>🚀</Text>
+            <Text style={{ fontWeight: '800', fontSize: FontSize.xl, textAlign: 'center', color: Colors.accent }}>${ticker || 'TOKEN'}</Text>
             <Text style={{ color: Colors.textSoft, textAlign: 'center', marginTop: 4 }}>{tokenName} is LIVE on pump.fun (Devnet)</Text>
             <View style={{ height: 1, backgroundColor: Colors.border, marginVertical: Spacing.md }} />
             <View style={s.row}><Text style={s.rowKey}>Creator wallet</Text><Text style={s.rowVal}>{wallet.shortAddress}</Text></View>
@@ -338,13 +338,13 @@ export function SolanaPumpEnhancedSim({ onComplete, onSkip, islandId }: SimProps
             </View>
             <View style={{ gap: 4 }}>
               <View style={s.row}><Text style={s.rowKey}>Buy events</Text><Text style={s.rowVal}>{buys} traders</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Token price</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '900' }]}>${price}</Text></View>
-              <View style={s.row}><Text style={s.rowKey}>Market cap</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>${marketCap.toLocaleString()}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Token price</Text><Text style={[s.rowVal, { color: Colors.accent, fontWeight: '800' }]}>${price}</Text></View>
+              <View style={s.row}><Text style={s.rowKey}>Market cap</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>${marketCap.toLocaleString()}</Text></View>
             </View>
             {!graduated ? (
               <TouchableOpacity onPress={() => setBuys(b => b + 1)}
                 style={{ marginTop: Spacing.md, padding: Spacing.lg, backgroundColor: Colors.accent, borderRadius: Radius.lg, alignItems: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900' }}>🟢 Simulate a Buy (+1 trader)</Text>
+                <Text style={{ color: '#fff', fontWeight: '800' }}>🟢 Simulate a Buy (+1 trader)</Text>
               </TouchableOpacity>
             ) : (
               <View style={{ marginTop: Spacing.md, padding: Spacing.md, backgroundColor: '#d1fae5', borderRadius: Radius.md }}>
@@ -395,10 +395,10 @@ export function NftMintEnhancedSim({ onComplete, onSkip, islandId }: SimProps) {
         <>
           <AddressPill label="Your Minting Wallet" address={wallet.address} chain={wallet.chain} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
           <Card>
-            <Text style={{ fontWeight: '900', fontSize: FontSize.xl, color: Colors.text }}>PixelPunks Collection</Text>
+            <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: Colors.text }}>PixelPunks Collection</Text>
             <Text style={s.hint2}>10,000 unique PFPs. 4,200 remaining.</Text>
             <View style={{ height: 1, backgroundColor: Colors.border, marginVertical: Spacing.md }} />
-            <View style={s.row}><Text style={s.rowKey}>Mint price</Text><Text style={[s.rowVal, { fontWeight: '900' }]}>{MINT_PRICE} ETH</Text></View>
+            <View style={s.row}><Text style={s.rowKey}>Mint price</Text><Text style={[s.rowVal, { fontWeight: '800' }]}>{MINT_PRICE} ETH</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Max per wallet</Text><Text style={s.rowVal}>3</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Est. gas (Sepolia)</Text><Text style={s.rowVal}>~{GAS} ETH</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Network</Text><Text style={s.rowVal}>Ethereum Sepolia</Text></View>
@@ -414,7 +414,7 @@ export function NftMintEnhancedSim({ onComplete, onSkip, islandId }: SimProps) {
             </View>
             <View style={[s.row, { marginTop: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm }]}>
               <Text style={{ fontWeight: '800' }}>Total (mint + gas)</Text>
-              <Text style={{ fontWeight: '900', fontSize: FontSize.lg, color: Colors.accent }}>{total} ETH</Text>
+              <Text style={{ fontWeight: '800', fontSize: FontSize.lg, color: Colors.accent }}>{total} ETH</Text>
             </View>
           </Card>
           <Btn label="Mint Now →" onPress={() => setStep('approve')} />
@@ -425,7 +425,7 @@ export function NftMintEnhancedSim({ onComplete, onSkip, islandId }: SimProps) {
         <>
           <Card>
             <Text style={s.fieldLabel}>MetaMask — CONFIRM TRANSACTION</Text>
-            <Text style={{ fontWeight: '900', color: Colors.text, fontSize: FontSize.md, marginBottom: Spacing.sm }}>PixelPunks.mint()</Text>
+            <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.md, marginBottom: Spacing.sm }}>PixelPunks.mint()</Text>
             <View style={s.row}><Text style={s.rowKey}>From</Text><Text style={s.rowVal}>{wallet.shortAddress}</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Contract</Text><Text style={{ fontSize: 11, fontFamily: 'monospace', color: Colors.accent }}>0x58cB...dF3a (Sepolia)</Text></View>
             <View style={s.row}><Text style={s.rowKey}>Value sent</Text><Text style={s.rowVal}>{(qty * MINT_PRICE).toFixed(3)} ETH</Text></View>
@@ -511,7 +511,7 @@ export function SendBitcoinEnhancedSim({ onComplete, onSkip, islandId }: SimProp
                 </TouchableOpacity>
               ))}
             </View>
-            {amt > 0 && <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>Total out</Text><Text style={[s.rowVal, { color: Colors.text, fontWeight: '900' }]}>{total.toFixed(5)} tBTC</Text></View>}
+            {amt > 0 && <View style={[s.row, { marginTop: Spacing.md }]}><Text style={s.rowKey}>Total out</Text><Text style={[s.rowVal, { color: Colors.text, fontWeight: '800' }]}>{total.toFixed(5)} tBTC</Text></View>}
           </Card>
 
           <Btn label="Review Transaction →" onPress={() => setStep('confirm')} disabled={!valid} />
@@ -573,7 +573,7 @@ export function BnbPancakeEnhancedSim({ onComplete, onSkip, islandId }: SimProps
         <TextInput style={s.input} value={amount} onChangeText={setAmount}
           keyboardType="decimal-pad" placeholder="tBNB amount" placeholderTextColor={Colors.textMuted} />
         <View style={s.row}><Text style={s.rowKey}>Rate</Text><Text style={s.rowVal}>1 tBNB = ~64 CAKE</Text></View>
-        <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '900' }]}>~{received} CAKE</Text></View>
+        <View style={s.row}><Text style={s.rowKey}>You receive</Text><Text style={[s.rowVal, { color: Colors.green, fontWeight: '800' }]}>~{received} CAKE</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Fee (0.25%)</Text><Text style={s.rowVal}>{(amtF * 0.0025).toFixed(4)} tBNB</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Gas cost</Text><Text style={[s.rowVal, { color: Colors.green }]}>~$0.10 (BSC Testnet)</Text></View>
         <View style={s.row}><Text style={s.rowKey}>Explorer</Text><Text style={s.rowVal}>testnet.bscscan.com</Text></View>
@@ -639,7 +639,7 @@ export function AirdropFarmEnhancedSim({ onComplete, onSkip, islandId }: SimProp
                 <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.sm }}>{task.label}</Text>
                 {submitted && <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 }}>💡 {task.tip}</Text>}
               </View>
-              <Text style={{ fontWeight: '900', color: task.points > 0 ? Colors.green : Colors.red, fontSize: FontSize.md }}>
+              <Text style={{ fontWeight: '800', color: task.points > 0 ? Colors.green : Colors.red, fontSize: FontSize.md }}>
                 {task.points > 0 ? '+' : ''}{task.points}
               </Text>
             </View>

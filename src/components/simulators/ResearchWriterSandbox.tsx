@@ -529,7 +529,7 @@ const main = StyleSheet.create({
 
 const done = StyleSheet.create({
   container: { alignItems: 'center', paddingVertical: Spacing.xxxl, gap: Spacing.md },
-  emoji: { fontSize: 48 },
+  emoji: { fontSize: 18 },
   title: { fontSize: 18, fontWeight: '800', color: Colors.green },
   body: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22 },
 });

@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   memberCountText: { fontSize: FontSize.xs },
   roomHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: Spacing.md, borderBottomWidth: 1 },
   roomHeaderCopy: { flex: 1 },
-  backBtn: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  backBtn: { width: 36, height: 36, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   backBtnText: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   roomEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
   roomTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black },
@@ -249,6 +249,6 @@ const styles = StyleSheet.create({
   emptyCopy: { fontSize: FontSize.sm, textAlign: 'center', maxWidth: 280 },
   inputBar: { flexDirection: 'row', gap: Spacing.sm, padding: Spacing.md, borderTopWidth: 1 },
   input: { flex: 1, borderRadius: Radius.full, borderWidth: 1, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: FontSize.sm },
-  sendBtn: { minWidth: 68, height: 42, borderRadius: 21, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
+  sendBtn: { minWidth: 68, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   sendBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
 });

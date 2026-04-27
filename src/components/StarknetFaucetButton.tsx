@@ -153,7 +153,7 @@ const s = StyleSheet.create({
   wrap:         { backgroundColor: '#fff', borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1.5, borderColor: '#ec489930' },
   compact:      { padding: Spacing.sm },
   infoRow:      { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, marginBottom: Spacing.md },
-  infoIcon:     { fontSize: 24, marginTop: 2 },
+  infoIcon:     { fontSize: 18, marginTop: 2 },
   infoTitle:    { fontSize: FontSize.sm, fontWeight: '900', color: Colors.text, marginBottom: 2 },
   infoSub:      { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 16 },
   btn:          { backgroundColor: '#ec4899', borderRadius: Radius.full, paddingVertical: 12, alignItems: 'center' },

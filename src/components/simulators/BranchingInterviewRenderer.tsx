@@ -516,7 +516,7 @@ const cl = StyleSheet.create({
 });
 
 const comp = StyleSheet.create({
-  verdict: { fontSize: 22, fontWeight: '900', textAlign: 'center', letterSpacing: 1 },
+  verdict: { fontSize: 18, fontWeight: '900', textAlign: 'center', letterSpacing: 1 },
   score: { fontSize: 16, fontWeight: '700', color: Colors.text, textAlign: 'center', marginTop: 4 },
   req: { fontSize: 12, color: Colors.textSoft, textAlign: 'center', marginBottom: Spacing.md },
   qRow: { flexDirection: 'row', gap: 8, alignItems: 'center', marginBottom: 6 },
@@ -537,5 +537,5 @@ const sa = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center', marginTop: 1, flexShrink: 0,
   },
   cbActive: { backgroundColor: '#22c55e', borderColor: '#22c55e' },
-  ck: { fontSize: 10, color: '#fff', fontWeight: '900' },
+  ck: { fontSize: 10, color: '#fff', fontWeight: '800' },
 });

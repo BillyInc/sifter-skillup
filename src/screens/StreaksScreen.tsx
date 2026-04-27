@@ -301,14 +301,14 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   bigGlyph: {
-    fontSize: 42,
+    fontSize: 18,
     fontWeight: FontWeight.black,
-    lineHeight: 48,
+    lineHeight: 22,
   },
   bigNumber: {
-    fontSize: 44,
+    fontSize: 18,
     fontWeight: FontWeight.black,
-    lineHeight: 48,
+    lineHeight: 22,
   },
   bigLabel: {
     fontSize: FontSize.md,
@@ -429,9 +429,9 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   freezeCount: {
-    fontSize: 34,
+    fontSize: 18,
     fontWeight: FontWeight.black,
-    lineHeight: 38,
+    lineHeight: 22,
   },
   actions: {
     gap: Spacing.sm,
