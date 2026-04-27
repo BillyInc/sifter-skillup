@@ -156,8 +156,16 @@ export const getIslandForLevel = (levelId: number): number => {
 export const getIslandObj = (levelId: number): Island | undefined =>
   ISLANDS.find(i => levelId >= i.start && levelId <= i.end);
 
-export const isIslandUnlocked = (island: Island, completedLevels: number[]): boolean =>
-  island.requiredLevel === 0 || completedLevels.includes(island.requiredLevel);
+export const isIslandUnlocked = (island: Island, completedLevels: number[]): boolean => {
+  const islandIndex = ISLANDS.findIndex((candidate) => candidate.id === island.id);
+  if (islandIndex <= 0) return true;
 
-export const getNextIsland = (currentIslandId: number): Island | undefined =>
-  ISLANDS.find(i => i.requiredLevel === (getIsland(currentIslandId)?.bossLevel ?? 0));
+  const previousIsland = ISLANDS[islandIndex - 1];
+  return completedLevels.includes(previousIsland.bossLevel);
+};
+
+export const getNextIsland = (currentIslandId: number): Island | undefined => {
+  const islandIndex = ISLANDS.findIndex((island) => island.id === currentIslandId);
+  if (islandIndex < 0) return undefined;
+  return ISLANDS[islandIndex + 1];
+};

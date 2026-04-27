@@ -51,6 +51,8 @@ ALTER TABLE skillup_dev.users
     DROP COLUMN IF EXISTS current_track_id,
     DROP COLUMN IF EXISTS active_field_color,
     DROP COLUMN IF EXISTS active_field_id,
+    DROP COLUMN IF EXISTS starknet_public_key,
+    DROP COLUMN IF EXISTS starknet_wallet_id,
     DROP COLUMN IF EXISTS starknet_email,
     DROP COLUMN IF EXISTS starknet_auth,
     DROP COLUMN IF EXISTS starknet_address,

@@ -452,12 +452,15 @@ function MultiSelectQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:
   // Shuffle options at render time
   const shuffled = useMemo(() => {
     if (!opts.length) return { shuffledOptions: [], correctIndices: [] };
-    const correctIndices = opts.map((o, i) => o.correct ? i : -1).filter(i => i >= 0);
-    const { shuffledOptions, newCorrectIndex } = shuffleOptionsWithCorrectTracking(
-      opts.map(o => o.text), 
-      correctIndices[0] || 0
-    );
-    return { shuffledOptions, correctIndices };
+    const shuffledOptions = [...opts];
+    for (let i = shuffledOptions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+    }
+    return {
+      shuffledOptions: shuffledOptions.map((o) => o.text),
+      correctIndices: shuffledOptions.map((o, i) => o.correct ? i : -1).filter(i => i >= 0),
+    };
   }, [opts]);
   
   const toggle=(i:number)=>setSelected(prev=>{const s=new Set(prev);s.has(i)?s.delete(i):s.add(i);return s;});
@@ -940,14 +943,16 @@ export default function LessonScreen({
 
       {returnTopic && <ReturnBanner topic={returnTopic} onReturn={()=>{setReturnTopic(null);onExit();}}/>}
 
-      {q?.type==='concept_card' && <ConceptCard q={q} onNext={()=>{handleAnswerCorrect();setTimeout(advance,200);}} levelId={levelId} onTermPress={handleTermPress}/>}
+      {q?.type==='concept_card' && <ConceptCard key={state.qIndex} q={q} onNext={()=>{handleAnswerCorrect();setTimeout(advance,200);}} levelId={levelId} onTermPress={handleTermPress}/>}
       {q?.type==='simulator' && (
         <>
           <LabObject
+            key={`lab-object-${state.qIndex}`}
             simulatorType={q.simulatorType ?? ''}
             fieldColor={(user as any)?.activeFieldColor}
           />
           <SimulatorCard
+            key={`sim-${state.qIndex}`}
             simulatorType={q.simulatorType ?? ''}
             islandId={simulatorIslandId}
             scenario={q.scenario}
@@ -959,12 +964,12 @@ export default function LessonScreen({
           />
         </>
       )}
-      {q?.type==='mcq'          && <MCQQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
-      {q?.type==='true_false'   && <TrueFalseQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
-      {q?.type==='order'        && <OrderQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
-      {q?.type==='multi_select' && <MultiSelectQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
-      {q?.type==='match_pairs'  && <MatchPairsQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
-      {q?.type==='fill_blank'   && <FillBlankQuestion q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='mcq'          && <MCQQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='true_false'   && <TrueFalseQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='order'        && <OrderQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='multi_select' && <MultiSelectQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='match_pairs'  && <MatchPairsQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
+      {q?.type==='fill_blank'   && <FillBlankQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
 
       {showFeedback&&state.answered&&q?.type!=='concept_card'&&q?.type!=='simulator'&&(
         <FeedbackBar correct={state.lastCorrect??false} combo={state.combo} xp={sessionXp} explanation={q?.explanation} onNext={handleNext} isLast={isLast}/>
