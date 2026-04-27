@@ -65,14 +65,17 @@ function TrackRow({
     <TouchableOpacity
       activeOpacity={0.82}
       onPress={() => {
+        if (!isLive) return;
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         onPress(track);
       }}
+      disabled={!isLive}
       style={[
         styles.trackRow,
         {
           backgroundColor: colors.bgSecondary,
           borderColor: isLive ? `${accentColor}33` : colors.border,
+          opacity: isLive ? 1 : 0.62,
         },
       ]}
     >
@@ -115,7 +118,7 @@ function IslandStrip({ onIslandPress }: { onIslandPress: () => void }) {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.islandScroll}
     >
-      {ISLANDS.slice(0, 18).map((island) => (
+      {ISLANDS.filter((island) => island.id === 18).map((island) => (
         <TouchableOpacity
           key={island.id}
           activeOpacity={0.82}
@@ -159,8 +162,7 @@ function FieldCard({
 }) {
   const { colors } = useTheme();
   const accentColor = fieldColor(field.id);
-  const isCrypto = field.id === 'crypto';
-  const starknetDetail = isCrypto ? getFieldDetail('starknet') : null;
+  const isStarknet = field.id === 'starknet';
   const tracks = [...detail.generalTracks, ...detail.specificTracks];
   const liveCount = tracks.filter((track) => track.status === 'live').length;
 
@@ -228,36 +230,32 @@ function FieldCard({
 
       {expanded ? (
         <View style={[styles.expandedSection, { borderTopColor: colors.border }]}>
-          {isCrypto ? (
+          {isStarknet ? (
             <>
               <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>Onboarding islands</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet islands</Text>
                 <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
-                  Open the map to begin the crypto path.
+                  Open the Starknet realm and continue from Island 18.
                 </Text>
               </View>
               <IslandStrip onIslandPress={onIslandPress} />
 
-              {starknetDetail ? (
-                <>
-                  <View style={styles.sectionHeader}>
-                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet advanced tracks</Text>
-                    <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
-                      Continue into the Starknet routes after the island sequence.
-                    </Text>
-                  </View>
-                  <View style={styles.trackList}>
-                    {[...starknetDetail.generalTracks, ...starknetDetail.specificTracks].map((track) => (
-                      <TrackRow
-                        key={track.id}
-                        track={track}
-                        accentColor={colors.starknet}
-                        onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
-                      />
-                    ))}
-                  </View>
-                </>
-              ) : null}
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet tracks</Text>
+                <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
+                  Only Starknet-related tracks are currently open.
+                </Text>
+              </View>
+              <View style={styles.trackList}>
+                {tracks.map((track) => (
+                  <TrackRow
+                    key={track.id}
+                    track={track}
+                    accentColor={colors.starknet}
+                    onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
+                  />
+                ))}
+              </View>
             </>
           ) : (
             <>
@@ -305,6 +303,10 @@ export default function FieldsScreen() {
   }, []);
 
   const handleTrackPress = async (fieldId: string, track: FieldSkillTrack) => {
+    if (track.status !== 'live') {
+      return;
+    }
+
     try {
       await updateActiveField(fieldId, fieldColor(fieldId), track.id, track.name);
     } catch {
@@ -346,7 +348,7 @@ export default function FieldsScreen() {
   };
 
   const handleIslandPress = () => {
-    navigation.push('/(tabs)/map/island');
+    navigation.push('/(tabs)/map/island', { initialIsland: 18 });
   };
 
   return (

@@ -183,10 +183,12 @@ function SecondaryBtn({ label, onPress }: { label: string; onPress: () => void }
   );
 }
 
-function Tag({ text, color = Colors.accent }: { text: string; color?: string }) {
+function Tag({ text, color }: { text: string; color?: string }) {
+  const { colors } = useTheme();
+  const resolvedColor = color ?? colors.accent;
   return (
-    <View style={[styles.tag, { backgroundColor: color + '18', borderColor: color + '40' }]}>
-      <Text style={[styles.tagText, { color }]}>{text}</Text>
+    <View style={[styles.tag, { backgroundColor: `${resolvedColor}18`, borderColor: `${resolvedColor}40` }]}>
+      <Text style={[styles.tagText, { color: resolvedColor }]}>{text}</Text>
     </View>
   );
 }
@@ -204,6 +206,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
   artifacts: PortfolioArtifact[];
   platformStatuses: PlatformStatus[];
 }) {
+  const { colors } = useTheme();
   const juniorCount = artifacts.filter(a => a.level === 'junior').length;
   const intermediateCount = artifacts.filter(a => a.level === 'intermediate').length;
   const seniorCount = artifacts.filter(a => a.level === 'senior').length;
@@ -220,7 +223,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
             { label: 'Junior', value: juniorCount, color: '#10b981' },
             { label: 'Intermediate', value: intermediateCount, color: '#f59e0b' },
             { label: 'Senior', value: seniorCount, color: '#ef4444' },
-            { label: 'Platforms', value: connectedCount, color: Colors.accent },
+            { label: 'Platforms', value: connectedCount, color: colors.accent },
           ].map(s => (
             <View key={s.label} style={styles.statBox}>
               <Text style={[styles.statValue, { color: s.color }]}>{s.value}</Text>
@@ -249,7 +252,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
             <Text style={styles.platformEmoji}>{cfg.emoji}</Text>
             <View style={{ flex: 1 }}>
               <View style={styles.platformNameRow}>
-                <Text style={[styles.platformName, { color: Colors.text }]}>{cfg.name}</Text>
+                <Text style={[styles.platformName, { color: colors.text }]}>{cfg.name}</Text>
                 <Tag
                   text={cfg.isPrimary ? 'PRIMARY' : 'SECONDARY'}
                   color={cfg.isPrimary ? '#10b981' : '#6366f1'}
@@ -394,6 +397,7 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
   onConnect: (platformId: string) => void;
   onDisconnect: (platformId: string) => void;
 }) {
+  const { colors } = useTheme();
   const primary = platformStatuses.filter(p => p.isPrimary);
   const secondary = platformStatuses.filter(p => !p.isPrimary);
 
@@ -404,7 +408,7 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
         <Text style={styles.platformItemEmoji}>{cfg?.emoji ?? '🔗'}</Text>
         <View style={{ flex: 1 }}>
           <View style={styles.platformNameRow}>
-            <Text style={[styles.platformName, { color: Colors.text }]}>{ps.name}</Text>
+            <Text style={[styles.platformName, { color: colors.text }]}>{ps.name}</Text>
             {ps.connected && <Tag text="Connected" color="#10b981" />}
           </View>
           {ps.connected && ps.username && (
@@ -532,13 +536,14 @@ function ProgressionTab({
   endOfLevelRetries: { simId: string; labId: string; concept: string }[];
   onSubmitEndOfLevelRetry: (simId: string) => void;
 }) {
+  const { colors } = useTheme();
   return (
     <>
       {/* Phase 2 gate */}
       <Card>
         <SectionLabel text="PHASE 2 CERTIFICATION — GATE STATUS" />
         {gateStatus === null ? (
-          <ActivityIndicator color={Colors.accent} />
+          <ActivityIndicator color={colors.accent} />
         ) : gateStatus.unlocked ? (
           <View style={styles.unlockedBox}>
             <Text style={styles.unlockedText}>🏆 Phase 2 Certification Attempt is UNLOCKED</Text>
@@ -560,7 +565,7 @@ function ProgressionTab({
       <Card>
         <SectionLabel text="AGGREGATE SIMULATIONS — 90% REQUIRED" />
         {aggSimStatus === null ? (
-          <ActivityIndicator color={Colors.accent} />
+          <ActivityIndicator color={colors.accent} />
         ) : (
           <>
             <View style={styles.aggRow}>
@@ -928,7 +933,7 @@ export default function PortfolioHubScreen() {
 
   // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
       <StatusBar barStyle={colors.bg === '#0b1020' ? 'light-content' : 'dark-content'} backgroundColor={colors.bg} />
 
       {/* Header */}
@@ -955,7 +960,7 @@ export default function PortfolioHubScreen() {
 
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator color={Colors.accent} size="large" />
+          <ActivityIndicator color={colors.accent} size="large" />
           <Text style={styles.loadingText}>Loading your artifacts…</Text>
         </View>
       ) : (

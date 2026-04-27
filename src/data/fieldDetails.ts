@@ -794,13 +794,6 @@ export function getAllFieldDetails(): FieldDetail[] {
 }
 
 export const LIVE_TRACK_IDS = new Set([
-  'defi-research-analyst',
-  'onchain-analyst',
-  'quant-trader',
-  'quant-developer',
-  'quant-researcher',
-  'supply-chain-analyst',
-  'supply-chain-analyst-sc',
   'starknet-islands',
   'starknet-defi-navigator',
   'starknet-ecosystem-deep-dive',

@@ -1,37 +1,22 @@
-/**
- * Sifter Skill_Up — AddressPill
- * Reusable wallet address display with copy, explorer link,
- * balance, and faucet button. Works for ALL chains without
- * any browser extension.
- *
- * Referenced by: walletEnhancedSims, island06SolanaSimulatorDefs, etc.
- */
-
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Linking, Platform,
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
-import { Colors, Spacing, Radius, FontSize, FontWeight } from '../../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../../theme';
 
 export interface AddressPillProps {
-  label:          string;           // e.g. "Your Wallet", "Your Staking Wallet"
-  address:        string | null;
-  chain:          string;           // e.g. 'solana-devnet'
-  balance?:       string;           // e.g. "5.0 SOL"
-  variant?:       'mine' | 'theirs' | 'contract';
-  onCreateWallet?: () => void;      // shown when address is null
-  explorerBase?:  string;
-  faucetUrl?:     string;
-  faucetLabel?:   string;
-  compact?:       boolean;
+  label: string;
+  address: string | null;
+  chain: string;
+  balance?: string;
+  variant?: 'mine' | 'theirs' | 'contract';
+  onCreateWallet?: () => void;
+  explorerBase?: string;
+  faucetUrl?: string;
+  faucetLabel?: string;
+  compact?: boolean;
 }
-
-const VARIANT_COLORS: Record<string, string> = {
-  mine:     Colors.accent,
-  theirs:   Colors.green,
-  contract: Colors.gold,
-};
 
 export default function AddressPill({
   label,
@@ -45,11 +30,22 @@ export default function AddressPill({
   faucetLabel = 'Get test tokens',
   compact = false,
 }: AddressPillProps) {
+  const { colors } = useTheme();
   const [copied, setCopied] = useState(false);
-  const color = VARIANT_COLORS[variant] ?? Colors.accent;
+
+  const accent = useMemo(() => {
+    switch (variant) {
+      case 'theirs':
+        return colors.green;
+      case 'contract':
+        return colors.gold;
+      default:
+        return colors.accent;
+    }
+  }, [colors.accent, colors.gold, colors.green, variant]);
 
   const shortAddr = address
-    ? `${address.slice(0, 6)}…${address.slice(-4)}`
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
     : null;
 
   const copy = async () => {
@@ -73,60 +69,55 @@ export default function AddressPill({
 
   if (!address) {
     return (
-      <View style={[styles.shell, { borderColor: color + '40' }]}>
-        <Text style={[styles.label, { color: Colors.textMuted }]}>{label}</Text>
-        <Text style={styles.noWallet}>No wallet yet</Text>
-        {onCreateWallet && (
+      <View style={[styles.shell, { borderColor: `${accent}40`, backgroundColor: colors.card }]}>
+        <Text style={[styles.label, { color: colors.textMuted }]}>{label}</Text>
+        <Text style={[styles.noWallet, { color: colors.textSoft }]}>No wallet connected yet</Text>
+        {onCreateWallet ? (
           <TouchableOpacity
-            style={[styles.createBtn, { backgroundColor: color }]}
+            style={[styles.createBtn, { backgroundColor: accent }]}
             onPress={onCreateWallet}
+            activeOpacity={0.85}
           >
-            <Text style={styles.createBtnText}>Create Testnet Wallet</Text>
+            <Text style={styles.createBtnText}>Create testnet wallet</Text>
           </TouchableOpacity>
-        )}
+        ) : null}
       </View>
     );
   }
 
   return (
-    <View style={[styles.shell, { borderColor: color + '40' }, compact && styles.compact]}>
+    <View style={[styles.shell, compact && styles.compact, { borderColor: `${accent}40`, backgroundColor: colors.card }]}>
       <View style={styles.row}>
-        <Text style={[styles.label, { color: color }]}>{label}</Text>
-        {balance && (
-          <View style={[styles.balanceBadge, { backgroundColor: color + '20' }]}>
-            <Text style={[styles.balanceText, { color }]}>{balance}</Text>
+        <Text style={[styles.label, { color: accent }]}>{label}</Text>
+        {balance ? (
+          <View style={[styles.balanceBadge, { backgroundColor: `${accent}18` }]}>
+            <Text style={[styles.balanceText, { color: accent }]}>{balance}</Text>
           </View>
-        )}
+        ) : null}
       </View>
 
-      <TouchableOpacity style={styles.addressRow} onPress={copy} activeOpacity={0.7}>
-        <Text style={[styles.address, { color: Colors.text }]} numberOfLines={1}>
+      <TouchableOpacity style={styles.addressRow} onPress={copy} activeOpacity={0.75}>
+        <Text style={[styles.address, { color: colors.text }]} numberOfLines={1}>
           {compact ? shortAddr : address}
         </Text>
-        <Text style={[styles.copyIcon, { color }]}>
-          {copied ? '✓' : '⎘'}
-        </Text>
+        <Text style={[styles.copyIcon, { color: accent }]}>{copied ? 'Copied' : 'Copy'}</Text>
       </TouchableOpacity>
 
-      {!compact && (
+      {!compact ? (
         <View style={styles.actions}>
-          <Text style={[styles.chainTag, { color: Colors.textMuted }]}>
-            {chain}
-          </Text>
-          {explorerBase && (
+          <Text style={[styles.chainTag, { color: colors.textMuted }]}>{chain}</Text>
+          {explorerBase ? (
             <TouchableOpacity onPress={openExplorer}>
-              <Text style={[styles.actionLink, { color }]}>Explorer ↗</Text>
+              <Text style={[styles.actionLink, { color: accent }]}>Explorer</Text>
             </TouchableOpacity>
-          )}
-          {faucetUrl && (
+          ) : null}
+          {faucetUrl ? (
             <TouchableOpacity onPress={openFaucet}>
-              <Text style={[styles.actionLink, { color: Colors.gold }]}>
-                {faucetLabel} →
-              </Text>
+              <Text style={[styles.actionLink, { color: colors.gold }]}>{faucetLabel}</Text>
             </TouchableOpacity>
-          )}
+          ) : null}
         </View>
-      )}
+      ) : null}
     </View>
   );
 }
@@ -135,7 +126,6 @@ const styles = StyleSheet.create({
   shell: {
     borderRadius: Radius.lg,
     borderWidth: 1.5,
-    backgroundColor: Colors.bgSecondary,
     padding: Spacing.md,
     gap: Spacing.sm,
   },
@@ -174,7 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.medium,
   },
   copyIcon: {
-    fontSize: FontSize.md,
+    fontSize: FontSize.xs,
     fontWeight: FontWeight.bold,
   },
   actions: {
@@ -193,7 +183,6 @@ const styles = StyleSheet.create({
   },
   noWallet: {
     fontSize: FontSize.sm,
-    color: Colors.textMuted,
   },
   createBtn: {
     borderRadius: Radius.md,
