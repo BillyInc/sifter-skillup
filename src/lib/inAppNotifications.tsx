@@ -1,7 +1,7 @@
 /**
  * Sifter Skill_Up — In-App Toast Notification System
  *
- * Duolingo-style toasts that fire INSIDE the app.
+ * In-app toasts that fire inside the app.
  * Works alongside the existing push notification engine.
  *
  * USAGE:
@@ -84,7 +84,7 @@ const TYPE_STYLES: Record<ToastType, { bg: string; border: string; textColor: st
   success: { bg: Colors.greenSoft,   border: Colors.green,      textColor: '#166534' },
   warning: { bg: Colors.goldSoft,    border: Colors.gold,       textColor: '#92400e' },
   info:    { bg: Colors.accentSoft,  border: Colors.accent,     textColor: Colors.accent },
-  streak:  { bg: '#fff7ed',          border: '#f97316',         textColor: '#9a3412' },
+  streak:  { bg: Colors.orangeSoft,  border: Colors.orange,     textColor: '#9a3412' },
 };
 
 function SingleToast({
@@ -100,6 +100,21 @@ function SingleToast({
   const isTop = (toast.position ?? (toast.type === 'warning' || toast.type === 'streak' ? 'top' : 'bottom')) === 'top';
   const ts = TYPE_STYLES[toast.type];
   const duration = toast.durationMs ?? 3500;
+
+  const dismiss = useCallback(() => {
+    Animated.parallel([
+      Animated.timing(translateY, {
+        toValue: isTop ? -120 : 120,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => onDismiss());
+  }, [isTop, onDismiss, opacity, translateY]);
 
   useEffect(() => {
     // Slide in
@@ -120,22 +135,7 @@ function SingleToast({
     // Auto-dismiss
     const timer = setTimeout(() => dismiss(), duration);
     return () => clearTimeout(timer);
-  }, []);
-
-  function dismiss() {
-    Animated.parallel([
-      Animated.timing(translateY, {
-        toValue: isTop ? -120 : 120,
-        duration: 250,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start(() => onDismiss());
-  }
+  }, [dismiss, duration, opacity, translateY]);
 
   return (
     <Animated.View
@@ -280,7 +280,7 @@ export const Toast = {
       type: 'info',
       emoji: '🚀',
       title: 'Portfolio updated',
-      body: `Pushed to ${platformName} · credited to Sifter Skill_Up`,
+      body: `Synced to ${platformName} from your Sifter portfolio`,
       position: 'bottom',
     }),
 
@@ -294,3 +294,5 @@ export const Toast = {
       durationMs: 2500,
     }),
 };
+
+

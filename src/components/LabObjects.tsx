@@ -7,7 +7,7 @@
  * DeFi liquidity pool, trading terminal, wallet interface,
  * yield farming chart, options board, etc.
  *
- * These are "Harry Potter paintings" — always in motion,
+ * These are living simulator illustrations — always in motion,
  * contextually relevant to what the student is about to do.
  *
  * HOW TO USE IN LessonScreen.tsx (2-line integration)
@@ -77,7 +77,7 @@ function useFloat(range = 7, duration = 2200, delay = 0) {
       Animated.timing(v, { toValue: -range, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
       Animated.timing(v, { toValue:  range, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
     ])).start();
-  }, []);
+  }, [delay, duration, range, v]);
   return v;
 }
 
@@ -89,7 +89,7 @@ function usePulse(min = 0.85, max = 1.12, duration = 1200, delay = 0) {
       Animated.timing(v, { toValue: max, duration, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
       Animated.timing(v, { toValue: min, duration, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
     ])).start();
-  }, []);
+  }, [delay, duration, max, min, v]);
   return v;
 }
 
@@ -97,7 +97,7 @@ function useSpin(duration = 8000, reverse = false) {
   const v = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.loop(Animated.timing(v, { toValue: 1, duration, easing: Easing.linear, useNativeDriver: true })).start();
-  }, []);
+  }, [duration, v]);
   return v.interpolate({ inputRange: [0, 1], outputRange: reverse ? ['0deg', '-360deg'] : ['0deg', '360deg'] });
 }
 
@@ -109,7 +109,7 @@ function useTravel(from: number, to: number, duration = 2400, delay = 0) {
       Animated.timing(v, { toValue: to,   duration, easing: Easing.linear, useNativeDriver: true }),
       Animated.timing(v, { toValue: from, duration: 0, useNativeDriver: true }),
     ])).start();
-  }, []);
+  }, [delay, duration, from, to, v]);
   return v;
 }
 
@@ -122,7 +122,7 @@ function useBarFill(target: number, duration = 1400, delay = 0) {
       Animated.delay(800),
       Animated.timing(v, { toValue: 0, duration: 400, useNativeDriver: false }),
     ])).start();
-  }, []);
+  }, [delay, duration, target, v]);
   return v;
 }
 
@@ -568,8 +568,6 @@ function TradingTerminalObject({ color }: { color: string }) {
 
 function DeFiResearchObject({ color }: { color: string }) {
   const float1 = useFloat(4, 2000);
-  const tvlBar = useBarFill(0.82, 2200, 0);
-
   const protocols = [
     { name: 'Uniswap', tvl: 0.9,  c: '#FF6B8A' },
     { name: 'Aave',    tvl: 0.75, c: '#B6509E' },
@@ -880,7 +878,7 @@ const styles = StyleSheet.create({
   dcaChipSub:      { fontSize: 10, color: 'rgba(255,255,255,0.7)', marginTop: 1 },
 
   // Build / terminal
-  terminal:        { width: '92%', backgroundColor: '#0D0D1A', borderRadius: 10, borderWidth: 1, padding: 10 },
+  terminal:        { width: '92%', backgroundColor: '#111111', borderRadius: 10, borderWidth: 1, padding: 10 },
   terminalDots:    { flexDirection: 'row', gap: 5, marginBottom: 8 },
   terminalDot:     { width: 8, height: 8, borderRadius: 4 },
   terminalLine:    { fontSize: 9.5, fontFamily: 'monospace', lineHeight: 15 },
@@ -909,7 +907,7 @@ const styles = StyleSheet.create({
   tvlValue:        { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
   protocolBars:    { width: '92%', gap: 6 },
   protocolBarRow:  { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  protocolBarName: { fontSize: 9, fontWeight: FontWeight.bold, color: '#94A3B8', width: 44 },
+  protocolBarName: { fontSize: 9, fontWeight: FontWeight.bold, color: '#6B7280', width: 44 },
   protocolBarTrack:{ flex: 1, height: 6, borderRadius: 3, backgroundColor: '#E5E7EB', overflow: 'hidden' },
   protocolBarFill: { height: '100%', borderRadius: 3 },
 

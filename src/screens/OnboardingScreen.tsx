@@ -1,27 +1,17 @@
 /**
- * Sifter Skill_Up — Onboarding Screen
- *
- * Shown once for users who still need onboarding.
- * Returning-user resume now happens before this screen via shared auth/resume routing.
- * Two paths:
- *   1. "I know what I want"   → Browse fields → pick role → straight to track
- *   2. "Help me figure it out" → Career interest quiz → platform suggests 3 tracks
- *
- * The quiz is 6 fast questions. Platform scores answers against a
- * field-affinity matrix and surfaces the top 3 matches with reasoning.
+ * Sifter Skill_Up - Onboarding Screen
  */
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LearnMoreScreen from './LearnMoreScreen';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Career interest quiz
-// ─────────────────────────────────────────────────────────────────────────────
+import {
+  Colors, Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
+} from '../theme';
+import { SifterButton, SifterCard } from '../components/ui';
 
 interface QuizQuestion {
   id: string;
@@ -37,14 +27,14 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: 'Pull the data and find out what happened', fields: ['data-science', 'data-analysis', 'supply-chain', 'quant-finance'], weight: 2 },
       { label: 'Call the people involved and understand the situation', fields: ['hr', 'sales', 'project-management', 'supply-chain'], weight: 2 },
       { label: 'Write down what I know and what I need to find out', fields: ['legal', 'writing', 'project-management', 'public-sector'], weight: 2 },
-      { label: 'Start fixing it immediately — figure it out as I go', fields: ['software-engineering', 'cloud-devops', 'cybersecurity', 'fintech'], weight: 2 },
+      { label: 'Start fixing it immediately and figure it out as I go', fields: ['software-engineering', 'cloud-devops', 'cybersecurity', 'fintech'], weight: 2 },
     ],
   },
   {
     id: 'q2',
     question: 'What kind of result makes you feel most satisfied?',
     options: [
-      { label: 'A dashboard or report that shows exactly what\'s happening', fields: ['data-analysis', 'data-science', 'supply-chain', 'quant-finance'], weight: 2 },
+      { label: 'A dashboard or report that shows exactly what is happening', fields: ['data-analysis', 'data-science', 'supply-chain', 'quant-finance'], weight: 2 },
       { label: 'Something I built that other people can use', fields: ['software-engineering', 'cloud-devops', 'product-design', 'ai-ml'], weight: 2 },
       { label: 'A deal closed, a number hit, a target beaten', fields: ['sales', 'real-estate', 'quant-finance', 'fintech'], weight: 2 },
       { label: 'A problem prevented before it happened', fields: ['cybersecurity', 'legal', 'risk', 'supply-chain'], weight: 2 },
@@ -64,7 +54,7 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 'q4',
     question: 'What do you want to be known for in your career?',
     options: [
-      { label: 'Being the person who always has the answer — backed by data', fields: ['data-science', 'data-analysis', 'quant-finance', 'ai-ml'], weight: 2 },
+      { label: 'Being the person who always has the answer backed by data', fields: ['data-science', 'data-analysis', 'quant-finance', 'ai-ml'], weight: 2 },
       { label: 'Being the person who keeps everything running smoothly', fields: ['supply-chain', 'project-management', 'logistics', 'cloud-devops'], weight: 2 },
       { label: 'Being the person who builds things that last', fields: ['software-engineering', 'product-design', 'specialized-engineering', 'real-estate'], weight: 2 },
       { label: 'Being the person who grows revenue and wins deals', fields: ['sales', 'digital-marketing', 'fintech', 'real-estate'], weight: 2 },
@@ -87,46 +77,47 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: 'Leading a data or analytics function', fields: ['data-science', 'data-analysis', 'ai-ml', 'quant-finance'], weight: 3 },
       { label: 'Running operations, supply chain, or a business unit', fields: ['supply-chain', 'project-management', 'logistics', 'public-sector'], weight: 3 },
       { label: 'A technical expert or senior engineer', fields: ['software-engineering', 'cybersecurity', 'cloud-devops', 'specialized-engineering'], weight: 3 },
-      { label: 'Building or growing a business — revenue, deals, growth', fields: ['sales', 'digital-marketing', 'fintech', 'real-estate'], weight: 3 },
+      { label: 'Building or growing a business through revenue and deals', fields: ['sales', 'digital-marketing', 'fintech', 'real-estate'], weight: 3 },
     ],
   },
 ];
 
-// Field affinity → track mapping
 const FIELD_TO_TRACK: Record<string, { name: string; emoji: string; why: string }> = {
-  'supply-chain':           { name: 'Supply Chain Analyst',        emoji: '🔗', why: 'You think systematically, manage risk, and care about execution — core supply chain instincts.' },
-  'data-science':           { name: 'Data Scientist',              emoji: '📊', why: 'You want to find patterns in data and turn them into decisions — that\'s data science.' },
-  'data-analysis':          { name: 'Data Analyst',                emoji: '📈', why: 'You want clear answers from data and to communicate them well — a natural analyst.' },
-  'software-engineering':   { name: 'Software Engineer',           emoji: '💻', why: 'You want to build things that work and solve problems with code.' },
-  'ai-ml':                  { name: 'AI/ML Engineer',              emoji: '🤖', why: 'You\'re drawn to cutting-edge problem-solving and automated intelligence.' },
-  'cybersecurity':          { name: 'Cybersecurity Analyst',       emoji: '🛡️', why: 'You want to prevent problems before they happen — security mindset at its core.' },
-  'cloud-devops':           { name: 'Cloud & DevOps Engineer',     emoji: '☁️', why: 'You want to build reliable, scalable infrastructure that keeps systems running.' },
-  'quant-finance':          { name: 'Quantitative Analyst',        emoji: '⚡', why: 'You think in numbers, probabilities, and systematic edge.' },
-  'project-management':     { name: 'Project Manager',             emoji: '📋', why: 'You want to lead teams, manage complexity, and deliver results on time.' },
-  'sales':                  { name: 'Sales & Revenue',             emoji: '💰', why: 'You want to win deals, build relationships, and hit numbers.' },
-  'digital-marketing':      { name: 'Digital Marketer',            emoji: '📣', why: 'You want to grow audiences, run campaigns, and drive measurable results.' },
-  'product-design':         { name: 'Product Designer',            emoji: '🎨', why: 'You want to create experiences that feel simple and actually work.' },
-  'fintech':                { name: 'Fintech & Blockchain',        emoji: '₿',  why: 'You want to build the future of finance and decentralised systems.' },
-  'hr':                     { name: 'Human Resources',             emoji: '👥', why: 'You care about people, culture, and building great teams.' },
-  'legal':                  { name: 'Legal & Compliance',          emoji: '⚖️', why: 'You think carefully, manage risk, and want to protect organisations.' },
-  'writing':                { name: 'Writing & Content',           emoji: '✍️', why: 'You communicate clearly and want to create content that reaches people.' },
-  'real-estate':            { name: 'Real Estate & Construction',  emoji: '🏗️', why: 'You want to work with tangible assets, deals, and long-term value.' },
-  'logistics':              { name: 'Logistics & Trade',           emoji: '🚢', why: 'You want to manage the movement of goods across the world.' },
-  'public-sector':          { name: 'Public Sector & NGO',         emoji: '🌍', why: 'You want your work to have social impact at scale.' },
-  'specialized-engineering':{ name: 'Specialized Engineering',     emoji: '🔧', why: 'You want to design and build physical systems and infrastructure.' },
-  'edtech':                 { name: 'Education Technology',        emoji: '📚', why: 'You want to teach, design learning, and improve how people grow.' },
-  'computational-science':  { name: 'Computational Science',       emoji: '🔬', why: 'You want to use computing to solve scientific problems.' },
+  'supply-chain': { name: 'Supply Chain Analyst', emoji: '🔗', why: 'You think systematically, manage risk, and care about execution.' },
+  'data-science': { name: 'Data Scientist', emoji: '📊', why: 'You are drawn to finding patterns and turning them into decisions.' },
+  'data-analysis': { name: 'Data Analyst', emoji: '📈', why: 'You want clear answers from data and a clean way to communicate them.' },
+  'software-engineering': { name: 'Software Engineer', emoji: '💻', why: 'You want to build things that work and solve problems with code.' },
+  'ai-ml': { name: 'AI/ML Engineer', emoji: '🤖', why: 'You are drawn to technical systems and automated intelligence.' },
+  'cybersecurity': { name: 'Cybersecurity Analyst', emoji: '🛡️', why: 'You naturally think about prevention, risk, and protection.' },
+  'cloud-devops': { name: 'Cloud & DevOps Engineer', emoji: '☁️', why: 'You like reliable systems, infrastructure, and operational smoothness.' },
+  'quant-finance': { name: 'Quantitative Analyst', emoji: '⚡', why: 'You think in numbers, probabilities, and systematic edge.' },
+  'project-management': { name: 'Project Manager', emoji: '📋', why: 'You want to align people, deadlines, and delivery.' },
+  sales: { name: 'Sales & Revenue', emoji: '💰', why: 'You are energized by targets, relationships, and closing outcomes.' },
+  'digital-marketing': { name: 'Digital Marketer', emoji: '📣', why: 'You want to grow reach, campaigns, and measurable traction.' },
+  'product-design': { name: 'Product Designer', emoji: '🎨', why: 'You care about creating experiences that feel simple and useful.' },
+  fintech: { name: 'Fintech & Blockchain', emoji: '₿', why: 'You are interested in financial systems and modern digital rails.' },
+  hr: { name: 'Human Resources', emoji: '👥', why: 'You care about people, culture, and healthy teams.' },
+  legal: { name: 'Legal & Compliance', emoji: '⚖️', why: 'You think carefully, manage risk, and value clarity.' },
+  writing: { name: 'Writing & Content', emoji: '✍️', why: 'You communicate clearly and want ideas to land well.' },
+  'real-estate': { name: 'Real Estate & Construction', emoji: '🏗️', why: 'You are interested in tangible assets, deals, and long-term value.' },
+  logistics: { name: 'Logistics & Trade', emoji: '🚢', why: 'You want to manage the movement of goods and systems.' },
+  'public-sector': { name: 'Public Sector & NGO', emoji: '🌍', why: 'You want your work to carry broad social impact.' },
+  'specialized-engineering': { name: 'Specialized Engineering', emoji: '🔧', why: 'You want to design and build rigorous technical systems.' },
+  edtech: { name: 'Education Technology', emoji: '📚', why: 'You want to improve how people learn and grow.' },
+  'computational-science': { name: 'Computational Science', emoji: '🔬', why: 'You want to use computing to solve scientific problems.' },
 };
 
-function scoreQuiz(answers: Record<string, number>): { trackId: string; name: string; emoji: string; why: string; score: number }[] {
+function scoreQuiz(answers: Record<string, number>) {
   const fieldScores: Record<string, number> = {};
 
-  QUIZ_QUESTIONS.forEach(q => {
-    const selectedIdx = answers[q.id];
-    if (selectedIdx === undefined) return;
-    const opt = q.options[selectedIdx];
-    opt.fields.forEach(field => {
-      fieldScores[field] = (fieldScores[field] ?? 0) + opt.weight;
+  QUIZ_QUESTIONS.forEach((question) => {
+    const selected = answers[question.id];
+    if (selected === undefined) {
+      return;
+    }
+
+    question.options[selected].fields.forEach((field) => {
+      fieldScores[field] = (fieldScores[field] ?? 0) + question.options[selected].weight;
     });
   });
 
@@ -141,203 +132,41 @@ function scoreQuiz(answers: Record<string, number>): { trackId: string; name: st
     }));
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Sub-screens
-// ─────────────────────────────────────────────────────────────────────────────
+type OnboardingStep = 'disclaimer' | 'welcome' | 'crypto-start' | 'quiz' | 'quiz-results';
 
-type OnboardingStep =
-  | 'disclaimer'
-  | 'welcome'
-  | 'crypto-start'
-  | 'quiz'
-  | 'quiz-results'
-  | 'browse';
-
-function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: (initialFilter?: string) => void; onQuiz: () => void; onCryptoStart: () => void }) {
-  const { colors } = useTheme();
-  return (
-    <View style={styles.stepContainer}>
-      <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-        <Text style={styles.welcomeEmoji}>⚡</Text>
-        <Text style={[styles.welcomeTitle, { color: colors.text }]}>What do you want to learn?</Text>
-        <Text style={[styles.welcomeSub, { color: colors.textSoft }]}>
-        We have 28 career fields and 800+ roles. Let&apos;s find the right one for you.
-        </Text>
-      </View>
-
-      <TouchableOpacity style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2, backgroundColor: colors.card }]} onPress={onCryptoStart} activeOpacity={0.85}>
-        <Text style={styles.bigBtnEmoji}>₿</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.bigBtnTitle, { color: '#f7931a' }]}>New to crypto</Text>
-          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>Start from zero → Bitcoin Bay island map</Text>
-        </View>
-        <Text style={[styles.bigBtnArrow, { color: '#f7931a' }]}>→</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={[styles.bigBtn, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={() => onKnow('operations')} activeOpacity={0.85}>
-        <Text style={styles.bigBtnEmoji}>🎯</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.bigBtnTitle, { color: colors.text }]}>I know what I want</Text>
-          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>Browse fields and pick a role directly</Text>
-        </View>
-        <Text style={[styles.bigBtnArrow, { color: colors.textMuted }]}>→</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={[styles.bigBtn, styles.bigBtnSecondary, { backgroundColor: colors.card, borderColor: colors.accent }]} onPress={onQuiz} activeOpacity={0.85}>
-        <Text style={styles.bigBtnEmoji}>🧠</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.bigBtnTitle, { color: colors.accent }]}>Help me figure it out</Text>
-          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>6 quick questions → we suggest your best match</Text>
-        </View>
-        <Text style={[styles.bigBtnArrow, { color: colors.accent }]}>→</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-// ─────────────────────────────────────────────────────────
-// CryptoStartStep — routes true beginners to Bitcoin Bay
-// ─────────────────────────────────────────────────────────
-function CryptoStartStep({ onStart, onBrowse }: { onStart: (trackId: string) => void; onBrowse: () => void }) {
-  const { colors } = useTheme();
-  return (
-    <View style={styles.stepContainer}>
-      <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-        <Text style={styles.welcomeEmoji}>₿</Text>
-        <Text style={[styles.welcomeTitle, { color: colors.text }]}>Start from the beginning</Text>
-        <Text style={[styles.welcomeSub, { color: colors.textSoft }]}>
-        You&apos;ll start at Bitcoin Bay — 18 islands that take you from complete beginner to confident crypto user. No experience needed.
-        </Text>
-      </View>
-
-      <View style={{ backgroundColor: 'rgba(247,147,26,0.1)', borderRadius: 20, padding: 16, marginBottom: 24, borderWidth: 1, borderColor: 'rgba(247,147,26,0.16)' }}>
-        <Text style={{ color: colors.text, fontSize: 14, lineHeight: 22 }}>
-          {`🏝️  18 islands, 270 levels\n₿  Bitcoin → Ethereum → Wallets → DeFi → NFTs\n🛡️  Security and scam protection built in\n🔓  Unlock skill tracks as you progress`}
-        </Text>
-      </View>
-
-      <TouchableOpacity
-        style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2, backgroundColor: colors.card }]}
-        onPress={() => onStart('island-map')}
-        activeOpacity={0.85}
-      >
-        <Text style={styles.bigBtnEmoji}>🚀</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.bigBtnTitle, { color: '#f7931a' }]}>Start at Bitcoin Bay</Text>
-          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>Begin Island 1 — no experience needed</Text>
-        </View>
-        <Text style={[styles.bigBtnArrow, { color: '#f7931a' }]}>→</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={{ marginTop: 16, padding: 12, alignItems: 'center' }} onPress={onBrowse}>
-        <Text style={{ color: colors.textMuted, fontSize: 14 }}>← Back to options</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-function QuizStep({
-  questions,
-  answers,
-  onAnswer,
-  onComplete,
+function RouteCard({
+  label,
+  title,
+  sub,
+  accent,
+  emoji,
+  onPress,
 }: {
-  questions: QuizQuestion[];
-  answers: Record<string, number>;
-  onAnswer: (qId: string, idx: number) => void;
-  onComplete: () => void;
+  label: string;
+  title: string;
+  sub: string;
+  accent: string;
+  emoji: string;
+  onPress: () => void;
 }) {
   const { colors } = useTheme();
-  const [current, setCurrent] = useState(0);
-  const q = questions[current];
-  const isLast = current === questions.length - 1;
-  const progress = (current + 1) / questions.length;
-
-  const handleSelect = (idx: number) => {
-    onAnswer(q.id, idx);
-    if (isLast) {
-      onComplete();
-    } else {
-      setCurrent(c => c + 1);
-    }
-  };
 
   return (
-    <View style={styles.stepContainer}>
-      {/* Progress */}
-      <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
-        <View style={[styles.progressFill, { width: `${progress * 100}%`, backgroundColor: colors.accent }]} />
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.88}
+      style={[styles.routeCard, { backgroundColor: colors.card, borderColor: accent }, Shadow.sm]}
+    >
+      <Text style={styles.routeEmoji}>{emoji}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={[styles.routeLabel, { color: colors.textMuted }]}>{label}</Text>
+        <Text style={[styles.routeTitle, { color: accent === colors.border ? colors.text : accent }]}>{title}</Text>
+        <Text style={[styles.routeSub, { color: colors.textSoft }]}>{sub}</Text>
       </View>
-      <Text style={[styles.progressLabel, { color: colors.textMuted }]}>{current + 1} of {questions.length}</Text>
-
-      <Text style={[styles.quizQuestion, { color: colors.text }]}>{q.question}</Text>
-
-      {q.options.map((opt, i) => (
-        <TouchableOpacity
-          key={i}
-          style={[
-            styles.quizOption,
-            { borderColor: colors.border, backgroundColor: colors.card },
-            answers[q.id] === i && { borderColor: colors.accent, backgroundColor: colors.accentSoft },
-          ]}
-          onPress={() => handleSelect(i)}
-          activeOpacity={0.8}
-        >
-          <Text style={[styles.quizOptionText, { color: colors.text }, answers[q.id] === i && { color: colors.accent, fontWeight: '700' }]}>
-            {opt.label}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+      <Text style={[styles.routeArrow, { color: accent === colors.border ? colors.textMuted : accent }]}>→</Text>
+    </TouchableOpacity>
   );
 }
-
-function QuizResultsStep({
-  results,
-  onSelect,
-  onBrowse,
-}: {
-  results: { trackId: string; name: string; emoji: string; why: string; score: number }[];
-  onSelect: (trackId: string) => void;
-  onBrowse: () => void;
-}) {
-  const { colors } = useTheme();
-  return (
-    <ScrollView contentContainerStyle={styles.stepContainer}>
-      <Text style={[styles.resultsTitle, { color: colors.text }]}>Your top matches</Text>
-      <Text style={[styles.resultsSub, { color: colors.textSoft }]}>
-        Based on your answers, these careers fit how you think and what you want.
-      </Text>
-
-      {results.map((r, i) => (
-        <TouchableOpacity
-          key={r.trackId}
-          style={[styles.resultCard, { backgroundColor: colors.card, borderColor: i === 0 ? colors.accent : colors.border }, i === 0 && styles.resultCardTop]}
-          onPress={() => onSelect(r.trackId)}
-          activeOpacity={0.85}
-        >
-          {i === 0 && (
-            <View style={styles.topMatchBadge}>
-              <Text style={styles.topMatchText}>⚡ BEST MATCH</Text>
-            </View>
-          )}
-          <Text style={styles.resultEmoji}>{r.emoji}</Text>
-          <Text style={[styles.resultName, { color: colors.text }]}>{r.name}</Text>
-          <Text style={[styles.resultWhy, { color: colors.textSoft }]}>{r.why}</Text>
-          <Text style={[styles.resultCta, { color: colors.accent }]}>Start this track →</Text>
-        </TouchableOpacity>
-      ))}
-
-      <TouchableOpacity style={styles.browseLink} onPress={onBrowse}>
-        <Text style={[styles.browseLinkText, { color: colors.textSoft }]}>Browse all fields instead</Text>
-      </TouchableOpacity>
-    </ScrollView>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Main screen
-// ─────────────────────────────────────────────────────────────────────────────
 
 interface Props {
   onComplete: (selectedTrackId: string) => void;
@@ -349,60 +178,65 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
   const [showLearnMore, setShowLearnMore] = useState(false);
   const [step, setStep] = useState<OnboardingStep>('disclaimer');
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [results, setResults] = useState<ReturnType<typeof scoreQuiz>>([]);
+  const results = useMemo(() => scoreQuiz(answers), [answers]);
+  const currentIndex = Object.keys(answers).length;
+  const currentQuestion = QUIZ_QUESTIONS[currentIndex];
 
-  const handleAnswer = (qId: string, idx: number) => {
-    setAnswers(prev => ({ ...prev, [qId]: idx }));
+  const answerQuestion = (optionIndex: number) => {
+    if (!currentQuestion) {
+      return;
+    }
+
+    const nextAnswers = { ...answers, [currentQuestion.id]: optionIndex };
+    setAnswers(nextAnswers);
+    if (currentIndex === QUIZ_QUESTIONS.length - 1) {
+      setStep('quiz-results');
+    }
   };
-
-  const handleQuizComplete = () => {
-    const scored = scoreQuiz(answers);
-    setResults(scored);
-    setStep('quiz-results');
-  };
-
-  // Disclaimer step
-  const handleDisclaimerAccept = () => setStep('welcome');
 
   if (step === 'disclaimer') {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-        <ScrollView contentContainerStyle={styles.disclaimerBody}>
-          <Text style={styles.disclaimerEmoji}>⚡</Text>
-          <Text style={[styles.disclaimerTitle, { color: colors.text }]}>Welcome to Sifter Skill_Up</Text>
-          <Text style={[styles.disclaimerSub, { color: colors.textSoft }]}>
-            We&apos;re here to help you build real career skills — from foundation to senior level.
-          </Text>
+        <ScrollView contentContainerStyle={styles.scrollBody}>
+          <SifterCard style={[styles.disclaimerHero, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>WELCOME</Text>
+            <Text style={styles.heroEmoji}>⚡</Text>
+            <Text style={[styles.heroTitle, { color: colors.text }]}>Build real skills, not just streaks</Text>
+            <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+              Sifter gives you a structured path, but strong outcomes still come from practice outside the app too.
+            </Text>
+          </SifterCard>
 
-          <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>But mastery isn&apos;t built in one place.</Text>
-            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>We encourage you to:</Text>
-            {[
-              '📚 Cross-reference with books and other learning materials',
-              '🏗️ Build real projects outside the app',
-              '👥 Join communities and find mentors in your field',
-              '🌍 Practice in the real world — not just simulations',
-            ].map((item, i) => (
-              <Text key={i} style={[styles.disclaimerBullet, { color: colors.text }]}>{item}</Text>
-            ))}
-          </View>
+          {[
+            {
+              title: 'What we encourage',
+              body: [
+                'Cross-reference with books and other learning materials',
+                'Build real projects outside the app',
+                'Join communities and find mentors in your field',
+                'Practise in the real world, not only simulations',
+              ],
+            },
+            {
+              title: 'What we promise',
+              body: ['Real, verifiable skills. An artifact trail that shows what you can do. Honest lessons built against industry standards.'],
+            },
+            {
+              title: "What we don't promise",
+              body: ["A job. Completing a path does not guarantee employment, because effort, networking, and market conditions still matter."],
+            },
+          ].map((section) => (
+            <SifterCard key={section.title} style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.cardTitle, { color: colors.text }]}>{section.title}</Text>
+              {section.body.map((line) => (
+                <Text key={line} style={[styles.cardBody, { color: colors.textSoft }]}>• {line}</Text>
+              ))}
+            </SifterCard>
+          ))}
 
-          <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we promise:</Text>
-            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>Real, verifiable skills. An artifact trail that proves what you can do. Honest, high-quality lessons built against industry standards.</Text>
-          </View>
-
-          <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we don&apos;t promise:</Text>
-            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>A job. Completing a path does not guarantee employment. Your outcomes depend on your effort, your network, and market conditions we can&apos;t control.</Text>
-          </View>
-
-          <TouchableOpacity style={[styles.acceptBtn, { backgroundColor: colors.accent }]} onPress={handleDisclaimerAccept}>
-            <Text style={styles.acceptBtnText}>I understand — Let&apos;s build skills</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.learnMoreLinkBtn} onPress={() => setShowLearnMore(true)}>
-            <Text style={[styles.learnMoreLinkText, { color: colors.accent }]}>Read full terms and resources →</Text>
+          <SifterButton label="I understand, continue" onPress={() => setStep('welcome')} />
+          <TouchableOpacity style={styles.learnMoreButton} onPress={() => setShowLearnMore(true)}>
+            <Text style={[styles.learnMoreText, { color: colors.accent }]}>Read full terms and resources</Text>
           </TouchableOpacity>
         </ScrollView>
 
@@ -413,113 +247,214 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
     );
   }
 
+  if (step === 'welcome') {
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+        <ScrollView contentContainerStyle={styles.scrollBody}>
+          <SifterCard style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>STARTING POINT</Text>
+            <Text style={styles.heroEmoji}>🧭</Text>
+            <Text style={[styles.heroTitle, { color: colors.text }]}>Choose how you want to start</Text>
+            <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+              Go straight to browsing, start with beginner crypto, or let the platform suggest a match.
+            </Text>
+          </SifterCard>
+
+          <RouteCard
+            label="BEGINNER CRYPTO"
+            title="New to crypto"
+            sub="Start from zero with the Bitcoin Bay island path."
+            accent="#f7931a"
+            emoji="₿"
+            onPress={() => setStep('crypto-start')}
+          />
+          <RouteCard
+            label="DIRECT PICK"
+            title="I know what I want"
+            sub="Browse fields and select a role without taking the quiz."
+            accent={colors.border}
+            emoji="🎯"
+            onPress={() => onBrowse('operations')}
+          />
+          <RouteCard
+            label="GUIDED MATCH"
+            title="Help me figure it out"
+            sub="Answer 6 quick questions and get your best-fit tracks."
+            accent={colors.accent}
+            emoji="🧠"
+            onPress={() => setStep('quiz')}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
+  if (step === 'crypto-start') {
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+        <ScrollView contentContainerStyle={styles.scrollBody}>
+          <SifterCard style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>BEGINNER CRYPTO</Text>
+            <Text style={styles.heroEmoji}>₿</Text>
+            <Text style={[styles.heroTitle, { color: colors.text }]}>Start from the beginning</Text>
+            <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+              Bitcoin Bay is the structured beginner route from fundamentals through core crypto usage.
+            </Text>
+          </SifterCard>
+
+          <View style={[styles.summaryPanel, { backgroundColor: 'rgba(247,147,26,0.08)', borderColor: 'rgba(247,147,26,0.18)' }]}>
+            <Text style={[styles.summaryText, { color: colors.text }]}>
+              {`18 islands, 270 levels\nBitcoin -> Ethereum -> Wallets -> DeFi -> NFTs\nSecurity and scam protection built in\nUnlock advanced tracks as you progress`}
+            </Text>
+          </View>
+
+          <RouteCard
+            label="RECOMMENDED START"
+            title="Start at Bitcoin Bay"
+            sub="Begin with Island 1. No previous experience required."
+            accent="#f7931a"
+            emoji="🚀"
+            onPress={() => onComplete('island-map')}
+          />
+
+          <TouchableOpacity style={styles.backLink} onPress={() => setStep('welcome')}>
+            <Text style={[styles.backLinkText, { color: colors.textMuted }]}>← Back to options</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
+  if (step === 'quiz' && currentQuestion) {
+    const progress = (currentIndex + 1) / QUIZ_QUESTIONS.length;
+
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+        <ScrollView contentContainerStyle={styles.scrollBody}>
+          <SifterCard style={[styles.quizHeaderCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>GUIDED MATCH</Text>
+            <View style={[styles.progressTrack, { backgroundColor: colors.border }]}>
+              <View style={[styles.progressFill, { backgroundColor: colors.accent, width: `${progress * 100}%` }]} />
+            </View>
+            <Text style={[styles.progressText, { color: colors.textMuted }]}>Question {currentIndex + 1} of {QUIZ_QUESTIONS.length}</Text>
+            <Text style={[styles.quizQuestion, { color: colors.text }]}>{currentQuestion.question}</Text>
+          </SifterCard>
+
+          {currentQuestion.options.map((option, index) => (
+            <TouchableOpacity
+              key={option.label}
+              onPress={() => answerQuestion(index)}
+              activeOpacity={0.88}
+              style={[styles.optionCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}
+            >
+              <Text style={[styles.optionText, { color: colors.text }]}>{option.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      {step === 'welcome' && (
-        <WelcomeStep
-          onKnow={onBrowse}
-          onQuiz={() => setStep('quiz')}
-          onCryptoStart={() => setStep('crypto-start')}
-        />
-      )}
-      {step === 'crypto-start' && (
-        <CryptoStartStep
-          onStart={onComplete}
-          onBrowse={() => setStep('welcome')}
-        />
-      )}
-      {step === 'quiz' && (
-        <QuizStep
-          questions={QUIZ_QUESTIONS}
-          answers={answers}
-          onAnswer={handleAnswer}
-          onComplete={handleQuizComplete}
-        />
-      )}
-      {step === 'quiz-results' && (
-        <QuizResultsStep
-          results={results}
-          onSelect={onComplete}
-          onBrowse={onBrowse}
-        />
-      )}
+      <ScrollView contentContainerStyle={styles.scrollBody}>
+        <SifterCard style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>TOP MATCHES</Text>
+          <Text style={[styles.heroTitle, { color: colors.text }]}>Your best-fit paths</Text>
+          <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+            These recommendations reflect how you think, what you enjoy, and where you seem to want to grow.
+          </Text>
+        </SifterCard>
+
+        {results.map((result, index) => (
+          <TouchableOpacity
+            key={result.trackId}
+            onPress={() => onComplete(result.trackId)}
+            activeOpacity={0.88}
+            style={[
+              styles.resultCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: index === 0 ? colors.accent : colors.border,
+              },
+              Shadow.sm,
+            ]}
+          >
+            {index === 0 ? (
+              <View style={[styles.bestBadge, { backgroundColor: colors.accent }]}>
+                <Text style={styles.bestBadgeText}>BEST MATCH</Text>
+              </View>
+            ) : null}
+            <Text style={styles.resultEmoji}>{result.emoji}</Text>
+            <Text style={[styles.resultName, { color: colors.text }]}>{result.name}</Text>
+            <Text style={[styles.resultWhy, { color: colors.textSoft }]}>{result.why}</Text>
+            <Text style={[styles.resultAction, { color: colors.accent }]}>Start this path →</Text>
+          </TouchableOpacity>
+        ))}
+
+        <TouchableOpacity style={styles.backLink} onPress={() => onBrowse()}>
+          <Text style={[styles.backLinkText, { color: colors.textMuted }]}>Browse all fields instead</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Styles
-// ─────────────────────────────────────────────────────────────────────────────
-
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  stepContainer: { flex: 1, padding: Spacing.lg, paddingTop: Spacing.xl },
-  heroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, marginBottom: Spacing.lg },
-
-  welcomeEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.lg },
-  welcomeTitle: { fontSize: FontSize.xl, fontWeight: '800', textAlign: 'center', marginBottom: Spacing.sm },
-  welcomeSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
-
-  bigBtn: {
-    flexDirection: 'row', alignItems: 'center', gap: Spacing.md,
-    borderRadius: Radius.xl,
+  scrollBody: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
+  eyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1, textAlign: 'center', marginBottom: Spacing.xs },
+  heroCard: { marginBottom: Spacing.md },
+  disclaimerHero: { marginBottom: Spacing.md },
+  heroEmoji: { fontSize: 42, textAlign: 'center', marginBottom: Spacing.sm },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, textAlign: 'center', marginBottom: Spacing.sm },
+  heroSub: { fontSize: FontSize.sm, lineHeight: 20, textAlign: 'center' },
+  disclaimerCard: { marginBottom: Spacing.md },
+  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.heavy, marginBottom: Spacing.sm },
+  cardBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  learnMoreButton: { paddingTop: Spacing.md, alignItems: 'center' },
+  learnMoreText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  routeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    borderRadius: Radius.lg,
     borderWidth: 1,
-    padding: Spacing.lg, marginBottom: Spacing.md,
-    ...Shadow.md,
+    padding: Spacing.lg,
+    marginBottom: Spacing.sm,
   },
-  bigBtnSecondary: { backgroundColor: '#fff', borderWidth: 2, borderColor: Colors.accent },
-  bigBtnEmoji: { fontSize: 28 },
-  bigBtnTitle: { fontSize: FontSize.md, fontWeight: '800', color: '#fff', marginBottom: 2 },
-  bigBtnSub: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)' },
-  bigBtnArrow: { fontSize: 20, color: '#fff', fontWeight: '700' },
-
-  progressBar: { height: 4, borderRadius: 2, marginBottom: Spacing.sm },
-  progressFill: { height: 4, borderRadius: 2 },
-  progressLabel: { fontSize: FontSize.xs, textAlign: 'right', marginBottom: Spacing.lg },
-
-  quizQuestion: { fontSize: FontSize.lg, fontWeight: '800', lineHeight: 26, marginBottom: Spacing.lg },
-  quizOption: {
-    borderWidth: 1.5, borderRadius: Radius.xl,
-    padding: Spacing.md, marginBottom: Spacing.sm,
+  routeEmoji: { fontSize: 28 },
+  routeLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 0.8, marginBottom: 2 },
+  routeTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
+  routeSub: { fontSize: FontSize.sm, lineHeight: 19 },
+  routeArrow: { fontSize: 20, fontWeight: FontWeight.heavy },
+  summaryPanel: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    marginBottom: Spacing.md,
   },
-  quizOptionSelected: { borderColor: Colors.accent, backgroundColor: Colors.accentSoft },
-  quizOptionText: { fontSize: FontSize.sm, lineHeight: 20 },
-  quizOptionTextSelected: { color: Colors.accent, fontWeight: '700' },
-
-  resultsTitle: { fontSize: FontSize.xl, fontWeight: '800', marginBottom: Spacing.sm },
-  resultsSub: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.lg },
-
-  resultCard: {
-    borderRadius: Radius.xl, padding: Spacing.lg,
-    marginBottom: Spacing.md, borderWidth: 1,
-    ...Shadow.sm,
+  summaryText: { fontSize: FontSize.sm, lineHeight: 22 },
+  backLink: { paddingVertical: Spacing.md, alignItems: 'center' },
+  backLinkText: { fontSize: FontSize.sm, fontWeight: FontWeight.medium },
+  quizHeaderCard: { marginBottom: Spacing.md },
+  progressTrack: { height: 6, borderRadius: Radius.full, overflow: 'hidden', marginBottom: Spacing.sm },
+  progressFill: { height: '100%', borderRadius: Radius.full },
+  progressText: { fontSize: FontSize.xs, marginBottom: Spacing.md, textAlign: 'right' },
+  quizQuestion: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy, lineHeight: 25 },
+  optionCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Spacing.sm },
+  optionText: { fontSize: FontSize.sm, lineHeight: 20, fontWeight: FontWeight.medium },
+  resultCard: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Spacing.sm },
+  bestBadge: {
+    alignSelf: 'flex-start',
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+    marginBottom: Spacing.sm,
   },
-  resultCardTop: { borderColor: Colors.accent, borderWidth: 2 },
-  topMatchBadge: {
-    backgroundColor: Colors.accent, borderRadius: Radius.sm,
-    paddingHorizontal: Spacing.sm, paddingVertical: 3,
-    alignSelf: 'flex-start', marginBottom: Spacing.sm,
-  },
-  topMatchText: { fontSize: 10, fontWeight: '800', color: '#fff', letterSpacing: 1 },
+  bestBadgeText: { color: '#fff', fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8 },
   resultEmoji: { fontSize: 36, marginBottom: Spacing.sm },
-  resultName: { fontSize: FontSize.lg, fontWeight: '800', marginBottom: Spacing.sm },
-  resultWhy: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.md },
-  resultCta: { fontSize: FontSize.sm, fontWeight: '700' },
-
-  browseLink: { padding: Spacing.lg, alignItems: 'center' },
-  browseLinkText: { fontSize: FontSize.sm, textDecorationLine: 'underline' },
-
-  // Disclaimer
-  disclaimerBody: { padding: Spacing.lg, alignItems: 'center', paddingBottom: 60 },
-  disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.xl },
-  disclaimerTitle: { fontSize: FontSize.xl, fontWeight: '900', textAlign: 'center', marginBottom: Spacing.sm },
-  disclaimerSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
-  disclaimerCard: { borderRadius: Radius.xl, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1 },
-  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', marginBottom: Spacing.sm },
-  disclaimerCardBody: { fontSize: FontSize.sm, lineHeight: 20 },
-  disclaimerBullet: { fontSize: FontSize.sm, lineHeight: 28, paddingLeft: 4 },
-  acceptBtn: { borderRadius: Radius.xl, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
-  acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
-  learnMoreLinkBtn: { padding: Spacing.md, alignItems: 'center' },
-  learnMoreLinkText: { fontSize: FontSize.sm, fontWeight: '700' },
+  resultName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: Spacing.sm },
+  resultWhy: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.sm },
+  resultAction: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
 });

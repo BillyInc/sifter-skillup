@@ -3,7 +3,7 @@
  * ─────────────────────────────────────────────────────────────
  * REPLACES: src/theme/index.ts
  *
- * Stitch + Duolingo hybrid token system.
+ * Base token system aligned to the Sifter reference shell.
  * Backward-compatible: { Colors } still works everywhere.
  * New: Stitch palette, dark mode, FontWeight, useTheme hook,
  *      world themes, XP system, streak constants, track tools,
@@ -28,7 +28,7 @@ export const Spacing = {
 // ─── Radius ───────────────────────────────────────────────────
 
 export const Radius = {
-  sm: 8, md: 12, lg: 16, xl: 20, xxl: 28, xxxl: 40, full: 99,
+  sm: 8, md: 12, lg: 14, xl: 18, xxl: 24, xxxl: 32, full: 99,
 } as const;
 
 // ─── Typography ───────────────────────────────────────────────
@@ -54,14 +54,14 @@ export const LineHeight = {
 // ─── Shadows ──────────────────────────────────────────────────
 
 export const Shadow = {
-  xs: { shadowColor: '#64748b', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06, shadowRadius: 4, elevation: 1 },
-  sm: { shadowColor: '#475569', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 8, elevation: 2 },
-  md: { shadowColor: '#334155', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.12, shadowRadius: 16, elevation: 4 },
-  lg: { shadowColor: '#1e293b', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.16, shadowRadius: 24, elevation: 8 },
-  glow:      { shadowColor: '#5b5fcf', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.4,  shadowRadius: 16, elevation: 8 },
-  glowGold:  { shadowColor: '#f59e0b', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.45, shadowRadius: 20, elevation: 10 },
-  glowGreen: { shadowColor: '#22c55e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.4,  shadowRadius: 16, elevation: 8 },
-  glowPink:  { shadowColor: '#ec4899', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.45, shadowRadius: 20, elevation: 10 },
+  xs: { shadowColor: '#000000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.04, shadowRadius: 4, elevation: 1 },
+  sm: { shadowColor: '#000000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.07, shadowRadius: 8, elevation: 2 },
+  md: { shadowColor: '#000000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.09, shadowRadius: 16, elevation: 4 },
+  lg: { shadowColor: '#000000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.12, shadowRadius: 24, elevation: 8 },
+  glow:      { shadowColor: '#6366f1', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.22, shadowRadius: 14, elevation: 6 },
+  glowGold:  { shadowColor: '#f59e0b', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
+  glowGreen: { shadowColor: '#10b981', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.22, shadowRadius: 14, elevation: 6 },
+  glowPink:  { shadowColor: '#ec4899', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
 } as const;
 
 // ─── Color palette interface ───────────────────────────────────
@@ -91,49 +91,49 @@ export interface ColorPalette {
 // ─── Light palette ────────────────────────────────────────────
 
 export const LightColors: ColorPalette = {
-  bg: '#F5F5FA', bgSecondary: '#EBEBF5', bgTertiary: '#E0E0F0',
-  card: '#FFFFFF', cardElevated: '#FFFFFF', navy: '#1A1A2E',
-  accent: '#5B5FCF', accentSoft: '#EBEBFF', accentDim: '#8B8FE8', accentDeep: '#3D40A0',
-  green: '#58CC02', greenSoft: '#D7F7C2',
-  red: '#FF4B4B', redSoft: '#FFE5E5',
-  gold: '#F59E0B', goldSoft: '#FFF7E0',
-  orange: '#FF9600', orangeSoft: '#FFF3E0',
-  text: '#1A1A2E', textSoft: '#4A4A6A', textMuted: '#8888A8', textInverse: '#FFFFFF',
-  border: '#E0E0F0', borderDark: '#C8C8E8', borderFocus: '#5B5FCF',
-  beginner: '#58CC02', intermediate: '#F59E0B', pro: '#5B5FCF',
+  bg: '#F0F2F6', bgSecondary: '#F5F5F5', bgTertiary: '#E5E7EB',
+  card: '#FFFFFF', cardElevated: '#FFFFFF', navy: '#111111',
+  accent: '#6366F1', accentSoft: '#EEF2FF', accentDim: '#8B5CF6', accentDeep: '#4338CA',
+  green: '#10B981', greenSoft: '#ECFDF5',
+  red: '#EF4444', redSoft: '#FEF2F2',
+  gold: '#F59E0B', goldSoft: '#FFF7ED',
+  orange: '#F97316', orangeSoft: '#FFF7ED',
+  text: '#111111', textSoft: '#374151', textMuted: '#6B7280', textInverse: '#FFFFFF',
+  border: '#E5E7EB', borderDark: '#D1D5DB', borderFocus: '#6366F1',
+  beginner: '#10B981', intermediate: '#F59E0B', pro: '#6366F1',
   bitcoin: '#F7931A', ethereum: '#627EEA', defi: '#10B981', nft: '#8B5CF6',
   bridge: '#06B6D4', meme: '#EF4444', base: '#0052FF', ton: '#0088CC',
   bnb: '#F0B90B', solana: '#9945FF', starknet: '#EC4899',
-  tabBar: '#FFFFFF', tabBarBorder: '#E0E0F0', tabBarActive: '#5B5FCF',
-  inputBg: '#FFFFFF', inputBorder: '#E0E0F0',
-  overlay: 'rgba(26,26,46,0.5)', shimmer: '#F0F0F8', shimmerHighlight: '#E0E0F0',
-  stitch: '#5B5FCF', stitchSoft: '#F0F0FF',
-  levelBadge: '#FFF0C2', levelBadgeText: '#B7791F',
-  streakFire: '#FF9600', xpGreen: '#58CC02',
+  tabBar: '#FFFFFF', tabBarBorder: '#E5E7EB', tabBarActive: '#111111',
+  inputBg: '#F5F5F5', inputBorder: '#E5E7EB',
+  overlay: 'rgba(17,17,17,0.46)', shimmer: '#F5F5F5', shimmerHighlight: '#E5E7EB',
+  stitch: '#6366F1', stitchSoft: '#EEF2FF',
+  levelBadge: '#FFF7ED', levelBadgeText: '#B45309',
+  streakFire: '#F97316', xpGreen: '#10B981',
 };
 
 // ─── Dark palette ─────────────────────────────────────────────
 
 export const DarkColors: ColorPalette = {
-  bg: '#0D0D1A', bgSecondary: '#13132B', bgTertiary: '#1A1A38',
-  card: '#1A1A30', cardElevated: '#222245', navy: '#E8E8F8',
-  accent: '#8B8FFF', accentSoft: '#1E1E4B', accentDim: '#6366F1', accentDeep: '#A8ABFF',
-  green: '#58CC02', greenSoft: '#0D2E00',
-  red: '#FF4B4B', redSoft: '#2D0D0D',
-  gold: '#FBB024', goldSoft: '#2D1F00',
-  orange: '#FF9600', orangeSoft: '#2D1A00',
-  text: '#F0F0FF', textSoft: '#A8A8C8', textMuted: '#6666AA', textInverse: '#0D0D1A',
-  border: '#222248', borderDark: '#333368', borderFocus: '#8B8FFF',
-  beginner: '#58CC02', intermediate: '#FBB024', pro: '#8B8FFF',
+  bg: '#0F172A', bgSecondary: '#111827', bgTertiary: '#1F2937',
+  card: '#111827', cardElevated: '#172033', navy: '#F9FAFB',
+  accent: '#818CF8', accentSoft: '#1E1B4B', accentDim: '#A78BFA', accentDeep: '#C7D2FE',
+  green: '#34D399', greenSoft: '#052E28',
+  red: '#F87171', redSoft: '#3A1014',
+  gold: '#FBBF24', goldSoft: '#3B2A09',
+  orange: '#FB923C', orangeSoft: '#3A1D09',
+  text: '#F9FAFB', textSoft: '#D1D5DB', textMuted: '#9CA3AF', textInverse: '#111111',
+  border: '#243041', borderDark: '#374151', borderFocus: '#818CF8',
+  beginner: '#34D399', intermediate: '#FBBF24', pro: '#818CF8',
   bitcoin: '#F7931A', ethereum: '#7C96FF', defi: '#34D399', nft: '#A78BFA',
   bridge: '#22D3EE', meme: '#F87171', base: '#3B82F6', ton: '#38BDF8',
   bnb: '#FBB024', solana: '#B57AFF', starknet: '#F472B6',
-  tabBar: '#0D0D1A', tabBarBorder: '#222248', tabBarActive: '#8B8FFF',
-  inputBg: '#1A1A30', inputBorder: '#333368',
+  tabBar: '#111827', tabBarBorder: '#243041', tabBarActive: '#F9FAFB',
+  inputBg: '#111827', inputBorder: '#374151',
   overlay: 'rgba(0,0,0,0.75)', shimmer: '#1A1A30', shimmerHighlight: '#222248',
-  stitch: '#8B8FFF', stitchSoft: '#1E1E4B',
-  levelBadge: '#2D2000', levelBadgeText: '#FBB024',
-  streakFire: '#FF9600', xpGreen: '#58CC02',
+  stitch: '#818CF8', stitchSoft: '#1E1B4B',
+  levelBadge: '#3B2A09', levelBadgeText: '#FBBF24',
+  streakFire: '#FB923C', xpGreen: '#34D399',
 };
 
 // Backward-compatible static export — existing code `import { Colors }` still works
@@ -205,14 +205,14 @@ export interface WorldTheme {
 }
 
 export const WORLD_THEMES: Record<string, WorldTheme> = {
-  'quant-quarter':          { id: 'quant-quarter',          name: 'Quant Quarter',          primaryColor: '#5B5FCF', secondaryColor: '#8B8FFF', bgGradient: ['#0a0a1f', '#1a1040'], glowColor: 'rgba(91,95,207,0.4)',    particleColor: '#8B8FFF', emoji: '🏛️' },
+  'quant-quarter':          { id: 'quant-quarter',          name: 'Quant Quarter',          primaryColor: '#6366F1', secondaryColor: '#8B5CF6', bgGradient: ['#0a0a1f', '#1a1040'], glowColor: 'rgba(99,102,241,0.4)',    particleColor: '#8B5CF6', emoji: '🏛️' },
   'blockchain-borough':     { id: 'blockchain-borough',     name: 'Blockchain Borough',     primaryColor: '#F7931A', secondaryColor: '#FBB024', bgGradient: ['#0f0a00', '#1f1200'], glowColor: 'rgba(247,147,26,0.4)',   particleColor: '#F7931A', emoji: '🔮' },
   'neural-nexus':           { id: 'neural-nexus',           name: 'Neural Nexus',           primaryColor: '#8B5CF6', secondaryColor: '#A78BFA', bgGradient: ['#0d0018', '#1a0030'], glowColor: 'rgba(139,92,246,0.45)', particleColor: '#A78BFA', emoji: '🧠' },
   'code-citadel':           { id: 'code-citadel',           name: 'Code Citadel',           primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#00101f', '#002040'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🏰' },
   'shadow-vault':           { id: 'shadow-vault',           name: 'Shadow Vault',           primaryColor: '#EF4444', secondaryColor: '#F87171', bgGradient: ['#0f0000', '#200000'], glowColor: 'rgba(239,68,68,0.4)',   particleColor: '#F87171', emoji: '🛡️' },
   'logistics-labyrinth':    { id: 'logistics-labyrinth',    name: 'Logistics Labyrinth',    primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#000d1a', '#001f40'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🔗' },
   'starknet-realm':         { id: 'starknet-realm',         name: 'Starknet Realm',         primaryColor: '#EC4899', secondaryColor: '#F472B6', bgGradient: ['#0a0015', '#1a0030'], glowColor: 'rgba(236,72,153,0.45)', particleColor: '#F472B6', emoji: '⚡' },
-  'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#5B5FCF', secondaryColor: '#8B8FFF', bgGradient: ['#0a0a1f', '#111130'], glowColor: 'rgba(91,95,207,0.35)', particleColor: '#8B8FFF', emoji: '⚡' },
+  'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#6366F1', secondaryColor: '#8B5CF6', bgGradient: ['#0a0a1f', '#111130'], glowColor: 'rgba(99,102,241,0.35)', particleColor: '#8B5CF6', emoji: '⚡' },
 };
 
 export function getWorldTheme(id: string): WorldTheme {
@@ -291,14 +291,14 @@ export const TRACK_TOOLS: Record<string, {
   color: string; toolEmoji: string; screenLabel: string; deskItems: string[];
 }> = {
   'crypto':               { color: '#F7931A', toolEmoji: '₿',  screenLabel: 'On-Chain Terminal',      deskItems: ['wallet', 'price-feed', 'defi-dashboard'] },
-  'quant':                { color: '#5B5FCF', toolEmoji: '📊', screenLabel: 'Bloomberg Terminal',      deskItems: ['python-ide', 'probability-tree', 'backtest'] },
+  'quant':                { color: '#6366F1', toolEmoji: '📊', screenLabel: 'Bloomberg Terminal',      deskItems: ['python-ide', 'probability-tree', 'backtest'] },
   'supply-chain':         { color: '#0EA5E9', toolEmoji: '🔗', screenLabel: 'Logistics Dashboard',     deskItems: ['sap-screen', 'shipping-map', 'inventory'] },
   'defi-research':        { color: '#10B981', toolEmoji: '🌊', screenLabel: 'DeFi Protocol Monitor',   deskItems: ['yield-curve', 'tvl-chart', 'liquidation'] },
   'starknet':             { color: '#EC4899', toolEmoji: '⚡', screenLabel: 'Cairo Dev Terminal',      deskItems: ['zk-proof', 'contract-editor', 'tx-feed'] },
   'starknet-defi-navigator': { color: '#EC4899', toolEmoji: '🧭', screenLabel: 'DeFi Navigator',      deskItems: ['pool-depth', 'yield-monitor', 'starkzap'] },
   'options-trading':      { color: '#8B5CF6', toolEmoji: '🎯', screenLabel: 'Options Chain',           deskItems: ['greeks-chart', 'vol-surface', 'expiry-cal'] },
   'ai-ml':                { color: '#06B6D4', toolEmoji: '🤖', screenLabel: 'Model Training Monitor', deskItems: ['gpu-rig', 'loss-curve', 'neural-net'] },
-  'default':              { color: '#5B5FCF', toolEmoji: '💼', screenLabel: 'Analyst Workstation',     deskItems: ['spreadsheet', 'notepad', 'coffee'] },
+  'default':              { color: '#6366F1', toolEmoji: '💼', screenLabel: 'Analyst Workstation',     deskItems: ['spreadsheet', 'notepad', 'coffee'] },
 };
 
 export function getTrackTools(trackId: string) {

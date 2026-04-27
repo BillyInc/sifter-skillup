@@ -20,7 +20,7 @@ function SimShell({ title, subtitle, icon, children }: {
       <View style={sh.header}>
         <Text style={sh.icon}>{icon}</Text>
         <View style={{ flex: 1 }}>
-          <Text style={sh.label}>⚡ QUANT LAB</Text>
+          <Text style={sh.label}>Sifter Quant Lab</Text>
           <Text style={sh.title}>{title}</Text>
           <Text style={sh.subtitle}>{subtitle}</Text>
         </View>
@@ -35,12 +35,12 @@ const sh = StyleSheet.create({
   header:   {
     flexDirection: 'row',
     gap: Spacing.sm,
-    backgroundColor: '#eef2ff',
+    backgroundColor: Colors.card,
     borderRadius: Radius.xl,
     padding: Spacing.md,
     alignItems: 'flex-start',
     borderWidth: 1,
-    borderColor: '#dbe3ff',
+    borderColor: Colors.border,
   },
   icon:     { fontSize: 30, lineHeight: 36 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
@@ -64,7 +64,7 @@ function GBtn({ label, onPress }: { label: string; onPress: () => void }) {
   );
 }
 const b = StyleSheet.create({
-  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: 13, alignItems: 'center', width: '100%' },
+  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.lg, paddingVertical: 13, alignItems: 'center', width: '100%' },
   disabled:    { opacity: 0.4 },
   primaryText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
   ghost:       { alignItems: 'center', paddingVertical: Spacing.sm },

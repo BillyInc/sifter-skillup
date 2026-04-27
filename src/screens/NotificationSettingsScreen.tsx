@@ -1,37 +1,61 @@
-/**
- * Sifter Skill_Up — Notification Settings Screen
- * Push, SMS, Email preferences + reminder time picker.
- * Accessible from Profile. Settings saved to server (queued offline).
- */
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity,
+  ScrollView,
+  StyleSheet,
   Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme } from '../theme';
 import { requestPushPermission, scheduleDailyReminder } from '../lib/notificationEngine';
 import { enqueueWrite } from '../lib/offlineStorage';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
+import { resolveTrackContext } from '../lib/trackContext';
 
 const HOURS = Array.from({ length: 24 }, (_, i) => ({
   value: i,
   label: i === 0 ? '12:00 AM' : i < 12 ? `${i}:00 AM` : i === 12 ? '12:00 PM' : `${i - 12}:00 PM`,
 }));
 
+function SettingsCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  const { colors } = useTheme();
+
+  return (
+    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+      <Text style={[styles.cardTitle, { color: colors.textMuted }]}>{title}</Text>
+      {children}
+    </View>
+  );
+}
+
 export default function NotificationSettingsScreen() {
+  const { colors } = useTheme();
   const { user } = useAuth();
-  const [push,      setPush]      = useState(true);
-  const [sms,       setSms]       = useState(false);
-  const [email,     setEmail]     = useState(true);
+  const trackContext = useMemo(() => resolveTrackContext(user), [user]);
+  const [push, setPush] = useState(true);
+  const [sms, setSms] = useState(false);
+  const [email, setEmail] = useState(true);
   const [hourLocal, setHourLocal] = useState(19);
-  const [saving,    setSaving]    = useState(false);
-  const [saved,     setSaved]     = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const workspaceLabel = trackContext.mode === 'track' ? trackContext.trackName : 'your active workspace';
+  const reminderPreview = push
+    ? `Daily reminder at ${HOURS[hourLocal].label}`
+    : 'No scheduled daily reminder';
 
   const handleSave = async () => {
     setSaving(true);
-    // Schedule local push at chosen hour
+
     if (push && user) {
       const token = await requestPushPermission();
       if (token) {
@@ -46,93 +70,153 @@ export default function NotificationSettingsScreen() {
         await enqueueWrite('/api/notifications/token', 'POST', { token }, 'normal');
       }
     }
-    // Save prefs to server
+
     await enqueueWrite('/api/notifications/prefs', 'PUT', { push, sms, email, hourLocal }, 'normal');
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const channels = [
+    {
+      key: 'push',
+      label: 'Push reminders',
+      sub: `The main daily nudge for ${workspaceLabel}.`,
+      value: push,
+      set: setPush,
+      recommended: true,
+    },
+    {
+      key: 'sms',
+      label: 'SMS alerts',
+      sub: 'Reserved for high-risk streak recovery moments.',
+      value: sms,
+      set: setSms,
+      recommended: false,
+    },
+    {
+      key: 'email',
+      label: 'Email digests',
+      sub: 'Weekly progress, artifact milestones, and recap messages.',
+      value: email,
+      set: setEmail,
+      recommended: true,
+    },
+  ];
+
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>🔔 Notifications</Text>
-        <Text style={styles.sub}>
-          We&apos;ll remind you to keep learning — personalised to your track and streak.
-          Never spammy. Always opt-outable.
-        </Text>
+        <View style={[styles.hero, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+          <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>Notifications</Text>
+          <Text style={[styles.heroTitle, { color: colors.text }]}>Keep the reminders useful, not noisy.</Text>
+          <Text style={[styles.heroBody, { color: colors.textSoft }]}>
+            Delivery is tuned around {workspaceLabel}, your streak timing, and the channels you actually want to hear from.
+          </Text>
+        </View>
 
-        {/* Channels */}
-        <Text style={styles.sectionHead}>CHANNELS</Text>
-
-        {[
-          { key: 'push', label: 'Push Notifications', sub: 'Daily reminder on your device', value: push, set: setPush, recommended: true },
-          { key: 'sms',  label: 'SMS',                sub: 'For urgent streak alerts (2+ days missed)', value: sms, set: setSms, recommended: false },
-          { key: 'email',label: 'Email',              sub: 'Weekly progress + artifact milestones', value: email, set: setEmail, recommended: true },
-        ].map(ch => (
-          <View key={ch.key} style={styles.channelRow}>
-            <View style={{ flex: 1 }}>
-              <View style={styles.channelLabelRow}>
-                <Text style={styles.channelLabel}>{ch.label}</Text>
-                {ch.recommended && <View style={styles.recBadge}><Text style={styles.recText}>Recommended</Text></View>}
+        <SettingsCard title="DELIVERY CHANNELS">
+          {channels.map((channel, index) => (
+            <View
+              key={channel.key}
+              style={[
+                styles.channelRow,
+                { borderTopColor: index === 0 ? 'transparent' : colors.border },
+              ]}
+            >
+              <View style={styles.channelCopy}>
+                <View style={styles.channelLabelRow}>
+                  <Text style={[styles.channelLabel, { color: colors.text }]}>{channel.label}</Text>
+                  {channel.recommended ? (
+                    <View style={[styles.recBadge, { backgroundColor: colors.accentSoft }]}>
+                      <Text style={[styles.recText, { color: colors.accent }]}>Recommended</Text>
+                    </View>
+                  ) : null}
+                </View>
+                <Text style={[styles.channelSub, { color: colors.textSoft }]}>{channel.sub}</Text>
               </View>
-              <Text style={styles.channelSub}>{ch.sub}</Text>
+
+              <Switch
+                value={channel.value}
+                onValueChange={channel.set}
+                trackColor={{ false: colors.border, true: colors.accent }}
+                thumbColor="#fff"
+              />
             </View>
-            <Switch
-              value={ch.value}
-              onValueChange={ch.set}
-              trackColor={{ false: Colors.border, true: Colors.accent }}
-              thumbColor="#fff"
-            />
-          </View>
-        ))}
+          ))}
+        </SettingsCard>
 
-        {/* Reminder time */}
-        {push && (
-          <>
-            <Text style={styles.sectionHead}>DAILY REMINDER TIME</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeRow}>
-              {[7, 8, 9, 12, 17, 18, 19, 20, 21].map(h => (
-                <TouchableOpacity
-                  key={h}
-                  style={[styles.timeChip, hourLocal === h && styles.timeChipActive]}
-                  onPress={() => setHourLocal(h)}
-                >
-                  <Text style={[styles.timeChipText, hourLocal === h && styles.timeChipTextActive]}>
-                    {HOURS[h].label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+        <SettingsCard title="REMINDER TIMING">
+          <Text style={[styles.cardHeadline, { color: colors.text }]}>Daily rhythm</Text>
+          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+            {reminderPreview}. Choose the time you are most likely to protect your streak and continue your workspace.
+          </Text>
+
+          {push ? (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.timeRow}
+            >
+              {[7, 8, 9, 12, 17, 18, 19, 20, 21].map(hour => {
+                const active = hourLocal === hour;
+                return (
+                  <TouchableOpacity
+                    key={hour}
+                    activeOpacity={0.85}
+                    onPress={() => setHourLocal(hour)}
+                    style={[
+                      styles.timeChip,
+                      {
+                        backgroundColor: active ? colors.accent : colors.bgSecondary,
+                        borderColor: active ? colors.accent : colors.border,
+                      },
+                    ]}
+                  >
+                    <Text style={[styles.timeChipText, { color: active ? '#fff' : colors.text }]}>
+                      {HOURS[hour].label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </ScrollView>
-          </>
-        )}
+          ) : (
+            <View style={[styles.infoPanel, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+              <Text style={[styles.infoPanelText, { color: colors.textSoft }]}>
+                Turn push reminders back on if you want a scheduled daily reminder time.
+              </Text>
+            </View>
+          )}
+        </SettingsCard>
 
-        {/* What they look like */}
-        <Text style={styles.sectionHead}>EXAMPLE NOTIFICATIONS</Text>
-        <View style={styles.exampleCard}>
-          <Text style={styles.exampleTitle}>⚡ Sifter Skill_Up</Text>
-          <Text style={styles.exampleBody}>
-            &quot;Supply chain analysts earn $75k+ — and you&apos;re 40% of the way there. 5 minutes. Let&apos;s go.&quot;
-          </Text>
-        </View>
-        <View style={styles.exampleCard}>
-          <Text style={styles.exampleTitle}>🚨 Come back!</Text>
-          <Text style={styles.exampleBody}>
-            &quot;2 days since your last lesson. Your future employer is interviewing someone who didn&apos;t stop.&quot;
-          </Text>
-        </View>
+        <SettingsCard title="PREVIEW">
+          <View style={[styles.previewCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+            <Text style={[styles.previewTitle, { color: colors.text }]}>Daily reminder</Text>
+            <Text style={[styles.previewBody, { color: colors.textSoft }]}>
+              You still have time to make progress in {workspaceLabel}. A quick session today keeps your streak moving.
+            </Text>
+          </View>
+          <View style={[styles.previewCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+            <Text style={[styles.previewTitle, { color: colors.text }]}>Recovery alert</Text>
+            <Text style={[styles.previewBody, { color: colors.textSoft }]}>
+              Your streak needs attention. Re-open your workspace today to avoid losing momentum.
+            </Text>
+          </View>
+        </SettingsCard>
 
         <TouchableOpacity
-          style={[styles.saveBtn, saving && styles.saveBtnDisabled]}
+          activeOpacity={0.85}
+          style={[styles.saveBtn, { backgroundColor: colors.accent }, saving && styles.saveBtnDisabled]}
           onPress={handleSave}
           disabled={saving}
         >
-          <Text style={styles.saveBtnText}>{saving ? 'Saving…' : saved ? '✓ Saved' : 'Save Preferences'}</Text>
+          <Text style={styles.saveBtnText}>
+            {saving ? 'Saving...' : saved ? 'Saved' : 'Save Preferences'}
+          </Text>
         </TouchableOpacity>
 
-        <Text style={styles.optOutNote}>
-          You can disable all notifications at any time from your device settings.
-          SMS and email notifications respect local regulations including NDPR (Nigeria).
+        <Text style={[styles.optOutNote, { color: colors.textMuted }]}>
+          You can disable all notifications from device settings at any time. SMS and email preferences still follow local privacy and delivery rules.
         </Text>
       </ScrollView>
       <DisclaimerFooter />
@@ -141,27 +225,141 @@ export default function NotificationSettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bg },
-  body: { padding: Spacing.lg },
-  title: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.xs },
-  sub: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20, marginBottom: Spacing.xl },
-  sectionHead: { fontSize: 10, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1.2, marginBottom: Spacing.sm, marginTop: Spacing.md },
-  channelRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border, ...Shadow.sm },
-  channelLabelRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: 2 },
-  channelLabel: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  channelSub: { fontSize: FontSize.xs, color: Colors.textSoft },
-  recBadge: { backgroundColor: Colors.greenSoft, borderRadius: 4, paddingHorizontal: 5, paddingVertical: 1 },
-  recText: { fontSize: 9, fontWeight: '800', color: Colors.green },
-  timeRow: { marginBottom: Spacing.md },
-  timeChip: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs, marginRight: Spacing.xs, backgroundColor: '#fff' },
-  timeChipActive: { backgroundColor: Colors.accent, borderColor: Colors.accent },
-  timeChipText: { fontSize: FontSize.xs, color: Colors.text, fontWeight: '600' },
-  timeChipTextActive: { color: '#fff', fontWeight: '800' },
-  exampleCard: { backgroundColor: Colors.navy, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm },
-  exampleTitle: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.gold, marginBottom: 4 },
-  exampleBody: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.85)', lineHeight: 18, fontStyle: 'italic' },
-  saveBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', marginTop: Spacing.xl, marginBottom: Spacing.md },
-  saveBtnDisabled: { opacity: 0.5 },
-  saveBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
-  optOutNote: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'center', lineHeight: 18 },
+  safe: { flex: 1 },
+  body: {
+    padding: Spacing.md,
+    paddingBottom: Spacing.xxxl,
+    gap: Spacing.md,
+  },
+  hero: {
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  heroEyebrow: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  heroTitle: {
+    fontSize: FontSize.xl,
+    fontWeight: FontWeight.black,
+  },
+  heroBody: {
+    fontSize: FontSize.sm,
+    lineHeight: 20,
+  },
+  card: {
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+  },
+  cardTitle: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+  },
+  cardHeadline: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.black,
+  },
+  cardBody: {
+    fontSize: FontSize.sm,
+    lineHeight: 20,
+  },
+  channelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    paddingTop: Spacing.sm,
+    borderTopWidth: 1,
+  },
+  channelCopy: {
+    flex: 1,
+    gap: 3,
+  },
+  channelLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    flexWrap: 'wrap',
+  },
+  channelLabel: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.black,
+  },
+  channelSub: {
+    fontSize: FontSize.xs,
+    lineHeight: 18,
+  },
+  recBadge: {
+    borderRadius: Radius.full,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  recText: {
+    fontSize: 10,
+    fontWeight: FontWeight.black,
+  },
+  timeRow: {
+    paddingTop: Spacing.xs,
+    gap: Spacing.xs,
+  },
+  timeChip: {
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    marginRight: Spacing.xs,
+  },
+  timeChipText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+  },
+  infoPanel: {
+    borderRadius: Radius.lg,
+    borderWidth: 1,
+    padding: Spacing.md,
+  },
+  infoPanelText: {
+    fontSize: FontSize.xs,
+    lineHeight: 18,
+  },
+  previewCard: {
+    borderRadius: Radius.lg,
+    borderWidth: 1,
+    padding: Spacing.md,
+    gap: 4,
+  },
+  previewTitle: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.black,
+  },
+  previewBody: {
+    fontSize: FontSize.xs,
+    lineHeight: 18,
+  },
+  saveBtn: {
+    borderRadius: Radius.xl,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  saveBtnDisabled: {
+    opacity: 0.6,
+  },
+  saveBtnText: {
+    color: '#fff',
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.black,
+  },
+  optOutNote: {
+    fontSize: FontSize.xs,
+    textAlign: 'center',
+    lineHeight: 18,
+    paddingHorizontal: Spacing.sm,
+  },
 });

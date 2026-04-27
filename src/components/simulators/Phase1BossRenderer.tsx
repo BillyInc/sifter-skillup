@@ -234,15 +234,15 @@ const tc = StyleSheet.create({
   container: { gap: Spacing.md },
   header: { gap: 4 },
   progress: { fontSize: 11, fontWeight: '800', color: '#7c3aed', letterSpacing: 1 },
-  progressBar: { height: 4, backgroundColor: '#1e293b', borderRadius: 2, overflow: 'hidden' },
+  progressBar: { height: 4, backgroundColor: Colors.border, borderRadius: 2, overflow: 'hidden' },
   progressFill: { height: '100%', backgroundColor: '#7c3aed', borderRadius: 2 },
   taskText: {
     fontSize: FontSize.sm, color: Colors.text, lineHeight: 22,
     fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
   },
   hintBtn: {
-    padding: Spacing.sm, borderRadius: Radius.sm,
-    borderWidth: 1, borderColor: '#7c3aed40', backgroundColor: '#0c0a1a',
+    padding: Spacing.sm, borderRadius: Radius.md,
+    borderWidth: 1, borderColor: '#7c3aed40', backgroundColor: Colors.card,
   },
   hintBtnText: { fontSize: 12, color: '#c084fc', fontWeight: '600', textAlign: 'center' },
   hintBox: {
@@ -312,17 +312,17 @@ function TaskResultCard({
 
 const res = StyleSheet.create({
   container: {
-    borderRadius: Radius.md, borderWidth: 1, padding: Spacing.md, marginBottom: 6,
+    borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.md, marginBottom: 6,
   },
-  pass: { backgroundColor: '#052e16', borderColor: '#22c55e40' },
-  fail: { backgroundColor: '#2d1215', borderColor: '#ef444440' },
+  pass: { backgroundColor: '#ecfdf5', borderColor: '#86efac' },
+  fail: { backgroundColor: '#fef2f2', borderColor: '#fecaca' },
   header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  taskNum: { fontSize: 11, fontWeight: '800', color: '#64748b', letterSpacing: 1 },
+  taskNum: { fontSize: 11, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1 },
   verdict: { flex: 1, fontSize: 13, fontWeight: '700' },
-  score: { fontSize: 12, color: '#94a3b8', fontWeight: '600' },
-  chevron: { fontSize: 10, color: '#475569' },
+  score: { fontSize: 12, color: Colors.textSoft, fontWeight: '600' },
+  chevron: { fontSize: 10, color: Colors.textMuted },
   detail: { marginTop: Spacing.sm, gap: 6 },
-  taskPreview: { fontSize: 11, color: '#64748b', lineHeight: 16, fontStyle: 'italic', marginBottom: 4 },
+  taskPreview: { fontSize: 11, color: Colors.textMuted, lineHeight: 16, fontStyle: 'italic', marginBottom: 4 },
   criterionRow: { flexDirection: 'row', gap: 6, alignItems: 'flex-start' },
   criterionText: { fontSize: 12, fontWeight: '600', lineHeight: 17 },
   feedback: { fontSize: 11, color: '#94a3b8', lineHeight: 15 },
@@ -551,7 +551,7 @@ export default function Phase1BossRenderer({
               borderWidth: 1, borderColor: '#f59e0b40', marginBottom: Spacing.md,
             }}>
               <Text style={{ fontSize: 12, color: '#fcd34d', lineHeight: 18 }}>
-                💡 For this type of task: include all the specific numbers from the scenario. State each result explicitly (e.g., "utilisation = 84%", not just "approximately correct").
+                💡 For this type of task: include all the specific numbers from the scenario. State each result explicitly (e.g., &quot;utilisation = 84%&quot;, not just &quot;approximately correct&quot;).
               </Text>
             </View>
           )}

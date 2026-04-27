@@ -108,7 +108,7 @@ export function useFeed(context: UserFeedContext): UseFeedReturn {
               label: context.primaryTrackId,
               emoji: '📡',
               fieldId: context.primaryFieldId,
-              accentColor: '#5B5FCF',
+              accentColor: '#6366F1',
               isPrimary: true,
             };
 

@@ -5,7 +5,7 @@
 // Connection modal  — Create new account OR Connect existing
 // Attribution       — every push tags "Sifter Skill_Up" as source
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, Modal, TextInput, ActivityIndicator,
@@ -26,6 +26,9 @@ import {
   WebSectionLabel, WebListRow, useIsWebWide,
 } from '../components/web/WebGrid';
 import { startPortfolioOAuth, isOAuthLive } from '../lib/portfolioOAuth';
+import { resolveTrackContext } from '../lib/trackContext';
+import { xpEngine, type XPSnapshot } from '../lib/XPEngine';
+import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
 
 // ─────────────────────────────────────────────────────────────
 // Types
@@ -526,9 +529,9 @@ function PushItemModal({
                         <Text style={pushSt.platformUser}>@{acc.username}</Text>
                       </View>
                       {alreadyDone
-                        ? <Text style={pushSt.postedBadge}>✓ Posted</Text>
+                        ? <Text style={pushSt.postedBadge}>Posted</Text>
                         : <View style={[pushSt.checkbox, isSelected && pushSt.checkboxOn]}>
-                            {isSelected && <Text style={{ color: '#fff', fontWeight: '900', fontSize: 13 }}>✓</Text>}
+                            {isSelected && <Text style={{ color: '#fff', fontWeight: '900', fontSize: 13 }}>OK</Text>}
                           </View>}
                     </TouchableOpacity>
                   );
@@ -544,9 +547,7 @@ function PushItemModal({
                   textAlignVertical="top"
                 />
                 <View style={pushSt.attributionNote}>
-                  <Text style={pushSt.attributionNoteText}>
-                    ⚡ {'"'}Sifter Skill_Up · sifter.app{'"'} is always included in the attribution field.
-                  </Text>
+                  <Text style={pushSt.attributionNoteText}>&quot;Sifter Skill_Up | sifter.app&quot; is always included in the attribution field.</Text>
                 </View>
               </>
             )}
@@ -570,7 +571,7 @@ function PushItemModal({
                         <Text style={pushSt.platformName}>{pl.name}</Text>
                         <Text style={pushSt.platformUser}>@{acc.username}</Text>
                       </View>
-                      <Text style={pushSt.packageBtn}>Get package ↗</Text>
+                      <Text style={pushSt.packageBtn}>Get package -&gt;</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -614,27 +615,51 @@ export default function PortfolioScreen() {
   const { colors } = useTheme();
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
+  const trackContext = useMemo(() => resolveTrackContext(user), [user]);
   const [tab, setTab]                       = useState<TabId>('my-track');
   const [connectedAccounts, setConnected]   = useState<ConnectedAccount[]>([]);
   const [portfolioItems, setItems]          = useState<PortfolioItem[]>([]);
+  const [xp, setXp]                         = useState<XPSnapshot | null>(null);
+  const [streak, setStreak]                 = useState<StreakStatus | null>(null);
   const [loading, setLoading]               = useState(true);
   const [refreshing, setRefreshing]         = useState(false);
   const [connectModal, setConnectModal]     = useState<PortfolioPlatform | null>(null);
   const [pushModal, setPushModal]           = useState<PortfolioItem | null>(null);
   const [expandedField, setExpandedField]   = useState<string | null>(null);
 
-  const activeTrack    = user?.active_track ?? 'crypto-onboarding';
-  const trackPlatforms = getPlatformsForField(activeTrack);
+  const activeFieldId  = trackContext.fieldId ?? user?.activeFieldId ?? user?.active_field_id ?? 'crypto';
+  const trackPlatforms = getPlatformsForField(activeFieldId);
+  const workspaceItems = useMemo(() => {
+    if (trackContext.mode !== 'track') {
+      return portfolioItems;
+    }
+    const scoped = portfolioItems.filter((item) =>
+      item.fieldId === activeFieldId
+      || item.sourceTrack === trackContext.trackId
+      || item.sourceTrack === trackContext.trackName,
+    );
+    return scoped.length > 0 ? scoped : portfolioItems;
+  }, [activeFieldId, portfolioItems, trackContext]);
+  const connectedCount = connectedAccounts.length;
+  const pushedCount = workspaceItems.filter(item => item.pushedTo.length > 0).length;
+  const totalTrackPlatformCount = trackPlatforms.primary.length + trackPlatforms.secondary.length;
+  const portfolioSubtitle = trackContext.mode === 'track'
+    ? `${trackContext.trackName} workspace · ${connectedCount} platform${connectedCount !== 1 ? 's' : ''} connected · ${workspaceItems.length} artifact${workspaceItems.length !== 1 ? 's' : ''}`
+    : `${connectedCount} platform${connectedCount !== 1 ? 's' : ''} connected · ${portfolioItems.length} artifact${portfolioItems.length !== 1 ? 's' : ''}`;
 
   const load = useCallback(async (refresh = false) => {
     if (refresh) setRefreshing(true); else setLoading(true);
     try {
-      const [accs, items] = await Promise.all([
-        API.portfolioGetAccounts().catch(() => ({ accounts: [] })),
-        API.portfolioGetItems().catch(() => ({ items: [] })),
+      const [accs, items, xpSnap, streakSnap] = await Promise.all([
+        API.portfolioGetAccounts().catch(() => []),
+        API.portfolioGetItems().catch(() => []),
+        xpEngine.snapshot().catch(() => null),
+        streakEngine.status().catch(() => null),
       ]);
-      setConnected(accs.accounts ?? []);
-      setItems(items.items ?? []);
+      setConnected(Array.isArray(accs) ? accs : (accs?.accounts ?? []));
+      setItems(Array.isArray(items) ? items : (items?.items ?? []));
+      setXp(xpSnap);
+      setStreak(streakSnap);
     } catch {}
     finally { setLoading(false); setRefreshing(false); }
   }, []);
@@ -654,14 +679,13 @@ export default function PortfolioScreen() {
 
   // ── WEB LAYOUT ──────────────────────────────────────────────────────────────
   if (isWebWide) {
-    const connectedCount = connectedAccounts.length;
     return (
       <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
         <WebShell>
           <WebPageHeader
-            title="💼 Artifacts + XP"
-            subtitle={`${connectedCount} platform${connectedCount !== 1 ? 's' : ''} connected · ${portfolioItems.length} item${portfolioItems.length !== 1 ? 's' : ''}`}
-            accentColor={colors.accent}
+            title="Artifacts + XP"
+            subtitle={portfolioSubtitle}
+            accentColor={trackContext.mode === 'track' ? trackContext.color : colors.accent}
           />
 
           <WebRow>
@@ -669,13 +693,13 @@ export default function PortfolioScreen() {
             <WebCol weight={1}>
               <WebCard title="Artifacts Hub" accentBar accentColor={colors.accent}>
                 {([
-                  { id: 'my-track',      label: '🎯 Track Platforms',    sub: 'Platforms for your track' },
-                  { id: 'my-work',       label: '📂 Artifacts',     sub: `${portfolioItems.length} items earned` },
-                  { id: 'all-platforms', label: '🌐 All Platforms', sub: 'Browse all 28 fields' },
+                  { id: 'my-track',      label: 'Track Platforms', sub: 'Platforms for your track' },
+                  { id: 'my-work',       label: 'Artifacts',       sub: `${workspaceItems.length} items earned` },
+                  { id: 'all-platforms', label: 'All Platforms',   sub: 'Browse all 28 fields' },
                 ] as { id: TabId; label: string; sub: string }[]).map(t => (
                   <WebListRow
                     key={t.id}
-                    icon={tab === t.id ? '▶' : '○'}
+                    icon={tab === t.id ? '>' : 'o'}
                     title={t.label}
                     sub={t.sub}
                     onPress={() => setTab(t.id)}
@@ -689,11 +713,19 @@ export default function PortfolioScreen() {
                 ))}
               </WebCard>
 
+              <WebCard title="Workspace Snapshot" accentBar accentColor={trackContext.mode === 'track' ? trackContext.color : colors.gold} style={{ marginTop: 20 }}>
+                <Text style={{ color: colors.textSoft, fontSize: FontSize.xs, marginBottom: 6 }}>{portfolioSubtitle}</Text>
+                <WebListRow icon="XP" title="Total XP" sub={xp?.stage.name ?? 'Progress stage'} right={<Text style={{ color: colors.text, fontWeight: '800' }}>{xp?.totalXp ?? 0}</Text>} />
+                <WebListRow icon="ST" title="Current Streak" sub={streak?.completedToday ? 'Protected today' : 'Needs action today'} right={<Text style={{ color: colors.text, fontWeight: '800' }}>{streak?.streak ?? 0}d</Text>} />
+                <WebListRow icon="PL" title="Track Platforms" sub={trackContext.mode === 'track' ? trackContext.trackName : 'Current workspace'} right={<Text style={{ color: colors.text, fontWeight: '800' }}>{totalTrackPlatformCount}</Text>} />
+                <WebListRow icon="OK" title="Artifacts Pushed" sub="Items already shared" right={<Text style={{ color: colors.text, fontWeight: '800' }}>{pushedCount}</Text>} />
+              </WebCard>
+
               {/* Connected platforms summary */}
               <WebCard title="Connected Platforms" accentBar accentColor={colors.green} style={{ marginTop: 20 }}>
                 {connectedAccounts.length === 0 ? (
                   <View style={{ alignItems: 'center', paddingVertical: 20 }}>
-                    <Text style={{ fontSize: 28 }}>🔗</Text>
+                    <Text style={{ fontSize: 28, fontWeight: '800', color: colors.textMuted }}>LN</Text>
                     <Text style={{ color: colors.textSoft, marginTop: 8, fontSize: 13, textAlign: 'center' }}>
                       No platforms connected yet.{'\n'}Go to My Track to connect.
                     </Text>
@@ -702,7 +734,7 @@ export default function PortfolioScreen() {
                   connectedAccounts.map(acc => (
                     <WebListRow
                       key={acc.platformId}
-                      icon="✅"
+                      icon="OK"
                       title={acc.platformId}
                       sub={acc.username ?? 'Connected'}
                     />
@@ -714,7 +746,7 @@ export default function PortfolioScreen() {
             {/* Right: tab content */}
             <WebCol weight={2}>
               <WebCard
-                title={tab === 'my-track' ? '🎯 Track Platforms' : tab === 'my-work' ? '📂 Artifacts' : '🌐 All Platforms'}
+                title={tab === 'my-track' ? 'Track Platforms' : tab === 'my-work' ? 'Artifacts' : 'All Platforms'}
                 accentBar accentColor={colors.accent}
               >
                 <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 640 }}>
@@ -730,7 +762,7 @@ export default function PortfolioScreen() {
                       </View>
                       {trackPlatforms.primary.length > 0 && (
                         <>
-                          <WebSectionLabel label="⭐ Essential" />
+                          <WebSectionLabel label="Essential" />
                           {trackPlatforms.primary.map(p => (
                             <PlatformCard key={p.id} platform={p} connected={connMap[p.id]} badge="primary" onPress={() => setConnectModal(p)} />
                           ))}
@@ -738,7 +770,7 @@ export default function PortfolioScreen() {
                       )}
                       {trackPlatforms.secondary.length > 0 && (
                         <>
-                          <WebSectionLabel label="📌 Also recommended" />
+                          <WebSectionLabel label="Also Recommended" />
                           {trackPlatforms.secondary.map(p => (
                             <PlatformCard key={p.id} platform={p} connected={connMap[p.id]} onPress={() => setConnectModal(p)} />
                           ))}
@@ -751,21 +783,21 @@ export default function PortfolioScreen() {
                   {tab === 'my-work' && (
                     <>
                       <View style={[s.autoSaveBanner, { backgroundColor: colors.accentSoft, borderRadius: Radius.md, marginBottom: 16 }]}>
-                        <Text style={{ fontSize: 22 }}>⚡</Text>
+                        <Text style={{ fontSize: 18, fontWeight: '900', color: colors.accent }}>AUTO</Text>
                         <Text style={[s.autoSaveText, { color: colors.textSoft }]}>
                           Artifacts are created automatically when you complete lessons and labs.
                         </Text>
                       </View>
-                      {portfolioItems.length === 0 ? (
+                      {workspaceItems.length === 0 ? (
                         <View style={{ alignItems: 'center', paddingVertical: 40 }}>
-                          <Text style={{ fontSize: 36 }}>📂</Text>
+                          <Text style={{ fontSize: 28, fontWeight: '900', color: colors.textMuted }}>ART</Text>
                           <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 14, textAlign: 'center' }}>
-                            Complete lessons on your skill track — your work appears here automatically.
+                            Complete lessons on your skill track and your work appears here automatically.
                           </Text>
                         </View>
                       ) : (
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
-                          {portfolioItems.map(item => (
+                          {workspaceItems.map(item => (
                             <TouchableOpacity
                               key={item.id}
                               style={[s.workCard, { flex: 1, minWidth: 240, backgroundColor: colors.card, borderColor: colors.border }]}
@@ -775,7 +807,7 @@ export default function PortfolioScreen() {
                               <Text style={[s.workTitle, { color: colors.text }]}>{item.title}</Text>
                               <Text style={[s.workDesc, { color: colors.textSoft }]} numberOfLines={2}>{item.description}</Text>
                               {item.pushedTo.length === 0 && (
-                                <Text style={[s.pushCta, { color: colors.accent }]}>Tap to push →</Text>
+                                <Text style={[s.pushCta, { color: colors.accent }]}>Tap to push {'->'}</Text>
                               )}
                             </TouchableOpacity>
                           ))}
@@ -805,10 +837,10 @@ export default function PortfolioScreen() {
                               <View style={{ flex: 1 }}>
                                 <Text style={[s.fieldName, { color: colors.text }]}>{field.fieldName}</Text>
                                 <Text style={[s.fieldCount, { color: colors.textMuted }]}>
-                                  {allP.length} platforms{connCount > 0 ? ` · ${connCount} connected` : ''}
+                                  {allP.length} platforms{connCount > 0 ? ` | ${connCount} connected` : ''}
                                 </Text>
                               </View>
-                              <Text style={{ color: colors.textMuted }}>{isOpen ? '▲' : '▼'}</Text>
+                              <Text style={{ color: colors.textMuted }}>{isOpen ? '^' : 'v'}</Text>
                             </TouchableOpacity>
                             {isOpen && (
                               <View style={s.fieldContent}>
@@ -870,19 +902,32 @@ export default function PortfolioScreen() {
       {/* ── Header ── */}
       <View style={s.header}>
         <View>
-          <Text style={s.headerTitle}>💼 Artifacts + XP</Text>
-          <Text style={s.headerSub}>
-            {connectedAccounts.length} platform{connectedAccounts.length !== 1 ? 's' : ''} connected · {portfolioItems.length} item{portfolioItems.length !== 1 ? 's' : ''}
-          </Text>
+          <Text style={s.headerTitle}>Artifacts + XP</Text>
+          <Text style={s.headerSub}>{portfolioSubtitle}</Text>
         </View>
       </View>
 
       {/* ── Tab bar ── */}
+      <View style={s.summaryStrip}>
+        <View style={s.summaryCard}>
+          <Text style={s.summaryLabel}>Workspace</Text>
+          <Text style={s.summaryValue}>{trackContext.mode === 'track' ? trackContext.trackName : 'Overview'}</Text>
+        </View>
+        <View style={s.summaryCard}>
+          <Text style={s.summaryLabel}>Artifacts</Text>
+          <Text style={s.summaryValue}>{workspaceItems.length}</Text>
+        </View>
+        <View style={s.summaryCard}>
+          <Text style={s.summaryLabel}>Streak</Text>
+          <Text style={s.summaryValue}>{streak?.streak ?? 0}d</Text>
+        </View>
+      </View>
+
       <View style={s.tabBar}>
         {([
-          { id: 'my-track',      label: '🎯 Track Platforms' },
-          { id: 'my-work',       label: '📂 Artifacts'  },
-          { id: 'all-platforms', label: '🌐 Explore'  },
+          { id: 'my-track',      label: 'Track Platforms' },
+          { id: 'my-work',       label: 'Artifacts'  },
+          { id: 'all-platforms', label: 'Explore'  },
         ] as { id: TabId; label: string }[]).map(t => (
           <TouchableOpacity
             key={t.id}
@@ -960,13 +1005,13 @@ export default function PortfolioScreen() {
         {tab === 'my-work' && (
           <>
             <View style={s.autoSaveBanner}>
-              <Text style={{ fontSize: 22 }}>⚡</Text>
+              <Text style={{ fontSize: 18, fontWeight: '900', color: colors.accent }}>AUTO</Text>
               <Text style={s.autoSaveText}>
                 Artifacts are created automatically when you complete lessons, labs, and boss battles. Tap any item to push it to your connected platforms.
               </Text>
             </View>
 
-            {portfolioItems.length === 0 ? (
+            {workspaceItems.length === 0 ? (
               <View style={s.emptyState}>
                 <Text style={{ fontSize: 40 }}>📂</Text>
                 <Text style={s.emptyTitle}>No items yet</Text>
@@ -975,7 +1020,7 @@ export default function PortfolioScreen() {
                 </Text>
               </View>
             ) : (
-              portfolioItems.map(item => (
+              workspaceItems.map(item => (
                 <TouchableOpacity
                   key={item.id}
                   style={s.workCard}
@@ -1004,7 +1049,7 @@ export default function PortfolioScreen() {
                     </View>
                   )}
                   {item.pushedTo.length === 0 && (
-                    <Text style={s.pushCta}>Tap to push to platforms →</Text>
+                    <Text style={s.pushCta}>Tap to push {'->'}</Text>
                   )}
                 </TouchableOpacity>
               ))
@@ -1040,10 +1085,10 @@ export default function PortfolioScreen() {
                       <Text style={s.fieldName}>{field.fieldName}</Text>
                       <Text style={s.fieldCount}>
                         {totalCount} platform{totalCount !== 1 ? 's' : ''}
-                        {connCount > 0 ? ` · ${connCount} connected` : ''}
+                        {connCount > 0 ? ` | ${connCount} connected` : ''}
                       </Text>
                     </View>
-                    <Text style={s.fieldChevron}>{isOpen ? '▲' : '▼'}</Text>
+                    <Text style={s.fieldChevron}>{isOpen ? '^' : 'v'}</Text>
                   </TouchableOpacity>
 
                   {isOpen && (
@@ -1125,6 +1170,10 @@ const s = StyleSheet.create({
   header:            { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
   headerTitle:       { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
   headerSub:         { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
+  summaryStrip:      { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Spacing.lg, paddingTop: Spacing.sm },
+  summaryCard:       { flex: 1, backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.sm, borderWidth: 1, borderColor: Colors.border, gap: 4 },
+  summaryLabel:      { fontSize: 10, fontWeight: '800', color: Colors.textMuted, textTransform: 'uppercase' },
+  summaryValue:      { fontSize: FontSize.sm, fontWeight: '900', color: Colors.text },
   tabBar:            { flexDirection: 'row', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
   tab:               { flex: 1, paddingVertical: Spacing.sm, alignItems: 'center' },
   tabActive:         { borderBottomWidth: 2.5, borderBottomColor: Colors.accent },
@@ -1219,3 +1268,5 @@ const pushSt = StyleSheet.create({
   submitBtn:         { backgroundColor: Colors.accent, borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center' },
   submitText:        { color: '#fff', fontWeight: '900', fontSize: FontSize.sm },
 });
+
+

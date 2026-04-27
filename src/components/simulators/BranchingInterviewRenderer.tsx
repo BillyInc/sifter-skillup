@@ -189,12 +189,12 @@ const pd = StyleSheet.create({
   row: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginBottom: Spacing.md },
   dot: {
     width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#1e293b', borderWidth: 1, borderColor: '#334155',
+    backgroundColor: Colors.card, borderWidth: 1, borderColor: Colors.border,
   },
-  dotActive: { backgroundColor: '#1e3a5f', borderColor: '#3b82f6' },
-  dotPass: { backgroundColor: '#052e16', borderColor: '#22c55e' },
-  dotFail: { backgroundColor: '#2d1215', borderColor: '#ef4444' },
-  dotText: { fontSize: 11, fontWeight: '800', color: '#94a3b8' },
+  dotActive: { backgroundColor: Colors.accentSoft, borderColor: Colors.accent },
+  dotPass: { backgroundColor: '#ecfdf5', borderColor: '#22c55e' },
+  dotFail: { backgroundColor: '#fef2f2', borderColor: '#ef4444' },
+  dotText: { fontSize: 11, fontWeight: '800', color: Colors.textSoft },
 });
 
 // ─── Branch label ─────────────────────────────────────────────────────────────
@@ -485,11 +485,11 @@ export default function BranchingInterviewRenderer({
 // ─── Styles ───────────────────────────────────────────────────────────────────
 
 const intro = StyleSheet.create({
-  title: { fontSize: 16, fontWeight: '900', color: '#e2e8f0', marginBottom: Spacing.sm },
-  desc: { fontSize: 13, color: '#94a3b8', lineHeight: 20, marginBottom: Spacing.md },
-  rules: { backgroundColor: '#0a0f1e', borderRadius: Radius.sm, padding: Spacing.md, marginBottom: Spacing.md },
-  rulesTitle: { fontSize: 11, fontWeight: '800', color: '#475569', letterSpacing: 1, marginBottom: Spacing.sm },
-  rule: { fontSize: 13, color: '#94a3b8', lineHeight: 22 },
+  title: { fontSize: 16, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm },
+  desc: { fontSize: 13, color: Colors.textSoft, lineHeight: 20, marginBottom: Spacing.md },
+  rules: { backgroundColor: Colors.bgSecondary, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border },
+  rulesTitle: { fontSize: 11, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1, marginBottom: Spacing.sm },
+  rule: { fontSize: 13, color: Colors.textSoft, lineHeight: 22 },
 });
 
 const q = StyleSheet.create({
@@ -498,11 +498,11 @@ const q = StyleSheet.create({
     fontFamily: 'Georgia',
   },
   input: {
-    backgroundColor: '#0d1117', color: '#e2e8f0', fontSize: FontSize.sm,
-    borderRadius: Radius.sm, borderWidth: 1, borderColor: '#1e293b',
+    backgroundColor: Colors.card, color: Colors.text, fontSize: FontSize.sm,
+    borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.border,
     padding: Spacing.md, minHeight: 160, lineHeight: 22,
   },
-  wc: { fontSize: 10, color: '#475569', textAlign: 'right', marginTop: 4 },
+  wc: { fontSize: 10, color: Colors.textMuted, textAlign: 'right', marginTop: 4 },
 });
 
 const cl = StyleSheet.create({
@@ -520,7 +520,7 @@ const comp = StyleSheet.create({
   score: { fontSize: 16, fontWeight: '700', color: Colors.text, textAlign: 'center', marginTop: 4 },
   req: { fontSize: 12, color: Colors.textSoft, textAlign: 'center', marginBottom: Spacing.md },
   qRow: { flexDirection: 'row', gap: 8, alignItems: 'center', marginBottom: 6 },
-  qText: { fontSize: 13, color: '#94a3b8' },
+  qText: { fontSize: 13, color: Colors.textSoft },
 });
 
 const sa = StyleSheet.create({

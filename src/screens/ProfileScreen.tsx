@@ -23,6 +23,7 @@ import {
 import { xpEngine, type XPSnapshot }      from '../lib/XPEngine';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
 import { useAuth } from '../hooks/useAuth';
+import { resolveTrackContext } from '../lib/trackContext';
 
 // ─── XP stage ring ─────────────────────────────────────────────────────────────
 
@@ -139,8 +140,9 @@ function AccountRow({ emoji, label, sub, onPress, color }: {
 export default function ProfileScreen() {
   const navigation = useRouter();
   const { colors } = useTheme();
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const go = useCallback((href: string) => navigation.push(href as any), [navigation]);
+  const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
 
   const handleSignOut = useCallback(async () => {
     try {
@@ -172,6 +174,12 @@ export default function ProfileScreen() {
   const stage     = xp?.stage.stage ?? 1;
   const stageName = xp?.stage.name  ?? 'Raw Recruit';
   const progress  = xp?.progress    ?? 0;
+  const workspaceHref = trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/fields';
+  const workspaceLabel = trackContext.mode === 'track' ? trackContext.trackName : 'Choose a workspace';
+  const workspaceBody = trackContext.mode === 'track'
+    ? trackContext.description
+    : 'Select an active track so your profile, streaks, and portfolio all stay aligned.';
+  const trackId = trackContext.fieldId ?? user?.activeFieldId ?? user?.active_field_id ?? 'crypto';
 
   // Mock skill bars — replace with real data from user profile
   const skillBars = [
@@ -189,7 +197,7 @@ export default function ProfileScreen() {
     return (
       <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
         <WebShell>
-          <WebPageHeader title="Your Profile" subtitle={`${stageName} · Stage ${stage}/8`} accentColor={colors.accent}
+          <WebPageHeader title="Profile" subtitle={`${workspaceLabel} · ${stageName} · Stage ${stage}/8`} accentColor={colors.accent}
             right={
               <TouchableOpacity onPress={() => go('/(tabs)/settings')}
                 style={{ padding: 8, borderRadius: Radius.md, backgroundColor: colors.card }}>
@@ -206,7 +214,7 @@ export default function ProfileScreen() {
                   <View style={{ position: 'relative', width: 150, height: 150, alignItems: 'center', justifyContent: 'center' }}>
                     <StageRing progress={progress} color={colors.accent} size={150} />
                     <View style={{ position: 'absolute' }}>
-                      <WorkerCharacter stage={stage} trackId="crypto" size={110} animate mood="neutral" />
+                      <WorkerCharacter stage={stage} trackId={trackId} size={110} animate mood="neutral" />
                     </View>
                   </View>
                   <Text style={[styles.stageName, { color: colors.text, textAlign: 'center', marginTop: 12 }]}>{stageName}</Text>
@@ -241,7 +249,10 @@ export default function ProfileScreen() {
                 })}
               </WebCard>
 
-              <WebCard title="Skill Progress" accentBar accentColor={colors.green}>
+              <WebCard title="Current Focus" accentBar accentColor={colors.green}>
+                <Text style={[styles.supportingCopy, { color: colors.textSoft }]}>
+                  These focus areas show what this workspace is currently emphasizing.
+                </Text>
                 {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
               </WebCard>
             </WebCol>
@@ -251,20 +262,23 @@ export default function ProfileScreen() {
           <WebRow>
             <WebCol weight={2}>
               <WebCard title="Your Workstation" accentBar accentColor={colors.accent}>
-                <DeskScene stage={stage} trackId="crypto" width={480} height={200} />
+                <DeskScene stage={stage} trackId={trackId} width={480} height={200} />
                 <Text style={[styles.deskLabel, { color: colors.textMuted, marginTop: 10 }]}>
-                  Stage {stage} — {stageName}. {xp?.xpToNextStage ?? '—'} XP to next upgrade.
+                  Stage {stage} · {stageName}. {xp?.xpToNextStage ?? '—'} XP to the next upgrade.
                 </Text>
               </WebCard>
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Artifacts + Account" accentBar accentColor={colors.gold}>
-                <WebListRow icon="💼" title="View Artifacts + XP" sub="Work samples, achievements" onPress={() => go('/(tabs)/portfolio')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🏅" title="Badges & Rewards" sub="Your earned badges" onPress={() => go('/(tabs)/guild')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🛍️" title="Merchandise" sub="Redeem merch credits" onPress={() => go('/merchandise')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="🏝️" title="Continue Learning" sub="Resume island journey" onPress={() => go('/(tabs)/map')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
-                <WebListRow icon="⚙️" title="Settings" sub="Theme, notifications, wallet" onPress={() => go('/(tabs)/settings')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+              <WebCard title="Workspace + Account" accentBar accentColor={colors.gold}>
+                <Text style={[styles.workspaceLabel, { color: colors.textMuted }]}>ACTIVE WORKSPACE</Text>
+                <Text style={[styles.workspaceTitle, { color: colors.text }]}>{workspaceLabel}</Text>
+                <Text style={[styles.workspaceBody, { color: colors.textSoft }]}>{workspaceBody}</Text>
+                <WebDivider />
+                <WebListRow icon="💼" title="Portfolio" sub="Artifacts, linked platforms, and XP" onPress={() => go('/(tabs)/portfolio')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="🏝️" title="Open Workspace" sub="Continue from your active learning surface" onPress={() => go(workspaceHref)} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="👥" title="Guilds + Community" sub="Group progress, rankings, and chat" onPress={() => go('/(tabs)/guild')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
+                <WebListRow icon="⚙️" title="Settings" sub="Theme, notifications, and account state" onPress={() => go('/(tabs)/settings')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebDivider />
                 <WebListRow icon="🔴" title="Sign Out" sub="" onPress={handleSignOut}
                   right={<Text style={{ color: colors.red }}>›</Text>} />
@@ -293,20 +307,21 @@ export default function ProfileScreen() {
         >
           {/* Settings gear */}
           <TouchableOpacity style={styles.settingsBtn} onPress={() => go('/(tabs)/settings')}>
-            <Text style={[styles.settingsBtnText, { color: colors.textMuted }]}>⚙️</Text>
+            <Text style={[styles.settingsBtnText, { color: colors.textMuted }]}>⚙</Text>
           </TouchableOpacity>
 
           {/* Character with stage ring overlay */}
           <View style={styles.characterWrap}>
             <StageRing progress={progress} color={colors.accent} size={150} />
             <View style={styles.characterOverlay}>
-              <WorkerCharacter stage={stage} trackId="crypto" size={110} animate mood="neutral" />
+              <WorkerCharacter stage={stage} trackId={trackId} size={110} animate mood="neutral" />
             </View>
           </View>
 
+          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>{workspaceLabel.toUpperCase()}</Text>
           <Text style={[styles.stageName, { color: colors.text }]}>{stageName}</Text>
           <Text style={[styles.stageDesc, { color: colors.textSoft }]}>
-            {xp?.stage.description ?? ''}
+            {xp?.stage.description ?? workspaceBody}
           </Text>
 
           {/* XP + streak row */}
@@ -331,9 +346,9 @@ export default function ProfileScreen() {
         {/* ── Desk scene ── */}
         <Animated.View style={{ opacity: entranceAnim }}>
           <SectionCard title="YOUR WORKSTATION">
-            <DeskScene stage={stage} trackId="crypto" width={320} height={160} />
+            <DeskScene stage={stage} trackId={trackId} width={320} height={160} />
             <Text style={[styles.deskLabel, { color: colors.textMuted }]}>
-              Stage {stage} — {stageName}. {xp?.xpToNextStage ?? '—'} XP to next upgrade.
+              Stage {stage} · {stageName}. {xp?.xpToNextStage ?? '—'} XP to the next upgrade.
             </Text>
           </SectionCard>
         </Animated.View>
@@ -368,29 +383,37 @@ export default function ProfileScreen() {
         </SectionCard>
 
         {/* ── Skills ── */}
-        <SectionCard title="SKILL PROGRESS">
+        <SectionCard title="CURRENT FOCUS">
+          <Text style={[styles.supportingCopy, { color: colors.textSoft }]}>
+            These focus areas reflect the direction of your current workspace.
+          </Text>
           {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
         </SectionCard>
 
         {/* ── Portfolio + Account ── */}
-        <SectionCard title="ARTIFACTS + ACCOUNT">
+        <SectionCard title="WORKSPACE + ACCOUNT">
           <AccountRow
-            emoji="💼" label="View Artifacts + XP"
-            sub="Work samples, achievements, resume"
+            emoji="💼" label="Portfolio"
+            sub="Artifacts, linked platforms, and proof of work"
             onPress={() => go('/(tabs)/portfolio')}
           />
           <AccountRow
-            emoji="🏝️" label="Continue Learning"
-            sub="Resume your island journey"
-            onPress={() => go('/(tabs)/map')}
+            emoji="🏝️" label="Open Workspace"
+            sub={trackContext.mode === 'track' ? `Continue inside ${workspaceLabel}` : 'Choose the track you want to continue'}
+            onPress={() => go(workspaceHref)}
           />
           <AccountRow
-            emoji="⚙️" label="Settings"
-            sub="Theme, notifications, wallet"
+            emoji="👥" label="Guilds + Community"
+            sub="Team progress, rankings, and guild chat"
+            onPress={() => go('/(tabs)/guild')}
+          />
+          <AccountRow
+            emoji="⚙" label="Settings"
+            sub="Theme, notifications, and account state"
             onPress={() => go('/(tabs)/settings')}
           />
           <AccountRow
-            emoji="🔴" label="Sign Out"
+            emoji="●" label="Sign Out"
             onPress={handleSignOut}
             color={colors.red}
           />
@@ -411,6 +434,7 @@ const styles = StyleSheet.create({
   heroSection:      { alignItems: 'center', paddingTop: Spacing.md, paddingBottom: Spacing.sm, position: 'relative' },
   settingsBtn:      { position: 'absolute', top: Spacing.md, right: 0 },
   settingsBtnText:  { fontSize: 22 },
+  eyebrow:          { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginTop: Spacing.md },
   characterWrap:    { position: 'relative', alignItems: 'center', justifyContent: 'center', width: 150, height: 150 },
   characterOverlay: { position: 'absolute' },
   ringBg:           { position: 'absolute' },
@@ -425,6 +449,7 @@ const styles = StyleSheet.create({
 
   sectionCard:      { borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1, gap: Spacing.md },
   sectionCardTitle: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
+  supportingCopy:   { fontSize: FontSize.xs, lineHeight: 18 },
 
   deskLabel:        { fontSize: FontSize.xs, textAlign: 'center', marginTop: Spacing.sm },
 
@@ -447,4 +472,7 @@ const styles = StyleSheet.create({
   accountRowLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   accountRowSub:    { fontSize: FontSize.xs, marginTop: 2 },
   accountRowArrow:  { fontSize: FontSize.lg },
+  workspaceLabel:   { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
+  workspaceTitle:   { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  workspaceBody:    { fontSize: FontSize.sm, lineHeight: 20 },
 });

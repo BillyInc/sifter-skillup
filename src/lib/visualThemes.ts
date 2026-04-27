@@ -60,7 +60,7 @@ export type SimulatorVisualTheme = {
 
 const FIELD_VISUALS: Record<string, FieldVisualTheme> = {
   crypto: { id: 'crypto', label: 'Crypto', icon: '₿', imageKey: 'field-crypto', palette: { primary: '#F97316', secondary: '#FDBA74', accent: '#F97316', surface: '#FFF7ED', gradient: ['#1A0800', '#2D1200', '#3D1A00'] }, simulator: { label: 'CRYPTO SIM', accent: '#F97316', soft: '#FFF7ED', border: '#FED7AA' } },
-  quant: { id: 'quant', label: 'Quant', icon: '📊', imageKey: 'field-quant', palette: { primary: '#5B5FCF', secondary: '#A5B4FC', accent: '#5B5FCF', surface: '#EEF2FF', gradient: ['#05030F', '#0D0A25', '#161240'] }, simulator: { label: 'QUANT SIM', accent: '#5B5FCF', soft: '#EEF2FF', border: '#C7D2FE' } },
+  quant: { id: 'quant', label: 'Quant', icon: '📊', imageKey: 'field-quant', palette: { primary: '#6366F1', secondary: '#A5B4FC', accent: '#6366F1', surface: '#EEF2FF', gradient: ['#05030F', '#0D0A25', '#161240'] }, simulator: { label: 'QUANT SIM', accent: '#6366F1', soft: '#EEF2FF', border: '#C7D2FE' } },
   'ai-ml': { id: 'ai-ml', label: 'AI / ML', icon: '🧠', imageKey: 'field-ai-ml', palette: { primary: '#3B82F6', secondary: '#93C5FD', accent: '#3B82F6', surface: '#EFF6FF', gradient: ['#020B18', '#051830', '#091E3C'] }, simulator: { label: 'AI SIM', accent: '#3B82F6', soft: '#EFF6FF', border: '#BFDBFE' } },
   'software-engineering': { id: 'software-engineering', label: 'Software Engineering', icon: '💻', imageKey: 'field-software-engineering', palette: { primary: '#06B6D4', secondary: '#67E8F9', accent: '#06B6D4', surface: '#ECFEFF', gradient: ['#010E12', '#02161C', '#031E26'] }, simulator: { label: 'BUILD SIM', accent: '#06B6D4', soft: '#ECFEFF', border: '#A5F3FC' } },
   'cloud-devops': { id: 'cloud-devops', label: 'Cloud & DevOps', icon: '☁️', imageKey: 'field-cloud-devops', palette: { primary: '#0EA5E9', secondary: '#7DD3FC', accent: '#0EA5E9', surface: '#F0F9FF', gradient: ['#03111C', '#072036', '#0B2D4B'] }, simulator: { label: 'OPS SIM', accent: '#0EA5E9', soft: '#F0F9FF', border: '#BAE6FD' } },
@@ -97,8 +97,8 @@ export function getFieldVisualTheme(fieldId?: string | null): FieldVisualTheme {
     label: 'Sifter',
     icon: '⚡',
     imageKey: 'field-default',
-    palette: { primary: '#5B5FCF', secondary: '#A5B4FC', accent: '#5B5FCF', surface: '#EEF2FF', gradient: ['#05030F', '#0D0A25', '#161240'] },
-    simulator: { label: 'SIFTER SKILL_UP', accent: '#5B5FCF', soft: '#EEF2FF', border: '#C7D2FE' },
+    palette: { primary: '#6366F1', secondary: '#A5B4FC', accent: '#6366F1', surface: '#EEF2FF', gradient: ['#05030F', '#0D0A25', '#161240'] },
+    simulator: { label: 'SIFTER SKILL_UP', accent: '#6366F1', soft: '#EEF2FF', border: '#C7D2FE' },
   };
 }
 
@@ -117,7 +117,7 @@ export function getTrackVisualTheme(trackId: string, fieldId?: string | null, tr
 
 export function getIslandVisualTheme(islandId: number): IslandVisualTheme {
   const island = ISLANDS.find((entry) => entry.id === islandId);
-  const primary = island?.color ?? '#5B5FCF';
+  const primary = island?.color ?? '#6366F1';
   return {
     id: islandId,
     label: island?.name ?? `Island ${islandId}`,

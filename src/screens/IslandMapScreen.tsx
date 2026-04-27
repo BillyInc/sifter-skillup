@@ -16,6 +16,7 @@ import { useAuth } from '../hooks/useAuth';
 import { TrackChoiceScreen } from './PostIslandTrackSelection';
 
 type Tier = 'beginner' | 'intermediate' | 'pro';
+type IslandState = 'locked' | 'continue' | 'review' | 'ready';
 
 function getTierLabel(tier: Tier) {
   if (tier === 'beginner') return 'Beginner Islands';
@@ -25,8 +26,28 @@ function getTierLabel(tier: Tier) {
 
 function getTierCopy(tier: Tier) {
   if (tier === 'beginner') return 'Foundations, wallet safety, and crypto basics.';
-  if (tier === 'intermediate') return 'Execution, analysis, and more technical judgment.';
-  return 'High-pressure, artifact-grade decision-making.';
+  if (tier === 'intermediate') return 'Execution, analysis, and sharper technical judgment.';
+  return 'High-pressure, artifact-grade decision making.';
+}
+
+function getIslandState(unlocked: boolean, completed: boolean, current: boolean): IslandState {
+  if (!unlocked) return 'locked';
+  if (current) return 'continue';
+  if (completed) return 'review';
+  return 'ready';
+}
+
+function getIslandStateCopy(state: IslandState) {
+  if (state === 'continue') {
+    return { label: 'Continue', helper: 'Current run', progress: '68%' };
+  }
+  if (state === 'review') {
+    return { label: 'Review', helper: 'Boss cleared', progress: '100%' };
+  }
+  if (state === 'ready') {
+    return { label: 'Start', helper: 'Ready now', progress: '22%' };
+  }
+  return { label: 'Locked', helper: 'Unlock required', progress: '0%' };
 }
 
 function IslandDetailModal({
@@ -48,26 +69,26 @@ function IslandDetailModal({
     <Modal visible={open} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.overlay}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
-        <View style={[styles.modalCard, { backgroundColor: colors.card, borderColor: `${island.color}35` }]}>
+        <View style={[styles.modalCard, { backgroundColor: colors.card, borderColor: `${island.color}30` }]}>
           <LinearGradient
-            colors={[`${island.color}20`, colors.card, colors.card]}
+            colors={[`${island.color}18`, colors.card, colors.card]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.modalGradient}
           >
             <View style={styles.modalHeader}>
-              <View style={[styles.modalIconWrap, { backgroundColor: `${island.color}18`, borderColor: `${island.color}45` }]}>
+              <View style={[styles.modalIconWrap, { backgroundColor: `${island.color}16`, borderColor: `${island.color}32` }]}>
                 <Text style={styles.modalIcon}>{island.icon}</Text>
               </View>
               <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                <Text style={[styles.modalClose, { color: colors.textMuted }]}>×</Text>
+                <Text style={[styles.modalClose, { color: colors.textMuted }]}>X</Text>
               </TouchableOpacity>
             </View>
 
-            <Text style={[styles.modalTitle, { color: colors.text }]}>{island.name}</Text>
             <Text style={[styles.modalEyebrow, { color: island.color }]}>
               {island.tier.toUpperCase()} · LEVELS {island.start}-{island.end}
             </Text>
+            <Text style={[styles.modalTitle, { color: colors.text }]}>{island.name}</Text>
             <Text style={[styles.modalDesc, { color: colors.textSoft }]}>{island.description}</Text>
 
             <View style={styles.modalMetaRow}>
@@ -76,7 +97,7 @@ function IslandDetailModal({
                   {island.end - island.start + 1} lessons
                 </Text>
               </View>
-              <View style={[styles.metaPill, { backgroundColor: `${island.color}15` }]}>
+              <View style={[styles.metaPill, { backgroundColor: `${island.color}12` }]}>
                 <Text style={[styles.metaPillText, { color: island.color }]}>Boss {island.bossLevel}</Text>
               </View>
             </View>
@@ -86,7 +107,7 @@ function IslandDetailModal({
               onPress={() => onEnter(island)}
               activeOpacity={0.88}
             >
-              <Text style={styles.enterBtnText}>Continue Into Island</Text>
+              <Text style={styles.enterBtnText}>Continue Island</Text>
             </TouchableOpacity>
           </LinearGradient>
         </View>
@@ -109,7 +130,9 @@ function IslandCard({
   onPress: () => void;
 }) {
   const { colors } = useTheme();
-  const badgeColor = completed ? '#10B981' : current ? island.color : colors.textMuted;
+  const state = getIslandState(unlocked, completed, current);
+  const stateCopy = getIslandStateCopy(state);
+  const accent = completed ? '#10B981' : current ? island.color : state === 'ready' ? colors.accent : colors.textMuted;
 
   return (
     <TouchableOpacity
@@ -119,22 +142,22 @@ function IslandCard({
         styles.islandCard,
         {
           backgroundColor: colors.card,
-          borderColor: current ? `${island.color}70` : colors.border,
-          opacity: unlocked ? 1 : 0.55,
+          borderColor: current ? `${island.color}66` : colors.border,
+          opacity: unlocked ? 1 : 0.58,
         },
       ]}
     >
       <LinearGradient
-        colors={[`${island.color}18`, colors.card, colors.card]}
+        colors={[`${island.color}15`, colors.card, colors.card]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.islandCardGradient}
       >
         <View style={styles.islandCardTop}>
-          <View style={[styles.islandIconWrap, { backgroundColor: `${island.color}18`, borderColor: `${island.color}35` }]}>
-            <Text style={styles.islandIcon}>{unlocked ? island.icon : '🔒'}</Text>
+          <View style={[styles.islandIconWrap, { backgroundColor: `${island.color}16`, borderColor: `${island.color}30` }]}>
+            <Text style={styles.islandIcon}>{unlocked ? island.icon : 'LOCK'}</Text>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={styles.islandHeaderText}>
             <Text style={[styles.islandName, { color: colors.text }]} numberOfLines={1}>
               {island.name}
             </Text>
@@ -142,16 +165,22 @@ function IslandCard({
               Levels {island.start}-{island.end}
             </Text>
           </View>
-          <View style={[styles.statePill, { backgroundColor: `${badgeColor}18` }]}>
-            <Text style={[styles.statePillText, { color: badgeColor }]}>
-              {completed ? 'Complete' : current ? 'Continue' : unlocked ? 'Open' : 'Locked'}
-            </Text>
+          <View style={[styles.statePill, { backgroundColor: `${accent}16` }]}>
+            <Text style={[styles.statePillText, { color: accent }]}>{stateCopy.label}</Text>
           </View>
         </View>
 
         <Text style={[styles.islandDesc, { color: colors.textSoft }]} numberOfLines={2}>
           {island.description}
         </Text>
+
+        <View style={styles.metaRow}>
+          <Text style={[styles.metaLabel, { color: colors.textMuted }]}>
+            {island.end - island.start + 1} lessons
+          </Text>
+          <Text style={[styles.metaLabel, { color: colors.textMuted }]}>Boss {island.bossLevel}</Text>
+          <Text style={[styles.metaLabel, { color: accent }]}>{stateCopy.helper}</Text>
+        </View>
 
         <View style={styles.progressRow}>
           <View style={[styles.progressTrack, { backgroundColor: colors.bgSecondary }]}>
@@ -160,13 +189,13 @@ function IslandCard({
                 styles.progressFill,
                 {
                   backgroundColor: completed ? '#10B981' : island.color,
-                  width: completed ? '100%' : current ? '68%' : unlocked ? '22%' : '0%',
+                  width: stateCopy.progress,
                 },
               ]}
             />
           </View>
           <Text style={[styles.progressLabel, { color: colors.textMuted }]}>
-            {completed ? 'Cleared' : current ? 'In progress' : unlocked ? 'Ready' : 'Unlock required'}
+            {state === 'locked' ? 'Unlock path required' : completed ? 'Ready for review' : current ? 'Best next step' : 'Ready to enter'}
           </Text>
         </View>
       </LinearGradient>
@@ -204,6 +233,7 @@ export default function IslandMapScreen({ route }: any) {
   const starkIsland = useMemo(() => ISLANDS.find(i => i.id === 18) ?? null, []);
   const starkIslandUnlocked = starkIsland ? isIslandUnlocked(starkIsland, completedLevels) : false;
   const progressPct = Math.min(100, (completedLevels.length / 310) * 100);
+  const clearedIslands = ISLANDS.filter(island => completedLevels.includes(island.bossLevel)).length;
 
   const handleEnter = (island: Island) => {
     setSelected(null);
@@ -224,13 +254,13 @@ export default function IslandMapScreen({ route }: any) {
           >
             <View style={styles.heroTop}>
               <TouchableOpacity onPress={() => router.back()} style={[styles.backBtn, { backgroundColor: colors.bgSecondary }]}>
-                <Text style={[styles.backBtnText, { color: colors.text }]}>‹</Text>
+                <Text style={[styles.backBtnText, { color: colors.text }]}>{'<'}</Text>
               </TouchableOpacity>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>My Islands</Text>
+              <View style={styles.heroHeaderText}>
+                <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>Progress Surface</Text>
                 <Text style={[styles.heroTitle, { color: colors.text }]}>Island Atlas</Text>
                 <Text style={[styles.heroSub, { color: colors.textSoft }]}>
-                  Theme-led island progression with the real lesson routes preserved.
+                  Continue the real lesson route, review cleared islands, and keep Starknet progression in sync.
                 </Text>
               </View>
               <View style={[styles.heroStat, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
@@ -239,18 +269,33 @@ export default function IslandMapScreen({ route }: any) {
               </View>
             </View>
 
+            <View style={styles.heroMetaRow}>
+              <View style={[styles.heroMetaChip, { backgroundColor: colors.bgSecondary }]}>
+                <Text style={[styles.heroMetaValue, { color: colors.text }]}>{currentLevel}</Text>
+                <Text style={[styles.heroMetaLabel, { color: colors.textMuted }]}>Current level</Text>
+              </View>
+              <View style={[styles.heroMetaChip, { backgroundColor: colors.bgSecondary }]}>
+                <Text style={[styles.heroMetaValue, { color: colors.text }]}>{clearedIslands}</Text>
+                <Text style={[styles.heroMetaLabel, { color: colors.textMuted }]}>Islands cleared</Text>
+              </View>
+              <View style={[styles.heroMetaChip, { backgroundColor: colors.bgSecondary }]}>
+                <Text style={[styles.heroMetaValue, { color: starkIslandUnlocked ? '#10B981' : colors.text }]}>{starkIslandUnlocked ? 'Ready' : 'Pending'}</Text>
+                <Text style={[styles.heroMetaLabel, { color: colors.textMuted }]}>Realm access</Text>
+              </View>
+            </View>
+
             <View style={styles.heroProgressWrap}>
               <View style={[styles.heroProgressTrack, { backgroundColor: colors.bgSecondary }]}>
                 <View style={[styles.heroProgressFill, { backgroundColor: colors.accent, width: `${progressPct}%` }]} />
               </View>
               <View style={styles.heroProgressMeta}>
-                <Text style={[styles.heroProgressText, { color: colors.textSoft }]}>Level {currentLevel}</Text>
+                <Text style={[styles.heroProgressText, { color: colors.textSoft }]}>{Math.round(progressPct)}% map completion</Text>
                 <Text style={[styles.heroProgressText, { color: colors.textMuted }]}>
                   {starkIslandUnlocked
                     ? 'Island 18 unlocked'
                     : starknetWalletReady
                       ? 'Wallet ready for Island 18'
-                      : 'Unlock Island 18 after Island 17'}
+                      : 'Clear Island 17 to unlock Starknet'}
                 </Text>
               </View>
             </View>
@@ -262,10 +307,9 @@ export default function IslandMapScreen({ route }: any) {
           return (
             <View key={tier} style={styles.section}>
               <View style={styles.sectionHeader}>
-                <View>
-                  <Text style={[styles.sectionTitle, { color: colors.text }]}>{getTierLabel(tier)}</Text>
-                  <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>{getTierCopy(tier)}</Text>
-                </View>
+                <Text style={[styles.sectionEyebrow, { color: colors.textMuted }]}>{tier.toUpperCase()}</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>{getTierLabel(tier)}</Text>
+                <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>{getTierCopy(tier)}</Text>
               </View>
               <View style={styles.grid}>
                 {tierIslands.map(island => (
@@ -285,9 +329,10 @@ export default function IslandMapScreen({ route }: any) {
 
         {starkIsland ? (
           <View style={styles.section}>
+            <Text style={[styles.sectionEyebrow, { color: colors.textMuted }]}>SPECIAL ACCESS</Text>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet Realm</Text>
             <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>
-              Island 18 unlocks after Island 17, and your Starknet wallet stays ready for the dedicated realm.
+              Island 18 opens after Island 17, and your Starknet wallet state stays attached to the dedicated realm flow.
             </Text>
             <IslandCard
               island={starkIsland}
@@ -326,12 +371,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backBtnText: { fontSize: 24, fontWeight: FontWeight.medium, marginTop: -3 },
+  backBtnText: { fontSize: 20, fontWeight: FontWeight.bold },
+  heroHeaderText: { flex: 1 },
   heroEyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 },
   heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, marginBottom: 4 },
   heroSub: { fontSize: FontSize.sm, lineHeight: 19, maxWidth: 520 },
   heroStat: {
-    minWidth: 74,
+    minWidth: 78,
     borderWidth: 1,
     borderRadius: Radius.xl,
     paddingHorizontal: 12,
@@ -340,6 +386,10 @@ const styles = StyleSheet.create({
   },
   heroStatValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   heroStatLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  heroMetaRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
+  heroMetaChip: { borderRadius: Radius.lg, paddingHorizontal: 12, paddingVertical: 10, minWidth: 110 },
+  heroMetaValue: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
+  heroMetaLabel: { fontSize: 11, fontWeight: FontWeight.medium },
   heroProgressWrap: { gap: 8 },
   heroProgressTrack: { height: 8, borderRadius: Radius.full, overflow: 'hidden' },
   heroProgressFill: { height: '100%', borderRadius: Radius.full },
@@ -347,6 +397,7 @@ const styles = StyleSheet.create({
   heroProgressText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   section: { marginBottom: Spacing.xl },
   sectionHeader: { marginBottom: Spacing.md },
+  sectionEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, marginBottom: 4 },
   sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 4 },
   sectionCopy: { fontSize: FontSize.sm, lineHeight: 18 },
   grid: { gap: Spacing.sm },
@@ -358,6 +409,7 @@ const styles = StyleSheet.create({
   },
   islandCardGradient: { padding: Spacing.md, gap: Spacing.md },
   islandCardTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  islandHeaderText: { flex: 1 },
   islandIconWrap: {
     width: 48,
     height: 48,
@@ -366,12 +418,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  islandIcon: { fontSize: 22 },
+  islandIcon: { fontSize: 16, fontWeight: FontWeight.black },
   islandName: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
   islandSub: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
   statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
   statePillText: { fontSize: 10, fontWeight: FontWeight.bold },
   islandDesc: { fontSize: FontSize.sm, lineHeight: 18 },
+  metaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
+  metaLabel: { fontSize: 11, fontWeight: FontWeight.medium },
   progressRow: { gap: 6 },
   progressTrack: { height: 6, borderRadius: Radius.full, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: Radius.full },
@@ -398,9 +452,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalIcon: { fontSize: 34 },
-  modalClose: { fontSize: 28, fontWeight: FontWeight.medium, lineHeight: 28 },
+  modalClose: { fontSize: 20, fontWeight: FontWeight.bold, lineHeight: 20 },
+  modalEyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 0.8, marginBottom: 6 },
   modalTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, marginBottom: 6 },
-  modalEyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 0.8, marginBottom: Spacing.md },
   modalDesc: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.md },
   modalMetaRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg, flexWrap: 'wrap' },
   metaPill: { borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 6 },

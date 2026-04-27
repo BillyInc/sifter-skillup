@@ -4,6 +4,7 @@ import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'r
 import { useRouter } from 'expo-router';
 import { FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme } from '../theme';
 import { useAuth } from '../hooks/useAuth';
+import { resolveTrackContext } from '../lib/trackContext';
 
 function SettingsCard({
   title,
@@ -43,6 +44,15 @@ export default function SettingsScreen() {
   const router = useRouter();
   const { colors, isDark, toggle } = useTheme();
   const { user, signOut, starknetReady, starknetWalletAddress, starknetWalletStatus } = useAuth();
+  const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
+  const workspaceHref = trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/fields';
+  const workspaceLabel = trackContext.mode === 'track' ? trackContext.trackName : 'No active workspace';
+  const workspaceCta = trackContext.mode === 'track' ? 'Open Current Workspace' : 'Explore Tracks';
+  const workspaceStatus = trackContext.fieldId === 'starknet' || starknetReady
+    ? (starknetReady
+        ? `Wallet bridge ready as ${starknetWalletAddress?.slice(0, 10)}...${starknetWalletAddress?.slice(-6)}.`
+        : `Wallet bridge status: ${starknetWalletStatus}.`)
+    : 'This workspace does not need a Starknet wallet to continue.';
 
   const handleSignOut = async () => {
     await signOut();
@@ -80,24 +90,25 @@ export default function SettingsScreen() {
           <Row label="Username" value={user?.username ?? 'Learner'} />
           <Row label="Email" value={user?.email || 'Not set'} />
           <Row label="Auth Provider" value={user?.auth_provider ?? 'guest'} />
+          <Row label="Active Field" value={user?.activeFieldId ?? user?.active_field_id ?? 'Not selected'} />
           <Row label="Active Track" value={user?.currentTrackName ?? user?.currentTrackId ?? 'Not selected'} />
         </SettingsCard>
 
-        <SettingsCard title="STARKNET">
+        <SettingsCard title="WORKSPACE">
           <Text style={[styles.cardHeadline, { color: colors.text }]}>
-            {starknetReady ? 'Sepolia wallet ready' : 'Wallet not ready yet'}
+            {trackContext.mode === 'track' ? `${workspaceLabel} is active` : 'Choose the workspace you want to continue'}
           </Text>
           <Text style={[styles.cardBody, { color: colors.textSoft }]}>
-            {starknetReady
-              ? `Connected through the shared StarkZap bridge as ${starknetWalletAddress?.slice(0, 10)}...${starknetWalletAddress?.slice(-6)}.`
-              : `Current bridge state: ${starknetWalletStatus}.`}
+            {trackContext.mode === 'track'
+              ? `${trackContext.description} ${workspaceStatus}`
+              : 'Pick a track from the dashboard to unlock contextual islands, guild views, portfolio targets, and continue actions.'}
           </Text>
           <TouchableOpacity
             activeOpacity={0.85}
-            onPress={() => router.push('/starknet-track')}
+            onPress={() => router.push(workspaceHref as any)}
             style={[styles.toggleBtn, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
           >
-            <Text style={[styles.toggleBtnText, { color: colors.text }]}>Open Starknet Tracks</Text>
+            <Text style={[styles.toggleBtnText, { color: colors.text }]}>{workspaceCta}</Text>
           </TouchableOpacity>
         </SettingsCard>
 

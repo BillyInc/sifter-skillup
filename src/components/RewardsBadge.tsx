@@ -48,8 +48,8 @@ export function RewardsBadge({ badge, size = 'md', onPress, locked = false }: Re
         styles.badgeCell,
         { width: dim, height: dim, borderRadius: dim / 4 },
         locked
-          ? { backgroundColor: colors.bgSecondary }
-          : { backgroundColor: glowColor + '18', borderColor: glowColor + '40', borderWidth: 1.5 },
+          ? { backgroundColor: colors.bgSecondary, borderColor: colors.border, borderWidth: 1 }
+          : { backgroundColor: colors.card, borderColor: glowColor + '40', borderWidth: 1.5 },
         !locked && badge.rarity !== 'common' ? Shadow.sm : null,
       ]}
       onPress={() => onPress?.(badge)}
@@ -89,6 +89,7 @@ export function BadgeDetailCard({ badge, onClose }: { badge: Badge; onClose: () 
       <View style={[styles.detailGlow, { backgroundColor: glowColor + '18' }]}>
         <Text style={styles.detailEmoji}>{badge.emoji}</Text>
       </View>
+      <Text style={[styles.detailEyebrow, { color: colors.textSoft }]}>Achievement unlocked</Text>
       <Text style={[styles.detailName, { color: colors.text }]}>{badge.name}</Text>
       <View style={[styles.rarityTag, { backgroundColor: glowColor + '20' }]}>
         <Text style={[styles.rarityLabel, { color: glowColor }]}>{BADGE_RARITY_LABELS[badge.rarity]}</Text>
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   detailCard:    { borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', gap: Spacing.md, maxWidth: 320, alignSelf: 'center' },
   detailGlow:    { width: 100, height: 100, borderRadius: 50, alignItems: 'center', justifyContent: 'center' },
   detailEmoji:   { fontSize: 48 },
+  detailEyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textTransform: 'uppercase', letterSpacing: 0.8 },
   detailName:    { fontSize: FontSize.xl, fontWeight: FontWeight.black, textAlign: 'center' },
   rarityTag:     { paddingHorizontal: Spacing.md, paddingVertical: 4, borderRadius: Radius.full },
   rarityLabel:   { fontSize: FontSize.xs, fontWeight: FontWeight.black },
