@@ -824,7 +824,7 @@ export default function LessonScreen({
       labIndex: resolvedLabIndex,
       simulatorState: null,
     }).catch(() => {});
-  }, [labId, labNumber, lessonTopic, levelId, lessonIndex, savePosition, starknetLab?.title, trackId, user]);
+  }, [inferredTrackId, inferredTrackName, labId, labNumber, lessonTopic, levelId, lessonIndex, resolvedLabIndex, resolvedLabTitle, savePosition, starknetLab?.title, trackId, user]);
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{

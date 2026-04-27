@@ -14,19 +14,19 @@ export interface AuthoredLesson {
   fact?: string;
   plain?: string;
   simulatorLesson?: string;
-  guidedPractice?: Array<{
+  guidedPractice?: {
     question: string;
     options?: string[];
     correct?: number;
     explanation?: string;
     hint?: string;
-  }>;
+  }[];
   interactiveSimulator?: { componentId?: string; title?: string };
-  lessonSimulations?: Array<{
+  lessonSimulations?: {
     type: string;
     scenario: string;
     scoringCriteria: string[];
-  }>;
+  }[];
   examples?: AuthoredLessonExample[];
 }
 
