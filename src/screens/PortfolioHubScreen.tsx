@@ -24,7 +24,7 @@ import {
   StatusBar, Linking, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme, webContainer } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -1025,7 +1025,7 @@ export default function PortfolioHubScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  scroll: { padding: Spacing.md, paddingBottom: 48 },
+  scroll: { ...webContainer, paddingBottom: 48 },
   loadingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
   loadingText: { fontSize: FontSize.sm, color: Colors.textSoft },
 

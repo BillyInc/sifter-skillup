@@ -14,7 +14,7 @@ import {
   Platform, useWindowDimensions, ActivityIndicator, ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { leaderboardEngine, type LeaderboardScope } from '../lib/leaderboardEngine';
 import type { Leaderboard, LeaderboardEntry } from '../types/social';
@@ -243,7 +243,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
       <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
         <View style={[styles.webRoot, { backgroundColor: colors.bg }]}>
           <ScopePanel />
-          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 900, alignSelf: 'center', width: '100%', paddingHorizontal: 28, paddingTop: 28, paddingBottom: 64 }}>
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 64 }}>
             <View style={{ marginBottom: 28, paddingBottom: 16, position: 'relative' }}>
               <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>

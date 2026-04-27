@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
   Linking,
+  Platform,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -11,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { API, API_BASE } from '../lib/api';
@@ -127,13 +128,13 @@ function WalletBanner({
 }
 
 const walletStyles = StyleSheet.create({
-  wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.xl, borderWidth: 1.5, padding: Spacing.md },
+  wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
   copy: { flex: 1 },
   label: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, textTransform: 'uppercase' },
   title: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, marginTop: 3 },
   help: { fontSize: FontSize.xs, lineHeight: 16, marginTop: 4 },
-  btn: { borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs },
-  btnTxt: { color: '#fff', fontSize: FontSize.xs, fontWeight: FontWeight.black },
+  btn: { borderRadius: 8, paddingHorizontal: 14, paddingVertical: 8 },
+  btnTxt: { color: '#fff', fontSize: 11, fontWeight: '700' },
 });
 
 function LabCard({
@@ -405,25 +406,25 @@ export default function StarknetTrackScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  scrollContent: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
-  heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
-  backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
+  scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
+  heroCard: { borderWidth: 1, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, gap: Spacing.md, ...Shadow.sm },
+  backButton: { alignSelf: 'flex-start', borderRadius: 8, paddingHorizontal: 14, paddingVertical: 8 },
   backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
   heroEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
   heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
   heroSub: { fontSize: FontSize.sm, lineHeight: 20 },
   statsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
-  statCard: { flex: 1, minWidth: 100, borderRadius: Radius.lg, padding: Spacing.md, gap: 2 },
+  statCard: { flex: 1, minWidth: 100, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, gap: 2, borderWidth: 1 },
   statValue: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   statLabel: { fontSize: 10, fontWeight: FontWeight.semibold },
   faucetWrap: { marginTop: -Spacing.xs },
-  notice: { borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.md },
+  notice: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
   noticeText: { fontSize: FontSize.sm, lineHeight: 20, fontWeight: FontWeight.medium },
   sectionHeader: { gap: 4, marginTop: Spacing.xs },
   sectionEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
   labList: { gap: Spacing.sm },
-  labCard: { borderRadius: Radius.xl, borderWidth: 1.5, padding: Spacing.md },
+  labCard: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
   labHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   labNumber: {
     width: 42,
@@ -438,9 +439,9 @@ const styles = StyleSheet.create({
   labEyebrow: { fontSize: 10, fontWeight: FontWeight.black, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
   labTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, marginBottom: 2 },
   labMetaText: { fontSize: FontSize.xs },
-  statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
-  statePillText: { fontSize: 10, fontWeight: FontWeight.black },
-  certCard: { borderRadius: Radius.xxl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.xs, alignItems: 'flex-start' },
+  statePill: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  statePillText: { fontSize: 9, fontWeight: '700' },
+  certCard: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, gap: Spacing.xs, alignItems: 'flex-start' },
   certEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
   certTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   certDesc: { fontSize: FontSize.sm, lineHeight: 20 },

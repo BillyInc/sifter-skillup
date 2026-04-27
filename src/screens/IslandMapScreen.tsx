@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Modal,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -10,7 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme } from '../theme';
+import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, webContainer } from '../theme';
 import { ISLANDS, getIsland, isIslandUnlocked, type Island } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
 import { TrackChoiceScreen } from './PostIslandTrackSelection';
@@ -359,15 +360,15 @@ export default function IslandMapScreen({ route }: any) {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  content: { padding: Spacing.lg, paddingBottom: Spacing.xxxl },
+  content: { ...webContainer, paddingBottom: Spacing.xxxl },
   heroCard: {
     borderWidth: 1,
-    borderRadius: Radius.xxl,
+    borderRadius: 11,
     overflow: 'hidden',
     marginBottom: Spacing.xl,
     ...Shadow.md,
   },
-  heroGradient: { padding: Spacing.lg, gap: Spacing.lg },
+  heroGradient: { padding: Platform.OS === 'web' ? 14 : 12, gap: Spacing.lg },
   heroTop: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md },
   backBtn: {
     width: 40,
@@ -384,15 +385,15 @@ const styles = StyleSheet.create({
   heroStat: {
     minWidth: 78,
     borderWidth: 1,
-    borderRadius: Radius.xl,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    borderRadius: 5,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
     alignItems: 'center',
   },
   heroStatValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   heroStatLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   heroMetaRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
-  heroMetaChip: { borderRadius: Radius.lg, paddingHorizontal: 12, paddingVertical: 10, minWidth: 110 },
+  heroMetaChip: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3, minWidth: 110 },
   heroMetaValue: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
   heroMetaLabel: { fontSize: 11, fontWeight: FontWeight.medium },
   heroProgressWrap: { gap: 8 },
@@ -401,18 +402,18 @@ const styles = StyleSheet.create({
   heroProgressMeta: { flexDirection: 'row', justifyContent: 'space-between', gap: Spacing.sm },
   heroProgressText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   section: { marginBottom: Spacing.xl },
-  sectionHeader: { marginBottom: Spacing.md },
+  sectionHeader: { marginBottom: 10 },
   sectionEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, marginBottom: 4 },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 4 },
+  sectionTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
   sectionCopy: { fontSize: FontSize.sm, lineHeight: 18 },
   grid: { gap: Spacing.sm },
   islandCard: {
     borderWidth: 1,
-    borderRadius: Radius.xl,
+    borderRadius: 11,
     overflow: 'hidden',
     ...Shadow.sm,
   },
-  islandCardGradient: { padding: Spacing.md, gap: Spacing.md },
+  islandCardGradient: { padding: Platform.OS === 'web' ? 14 : 12, gap: Spacing.md },
   islandCardTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   islandHeaderText: { flex: 1 },
   islandIconWrap: {
@@ -426,8 +427,8 @@ const styles = StyleSheet.create({
   islandIcon: { fontSize: 16, fontWeight: FontWeight.black },
   islandName: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
   islandSub: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
-  statePillText: { fontSize: 10, fontWeight: FontWeight.bold },
+  statePill: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  statePillText: { fontSize: 9, fontWeight: '700' },
   islandDesc: { fontSize: FontSize.sm, lineHeight: 18 },
   metaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
   metaLabel: { fontSize: 11, fontWeight: FontWeight.medium },
@@ -442,11 +443,11 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
   },
   modalCard: {
-    borderRadius: Radius.xxl,
+    borderRadius: 11,
     borderWidth: 1,
     overflow: 'hidden',
   },
-  modalGradient: { padding: Spacing.xl },
+  modalGradient: { padding: Platform.OS === 'web' ? 14 : 12 },
   modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.lg },
   modalIconWrap: {
     width: 72,
@@ -462,8 +463,8 @@ const styles = StyleSheet.create({
   modalTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, marginBottom: 6 },
   modalDesc: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.md },
   modalMetaRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg, flexWrap: 'wrap' },
-  metaPill: { borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 6 },
-  metaPillText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  enterBtn: { borderRadius: Radius.lg, paddingVertical: 14, alignItems: 'center' },
-  enterBtnText: { color: '#fff', fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  metaPill: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  metaPillText: { fontSize: 9, fontWeight: '700' },
+  enterBtn: { borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
+  enterBtnText: { color: '#fff', fontSize: 11, fontWeight: '700' },
 });

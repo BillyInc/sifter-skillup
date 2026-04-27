@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
+  Spacing, Radius, FontSize, Shadow, FontWeight, useTheme, webContainer,
 } from '../theme';
 import { SifterButton, SifterCard } from '../components/ui';
 
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   headerSub: { fontSize: FontSize.xs, lineHeight: 17 },
   content: {
-    padding: Spacing.lg,
+    ...webContainer,
     paddingBottom: 112,
   },
   introCard: { marginBottom: Spacing.md },

@@ -4,7 +4,7 @@ import {
   SafeAreaView, Linking, RefreshControl, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { API } from '../lib/api';
@@ -292,7 +292,7 @@ export default function EcosystemTrackScreen() {
 }
 
 const styles = StyleSheet.create({
-  scrollContent: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: 60 },
+  scrollContent: { ...webContainer, gap: Spacing.md, paddingBottom: 60 },
   heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
   backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
   backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },

@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LearnMoreScreen from './LearnMoreScreen';
 import {
-  Colors, Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
+  Colors, Spacing, Radius, FontSize, Shadow, FontWeight, useTheme, webContainer,
 } from '../theme';
 import { SifterButton, SifterCard } from '../components/ui';
 
@@ -402,7 +402,7 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  scrollBody: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
+  scrollBody: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
   eyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1, textAlign: 'center', marginBottom: Spacing.xs },
   heroCard: { marginBottom: Spacing.md },
   disclaimerHero: { marginBottom: Spacing.md },
