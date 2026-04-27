@@ -13,6 +13,8 @@ ALTER TABLE sifter_dev.users
   ADD COLUMN IF NOT EXISTS email                TEXT UNIQUE,
   ADD COLUMN IF NOT EXISTS password_hash        TEXT,
   ADD COLUMN IF NOT EXISTS starknet_address     TEXT UNIQUE,
+  ADD COLUMN IF NOT EXISTS starknet_wallet_id   TEXT UNIQUE,
+  ADD COLUMN IF NOT EXISTS starknet_public_key  TEXT,
   ADD COLUMN IF NOT EXISTS starknet_auth        BOOLEAN NOT NULL DEFAULT false,
   ADD COLUMN IF NOT EXISTS starknet_email       TEXT,
   ADD COLUMN IF NOT EXISTS github_token         TEXT,
@@ -29,6 +31,7 @@ ALTER TABLE sifter_dev.users
   ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false;
 
 CREATE INDEX IF NOT EXISTS idx_users_starknet ON sifter_dev.users(starknet_address);
+CREATE INDEX IF NOT EXISTS idx_users_starknet_wallet_id ON sifter_dev.users(starknet_wallet_id);
 CREATE INDEX IF NOT EXISTS idx_users_email    ON sifter_dev.users(email);
 
 -- ── 2. DEVICE SESSIONS ─────────────────────────────────────────
