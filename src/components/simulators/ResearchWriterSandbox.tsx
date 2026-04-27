@@ -236,16 +236,16 @@ function SectionTab({
   const wordReady = wordCount >= Math.round(def.wordCountTarget * 0.6);
 
   const bgColor = !validated
-    ? (active ? '#0c1a2e' : '#0a0f1e')
+    ? (active ? Colors.accentSoft : Colors.card)
     : validated.passed
-    ? '#052e16'
-    : '#2d1215';
+    ? '#ecfdf5'
+    : '#fef2f2';
 
   const borderColor = !validated
-    ? (active ? '#3b82f6' : '#1e293b')
+    ? (active ? Colors.accent : Colors.border)
     : validated.passed
-    ? '#22c55e40'
-    : '#ef444440';
+    ? '#86efac'
+    : '#fecaca';
 
   return (
     <TouchableOpacity
@@ -320,19 +320,19 @@ const tab = StyleSheet.create({
   },
   header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   icon: { fontSize: 20 },
-  title: { fontSize: FontSize.sm, fontWeight: '700', color: '#e2e8f0' },
-  meta: { fontSize: 11, color: '#64748b', marginTop: 2 },
-  desc: { fontSize: 12, color: '#64748b', lineHeight: 18, marginBottom: Spacing.sm, fontStyle: 'italic' },
+  title: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
+  meta: { fontSize: 11, color: Colors.textMuted, marginTop: 2 },
+  desc: { fontSize: 12, color: Colors.textSoft, lineHeight: 18, marginBottom: Spacing.sm, fontStyle: 'italic' },
   editor: { marginTop: Spacing.md },
   input: {
-    backgroundColor: '#0d1117', color: '#e2e8f0',
-    borderRadius: Radius.sm, borderWidth: 1, borderColor: '#1e293b',
+    backgroundColor: Colors.card, color: Colors.text,
+    borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.border,
     padding: Spacing.md, minHeight: 200,
     fontSize: 13, lineHeight: 20, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
   },
   wc: { fontSize: 11, textAlign: 'right', marginTop: 4, fontWeight: '600' },
-  checks: { marginTop: Spacing.md, borderTopWidth: 1, borderTopColor: '#1e293b', paddingTop: Spacing.sm },
-  checksLabel: { fontSize: 10, fontWeight: '800', color: '#475569', letterSpacing: 1, marginBottom: 6 },
+  checks: { marginTop: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm },
+  checksLabel: { fontSize: 10, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1, marginBottom: 6 },
   checkRow: { flexDirection: 'row', gap: 6, alignItems: 'flex-start', marginBottom: 6 },
   fieldLabel: { fontSize: 12, fontWeight: '600' },
   fieldHint: { fontSize: 11, color: '#64748b', lineHeight: 16 },
@@ -438,7 +438,7 @@ export default function ResearchWriterSandbox({
         {/* Instructions */}
         <View style={main.instructions}>
           <Text style={main.instrText}>
-            Complete each section. Tap "Validate Section" to check required fields before moving on.
+            Complete each section. Tap &quot;Validate Section&quot; to check required fields before moving on.
             {isBoss
               ? ` All ${activeSections.length} sections required for Portfolio Push.`
               : ` ${passRequired} of ${activeSections.length} sections required to pass.`}
@@ -497,12 +497,12 @@ export default function ResearchWriterSandbox({
 
 const main = StyleSheet.create({
   instructions: {
-    backgroundColor: '#0c1a2e', borderRadius: Radius.sm,
-    padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: '#1e3a5f',
+    backgroundColor: Colors.card, borderRadius: Radius.lg,
+    padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border,
   },
-  instrText: { fontSize: 13, color: '#94a3b8', lineHeight: 19 },
+  instrText: { fontSize: 13, color: Colors.textSoft, lineHeight: 19 },
   progress: {
-    height: 6, backgroundColor: '#1e293b', borderRadius: 3,
+    height: 6, backgroundColor: Colors.border, borderRadius: 3,
     marginBottom: Spacing.md, overflow: 'hidden', position: 'relative',
   },
   progressFill: {
@@ -511,12 +511,12 @@ const main = StyleSheet.create({
   },
   progressText: {
     position: 'absolute', right: 0, top: 8,
-    fontSize: 10, color: '#64748b', fontWeight: '700',
+    fontSize: 10, color: Colors.textMuted, fontWeight: '700',
   },
   validateBtn: {
-    backgroundColor: '#0f172a', borderRadius: Radius.sm,
+    backgroundColor: Colors.card, borderRadius: Radius.md,
     padding: Spacing.sm, marginBottom: Spacing.md,
-    borderWidth: 1, borderColor: '#22c55e40', alignItems: 'center',
+    borderWidth: 1, borderColor: '#86efac', alignItems: 'center',
   },
   validateText: { fontSize: 13, color: '#22c55e', fontWeight: '700' },
   blockMsg: {
@@ -530,6 +530,6 @@ const main = StyleSheet.create({
 const done = StyleSheet.create({
   container: { alignItems: 'center', paddingVertical: Spacing.xxxl, gap: Spacing.md },
   emoji: { fontSize: 48 },
-  title: { fontSize: 18, fontWeight: '800', color: '#22c55e' },
+  title: { fontSize: 18, fontWeight: '800', color: Colors.green },
   body: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22 },
 });

@@ -28,7 +28,7 @@ import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../../t
 export const WEB_BREAKPOINT   = 768;
 export const WEB_MAX_WIDTH    = 1280;
 export const WEB_SIDEBAR_W    = 220;
-export const GRID_GAP         = 20;
+export const GRID_GAP         = 16;
 export const GRID_GAP_SM      = 14;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────────
@@ -85,7 +85,6 @@ export function WebPageHeader({
         )}
       </View>
       {right && <View style={styles.pageHeaderRight}>{right}</View>}
-      {/* Bottom accent line */}
       <View style={[styles.pageHeaderLine, { backgroundColor: accentColor ?? colors.accent }]} />
     </View>
   );
@@ -318,7 +317,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   pageTitle: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: '900',
     letterSpacing: -0.5,
     marginBottom: 4,
@@ -339,8 +338,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    height: 3,
-    width: 48,
+    height: 4,
+    width: 56,
     borderRadius: Radius.full,
   },
 
@@ -368,7 +367,7 @@ const styles = StyleSheet.create({
 
   card: {
     borderRadius: Radius.xl,
-    padding: GRID_GAP,
+    padding: 18,
     borderWidth: 1,
     overflow: 'hidden',
   },
@@ -377,7 +376,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 3,
+    height: 4,
   },
   cardTitleRow: {
     flexDirection: 'row',

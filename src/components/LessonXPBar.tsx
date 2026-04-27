@@ -136,9 +136,16 @@ export default function LessonXPBar({
       <Animated.View
         style={[
           styles.compactContainer,
-          { transform: [{ translateX: shakeX }] },
+          {
+            transform: [{ translateX: shakeX }],
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+          },
         ]}
       >
+        <Text style={[styles.compactStage, { color: colors.textSoft }]} numberOfLines={1}>
+          {stage.name}
+        </Text>
         <Animated.View
           style={[
             styles.compactTrack,
@@ -163,61 +170,58 @@ export default function LessonXPBar({
 
   return (
     <View style={styles.container}>
-      {/* Stage label */}
-      <View style={styles.topRow}>
-        <Text style={[styles.stageLabel, { color: colors.accent }]}>
-          ⚡ {stage.name}
-        </Text>
-        <View style={styles.xpRow}>
-          <Text style={[styles.xpText, { color: colors.textSoft }]}>
-            {currentXp} XP
-          </Text>
-          {/* Session XP badge — pops on correct */}
+      <View style={[styles.chrome, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <View style={styles.topRow}>
+          <View style={[styles.stagePill, { backgroundColor: colors.accentSoft }]}>
+            <Text style={[styles.stageLabel, { color: colors.accent }]}>
+              Stage {stage.name}
+            </Text>
+          </View>
+          <View style={styles.xpRow}>
+            <Text style={[styles.xpText, { color: colors.textSoft }]}>
+              {currentXp} XP
+            </Text>
+            <Animated.View
+              style={[
+                styles.sessionBadge,
+                { backgroundColor: colors.xpGreen, opacity: badgeAlpha, transform: [{ scale: badgeScale }] },
+              ]}
+            >
+              <Text style={styles.sessionBadgeText}>+{XP_VALUES.lessonComplete}</Text>
+            </Animated.View>
+          </View>
+        </View>
+
+        <Animated.View style={{ transform: [{ translateX: shakeX }] }}>
           <Animated.View
             style={[
-              styles.sessionBadge,
-              { backgroundColor: colors.xpGreen, opacity: badgeAlpha, transform: [{ scale: badgeScale }] },
+              styles.track,
+              { backgroundColor: colors.bgSecondary, transform: [{ scaleY }] },
             ]}
           >
-            <Text style={styles.sessionBadgeText}>+{XP_VALUES.lessonComplete}</Text>
+            <Animated.View
+              style={[styles.fill, { backgroundColor: barColor, width: fillWidth }]}
+            />
+            <Animated.View
+              pointerEvents="none"
+              style={[
+                StyleSheet.absoluteFillObject,
+                { backgroundColor: barColor, borderRadius: Radius.full, opacity: glowAlpha },
+              ]}
+            />
+            <Animated.View
+              pointerEvents="none"
+              style={[styles.shine, { opacity: fillAnim.interpolate({ inputRange: [0, 0.05], outputRange: [0, 0.3] }) }]}
+            />
           </Animated.View>
-        </View>
-      </View>
-
-      {/* Bar */}
-      <Animated.View style={{ transform: [{ translateX: shakeX }] }}>
-        <Animated.View
-          style={[
-            styles.track,
-            { backgroundColor: colors.bgSecondary, transform: [{ scaleY }] },
-          ]}
-        >
-          {/* Fill */}
-          <Animated.View
-            style={[styles.fill, { backgroundColor: barColor, width: fillWidth }]}
-          />
-          {/* Streak glow overlay */}
-          <Animated.View
-            pointerEvents="none"
-            style={[
-              StyleSheet.absoluteFillObject,
-              { backgroundColor: barColor, borderRadius: Radius.full, opacity: glowAlpha },
-            ]}
-          />
-          {/* Shine */}
-          <Animated.View
-            pointerEvents="none"
-            style={[styles.shine, { opacity: fillAnim.interpolate({ inputRange: [0, 0.05], outputRange: [0, 0.3] }) }]}
-          />
         </Animated.View>
-      </Animated.View>
 
-      {/* Streak indicator */}
-      {correctStreak >= 2 && (
-        <Text style={[styles.streakLabel, { color: colors.gold }]}>
-          🔥 {correctStreak} in a row!
-        </Text>
-      )}
+        {correctStreak >= 2 && (
+          <Text style={[styles.streakLabel, { color: colors.gold }]}>
+            {correctStreak} correct in a row
+          </Text>
+        )}
+      </View>
     </View>
   );
 }
@@ -226,7 +230,9 @@ export default function LessonXPBar({
 
 const styles = StyleSheet.create({
   container:        { gap: Spacing.xs },
+  chrome:           { borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.sm, gap: Spacing.xs },
   topRow:           { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  stagePill:        { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 4 },
   stageLabel:       { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
   xpRow:            { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
   xpText:           { fontSize: FontSize.xs },
@@ -239,7 +245,8 @@ const styles = StyleSheet.create({
   streakLabel:      { fontSize: FontSize.xs, fontWeight: FontWeight.bold, textAlign: 'right' },
 
   // Compact
-  compactContainer: { height: 5 },
-  compactTrack:     { flex: 1, borderRadius: Radius.full, overflow: 'hidden', position: 'relative' },
+  compactContainer: { borderRadius: Radius.md, borderWidth: 1, paddingHorizontal: Spacing.sm, paddingVertical: 6, gap: 6 },
+  compactStage:     { fontSize: 10, fontWeight: FontWeight.bold },
+  compactTrack:     { height: 5, borderRadius: Radius.full, overflow: 'hidden', position: 'relative' },
   compactFill:      { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: Radius.full },
 });

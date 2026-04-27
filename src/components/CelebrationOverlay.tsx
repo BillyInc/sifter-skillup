@@ -1,7 +1,7 @@
 /**
  * Sifter Skill_Up — Celebration Overlay
  * Full-screen celebration triggered on lesson complete, lab complete, stage-up.
- * Stitch palette confetti + The Bolt + XP burst. Auto-dismisses after 3.5s.
+ * System palette confetti + The Bolt + XP burst. Auto-dismisses after 3.5s.
  *
  * Usage:
  *   <CelebrationOverlay
@@ -50,9 +50,9 @@ export interface CelebrationOverlayProps {
 const { width: W, height: H } = Dimensions.get('window');
 const NUM_CONFETTI = 28;
 
-// Stitch palette confetti colours
+// Theme-aligned confetti colors
 const CONFETTI_COLORS = [
-  '#5B5FCF', '#8B8FFF', '#58CC02', '#FF9600',
+  '#6366F1', '#8B5CF6', '#10B981', '#F97316',
   '#F59E0B', '#EC4899', '#0EA5E9', '#10B981',
 ];
 
@@ -119,7 +119,7 @@ function ConfettiParticle({ index, delay }: { index: number; delay: number }) {
         }),
       ]),
     ]).start();
-  }, []);
+  }, [alpha, delay, duration, rot, scale, targetX, x, y]);
 
   const rotate = rot.interpolate({
     inputRange: [-4, 4],
@@ -172,7 +172,7 @@ function XPBurst({ xp, visible }: { xp: number; visible: boolean }) {
       ]),
       Animated.timing(alpha, { toValue: 0, duration: 500, useNativeDriver: true }),
     ]).start();
-  }, [visible]);
+  }, [alpha, scale, visible, y]);
 
   return (
     <Animated.View
@@ -216,7 +216,7 @@ export default function CelebrationOverlay({
     if (!visible) return;
     const t = setTimeout(onDismiss, autoDismissMs);
     return () => clearTimeout(t);
-  }, [visible, autoDismissMs]);
+  }, [autoDismissMs, onDismiss, visible]);
 
   // Entrance animation
   useEffect(() => {
@@ -235,7 +235,7 @@ export default function CelebrationOverlay({
         Animated.timing(cardAlpha, { toValue: 1, duration: 200, useNativeDriver: true }),
       ]),
     ]).start();
-  }, [visible]);
+  }, [cardAlpha, cardScale, containerAlpha, containerScale, visible]);
 
   const confettiItems = useMemo(() =>
     Array.from({ length: NUM_CONFETTI }, (_, i) => ({ id: i, delay: i * 60 })),
@@ -294,9 +294,7 @@ export default function CelebrationOverlay({
           <Text style={[styles.headline, { color: colors.text }]}>
             {stageUp && stageName ? `You're now a ${stageName}` : copy.headline}
           </Text>
-          <Text style={[styles.sub, { color: colors.textSoft }]}>
-            {stageUp && stageName ? copy.sub : copy.sub}
-          </Text>
+          <Text style={[styles.sub, { color: colors.textSoft }]}>{copy.sub}</Text>
 
           {/* Streak badge */}
           {streak && streak > 0 && (

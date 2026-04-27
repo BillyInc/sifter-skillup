@@ -180,14 +180,14 @@ const sa = StyleSheet.create({
     flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm,
     paddingVertical: Spacing.sm, paddingHorizontal: Spacing.sm,
     borderRadius: Radius.sm, marginBottom: 6,
-    backgroundColor: '#0f172a', borderWidth: 1, borderColor: '#1e293b',
+    backgroundColor: Colors.card, borderWidth: 1, borderColor: Colors.border,
   },
   rowChecked: {
-    backgroundColor: '#052e16', borderColor: '#22c55e40',
+    backgroundColor: '#ecfdf5', borderColor: '#86efac',
   },
   checkbox: {
     width: 20, height: 20, borderRadius: 4, borderWidth: 2,
-    borderColor: '#475569', alignItems: 'center', justifyContent: 'center',
+    borderColor: Colors.textMuted, alignItems: 'center', justifyContent: 'center',
     marginTop: 1, flexShrink: 0,
   },
   checkboxChecked: {
@@ -195,7 +195,7 @@ const sa = StyleSheet.create({
   },
   checkmark: { fontSize: 12, color: '#fff', fontWeight: '900' },
   criterionText: { flex: 1, fontSize: 13, color: Colors.textSoft, lineHeight: 19 },
-  criterionTextChecked: { color: '#86efac' },
+  criterionTextChecked: { color: Colors.green },
 });
 
 // ── Auto-scored criteria preview ──────────────────────────────────────────────
@@ -297,7 +297,7 @@ const rp = StyleSheet.create({
   badge: { fontSize: 18, fontWeight: '900', letterSpacing: 1 },
   threshold: { fontSize: 12, color: Colors.textSoft, marginTop: 4 },
   retryBox: {
-    backgroundColor: '#fef9ee', borderRadius: Radius.md,
+    backgroundColor: '#fef9ee', borderRadius: Radius.lg,
     padding: Spacing.md, borderWidth: 1, borderColor: '#fde68a',
     marginTop: Spacing.md, gap: Spacing.sm,
   },
@@ -545,7 +545,7 @@ const rev = StyleSheet.create({
     fontStyle: 'italic',
   },
   gate: {
-    backgroundColor: '#fffbeb', borderRadius: Radius.md,
+    backgroundColor: '#fffbeb', borderRadius: Radius.lg,
     padding: Spacing.sm, borderWidth: 1, borderColor: '#fde68a',
     marginBottom: Spacing.sm,
   },

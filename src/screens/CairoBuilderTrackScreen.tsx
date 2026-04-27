@@ -1,19 +1,11 @@
-/**
- * Cairo Builder Track Screen
- * Developer track: Write, test, deploy Cairo smart contracts.
- * Accent: #F97316 (orange)
- * Boss IDs: 5001–5020
- */
-
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, RefreshControl, Linking, ActivityIndicator,
+  SafeAreaView, RefreshControl, Linking,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
-import { API } from '../lib/api';
 import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
 const ACCENT = '#F97316';
@@ -29,19 +21,19 @@ interface LabDef {
 }
 
 const CAIRO_LAB_UI: Record<number, Omit<LabDef, 'id' | 'number' | 'bossLevelId' | 'lessonCount'>> = {
-  0: { title:'Setup & Scarb', description:'Install Scarb, create your first Cairo project, run `scarb build`.', tags:['Tooling','Scarb','Setup'] },
-  1: { title:'Cairo Basics & ERC-20', description:'Felt252 types, storage variables, events. Deploy a full ERC-20 to Sepolia.', tags:['Cairo','ERC-20','Sepolia'] },
-  2: { title:'Account Abstraction', description:'Custom account contracts, ECDSA signatures, multi-sig patterns.', tags:['AA','Signatures','Multi-sig'] },
-  3: { title:'snforge Testing', description:'Write contract tests with snforge_std and a local Starknet test harness.', tags:['Testing','snforge','TDD'] },
-  4: { title:'Starkzap SDK Integration', description:'Connect your Cairo contract to the Starkzap SDK for front-end interaction.', tags:['Starkzap','SDK','Integration'] },
-  5: { title:'DeFi Primitives: Vault & AMM', description:'Build lending and AMM primitives with Cairo state machines and tests.', tags:['DeFi','Vault','AMM'] },
-  6: { title:'Perpetuals Exchange', description:'Model a perpetuals venue with order logic, margin rules, and Sepolia deployment.', tags:['Perps','Advanced','Deploy'] },
-  7: { title:'Cairo Architecture Patterns', description:'Dispatcher pattern, component libraries, and upgrade-safe contract structure.', tags:['Architecture','Patterns'] },
-  8: { title:'Full Stack: Apibara + FastAPI', description:'Index Starknet events with Apibara and expose them through a FastAPI service.', tags:['Indexer','Apibara','API'] },
-  9: { title:'LendingPool Full Stack', description:'Ship an end-to-end lending protocol with contracts, indexing, and UI.', tags:['Full Stack','Lending'] },
-  10: { title:'Security Audit I', description:'Use STRIDE and code review to identify concrete vulnerabilities in Cairo systems.', tags:['Security','STRIDE','Audit'] },
-  11: { title:'Security Audit II + Fork Tests', description:'Audit a live-style deployment path and validate assumptions with fork-style tests.', tags:['Fork Tests','Advanced Audit'] },
-  12: { title:'Final Boss: Reverse Engineer', description:'Reverse engineer, audit, and package a complete Starknet protocol case study.', tags:['Final Boss','GitHub','Certification'] },
+  0: { title: 'Setup & Scarb', description: 'Install Scarb, create your first Cairo project, and run the first build.', tags: ['Tooling', 'Scarb', 'Setup'] },
+  1: { title: 'Cairo Basics & ERC-20', description: 'Work through felt252 types, storage, events, and deploy an ERC-20 on Sepolia.', tags: ['Cairo', 'ERC-20', 'Sepolia'] },
+  2: { title: 'Account Abstraction', description: 'Build around account contracts, signatures, and multi-sig patterns.', tags: ['AA', 'Signatures', 'Multi-sig'] },
+  3: { title: 'snforge Testing', description: 'Write tests with snforge_std and a Starknet-focused local harness.', tags: ['Testing', 'snforge', 'TDD'] },
+  4: { title: 'Starkzap SDK Integration', description: 'Connect Cairo contracts to the Starkzap SDK for front-end interaction.', tags: ['Starkzap', 'SDK', 'Integration'] },
+  5: { title: 'DeFi Primitives: Vault & AMM', description: 'Build lending and AMM primitives with Cairo state machines and tests.', tags: ['DeFi', 'Vault', 'AMM'] },
+  6: { title: 'Perpetuals Exchange', description: 'Model a perps venue with order logic, margin rules, and Sepolia deployment.', tags: ['Perps', 'Advanced', 'Deploy'] },
+  7: { title: 'Cairo Architecture Patterns', description: 'Practice dispatcher patterns, component libraries, and upgrade-safe structure.', tags: ['Architecture', 'Patterns'] },
+  8: { title: 'Full Stack: Apibara + FastAPI', description: 'Index Starknet events and expose them through a FastAPI service.', tags: ['Indexer', 'Apibara', 'API'] },
+  9: { title: 'LendingPool Full Stack', description: 'Ship an end-to-end lending protocol with contracts, indexing, and UI.', tags: ['Full Stack', 'Lending'] },
+  10: { title: 'Security Audit I', description: 'Use STRIDE and code review to identify concrete vulnerabilities.', tags: ['Security', 'STRIDE', 'Audit'] },
+  11: { title: 'Security Audit II + Fork Tests', description: 'Audit a live-style deployment path and validate assumptions with fork-style tests.', tags: ['Fork Tests', 'Advanced Audit'] },
+  12: { title: 'Final Boss: Reverse Engineer', description: 'Reverse engineer, audit, and package a complete Starknet protocol case study.', tags: ['Final Boss', 'GitHub', 'Certification'] },
 };
 
 const CAIRO_LABS: LabDef[] = getStarknetLabs('cairo-builder').map((lab) => {
@@ -58,39 +50,44 @@ const CAIRO_LABS: LabDef[] = getStarknetLabs('cairo-builder').map((lab) => {
   };
 });
 
-function LabCard({ lab, unlocked, completed, onPress }: {
-  lab: LabDef; unlocked: boolean; completed: boolean; onPress: () => void;
+function LabCard({ lab, unlocked, completed, current, onPress }: {
+  lab: LabDef; unlocked: boolean; completed: boolean; current: boolean; onPress: () => void;
 }) {
   const { colors } = useTheme();
-  const alpha = unlocked ? 1 : 0.45;
+  const accent = completed ? '#10B981' : current ? ACCENT : unlocked ? ACCENT : colors.textMuted;
+  const stateLabel = !unlocked ? 'Locked' : current ? 'Continue' : completed ? 'Review' : 'Start';
 
   return (
     <TouchableOpacity
-      style={[lc.card, {
-        backgroundColor: colors.card ?? '#1A1A2E',
-        borderColor: completed ? `${ACCENT}80` : unlocked ? `${ACCENT}30` : colors.border,
-        opacity: alpha,
+      style={[styles.labCard, {
+        backgroundColor: colors.card,
+        borderColor: current ? `${ACCENT}55` : completed ? '#10B98155' : unlocked ? `${ACCENT}28` : colors.border,
+        opacity: unlocked ? 1 : 0.56,
       }]}
       onPress={onPress}
       disabled={!unlocked}
-      activeOpacity={0.8}
+      activeOpacity={0.82}
     >
-      <View style={lc.row}>
-        <View style={[lc.numBadge, { backgroundColor: completed ? ACCENT : `${ACCENT}20` }]}>
-          <Text style={[lc.num, { color: completed ? '#fff' : ACCENT }]}>
-            {completed ? '✓' : lab.number === 0 ? '0' : lab.number}
+      <View style={styles.labHeader}>
+        <View style={[styles.numberBadge, { backgroundColor: completed ? '#10B981' : `${ACCENT}16`, borderColor: `${ACCENT}32` }]}>
+          <Text style={[styles.numberText, { color: completed ? '#fff' : ACCENT }]}>
+            {lab.number}
           </Text>
         </View>
-        <View style={{ flex: 1 }}>
-          <Text style={[lc.title, { color: colors.text }]}>{lab.title}</Text>
-          <Text style={[lc.desc, { color: colors.textSoft }]} numberOfLines={2}>{lab.description}</Text>
+        <View style={styles.labCopy}>
+          <Text style={[styles.labEyebrow, { color: ACCENT }]}>Cairo Lab</Text>
+          <Text style={[styles.labTitle, { color: colors.text }]}>{lab.title}</Text>
+          <Text style={[styles.labDesc, { color: colors.textSoft }]} numberOfLines={2}>{lab.description}</Text>
         </View>
-        {!unlocked && <Text style={lc.lock}>🔒</Text>}
+        <View style={[styles.statePill, { backgroundColor: `${accent}14` }]}>
+          <Text style={[styles.statePillText, { color: accent }]}>{stateLabel}</Text>
+        </View>
       </View>
-      <View style={lc.tags}>
-        {lab.tags.map(t => (
-          <View key={t} style={[lc.tag, { backgroundColor: `${ACCENT}15` }]}>
-            <Text style={[lc.tagTxt, { color: ACCENT }]}>{t}</Text>
+      <View style={styles.tagRow}>
+        <Text style={[styles.lessonMeta, { color: colors.textMuted }]}>{lab.lessonCount} lessons</Text>
+        {lab.tags.slice(0, 3).map(tag => (
+          <View key={tag} style={[styles.tag, { backgroundColor: `${ACCENT}10` }]}>
+            <Text style={[styles.tagText, { color: ACCENT }]}>{tag}</Text>
           </View>
         ))}
       </View>
@@ -98,39 +95,27 @@ function LabCard({ lab, unlocked, completed, onPress }: {
   );
 }
 
-const lc = StyleSheet.create({
-  card:    { borderRadius: Radius.lg, borderWidth: 1.5, padding: Spacing.md, gap: Spacing.sm, ...Shadow.sm },
-  row:     { flexDirection: 'row', gap: Spacing.md, alignItems: 'flex-start' },
-  numBadge:{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
-  num:     { fontWeight: '900', fontSize: FontSize.md },
-  title:   { fontWeight: '800', fontSize: FontSize.md },
-  desc:    { fontSize: FontSize.sm, lineHeight: 18, marginTop: 2 },
-  lock:    { fontSize: 18, alignSelf: 'center' },
-  tags:    { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
-  tag:     { borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2 },
-  tagTxt:  { fontSize: 9, fontWeight: '700' },
-});
-
 export default function CairoBuilderTrackScreen() {
-  const router    = useRouter();
-  const { user, updateActiveField }  = useAuth();
+  const router = useRouter();
+  const { user, updateActiveField } = useAuth();
   const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [sepoliaBlock, setSepoliaBlock] = useState<string | null>(null);
 
   const completedLevels: string[] = (user?.completed_levels ?? user?.completedLevels ?? []).map(String);
 
-  // Lab N is unlocked if the previous registry-backed lab boss is completed (or it's lab 0).
   function isLabUnlocked(lab: LabDef): boolean {
     if (lab.number === 0) return true;
     const previousLab = CAIRO_LABS.find((candidate) => candidate.number === lab.number - 1);
     return previousLab ? completedLevels.includes(String(previousLab.bossLevelId)) : false;
   }
+
   function isLabCompleted(lab: LabDef): boolean {
     return completedLevels.includes(String(lab.bossLevelId));
   }
 
-  // Fetch live Sepolia block number on mount (proves RPC is live)
+  const currentLabId = CAIRO_LABS.find((lab) => isLabUnlocked(lab) && !isLabCompleted(lab))?.id;
+
   useEffect(() => {
     fetch('https://starknet-sepolia.public.blastapi.io/rpc/v0_7', {
       method: 'POST',
@@ -176,72 +161,72 @@ export default function CairoBuilderTrackScreen() {
   const completedCount = CAIRO_LABS.filter(isLabCompleted).length;
 
   return (
-    <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
-      {/* Header */}
-      <View style={[s.header, { borderBottomColor: colors.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={s.back}>
-          <Text style={{ color: ACCENT, fontSize: 16, fontWeight: '700' }}>← Back</Text>
-        </TouchableOpacity>
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <Text style={{ fontSize: 22, fontWeight: '900', color: colors.text }}>🏗️ Cairo Builder</Text>
-          <Text style={{ fontSize: 11, color: colors.textSoft, marginTop: 1 }}>Developer Track</Text>
-        </View>
-        <View style={{ width: 60 }} />
-      </View>
-
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <ScrollView
-        contentContainerStyle={s.scroll}
+        contentContainerStyle={styles.scroll}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={ACCENT} />}
+        showsVerticalScrollIndicator={false}
       >
-        {/* Sepolia live indicator */}
-        <View style={[s.sepoliaBanner, { backgroundColor: '#0A2A1A', borderColor: '#00FF8830' }]}>
-          <Text style={{ fontSize: 16 }}>⚡</Text>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: '#00FF88', fontWeight: '800', fontSize: 11 }}>
-              STARKNET SEPOLIA {sepoliaBlock ? `LIVE — Block ${sepoliaBlock}` : 'CONNECTING...'}
-            </Text>
-            <Text style={{ color: '#888', fontSize: 10, marginTop: 1 }}>
-              All deployments verified on-chain · snforge tests run locally
-            </Text>
-          </View>
-        </View>
-
-        {/* Progress */}
-        <View style={[s.progressCard, { backgroundColor: `${ACCENT}10`, borderColor: `${ACCENT}30` }]}>
-          <Text style={{ color: ACCENT, fontWeight: '800', fontSize: 12 }}>PROGRESS</Text>
-          <Text style={{ color: colors.text, fontSize: 28, fontWeight: '900', marginTop: 4 }}>
-            {completedCount}/{CAIRO_LABS.length}
+        <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <TouchableOpacity onPress={() => router.back()} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
+            <Text style={[styles.backButtonText, { color: colors.text }]}>{'<'} Back</Text>
+          </TouchableOpacity>
+          <Text style={[styles.heroEyebrow, { color: ACCENT }]}>Builder Workspace</Text>
+          <Text style={[styles.heroTitle, { color: colors.text }]}>Cairo Builder</Text>
+          <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+            Write, test, deploy, and audit Starknet contracts with the exact lab progression preserved.
           </Text>
-          <Text style={{ color: colors.textSoft, fontSize: 12 }}>labs completed</Text>
-          <View style={[s.bar, { backgroundColor: colors.border }]}>
-            <View style={[s.barFill, { backgroundColor: ACCENT, width: `${(completedCount / CAIRO_LABS.length) * 100}%` }]} />
+
+          <View style={styles.heroStats}>
+            <View style={[styles.heroStatCard, { backgroundColor: colors.bgSecondary }]}>
+              <Text style={[styles.heroStatValue, { color: ACCENT }]}>{completedCount}/{CAIRO_LABS.length}</Text>
+              <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Labs cleared</Text>
+            </View>
+            <View style={[styles.heroStatCard, { backgroundColor: colors.bgSecondary }]}>
+              <Text style={[styles.heroStatValue, { color: colors.text }]}>{sepoliaBlock ?? '...'}</Text>
+              <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Sepolia block</Text>
+            </View>
+            <View style={[styles.heroStatCard, { backgroundColor: colors.bgSecondary }]}>
+              <Text style={[styles.heroStatValue, { color: currentLabId ? ACCENT : '#10B981' }]}>{currentLabId ? 'Continue' : 'Review'}</Text>
+              <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>State</Text>
+            </View>
           </View>
         </View>
 
-        {/* Quick links */}
-        <View style={s.links}>
-          <TouchableOpacity style={[s.link, { borderColor: ACCENT }]}
-            onPress={() => Linking.openURL('https://book.cairo-lang.org')}>
-            <Text style={{ color: ACCENT, fontWeight: '700', fontSize: 12 }}>📖 Cairo Book</Text>
+        <View style={[styles.bannerCard, { backgroundColor: colors.card, borderColor: '#00FF8830' }]}>
+          <Text style={[styles.bannerEyebrow, { color: '#00FF88' }]}>Sepolia Live</Text>
+          <Text style={[styles.bannerTitle, { color: colors.text }]}>
+            {sepoliaBlock ? `Connected at block ${sepoliaBlock}` : 'Connecting to Starknet Sepolia'}
+          </Text>
+          <Text style={[styles.bannerBody, { color: colors.textSoft }]}>
+            Deployments stay on-chain and testing remains grounded in the real Cairo toolchain.
+          </Text>
+        </View>
+
+        <View style={styles.linkRow}>
+          <TouchableOpacity style={[styles.linkChip, { borderColor: ACCENT }]} onPress={() => Linking.openURL('https://book.cairo-lang.org')}>
+            <Text style={[styles.linkText, { color: ACCENT }]}>Cairo Book</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[s.link, { borderColor: ACCENT }]}
-            onPress={() => Linking.openURL('https://docs.swmansion.com/scarb/')}>
-            <Text style={{ color: ACCENT, fontWeight: '700', fontSize: 12 }}>🔨 Scarb Docs</Text>
+          <TouchableOpacity style={[styles.linkChip, { borderColor: ACCENT }]} onPress={() => Linking.openURL('https://docs.swmansion.com/scarb/')}>
+            <Text style={[styles.linkText, { color: ACCENT }]}>Scarb Docs</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[s.link, { borderColor: ACCENT }]}
-            onPress={() => Linking.openURL('https://foundry-rs.github.io/starknet-foundry/')}>
-            <Text style={{ color: ACCENT, fontWeight: '700', fontSize: 12 }}>🧪 snforge Docs</Text>
+          <TouchableOpacity style={[styles.linkChip, { borderColor: ACCENT }]} onPress={() => Linking.openURL('https://foundry-rs.github.io/starknet-foundry/')}>
+            <Text style={[styles.linkText, { color: ACCENT }]}>snforge Docs</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Lab list */}
-        <Text style={[s.sectionTitle, { color: colors.text }]}>LABS</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionEyebrow, { color: colors.textMuted }]}>Labs</Text>
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>Builder Sequence</Text>
+        </View>
+
         {CAIRO_LABS.map(lab => (
           <LabCard
             key={lab.id}
             lab={lab}
             unlocked={isLabUnlocked(lab)}
             completed={isLabCompleted(lab)}
+            current={lab.id === currentLabId}
             onPress={() => handleLabPress(lab)}
           />
         ))}
@@ -250,19 +235,41 @@ export default function CairoBuilderTrackScreen() {
   );
 }
 
-const s = StyleSheet.create({
-  screen:       { flex: 1 },
-  header:       { flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.md,
-                  paddingVertical: Spacing.sm, borderBottomWidth: 1 },
-  back:         { width: 60 },
-  scroll:       { padding: Spacing.md, gap: Spacing.md, paddingBottom: 60 },
-  sepoliaBanner:{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'center',
-                  borderRadius: Radius.md, borderWidth: 1, padding: Spacing.sm },
-  progressCard: { borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.lg },
-  bar:          { height: 6, borderRadius: 3, marginTop: Spacing.sm, overflow: 'hidden' },
-  barFill:      { height: '100%', borderRadius: 3 },
-  links:        { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
-  link:         { borderRadius: Radius.full, borderWidth: 1.5, paddingHorizontal: Spacing.md,
-                  paddingVertical: 6 },
-  sectionTitle: { fontSize: 11, fontWeight: '900', letterSpacing: 0.8 },
+const styles = StyleSheet.create({
+  screen: { flex: 1 },
+  scroll: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: 60 },
+  heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
+  backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
+  backButtonText: { fontSize: FontSize.xs, fontWeight: '800' },
+  heroEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: '900' },
+  heroSub: { fontSize: FontSize.sm, lineHeight: 20 },
+  heroStats: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
+  heroStatCard: { flex: 1, minWidth: 98, borderRadius: Radius.lg, padding: Spacing.md, gap: 2 },
+  heroStatValue: { fontSize: FontSize.md, fontWeight: '900' },
+  heroStatLabel: { fontSize: 10, fontWeight: '700' },
+  bannerCard: { borderWidth: 1, borderRadius: Radius.xl, padding: Spacing.lg, gap: Spacing.xs },
+  bannerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  bannerTitle: { fontSize: FontSize.md, fontWeight: '900' },
+  bannerBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  linkRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
+  linkChip: { borderRadius: Radius.full, borderWidth: 1.5, paddingHorizontal: Spacing.md, paddingVertical: 7 },
+  linkText: { fontSize: 12, fontWeight: '700' },
+  sectionHeader: { gap: 4, marginTop: Spacing.xs },
+  sectionEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
+  sectionTitle: { fontSize: FontSize.lg, fontWeight: '900' },
+  labCard: { borderRadius: Radius.xl, borderWidth: 1.5, padding: Spacing.md, gap: Spacing.sm, ...Shadow.sm },
+  labHeader: { flexDirection: 'row', gap: Spacing.sm, alignItems: 'flex-start' },
+  numberBadge: { width: 42, height: 42, borderRadius: 21, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  numberText: { fontWeight: '900', fontSize: FontSize.md },
+  labCopy: { flex: 1 },
+  labEyebrow: { fontSize: 10, fontWeight: '900', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
+  labTitle: { fontWeight: '800', fontSize: FontSize.md, marginBottom: 2 },
+  labDesc: { fontSize: FontSize.sm, lineHeight: 18 },
+  statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
+  statePillText: { fontSize: 10, fontWeight: '900' },
+  tagRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, alignItems: 'center' },
+  lessonMeta: { fontSize: FontSize.xs, marginRight: 4 },
+  tag: { borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 3 },
+  tagText: { fontSize: 9, fontWeight: '700' },
 });

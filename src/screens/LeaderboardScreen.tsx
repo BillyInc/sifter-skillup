@@ -18,19 +18,21 @@ import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { leaderboardEngine, type LeaderboardScope } from '../lib/leaderboardEngine';
 import type { Leaderboard, LeaderboardEntry } from '../types/social';
+import { resolveTrackContext } from '../lib/trackContext';
 
 // XP stage colours reused from character system
 const STAGE_COLORS = ['','#94A3B8','#3B82F6','#22C55E','#F59E0B','#EF4444','#8B5CF6','#EC4899','#F59E0B'];
 const SCOPE_TABS: { scope: LeaderboardScope; label: string; emoji: string }[] = [
   { scope: 'global', label: 'Global',  emoji: '🌐' },
   { scope: 'field',  label: 'Field',   emoji: '📊' },
-  { scope: 'track',  label: 'Track',   emoji: '🎯' },
+  { scope: 'track',  label: 'Workspace',   emoji: '🎯' },
 ];
 const RANK_MEDALS: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
 
 export default function LeaderboardScreen({ navigation: _navigation }: any) {
   const { colors } = useTheme();
   const { user }   = useAuth();
+  const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
   const { width }  = useWindowDimensions();
   const isWebWide  = Platform.OS === 'web' && width >= 768;
 
@@ -127,7 +129,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
           Week of {start} – {end} · Resets Sunday 23:59 UTC
         </Text>
         <Text style={[styles.weekReward, { color: colors.gold }]}>
-          🏆 Top 3 win XP + Merch Credits + Badge
+          Top 3 earn bonus XP, merch credits, and leaderboard badges.
         </Text>
       </View>
     );
@@ -168,7 +170,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
       <View style={styles.empty}>
         <Text style={styles.emptyEmoji}>🏆</Text>
         <Text style={[styles.emptyTitle, { color: colors.text }]}>No entries yet this week</Text>
-        <Text style={[styles.emptySub, { color: colors.textMuted }]}>Complete lessons to appear on the board.</Text>
+        <Text style={[styles.emptySub, { color: colors.textMuted }]}>Complete workspace activity to appear on the board.</Text>
       </View>
     );
     return (
@@ -223,10 +225,14 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
 
   const Header = () => (
     <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-      <Text style={[styles.headerTitle, { color: colors.text }]}>🏆 Leaderboard</Text>
+      <Text style={[styles.headerTitle, { color: colors.text }]}>Leaderboard</Text>
       {board && (
         <Text style={[styles.headerSub, { color: colors.accent }]}>
-          {board.entries.length} players · {scope === 'global' ? 'Global' : scope === 'field' ? user?.active_field_id ?? 'Field' : user?.current_track_id ?? 'Track'}
+          {board.entries.length} players · {scope === 'global'
+            ? 'Global'
+            : scope === 'field'
+              ? (trackContext.fieldId ?? user?.active_field_id ?? 'Field')
+              : (trackContext.mode === 'track' ? trackContext.trackName : user?.current_track_id ?? 'Workspace')}
         </Text>
       )}
     </View>
@@ -240,7 +246,9 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
           <ScrollView style={{ flex: 1 }} contentContainerStyle={{ maxWidth: 900, alignSelf: 'center', width: '100%', paddingHorizontal: 28, paddingTop: 28, paddingBottom: 64 }}>
             <View style={{ marginBottom: 28, paddingBottom: 16, position: 'relative' }}>
               <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
-              <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>Global · Field · Track · Weekly reset</Text>
+              <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
+                Global, field, and workspace competition with a weekly reset.
+              </Text>
               <View style={{ position: 'absolute', bottom: 0, left: 0, height: 3, width: 48, borderRadius: Radius.full, backgroundColor: colors.accent }} />
             </View>
             <Header />

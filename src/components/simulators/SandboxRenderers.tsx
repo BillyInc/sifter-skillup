@@ -149,12 +149,12 @@ export function DataModelRenderer({
 
 const dm = StyleSheet.create({
   row:          { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8, gap: 8 },
-  rowBorder:    { borderBottomWidth: 1, borderBottomColor: '#f1f5f9' },
+  rowBorder:    { borderBottomWidth: 1, borderBottomColor: Colors.border },
   key:          { fontSize: 12, color: Colors.textSoft, fontWeight: '600', flex: 1 },
   val:          { fontSize: 12, color: Colors.text, fontWeight: '700', flex: 1.5, textAlign: 'right' },
   valHighlight: { color: Colors.accent },
   rawText:      { fontSize: FontSize.sm, color: Colors.text, lineHeight: 21 },
-  input:        { backgroundColor: Colors.card, color: Colors.text, fontSize: FontSize.sm, borderRadius: Radius.md, borderWidth: 1.5, padding: Spacing.md, minHeight: 140, lineHeight: 22 },
+  input:        { backgroundColor: Colors.card, color: Colors.text, fontSize: FontSize.sm, borderRadius: Radius.lg, borderWidth: 1.5, padding: Spacing.md, minHeight: 140, lineHeight: 22 },
   error:        { fontSize: 12, color: '#ef4444', fontWeight: '600' },
 });
 
@@ -297,7 +297,7 @@ const sc = StyleSheet.create({
   reqRow:      { flexDirection: 'row', gap: 8, marginBottom: 6 },
   reqBullet:   { fontSize: 16, lineHeight: 20, fontWeight: '900' },
   reqText:     { flex: 1, fontSize: 13, color: Colors.textSoft, lineHeight: 19 },
-  editorWrap:  { borderWidth: 1.5, borderRadius: Radius.lg, overflow: 'hidden', backgroundColor: '#0f172a' },
+  editorWrap:  { borderWidth: 1.5, borderRadius: Radius.xl, overflow: 'hidden', backgroundColor: '#0f172a' },
   editorHeader:{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.md, paddingVertical: 8 },
   langBadge:   { borderRadius: Radius.sm, paddingHorizontal: 10, paddingVertical: 3 },
   langText:    { fontSize: 11, fontWeight: '800', color: '#fff', letterSpacing: 0.5 },
@@ -430,8 +430,8 @@ const rp = StyleSheet.create({
   critBullet: { fontSize: 14, lineHeight: 19, fontWeight: '900' },
   critText:   { flex: 1, fontSize: 13, color: Colors.textSoft, lineHeight: 18 },
   toolbar:    { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
-  fmtBtn:     { backgroundColor: '#f1f5f9', borderRadius: Radius.sm, paddingHorizontal: 10, paddingVertical: 6, borderWidth: 1, borderColor: '#e2e8f0' },
+  fmtBtn:     { backgroundColor: Colors.bgSecondary, borderRadius: Radius.md, paddingHorizontal: 10, paddingVertical: 6, borderWidth: 1, borderColor: Colors.border },
   fmtBtnText: { fontSize: 11, fontWeight: '700', color: Colors.text, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' },
-  editor:     { backgroundColor: Colors.card, color: Colors.text, fontSize: 13, lineHeight: 22, borderRadius: Radius.md, borderWidth: 1.5, padding: Spacing.md, minHeight: 240 },
+  editor:     { backgroundColor: Colors.card, color: Colors.text, fontSize: 13, lineHeight: 22, borderRadius: Radius.lg, borderWidth: 1.5, padding: Spacing.md, minHeight: 240 },
   error:      { fontSize: 12, color: '#ef4444', fontWeight: '600' },
 });

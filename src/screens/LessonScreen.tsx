@@ -298,7 +298,7 @@ function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, o
 function ReturnBanner({ topic, onReturn }: { topic: string; onReturn: () => void }) {
   return (
     <TouchableOpacity style={sty.returnBanner} onPress={onReturn} activeOpacity={0.85}>
-      <Text style={sty.returnTxt}>← Back to "{topic}"</Text>
+      <Text style={sty.returnTxt}>← Back to &quot;{topic}&quot;</Text>
     </TouchableOpacity>
   );
 }
@@ -440,7 +440,7 @@ function TrueFalseQuestion({ q, onCorrect, onWrong }: { q:Question; onCorrect:()
     <View style={sty.body}>
       <View style={[sty.card,Shadow.md]}>
         <Text style={sty.qCtx}>True or False?</Text>
-        <Text style={[sty.qPrompt,{fontStyle:'italic'}]}>"{q.prompt}"</Text>
+        <Text style={[sty.qPrompt,{fontStyle:'italic'}]}>&quot;{q.prompt}&quot;</Text>
       </View>
       <View style={[sty.tfRow,{marginTop:Spacing.xxl}]}>
         {[{val:true,label:'✓  TRUE',bg:'#d1fae5',color:'#065f46'},{val:false,label:'✗  FALSE',bg:'#fee2e2',color:'#7f1d1d'}].map(({val,label,bg,color})=>{
@@ -1161,7 +1161,7 @@ function inferResumeLevel(labIndex: number): 'junior' | 'intermediate' | 'senior
 // ── Styles ────────────────────────────────────────────────────
 const sty = StyleSheet.create({
   screen:        {flex:1,backgroundColor:Colors.bg},
-  topBar:        {flexDirection:'row',alignItems:'center',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,backgroundColor:'#fff',borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
+  topBar:        {flexDirection:'row',alignItems:'center',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
   exitBtn:       {padding:Spacing.sm},
   exitTxt:       {fontSize:18,color:Colors.textSoft},
   progressWrap:  {flex:1},
@@ -1180,15 +1180,15 @@ const sty = StyleSheet.create({
   conceptFact:   {fontSize:FontSize.md,lineHeight:24,color:Colors.text},
   lessonBodyWrap:{gap:Spacing.md},
   lessonParagraph:{fontSize:FontSize.sm,lineHeight:23,color:Colors.text},
-  takeawayBox:   {backgroundColor:'#f8fafc',borderRadius:Radius.md,borderWidth:1,borderColor:Colors.border,padding:Spacing.md,marginTop:Spacing.lg},
+  takeawayBox:   {backgroundColor:Colors.bgSecondary,borderRadius:Radius.lg,borderWidth:1,borderColor:Colors.border,padding:Spacing.md,marginTop:Spacing.lg},
   takeawayLabel: {fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
   takeawayText:  {fontSize:FontSize.sm,lineHeight:21,color:Colors.text},
-  analogy:       {backgroundColor:'#f0f4ff',borderLeftWidth:4,borderLeftColor:Colors.accent,borderRadius:Radius.sm,padding:Spacing.md,marginTop:Spacing.lg},
+  analogy:       {backgroundColor:Colors.accentSoft,borderLeftWidth:4,borderLeftColor:Colors.accent,borderRadius:Radius.lg,padding:Spacing.md,marginTop:Spacing.lg},
   analogyLabel:  {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
   analogyText:   {fontSize:FontSize.sm,lineHeight:20,color:'#374151'},
   exampleSection:{marginTop:Spacing.lg,gap:Spacing.sm},
   exampleSectionLabel:{fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5},
-  exampleCard:   {backgroundColor:'#fff7ed',borderRadius:Radius.md,borderWidth:1,borderColor:'#fdba7440',padding:Spacing.md,gap:Spacing.xs},
+  exampleCard:   {backgroundColor:'#fff7ed',borderRadius:Radius.lg,borderWidth:1,borderColor:'#fdba7440',padding:Spacing.md,gap:Spacing.xs},
   exampleTag:    {fontSize:FontSize.xs,fontWeight:'800',color:'#c2410c'},
   exampleContext:{fontSize:FontSize.xs,lineHeight:18,color:Colors.textSoft},
   exampleScenario:{fontSize:FontSize.sm,fontWeight:'700',lineHeight:20,color:Colors.text},
@@ -1201,7 +1201,7 @@ const sty = StyleSheet.create({
   termBadgeTxt:  {fontSize:FontSize.xs,fontWeight:'700',color:Colors.accent},
   // overlay/modal
   overlay:       {flex:1,backgroundColor:'rgba(0,0,0,0.45)',justifyContent:'center',alignItems:'center',padding:Spacing.xl},
-  termModal:     {backgroundColor:Colors.card,borderRadius:Radius.xl,padding:Spacing.xxl,width:'100%',maxWidth:420},
+  termModal:     {backgroundColor:Colors.card,borderRadius:Radius.xl,padding:Spacing.xxl,width:'100%',maxWidth:420,borderWidth:1,borderColor:Colors.border},
   termModalHead: {flexDirection:'row',alignItems:'center',marginBottom:Spacing.md,gap:Spacing.sm},
   termModalIcon: {fontSize:22},
   termModalTitle:{flex:1,fontSize:FontSize.md,fontWeight:'800',color:Colors.text},
@@ -1212,18 +1212,18 @@ const sty = StyleSheet.create({
   returnBanner:  {backgroundColor:Colors.accentSoft,borderBottomWidth:1,borderBottomColor:Colors.accent+'40',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm},
   returnTxt:     {fontSize:FontSize.sm,fontWeight:'700',color:Colors.accent},
   // notes panel
-  notePanel:     {flex:1,backgroundColor:Colors.bg,marginTop:60},
+  notePanel:     {flex:1,backgroundColor:Colors.bg,marginTop:60,borderTopLeftRadius:Radius.xl,borderTopRightRadius:Radius.xl,overflow:'hidden'},
   notePanelHead: {flexDirection:'row',alignItems:'center',padding:Spacing.lg,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border},
   notePanelTitle:{fontSize:FontSize.md,fontWeight:'800',color:Colors.text},
   noteDraftRow:  {flexDirection:'row',gap:Spacing.sm,padding:Spacing.lg,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border},
-  noteDraftInput:{flex:1,minHeight:44,maxHeight:100,borderWidth:1.5,borderColor:Colors.border,borderRadius:Radius.md,paddingHorizontal:Spacing.md,paddingVertical:Spacing.sm,fontSize:FontSize.sm,color:Colors.text,backgroundColor:'#f8fafc'},
+  noteDraftInput:{flex:1,minHeight:44,maxHeight:100,borderWidth:1.5,borderColor:Colors.border,borderRadius:Radius.lg,paddingHorizontal:Spacing.md,paddingVertical:Spacing.sm,fontSize:FontSize.sm,color:Colors.text,backgroundColor:Colors.bgSecondary},
   noteSaveBtn:   {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingHorizontal:Spacing.lg,alignItems:'center',justifyContent:'center'},
   noteSaveBtnTxt:{color:'#fff',fontSize:FontSize.sm,fontWeight:'800'},
-  noteCard:      {backgroundColor:Colors.card,borderRadius:Radius.md,padding:Spacing.md,borderWidth:1,borderColor:Colors.border,marginBottom:Spacing.sm},
+  noteCard:      {backgroundColor:Colors.card,borderRadius:Radius.lg,padding:Spacing.md,borderWidth:1,borderColor:Colors.border,marginBottom:Spacing.sm},
   noteContent:   {fontSize:FontSize.sm,lineHeight:20,color:Colors.text},
   noteFooter:    {flexDirection:'row',justifyContent:'space-between',marginTop:Spacing.sm},
   noteDate:      {fontSize:FontSize.xs,color:Colors.textMuted},
-  faucetBanner:  {marginHorizontal:Spacing.lg, marginTop:Spacing.md, borderRadius:Radius.lg, borderWidth:1, borderColor:'#ec489940', backgroundColor:'#fff6fb', padding:Spacing.md},
+  faucetBanner:  {marginHorizontal:Spacing.lg, marginTop:Spacing.md, borderRadius:Radius.xl, borderWidth:1, borderColor:'#ec489940', backgroundColor:'#fff6fb', padding:Spacing.md},
   faucetBannerTitle:{fontSize:FontSize.sm,fontWeight:'800',color:'#9d174d'},
   faucetBannerSub:{fontSize:FontSize.xs,lineHeight:18,color:Colors.textSoft,marginTop:4},
   // questions

@@ -10,7 +10,7 @@ import {
   Modal, View, Text, StyleSheet, TouchableOpacity, ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 
 interface Props {
   visible: boolean;
@@ -28,13 +28,16 @@ export default function OAuthConsentModal({
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onDecline}>
       <SafeAreaView style={styles.safe}>
         <ScrollView contentContainerStyle={styles.body}>
-          <Text style={styles.emoji}>{platformEmoji}</Text>
-          <Text style={styles.title}>Connect to {platform}</Text>
-          <Text style={styles.sub}>
-            Before you connect, here&apos;s exactly what Sifter Skill_Up will and won&apos;t do with your {platform} account.
-          </Text>
+          <View style={[styles.hero, Shadow.sm]}>
+            <Text style={styles.emoji}>{platformEmoji}</Text>
+            <Text style={styles.eyebrow}>Connection Review</Text>
+            <Text style={styles.title}>Connect to {platform}</Text>
+            <Text style={styles.sub}>
+              Before you connect, here&apos;s exactly what Sifter Skill_Up will and won&apos;t do with your {platform} account.
+            </Text>
+          </View>
 
-          <Text style={styles.sectionLabel}>✅ WE WILL:</Text>
+          <Text style={styles.sectionLabel}>✅ WE WILL</Text>
           {permissions.map((p, i) => (
             <View key={i} style={styles.permRow}>
               <Text style={styles.permIcon}>✓</Text>
@@ -42,7 +45,7 @@ export default function OAuthConsentModal({
             </View>
           ))}
 
-          <Text style={[styles.sectionLabel, { marginTop: Spacing.lg }]}>✗ WE WILL NEVER:</Text>
+          <Text style={[styles.sectionLabel, { marginTop: Spacing.lg }]}>✗ WE WILL NEVER</Text>
           {[
             'Store your password',
             'Post, push, or update anything without your review and approval',
@@ -110,11 +113,13 @@ export const PLATFORM_PERMISSIONS: Record<string, string[]> = {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
   body: { padding: Spacing.xl, alignItems: 'center' },
-  emoji: { fontSize: 48, marginBottom: Spacing.md, marginTop: Spacing.lg },
+  hero: { width: '100%', backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: Colors.border, marginTop: Spacing.lg, marginBottom: Spacing.lg },
+  emoji: { fontSize: 48, marginBottom: Spacing.md },
+  eyebrow: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: Spacing.xs },
   title: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm, textAlign: 'center' },
   sub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20, marginBottom: Spacing.xl },
   sectionLabel: { fontSize: 10, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1.2, alignSelf: 'flex-start', marginBottom: Spacing.sm },
-  permRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, alignSelf: 'stretch', marginBottom: Spacing.xs },
+  permRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, alignSelf: 'stretch', marginBottom: Spacing.xs, backgroundColor: Colors.card, borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1, borderColor: Colors.border },
   permIcon: { fontSize: 14, color: Colors.green, fontWeight: '800', width: 16 },
   permText: { flex: 1, fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
   revokeNote: { backgroundColor: Colors.greenSoft, borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.lg, width: '100%' },

@@ -1,9 +1,9 @@
 /**
  * Sifter Skill_Up — Field Artwork System
  *
- * Each field gets a unique animated living illustration.
+ * Each field gets a distinct animated illustration.
  * No external SVG library needed — pure React Native Animated Views.
- * These are "Harry Potter paintings" — they always move.
+ * These are living illustrations that stay in motion.
  */
 
 import React, { useEffect, useRef } from 'react';
@@ -92,7 +92,7 @@ function useTravel(fromX: number, toX: number, duration = 3000, delay = 0) {
 }
 
 // ─── CRYPTO / WEB3 ─────────────────────────────────────────────────────────────
-// Blockchain nodes floating in a network with electric data packets
+// Blockchain nodes in a network with moving data packets.
 
 export function CryptoArtwork({ size = 200 }: { size?: number }) {
   // Floating nodes
@@ -242,7 +242,7 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
 // Animated trading chart with ascending price line
 
 export function QuantArtwork({ size = 200 }: { size?: number }) {
-  const C = '#5B5FCF';
+  const C = '#6366F1';
   const DIM = size;
 
   const chartAnim = useRef(new Animated.Value(0)).current;
@@ -627,7 +627,7 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
         position: 'absolute', top: DIM * 0.33, left: DIM * 0.2,
         width: DIM * 0.6, height: DIM * 0.34,
         borderRadius: 8,
-        backgroundColor: '#0A0A0A',
+        backgroundColor: '#111111',
         borderWidth: 1.5, borderColor: C,
         padding: DIM * 0.03,
         transform: [{ scale: pulse1 }],
@@ -643,7 +643,7 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
 // ─── GENERIC / DEFAULT ─────────────────────────────────────────────────────────
 // Pulsing orbs for any field without specific artwork
 
-export function GenericArtwork({ size = 200, color = '#5B5FCF', emoji = '⚡' }: {
+export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '⚡' }: {
   size?: number; color?: string; emoji?: string;
 }) {
   const DIM = size;
@@ -729,7 +729,7 @@ export function FieldArtwork({ fieldId, size = 180 }: { fieldId: string; size?: 
 // Field IDs are EXACT matches from src/data/fieldDetails.ts
 const COLORS: Record<string, string> = {
   'crypto':                 '#F97316',
-  'quant':                  '#5B5FCF',
+  'quant':                  '#6366F1',
   'ai-ml':                  '#3B82F6',
   'supply-chain':           '#10B981',
   'software-engineering':   '#06B6D4',
@@ -753,8 +753,8 @@ const COLORS: Record<string, string> = {
   'insurance-actuarial':    '#8B5CF6',
   'agriculture-tech':       '#22C55E',
   'creative-media':         '#F59E0B',
-  'computational-science':  '#5B5FCF',
-  'specialized-engineering':'#94A3B8',
+  'computational-science':  '#6366F1',
+  'specialized-engineering':'#6B7280',
   'public-sector-ngo':      '#6B7280',
   'writing-content':        '#F59E0B',
 };
@@ -791,7 +791,7 @@ const EMOJIS: Record<string, string> = {
   'writing-content':        '✍️',
 };
 
-export const fieldColor = (id: string) => getFieldColor(id) || COLORS[id] || '#5B5FCF';
+export const fieldColor = (id: string) => getFieldColor(id) || COLORS[id] || '#6366F1';
 export const fieldEmoji = (id: string) => getFieldIcon(id) || EMOJIS[id] || '⚡';
 
 // ─── Shared styles ─────────────────────────────────────────────────────────────

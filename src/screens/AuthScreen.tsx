@@ -96,7 +96,7 @@ function CircuitBackground({ isDark }: { isDark: boolean }) {
     ).start();
   }, [pulse]);
 
-  const dotColor = isDark ? 'rgba(99,102,241,0.18)' : 'rgba(99,102,241,0.10)';
+  const dotColor = isDark ? 'rgba(148,163,184,0.18)' : 'rgba(148,163,184,0.12)';
   const cols = Math.ceil(W / 40);
   const rows = Math.ceil(H / 40);
   const opacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });
@@ -188,11 +188,14 @@ type StarknetOnReady = (
 function StarknetHeader() {
   return (
     <View style={{ alignItems: 'center', marginBottom: Spacing.xl }}>
+      <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: 'rgba(255,255,255,0.52)', textAlign: 'center', letterSpacing: 1, marginBottom: 8 }}>
+        STARKNET ACCESS
+      </Text>
       <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' }}>
-        Starknet World
+        Continue with Starknet
       </Text>
       <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.68)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
-        Log in or create access with Privy, then continue straight into the Starknet islands.
+        Sign in with Privy, sync your wallet, and return directly to the Starknet path.
       </Text>
     </View>
   );
@@ -529,10 +532,23 @@ export default function AuthScreen() {
         ) : null}
         <ScrollView contentContainerStyle={styles.welcomeContent} showsVerticalScrollIndicator={false}>
           <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
+            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>SKILL PLATFORM</Text>
             <Text style={[styles.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
             <Text style={[styles.tagline, { color: colors.textSoft }]}>
-              Compact, track-first learning for crypto, operations, and advanced career paths.
+              A cleaner way to enter tracks, save progress, and keep learning moving.
             </Text>
+
+            <View style={styles.featureList}>
+              {[
+                'Track-first onboarding',
+                'Saved progress across devices',
+                'Guest mode if you want to explore first',
+              ].map((item) => (
+                <View key={item} style={[styles.featureItem, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                  <Text style={[styles.featureText, { color: colors.textSoft }]}>{item}</Text>
+                </View>
+              ))}
+            </View>
 
             <View style={styles.btnGroup}>
               <AuthButton label="Create account" onPress={() => setMode('signup')} colors={colors} />
@@ -543,8 +559,8 @@ export default function AuthScreen() {
                 activeOpacity={0.85}
               >
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.starknetCTATitle, { color: STARKNET_THEME.palette.primary }]}>Log in or create with Starknet</Text>
-                  <Text style={styles.starknetCTASub}>Privy auth, wallet sync, and direct Starknet island return</Text>
+                  <Text style={[styles.starknetCTATitle, { color: STARKNET_THEME.palette.primary }]}>Use Starknet access</Text>
+                  <Text style={styles.starknetCTASub}>Privy sign-in, wallet sync, and direct return to Starknet content</Text>
                 </View>
               </TouchableOpacity>
 
@@ -566,7 +582,7 @@ export default function AuthScreen() {
               />
 
               <TouchableOpacity style={styles.guestBtn} onPress={() => run(signInGuest)} disabled={loading}>
-                {loading ? <ActivityIndicator color={colors.textMuted} size="small" /> : <Text style={[styles.guestText, { color: colors.textMuted }]}>Continue as guest</Text>}
+                  {loading ? <ActivityIndicator color={colors.textMuted} size="small" /> : <Text style={[styles.guestText, { color: colors.textMuted }]}>Browse first with guest access</Text>}
               </TouchableOpacity>
             </View>
 
@@ -593,10 +609,10 @@ export default function AuthScreen() {
               </TouchableOpacity>
 
               <Text style={[styles.formTitle, { color: colors.text }]}>
-                {mode === 'login' ? 'Welcome back' : 'Create account'}
+                {mode === 'login' ? 'Welcome back' : 'Create your account'}
               </Text>
               <Text style={[styles.formSub, { color: colors.textSoft }]}>
-                {mode === 'login' ? 'Return to your saved track and continue.' : 'Create your account and enter your first track.'}
+                {mode === 'login' ? 'Return to your saved track and continue.' : 'Create an account to save your track setup and progress.'}
               </Text>
 
               {error ? (
@@ -656,8 +672,12 @@ const styles = StyleSheet.create({
   welcomeContent: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.lg, paddingBottom: Spacing.xxxl },
   formContent: { flexGrow: 1, justifyContent: 'center', padding: Spacing.lg, paddingBottom: Spacing.xxxl, alignItems: 'center' },
   card: { width: '100%', maxWidth: 430, borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1, gap: Spacing.sm },
+  eyebrow: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 1, textAlign: 'center' },
   appName: { fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' },
   tagline: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
+  featureList: { gap: Spacing.xs, marginVertical: Spacing.sm },
+  featureItem: { borderRadius: Radius.md, borderWidth: 1, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  featureText: { fontSize: FontSize.xs, textAlign: 'center', fontWeight: '600' },
   btnGroup: { gap: Spacing.sm },
   authButton: { width: '100%' },
   input: { borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: 12, fontSize: FontSize.sm, width: '100%' },

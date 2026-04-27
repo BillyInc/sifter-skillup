@@ -290,7 +290,8 @@ export default function DiaryScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
       <View style={[styles.header, { borderBottomColor: colors.border, backgroundColor: colors.card }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>📓 My Diary</Text>
+        <Text style={[styles.headerEyebrow, { color: colors.accent }]}>Sifter Workspace</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>My Diary</Text>
         <Text style={[styles.headerSub, { color: colors.green }]}>🔒 Stored only on this device</Text>
       </View>
 
@@ -423,10 +424,11 @@ export default function DiaryScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   header: { paddingHorizontal: Spacing.lg, paddingTop: Spacing.md, paddingBottom: Spacing.sm, borderBottomWidth: 1 },
+  headerEyebrow: { fontSize: 10, fontWeight: '800', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
   headerTitle: { fontSize: FontSize.xl, fontWeight: '900' },
   headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: '700' },
   tabBar: { flexDirection: 'row', borderBottomWidth: 1, paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, gap: Spacing.xs },
-  tabBtn: { flex: 1, paddingVertical: 8, alignItems: 'center', borderRadius: Radius.full },
+  tabBtn: { flex: 1, paddingVertical: 10, alignItems: 'center', borderRadius: Radius.full },
   tabBtnActive: {},
   tabLabel: { fontSize: 11, fontWeight: '700' },
   tabLabelActive: { color: '#fff', fontWeight: '800' },
@@ -438,7 +440,7 @@ const styles = StyleSheet.create({
   filterChipTextActive: { color: '#fff', fontWeight: '800' },
 
   scroll: { flex: 1 },
-  noteCard: { margin: Spacing.md, marginBottom: 0, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1 },
+  noteCard: { margin: Spacing.md, marginBottom: 0, borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1 },
   noteHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: 6 },
   noteCat: { fontSize: 16 },
   noteTitle: { flex: 1, fontSize: FontSize.sm, fontWeight: '800' },
@@ -446,7 +448,7 @@ const styles = StyleSheet.create({
   noteMeta: { flexDirection: 'row', gap: Spacing.sm },
   noteMetaText: { fontSize: 10, paddingHorizontal: 6, paddingVertical: 2, borderRadius: Radius.sm, overflow: 'hidden' },
 
-  bookmarkCard: { margin: Spacing.md, marginBottom: 0, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1 },
+  bookmarkCard: { margin: Spacing.md, marginBottom: 0, borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1 },
   bookmarkMeta: { flexDirection: 'row', gap: 4, alignItems: 'center', marginBottom: 4 },
   bookmarkField: { fontSize: 10, fontWeight: '700' },
   bookmarkSep: { fontSize: 10 },
@@ -457,11 +459,11 @@ const styles = StyleSheet.create({
   bookmarkNote: { fontSize: FontSize.xs, marginBottom: 6 },
   deleteBookmarkText: { fontSize: FontSize.xs, alignSelf: 'flex-end', fontWeight: '700' },
 
-  emptyState: { margin: Spacing.md, borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.lg, gap: Spacing.xs },
+  emptyState: { margin: Spacing.md, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.xs },
   emptyTitle: { fontSize: FontSize.md, fontWeight: '800' },
   emptyBody: { fontSize: FontSize.sm, lineHeight: 20 },
 
-  fab: { position: 'absolute', bottom: 24, right: 24, width: 52, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center' },
+  fab: { position: 'absolute', bottom: 24, right: 24, width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center' },
   fabText: { color: '#fff', fontSize: 28, fontWeight: '300', lineHeight: 30 },
 
   // Editor

@@ -65,7 +65,7 @@ function Shell({ title, icon, subtitle, children }: {
       <View style={s.header}>
         <Text style={s.icon}>{icon}</Text>
         <View style={{ flex: 1 }}>
-          <Text style={s.label}>⚡ SIFTER SKILL_UP</Text>
+          <Text style={s.label}>Sifter Runtime Lab</Text>
           <Text style={s.title}>{title}</Text>
           <Text style={s.subtitle}>{subtitle}</Text>
         </View>
@@ -362,7 +362,7 @@ export default function SimulatorFactory({ def, onComplete, onSkip }: SimProps) 
 const s = StyleSheet.create({
   wrap:     { flex: 1 },
   content:  { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
-  header:   { flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' },
+  header:   { flexDirection: 'row', gap: Spacing.md, backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.md, alignItems: 'flex-start', borderWidth: 1, borderColor: Colors.border },
   icon:     { fontSize: 36, lineHeight: 44 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
   title:    { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 },
@@ -370,7 +370,7 @@ const s = StyleSheet.create({
 });
 
 const btn = StyleSheet.create({
-  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center', width: '100%', marginTop: 12 },
+  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.lg, paddingVertical: Spacing.lg, alignItems: 'center', width: '100%', marginTop: 12 },
   disabled:    { opacity: 0.4 },
   primaryText: { color: '#fff', fontSize: FontSize.lg, fontWeight: '800' },
   ghost:       { paddingVertical: Spacing.md, alignItems: 'center', marginTop: 4 },
@@ -380,14 +380,14 @@ const btn = StyleSheet.create({
 const mcq = StyleSheet.create({
   progress:     { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 16 },
   progressText: { fontSize: 12, color: Colors.textSoft, fontWeight: '700', minWidth: 40 },
-  progressBar:  { flex: 1, height: 4, backgroundColor: '#e2e8f0', borderRadius: 2 },
+  progressBar:  { flex: 1, height: 4, backgroundColor: Colors.border, borderRadius: 2 },
   progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
   prompt:       { fontSize: 15, color: Colors.text, lineHeight: 22, fontWeight: '500', marginBottom: 4 },
   codeBox:      { backgroundColor: '#1e293b', borderRadius: Radius.md, padding: Spacing.md, marginBottom: 12 },
   codeText:     { fontFamily: 'monospace', color: '#e2e8f0', fontSize: 12, lineHeight: 19 },
-  option:       { borderWidth: 2, borderRadius: Radius.md, padding: Spacing.md },
+  option:       { borderWidth: 2, borderRadius: Radius.lg, padding: Spacing.md },
   optionText:   { fontSize: 14, fontWeight: '600', fontFamily: 'monospace' },
-  explain:      { borderRadius: Radius.md, padding: Spacing.md, marginTop: 12, marginBottom: 4 },
+  explain:      { borderRadius: Radius.lg, padding: Spacing.md, marginTop: 12, marginBottom: 4, borderWidth: 1, borderColor: Colors.border },
   explainLabel: { fontSize: 13, fontWeight: '700', color: '#0f172a', marginBottom: 4 },
   explainText:  { fontSize: 13, color: '#374151', lineHeight: 20 },
 });
@@ -401,7 +401,7 @@ const build = StyleSheet.create({
 });
 
 const mch = StyleSheet.create({
-  card:      { backgroundColor: '#f0f4ff', borderWidth: 2, borderColor: Colors.accent, borderRadius: Radius.md, padding: 10, minHeight: 52, justifyContent: 'center' },
+  card:      { backgroundColor: Colors.card, borderWidth: 2, borderColor: Colors.border, borderRadius: Radius.lg, padding: 10, minHeight: 52, justifyContent: 'center' },
   cardActive: { backgroundColor: '#e0e7ff', borderColor: '#4338ca' },
   cardDone:   { backgroundColor: '#d1fae5', borderColor: '#10b981' },
   cardWrong:  { backgroundColor: '#fee2e2', borderColor: '#ef4444' },

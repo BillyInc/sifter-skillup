@@ -1,606 +1,631 @@
-/**
- * Sifter Skill_Up — Fields Screen
- *
- * Interactive skill field discovery. Each field is a full-height animated panel.
- * Scroll to browse. Tap to enter — the card expands into a portal.
- * "Harry Potter painting" feel — everything is always in motion.
- *
- * Layout:
- *   - Vertical snap-scroll stack of field panels
- *   - Each panel: unique animated artwork + field identity
- *   - Tap → spring expand to full screen → track pathway appears
- *   - Crypto special case: shows island chain pathway
- */
-
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Animated, Easing, Dimensions, SafeAreaView, Modal,
-  TouchableWithoutFeedback,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { useNavigation } from 'expo-router';
-import { Radius, FontSize, FontWeight, Spacing } from '../theme';
-import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTrack } from '../data/fieldDetails';
+import {
+  FontSize,
+  FontWeight,
+  Radius,
+  Shadow,
+  Spacing,
+  useTheme,
+} from '../theme';
+import {
+  getAllFieldDetails,
+  getFieldDetail,
+  type FieldDetail,
+  type FieldSkillTrack,
+} from '../data/fieldDetails';
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
-import { getFieldGradient as resolveFieldGradient } from '../lib/visualThemes';
 
-const { width: SW, height: SH } = Dimensions.get('window');
+type FieldSummary = {
+  id: string;
+  name: string;
+  status: 'live' | 'coming_soon';
+};
 
-const CARD_HEIGHT = SH * 0.78;
-const PEEK_HEIGHT = SH * 0.11;  // how much of next card peeks
-
-// ─── Field background gradients ────────────────────────────────────────────────
-
-function getFieldGradient(id: string): [string, string, string] {
-  return resolveFieldGradient(id);
-}
-
-// ─── Island chain (Crypto special case) ──────────────────────────────────────
-
-function IslandChain({ onIslandPress }: { onIslandPress: (island: any) => void }) {
-  const scrollRef  = useRef<ScrollView>(null);
-  const floats = [
-    useAnimatedFloat(5, 2000, 0),
-    useAnimatedFloat(5, 2150, 200),
-    useAnimatedFloat(5, 2300, 400),
-    useAnimatedFloat(5, 2450, 600),
-    useAnimatedFloat(5, 2600, 800),
-    useAnimatedFloat(5, 2750, 1000),
-    useAnimatedFloat(5, 2900, 1200),
-    useAnimatedFloat(5, 3050, 1400),
-  ];
-
+function StatusPill({
+  label,
+  color,
+  backgroundColor,
+}: {
+  label: string;
+  color: string;
+  backgroundColor: string;
+}) {
   return (
-    <View style={chain.root}>
-      <Text style={[chain.label, { color: '#F9731680' }]}>ONBOARDING ISLANDS</Text>
-      <ScrollView
-        ref={scrollRef}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={chain.scroll}
-        decelerationRate="fast"
-        snapToInterval={90}
-      >
-        {ISLANDS.slice(0, 18).map((island, i) => {
-          const floatAnim = floats[i % floats.length];
-          return (
-            <Animated.View key={island.id} style={[chain.islandWrap, { transform: [{ translateY: floatAnim }] }]}>
-              <TouchableOpacity
-                style={[chain.island, {
-                  backgroundColor: island.color + 'CC',
-                  borderColor: island.color,
-                  shadowColor: island.color,
-                }]}
-                onPress={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                  onIslandPress(island);
-                }}
-                activeOpacity={0.8}
-              >
-                <Text style={chain.islandIcon}>{island.icon}</Text>
-                <Text style={chain.islandNum}>{island.id}</Text>
-              </TouchableOpacity>
-              <Text style={[chain.islandName, { color: '#FFF8' }]} numberOfLines={2}>{island.name}</Text>
-            </Animated.View>
-          );
-        })}
-
-        {/* Starknet portal */}
-        <View style={chain.portalWrap}>
-          <View style={[chain.portal, { borderColor: '#EC4899', shadowColor: '#EC4899' }]}>
-            <Text style={chain.portalText}>⚡</Text>
-            <Text style={[chain.portalLabel, { color: '#EC4899' }]}>Starknet</Text>
-          </View>
-          <Text style={[chain.islandName, { color: '#EC489980' }]}>Advanced Track</Text>
-        </View>
-      </ScrollView>
+    <View style={[styles.pill, { backgroundColor }]}>
+      <Text style={[styles.pillText, { color }]}>{label}</Text>
     </View>
   );
 }
 
-// ─── Track pathway (non-crypto fields) ────────────────────────────────────────
-
-function TrackPath({
-  detail, fieldColor: C, onTrackPress,
+function TrackRow({
+  track,
+  accentColor,
+  onPress,
 }: {
-  detail: FieldDetail;
-  fieldColor: string;
-  onTrackPress: (track: FieldSkillTrack) => void;
+  track: FieldSkillTrack;
+  accentColor: string;
+  onPress: (track: FieldSkillTrack) => void;
 }) {
   const { colors } = useTheme();
-  const tracks = [...detail.generalTracks, ...detail.specificTracks];
+  const isLive = track.status === 'live';
 
   return (
-    <ScrollView style={path.root} showsVerticalScrollIndicator={false}>
-      {tracks.map((track, i) => {
-        const isLive = track.status === 'live';
-        return (
-          <TouchableOpacity
-            key={track.id}
-            style={[
-              path.trackRow,
-              {
-                backgroundColor: isLive ? C + '20' : colors.card,
-                borderColor: isLive ? C + '60' : colors.border,
-              },
-            ]}
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-              onTrackPress(track);
-            }}
-            activeOpacity={0.8}
-          >
-            {/* Path connector */}
-            {i < tracks.length - 1 && (
-              <View style={[path.connector, { backgroundColor: C + '40' }]} />
-            )}
+    <TouchableOpacity
+      activeOpacity={0.82}
+      onPress={() => {
+        void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        onPress(track);
+      }}
+      style={[
+        styles.trackRow,
+        {
+          backgroundColor: colors.bgSecondary,
+          borderColor: isLive ? `${accentColor}33` : colors.border,
+        },
+      ]}
+    >
+      <View style={[styles.trackIcon, { backgroundColor: isLive ? `${accentColor}18` : colors.card }]}>
+        <Text style={[styles.trackIconText, { color: isLive ? accentColor : colors.textMuted }]}>
+          {isLive ? '>' : '#'}
+        </Text>
+      </View>
 
-            <View style={[path.trackDot, { backgroundColor: isLive ? C : colors.bgSecondary, borderColor: isLive ? C : colors.border }]}>
-              {isLive
-                ? <Text style={path.dotCheck}>⚡</Text>
-                : <Text style={[path.dotNum, { color: colors.textMuted }]}>{i + 1}</Text>
-              }
-            </View>
+      <View style={styles.trackCopy}>
+        <View style={styles.trackHeaderRow}>
+          <Text style={[styles.trackName, { color: colors.text }]} numberOfLines={1}>
+            {track.name}
+          </Text>
+          <StatusPill
+            label={track.type === 'GENERAL' ? 'General' : 'Specific'}
+            color={track.type === 'GENERAL' ? colors.green : accentColor}
+            backgroundColor={track.type === 'GENERAL' ? `${colors.green}14` : `${accentColor}14`}
+          />
+          <StatusPill
+            label={isLive ? 'Live' : 'Locked'}
+            color={isLive ? colors.green : colors.textMuted}
+            backgroundColor={isLive ? `${colors.green}14` : colors.card}
+          />
+        </View>
+        <Text style={[styles.trackTagline, { color: colors.textSoft }]} numberOfLines={2}>
+          {track.tagline}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
 
-            <View style={{ flex: 1 }}>
-              <View style={path.trackTop}>
-                <Text style={[path.trackName, { color: isLive ? '#FFF' : colors.textSoft }]}>{track.name}</Text>
-                <View style={[path.typePill, { backgroundColor: track.type === 'GENERAL' ? '#10B98125' : C + '25' }]}>
-                  <Text style={[path.typeText, { color: track.type === 'GENERAL' ? '#10B981' : C }]}>
-                    {track.type}
-                  </Text>
-                </View>
-              </View>
-              <Text style={[path.trackTagline, { color: colors.textMuted }]} numberOfLines={1}>{track.tagline}</Text>
-            </View>
+function IslandStrip({ onIslandPress }: { onIslandPress: () => void }) {
+  const { colors } = useTheme();
 
-            <Text style={[path.trackArrow, { color: isLive ? C : colors.textMuted }]}>
-              {isLive ? '›' : '🔒'}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.islandScroll}
+    >
+      {ISLANDS.slice(0, 18).map((island) => (
+        <TouchableOpacity
+          key={island.id}
+          activeOpacity={0.82}
+          onPress={() => {
+            void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onIslandPress();
+          }}
+          style={[
+            styles.islandCard,
+            { backgroundColor: colors.bgSecondary, borderColor: colors.border },
+            Shadow.xs,
+          ]}
+        >
+          <View style={[styles.islandIconWrap, { backgroundColor: `${island.color}18` }]}>
+            <Text style={styles.islandIcon}>{island.icon}</Text>
+          </View>
+          <Text style={[styles.islandNumber, { color: island.color }]}>Island {island.id}</Text>
+          <Text style={[styles.islandName, { color: colors.text }]} numberOfLines={2}>
+            {island.name}
+          </Text>
+        </TouchableOpacity>
+      ))}
     </ScrollView>
   );
 }
 
-// ─── Expanded field modal ──────────────────────────────────────────────────────
-
-function FieldPortal({
-  field, detail, onClose, fieldColor: C,
+function FieldCard({
+  field,
+  detail,
+  expanded,
+  onToggle,
+  onTrackPress,
+  onIslandPress,
 }: {
-  field: any;
+  field: FieldSummary;
   detail: FieldDetail;
-  onClose: () => void;
-  fieldColor: string;
+  expanded: boolean;
+  onToggle: () => void;
+  onTrackPress: (fieldId: string, track: FieldSkillTrack) => void;
+  onIslandPress: () => void;
 }) {
-  const navigation = useNavigation<any>();
-  const { updateActiveField } = useAuth();
-  const entrance   = useRef(new Animated.Value(0)).current;
-  const slideY     = useRef(new Animated.Value(40)).current;
-  const isCrypto   = field.id === 'crypto';
+  const { colors } = useTheme();
+  const accentColor = fieldColor(field.id);
+  const isCrypto = field.id === 'crypto';
   const starknetDetail = isCrypto ? getFieldDetail('starknet') : null;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.spring(entrance, { toValue: 1, tension: 60, friction: 10, useNativeDriver: true }),
-      Animated.spring(slideY,   { toValue: 0,  tension: 50, friction: 10, useNativeDriver: true }),
-    ]).start();
-  }, [entrance, slideY]);
-
-  const close = () => {
-    Animated.parallel([
-      Animated.timing(entrance, { toValue: 0, duration: 200, useNativeDriver: true }),
-      Animated.timing(slideY,   { toValue: 40, duration: 200, useNativeDriver: true }),
-    ]).start(onClose);
-  };
-
-  const handleTrack = (track: FieldSkillTrack) => {
-    close();
-    setTimeout(async () => {
-      try {
-        await updateActiveField(field.id, fieldColor(field.id), track.id, track.name);
-      } catch {
-        // Best effort only - continue navigation even if persistence fails.
-      }
-
-      if (track.navigateTo === 'Quant') navigation.push('/skills/quant-map');
-      else if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') navigation.push('/(tabs)/map/island');
-      else if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') navigation.push('/starknet-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
-      else if (track.id === 'starknet-ecosystem-deep-dive') navigation.push('/ecosystem-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
-      else if (track.id === 'cairo-builder') navigation.push('/cairo-builder-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
-      else navigation.push('/world', {
-        worldId: track.worldThemeId,
-        trackId: track.id,
-        fieldId: field.id,
-        trackName: track.name,
-        live: track.status === 'live',
-      });
-    }, 220);
-  };
-
-  const gradient = getFieldGradient(field.id);
+  const tracks = [...detail.generalTracks, ...detail.specificTracks];
+  const liveCount = tracks.filter((track) => track.status === 'live').length;
 
   return (
-    <Modal transparent animationType="none" statusBarTranslucent>
-      <TouchableWithoutFeedback onPress={close}>
-        <View style={portal.overlay} />
-      </TouchableWithoutFeedback>
-
-      <Animated.View style={[portal.sheet, {
-        transform: [
-          { scale: entrance.interpolate({ inputRange: [0, 1], outputRange: [0.92, 1] }) },
-          { translateY: slideY },
-        ],
-        opacity: entrance,
-      }]}>
-        <LinearGradient colors={gradient} style={portal.gradient}>
-
-          {/* Handle */}
-          <TouchableOpacity onPress={close} style={portal.handle} activeOpacity={0.7}>
-            <View style={[portal.handleBar, { backgroundColor: C + '60' }]} />
-          </TouchableOpacity>
-
-          {/* Header */}
-          <View style={portal.header}>
-            <View style={{ flex: 1 }}>
-              <Text style={portal.fieldEmoji}>{fieldEmoji(field.id)}</Text>
-              <Text style={[portal.fieldName, { color: '#FFF' }]}>{field.name}</Text>
-              <Text style={[portal.fieldSub, { color: C }]}>{detail.worldName}</Text>
-            </View>
-            <FieldArtwork fieldId={field.id} size={110} />
+    <View
+      style={[
+        styles.fieldCard,
+        {
+          backgroundColor: colors.card,
+          borderColor: expanded ? `${accentColor}40` : colors.border,
+        },
+        Shadow.sm,
+      ]}
+    >
+      <TouchableOpacity activeOpacity={0.88} onPress={onToggle} style={styles.fieldCardPress}>
+        <View style={styles.fieldCardTop}>
+          <View style={[styles.artworkFrame, { backgroundColor: `${accentColor}12` }]}>
+            <FieldArtwork fieldId={field.id} size={68} />
           </View>
 
-          {/* Description */}
-          <Text style={[portal.fieldDesc, { color: '#FFFFFF99' }]} numberOfLines={2}>
-            {detail.worldDescription}
+          <View style={styles.fieldMainCopy}>
+            <View style={styles.fieldTitleRow}>
+              <Text style={styles.fieldEmoji}>{fieldEmoji(field.id)}</Text>
+              <Text style={[styles.fieldName, { color: colors.text }]} numberOfLines={1}>
+                {field.name}
+              </Text>
+            </View>
+
+            <View style={styles.fieldMetaRow}>
+              <StatusPill
+                label={field.status === 'live' ? 'Live now' : 'Coming soon'}
+                color={field.status === 'live' ? colors.green : colors.textMuted}
+                backgroundColor={field.status === 'live' ? `${colors.green}14` : colors.bgSecondary}
+              />
+              <StatusPill
+                label={`${tracks.length} tracks`}
+                color={accentColor}
+                backgroundColor={`${accentColor}14`}
+              />
+              {liveCount > 0 ? (
+                <StatusPill
+                  label={`${liveCount} live`}
+                  color={colors.orange}
+                  backgroundColor={colors.orangeSoft}
+                />
+              ) : null}
+            </View>
+
+            <Text style={[styles.fieldWorldName, { color: accentColor }]} numberOfLines={1}>
+              {detail.worldName}
+            </Text>
+            <Text style={[styles.fieldDescription, { color: colors.textSoft }]} numberOfLines={2}>
+              {detail.worldDescription}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.fieldFooterRow}>
+          <Text style={[styles.browseHint, { color: colors.textMuted }]}>
+            {expanded ? 'Hide tracks' : 'Browse tracks'}
           </Text>
+          <Text style={[styles.browseArrow, { color: accentColor }]}>{expanded ? '^' : 'v'}</Text>
+        </View>
+      </TouchableOpacity>
 
-          {/* Track count */}
-          <View style={portal.statsRow}>
-            <View style={[portal.statPill, { borderColor: C + '50' }]}>
-              <Text style={[portal.statText, { color: C }]}>
-                {detail.generalTracks.length + detail.specificTracks.length} tracks
-              </Text>
-            </View>
-            <View style={[portal.statPill, { borderColor: C + '50' }]}>
-              <Text style={[portal.statText, { color: C }]}>
-                {[...detail.generalTracks, ...detail.specificTracks].filter(t => t.status === 'live').length} live
-              </Text>
-            </View>
-            {detail.generalTracks.length > 0 && (
-              <View style={[portal.statPill, { borderColor: '#10B98150' }]}>
-                <Text style={[portal.statText, { color: '#10B981' }]}>GENERAL + SPECIFIC</Text>
-              </View>
-            )}
-          </View>
-
-          <View style={[portal.divider, { backgroundColor: C + '30' }]} />
-
-          {/* Content */}
+      {expanded ? (
+        <View style={[styles.expandedSection, { borderTopColor: colors.border }]}>
           {isCrypto ? (
             <>
-              <Text style={[portal.sectionLabel, { color: C }]}>ONBOARDING ISLANDS</Text>
-              <IslandChain onIslandPress={() => { close(); setTimeout(() => navigation.push('/(tabs)/map/island'), 220); }} />
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Onboarding islands</Text>
+                <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
+                  Open the map to begin the crypto path.
+                </Text>
+              </View>
+              <IslandStrip onIslandPress={onIslandPress} />
+
               {starknetDetail ? (
                 <>
-                  <View style={[portal.divider, { backgroundColor: '#EC489930', marginTop: Spacing.md }]} />
-                  <Text style={[portal.sectionLabel, { color: '#EC4899' }]}>STARKNET TRACKS</Text>
-                  <TrackPath detail={starknetDetail} fieldColor="#EC4899" onTrackPress={handleTrack} />
+                  <View style={styles.sectionHeader}>
+                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet advanced tracks</Text>
+                    <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
+                      Continue into the Starknet routes after the island sequence.
+                    </Text>
+                  </View>
+                  <View style={styles.trackList}>
+                    {[...starknetDetail.generalTracks, ...starknetDetail.specificTracks].map((track) => (
+                      <TrackRow
+                        key={track.id}
+                        track={track}
+                        accentColor={colors.starknet}
+                        onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
+                      />
+                    ))}
+                  </View>
                 </>
               ) : null}
             </>
           ) : (
             <>
-              <Text style={[portal.sectionLabel, { color: C }]}>SKILL TRACKS</Text>
-              <TrackPath detail={detail} fieldColor={C} onTrackPress={handleTrack} />
+              <View style={styles.sectionHeader}>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Available tracks</Text>
+                <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
+                  Pick a route to continue into lessons, maps, or world content.
+                </Text>
+              </View>
+              <View style={styles.trackList}>
+                {tracks.map((track) => (
+                  <TrackRow
+                    key={track.id}
+                    track={track}
+                    accentColor={accentColor}
+                    onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
+                  />
+                ))}
+              </View>
             </>
           )}
-        </LinearGradient>
-      </Animated.View>
-    </Modal>
+        </View>
+      ) : null}
+    </View>
   );
 }
-
-// ─── Single field card ─────────────────────────────────────────────────────────
-
-function FieldCard({ field, detail, index }: { field: any; detail: FieldDetail | null; index: number }) {
-  const C          = fieldColor(field.id);
-  const gradient   = getFieldGradient(field.id);
-  const [open, setOpen] = useState(false);
-
-  const pressAnim  = useRef(new Animated.Value(1)).current;
-  const glowAnim   = useRef(new Animated.Value(0)).current;
-
-  // Entrance stagger
-  const entranceY = useRef(new Animated.Value(60)).current;
-  const entranceO = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.parallel([
-      Animated.spring(entranceY, { toValue: 0, tension: 50, friction: 9, delay: index * 80, useNativeDriver: true }),
-      Animated.timing(entranceO, { toValue: 1, duration: 400, delay: index * 80, useNativeDriver: true }),
-    ]).start();
-  }, [entranceO, entranceY, index]);
-
-  // Live field glow loop
-  useEffect(() => {
-    if (field.status === 'live') {
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(glowAnim, { toValue: 1, duration: 1400, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
-          Animated.timing(glowAnim, { toValue: 0.3, duration: 1400, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
-        ])
-      ).start();
-    }
-  }, [field.status, glowAnim]);
-
-  const onPress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    Animated.sequence([
-      Animated.timing(pressAnim, { toValue: 0.97, duration: 80, useNativeDriver: true }),
-      Animated.spring(pressAnim, { toValue: 1, tension: 80, friction: 5, useNativeDriver: true }),
-    ]).start();
-    setOpen(true);
-  };
-
-  const liveCount = detail
-    ? [...(detail.generalTracks ?? []), ...(detail.specificTracks ?? [])].filter(t => t.status === 'live').length
-    : 0;
-  const totalTracks = detail ? (detail.generalTracks?.length ?? 0) + (detail.specificTracks?.length ?? 0) : 0;
-
-  return (
-    <>
-      <Animated.View style={[
-        card.wrap,
-        { transform: [{ scale: pressAnim }, { translateY: entranceY }], opacity: entranceO },
-      ]}>
-        <TouchableWithoutFeedback onPress={onPress}>
-          <View style={[card.card, { height: CARD_HEIGHT }]}>
-            <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
-
-            {/* Live glow border */}
-            {field.status === 'live' && (
-              <Animated.View style={[card.glowBorder, {
-                borderColor: glowAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [C + '40', C + 'CC'],
-                }),
-              }]} />
-            )}
-
-            {/* Artwork — top 55% */}
-            <View style={card.artworkArea}>
-              <FieldArtwork fieldId={field.id} size={Math.min(SW * 0.55, 220)} />
-            </View>
-
-            {/* Bottom identity panel */}
-            <View style={card.infoPanel}>
-
-              {/* Field name */}
-              <View style={card.nameRow}>
-                <Text style={[card.fieldEmoji]}>{fieldEmoji(field.id)}</Text>
-                <Text style={[card.fieldName, { color: '#FFF' }]} numberOfLines={1}>{field.name}</Text>
-                {field.status === 'live' && (
-                  <View style={[card.liveBadge, { backgroundColor: C }]}>
-                    <Text style={card.liveBadgeText}>⚡ LIVE</Text>
-                  </View>
-                )}
-              </View>
-
-              {/* Tagline */}
-              <Text style={[card.tagline, { color: '#FFFFFF80' }]} numberOfLines={2}>
-                {(detail?.worldDescription ?? '').slice(0, 80) + (((detail?.worldDescription ?? '').length > 80) ? '…' : '')}
-              </Text>
-
-              {/* Track count bar */}
-              <View style={card.metaRow}>
-                <View style={[card.trackPill, { borderColor: C + '60' }]}>
-                  <Text style={[card.trackPillText, { color: C }]}>{totalTracks} tracks</Text>
-                </View>
-                {liveCount > 0 && (
-                  <View style={[card.trackPill, { borderColor: '#10B98160' }]}>
-                    <Text style={[card.trackPillText, { color: '#10B981' }]}>{liveCount} live</Text>
-                  </View>
-                )}
-
-                {/* World name */}
-                <Text style={[card.worldLabel, { color: C + '99' }]}>
-                  {detail?.worldName ?? ''}
-                </Text>
-
-                {/* Tap hint */}
-                <View style={[card.tapHint, { backgroundColor: C + '25', borderColor: C + '50' }]}>
-                  <Text style={[card.tapHintText, { color: C }]}>Tap to enter ›</Text>
-                </View>
-              </View>
-            </View>
-
-            {/* Bottom peek gradient */}
-            <LinearGradient
-              colors={['transparent', '#00000060']}
-              style={card.peekGradient}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </Animated.View>
-
-      {open && detail && (
-        <FieldPortal
-          field={field}
-          detail={detail}
-          fieldColor={C}
-          onClose={() => setOpen(false)}
-        />
-      )}
-    </>
-  );
-}
-
-// ─── Screen ────────────────────────────────────────────────────────────────────
 
 export default function FieldsScreen() {
-  const allDetails = getAllFieldDetails();
+  const { colors } = useTheme();
+  const navigation = useNavigation<any>();
+  const { updateActiveField } = useAuth();
+  const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
 
-  // Build merged field list from ALL_FIELDS + fieldDetails
-  const fields = allDetails.map(d => ({
-    id: d.fieldId,
-    name: d.worldName.replace(/\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/, '') || d.worldName,
-    status: [...d.generalTracks, ...d.specificTracks].some(t => t.status === 'live') ? 'live' : 'coming_soon',
-  }));
+  const fields = useMemo<FieldSummary[]>(() => {
+    return getAllFieldDetails().map((detail) => ({
+      id: detail.fieldId,
+      name: detail.worldName.replace(
+        /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
+        '',
+      ) || detail.worldName,
+      status: [...detail.generalTracks, ...detail.specificTracks].some((track) => track.status === 'live')
+        ? 'live'
+        : 'coming_soon',
+    }));
+  }, []);
+
+  const handleTrackPress = async (fieldId: string, track: FieldSkillTrack) => {
+    try {
+      await updateActiveField(fieldId, fieldColor(fieldId), track.id, track.name);
+    } catch {
+      // Best effort only. Navigation should still continue.
+    }
+
+    if (track.navigateTo === 'Quant') {
+      navigation.push('/skills/quant-map');
+      return;
+    }
+
+    if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') {
+      navigation.push('/(tabs)/map/island');
+      return;
+    }
+
+    if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') {
+      navigation.push('/starknet-track', { trackId: track.id, fieldId, trackName: track.name });
+      return;
+    }
+
+    if (track.id === 'starknet-ecosystem-deep-dive') {
+      navigation.push('/ecosystem-track', { trackId: track.id, fieldId, trackName: track.name });
+      return;
+    }
+
+    if (track.id === 'cairo-builder') {
+      navigation.push('/cairo-builder-track', { trackId: track.id, fieldId, trackName: track.name });
+      return;
+    }
+
+    navigation.push('/world', {
+      worldId: track.worldThemeId,
+      trackId: track.id,
+      fieldId,
+      trackName: track.name,
+      live: track.status === 'live',
+    });
+  };
+
+  const handleIslandPress = () => {
+    navigation.push('/(tabs)/map/island');
+  };
 
   return (
-    <SafeAreaView style={[screen.root, { backgroundColor: '#050510' }]}>
-
-      {/* Page header */}
-      <View style={screen.header}>
-        <Text style={screen.headerTitle}>🌐 Career Fields</Text>
-        <Text style={screen.headerSub}>Scroll to explore · Tap to enter</Text>
-      </View>
-
-      {/* Snap-scrolling field stack */}
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <ScrollView
-        style={{ flex: 1 }}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        snapToInterval={CARD_HEIGHT + Spacing.sm}
-        decelerationRate="fast"
-        contentContainerStyle={{ paddingBottom: PEEK_HEIGHT + 20 }}
       >
-        {fields.map((field, i) => {
-          const detail = getFieldDetail(field.id) ?? null;
-          return (
-            <View key={field.id} style={[screen.cardWrap, { marginBottom: Spacing.sm }]}>
-              <FieldCard field={field} detail={detail} index={i} />
-            </View>
-          );
-        })}
-      </ScrollView>
+        <View style={styles.header}>
+          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>FIELDS</Text>
+          <Text style={[styles.title, { color: colors.text }]}>Browse career paths</Text>
+          <Text style={[styles.subtitle, { color: colors.textSoft }]}>
+            Compare fields, scan the live routes, and open the track that fits what you want to learn next.
+          </Text>
+        </View>
 
-      {/* Scroll indicator */}
-      <View style={screen.scrollHint}>
-        <Text style={screen.scrollHintText}>↕ Scroll to discover 29 fields</Text>
-      </View>
+        <View style={styles.summaryRow}>
+          <View
+            style={[
+              styles.summaryCard,
+              { backgroundColor: colors.card, borderColor: colors.border },
+              Shadow.xs,
+            ]}
+          >
+            <Text style={[styles.summaryValue, { color: colors.text }]}>{fields.length}</Text>
+            <Text style={[styles.summaryLabel, { color: colors.textMuted }]}>Fields</Text>
+          </View>
+          <View
+            style={[
+              styles.summaryCard,
+              { backgroundColor: colors.card, borderColor: colors.border },
+              Shadow.xs,
+            ]}
+          >
+            <Text style={[styles.summaryValue, { color: colors.green }]}>
+              {fields.filter((field) => field.status === 'live').length}
+            </Text>
+            <Text style={[styles.summaryLabel, { color: colors.textMuted }]}>Live now</Text>
+          </View>
+        </View>
+
+        <View style={styles.cards}>
+          {fields.map((field) => {
+            const detail = getFieldDetail(field.id);
+            if (!detail) {
+              return null;
+            }
+
+            return (
+              <FieldCard
+                key={field.id}
+                detail={detail}
+                expanded={expandedFieldId === field.id}
+                field={field}
+                onIslandPress={handleIslandPress}
+                onToggle={() => setExpandedFieldId((current) => (current === field.id ? null : field.id))}
+                onTrackPress={handleTrackPress}
+              />
+            );
+          })}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
-// ─── Animation helper ─────────────────────────────────────────────────────────
-
-function useAnimatedFloat(range: number, duration: number, delay: number) {
-  const v = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.delay(delay),
-        Animated.timing(v, { toValue: -range, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-        Animated.timing(v, { toValue: range,  duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-      ])
-    ).start();
-  }, [delay, duration, range, v]);
-  return v;
-}
-
-// ─── Styles ────────────────────────────────────────────────────────────────────
-
-const screen = StyleSheet.create({
-  root:          { flex: 1 },
-  header:        { paddingHorizontal: Spacing.lg, paddingTop: Spacing.md, paddingBottom: Spacing.sm },
-  headerTitle:   { fontSize: FontSize.xl, fontWeight: FontWeight.black, color: '#FFF', letterSpacing: -0.3 },
-  headerSub:     { fontSize: FontSize.xs, color: '#FFFFFF60', marginTop: 2 },
-  cardWrap:      {},
-  scrollHint:    { position: 'absolute', bottom: 16, alignSelf: 'center', backgroundColor: '#FFFFFF15', borderRadius: 20, paddingHorizontal: 14, paddingVertical: 6 },
-  scrollHintText:{ fontSize: 11, color: '#FFFFFF60', fontWeight: '600' },
-});
-
-const card = StyleSheet.create({
-  wrap:         { marginHorizontal: Spacing.sm },
-  card:         { borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: '#FFFFFF10' },
-  glowBorder:   { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl, borderWidth: 2 },
-  artworkArea:  { flex: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.lg },
-  infoPanel:    { paddingHorizontal: Spacing.lg, paddingBottom: Spacing.lg, gap: Spacing.sm },
-  nameRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  fieldEmoji:   { fontSize: 28 },
-  fieldName:    { flex: 1, fontSize: FontSize.xxl, fontWeight: FontWeight.black, letterSpacing: -0.5 },
-  liveBadge:    { paddingHorizontal: 10, paddingVertical: 4, borderRadius: Radius.full },
-  liveBadgeText:{ fontSize: 10, fontWeight: FontWeight.black, color: '#FFF' },
-  tagline:      { fontSize: FontSize.sm, lineHeight: 20 },
-  metaRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, flexWrap: 'wrap' },
-  trackPill:    { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 4 },
-  trackPillText:{ fontSize: 11, fontWeight: FontWeight.bold },
-  worldLabel:   { flex: 1, fontSize: 11, fontWeight: FontWeight.medium },
-  tapHint:      { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 4 },
-  tapHintText:  { fontSize: 11, fontWeight: FontWeight.bold },
-  peekGradient: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 60 },
-});
-
-const portal = StyleSheet.create({
-  overlay:      { ...StyleSheet.absoluteFillObject, backgroundColor: '#000000BB' },
-  sheet:        {
-    position: 'absolute', bottom: 0, left: 0, right: 0,
-    height: SH * 0.88,
-    borderTopLeftRadius: 28, borderTopRightRadius: 28,
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: Spacing.lg,
+    paddingTop: Spacing.md,
+    paddingBottom: Spacing.xxxl,
+  },
+  header: {
+    marginBottom: Spacing.lg,
+    gap: 6,
+  },
+  eyebrow: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+    letterSpacing: 1.2,
+  },
+  title: {
+    fontSize: FontSize.xxxl,
+    fontWeight: FontWeight.black,
+    letterSpacing: -0.8,
+  },
+  subtitle: {
+    fontSize: FontSize.md,
+    lineHeight: 22,
+    maxWidth: 620,
+  },
+  summaryRow: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginBottom: Spacing.lg,
+  },
+  summaryCard: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: Radius.xl,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+  },
+  summaryValue: {
+    fontSize: FontSize.xxl,
+    fontWeight: FontWeight.black,
+  },
+  summaryLabel: {
+    fontSize: FontSize.sm,
+    marginTop: 2,
+  },
+  cards: {
+    gap: Spacing.md,
+  },
+  fieldCard: {
+    borderWidth: 1,
+    borderRadius: Radius.xl,
     overflow: 'hidden',
   },
-  gradient:     { flex: 1, padding: Spacing.lg },
-  handle:       { alignItems: 'center', marginBottom: Spacing.md },
-  handleBar:    { width: 48, height: 4, borderRadius: 2 },
-  header:       { flexDirection: 'row', alignItems: 'flex-start', marginBottom: Spacing.sm },
-  fieldEmoji:   { fontSize: 36, marginBottom: 4 },
-  fieldName:    { fontSize: FontSize.xxl, fontWeight: FontWeight.black, letterSpacing: -0.5, marginBottom: 2 },
-  fieldSub:     { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  fieldDesc:    { fontSize: FontSize.sm, lineHeight: 18, marginBottom: Spacing.md },
-  statsRow:     { flexDirection: 'row', gap: Spacing.xs, flexWrap: 'wrap', marginBottom: Spacing.md },
-  statPill:     { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 5 },
-  statText:     { fontSize: 11, fontWeight: FontWeight.bold },
-  divider:      { height: 1, marginBottom: Spacing.md },
-  sectionLabel: { fontSize: 11, fontWeight: FontWeight.black, letterSpacing: 1.0, marginBottom: Spacing.sm },
-});
-
-const chain = StyleSheet.create({
-  root:       { flex: 1 },
-  label:      { fontSize: 10, fontWeight: '900', letterSpacing: 0.8, marginBottom: 8 },
-  scroll:     { paddingBottom: 8, gap: 0 },
-  islandWrap: { width: 80, alignItems: 'center', marginRight: 8 },
-  island:     {
-    width: 52, height: 52, borderRadius: 26,
-    alignItems: 'center', justifyContent: 'center',
-    borderWidth: 1.5,
-    shadowOpacity: 0.6, shadowRadius: 8, shadowOffset: { width: 0, height: 0 },
+  fieldCardPress: {
+    padding: Spacing.md,
   },
-  islandIcon: { fontSize: 22 },
-  islandNum:  { position: 'absolute', bottom: 2, right: 4, fontSize: 8, color: '#FFF', fontWeight: '900' },
-  islandName: { fontSize: 9, fontWeight: '600', textAlign: 'center', marginTop: 4, lineHeight: 12 },
-  portalWrap: { width: 80, alignItems: 'center', marginRight: 8 },
-  portal:     {
-    width: 52, height: 52, borderRadius: 8,
-    alignItems: 'center', justifyContent: 'center',
-    borderWidth: 2, backgroundColor: '#EC489920',
-    shadowOpacity: 0.8, shadowRadius: 10, shadowOffset: { width: 0, height: 0 },
+  fieldCardTop: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: Spacing.md,
   },
-  portalText:  { fontSize: 22 },
-  portalLabel: { fontSize: 8, fontWeight: '900', letterSpacing: 0.5 },
-});
-
-const path = StyleSheet.create({
-  root:        { flex: 1 },
+  artworkFrame: {
+    width: 84,
+    height: 84,
+    borderRadius: Radius.lg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  fieldMainCopy: {
+    flex: 1,
+    gap: 6,
+  },
+  fieldTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  fieldEmoji: {
+    fontSize: 24,
+  },
+  fieldName: {
+    flex: 1,
+    fontSize: FontSize.xl,
+    fontWeight: FontWeight.black,
+    letterSpacing: -0.4,
+  },
+  fieldMetaRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.xs,
+  },
+  fieldWorldName: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  fieldDescription: {
+    fontSize: FontSize.sm,
+    lineHeight: 20,
+  },
+  fieldFooterRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: Spacing.sm,
+    paddingTop: Spacing.sm,
+  },
+  browseHint: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.medium,
+  },
+  browseArrow: {
+    fontSize: 18,
+    fontWeight: FontWeight.black,
+  },
+  expandedSection: {
+    borderTopWidth: 1,
+    padding: Spacing.md,
+    paddingTop: Spacing.sm,
+    gap: Spacing.md,
+  },
+  sectionHeader: {
+    gap: 4,
+  },
+  sectionTitle: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.bold,
+  },
+  sectionSub: {
+    fontSize: FontSize.sm,
+    lineHeight: 19,
+  },
+  islandScroll: {
+    paddingRight: Spacing.sm,
+    gap: Spacing.sm,
+  },
+  islandCard: {
+    width: 132,
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.sm,
+    gap: 6,
+  },
+  islandIconWrap: {
+    width: 42,
+    height: 42,
+    borderRadius: Radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  islandIcon: {
+    fontSize: 20,
+  },
+  islandNumber: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+  },
+  islandName: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+    lineHeight: 18,
+  },
+  trackList: {
+    gap: Spacing.sm,
+  },
   trackRow: {
-    flexDirection: 'row', alignItems: 'center', gap: Spacing.sm,
-    borderWidth: 1, borderRadius: Radius.lg,
-    padding: Spacing.md, marginBottom: Spacing.sm,
-    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: Spacing.sm,
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.sm,
   },
-  connector:   { position: 'absolute', width: 2, height: 12, bottom: -12, left: 22 },
-  trackDot:    { width: 32, height: 32, borderRadius: 16, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
-  dotCheck:    { fontSize: 14 },
-  dotNum:      { fontSize: 12, fontWeight: FontWeight.black },
-  trackTop:    { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: 2 },
-  trackName:   { fontSize: FontSize.sm, fontWeight: FontWeight.bold, flex: 1 },
-  typePill:    { borderRadius: Radius.full, paddingHorizontal: 7, paddingVertical: 2 },
-  typeText:    { fontSize: 9, fontWeight: FontWeight.black },
-  trackTagline:{ fontSize: FontSize.xs },
-  trackArrow:  { fontSize: 18, fontWeight: FontWeight.black },
+  trackIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: Radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  trackIconText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.black,
+  },
+  trackCopy: {
+    flex: 1,
+    gap: 4,
+  },
+  trackHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: Spacing.xs,
+  },
+  trackName: {
+    flexShrink: 1,
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  trackTagline: {
+    fontSize: FontSize.sm,
+    lineHeight: 19,
+  },
+  pill: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: Radius.full,
+  },
+  pillText: {
+    fontSize: 10,
+    fontWeight: FontWeight.bold,
+  },
 });
