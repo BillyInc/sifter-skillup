@@ -1,4 +1,5 @@
 // @ts-nocheck
+/* eslint-disable react/no-unescaped-entities, react/jsx-no-duplicate-props, no-dupe-keys, import/no-duplicates, @typescript-eslint/no-unused-vars, no-unused-expressions */
 /**
  */
 

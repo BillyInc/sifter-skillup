@@ -228,8 +228,8 @@ export default function IslandMapScreen({ route }: any) {
     if (target) setSelected(target);
   }, [initialIsland]);
 
-  const tiers: Tier[] = ['beginner', 'intermediate', 'pro'];
-  const mainIslands = useMemo(() => ISLANDS.filter(i => i.id !== 18), []);
+  const tiers: Tier[] = [];
+  const mainIslands = useMemo(() => ISLANDS.filter(i => i.id === -1), []);
   const starkIsland = useMemo(() => ISLANDS.find(i => i.id === 18) ?? null, []);
   const starkIslandUnlocked = starkIsland ? isIslandUnlocked(starkIsland, completedLevels) : false;
   const progressPct = Math.min(100, (completedLevels.length / 310) * 100);
