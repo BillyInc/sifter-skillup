@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LearnMoreScreen from './LearnMoreScreen';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Career interest quiz
@@ -154,39 +154,42 @@ type OnboardingStep =
   | 'browse';
 
 function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: (initialFilter?: string) => void; onQuiz: () => void; onCryptoStart: () => void }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.stepContainer}>
-      <Text style={styles.welcomeEmoji}>⚡</Text>
-      <Text style={styles.welcomeTitle}>What do you want to learn?</Text>
-      <Text style={styles.welcomeSub}>
+      <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+        <Text style={styles.welcomeEmoji}>⚡</Text>
+        <Text style={[styles.welcomeTitle, { color: colors.text }]}>What do you want to learn?</Text>
+        <Text style={[styles.welcomeSub, { color: colors.textSoft }]}>
         We have 28 career fields and 800+ roles. Let's find the right one for you.
-      </Text>
+        </Text>
+      </View>
 
-      <TouchableOpacity style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2 }]} onPress={onCryptoStart} activeOpacity={0.85}>
+      <TouchableOpacity style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2, backgroundColor: colors.card }]} onPress={onCryptoStart} activeOpacity={0.85}>
         <Text style={styles.bigBtnEmoji}>₿</Text>
         <View style={{ flex: 1 }}>
           <Text style={[styles.bigBtnTitle, { color: '#f7931a' }]}>New to crypto</Text>
-          <Text style={styles.bigBtnSub}>Start from zero → Bitcoin Bay island map</Text>
+          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>Start from zero → Bitcoin Bay island map</Text>
         </View>
         <Text style={[styles.bigBtnArrow, { color: '#f7931a' }]}>→</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.bigBtn} onPress={() => onKnow('operations')} activeOpacity={0.85}>
+      <TouchableOpacity style={[styles.bigBtn, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={() => onKnow('operations')} activeOpacity={0.85}>
         <Text style={styles.bigBtnEmoji}>🎯</Text>
         <View style={{ flex: 1 }}>
-          <Text style={styles.bigBtnTitle}>I know what I want</Text>
-          <Text style={styles.bigBtnSub}>Browse fields and pick a role directly</Text>
+          <Text style={[styles.bigBtnTitle, { color: colors.text }]}>I know what I want</Text>
+          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>Browse fields and pick a role directly</Text>
         </View>
-        <Text style={styles.bigBtnArrow}>→</Text>
+        <Text style={[styles.bigBtnArrow, { color: colors.textMuted }]}>→</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.bigBtn, styles.bigBtnSecondary]} onPress={onQuiz} activeOpacity={0.85}>
+      <TouchableOpacity style={[styles.bigBtn, styles.bigBtnSecondary, { backgroundColor: colors.card, borderColor: colors.accent }]} onPress={onQuiz} activeOpacity={0.85}>
         <Text style={styles.bigBtnEmoji}>🧠</Text>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.bigBtnTitle, { color: Colors.accent }]}>Help me figure it out</Text>
-          <Text style={styles.bigBtnSub}>6 quick questions → we suggest your best match</Text>
+          <Text style={[styles.bigBtnTitle, { color: colors.accent }]}>Help me figure it out</Text>
+          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>6 quick questions → we suggest your best match</Text>
         </View>
-        <Text style={[styles.bigBtnArrow, { color: Colors.accent }]}>→</Text>
+        <Text style={[styles.bigBtnArrow, { color: colors.accent }]}>→</Text>
       </TouchableOpacity>
     </View>
   );
@@ -196,35 +199,38 @@ function WelcomeStep({ onKnow, onQuiz, onCryptoStart }: { onKnow: (initialFilter
 // CryptoStartStep — routes true beginners to Bitcoin Bay
 // ─────────────────────────────────────────────────────────
 function CryptoStartStep({ onStart, onBrowse }: { onStart: (trackId: string) => void; onBrowse: () => void }) {
+  const { colors } = useTheme();
   return (
     <View style={styles.stepContainer}>
-      <Text style={styles.welcomeEmoji}>₿</Text>
-      <Text style={styles.welcomeTitle}>Start from the beginning</Text>
-      <Text style={styles.welcomeSub}>
+      <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+        <Text style={styles.welcomeEmoji}>₿</Text>
+        <Text style={[styles.welcomeTitle, { color: colors.text }]}>Start from the beginning</Text>
+        <Text style={[styles.welcomeSub, { color: colors.textSoft }]}>
         You'll start at Bitcoin Bay — 18 islands that take you from complete beginner to confident crypto user. No experience needed.
-      </Text>
+        </Text>
+      </View>
 
-      <View style={{ backgroundColor: 'rgba(247,147,26,0.1)', borderRadius: 12, padding: 16, marginBottom: 24 }}>
-        <Text style={{ color: Colors.text, fontSize: 14, lineHeight: 22 }}>
+      <View style={{ backgroundColor: 'rgba(247,147,26,0.1)', borderRadius: 20, padding: 16, marginBottom: 24, borderWidth: 1, borderColor: 'rgba(247,147,26,0.16)' }}>
+        <Text style={{ color: colors.text, fontSize: 14, lineHeight: 22 }}>
           {`🏝️  18 islands, 270 levels\n₿  Bitcoin → Ethereum → Wallets → DeFi → NFTs\n🛡️  Security and scam protection built in\n🔓  Unlock skill tracks as you progress`}
         </Text>
       </View>
 
       <TouchableOpacity
-        style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2 }]}
+        style={[styles.bigBtn, { borderColor: '#f7931a', borderWidth: 2, backgroundColor: colors.card }]}
         onPress={() => onStart('island-map')}
         activeOpacity={0.85}
       >
         <Text style={styles.bigBtnEmoji}>🚀</Text>
         <View style={{ flex: 1 }}>
           <Text style={[styles.bigBtnTitle, { color: '#f7931a' }]}>Start at Bitcoin Bay</Text>
-          <Text style={styles.bigBtnSub}>Begin Island 1 — no experience needed</Text>
+          <Text style={[styles.bigBtnSub, { color: colors.textSoft }]}>Begin Island 1 — no experience needed</Text>
         </View>
         <Text style={[styles.bigBtnArrow, { color: '#f7931a' }]}>→</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={{ marginTop: 16, padding: 12, alignItems: 'center' }} onPress={onBrowse}>
-        <Text style={{ color: Colors.textMuted, fontSize: 14 }}>← Back to options</Text>
+        <Text style={{ color: colors.textMuted, fontSize: 14 }}>← Back to options</Text>
       </TouchableOpacity>
     </View>
   );
@@ -241,6 +247,7 @@ function QuizStep({
   onAnswer: (qId: string, idx: number) => void;
   onComplete: () => void;
 }) {
+  const { colors } = useTheme();
   const [current, setCurrent] = useState(0);
   const q = questions[current];
   const isLast = current === questions.length - 1;
@@ -258,21 +265,25 @@ function QuizStep({
   return (
     <View style={styles.stepContainer}>
       {/* Progress */}
-      <View style={styles.progressBar}>
-        <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
+      <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
+        <View style={[styles.progressFill, { width: `${progress * 100}%`, backgroundColor: colors.accent }]} />
       </View>
-      <Text style={styles.progressLabel}>{current + 1} of {questions.length}</Text>
+      <Text style={[styles.progressLabel, { color: colors.textMuted }]}>{current + 1} of {questions.length}</Text>
 
-      <Text style={styles.quizQuestion}>{q.question}</Text>
+      <Text style={[styles.quizQuestion, { color: colors.text }]}>{q.question}</Text>
 
       {q.options.map((opt, i) => (
         <TouchableOpacity
           key={i}
-          style={[styles.quizOption, answers[q.id] === i && styles.quizOptionSelected]}
+          style={[
+            styles.quizOption,
+            { borderColor: colors.border, backgroundColor: colors.card },
+            answers[q.id] === i && { borderColor: colors.accent, backgroundColor: colors.accentSoft },
+          ]}
           onPress={() => handleSelect(i)}
           activeOpacity={0.8}
         >
-          <Text style={[styles.quizOptionText, answers[q.id] === i && styles.quizOptionTextSelected]}>
+          <Text style={[styles.quizOptionText, { color: colors.text }, answers[q.id] === i && { color: colors.accent, fontWeight: '700' }]}>
             {opt.label}
           </Text>
         </TouchableOpacity>
@@ -290,17 +301,18 @@ function QuizResultsStep({
   onSelect: (trackId: string) => void;
   onBrowse: () => void;
 }) {
+  const { colors } = useTheme();
   return (
     <ScrollView contentContainerStyle={styles.stepContainer}>
-      <Text style={styles.resultsTitle}>Your top matches</Text>
-      <Text style={styles.resultsSub}>
+      <Text style={[styles.resultsTitle, { color: colors.text }]}>Your top matches</Text>
+      <Text style={[styles.resultsSub, { color: colors.textSoft }]}>
         Based on your answers, these careers fit how you think and what you want.
       </Text>
 
       {results.map((r, i) => (
         <TouchableOpacity
           key={r.trackId}
-          style={[styles.resultCard, i === 0 && styles.resultCardTop]}
+          style={[styles.resultCard, { backgroundColor: colors.card, borderColor: i === 0 ? colors.accent : colors.border }, i === 0 && styles.resultCardTop]}
           onPress={() => onSelect(r.trackId)}
           activeOpacity={0.85}
         >
@@ -310,14 +322,14 @@ function QuizResultsStep({
             </View>
           )}
           <Text style={styles.resultEmoji}>{r.emoji}</Text>
-          <Text style={styles.resultName}>{r.name}</Text>
-          <Text style={styles.resultWhy}>{r.why}</Text>
-          <Text style={styles.resultCta}>Start this track →</Text>
+          <Text style={[styles.resultName, { color: colors.text }]}>{r.name}</Text>
+          <Text style={[styles.resultWhy, { color: colors.textSoft }]}>{r.why}</Text>
+          <Text style={[styles.resultCta, { color: colors.accent }]}>Start this track →</Text>
         </TouchableOpacity>
       ))}
 
       <TouchableOpacity style={styles.browseLink} onPress={onBrowse}>
-        <Text style={styles.browseLinkText}>Browse all fields instead</Text>
+        <Text style={[styles.browseLinkText, { color: colors.textSoft }]}>Browse all fields instead</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -333,6 +345,7 @@ interface Props {
 }
 
 export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
+  const { colors } = useTheme();
   const [showLearnMore, setShowLearnMore] = useState(false);
   const [step, setStep] = useState<OnboardingStep>('disclaimer');
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -353,43 +366,43 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
 
   if (step === 'disclaimer') {
     return (
-      <SafeAreaView style={styles.safe}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
         <ScrollView contentContainerStyle={styles.disclaimerBody}>
           <Text style={styles.disclaimerEmoji}>⚡</Text>
-          <Text style={styles.disclaimerTitle}>Welcome to Sifter Skill_Up</Text>
-          <Text style={styles.disclaimerSub}>
+          <Text style={[styles.disclaimerTitle, { color: colors.text }]}>Welcome to Sifter Skill_Up</Text>
+          <Text style={[styles.disclaimerSub, { color: colors.textSoft }]}>
             We're here to help you build real career skills — from foundation to senior level.
           </Text>
 
-          <View style={styles.disclaimerCard}>
-            <Text style={styles.disclaimerCardTitle}>But mastery isn't built in one place.</Text>
-            <Text style={styles.disclaimerCardBody}>We encourage you to:</Text>
+          <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>But mastery isn't built in one place.</Text>
+            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>We encourage you to:</Text>
             {[
               '📚 Cross-reference with books and other learning materials',
               '🏗️ Build real projects outside the app',
               '👥 Join communities and find mentors in your field',
               '🌍 Practice in the real world — not just simulations',
             ].map((item, i) => (
-              <Text key={i} style={styles.disclaimerBullet}>{item}</Text>
+              <Text key={i} style={[styles.disclaimerBullet, { color: colors.text }]}>{item}</Text>
             ))}
           </View>
 
-          <View style={styles.disclaimerCard}>
-            <Text style={styles.disclaimerCardTitle}>What we promise:</Text>
-            <Text style={styles.disclaimerCardBody}>Real, verifiable skills. A portfolio that proves what you can do. Honest, high-quality lessons built against industry standards.</Text>
+          <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we promise:</Text>
+            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>Real, verifiable skills. A portfolio that proves what you can do. Honest, high-quality lessons built against industry standards.</Text>
           </View>
 
-          <View style={styles.disclaimerCard}>
-            <Text style={styles.disclaimerCardTitle}>What we don't promise:</Text>
-            <Text style={styles.disclaimerCardBody}>A job. Completing a path does not guarantee employment. Your outcomes depend on your effort, your network, and market conditions we can't control.</Text>
+          <View style={[styles.disclaimerCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+            <Text style={[styles.disclaimerCardTitle, { color: colors.text }]}>What we don't promise:</Text>
+            <Text style={[styles.disclaimerCardBody, { color: colors.textSoft }]}>A job. Completing a path does not guarantee employment. Your outcomes depend on your effort, your network, and market conditions we can't control.</Text>
           </View>
 
-          <TouchableOpacity style={styles.acceptBtn} onPress={handleDisclaimerAccept}>
+          <TouchableOpacity style={[styles.acceptBtn, { backgroundColor: colors.accent }]} onPress={handleDisclaimerAccept}>
             <Text style={styles.acceptBtnText}>I understand — Let's build skills</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.learnMoreLinkBtn} onPress={() => setShowLearnMore(true)}>
-            <Text style={styles.learnMoreLinkText}>Read full terms and resources →</Text>
+            <Text style={[styles.learnMoreLinkText, { color: colors.accent }]}>Read full terms and resources →</Text>
           </TouchableOpacity>
         </ScrollView>
 
@@ -401,7 +414,7 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
       {step === 'welcome' && (
         <WelcomeStep
           onKnow={onBrowse}
@@ -440,15 +453,17 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  stepContainer: { flex: 1, padding: Spacing.xl, paddingTop: Spacing.xxxl },
+  stepContainer: { flex: 1, padding: Spacing.lg, paddingTop: Spacing.xl },
+  heroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, marginBottom: Spacing.lg },
 
   welcomeEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.lg },
-  welcomeTitle: { fontSize: FontSize.xxl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
-  welcomeSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20, marginBottom: Spacing.xxxl },
+  welcomeTitle: { fontSize: FontSize.xl, fontWeight: '800', textAlign: 'center', marginBottom: Spacing.sm },
+  welcomeSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
 
   bigBtn: {
     flexDirection: 'row', alignItems: 'center', gap: Spacing.md,
-    backgroundColor: Colors.accent, borderRadius: Radius.lg,
+    borderRadius: Radius.xl,
+    borderWidth: 1,
     padding: Spacing.lg, marginBottom: Spacing.md,
     ...Shadow.md,
   },
@@ -458,25 +473,25 @@ const styles = StyleSheet.create({
   bigBtnSub: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)' },
   bigBtnArrow: { fontSize: 20, color: '#fff', fontWeight: '700' },
 
-  progressBar: { height: 4, backgroundColor: Colors.border, borderRadius: 2, marginBottom: Spacing.sm },
-  progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
-  progressLabel: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'right', marginBottom: Spacing.xl },
+  progressBar: { height: 4, borderRadius: 2, marginBottom: Spacing.sm },
+  progressFill: { height: 4, borderRadius: 2 },
+  progressLabel: { fontSize: FontSize.xs, textAlign: 'right', marginBottom: Spacing.lg },
 
-  quizQuestion: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text, lineHeight: 26, marginBottom: Spacing.xl },
+  quizQuestion: { fontSize: FontSize.lg, fontWeight: '800', lineHeight: 26, marginBottom: Spacing.lg },
   quizOption: {
-    borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.md,
-    padding: Spacing.lg, marginBottom: Spacing.sm, backgroundColor: '#fff',
+    borderWidth: 1.5, borderRadius: Radius.xl,
+    padding: Spacing.md, marginBottom: Spacing.sm,
   },
   quizOptionSelected: { borderColor: Colors.accent, backgroundColor: Colors.accentSoft },
-  quizOptionText: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
+  quizOptionText: { fontSize: FontSize.sm, lineHeight: 20 },
   quizOptionTextSelected: { color: Colors.accent, fontWeight: '700' },
 
-  resultsTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  resultsSub: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20, marginBottom: Spacing.xl },
+  resultsTitle: { fontSize: FontSize.xl, fontWeight: '800', marginBottom: Spacing.sm },
+  resultsSub: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.lg },
 
   resultCard: {
-    backgroundColor: '#fff', borderRadius: Radius.lg, padding: Spacing.xl,
-    marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border,
+    borderRadius: Radius.xl, padding: Spacing.lg,
+    marginBottom: Spacing.md, borderWidth: 1,
     ...Shadow.sm,
   },
   resultCardTop: { borderColor: Colors.accent, borderWidth: 2 },
@@ -487,24 +502,24 @@ const styles = StyleSheet.create({
   },
   topMatchText: { fontSize: 10, fontWeight: '800', color: '#fff', letterSpacing: 1 },
   resultEmoji: { fontSize: 36, marginBottom: Spacing.sm },
-  resultName: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  resultWhy: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20, marginBottom: Spacing.md },
-  resultCta: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.accent },
+  resultName: { fontSize: FontSize.lg, fontWeight: '800', marginBottom: Spacing.sm },
+  resultWhy: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.md },
+  resultCta: { fontSize: FontSize.sm, fontWeight: '700' },
 
   browseLink: { padding: Spacing.lg, alignItems: 'center' },
-  browseLinkText: { fontSize: FontSize.sm, color: Colors.textSoft, textDecorationLine: 'underline' },
+  browseLinkText: { fontSize: FontSize.sm, textDecorationLine: 'underline' },
 
   // Disclaimer
-  disclaimerBody: { padding: Spacing.xl, alignItems: 'center', paddingBottom: 60 },
+  disclaimerBody: { padding: Spacing.lg, alignItems: 'center', paddingBottom: 60 },
   disclaimerEmoji: { fontSize: 56, marginBottom: Spacing.lg, marginTop: Spacing.xl },
-  disclaimerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
-  disclaimerSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
-  disclaimerCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border },
-  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  disclaimerCardBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
-  disclaimerBullet: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 28, paddingLeft: 4 },
-  acceptBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
+  disclaimerTitle: { fontSize: FontSize.xl, fontWeight: '900', textAlign: 'center', marginBottom: Spacing.sm },
+  disclaimerSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 22, marginBottom: Spacing.xl },
+  disclaimerCard: { borderRadius: Radius.xl, padding: Spacing.lg, marginBottom: Spacing.md, width: '100%', borderWidth: 1 },
+  disclaimerCardTitle: { fontSize: FontSize.sm, fontWeight: '800', marginBottom: Spacing.sm },
+  disclaimerCardBody: { fontSize: FontSize.sm, lineHeight: 20 },
+  disclaimerBullet: { fontSize: FontSize.sm, lineHeight: 28, paddingLeft: 4 },
+  acceptBtn: { borderRadius: Radius.xl, padding: Spacing.lg, width: '100%', alignItems: 'center', marginTop: Spacing.lg, marginBottom: Spacing.sm },
   acceptBtnText: { color: '#fff', fontWeight: '900', fontSize: FontSize.md },
   learnMoreLinkBtn: { padding: Spacing.md, alignItems: 'center' },
-  learnMoreLinkText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
+  learnMoreLinkText: { fontSize: FontSize.sm, fontWeight: '700' },
 });

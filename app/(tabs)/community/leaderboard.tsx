@@ -1,7 +1,5 @@
-import LeaderboardScreen from '@/screens/LeaderboardScreen';
-import { useLocalSearchParams } from 'expo-router';
+import { Redirect } from 'expo-router';
 
 export default function LeaderboardTabScreen() {
-  const params = useLocalSearchParams();
-  return <LeaderboardScreen route={{ params }} navigation={{}} />;
+  return <Redirect href="/(tabs)/guild" />;
 }
