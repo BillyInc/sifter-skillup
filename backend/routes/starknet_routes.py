@@ -6,7 +6,7 @@ from typing import Optional
 import httpx
 import jwt
 from cryptography.hazmat.primitives import serialization
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, Header, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from auth import Auth
@@ -190,7 +190,13 @@ def _wallet_response(wallet: dict, created: bool) -> dict:
     }
 
 
-def _update_user_wallet_fields(service, user_id: str, wallet: dict, email: Optional[str] = None) -> None:
+def _update_user_wallet_fields(
+    service,
+    user_id: str,
+    wallet: dict,
+    email: Optional[str] = None,
+    privy_did: Optional[str] = None,
+) -> bool:
     update_fields = {
         "starknet_address": wallet.get("address"),
         "starknet_auth": True,
@@ -198,6 +204,8 @@ def _update_user_wallet_fields(service, user_id: str, wallet: dict, email: Optio
     }
     if email:
         update_fields["starknet_email"] = email
+    if privy_did:
+        update_fields["privy_did"] = privy_did
 
     try:
         extended_fields = {
@@ -206,9 +214,33 @@ def _update_user_wallet_fields(service, user_id: str, wallet: dict, email: Optio
             "starknet_public_key": wallet.get("public_key"),
         }
         service.table("users").update(extended_fields).eq("id", user_id).execute()
+        return True
     except Exception as exc:
         log.warning("Falling back to minimal Starknet wallet field update", user_id=user_id, error=str(exc))
         service.table("users").update(update_fields).eq("id", user_id).execute()
+        return True
+
+
+def _get_user_from_sifter_token(sifter_token: Optional[str]) -> Optional[dict]:
+    if not sifter_token:
+        return None
+
+    try:
+        payload = Auth.decode_jwt(sifter_token)
+        user_id = payload.get("sub")
+        if not user_id:
+            return None
+        result = (
+            db.get_service_client()
+            .table("users")
+            .select("*")
+            .eq("id", user_id)
+            .single()
+            .execute()
+        )
+        return result.data or None
+    except Exception:
+        return None
 
 
 async def _ensure_privy_starknet_wallet(privy_user_id: str) -> tuple[dict, bool]:
@@ -238,6 +270,7 @@ def _next_rpc(network: str) -> str:
 @wallets_router.post("/create-starknet", response_model=ResponseModel)
 async def create_starknet(
     claims: dict = Depends(_verified_privy_claims),
+    x_sifter_token: Optional[str] = Header(default=None, alias="X-Sifter-Token"),
 ):
     privy_user_id = claims["sub"]
     service = db.get_service_client()
@@ -250,6 +283,13 @@ async def create_starknet(
         .execute()
     )
     user_row = user_lookup.data[0] if user_lookup.data else None
+    if user_row is None:
+        sifter_user = _get_user_from_sifter_token(x_sifter_token)
+        if sifter_user:
+            existing_did = sifter_user.get("privy_did")
+            if existing_did and existing_did != privy_user_id:
+                raise HTTPException(409, "Current Sifter account is linked to a different Privy account")
+            user_row = sifter_user
 
     if user_row and user_row.get("starknet_address") and user_row.get("starknet_wallet_id"):
         return ResponseModel(data={
@@ -258,6 +298,7 @@ async def create_starknet(
             "wallet_id": user_row.get("starknet_wallet_id"),
             "public_key": user_row.get("starknet_public_key"),
             "chain_type": "starknet",
+            "persisted": True,
         })
 
     try:
@@ -267,10 +308,20 @@ async def create_starknet(
     except Exception as exc:
         raise HTTPException(500, f"Failed to ensure Starknet wallet: {exc}") from exc
 
+    persisted = False
     if user_row:
-        _update_user_wallet_fields(service, user_row["id"], wallet, user_row.get("email"))
+        persisted = _update_user_wallet_fields(
+            service,
+            user_row["id"],
+            wallet,
+            user_row.get("email"),
+            privy_did=privy_user_id,
+        )
 
-    return ResponseModel(data=_wallet_response(wallet, created))
+    return ResponseModel(data={
+        **_wallet_response(wallet, created),
+        "persisted": persisted,
+    })
 
 
 @starknet_router.post("/rpc", response_model=ResponseModel)
@@ -354,6 +405,7 @@ async def starknet_auth_email(
     service = db.get_service_client()
     user_row: Optional[dict] = existing_user
     matched_by_did = False
+    is_new_user = False
 
     if user_row is None:
         did_lookup = (
@@ -380,6 +432,7 @@ async def starknet_auth_email(
 
     if user_row is None:
         user_id = str(uuid.uuid4())
+        is_new_user = True
         new_payload = {
             "id": user_id,
             "email": email,
@@ -395,7 +448,12 @@ async def starknet_auth_email(
             "completed_levels": [],
             "perfect_levels": [],
             "python_chapters_completed": [],
+            "onboarding_completed": True,
             "active_track": "crypto",
+            "active_field_id": "starknet",
+            "active_field_color": "#EC4899",
+            "current_track_id": "starknet-islands",
+            "current_track_name": "Starknet Islands",
             "boosters": {"hammer": 3, "lightning": 2, "shuffle": 5},
             "achievements": [],
             "settings": {"notifications": True, "sound": True, "haptics": True},
@@ -405,7 +463,7 @@ async def starknet_auth_email(
         }
         inserted = service.table("users").insert(new_payload).execute()
         user_row = inserted.data[0] if inserted.data else new_payload
-        _update_user_wallet_fields(service, user_row["id"], wallet, email)
+        _update_user_wallet_fields(service, user_row["id"], wallet, email, privy_did=privy_did)
     else:
         update_fields = {
             "last_login": datetime.now().isoformat(),
@@ -424,7 +482,7 @@ async def starknet_auth_email(
         if update_fields:
             service.table("users").update(update_fields).eq("id", user_row["id"]).execute()
 
-        _update_user_wallet_fields(service, user_row["id"], wallet, email)
+        _update_user_wallet_fields(service, user_row["id"], wallet, email, privy_did=privy_did)
 
     fresh = (
         service.table("users")
@@ -447,7 +505,11 @@ async def starknet_auth_email(
         address=(wallet.get("address", "")[:10] + "...") if wallet.get("address") else None,
     )
 
-    return ResponseModel(data={"token": sifter_jwt, "user": updated_user})
+    return ResponseModel(data={
+        "token": sifter_jwt,
+        "user": updated_user,
+        "is_new_user": is_new_user,
+    })
 
 
 async def _unlock_starknet_island(user_id: str):

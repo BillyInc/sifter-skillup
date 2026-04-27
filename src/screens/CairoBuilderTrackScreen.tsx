@@ -113,7 +113,7 @@ const lc = StyleSheet.create({
 
 export default function CairoBuilderTrackScreen() {
   const router    = useRouter();
-  const { user }  = useAuth();
+  const { user, updateActiveField }  = useAuth();
   const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [sepoliaBlock, setSepoliaBlock] = useState<string | null>(null);
@@ -141,6 +141,19 @@ export default function CairoBuilderTrackScreen() {
       .then(d => { if (d.result) setSepoliaBlock(`#${d.result}`); })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!user?.id || user.currentTrackId === 'cairo-builder') {
+      return;
+    }
+
+    void updateActiveField(
+      'starknet',
+      '#EC4899',
+      'cairo-builder',
+      'Cairo Builder',
+    ).catch(() => {});
+  }, [updateActiveField, user?.currentTrackId, user?.id]);
 
   function handleLabPress(lab: LabDef) {
     router.push({

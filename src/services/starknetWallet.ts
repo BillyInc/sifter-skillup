@@ -1,20 +1,24 @@
+import { API } from '../lib/api';
 import { API_BASE } from '../lib/config';
 
 export interface EnsuredStarknetWallet {
   address: string;
   walletId?: string | null;
   created: boolean;
+  persisted: boolean;
 }
 
 export async function ensureStarknetWallet(
   privyAccessToken: string,
 ): Promise<EnsuredStarknetWallet | null> {
   try {
+    const sifterToken = await API.getToken();
     const response = await fetch(`${API_BASE}/api/wallets/create-starknet`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${privyAccessToken}`,
         'Content-Type': 'application/json',
+        ...(sifterToken ? { 'X-Sifter-Token': sifterToken } : {}),
       },
     });
 
@@ -33,6 +37,7 @@ export async function ensureStarknetWallet(
       address: data.address,
       walletId: data.wallet_id ?? null,
       created: Boolean(data.created),
+      persisted: data.persisted !== false,
     };
   } catch (error) {
     console.error('[StarknetWallet] ensure failed:', error);

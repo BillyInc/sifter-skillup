@@ -22,9 +22,11 @@ import {
 import { WorkerCharacter, TheBolt } from '../components/CharacterSystem';
 import { FieldArtwork, fieldColor } from '../components/artwork/FieldArtwork';
 import { useAuth } from '../hooks/useAuth';
+import { useResume } from '../hooks/useResume';
 import { xpEngine, type XPSnapshot } from '../lib/XPEngine';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
 import { findTrackById, getTrackHref, resolveTrackContext } from '../lib/trackContext';
+import { buildResumeHref, getResumeSummary, normaliseResumePosition } from '../lib/resumeNavigation';
 import {
   GRID_GAP,
   WebCard,
@@ -290,9 +292,19 @@ export default function HomeScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { user, updateActiveField } = useAuth();
+  const { lastPosition } = useResume();
   const isWebWide = useIsWebWide();
   const go = useCallback((href: string) => router.push(href as any), [router]);
-  const trackContext = useMemo(() => resolveTrackContext(user), [user]);
+  const resumePosition = useMemo(
+    () => lastPosition ?? normaliseResumePosition(user?.last_position),
+    [lastPosition, user?.last_position],
+  );
+  const trackContext = useMemo(() => resolveTrackContext(user, {
+    trackId: resumePosition?.trackId,
+    trackName: resumePosition?.trackName,
+  }), [resumePosition?.trackId, resumePosition?.trackName, user]);
+  const resumeHref = useMemo(() => buildResumeHref(resumePosition), [resumePosition]);
+  const resumeSummary = useMemo(() => getResumeSummary(resumePosition), [resumePosition]);
 
   const [xp, setXp] = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
@@ -326,7 +338,14 @@ export default function HomeScreen() {
   const stage = xp?.stage.stage ?? 1;
   const dailyGoal = XP_DAILY_GOALS[xp?.dailyGoalKey ?? 'regular']?.xp ?? 20;
   const accentColor = trackContext.color || colors.accent;
-  const continueHref = trackContext.continueHref || '/(tabs)/fields';
+  const continueHref = resumeHref || trackContext.continueHref || '/(tabs)/fields';
+  const continueLabel = trackContext.mode === 'track'
+    ? (resumeSummary ? 'Continue Where You Left Off' : trackContext.continueLabel)
+    : 'Explore Tracks';
+  const continueSub = resumeSummary ?? (trackContext.mode === 'track' ? `Resume ${trackContext.trackName}` : 'Resume island journey');
+  const heroSummary = trackContext.mode === 'track' && resumeSummary
+    ? `${trackContext.heroSummary} ${resumeSummary}.`
+    : trackContext.heroSummary;
 
   const openTrack = useCallback(async (trackId: string) => {
     const track = findTrackById(trackId);
@@ -408,9 +427,9 @@ export default function HomeScreen() {
                   artFieldId={trackContext.artFieldId}
                   eyebrow={trackContext.heroEyebrow}
                   title={trackContext.heroTitle}
-                  summary={trackContext.heroSummary}
+                  summary={heroSummary}
                   focusAreas={trackContext.focusAreas}
-                  continueLabel={trackContext.continueLabel}
+                  continueLabel={continueLabel}
                   chartValues={trackContext.chartValues}
                   onContinue={() => go(continueHref)}
                 />
@@ -569,7 +588,7 @@ export default function HomeScreen() {
                   {
                     emoji: '🏝️',
                     label: trackContext.mode === 'track' ? 'Continue Track' : 'Continue Learning',
-                    sub: trackContext.mode === 'track' ? `Resume ${trackContext.trackName}` : 'Resume island journey',
+                    sub: continueSub,
                     route: continueHref,
                   },
                   { emoji: '🌐', label: 'Explore Tracks', sub: 'Browse career fields', route: '/(tabs)/fields' },
@@ -637,7 +656,7 @@ export default function HomeScreen() {
             <View style={{ flex: 1 }}>
               <Text style={[styles.mobileHeroTitle, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
               <Text style={[styles.mobileHeroSummary, { color: colors.textSoft }]}>
-                {trackContext.mode === 'track' ? trackContext.heroSummary : (xp?.stage.description ?? 'Just starting out. Empty desk, full potential.')}
+                {trackContext.mode === 'track' ? heroSummary : (xp?.stage.description ?? 'Just starting out. Empty desk, full potential.')}
               </Text>
               {xp ? (
                 <XPProgressBar
@@ -650,7 +669,7 @@ export default function HomeScreen() {
             </View>
           </View>
           <TouchableOpacity onPress={() => go(continueHref)} style={[styles.mobilePrimaryBtn, { backgroundColor: accentColor }]}>
-            <Text style={styles.mobilePrimaryBtnText}>{trackContext.mode === 'track' ? trackContext.continueLabel : 'Explore Tracks'}</Text>
+            <Text style={styles.mobilePrimaryBtnText}>{continueLabel}</Text>
           </TouchableOpacity>
         </Animated.View>
 
@@ -667,7 +686,7 @@ export default function HomeScreen() {
 
         <Animated.View style={[styles.actionsSection, contentStyle]}>
           <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{trackContext.mode === 'track' ? 'TRACK ACTIONS' : 'QUICK ACTIONS'}</Text>
-          <QuickAction emoji="🏝️" label={trackContext.mode === 'track' ? 'Continue Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? `Resume ${trackContext.trackName}` : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
+          <QuickAction emoji="🏝️" label={trackContext.mode === 'track' ? 'Continue Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? continueSub : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
           <QuickAction emoji="🌐" label="Explore Tracks" sub="Browse career fields" color={colors.green} onPress={() => go('/(tabs)/fields')} />
           <QuickAction emoji="📰" label="Open Feed" sub="News, data, jobs for your track" color={colors.orange} onPress={() => go('/(tabs)/feed')} />
           <QuickAction emoji="💼" label="Portfolio & XP" sub="View tasks, artifacts, and pushes" color={colors.gold} onPress={() => go('/(tabs)/portfolio')} />

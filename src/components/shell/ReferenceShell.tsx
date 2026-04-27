@@ -10,7 +10,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { usePathname, useRouter } from 'expo-router';
+import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '../../theme';
 import { useAuth } from '../../hooks/useAuth';
@@ -76,6 +76,13 @@ function getActiveMobileNavId(activeId: NavId): NavId {
   return 'dashboard';
 }
 
+function readParam(value: string | string[] | undefined): string | null {
+  if (Array.isArray(value)) {
+    return value[0] ?? null;
+  }
+  return value ?? null;
+}
+
 function NavList({
   activeId,
   onNavigate,
@@ -124,12 +131,18 @@ function NavList({
 export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const params = useLocalSearchParams<{ trackId?: string | string[]; trackName?: string | string[] }>();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { colors, isDark, toggle } = useTheme();
   const { user } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const trackContext = useMemo(() => resolveTrackContext(user), [user]);
+  const routeTrackId = readParam(params.trackId);
+  const routeTrackName = readParam(params.trackName);
+  const trackContext = useMemo(() => resolveTrackContext(user, {
+    trackId: routeTrackId,
+    trackName: routeTrackName,
+  }), [routeTrackId, routeTrackName, user]);
 
   const activeId = useMemo(() => getActiveNavId(pathname), [pathname]);
   const activeMobileId = useMemo(() => getActiveMobileNavId(activeId), [activeId]);

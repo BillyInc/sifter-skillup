@@ -29,9 +29,22 @@ async def save_last_position_game(
 ):
     """Save resume position. Called by useResume.savePosition()."""
     position = body.get("position", body)
-    db.get_service_client().table("users").update({
+    updates = {
         "last_position": position,
-    }).eq("id", current_user["id"]).execute()
+    }
+
+    track_id = position.get("trackId") or position.get("track_id")
+    track_name = position.get("trackName") or position.get("track_name")
+    if track_id:
+        updates["current_track_id"] = track_id
+        updates["active_track"] = track_id
+    if track_name:
+        updates["current_track_name"] = track_name
+    if track_id and str(track_id).startswith("starknet"):
+        updates["active_field_id"] = "starknet"
+        updates["active_field_color"] = "#EC4899"
+
+    db.get_service_client().table("users").update(updates).eq("id", current_user["id"]).execute()
     return ResponseModel(data={"saved": True})
 
 
@@ -62,7 +75,7 @@ async def get_full_progress(current_user: dict = Depends(Auth.get_current_user))
     return ResponseModel(data={
         "userId":            current_user["id"],
         "completedLevels":   current_user.get("completed_levels", []),
-        "currentTrack":      current_user.get("active_track", "crypto"),
+        "currentTrack":      current_user.get("current_track_id") or current_user.get("active_track", "crypto"),
         "currentTrackName":  current_user.get("current_track_name", ""),
         "lastPosition":      current_user.get("last_position"),
         "xp":                current_user.get("points", 0),

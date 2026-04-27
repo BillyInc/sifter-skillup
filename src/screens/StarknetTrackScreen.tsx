@@ -18,6 +18,7 @@ import { API, API_BASE } from '../lib/api';
 import { PRIVY_ENABLED } from '../lib/config';
 import { useAppPrivy } from '../lib/privy';
 import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
+import StarknetFaucetButton from '../components/StarknetFaucetButton';
 
 interface LabDef {
   id: string;
@@ -186,7 +187,7 @@ function LabCard({
 
 export default function StarknetTrackScreen() {
   const { colors } = useTheme();
-  const { user, authStarknet, starknetLoading, refreshUser } = useAuth();
+  const { user, authStarknet, starknetLoading, refreshUser, updateActiveField } = useAuth();
   const navigation = useRouter();
   const privy = useAppPrivy();
 
@@ -202,6 +203,19 @@ export default function StarknetTrackScreen() {
   useEffect(() => {
     void loadData();
   }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id || user.currentTrackId === 'starknet-defi-navigator') {
+      return;
+    }
+
+    void updateActiveField(
+      'starknet',
+      '#EC4899',
+      'starknet-defi-navigator',
+      'Starknet DeFi Navigator',
+    ).catch(() => {});
+  }, [updateActiveField, user?.currentTrackId, user?.id]);
 
   async function loadData() {
     if (!user?.id) {
@@ -323,6 +337,11 @@ export default function StarknetTrackScreen() {
       >
         <View style={{ padding: Spacing.lg }}>
           <WalletBanner address={address} isCreating={creatingWallet || starknetLoading} onConnect={handleConnectWallet} />
+          {address ? (
+            <View style={{ marginTop: Spacing.md }}>
+              <StarknetFaucetButton walletAddress={address} />
+            </View>
+          ) : null}
         </View>
 
         <View style={styles.stats}>
