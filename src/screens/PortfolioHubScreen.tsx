@@ -899,7 +899,7 @@ export default function PortfolioHubScreen() {
             <WebCol weight={2}>
               {loading ? (
                 <WebCard>
-                  <View style={{ alignItems: 'center', paddingVertical: 60 }}>
+                  <View style={{ alignItems: 'center', paddingVertical: 18 }}>
                     <ActivityIndicator color={colors.accent} size="large" />
                     <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 13 }}>Loading artifacts…</Text>
                   </View>
@@ -1025,7 +1025,7 @@ export default function PortfolioHubScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  scroll: { ...webContainer, paddingBottom: 48 },
+  scroll: { ...webContainer, paddingBottom: 18 },
   loadingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
   loadingText: { fontSize: FontSize.sm, color: Colors.textSoft },
 
@@ -1106,7 +1106,7 @@ const styles = StyleSheet.create({
 
   statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm },
   statBox: { flex: 1, alignItems: 'center' },
-  statValue: { fontSize: 28, fontWeight: '800' },
+  statValue: { fontSize: 18, fontWeight: '800' },
   statLabel: { fontSize: 10, color: Colors.textSoft, marginTop: 2 },
 
   alertBox: {
@@ -1125,7 +1125,7 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
     gap: Spacing.sm,
   },
-  platformEmoji: { fontSize: 24, width: 36, textAlign: 'center' },
+  platformEmoji: { fontSize: 18, width: 36, textAlign: 'center' },
   platformNameRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 2 },
   platformName: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
   platformDesc: { fontSize: 12, color: Colors.textSoft, lineHeight: 16 },
@@ -1139,7 +1139,7 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
     gap: Spacing.sm,
   },
-  platformItemEmoji: { fontSize: 24, width: 36, textAlign: 'center', marginTop: 2 },
+  platformItemEmoji: { fontSize: 18, width: 36, textAlign: 'center', marginTop: 2 },
 
   tag: {
     borderWidth: 1,

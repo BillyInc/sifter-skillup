@@ -69,7 +69,7 @@ function GuildCard({ guild, onJoin, joined }: {
   return (
     <View style={[gc.card, { backgroundColor: colors.card, borderColor: `${guild.accent}30` }]}>
       <View style={gc.row}>
-        <Text style={{ fontSize: 28 }}>{guild.icon}</Text>
+        <Text style={{ fontSize: 18 }}>{guild.icon}</Text>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Text style={[gc.name, { color: colors.text }]}>{guild.name}</Text>
@@ -312,13 +312,13 @@ export default function GuildScreen() {
                 ) : (
                   <WebCard accentBar accentColor={colors.accent}>
                     <View style={s.emptyState}>
-                      <Text style={{ fontSize: 48 }}>Guilds</Text>
+                      <Text style={{ fontSize: 18 }}>Guilds</Text>
                       <Text style={[s.emptyTitle, { color: colors.text }]}>Join a Guild</Text>
                       <Text style={[s.emptySub, { color: colors.textSoft, maxWidth: 520 }]}>
                         Guilds keep your workspace social with shared XP, rankings, and team accountability.
                       </Text>
                       <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accent }]} onPress={() => setTab('browse')}>
-                        <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.md }}>Browse Guilds</Text>
+                        <Text style={{ color: '#fff', fontWeight: '800', fontSize: FontSize.md }}>Browse Guilds</Text>
                       </TouchableOpacity>
                     </View>
                   </WebCard>
@@ -342,7 +342,7 @@ export default function GuildScreen() {
                       <Text style={[s.lbRank, { color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : colors.textMuted }]}>
                         {i === 0 ? '1' : i === 1 ? '2' : i === 2 ? '3' : `${i + 1}`}
                       </Text>
-                      <Text style={{ fontSize: 22 }}>{g.icon}</Text>
+                      <Text style={{ fontSize: 18 }}>{g.icon}</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={[s.lbName, { color: colors.text }]}>{g.name}</Text>
                         <Text style={{ color: colors.textMuted, fontSize: 11 }}>{g.member_count} members</Text>
@@ -390,7 +390,7 @@ export default function GuildScreen() {
                           onPress={sendChat}
                           disabled={!chatInput.trim() || sending}
                         >
-                          <Text style={{ color: '#fff', fontWeight: '900', fontSize: 13 }}>{sending ? '...' : '>'}</Text>
+                          <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>{sending ? '...' : '>'}</Text>
                         </TouchableOpacity>
                       </View>
                     </>
@@ -472,7 +472,7 @@ export default function GuildScreen() {
             userGuildId && myGuild ? (
               <>
                 <View style={[s.card, { backgroundColor: `${myGuild.accent}10`, borderColor: `${myGuild.accent}30` }]}>
-                  <Text style={{ fontSize: 36 }}>{myGuild.icon}</Text>
+                  <Text style={{ fontSize: 18 }}>{myGuild.icon}</Text>
                   <Text style={[s.guildName, { color: colors.text }]}>{myGuild.name}</Text>
                   <Text style={[s.guildDesc, { color: colors.textSoft }]}>{myGuild.description}</Text>
                   <View style={s.statsRow}>
@@ -514,14 +514,14 @@ export default function GuildScreen() {
               </>
             ) : (
               <View style={s.emptyState}>
-                <Text style={{ fontSize: 48 }}>⚔️</Text>
+                <Text style={{ fontSize: 18 }}>⚔️</Text>
                 <Text style={[s.emptyTitle, { color: colors.text }]}>Join a Guild</Text>
                 <Text style={[s.emptySub, { color: colors.textSoft }]}>
                   Guilds keep your workspace social with shared XP, rankings, and team accountability.
                 </Text>
                 <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accent }]}
                   onPress={() => setTab('browse')}>
-                  <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.md }}>Browse Guilds</Text>
+                  <Text style={{ color: '#fff', fontWeight: '800', fontSize: FontSize.md }}>Browse Guilds</Text>
                 </TouchableOpacity>
               </View>
             )
@@ -542,7 +542,7 @@ export default function GuildScreen() {
                   <Text style={[s.lbRank, { color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : colors.textMuted }]}>
                     {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}
                   </Text>
-                  <Text style={{ fontSize: 22 }}>{g.icon}</Text>
+                  <Text style={{ fontSize: 18 }}>{g.icon}</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={[s.lbName, { color: colors.text }]}>{g.name}</Text>
                     <Text style={{ color: colors.textMuted, fontSize: 11 }}>{g.member_count} members</Text>
@@ -610,7 +610,7 @@ export default function GuildScreen() {
                     onPress={sendChat}
                     disabled={!chatInput.trim() || sending}
                   >
-                    <Text style={{ color: '#fff', fontWeight: '900', fontSize: 13 }}>
+                    <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>
                       {sending ? '…' : '→'}
                     </Text>
                   </TouchableOpacity>
@@ -639,7 +639,7 @@ const s = StyleSheet.create({
   webTab:      { borderRadius: 8, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 8 },
   webGuildHero:{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
   webGuildBadge:{ width: 56, height: 56, borderRadius: 16, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
-  webGuildBadgeIcon:{ fontSize: 26 },
+  webGuildBadgeIcon:{ fontSize: 18 },
   webGuildTitleRow:{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: 4, flexWrap: 'wrap' },
   webGuildName:{ fontSize: FontSize.lg, fontWeight: '900' },
   webGuildDesc:{ fontSize: FontSize.sm, lineHeight: 20 },
@@ -649,19 +649,19 @@ const s = StyleSheet.create({
   webLeaderboardRow:{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: 10, borderBottomWidth: 1 },
   webRankDot:  { width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   webStreakLabel:{ fontSize: 12, fontWeight: '800', marginBottom: 4 },
-  webStreakNumber:{ fontSize: 32, fontWeight: '900' },
+  webStreakNumber:{ fontSize: 18, fontWeight: '800' },
   webStreakSub:{ fontSize: 11, marginTop: 4, lineHeight: 17 },
   tabBar:      { borderBottomWidth: 1, maxHeight: 44 },
   tab:         { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
   tabTxt:      { fontSize: 12, fontWeight: '700' },
-  content:     { padding: Spacing.md, gap: Spacing.md, paddingBottom: 60 },
+  content:     { padding: Spacing.md, gap: Spacing.md, paddingBottom: 18 },
   card:        { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12,
                  alignItems: 'center', gap: Spacing.sm },
   guildName:   { fontSize: FontSize.lg, fontWeight: '900', textAlign: 'center' },
   guildDesc:   { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
   statsRow:    { flexDirection: 'row', gap: Spacing.xl, marginTop: Spacing.sm },
   statBox:     { alignItems: 'center' },
-  statVal:     { fontSize: 20, fontWeight: '900' },
+  statVal:     { fontSize: 20, fontWeight: '800' },
   statLbl:     { fontSize: 10, fontWeight: '600', marginTop: 2 },
   leaveBtn:    { borderWidth: 1, borderRadius: 8, paddingHorizontal: 14,
                  paddingVertical: 8, marginTop: Spacing.sm },
@@ -669,14 +669,14 @@ const s = StyleSheet.create({
   section:     { fontSize: 13, fontWeight: '800', letterSpacing: 0.8, marginBottom: 10 },
   memberRow:   { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm,
                  borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
-  rank:        { width: 28, fontSize: 13, fontWeight: '900', textAlign: 'center' },
+  rank:        { width: 28, fontSize: 13, fontWeight: '800', textAlign: 'center' },
   memberName:  { fontSize: FontSize.sm, fontWeight: '700' },
   pts:         { fontSize: 12, fontWeight: '700' },
   lbRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm,
                  borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
   lbRank:      { width: 32, fontSize: 18, textAlign: 'center' },
   lbName:      { fontSize: FontSize.sm, fontWeight: '800' },
-  lbXP:        { fontSize: 13, fontWeight: '900' },
+  lbXP:        { fontSize: 13, fontWeight: '800' },
   emptyState:  { alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.xxxl },
   emptyTitle:  { fontSize: FontSize.xl, fontWeight: '900' },
   emptySub:    { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 22 },

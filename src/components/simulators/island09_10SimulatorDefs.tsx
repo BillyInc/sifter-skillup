@@ -34,7 +34,7 @@ function SimShell({ title, subtitle, icon, children }: { title: string; subtitle
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md }} showsVerticalScrollIndicator={false}>
       <View style={{ flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' }}>
-        <Text style={{ fontSize: 36, lineHeight: 44 }}>{icon}</Text>
+        <Text style={{ fontSize: 18, lineHeight: 22 }}>{icon}</Text>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 }}>⚡ TRY IT NOW</Text>
           <Text style={{ fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 }}>{title}</Text>
@@ -356,7 +356,7 @@ export function MemeExitStrategySim({ onComplete, onSkip }: SimProps) {
               {Object.entries(sel.returns).map(([label, amount]) => (
                 <View key={label} style={s.row}>
                   <Text style={s.rk}>{label}</Text>
-                  <Text style={[s.rv, { color: Number(amount) > 0 ? Colors.green : Colors.red, fontWeight: '900' }]}>
+                  <Text style={[s.rv, { color: Number(amount) > 0 ? Colors.green : Colors.red, fontWeight: '800' }]}>
                     {Number(amount) > 0 ? '+' : ''}${Number(amount).toFixed(0)}
                   </Text>
                 </View>
@@ -434,7 +434,7 @@ export function MemePortfolioSizeSim({ onComplete, onSkip }: SimProps) {
           <View key={label as string} style={{ marginBottom: Spacing.sm }}>
             <View style={s.row}>
               <Text style={s.rk}>{label}</Text>
-              <Text style={{ fontWeight: '900', color: color as string }}>{pct}% — ${(port * Number(pct) / 100).toFixed(0)}</Text>
+              <Text style={{ fontWeight: '800', color: color as string }}>{pct}% — ${(port * Number(pct) / 100).toFixed(0)}</Text>
             </View>
             <View style={{ height: 6, backgroundColor: Colors.border, borderRadius: 99, overflow: 'hidden' }}>
               <View style={{ height: 6, borderRadius: 99, backgroundColor: color as string, width: `${pct}%` as any }} />
@@ -496,7 +496,7 @@ export function MemecoinBossSim({ onComplete, onSkip }: SimProps) {
         {[1, 2, 3].map(n => (
           <View key={n} style={{ flex: 1, padding: Spacing.sm, borderRadius: Radius.md, alignItems: 'center',
             backgroundColor: stage === n ? Colors.accent : n < stage ? '#d1fae5' : Colors.border }}>
-            <Text style={{ fontWeight: '900', color: stage === n ? '#fff' : n < stage ? Colors.green : Colors.textSoft, fontSize: FontSize.xs }}>
+            <Text style={{ fontWeight: '800', color: stage === n ? '#fff' : n < stage ? Colors.green : Colors.textSoft, fontSize: FontSize.xs }}>
               {n < stage ? '✓' : `Stage ${n}`}
             </Text>
           </View>
@@ -534,7 +534,7 @@ export function MemecoinBossSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={[s.fl, { color: Colors.accent }]}>STAGE 2 — TOKEN SAFETY CHECK</Text>
-            <Text style={{ fontWeight: '900', color: Colors.text, fontSize: FontSize.lg, marginBottom: Spacing.md }}>MOON100X</Text>
+            <Text style={{ fontWeight: '800', color: Colors.text, fontSize: FontSize.lg, marginBottom: Spacing.md }}>MOON100X</Text>
             <View style={{ gap: 4 }}>
               {[
                 { label: 'FDV / MC ratio', value: '100× (90% tokens locked)', bad: true },
@@ -597,8 +597,8 @@ export function MemecoinBossSim({ onComplete, onSkip }: SimProps) {
       {allDone && (
         <>
           <Card style={{ borderColor: total >= 2 ? Colors.green : Colors.red }}>
-            <Text style={{ textAlign: 'center', fontSize: 48 }}>{total >= 2 ? '🏆' : '📚'}</Text>
-            <Text style={{ fontWeight: '900', textAlign: 'center', fontSize: FontSize.xl, color: total >= 2 ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>{total >= 2 ? '🏆' : '📚'}</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', fontSize: FontSize.xl, color: total >= 2 ? Colors.green : Colors.red, marginTop: Spacing.sm }}>
               {total >= 2 ? 'MEMECOIN BOSS DEFEATED!' : 'Review & Retry'}
             </Text>
             <Text style={{ textAlign: 'center', color: Colors.textSoft }}>{total}/3 stages passed</Text>
@@ -662,14 +662,14 @@ export function AirdropEligibilitySim({ onComplete, onSkip }: SimProps) {
             <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
               <TouchableOpacity onPress={() => set(v => Math.max(min, v - step))} disabled={checked}
                 style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: Colors.border, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '900', color: Colors.text }}>−</Text>
+                <Text style={{ fontWeight: '800', color: Colors.text }}>−</Text>
               </TouchableOpacity>
               <View style={{ flex: 1, height: 8, backgroundColor: Colors.border, borderRadius: 99, alignSelf: 'center', overflow: 'hidden' }}>
                 <View style={{ height: 8, borderRadius: 99, backgroundColor: Colors.accent, width: `${((value - min) / (max - min)) * 100}%` as any }} />
               </View>
               <TouchableOpacity onPress={() => set(v => Math.min(max, v + step))} disabled={checked}
                 style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: Colors.border, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ fontWeight: '900', color: Colors.text }}>+</Text>
+                <Text style={{ fontWeight: '800', color: Colors.text }}>+</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -686,11 +686,11 @@ export function AirdropEligibilitySim({ onComplete, onSkip }: SimProps) {
                   <Text style={{ fontWeight: '700', color: Colors.text, fontSize: FontSize.sm }}>{c.label}</Text>
                   <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft }}>{c.req}</Text>
                 </View>
-                <Text style={{ fontWeight: '900', color: c.met ? Colors.green : Colors.red, fontSize: FontSize.lg }}>{c.met ? '✅' : '❌'}</Text>
+                <Text style={{ fontWeight: '800', color: c.met ? Colors.green : Colors.red, fontSize: FontSize.lg }}>{c.met ? '✅' : '❌'}</Text>
               </View>
             ))}
             <View style={{ padding: Spacing.md, backgroundColor: qualifies ? '#d1fae5' : '#fee2e2', borderRadius: Radius.md, marginTop: Spacing.sm }}>
-              <Text style={{ fontWeight: '900', color: qualifies ? Colors.green : Colors.red, textAlign: 'center' }}>
+              <Text style={{ fontWeight: '800', color: qualifies ? Colors.green : Colors.red, textAlign: 'center' }}>
                 {tier} — {score}/5 criteria met
               </Text>
             </View>
@@ -750,7 +750,7 @@ export function SybilDetectorSim({ onComplete, onSkip }: SimProps) {
         const isCorrect = chosen === w.isSybil;
         return (
           <Card key={w.id} style={{ borderColor: checked ? (isCorrect ? Colors.green : Colors.red) : Colors.border }}>
-            <Text style={{ fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm }}>Wallet {w.id}: {w.address}</Text>
+            <Text style={{ fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm }}>Wallet {w.id}: {w.address}</Text>
             {w.signals.map((sig, i) => (
               <Text key={i} style={{ fontSize: FontSize.xs, color: Colors.text, lineHeight: 18, marginBottom: 2 }}>
                 {checked && w.isSybil ? '🚩' : '•'} {sig}
@@ -880,7 +880,7 @@ export function AirdropExpectedValueSim({ onComplete, onSkip }: SimProps) {
         </View>
         <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm }]}>
           <Text style={{ fontWeight: '800' }}>Total cost</Text>
-          <Text style={{ fontWeight: '900', color: Colors.red, fontSize: FontSize.lg }}>${totalCost.toFixed(0)}</Text>
+          <Text style={{ fontWeight: '800', color: Colors.red, fontSize: FontSize.lg }}>${totalCost.toFixed(0)}</Text>
         </View>
       </Card>
 
@@ -912,11 +912,11 @@ export function AirdropExpectedValueSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card style={{ borderColor: isPositive ? Colors.green : Colors.red }}>
             <Text style={s.fl}>EXPECTED VALUE ANALYSIS</Text>
-            <View style={s.row}><Text style={s.rk}>Expected airdrop value</Text><Text style={[s.rv, { color: Colors.accent, fontWeight: '900' }]}>${ev.toFixed(0)}</Text></View>
+            <View style={s.row}><Text style={s.rk}>Expected airdrop value</Text><Text style={[s.rv, { color: Colors.accent, fontWeight: '800' }]}>${ev.toFixed(0)}</Text></View>
             <View style={s.row}><Text style={s.rk}>Your total cost</Text><Text style={[s.rv, { color: Colors.red }]}>${totalCost.toFixed(0)}</Text></View>
             <View style={[s.row, { borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.sm, marginTop: 4 }]}>
               <Text style={{ fontWeight: '800' }}>Net EV</Text>
-              <Text style={{ fontWeight: '900', fontSize: FontSize.xl, color: isPositive ? Colors.green : Colors.red }}>
+              <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: isPositive ? Colors.green : Colors.red }}>
                 {isPositive ? '+' : ''}${(ev - totalCost).toFixed(0)} ({roi}% ROI)
               </Text>
             </View>
@@ -996,8 +996,8 @@ export function AirdropBossSim({ onComplete, onSkip }: SimProps) {
       ) : (
         <>
           <Card style={{ borderColor: score >= 2 ? Colors.green : Colors.red }}>
-            <Text style={{ textAlign: 'center', fontSize: 48 }}>{score >= 2 ? '🏆' : '📚'}</Text>
-            <Text style={{ fontWeight: '900', textAlign: 'center', fontSize: FontSize.xl, color: score >= 2 ? Colors.green : Colors.red }}>
+            <Text style={{ textAlign: 'center', fontSize: 18 }}>{score >= 2 ? '🏆' : '📚'}</Text>
+            <Text style={{ fontWeight: '800', textAlign: 'center', fontSize: FontSize.xl, color: score >= 2 ? Colors.green : Colors.red }}>
               {score >= 2 ? 'AIRDROP BOSS CLEARED!' : 'Review the Lessons'}
             </Text>
             <Text style={{ textAlign: 'center', color: Colors.textSoft }}>{score}/3 correct</Text>

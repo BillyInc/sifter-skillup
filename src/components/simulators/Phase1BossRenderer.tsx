@@ -391,7 +391,7 @@ function SummaryScreen({
 
 const sum = StyleSheet.create({
   header: { alignItems: 'center', paddingVertical: Spacing.lg, gap: 6 },
-  verdict: { fontSize: 22, fontWeight: '900', letterSpacing: 1 },
+  verdict: { fontSize: 18, fontWeight: '900', letterSpacing: 1 },
   score: { fontSize: 18, fontWeight: '700', color: Colors.text },
   threshold: { fontSize: 12, color: Colors.textSoft },
   unlockBadge: {
@@ -522,7 +522,7 @@ export default function Phase1BossRenderer({
       >
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ alignItems: 'center', paddingVertical: Spacing.lg }}>
-            <Text style={{ fontSize: 20, fontWeight: '900', color: currentResult.passed ? '#22c55e' : '#ef4444' }}>
+            <Text style={{ fontSize: 20, fontWeight: '800', color: currentResult.passed ? '#22c55e' : '#ef4444' }}>
               {currentResult.passed ? '✓ PASS' : '✗ INCOMPLETE'}
             </Text>
             <Text style={{ fontSize: 13, color: Colors.textSoft, marginTop: 4 }}>

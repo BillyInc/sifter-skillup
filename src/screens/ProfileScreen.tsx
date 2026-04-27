@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
 
   heroSection:      { alignItems: 'center', paddingTop: Spacing.md, paddingBottom: Spacing.sm, position: 'relative' },
   settingsBtn:      { position: 'absolute', top: Spacing.md, right: 0 },
-  settingsBtnText:  { fontSize: 22 },
+  settingsBtnText:  { fontSize: 18 },
   eyebrow:          { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginTop: Spacing.md },
   characterWrap:    { position: 'relative', alignItems: 'center', justifyContent: 'center', width: 150, height: 150 },
   characterOverlay: { position: 'absolute' },
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
   skillBarPct:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, width: 34, textAlign: 'right' },
 
   accountRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm },
-  accountRowEmoji:  { fontSize: 22 },
+  accountRowEmoji:  { fontSize: 18 },
   accountRowLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   accountRowSub:    { fontSize: FontSize.xs, marginTop: 2 },
   accountRowArrow:  { fontSize: FontSize.lg },

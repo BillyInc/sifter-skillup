@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.lg,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   sub: {
     fontSize: FontSize.xs,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   sectionNum: {
     width: 24,
     fontSize: FontSize.sm,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   sectionTitle: {
     fontSize: FontSize.sm,

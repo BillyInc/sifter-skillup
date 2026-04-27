@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   fieldEmoji: {
-    fontSize: 24,
+    fontSize: 18,
   },
   fieldName: {
     flex: 1,

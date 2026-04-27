@@ -193,7 +193,7 @@ const sa = StyleSheet.create({
   checkboxChecked: {
     backgroundColor: '#22c55e', borderColor: '#22c55e',
   },
-  checkmark: { fontSize: 12, color: '#fff', fontWeight: '900' },
+  checkmark: { fontSize: 12, color: '#fff', fontWeight: '800' },
   criterionText: { flex: 1, fontSize: 13, color: Colors.textSoft, lineHeight: 19 },
   criterionTextChecked: { color: Colors.green },
 });
@@ -294,7 +294,7 @@ function ResultsPanel({
 
 const rp = StyleSheet.create({
   header: { alignItems: 'center', paddingVertical: Spacing.lg },
-  badge: { fontSize: 18, fontWeight: '900', letterSpacing: 1 },
+  badge: { fontSize: 18, fontWeight: '800', letterSpacing: 1 },
   threshold: { fontSize: 12, color: Colors.textSoft, marginTop: 4 },
   retryBox: {
     backgroundColor: '#fef9ee', borderRadius: Radius.lg,

@@ -349,7 +349,7 @@ function LendObject({ color }: { color: string }) {
         borderColor: color + '50',
         transform: [{ translateY: float1 }],
       }]}>
-        <Text style={{ fontSize: 28 }}>🏦</Text>
+        <Text style={{ fontSize: 18 }}>🏦</Text>
         <Text style={[styles.protocolName, { color }]}>Vesu</Text>
       </Animated.View>
 
@@ -746,7 +746,7 @@ function FallbackObject({ color }: { color: string }) {
           transform: [{ rotate: spin }],
         }]} />
         <View style={[styles.fallbackCore, { backgroundColor: color }]}>
-          <Text style={{ fontSize: 24, color: '#FFF' }}>⚡</Text>
+          <Text style={{ fontSize: 18, color: '#FFF' }}>⚡</Text>
         </View>
       </Animated.View>
     </LabObjectFrame>
@@ -836,7 +836,7 @@ const styles = StyleSheet.create({
   tokenLabel:      { fontSize: 10, fontWeight: FontWeight.black },
   swapArrow:       { alignItems: 'center', justifyContent: 'center' },
   swapArrowLine:   { height: 2, width: 40, marginBottom: 4 },
-  swapArrowHead:   { fontSize: 22, fontWeight: FontWeight.black },
+  swapArrowHead:   { fontSize: 18, fontWeight: FontWeight.black },
   priceImpactRow:  { flexDirection: 'row', alignItems: 'center', gap: 8, position: 'absolute', bottom: 12, left: 16, right: 16 },
   priceImpactLabel:{ fontSize: 10, fontWeight: FontWeight.semibold },
   priceImpactTrack:{ flex: 1, height: 4, borderRadius: 2, backgroundColor: '#E5E7EB', overflow: 'hidden' },
@@ -847,7 +847,7 @@ const styles = StyleSheet.create({
   stakingRing:     { position: 'absolute', width: 120, height: 120, borderRadius: 60, borderWidth: 1.5 },
   stakingRingDot:  { position: 'absolute', top: -4, left: 55, width: 8, height: 8, borderRadius: 4 },
   apyBadge:        { borderRadius: 16, padding: 12, alignItems: 'center', minWidth: 72 },
-  apyValue:        { fontSize: 22, fontWeight: FontWeight.black, color: '#FFF' },
+  apyValue:        { fontSize: 18, fontWeight: FontWeight.black, color: '#FFF' },
   apyLabel:        { fontSize: 10, fontWeight: FontWeight.black, color: 'rgba(255,255,255,0.7)' },
   validatorRow:    { position: 'absolute', bottom: 16, flexDirection: 'row', gap: 8 },
   validatorDot:    { width: 10, height: 10, borderRadius: 5 },
@@ -871,7 +871,7 @@ const styles = StyleSheet.create({
   // DCA
   dcaAvgLine:      { position: 'absolute', top: '45%', height: 2, width: '100%', backgroundColor: 'transparent' },
   dcaAvgDot:       { width: 8, height: 8, borderRadius: 4, alignSelf: 'center', top: -3 },
-  dcaBarsRow:      { flexDirection: 'row', alignItems: 'flex-end', gap: 6, paddingHorizontal: 16, paddingBottom: 44, height: 100 },
+  dcaBarsRow:      { flexDirection: 'row', alignItems: 'flex-end', gap: 6, paddingHorizontal: 16, paddingBottom: 18, height: 100 },
   dcaBar:          { flex: 1, borderRadius: 3, minHeight: 8 },
   dcaChip:         { position: 'absolute', bottom: 12, borderRadius: Radius.lg, paddingHorizontal: 14, paddingVertical: 6 },
   dcaChipText:     { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#FFF' },
@@ -888,7 +888,7 @@ const styles = StyleSheet.create({
   bossOrbit:       { position: 'absolute', width: 140, height: 140, borderRadius: 70, borderWidth: 1.5 },
   bossActionNode:  { position: 'absolute', width: 40, height: 40, borderRadius: 12, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
   bossActionLabel: { fontSize: 8, fontWeight: FontWeight.bold, marginTop: 1 },
-  bossCenterNode:  { position: 'absolute', width: 44, height: 44, borderRadius: 22, top: 43, left: 68, alignItems: 'center', justifyContent: 'center' },
+  bossCenterNode:  { position: 'absolute', width: 44, height: 44, borderRadius: 14, top: 43, left: 68, alignItems: 'center', justifyContent: 'center' },
 
   // Trading terminal / order book
   priceChip:       { position: 'absolute', top: 12, right: 16, borderRadius: Radius.md, paddingHorizontal: 10, paddingVertical: 6 },
@@ -936,5 +936,5 @@ const styles = StyleSheet.create({
   // Fallback
   fallbackOrb:     { width: 120, height: 120, borderRadius: 60, alignItems: 'center', justifyContent: 'center' },
   fallbackRing:    { position: 'absolute', width: 110, height: 110, borderRadius: 55, borderWidth: 1.5 },
-  fallbackCore:    { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
+  fallbackCore:    { width: 48, height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
 });

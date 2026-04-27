@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   emoji: {
-    fontSize: 40,
+    fontSize: 18,
   },
   headline: {
     fontSize: FontSize.xxl,

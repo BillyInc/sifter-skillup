@@ -682,7 +682,7 @@ function CompleteScreen({ stars, xp, topic, onContinue, warning }: {
 function FailScreen({ topic, onRetry, onQuit }: { topic:string; onRetry:()=>void; onQuit:()=>void }) {
   return (
     <View style={sty.fullCenter}>
-      <Text style={{fontSize:64,marginBottom:Spacing.lg}}>💔</Text>
+      <Text style={{fontSize: 18,marginBottom:Spacing.lg}}>💔</Text>
       <Text style={sty.bigTitle}>Out of hearts!</Text>
       <Text style={sty.subtopic}>You were studying: {topic}</Text>
       <Text style={{color:Colors.textSoft,marginTop:Spacing.sm,textAlign:'center',lineHeight:20}}>Hearts refill over time.</Text>
@@ -1185,8 +1185,8 @@ const sty = StyleSheet.create({
   exitBtn:       {padding:Spacing.sm},
   exitTxt:       {fontSize:16,color:Colors.textSoft},
   progressWrap:  {flex:1},
-  progressBg:    {height:10,backgroundColor:Colors.border,borderRadius:99},
-  progressFill:  {height:10,backgroundColor:Colors.accent,borderRadius:99},
+  progressBg:    {height:10,backgroundColor:Colors.border,borderRadius: 14},
+  progressFill:  {height:10,backgroundColor:Colors.accent,borderRadius: 14},
   topActions:    {flexDirection:'row',alignItems:'center',gap:6},
   hearts:        {flexDirection:'row',gap:2},
   heart:         {fontSize:14},
@@ -1195,8 +1195,8 @@ const sty = StyleSheet.create({
   card:          {backgroundColor:Colors.card,borderRadius:Radius.lg,borderWidth:1,borderColor:Colors.border,padding:Spacing.md},
   tierBadge:     {alignSelf:'flex-start',borderRadius:Radius.full,borderWidth:1.5,paddingHorizontal:Spacing.md,paddingVertical:3,marginBottom:Spacing.md},
   tierLabel:     {fontSize:FontSize.xs,fontWeight:'800',textTransform:'uppercase',letterSpacing:0.5},
-  conceptTopic:  {fontSize:FontSize.lg,fontWeight:'900',color:Colors.text,lineHeight:24,marginBottom:Spacing.sm},
-  divider:       {height:2,borderRadius:99,marginBottom:Spacing.md,opacity:0.6},
+  conceptTopic:  {fontSize:FontSize.lg,fontWeight: '800',color:Colors.text,lineHeight:24,marginBottom:Spacing.sm},
+  divider:       {height:2,borderRadius: 14,marginBottom:Spacing.md,opacity:0.6},
   conceptFact:   {fontSize:FontSize.sm,lineHeight:21,color:Colors.text},
   lessonBodyWrap:{gap:Spacing.sm},
   lessonParagraph:{fontSize:FontSize.sm,lineHeight:19,color:Colors.text},
@@ -1223,7 +1223,7 @@ const sty = StyleSheet.create({
   overlay:       {flex:1,backgroundColor:'rgba(0,0,0,0.45)',justifyContent:'center',alignItems:'center',padding:Spacing.xl},
   termModal:     {backgroundColor:Colors.card,borderRadius:Radius.xl,padding:Spacing.xxl,width:'100%',maxWidth:420,borderWidth:1,borderColor:Colors.border},
   termModalHead: {flexDirection:'row',alignItems:'center',marginBottom:Spacing.md,gap:Spacing.sm},
-  termModalIcon: {fontSize:22},
+  termModalIcon: {fontSize: 18},
   termModalTitle:{flex:1,fontSize:FontSize.md,fontWeight:'800',color:Colors.text},
   termModalBody: {fontSize:FontSize.sm,lineHeight:21,color:Colors.textSoft,marginBottom:Spacing.lg},
   termModalBtn:  {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:Spacing.md,alignItems:'center'},
@@ -1274,16 +1274,16 @@ const sty = StyleSheet.create({
   blankOptTxt:   {fontSize:FontSize.md,fontWeight:'700',color:'#1e293b'},
   feedbackBar:   {borderTopWidth:3,padding:Spacing.sm},
   feedbackRow:   {flexDirection:'row',alignItems:'flex-start',gap:Spacing.md},
-  feedbackIcon:  {fontSize:24},
+  feedbackIcon:  {fontSize: 18},
   feedbackTitle: {fontSize:FontSize.sm,fontWeight:'800'},
   feedbackExpl:  {fontSize:FontSize.xs,color:Colors.textSoft,lineHeight:19,marginTop:2},
   xpBadge:       {backgroundColor:Colors.accentSoft,borderRadius:Radius.full,paddingHorizontal:Spacing.sm,paddingVertical:2,alignSelf:'flex-start'},
   xpBadgeTxt:    {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent},
   fullCenter:    {flex:1,alignItems:'center',justifyContent:'center',padding:Spacing.xl,maxWidth:560,alignSelf:'center',width:'100%'},
-  stars:         {fontSize:44,letterSpacing:6,color:Colors.gold,marginBottom:Spacing.lg},
+  stars:         {fontSize: 18,letterSpacing:6,color:Colors.gold,marginBottom:Spacing.lg},
   bigTitle:      {fontSize:FontSize.xxxl,fontWeight:'900',color:Colors.text},
   subtopic:      {fontSize:FontSize.md,color:Colors.textSoft,marginTop:Spacing.sm,textAlign:'center'},
-  xpNum:         {fontSize:38,fontWeight:'900',color:Colors.accent,marginTop:Spacing.lg},
+  xpNum:         {fontSize: 18,fontWeight: '800',color:Colors.accent,marginTop:Spacing.lg},
   perfectBadge:  {backgroundColor:Colors.gold,borderRadius:Radius.full,paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm,marginTop:Spacing.md},
   perfectTxt:    {fontSize:FontSize.sm,fontWeight:'800',color:'#fff',letterSpacing:0.5},
   completionWarning:{marginTop:Spacing.lg,paddingHorizontal:Spacing.lg,color:Colors.textSoft,textAlign:'center',lineHeight:20,maxWidth:320},

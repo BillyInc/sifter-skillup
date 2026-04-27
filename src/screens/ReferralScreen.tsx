@@ -192,13 +192,13 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
   content: { ...webContainer },
   hero: { alignItems: 'center', marginBottom: Spacing.xl },
-  heroEmoji: { fontSize: 52, marginBottom: Spacing.md },
+  heroEmoji: { fontSize: 18, marginBottom: Spacing.md },
   heroTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm },
   heroSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20 },
 
   statsRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg },
   statCard: { flex: 1, backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center', borderWidth: 1, borderColor: Colors.border },
-  statNum: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text },
+  statNum: { fontSize: FontSize.xxl, fontWeight: '800', color: Colors.text },
   statLabel: { fontSize: FontSize.xs, color: Colors.textSoft },
 
   progressSection: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 1, borderColor: Colors.border },
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   tierCard: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
   tierCardEarned: { borderColor: Colors.green, backgroundColor: Colors.greenSoft },
   tierPoints: { width: 48, alignItems: 'center' },
-  tierPointsNum: { fontSize: FontSize.md, fontWeight: '900', color: Colors.text },
+  tierPointsNum: { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
   tierPointsLabel: { fontSize: 10, color: Colors.textMuted },
   tierReward: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
   tierDesc: { fontSize: FontSize.xs, color: Colors.textSoft },
@@ -233,5 +233,5 @@ const styles = StyleSheet.create({
   referralRow: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, backgroundColor: '#fff', borderRadius: Radius.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
   referralName: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
   referralType: { fontSize: FontSize.xs, color: Colors.textSoft },
-  referralPoints: { fontSize: FontSize.md, fontWeight: '900', color: Colors.green },
+  referralPoints: { fontSize: FontSize.md, fontWeight: '800', color: Colors.green },
 });

@@ -317,8 +317,8 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   pageTitle: {
-    fontSize: 26,
-    fontWeight: '900',
+    fontSize: 18,
+    fontWeight: '800',
     letterSpacing: -0.4,
     marginBottom: 2,
   },
@@ -431,8 +431,8 @@ const styles = StyleSheet.create({
   listRowRight:     { marginLeft: Spacing.sm, alignItems: 'center', justifyContent: 'center' },
   listRowRightText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
 
-  emptyState:   { alignItems: 'center', paddingVertical: 28, gap: 8 },
-  emptyEmoji:   { fontSize: 32 },
+  emptyState:   { alignItems: 'center', paddingVertical: 18, gap: 8 },
+  emptyEmoji:   { fontSize: 18 },
   emptyTitle:   { fontSize: FontSize.md, fontWeight: FontWeight.bold, textAlign: 'center' },
   emptySub:     { fontSize: FontSize.sm, textAlign: 'center' },
 });

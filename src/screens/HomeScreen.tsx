@@ -761,7 +761,7 @@ const styles = StyleSheet.create({
 
   heroPanel: { flexDirection: 'row', minHeight: 260 },
   heroPanelCopy: { flex: 1, padding: 24, justifyContent: 'center' },
-  heroPanelTitle: { fontSize: 24, fontWeight: '900', letterSpacing: -0.7, marginBottom: 10 },
+  heroPanelTitle: { fontSize: 18, fontWeight: '900', letterSpacing: -0.7, marginBottom: 10 },
   heroPanelSummary: { fontSize: FontSize.md, lineHeight: 22, marginBottom: 16, maxWidth: 520 },
   heroPanelTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 18 },
   heroTag: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
@@ -801,7 +801,7 @@ const styles = StyleSheet.create({
   webDiscTitle: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 6 },
   webDiscItem: { fontSize: FontSize.sm, marginBottom: 4 },
   webStreakLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2, marginBottom: 4 },
-  webStreakNum: { fontSize: 34, fontWeight: FontWeight.black, lineHeight: 38, marginBottom: 6 },
+  webStreakNum: { fontSize: 18, fontWeight: FontWeight.black, lineHeight: 22, marginBottom: 6 },
   webStreakSub: { fontSize: FontSize.sm },
 
   webChartArea: { height: 90, borderRadius: Radius.md, borderWidth: 1, overflow: 'hidden', marginBottom: 14, padding: 10, alignItems: 'center', justifyContent: 'center' },

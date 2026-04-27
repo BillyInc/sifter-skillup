@@ -60,7 +60,7 @@ function SimHeader({ icon, title, subtitle, colors, children }: {
 }
 const sH = StyleSheet.create({
   wrap:  { flexDirection: 'row', gap: Spacing.md, borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start', marginBottom: Spacing.md },
-  icon:  { fontSize: 36, lineHeight: 44 },
+  icon:  { fontSize: 18, lineHeight: 22 },
   label: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 0.8 },
   title: { fontSize: FontSize.lg, fontWeight: '900', lineHeight: 24, marginTop: 2 },
   sub:   { fontSize: FontSize.sm, lineHeight: 18, marginTop: 2 },
@@ -492,7 +492,7 @@ function BuildSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="🛠️" title="Integration Challenge" subtitle="Apply Starkzap SDK to a real scenario." colors={colors} />
       <View style={[{ backgroundColor: colors.card, borderRadius: Radius.lg, padding: Spacing.lg, borderWidth: 1, borderColor: colors.border }]}>
-        <Text style={[{ color: colors.text, fontSize: FontSize.md, fontWeight: '900', marginBottom: Spacing.sm }]}>Challenge</Text>
+        <Text style={[{ color: colors.text, fontSize: FontSize.md, fontWeight: '800', marginBottom: Spacing.sm }]}>Challenge</Text>
         <Text style={[{ color: colors.textSoft, fontSize: FontSize.sm, lineHeight: 20 }]}>
           A DeFi app wants to offer users: (1) gasless onboarding via email, (2) auto-stake any STRK received, (3) a weekly DCA into USDC.{'\n\n'}
           Design the wallet configuration and write the three Starkzap SDK calls needed. The pattern: connectWallet → stake → dca().create
@@ -539,7 +539,7 @@ function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
       {steps.map(s => (
         <View key={s.key} style={[{ borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: s.done ? (colors.green + '40') : colors.border, backgroundColor: s.done ? colors.greenSoft : colors.card }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md }}>
-            <Text style={{ fontSize: 24 }}>{s.done ? '✅' : s.icon}</Text>
+            <Text style={{ fontSize: 18 }}>{s.done ? '✅' : s.icon}</Text>
             <Text style={[{ flex: 1, fontSize: FontSize.sm, fontWeight: '800', color: s.done ? colors.green : colors.text }]}>{s.label}</Text>
             {!s.done && step === s.key && (
               <TouchableOpacity
@@ -563,8 +563,8 @@ function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
       {allDone && (
         <>
           <View style={[{ backgroundColor: '#ec4899' + '15', borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' }]}>
-            <Text style={{ fontSize: 48 }}>⭐</Text>
-            <Text style={{ fontSize: FontSize.xl, fontWeight: '900', color: '#ec4899', marginTop: Spacing.sm }}>Island Complete!</Text>
+            <Text style={{ fontSize: 18 }}>⭐</Text>
+            <Text style={{ fontSize: FontSize.xl, fontWeight: '800', color: '#ec4899', marginTop: Spacing.sm }}>Island Complete!</Text>
             <Text style={{ color: colors.textSoft, fontSize: FontSize.sm, textAlign: 'center', marginTop: 4 }}>You executed 3 real Starknet transactions.</Text>
           </View>
           <ActionBtn label="Complete Island →" onPress={onComplete} colors={colors} variant="starknet" />
@@ -749,7 +749,7 @@ export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSki
     default:
       return (
         <View style={{ padding: Spacing.xl, alignItems: 'center', gap: Spacing.md }}>
-          <Text style={{ fontSize: 32 }}>⚡</Text>
+          <Text style={{ fontSize: 18 }}>⚡</Text>
           <Text style={{ color: colors.text, fontSize: FontSize.md, fontWeight: '800' }}>Starknet Simulator</Text>
           <Text style={{ color: colors.textSoft, fontSize: FontSize.sm, textAlign: 'center' }}>
             No live simulator is configured for "{simulatorType}".

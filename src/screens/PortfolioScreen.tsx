@@ -96,7 +96,7 @@ function PlatformCard({
             justifyContent: 'center',
           }}
         >
-          <Text style={{ fontSize: 24 }}>{platform.icon}</Text>
+          <Text style={{ fontSize: 18 }}>{platform.icon}</Text>
         </View>
 
         <View style={{ flex: 1, gap: 4 }}>
@@ -256,7 +256,7 @@ function PlatformConnectModal({
           <TouchableOpacity onPress={onClose} style={mStyle.closeBtn}>
             <Text style={mStyle.closeX}>✕</Text>
           </TouchableOpacity>
-          <Text style={{ fontSize: 44, marginBottom: 4 }}>{platform.icon}</Text>
+          <Text style={{ fontSize: 18, marginBottom: 4 }}>{platform.icon}</Text>
           <Text style={mStyle.title}>{platform.name}</Text>
           <Text style={mStyle.subtitle}>{platform.what_to_post}</Text>
         </View>
@@ -275,7 +275,7 @@ function PlatformConnectModal({
                     onPress={handleOAuth}
                     disabled={oauthBusy}
                     activeOpacity={0.85}>
-                    <Text style={{ fontSize: 26 }}>🔐</Text>
+                    <Text style={{ fontSize: 18 }}>🔐</Text>
                     <View style={{ flex: 1 }}>
                       <Text style={mStyle.modeTitle}>
                         {oauthBusy ? `Connecting to ${platform.name}…` : `Connect with ${platform.name} OAuth`}
@@ -294,7 +294,7 @@ function PlatformConnectModal({
 
                 {canCreate && (
                   <TouchableOpacity style={mStyle.modeCard} onPress={() => setMode('create')} activeOpacity={0.85}>
-                    <Text style={{ fontSize: 26 }}>✨</Text>
+                    <Text style={{ fontSize: 18 }}>✨</Text>
                     <View style={{ flex: 1 }}>
                       <Text style={mStyle.modeTitle}>Create new account</Text>
                       <Text style={mStyle.modeSub}>
@@ -306,7 +306,7 @@ function PlatformConnectModal({
                 )}
 
                 <TouchableOpacity style={mStyle.modeCard} onPress={() => setMode('link')} activeOpacity={0.85}>
-                  <Text style={{ fontSize: 26 }}>🔗</Text>
+                  <Text style={{ fontSize: 18 }}>🔗</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={mStyle.modeTitle}>
                       {oauthLive ? 'Add manual link instead' : `Add your ${platform.name} link`}
@@ -321,7 +321,7 @@ function PlatformConnectModal({
                 </TouchableOpacity>
 
                 <TouchableOpacity style={mStyle.modeCard} onPress={() => Linking.openURL(platform.signupUrl)} activeOpacity={0.85}>
-                  <Text style={{ fontSize: 26 }}>🌐</Text>
+                  <Text style={{ fontSize: 18 }}>🌐</Text>
                   <View style={{ flex: 1 }}>
                     <Text style={mStyle.modeTitle}>Open {platform.name}</Text>
                     <Text style={mStyle.modeSub}>Visit {platform.url} in your browser.</Text>
@@ -348,7 +348,7 @@ function PlatformConnectModal({
 
                 {done ? (
                   <View style={mStyle.doneBox}>
-                    <Text style={{ fontSize: 48 }}>✅</Text>
+                    <Text style={{ fontSize: 18 }}>✅</Text>
                     <Text style={mStyle.doneText}>Account created and connected!</Text>
                   </View>
                 ) : (
@@ -378,7 +378,7 @@ function PlatformConnectModal({
 
                     <View style={mStyle.attributionBox}>
                       <Text style={mStyle.attributionText}>
-                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '900' }}>{'"'}Trained via Sifter Skill_Up{'"'}</Text> — so recruiters know where your skills came from.
+                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '800' }}>{'"'}Trained via Sifter Skill_Up{'"'}</Text> — so recruiters know where your skills came from.
                       </Text>
                     </View>
 
@@ -523,7 +523,7 @@ function PushItemModal({
                       style={[pushSt.platformRow, isSelected && pushSt.platformRowOn, alreadyDone && { opacity: 0.5 }]}
                       onPress={() => !alreadyDone && toggle(acc.platformId)}
                       activeOpacity={alreadyDone ? 1 : 0.8}>
-                      <Text style={{ fontSize: 22 }}>{pl.icon}</Text>
+                      <Text style={{ fontSize: 18 }}>{pl.icon}</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={pushSt.platformName}>{pl.name}</Text>
                         <Text style={pushSt.platformUser}>@{acc.username}</Text>
@@ -531,7 +531,7 @@ function PushItemModal({
                       {alreadyDone
                         ? <Text style={pushSt.postedBadge}>Posted</Text>
                         : <View style={[pushSt.checkbox, isSelected && pushSt.checkboxOn]}>
-                            {isSelected && <Text style={{ color: '#fff', fontWeight: '900', fontSize: 13 }}>OK</Text>}
+                            {isSelected && <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>OK</Text>}
                           </View>}
                     </TouchableOpacity>
                   );
@@ -566,7 +566,7 @@ function PushItemModal({
                         const pkg = await API.portfolioGeneratePackage({ itemId: item.id, platformId: acc.platformId });
                         if (pkg?.downloadUrl) Linking.openURL(pkg.downloadUrl);
                       }}>
-                      <Text style={{ fontSize: 22 }}>{pl.icon}</Text>
+                      <Text style={{ fontSize: 18 }}>{pl.icon}</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={pushSt.platformName}>{pl.name}</Text>
                         <Text style={pushSt.platformUser}>@{acc.username}</Text>
@@ -725,7 +725,7 @@ export default function PortfolioScreen() {
               <WebCard title="Connected Platforms" accentBar accentColor={colors.green} style={{ marginTop: 20 }}>
                 {connectedAccounts.length === 0 ? (
                   <View style={{ alignItems: 'center', paddingVertical: 20 }}>
-                    <Text style={{ fontSize: 28, fontWeight: '800', color: colors.textMuted }}>LN</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '800', color: colors.textMuted }}>LN</Text>
                     <Text style={{ color: colors.textSoft, marginTop: 8, fontSize: 13, textAlign: 'center' }}>
                       No platforms connected yet.{'\n'}Go to My Track to connect.
                     </Text>
@@ -783,14 +783,14 @@ export default function PortfolioScreen() {
                   {tab === 'my-work' && (
                     <>
                       <View style={[s.autoSaveBanner, { backgroundColor: colors.accentSoft, borderRadius: Radius.md, marginBottom: 16 }]}>
-                        <Text style={{ fontSize: 18, fontWeight: '900', color: colors.accent }}>AUTO</Text>
+                        <Text style={{ fontSize: 18, fontWeight: '800', color: colors.accent }}>AUTO</Text>
                         <Text style={[s.autoSaveText, { color: colors.textSoft }]}>
                           Artifacts are created automatically when you complete lessons and labs.
                         </Text>
                       </View>
                       {workspaceItems.length === 0 ? (
-                        <View style={{ alignItems: 'center', paddingVertical: 40 }}>
-                          <Text style={{ fontSize: 28, fontWeight: '900', color: colors.textMuted }}>ART</Text>
+                        <View style={{ alignItems: 'center', paddingVertical: 18 }}>
+                          <Text style={{ fontSize: 18, fontWeight: '800', color: colors.textMuted }}>ART</Text>
                           <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 14, textAlign: 'center' }}>
                             Complete lessons on your skill track and your work appears here automatically.
                           </Text>
@@ -833,7 +833,7 @@ export default function PortfolioScreen() {
                               onPress={() => setExpandedField(isOpen ? null : field.fieldId)}
                               activeOpacity={0.85}
                             >
-                              <Text style={{ fontSize: 22 }}>{field.emoji}</Text>
+                              <Text style={{ fontSize: 18 }}>{field.emoji}</Text>
                               <View style={{ flex: 1 }}>
                                 <Text style={[s.fieldName, { color: colors.text }]}>{field.fieldName}</Text>
                                 <Text style={[s.fieldCount, { color: colors.textMuted }]}>
@@ -989,7 +989,7 @@ export default function PortfolioScreen() {
 
             {trackPlatforms.primary.length === 0 && trackPlatforms.secondary.length === 0 && (
               <View style={s.emptyState}>
-                <Text style={{ fontSize: 40 }}>🔜</Text>
+                <Text style={{ fontSize: 18 }}>🔜</Text>
                 <Text style={s.emptyTitle}>Platforms coming soon</Text>
                 <Text style={s.emptySub}>Tap Explore to browse all available platforms.</Text>
               </View>
@@ -1005,7 +1005,7 @@ export default function PortfolioScreen() {
         {tab === 'my-work' && (
           <>
             <View style={s.autoSaveBanner}>
-              <Text style={{ fontSize: 18, fontWeight: '900', color: colors.accent }}>AUTO</Text>
+              <Text style={{ fontSize: 18, fontWeight: '800', color: colors.accent }}>AUTO</Text>
               <Text style={s.autoSaveText}>
                 Artifacts are created automatically when you complete lessons, labs, and boss battles. Tap any item to push it to your connected platforms.
               </Text>
@@ -1013,7 +1013,7 @@ export default function PortfolioScreen() {
 
             {workspaceItems.length === 0 ? (
               <View style={s.emptyState}>
-                <Text style={{ fontSize: 40 }}>📂</Text>
+                <Text style={{ fontSize: 18 }}>📂</Text>
                 <Text style={s.emptyTitle}>No items yet</Text>
                 <Text style={s.emptySub}>
                   Complete lessons on your skill track — your work will appear here automatically.
@@ -1080,7 +1080,7 @@ export default function PortfolioScreen() {
                     style={[s.fieldHeader, { borderLeftColor: field.color }]}
                     onPress={() => setExpandedField(isOpen ? null : field.fieldId)}
                     activeOpacity={0.85}>
-                    <Text style={{ fontSize: 26 }}>{field.emoji}</Text>
+                    <Text style={{ fontSize: 18 }}>{field.emoji}</Text>
                     <View style={{ flex: 1 }}>
                       <Text style={s.fieldName}>{field.fieldName}</Text>
                       <Text style={s.fieldCount}>
@@ -1173,12 +1173,12 @@ const s = StyleSheet.create({
   summaryStrip:      { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Spacing.lg, paddingTop: Spacing.sm },
   summaryCard:       { flex: 1, backgroundColor: Colors.card, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border, gap: 4 },
   summaryLabel:      { fontSize: 10, fontWeight: '800', color: Colors.textMuted, textTransform: 'uppercase' },
-  summaryValue:      { fontSize: FontSize.sm, fontWeight: '900', color: Colors.text },
+  summaryValue:      { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
   tabBar:            { flexDirection: 'row', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
   tab:               { flex: 1, paddingVertical: Spacing.sm, alignItems: 'center' },
   tabActive:         { borderBottomWidth: 2.5, borderBottomColor: Colors.accent },
   tabText:           { fontSize: 11, fontWeight: '700', color: Colors.textSoft },
-  tabTextActive:     { color: Colors.accent, fontWeight: '900' },
+  tabTextActive:     { color: Colors.accent, fontWeight: '800' },
   scroll:            { flex: 1 },
   scrollContent:     { padding: Spacing.lg, gap: Spacing.md },
   sectionHeading:    { fontSize: 13, fontWeight: '800', color: Colors.text, marginTop: Spacing.xs, marginBottom: 10 },
@@ -1240,7 +1240,7 @@ const mStyle = StyleSheet.create({
   openProfile:       { alignSelf: 'flex-start' },
   openProfileText:   { color: Colors.accent, fontWeight: '700', fontSize: FontSize.sm },
   doneBox:           { alignItems: 'center', paddingVertical: Spacing.xxl, gap: Spacing.md },
-  doneText:          { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text },
+  doneText:          { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text },
 });
 
 // Push modal styles

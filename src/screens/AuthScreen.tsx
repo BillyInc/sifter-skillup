@@ -192,7 +192,7 @@ function StarknetHeader() {
       <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: 'rgba(255,255,255,0.52)', textAlign: 'center', letterSpacing: 1, marginBottom: 8 }}>
         STARKNET ACCESS
       </Text>
-      <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' }}>
+      <Text style={{ fontSize: FontSize.xxl, fontWeight: '800', color: '#fff', textAlign: 'center' }}>
         Continue with Starknet
       </Text>
       <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.68)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>

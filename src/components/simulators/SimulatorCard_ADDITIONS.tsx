@@ -114,7 +114,7 @@ function WalletBanner({ islandId }: { islandId: number }) {
           <Text style={{ fontWeight: '800', color: Colors.accent, fontSize: 13 }}>Create {wallet.chain.name} Wallet</Text>
           <Text style={{ fontSize: 11, color: Colors.textSoft, marginTop: 1 }}>Use your real testnet address in this simulator</Text>
         </View>
-        <Text style={{ color: Colors.accent, fontWeight: '900' }}>→</Text>
+        <Text style={{ color: Colors.accent, fontWeight: '800' }}>→</Text>
       </TouchableOpacity>
     );
   }
@@ -132,7 +132,7 @@ function WalletBanner({ islandId }: { islandId: number }) {
         <Text style={{ fontFamily: 'monospace', fontSize: 11, color: Colors.text, fontWeight: '700' }}>{wallet.shortAddress}</Text>
       </View>
       <View style={{ alignItems: 'flex-end' }}>
-        <Text style={{ fontSize: 11, fontWeight: '900', color: wallet.isDemoMode ? '#92400e' : Colors.green }}>{wallet.balance}</Text>
+        <Text style={{ fontSize: 11, fontWeight: '800', color: wallet.isDemoMode ? '#92400e' : Colors.green }}>{wallet.balance}</Text>
         <Text style={{ fontSize: 9, color: Colors.textSoft }}>{copied ? '✓ Copied' : '📋 tap'}</Text>
       </View>
     </TouchableOpacity>
@@ -259,7 +259,7 @@ function TonWalletEnhancedSim({ onComplete, onSkip, islandId = 13 }: SimProps & 
         <>
           <View style={{ backgroundColor: Colors.card, borderRadius: 10, padding: 16, gap: 6, borderWidth: 1.5, borderColor: Colors.border }}>
             <Text style={{ fontSize: 11, fontWeight: '800', color: Colors.textSoft }}>YOUR BALANCE</Text>
-            <Text style={{ fontSize: 28, fontWeight: '900', color: Colors.text }}>{wallet.balance}</Text>
+            <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.text }}>{wallet.balance}</Text>
             <Text style={{ fontSize: 11, fontWeight: '800', color: Colors.textSoft, marginTop: 8 }}>RECIPIENT</Text>
             <Text style={{ fontFamily: 'monospace', fontSize: 11, color: Colors.accent }}>{ALICE.slice(0,20)}…{ALICE.slice(-8)}</Text>
             <Text style={{ fontSize: 11, fontWeight: '800', color: Colors.textSoft, marginTop: 8 }}>AMOUNT (TON)</Text>
@@ -360,8 +360,8 @@ function SolanaPumpEnhancedSim({ onComplete, onSkip, islandId = 9 }: SimProps & 
       {step === 'launch' && (
         <>
           <View style={{ backgroundColor: Colors.card, borderRadius: 10, padding: 16, alignItems: 'center', gap: 8, borderWidth: 1.5, borderColor: Colors.border }}>
-            <Text style={{ fontSize: 48 }}>🚀</Text>
-            <Text style={{ fontWeight: '900', fontSize: 22, color: Colors.accent }}>${ticker}</Text>
+            <Text style={{ fontSize: 18 }}>🚀</Text>
+            <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.accent }}>${ticker}</Text>
             <Text style={{ color: Colors.textSoft }}>{tokenName} is LIVE on pump.fun (Devnet)</Text>
             <Text style={{ fontSize: 12, color: Colors.textSoft }}>Creator: {wallet.shortAddress}</Text>
           </View>
@@ -383,7 +383,7 @@ function SolanaPumpEnhancedSim({ onComplete, onSkip, islandId = 9 }: SimProps & 
             ))}
             {!graduated
               ? <TouchableOpacity onPress={() => setBuys(b => b + 1)} style={{ padding: 12, backgroundColor: Colors.accent, borderRadius: 10, alignItems: 'center' }}>
-                  <Text style={{ color: '#fff', fontWeight: '900' }}>🟢 Simulate a Buy (+1 trader)</Text>
+                  <Text style={{ color: '#fff', fontWeight: '800' }}>🟢 Simulate a Buy (+1 trader)</Text>
                 </TouchableOpacity>
               : <View style={{ padding: 10, backgroundColor: '#d1fae5', borderRadius: 8 }}>
                   <Text style={{ fontWeight: '800', color: Colors.green }}>🎓 GRADUATED! Migrates to Raydium with permanent LP.</Text>
@@ -414,7 +414,7 @@ function NftMintEnhancedSim({ onComplete, onSkip, islandId = 7 }: SimProps & { i
       {step === 'select' && (
         <>
           <View style={{ backgroundColor: Colors.card, borderRadius: 10, padding: 16, gap: 6, borderWidth: 1.5, borderColor: Colors.border }}>
-            <Text style={{ fontWeight: '900', fontSize: 18, color: Colors.text }}>PixelPunks Collection</Text>
+            <Text style={{ fontWeight: '800', fontSize: 18, color: Colors.text }}>PixelPunks Collection</Text>
             <Text style={{ color: Colors.textSoft, fontSize: 13 }}>10,000 unique PFPs. 4,200 remaining.</Text>
             {[['Mint price','0.08 ETH'],['Gas (Sepolia)','~0.012 ETH'],['Network','Ethereum Sepolia'],['From',wallet.shortAddress]].map(([k,v]) => (
               <View key={k} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -425,14 +425,14 @@ function NftMintEnhancedSim({ onComplete, onSkip, islandId = 7 }: SimProps & { i
             <Text style={{ fontSize: 11, fontWeight: '800', color: Colors.textSoft, marginTop: 8 }}>HOW MANY?</Text>
             <View style={{ flexDirection: 'row', gap: 8, justifyContent: 'center' }}>
               {[1,2,3].map(n => (
-                <TouchableOpacity key={n} onPress={() => setQty(n)} style={{ paddingHorizontal: 28, paddingVertical: 12, borderRadius: 10, borderWidth: 2, borderColor: qty === n ? Colors.accent : Colors.border, backgroundColor: qty === n ? '#eff6ff' : Colors.card }}>
+                <TouchableOpacity key={n} onPress={() => setQty(n)} style={{ paddingHorizontal: 18, paddingVertical: 12, borderRadius: 10, borderWidth: 2, borderColor: qty === n ? Colors.accent : Colors.border, backgroundColor: qty === n ? '#eff6ff' : Colors.card }}>
                   <Text style={{ fontWeight: '800', fontSize: 18, color: qty === n ? Colors.accent : Colors.text }}>{n}</Text>
                 </TouchableOpacity>
               ))}
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: 8, marginTop: 4 }}>
               <Text style={{ fontWeight: '800' }}>Total</Text>
-              <Text style={{ fontWeight: '900', fontSize: 16, color: Colors.accent }}>{total} ETH</Text>
+              <Text style={{ fontWeight: '800', fontSize: 16, color: Colors.accent }}>{total} ETH</Text>
             </View>
           </View>
           <PrimaryBtn label="Mint Now →" onPress={() => setStep('approve')} />
@@ -442,7 +442,7 @@ function NftMintEnhancedSim({ onComplete, onSkip, islandId = 7 }: SimProps & { i
         <>
           <View style={{ backgroundColor: Colors.card, borderRadius: 10, padding: 16, gap: 6, borderWidth: 1.5, borderColor: Colors.border }}>
             <Text style={{ fontSize: 11, fontWeight: '800', color: Colors.textSoft }}>MetaMask — CONFIRM TRANSACTION</Text>
-            <Text style={{ fontWeight: '900', fontSize: 14 }}>PixelPunks.mint()</Text>
+            <Text style={{ fontWeight: '800', fontSize: 14 }}>PixelPunks.mint()</Text>
             {[['From',wallet.shortAddress],['Contract','0x58cB...dF3a (Sepolia)'],['Value sent',(qty*0.08).toFixed(3)+' ETH'],['Gas est.','0.012 ETH']].map(([k,v]) => (
               <View key={k} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ fontSize: 13, color: Colors.textSoft }}>{k}</Text>
@@ -498,7 +498,7 @@ function AirdropFarmEnhancedSim({ onComplete, onSkip, islandId = 10 }: SimProps 
                 <Text style={{ fontWeight: '800', fontSize: 13, color: Colors.text }}>{task.label}</Text>
                 {submitted && <Text style={{ fontSize: 11, color: Colors.textSoft, marginTop: 2 }}>💡 {task.tip}</Text>}
               </View>
-              <Text style={{ fontWeight: '900', color: task.points > 0 ? Colors.green : Colors.red, fontSize: 16 }}>{task.points > 0 ? '+' : ''}{task.points}</Text>
+              <Text style={{ fontWeight: '800', color: task.points > 0 ? Colors.green : Colors.red, fontSize: 16 }}>{task.points > 0 ? '+' : ''}{task.points}</Text>
             </View>
           </TouchableOpacity>
         );
@@ -700,7 +700,7 @@ function MemePortfolioSizeSim({ onComplete, onSkip }: SimProps) {
           <View key={label as string}>
             <View style={{ flexDirection:'row', justifyContent:'space-between' }}>
               <Text style={{ fontSize:12, color:Colors.textSoft }}>{label}</Text>
-              <Text style={{ fontSize:12, fontWeight:'900', color:color as string }}>{pct}% — ${(port * Number(pct) / 100).toFixed(0)}</Text>
+              <Text style={{ fontSize:12, fontWeight: '800', color:color as string }}>{pct}% — ${(port * Number(pct) / 100).toFixed(0)}</Text>
             </View>
             <View style={{ height:5, backgroundColor:Colors.border, borderRadius:99, overflow:'hidden', marginTop:2 }}>
               <View style={{ height:5, borderRadius:99, backgroundColor:color as string, width:`${pct}%` as any }} />
@@ -732,7 +732,7 @@ function MemecoinBossSim({ onComplete, onSkip }: SimProps) {
       <View style={{ flexDirection:'row', gap:6, marginBottom:8 }}>
         {[1,2,3].map(n => (
           <View key={n} style={{ flex:1, padding:6, borderRadius:8, alignItems:'center', backgroundColor:stage===n?Colors.accent:n<stage?'#d1fae5':Colors.border }}>
-            <Text style={{ fontWeight:'900', fontSize:11, color:stage===n?'#fff':n<stage?Colors.green:Colors.textSoft }}>{n<stage?'✓':`Stage ${n}`}</Text>
+            <Text style={{ fontWeight: '800', fontSize:11, color:stage===n?'#fff':n<stage?Colors.green:Colors.textSoft }}>{n<stage?'✓':`Stage ${n}`}</Text>
           </View>
         ))}
       </View>
@@ -758,7 +758,7 @@ function MemecoinBossSim({ onComplete, onSkip }: SimProps) {
         <>
           <View style={{ backgroundColor:Colors.card, borderRadius:10, padding:14, borderWidth:1.5, borderColor:Colors.border, gap:6 }}>
             <Text style={{ fontSize:11, fontWeight:'800', color:Colors.accent }}>STAGE 2 — TOKEN SAFETY</Text>
-            <Text style={{ fontWeight:'900', fontSize:16, color:Colors.text }}>MOON100X</Text>
+            <Text style={{ fontWeight: '800', fontSize:16, color:Colors.text }}>MOON100X</Text>
             {[{label:'FDV/MC ratio',value:'100×',bad:true},{label:'LP',value:'UNLOCKED',bad:true},{label:'Mint authority',value:'ACTIVE',bad:true},{label:'Honeypot',value:'DETECTED',bad:true},{label:'Dev wallet',value:'42%',bad:true}].map(({label,value,bad}) => (
               <View key={label} style={{ flexDirection:'row', justifyContent:'space-between', backgroundColor:bad?'#fff0f0':'#f0fff4', borderRadius:6, paddingHorizontal:8, paddingVertical:4 }}>
                 <Text style={{ fontSize:12, color:bad?Colors.red:Colors.green }}>{label}</Text>
@@ -797,8 +797,8 @@ function MemecoinBossSim({ onComplete, onSkip }: SimProps) {
       {allDone && (
         <>
           <View style={{ backgroundColor:score>=2?'#d1fae5':'#fee2e2', borderRadius:14, padding:20, alignItems:'center', borderWidth:2, borderColor:score>=2?Colors.green:Colors.red }}>
-            <Text style={{ fontSize:48 }}>{score>=2?'🏆':'📚'}</Text>
-            <Text style={{ fontWeight:'900', fontSize:20, color:score>=2?Colors.green:Colors.red, marginTop:8 }}>{score>=2?'MEMECOIN BOSS DEFEATED!':'Review & Retry'}</Text>
+            <Text style={{ fontSize: 18 }}>{score>=2?'🏆':'📚'}</Text>
+            <Text style={{ fontWeight: '800', fontSize:20, color:score>=2?Colors.green:Colors.red, marginTop:8 }}>{score>=2?'MEMECOIN BOSS DEFEATED!':'Review & Retry'}</Text>
             <Text style={{ color:Colors.textSoft }}>{score}/3 stages passed</Text>
           </View>
           <PrimaryBtn label="Return to Island Map →" onPress={onComplete} />
@@ -834,17 +834,17 @@ function AirdropEligibilitySim({ onComplete, onSkip }: SimProps) {
         <View key={label} style={{ gap:4 }}>
           <View style={{ flexDirection:'row', justifyContent:'space-between' }}>
             <Text style={{ fontSize:12, color:Colors.textSoft }}>{label}</Text>
-            <Text style={{ fontWeight:'900', color:Colors.accent }}>{val}</Text>
+            <Text style={{ fontWeight: '800', color:Colors.accent }}>{val}</Text>
           </View>
           <View style={{ flexDirection:'row', gap:8 }}>
             <TouchableOpacity onPress={() => set(v => Math.max(min, v-step))} disabled={checked} style={{ width:32, height:32, borderRadius:16, backgroundColor:Colors.border, alignItems:'center', justifyContent:'center' }}>
-              <Text style={{ fontWeight:'900', color:Colors.text }}>−</Text>
+              <Text style={{ fontWeight: '800', color:Colors.text }}>−</Text>
             </TouchableOpacity>
             <View style={{ flex:1, height:6, backgroundColor:Colors.border, borderRadius:99, alignSelf:'center', overflow:'hidden' }}>
               <View style={{ height:6, borderRadius:99, backgroundColor:Colors.accent, width:`${((val-min)/(max-min))*100}%` as any }} />
             </View>
             <TouchableOpacity onPress={() => set(v => Math.min(max, v+step))} disabled={checked} style={{ width:32, height:32, borderRadius:16, backgroundColor:Colors.border, alignItems:'center', justifyContent:'center' }}>
-              <Text style={{ fontWeight:'900', color:Colors.text }}>+</Text>
+              <Text style={{ fontWeight: '800', color:Colors.text }}>+</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -863,7 +863,7 @@ function AirdropEligibilitySim({ onComplete, onSkip }: SimProps) {
             ))}
           </View>
           <View style={{ padding:12, backgroundColor:score>=4?'#d1fae5':'#fee2e2', borderRadius:10, borderWidth:2, borderColor:score>=4?Colors.green:Colors.red }}>
-            <Text style={{ fontWeight:'900', color:score>=4?Colors.green:Colors.red, textAlign:'center' }}>{tier} — {score}/5 criteria met</Text>
+            <Text style={{ fontWeight: '800', color:score>=4?Colors.green:Colors.red, textAlign:'center' }}>{tier} — {score}/5 criteria met</Text>
           </View>
           <PrimaryBtn label="Continue →" onPress={onComplete} />
         </>
@@ -893,7 +893,7 @@ function SybilDetectorSim({ onComplete, onSkip }: SimProps) {
         const chosen = answers[w.id]; const isCorrect = chosen === w.isSybil;
         return (
           <View key={w.id} style={{ backgroundColor:Colors.card, borderRadius:10, padding:14, borderWidth:1.5, borderColor:checked?(isCorrect?Colors.green:Colors.red):Colors.border, gap:8 }}>
-            <Text style={{ fontWeight:'900', color:Colors.text }}>Wallet {w.id}: {w.address}</Text>
+            <Text style={{ fontWeight: '800', color:Colors.text }}>Wallet {w.id}: {w.address}</Text>
             {w.signals.map((sig,i) => (
               <Text key={i} style={{ fontSize:11, color:Colors.text, lineHeight:18 }}>{checked&&w.isSybil?'🚩':'•'} {sig}</Text>
             ))}
@@ -990,7 +990,7 @@ function AirdropExpectedValueSim({ onComplete, onSkip }: SimProps) {
         </View>
         <View style={{ flexDirection:'row', justifyContent:'space-between' }}>
           <Text style={{ fontWeight:'800' }}>Total cost</Text>
-          <Text style={{ fontWeight:'900', color:Colors.red, fontSize:16 }}>${totalCost.toFixed(0)}</Text>
+          <Text style={{ fontWeight: '800', color:Colors.red, fontSize:16 }}>${totalCost.toFixed(0)}</Text>
         </View>
       </View>
       {!confirmed
@@ -1006,7 +1006,7 @@ function AirdropExpectedValueSim({ onComplete, onSkip }: SimProps) {
               ))}
               <View style={{ flexDirection:'row', justifyContent:'space-between', borderTopWidth:1, borderTopColor:Colors.border, paddingTop:8, marginTop:4 }}>
                 <Text style={{ fontWeight:'800' }}>Net EV</Text>
-                <Text style={{ fontWeight:'900', fontSize:18, color:ev>totalCost?Colors.green:Colors.red }}>{ev>totalCost?'+':''}${(ev-totalCost).toFixed(0)} ({roi}% ROI)</Text>
+                <Text style={{ fontWeight: '800', fontSize:18, color:ev>totalCost?Colors.green:Colors.red }}>{ev>totalCost?'+':''}${(ev-totalCost).toFixed(0)} ({roi}% ROI)</Text>
               </View>
             </View>
             <ResultBox correct={ev>totalCost} message={ev>totalCost?`Positive EV — worth pursuing if the protocol is legitimate. Track time costs rigorously.`:`Negative EV — you'd be better off putting $${totalCost.toFixed(0)} directly into ETH. Most airdrop farming loses money when opportunity cost is included.`} />
@@ -1043,8 +1043,8 @@ function AirdropBossSim({ onComplete, onSkip }: SimProps) {
         ? <PrimaryBtn label="Submit Boss Answers →" onPress={() => setDone(true)} disabled={!q1||!q2||!q3} />
         : <>
             <View style={{ backgroundColor:score>=2?'#d1fae5':'#fee2e2', borderRadius:14, padding:20, alignItems:'center', borderWidth:2, borderColor:score>=2?Colors.green:Colors.red }}>
-              <Text style={{ fontSize:48 }}>{score>=2?'🏆':'📚'}</Text>
-              <Text style={{ fontWeight:'900', fontSize:20, color:score>=2?Colors.green:Colors.red, marginTop:8 }}>{score>=2?'AIRDROP BOSS CLEARED!':'Review the Lessons'}</Text>
+              <Text style={{ fontSize: 18 }}>{score>=2?'🏆':'📚'}</Text>
+              <Text style={{ fontWeight: '800', fontSize:20, color:score>=2?Colors.green:Colors.red, marginTop:8 }}>{score>=2?'AIRDROP BOSS CLEARED!':'Review the Lessons'}</Text>
               <Text style={{ color:Colors.textSoft }}>{score}/3 correct</Text>
             </View>
             <View style={{ backgroundColor:Colors.card, borderRadius:10, padding:14, gap:4, borderWidth:1.5, borderColor:Colors.border }}>

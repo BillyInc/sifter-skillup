@@ -688,7 +688,7 @@ export function EmptyStateCard({ icon, title, subtitle, action }: EmptyStateCard
       padding: Spacing.xxl,
       gap: Spacing.sm,
     }}>
-      <Text style={{ fontSize: 40 }}>{icon}</Text>
+      <Text style={{ fontSize: 18 }}>{icon}</Text>
       <Text style={{
         fontSize: FontSize.lg,
         fontWeight: FontWeight.heavy,

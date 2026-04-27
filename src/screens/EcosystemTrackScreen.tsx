@@ -292,7 +292,7 @@ export default function EcosystemTrackScreen() {
 }
 
 const styles = StyleSheet.create({
-  scrollContent: { ...webContainer, gap: Spacing.md, paddingBottom: 60 },
+  scrollContent: { ...webContainer, gap: Spacing.md, paddingBottom: 18 },
   heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
   backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
   backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   labNumberBadge: {
     width: 42,
     height: 42,
-    borderRadius: 21,
+    borderRadius: 14,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',

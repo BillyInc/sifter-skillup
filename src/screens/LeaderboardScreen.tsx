@@ -243,9 +243,9 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
       <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
         <View style={[styles.webRoot, { backgroundColor: colors.bg }]}>
           <ScopePanel />
-          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 64 }}>
-            <View style={{ marginBottom: 28, paddingBottom: 16, position: 'relative' }}>
-              <Text style={{ fontSize: 28, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
+          <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 18 }}>
+            <View style={{ marginBottom: 14, paddingBottom: 16, position: 'relative' }}>
+              <Text style={{ fontSize: 18, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
               <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
                 Global, field, and workspace competition with a weekly reset.
               </Text>
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
   medal:         { fontSize: 20 },
   rankNum:       { fontSize: FontSize.sm, fontWeight: FontWeight.black },
   delta:         { fontSize: 9, fontWeight: FontWeight.black },
-  avatarCircle:  { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  avatarCircle:  { width: 36, height: 36, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   avatarText:    { fontSize: 16 },
   username:      { fontSize: FontSize.sm },
   stageName:     { fontSize: FontSize.xs },
@@ -313,11 +313,11 @@ const styles = StyleSheet.create({
   userPosRank:   { fontSize: FontSize.xxxl, fontWeight: FontWeight.black },
   userPosXp:     { fontSize: FontSize.sm },
 
-  listContent:   { paddingBottom: 100 },
+  listContent:   { paddingBottom: 18 },
   centreLoad:    { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.xxxl },
   loadText:      { fontSize: FontSize.sm },
   empty:         { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.xxxl },
-  emptyEmoji:    { fontSize: 36 },
+  emptyEmoji:    { fontSize: 18 },
   emptyTitle:    { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   emptySub:      { fontSize: FontSize.sm, textAlign: 'center' },
 });

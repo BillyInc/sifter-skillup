@@ -128,11 +128,11 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
 const styles = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.55)', alignItems: 'center', justifyContent: 'center', padding: Spacing.xl },
   card: { backgroundColor: '#fff', borderRadius: Radius.xl, padding: Spacing.xxl, width: '100%', alignItems: 'center' },
-  emoji: { fontSize: 44, marginBottom: Spacing.md },
+  emoji: { fontSize: 18, marginBottom: Spacing.md },
   title: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.sm },
   sub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20, marginBottom: Spacing.lg },
   stars: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg },
-  star: { fontSize: 40, color: Colors.border },
+  star: { fontSize: 18, color: Colors.border },
   starFilled: { color: Colors.gold },
   input: { width: '100%', borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text, minHeight: 100, marginBottom: Spacing.md, textAlignVertical: 'top' },
   submitBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.md, width: '100%', alignItems: 'center', marginBottom: Spacing.sm },

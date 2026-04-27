@@ -439,7 +439,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           </View>
         </View>
 
-        <View style={[styles.content, !isWide && { paddingBottom: 88 }]}>{children}</View>
+        <View style={[styles.content, !isWide && { paddingBottom: 18 }]}>{children}</View>
 
         {!isWide && (
           <View
@@ -620,7 +620,7 @@ const styles = StyleSheet.create({
   profileMiniAvatar: {
     width: 36,
     height: 36,
-    borderRadius: 18,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -735,7 +735,7 @@ const styles = StyleSheet.create({
   avatarBtn: {
     width: 42,
     height: 42,
-    borderRadius: 21,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },

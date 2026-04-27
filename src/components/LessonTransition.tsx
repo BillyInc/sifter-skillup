@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  chainEmoji: { fontSize: 24 },
+  chainEmoji: { fontSize: 18 },
 
   // Boss
   bossRingOuter: {
@@ -488,7 +488,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  bossEmoji: { fontSize: 26 },
+  bossEmoji: { fontSize: 18 },
 
   // Warp
   warpGlow: {
@@ -529,13 +529,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 48,
     height: 48,
-    borderRadius: 24,
+    borderRadius: 14,
     top: 66,
     left: 66,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  warpEmoji: { fontSize: 22, color: '#FFF' },
+  warpEmoji: { fontSize: 18, color: '#FFF' },
 
   // Judgment
   judgmentPole: {
@@ -588,6 +588,6 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.black,
     color: '#FFF',
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: 22,
   },
 });

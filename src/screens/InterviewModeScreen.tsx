@@ -476,7 +476,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
   header: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.card },
   backBtn: { padding: Spacing.sm, marginRight: Spacing.sm },
-  backBtnText: { fontSize: 22, color: Colors.text },
+  backBtnText: { fontSize: 18, color: Colors.text },
   headerEyebrow: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
   headerTitle: { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
   headerSub: { fontSize: FontSize.xs, color: Colors.textSoft },
@@ -484,7 +484,7 @@ const styles = StyleSheet.create({
   // Intro
   introContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
   heroCard: { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: Colors.border, marginBottom: Spacing.lg },
-  introEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.md },
+  introEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.md },
   kicker: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: Spacing.xs },
   introTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xs },
   introSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center' },
@@ -524,7 +524,7 @@ const styles = StyleSheet.create({
   contextLabel: { fontSize: 9, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1, marginBottom: 4 },
   contextText: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
 
-  questionText: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text, lineHeight: 26, marginBottom: Spacing.md },
+  questionText: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text, lineHeight: 22, marginBottom: Spacing.md },
 
   guidanceBox: { backgroundColor: Colors.greenSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border },
   guidanceLabel: { fontSize: 9, fontWeight: '800', color: '#166534', letterSpacing: 1, marginBottom: 4 },
@@ -545,7 +545,7 @@ const styles = StyleSheet.create({
 
   // Result
   resultContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
-  resultEmoji: { fontSize: 48, textAlign: 'center', marginBottom: Spacing.md },
+  resultEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.md },
   resultTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xl },
 
   portfolioPushedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: '#86efac' },

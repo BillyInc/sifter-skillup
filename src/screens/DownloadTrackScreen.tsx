@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
   },
-  emoji: { fontSize: 34 },
+  emoji: { fontSize: 18 },
   heroText: { flex: 1, gap: 4 },
   trackName: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
   trackSub: { fontSize: FontSize.sm, lineHeight: 20 },

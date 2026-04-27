@@ -105,11 +105,11 @@ function ScoreScreen({ score, total, onComplete }: {
               'Go back and re-read the level before retrying.';
   return (
     <View style={{ alignItems: 'center', padding: Spacing.xl }}>
-      <Text style={{ fontSize: 52, marginBottom: 12 }}>{emoji}</Text>
-      <Text style={{ fontSize: 28, fontWeight: '900', color: Colors.text, marginBottom: 6 }}>
+      <Text style={{ fontSize: 18, marginBottom: 12 }}>{emoji}</Text>
+      <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.text, marginBottom: 6 }}>
         {score}/{total}
       </Text>
-      <Text style={{ fontSize: 15, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: 28 }}>
+      <Text style={{ fontSize: 15, color: Colors.textSoft, textAlign: 'center', lineHeight: 22, marginBottom: 14 }}>
         {msg}
       </Text>
       <PrimaryBtn label="Complete ✓" onPress={onComplete} />
@@ -299,9 +299,9 @@ function MatchRenderer({ pairs, onComplete, onSkip }: {
 
   if (done) return (
     <View style={{ alignItems: 'center', padding: Spacing.xl }}>
-      <Text style={{ fontSize: 52, marginBottom: 12 }}>🏆</Text>
-      <Text style={{ fontSize: 22, fontWeight: '900', color: Colors.text, marginBottom: 8 }}>Perfect Match!</Text>
-      <Text style={{ color: Colors.textSoft, marginBottom: 28 }}>All pairs correctly matched.</Text>
+      <Text style={{ fontSize: 18, marginBottom: 12 }}>🏆</Text>
+      <Text style={{ fontSize: 18, fontWeight: '800', color: Colors.text, marginBottom: 8 }}>Perfect Match!</Text>
+      <Text style={{ color: Colors.textSoft, marginBottom: 14 }}>All pairs correctly matched.</Text>
       <PrimaryBtn label="Complete ✓" onPress={onComplete} />
     </View>
   );
@@ -363,7 +363,7 @@ const s = StyleSheet.create({
   wrap:     { flex: 1 },
   content:  { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
   header:   { flexDirection: 'row', gap: Spacing.md, backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.md, alignItems: 'flex-start', borderWidth: 1, borderColor: Colors.border },
-  icon:     { fontSize: 36, lineHeight: 44 },
+  icon:     { fontSize: 18, lineHeight: 22 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
   title:    { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 },
   subtitle: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18, marginTop: 2 },
