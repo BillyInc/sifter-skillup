@@ -4,7 +4,7 @@ import {
   SafeAreaView, RefreshControl, Linking,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTheme, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
@@ -237,7 +237,7 @@ export default function CairoBuilderTrackScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  scroll: { padding: Spacing.lg, gap: Spacing.md, paddingBottom: 60 },
+  scroll: { ...webContainer, gap: Spacing.md, paddingBottom: 60 },
   heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
   backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
   backButtonText: { fontSize: FontSize.xs, fontWeight: '800' },

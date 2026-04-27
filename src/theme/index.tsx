@@ -363,3 +363,8 @@ export function getRewardTier(xp: number): RewardTier {
   if (xp >= 300)  return 'silver';
   return 'bronze';
 }
+
+export const WEB_MAX_WIDTH = 1260;
+export const webContainer = Platform.OS === 'web'
+  ? { maxWidth: 1260, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 22, paddingTop: 20 }
+  : { paddingHorizontal: 14, paddingTop: 12 };

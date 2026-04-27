@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize } from '../theme';
+import { Colors, Spacing, Radius, FontSize, webContainer } from '../theme';
 import { API } from '../lib/api';
 import { offlineRead } from '../lib/offlineQueue';
 
@@ -190,7 +190,7 @@ export default function ReferralScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
-  content: { padding: Spacing.lg },
+  content: { ...webContainer },
   hero: { alignItems: 'center', marginBottom: Spacing.xl },
   heroEmoji: { fontSize: 52, marginBottom: Spacing.md },
   heroTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm },

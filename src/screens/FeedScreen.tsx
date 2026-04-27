@@ -16,7 +16,7 @@ import {
   SafeAreaView, RefreshControl,
   Platform, useWindowDimensions,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import FeedWebLayout from '../components/FeedWebLayout';
 import { useFeed } from '../hooks/useFeed';
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
   fallbackBanner:     { margin: Spacing.md, marginTop: 0, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.md },
   fallbackBannerText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, lineHeight: 18 },
 
-  feedContent:        { padding: Spacing.md, gap: Spacing.md },
+  feedContent:        { ...webContainer, gap: Spacing.md },
 
   sectionBlock:       { gap: Spacing.sm },
   sectionHeader:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md, borderLeftWidth: 3, borderRadius: Radius.md },

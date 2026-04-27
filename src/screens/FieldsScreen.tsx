@@ -16,6 +16,7 @@ import {
   Shadow,
   Spacing,
   useTheme,
+  webContainer,
 } from '../theme';
 import {
   getAllFieldDetails,
@@ -445,8 +446,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.md,
+    ...webContainer,
     paddingBottom: Spacing.xxxl,
   },
   header: {

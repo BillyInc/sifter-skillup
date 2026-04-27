@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
-  AnimPreset, XP_STAGES,
+  AnimPreset, XP_STAGES, webContainer,
 } from '../theme';
 import { WorkerCharacter, DeskScene } from '../components/CharacterSystem';
 import {
@@ -430,7 +430,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   screen:           { flex: 1 },
-  scroll:           { padding: Spacing.md, paddingBottom: Spacing.xxxl, gap: Spacing.md },
+  scroll:           { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
 
   heroSection:      { alignItems: 'center', paddingTop: Spacing.md, paddingBottom: Spacing.sm, position: 'relative' },
   settingsBtn:      { position: 'absolute', top: Spacing.md, right: 0 },

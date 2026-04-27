@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme } from '../theme';
+import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, webContainer } from '../theme';
 import { requestPushPermission, scheduleDailyReminder } from '../lib/notificationEngine';
 import { enqueueWrite } from '../lib/offlineStorage';
 import { useAuth } from '../hooks/useAuth';
@@ -227,7 +227,7 @@ export default function NotificationSettingsScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   body: {
-    padding: Spacing.md,
+    ...webContainer,
     paddingBottom: Spacing.xxxl,
     gap: Spacing.md,
   },

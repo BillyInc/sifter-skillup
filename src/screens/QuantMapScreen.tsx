@@ -8,7 +8,7 @@ import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIsla
 import { QUANT_LEVELS } from '../data/quantLevels';
 import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, useTheme, webContainer } from '../theme';
 import LessonScreen from './LessonScreen';
 import { VRBridge } from '../lib/vrBridge';
 import type { VRScenarioKey } from '../lib/vrBridge';
@@ -447,7 +447,7 @@ export default function QuantMapScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.bg },
   scroll: { flex: 1 },
-  scrollContent: { padding: Spacing.lg, gap: Spacing.lg, paddingBottom: 40 },
+  scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: 40 },
   header: { backgroundColor: Colors.navy, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
   headerTop: { gap: 2 },
   headerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },

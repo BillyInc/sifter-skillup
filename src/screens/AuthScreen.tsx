@@ -19,7 +19,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetPrivyLogin';
 import { PRIVY_CONFIGURED, PRIVY_ENABLED } from '../lib/config';
 import { readPendingPrivyWebLogin } from '../lib/privyShared';
-import { useTheme, Spacing, Radius, FontSize } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, webContainer } from '../theme';
 import { SifterButton } from '../components/ui';
 import { getFieldVisualTheme } from '../lib/visualThemes';
 
@@ -690,8 +690,8 @@ const styles = StyleSheet.create({
   statusBar: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.xl, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   statusDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' },
   statusText: { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 0.5 },
-  welcomeContent: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.lg, paddingBottom: Spacing.xxxl },
-  formContent: { flexGrow: 1, justifyContent: 'center', padding: Spacing.lg, paddingBottom: Spacing.xxxl, alignItems: 'center' },
+  welcomeContent: { ...webContainer, flexGrow: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: Spacing.xxxl },
+  formContent: { ...webContainer, flexGrow: 1, justifyContent: 'center', paddingBottom: Spacing.xxxl, alignItems: 'center' },
   card: { width: '100%', maxWidth: 430, borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1, gap: Spacing.sm },
   starknetCard: { backgroundColor: '#0a0a1f' },
   eyebrow: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 1, textAlign: 'center' },

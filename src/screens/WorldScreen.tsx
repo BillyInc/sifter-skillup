@@ -4,7 +4,7 @@ import {
   Animated, Dimensions, ScrollView, ActivityIndicator,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset } from '../theme';
+import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, webContainer } from '../theme';
 import { getFieldDetail } from '../data/fieldDetails';
 import { getField } from '../data/fields';
 import {
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   safe: { flex: 1 },
   orbContainer: { position: 'absolute', left: -80, top: -60 },
-  scrollContent: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.xl },
+  scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.xl },
   backBtn: {
     alignSelf: 'flex-start',
     borderRadius: Radius.full,
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   },
   lockedText: { color: 'rgba(255,255,255,0.68)', fontSize: FontSize.sm, fontWeight: '700' },
   labScreen: { flex: 1 },
-  labScroll: { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
+  labScroll: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
   backChip: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
   backChipText: { fontSize: FontSize.xs, fontWeight: '800' },
   labHeroCard: { borderRadius: Radius.xxl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.sm },

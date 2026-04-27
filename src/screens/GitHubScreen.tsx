@@ -14,7 +14,7 @@ import {
   TextInput, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { Colors, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -1040,7 +1040,7 @@ export default function GitHubScreen() {
 // ─────────────────────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   screen:          { flex: 1, backgroundColor: Colors.bg },
-  scroll:          { padding: Spacing.md, gap: Spacing.md, paddingBottom: Spacing.xxxl },
+  scroll:          { ...webContainer, gap: Spacing.md, paddingBottom: Spacing.xxxl },
   header:          { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border },
   headerTitle:     { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
   headerSub:       { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
@@ -1088,4 +1088,3 @@ const styles = StyleSheet.create({
   explanationBox:  { backgroundColor: '#f0f4ff', borderRadius: Radius.md, padding: Spacing.md, marginTop: 4 },
   explanationText: { fontSize: FontSize.sm, color: '#1e3a8a', fontWeight: '600' },
 });
-
