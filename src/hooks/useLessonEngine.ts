@@ -1,5 +1,13 @@
 import { useState, useCallback, useRef } from 'react';
 import type { Level } from '../data/levels';
+import {
+  getAuthoredLessonPlain,
+  getAuthoredLessonSummary,
+  getAuthoredLessonTopic,
+  isAuthoredLesson,
+  truncateAuthoredLessonText,
+  type AuthoredLesson,
+} from '../data/tracks/starknet_ecosystem/authoredLesson';
 
 // ── Starknet lesson adapter ────────────────────────────────────
 // Starknet lab lessons (from starknetLessonRegistry) have a different shape
@@ -8,11 +16,22 @@ import type { Level } from '../data/levels';
 // `interactiveSimulator`. We build a Question[] directly from that richer
 // structure so we preserve the authored practice questions instead of
 // regenerating them from a stripped-down Level summary.
-interface StarknetLesson {
+/*
+interface AuthoredLessonExample {
+  contextTag?: string;
+  context?: string;
+  scenario: string;
+  outcome: string;
+}
+
+interface AuthoredLesson {
   id?: string;
   title?: string;
+  topic?: string;
   explanation?: string;
   keyTakeaway?: string;
+  fact?: string;
+  plain?: string;
   simulatorLesson?: string;
   guidedPractice?: Array<{
     question: string;
@@ -27,6 +46,7 @@ interface StarknetLesson {
     scenario: string;
     scoringCriteria: string[];
   }>;
+  examples?: AuthoredLessonExample[];
 }
 
 function truncatePlain(s: string, max: number): string {
@@ -35,13 +55,13 @@ function truncatePlain(s: string, max: number): string {
   return trimmed.slice(0, max - 1).trimEnd() + '…';
 }
 
-function buildStarknetLessonQuestions(lesson: StarknetLesson): Question[] {
+*/
+function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
   const questions: Question[] = [];
-  const topic = lesson.title ?? 'Starknet Lesson';
+  const topic = getAuthoredLessonTopic(lesson);
   const explanation = (lesson.explanation ?? '').trim();
-  const firstParagraph = explanation.split(/\n\n+/)[0] ?? explanation;
-  const fact = lesson.keyTakeaway ?? truncatePlain(firstParagraph, 400);
-  const plain = lesson.keyTakeaway ?? truncatePlain(firstParagraph, 240);
+  const fact = getAuthoredLessonSummary(lesson);
+  const plain = getAuthoredLessonPlain(lesson);
 
   // 1. Concept card — from the lesson explanation / key takeaway.
   questions.push({
@@ -50,6 +70,9 @@ function buildStarknetLessonQuestions(lesson: StarknetLesson): Question[] {
     tier: 'intermediate',
     fact,
     plain,
+    lessonBody: explanation || undefined,
+    keyTakeaway: lesson.keyTakeaway ?? fact,
+    examples: lesson.examples ?? [],
   });
 
   // 2. Interactive simulator — if the lesson has one.
@@ -97,7 +120,7 @@ function buildStarknetLessonQuestions(lesson: StarknetLesson): Question[] {
   if (!hasInteractive && fact.length > 20) {
     questions.push({
       type: 'true_false',
-      prompt: truncatePlain(fact, 180),
+      prompt: truncateAuthoredLessonText(fact, 180),
       correct: true,
       explanation: fact,
     });
@@ -123,6 +146,9 @@ export interface Question {
   type: QuestionType;
   // concept_card
   topic?: string; tier?: string; fact?: string; plain?: string; glossaryWord?: string;
+  lessonBody?: string;
+  keyTakeaway?: string;
+  examples?: AuthoredLessonExample[];
   // mcq / tf / multi_select
   prompt?: string; context?: string | null;
   options?: Option[]; correct?: number | boolean;
@@ -488,14 +514,12 @@ function buildLesson(level: Level): Question[] {
 // ── Hook ─────────────────────────────────────────────────────
 export function useLessonEngine() {
   const [state, setState] = useState<LessonState | null>(null);
-  const levelRef = useRef<Level | null>(null);
-  const starknetLessonRef = useRef<StarknetLesson | null>(null);
+  const lessonRef = useRef<Level | AuthoredLesson | null>(null);
 
   const startLesson = useCallback((level: Level) => {
-    levelRef.current = level;
-    starknetLessonRef.current = null;
+    lessonRef.current = level;
     setState({
-      questions:   buildLesson(level),
+      questions:   isAuthoredLesson(level) ? buildAuthoredLessonQuestions(level) : buildLesson(level),
       qIndex:      0,
       hearts:      5,
       xp:          0,
@@ -515,25 +539,10 @@ export function useLessonEngine() {
    * key takeaway, simulator, guided-practice MCQs — rather than regenerating
    * from a Level summary.
    */
-  const startStarknetLesson = useCallback((lesson: unknown) => {
-    const typed = (lesson ?? {}) as StarknetLesson;
-    starknetLessonRef.current = typed;
-    // Synthesize a Level-shaped stub so consumers that read `level.topic` etc.
-    // (e.g. LessonScreen completion/bookmark code) still have something.
-    const stubLevel = {
-      id: 0,
-      mechanic: 'memory',
-      tier: 'intermediate',
-      topic: typed.title ?? 'Starknet Lesson',
-      fact: typed.keyTakeaway ?? truncatePlain(typed.explanation ?? '', 400),
-      plain: typed.keyTakeaway ?? truncatePlain(typed.explanation ?? '', 240),
-      stars: [1, 1, 1],
-      target: 1,
-      coins: 0,
-    } as unknown as Level;
-    levelRef.current = stubLevel;
+  const startStarknetLesson = useCallback((lesson: AuthoredLesson) => {
+    lessonRef.current = lesson;
     setState({
-      questions:   buildStarknetLessonQuestions(typed),
+      questions:   buildAuthoredLessonQuestions(lesson),
       qIndex:      0,
       hearts:      5,
       xp:          0,
@@ -592,12 +601,12 @@ export function useLessonEngine() {
   }, []);
 
   const resetLesson = useCallback(() => {
-    if (starknetLessonRef.current) {
-      startStarknetLesson(starknetLessonRef.current);
-    } else if (levelRef.current) {
-      startLesson(levelRef.current);
+    if (isAuthoredLesson(lessonRef.current)) {
+      startStarknetLesson(lessonRef.current);
+    } else if (lessonRef.current) {
+      startLesson(lessonRef.current);
     }
   }, [startLesson, startStarknetLesson]);
 
-  return { state, level: levelRef.current, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator };
+  return { state, lesson: lessonRef.current, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator };
 }

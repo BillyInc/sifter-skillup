@@ -72,9 +72,7 @@ function buildLessonHref(position: ResumePosition): string | null {
     params.set('trackId', position.trackId);
     if (position.labId) {
       params.set('labId', position.labId);
-    }
-    if (position.labIndex > 0) {
-      params.set('labNumber', String(position.labIndex));
+      params.set('labNumber', String(Math.max(0, position.labIndex)));
     }
     params.set('lessonIndex', String(Math.max(0, position.lessonIndex)));
   }
