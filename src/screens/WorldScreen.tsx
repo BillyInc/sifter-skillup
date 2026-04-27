@@ -161,7 +161,7 @@ function LabWorldScreen({
       const lab = getStarknetLab(trackId as StarknetTrackId, labNum);
       if (lab && lab.lessons.length > 0) {
         router.push({
-          pathname: '/(tabs)/map/lesson' as any,
+          pathname: '/map/lesson' as any,
           params: {
             levelId: getStarknetLessonRuntimeId(trackId as StarknetTrackId, labNum, 0),
             trackId,
@@ -175,7 +175,7 @@ function LabWorldScreen({
     }
 
     router.push({
-      pathname: '/(tabs)/map/lesson' as any,
+      pathname: '/map/lesson' as any,
       params: { levelId: bossLevelId - 1, trackId, labId, labNumber },
     });
   }
@@ -327,7 +327,7 @@ export default function WorldScreen() {
     if (trackId === 'starknet-defi-navigator') { router.push('/starknet-track' as any); return; }
     if (trackId === 'starknet-ecosystem-deep-dive') { router.push('/ecosystem-track' as any); return; }
     if (trackId === 'cairo-builder') { router.push('/cairo-builder-track' as any); return; }
-    router.push('/(tabs)/map/island' as any);
+    router.push('/map/island' as any);
   };
 
   const [bg0, bg1] = worldTheme.bgGradient;

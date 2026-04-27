@@ -97,7 +97,7 @@ export default function AddressPill({
       </View>
 
       <TouchableOpacity style={styles.addressRow} onPress={copy} activeOpacity={0.75}>
-        <Text style={[styles.address, { color: colors.text }]} numberOfLines={1}>
+        <Text style={[styles.address, compact && styles.addressCompact, { color: colors.text }]} numberOfLines={compact ? 1 : 2}>
           {compact ? shortAddr : address}
         </Text>
         <Text style={[styles.copyIcon, { color: accent }]}>{copied ? 'Copied' : 'Copy'}</Text>
@@ -162,6 +162,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     fontFamily: Platform.select({ web: 'monospace', default: undefined }),
     fontWeight: FontWeight.medium,
+  },
+  addressCompact: {
+    maxWidth: '100%',
   },
   copyIcon: {
     fontSize: FontSize.xs,

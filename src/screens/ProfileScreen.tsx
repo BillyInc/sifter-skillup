@@ -214,7 +214,7 @@ export default function ProfileScreen() {
                   <View style={{ position: 'relative', width: 150, height: 150, alignItems: 'center', justifyContent: 'center' }}>
                     <StageRing progress={progress} color={colors.accent} size={150} />
                     <View style={{ position: 'absolute' }}>
-                      <WorkerCharacter stage={stage} trackId={trackId} size={110} animate mood="neutral" />
+                      <WorkerCharacter stage={stage} trackId={trackId} size={110} mood="neutral" />
                     </View>
                   </View>
                   <Text style={[styles.stageName, { color: colors.text, textAlign: 'center', marginTop: 12 }]}>{stageName}</Text>
@@ -223,6 +223,7 @@ export default function ProfileScreen() {
                   </Text>
                 </View>
                 <WebDivider />
+                <WebListRow icon="👕" title="Merchandise" sub="Spend merch credits on apparel and shoes" onPress={() => go('/merchandise')} right={<Text style={{ color: colors.textMuted }}>›</Text>} />
                 <WebStatTile emoji="⚡" label="Total XP"  value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to Stage ${stage + 1}`} color={colors.accent} />
                 <WebStatTile emoji="🔥" label="Streak"    value={`${streak?.streak ?? 0} days`} sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} color={colors.orange} />
                 <WebStatTile emoji="🏝️" label="Levels"    value={`${(xp?.totalXp ?? 0) > 0 ? Math.floor((xp?.totalXp ?? 0) / 10) : 0}`} sub="Total lessons completed" color={colors.green} />
@@ -314,7 +315,7 @@ export default function ProfileScreen() {
           <View style={styles.characterWrap}>
             <StageRing progress={progress} color={colors.accent} size={150} />
             <View style={styles.characterOverlay}>
-              <WorkerCharacter stage={stage} trackId={trackId} size={110} animate mood="neutral" />
+              <WorkerCharacter stage={stage} trackId={trackId} size={110} mood="neutral" />
             </View>
           </View>
 

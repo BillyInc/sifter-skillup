@@ -77,16 +77,16 @@ export function StarknetWalletBridgeProvider({
   children: React.ReactNode;
   preferredAddress?: string | null;
 }) {
+  if (Platform.OS === 'web') {
+    return <StarknetWalletBridgeWeb preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeWeb>;
+  }
+
   if (!PRIVY_NATIVE_ENABLED) {
     return (
       <StarknetWalletBridgeContext.Provider value={DEFAULT_VALUE}>
         {children}
       </StarknetWalletBridgeContext.Provider>
     );
-  }
-
-  if (Platform.OS === 'web') {
-    return <StarknetWalletBridgeWeb preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeWeb>;
   }
 
   return <StarknetWalletBridgeNative preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeNative>;

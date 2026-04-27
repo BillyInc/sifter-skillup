@@ -14,6 +14,7 @@ import {
   Dimensions,
   Linking,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
 import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetPrivyLogin';
 import { PRIVY_CONFIGURED, PRIVY_ENABLED } from '../lib/config';
@@ -219,6 +220,7 @@ function StarknetBenefits() {
 }
 
 function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: StarknetOnReady }) {
+  const { colors } = useTheme();
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [localError, setLocalError] = useState('');
@@ -309,7 +311,10 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
         <View style={styles.starknetInputGroup}>
           <Text style={styles.starknetInputLabel}>Verification code</Text>
           <Text style={styles.starknetCodeHelp}>
-            Enter the 6-digit code sent to {email}
+            Enter the 6-digit code sent to
+          </Text>
+          <Text style={[styles.starknetCodeTarget, { color: colors.card }]}>
+            {email}
           </Text>
           <TextInput
             style={[styles.input, styles.starknetInput, styles.starknetCodeInput]}
@@ -347,29 +352,20 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
       </TouchableOpacity>
 
       {!showCodeInput ? (
-        <View style={{ marginTop: Spacing.md }}>
-          <Text style={{ color: 'rgba(255,255,255,0.4)', fontSize: FontSize.xs, textAlign: 'center', marginBottom: Spacing.sm }}>
+        <View style={styles.starknetOAuthBlock}>
+          <Text style={styles.starknetOAuthLabel}>
             or continue with
           </Text>
-          <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
+          <View style={styles.starknetOAuthRow}>
             {(['google', 'apple', 'twitter'] as OAuthProvider[]).map((provider) => (
               <TouchableOpacity
                 key={provider}
-                style={{
-                  flex: 1,
-                  borderColor: '#334155',
-                  borderWidth: 1,
-                  borderRadius: Radius.md,
-                  paddingVertical: Spacing.md,
-                  alignItems: 'center',
-                  backgroundColor: '#1e1e38',
-                  opacity: busy ? 0.5 : 1,
-                }}
+                style={[styles.starknetOAuthBtn, busy && styles.starknetOAuthBtnBusy]}
                 onPress={() => handleOAuth(provider)}
                 disabled={busy}
                 activeOpacity={0.85}
               >
-                <Text style={{ color: '#fff', fontWeight: '700', fontSize: FontSize.sm }}>
+                <Text style={styles.starknetOAuthBtnText}>
                   {provider === 'twitter' ? 'X' : provider[0].toUpperCase() + provider.slice(1)}
                 </Text>
               </TouchableOpacity>
@@ -420,6 +416,7 @@ function StarknetMode({
 }
 
 export default function AuthScreen() {
+  const router = useRouter();
   const {
     signInEmail,
     signUpEmail,
@@ -453,11 +450,16 @@ export default function AuthScreen() {
     }
   }, [authTelegram, cardAnim]);
 
+  const routeToHome = () => {
+    router.replace('/(tabs)/home');
+  };
+
   const run = async (fn: () => Promise<void>, setBusy: (value: boolean) => void) => {
     setError('');
     setBusy(true);
     try {
       await fn();
+      routeToHome();
     } catch (cause: any) {
       setError(cause.message || 'Something went wrong');
     } finally {
@@ -472,6 +474,7 @@ export default function AuthScreen() {
       const result = await connectBaseWallet();
       if (result) {
         await authBaseWallet(result.address, result.signature, result.message);
+        routeToHome();
       }
     } catch (cause: any) {
       setError(cause.message || 'Wallet error');
@@ -590,9 +593,17 @@ export default function AuthScreen() {
                 colors={colors}
               />
 
-              <TouchableOpacity style={styles.guestBtn} onPress={() => run(signInGuest, setGuestLoading)} disabled={guestLoading}>
-                  {guestLoading ? <ActivityIndicator color={colors.textMuted} size="small" /> : <Text style={[styles.guestText, { color: colors.textMuted }]}>Browse first with guest access</Text>}
-              </TouchableOpacity>
+              <View style={[styles.authDivider, { borderTopColor: colors.border }]}>
+                <Text style={[styles.authDividerText, { color: colors.textMuted }]}>Explore without setup</Text>
+              </View>
+
+              <AuthButton
+                label="Continue as Guest"
+                onPress={() => run(signInGuest, setGuestLoading)}
+                loading={guestLoading}
+                variant="ghost"
+                colors={colors}
+              />
             </View>
 
             {error ? (
@@ -699,12 +710,19 @@ const styles = StyleSheet.create({
   starknetInputHint: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.6)', lineHeight: 17 },
   starknetInput: { backgroundColor: '#1e1e38', borderColor: '#334155', color: '#fff' },
   starknetCodeHelp: { color: 'rgba(255,255,255,0.7)', fontSize: FontSize.sm, lineHeight: 19 },
+  starknetCodeTarget: { fontSize: FontSize.sm, fontWeight: '700', textAlign: 'left' },
   starknetCodeInput: { letterSpacing: 4, textAlign: 'center' },
   starknetCTA: { borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#ec489908' },
   starknetCTATitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#ec4899' },
   starknetCTASub: { fontSize: FontSize.xs, color: 'rgba(236,72,153,0.7)', marginTop: 2 },
-  guestBtn: { alignItems: 'center', paddingVertical: Spacing.sm },
-  guestText: { fontSize: FontSize.sm, fontWeight: '600' },
+  starknetOAuthBlock: { marginTop: Spacing.md, gap: Spacing.sm },
+  starknetOAuthLabel: { color: 'rgba(255,255,255,0.45)', fontSize: FontSize.xs, textAlign: 'center' },
+  starknetOAuthRow: { flexDirection: 'row', gap: Spacing.sm },
+  starknetOAuthBtn: { flex: 1, borderColor: '#334155', borderWidth: 1, borderRadius: Radius.md, paddingVertical: Spacing.md, alignItems: 'center', backgroundColor: '#1e1e38' },
+  starknetOAuthBtnBusy: { opacity: 0.5 },
+  starknetOAuthBtnText: { color: '#fff', fontWeight: '700', fontSize: FontSize.sm },
+  authDivider: { borderTopWidth: 1, marginTop: Spacing.xs, paddingTop: Spacing.sm },
+  authDividerText: { fontSize: FontSize.xs, textAlign: 'center', fontWeight: '700', letterSpacing: 0.3 },
   errorBox: { borderRadius: Radius.md, padding: Spacing.md },
   errorText: { fontSize: FontSize.sm, fontWeight: '600', textAlign: 'center' },
   backBtn: { alignSelf: 'flex-start', marginBottom: Spacing.md },

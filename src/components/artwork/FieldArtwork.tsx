@@ -647,64 +647,72 @@ export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '⚡' }:
   size?: number; color?: string; emoji?: string;
 }) {
   const DIM = size;
-  const pulse1 = usePulse(0.7, 1.1, 1400, 0);
-  const pulse2 = usePulse(0.8, 1.2, 1600, 300);
-  const pulse3 = usePulse(0.6, 1.0, 1200, 600);
-  const float1 = useFloat(6, 2000, 0);
-  const float2 = useFloat(8, 2200, 400);
-  const float3 = useFloat(5, 1800, 200);
-  const spin   = useSpin(12000);
-
   return (
     <View style={[artwork.root, { width: DIM, height: DIM }]}>
-
-      <Animated.View style={{
-        position: 'absolute', top: DIM * 0.05, left: DIM * 0.05,
-        width: DIM * 0.9, height: DIM * 0.9,
-        borderRadius: DIM * 0.45,
-        borderWidth: 1.5, borderColor: color + '30',
-        borderStyle: 'dashed',
-        transform: [{ rotate: spin }],
-      }}>
-        {/* Orbiting dot */}
-        <View style={{
-          position: 'absolute', top: -5, left: DIM * 0.44,
-          width: 10, height: 10, borderRadius: 5,
-          backgroundColor: color,
-        }} />
-      </Animated.View>
-
-      {/* Floating orbs */}
-      {[
-        { x: 0.15, y: 0.25, s: DIM * 0.12, pulse: pulse1, float: float1 },
-        { x: 0.7,  y: 0.2,  s: DIM * 0.09, pulse: pulse2, float: float2 },
-        { x: 0.6,  y: 0.65, s: DIM * 0.10, pulse: pulse3, float: float3 },
-        { x: 0.1,  y: 0.65, s: DIM * 0.08, pulse: pulse1, float: float1 },
-        { x: 0.8,  y: 0.5,  s: DIM * 0.07, pulse: pulse2, float: float2 },
-      ].map((o, i) => (
-        <Animated.View key={i} style={{
+      <View
+        style={{
           position: 'absolute',
-          left: DIM * o.x - o.s / 2,
-          top: DIM * o.y - o.s / 2,
-          width: o.s, height: o.s, borderRadius: o.s / 2,
-          backgroundColor: color + (i % 2 === 0 ? 'CC' : '70'),
-          transform: [{ scale: o.pulse }, { translateY: o.float }],
-          shadowColor: color, shadowOpacity: 0.4, shadowRadius: 8,
-        }} />
+          top: DIM * 0.08,
+          left: DIM * 0.08,
+          width: DIM * 0.84,
+          height: DIM * 0.84,
+          borderRadius: DIM * 0.28,
+          backgroundColor: color + '12',
+          borderWidth: 1.5,
+          borderColor: color + '26',
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: DIM * 0.18,
+          left: DIM * 0.18,
+          width: DIM * 0.64,
+          height: DIM * 0.64,
+          borderRadius: DIM * 0.24,
+          borderWidth: 1,
+          borderColor: color + '2E',
+          backgroundColor: '#FFFFFFCC',
+        }}
+      />
+      {[
+        { x: 0.16, y: 0.24, s: DIM * 0.08, a: '70' },
+        { x: 0.76, y: 0.24, s: DIM * 0.06, a: '55' },
+        { x: 0.18, y: 0.74, s: DIM * 0.05, a: '50' },
+        { x: 0.78, y: 0.7, s: DIM * 0.07, a: '66' },
+      ].map((dot, index) => (
+        <View
+          key={index}
+          style={{
+            position: 'absolute',
+            left: DIM * dot.x - dot.s / 2,
+            top: DIM * dot.y - dot.s / 2,
+            width: dot.s,
+            height: dot.s,
+            borderRadius: dot.s / 2,
+            backgroundColor: color + dot.a,
+          }}
+        />
       ))}
-
-      {/* Center */}
-      <Animated.View style={{
-        position: 'absolute', top: DIM * 0.37, left: DIM * 0.37,
-        width: DIM * 0.26, height: DIM * 0.26,
-        borderRadius: DIM * 0.13,
-        backgroundColor: color,
-        alignItems: 'center', justifyContent: 'center',
-        transform: [{ scale: pulse1 }],
-        shadowColor: color, shadowOpacity: 0.8, shadowRadius: 14,
-      }}>
-        <Text style={{ fontSize: DIM * 0.13 }}>{emoji}</Text>
-      </Animated.View>
+      <View
+        style={{
+          position: 'absolute',
+          top: DIM * 0.32,
+          left: DIM * 0.32,
+          width: DIM * 0.36,
+          height: DIM * 0.36,
+          borderRadius: DIM * 0.18,
+          backgroundColor: color,
+          alignItems: 'center',
+          justifyContent: 'center',
+          shadowColor: color,
+          shadowOpacity: 0.16,
+          shadowRadius: 8,
+          elevation: 2,
+        }}
+      >
+        <Text style={{ fontSize: DIM * 0.16 }}>{emoji}</Text>
+      </View>
     </View>
   );
 }
@@ -712,15 +720,6 @@ export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '⚡' }:
 // ─── Router ────────────────────────────────────────────────────────────────────
 
 export function FieldArtwork({ fieldId, size = 180 }: { fieldId: string; size?: number }) {
-  const map: Record<string, () => React.ReactElement> = {
-    'crypto':               () => <CryptoArtwork size={size} />,
-    'quant':                () => <QuantArtwork size={size} />,
-    'ai-ml':                () => <AIArtwork size={size} />,
-    'supply-chain':         () => <SupplyChainArtwork size={size} />,
-    'software-engineering': () => <SoftwareArtwork size={size} />,
-  };
-  const Comp = map[fieldId];
-  if (Comp) return Comp();
   return <GenericArtwork size={size} emoji={fieldEmoji(fieldId)} color={fieldColor(fieldId)} />;
 }
 

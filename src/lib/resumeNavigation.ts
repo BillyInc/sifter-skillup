@@ -77,7 +77,7 @@ function buildLessonHref(position: ResumePosition): string | null {
     params.set('lessonIndex', String(Math.max(0, position.lessonIndex)));
   }
 
-  return `/(tabs)/map/lesson?${params.toString()}`;
+  return `/map/lesson?${params.toString()}`;
 }
 
 export function buildResumeHref(position: ResumePosition | null | undefined): string | null {
@@ -91,7 +91,7 @@ export function buildResumeHref(position: ResumePosition | null | undefined): st
   }
 
   if (position.trackId === 'starknet-islands') {
-    return '/(tabs)/map/island?initialIsland=18';
+    return '/map/island?initialIsland=18';
   }
 
   const track = findTrackById(position.trackId);

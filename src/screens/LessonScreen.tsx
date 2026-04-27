@@ -1131,6 +1131,13 @@ export default function LessonScreen({
         mechanic={nextTarget?.mechanic}
         onDone={() => {
           setShowTransition(false);
+          if (pendingLevelId != null && !isStarknetLabLesson && onNavigateToLesson) {
+            const nextLevelId = pendingLevelId;
+            setPendingLevelId(null);
+            onNavigateToLesson(nextLevelId);
+            return;
+          }
+          setPendingLevelId(null);
           if (state) onComplete(state.stars, state.xp);
         }}
       />
@@ -1161,7 +1168,7 @@ function inferResumeLevel(labIndex: number): 'junior' | 'intermediate' | 'senior
 // ── Styles ────────────────────────────────────────────────────
 const sty = StyleSheet.create({
   screen:        {flex:1,backgroundColor:Colors.bg},
-  topBar:        {flexDirection:'row',alignItems:'center',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
+  topBar:        {flexDirection:'row',alignItems:'center',paddingHorizontal:Spacing.md,paddingVertical:Spacing.sm,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
   exitBtn:       {padding:Spacing.sm},
   exitTxt:       {fontSize:18,color:Colors.textSoft},
   progressWrap:  {flex:1},
@@ -1170,22 +1177,22 @@ const sty = StyleSheet.create({
   topActions:    {flexDirection:'row',alignItems:'center',gap:6},
   hearts:        {flexDirection:'row',gap:2},
   heart:         {fontSize:16},
-  body:          {flex:1,padding:Spacing.lg},
-  bodyContent:   {paddingBottom:Spacing.xxxl},
-  card:          {backgroundColor:Colors.card,borderRadius:Radius.xl,borderWidth:1.5,borderColor:Colors.border,padding:Spacing.xxl},
+  body:          {flex:1,padding:Spacing.md,width:'100%',maxWidth:860,alignSelf:'center'},
+  bodyContent:   {paddingBottom:Spacing.xxl},
+  card:          {backgroundColor:Colors.card,borderRadius:Radius.lg,borderWidth:1,borderColor:Colors.border,padding:Spacing.lg},
   tierBadge:     {alignSelf:'flex-start',borderRadius:Radius.full,borderWidth:1.5,paddingHorizontal:Spacing.md,paddingVertical:3,marginBottom:Spacing.md},
   tierLabel:     {fontSize:FontSize.xs,fontWeight:'800',textTransform:'uppercase',letterSpacing:0.5},
-  conceptTopic:  {fontSize:FontSize.xxl,fontWeight:'900',color:Colors.text,lineHeight:30,marginBottom:Spacing.md},
-  divider:       {height:2,borderRadius:99,marginBottom:Spacing.lg,opacity:0.6},
-  conceptFact:   {fontSize:FontSize.md,lineHeight:24,color:Colors.text},
-  lessonBodyWrap:{gap:Spacing.md},
-  lessonParagraph:{fontSize:FontSize.sm,lineHeight:23,color:Colors.text},
+  conceptTopic:  {fontSize:FontSize.xl,fontWeight:'900',color:Colors.text,lineHeight:24,marginBottom:Spacing.sm},
+  divider:       {height:2,borderRadius:99,marginBottom:Spacing.md,opacity:0.6},
+  conceptFact:   {fontSize:FontSize.sm,lineHeight:21,color:Colors.text},
+  lessonBodyWrap:{gap:Spacing.sm},
+  lessonParagraph:{fontSize:FontSize.sm,lineHeight:20,color:Colors.text},
   takeawayBox:   {backgroundColor:Colors.bgSecondary,borderRadius:Radius.lg,borderWidth:1,borderColor:Colors.border,padding:Spacing.md,marginTop:Spacing.lg},
   takeawayLabel: {fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
-  takeawayText:  {fontSize:FontSize.sm,lineHeight:21,color:Colors.text},
+  takeawayText:  {fontSize:FontSize.sm,lineHeight:19,color:Colors.text},
   analogy:       {backgroundColor:Colors.accentSoft,borderLeftWidth:4,borderLeftColor:Colors.accent,borderRadius:Radius.lg,padding:Spacing.md,marginTop:Spacing.lg},
   analogyLabel:  {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
-  analogyText:   {fontSize:FontSize.sm,lineHeight:20,color:'#374151'},
+  analogyText:   {fontSize:FontSize.sm,lineHeight:19,color:'#374151'},
   exampleSection:{marginTop:Spacing.lg,gap:Spacing.sm},
   exampleSectionLabel:{fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5},
   exampleCard:   {backgroundColor:'#fff7ed',borderRadius:Radius.lg,borderWidth:1,borderColor:'#fdba7440',padding:Spacing.md,gap:Spacing.xs},
@@ -1228,15 +1235,15 @@ const sty = StyleSheet.create({
   faucetBannerSub:{fontSize:FontSize.xs,lineHeight:18,color:Colors.textSoft,marginTop:4},
   // questions
   qCtx:          {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:Spacing.sm},
-  qPrompt:       {fontSize:FontSize.lg,fontWeight:'800',color:Colors.text,lineHeight:26},
-  optBtn:        {flexDirection:'row',alignItems:'center',gap:Spacing.md,padding:Spacing.md,backgroundColor:Colors.card,borderRadius:Radius.md,borderWidth:2,borderColor:Colors.border},
+  qPrompt:       {fontSize:FontSize.md,fontWeight:'800',color:Colors.text,lineHeight:22},
+  optBtn:        {flexDirection:'row',alignItems:'center',gap:Spacing.sm,padding:Spacing.sm,backgroundColor:Colors.card,borderRadius:Radius.md,borderWidth:1.5,borderColor:Colors.border},
   optLetter:     {width:30,height:30,borderRadius:8,backgroundColor:Colors.border,alignItems:'center',justifyContent:'center'},
   optLetterTxt:  {fontSize:FontSize.xs,fontWeight:'800'},
-  optTxt:        {flex:1,fontSize:FontSize.md,fontWeight:'600',color:Colors.text,lineHeight:20},
+  optTxt:        {flex:1,fontSize:FontSize.sm,fontWeight:'600',color:Colors.text,lineHeight:18},
   checkbox:      {width:24,height:24,borderRadius:6,borderWidth:2,alignItems:'center',justifyContent:'center'},
   tfRow:         {flexDirection:'row',gap:Spacing.md},
-  tfBtn:         {flex:1,padding:Spacing.lg,borderRadius:Radius.md,alignItems:'center',justifyContent:'center'},
-  tfTxt:         {fontSize:FontSize.md,fontWeight:'800'},
+  tfBtn:         {flex:1,padding:Spacing.md,borderRadius:Radius.md,alignItems:'center',justifyContent:'center'},
+  tfTxt:         {fontSize:FontSize.sm,fontWeight:'800'},
   orderEmpty:    {flexDirection:'row',alignItems:'center',gap:Spacing.sm,padding:Spacing.md,borderRadius:Radius.md,borderWidth:2,borderStyle:'dashed',borderColor:Colors.border,minHeight:48},
   orderFilled:   {flexDirection:'row',alignItems:'center',gap:Spacing.sm,padding:Spacing.md,borderRadius:Radius.md,borderWidth:2,borderColor:Colors.accent,backgroundColor:Colors.accentSoft,minHeight:48},
   orderNum:      {width:24,height:24,borderRadius:Radius.full,backgroundColor:Colors.accentSoft,alignItems:'center',justifyContent:'center'},
@@ -1252,14 +1259,14 @@ const sty = StyleSheet.create({
   blankBoxTxt:   {fontSize:FontSize.md,fontWeight:'800',color:'#94a3b8'},
   blankOpt:      {paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,borderRadius:Radius.full,borderWidth:2,borderColor:'#e2e8f0',backgroundColor:'#fff',minWidth:80,alignItems:'center'},
   blankOptTxt:   {fontSize:FontSize.md,fontWeight:'700',color:'#1e293b'},
-  feedbackBar:   {borderTopWidth:3,padding:Spacing.lg},
+  feedbackBar:   {borderTopWidth:3,padding:Spacing.md},
   feedbackRow:   {flexDirection:'row',alignItems:'flex-start',gap:Spacing.md},
   feedbackIcon:  {fontSize:24},
   feedbackTitle: {fontSize:FontSize.md,fontWeight:'800'},
   feedbackExpl:  {fontSize:FontSize.sm,color:Colors.textSoft,lineHeight:19,marginTop:2},
   xpBadge:       {backgroundColor:Colors.accentSoft,borderRadius:Radius.full,paddingHorizontal:Spacing.sm,paddingVertical:2,alignSelf:'flex-start'},
   xpBadgeTxt:    {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent},
-  fullCenter:    {flex:1,alignItems:'center',justifyContent:'center',padding:Spacing.xxl},
+  fullCenter:    {flex:1,alignItems:'center',justifyContent:'center',padding:Spacing.xl,maxWidth:560,alignSelf:'center',width:'100%'},
   stars:         {fontSize:44,letterSpacing:6,color:Colors.gold,marginBottom:Spacing.lg},
   bigTitle:      {fontSize:FontSize.xxxl,fontWeight:'900',color:Colors.text},
   subtopic:      {fontSize:FontSize.md,color:Colors.textSoft,marginTop:Spacing.sm,textAlign:'center'},
@@ -1267,10 +1274,10 @@ const sty = StyleSheet.create({
   perfectBadge:  {backgroundColor:Colors.gold,borderRadius:Radius.full,paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm,marginTop:Spacing.md},
   perfectTxt:    {fontSize:FontSize.sm,fontWeight:'800',color:'#fff',letterSpacing:0.5},
   completionWarning:{marginTop:Spacing.lg,paddingHorizontal:Spacing.lg,color:Colors.textSoft,textAlign:'center',lineHeight:20,maxWidth:320},
-  primaryBtn:    {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:Spacing.lg,alignItems:'center',width:'100%'},
-  primaryBtnTxt: {color:'#fff',fontSize:FontSize.lg,fontWeight:'800',letterSpacing:0.3},
-  ghostBtn:      {borderRadius:Radius.md,paddingVertical:Spacing.lg,alignItems:'center',borderWidth:2,borderColor:Colors.border},
-  ghostTxt:      {color:Colors.textSoft,fontSize:FontSize.lg,fontWeight:'700'},
+  primaryBtn:    {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:Spacing.md,alignItems:'center',width:'100%'},
+  primaryBtnTxt: {color:'#fff',fontSize:FontSize.md,fontWeight:'800',letterSpacing:0.2},
+  ghostBtn:      {borderRadius:Radius.md,paddingVertical:Spacing.md,alignItems:'center',borderWidth:2,borderColor:Colors.border},
+  ghostTxt:      {color:Colors.textSoft,fontSize:FontSize.md,fontWeight:'700'},
 });
 
 function shuffle<T>(arr:T[]):T[]{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}

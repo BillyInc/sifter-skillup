@@ -35,6 +35,8 @@ export function PrivyStarknetBootstrap({
           if (!user.starknet_address || user.starknet_address !== wallet.address) {
             await refreshUser();
           }
+        } else if (user.starknet_address) {
+          lastSyncedPrivyUser.current = privy.user?.id ?? null;
         }
       } finally {
         inFlight.current = false;

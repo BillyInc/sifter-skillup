@@ -100,8 +100,8 @@ export function getTrackHref(track: Pick<TrackLookup, 'id' | 'fieldId' | 'worldT
   if (track.id === 'starknet-defi-navigator') return '/starknet-track';
   if (track.id === 'starknet-ecosystem-deep-dive') return '/ecosystem-track';
   if (track.id === 'cairo-builder') return '/cairo-builder-track';
-  if (track.id === 'starknet-islands') return '/(tabs)/map/island?initialIsland=18';
-  if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') return '/(tabs)/map/island';
+  if (track.id === 'starknet-islands') return '/map/island?initialIsland=18';
+  if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') return '/map/island';
   if (track.navigateTo === 'Quant') return '/skills/quant-map';
   if (track.navigateTo === 'StarknetTrack') return '/starknet-track';
   return buildWorldHref(track as TrackLookup);
@@ -138,7 +138,7 @@ function buildOverviewContext(): TrackContext {
     color: '#111111',
     emoji: '⚡',
     artFieldId: 'crypto',
-    continueHref: '/(tabs)/fields',
+    continueHref: '/fields',
     continueLabel: 'Explore Tracks',
     shellTitle: 'Dashboard',
     shellSubtitle: 'Reference-style overview',

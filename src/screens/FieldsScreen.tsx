@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { useNavigation } from 'expo-router';
+import { useRouter } from 'expo-router';
 import {
   FontSize,
   FontWeight,
@@ -285,21 +285,28 @@ function FieldCard({
 
 export default function FieldsScreen() {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const router = useRouter();
   const { updateActiveField } = useAuth();
   const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
 
   const fields = useMemo<FieldSummary[]>(() => {
-    return getAllFieldDetails().map((detail) => ({
-      id: detail.fieldId,
-      name: detail.worldName.replace(
-        /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
-        '',
-      ) || detail.worldName,
-      status: [...detail.generalTracks, ...detail.specificTracks].some((track) => track.status === 'live')
-        ? 'live'
-        : 'coming_soon',
-    }));
+    return getAllFieldDetails()
+      .map((detail) => ({
+        id: detail.fieldId,
+        name: detail.worldName.replace(
+          /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
+          '',
+        ) || detail.worldName,
+        status: [...detail.generalTracks, ...detail.specificTracks].some((track) => track.status === 'live')
+          ? 'live'
+          : 'coming_soon',
+      }))
+      .sort((a, b) => {
+        if (a.id === 'starknet') return -1;
+        if (b.id === 'starknet') return 1;
+        if (a.status !== b.status) return a.status === 'live' ? -1 : 1;
+        return a.name.localeCompare(b.name);
+      });
   }, []);
 
   const handleTrackPress = async (fieldId: string, track: FieldSkillTrack) => {
@@ -314,41 +321,59 @@ export default function FieldsScreen() {
     }
 
     if (track.navigateTo === 'Quant') {
-      navigation.push('/skills/quant-map');
+      router.push('/skills/quant-map' as any);
       return;
     }
 
     if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') {
-      navigation.push('/(tabs)/map/island');
+      router.push({
+        pathname: '/map/island' as any,
+        params: { initialIsland: '18' },
+      });
       return;
     }
 
     if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') {
-      navigation.push('/starknet-track', { trackId: track.id, fieldId, trackName: track.name });
+      router.push({
+        pathname: '/starknet-track' as any,
+        params: { trackId: track.id, fieldId, trackName: track.name },
+      });
       return;
     }
 
     if (track.id === 'starknet-ecosystem-deep-dive') {
-      navigation.push('/ecosystem-track', { trackId: track.id, fieldId, trackName: track.name });
+      router.push({
+        pathname: '/ecosystem-track' as any,
+        params: { trackId: track.id, fieldId, trackName: track.name },
+      });
       return;
     }
 
     if (track.id === 'cairo-builder') {
-      navigation.push('/cairo-builder-track', { trackId: track.id, fieldId, trackName: track.name });
+      router.push({
+        pathname: '/cairo-builder-track' as any,
+        params: { trackId: track.id, fieldId, trackName: track.name },
+      });
       return;
     }
 
-    navigation.push('/world', {
-      worldId: track.worldThemeId,
-      trackId: track.id,
-      fieldId,
-      trackName: track.name,
-      live: track.status === 'live',
+    router.push({
+      pathname: '/world' as any,
+      params: {
+        worldId: track.worldThemeId,
+        trackId: track.id,
+        fieldId,
+        trackName: track.name,
+        live: String(track.status === 'live'),
+      },
     });
   };
 
   const handleIslandPress = () => {
-    navigation.push('/(tabs)/map/island', { initialIsland: 18 });
+    router.push({
+      pathname: '/map/island' as any,
+      params: { initialIsland: '18' },
+    });
   };
 
   return (

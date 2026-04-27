@@ -230,6 +230,13 @@ export default function StreaksScreen() {
           >
             <Text style={[styles.secondaryBtnText, { color: colors.text }]}>Open Feed</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={() => router.push('/merchandise')}
+            style={[styles.secondaryBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+          >
+            <Text style={[styles.secondaryBtnText, { color: colors.text }]}>Redeem Merch</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

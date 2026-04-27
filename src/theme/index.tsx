@@ -34,8 +34,8 @@ export const Radius = {
 // ─── Typography ───────────────────────────────────────────────
 
 export const FontSize = {
-  xs: 11, sm: 13, md: 15, lg: 17, xl: 20, xxl: 24, xxxl: 28,
-  display: 36, hero: 44,
+  xs: 10, sm: 12, md: 14, lg: 16, xl: 18, xxl: 22, xxxl: 26,
+  display: 32, hero: 38,
 } as const;
 
 export const FontWeight = {
@@ -137,7 +137,7 @@ export const DarkColors: ColorPalette = {
 };
 
 // Backward-compatible static export — existing code `import { Colors }` still works
-export const Colors = LightColors;
+export const Colors: ColorPalette = { ...LightColors };
 
 // ─── Theme context ────────────────────────────────────────────
 
@@ -183,6 +183,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const isDark = mode === 'dark';
   const colors = isDark ? DarkColors : LightColors;
   const toggle = () => setMode(isDark ? 'light' : 'dark');
+
+  useEffect(() => {
+    Object.assign(Colors, colors);
+  }, [colors]);
 
   return (
     <ThemeCtx.Provider value={{ mode, isDark, colors, setMode, toggle }}>
