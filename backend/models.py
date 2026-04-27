@@ -117,8 +117,9 @@ class PushTokenUpdate(BaseModel):
 # ── Starknet ──────────────────────────────────────────────────
 
 class StarknetAuthRequest(BaseModel):
-    email:      str
-    # Privy creates the wallet server-side — client just sends email
+    email:      Optional[str] = None
+    # Privy creates the wallet server-side — client can send email,
+    # but the backend can also recover it from Privy/Supabase.
     privy_token: Optional[str] = None
     starknet_address: Optional[str] = None
 

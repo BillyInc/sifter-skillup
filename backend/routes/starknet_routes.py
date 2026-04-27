@@ -14,7 +14,7 @@ from config import settings
 from database import db
 from logger import log
 from models import ResponseModel, StarknetAuthRequest, StarknetRPCRequest
-from services.privy_starknet import create_starknet_wallet, get_user_wallets
+from services.privy_starknet import create_starknet_wallet, get_user_email, get_user_wallets
 
 
 _OVERWRITABLE_AUTH_PROVIDERS = {"", "guest", None}
@@ -376,9 +376,7 @@ async def starknet_auth_email(
     background_tasks: BackgroundTasks,
     existing_user: Optional[dict] = Depends(_optional_current_user),
 ):
-    email = body.email.strip().lower()
-    if not email or "@" not in email:
-        raise HTTPException(400, "Valid email required")
+    email = (body.email or "").strip().lower()
 
     privy_token = body.privy_token or ""
     if not _looks_like_jwt(privy_token):
@@ -394,6 +392,25 @@ async def starknet_auth_email(
     privy_did = claims.get("sub")
     if not privy_did:
         raise HTTPException(401, "Privy token missing subject (DID)")
+
+    privy_email: Optional[str] = None
+    try:
+        privy_email = await get_user_email(privy_did)
+    except httpx.HTTPStatusError as exc:
+        log.warning(
+            "Failed to fetch Privy email; continuing with request/Supabase fallback",
+            privy_did_fp=privy_did[:12],
+            status=exc.response.status_code,
+        )
+    except Exception as exc:
+        log.warning(
+            "Failed to resolve Privy email; continuing with fallback",
+            privy_did_fp=privy_did[:12],
+            error=str(exc),
+        )
+
+    if privy_email:
+        email = privy_email.strip().lower()
 
     try:
         wallet, _ = await _ensure_privy_starknet_wallet(privy_did)
@@ -419,7 +436,7 @@ async def starknet_auth_email(
             user_row = did_lookup.data[0]
             matched_by_did = True
 
-    if user_row is None:
+    if user_row is None and email:
         email_lookup = (
             service.table("users")
             .select("*")
@@ -429,6 +446,20 @@ async def starknet_auth_email(
         )
         if email_lookup.data:
             user_row = email_lookup.data[0]
+
+    if user_row is None:
+        wallet_lookup = (
+            service.table("users")
+            .select("*")
+            .eq("starknet_address", wallet.get("address"))
+            .limit(1)
+            .execute()
+        )
+        if wallet_lookup.data:
+            user_row = wallet_lookup.data[0]
+
+    if user_row is None and not email:
+        raise HTTPException(400, "Could not determine email from Privy or the request")
 
     if user_row is None:
         user_id = str(uuid.uuid4())
@@ -478,6 +509,8 @@ async def starknet_auth_email(
 
         if not existing_did:
             update_fields["privy_did"] = privy_did
+        if email and not user_row.get("email"):
+            update_fields["email"] = email
 
         if update_fields:
             service.table("users").update(update_fields).eq("id", user_row["id"]).execute()
