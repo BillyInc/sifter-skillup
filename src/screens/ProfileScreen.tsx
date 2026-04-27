@@ -407,29 +407,29 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   screen:           { flex: 1 },
-  scroll:           { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
+  scroll:           { padding: Spacing.md, paddingBottom: Spacing.xxxl, gap: Spacing.md },
 
-  heroSection:      { alignItems: 'center', paddingTop: Spacing.lg, paddingBottom: Spacing.sm, position: 'relative' },
-  settingsBtn:      { position: 'absolute', top: Spacing.lg, right: 0 },
+  heroSection:      { alignItems: 'center', paddingTop: Spacing.md, paddingBottom: Spacing.sm, position: 'relative' },
+  settingsBtn:      { position: 'absolute', top: Spacing.md, right: 0 },
   settingsBtnText:  { fontSize: 22 },
   characterWrap:    { position: 'relative', alignItems: 'center', justifyContent: 'center', width: 150, height: 150 },
   characterOverlay: { position: 'absolute' },
   ringBg:           { position: 'absolute' },
   ringFg:           {},
-  stageName:        { fontSize: FontSize.xl, fontWeight: FontWeight.black, marginTop: Spacing.md },
+  stageName:        { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginTop: Spacing.md },
   stageDesc:        { fontSize: FontSize.sm, textAlign: 'center', maxWidth: 280, marginTop: 4, lineHeight: 18 },
-  heroStats:        { flexDirection: 'row', alignItems: 'center', marginTop: Spacing.lg, gap: 0 },
+  heroStats:        { flexDirection: 'row', alignItems: 'center', marginTop: Spacing.md, gap: 0 },
   heroStat:         { flex: 1, alignItems: 'center' },
-  heroStatValue:    { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  heroStatValue:    { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   heroStatLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, marginTop: 2 },
   heroStatDivider:  { width: 1, height: 32 },
 
-  sectionCard:      { borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1, gap: Spacing.md },
+  sectionCard:      { borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1, gap: Spacing.md },
   sectionCardTitle: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
 
   deskLabel:        { fontSize: FontSize.xs, textAlign: 'center', marginTop: Spacing.sm },
 
-  stageRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.sm },
+  stageRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: 10, paddingHorizontal: Spacing.sm },
   stageDot:         { width: 28, height: 28, borderRadius: 14, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
   stageRowName:     { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   stageRowRange:    { fontSize: FontSize.xs, marginTop: 1 },
@@ -443,9 +443,9 @@ const styles = StyleSheet.create({
   skillBarFill:     { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: Radius.full },
   skillBarPct:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, width: 34, textAlign: 'right' },
 
-  accountRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.md },
+  accountRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm },
   accountRowEmoji:  { fontSize: 22 },
-  accountRowLabel:  { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
+  accountRowLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   accountRowSub:    { fontSize: FontSize.xs, marginTop: 2 },
-  accountRowArrow:  { fontSize: FontSize.xl },
+  accountRowArrow:  { fontSize: FontSize.lg },
 });

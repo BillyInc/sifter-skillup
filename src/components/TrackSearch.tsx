@@ -231,31 +231,31 @@ export function TrackSearch({ monitoredTracks, onAdd, onRemove, onClose }: Track
 const styles = StyleSheet.create({
   sheet:            { flex: 1 },
 
-  header:           { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, borderBottomWidth: 1 },
+  header:           { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   closeBtn:         { fontSize: 20, fontWeight: FontWeight.bold, width: 40 },
-  headerTitle:      { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  headerTitle:      { fontSize: FontSize.md, fontWeight: FontWeight.black },
 
-  contextBanner:    { padding: Spacing.md, paddingHorizontal: Spacing.lg },
+  contextBanner:    { margin: Spacing.md, marginBottom: Spacing.sm, padding: Spacing.md, borderRadius: Radius.xl },
   contextText:      { fontSize: FontSize.sm, lineHeight: 18 },
 
-  searchRow:        { padding: Spacing.md, borderBottomWidth: 1 },
-  searchBox:        { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderRadius: Radius.lg, borderWidth: 1.5, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
-  searchInput:      { flex: 1, fontSize: FontSize.md },
+  searchRow:        { paddingHorizontal: Spacing.md, paddingBottom: Spacing.sm },
+  searchBox:        { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderRadius: Radius.xl, borderWidth: 1.5, paddingHorizontal: Spacing.md, paddingVertical: 10 },
+  searchInput:      { flex: 1, fontSize: FontSize.sm },
 
-  monitoredSection: { padding: Spacing.lg, borderBottomWidth: 1, gap: Spacing.sm },
+  monitoredSection: { paddingHorizontal: Spacing.md, paddingBottom: Spacing.md, gap: Spacing.sm },
   monitoredLabel:   { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
   monitoredPills:   { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
   monitoredPill:    { flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.sm, paddingVertical: Spacing.xs, borderRadius: Radius.full, borderWidth: 1.5 },
   monitoredPillEmoji:{ fontSize: 14 },
   monitoredPillLabel:{ fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginLeft: 4 },
 
-  list:             { padding: Spacing.md, gap: Spacing.sm },
+  list:             { paddingHorizontal: Spacing.md, paddingBottom: Spacing.xxxl, gap: Spacing.sm },
 
   fieldHeader:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.xs, borderBottomWidth: 1, marginTop: Spacing.sm, marginBottom: Spacing.xs },
   fieldHeaderEmoji: { fontSize: 18 },
   fieldHeaderLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.black, letterSpacing: 0.6 },
 
-  trackRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: Spacing.md, borderRadius: Radius.lg, borderWidth: 1.5 },
+  trackRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: Spacing.md, borderRadius: Radius.xl, borderWidth: 1.5 },
   trackDot:         { width: 8, height: 8, borderRadius: 4 },
   trackEmoji:       { fontSize: 20 },
   trackLabel:       { fontSize: FontSize.sm, fontWeight: FontWeight.bold },

@@ -132,14 +132,14 @@ export default function StreaksScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: {
-    padding: Spacing.lg,
+    padding: Spacing.md,
     paddingBottom: Spacing.xxxl,
-    gap: Spacing.lg,
+    gap: Spacing.md,
   },
   hero: {
     borderRadius: Radius.xl,
     borderWidth: 1,
-    padding: Spacing.xl,
+    padding: Spacing.lg,
     gap: Spacing.sm,
   },
   heroBadge: {
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   title: {
-    fontSize: FontSize.xxl,
+    fontSize: FontSize.xl,
     fontWeight: FontWeight.black,
   },
   subtitle: {
@@ -166,9 +166,9 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   statCard: {
-    borderRadius: Radius.xl,
+    borderRadius: Radius.lg,
     borderWidth: 1,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     gap: 4,
   },
   statLabel: {
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   statValue: {
-    fontSize: FontSize.xxl,
+    fontSize: FontSize.xl,
     fontWeight: FontWeight.black,
   },
   statSub: {
@@ -186,9 +186,9 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   panel: {
-    borderRadius: Radius.xl,
+    borderRadius: Radius.lg,
     borderWidth: 1,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     gap: Spacing.sm,
   },
   panelEyebrow: {
@@ -206,31 +206,31 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   freezeCount: {
-    fontSize: 40,
+    fontSize: 34,
     fontWeight: FontWeight.black,
-    lineHeight: 44,
+    lineHeight: 38,
   },
   actions: {
     gap: Spacing.sm,
   },
   primaryBtn: {
     borderRadius: Radius.xl,
-    paddingVertical: Spacing.lg,
+    paddingVertical: Spacing.md,
     alignItems: 'center',
   },
   primaryBtnText: {
     color: '#fff',
-    fontSize: FontSize.md,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.black,
   },
   secondaryBtn: {
     borderRadius: Radius.xl,
     borderWidth: 1,
-    paddingVertical: Spacing.lg,
+    paddingVertical: Spacing.md,
     alignItems: 'center',
   },
   secondaryBtnText: {
-    fontSize: FontSize.md,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.bold,
   },
 });

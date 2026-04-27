@@ -13,6 +13,8 @@ import {
 import { usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '../../theme';
+import { useAuth } from '../../hooks/useAuth';
+import { resolveTrackContext } from '../../lib/trackContext';
 
 type NavId =
   | 'dashboard'
@@ -103,7 +105,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { colors, isDark, toggle } = useTheme();
+  const { user } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const trackContext = useMemo(() => resolveTrackContext(user), [user]);
 
   const activeId = useMemo(() => getActiveNavId(pathname), [pathname]);
   const activeItem = PRIMARY_NAV.find(item => item.id === activeId) ?? PRIMARY_NAV[0];
@@ -180,14 +184,14 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             )}
 
             <View>
-              <Text style={[styles.pageEyebrow, { color: colors.textMuted }]}>Reference Shell</Text>
-              <Text style={[styles.pageTitle, { color: colors.text }]}>{activeItem.label}</Text>
+              <Text style={[styles.pageEyebrow, { color: colors.textMuted }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.heroEyebrow : 'Reference Shell'}</Text>
+              <Text style={[styles.pageTitle, { color: colors.text }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.trackName : activeItem.label}</Text>
             </View>
           </View>
 
           <View style={styles.topbarActions}>
             <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-              <Text style={[styles.searchStubText, { color: colors.textMuted }]}>Search is routed next through Feed and Guilds</Text>
+              <Text style={[styles.searchStubText, { color: colors.textMuted }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.searchPlaceholder : 'Search is routed next through Feed and Guilds'}</Text>
             </View>
 
             <TouchableOpacity

@@ -244,17 +244,17 @@ export function CommentSheet({
 const styles = StyleSheet.create({
   sheet:           { flex: 1 },
 
-  sheetHeader:     { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, borderBottomWidth: 1 },
+  sheetHeader:     { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   closeBtn:        { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
-  closeBtnText:    { fontSize: 20, fontWeight: FontWeight.bold },
-  sheetTitle:      { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  closeBtnText:    { fontSize: 18, fontWeight: FontWeight.bold },
+  sheetTitle:      { fontSize: FontSize.md, fontWeight: FontWeight.black },
 
-  postPreview:     { padding: Spacing.lg, borderBottomWidth: 1 },
+  postPreview:     { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   previewSource:   { fontSize: 11, fontWeight: FontWeight.black, textTransform: 'uppercase' as any, letterSpacing: 0.4, marginBottom: 4 },
   previewTitle:    { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, lineHeight: 19 },
 
   loadingCenter:   { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  commentsList:    { padding: Spacing.lg, gap: Spacing.md },
+  commentsList:    { padding: Spacing.md, gap: Spacing.sm },
   emptyText:       { textAlign: 'center', marginTop: Spacing.xxl, fontSize: FontSize.md },
 
   commentItem:     { gap: Spacing.xs, marginBottom: Spacing.md },
@@ -270,16 +270,16 @@ const styles = StyleSheet.create({
   commentAction:   { paddingVertical: 4 },
   commentActionText:{ fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
 
-  inputArea:       { borderTopWidth: 1, padding: Spacing.md, gap: Spacing.sm },
-  replyIndicator:  { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: Spacing.sm, borderRadius: Radius.md },
+  inputArea:       { borderTopWidth: 1, padding: Spacing.sm, gap: Spacing.sm },
+  replyIndicator:  { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: Spacing.sm, borderRadius: Radius.lg },
   replyIndicatorText:{ fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   replyDismiss:    { fontSize: 16, fontWeight: FontWeight.bold, padding: 4 },
   imagePreview:    { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  imageThumb:      { width: 64, height: 64, borderRadius: Radius.md },
+  imageThumb:      { width: 56, height: 56, borderRadius: Radius.md },
   removeImage:     { padding: Spacing.xs },
   inputRow:        { flexDirection: 'row', alignItems: 'flex-end', gap: Spacing.sm },
-  textInput:       { flex: 1, borderRadius: Radius.lg, borderWidth: 1.5, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: FontSize.md, maxHeight: 120, minHeight: 44 },
-  imagePickerBtn:  { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  textInput:       { flex: 1, borderRadius: Radius.xl, borderWidth: 1.5, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: FontSize.sm, maxHeight: 120, minHeight: 42 },
+  imagePickerBtn:  { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   sendBtn:         { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-  sendBtnText:     { color: '#fff', fontSize: 20, fontWeight: FontWeight.black },
+  sendBtnText:     { color: '#fff', fontSize: 18, fontWeight: FontWeight.black },
 });

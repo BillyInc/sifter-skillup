@@ -361,19 +361,19 @@ export function FeedCard({ item, accentColor, onReact, onComment, onBookmark }: 
 // ─── Styles ────────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
-  card:            { borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, gap: Spacing.sm },
+  card:            { borderRadius: Radius.xl, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, gap: Spacing.sm },
 
   cardHeader:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   sourceBadge:     { paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
   sourceText:      { fontSize: 11, fontWeight: FontWeight.black, textTransform: 'uppercase' as any, letterSpacing: 0.4 },
   timeText:        { fontSize: 11 },
 
-  cardTitle:       { fontSize: FontSize.md, fontWeight: FontWeight.black, lineHeight: 21 },
-  cardContent:     { fontSize: FontSize.sm, lineHeight: 19 },
+  cardTitle:       { fontSize: FontSize.sm, fontWeight: FontWeight.black, lineHeight: 19 },
+  cardContent:     { fontSize: FontSize.xs, lineHeight: 18 },
 
   // Widgets
-  widget:          { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1, gap: Spacing.xs },
-  widgetValue:     { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  widget:          { borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, gap: Spacing.xs },
+  widgetValue:     { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   widgetLabel:     { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, textTransform: 'uppercase' as any },
   changeRow:       { flexDirection: 'row', gap: Spacing.md },
   changeText:      { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
@@ -400,8 +400,8 @@ const styles = StyleSheet.create({
   projectTvl:      { fontSize: FontSize.sm },
 
   sentimentHeader: { flexDirection: 'row', alignItems: 'baseline', gap: Spacing.sm },
-  sentimentIndex:  { fontSize: FontSize.xxxl, fontWeight: FontWeight.black },
-  sentimentLabel:  { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  sentimentIndex:  { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  sentimentLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   sentimentChange: { fontSize: FontSize.xs, marginLeft: 'auto' as any },
   sentimentBar:    { height: 8, borderRadius: Radius.full, overflow: 'hidden' },
   sentimentFill:   { height: '100%', borderRadius: Radius.full },
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
   communityHandle: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   communityStats:  { fontSize: 11 },
 
-  newsImage:       { width: '100%', height: 160, borderRadius: Radius.md },
+  newsImage:       { width: '100%', height: 148, borderRadius: Radius.lg },
 
   actionChip:      { paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full },
   actionChipText:  { fontSize: FontSize.xs, fontWeight: FontWeight.black, color: '#fff' },
