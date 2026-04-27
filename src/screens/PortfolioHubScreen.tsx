@@ -152,15 +152,17 @@ const CREDENTIAL_STATEMENT =
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Card({ children, style }: { children: React.ReactNode; style?: object }) {
-  return <View style={[styles.card, Shadow.sm, style]}>{children}</View>;
+  const { colors } = useTheme();
+  return <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm, style]}>{children}</View>;
 }
 
 function PrimaryBtn({
   label, onPress, loading = false, icon = '', disabled = false,
 }: { label: string; onPress: () => void; loading?: boolean; icon?: string; disabled?: boolean }) {
+  const { colors } = useTheme();
   return (
     <TouchableOpacity
-      style={[styles.primaryBtn, disabled && styles.primaryBtnDisabled]}
+      style={[styles.primaryBtn, { backgroundColor: colors.accent }, disabled && styles.primaryBtnDisabled]}
       onPress={onPress}
       activeOpacity={0.85}
       disabled={loading || disabled}
@@ -173,23 +175,25 @@ function PrimaryBtn({
 }
 
 function SecondaryBtn({ label, onPress }: { label: string; onPress: () => void }) {
+  const { colors } = useTheme();
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={styles.secondaryBtn}>
-      <Text style={styles.secondaryBtnText}>{label}</Text>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={[styles.secondaryBtn, { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
+      <Text style={[styles.secondaryBtnText, { color: colors.text }]}>{label}</Text>
     </TouchableOpacity>
   );
 }
 
 function Tag({ text, color = Colors.accent }: { text: string; color?: string }) {
   return (
-    <View style={[styles.tag, { backgroundColor: color + '22', borderColor: color + '55' }]}>
+    <View style={[styles.tag, { backgroundColor: color + '18', borderColor: color + '40' }]}>
       <Text style={[styles.tagText, { color }]}>{text}</Text>
     </View>
   );
 }
 
 function SectionLabel({ text }: { text: string }) {
-  return <Text style={styles.sectionLabel}>{text}</Text>;
+  const { colors } = useTheme();
+  return <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{text}</Text>;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -931,12 +935,12 @@ export default function PortfolioHubScreen() {
   // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
+      <StatusBar barStyle={colors.bg === '#0b1020' ? 'light-content' : 'dark-content'} backgroundColor={colors.bg} />
 
       {/* Header */}
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <Text style={styles.headerTitle}>⚡ Portfolio Hub</Text>
-        <Text style={styles.headerSub}>Supply Chain Analyst</Text>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>⚡ Portfolio Hub</Text>
+        <Text style={[styles.headerSub, { color: colors.textSoft }]}>Supply Chain Analyst</Text>
       </View>
 
       {/* Tabs */}
@@ -944,11 +948,11 @@ export default function PortfolioHubScreen() {
         {TABS.map(tab => (
           <TouchableOpacity
             key={tab.id}
-            style={[styles.tab, activeTab === tab.id && styles.tabActive]}
+            style={[styles.tab, activeTab === tab.id && { backgroundColor: colors.accentSoft }]}
             onPress={() => setActiveTab(tab.id)}
             activeOpacity={0.7}
           >
-            <Text style={[styles.tabText, activeTab === tab.id && styles.tabTextActive]}>
+            <Text style={[styles.tabText, { color: colors.textSoft }, activeTab === tab.id && { color: colors.accent, fontWeight: '800' }]}>
               {tab.emoji} {tab.label}
             </Text>
           </TouchableOpacity>
@@ -1027,7 +1031,7 @@ const styles = StyleSheet.create({
   loadingText: { fontSize: FontSize.sm, color: Colors.textSoft },
 
   xpBanner: {
-    borderRadius: Radius.md,
+    borderRadius: Radius.xl,
     padding: Spacing.md,
     marginHorizontal: Spacing.md,
     marginTop: Spacing.md,
@@ -1063,8 +1067,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
-  headerTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text },
-  headerSub: { fontSize: FontSize.sm, color: Colors.textSoft, marginTop: 2 },
+  headerTitle: { fontSize: FontSize.lg, fontWeight: '800' },
+  headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: '700' },
 
   tabBar: {
     flexDirection: 'row',
@@ -1078,18 +1082,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 6,
     paddingHorizontal: 4,
-    borderRadius: Radius.sm,
+    borderRadius: Radius.full,
     alignItems: 'center',
   },
-  tabActive: { backgroundColor: Colors.accent + '22' },
-  tabText: { fontSize: 10, color: Colors.textSoft, fontWeight: '600', textAlign: 'center' },
-  tabTextActive: { color: Colors.accent, fontWeight: '800' },
+  tabActive: {},
+  tabText: { fontSize: 10, fontWeight: '700', textAlign: 'center' },
+  tabTextActive: { fontWeight: '800' },
 
   card: {
-    backgroundColor: '#fff',
-    borderRadius: Radius.md,
+    borderRadius: Radius.xl,
     padding: Spacing.md,
     marginBottom: Spacing.md,
+    borderWidth: 1,
   },
   sectionLabel: {
     fontSize: 10,

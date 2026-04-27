@@ -26,6 +26,7 @@ import { getAllFieldDetails, getFieldDetail, type FieldDetail, type FieldSkillTr
 import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
 import { useIsWebWide } from '../components/web/WebGrid';
+import { useAuth } from '../hooks/useAuth';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 
@@ -186,6 +187,7 @@ function FieldPortal({
 }) {
   const navigation = useNavigation<any>();
   const { colors } = useTheme();
+  const { updateActiveField } = useAuth();
   const entrance   = useRef(new Animated.Value(0)).current;
   const slideY     = useRef(new Animated.Value(40)).current;
   const isCrypto   = field.id === 'crypto';
@@ -207,7 +209,13 @@ function FieldPortal({
 
   const handleTrack = (track: FieldSkillTrack) => {
     close();
-    setTimeout(() => {
+    setTimeout(async () => {
+      try {
+        await updateActiveField(field.id, fieldColor(field.id), track.id, track.name);
+      } catch {
+        // Best effort only - continue navigation even if persistence fails.
+      }
+
       if (track.navigateTo === 'Quant') navigation.push('/skills/quant-map');
       else if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') navigation.push('/map/island');
       else if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') navigation.push('/starknet-track', { trackId: track.id, fieldId: field.id, trackName: track.name });

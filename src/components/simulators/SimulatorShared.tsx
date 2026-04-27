@@ -40,19 +40,21 @@ export function SimShell({
 
 const sh = StyleSheet.create({
   wrap:     { flex: 1 },
-  content:  { padding: Spacing.lg, paddingBottom: 80, gap: Spacing.md },
+  content:  { padding: Spacing.md, paddingBottom: 72, gap: Spacing.sm },
   header:   {
-    flexDirection: 'row', gap: Spacing.md,
-    backgroundColor: '#f0f4ff', borderRadius: Radius.lg,
+    flexDirection: 'row', gap: Spacing.sm,
+    backgroundColor: '#eef2ff', borderRadius: Radius.xl,
     padding: Spacing.md, alignItems: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#dbe3ff',
   },
-  icon:     { fontSize: 36, lineHeight: 44 },
+  icon:     { fontSize: 30, lineHeight: 36 },
   label:    {
     fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent,
     textTransform: 'uppercase', letterSpacing: 0.8,
   },
-  title:    { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 },
-  subtitle: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18, marginTop: 2 },
+  title:    { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, lineHeight: 21, marginTop: 1 },
+  subtitle: { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
 });
 
 // ── Buttons ───────────────────────────────────────────────────────────────────
@@ -81,12 +83,12 @@ export function GhostBtn({ label, onPress }: { label: string; onPress: () => voi
 const btn = StyleSheet.create({
   primary:     {
     backgroundColor: Colors.accent, borderRadius: Radius.md,
-    paddingVertical: Spacing.lg, alignItems: 'center', width: '100%', marginTop: 4,
+    paddingVertical: 13, alignItems: 'center', width: '100%', marginTop: 4,
   },
   disabled:    { opacity: 0.4 },
-  primaryText: { color: '#fff', fontSize: FontSize.lg, fontWeight: '800' },
-  ghost:       { paddingVertical: Spacing.md, alignItems: 'center', marginTop: 4 },
-  ghostText:   { color: Colors.textSoft, fontSize: FontSize.sm },
+  primaryText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
+  ghost:       { paddingVertical: Spacing.sm, alignItems: 'center', marginTop: 4 },
+  ghostText:   { color: Colors.textSoft, fontSize: FontSize.xs, fontWeight: '700' },
 });
 
 // ── Cards ─────────────────────────────────────────────────────────────────────
@@ -97,8 +99,8 @@ export function Card({ children, style }: { children: React.ReactNode; style?: o
 
 const card = StyleSheet.create({
   box: {
-    backgroundColor: Colors.card, borderRadius: Radius.lg,
-    borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.lg,
+    backgroundColor: Colors.card, borderRadius: Radius.xl,
+    borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.md,
   },
 });
 
@@ -130,7 +132,7 @@ export function SectionLabel({ text, color }: { text: string; color?: string }) 
 const sec = StyleSheet.create({
   label: {
     fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent,
-    textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: Spacing.sm,
+    textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 6,
   },
 });
 
@@ -178,12 +180,12 @@ export function ScoreScreen({
 }
 
 const sc = StyleSheet.create({
-  wrap:        { alignItems: 'center', padding: Spacing.xl, gap: Spacing.md },
-  emoji:       { fontSize: 56 },
-  fraction:    { fontSize: 28, fontWeight: '900' },
-  label:       { fontSize: FontSize.md, color: Colors.textSoft, fontWeight: '600' },
-  xpBadge:    { borderRadius: Radius.full, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm },
-  xpText:     { fontSize: FontSize.xl, fontWeight: '900' },
+  wrap:        { alignItems: 'center', padding: Spacing.lg, gap: Spacing.sm },
+  emoji:       { fontSize: 48 },
+  fraction:    { fontSize: 24, fontWeight: '900' },
+  label:       { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '600' },
+  xpBadge:    { borderRadius: Radius.full, paddingHorizontal: Spacing.md, paddingVertical: 6 },
+  xpText:     { fontSize: FontSize.lg, fontWeight: '900' },
   feedbackBox: {
     backgroundColor: '#f8fafc', borderRadius: Radius.md,
     padding: Spacing.md, width: '100%', borderWidth: 1, borderColor: Colors.border,

@@ -201,8 +201,8 @@ function StarknetHeader() {
       <Text style={{ fontSize: FontSize.xxl, fontWeight: '900', color: '#fff', textAlign: 'center' }}>
         Starknet World
       </Text>
-      <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.6)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
-        Sign in with Privy, then let the backend create or sync your Starknet wallet.
+      <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.68)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
+        Log in or create access with Privy, then continue straight into the Starknet islands.
       </Text>
     </View>
   );
@@ -489,10 +489,7 @@ export default function AuthScreen() {
     setMode('connecting');
     try {
       await authStarknet(starkEmail, starknetAddress, privyAccessToken);
-      router.replace({
-        pathname: '/(tabs)/map/island' as any,
-        params: { initialIsland: '18' },
-      });
+      router.replace('/(tabs)/map/island?initialIsland=18' as any);
     } catch (cause: any) {
       setError(cause.message || 'Starknet error');
       setMode('starknet');
@@ -547,11 +544,11 @@ export default function AuthScreen() {
           <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
             <Text style={[styles.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
             <Text style={[styles.tagline, { color: colors.textSoft }]}>
-              Master crypto, career skills, and quantitative finance.
+              Compact, track-first learning for crypto, operations, and advanced career paths.
             </Text>
 
             <View style={styles.btnGroup}>
-              <AuthButton label="Get Started - Free" onPress={() => setMode('signup')} colors={colors} />
+              <AuthButton label="Create account" onPress={() => setMode('signup')} colors={colors} />
 
               <TouchableOpacity
                 style={[styles.starknetCTA, { borderColor: '#ec489950' }]}
@@ -559,14 +556,14 @@ export default function AuthScreen() {
                 activeOpacity={0.85}
               >
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.starknetCTATitle}>Continue with Starknet</Text>
-                  <Text style={styles.starknetCTASub}>Live Privy auth, backend wallet creation, Starknet Island #18</Text>
+                  <Text style={styles.starknetCTATitle}>Log in or create with Starknet</Text>
+                  <Text style={styles.starknetCTASub}>Privy auth, wallet sync, and direct Starknet island return</Text>
                 </View>
               </TouchableOpacity>
 
               {(isBaseAvailable() || Platform.OS === 'web') ? (
                 <AuthButton
-                  label="Connect Base Wallet"
+                  label="Connect Base"
                   onPress={handleBase}
                   loading={loading}
                   variant="base"
@@ -575,7 +572,7 @@ export default function AuthScreen() {
               ) : null}
 
               <AuthButton
-                label="I already have an account"
+                label="Log in"
                 onPress={() => setMode('login')}
                 variant="ghost"
                 colors={colors}
@@ -612,7 +609,7 @@ export default function AuthScreen() {
                 {mode === 'login' ? 'Welcome back' : 'Create account'}
               </Text>
               <Text style={[styles.formSub, { color: colors.textSoft }]}>
-                {mode === 'login' ? 'Sign in to continue your streak.' : 'Start your learning journey.'}
+                {mode === 'login' ? 'Return to your saved track and continue.' : 'Create your account and enter your first track.'}
               </Text>
 
               {error ? (
@@ -628,7 +625,7 @@ export default function AuthScreen() {
               <AuthInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry colors={colors} />
 
               <AuthButton
-                label={mode === 'login' ? 'Sign In' : 'Create Account'}
+                label={mode === 'login' ? 'Log in' : 'Create account'}
                 onPress={() => run(
                   mode === 'login'
                     ? () => signInEmail(email, password)
@@ -643,7 +640,7 @@ export default function AuthScreen() {
                 onPress={() => { setError(''); setMode(mode === 'login' ? 'signup' : 'login'); }}
               >
                 <Text style={{ fontWeight: '700', fontSize: FontSize.md, color: colors.accent }}>
-                  {mode === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+                  {mode === 'login' ? "Don't have an account? Create one" : 'Already have an account? Log in'}
                 </Text>
               </TouchableOpacity>
 
@@ -669,26 +666,26 @@ const styles = StyleSheet.create({
   statusBar: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.xl, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   statusDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' },
   statusText: { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 0.5 },
-  welcomeContent: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.xl, paddingBottom: Spacing.xxxl },
-  formContent: { flexGrow: 1, justifyContent: 'center', padding: Spacing.xl, paddingBottom: Spacing.xxxl, alignItems: 'center' },
-  card: { width: '100%', maxWidth: 440, borderRadius: Radius.xl, padding: Spacing.xxl, borderWidth: 1, gap: Spacing.md },
+  welcomeContent: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: Spacing.lg, paddingBottom: Spacing.xxxl },
+  formContent: { flexGrow: 1, justifyContent: 'center', padding: Spacing.lg, paddingBottom: Spacing.xxxl, alignItems: 'center' },
+  card: { width: '100%', maxWidth: 430, borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1, gap: Spacing.sm },
   appName: { fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' },
-  tagline: { fontSize: FontSize.md, textAlign: 'center', lineHeight: 22 },
+  tagline: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
   btnGroup: { gap: Spacing.sm },
-  btn: { borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center', width: '100%' },
-  btnText: { fontSize: FontSize.lg, fontWeight: '800' },
-  input: { borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md + 2, fontSize: FontSize.md, width: '100%' },
+  btn: { borderRadius: Radius.md, paddingVertical: 13, alignItems: 'center', width: '100%' },
+  btnText: { fontSize: FontSize.md, fontWeight: '800' },
+  input: { borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: 12, fontSize: FontSize.sm, width: '100%' },
   starknetCTA: { borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#ec489908' },
   starknetCTATitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#ec4899' },
   starknetCTASub: { fontSize: FontSize.xs, color: 'rgba(236,72,153,0.7)', marginTop: 2 },
   guestBtn: { alignItems: 'center', paddingVertical: Spacing.sm },
-  guestText: { fontSize: FontSize.md, fontWeight: '600' },
+  guestText: { fontSize: FontSize.sm, fontWeight: '600' },
   errorBox: { borderRadius: Radius.md, padding: Spacing.md },
   errorText: { fontSize: FontSize.sm, fontWeight: '600', textAlign: 'center' },
   backBtn: { alignSelf: 'flex-start', marginBottom: Spacing.md },
   backText: { fontSize: FontSize.md, fontWeight: '700' },
   formTitle: { fontSize: FontSize.xxl, fontWeight: '900' },
-  formSub: { fontSize: FontSize.md, lineHeight: 21 },
+  formSub: { fontSize: FontSize.sm, lineHeight: 19 },
   starkBenefits: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm },
   benefitRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 });

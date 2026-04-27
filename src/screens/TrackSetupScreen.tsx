@@ -274,7 +274,7 @@ function ToolCard({ tool, index, accentColor }: { tool: ToolDef; index: number; 
 }
 
 const tc = StyleSheet.create({
-  wrap:        { backgroundColor: Colors.card, borderRadius: Radius.lg, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border, overflow: 'hidden' },
+  wrap:        { backgroundColor: Colors.card, borderRadius: Radius.xl, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border, overflow: 'hidden' },
   row:         { flexDirection: 'row', alignItems: 'center', gap: 10, padding: Spacing.md },
   emoji:       { fontSize: 28, width: 36 },
   name:        { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
@@ -329,7 +329,7 @@ function PackageManagerCard({ def, accentColor }: { def: PackageManagerDef; acce
 }
 
 const pm = StyleSheet.create({
-  wrap:          { backgroundColor: Colors.card, borderRadius: Radius.lg, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border, overflow: 'hidden' },
+  wrap:          { backgroundColor: Colors.card, borderRadius: Radius.xl, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border, overflow: 'hidden' },
   header:        { flexDirection: 'row', alignItems: 'center', gap: 10, padding: Spacing.md },
   headerIcon:    { fontSize: 24 },
   headerTitle:   { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
@@ -404,7 +404,7 @@ function AssetDownloader({ assets, onAllDone }: {
 }
 
 const ad = StyleSheet.create({
-  wrap:    { backgroundColor: '#f8fafc', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: '#e2e8f0' },
+  wrap:    { backgroundColor: '#f8fafc', borderRadius: Radius.xl, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: '#e2e8f0' },
   title:   { fontSize: 12, fontWeight: '800', color: Colors.textSoft, textTransform: 'uppercase', letterSpacing: 0.6, marginBottom: 12 },
   item:    { marginBottom: 10 },
   itemRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
@@ -514,16 +514,16 @@ export default function TrackSetupScreen({
 }
 
 const hd = StyleSheet.create({
-  wrap:  { flexDirection: 'row', alignItems: 'center', gap: 10, padding: Spacing.lg, borderBottomWidth: 3 },
+  wrap:  { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, borderBottomWidth: 3 },
   icon:  { fontSize: 32 },
   title: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
-  sub:   { fontSize: FontSize.sm, color: Colors.textSoft, marginTop: 1 },
+  sub:   { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 1 },
 });
 
 const intro = StyleSheet.create({
   heading:      { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, marginBottom: 6 },
-  sub:          { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 21, marginBottom: Spacing.lg },
-  divider:      { height: 1, backgroundColor: Colors.border, marginVertical: Spacing.lg },
+  sub:          { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 19, marginBottom: Spacing.md },
+  divider:      { height: 1, backgroundColor: Colors.border, marginVertical: Spacing.md },
   noTools:      { alignItems: 'center', paddingVertical: Spacing.xxxl },
   noToolsText:  { fontSize: FontSize.sm, color: Colors.textSoft },
 });
@@ -532,6 +532,6 @@ const cta = StyleSheet.create({
   wrap:          { padding: Spacing.lg, borderTopWidth: 1, backgroundColor: Colors.bg },
   preparing:     { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
   preparingText: { fontSize: 12, color: Colors.textSoft, fontWeight: '600' },
-  btn:           { borderRadius: Radius.lg, paddingVertical: Spacing.lg, alignItems: 'center' },
-  btnText:       { fontSize: FontSize.lg, fontWeight: '800' },
+  btn:           { borderRadius: Radius.xl, paddingVertical: 14, alignItems: 'center' },
+  btnText:       { fontSize: FontSize.md, fontWeight: '800' },
 });

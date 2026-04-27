@@ -190,31 +190,34 @@ function LabWorldScreen({
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0D0D1A' }}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
-        <Text style={styles.backBtnText}>← Back</Text>
-      </TouchableOpacity>
-
       <ScrollView contentContainerStyle={{ padding: Spacing.lg, gap: Spacing.lg }}>
-        <Animated.View style={[{ alignItems: 'center', gap: Spacing.md }, contentStyle]}>
-          <View style={{ backgroundColor: `${accentColor}20`, borderRadius: Radius.full,
-            paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm,
-            borderWidth: 1, borderColor: `${accentColor}50` }}>
+        <Animated.View style={[styles.labHeroCard, { borderColor: `${accentColor}30` }, contentStyle]}>
+          <TouchableOpacity style={styles.labBackBtn} onPress={() => router.back()}>
+            <Text style={styles.labBackBtnText}>← Back</Text>
+          </TouchableOpacity>
+
+          <View style={{ alignItems: 'center', gap: Spacing.sm }}>
+            <View style={{ backgroundColor: `${accentColor}20`, borderRadius: Radius.full,
+              paddingHorizontal: Spacing.md, paddingVertical: 6,
+              borderWidth: 1, borderColor: `${accentColor}50` }}>
+              <Text style={{ color: accentColor, fontWeight: '800', fontSize: FontSize.xs }}>
+                TRACK CONTEXT
+              </Text>
+            </View>
             <Text style={{ color: accentColor, fontWeight: '800', fontSize: FontSize.sm }}>
               {trackName.toUpperCase()}
             </Text>
-          </View>
-
-          <Text style={{ color: '#fff', fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' }}>
-            Lab {labNum}
-          </Text>
-
-          {loading ? (
-            <ActivityIndicator color={accentColor} size="large" />
-          ) : (
-            <Text style={{ color: '#aaa', fontSize: FontSize.md, textAlign: 'center' }}>
-              {lessonCount > 0 ? `${lessonCount} lessons + boss challenge` : 'Ready to begin'}
+            <Text style={{ color: '#fff', fontSize: FontSize.xxl, fontWeight: '900', textAlign: 'center' }}>
+              Lab {labNum}
             </Text>
-          )}
+            {loading ? (
+              <ActivityIndicator color={accentColor} size="large" />
+            ) : (
+              <Text style={{ color: '#aaa', fontSize: FontSize.sm, textAlign: 'center' }}>
+                {lessonCount > 0 ? `${lessonCount} lessons + boss challenge` : 'Ready to begin'}
+              </Text>
+            )}
+          </View>
         </Animated.View>
 
         {/* Lab info cards */}
@@ -264,11 +267,11 @@ function LabWorldScreen({
         <Animated.View style={[{ gap: Spacing.md }, contentStyle]}>
           <TouchableOpacity
             style={{ backgroundColor: accentColor, borderRadius: Radius.xl,
-              paddingVertical: Spacing.lg, alignItems: 'center' }}
+              paddingVertical: 14, alignItems: 'center' }}
             onPress={handleStartLab}
             activeOpacity={0.85}
           >
-            <Text style={{ color: '#fff', fontSize: FontSize.lg, fontWeight: '900' }}>
+            <Text style={{ color: '#fff', fontSize: FontSize.md, fontWeight: '900' }}>
               Start Lab {labNum} →
             </Text>
           </TouchableOpacity>
@@ -381,15 +384,31 @@ export default function WorldScreen() {
         </TouchableOpacity>
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Animated.View style={[styles.worldHeader, headerStyle]}>
+          <Animated.View style={[styles.worldHeroCard, headerStyle]}>
+            <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+              <Text style={styles.backBtnText}>←</Text>
+            </TouchableOpacity>
             <Text style={styles.worldEmoji}>{worldTheme.emoji}</Text>
             <Text style={styles.worldName}>{worldTheme.name}</Text>
             {trackName !== 'World' && (
               <Text style={styles.worldSub}>{trackName}</Text>
             )}
+            <Text style={styles.worldBodyText}>
+              {track?.description ?? detail?.worldDescription ?? 'Track-specific world view with compact cards and a direct continue path.'}
+            </Text>
           </Animated.View>
 
           <Animated.View style={[styles.worldContent, contentStyle]}>
+            <View style={styles.worldInfoCard}>
+              <Text style={styles.worldInfoLabel}>WORLD STATUS</Text>
+              <Text style={styles.worldInfoTitle}>{live ? 'Live Track' : 'Locked Track'}</Text>
+              <Text style={styles.worldInfoText}>
+                {live
+                  ? 'Continue into the exact track context instead of a mismatched generic dashboard.'
+                  : 'This track remains visible in the new system, but entry is still gated until content is live.'}
+              </Text>
+            </View>
+
             {live ? (
               <TouchableOpacity style={styles.ctaBtn} onPress={handleCTA} activeOpacity={0.85}>
                 <Text style={styles.ctaBtnText}>Enter {trackName} →</Text>
@@ -410,15 +429,23 @@ const styles = StyleSheet.create({
   screen:       { flex: 1 },
   orbContainer: { position: 'absolute', left: -80, top: -60 },
   scrollContent:{ padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.xl },
-  backBtn:      { margin: Spacing.md, padding: Spacing.sm, alignSelf: 'flex-start' },
-  backBtnText:  { color: '#fff', fontSize: FontSize.lg, fontWeight: '700' },
-  worldHeader:  { alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.xl },
+  backBtn:      { width: 38, height: 38, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.12)', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginBottom: Spacing.md },
+  backBtnText:  { color: '#fff', fontSize: FontSize.md, fontWeight: '700' },
+  worldHeroCard:{ alignItems: 'center', gap: Spacing.sm, padding: Spacing.lg, borderRadius: Radius.xxl, backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.14)' },
   worldEmoji:   { fontSize: 64 },
   worldName:    { fontSize: 28, fontWeight: '900', color: '#fff', textAlign: 'center' },
   worldSub:     { fontSize: FontSize.md, color: 'rgba(255,255,255,0.7)', textAlign: 'center' },
+  worldBodyText:{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.74)', textAlign: 'center', lineHeight: 19, maxWidth: 540 },
   worldContent: { gap: Spacing.lg },
-  ctaBtn:       { backgroundColor: '#EC4899', borderRadius: Radius.xl, paddingVertical: Spacing.lg, alignItems: 'center' },
-  ctaBtnText:   { color: '#fff', fontSize: FontSize.lg, fontWeight: '900' },
-  lockedBadge:  { backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' },
-  lockedText:   { color: 'rgba(255,255,255,0.6)', fontSize: FontSize.lg, fontWeight: '700' },
+  worldInfoCard:{ backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
+  worldInfoLabel:{ fontSize: FontSize.xs, fontWeight: '800', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.8, marginBottom: 6 },
+  worldInfoTitle:{ fontSize: FontSize.lg, fontWeight: '900', color: '#fff', marginBottom: 4 },
+  worldInfoText:{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.72)', lineHeight: 19 },
+  ctaBtn:       { backgroundColor: '#EC4899', borderRadius: Radius.xl, paddingVertical: 14, alignItems: 'center' },
+  ctaBtnText:   { color: '#fff', fontSize: FontSize.md, fontWeight: '900' },
+  lockedBadge:  { backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'center' },
+  lockedText:   { color: 'rgba(255,255,255,0.6)', fontSize: FontSize.md, fontWeight: '700' },
+  labHeroCard:  { backgroundColor: '#141427', borderRadius: Radius.xxl, padding: Spacing.md, gap: Spacing.md, borderWidth: 1 },
+  labBackBtn:   { alignSelf: 'flex-start', paddingVertical: 6, paddingHorizontal: 10, borderRadius: Radius.full, backgroundColor: 'rgba(255,255,255,0.08)' },
+  labBackBtnText:{ color: '#fff', fontSize: FontSize.xs, fontWeight: '800' },
 });

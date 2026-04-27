@@ -236,6 +236,7 @@ export default function FeedScreen() {
       {/* ── Header ── */}
       <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
         <View>
+          <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>TRACK FEED</Text>
           <Text style={[styles.headerTitle, { color: colors.text }]}>📰 Feed</Text>
           <Text style={[styles.headerSub, { color: accentColor }]}>
             {activeTrack?.label ?? 'Your track'}
@@ -378,32 +379,33 @@ export default function FeedScreen() {
 const styles = StyleSheet.create({
   screen:             { flex: 1 },
 
-  header:             { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, borderBottomWidth: 1 },
-  headerTitle:        { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  headerSub:          { fontSize: FontSize.sm, fontWeight: FontWeight.bold, marginTop: 2 },
+  header:             { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
+  headerEyebrow:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 2 },
+  headerTitle:        { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  headerSub:          { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginTop: 2 },
 
-  chipsScroll:        { borderBottomWidth: 1, maxHeight: 54 },
+  chipsScroll:        { borderBottomWidth: 1, maxHeight: 52 },
   chipsContent:       { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row', alignItems: 'center' },
-  chip:               { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: Spacing.md, paddingVertical: 7, borderRadius: Radius.full, borderWidth: 1.5 },
+  chip:               { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: Spacing.md, paddingVertical: 6, borderRadius: Radius.full, borderWidth: 1.5 },
   chipEmoji:          { fontSize: 14 },
-  chipLabel:          { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  chipLabel:          { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
   primaryDot:         { width: 6, height: 6, borderRadius: 3, marginLeft: 2 },
   manageChip:         {},
 
-  sectionFilter:      { borderBottomWidth: 1, maxHeight: 48 },
+  sectionFilter:      { borderBottomWidth: 1, maxHeight: 46 },
   sectionFilterContent:{ paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, gap: Spacing.xs, flexDirection: 'row', alignItems: 'center' },
   sectionFilterChip:  { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: Spacing.md, paddingVertical: 5, borderRadius: Radius.full, borderWidth: 1 },
   sectionFilterIcon:  { fontSize: 12 },
   sectionFilterLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  fallbackBanner:     { margin: Spacing.md, marginTop: 0, borderRadius: Radius.lg, borderWidth: 1, padding: Spacing.md },
+  fallbackBanner:     { margin: Spacing.md, marginTop: 0, borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.md },
   fallbackBannerText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, lineHeight: 18 },
 
   feedContent:        { padding: Spacing.md, gap: Spacing.md },
 
   sectionBlock:       { gap: Spacing.sm },
-  sectionHeader:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingLeft: Spacing.md, borderLeftWidth: 3 },
+  sectionHeader:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md, borderLeftWidth: 3, borderRadius: Radius.md },
   sectionIcon:        { fontSize: 18 },
-  sectionTitle:       { fontSize: FontSize.sm, fontWeight: FontWeight.black, letterSpacing: 0.5, flex: 1 },
+  sectionTitle:       { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.5, flex: 1 },
   sectionRight:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   sectionCount:       { paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
   sectionCountText:   { fontSize: 11, fontWeight: FontWeight.black },

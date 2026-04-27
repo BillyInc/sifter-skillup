@@ -64,12 +64,21 @@ function SimShell({
 
 const shell = StyleSheet.create({
   wrap:     { flex: 1 },
-  content:  { padding: Spacing.lg, paddingBottom: Spacing.xxxl, gap: Spacing.md },
-  header:   { flexDirection: 'row', gap: Spacing.md, backgroundColor: '#f0f4ff', borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'flex-start' },
-  icon:     { fontSize: 36, lineHeight: 44 },
+  content:  { padding: Spacing.md, paddingBottom: Spacing.xxxl, gap: Spacing.sm },
+  header:   {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    backgroundColor: '#eef2ff',
+    borderRadius: Radius.xl,
+    padding: Spacing.md,
+    alignItems: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#dbe3ff',
+  },
+  icon:     { fontSize: 30, lineHeight: 36 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
-  title:    { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 24, marginTop: 2 },
-  subtitle: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18, marginTop: 2 },
+  title:    { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, lineHeight: 21, marginTop: 1 },
+  subtitle: { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
 });
 
 function PrimaryBtn({ label, onPress, disabled = false }: { label: string; onPress: () => void; disabled?: boolean }) {
@@ -90,11 +99,11 @@ function GhostBtn({ label, onPress }: { label: string; onPress: () => void }) {
   );
 }
 const btn = StyleSheet.create({
-  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center', width: '100%' },
+  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: 13, alignItems: 'center', width: '100%' },
   disabled:    { opacity: 0.4 },
-  primaryText: { color: '#fff', fontSize: FontSize.lg, fontWeight: '800' },
-  ghost:       { alignItems: 'center', paddingVertical: Spacing.md },
-  ghostText:   { color: Colors.textSoft, fontSize: FontSize.sm, fontWeight: '600' },
+  primaryText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
+  ghost:       { alignItems: 'center', paddingVertical: Spacing.sm },
+  ghostText:   { color: Colors.textSoft, fontSize: FontSize.xs, fontWeight: '700' },
 });
 
 function ResultBox({ correct, message }: { correct: boolean; message: string }) {
@@ -115,7 +124,7 @@ function Card({ children, style }: { children: React.ReactNode; style?: object }
   return <View style={[card.box, Shadow.sm, style]}>{children}</View>;
 }
 const card = StyleSheet.create({
-  box: { backgroundColor: Colors.card, borderRadius: Radius.lg, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.lg },
+  box: { backgroundColor: Colors.card, borderRadius: Radius.xl, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.md },
 });
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -144,14 +144,14 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: {
-    padding: Spacing.lg,
+    padding: Spacing.md,
     paddingBottom: Spacing.xxxl,
-    gap: Spacing.lg,
+    gap: Spacing.md,
   },
   hero: {
     borderRadius: Radius.xl,
     borderWidth: 1,
-    padding: Spacing.xl,
+    padding: Spacing.lg,
     gap: Spacing.sm,
   },
   heroEyebrow: {
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   heroTitle: {
-    fontSize: FontSize.xxl,
+    fontSize: FontSize.xl,
     fontWeight: FontWeight.black,
   },
   heroBody: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: Radius.xl,
     borderWidth: 1,
-    padding: Spacing.lg,
+    padding: Spacing.md,
     gap: Spacing.sm,
   },
   cardTitle: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   cardHeadline: {
-    fontSize: FontSize.lg,
+    fontSize: FontSize.md,
     fontWeight: FontWeight.black,
   },
   cardBody: {
@@ -200,13 +200,13 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   rowValue: {
-    fontSize: FontSize.md,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.bold,
   },
   toggleBtn: {
     borderRadius: Radius.xl,
     borderWidth: 1,
-    paddingVertical: Spacing.md,
+    paddingVertical: 12,
     alignItems: 'center',
   },
   toggleBtnText: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   linkBtn: {
     borderRadius: Radius.xl,
     borderWidth: 1,
-    paddingVertical: Spacing.md,
+    paddingVertical: 12,
     alignItems: 'center',
   },
   linkBtnText: {
@@ -225,12 +225,12 @@ const styles = StyleSheet.create({
   },
   signOutBtn: {
     borderRadius: Radius.xl,
-    paddingVertical: Spacing.lg,
+    paddingVertical: Spacing.md,
     alignItems: 'center',
   },
   signOutBtnText: {
     color: '#fff',
-    fontSize: FontSize.md,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.black,
   },
 });
