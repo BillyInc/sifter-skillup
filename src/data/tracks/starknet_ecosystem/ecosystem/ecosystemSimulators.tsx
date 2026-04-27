@@ -3023,7 +3023,7 @@ const ss = StyleSheet.create({
   statTile:     { flex: 1, minWidth: 80, backgroundColor: C.bgElevated, borderRadius: 8, padding: 10, borderWidth: 1, borderColor: C.border, alignItems: 'center' },
 
   // Protocol row
-  protoRow:     { flexDirection: 'row', alignItems: 'center', gap: 8, padding: '8px 10px' as any, borderRadius: 6, marginBottom: 2 },
+  protoRow:     { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 8, paddingHorizontal: 10, borderRadius: 6, marginBottom: 2 },
 
   // Monospace block
   monoBlock:    { backgroundColor: '#0d1117', borderRadius: 8, padding: 12, borderWidth: 1, borderColor: C.border },

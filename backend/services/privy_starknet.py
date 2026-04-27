@@ -50,6 +50,49 @@ def _pick_wallet(payload: Any) -> Optional[dict]:
     return None
 
 
+def _pick_email(payload: Any) -> Optional[str]:
+    if isinstance(payload, dict):
+        email = payload.get("email")
+        if isinstance(email, dict):
+            address = email.get("address")
+            if isinstance(address, str) and address:
+                return address
+
+        linked_accounts = payload.get("linked_accounts")
+        if isinstance(linked_accounts, list):
+            for account in linked_accounts:
+                if (
+                    isinstance(account, dict)
+                    and account.get("type") == "email"
+                    and isinstance(account.get("address"), str)
+                    and account.get("address")
+                ):
+                    return account["address"]
+
+        data = payload.get("data")
+        if isinstance(data, dict):
+            return _pick_email(data)
+
+    if isinstance(payload, list):
+        for item in payload:
+            email = _pick_email(item)
+            if email:
+                return email
+
+    return None
+
+
+async def get_privy_user(privy_user_id: str) -> dict:
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        response = await client.get(
+            f"{PRIVY_BASE_URL}/users/{privy_user_id}",
+            auth=(PRIVY_APP_ID, PRIVY_APP_SECRET),
+            headers={"privy-app-id": PRIVY_APP_ID},
+        )
+        response.raise_for_status()
+        return response.json()
+
+
 async def create_starknet_wallet(privy_user_id: str) -> dict:
     async with httpx.AsyncClient(timeout=15.0) as client:
         response = await client.post(
@@ -72,17 +115,15 @@ async def create_starknet_wallet(privy_user_id: str) -> dict:
 
 
 async def get_user_wallets(privy_user_id: str) -> list[dict]:
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        response = await client.get(
-            f"{PRIVY_BASE_URL}/users/{privy_user_id}",
-            auth=(PRIVY_APP_ID, PRIVY_APP_SECRET),
-            headers={"privy-app-id": PRIVY_APP_ID},
-        )
-        response.raise_for_status()
-        data = response.json()
-        linked_accounts = data.get("linked_accounts", [])
-        return [
-            account
-            for account in linked_accounts
-            if isinstance(account, dict) and account.get("chain_type") == "starknet"
-        ]
+    data = await get_privy_user(privy_user_id)
+    linked_accounts = data.get("linked_accounts", [])
+    return [
+        account
+        for account in linked_accounts
+        if isinstance(account, dict) and account.get("chain_type") == "starknet"
+    ]
+
+
+async def get_user_email(privy_user_id: str) -> Optional[str]:
+    data = await get_privy_user(privy_user_id)
+    return _pick_email(data)
