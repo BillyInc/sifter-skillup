@@ -206,8 +206,11 @@ export default function GuildScreen() {
   return (
     <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
       {/* Header */}
-      <View style={[s.header, { borderBottomColor: colors.border }]}>
-        <Text style={[s.title, { color: colors.text }]}>⚔️ Guilds</Text>
+      <View style={[s.header, { borderBottomColor: colors.border, backgroundColor: colors.card }]}>
+        <View>
+          <Text style={[s.eyebrow, { color: colors.textMuted }]}>COMMUNITY</Text>
+          <Text style={[s.title, { color: colors.text }]}>⚔️ Guilds</Text>
+        </View>
         {userGuildId && myGuild && (
           <View style={[s.guildChip, { backgroundColor: `${myGuild.accent}20`, borderColor: `${myGuild.accent}40` }]}>
             <Text style={{ color: myGuild.accent, fontWeight: '800', fontSize: 12 }}>
@@ -397,20 +400,21 @@ export default function GuildScreen() {
 const s = StyleSheet.create({
   screen:      { flex: 1 },
   header:      { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-                 paddingHorizontal: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1 },
-  title:       { fontSize: 22, fontWeight: '900' },
+                 paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
+  eyebrow:     { fontSize: 10, fontWeight: '900', letterSpacing: 0.8, marginBottom: 2 },
+  title:       { fontSize: 20, fontWeight: '900' },
   guildChip:   { borderRadius: Radius.full, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 4 },
   tabBar:      { borderBottomWidth: 1, maxHeight: 44 },
-  tab:         { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm },
-  tabTxt:      { fontSize: 13, fontWeight: '700' },
+  tab:         { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
+  tabTxt:      { fontSize: 12, fontWeight: '700' },
   content:     { padding: Spacing.md, gap: Spacing.md, paddingBottom: 60 },
   card:        { borderRadius: Radius.xl, borderWidth: 1.5, padding: Spacing.lg,
                  alignItems: 'center', gap: Spacing.sm },
-  guildName:   { fontSize: FontSize.xl, fontWeight: '900', textAlign: 'center' },
+  guildName:   { fontSize: FontSize.lg, fontWeight: '900', textAlign: 'center' },
   guildDesc:   { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
   statsRow:    { flexDirection: 'row', gap: Spacing.xl, marginTop: Spacing.sm },
   statBox:     { alignItems: 'center' },
-  statVal:     { fontSize: 22, fontWeight: '900' },
+  statVal:     { fontSize: 20, fontWeight: '900' },
   statLbl:     { fontSize: 10, fontWeight: '600', marginTop: 2 },
   leaveBtn:    { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: Spacing.lg,
                  paddingVertical: 6, marginTop: Spacing.sm },

@@ -22,10 +22,15 @@ import { Colors, Spacing, Radius, FontSize, Shadow } from '../theme';
 import SimulatorCard from '../components/simulators/SimulatorCard';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { shuffleOptionsWithCorrectTracking } from '../lib/shuffleOptions';
+import FlagModal from '../components/FlagModal';
+import {
+  deleteBookmark as deleteDiaryBookmark,
+  getBookmarks as getDiaryBookmarks,
+  saveBookmark as saveDiaryBookmark,
+} from '../lib/diaryEngine';
 
 // ── Animated layer components ──────────────────────────────────
 import LessonXPBar, { type LessonMood } from '../components/LessonXPBar';
-import CharacterReaction, { type CharacterMood } from '../components/CharacterReaction';
 import CelebrationOverlay, { type CelebrationEventType } from '../components/CelebrationOverlay';
 import AIExplainer from '../components/AIExplainer';
 import LessonTransition from '../components/LessonTransition';
@@ -215,10 +220,10 @@ function NotesPanel({ visible, levelId, topic, onClose }: {
 }
 
 // ── Top bar (upgraded with LessonXPBar) ──────────────────────
-function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport,
+function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport, onFlag,
   totalXp, sessionXp, correctStreak, mood, onAIExplainer }: {
   progress:number; hearts:number; onExit:()=>void;
-  isBookmarked:boolean; onBookmark:()=>void; onNotes:()=>void; onExport:()=>void;
+  isBookmarked:boolean; onBookmark:()=>void; onNotes:()=>void; onExport:()=>void; onFlag:()=>void;
   totalXp: number; sessionXp: number; correctStreak: number; mood: LessonMood;
   onAIExplainer: () => void;
 }) {
@@ -248,6 +253,9 @@ function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, o
         </TouchableOpacity>
         <TouchableOpacity onPress={onNotes} hitSlop={{top:8,bottom:8,left:8,right:8}}>
           <Text style={{fontSize:20}}>📝</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onFlag} hitSlop={{top:8,bottom:8,left:8,right:8}}>
+          <Text style={{fontSize:18}}>🚩</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onExport} hitSlop={{top:8,bottom:8,left:8,right:8}}>
           <Text style={{fontSize:20}}>⬆️</Text>
@@ -683,7 +691,6 @@ export default function LessonScreen({
   const [termVisible, setTermVisible]         = useState(false);
   const [returnTopic, setReturnTopic]         = useState<string|null>(null);
   // ── Animated layer ─────────────────────────────────────────
-  const [characterMood, setCharacterMood]     = useState<CharacterMood>('idle');
   const [lessonMood, setLessonMood]           = useState<LessonMood>('idle');
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationType, setCelebType]       = useState<CelebrationEventType>('lesson');
@@ -694,6 +701,7 @@ export default function LessonScreen({
   // ── Lesson transition ──────────────────────────────────────
   const [showTransition, setShowTransition]   = useState(false);
   const [pendingLevelId, setPendingLevelId]   = useState<number|null>(null);
+  const [showFlag, setShowFlag]               = useState(false);
 
   const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
   const isBossLvl  = level?.mechanic === 'boss';
@@ -747,7 +755,7 @@ export default function LessonScreen({
   useEffect(()=>{ if(state?.answered) setShowFeedback(true); }, [state?.answered]);
 
   const resetMood = useCallback(() => {
-    setTimeout(() => { setCharacterMood('idle'); setLessonMood('idle'); }, 1500);
+    setTimeout(() => { setLessonMood('idle'); }, 1500);
   }, []);
 
   const handleNext = () => { setShowFeedback(false); advance(); };
@@ -816,12 +824,10 @@ export default function LessonScreen({
 
     setCelebType(isBossLvl ? 'boss' : 'lesson');
     setShowCelebration(true);
-    setCharacterMood('celebrating');
   };
 
   const handleCelebDismiss = () => {
     setShowCelebration(false);
-    setCharacterMood('idle');
     setCelebrationDone(true);
     // Play portal transition when there is a next lesson in sequence;
     // skip it and call onComplete directly at track/island end.
@@ -834,14 +840,12 @@ export default function LessonScreen({
   };
 
   const handleAnswerCorrect = () => {
-    setCharacterMood('correct');
     setLessonMood((state?.combo ?? 0) >= 2 ? 'streak' : 'correct');
     resetMood();
     answerCorrect();
   };
 
   const handleAnswerWrong = () => {
-    setCharacterMood('wrong');
     setLessonMood('wrong');
     resetMood();
     answerWrong();
@@ -849,8 +853,30 @@ export default function LessonScreen({
 
   const handleBookmark = async () => {
     const bm = await loadBookmarks();
-    if (isBookmarked) { await saveBookmarks(bm.filter(b=>b.levelId!==levelId)); setIsBookmarked(false); }
-    else { if(level) { bm.unshift({levelId,topic:level.topic,fact:level.fact,savedAt:Date.now()}); await saveBookmarks(bm); } setIsBookmarked(true); }
+    if (isBookmarked) {
+      await saveBookmarks(bm.filter(b=>b.levelId!==levelId));
+      const diaryBookmarks = await getDiaryBookmarks();
+      const matches = diaryBookmarks.filter(b => String(b.lessonId) === String(levelId));
+      await Promise.all(matches.map(b => deleteDiaryBookmark(b.id)));
+      setIsBookmarked(false);
+    } else {
+      if(level) {
+        bm.unshift({levelId,topic:level.topic,fact:level.fact,savedAt:Date.now()});
+        await saveBookmarks(bm);
+        await saveDiaryBookmark({
+          lessonId: String(levelId),
+          lessonTitle: level.topic,
+          field: String((user as any)?.activeFieldId ?? (user as any)?.active_field_id ?? 'general'),
+          level: String(levelId),
+          labId: String(labId ?? trackId ?? 'lesson'),
+          labTitle: String((user as any)?.currentTrackName ?? trackId ?? 'Lesson'),
+          lessonType: isBossLvl ? 'boss' : q?.type === 'simulator' ? 'simulator' : 'concept',
+          excerpt: String(level.fact ?? '').slice(0, 240),
+          note: q?.prompt ? String(q.prompt).slice(0, 180) : undefined,
+        });
+      }
+      setIsBookmarked(true);
+    }
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
   const handleTermPress = (link: TermLink) => { setActiveLink(link); setTermVisible(true); };
@@ -903,6 +929,7 @@ export default function LessonScreen({
         isBookmarked={isBookmarked}
         onBookmark={handleBookmark}
         onNotes={()=>setShowNotes(true)}
+        onFlag={()=>setShowFlag(true)}
         onExport={exportAll}
         totalXp={totalXp}
         sessionXp={sessionXp}
@@ -941,16 +968,6 @@ export default function LessonScreen({
         <FeedbackBar correct={state.lastCorrect??false} combo={state.combo} xp={sessionXp} explanation={q?.explanation} onNext={handleNext} isLast={isLast}/>
       )}
 
-      {/* Floating character — bottom-left, never blocks answers */}
-      <View style={sty.characterFloat} pointerEvents="none">
-        <CharacterReaction
-          mood={characterMood}
-          stage={(user as any)?.xp_stage ?? 1}
-          trackId={(user as any)?.currentTrackId ?? 'default'}
-          size={72}
-        />
-      </View>
-
       {showExplainer && (
         <AIExplainer
           conceptText={explainerText}
@@ -966,6 +983,14 @@ export default function LessonScreen({
 
       <TermLinkModal link={activeLink} visible={termVisible} onClose={()=>setTermVisible(false)} onGoToLesson={handleGoToLinked}/>
       <NotesPanel visible={showNotes} levelId={levelId} topic={level.topic} onClose={()=>setShowNotes(false)}/>
+      <FlagModal
+        visible={showFlag}
+        lessonId={String(levelId)}
+        lessonTitle={level.topic}
+        questionId={`${levelId}-${state.qIndex}`}
+        userId={String((user as any)?.id ?? 'local')}
+        onClose={() => setShowFlag(false)}
+      />
       <LessonTransition
         visible={showTransition}
         fromTopic={level.topic}
@@ -985,7 +1010,6 @@ export default function LessonScreen({
 // ── Styles ────────────────────────────────────────────────────
 const sty = StyleSheet.create({
   screen:        {flex:1,backgroundColor:Colors.bg},
-  characterFloat:{position:'absolute',bottom:80,left:12,zIndex:10,opacity:0.92},
   topBar:        {flexDirection:'row',alignItems:'center',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,backgroundColor:'#fff',borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
   exitBtn:       {padding:Spacing.sm},
   exitTxt:       {fontSize:18,color:Colors.textSoft},

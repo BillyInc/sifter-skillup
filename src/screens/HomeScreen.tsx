@@ -1,29 +1,41 @@
-/**
- * Sifter Skill_Up — Home Screen
- * Mobile: single-column scroll.
- * Web ≥768px: 3-panel dashboard grid matching the Sifter design mockup.
- */
-
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  SafeAreaView, Animated, RefreshControl,
-  Platform, useWindowDimensions, Easing,
+  Animated,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
-  AnimPreset, XP_DAILY_GOALS,
+  FontSize,
+  FontWeight,
+  Radius,
+  Shadow,
+  Spacing,
+  XP_DAILY_GOALS,
+  useTheme,
 } from '../theme';
 import { WorkerCharacter, TheBolt } from '../components/CharacterSystem';
-import { xpEngine, type XPSnapshot }       from '../lib/XPEngine';
-import { streakEngine, type StreakStatus }  from '../lib/StreakEngine';
-import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
+import { FieldArtwork, fieldColor } from '../components/artwork/FieldArtwork';
 import { useAuth } from '../hooks/useAuth';
+import { xpEngine, type XPSnapshot } from '../lib/XPEngine';
+import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
+import { findTrackById, getTrackHref, resolveTrackContext } from '../lib/trackContext';
 import {
-  WebShell, WebPageHeader, WebRow, WebCol, WebCard,
-  WebSectionLabel, WebStatTile, WebDivider, WebListRow, useIsWebWide, GRID_GAP,
+  GRID_GAP,
+  WebCard,
+  WebCol,
+  WebListRow,
+  WebPageHeader,
+  WebRow,
+  WebSectionLabel,
+  WebShell,
+  WebStatTile,
+  useIsWebWide,
 } from '../components/web/WebGrid';
 
 function getGreeting(): string {
@@ -33,123 +45,51 @@ function getGreeting(): string {
   return 'Good evening';
 }
 
-// ─── Active Track Hero ─────────────────────────────────────────────────────────
-// Shown when user has an active track — the living animated object of their field.
-// "Harry Potter painting" — always in motion. Replaces the static character section.
+function StreakBanner({ status }: { status: StreakStatus }) {
+  const { colors } = useTheme();
+  const atRisk = (status as any).isAtRisk;
+  if (!atRisk && status.streak < 2) return null;
 
-function ActiveTrackHero({
-  fieldId, trackName, onPress,
+  const backgroundColor = atRisk ? `${colors.orange}18` : `${colors.xpGreen}18`;
+  const color = atRisk ? colors.orange : colors.xpGreen;
+  const msg = atRisk
+    ? `Streak at risk. ${(((status as any).hoursUntilLoss ?? 0) as number).toFixed(0)}h left to save it.`
+    : `${status.streak}-day streak active. Keep it moving.`;
+
+  return (
+    <View style={[styles.streakBanner, { backgroundColor }]}>
+      <Text style={[styles.streakBannerText, { color }]}>{msg}</Text>
+    </View>
+  );
+}
+
+function XPProgressBar({
+  progress,
+  color,
+  dailyXp,
+  dailyGoalTarget,
 }: {
-  fieldId: string; trackName: string; onPress: () => void;
-}) {
-  const { colors }  = useTheme();
-  const C           = fieldColor(fieldId);
-  const emoji       = fieldEmoji(fieldId);
-  const pulseAnim   = useRef(new Animated.Value(1)).current;
-  const glowAnim    = useRef(new Animated.Value(0)).current;
-  const entranceY   = useRef(new Animated.Value(20)).current;
-  const entranceO   = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    // Entrance
-    Animated.parallel([
-      Animated.spring(entranceY, { toValue: 0, tension: 60, friction: 10, useNativeDriver: true }),
-      Animated.timing(entranceO, { toValue: 1, duration: 400, useNativeDriver: true }),
-    ]).start();
-    // Glow pulse on the frame
-    Animated.loop(Animated.sequence([
-      Animated.timing(glowAnim, { toValue: 1, duration: 1200, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
-      Animated.timing(glowAnim, { toValue: 0.25, duration: 1200, easing: Easing.inOut(Easing.ease), useNativeDriver: false }),
-    ])).start();
-  }, [fieldId]);
-
-  const handlePressIn  = () => Animated.spring(pulseAnim, { toValue: 0.97, tension: 80, friction: 5, useNativeDriver: true }).start();
-  const handlePressOut = () => Animated.spring(pulseAnim, { toValue: 1.0,  tension: 80, friction: 5, useNativeDriver: true }).start();
-
-  return (
-    <Animated.View style={[
-      activeHero.wrap,
-      { opacity: entranceO, transform: [{ translateY: entranceY }, { scale: pulseAnim }] },
-    ]}>
-      <TouchableOpacity
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onPress={onPress}
-        activeOpacity={1}
-      >
-        {/* Animated glow border */}
-        <Animated.View style={[activeHero.glowBorder, {
-          borderColor: glowAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [C + '30', C + '90'],
-          }) as any,
-        }]} />
-
-        {/* Background gradient */}
-        <View style={[activeHero.card, { backgroundColor: colors.card }]}>
-
-          {/* Field label pill */}
-          <View style={[activeHero.fieldPill, { backgroundColor: C + '20', borderColor: C + '50' }]}>
-            <Text style={activeHero.fieldPillEmoji}>{emoji}</Text>
-            <Text style={[activeHero.fieldPillText, { color: C }]}>Your Active Field</Text>
-            <View style={[activeHero.liveIndicator, { backgroundColor: C }]} />
-          </View>
-
-          {/* Artwork fills the majority of the card */}
-          <View style={activeHero.artworkContainer}>
-            <FieldArtwork fieldId={fieldId} size={180} />
-          </View>
-
-          {/* Track identity */}
-          <View style={activeHero.identity}>
-            <View style={{ flex: 1 }}>
-              <Text style={[activeHero.trackName, { color: '#FFF' }]} numberOfLines={1}>{trackName}</Text>
-              <Text style={[activeHero.tapHint, { color: C + '99' }]}>Tap to continue →</Text>
-            </View>
-            <View style={[activeHero.resumeBtn, { backgroundColor: C }]}>
-              <Text style={activeHero.resumeBtnText}>Resume</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </Animated.View>
-  );
-}
-
-function StatCard({ label, value, sub, color, emoji, onPress }: {
-  label: string; value: string; sub?: string; color: string; emoji: string; onPress?: () => void;
+  progress: number;
+  color: string;
+  dailyXp: number;
+  dailyGoalTarget: number;
 }) {
   const { colors } = useTheme();
-  const scaleAnim  = useRef(new Animated.Value(1)).current;
-  return (
-    <Animated.View style={{ transform: [{ scale: scaleAnim }], flex: 1 }}>
-      <TouchableOpacity
-        onPressIn={() => Animated.timing(scaleAnim, { toValue: 0.96, ...AnimPreset.tap }).start()}
-        onPressOut={() => Animated.timing(scaleAnim, { toValue: 1, duration: 150, useNativeDriver: true }).start()}
-        onPress={onPress} activeOpacity={1}
-        style={[styles.statCard, { backgroundColor: colors.card, borderColor: color + '30' }, Shadow.sm]}
-      >
-        <Text style={styles.statEmoji}>{emoji}</Text>
-        <Text style={[styles.statValue, { color }]}>{value}</Text>
-        <Text style={[styles.statLabel, { color: colors.textSoft }]}>{label}</Text>
-        {sub && <Text style={[styles.statSub, { color: colors.textMuted }]}>{sub}</Text>}
-      </TouchableOpacity>
-    </Animated.View>
-  );
-}
-
-function XPProgressBar({ progress, color, dailyXp, dailyGoalTarget }: {
-  progress: number; color: string; dailyXp: number; dailyGoalTarget: number;
-}) {
-  const { colors } = useTheme();
-  const fillAnim      = useRef(new Animated.Value(0)).current;
+  const fillAnim = useRef(new Animated.Value(0)).current;
   const dailyFillAnim = useRef(new Animated.Value(0)).current;
+
   useEffect(() => {
-    Animated.timing(fillAnim,      { toValue: progress,                               duration: 700, useNativeDriver: false }).start();
-    Animated.timing(dailyFillAnim, { toValue: Math.min(1, dailyXp / dailyGoalTarget), duration: 600, useNativeDriver: false }).start();
-  }, [progress, dailyXp]);
-  const w  = fillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
-  const dw = dailyFillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
+    Animated.timing(fillAnim, { toValue: progress, duration: 650, useNativeDriver: false }).start();
+    Animated.timing(dailyFillAnim, {
+      toValue: Math.min(1, dailyXp / Math.max(1, dailyGoalTarget)),
+      duration: 650,
+      useNativeDriver: false,
+    }).start();
+  }, [dailyFillAnim, dailyGoalTarget, dailyXp, fillAnim, progress]);
+
+  const width = fillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
+  const dailyWidth = dailyFillAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] });
+
   return (
     <View style={{ gap: 6 }}>
       <View style={styles.progressLabelRow}>
@@ -157,27 +97,184 @@ function XPProgressBar({ progress, color, dailyXp, dailyGoalTarget }: {
         <Text style={[styles.progressValue, { color }]}>{Math.round(progress * 100)}%</Text>
       </View>
       <View style={[styles.progressTrack, { backgroundColor: colors.bgSecondary }]}>
-        <Animated.View style={[styles.progressFill, { backgroundColor: color, width: w }]} />
+        <Animated.View style={[styles.progressFill, { backgroundColor: color, width }]} />
       </View>
       <View style={styles.progressLabelRow}>
         <Text style={[styles.progressLabel, { color: colors.textSoft }]}>Daily Goal</Text>
         <Text style={[styles.progressValue, { color: colors.xpGreen }]}>{dailyXp} / {dailyGoalTarget} XP</Text>
       </View>
       <View style={[styles.progressTrack, { backgroundColor: colors.bgSecondary }]}>
-        <Animated.View style={[styles.progressFill, { backgroundColor: colors.xpGreen, width: dw }]} />
+        <Animated.View style={[styles.progressFill, { backgroundColor: colors.xpGreen, width: dailyWidth }]} />
       </View>
     </View>
   );
 }
 
-function QuickAction({ emoji, label, sub, color, onPress }: {
-  emoji: string; label: string; sub: string; color: string; onPress: () => void;
+function WebMiniChart({ color, values }: { color: string; values: number[] }) {
+  const max = Math.max(...values, 1);
+  return (
+    <View style={styles.miniChart}>
+      {values.map((v, i) => (
+        <View key={`${color}-${i}`} style={styles.miniChartBarWrap}>
+          <View
+            style={[
+              styles.miniChartBar,
+              {
+                height: `${(v / max) * 100}%` as any,
+                backgroundColor: i === values.length - 1 ? color : `${color}66`,
+              },
+            ]}
+          />
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function ReferenceBadge({ label, color }: { label: string; color: string }) {
+  return (
+    <View style={[styles.referenceBadge, { backgroundColor: `${color}18`, borderColor: `${color}35` }]}>
+      <Text style={[styles.referenceBadgeText, { color }]}>{label}</Text>
+    </View>
+  );
+}
+
+function OverviewTrackCard({
+  emoji,
+  name,
+  accentColor,
+  summary,
+  points,
+  onPress,
+}: {
+  emoji: string;
+  name: string;
+  accentColor: string;
+  summary: string;
+  points: string[];
+  onPress: () => void;
 }) {
   const { colors } = useTheme();
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.85}
-      style={[styles.quickAction, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <View style={[styles.quickActionIcon, { backgroundColor: color + '18' }]}>
+    <WebCard accentBar accentColor={accentColor} onPress={onPress} style={{ height: '100%' }}>
+      <View style={styles.webTrackHeader}>
+        <Text style={styles.webTrackEmoji}>{emoji}</Text>
+        <Text style={[styles.webTrackName, { color: colors.text }]}>{name}</Text>
+        <Text style={[styles.webTrackArrow, { color: colors.textMuted }]}>›</Text>
+      </View>
+      <Text style={[styles.overviewTrackSummary, { color: colors.textSoft }]}>{summary}</Text>
+      <WebMiniChart color={accentColor} values={[12, 24, 21, 38, 44, 57, 63]} />
+      <View style={{ marginTop: 10, gap: 4 }}>
+        {points.map((point) => (
+          <Text key={point} style={[styles.webTrackKey, { color: colors.textSoft }]}>• {point}</Text>
+        ))}
+      </View>
+      <TouchableOpacity onPress={onPress} style={[styles.webTrackBtn, { backgroundColor: accentColor }]}>
+        <Text style={styles.webTrackBtnText}>Open Track</Text>
+      </TouchableOpacity>
+    </WebCard>
+  );
+}
+
+function TrackHeroCard({
+  accentColor,
+  artFieldId,
+  eyebrow,
+  title,
+  summary,
+  focusAreas,
+  continueLabel,
+  chartValues,
+  onContinue,
+}: {
+  accentColor: string;
+  artFieldId: string;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  focusAreas: string[];
+  continueLabel: string;
+  chartValues: number[];
+  onContinue: () => void;
+}) {
+  const { colors } = useTheme();
+
+  return (
+    <WebCard noPad style={{ overflow: 'hidden' }}>
+      <View style={[styles.heroPanel, { backgroundColor: colors.card }]}>
+        <View style={styles.heroPanelCopy}>
+          <ReferenceBadge label={eyebrow} color={accentColor} />
+          <Text style={[styles.heroPanelTitle, { color: colors.text }]}>{title}</Text>
+          <Text style={[styles.heroPanelSummary, { color: colors.textSoft }]}>{summary}</Text>
+          <View style={styles.heroPanelTags}>
+            {focusAreas.map((item) => (
+              <View key={item} style={[styles.heroTag, { backgroundColor: colors.bgSecondary }]}>
+                <Text style={[styles.heroTagText, { color: colors.textSoft }]}>{item}</Text>
+              </View>
+            ))}
+          </View>
+          <TouchableOpacity onPress={onContinue} style={[styles.heroPanelBtn, { backgroundColor: accentColor }]}>
+            <Text style={styles.heroPanelBtnText}>{continueLabel}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={[styles.heroPanelVisual, { backgroundColor: `${accentColor}0D` }]}>
+          <FieldArtwork fieldId={artFieldId} size={154} />
+          <View style={[styles.heroPanelMiniCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+            <Text style={[styles.heroPanelMiniLabel, { color: colors.textMuted }]}>Momentum</Text>
+            <WebMiniChart color={accentColor} values={chartValues} />
+          </View>
+        </View>
+      </View>
+    </WebCard>
+  );
+}
+
+function StatCard({
+  emoji,
+  label,
+  value,
+  sub,
+  color,
+}: {
+  emoji: string;
+  label: string;
+  value: string;
+  sub?: string;
+  color: string;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: `${color}30` }, Shadow.sm]}>
+      <Text style={styles.statEmoji}>{emoji}</Text>
+      <Text style={[styles.statValue, { color }]}>{value}</Text>
+      <Text style={[styles.statLabel, { color: colors.textSoft }]}>{label}</Text>
+      {sub ? <Text style={[styles.statSub, { color: colors.textMuted }]}>{sub}</Text> : null}
+    </View>
+  );
+}
+
+function QuickAction({
+  emoji,
+  label,
+  sub,
+  color,
+  onPress,
+}: {
+  emoji: string;
+  label: string;
+  sub: string;
+  color: string;
+  onPress: () => void;
+}) {
+  const { colors } = useTheme();
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.85}
+      style={[styles.quickAction, { backgroundColor: colors.card, borderColor: colors.border }]}
+    >
+      <View style={[styles.quickActionIcon, { backgroundColor: `${color}18` }]}>
         <Text style={styles.quickActionEmoji}>{emoji}</Text>
       </View>
       <View style={{ flex: 1 }}>
@@ -189,185 +286,238 @@ function QuickAction({ emoji, label, sub, color, onPress }: {
   );
 }
 
-function StreakBanner({ status }: { status: StreakStatus }) {
-  const { colors } = useTheme();
-  if (!(status as any).isAtRisk && status.streak < 2) return null;
-  const bg  = (status as any).isAtRisk ? colors.orange + '18' : colors.xpGreen + '18';
-  const fg  = (status as any).isAtRisk ? colors.orange : colors.xpGreen;
-  const msg = (status as any).isAtRisk
-    ? `⚠️ Streak at risk! ${status.hoursUntilLoss?.toFixed(0)}h left — do a lesson now.`
-    : `🔥 ${status.streak}-day streak! Keep it up.`;
-  return (
-    <View style={[styles.streakBanner, { backgroundColor: bg }]}>
-      <Text style={[styles.streakBannerText, { color: fg }]}>{msg}</Text>
-    </View>
-  );
-}
-
-function WebMiniChart({ color, values }: { color: string; values: number[] }) {
-  const max = Math.max(...values);
-  return (
-    <View style={styles.miniChart}>
-      {values.map((v, i) => (
-        <View key={i} style={styles.miniChartBarWrap}>
-          <View style={[
-            styles.miniChartBar,
-            { height: `${(v / max) * 100}%` as any, backgroundColor: i === values.length - 1 ? color : color + '50' },
-          ]} />
-        </View>
-      ))}
-    </View>
-  );
-}
-
 export default function HomeScreen() {
-  const router      = useRouter();
-  const { colors }  = useTheme();
-  const { user }    = useAuth();
-  const isWebWide   = useIsWebWide();
+  const router = useRouter();
+  const { colors } = useTheme();
+  const { user, updateActiveField } = useAuth();
+  const isWebWide = useIsWebWide();
   const go = useCallback((href: string) => router.push(href as any), [router]);
+  const trackContext = useMemo(() => resolveTrackContext(user), [user]);
 
-  // Active track — drives the animated hero on home
-  const activeFieldId  = user?.activeFieldId  ?? user?.currentTrackId?.split('-').slice(0, -1).join('-') ?? null;
-  const activeTrackName = user?.currentTrackName ?? user?.currentTrackId ?? null;
-
-  const [xp,     setXp]     = useState<XPSnapshot | null>(null);
+  const [xp, setXp] = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const headerAnim  = useRef(new Animated.Value(0)).current;
+  const headerAnim = useRef(new Animated.Value(0)).current;
   const contentAnim = useRef(new Animated.Value(0)).current;
 
   const loadData = useCallback(async () => {
     const [xpSnap, streakSnap] = await Promise.all([xpEngine.snapshot(), streakEngine.status()]);
-    setXp(xpSnap); setStreak(streakSnap);
+    setXp(xpSnap);
+    setStreak(streakSnap);
   }, []);
 
   useFocusEffect(useCallback(() => {
-    loadData();
-    headerAnim.setValue(0); contentAnim.setValue(0);
+    void loadData();
+    headerAnim.setValue(0);
+    contentAnim.setValue(0);
     Animated.sequence([
-      Animated.timing(headerAnim,  { toValue: 1, duration: 450, useNativeDriver: true }),
-      Animated.timing(contentAnim, { toValue: 1, duration: 350, useNativeDriver: true }),
+      Animated.timing(headerAnim, { toValue: 1, duration: 420, useNativeDriver: true }),
+      Animated.timing(contentAnim, { toValue: 1, duration: 320, useNativeDriver: true }),
     ]).start();
-  }, []));
+  }, [contentAnim, headerAnim, loadData]));
 
-  const onRefresh = async () => { setRefreshing(true); await loadData(); setRefreshing(false); };
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  };
 
-  const stage       = xp?.stage.stage ?? 1;
-  const accentColor = colors.accent;
-  const dailyGoal   = XP_DAILY_GOALS[xp?.dailyGoalKey ?? 'regular']?.xp ?? 20;
+  const stage = xp?.stage.stage ?? 1;
+  const dailyGoal = XP_DAILY_GOALS[xp?.dailyGoalKey ?? 'regular']?.xp ?? 20;
+  const accentColor = trackContext.color || colors.accent;
+  const continueHref = trackContext.continueHref || '/(tabs)/fields';
 
-  // ── WEB LAYOUT ──────────────────────────────────────────────────────────────
+  const openTrack = useCallback(async (trackId: string) => {
+    const track = findTrackById(trackId);
+    if (!track) {
+      go('/(tabs)/fields');
+      return;
+    }
+
+    try {
+      await updateActiveField(track.fieldId, fieldColor(track.fieldId), track.id, track.name);
+    } catch {
+      // Best effort only.
+    }
+
+    go(getTrackHref(track));
+  }, [go, updateActiveField]);
 
   if (isWebWide) {
+    const overviewTracks = [
+      {
+        id: 'quant-trader',
+        emoji: '📈',
+        name: 'Quant Track',
+        color: '#6366f1',
+        summary: 'Math-heavy trading, research, and execution infrastructure.',
+        points: ['Strategy labs', 'Backtests', 'Market microstructure'],
+      },
+      {
+        id: 'supply-chain-analyst',
+        emoji: '🏭',
+        name: 'Supply Chain Track',
+        color: '#10b981',
+        summary: 'Forecasting, inventory, logistics, and operations decision-making.',
+        points: ['Planning', 'Flow control', 'Operations analytics'],
+      },
+      {
+        id: 'onchain-analyst',
+        emoji: '🔍',
+        name: 'Onchain Track',
+        color: '#3b82f6',
+        summary: 'Protocol intelligence, smart-money analysis, and wallet tracing.',
+        points: ['Wallet flows', 'Protocol maps', 'On-chain signals'],
+      },
+      {
+        id: 'starknet-defi-navigator',
+        emoji: '⚡',
+        name: 'Starknet Track',
+        color: '#ec4899',
+        summary: 'Live Starknet wallet actions, labs, and on-chain execution practice.',
+        points: ['Sepolia practice', 'Wallet actions', 'Live labs'],
+      },
+    ];
+
     return (
       <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
         <WebShell>
           <WebPageHeader
-            title={`${getGreeting()} — Your desk awaits.`}
-            subtitle="Master the markets with elite skills and real portfolio work."
+            title={trackContext.mode === 'track' ? `${trackContext.trackName} Workspace` : `${getGreeting()} — Your desk awaits.`}
+            subtitle={trackContext.mode === 'track' ? trackContext.tagline : 'Master the markets with elite skills and real portfolio work.'}
             accentColor={accentColor}
-            right={
+            right={(
               <TouchableOpacity
                 onPress={() => go('/(tabs)/profile')}
                 style={[styles.webBoltBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
               >
                 <TheBolt size={32} animate />
-                <Text style={[styles.webBoltLabel, { color: colors.accent }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
+                <Text style={[styles.webBoltLabel, { color: accentColor }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
               </TouchableOpacity>
-            }
+            )}
           />
 
-          {streak && <StreakBanner status={streak} />}
+          {streak ? <StreakBanner status={streak} /> : null}
 
-          {/* Row 1: Progress (2) + Stats (1) */}
           <WebRow>
             <WebCol weight={2}>
-              <WebCard accentBar accentColor={accentColor}
-                title="My Progress"
-                titleRight={
-                  <View style={[styles.webBadge, { backgroundColor: accentColor + '18' }]}>
-                    <Text style={[styles.webBadgeText, { color: accentColor }]}>Stage {stage}/8</Text>
-                  </View>
-                }
-              >
-                <View style={styles.webCharRow}>
-                  {activeFieldId ? (
-                    /* Returning user — living field artwork */
-                    <View style={{ alignItems: 'center', marginRight: 16 }}>
-                      <FieldArtwork fieldId={activeFieldId} size={120} />
-                      <View style={[{ paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, marginTop: 6, backgroundColor: fieldColor(activeFieldId) + '20', borderWidth: 1, borderColor: fieldColor(activeFieldId) + '50' }]}>
-                        <Text style={{ fontSize: 10, color: fieldColor(activeFieldId), fontWeight: '700' }}>
-                          {fieldEmoji(activeFieldId)} {activeTrackName ?? 'Active Track'}
-                        </Text>
-                      </View>
-                    </View>
-                  ) : (
+              {trackContext.mode === 'track' ? (
+                <TrackHeroCard
+                  accentColor={accentColor}
+                  artFieldId={trackContext.artFieldId}
+                  eyebrow={trackContext.heroEyebrow}
+                  title={trackContext.heroTitle}
+                  summary={trackContext.heroSummary}
+                  focusAreas={trackContext.focusAreas}
+                  continueLabel={trackContext.continueLabel}
+                  chartValues={trackContext.chartValues}
+                  onContinue={() => go(continueHref)}
+                />
+              ) : (
+                <WebCard accentBar accentColor={colors.accent} title="My Progress">
+                  <View style={styles.webProgressCard}>
                     <WorkerCharacter stage={stage} trackId="crypto" size={88} animate mood="neutral" />
-                  )}
-                  <View style={{ flex: 1, paddingLeft: 8 }}>
-                    <Text style={[styles.webStageName, { color: accentColor }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
-                    <Text style={[styles.webStageDesc, { color: colors.textSoft }]}>
-                      {xp?.stage.description ?? 'Just starting out. Empty desk, full potential.'}
-                    </Text>
-                    {xp && <XPProgressBar progress={xp.progress} color={accentColor} dailyXp={xp.dailyXp} dailyGoalTarget={dailyGoal} />}
+                    <View style={{ flex: 1 }}>
+                      <Text style={[styles.webStageName, { color: colors.accent }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
+                      <Text style={[styles.webStageDesc, { color: colors.textSoft }]}>
+                        {xp?.stage.description ?? 'Just starting out. Empty desk, full potential.'}
+                      </Text>
+                      {xp ? (
+                        <XPProgressBar
+                          progress={xp.progress}
+                          color={colors.accent}
+                          dailyXp={xp.dailyXp}
+                          dailyGoalTarget={dailyGoal}
+                        />
+                      ) : null}
+                    </View>
+                    <WebMiniChart color={colors.accent} values={[20, 35, 28, 50, 45, 60, 72]} />
                   </View>
-                  <WebMiniChart color={accentColor} values={[20, 35, 28, 50, 45, 60, xp?.dailyXp ?? 30]} />
-                </View>
-              </WebCard>
+                </WebCard>
+              )}
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Today's Stats" accentBar accentColor={colors.xpGreen}>
-                <WebStatTile emoji="🔥" label="Day Streak"  value={`${streak?.streak ?? 0}`}        sub={streak?.completedToday ? 'Done today ✓' : 'Needs a lesson'} color={colors.orange} />
-                <WebStatTile emoji="⚡" label="Total XP"    value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to next stage`}                color={accentColor} />
-                <WebStatTile emoji="🎯" label="Daily XP"    value={`${xp?.dailyXp ?? 0}`}           sub={`Goal: ${dailyGoal} XP`}                                    color={colors.xpGreen} />
-                <WebStatTile emoji="🏆" label="Stage"       value={`${stage} / 8`}                  sub={xp?.stage.name}                                             color={colors.gold} />
+              <WebCard title={trackContext.mode === 'track' ? 'Track Status' : "Today's Stats"} accentBar accentColor={colors.xpGreen}>
+                <WebStatTile emoji="🔥" label="Day Streak" value={`${streak?.streak ?? 0}`} sub={streak?.completedToday ? 'Done today ✓' : 'Needs a lesson'} color={colors.orange} />
+                <WebStatTile emoji="⚡" label="Total XP" value={`${xp?.totalXp ?? 0}`} sub={`${xp?.xpToNextStage ?? '—'} to next stage`} color={accentColor} />
+                <WebStatTile
+                  emoji="🎯"
+                  label={trackContext.mode === 'track' ? (trackContext.stats[0]?.label ?? 'Focus') : 'Daily XP'}
+                  value={trackContext.mode === 'track' ? (trackContext.stats[0]?.value ?? 'Ready') : `${xp?.dailyXp ?? 0}`}
+                  sub={trackContext.mode === 'track' ? (trackContext.stats[1]?.value ?? trackContext.tagline) : `Goal: ${dailyGoal} XP`}
+                  color={trackContext.mode === 'track' ? accentColor : colors.xpGreen}
+                />
+                <WebStatTile
+                  emoji="🏆"
+                  label={trackContext.mode === 'track' ? (trackContext.stats[2]?.label ?? 'Mode') : 'Stage'}
+                  value={trackContext.mode === 'track' ? (trackContext.stats[2]?.value ?? 'Track view') : `${stage} / 8`}
+                  sub={trackContext.mode === 'track' ? (trackContext.stats[3]?.value ?? trackContext.worldName) : xp?.stage.name}
+                  color={colors.gold}
+                />
               </WebCard>
             </WebCol>
           </WebRow>
 
-          {/* Row 2: 3-col career tracks */}
-          <WebSectionLabel label="Career Tracks Overview" action="Explore All →" onAction={() => go('/(tabs)/fields')} />
-          <WebRow cols={3}>
-            {[
-              { id: 'quant',   name: 'Quant Track',        emoji: '📊', color: colors.accent, keys: ['Derivatives Trading', 'Sharpe Ratio Analysis', 'Algo Strategy Building'] },
-              { id: 'supply',  name: 'Supply Chain Track',  emoji: '🔗', color: colors.green,  keys: ['Supply Coin Trading', 'Chain Structures', 'Inventory Optimisation'] },
-              { id: 'onchain', name: 'Onchain Track',       emoji: '🔍', color: colors.orange, keys: ['Wallet Analytics', 'Protocol Research', 'On-chain Trading Tracks'] },
-            ].map(track => (
-              <WebCard key={track.id} accentBar accentColor={track.color} onPress={() => go('/(tabs)/fields')} style={{ height: '100%' }}>
-                <View style={styles.webTrackHeader}>
-                  <Text style={styles.webTrackEmoji}>{track.emoji}</Text>
-                  <Text style={[styles.webTrackName, { color: colors.text }]}>{track.name}</Text>
-                  <Text style={[styles.webTrackArrow, { color: colors.textMuted }]}>›</Text>
-                </View>
-                <WebMiniChart color={track.color} values={[10, 25, 20, 40, 35, 55, 50]} />
-                <View style={{ marginTop: 10, gap: 4 }}>
-                  {track.keys.map(k => <Text key={k} style={[styles.webTrackKey, { color: colors.textSoft }]}>✓ {k}</Text>)}
-                </View>
-                <TouchableOpacity
-                  onPress={() => go('/(tabs)/map/island')}
-                  style={[styles.webTrackBtn, { backgroundColor: track.color }]}
-                >
-                  <Text style={styles.webTrackBtnText}>Continue Track ›</Text>
-                </TouchableOpacity>
-              </WebCard>
-            ))}
-          </WebRow>
+          {trackContext.mode === 'track' ? (
+            <>
+              <WebSectionLabel label={trackContext.challengeTitle} action="Switch Track →" onAction={() => go('/(tabs)/fields')} />
+              <WebRow>
+                <WebCol weight={2}>
+                  <WebCard accentBar accentColor={accentColor}>
+                    <Text style={[styles.trackFeatureTitle, { color: colors.text }]}>{trackContext.challengeTitle}</Text>
+                    <Text style={[styles.trackFeatureSummary, { color: colors.textSoft }]}>{trackContext.challengeSummary}</Text>
+                    <View style={styles.trackFeatureGrid}>
+                      {trackContext.focusAreas.map((item, index) => (
+                        <View key={item} style={[styles.trackFeatureItem, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                          <Text style={[styles.trackFeatureIndex, { color: accentColor }]}>{`0${index + 1}`}</Text>
+                          <Text style={[styles.trackFeatureItemText, { color: colors.textSoft }]}>{item}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </WebCard>
+                </WebCol>
+                <WebCol weight={1}>
+                  <WebCard title="Continue" accentBar accentColor={accentColor}>
+                    <WebListRow icon={trackContext.emoji} title={trackContext.trackName} sub={trackContext.tagline} onPress={() => go(continueHref)} />
+                    <WebListRow icon="🗺️" title={trackContext.worldName} sub={trackContext.shellSubtitle} onPress={() => go(continueHref)} />
+                    <TouchableOpacity onPress={() => go(continueHref)} style={[styles.primaryActionBtn, { backgroundColor: accentColor }]}>
+                      <Text style={styles.primaryActionBtnText}>{trackContext.continueLabel}</Text>
+                    </TouchableOpacity>
+                  </WebCard>
+                </WebCol>
+              </WebRow>
+            </>
+          ) : (
+            <>
+              <WebSectionLabel label="Career Tracks Overview" action="Explore All →" onAction={() => go('/(tabs)/fields')} />
+              <WebRow cols={2}>
+                {overviewTracks.map((track) => (
+                  <OverviewTrackCard
+                    key={track.id}
+                    emoji={track.emoji}
+                    name={track.name}
+                    accentColor={track.color}
+                    summary={track.summary}
+                    points={track.points}
+                    onPress={() => void openTrack(track.id)}
+                  />
+                ))}
+              </WebRow>
+            </>
+          )}
 
-          {/* Row 3: Guilds (2) + Streak & Challenges (1) */}
           <WebRow>
             <WebCol weight={2}>
-              <WebCard title="Guilds" accentBar accentColor={colors.accent}>
-                <WebListRow icon="🛡️" title="Alpha Seekers Guild" sub="Active · 1 hr ago" onPress={() => go('/(tabs)/guild')} />
+              <WebCard title={trackContext.mode === 'track' ? `${trackContext.trackName} Guilds` : 'Guilds'} accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accent}>
+                <WebListRow icon="🛡️" title={trackContext.mode === 'track' ? `${trackContext.trackName} Circle` : 'Alpha Seekers Guild'} sub="Active · 1 hr ago" onPress={() => go('/(tabs)/guild')} />
                 <View style={[styles.webDiscussionCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
                   <Text style={[styles.webDiscTitle, { color: colors.textMuted }]}>ACTIVE DISCUSSIONS</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>💬 Machine Learning in Alpha Generation</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>💬 Optimal Portfolio Rebalancing Frequency</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>💬 {trackContext.mode === 'track' ? `${trackContext.trackName} tactics and next steps` : 'Machine Learning in Alpha Generation'}</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>💬 {trackContext.mode === 'track' ? `How to progress faster inside ${trackContext.trackName}` : 'Optimal Portfolio Rebalancing Frequency'}</Text>
                 </View>
-                <WebListRow icon="⚡" title="Upcoming Challenges" sub="Evaluating HFT latency effects with your guild…"
-                  badge={3} badgeColor={colors.orange} onPress={() => go('/(tabs)/guild')} />
+                <WebListRow icon="⚡" title="Upcoming Challenges" sub="Track-specific challenge prompts and guild tasks" badge={3} badgeColor={colors.orange} onPress={() => go('/(tabs)/guild')} />
               </WebCard>
             </WebCol>
 
@@ -376,51 +526,64 @@ export default function HomeScreen() {
                 <Text style={[styles.webStreakLabel, { color: colors.textMuted }]}>ACTIVE STREAK</Text>
                 <Text style={[styles.webStreakNum, { color: colors.orange }]}>{streak?.streak ?? 0} Days</Text>
                 <Text style={[styles.webStreakSub, { color: colors.textSoft }]}>
-                  {streak?.completedToday ? '✅ Lesson done today' : '📚 Complete a lesson to extend'}
+                  {streak?.completedToday ? 'Lesson completed today.' : 'Complete a lesson to extend it.'}
                 </Text>
               </WebCard>
               <WebCard title="Upcoming Challenges" accentBar accentColor={colors.xpGreen}>
-                <WebListRow icon="🏆" title="Vol Arb Challenge"    sub="Trading Competition"    onPress={() => go('/(tabs)/guild')} />
-                <WebListRow icon="📈" title="HFT Latency Analysis" sub="Research · 3 days left" badge="3d" badgeColor={colors.accent} onPress={() => go('/(tabs)/guild')} />
+                <WebListRow icon="🏆" title={trackContext.mode === 'track' ? `${trackContext.trackName} challenge board` : 'Vol Arb Challenge'} sub={trackContext.mode === 'track' ? trackContext.challengeSummary : 'Trading competition'} onPress={() => go('/(tabs)/guild')} />
+                <WebListRow icon="📈" title="Feed + Guild Signals" sub="Track news, jobs, and collaboration" badge="Live" badgeColor={accentColor} onPress={() => go('/(tabs)/feed')} />
               </WebCard>
             </WebCol>
           </WebRow>
 
-          {/* Row 4: Portfolio chart (2) + Quick Actions (1) */}
           <WebRow>
             <WebCol weight={2}>
               <WebCard
-                title="Portfolio & XP"
-                titleRight={<View style={[styles.webBadge, { backgroundColor: colors.xpGreen + '18' }]}><Text style={[styles.webBadgeText, { color: colors.xpGreen }]}>{artifactsEarned(xp?.totalXp ?? 0)} artifacts earned</Text></View>}
-                accentBar accentColor={colors.xpGreen}
+                title={trackContext.mode === 'track' ? `${trackContext.trackName} Portfolio & XP` : 'Portfolio & XP'}
+                titleRight={<ReferenceBadge label={`${Math.max(1, Math.floor((xp?.totalXp ?? 0) / 120))} artifacts earned`} color={colors.xpGreen} />}
+                accentBar
+                accentColor={colors.xpGreen}
               >
                 <View style={[styles.webChartArea, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-                  <WebMiniChart color={colors.xpGreen} values={[500, 700, 650, 900, 850, 1100, 1050, 1300, 1250, 1500, 1450, 1700]} />
+                  <WebMiniChart
+                    color={trackContext.mode === 'track' ? accentColor : colors.xpGreen}
+                    values={trackContext.mode === 'track' ? trackContext.chartValues : [500, 700, 650, 900, 850, 1100, 1050, 1300, 1250, 1500, 1450, 1700]}
+                  />
                 </View>
                 <View style={styles.webChartMetrics}>
                   <View>
-                    <Text style={[styles.webMetricVal, { color: colors.text }]}>{xp?.totalXp ?? 43534} XP</Text>
+                    <Text style={[styles.webMetricVal, { color: colors.text }]}>{xp?.totalXp ?? 0} XP</Text>
                     <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Total XP</Text>
                   </View>
                   <View>
-                    <Text style={[styles.webMetricVal, { color: colors.xpGreen }]}>{platformsConnected(user?.settings)}</Text>
-                    <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Platforms connected</Text>
+                    <Text style={[styles.webMetricVal, { color: accentColor }]}>{trackContext.trackName}</Text>
+                    <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Current Track</Text>
                   </View>
                 </View>
               </WebCard>
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Quick Actions" accentBar accentColor={colors.accent}>
+              <WebCard title="Quick Actions" accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accent}>
                 {[
-                  { emoji: '🏝️', label: 'Continue Learning', sub: 'Resume island journey', route: '/(tabs)/map/island' },
-                  { emoji: '🌐', label: 'Explore Tracks',    sub: 'Browse career fields',  route: '/(tabs)/fields' },
-                  { emoji: '📰', label: 'Open Feed',         sub: 'News, data, jobs',      route: '/(tabs)/feed' },
-                  { emoji: '💼', label: 'Portfolio & XP',    sub: 'Tasks, artifacts, pushes', route: '/(tabs)/portfolio' },
-                ].map(a => (
-                  <WebListRow key={a.route} icon={a.emoji} title={a.label} sub={a.sub}
-                    onPress={() => go(a.route)}
-                    right={<Text style={{ color: colors.textMuted, fontSize: 16 }}>›</Text>} />
+                  {
+                    emoji: '🏝️',
+                    label: trackContext.mode === 'track' ? 'Continue Track' : 'Continue Learning',
+                    sub: trackContext.mode === 'track' ? `Resume ${trackContext.trackName}` : 'Resume island journey',
+                    route: continueHref,
+                  },
+                  { emoji: '🌐', label: 'Explore Tracks', sub: 'Browse career fields', route: '/(tabs)/fields' },
+                  { emoji: '📰', label: 'Open Feed', sub: 'News, data, jobs', route: '/(tabs)/feed' },
+                  { emoji: '💼', label: 'Portfolio & XP', sub: 'Tasks, artifacts, pushes', route: '/(tabs)/portfolio' },
+                ].map((item) => (
+                  <WebListRow
+                    key={item.label}
+                    icon={item.emoji}
+                    title={item.label}
+                    sub={item.sub}
+                    onPress={() => go(item.route)}
+                    right={<Text style={{ color: colors.textMuted, fontSize: 16 }}>›</Text>}
+                  />
                 ))}
               </WebCard>
             </WebCol>
@@ -430,177 +593,194 @@ export default function HomeScreen() {
     );
   }
 
-  // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
-
-  const headerStyle  = { opacity: headerAnim,  transform: [{ translateY: headerAnim.interpolate({ inputRange: [0, 1], outputRange: [-20, 0] }) }] };
-  const contentStyle = { opacity: contentAnim, transform: [{ translateY: contentAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 0] }) }] };
+  const headerStyle = {
+    opacity: headerAnim,
+    transform: [{ translateY: headerAnim.interpolate({ inputRange: [0, 1], outputRange: [-20, 0] }) }],
+  };
+  const contentStyle = {
+    opacity: contentAnim,
+    transform: [{ translateY: contentAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 0] }) }],
+  };
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.accent} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={accentColor} />}
       >
         <Animated.View style={[styles.header, headerStyle]}>
           <View style={styles.headerLeft}>
-            <Text style={[styles.greeting, { color: colors.textMuted }]}>{getGreeting()}</Text>
-            <Text style={[styles.headline, { color: colors.text }]}>Your desk awaits.</Text>
+            <Text style={[styles.greeting, { color: colors.textMuted }]}>{trackContext.mode === 'track' ? trackContext.heroEyebrow : getGreeting()}</Text>
+            <Text style={[styles.headline, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : 'Your desk awaits.'}</Text>
           </View>
           <TouchableOpacity onPress={() => go('/(tabs)/profile')} activeOpacity={0.85}>
             <TheBolt size={64} animate />
           </TouchableOpacity>
         </Animated.View>
 
-        {streak && <StreakBanner status={streak} />}
+        {streak ? <StreakBanner status={streak} /> : null}
 
-        <Animated.View style={[styles.characterSection, contentStyle]}>
-          {activeFieldId && activeTrackName ? (
-            /* Active track — show living animated field artwork */
-            <ActiveTrackHero
-              fieldId={activeFieldId}
-              trackName={activeTrackName}
-              onPress={() => go('/(tabs)/map/island')}
-            />
-          ) : (
-            /* New user — show worker character */
-            <View style={[styles.characterCard, { backgroundColor: colors.card }, Shadow.md]}>
+        <Animated.View style={[styles.mobileHeroCard, { backgroundColor: colors.card, borderColor: `${accentColor}28` }, Shadow.md, contentStyle]}>
+          <View style={styles.mobileHeroHeader}>
+            <ReferenceBadge label={trackContext.heroEyebrow} color={accentColor} />
+            {trackContext.mode === 'track' ? (
+              <Text style={[styles.mobileHeroTrackPill, { color: accentColor }]}>{trackContext.trackName}</Text>
+            ) : null}
+          </View>
+          <View style={styles.mobileHeroBody}>
+            {trackContext.mode === 'track' ? (
+              <FieldArtwork fieldId={trackContext.artFieldId} size={124} />
+            ) : (
               <WorkerCharacter stage={stage} trackId="crypto" size={100} animate mood="neutral" />
-              <View style={styles.characterInfo}>
-                <Text style={[styles.stageName, { color: colors.accent }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
-                <Text style={[styles.stageDesc, { color: colors.textSoft }]} numberOfLines={2}>
-                  {xp?.stage.description ?? 'Just starting out. Empty desk, full potential.'}
-                </Text>
-                {xp && <XPProgressBar progress={xp.progress} color={accentColor} dailyXp={xp.dailyXp} dailyGoalTarget={dailyGoal} />}
-              </View>
+            )}
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.mobileHeroTitle, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
+              <Text style={[styles.mobileHeroSummary, { color: colors.textSoft }]}>
+                {trackContext.mode === 'track' ? trackContext.heroSummary : (xp?.stage.description ?? 'Just starting out. Empty desk, full potential.')}
+              </Text>
+              {xp ? (
+                <XPProgressBar
+                  progress={xp.progress}
+                  color={accentColor}
+                  dailyXp={xp.dailyXp}
+                  dailyGoalTarget={dailyGoal}
+                />
+              ) : null}
             </View>
-          )}
+          </View>
+          <TouchableOpacity onPress={() => go(continueHref)} style={[styles.mobilePrimaryBtn, { backgroundColor: accentColor }]}>
+            <Text style={styles.mobilePrimaryBtnText}>{trackContext.mode === 'track' ? trackContext.continueLabel : 'Explore Tracks'}</Text>
+          </TouchableOpacity>
         </Animated.View>
 
         <Animated.View style={[styles.statsGrid, contentStyle]}>
           <View style={styles.statsRow}>
-            <StatCard emoji="🔥" label="Streak"   color={colors.orange}   value={`${streak?.streak ?? 0}`}  sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} />
-            <StatCard emoji="⚡" label="Total XP" color={colors.accent}   value={`${xp?.totalXp ?? 0}`}     sub={`${xp?.xpToNextStage ?? '—'} to next stage`} />
+            <StatCard emoji="🔥" label="Streak" color={colors.orange} value={`${streak?.streak ?? 0}`} sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} />
+            <StatCard emoji="⚡" label="Total XP" color={accentColor} value={`${xp?.totalXp ?? 0}`} sub={`${xp?.xpToNextStage ?? '—'} to next stage`} />
           </View>
           <View style={styles.statsRow}>
-            <StatCard emoji="🎯" label="Daily XP" color={colors.xpGreen}  value={`${xp?.dailyXp ?? 0}`}     sub={`Goal: ${dailyGoal} XP`} />
-            <StatCard emoji="🏆" label="Stage"    color={colors.gold}     value={`${stage} / 8`}            sub={xp?.stage.name ?? '—'} />
+            <StatCard emoji="🎯" label={trackContext.mode === 'track' ? (trackContext.stats[0]?.label ?? 'Focus') : 'Daily XP'} color={trackContext.mode === 'track' ? accentColor : colors.xpGreen} value={trackContext.mode === 'track' ? (trackContext.stats[0]?.value ?? 'Ready') : `${xp?.dailyXp ?? 0}`} sub={trackContext.mode === 'track' ? (trackContext.stats[1]?.value ?? trackContext.tagline) : `Goal: ${dailyGoal} XP`} />
+            <StatCard emoji="🏆" label={trackContext.mode === 'track' ? (trackContext.stats[2]?.label ?? 'Mode') : 'Stage'} color={colors.gold} value={trackContext.mode === 'track' ? (trackContext.stats[2]?.value ?? 'Track view') : `${stage} / 8`} sub={trackContext.mode === 'track' ? (trackContext.stats[3]?.value ?? trackContext.worldName) : (xp?.stage.name ?? '—')} />
           </View>
         </Animated.View>
 
         <Animated.View style={[styles.actionsSection, contentStyle]}>
-          <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>QUICK ACTIONS</Text>
-          <QuickAction emoji="🏝️" label="Continue Learning" sub="Resume your island journey"      color={colors.accent} onPress={() => go('/(tabs)/map/island')} />
-          <QuickAction emoji="🌐" label="Explore Tracks"    sub="Browse career fields"            color={colors.green}  onPress={() => go('/(tabs)/fields')} />
-          <QuickAction emoji="📰" label="Open Feed"         sub="News, data, jobs for your track" color={colors.orange} onPress={() => go('/(tabs)/feed')} />
-          <QuickAction emoji="💼" label="Portfolio & XP"    sub="View tasks, artifacts, and pushes"  color={colors.gold}   onPress={() => go('/(tabs)/portfolio')} />
+          <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{trackContext.mode === 'track' ? 'TRACK ACTIONS' : 'QUICK ACTIONS'}</Text>
+          <QuickAction emoji="🏝️" label={trackContext.mode === 'track' ? 'Continue Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? `Resume ${trackContext.trackName}` : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
+          <QuickAction emoji="🌐" label="Explore Tracks" sub="Browse career fields" color={colors.green} onPress={() => go('/(tabs)/fields')} />
+          <QuickAction emoji="📰" label="Open Feed" sub="News, data, jobs for your track" color={colors.orange} onPress={() => go('/(tabs)/feed')} />
+          <QuickAction emoji="💼" label="Portfolio & XP" sub="View tasks, artifacts, and pushes" color={colors.gold} onPress={() => go('/(tabs)/portfolio')} />
         </Animated.View>
-
-        <View style={{ height: Spacing.xxxl }} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen:   { flex: 1 },
-  scroll:   { padding: Spacing.lg, paddingBottom: Spacing.xxxl },
-
-  header:     { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.md },
+  screen: { flex: 1 },
+  scroll: { padding: Spacing.lg, paddingBottom: Spacing.xxxl },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.md },
   headerLeft: { flex: 1 },
-  greeting:   { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, marginBottom: 2 },
-  headline:   { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  greeting: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, marginBottom: 2 },
+  headline: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
 
-  streakBanner:     { borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.lg },
+  streakBanner: { borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.lg },
   streakBannerText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, textAlign: 'center' },
 
-  characterSection: { marginBottom: Spacing.lg },
-  characterCard:    { borderRadius: Radius.xl, padding: Spacing.lg, flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.lg },
-  characterInfo:    { flex: 1 },
-  stageName:        { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 4 },
-  stageDesc:        { fontSize: FontSize.sm, lineHeight: 18, marginBottom: Spacing.md },
-
   progressLabelRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  progressLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  progressValue:    { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  progressTrack:    { height: 6, borderRadius: Radius.full, overflow: 'hidden' },
-  progressFill:     { height: '100%', borderRadius: Radius.full },
+  progressLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  progressValue: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  progressTrack: { height: 6, borderRadius: Radius.full, overflow: 'hidden' },
+  progressFill: { height: '100%', borderRadius: Radius.full },
 
-  statsGrid: { gap: Spacing.sm, marginBottom: Spacing.lg },
-  statsRow:  { flexDirection: 'row', gap: Spacing.sm },
-  statCard:  { borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'center', gap: 2, borderWidth: 1 },
-  statEmoji: { fontSize: 22, marginBottom: 2 },
-  statValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  statLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  statSub:   { fontSize: 10, fontWeight: FontWeight.medium },
+  miniChart: { height: 58, flexDirection: 'row', alignItems: 'flex-end', gap: 2, width: 92 },
+  miniChartBarWrap: { flex: 1, height: '100%', justifyContent: 'flex-end' },
+  miniChartBar: { width: '100%', borderRadius: 2, minHeight: 3 },
 
-  actionsSection:   { gap: Spacing.sm },
-  sectionLabel:     { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
-  quickAction:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1 },
-  quickActionIcon:  { width: 44, height: 44, borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center' },
-  quickActionEmoji: { fontSize: 22 },
-  quickActionLabel: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
-  quickActionSub:   { fontSize: FontSize.xs, marginTop: 2 },
-  quickActionArrow: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  referenceBadge: {
+    borderRadius: Radius.full,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+  },
+  referenceBadgeText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
 
-  webBoltBtn:   { flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: Radius.lg, padding: 10, borderWidth: 1 },
-  webBoltLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  webBadge:     { paddingHorizontal: 10, paddingVertical: 4, borderRadius: Radius.full },
-  webBadgeText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  webCharRow:   { flexDirection: 'row', alignItems: 'flex-start' },
+  webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: Radius.lg, padding: 10, borderWidth: 1 },
+  webBoltLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, maxWidth: 180 },
+
+  webProgressCard: { flexDirection: 'row', gap: 16, alignItems: 'flex-start' },
   webStageName: { fontSize: FontSize.xl, fontWeight: FontWeight.black, marginBottom: 4 },
   webStageDesc: { fontSize: FontSize.sm, lineHeight: 18, marginBottom: 12 },
 
-  miniChart:        { height: 52, flexDirection: 'row', alignItems: 'flex-end', gap: 2, width: 80, marginLeft: 8 },
-  miniChartBarWrap: { flex: 1, height: '100%', justifyContent: 'flex-end' },
-  miniChartBar:     { width: '100%', borderRadius: 2, minHeight: 3 },
+  heroPanel: { flexDirection: 'row', minHeight: 260 },
+  heroPanelCopy: { flex: 1, padding: 24, justifyContent: 'center' },
+  heroPanelTitle: { fontSize: 32, fontWeight: '900', letterSpacing: -0.7, marginBottom: 10 },
+  heroPanelSummary: { fontSize: FontSize.md, lineHeight: 22, marginBottom: 16, maxWidth: 520 },
+  heroPanelTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 18 },
+  heroTag: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 6 },
+  heroTagText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  heroPanelBtn: { alignSelf: 'flex-start', borderRadius: 10, paddingHorizontal: 18, paddingVertical: 10 },
+  heroPanelBtnText: { color: '#fff', fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  heroPanelVisual: { width: 290, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24 },
+  heroPanelMiniCard: { borderWidth: 1, borderRadius: Radius.lg, padding: 12, width: '100%' },
+  heroPanelMiniLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginBottom: 8 },
 
-  webTrackHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 },
-  webTrackEmoji:  { fontSize: 22 },
-  webTrackName:   { fontSize: FontSize.md, fontWeight: FontWeight.bold, flex: 1 },
-  webTrackArrow:  { fontSize: 18 },
-  webTrackKey:    { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  webTrackBtn:    { borderRadius: Radius.md, paddingVertical: 8, alignItems: 'center', marginTop: 12 },
-  webTrackBtnText:{ fontSize: FontSize.xs, fontWeight: FontWeight.bold, color: '#fff' },
+  webTrackHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
+  webTrackEmoji: { fontSize: 22 },
+  webTrackName: { fontSize: FontSize.md, fontWeight: FontWeight.bold, flex: 1 },
+  webTrackArrow: { fontSize: 18 },
+  overviewTrackSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 10 },
+  webTrackKey: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
+  webTrackBtn: { borderRadius: Radius.md, paddingVertical: 9, alignItems: 'center', marginTop: 12 },
+  webTrackBtnText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, color: '#fff' },
+
+  trackFeatureTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 8 },
+  trackFeatureSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 14 },
+  trackFeatureGrid: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
+  trackFeatureItem: { width: '31%', minWidth: 160, borderRadius: Radius.lg, borderWidth: 1, padding: 14, gap: 8 },
+  trackFeatureIndex: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  trackFeatureItemText: { fontSize: FontSize.sm, lineHeight: 18 },
+  primaryActionBtn: { borderRadius: Radius.md, paddingVertical: 10, paddingHorizontal: 14, alignItems: 'center', marginTop: 12 },
+  primaryActionBtnText: { color: '#fff', fontSize: FontSize.sm, fontWeight: FontWeight.black },
 
   webDiscussionCard: { borderRadius: Radius.md, padding: 12, borderWidth: 1, marginVertical: 8 },
-  webDiscTitle:      { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 6 },
-  webDiscItem:       { fontSize: FontSize.sm, marginBottom: 4 },
-
+  webDiscTitle: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 6 },
+  webDiscItem: { fontSize: FontSize.sm, marginBottom: 4 },
   webStreakLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2, marginBottom: 4 },
-  webStreakNum:   { fontSize: 34, fontWeight: FontWeight.black, lineHeight: 38, marginBottom: 6 },
-  webStreakSub:   { fontSize: FontSize.sm },
+  webStreakNum: { fontSize: 34, fontWeight: FontWeight.black, lineHeight: 38, marginBottom: 6 },
+  webStreakSub: { fontSize: FontSize.sm },
 
-  webChartArea:    { height: 90, borderRadius: Radius.md, borderWidth: 1, overflow: 'hidden', marginBottom: 14, padding: 10 },
+  webChartArea: { height: 90, borderRadius: Radius.md, borderWidth: 1, overflow: 'hidden', marginBottom: 14, padding: 10, alignItems: 'center', justifyContent: 'center' },
   webChartMetrics: { flexDirection: 'row', gap: 32 },
-  webMetricVal:    { fontSize: FontSize.xl, fontWeight: FontWeight.black },
-  webMetricLbl:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  webMetricVal: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  webMetricLbl: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+
+  mobileHeroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, marginBottom: Spacing.lg, gap: Spacing.md },
+  mobileHeroHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  mobileHeroTrackPill: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  mobileHeroBody: { flexDirection: 'row', gap: Spacing.md, alignItems: 'center' },
+  mobileHeroTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 4 },
+  mobileHeroSummary: { fontSize: FontSize.sm, lineHeight: 18, marginBottom: Spacing.md },
+  mobilePrimaryBtn: { borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center' },
+  mobilePrimaryBtnText: { color: '#fff', fontSize: FontSize.md, fontWeight: FontWeight.black },
+
+  statsGrid: { gap: Spacing.sm, marginBottom: Spacing.lg },
+  statsRow: { flexDirection: 'row', gap: Spacing.sm },
+  statCard: { flex: 1, borderRadius: Radius.lg, padding: Spacing.md, alignItems: 'center', gap: 2, borderWidth: 1 },
+  statEmoji: { fontSize: 22, marginBottom: 2 },
+  statValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  statLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  statSub: { fontSize: 10, fontWeight: FontWeight.medium, textAlign: 'center' },
+
+  actionsSection: { gap: Spacing.sm },
+  sectionLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
+  quickAction: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1 },
+  quickActionIcon: { width: 44, height: 44, borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center' },
+  quickActionEmoji: { fontSize: 22 },
+  quickActionLabel: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  quickActionSub: { fontSize: FontSize.xs, marginTop: 2 },
+  quickActionArrow: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
 });
-
-const activeHero = StyleSheet.create({
-  wrap:            { marginBottom: Spacing.lg },
-  glowBorder:      { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl, borderWidth: 2, zIndex: 1 },
-  card:            { borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: 'transparent' },
-  fieldPill:       { flexDirection: 'row', alignItems: 'center', gap: 6, margin: Spacing.md, marginBottom: 0, alignSelf: 'flex-start', borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 5 },
-  fieldPillEmoji:  { fontSize: 14 },
-  fieldPillText:   { fontSize: 11, fontWeight: FontWeight.bold },
-  liveIndicator:   { width: 6, height: 6, borderRadius: 3 },
-  artworkContainer:{ alignItems: 'center', justifyContent: 'center', paddingVertical: Spacing.md, height: 200 },
-  identity:        { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, padding: Spacing.lg, paddingTop: 0 },
-  trackName:       { fontSize: FontSize.xl, fontWeight: FontWeight.black, marginBottom: 4 },
-  tapHint:         { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
-  resumeBtn:       { borderRadius: Radius.full, paddingHorizontal: 18, paddingVertical: 10 },
-  resumeBtnText:   { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: '#FFF' },
-});
-
-function artifactsEarned(totalXp: number) {
-  return Math.max(1, Math.floor(totalXp / 120));
-}
-
-function platformsConnected(settings: Record<string, unknown> | undefined) {
-  const connected = Array.isArray((settings as any)?.connected_platforms)
-    ? (settings as any).connected_platforms.length
-    : 0;
-
-  return `${connected || 1}`;
-}
