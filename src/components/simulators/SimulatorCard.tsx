@@ -67,21 +67,21 @@ function SimShell({
 
 const shell = StyleSheet.create({
   wrap:     { flex: 1 },
-  content:  { padding: Spacing.md, paddingBottom: Spacing.xxxl, gap: Spacing.sm },
+  content:  { padding: 14, paddingBottom: Spacing.xxxl, gap: Spacing.sm },
   header:   {
     flexDirection: 'row',
     gap: Spacing.sm,
     backgroundColor: Colors.card,
     borderRadius: Radius.xl,
-    padding: Spacing.md,
+    padding: 14,
     alignItems: 'flex-start',
     borderWidth: 1,
     borderColor: Colors.border,
   },
   icon:     { fontSize: 30, lineHeight: 36 },
   label:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8 },
-  title:    { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, lineHeight: 21, marginTop: 1 },
-  subtitle: { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
+  title:    { fontSize: 11, fontWeight: '800', color: Colors.text, lineHeight: 17, marginTop: 1 },
+  subtitle: { fontSize: 11, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
 });
 
 function PrimaryBtn({ label, onPress, disabled = false }: { label: string; onPress: () => void; disabled?: boolean }) {
@@ -102,11 +102,11 @@ function GhostBtn({ label, onPress }: { label: string; onPress: () => void }) {
   );
 }
 const btn = StyleSheet.create({
-  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.lg, paddingVertical: 13, alignItems: 'center', width: '100%' },
+  primary:     { backgroundColor: Colors.accent, borderRadius: Radius.lg, paddingVertical: 7, alignItems: 'center', width: '100%' },
   disabled:    { opacity: 0.4 },
-  primaryText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
-  ghost:       { alignItems: 'center', paddingVertical: Spacing.sm },
-  ghostText:   { color: Colors.textSoft, fontSize: FontSize.xs, fontWeight: '700' },
+  primaryText: { color: '#fff', fontSize: 11, fontWeight: '800' },
+  ghost:       { alignItems: 'center', paddingVertical: 7 },
+  ghostText:   { color: Colors.textSoft, fontSize: 11, fontWeight: '700' },
 });
 
 function ResultBox({ correct, message }: { correct: boolean; message: string }) {
@@ -118,16 +118,16 @@ function ResultBox({ correct, message }: { correct: boolean; message: string }) 
   );
 }
 const res = StyleSheet.create({
-  box: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: Spacing.md, borderRadius: Radius.md, borderWidth: 1.5 },
+  box: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, padding: 14, borderRadius: Radius.md, borderWidth: 1.5 },
   icon: { fontSize: 20 },
-  msg:  { flex: 1, fontSize: FontSize.sm, fontWeight: '700', lineHeight: 19 },
+  msg:  { flex: 1, fontSize: 11, fontWeight: '700', lineHeight: 17 },
 });
 
 function Card({ children, style }: { children: React.ReactNode; style?: object }) {
   return <View style={[card.box, Shadow.sm, style]}>{children}</View>;
 }
 const card = StyleSheet.create({
-  box: { backgroundColor: Colors.card, borderRadius: Radius.xl, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.md },
+  box: { backgroundColor: Colors.card, borderRadius: Radius.xl, borderWidth: 1.5, borderColor: Colors.border, padding: 14 },
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -234,8 +234,8 @@ function TonTapEarnSim({ onComplete, onSkip }: SimProps) {
     <SimShell icon="🎮" title="Tap-to-Earn Simulation" subtitle="Experience how play-to-airdrop games work on TON.">
       <Card>
         <Text style={[s.fieldLabel, { textAlign: 'center' }]}>TAPS: {taps}/{TARGET_TAPS}</Text>
-        <View style={{ height: 8, backgroundColor: Colors.border, borderRadius: 99, marginVertical: Spacing.sm }}>
-          <View style={{ height: 8, borderRadius: 99, backgroundColor: Colors.accent, width: `${pct}%` }} />
+        <View style={{ height: 7, backgroundColor: Colors.border, borderRadius: 99, marginVertical: Spacing.sm }}>
+          <View style={{ height: 7, borderRadius: 99, backgroundColor: Colors.accent, width: `${pct}%` }} />
         </View>
         <Text style={[s.bigNumber, { textAlign: 'center', color: '#0088cc' }]}>{earned} TON</Text>
         <Text style={[s.fieldLabel, { textAlign: 'center' }]}>EARNED</Text>
@@ -265,9 +265,9 @@ function TonTapEarnSim({ onComplete, onSkip }: SimProps) {
   );
 }
 const tapBtn = StyleSheet.create({
-  btn:   { alignSelf: 'center', width: 140, height: 140, borderRadius: 70, backgroundColor: '#0088cc', alignItems: 'center', justifyContent: 'center', ...Shadow.md as object },
+  btn:   { alignSelf: 'center', width: 119, height: 119, borderRadius: 60, backgroundColor: '#0088cc', alignItems: 'center', justifyContent: 'center', ...Shadow.md as object },
   coin:  { fontSize: 52 },
-  label: { color: '#fff', fontSize: FontSize.xs, fontWeight: '900', letterSpacing: 1, marginTop: 4 },
+  label: { color: '#fff', fontSize: 11, fontWeight: '800', letterSpacing: 1, marginTop: 4 },
 });
 
 // ── tonStaking ────────────────────────────────────────────────────────────────
@@ -321,7 +321,7 @@ function TonStakingSim({ onComplete, onSkip }: SimProps) {
 const chip = StyleSheet.create({
   base:       { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full, borderWidth: 1.5, borderColor: Colors.border, backgroundColor: Colors.card },
   active:     { borderColor: Colors.accent, backgroundColor: Colors.accentSoft },
-  text:       { fontSize: FontSize.sm, fontWeight: '700', color: Colors.textSoft },
+  text:       { fontSize: 11, fontWeight: '700', color: Colors.textSoft },
   activeText: { color: Colors.accent },
 });
 
@@ -393,10 +393,10 @@ function CbProductPickerSim({ onComplete, onSkip }: SimProps) {
   );
 }
 const s2 = StyleSheet.create({
-  scenario: { fontSize: FontSize.md, fontWeight: '700', color: Colors.text, lineHeight: 22 },
-  prodBtn:  { flex: 1, padding: Spacing.md, borderRadius: Radius.md, alignItems: 'center' },
-  prodText: { fontSize: FontSize.sm, fontWeight: '800', textAlign: 'center' },
-  hint:     { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: Spacing.sm, lineHeight: 17 },
+  scenario: { fontSize: 11, fontWeight: '700', color: Colors.text, lineHeight: 17 },
+  prodBtn:  { flex: 1, paddingVertical: 7, paddingHorizontal: 14, borderRadius: Radius.md, alignItems: 'center' },
+  prodText: { fontSize: 11, fontWeight: '800', textAlign: 'center' },
+  hint:     { fontSize: 11, color: Colors.textSoft, marginTop: Spacing.sm, lineHeight: 17 },
 });
 
 // ── cbAdvancedTrade ───────────────────────────────────────────────────────────
@@ -2331,8 +2331,8 @@ function HalvingSim({ onComplete, onSkip }: SimProps) {
           <View style={s.row}><Text style={s.rowKey}>Supply mined so far</Text><Text style={s.rowVal}>{h.totalMined} of 21M</Text></View>
           <View style={s.row}><Text style={s.rowKey}>Annual new BTC</Text><Text style={s.rowVal}>~{(h.reward * 52560).toLocaleString()} BTC</Text></View>
         </View>
-        <View style={{ height: 12, backgroundColor: Colors.border, borderRadius: 99, marginTop: Spacing.md, overflow: 'hidden' }}>
-          <View style={{ height: 12, borderRadius: 99, backgroundColor: Colors.bitcoin, width: h.totalMined }} />
+        <View style={{ height: 10, backgroundColor: Colors.border, borderRadius: 99, marginTop: Spacing.md, overflow: 'hidden' }}>
+          <View style={{ height: 10, borderRadius: 99, backgroundColor: Colors.bitcoin, width: h.totalMined }} />
         </View>
         <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 4 }}>Supply mined: {h.totalMined}</Text>
       </Card>
@@ -3359,8 +3359,8 @@ function BondingCurveSim({ onComplete, onSkip }: SimProps) {
           ))}
         </View>
         <View style={{ marginTop: Spacing.md }}>
-          <View style={{ height: 12, backgroundColor: Colors.border, borderRadius: 99, overflow: 'hidden' }}>
-            <View style={{ height: 12, borderRadius: 99, backgroundColor: isGraduated ? Colors.green : Colors.accent, width: `${pct}%` }} />
+          <View style={{ height: 10, backgroundColor: Colors.border, borderRadius: 99, overflow: 'hidden' }}>
+            <View style={{ height: 10, borderRadius: 99, backgroundColor: isGraduated ? Colors.green : Colors.accent, width: `${pct}%` }} />
           </View>
           <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 4, textAlign: 'right' }}>{pct.toFixed(0)}% to graduation (500 SOL)</Text>
         </View>
@@ -4482,8 +4482,8 @@ function SolanaPumpSim({ onComplete, onSkip }: SimProps) {
         <>
           <Card>
             <Text style={s.fieldLabel}>BONDING CURVE PROGRESS</Text>
-            <View style={{ height: 12, backgroundColor: Colors.border, borderRadius: 99, overflow: 'hidden', marginBottom: Spacing.sm }}>
-              <View style={{ height: 12, borderRadius: 99, backgroundColor: graduated ? Colors.green : Colors.accent, width: `${pct}%` }} />
+            <View style={{ height: 10, backgroundColor: Colors.border, borderRadius: 99, overflow: 'hidden', marginBottom: Spacing.sm }}>
+              <View style={{ height: 10, borderRadius: 99, backgroundColor: graduated ? Colors.green : Colors.accent, width: `${pct}%` }} />
             </View>
             <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, textAlign: 'right' }}>{pct.toFixed(0)}% to graduation ($69K MC)</Text>
             <View style={{ marginTop: Spacing.sm, gap: 4 }}>
@@ -4496,8 +4496,8 @@ function SolanaPumpSim({ onComplete, onSkip }: SimProps) {
                 <Text style={{ fontWeight: '800', color: Colors.green }}>🎓 GRADUATED! Token migrates to Raydium with permanent LP. Now trades on open market.</Text>
               </View>
             ) : (
-              <TouchableOpacity onPress={handleBuy} style={{ marginTop: Spacing.md, padding: Spacing.lg, backgroundColor: Colors.accent, borderRadius: Radius.lg, alignItems: 'center' }}>
-                <Text style={{ color: '#fff', fontWeight: '900', fontSize: FontSize.md }}>🟢 Simulate a Buy (+1 trader)</Text>
+              <TouchableOpacity onPress={handleBuy} style={{ marginTop: Spacing.md, paddingVertical: 7, paddingHorizontal: 14, backgroundColor: Colors.accent, borderRadius: Radius.lg, alignItems: 'center' }}>
+                <Text style={{ color: '#fff', fontWeight: '900', fontSize: 11 }}>🟢 Simulate a Buy (+1 trader)</Text>
               </TouchableOpacity>
             )}
           </Card>
@@ -5221,14 +5221,14 @@ export default function SimulatorCard({
 // SHARED STYLES
 // ─────────────────────────────────────────────────────────────────────────────
 const s = StyleSheet.create({
-  fieldLabel: { fontSize: FontSize.xs, fontWeight: '800', color: Colors.textSoft, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
+  fieldLabel: { fontSize: 11, fontWeight: '800', color: Colors.textSoft, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 },
   bigNumber:  { fontSize: 32, fontWeight: '900', color: Colors.text },
-  address:    { fontSize: FontSize.sm, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: Colors.text, backgroundColor: Colors.border, borderRadius: Radius.sm, padding: Spacing.sm, marginBottom: Spacing.md },
-  input:      { borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: FontSize.lg, fontWeight: '700', color: Colors.text, marginBottom: Spacing.md, backgroundColor: Colors.card },
+  address:    { fontSize: 11, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', color: Colors.text, backgroundColor: Colors.border, borderRadius: Radius.sm, padding: Spacing.sm, marginBottom: Spacing.md, lineHeight: 17 },
+  input:      { height: 36, borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.md, paddingHorizontal: Spacing.md, fontSize: 12, fontWeight: '700', color: Colors.text, marginBottom: Spacing.md, backgroundColor: Colors.card },
   row:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 4 },
-  rowKey:     { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '600' },
-  rowVal:     { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '700', flex: 1, textAlign: 'right' },
-  bullet:     { fontSize: FontSize.sm, color: Colors.text, lineHeight: 20, marginBottom: 2 },
+  rowKey:     { fontSize: 11, color: Colors.textSoft, fontWeight: '600', lineHeight: 17 },
+  rowVal:     { fontSize: 11, color: Colors.textSoft, fontWeight: '700', flex: 1, textAlign: 'right', lineHeight: 17 },
+  bullet:     { fontSize: 11, color: Colors.text, lineHeight: 17, marginBottom: 2 },
   hint:       { fontSize: FontSize.xs, color: Colors.red, marginTop: 4 },
-  hint2:      { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18 },
+  hint2:      { fontSize: 11, color: Colors.textSoft, lineHeight: 17 },
 });

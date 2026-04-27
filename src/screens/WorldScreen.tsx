@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, SafeAreaView,
-  Animated, Dimensions, ScrollView, ActivityIndicator,
+  Animated, Dimensions, ScrollView, ActivityIndicator, Platform,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, webContainer } from '../theme';
@@ -464,19 +464,19 @@ const styles = StyleSheet.create({
   labScroll: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
   backChip: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
   backChipText: { fontSize: FontSize.xs, fontWeight: '800' },
-  labHeroCard: { borderRadius: Radius.xxl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.sm },
-  labTitle: { fontSize: FontSize.xxl, fontWeight: '900' },
-  labSub: { fontSize: FontSize.md, fontWeight: '700' },
-  labHeroCopy: { fontSize: FontSize.sm, lineHeight: 20 },
+  labHeroCard: { borderRadius: Radius.xxl, borderWidth: 1, padding: 16, gap: Spacing.sm, width: '100%', maxWidth: 480, alignSelf: 'center' },
+  labTitle: { fontSize: 20, fontWeight: '900' },
+  labSub: { fontSize: 11, fontWeight: '700' },
+  labHeroCopy: { fontSize: 11, lineHeight: 17 },
   labStatsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap', marginTop: Spacing.sm },
   labStatCard: { borderRadius: Radius.lg, paddingHorizontal: 12, paddingVertical: 10, minWidth: 98 },
   labStatValue: { fontSize: FontSize.sm, fontWeight: '900', marginBottom: 2 },
-  labStatLabel: { fontSize: 10, fontWeight: '700' },
+  labStatLabel: { fontSize: 11, fontWeight: '700' },
   labInfoStack: { gap: Spacing.md },
   infoCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.xs },
   infoEyebrow: { fontSize: FontSize.xs, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.8 },
   infoTitle: { fontSize: FontSize.md, fontWeight: '900' },
   infoBody: { fontSize: FontSize.sm, lineHeight: 20 },
-  primaryButton: { borderRadius: Radius.xl, paddingVertical: 14, alignItems: 'center' },
-  primaryButtonText: { color: '#fff', fontSize: FontSize.md, fontWeight: '900' },
+  primaryButton: { borderRadius: Radius.xl, paddingVertical: 10, alignItems: 'center', width: Platform.OS === 'web' ? 480 : undefined, maxWidth: '100%', alignSelf: 'center' },
+  primaryButtonText: { color: '#fff', fontSize: 12, fontWeight: '900' },
 });
