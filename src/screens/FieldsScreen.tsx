@@ -217,7 +217,7 @@ function FieldPortal({
       }
 
       if (track.navigateTo === 'Quant') navigation.push('/skills/quant-map');
-      else if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') navigation.push('/map/island');
+      else if (track.navigateTo === 'CryptoMap' || track.navigateTo === 'IslandMap') navigation.push('/(tabs)/map/island');
       else if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') navigation.push('/starknet-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
       else if (track.id === 'starknet-ecosystem-deep-dive') navigation.push('/ecosystem-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
       else if (track.id === 'cairo-builder') navigation.push('/cairo-builder-track', { trackId: track.id, fieldId: field.id, trackName: track.name });
@@ -293,7 +293,7 @@ function FieldPortal({
           {isCrypto ? (
             <>
               <Text style={[portal.sectionLabel, { color: C }]}>ONBOARDING ISLANDS</Text>
-              <IslandChain onIslandPress={() => { close(); setTimeout(() => navigation.push('/map/island'), 220); }} />
+              <IslandChain onIslandPress={() => { close(); setTimeout(() => navigation.push('/(tabs)/map/island'), 220); }} />
               {starknetDetail ? (
                 <>
                   <View style={[portal.divider, { backgroundColor: '#EC489930', marginTop: Spacing.md }]} />

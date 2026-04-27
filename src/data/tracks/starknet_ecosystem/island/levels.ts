@@ -2514,5 +2514,10 @@ export const STARKNET_LEVELS: Record<number, Level | StarknetIslandLevel> = {
 export const isStarknetIslandLevel = (level: Level | StarknetIslandLevel): level is StarknetIslandLevel =>
   'explanation' in level && 'guidedPractice' in level && 'examples' in level;
 
+export function getStarknetIslandLevel(levelId: number): StarknetIslandLevel | undefined {
+  const level = STARKNET_LEVELS[levelId];
+  return level && isStarknetIslandLevel(level) ? level : undefined;
+}
+
 export const STARKNET_ISLAND_LEVELS = Object.values(STARKNET_LEVELS);
 export const UPGRADED_LEVELS = [291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310];

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { ISLAND_LEVELS } from './islandLevels';
 // Re-export from tracks folder
+import { STARKNET_TRACK_BOSS_LEVELS } from './tracks/starknet_ecosystem/bossLevels';
 import { STARKNET_LEVELS } from './tracks/starknet_ecosystem/island/levels';
 // ⚡ Sifter Skill_Up — Level Data (270 levels, auto-converted)
 // DO NOT EDIT MANUALLY — edit the source levels.js and reconvert
@@ -3793,7 +3794,8 @@ function makeBossLevel(id: number, topic: string, tier: 'pro' = 'pro'): Level {
   };
 }
 
-export const TRACK_BOSS_LEVELS: Record<number, Level> = {
+export const TRACK_BOSS_LEVELS: Record<number, Level> = STARKNET_TRACK_BOSS_LEVELS;
+/*
   // ── DeFi Navigator (3001–3011) ──────────────────────────
   3001: makeBossLevel(3001, 'DeFi Mental Models Boss'),
   3002: makeBossLevel(3002, 'Token Swaps and AMMs Boss'),
@@ -3831,6 +3833,7 @@ export const TRACK_BOSS_LEVELS: Record<number, Level> = {
   5012: makeBossLevel(5012, 'Production Deployment Boss'),
   5013: makeBossLevel(5013, 'Cairo Builder Final Boss'),
 };
+*/
 
 export function getLevel(id: number): Level | undefined {
   return LEVELS[id] ?? (ISLAND_LEVELS as any)[id] ?? (STARKNET_LEVELS as any)[id] ?? TRACK_BOSS_LEVELS[id];

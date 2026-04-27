@@ -14,6 +14,15 @@ import { findTrackById } from '../lib/trackContext';
 import { getLevel, LEVELS } from '../data/levels';
 import { getIslandForLevel } from '../data/islands';
 import {
+  getAuthoredLessonSummary,
+  getAuthoredLessonTopic,
+} from '../data/tracks/starknet_ecosystem/authoredLesson';
+import { getStarknetTrackBossLevel } from '../data/tracks/starknet_ecosystem/bossLevels';
+import {
+  STARKNET_LEVELS,
+  getStarknetIslandLevel,
+} from '../data/tracks/starknet_ecosystem/island/levels';
+import {
   isStarknetTrack,
   getStarknetLab,
   getStarknetLesson,
@@ -78,6 +87,14 @@ interface Note {
   createdAt: number;
 }
 
+function getLessonParagraphs(text?: string): string[] {
+  if (!text) return [];
+  return text
+    .split(/\n\s*\n+/)
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0 && part !== '---');
+}
+
 // ── Storage ───────────────────────────────────────────────────
 const BOOKMARKS_KEY = 'sifter_bookmarks_v1';
 const NOTES_KEY     = 'sifter_notes_v1';
@@ -101,7 +118,11 @@ function escapeRe(s: string) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
 function detectTermLinks(currentLevelId: number, text: string): TermLink[] {
   const links: TermLink[] = [];
   const seen = new Set<string>();
-  Object.values(LEVELS).forEach(level => {
+  const glossaryLevels = [
+    ...Object.values(LEVELS),
+    ...Object.values(STARKNET_LEVELS as Record<number, any>),
+  ];
+  glossaryLevels.forEach(level => {
     if (level.id >= currentLevelId || !level.glossaryWord) return;
     const t = level.glossaryWord.toLowerCase();
     if (seen.has(t)) return;
@@ -288,7 +309,9 @@ function ConceptCard({ q, onNext, levelId, onTermPress }: {
 }) {
   const tc = q.tier === 'beginner' ? Colors.beginner : q.tier === 'intermediate' ? Colors.intermediate : Colors.pro;
   const tl = q.tier === 'beginner' ? '🟢 Beginner' : q.tier === 'intermediate' ? '🟡 Intermediate' : '🔵 Pro';
-  const fullText = (q.fact || '') + ' ' + (q.plain || '');
+  const lessonParagraphs = getLessonParagraphs(q.lessonBody);
+  const takeaway = q.keyTakeaway ?? q.fact;
+  const fullText = [q.lessonBody, q.fact, q.plain].filter(Boolean).join(' ');
   const termLinks = detectTermLinks(levelId, fullText);
 
   return (
@@ -299,11 +322,40 @@ function ConceptCard({ q, onNext, levelId, onTermPress }: {
         </View>
         <Text style={sty.conceptTopic}>{q.topic}</Text>
         <View style={[sty.divider,{backgroundColor:tc}]}/>
-        <Text style={sty.conceptFact}>{q.fact}</Text>
-        {q.plain ? (
+        {lessonParagraphs.length > 0 ? (
+          <View style={sty.lessonBodyWrap}>
+            {lessonParagraphs.map((paragraph, index) => (
+              <Text key={`${index}-${paragraph.slice(0, 24)}`} style={sty.lessonParagraph}>
+                {paragraph}
+              </Text>
+            ))}
+          </View>
+        ) : takeaway ? (
+          <Text style={sty.conceptFact}>{takeaway}</Text>
+        ) : null}
+        {takeaway ? (
+          <View style={sty.takeawayBox}>
+            <Text style={sty.takeawayLabel}>Key Takeaway</Text>
+            <Text style={sty.takeawayText}>{takeaway}</Text>
+          </View>
+        ) : null}
+        {q.plain && q.plain !== takeaway ? (
           <View style={sty.analogy}>
             <Text style={sty.analogyLabel}>💡 THINK OF IT LIKE THIS</Text>
             <Text style={sty.analogyText}>{q.plain}</Text>
+          </View>
+        ) : null}
+        {q.examples && q.examples.length > 0 ? (
+          <View style={sty.exampleSection}>
+            <Text style={sty.exampleSectionLabel}>Worked Examples</Text>
+            {q.examples.slice(0, 3).map((example, index) => (
+              <View key={`${index}-${example.scenario.slice(0, 24)}`} style={sty.exampleCard}>
+                {example.contextTag ? <Text style={sty.exampleTag}>{example.contextTag}</Text> : null}
+                {example.context ? <Text style={sty.exampleContext}>{example.context}</Text> : null}
+                <Text style={sty.exampleScenario}>{example.scenario}</Text>
+                <Text style={sty.exampleOutcome}>{example.outcome}</Text>
+              </View>
+            ))}
           </View>
         ) : null}
         {termLinks.length > 0 && (
@@ -667,24 +719,9 @@ export default function LessonScreen({
   const starknetLesson = isStarknetLabLesson
     ? getStarknetLesson(trackId as StarknetTrackId, labNumber as number, lessonIndex as number)
     : null;
-
-  const classicLevel = getLevel(levelId);
-  const level = starknetLesson
-    ? ({
-        // Light Level-shaped wrapper so existing reads like `level.topic`,
-        // `level.mechanic === 'boss'`, and `level.fact` keep working when the
-        // actual lesson data lives in the Starknet registry.
-        id: levelId,
-        mechanic: 'memory',
-        tier: 'intermediate',
-        topic: starknetLesson.title ?? 'Starknet Lesson',
-        fact: (starknetLesson.keyTakeaway as string) ?? ((starknetLesson.explanation as string) ?? '').slice(0, 400),
-        plain: (starknetLesson.keyTakeaway as string) ?? ((starknetLesson.explanation as string) ?? '').slice(0, 240),
-        stars: [1, 1, 1] as [number, number, number],
-        target: 1,
-        coins: 0,
-      } as any)
-    : classicLevel;
+  const classicLevel = getStarknetIslandLevel(levelId) ?? getStarknetTrackBossLevel(levelId) ?? getLevel(levelId);
+  const lessonTopic = starknetLesson ? getAuthoredLessonTopic(starknetLesson as any) : classicLevel?.topic ?? 'Lesson';
+  const lessonSummary = starknetLesson ? getAuthoredLessonSummary(starknetLesson as any) : classicLevel?.fact ?? '';
 
   const { user } = useAuth();
   const { savePosition } = useResume();
@@ -711,7 +748,7 @@ export default function LessonScreen({
   const [showFlag, setShowFlag]               = useState(false);
 
   const totalXp    = (user as any)?.points ?? (user as any)?.totalXp ?? 0;
-  const isBossLvl  = level?.mechanic === 'boss';
+  const isBossLvl  = Boolean(isBoss || classicLevel?.isBoss || classicLevel?.mechanic === 'boss');
   const starknetLab = isStarknetLabLesson
     ? getStarknetLab(trackId as StarknetTrackId, labNumber as number)
     : null;
@@ -720,6 +757,28 @@ export default function LessonScreen({
     && lessonIndex !== undefined
     && lessonIndex + 1 < starknetLab.lessons.length,
   );
+  const userTrackId =
+    (user as any)?.currentTrackId
+    ?? (user as any)?.current_track_id
+    ?? (user as any)?.active_track
+    ?? 'crypto';
+  const inferredTrackId = trackId
+    ?? (
+      ((user as any)?.activeFieldId === 'starknet')
+      || ((user as any)?.active_field_id === 'starknet')
+      || (levelId >= 291 && levelId <= 310)
+        ? 'starknet-islands'
+        : userTrackId
+    );
+  const inferredTrack = findTrackById(inferredTrackId);
+  const inferredTrackName =
+    inferredTrack?.name
+    ?? ((user as any)?.currentTrackName)
+    ?? ((user as any)?.current_track_name)
+    ?? inferredTrackId;
+  const resolvedLabIndex = labNumber ?? labIndexFromLegacyId(labId) ?? (inferredTrackId === 'starknet-islands' ? 18 : 0);
+  const resolvedLabTitle = starknetLab?.title
+    ?? (inferredTrackId === 'starknet-islands' ? 'Starknet Islands' : inferredTrackName);
   const nextTarget = hasNextStarknetLesson
     ? {
         levelId: getStarknetLessonRuntimeId(
@@ -733,12 +792,12 @@ export default function LessonScreen({
     : isStarknetLabLesson && starknetLab
       ? {
           levelId: starknetLab.bossLevelId,
-          topic: getLevel(starknetLab.bossLevelId)?.topic ?? 'Boss Challenge',
-          mechanic: getLevel(starknetLab.bossLevelId)?.mechanic ?? 'simulator',
+          topic: getStarknetTrackBossLevel(starknetLab.bossLevelId)?.topic ?? 'Boss Challenge',
+          mechanic: getStarknetTrackBossLevel(starknetLab.bossLevelId)?.mechanic ?? 'simulator',
         }
       : (() => {
           const nextLevelId = levelId + 1;
-          const nextLevel = getLevel(nextLevelId);
+          const nextLevel = getStarknetIslandLevel(nextLevelId) ?? getStarknetTrackBossLevel(nextLevelId) ?? getLevel(nextLevelId);
           return nextLevel
             ? {
                 levelId: nextLevelId,
@@ -749,32 +808,9 @@ export default function LessonScreen({
         })();
 
   useEffect(() => {
-    if (!level) {
+    if (!lessonTopic) {
       return;
     }
-
-    const userTrackId =
-      (user as any)?.currentTrackId
-      ?? (user as any)?.current_track_id
-      ?? (user as any)?.active_track
-      ?? 'crypto';
-    const inferredTrackId = trackId
-      ?? (
-        ((user as any)?.activeFieldId === 'starknet')
-        || ((user as any)?.active_field_id === 'starknet')
-        || (levelId >= 291 && levelId <= 310)
-          ? 'starknet-islands'
-          : userTrackId
-      );
-    const inferredTrack = findTrackById(inferredTrackId);
-    const inferredTrackName =
-      inferredTrack?.name
-      ?? ((user as any)?.currentTrackName)
-      ?? ((user as any)?.current_track_name)
-      ?? inferredTrackId;
-    const resolvedLabIndex = labNumber ?? labIndexFromLegacyId(labId) ?? (inferredTrackId === 'starknet-islands' ? 18 : 0);
-    const resolvedLabTitle = starknetLab?.title
-      ?? (inferredTrackId === 'starknet-islands' ? 'Starknet Islands' : inferredTrackName);
 
     void savePosition({
       trackId: inferredTrackId,
@@ -783,12 +819,12 @@ export default function LessonScreen({
       labId: labId ?? (inferredTrackId === 'starknet-islands' ? 'island-18' : inferredTrackId),
       labTitle: resolvedLabTitle,
       lessonId: String(levelId),
-      lessonTitle: level.topic ?? 'Lesson',
+      lessonTitle: lessonTopic,
       lessonIndex: lessonIndex ?? 0,
       labIndex: resolvedLabIndex,
       simulatorState: null,
     }).catch(() => {});
-  }, [labId, labNumber, level, levelId, lessonIndex, savePosition, starknetLab?.title, trackId, user]);
+  }, [labId, labNumber, lessonTopic, levelId, lessonIndex, savePosition, starknetLab?.title, trackId, user]);
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{
@@ -810,10 +846,14 @@ export default function LessonScreen({
   const handleNext = () => { setShowFeedback(false); advance(); };
 
   const handleFinish = async () => {
-    if(!state||!level||celebrationDone) return;
+    if(!state || celebrationDone) return;
+    const requestedTrack = trackId ?? userTrackId;
+    const completionTrack = requestedTrack === 'starknet-islands' || (levelId >= 291 && levelId <= 310)
+      ? 'crypto'
+      : requestedTrack;
     await completeLevel(
       levelId,
-      trackId ?? (user as any)?.currentTrackId ?? (user as any)?.active_track ?? 'default',
+      completionTrack,
       state.xp,
       state.wrongCount===0,
     );
@@ -909,18 +949,18 @@ export default function LessonScreen({
       await Promise.all(matches.map(b => deleteDiaryBookmark(b.id)));
       setIsBookmarked(false);
     } else {
-      if(level) {
-        bm.unshift({levelId,topic:level.topic,fact:level.fact,savedAt:Date.now()});
+      if (lessonTopic) {
+        bm.unshift({levelId,topic:lessonTopic,fact:lessonSummary,savedAt:Date.now()});
         await saveBookmarks(bm);
         await saveDiaryBookmark({
           lessonId: String(levelId),
-          lessonTitle: level.topic,
+          lessonTitle: lessonTopic,
           field: String((user as any)?.activeFieldId ?? (user as any)?.active_field_id ?? 'general'),
           level: String(levelId),
           labId: String(labId ?? trackId ?? 'lesson'),
           labTitle: String((user as any)?.currentTrackName ?? trackId ?? 'Lesson'),
           lessonType: isBossLvl ? 'boss' : q?.type === 'simulator' ? 'simulator' : 'concept',
-          excerpt: String(level.fact ?? '').slice(0, 240),
+          excerpt: String(lessonSummary).slice(0, 240),
           note: q?.prompt ? String(q.prompt).slice(0, 180) : undefined,
         });
       }
@@ -930,17 +970,19 @@ export default function LessonScreen({
   };
   const handleTermPress = (link: TermLink) => { setActiveLink(link); setTermVisible(true); };
   const handleGoToLinked = (id: number) => {
-    if(onNavigateToLesson) { if(level) setReturnTopic(level.topic); onNavigateToLesson(id); }
+    if(onNavigateToLesson) { setReturnTopic(lessonTopic); onNavigateToLesson(id); }
   };
   const handleAIExplainer = () => {
-    if (!state || !level) return;
+    if (!state) return;
     const q = state.questions[state.qIndex];
-    const txt = q?.type === 'concept_card' ? `${q.fact ?? ''} ${q.plain ?? ''}` : q?.prompt ?? level.fact ?? '';
+    const txt = q?.type === 'concept_card'
+      ? `${q.lessonBody ?? ''} ${q.keyTakeaway ?? q.fact ?? ''} ${q.plain ?? ''}`
+      : q?.prompt ?? lessonSummary;
     setExplainerText(txt);
     setShowExplainer(true);
   };
 
-  if (!level || !state) return null;
+  if (!state || (!classicLevel && !starknetLesson)) return null;
   const q        = state.questions[state.qIndex];
   const progress = (state.qIndex / state.questions.length) * 100;
   const isLast   = state.qIndex + 1 >= state.questions.length;
@@ -967,12 +1009,12 @@ export default function LessonScreen({
           onDismiss={handleCelebDismiss}
         />
         {!showCelebration && (
-          <CompleteScreen stars={state.stars} xp={sessionXp} topic={level.topic} onContinue={handleCelebDismiss}/>
+          <CompleteScreen stars={state.stars} xp={sessionXp} topic={lessonTopic} onContinue={handleCelebDismiss}/>
         )}
       </SafeAreaView>
     );
   }
-  if (state.failed) return <SafeAreaView style={sty.screen}><FailScreen topic={level.topic} onRetry={resetLesson} onQuit={onExit}/></SafeAreaView>;
+  if (state.failed) return <SafeAreaView style={sty.screen}><FailScreen topic={lessonTopic} onRetry={resetLesson} onQuit={onExit}/></SafeAreaView>;
 
   return (
     <SafeAreaView style={sty.screen}>
@@ -1054,18 +1096,18 @@ export default function LessonScreen({
       )}
 
       <TermLinkModal link={activeLink} visible={termVisible} onClose={()=>setTermVisible(false)} onGoToLesson={handleGoToLinked}/>
-      <NotesPanel visible={showNotes} levelId={levelId} topic={level.topic} onClose={()=>setShowNotes(false)}/>
+      <NotesPanel visible={showNotes} levelId={levelId} topic={lessonTopic} onClose={()=>setShowNotes(false)}/>
       <FlagModal
         visible={showFlag}
         lessonId={String(levelId)}
-        lessonTitle={level.topic}
+        lessonTitle={lessonTopic}
         questionId={`${levelId}-${state.qIndex}`}
         userId={String((user as any)?.id ?? 'local')}
         onClose={() => setShowFlag(false)}
       />
       <LessonTransition
         visible={showTransition}
-        fromTopic={level.topic}
+        fromTopic={lessonTopic}
         toTopic={nextTarget?.topic ?? ''}
         fieldColor={(user as any)?.activeFieldColor}
         mechanic={nextTarget?.mechanic}
@@ -1118,9 +1160,21 @@ const sty = StyleSheet.create({
   conceptTopic:  {fontSize:FontSize.xxl,fontWeight:'900',color:Colors.text,lineHeight:30,marginBottom:Spacing.md},
   divider:       {height:2,borderRadius:99,marginBottom:Spacing.lg,opacity:0.6},
   conceptFact:   {fontSize:FontSize.md,lineHeight:24,color:Colors.text},
+  lessonBodyWrap:{gap:Spacing.md},
+  lessonParagraph:{fontSize:FontSize.sm,lineHeight:23,color:Colors.text},
+  takeawayBox:   {backgroundColor:'#f8fafc',borderRadius:Radius.md,borderWidth:1,borderColor:Colors.border,padding:Spacing.md,marginTop:Spacing.lg},
+  takeawayLabel: {fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
+  takeawayText:  {fontSize:FontSize.sm,lineHeight:21,color:Colors.text},
   analogy:       {backgroundColor:'#f0f4ff',borderLeftWidth:4,borderLeftColor:Colors.accent,borderRadius:Radius.sm,padding:Spacing.md,marginTop:Spacing.lg},
   analogyLabel:  {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
   analogyText:   {fontSize:FontSize.sm,lineHeight:20,color:'#374151'},
+  exampleSection:{marginTop:Spacing.lg,gap:Spacing.sm},
+  exampleSectionLabel:{fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5},
+  exampleCard:   {backgroundColor:'#fff7ed',borderRadius:Radius.md,borderWidth:1,borderColor:'#fdba7440',padding:Spacing.md,gap:Spacing.xs},
+  exampleTag:    {fontSize:FontSize.xs,fontWeight:'800',color:'#c2410c'},
+  exampleContext:{fontSize:FontSize.xs,lineHeight:18,color:Colors.textSoft},
+  exampleScenario:{fontSize:FontSize.sm,fontWeight:'700',lineHeight:20,color:Colors.text},
+  exampleOutcome:{fontSize:FontSize.sm,lineHeight:20,color:'#7c2d12'},
   // term links
   termSection:   {marginTop:Spacing.lg,borderTopWidth:1,borderTopColor:Colors.border,paddingTop:Spacing.md},
   termSectionLabel:{fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5,marginBottom:Spacing.sm},
