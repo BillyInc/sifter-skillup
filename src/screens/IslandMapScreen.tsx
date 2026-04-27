@@ -237,7 +237,12 @@ export default function IslandMapScreen({ route }: any) {
 
   const handleEnter = (island: Island) => {
     setSelected(null);
-    setTimeout(() => router.push(`/(tabs)/map/lesson?levelId=${island.start}` as any), 160);
+    setTimeout(() => {
+      router.push({
+        pathname: '/map/lesson' as any,
+        params: { levelId: String(island.start) },
+      });
+    }, 160);
   };
 
   return (

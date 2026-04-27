@@ -59,9 +59,9 @@ export function SifterCard({
   const cardStyle: ViewStyle = {
     backgroundColor: elevated ? colors.cardElevated : colors.card,
     borderRadius: Radius.lg,
-    padding: noPadding ? 0 : Spacing.lg,
-    ...(elevated ? Shadow.md : Shadow.sm),
-    ...(accent ? { borderLeftWidth: 3, borderLeftColor: accent } : {}),
+    padding: noPadding ? 0 : Spacing.md,
+    ...(elevated ? Shadow.sm : Shadow.xs),
+    ...(accent ? { borderLeftWidth: 2, borderLeftColor: accent } : {}),
     borderWidth: accent ? 0 : 1,
     borderColor: colors.border,
   };
@@ -131,7 +131,7 @@ export function PressableCard({
         borderRadius: Radius.lg,
         borderWidth: 1,
         borderColor,
-        ...Shadow.sm,
+        ...Shadow.xs,
         transform: [{ scale }],
         overflow: 'hidden',
       },
@@ -205,9 +205,9 @@ export function SifterButton({
           backgroundColor: bg,
           borderWidth: variant === 'ghost' ? 1 : 0,
           borderColor,
-          borderRadius: Radius.lg,
-          paddingVertical: size === 'sm' ? 10 : size === 'lg' ? 15 : 12,
-          paddingHorizontal: Spacing.xl,
+          borderRadius: Radius.md,
+          paddingVertical: size === 'sm' ? 8 : size === 'lg' ? 12 : 10,
+          paddingHorizontal: size === 'sm' ? Spacing.md : Spacing.lg,
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
@@ -253,13 +253,13 @@ export function Badge({ label, variant = 'default', color, icon, size = 'md' }: 
     danger:   { bg: colors.redSoft,     text: colors.red },
     info:     { bg: colors.accentSoft,  text: colors.accent },
     track:    { bg: color ? color + '20' : colors.accentSoft, text: color ?? colors.accent },
-    scholar:  { bg: '#EDE9FF', text: '#5B21B6' },
+    scholar:  { bg: colors.accentSoft, text: colors.accent },
     xp:       { bg: colors.greenSoft,   text: colors.xpGreen },
   };
 
   const { bg, text } = config[variant];
-  const pad = size === 'sm' ? { paddingHorizontal: 6, paddingVertical: 2 } : { paddingHorizontal: Spacing.sm, paddingVertical: 3 };
-  const fs  = size === 'sm' ? FontSize.xs : FontSize.sm;
+  const pad = size === 'sm' ? { paddingHorizontal: 6, paddingVertical: 2 } : { paddingHorizontal: Spacing.sm, paddingVertical: 2 };
+  const fs  = size === 'sm' ? FontSize.xs : FontSize.xs;
 
   return (
     <View style={[{ flexDirection: 'row', alignItems: 'center', gap: 3, backgroundColor: bg, borderRadius: Radius.full }, pad]}>
@@ -295,8 +295,8 @@ export function LevelBadge({ level, style }: LevelBadgeProps) {
       {
         backgroundColor: colors.levelBadge,
         borderRadius: Radius.full,
-        paddingHorizontal: Spacing.md,
-        paddingVertical: 5,
+        paddingHorizontal: Spacing.sm,
+        paddingVertical: 4,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
@@ -333,7 +333,7 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({
-  progress, color, trackColor, height = 8,
+  progress, color, trackColor, height = 6,
   showLabel, label, animate = true, style,
 }: ProgressBarProps) {
   const { colors } = useTheme();
@@ -398,27 +398,27 @@ export function StatChip({ icon, value, label, valueColor, style }: StatChipProp
   return (
     <View style={[{
       backgroundColor: colors.card,
-      borderRadius: Radius.xl,
-      padding: Spacing.lg,
+      borderRadius: Radius.lg,
+      padding: Spacing.md,
       alignItems: 'flex-start',
-      gap: Spacing.sm,
+      gap: Spacing.xs,
       flex: 1,
       borderWidth: 1,
       borderColor: colors.border,
       ...Shadow.xs,
     }, style]}>
       <View style={{
-        width: 40, height: 40, borderRadius: Radius.lg,
+        width: 34, height: 34, borderRadius: Radius.md,
         backgroundColor: colors.bgSecondary,
         alignItems: 'center', justifyContent: 'center',
       }}>
-        <Text style={{ fontSize: 20 }}>{icon}</Text>
+        <Text style={{ fontSize: 16 }}>{icon}</Text>
       </View>
       <Text style={{
-        fontSize: FontSize.xxl,
+        fontSize: FontSize.xl,
         fontWeight: FontWeight.black,
         color: valueColor ?? colors.text,
-        lineHeight: FontSize.xxl * 1.2,
+        lineHeight: FontSize.xl * 1.2,
       }}>
         {value}
       </Text>
@@ -595,7 +595,7 @@ export function SkillBar({ name, percent, color, style }: SkillBarProps) {
       <ProgressBar
         progress={percent / 100}
         color={color ?? colors.accent}
-        height={6}
+        height={5}
       />
     </View>
   );
@@ -685,10 +685,10 @@ export function EmptyStateCard({ icon, title, subtitle, action }: EmptyStateCard
   return (
     <View style={{
       alignItems: 'center',
-      padding: Spacing.xxxl,
-      gap: Spacing.md,
+      padding: Spacing.xxl,
+      gap: Spacing.sm,
     }}>
-      <Text style={{ fontSize: 48 }}>{icon}</Text>
+      <Text style={{ fontSize: 40 }}>{icon}</Text>
       <Text style={{
         fontSize: FontSize.lg,
         fontWeight: FontWeight.heavy,
@@ -702,7 +702,7 @@ export function EmptyStateCard({ icon, title, subtitle, action }: EmptyStateCard
           fontSize: FontSize.sm,
           color: colors.textSoft,
           textAlign: 'center',
-          lineHeight: FontSize.sm * 1.6,
+          lineHeight: FontSize.sm * 1.5,
         }}>
           {subtitle}
         </Text>
@@ -865,7 +865,7 @@ export function TrackProgressCard({
 }: TrackProgressCardProps) {
   const { colors } = useTheme();
   return (
-    <SifterCard elevated style={{ gap: Spacing.md }}>
+    <SifterCard elevated style={{ gap: Spacing.sm }}>
       <Text style={{
         fontSize: FontSize.xs,
         fontWeight: FontWeight.bold,
@@ -894,6 +894,7 @@ export function TrackProgressCard({
         onPress={onContinue}
         color={color}
         variant="track"
+        size="sm"
       />
     </SifterCard>
   );

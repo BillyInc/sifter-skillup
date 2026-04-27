@@ -26,10 +26,10 @@ import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../../t
 // ─── Constants ──────────────────────────────────────────────────────────────────
 
 export const WEB_BREAKPOINT   = 768;
-export const WEB_MAX_WIDTH    = 1280;
-export const WEB_SIDEBAR_W    = 220;
-export const GRID_GAP         = 16;
-export const GRID_GAP_SM      = 14;
+export const WEB_MAX_WIDTH    = 1160;
+export const WEB_SIDEBAR_W    = 204;
+export const GRID_GAP         = 12;
+export const GRID_GAP_SM      = 10;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────────
 
@@ -294,7 +294,7 @@ export function WebEmptyState({ emoji, title, sub }: { emoji: string; title: str
   return (
     <View style={styles.emptyState}>
       <Text style={styles.emptyEmoji}>{emoji}</Text>
-      <Text style={[styles.emptyTitle, { color: colors.textSoft }]}>{title}</Text>
+      <Text style={[styles.emptyTitle, { color: colors.text }]}>{title}</Text>
       {sub && <Text style={[styles.emptySub, { color: colors.textMuted }]}>{sub}</Text>}
     </View>
   );
@@ -307,23 +307,23 @@ const styles = StyleSheet.create({
     maxWidth: WEB_MAX_WIDTH,
     width: '100%',
     alignSelf: 'center',
-    paddingHorizontal: GRID_GAP * 1.5,
-    paddingTop: GRID_GAP * 1.5,
+    paddingHorizontal: GRID_GAP + 4,
+    paddingTop: GRID_GAP + 4,
   },
 
   pageHeader: {
-    marginBottom: GRID_GAP * 1.5,
+    marginBottom: GRID_GAP + 4,
     position: 'relative',
-    paddingBottom: 16,
+    paddingBottom: 12,
   },
   pageTitle: {
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: '900',
-    letterSpacing: -0.5,
-    marginBottom: 4,
+    letterSpacing: -0.4,
+    marginBottom: 2,
   },
   pageSubtitle: {
-    fontSize: FontSize.md,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.medium,
   },
   pageHeaderRight: {
@@ -331,15 +331,15 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     flexDirection: 'row',
-    gap: 10,
+    gap: 8,
     alignItems: 'center',
   },
   pageHeaderLine: {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    height: 4,
-    width: 56,
+    height: 3,
+    width: 44,
     borderRadius: Radius.full,
   },
 
@@ -350,9 +350,9 @@ const styles = StyleSheet.create({
     marginBottom: GRID_GAP_SM,
   },
   sectionLabel: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: FontWeight.black,
-    letterSpacing: 1.1,
+    letterSpacing: 1,
   },
   sectionAction: {
     fontSize: FontSize.sm,
@@ -362,12 +362,12 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    marginBottom: GRID_GAP,
+    marginBottom: GRID_GAP_SM,
   },
 
   card: {
-    borderRadius: Radius.xl,
-    padding: 18,
+    borderRadius: Radius.lg,
+    padding: 14,
     borderWidth: 1,
     overflow: 'hidden',
   },
@@ -376,30 +376,30 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 4,
+    height: 3,
   },
   cardTitleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 14,
+    marginBottom: 10,
   },
   cardTitle: {
-    fontSize: FontSize.md,
+    fontSize: FontSize.sm,
     fontWeight: FontWeight.bold,
   },
 
   statTile: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    borderRadius: Radius.lg,
-    padding: 14,
+    gap: 10,
+    borderRadius: Radius.md,
+    padding: 12,
     borderWidth: 1,
     marginBottom: GRID_GAP_SM,
   },
-  statTileEmoji:  { fontSize: 22 },
-  statTileValue:  { fontSize: FontSize.xl, fontWeight: FontWeight.black, lineHeight: 22 },
+  statTileEmoji:  { fontSize: 18 },
+  statTileValue:  { fontSize: FontSize.lg, fontWeight: FontWeight.black, lineHeight: 20 },
   statTileLabel:  { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   statTileSub:    { fontSize: 10, marginTop: 1 },
 
@@ -419,20 +419,20 @@ const styles = StyleSheet.create({
   listRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    paddingVertical: 12,
+    gap: 10,
+    paddingVertical: 9,
     borderBottomWidth: 1,
   },
-  listRowIcon:      { fontSize: 20 },
+  listRowIcon:      { fontSize: 16 },
   listRowTitle:     { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   listRowSub:       { fontSize: FontSize.xs, marginTop: 2 },
-  listRowBadge:     { minWidth: 22, height: 22, borderRadius: 11, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 6 },
-  listRowBadgeText: { fontSize: 11, fontWeight: FontWeight.black, color: '#fff' },
+  listRowBadge:     { minWidth: 18, height: 18, borderRadius: 9, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 5 },
+  listRowBadgeText: { fontSize: 10, fontWeight: FontWeight.black, color: '#fff' },
   listRowRight:     { marginLeft: Spacing.sm, alignItems: 'center', justifyContent: 'center' },
-  listRowRightText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  listRowRightText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
 
-  emptyState:   { alignItems: 'center', paddingVertical: 40, gap: 10 },
-  emptyEmoji:   { fontSize: 36 },
+  emptyState:   { alignItems: 'center', paddingVertical: 28, gap: 8 },
+  emptyEmoji:   { fontSize: 32 },
   emptyTitle:   { fontSize: FontSize.md, fontWeight: FontWeight.bold, textAlign: 'center' },
   emptySub:     { fontSize: FontSize.sm, textAlign: 'center' },
 });

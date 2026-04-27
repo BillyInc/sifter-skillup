@@ -47,7 +47,7 @@ interface ShellSearchItem {
 
 const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/home',        sub: 'Overview' },
-  { id: 'islands',   label: 'My Islands',     icon: '🗺', href: '/(tabs)/map/island',  sub: 'Island 18 and beyond' },
+  { id: 'islands',   label: 'My Islands',     icon: '🗺', href: '/map/island',  sub: 'Island 18 and beyond' },
   { id: 'tracks',    label: 'Career Tracks',  icon: '🧭', href: '/(tabs)/fields',      sub: 'Skill paths' },
   { id: 'guilds',    label: 'Guilds',         icon: '🛡', href: '/(tabs)/guild',       sub: 'Leaderboard and chat' },
   { id: 'portfolio', label: 'Portfolio & XP', icon: '💼', href: '/(tabs)/portfolio',   sub: 'Artifacts and XP' },
@@ -239,7 +239,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
         id: 'islands',
         label: workspaceLabel,
         hint: workspaceHint,
-        href: trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/map/island',
+        href: trackContext.mode === 'track' ? trackContext.continueHref : '/map/island',
         keywords: ['islands', 'map', 'lessons', 'levels', 'workspace', 'current track', trackContext.trackName.toLowerCase(), trackContext.worldName.toLowerCase()],
       },
       {
