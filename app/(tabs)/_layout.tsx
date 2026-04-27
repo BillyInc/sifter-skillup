@@ -23,7 +23,6 @@ export default function TabsLayout() {
           <Tabs.Screen name="feed" options={{ href: null }} />
           <Tabs.Screen name="profile" options={{ href: null }} />
           <Tabs.Screen name="skills" options={{ href: null }} />
-          <Tabs.Screen name="community" options={{ href: null }} />
           <Tabs.Screen name="home" options={{ href: null }} />
         </Tabs>
       </ReferenceShell>

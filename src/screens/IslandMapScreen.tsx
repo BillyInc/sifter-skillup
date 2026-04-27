@@ -26,7 +26,7 @@ function getTierLabel(tier: Tier) {
 function getTierCopy(tier: Tier) {
   if (tier === 'beginner') return 'Foundations, wallet safety, and crypto basics.';
   if (tier === 'intermediate') return 'Execution, analysis, and more technical judgment.';
-  return 'High-pressure, portfolio-grade decision-making.';
+  return 'High-pressure, artifact-grade decision-making.';
 }
 
 function IslandDetailModal({
@@ -227,10 +227,10 @@ export default function IslandMapScreen({ route }: any) {
                 <Text style={[styles.backBtnText, { color: colors.text }]}>‹</Text>
               </TouchableOpacity>
               <View style={{ flex: 1 }}>
-                <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>Crypto Onboarding</Text>
-                <Text style={[styles.heroTitle, { color: colors.text }]}>Island Journey</Text>
+                <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>My Islands</Text>
+                <Text style={[styles.heroTitle, { color: colors.text }]}>Island Atlas</Text>
                 <Text style={[styles.heroSub, { color: colors.textSoft }]}>
-                  Compact, track-first progression with the real lesson routes preserved.
+                  Theme-led island progression with the real lesson routes preserved.
                 </Text>
               </View>
               <View style={[styles.heroStat, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
@@ -287,7 +287,7 @@ export default function IslandMapScreen({ route }: any) {
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet Realm</Text>
             <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>
-              Island 18 now unlocks strictly after Island 17, while your Starknet wallet stays ready as soon as you connect it.
+              Island 18 unlocks after Island 17, and your Starknet wallet stays ready for the dedicated realm.
             </Text>
             <IslandCard
               island={starkIsland}

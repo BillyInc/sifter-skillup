@@ -19,8 +19,12 @@ import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetP
 import { PRIVY_CONFIGURED, PRIVY_ENABLED } from '../lib/config';
 import { readPendingPrivyWebLogin } from '../lib/privyShared';
 import { useTheme, Spacing, Radius, FontSize } from '../theme';
+import { SifterButton } from '../components/ui';
+import { getFieldVisualTheme } from '../lib/visualThemes';
 
 const { width: W, height: H } = Dimensions.get('window');
+const STARKNET_THEME = getFieldVisualTheme('starknet');
+const BASE_THEME = { accent: '#0052ff' };
 
 type Mode = 'welcome' | 'login' | 'signup' | 'connecting' | 'starknet';
 
@@ -131,30 +135,17 @@ function AuthButton({
   variant?: 'primary' | 'ghost' | 'base';
   colors: any;
 }) {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  const handlePress = () => {
-    Animated.sequence([
-      Animated.timing(scaleAnim, { toValue: 0.97, duration: 80, useNativeDriver: true }),
-      Animated.timing(scaleAnim, { toValue: 1, duration: 120, useNativeDriver: true }),
-    ]).start();
-    onPress();
-  };
-
-  const bg = variant === 'primary' ? colors.accent : variant === 'base' ? '#0052ff' : 'transparent';
-  const border = variant === 'ghost' ? colors.border : 'transparent';
-  const textColor = variant === 'ghost' ? colors.accent : '#fff';
-
   return (
-    <Animated.View style={{ transform: [{ scale: scaleAnim }], width: '100%' }}>
-      <TouchableOpacity
-        style={[styles.btn, { backgroundColor: bg, borderColor: border, borderWidth: variant === 'ghost' ? 2 : 0 }]}
-        onPress={handlePress}
-        disabled={loading}
-        activeOpacity={0.85}
-      >
-        {loading ? <ActivityIndicator color={textColor} /> : <Text style={[styles.btnText, { color: textColor }]}>{label}</Text>}
-      </TouchableOpacity>
-    </Animated.View>
+    <SifterButton
+      label={label}
+      onPress={onPress}
+      loading={loading}
+      variant={variant === 'ghost' ? 'ghost' : 'primary'}
+      color={variant === 'base' ? BASE_THEME.accent : colors.accent}
+      size="md"
+      fullWidth
+      style={styles.authButton}
+    />
   );
 }
 
@@ -209,7 +200,7 @@ function StarknetHeader() {
 
 function StarknetBenefits() {
   return (
-    <View style={[styles.starkBenefits, { borderColor: '#ec489930' }]}>
+    <View style={[styles.starkBenefits, { borderColor: `${STARKNET_THEME.palette.primary}30` }]}>
       {[
         'Live Privy auth with backend wallet wiring',
         'No seed phrase required',
@@ -285,9 +276,9 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
   }
 
   return (
-    <View style={[styles.card, { backgroundColor: '#0a0a1f', borderColor: '#ec489940' }]}>
+    <View style={[styles.card, { backgroundColor: '#0a0a1f', borderColor: `${STARKNET_THEME.palette.primary}40` }]}>
       <TouchableOpacity onPress={onBack} style={styles.backBtn}>
-        <Text style={[styles.backText, { color: '#ec4899' }]}>Back</Text>
+        <Text style={[styles.backText, { color: STARKNET_THEME.palette.primary }]}>Back</Text>
       </TouchableOpacity>
 
       <StarknetHeader />
@@ -326,7 +317,7 @@ function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: S
       )}
 
       <TouchableOpacity
-        style={[styles.btn, { backgroundColor: '#ec4899', opacity: busy ? 0.7 : 1 }]}
+        style={[styles.btn, { backgroundColor: STARKNET_THEME.palette.primary, opacity: busy ? 0.7 : 1 }]}
         onPress={showCodeInput ? handleSubmitCode : handleSendCode}
         disabled={busy || (!showCodeInput ? !email : code.length < 6)}
         activeOpacity={0.85}
@@ -392,9 +383,9 @@ function StarknetUnavailableMode({ onBack }: { onBack: () => void }) {
     : 'Starknet auth is currently unavailable on this device.';
 
   return (
-    <View style={[styles.card, { backgroundColor: '#0a0a1f', borderColor: '#ec489940' }]}>
+    <View style={[styles.card, { backgroundColor: '#0a0a1f', borderColor: `${STARKNET_THEME.palette.primary}40` }]}>
       <TouchableOpacity onPress={onBack} style={styles.backBtn}>
-        <Text style={[styles.backText, { color: '#ec4899' }]}>Back</Text>
+        <Text style={[styles.backText, { color: STARKNET_THEME.palette.primary }]}>Back</Text>
       </TouchableOpacity>
       <StarknetHeader />
       <StarknetBenefits />
@@ -518,7 +509,7 @@ export default function AuthScreen() {
             <StarknetMode onBack={() => { setMode('welcome'); setError(''); }} onReady={handleStarknet} />
           </Animated.View>
           {error ? <Text style={[styles.errorText, { color: '#f87171' }]}>{error}</Text> : null}
-          {starknetLoading ? <ActivityIndicator color="#ec4899" style={{ marginTop: Spacing.md }} /> : null}
+          {starknetLoading ? <ActivityIndicator color={STARKNET_THEME.palette.primary} style={{ marginTop: Spacing.md }} /> : null}
         </ScrollView>
       </View>
     );
@@ -547,12 +538,12 @@ export default function AuthScreen() {
               <AuthButton label="Create account" onPress={() => setMode('signup')} colors={colors} />
 
               <TouchableOpacity
-                style={[styles.starknetCTA, { borderColor: '#ec489950' }]}
+                style={[styles.starknetCTA, { borderColor: `${STARKNET_THEME.palette.primary}50` }]}
                 onPress={() => setMode('starknet')}
                 activeOpacity={0.85}
               >
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.starknetCTATitle}>Log in or create with Starknet</Text>
+                  <Text style={[styles.starknetCTATitle, { color: STARKNET_THEME.palette.primary }]}>Log in or create with Starknet</Text>
                   <Text style={styles.starknetCTASub}>Privy auth, wallet sync, and direct Starknet island return</Text>
                 </View>
               </TouchableOpacity>
@@ -668,8 +659,7 @@ const styles = StyleSheet.create({
   appName: { fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' },
   tagline: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
   btnGroup: { gap: Spacing.sm },
-  btn: { borderRadius: Radius.md, paddingVertical: 13, alignItems: 'center', width: '100%' },
-  btnText: { fontSize: FontSize.md, fontWeight: '800' },
+  authButton: { width: '100%' },
   input: { borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: 12, fontSize: FontSize.sm, width: '100%' },
   starknetCTA: { borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#ec489908' },
   starknetCTATitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#ec4899' },

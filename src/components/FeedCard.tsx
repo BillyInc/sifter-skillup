@@ -230,12 +230,12 @@ function SkillWidget({ metadata, accent }: { metadata: any; accent: string }) {
   );
 }
 
-function CommunityWidget({ metadata, accent }: { metadata: any; accent: string }) {
+function GuildConversationWidget({ metadata, accent }: { metadata: any; accent: string }) {
   const { colors } = useTheme();
   return (
-    <View style={styles.communityMeta}>
-      <Text style={[styles.communityHandle, { color: accent }]}>{metadata.authorHandle}</Text>
-      <Text style={[styles.communityStats, { color: colors.textMuted }]}>
+    <View style={styles.guildMeta}>
+      <Text style={[styles.guildHandle, { color: accent }]}>{metadata.authorHandle}</Text>
+      <Text style={[styles.guildStats, { color: colors.textMuted }]}>
         {metadata.replies} replies · {metadata.likes} likes
       </Text>
     </View>
@@ -308,7 +308,7 @@ export function FeedCard({ item, accentColor, onReact, onComment, onBookmark }: 
       case 'market_sentiment': return <MarketSentimentWidget  metadata={meta} accent={accentColor} />;
       case 'job':              return <JobWidget              metadata={meta} accent={accentColor} />;
       case 'skill':            return <SkillWidget            metadata={meta} accent={accentColor} />;
-      case 'community':        return <CommunityWidget        metadata={meta} accent={accentColor} />;
+      case 'community':        return <GuildConversationWidget metadata={meta} accent={accentColor} />;
       default:                 return <NewsWidget             metadata={meta} />;
     }
   };
@@ -415,9 +415,9 @@ const styles = StyleSheet.create({
   skillRow:        { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   skillMeta:       { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, flex: 1 },
 
-  communityMeta:   { gap: 2 },
-  communityHandle: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  communityStats:  { fontSize: 11 },
+  guildMeta:       { gap: 2 },
+  guildHandle:     { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  guildStats:      { fontSize: 11 },
 
   newsImage:       { width: '100%', height: 148, borderRadius: Radius.lg },
 

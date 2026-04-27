@@ -10,7 +10,7 @@ import { Colors, Spacing, Radius, FontSize } from '../theme';
 const SECTIONS = [
   {
     title: 'What data we collect',
-    body: 'Account data: name, email, phone number (optional, for SMS notifications), profile photo (optional).\n\nLearning data: completed levels, XP, streaks, portfolio artifacts, last position in the app.\n\nDevice data: device type and OS (for push notifications), device ID (for multi-device sync).\n\nUsage data: feature interactions and analytics (anonymised).\n\nPayment data: handled entirely by our payment processor. We do not store card details.',
+    body: 'Account data: name, email, phone number (optional, for SMS notifications), profile photo (optional).\n\nLearning data: completed levels, XP, streaks, earned artifacts, last position in the app.\n\nDevice data: device type and OS (for push notifications), device ID (for multi-device sync).\n\nUsage data: feature interactions and analytics (anonymised).\n\nPayment data: handled entirely by our payment processor. We do not store card details.',
   },
   {
     title: 'What we do NOT collect',
@@ -69,7 +69,7 @@ export default function PrivacyScreen({ onClose }: Props) {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <View style={styles.shortNote}>
           <Text style={styles.shortNoteText}>
-            🔒 Short version: your diary never leaves your device. We don't sell your data. You can delete everything at any time.
+            🔒 Short version: your diary never leaves your device. We don&apos;t sell your data. You can delete everything at any time.
           </Text>
         </View>
         {SECTIONS.map((s, i) => (

@@ -49,6 +49,8 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
         setCanClaim(false);
         setHoursLeft(24);
         onSuccess?.(r);
+      } else if (r.fallbackUrl) {
+        Linking.openURL(r.fallbackUrl).catch(() => {});
       }
     } finally {
       setLoading(false);
@@ -80,8 +82,8 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
   if (result && !result.success) return (
     <View style={[s.wrap, s.errorWrap, compact && s.compact]}>
       <Text style={s.errorText}>⚠️ {result.error}</Text>
-      {result.error?.includes('faucet.starknet.io') && (
-        <TouchableOpacity onPress={() => Linking.openURL('https://faucet.starknet.io')}>
+      {result.fallbackUrl && (
+        <TouchableOpacity onPress={() => Linking.openURL(result.fallbackUrl!)}>
           <Text style={s.linkText}>Open faucet.starknet.io →</Text>
         </TouchableOpacity>
       )}
@@ -94,7 +96,7 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
       <Text style={s.cooldownIcon}>⏱</Text>
       <View style={{ flex: 1 }}>
         <Text style={s.cooldownTitle}>Next claim in {hoursLeft}h</Text>
-        <Text style={s.cooldownSub}>You already claimed today's testnet STRK</Text>
+        <Text style={s.cooldownSub}>You already claimed today&apos;s testnet STRK</Text>
       </View>
     </View>
   );

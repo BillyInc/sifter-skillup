@@ -61,6 +61,7 @@ export const PRIMER_L0_1 = {
   trackType: 'A',
   lessonNumber: 1,
   module: 'primer',
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 Think about the last time you were stuck in traffic on a busy motorway. Every car wants to get to the same city. The motorway can only handle so many cars at once. The more cars that join, the slower everything gets — and the more expensive it becomes to even get on (toll prices go up when demand spikes).
@@ -253,6 +254,7 @@ export const PRIMER_L0_2 = {
   trackType: 'A/B',
   lessonNumber: 2,
   module: 'primer',
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 In 2022, the Solana blockchain had a problem that confused a lot of people. Solana's staking rewards were generating new SOL tokens at a rate of about 8% per year — meaning 8% more SOL came into existence every year. Some holders were excited: "I'm earning 8% on my SOL just by holding it." Others were losing money in real terms even while earning those rewards.
@@ -725,6 +727,7 @@ export const LAB1_LESSON_1 = {
   title: 'The Full Starknet Map: Every Category',
   trackType: 'A',
   lessonNumber: 1,
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 In the summer of 2020, something unusual happened. A new category of financial apps — apps with no banks, no employees, no company offices — crossed $1 billion in total deposits for the first time. By September that same year, the number had hit $10 billion. By 2021, it crossed $100 billion. This explosion happened across dozens of different applications doing completely different things.
@@ -1562,6 +1565,7 @@ export const LAB1_LESSON_5 = {
   title: 'Ecosystem Actors: Foundation, StarkWare, Ecosystem Funds',
   trackType: 'A',
   lessonNumber: 5,
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 In 2016, a hacker drained $60 million from The DAO — a smart contract on Ethereum holding $150 million of user funds. The community faced an urgent decision: let the hack stand, or rewrite the blockchain to return the funds. They chose to rewrite history. But who actually made that decision? A small group of core developers and large miners who together had enough influence to push through a controversial software change. The ecosystem that claimed to be governed by code alone turned out to have informal power concentrated in very few hands.
@@ -2464,6 +2468,7 @@ export const LAB2_LESSON_4 = {
   title: 'Account Abstraction as a User-Facing Feature',
   trackType: 'A',
   lessonNumber: 4,
+  simulatorLesson: 'starkzap-wallet',
 
   explanation: `
 When online banking first launched in the late 1990s, you could access your account through a website. But accessing it required a username, a password, and often a hardware token that generated a 6-digit code every 30 seconds. If you lost the token, you were locked out until you called the bank and verified your identity in person. If someone stole your password and your token, they could access your money.
@@ -2648,6 +2653,7 @@ export const LAB2_LESSON_5 = {
   title: 'Starknet vs Ethereum vs Other L2s',
   trackType: 'A',
   lessonNumber: 5,
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 The smartphone market in 2010 looked superficially unified: multiple manufacturers made touchscreen phones. But Apple, Samsung, BlackBerry, and Nokia had made completely different architectural decisions — different operating systems, different app ecosystems, different hardware philosophies. Saying "they are all smartphones" was technically true and analytically useless. The differences between the architectures determined which use cases each could serve, which developers built for them, and ultimately which survived.
@@ -3049,6 +3055,7 @@ export const LAB3_LESSON_1 = {
   title: 'STRK Token: Distribution, Vesting, Supply Schedule',
   trackType: 'A/B',
   lessonNumber: 1,
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 In Primer L0.2, you learned the concepts: circulating supply, total supply, FDV, vesting, dilution. Those were the building blocks. This lesson applies every one of them to STRK — Starknet's native token — specifically. When you finish, you will be able to read STRK's tokenomics documentation, calculate what is coming, and assess what it means.
@@ -3599,6 +3606,7 @@ export const LAB3_LESSON_4 = {
   title: 'Reading Tokenomics Documentation Critically',
   trackType: 'B',
   lessonNumber: 4,
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   prerequisiteCheck: `
 PREREQUISITE CHECK
@@ -3841,6 +3849,7 @@ export const LAB3_LESSON_5 = {
   title: 'Evaluating a Protocol\'s Governance Risk',
   trackType: 'A',
   lessonNumber: 5,
+  simulatorLesson: 'starkzap-ecosystem-read',
 
   explanation: `
 In 2022, the governance system of Mango Markets — a DeFi lending protocol on Solana — was used against its users. An attacker took out a large leveraged position in Mango's own token (MNGO), manipulated the price upward, used the inflated collateral to borrow $117 million from the protocol, and then proposed a governance vote to forgive his loan and return a smaller amount to the protocol. Because he held enough governance tokens from his manipulation profits, he could pass the vote. Technically, the governance process worked exactly as designed. The outcome was theft.
@@ -4407,6 +4416,7 @@ export const LAB4_LESSON_2 = {
   title: 'Scarb and Starknet Foundry',
   trackType: 'C',
   lessonNumber: 2,
+  simulatorLesson: 'starkzap-package-install',
   evaluationNote: 'This lesson teaches you to evaluate Scarb and Starknet Foundry from an ecosystem analysis perspective. You will not write any code.',
 
   explanation: `
@@ -4599,6 +4609,7 @@ export const LAB4_LESSON_3 = {
   title: 'Starkzap SDK and Frontend Developer Adoption',
   trackType: 'C',
   lessonNumber: 3,
+  simulatorLesson: 'starkzap-package-install',
   evaluationNote: 'This lesson teaches you to evaluate the Starkzap SDK from an ecosystem analysis perspective. You will not write any code.',
 
   explanation: `

@@ -31,7 +31,7 @@ export default function OAuthConsentModal({
           <Text style={styles.emoji}>{platformEmoji}</Text>
           <Text style={styles.title}>Connect to {platform}</Text>
           <Text style={styles.sub}>
-            Before you connect, here's exactly what Sifter Skill_Up will and won't do with your {platform} account.
+            Before you connect, here&apos;s exactly what Sifter Skill_Up will and won&apos;t do with your {platform} account.
           </Text>
 
           <Text style={styles.sectionLabel}>✅ WE WILL:</Text>
@@ -59,13 +59,13 @@ export default function OAuthConsentModal({
           <View style={styles.revokeNote}>
             <Text style={styles.revokeText}>
               🔒 You can revoke access at any time from your Sifter account settings
-              or directly from {platform}'s connected apps settings. We use OAuth — no passwords stored.
+              or directly from {platform}&apos;s connected apps settings. We use OAuth — no passwords stored.
             </Text>
           </View>
 
           <View style={styles.agentNote}>
             <Text style={styles.agentText}>
-              By tapping "Connect", you authorise Sifter Skill_Up to act as your limited agent
+              By tapping &quot;Connect&quot;, you authorise Sifter Skill_Up to act as your limited agent
               for the specific actions listed above on {platform}, as described in our{' '}
               <Text style={styles.agentLink}>Terms of Service</Text>.
             </Text>
@@ -88,22 +88,22 @@ export default function OAuthConsentModal({
 export const PLATFORM_PERMISSIONS: Record<string, string[]> = {
   LinkedIn: [
     'Read your basic profile (name, headline, photo)',
-    'Update your profile with portfolio projects you approve',
-    'Post portfolio artifacts to your feed when you initiate it',
+    'Update your profile with approved Sifter projects',
+    'Post approved Sifter artifacts to your feed when you initiate it',
   ],
   GitHub: [
-    'Create repositories for your portfolio projects (with your approval)',
+    'Create repositories for your approved Sifter projects',
     'Push code and README files you\'ve completed in Sifter',
     'Read your public profile information',
   ],
   Upwork: [
     'Help you create or update your Upwork profile',
-    'Submit portfolio work you approve to your profile',
+    'Submit approved Sifter work to your profile',
     'Read your profile to check what\'s already there',
   ],
   Fiverr: [
-    'Assist with profile creation using your completed portfolio work',
-    'Update your portfolio section with projects you approve',
+    'Assist with profile creation using your completed Sifter work',
+    'Update your artifacts section with projects you approve',
   ],
 };
 

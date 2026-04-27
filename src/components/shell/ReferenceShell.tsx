@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
   useWindowDimensions,
@@ -35,17 +36,25 @@ interface ShellNavItem {
   sub: string;
 }
 
+interface ShellSearchItem {
+  id: string;
+  label: string;
+  hint: string;
+  href: string;
+  keywords: string[];
+}
+
 const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/home',         sub: 'Overview' },
   { id: 'islands',   label: 'My Islands',     icon: '🗺️', href: '/(tabs)/map/island',  sub: 'Island 18 and beyond' },
   { id: 'tracks',    label: 'Career Tracks',  icon: '🧭', href: '/(tabs)/fields',      sub: 'Skill paths' },
   { id: 'guilds',    label: 'Guilds',         icon: '🛡️', href: '/(tabs)/guild',       sub: 'Leaderboard and chat' },
-  { id: 'portfolio', label: 'Portfolio & XP', icon: '💼', href: '/(tabs)/portfolio',   sub: 'Artifacts and pushes' },
+  { id: 'portfolio', label: 'Portfolio & XP', icon: '💼', href: '/(tabs)/portfolio',   sub: 'Artifacts and XP' },
   { id: 'streaks',   label: 'Streaks',        icon: '🔥', href: '/(tabs)/streaks',     sub: 'Consistency' },
   { id: 'settings',  label: 'Settings',       icon: '⚙', href: '/(tabs)/settings',    sub: 'Theme and preferences' },
 ];
 
-const MOBILE_NAV: Array<{ id: NavId; label: string; icon: string; href: string }> = [
+const MOBILE_NAV: { id: NavId; label: string; icon: string; href: string }[] = [
   { id: 'dashboard', label: 'Home', icon: '⊞', href: '/(tabs)/home' },
   { id: 'tracks', label: 'Tracks', icon: '🧭', href: '/(tabs)/fields' },
   { id: 'feed', label: 'Feeds', icon: '📰', href: '/(tabs)/feed' },
@@ -137,6 +146,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const { colors, isDark, toggle } = useTheme();
   const { user } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchFocused, setSearchFocused] = useState(false);
   const routeTrackId = readParam(params.trackId);
   const routeTrackName = readParam(params.trackName);
   const trackContext = useMemo(() => resolveTrackContext(user, {
@@ -149,9 +160,67 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const activeItem = PRIMARY_NAV.find(item => item.id === activeId) ?? PRIMARY_NAV[0];
   const isWide = Platform.OS === 'web' && width >= 1100;
 
+  const searchItems = useMemo<ShellSearchItem[]>(() => {
+    const base: ShellSearchItem[] = [
+      { id: 'dashboard', label: 'Dashboard', hint: 'Overview and workspace', href: '/(tabs)/home', keywords: ['dashboard', 'home', 'overview', 'workspace'] },
+      { id: 'islands', label: 'My Islands', hint: 'Island map and lessons', href: '/(tabs)/map/island', keywords: ['islands', 'map', 'lessons', 'levels', 'starknet island'] },
+      { id: 'tracks', label: 'Career Tracks', hint: 'Browse skill paths', href: '/(tabs)/fields', keywords: ['tracks', 'skills', 'fields', 'career'] },
+      { id: 'guilds', label: 'Guilds', hint: 'Guild hub, rankings, and chat', href: '/(tabs)/guild', keywords: ['guilds', 'guild', 'rankings', 'leaderboard', 'chat', 'community'] },
+      { id: 'feed', label: 'Feeds', hint: 'Track news, jobs, and signals', href: '/(tabs)/feed', keywords: ['feeds', 'feed', 'news', 'jobs', 'signals'] },
+      { id: 'portfolio', label: 'Portfolio & XP', hint: 'Artifacts, tasks, and XP', href: '/(tabs)/portfolio', keywords: ['portfolio', 'artifacts', 'xp', 'projects', 'work samples'] },
+      { id: 'streaks', label: 'Streaks', hint: 'Consistency and rewards', href: '/(tabs)/streaks', keywords: ['streaks', 'streak', 'consistency'] },
+      { id: 'settings', label: 'Settings', hint: 'Theme, notifications, wallet', href: '/(tabs)/settings', keywords: ['settings', 'preferences', 'theme', 'notifications', 'wallet'] },
+      { id: 'profile', label: 'Profile', hint: 'Your account and progress', href: '/(tabs)/profile', keywords: ['profile', 'account', 'progress'] },
+    ];
+
+    if (trackContext.mode === 'track') {
+      base.unshift({
+        id: 'current-track',
+        label: trackContext.trackName,
+        hint: trackContext.tagline,
+        href: '/(tabs)/home',
+        keywords: [
+          trackContext.trackName.toLowerCase(),
+          trackContext.worldName.toLowerCase(),
+          trackContext.heroEyebrow.toLowerCase(),
+          'current track',
+        ],
+      });
+    }
+
+    return base;
+  }, [trackContext]);
+
+  const filteredSearchItems = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return searchItems.slice(0, 5);
+    return searchItems
+      .filter(item =>
+        item.label.toLowerCase().includes(q)
+        || item.hint.toLowerCase().includes(q)
+        || item.keywords.some(keyword => keyword.includes(q)),
+      )
+      .slice(0, 6);
+  }, [searchItems, searchQuery]);
+
   const goTo = (item: ShellNavItem) => {
     setDrawerOpen(false);
     router.push(item.href as any);
+  };
+
+  const openSearchResult = (href: string) => {
+    setSearchFocused(false);
+    setSearchQuery('');
+    router.push(href as any);
+  };
+
+  const handleSearchSubmit = () => {
+    const first = filteredSearchItems[0];
+    if (first) {
+      openSearchResult(first.href);
+      return;
+    }
+    openSearchResult('/(tabs)/feed');
   };
 
   return (
@@ -227,8 +296,36 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
           <View style={styles.topbarActions}>
             {isWide && (
-              <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-                <Text style={[styles.searchStubText, { color: colors.textMuted }]}>{trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.searchPlaceholder : 'Search is routed next through Feed and Guilds'}</Text>
+              <View style={styles.searchWrap}>
+                <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                  <Text style={[styles.searchIcon, { color: colors.textMuted }]}>⌕</Text>
+                  <TextInput
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
+                    onSubmitEditing={handleSearchSubmit}
+                    placeholder={trackContext.mode === 'track' && activeId === 'dashboard' ? trackContext.searchPlaceholder : 'Search screens, tracks, and tools'}
+                    placeholderTextColor={colors.textMuted}
+                    style={[styles.searchInput, { color: colors.text }]}
+                    returnKeyType="search"
+                  />
+                </View>
+                {searchFocused && filteredSearchItems.length > 0 && (
+                  <View style={[styles.searchResults, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                    {filteredSearchItems.map(item => (
+                      <TouchableOpacity
+                        key={item.id}
+                        activeOpacity={0.8}
+                        onPress={() => openSearchResult(item.href)}
+                        style={[styles.searchResultRow, { borderBottomColor: colors.border }]}
+                      >
+                        <Text style={[styles.searchResultTitle, { color: colors.text }]}>{item.label}</Text>
+                        <Text style={[styles.searchResultHint, { color: colors.textMuted }]}>{item.hint}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
               </View>
             )}
 
@@ -490,6 +587,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: Spacing.sm,
   },
+  searchWrap: {
+    position: 'relative',
+  },
   searchStub: {
     minWidth: 220,
     maxWidth: 360,
@@ -497,9 +597,41 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
   },
-  searchStubText: {
+  searchIcon: {
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+  },
+  searchInput: {
+    minWidth: 220,
     fontSize: FontSize.xs,
+    paddingVertical: 0,
+  },
+  searchResults: {
+    position: 'absolute',
+    top: 52,
+    left: 0,
+    right: 0,
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    overflow: 'hidden',
+    ...Shadow.md,
+  },
+  searchResultRow: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderBottomWidth: 1,
+  },
+  searchResultTitle: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+    marginBottom: 2,
+  },
+  searchResultHint: {
+    fontSize: 11,
   },
   topbarIconBtn: {
     width: 42,
