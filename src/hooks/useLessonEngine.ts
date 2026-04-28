@@ -591,6 +591,19 @@ export function useLessonEngine() {
     });
   }, []);
 
+  const goBack = useCallback(() => {
+    setState(prev => {
+      if (!prev || prev.qIndex <= 0) return prev;
+      return {
+        ...prev,
+        qIndex: prev.qIndex - 1,
+        answered: false,
+        lastCorrect: null,
+        finished: false,
+      };
+    });
+  }, []);
+
   const completeSimulator = useCallback(() => {
     setState(prev => {
       if (!prev) return prev;
@@ -631,5 +644,5 @@ export function useLessonEngine() {
     }
   }, [startLesson, startStarknetLesson]);
 
-  return { state, lesson: lessonRef.current, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator };
+  return { state, lesson: lessonRef.current, startLesson, startStarknetLesson, advance, goBack, answerCorrect, answerWrong, resetLesson, completeSimulator };
 }

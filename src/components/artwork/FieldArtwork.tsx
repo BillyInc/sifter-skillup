@@ -508,7 +508,9 @@ export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '⚡' }:
 
 // ─── Router ────────────────────────────────────────────────────────────────────
 
-export function FieldArtwork({ fieldId, size = 180 }: { fieldId: string; size?: number }) {
+type FieldArtworkProps = { fieldId: string; size?: number };
+
+export function FieldArtwork({ fieldId, size = 180 }: FieldArtworkProps) {
   switch (fieldId) {
     case 'crypto':
       return <CryptoArtwork size={size} />;
@@ -524,6 +526,8 @@ export function FieldArtwork({ fieldId, size = 180 }: { fieldId: string; size?: 
       return <GenericArtwork size={size} emoji={fieldEmoji(fieldId)} color={fieldColor(fieldId)} />;
   }
 }
+
+export default FieldArtwork;
 
 // ─── Field colour/emoji maps ───────────────────────────────────────────────────
 

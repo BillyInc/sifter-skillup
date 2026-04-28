@@ -355,6 +355,20 @@ function LessonNavRow({ previousTopic, onPrevious }: {
   );
 }
 
+function LessonStepBackRow({ canGoBack, onBack }: {
+  canGoBack: boolean;
+  onBack: () => void;
+}) {
+  if (!canGoBack) return null;
+  return (
+    <View style={sty.lessonNavRow}>
+      <TouchableOpacity style={sty.lessonNavBtn} onPress={onBack} activeOpacity={0.85}>
+        <Text style={sty.lessonNavBtnText}>Previous step in this lesson</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 function ConceptCard({ q, onNext, levelId, onTermPress }: {
   q: Question; onNext: () => void; levelId: number; onTermPress: (link: TermLink) => void;
 }) {
@@ -779,7 +793,7 @@ export default function LessonScreen({
 
   const { user } = useAuth();
   const { savePosition } = useResume();
-  const { state, startLesson, startStarknetLesson, advance, answerCorrect, answerWrong, resetLesson, completeSimulator } = useLessonEngine();
+  const { state, startLesson, startStarknetLesson, advance, goBack, answerCorrect, answerWrong, resetLesson, completeSimulator } = useLessonEngine();
   const { completeLevel } = useProgress();
 
   const [showFeedback, setShowFeedback]       = useState(false);
@@ -1158,6 +1172,10 @@ export default function LessonScreen({
       <LessonNavRow
         previousTopic={previousTarget?.topic ?? null}
         onPrevious={previousTarget && onNavigateToLesson ? () => onNavigateToLesson(previousTarget.levelId) : null}
+      />
+      <LessonStepBackRow
+        canGoBack={Boolean(state && state.qIndex > 0 && !state.finished)}
+        onBack={goBack}
       />
 
       {showStarknetFaucet && user?.starknet_address ? (
