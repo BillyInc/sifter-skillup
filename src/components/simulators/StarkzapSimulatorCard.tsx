@@ -44,6 +44,9 @@ function useStarknetWallet() {
   return {
     wallet: bridge.wallet as StarkzapWallet | null,
     address: bridge.address,
+    ready: bridge.ready,
+    status: bridge.status,
+    error: bridge.error,
   };
 }
 
@@ -153,6 +156,42 @@ const dB = StyleSheet.create({
   text: { fontSize: FontSize.xs, fontWeight: '600', textAlign: 'center' },
 });
 
+function WalletReadyNotice({
+  colors,
+  walletAddress,
+  walletStatus,
+  walletReady,
+}: {
+  colors: any;
+  walletAddress?: string | null;
+  walletStatus?: string;
+  walletReady?: boolean;
+}) {
+  if (!isStarkzapAvailable()) {
+    return <DemoBadge colors={colors} />;
+  }
+
+  if (walletReady && walletAddress) {
+    return (
+      <StatusNotice
+        colors={colors}
+        tone="success"
+        title="Wallet connected"
+        body={`Live Starknet lessons will use ${shortAddress(walletAddress)} on Starknet Sepolia.`}
+      />
+    );
+  }
+
+  return (
+    <StatusNotice
+      colors={colors}
+      tone="demo"
+      title="Connect wallet before continuing"
+      body={`These Starknet simulators need your Privy Starknet wallet connected first. Current bridge status: ${walletStatus ?? 'waiting-for-user'}.`}
+    />
+  );
+}
+
 // ─── Helper — get or create wallet ────────────────────────────────────────────
 
 async function getWallet(starknetWallet: any): Promise<StarkzapWallet | null> {
@@ -225,7 +264,12 @@ const status = StyleSheet.create({
 // ── Wallet ──────────────────────────────────────────────────────────────────
 
 function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet, address: starknetAddress } = useStarknetWallet();
+  const {
+    wallet: starknetWallet,
+    address: starknetAddress,
+    ready: walletReady,
+    status: walletStatus,
+  } = useStarknetWallet();
   const [balance, setBalance] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -250,7 +294,8 @@ function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onS
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="👛" title="Your Starknet Wallet" subtitle="View your address and check your STRK balance on Sepolia." colors={colors} />
-      <DemoBadge colors={colors} />
+      <WalletReadyNotice colors={colors} walletAddress={address} walletReady={walletReady} walletStatus={walletStatus} />
+      <InfoRow icon="status" label="Bridge status" value={walletReady ? 'connected' : walletStatus} colors={colors} />
       <InfoRow icon="🔑" label="Address" value={address} colors={colors} />
       {balance && <InfoRow icon="💰" label="STRK Balance" value={balance} colors={colors} />}
       {!done
@@ -273,7 +318,7 @@ function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onS
 // ── Gasless ─────────────────────────────────────────────────────────────────
 
 function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarknetWallet();
+  const { wallet: starknetWallet, address, ready: walletReady, status: walletStatus } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
   const [mode, setMode] = useState<'live' | 'demo' | null>(null);
@@ -312,7 +357,7 @@ function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; on
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="⛽" title="Send Gasless Transaction" subtitle="Transfer 1 STRK. The AVNU Paymaster covers the fee — you pay $0." colors={colors} />
-      <DemoBadge colors={colors} />
+      <WalletReadyNotice colors={colors} walletAddress={address} walletReady={walletReady} walletStatus={walletStatus} />
       <InfoRow icon="📤" label="Send" value="1 STRK" colors={colors} />
       <InfoRow icon="⛽" label="Gas fee" value="$0.00 (sponsored)" colors={colors} />
       <InfoRow icon="📍" label="To" value={MOCK.walletAddress} colors={colors} />
@@ -331,14 +376,22 @@ function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; on
 // ── Swap ────────────────────────────────────────────────────────────────────
 
 function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarknetWallet();
+  const { wallet: starknetWallet, address, ready: walletReady, status: walletStatus } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleGetQuote = async () => {
+    setError(null);
     setLoading(true);
     await simulateDelay(1500);
+    const walletError = getLiveWalletError(starknetWallet);
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
     if (isStarkzapAvailable() && starknetWallet) {
       try {
         const w = starknetWallet as any;
@@ -348,7 +401,9 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
           amountIn: { toUnit: () => '1000000000000000000' } as any,
         });
         setQuote(`≈ ${(Number(q.amountOutBase) / 1e6).toFixed(4)} USDC`);
-      } catch { setQuote(MOCK.swapQuote.to); }
+      } catch (err) {
+        setError(getErrorMessage(err));
+      }
     } else {
       setQuote(MOCK.swapQuote.to);
     }
@@ -356,8 +411,15 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
   };
 
   const handleSwap = async () => {
+    setError(null);
     setLoading(true);
     await simulateDelay(2500);
+    const walletError = getLiveWalletError(starknetWallet);
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
     if (isStarkzapAvailable() && starknetWallet) {
       try {
         const w = starknetWallet as any;
@@ -369,7 +431,9 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
           provider: 'avnu',
         });
         setTxHash(tx.hash);
-      } catch { setTxHash(MOCK.txHash); }
+      } catch (err) {
+        setError(getErrorMessage(err));
+      }
     } else {
       setTxHash(MOCK.txHash);
     }
@@ -379,7 +443,7 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="🔄" title="Swap STRK → USDC" subtitle="Execute a real token swap via AVNU on Starknet Sepolia." colors={colors} />
-      <DemoBadge colors={colors} />
+      <WalletReadyNotice colors={colors} walletAddress={address} walletReady={walletReady} walletStatus={walletStatus} />
       <InfoRow icon="↗️" label="You sell" value="1 STRK" colors={colors} />
       <InfoRow icon="↙️" label="You receive" value={quote ?? '—'} colors={colors} />
       <InfoRow icon="💧" label="Slippage" value="1%" colors={colors} />
@@ -403,19 +467,29 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 const STAKE_POOL = '0x028d709c875c0ceac3dce7065bec5328186dc89fe254527084d1689910954b0a';
 
 function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarknetWallet();
+  const { wallet: starknetWallet, address, ready: walletReady, status: walletStatus } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleStake = async () => {
+    setError(null);
     setLoading(true);
     await simulateDelay(2500);
+    const walletError = getLiveWalletError(starknetWallet);
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
     if (isStarkzapAvailable() && starknetWallet) {
       try {
         const w = starknetWallet as any;
         const tx = await w.stake(STAKE_POOL, { toUnit: () => '100000000000000000000' } as any);
         setTxHash(tx.hash);
-      } catch { setTxHash(MOCK.txHash); }
+      } catch (err) {
+        setError(getErrorMessage(err));
+      }
     } else {
       setTxHash(MOCK.txHash);
     }
@@ -425,7 +499,7 @@ function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="🏦" title="Stake STRK" subtitle="Delegate 100 STRK to a validator. Earn ~8% APY." colors={colors} />
-      <DemoBadge colors={colors} />
+      <WalletReadyNotice colors={colors} walletAddress={address} walletReady={walletReady} walletStatus={walletStatus} />
       <InfoRow icon="🪙" label="Amount" value="100 STRK" colors={colors} />
       <InfoRow icon="📈" label="APY" value={MOCK.poolApy} colors={colors} />
       <InfoRow icon="⏱" label="Lock-up" value="21 days unbonding" colors={colors} />
@@ -445,13 +519,21 @@ function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Lend ────────────────────────────────────────────────────────────────────
 
 function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarknetWallet();
+  const { wallet: starknetWallet, address, ready: walletReady, status: walletStatus } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDeposit = async () => {
+    setError(null);
     setLoading(true);
     await simulateDelay(2200);
+    const walletError = getLiveWalletError(starknetWallet);
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
     if (isStarkzapAvailable() && starknetWallet) {
       try {
         const w = starknetWallet as any;
@@ -461,7 +543,9 @@ function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
           pool: 'vesu-genesis',
         });
         setTxHash(tx.hash);
-      } catch { setTxHash(MOCK.txHash); }
+      } catch (err) {
+        setError(getErrorMessage(err));
+      }
     } else {
       setTxHash(MOCK.txHash);
     }
@@ -471,7 +555,7 @@ function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="💵" title="Deposit into Vesu" subtitle="Supply 100 USDC to Vesu lending market. Earn supply APY." colors={colors} />
-      <DemoBadge colors={colors} />
+      <WalletReadyNotice colors={colors} walletAddress={address} walletReady={walletReady} walletStatus={walletStatus} />
       <InfoRow icon="💵" label="Deposit" value="100 USDC" colors={colors} />
       <InfoRow icon="📈" label="Supply APY" value="~5.2%" colors={colors} />
       <InfoRow icon="🏛️" label="Protocol" value="Vesu Finance" colors={colors} />
@@ -491,14 +575,22 @@ function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 // ── DCA ─────────────────────────────────────────────────────────────────────
 
 function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarknetWallet();
+  const { wallet: starknetWallet, address, ready: walletReady, status: walletStatus } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handlePreview = async () => {
+    setError(null);
     setLoading(true);
     await simulateDelay(1500);
+    const walletError = getLiveWalletError(starknetWallet);
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
     if (isStarkzapAvailable() && starknetWallet) {
       try {
         const w = starknetWallet as any;
@@ -509,7 +601,9 @@ function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip
         });
         const strk = Number(p.amountOutBase) / 1e18;
         setPreview(`≈ ${strk.toFixed(2)} STRK per cycle`);
-      } catch { setPreview('≈ 12.4 STRK per cycle'); }
+      } catch (err) {
+        setError(getErrorMessage(err));
+      }
     } else {
       setPreview('≈ 12.4 STRK per cycle');
     }
@@ -517,8 +611,15 @@ function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip
   };
 
   const handleCreate = async () => {
+    setError(null);
     setLoading(true);
     await simulateDelay(2500);
+    const walletError = getLiveWalletError(starknetWallet);
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
     if (isStarkzapAvailable() && starknetWallet) {
       try {
         const w = starknetWallet as any;
@@ -530,7 +631,9 @@ function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip
           cycles: BigInt(12),
         });
         setTxHash(tx.hash);
-      } catch { setTxHash(MOCK.txHash); }
+      } catch (err) {
+        setError(getErrorMessage(err));
+      }
     } else {
       setTxHash(MOCK.txHash);
     }
@@ -540,7 +643,7 @@ function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="📅" title="Create DCA Order" subtitle="Buy STRK weekly with $10 USDC for 12 weeks automatically." colors={colors} />
-      <DemoBadge colors={colors} />
+      <WalletReadyNotice colors={colors} walletAddress={address} walletReady={walletReady} walletStatus={walletStatus} />
       <InfoRow icon="💰" label="Buy" value="STRK" colors={colors} />
       <InfoRow icon="💵" label="Spend" value="$10 USDC per week" colors={colors} />
       <InfoRow icon="🔄" label="Duration" value="12 weeks" colors={colors} />
