@@ -52,6 +52,54 @@ function getGreeting(): string {
   return 'Good evening';
 }
 
+function buildTrackAwarePins(trackContext: ReturnType<typeof resolveTrackContext>) {
+  if (trackContext.mode !== 'track') {
+    return DEFAULT_ISLAND_PINS;
+  }
+
+  if (trackContext.fieldId === 'quant') {
+    return [
+      { x: 138, y: 193, color: '#6366F1', name: 'Vol Surface', done: 8, total: 10 },
+      { x: 215, y: 148, color: '#3B82F6', name: 'Derivatives', done: 7, total: 10 },
+      { x: 258, y: 188, color: '#A855F7', name: 'HFT Desk', done: 5, total: 10 },
+      { x: 232, y: 225, color: '#10B981', name: 'Risk Models', done: 6, total: 10 },
+    ];
+  }
+
+  if (trackContext.fieldId === 'supply-chain') {
+    return [
+      { x: 138, y: 193, color: '#10B981', name: 'Planning', done: 6, total: 10 },
+      { x: 215, y: 148, color: '#14B8A6', name: 'Procurement', done: 5, total: 10 },
+      { x: 258, y: 188, color: '#F59E0B', name: 'Warehousing', done: 4, total: 10 },
+      { x: 232, y: 225, color: '#3B82F6', name: 'Logistics', done: 7, total: 10 },
+    ];
+  }
+
+  if (trackContext.fieldId === 'starknet') {
+    return [
+      { x: 138, y: 193, color: '#F4B74A', name: 'Wallet Ops', done: 5, total: 10 },
+      { x: 215, y: 148, color: '#F97316', name: 'Bridge Flow', done: 4, total: 10 },
+      { x: 258, y: 188, color: '#22C55E', name: 'DeFi Labs', done: 7, total: 10 },
+      { x: 232, y: 225, color: '#8B5CF6', name: 'Cairo Build', done: 3, total: 10 },
+    ];
+  }
+
+  if (trackContext.fieldId === 'crypto') {
+    return [
+      { x: 138, y: 193, color: '#0EA5E9', name: 'Wallet Flows', done: 4, total: 10 },
+      { x: 215, y: 148, color: '#8B5CF6', name: 'Protocol Maps', done: 6, total: 10 },
+      { x: 258, y: 188, color: '#F43F5E', name: 'Smart Money', done: 3, total: 10 },
+      { x: 232, y: 225, color: '#10B981', name: 'Yield Systems', done: 5, total: 10 },
+    ];
+  }
+
+  return DEFAULT_ISLAND_PINS.map((pin, index) => ({
+    ...pin,
+    name: trackContext.focusAreas[index] ?? pin.name,
+    color: index === 0 ? trackContext.color : pin.color,
+  }));
+}
+
 function StreakBanner({ status }: { status: StreakStatus }) {
   const { colors } = useTheme();
   const atRisk = (status as any).isAtRisk;
@@ -194,6 +242,7 @@ function TrackHeroCard({
   accentColor,
   trackId,
   heroVisual,
+  globePins,
   eyebrow,
   title,
   summary,
@@ -205,6 +254,7 @@ function TrackHeroCard({
   accentColor: string;
   trackId?: string;
   heroVisual: 'globe' | 'isometric';
+  globePins: typeof DEFAULT_ISLAND_PINS;
   eyebrow: string;
   title: string;
   summary: string;
@@ -244,7 +294,7 @@ function TrackHeroCard({
           <View style={heroVisual === 'globe' ? styles.heroArtworkGlobe : styles.heroArtworkScene}>
             {heroVisual === 'globe' ? (
               <IslandGlobe
-                pins={DEFAULT_ISLAND_PINS}
+                pins={globePins}
                 width="100%"
                 height="100%"
               />
@@ -376,6 +426,7 @@ export default function HomeScreen() {
     trackContext.artFieldId === 'crypto' ||
     !trackContext.trackId;
   const heroVisual = isCryptoOrIsland ? 'globe' : 'isometric';
+  const trackAwarePins = useMemo(() => buildTrackAwarePins(trackContext), [trackContext]);
   const continueHref = resumeHref || trackContext.continueHref || '/(tabs)/fields';
   const continueLabel = trackContext.mode === 'track'
     ? (resumeSummary ? 'Continue where you left off' : trackContext.continueLabel)
@@ -464,6 +515,7 @@ export default function HomeScreen() {
                   accentColor={accentColor}
                   trackId={trackContext.trackId ?? trackContext.artFieldId}
                   heroVisual={heroVisual}
+                  globePins={trackAwarePins}
                   eyebrow={trackContext.heroEyebrow}
                   title={trackContext.heroTitle}
                   summary={heroSummary}
@@ -476,7 +528,7 @@ export default function HomeScreen() {
                 <WebCard accentBar accentColor={colors.accent} title="Progress Overview">
                   <View style={styles.webProgressCard}>
                     <View style={styles.overviewGlobeWrap}>
-                      <IslandGlobe pins={DEFAULT_ISLAND_PINS} width="100%" height="100%" />
+                      <IslandGlobe pins={trackAwarePins} width="100%" height="100%" />
                     </View>
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.webStageName, { color: colors.accent }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
@@ -704,7 +756,7 @@ export default function HomeScreen() {
             <View style={heroVisual === 'globe' ? styles.mobileArtworkGlobe : styles.mobileArtworkScene}>
               {heroVisual === 'globe' ? (
                 <IslandGlobe
-                  pins={DEFAULT_ISLAND_PINS}
+                  pins={trackAwarePins}
                   width="100%"
                   height="100%"
                 />
@@ -775,7 +827,7 @@ const styles = StyleSheet.create({
   mobileHeaderSub: { fontSize: FontSize.sm, lineHeight: 18, marginTop: 6, maxWidth: 280 },
   mobileBoltBtn: { borderWidth: 1, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14 },
 
-  streakBanner: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, marginBottom: Spacing.lg },
+  streakBanner: { borderRadius: 10, borderWidth: 1, padding: Platform.OS === 'web' ? 10 : 12, marginBottom: Spacing.md },
   streakBannerText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, textAlign: 'center' },
 
   progressLabelRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
@@ -790,26 +842,26 @@ const styles = StyleSheet.create({
 
   referenceBadgeWrap: { alignSelf: 'flex-start', marginBottom: 10 },
 
-  webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, borderWidth: 1 },
+  webBoltBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, borderRadius: 8, paddingVertical: 6, paddingHorizontal: 10, borderWidth: 1 },
   webBoltLabel: { fontSize: 11, fontWeight: '700', maxWidth: 180 },
 
-  webProgressCard: { flexDirection: 'row', gap: 16, alignItems: 'flex-start' },
-  overviewGlobeWrap: { width: 160, aspectRatio: 1, flexShrink: 0 },
-  webStageName: { fontSize: FontSize.xl, fontWeight: FontWeight.black, marginBottom: 4 },
-  webStageDesc: { fontSize: FontSize.sm, lineHeight: 18, marginBottom: 12 },
+  webProgressCard: { flexDirection: 'row', gap: 12, alignItems: 'flex-start' },
+  overviewGlobeWrap: { width: 148, aspectRatio: 1, flexShrink: 0 },
+  webStageName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 3 },
+  webStageDesc: { fontSize: FontSize.xs, lineHeight: 17, marginBottom: 10 },
 
-  heroPanel: { flexDirection: 'row', minHeight: 272 },
-  heroPanelCopy: { flex: 1, padding: 28, justifyContent: 'center' },
-  heroPanelTitle: { fontSize: 18, fontWeight: '900', letterSpacing: -0.7, marginBottom: 10 },
-  heroPanelSummary: { fontSize: FontSize.md, lineHeight: 22, marginBottom: 16, maxWidth: 520 },
-  heroPanelTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 18 },
+  heroPanel: { flexDirection: 'row', minHeight: 236 },
+  heroPanelCopy: { flex: 1, padding: 18, justifyContent: 'center' },
+  heroPanelTitle: { fontSize: 17, fontWeight: '900', letterSpacing: -0.5, marginBottom: 8 },
+  heroPanelSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 12, maxWidth: 420 },
+  heroPanelTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 12 },
   heroTag: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
   heroTagText: { fontSize: 9, fontWeight: '700' },
   heroPanelBtn: { alignSelf: 'flex-start' },
-  heroPanelVisual: { width: 296, alignItems: 'center', justifyContent: 'center', gap: 14, padding: 28 },
-  heroArtworkGlobe: { width: '100%', maxWidth: 240, aspectRatio: 1 },
-  heroArtworkScene: { width: '100%', maxWidth: 242, aspectRatio: 560 / 300 },
-  heroPanelMiniCard: { borderWidth: 1, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 16 : 14, width: '100%' },
+  heroPanelVisual: { width: 270, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 18 },
+  heroArtworkGlobe: { width: '100%', maxWidth: 208, aspectRatio: 1 },
+  heroArtworkScene: { width: '100%', maxWidth: 220, aspectRatio: 560 / 300 },
+  heroPanelMiniCard: { borderWidth: 1, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 12 : 14, width: '100%' },
   heroPanelMiniLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginBottom: 8 },
 
   overviewTrackCard: { height: '100%' },
@@ -826,26 +878,26 @@ const styles = StyleSheet.create({
   trackIconBadgeText: { fontSize: 9, fontWeight: '700', letterSpacing: 0.4 },
   webTrackName: { fontSize: FontSize.md, fontWeight: FontWeight.bold, flex: 1 },
   webTrackArrow: { fontSize: 18 },
-  overviewTrackSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 10 },
+  overviewTrackSummary: { fontSize: FontSize.xs, lineHeight: 18, marginBottom: 8 },
   webTrackKey: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  webTrackBtn: { marginTop: 12 },
+  webTrackBtn: { marginTop: 10 },
 
   trackFeatureTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
   trackFeatureSummary: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: 14 },
   trackFeatureGrid: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
-  trackFeatureItem: { width: '31%', minWidth: 160, borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, gap: 8 },
+  trackFeatureItem: { width: '31%', minWidth: 160, borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 12 : 12, gap: 8 },
   trackFeatureIndex: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   trackFeatureItemText: { fontSize: FontSize.sm, lineHeight: 18 },
   primaryActionBtn: { marginTop: 12 },
 
-  webDiscussionCard: { borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, marginVertical: 8 },
+  webDiscussionCard: { borderRadius: 11, padding: Platform.OS === 'web' ? 12 : 12, borderWidth: 1, marginVertical: 6 },
   webDiscTitle: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: 6 },
   webDiscItem: { fontSize: FontSize.sm, marginBottom: 4 },
   webStreakLabel: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2, marginBottom: 4 },
   webStreakNum: { fontSize: 18, fontWeight: FontWeight.black, lineHeight: 22, marginBottom: 6 },
   webStreakSub: { fontSize: FontSize.sm },
 
-  webChartArea: { height: 90, borderRadius: Radius.md, borderWidth: 1, overflow: 'hidden', marginBottom: 14, padding: 10, alignItems: 'center', justifyContent: 'center' },
+  webChartArea: { height: 84, borderRadius: Radius.md, borderWidth: 1, overflow: 'hidden', marginBottom: 10, padding: 10, alignItems: 'center', justifyContent: 'center' },
   webChartMetrics: { flexDirection: 'row', gap: 32 },
   webMetricVal: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
   webMetricLbl: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },

@@ -13,6 +13,7 @@ import {
   Animated,
   Dimensions,
   Linking,
+  type ViewStyle,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../hooks/useAuth';
@@ -26,6 +27,22 @@ import { getFieldVisualTheme } from '../lib/visualThemes';
 const { width: W, height: H } = Dimensions.get('window');
 const STARKNET_THEME = getFieldVisualTheme('starknet');
 const BASE_THEME = { accent: '#0052ff' };
+
+const welcomeContentStyle: ViewStyle = {
+  ...(webContainer as ViewStyle),
+  flexGrow: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingBottom: Spacing.xxxl,
+};
+
+const formContentStyle: ViewStyle = {
+  ...(webContainer as ViewStyle),
+  flexGrow: 1,
+  justifyContent: 'center',
+  paddingBottom: Spacing.xxxl,
+  alignItems: 'center',
+};
 
 type Mode = 'welcome' | 'login' | 'signup' | 'connecting' | 'starknet';
 
@@ -519,7 +536,7 @@ export default function AuthScreen() {
     return (
       <View style={[styles.screen, { backgroundColor: '#020208' }]}>
         <CircuitBackground isDark />
-        <ScrollView contentContainerStyle={styles.welcomeContent} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={welcomeContentStyle} showsVerticalScrollIndicator={false}>
           <Animated.View style={cardStyle}>
             <StarknetMode onBack={() => { setMode('welcome'); setError(''); }} onReady={handleStarknet} />
           </Animated.View>
@@ -542,7 +559,7 @@ export default function AuthScreen() {
             <Text style={[styles.statusText, { color: colors.textMuted }]}>SIFTER SKILL_UP</Text>
           </View>
         ) : null}
-        <ScrollView contentContainerStyle={styles.welcomeContent} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={welcomeContentStyle} showsVerticalScrollIndicator={false}>
           <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
             <Text style={[styles.eyebrow, { color: colors.textMuted }]}>SKILL PLATFORM</Text>
             <Text style={[styles.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
@@ -622,7 +639,7 @@ export default function AuthScreen() {
       <CircuitBackground isDark={isDark} />
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <ScrollView contentContainerStyle={styles.formContent} keyboardShouldPersistTaps="handled">
+          <ScrollView contentContainerStyle={formContentStyle} keyboardShouldPersistTaps="handled">
             <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
               <TouchableOpacity onPress={() => setMode('welcome')} style={styles.backBtn}>
                 <Text style={[styles.backText, { color: colors.accent }]}>Back</Text>
@@ -690,8 +707,6 @@ const styles = StyleSheet.create({
   statusBar: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.xl, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
   statusDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' },
   statusText: { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 0.5 },
-  welcomeContent: { ...webContainer, flexGrow: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: Spacing.xxxl },
-  formContent: { ...webContainer, flexGrow: 1, justifyContent: 'center', paddingBottom: Spacing.xxxl, alignItems: 'center' },
   card: { width: '100%', maxWidth: 430, borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1, gap: Spacing.sm },
   starknetCard: { backgroundColor: '#0a0a1f' },
   eyebrow: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 1, textAlign: 'center' },

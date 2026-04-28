@@ -116,24 +116,24 @@ export const LightColors: ColorPalette = {
 // ─── Dark palette ─────────────────────────────────────────────
 
 export const DarkColors: ColorPalette = {
-  bg: '#090909', bgSecondary: '#111111', bgTertiary: '#1A1A1A',
-  card: '#121212', cardElevated: '#171717', navy: '#F9FAFB',
-  accent: '#F59E0B', accentSoft: '#221507', accentDim: '#D97706', accentDeep: '#FDE68A',
-  green: '#34D399', greenSoft: '#052E28',
-  red: '#F87171', redSoft: '#3A1014',
-  gold: '#FBBF24', goldSoft: '#3B2A09',
-  orange: '#FB923C', orangeSoft: '#3A1D09',
-  text: '#FAFAFA', textSoft: '#D4D4D8', textMuted: '#A1A1AA', textInverse: '#111111',
-  border: '#2A2A2A', borderDark: '#3A3A3A', borderFocus: '#F59E0B',
-  beginner: '#34D399', intermediate: '#FBBF24', pro: '#F59E0B',
+  bg: '#11141A', bgSecondary: '#171B22', bgTertiary: '#20252E',
+  card: '#1A2029', cardElevated: '#202733', navy: '#F8FAFC',
+  accent: '#E8EDF5', accentSoft: '#262D38', accentDim: '#B8C1CD', accentDeep: '#FFFFFF',
+  green: '#34D399', greenSoft: '#102E27',
+  red: '#F87171', redSoft: '#34181B',
+  gold: '#F4B74A', goldSoft: '#342815',
+  orange: '#FB923C', orangeSoft: '#392414',
+  text: '#F4F7FB', textSoft: '#CBD5E1', textMuted: '#94A3B8', textInverse: '#11141A',
+  border: '#2B3442', borderDark: '#3A4658', borderFocus: '#CBD5E1',
+  beginner: '#34D399', intermediate: '#F4B74A', pro: '#F87171',
   bitcoin: '#F7931A', ethereum: '#7C96FF', defi: '#34D399', nft: '#A78BFA',
   bridge: '#22D3EE', meme: '#F87171', base: '#3B82F6', ton: '#38BDF8',
-  bnb: '#FBB024', solana: '#B57AFF', starknet: '#F59E0B',
-  tabBar: '#111111', tabBarBorder: '#2A2A2A', tabBarActive: '#F59E0B',
-  inputBg: '#181818', inputBorder: '#3A3A3A',
-  overlay: 'rgba(0,0,0,0.75)', shimmer: '#171717', shimmerHighlight: '#222222',
-  stitch: '#F59E0B', stitchSoft: '#221507',
-  levelBadge: '#3B2A09', levelBadgeText: '#FBBF24',
+  bnb: '#FBB024', solana: '#B57AFF', starknet: '#F4B74A',
+  tabBar: '#171B22', tabBarBorder: '#2B3442', tabBarActive: '#F4F7FB',
+  inputBg: '#151A22', inputBorder: '#324051',
+  overlay: 'rgba(6,10,16,0.76)', shimmer: '#1F2732', shimmerHighlight: '#2A3442',
+  stitch: '#F4F7FB', stitchSoft: '#262D38',
+  levelBadge: '#342815', levelBadgeText: '#F4B74A',
   streakFire: '#FB923C', xpGreen: '#34D399',
 };
 
@@ -365,7 +365,7 @@ export function getRewardTier(xp: number): RewardTier {
   return 'bronze';
 }
 
-export const WEB_MAX_WIDTH = 1160;
+export const WEB_MAX_WIDTH = 1088;
 export const webContainer = Platform.OS === 'web'
-  ? { maxWidth: 1160, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 18, paddingTop: 18 }
+  ? { maxWidth: 1088, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 14, paddingTop: 14 }
   : { paddingHorizontal: 14, paddingTop: 12 };

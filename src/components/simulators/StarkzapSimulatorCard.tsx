@@ -19,17 +19,17 @@
  *   starkzap-boss     — final challenge, combines multiple actions
  */
 
-import React, { useState, useRef, useEffect, type ReactNode } from 'react';
+import React, { useState, useEffect, type ReactNode } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  ActivityIndicator, Animated, Linking,
+  ActivityIndicator, Linking,
 } from 'react-native';
-import { useStarkzapWallet } from '../../lib/starkzapPrivyAdapter';
+import { useStarknetWalletBridge } from '../auth/StarknetWalletBridge';
 import {
-  isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
+  isStarkzapAvailable, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../lib/starkzap';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme } from '../../theme';
+import { Spacing, Radius, FontSize, useTheme } from '../../theme';
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
@@ -37,6 +37,14 @@ interface Props {
   simulatorType: string;   // e.g. 'starkzap-swap'
   onComplete: () => void;
   onSkip: () => void;
+}
+
+function useStarknetWallet() {
+  const bridge = useStarknetWalletBridge();
+  return {
+    wallet: bridge.wallet as StarkzapWallet | null,
+    address: bridge.address,
+  };
 }
 
 // ─── Shared UI components ──────────────────────────────────────────────────────
@@ -150,25 +158,74 @@ const dB = StyleSheet.create({
 async function getWallet(starknetWallet: any): Promise<StarkzapWallet | null> {
   if (starknetWallet) return starknetWallet as StarkzapWallet;
   if (!isStarkzapAvailable()) return null;
-  try {
-    const { StarkSigner } = require('starkzap-native');
-    const key = process.env.EXPO_PUBLIC_DEMO_STARK_KEY ?? '0x1';
-    return await starkzapSdk.connectWallet({
-      account: { signer: new StarkSigner(key) },
-      deploy: 'if_needed',
-      feeMode: 'sponsored',
-    });
-  } catch { return null; }
+  return null;
 }
 
 async function simulateDelay(ms = 2000) { return new Promise(r => setTimeout(r, ms)); }
+
+function shortAddress(address?: string | null) {
+  if (!address) return MOCK.walletAddress;
+  if (address.length <= 18) return address;
+  return `${address.slice(0, 8)}...${address.slice(-6)}`;
+}
+
+function asAmount(baseUnits: string, formatted: string) {
+  return {
+    toUnit: () => baseUnits,
+    toFormatted: () => formatted,
+    isZero: () => baseUnits === '0',
+  } as any;
+}
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message) return error.message;
+  if (typeof error === 'string' && error.trim()) return error.trim();
+  return 'The live Starknet action failed in this runtime.';
+}
+
+function getLiveWalletError(starknetWallet: StarkzapWallet | null) {
+  if (!isStarkzapAvailable()) return null;
+  if (!starknetWallet) return 'Connect a Starknet wallet before running the live Sepolia lesson.';
+  return null;
+}
+
+function StatusNotice({
+  colors,
+  tone,
+  title,
+  body,
+}: {
+  colors: any;
+  tone: 'error' | 'demo' | 'success';
+  title: string;
+  body: string;
+}) {
+  const palette = tone === 'error'
+    ? { bg: colors.redSoft ?? '#fef2f2', fg: colors.red ?? '#b91c1c', border: `${colors.red ?? '#b91c1c'}40` }
+    : tone === 'success'
+      ? { bg: colors.greenSoft, fg: colors.green, border: `${colors.green}40` }
+      : { bg: colors.goldSoft, fg: colors.gold, border: `${colors.gold}40` };
+
+  return (
+    <View style={[status.wrap, { backgroundColor: palette.bg, borderColor: palette.border }]}>
+      <Text style={[status.title, { color: palette.fg }]}>{title}</Text>
+      <Text style={[status.body, { color: colors.textSoft }]}>{body}</Text>
+    </View>
+  );
+}
+
+const status = StyleSheet.create({
+  wrap: { borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.xs, borderWidth: 1, marginBottom: Spacing.sm },
+  title: { fontSize: FontSize.md, fontWeight: '800' },
+  body: { fontSize: FontSize.sm, lineHeight: 20 },
+});
 
 // ─── Individual simulators ─────────────────────────────────────────────────────
 
 // ── Wallet ──────────────────────────────────────────────────────────────────
 
 function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet, address: starknetAddress } = useStarkzapWallet();
+  const { wallet: starknetWallet, address: starknetAddress } = useStarknetWallet();
   const [balance, setBalance] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -216,21 +273,38 @@ function WalletSim({ onComplete, onSkip, colors }: { onComplete: () => void; onS
 // ── Gasless ─────────────────────────────────────────────────────────────────
 
 function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarkzapWallet();
+  const { wallet: starknetWallet } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
+  const [mode, setMode] = useState<'live' | 'demo' | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSend = async () => {
+    setError(null);
     setLoading(true);
-    await simulateDelay(2000);
-    if (isStarkzapAvailable() && starknetWallet) {
-      try {
-        const w = starknetWallet as any;
-        const tx = await w.transfer(STARKNET_TOKENS.STRK, [{ to: MOCK.walletAddress, amount: { toUnit: () => '1000000000000000000' } as any }]);
-        setTxHash(tx.hash);
-      } catch { setTxHash(MOCK.txHash); }
-    } else {
+    const walletError = getLiveWalletError(starknetWallet);
+
+    if (!isStarkzapAvailable()) {
+      await simulateDelay(2000);
       setTxHash(MOCK.txHash);
+      setMode('demo');
+      setLoading(false);
+      return;
+    }
+
+    if (walletError) {
+      setError(walletError);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const w = starknetWallet as any;
+      const tx = await w.transfer(STARKNET_TOKENS.STRK, [{ to: MOCK.walletAddress, amount: { toUnit: () => '1000000000000000000' } as any }]);
+      setTxHash(tx.hash);
+      setMode('live');
+    } catch (err) {
+      setError(getErrorMessage(err));
     }
     setLoading(false);
   };
@@ -257,7 +331,7 @@ function GaslessSim({ onComplete, onSkip, colors }: { onComplete: () => void; on
 // ── Swap ────────────────────────────────────────────────────────────────────
 
 function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarkzapWallet();
+  const { wallet: starknetWallet } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [quote, setQuote] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -329,7 +403,7 @@ function SwapSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 const STAKE_POOL = '0x028d709c875c0ceac3dce7065bec5328186dc89fe254527084d1689910954b0a';
 
 function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarkzapWallet();
+  const { wallet: starknetWallet } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
 
@@ -371,7 +445,7 @@ function StakeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Lend ────────────────────────────────────────────────────────────────────
 
 function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarkzapWallet();
+  const { wallet: starknetWallet } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
 
@@ -417,7 +491,7 @@ function LendSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 // ── DCA ─────────────────────────────────────────────────────────────────────
 
 function DcaSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarkzapWallet();
+  const { wallet: starknetWallet } = useStarknetWallet();
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -507,7 +581,7 @@ function BuildSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSk
 // ── Boss (combined challenge) ────────────────────────────────────────────────
 
 function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { wallet: starknetWallet } = useStarkzapWallet();
+  const { wallet: starknetWallet } = useStarknetWallet();
   const [step, setStep] = useState<'swap' | 'stake' | 'lend' | 'done'>('swap');
   const [loading, setLoading] = useState(false);
   const [txHashes, setTxHashes] = useState<Record<string, string>>({});
@@ -726,6 +800,309 @@ function PackageInstallSim({ onComplete, onSkip, colors }: { onComplete: () => v
   );
 }
 
+function LiveBridgeSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const { wallet: starknetWallet, address } = useStarknetWallet();
+  const [step, setStep] = useState<'idle'|'bridging'|'done'>('idle');
+  const [txHash, setTxHash] = useState<string | null>(null);
+  const [mode, setMode] = useState<'live' | 'demo' | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleBridge = async () => {
+    setError(null);
+    setStep('bridging');
+
+    if (!isStarkzapAvailable()) {
+      await simulateDelay(1800);
+      setTxHash(`0xbridge${Date.now().toString(16)}`);
+      setMode('demo');
+      setStep('done');
+      return;
+    }
+
+    const wallet = await getWallet(starknetWallet);
+
+    if (!wallet) {
+      setError('Connect a Starknet wallet before attempting the live Sepolia bridge.');
+      setStep('idle');
+      return;
+    }
+
+    try {
+      const txBuilder = typeof (wallet as any).tx === 'function' ? (wallet as any).tx() : null;
+      const liveTx =
+        txBuilder?.bridge
+          ? await txBuilder.bridge({
+              fromChain: 'ethereum-sepolia',
+              toChain: 'starknet-sepolia',
+              token: STARKNET_TOKENS.ETH,
+              amount: asAmount('10000000000000000', '0.01 ETH'),
+              destination: address ?? (wallet as any).address,
+            })
+          : typeof (wallet as any).bridge === 'function'
+            ? await (wallet as any).bridge({
+                fromChain: 'ethereum-sepolia',
+                toChain: 'starknet-sepolia',
+                token: STARKNET_TOKENS.ETH,
+                amount: asAmount('10000000000000000', '0.01 ETH'),
+                destination: address ?? (wallet as any).address,
+              })
+            : (wallet as any).bridges?.deposit
+              ? await (wallet as any).bridges.deposit({
+                  sourceChain: 'ethereum-sepolia',
+                  destinationChain: 'starknet-sepolia',
+                  token: STARKNET_TOKENS.ETH,
+                  amount: asAmount('10000000000000000', '0.01 ETH'),
+                  recipient: address ?? (wallet as any).address,
+                })
+              : null;
+
+      if (liveTx?.hash) {
+        setTxHash(liveTx.hash);
+        setMode('live');
+        setStep('done');
+        return;
+      }
+
+      setError('The connected StarkZap runtime did not expose a usable Sepolia bridge method. Falling back to demo mode for lesson continuity.');
+      await simulateDelay(1200);
+      setTxHash(`0xbridge${Date.now().toString(16)}`);
+      setMode('demo');
+      setStep('done');
+    } catch (err) {
+      setError(`${getErrorMessage(err)} Falling back to demo mode for lesson continuity.`);
+      await simulateDelay(1200);
+      setTxHash(`0xbridge${Date.now().toString(16)}`);
+      setMode('demo');
+      setStep('done');
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={{ gap: Spacing.md, paddingBottom: Spacing.sm }}>
+      <SimHeader icon="🌉" title="Bridge to Starknet" subtitle="Bridge test ETH from Ethereum Sepolia to Starknet Sepolia." colors={colors}>
+        {step === 'idle' && <>
+          <InfoRow icon="📤" label="From" value="Ethereum Sepolia" colors={colors} />
+          <InfoRow icon="📥" label="To" value="Starknet Sepolia" colors={colors} />
+          <InfoRow icon="💰" label="Amount" value="0.01 ETH" colors={colors} />
+          <InfoRow icon="🔐" label="Recipient" value={shortAddress(address ?? (starknetWallet as any)?.address)} colors={colors} />
+          <InfoRow icon="⏱️" label="Est. Time" value="5 min to 12h depending on route" colors={colors} />
+          {!isStarkzapAvailable() && <DemoBadge colors={colors} />}
+          {error ? <StatusNotice colors={colors} tone="error" title="Live bridge unavailable" body={error} /> : null}
+          <ActionBtn label="Bridge to Starknet" onPress={handleBridge} colors={colors} variant="starknet" />
+        </>}
+        {step === 'bridging' && <ActionBtn label="Bridging..." onPress={()=>{}} loading colors={colors} />}
+        {step === 'done' && <>
+          <View style={[{ backgroundColor: colors.greenSoft, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.xs }]}>
+            <Text style={{ color: colors.green, fontWeight: '800', fontSize: FontSize.md }}>
+              {mode === 'live' ? 'Bridge submitted' : 'Demo bridge completed'}
+            </Text>
+            <Text style={{ color: colors.textSoft, fontSize: FontSize.sm }}>
+              {mode === 'live'
+                ? `Bridge request sent toward Starknet Sepolia for ${shortAddress(address ?? (starknetWallet as any)?.address)}.`
+                : 'Live bridge APIs were unavailable in this runtime, so the lesson fell back to a safe demo flow.'}
+            </Text>
+          </View>
+          {txHash ? <TxResult hash={txHash} label={mode === 'live' ? 'Bridge transaction submitted' : 'Demo bridge recorded'} colors={colors} /> : null}
+          <ActionBtn label="Continue" onPress={onComplete} colors={colors} />
+        </>}
+        <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+      </SimHeader>
+    </ScrollView>
+  );
+
+  /*
+
+  return (
+    <SimHeader icon="ðŸŒ‰" title="Bridge to Starknet" subtitle="Attempt a live Starknet Sepolia bridge when the SDK runtime supports it." colors={colors}>
+      {step === 'idle' && <>
+        <InfoRow icon="ðŸ“¤" label="From" value="Ethereum Sepolia" colors={colors} />
+        <InfoRow icon="ðŸ“¥" label="To" value="Starknet Sepolia" colors={colors} />
+        <InfoRow icon="ðŸ’°" label="Amount" value="0.01 ETH" colors={colors} />
+        <InfoRow icon="ðŸ”‘" label="Recipient" value={shortAddress(address ?? (starknetWallet as any)?.address)} colors={colors} />
+        <InfoRow icon="â±ï¸" label="Est. Time" value="5 min to 12h depending on route" colors={colors} />
+        {!isStarkzapAvailable() && <DemoBadge colors={colors} />}
+        {error ? <StatusNotice colors={colors} tone="error" title="Live bridge unavailable" body={error} /> : null}
+        <ActionBtn label="Bridge to Starknet â†’" onPress={handleBridge} colors={colors} variant="starknet" />
+      </>}
+      {step === 'bridging' && <ActionBtn label="Bridgingâ€¦" onPress={()=>{}} loading colors={colors} />}
+      {step === 'done' && <>
+        <View style={[{ backgroundColor: colors.greenSoft, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.xs }]}>
+          <Text style={{ color: colors.green, fontWeight: '800', fontSize: FontSize.md }}>
+            {mode === 'live' ? 'âœ… Bridge submitted' : 'ðŸ§ª Demo bridge completed'}
+          </Text>
+          <Text style={{ color: colors.textSoft, fontSize: FontSize.sm }}>
+            {mode === 'live'
+              ? `Bridge request sent toward Starknet Sepolia for ${shortAddress(address ?? (starknetWallet as any)?.address)}.`
+              : 'Live bridge APIs were unavailable in this runtime, so the lesson fell back to a safe demo flow.'}
+          </Text>
+        </View>
+        {txHash ? <TxResult hash={txHash} label={mode === 'live' ? 'Bridge transaction submitted' : 'Demo bridge recorded'} colors={colors} /> : null}
+        <ActionBtn label="Continue â†’" onPress={onComplete} colors={colors} />
+      </>}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+  */
+}
+
+function LiveBalanceSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const { wallet: starknetWallet, address } = useStarknetWallet();
+  const [balances, setBalances] = useState<{eth:string;strk:string;mode:'live'|'demo'}|null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void (async () => {
+      const wallet = await getWallet(starknetWallet);
+      if (isStarkzapAvailable() && !wallet) {
+        if (!cancelled) {
+          setError('Connect a Starknet wallet to load your live Sepolia balances.');
+        }
+        return;
+      }
+      if (wallet) {
+        try {
+          const [strk, eth] = await Promise.all([
+            (wallet as any).balanceOf(STARKNET_TOKENS.STRK),
+            (wallet as any).balanceOf(STARKNET_TOKENS.ETH),
+          ]);
+          if (!cancelled) {
+            setBalances({
+              strk: strk.toFormatted?.() ?? MOCK.strkBalance,
+              eth: eth.toFormatted?.() ?? '0.0142 ETH',
+              mode: 'live',
+            });
+          }
+          return;
+        } catch (err) {
+          if (!cancelled) {
+            setError(getErrorMessage(err));
+          }
+          return;
+        }
+      }
+
+      if (!cancelled) {
+        setBalances({
+          strk: MOCK.strkBalance,
+          eth: '0.0142 ETH',
+          mode: 'demo',
+        });
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [starknetWallet]);
+
+  return (
+    <SimHeader icon="ðŸ’¼" title="Wallet Balance" subtitle="Read the connected Starknet Sepolia wallet first, then fall back to demo values if needed." colors={colors}>
+      {balances ? <>
+        <InfoRow icon="ðŸ”‘" label="Wallet" value={shortAddress(address ?? (starknetWallet as any)?.address)} colors={colors} />
+        <InfoRow icon="âš¡" label="STRK" value={balances.strk} colors={colors} />
+        <InfoRow icon="ðŸ’Ž" label="ETH" value={balances.eth} colors={colors} />
+        <InfoRow icon="ðŸ”—" label="Network" value="Starknet Sepolia" colors={colors} />
+        {error ? <StatusNotice colors={colors} tone="error" title="Live balance read failed" body={error} /> : null}
+        {balances.mode === 'demo' ? <DemoBadge colors={colors} /> : null}
+        <ActionBtn label="Continue â†’" onPress={onComplete} colors={colors} />
+      </> : <>
+        {error ? <StatusNotice colors={colors} tone="error" title="Live wallet required" body={error} /> : null}
+        <ActionBtn label="Fetchingâ€¦" onPress={()=>{}} loading colors={colors} />
+      </>}
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </SimHeader>
+  );
+}
+
+function ConfidentialSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
+  const { wallet: starknetWallet, address } = useStarknetWallet();
+  const [loading, setLoading] = useState(false);
+  const [txHash, setTxHash] = useState<string | null>(null);
+  const [mode, setMode] = useState<'live' | 'demo' | null>(null);
+
+  const recipientId = { x: '0x021cafe', y: '0x045beef' };
+
+  const handleTransfer = async () => {
+    setLoading(true);
+    const wallet = await getWallet(starknetWallet);
+
+    if (wallet) {
+      try {
+        const txBuilder = typeof (wallet as any).tx === 'function' ? (wallet as any).tx() : null;
+        const confidentialApi = txBuilder?.confidential ?? (wallet as any).confidential ?? null;
+
+        if (txBuilder?.confidentialFund && txBuilder?.confidentialTransfer) {
+          await txBuilder.confidentialFund({
+            token: STARKNET_TOKENS.USDC,
+            amount: asAmount('1000000', '1 USDC'),
+          });
+          const tx = await txBuilder.confidentialTransfer({
+            token: STARKNET_TOKENS.USDC,
+            amount: asAmount('1000000', '1 USDC'),
+            to: recipientId,
+          });
+          setTxHash(tx.hash);
+          setMode('live');
+          setLoading(false);
+          return;
+        }
+
+        if (confidentialApi?.fund && confidentialApi?.transfer) {
+          await confidentialApi.fund({
+            token: STARKNET_TOKENS.USDC,
+            amount: asAmount('1000000', '1 USDC'),
+          });
+          const tx = await confidentialApi.transfer({
+            token: STARKNET_TOKENS.USDC,
+            amount: asAmount('1000000', '1 USDC'),
+            recipientId,
+          });
+          setTxHash(tx.hash);
+          setMode('live');
+          setLoading(false);
+          return;
+        }
+      } catch {}
+    }
+
+    await simulateDelay(1800);
+    setTxHash(MOCK.txHash);
+    setMode('demo');
+    setLoading(false);
+  };
+
+  return (
+    <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
+      <SimHeader icon="ðŸ”" title="Confidential Transfer" subtitle="Try a live Tongo/StarkZap confidential flow first, then gracefully fall back if this runtime lacks those methods." colors={colors} />
+      {!isStarkzapAvailable() && <DemoBadge colors={colors} />}
+      <InfoRow icon="ðŸ”‘" label="Wallet" value={shortAddress(address ?? (starknetWallet as any)?.address)} colors={colors} />
+      <InfoRow icon="ðŸ’µ" label="Token" value="1 USDC" colors={colors} />
+      <InfoRow icon="ðŸ•¶ï¸" label="Recipient ID" value={`${recipientId.x.slice(0, 8)}... / ${recipientId.y.slice(0, 8)}...`} colors={colors} />
+      <InfoRow icon="ðŸ”—" label="Network" value="Starknet Sepolia" colors={colors} />
+      {txHash
+        ? <>
+            <View style={[{ backgroundColor: colors.greenSoft, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.xs }]}>
+              <Text style={{ color: colors.green, fontWeight: '800', fontSize: FontSize.md }}>
+                {mode === 'live' ? 'âœ… Confidential transfer submitted' : 'ðŸ§ª Confidential transfer demo completed'}
+              </Text>
+              <Text style={{ color: colors.textSoft, fontSize: FontSize.sm }}>
+                {mode === 'live'
+                  ? 'The runtime exposed confidential StarkZap/Tongo methods, so this lesson used the live wallet path.'
+                  : 'This runtime did not expose confidential methods, so the lesson safely fell back to demo mode instead of breaking.'}
+              </Text>
+            </View>
+            <TxResult hash={txHash} label={mode === 'live' ? 'Confidential transfer broadcast' : 'Demo confidential transfer recorded'} colors={colors} />
+            <ActionBtn label="Continue â†’" onPress={onComplete} colors={colors} />
+          </>
+        : <ActionBtn label={loading ? '' : 'ðŸ” Send Confidential Transfer'} onPress={handleTransfer} loading={loading} colors={colors} variant="starknet" />
+      }
+      <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
+    </ScrollView>
+  );
+}
+
 export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSkip }: Props) {
   const { colors } = useTheme();
 
@@ -741,8 +1118,9 @@ export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSki
     case 'starkzap-build':          return <BuildSim          {...props} />;
     case 'starkzap-boss':           return <BossSim           {...props} />;
     case 'starkzap-borrow':         return <BorrowSim         {...props} />;
-    case 'starkzap-bridge':         return <BridgeSim         {...props} />;
-    case 'starkzap-balance':        return <BalanceSim        {...props} />;
+    case 'starkzap-bridge':         return <LiveBridgeSim     {...props} />;
+    case 'starkzap-balance':        return <LiveBalanceSim    {...props} />;
+    case 'starkzap-confidential':   return <ConfidentialSim   {...props} />;
     case 'starkzap-ecosystem-read': return <EcosystemReadSim  {...props} />;
     case 'starkzap-mainnet-push':   return <MainnetPushSim    {...props} />;
     case 'starkzap-package-install':return <PackageInstallSim {...props} />;
@@ -752,7 +1130,7 @@ export default function StarkzapSimulatorCard({ simulatorType, onComplete, onSki
           <Text style={{ fontSize: 18 }}>⚡</Text>
           <Text style={{ color: colors.text, fontSize: FontSize.md, fontWeight: '800' }}>Starknet Simulator</Text>
           <Text style={{ color: colors.textSoft, fontSize: FontSize.sm, textAlign: 'center' }}>
-            No live simulator is configured for "{simulatorType}".
+            No live simulator is configured for {`"${simulatorType}"`}.
           </Text>
           <ActionBtn label="Skip" onPress={onSkip} variant="ghost" colors={colors} />
         </View>
