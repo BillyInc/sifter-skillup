@@ -118,24 +118,32 @@ function CircuitBackground({ isDark }: { isDark: boolean }) {
   const cols = Math.ceil(W / 40);
   const rows = Math.ceil(H / 40);
   const opacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });
+  const dots = Array.from({ length: rows * cols }, (_, index) => {
+    const row = Math.floor(index / cols);
+    const col = index % cols;
+    return {
+      key: `${row}-${col}`,
+      left: col * 40 - 1,
+      top: row * 40 - 1,
+    };
+  });
 
   return (
     <Animated.View style={[StyleSheet.absoluteFillObject, { opacity }]} pointerEvents="none">
-      {Array.from({ length: rows }).map((_, row) =>
-        Array.from({ length: cols }).map((__, col) => (
-          <View
-            key={`${row}-${col}`}
-            style={{
-              position: 'absolute',
-              left: col * 40 - 1,
-              top: row * 40 - 1,
-              width: 3,
-              height: 3,
-              borderRadius: 1.5,
-              backgroundColor: dotColor,
-            }}
-          />
-        )))}
+      {dots.map((dot) => (
+        <View
+          key={dot.key}
+          style={{
+            position: 'absolute',
+            left: dot.left,
+            top: dot.top,
+            width: 3,
+            height: 3,
+            borderRadius: 1.5,
+            backgroundColor: dotColor,
+          }}
+        />
+      ))}
     </Animated.View>
   );
 }
