@@ -37,8 +37,8 @@ function StarknetWalletBridgeWeb({
     <StarknetWalletBridgeContext.Provider value={{
       wallet: null,
       address: fallbackAddress,
-      status: fallbackAddress ? 'ready' : 'waiting-for-user',
-      ready: Boolean(fallbackAddress),
+      status: fallbackAddress ? 'waiting-for-user' : 'waiting-for-user',
+      ready: false,
       error: null,
     }}>
       {children}

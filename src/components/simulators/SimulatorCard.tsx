@@ -4994,6 +4994,7 @@ const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
   'starkzap-dca':               (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-dca" />,
   'starkzap-bridge':            (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-bridge" />,
   'starkzap-balance':           (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-balance" />,
+  'starkzap-confidential':      (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-confidential" />,
   'starkzap-ecosystem-read':    (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-ecosystem-read" />,
   'starkzap-mainnet-push':      (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-mainnet-push" />,
   'starkzap-package-install':   (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-package-install" />,

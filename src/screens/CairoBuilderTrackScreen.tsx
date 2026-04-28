@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   SafeAreaView, RefreshControl, Linking,
+  type ViewStyle,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
@@ -9,6 +10,12 @@ import { useAuth } from '../hooks/useAuth';
 import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
 
 const ACCENT = '#F97316';
+
+const scrollContentStyle: ViewStyle = {
+  ...(webContainer as ViewStyle),
+  gap: Spacing.lg,
+  paddingBottom: Spacing.xl,
+};
 
 interface LabDef {
   id: string;
@@ -163,7 +170,7 @@ export default function CairoBuilderTrackScreen() {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <ScrollView
-        contentContainerStyle={styles.scroll}
+        contentContainerStyle={scrollContentStyle}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={ACCENT} />}
         showsVerticalScrollIndicator={false}
       >
@@ -237,7 +244,6 @@ export default function CairoBuilderTrackScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  scroll: { ...webContainer, gap: Spacing.lg, paddingBottom: Spacing.xl },
   heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.xl, gap: Spacing.md, ...Shadow.sm },
   backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 9 },
   backButtonText: { fontSize: FontSize.xs, fontWeight: '800' },

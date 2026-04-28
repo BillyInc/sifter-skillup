@@ -111,7 +111,7 @@ export default function StarknetFaucetButton({ walletAddress, compact, onSuccess
     >
       {loading
         ? <ActivityIndicator color="#fff" size="small" />
-        : <Text style={s.compactBtnText}>⚡ Get 10 test STRK</Text>
+        : <Text style={s.compactBtnText}>Get test STRK</Text>
       }
     </TouchableOpacity>
   );
@@ -159,8 +159,8 @@ const s = StyleSheet.create({
   btn:          { backgroundColor: '#f59e0b', borderRadius: Radius.full, paddingVertical: 12, alignItems: 'center' },
   btnText:      { color: '#fff', fontSize: FontSize.sm, fontWeight: '800' },
   hint:         { fontSize: 10, color: Colors.textMuted, textAlign: 'center', marginTop: Spacing.sm },
-  compactBtn:   { backgroundColor: '#f59e0b', borderRadius: Radius.full, paddingVertical: 8, paddingHorizontal: 16, alignItems: 'center' },
-  compactBtnText: { color: '#fff', fontSize: FontSize.xs, fontWeight: '800' },
+  compactBtn:   { backgroundColor: '#f59e0b', borderRadius: Radius.full, paddingVertical: 7, paddingHorizontal: 12, alignItems: 'center', alignSelf: 'flex-start', minHeight: 32 },
+  compactBtnText: { color: '#fff', fontSize: 11, fontWeight: '800' },
   successRow:   { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   successIcon:  { fontSize: 20 },
   successTitle: { fontSize: FontSize.sm, fontWeight: '900', color: Colors.green },
