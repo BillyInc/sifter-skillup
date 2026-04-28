@@ -53,7 +53,7 @@ const NUM_CONFETTI = 28;
 // Theme-aligned confetti colors
 const CONFETTI_COLORS = [
   '#6366F1', '#8B5CF6', '#10B981', '#F97316',
-  '#F59E0B', '#EC4899', '#0EA5E9', '#10B981',
+  '#F59E0B', '#FBBF24', '#0EA5E9', '#10B981',
 ];
 
 // ─── Copy per event type ───────────────────────────────────────────────────────

@@ -161,7 +161,7 @@ export default function EcosystemTrackScreen() {
 
     void updateActiveField(
       'starknet',
-      '#EC4899',
+      '#F59E0B',
       'starknet-ecosystem-deep-dive',
       'Starknet Ecosystem Deep Dive',
     ).catch(() => {});
@@ -292,18 +292,18 @@ export default function EcosystemTrackScreen() {
 }
 
 const styles = StyleSheet.create({
-  scrollContent: { ...webContainer, gap: Spacing.md, paddingBottom: 18 },
-  heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.lg, gap: Spacing.md, ...Shadow.sm },
-  backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
+  scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: Spacing.xl },
+  heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.xl, gap: Spacing.md, ...Shadow.sm },
+  backButton: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 9 },
   backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
   heroEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
   heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
   heroSub: { fontSize: FontSize.sm, lineHeight: 20 },
   statsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
-  statCard: { flex: 1, minWidth: 96, borderRadius: Radius.lg, padding: Spacing.md, gap: 2 },
+  statCard: { flex: 1, minWidth: 104, borderRadius: Radius.xl, padding: Spacing.lg, gap: 4 },
   statValue: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   statLabel: { fontSize: 10, fontWeight: FontWeight.medium },
-  bannerCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.sm },
+  bannerCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.xl, gap: Spacing.sm },
   bannerHeader: { flexDirection: 'row', gap: Spacing.sm, alignItems: 'flex-start' },
   bannerCopy: { flex: 1 },
   bannerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
   levelHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Spacing.sm },
   levelHeaderLine: { flex: 1, height: 1 },
   levelHeaderText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1.2 },
-  labCard: { borderWidth: 1.5, borderRadius: Radius.xl, padding: Spacing.md, gap: Spacing.sm, ...Shadow.sm },
+  labCard: { borderWidth: 1.5, borderRadius: Radius.xl, padding: Spacing.lg, gap: Spacing.sm, ...Shadow.sm },
   labHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   labNumberBadge: {
     width: 42,
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   labEyebrow: { fontSize: 10, fontWeight: FontWeight.black, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
   labTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, lineHeight: 22 },
   labMeta: { fontSize: FontSize.xs },
-  statePill: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5 },
+  statePill: { borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 6 },
   statePillText: { fontSize: 10, fontWeight: FontWeight.black },
   chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
   chip: { borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 4 },

@@ -209,7 +209,7 @@ function TaskCard({
           value={response}
           onChangeText={setResponse}
           placeholder="Write your answer here. Include all calculations, specific numbers, and reasoning."
-          placeholderTextColor="#94a3b8"
+          placeholderTextColor={Colors.textMuted}
           multiline
           style={tc.input}
           textAlignVertical="top"
@@ -251,9 +251,9 @@ const tc = StyleSheet.create({
   },
   hintText: { fontSize: 13, color: '#fcd34d', lineHeight: 19 },
   input: {
-    backgroundColor: Colors.card, color: Colors.text, fontSize: FontSize.sm,
-    borderRadius: Radius.md, borderWidth: 1.5, borderColor: '#7c3aed40',
-    padding: Spacing.md, minHeight: 140, lineHeight: 22,
+    backgroundColor: Colors.inputBg, color: Colors.text, fontSize: FontSize.sm,
+    borderRadius: Radius.md, borderWidth: 1.5, borderColor: Colors.inputBorder,
+    padding: Spacing.md, minHeight: 180, lineHeight: 22, marginBottom: Spacing.sm,
   },
   wc: { fontSize: 10, textAlign: 'right', marginTop: 4, fontWeight: '600' },
 });

@@ -63,6 +63,7 @@ interface TrackSceneProps {
   accentColor: string;
   width?: number;
   height?: number;
+  fieldId?: string;
 }
 
 type TrackIsometricSceneInternalProps = TrackIsometricSceneProps & {
@@ -121,11 +122,11 @@ const CAIRO_SCENE: SectorDef[] = [
 ];
 
 const STARKNET_DEFI_SCENE: SectorDef[] = [
-  { label: 'Pool Depth', height: 0.78, color: '#EC4899', annotation: 'JediSwap' },
-  { label: 'Yield Monitor', height: 0.65, color: '#DB2777', annotation: 'Live APR' },
-  { label: 'StarkZap', height: 0.82, color: '#F472B6', annotation: 'Live txns' },
-  { label: 'Bridge', height: 0.50, color: '#FBCFE8' },
-  { label: 'Governance', height: 0.40, color: '#FCE7F3' },
+  { label: 'Pool Depth', height: 0.78, color: '#F59E0B', annotation: 'JediSwap' },
+  { label: 'Yield Monitor', height: 0.65, color: '#D97706', annotation: 'Live APR' },
+  { label: 'StarkZap', height: 0.82, color: '#FBBF24', annotation: 'Live txns' },
+  { label: 'Bridge', height: 0.50, color: '#FDE68A' },
+  { label: 'Governance', height: 0.40, color: '#FFFBEB' },
 ];
 
 const SECURITY_SCENE: SectorDef[] = [
@@ -141,15 +142,15 @@ const CRYPTO_SCENE: SectorDef[] = [
   { label: 'Ethereum', height: 0.80, color: '#627EEA', annotation: '12/15 done' },
   { label: 'DeFi Universe', height: 0.33, color: '#10B981', annotation: '5/15 done' },
   { label: 'Bridges & L2s', height: 0.0, color: '#06B6D4' },
-  { label: 'Starknet World', height: 0.10, color: '#EC4899' },
+  { label: 'Starknet World', height: 0.10, color: '#F59E0B' },
 ];
 
 const STARKNET_ISLANDS_SCENE: SectorDef[] = [
-  { label: 'Wallet Ops', height: 0.62, color: '#EC4899', annotation: 'Braavos ready' },
-  { label: 'Swaps', height: 0.72, color: '#F472B6', annotation: 'Gasless flow' },
+  { label: 'Wallet Ops', height: 0.62, color: '#F59E0B', annotation: 'Braavos ready' },
+  { label: 'Swaps', height: 0.72, color: '#FBBF24', annotation: 'Gasless flow' },
   { label: 'Staking', height: 0.56, color: '#FB7185', annotation: 'Live STRK' },
   { label: 'Lending', height: 0.48, color: '#FDA4AF' },
-  { label: 'DCA', height: 0.66, color: '#FBCFE8' },
+  { label: 'DCA', height: 0.66, color: '#FDE68A' },
 ];
 
 const STARKNET_ECOSYSTEM_SCENE: SectorDef[] = [
@@ -214,6 +215,19 @@ const PRIMARY_TRACK_SCENES: Record<string, SectorDef[]> = {
   'onchain-sleuth': ONCHAIN_SCENE,
   'memecoin-trader': MEMECOIN_SCENE,
   'futures-trading': FUTURES_SCENE,
+};
+
+const FIELD_SCENES: Record<string, SectorDef[]> = {
+  crypto: CRYPTO_SCENE,
+  starknet: STARKNET_ISLANDS_SCENE,
+  quant: QUANT_SCENE,
+  'supply-chain': SUPPLY_SCENE,
+  'logistics-trade': SUPPLY_SCENE,
+  cybersecurity: SECURITY_SCENE,
+  'software-engineering': SOFTWARE_SCENE,
+  'cloud-devops': SOFTWARE_SCENE,
+  'ai-ml': AI_SCENE,
+  'data-science': AI_SCENE,
 };
 
 function titleFromTrackId(trackId: string): string {
@@ -379,12 +393,17 @@ export function TrackIsometricScene({
   const footer = footerLabel ?? accentColor;
 
   return (
-    <Svg width={width} height={height} viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}>
+    <Svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
       <Defs>
         <LinearGradient id="isoBg" x1="0" y1="0" x2="1" y2="1">
           <Stop offset="0%" stopColor="#060d1f" />
           <Stop offset="50%" stopColor="#0d1b3e" />
-          <Stop offset="100%" stopColor="#130824" />
+          <Stop offset="100%" stopColor="#221208" />
         </LinearGradient>
       </Defs>
 
@@ -500,9 +519,10 @@ export default function TrackScene({
   accentColor,
   width = 560,
   height = 300,
+  fieldId,
 }: TrackSceneProps) {
-  const sectors = TRACK_SCENES[trackId];
-  const footerLabel = titleFromTrackId(trackId);
+  const sectors = TRACK_SCENES[trackId] ?? (fieldId ? FIELD_SCENES[fieldId] : undefined);
+  const footerLabel = titleFromTrackId(trackId || fieldId || 'track');
 
   if (!sectors) {
     return (

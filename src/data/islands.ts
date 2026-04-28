@@ -10,7 +10,7 @@
  *   I15 = Alt-Chain Ecosystems (was I14)
  *   I16 = Security & Research (was I17)
  *   I17 = Advanced Crypto (was I18)
- *   I18 = Starknet World (was I19) — unlocks after I17 (L135)
+ *   I18 = Starknet Islands (was I19) — unlocks after I17 (L135)
  * Old Island 11 (Memecoin Madness) DELETED — merged into I9
  */
 
@@ -136,9 +136,9 @@ export const ISLANDS: Island[] = [
     icon: '⚡', color: '#6366f1', start: 121, end: 135, bossLevel: 135, requiredLevel: 240,
   },
   {
-    id: 18, tier: 'pro', name: 'Starknet World',
+    id: 18, tier: 'pro', name: 'Starknet Islands',
     description: 'Account abstraction · Gasless transactions · STRK swaps · Staking · Lending · DCA · Powered by StarkZap SDK. Execute real Sepolia transactions as you learn.',
-    icon: '⚡', color: '#ec4899', start: 291, end: 310, bossLevel: 310, requiredLevel: 135,
+    icon: '⚡', color: '#f59e0b', start: 291, end: 310, bossLevel: 310, requiredLevel: 135,
     chain: 'starknet-sepolia',
     nextTracks: ['starknet-defi-navigator', 'starknet-ecosystem-deep-dive', 'cairo-builder'],
   },

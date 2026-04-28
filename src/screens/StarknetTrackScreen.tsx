@@ -67,7 +67,7 @@ const LABS: LabDef[] = getStarknetLabs('starknet-defi-navigator').map((lab, inde
 const LEVEL_COLORS = {
   junior: '#58CC02',
   intermediate: '#F59E0B',
-  senior: '#EC4899',
+  senior: '#D97706',
 };
 
 function WalletBanner({
@@ -83,9 +83,9 @@ function WalletBanner({
 
   if (isCreating) {
     return (
-      <View style={[walletStyles.wrap, { backgroundColor: '#EC489912', borderColor: '#EC489940' }]}>
+      <View style={[walletStyles.wrap, { backgroundColor: '#F59E0B12', borderColor: '#F59E0B40' }]}>
         <View style={walletStyles.copy}>
-          <Text style={[walletStyles.label, { color: '#EC4899' }]}>Wallet Status</Text>
+          <Text style={[walletStyles.label, { color: '#F59E0B' }]}>Wallet Status</Text>
           <Text style={[walletStyles.title, { color: colors.text }]}>Connecting Starknet wallet</Text>
           <Text style={[walletStyles.help, { color: colors.textSoft }]}>Checking your live Privy-backed wallet.</Text>
         </View>
@@ -95,16 +95,16 @@ function WalletBanner({
 
   if (address) {
     return (
-      <View style={[walletStyles.wrap, { backgroundColor: '#EC489912', borderColor: '#EC489940' }]}>
+      <View style={[walletStyles.wrap, { backgroundColor: '#F59E0B12', borderColor: '#F59E0B40' }]}>
         <View style={walletStyles.copy}>
-          <Text style={[walletStyles.label, { color: '#EC4899' }]}>Wallet Ready</Text>
+          <Text style={[walletStyles.label, { color: '#F59E0B' }]}>Wallet Ready</Text>
           <Text style={[walletStyles.title, { color: colors.text }]} selectable>{address}</Text>
           <Text style={[walletStyles.help, { color: colors.textSoft }]}>
             Verify this address on Starknet Sepolia Voyager to confirm it is live and funded by real transactions.
           </Text>
         </View>
         <TouchableOpacity
-          style={[walletStyles.btn, { backgroundColor: '#EC4899' }]}
+          style={[walletStyles.btn, { backgroundColor: '#F59E0B' }]}
           onPress={() => Linking.openURL(`https://sepolia.voyager.online/contract/${address}`)}
         >
           <Text style={walletStyles.btnTxt}>Verify</Text>
@@ -120,7 +120,7 @@ function WalletBanner({
         <Text style={[walletStyles.title, { color: colors.text }]}>Connect a Starknet wallet</Text>
         <Text style={[walletStyles.help, { color: colors.textSoft }]}>Lab 1 unlocks as soon as your live Privy Starknet wallet is connected.</Text>
       </View>
-      <View style={[walletStyles.btn, { backgroundColor: '#EC4899' }]}>
+      <View style={[walletStyles.btn, { backgroundColor: '#F59E0B' }]}>
         <Text style={walletStyles.btnTxt}>Connect</Text>
       </View>
     </TouchableOpacity>
@@ -128,12 +128,12 @@ function WalletBanner({
 }
 
 const walletStyles = StyleSheet.create({
-  wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
+  wrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderRadius: 10, borderWidth: 1, padding: Platform.OS === 'web' ? 12 : 10 },
   copy: { flex: 1 },
   label: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8, textTransform: 'uppercase' },
   title: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, marginTop: 3 },
   help: { fontSize: FontSize.xs, lineHeight: 16, marginTop: 4 },
-  btn: { borderRadius: 8, paddingHorizontal: 14, paddingVertical: 8 },
+  btn: { borderRadius: 8, paddingHorizontal: 12, paddingVertical: 7 },
   btnTxt: { color: '#fff', fontSize: 11, fontWeight: '700' },
 });
 
@@ -152,8 +152,9 @@ function LabCard({
 }) {
   const { colors } = useTheme();
   const levelColor = LEVEL_COLORS[lab.level];
-  const accent = completed ? '#10B981' : current ? '#EC4899' : levelColor;
+  const accent = completed ? '#10B981' : current ? '#F59E0B' : levelColor;
   const stateLabel = locked ? 'Locked' : current ? 'Continue' : completed ? 'Review' : 'Start';
+  const stateIcon = locked ? 'Lock' : current ? 'Open' : completed ? 'View' : 'Go';
 
   return (
     <TouchableOpacity
@@ -161,7 +162,7 @@ function LabCard({
         styles.labCard,
         {
           backgroundColor: colors.card,
-          borderColor: current ? '#EC489955' : completed ? '#10B98155' : locked ? colors.border : `${levelColor}38`,
+          borderColor: current ? '#F59E0B55' : completed ? '#10B98155' : locked ? colors.border : `${levelColor}38`,
           opacity: locked ? 0.58 : 1,
         },
         Shadow.sm,
@@ -182,7 +183,8 @@ function LabCard({
             {lab.lessonCount} lessons · {lab.estimatedH}h {lab.portfolioPush ? '· Portfolio' : ''}
           </Text>
         </View>
-        <View style={[styles.statePill, { backgroundColor: `${accent}14` }]}>
+        <View style={[styles.statePill, { backgroundColor: `${accent}14`, borderColor: `${accent}36` }]}>
+          <Text style={[styles.statePillText, { color: accent }]}>{stateIcon}</Text>
           <Text style={[styles.statePillText, { color: accent }]}>{stateLabel}</Text>
         </View>
       </View>
@@ -248,7 +250,7 @@ export default function StarknetTrackScreen() {
 
     void updateActiveField(
       'starknet',
-      '#EC4899',
+      '#F59E0B',
       'starknet-defi-navigator',
       'Starknet DeFi Navigator',
     ).catch(() => {});
@@ -330,14 +332,19 @@ export default function StarknetTrackScreen() {
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#EC4899" />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#F59E0B" />}
         contentContainerStyle={styles.scrollContent}
       >
         <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <TouchableOpacity onPress={() => navigation.back()} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
-            <Text style={[styles.backButtonText, { color: colors.text }]}>{'<'} Back</Text>
+          <TouchableOpacity
+            onPress={() => navigation.back()}
+            style={[styles.backButton, { backgroundColor: colors.bgSecondary, borderColor: '#F59E0B30' }]}
+            activeOpacity={0.85}
+          >
+            <Text style={[styles.backButtonIcon, { color: '#F59E0B' }]}>←</Text>
+            <Text style={[styles.backButtonText, { color: colors.text }]}>Back to Tracks</Text>
           </TouchableOpacity>
-          <Text style={[styles.heroEyebrow, { color: '#EC4899' }]}>Starknet Workspace</Text>
+          <Text style={[styles.heroEyebrow, { color: '#F59E0B' }]}>Starknet Workspace</Text>
           <Text style={[styles.heroTitle, { color: colors.text }]}>DeFi Navigator</Text>
           <Text style={[styles.heroSub, { color: colors.textSoft }]}>
             Continue the Starknet practitioner flow with wallet-gated lab access, real on-chain actions, and lab-by-lab progression.
@@ -346,8 +353,8 @@ export default function StarknetTrackScreen() {
           <View style={styles.statsRow}>
             {[
               { label: 'XP Earned', value: trackXP.toLocaleString(), accent: colors.text },
-              { label: 'Labs Cleared', value: `${labsDone}/${LABS.length}`, accent: '#EC4899' },
-              { label: 'State', value: islandDone ? 'Review' : address ? 'Continue' : 'Locked', accent: islandDone ? '#10B981' : '#EC4899' },
+              { label: 'Labs Cleared', value: `${labsDone}/${LABS.length}`, accent: '#F59E0B' },
+              { label: 'State', value: islandDone ? 'Review' : address ? 'Continue' : 'Locked', accent: islandDone ? '#10B981' : '#F59E0B' },
             ].map((item) => (
               <View key={item.label} style={[styles.statCard, { backgroundColor: colors.bgSecondary }]}>
                 <Text style={[styles.statValue, { color: item.accent }]}>{item.value}</Text>
@@ -365,8 +372,8 @@ export default function StarknetTrackScreen() {
         ) : null}
 
         {!address ? (
-          <View style={[styles.notice, { backgroundColor: '#EC489910', borderColor: '#EC489940' }]}>
-            <Text style={[styles.noticeText, { color: '#EC4899' }]}>
+          <View style={[styles.notice, { backgroundColor: '#F59E0B10', borderColor: '#F59E0B40' }]}>
+            <Text style={[styles.noticeText, { color: '#F59E0B' }]}>
               Connect your Starknet wallet to unlock Lab 1. The rest of the labs open sequentially after each boss.
             </Text>
           </View>
@@ -390,8 +397,8 @@ export default function StarknetTrackScreen() {
           ))}
         </View>
 
-        <View style={[styles.certCard, { backgroundColor: '#EC489910', borderColor: '#EC489930' }]}>
-          <Text style={[styles.certEyebrow, { color: '#EC4899' }]}>Completion Path</Text>
+        <View style={[styles.certCard, { backgroundColor: '#F59E0B10', borderColor: '#F59E0B30' }]}>
+          <Text style={[styles.certEyebrow, { color: '#F59E0B' }]}>Completion Path</Text>
           <Text style={[styles.certTitle, { color: colors.text }]}>DeFi Navigator Certified</Text>
           <Text style={[styles.certDesc, { color: colors.textSoft }]}>
             Complete all 11 labs and the final boss to finish the Starknet DeFi certification flow.
@@ -406,15 +413,16 @@ export default function StarknetTrackScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
-  heroCard: { borderWidth: 1, borderRadius: 11, padding: 16, gap: Spacing.md, ...Shadow.sm },
-  backButton: { alignSelf: 'flex-start', borderRadius: 8, paddingHorizontal: 14, paddingVertical: 8 },
+  scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
+  heroCard: { borderWidth: 1, borderRadius: Radius.xxl, padding: Spacing.xl, gap: Spacing.md, ...Shadow.sm },
+  backButton: { alignSelf: 'flex-start', borderRadius: 999, paddingHorizontal: 14, paddingVertical: 9, borderWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 8 },
+  backButtonIcon: { fontSize: 14, fontWeight: FontWeight.black },
   backButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.black },
   heroEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
   heroTitle: { fontSize: 20, fontWeight: '900' },
   heroSub: { fontSize: 11, lineHeight: 17 },
   statsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap' },
-  statCard: { flex: 1, minWidth: 100, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, gap: 2, borderWidth: 1 },
+  statCard: { flex: 1, minWidth: 108, borderRadius: Radius.xl, padding: Platform.OS === 'web' ? 16 : 14, gap: 4, borderWidth: 1 },
   statValue: { fontSize: FontSize.md, fontWeight: FontWeight.black },
   statLabel: { fontSize: 10, fontWeight: FontWeight.semibold },
   faucetWrap: { marginTop: -Spacing.xs },
@@ -424,7 +432,7 @@ const styles = StyleSheet.create({
   sectionEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
   sectionTitle: { fontSize: 13, fontWeight: '800', marginBottom: 10 },
   labList: { gap: Spacing.sm },
-  labCard: { borderRadius: 11, borderWidth: 1, padding: 12 },
+  labCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Platform.OS === 'web' ? 16 : 14, gap: Spacing.sm },
   labHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   labNumber: {
     width: 28,
@@ -439,9 +447,9 @@ const styles = StyleSheet.create({
   labEyebrow: { fontSize: 10, fontWeight: FontWeight.black, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 2 },
   labTitle: { fontSize: 12, fontWeight: '800', marginBottom: 2 },
   labMetaText: { fontSize: 11, lineHeight: 16 },
-  statePill: { borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  statePill: { borderRadius: 999, paddingHorizontal: 11, paddingVertical: 6, borderWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 5 },
   statePillText: { fontSize: 9, fontWeight: '700' },
-  certCard: { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12, gap: Spacing.xs, alignItems: 'flex-start' },
+  certCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Platform.OS === 'web' ? 16 : 14, gap: Spacing.sm, alignItems: 'flex-start' },
   certEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
   certTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   certDesc: { fontSize: FontSize.sm, lineHeight: 20 },

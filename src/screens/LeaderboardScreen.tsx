@@ -21,7 +21,7 @@ import type { Leaderboard, LeaderboardEntry } from '../types/social';
 import { resolveTrackContext } from '../lib/trackContext';
 
 // XP stage colours reused from character system
-const STAGE_COLORS = ['','#94A3B8','#3B82F6','#22C55E','#F59E0B','#EF4444','#8B5CF6','#EC4899','#F59E0B'];
+const STAGE_COLORS = ['','#94A3B8','#3B82F6','#22C55E','#F59E0B','#EF4444','#8B5CF6','#FBBF24','#F59E0B'];
 const SCOPE_TABS: { scope: LeaderboardScope; label: string; emoji: string }[] = [
   { scope: 'global', label: 'Global',  emoji: '🌐' },
   { scope: 'field',  label: 'Field',   emoji: '📊' },
@@ -272,7 +272,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
 const styles = StyleSheet.create({
   screen:        { flex: 1 },
   webRoot:       { flex: 1, flexDirection: 'row' },
-  scopePanel:    { width: 220, borderRightWidth: 1, padding: Spacing.lg, gap: Spacing.xs },
+  scopePanel:    { width: 232, borderRightWidth: 1, padding: Spacing.lg, gap: Spacing.sm },
   scopePanelTitle:{ fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginTop: Spacing.sm, marginBottom: Spacing.xs },
   scopeRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, paddingHorizontal: Spacing.sm },
   scopeRowEmoji: { fontSize: 18 },
@@ -291,11 +291,11 @@ const styles = StyleSheet.create({
   scopeTabEmoji: { fontSize: 16 },
   scopeTabLabel: { fontSize: FontSize.sm },
 
-  weekBanner:    { padding: Spacing.md, paddingHorizontal: Spacing.lg, gap: 2 },
+  weekBanner:    { padding: Spacing.lg, paddingHorizontal: Spacing.lg, gap: 4 },
   weekText:      { fontSize: FontSize.xs },
   weekReward:    { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
 
-  row:           { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.md, paddingHorizontal: Spacing.lg, borderBottomWidth: StyleSheet.hairlineWidth },
+  row:           { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.md, paddingHorizontal: Spacing.lg, borderBottomWidth: StyleSheet.hairlineWidth },
   rankCell:      { width: 42, alignItems: 'center', gap: 2 },
   medal:         { fontSize: 20 },
   rankNum:       { fontSize: FontSize.sm, fontWeight: FontWeight.black },
@@ -308,12 +308,12 @@ const styles = StyleSheet.create({
   weeklyXp:      { fontSize: FontSize.sm, fontWeight: FontWeight.black },
   totalXp:       { fontSize: FontSize.xs },
 
-  userPosCard:   { margin: Spacing.lg, borderRadius: Radius.lg, padding: Spacing.lg, borderWidth: 1, alignItems: 'center', gap: Spacing.xs },
+  userPosCard:   { margin: Spacing.lg, borderRadius: Radius.xl, padding: Spacing.xl, borderWidth: 1, alignItems: 'center', gap: Spacing.sm },
   userPosTitle:  { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
   userPosRank:   { fontSize: FontSize.xxxl, fontWeight: FontWeight.black },
   userPosXp:     { fontSize: FontSize.sm },
 
-  listContent:   { paddingBottom: 18 },
+  listContent:   { paddingBottom: Spacing.xl },
   centreLoad:    { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.xxxl },
   loadText:      { fontSize: FontSize.sm },
   empty:         { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, padding: Spacing.xxxl },

@@ -58,7 +58,7 @@ type TrackLookup = FieldSkillTrack & {
 
 const DEFAULT_CHART = [22, 36, 31, 48, 54, 68, 72];
 const FALLBACK_FIELD_THEME: Record<string, { color: string; emoji: string }> = {
-  starknet: { color: '#ec4899', emoji: '⚡' },
+  starknet: { color: '#ffd700', emoji: '⚡' },
 };
 
 function getTrackCatalog(): TrackLookup[] {

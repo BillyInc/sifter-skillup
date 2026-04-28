@@ -1568,7 +1568,7 @@ export const PYTHON_CHAPTERS: PythonChapter[] = [
     subtitle: 'Classes to Composition',
     description: 'Classes, inheritance, magic methods, ABCs, dataclasses, properties, and the composition principle. How to model real-world problems in code that is maintainable and extensible.',
     icon: '🏗️',
-    color: '#ec4899',
+    color: '#eab308',
     start: 2031, end: 2040, bossLevel: 2040,
     requiredChapter: 3,
   },
