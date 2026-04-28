@@ -374,7 +374,7 @@ export default function BranchingInterviewRenderer({
             value={initialResponse}
             onChangeText={setInitialResponse}
             placeholder="Give a specific, data-backed response. Reference numbers and protocol names where relevant."
-            placeholderTextColor="#94a3b8"
+            placeholderTextColor={Colors.textMuted}
             multiline
             style={q.input}
             textAlignVertical="top"
@@ -415,7 +415,7 @@ export default function BranchingInterviewRenderer({
             value={followUpResponse}
             onChangeText={setFollowUpResponse}
             placeholder="Answer the follow-up question precisely. Be specific."
-            placeholderTextColor="#94a3b8"
+            placeholderTextColor={Colors.textMuted}
             multiline
             style={q.input}
             textAlignVertical="top"
@@ -498,9 +498,9 @@ const q = StyleSheet.create({
     fontFamily: 'Georgia',
   },
   input: {
-    backgroundColor: Colors.card, color: Colors.text, fontSize: FontSize.sm,
-    borderRadius: Radius.md, borderWidth: 1, borderColor: Colors.border,
-    padding: Spacing.md, minHeight: 160, lineHeight: 22,
+    backgroundColor: Colors.inputBg, color: Colors.text, fontSize: FontSize.sm,
+    borderRadius: Radius.md, borderWidth: 1.5, borderColor: Colors.inputBorder,
+    padding: Spacing.md, minHeight: 190, lineHeight: 22, marginBottom: Spacing.sm,
   },
   wc: { fontSize: 10, color: Colors.textMuted, textAlign: 'right', marginTop: 4 },
 });

@@ -80,7 +80,7 @@ const CHAIN_CONFIG: Record<string, ChainConfig> = {
     icon: '⚡', name: 'Starknet Sepolia', shortName: 'STRK Sepolia',
     nativeSymbol: 'STRK', explorerUrl: 'https://sepolia.voyager.online',
     faucetUrl: 'https://starknet-faucet.vercel.app', faucetLabel: 'Get Sepolia STRK',
-    demoBalance: '124.5 STRK', color: '#ec4899',
+    demoBalance: '124.5 STRK', color: '#ffd700',
   },
 };
 

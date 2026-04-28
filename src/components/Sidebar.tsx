@@ -75,7 +75,7 @@ function NavRow({
 
   const bgColor = bgAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['transparent', '#111111'],
+    outputRange: ['transparent', colors.navy],
   });
 
   return (
@@ -92,17 +92,21 @@ function NavRow({
           <View style={[styles.activeBar, { backgroundColor: colors.accent }]} />
         )}
 
-        <Text style={[styles.navEmoji, isActive && { opacity: 1 }]}>
-          {isActive ? item.activeEmoji : item.emoji}
-        </Text>
+        <View style={styles.navIconWrap}>
+          <Text style={[styles.navEmoji, isActive && { opacity: 1 }]}>
+            {isActive ? item.activeEmoji : item.emoji}
+          </Text>
+        </View>
 
-        <Text style={[
-          styles.navLabel,
-          { color: isActive ? '#ffffff' : '#374151' },
-          isActive && styles.navLabelActive,
-        ]}>
-          {item.label}
-        </Text>
+        <View style={styles.navTextWrap}>
+          <Text style={[
+            styles.navLabel,
+            { color: isActive ? colors.textInverse : colors.textSoft },
+            isActive && styles.navLabelActive,
+          ]}>
+            {item.label}
+          </Text>
+        </View>
 
         {badge && (
           <View style={[styles.badge, { backgroundColor: colors.accent }]}>
@@ -177,10 +181,12 @@ export default function Sidebar() {
     >
       {/* ── Brand ── */}
       <View style={[styles.brand, { borderBottomColor: colors.border }]}>
-        <Text style={[styles.brandEmoji]}>⚡</Text>
+        <View style={styles.brandMark}>
+          <Text style={styles.brandEmoji}>⚡</Text>
+        </View>
         <View>
           <Text style={[styles.brandName, { color: colors.text }]}>Sifter</Text>
-          <Text style={[styles.brandSub, { color: colors.accent }]}>Skill_Up</Text>
+          <Text style={[styles.brandSub, { color: colors.accent }]}>SKILL_UP</Text>
         </View>
       </View>
 
@@ -255,60 +261,73 @@ const styles = StyleSheet.create({
   sidebar: {
     height: '100%' as any,
     borderRightWidth: 1,
-    paddingTop: Spacing.xxl,
-    paddingBottom: Spacing.xl,
     flexDirection: 'column',
+    flexShrink: 0,
+    overflow: 'hidden',
   },
   brand: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
-    paddingHorizontal: 14,
-    paddingVertical: 14,
-    marginBottom: Spacing.md,
+    gap: 8,
+    paddingHorizontal: 18,
+    paddingTop: 20,
+    paddingBottom: 16,
     borderBottomWidth: 1,
   },
-  brandEmoji:   { fontSize: 18 },
-  brandName:    { fontSize: FontSize.lg, fontWeight: FontWeight.black, lineHeight: 20 },
-  brandSub:     { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 1 },
+  brandMark: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F59E0B',
+  },
+  brandEmoji:   { fontSize: 16 },
+  brandName:    { fontSize: 14, fontWeight: FontWeight.black, lineHeight: 16, letterSpacing: -0.3 },
+  brandSub:     { fontSize: 9, fontWeight: FontWeight.bold, letterSpacing: 1.1 },
 
   statPill: {
     flexDirection: 'row',
-    marginHorizontal: Spacing.lg,
-    marginBottom: Spacing.lg,
-    borderRadius: 11,
+    marginHorizontal: 14,
+    marginTop: 12,
+    marginBottom: 10,
+    borderRadius: 10,
     borderWidth: 1,
-    padding: Platform.OS === 'web' ? 14 : 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   statPillItem:     { flex: 1, alignItems: 'center' },
   statPillValue:    { fontSize: FontSize.md, fontWeight: FontWeight.black },
   statPillLabel:    { fontSize: 10, fontWeight: FontWeight.semibold, marginTop: 2 },
   statPillDivider:  { width: 1, marginVertical: 4 },
 
-  navSection:  { gap: 2, paddingHorizontal: Spacing.sm },
+  navSection:  { gap: 2, paddingHorizontal: 10, paddingVertical: 4 },
 
   navRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderRadius: 8,
+    gap: 9,
+    minHeight: 38,
+    paddingVertical: 9,
+    paddingHorizontal: 11,
+    borderRadius: 9,
     position: 'relative',
     overflow: 'hidden',
   },
-  navRowActive: { backgroundColor: '#111111', borderRadius: 8 },
+  navRowActive: { backgroundColor: '#111111', borderRadius: 9 },
   activeBar: {
     position: 'absolute',
-    left: 0,
-    top: '20%' as any,
-    bottom: '20%' as any,
-    width: 0,
-    borderRadius: Radius.full,
+    left: 6,
+    top: 10,
+    bottom: 10,
+    width: 2,
+    borderRadius: 2,
   },
-  navEmoji:   { fontSize: 13, opacity: 0.7 },
-  navLabel:   { fontSize: 12, fontWeight: '500' },
-  navLabelActive: { fontWeight: '700' },
+  navIconWrap: { width: 16, alignItems: 'center', justifyContent: 'center' },
+  navTextWrap: { flex: 1, justifyContent: 'center' },
+  navEmoji:   { fontSize: 14, opacity: 0.72 },
+  navLabel:   { fontSize: 13, fontWeight: FontWeight.medium },
+  navLabelActive: { fontWeight: FontWeight.bold },
   badge: {
     marginLeft: 'auto' as any,
     paddingHorizontal: 7,
@@ -319,28 +338,33 @@ const styles = StyleSheet.create({
 
   bottomSection: {
     borderTopWidth: 1,
-    paddingTop: Spacing.md,
-    paddingHorizontal: Spacing.sm,
-    gap: Spacing.xs,
+    paddingTop: 14,
+    paddingHorizontal: 10,
+    paddingBottom: 14,
+    gap: 6,
   },
   learnBtn: {
-    marginHorizontal: Spacing.sm,
-    marginBottom: Spacing.sm,
+    marginHorizontal: 4,
+    marginBottom: 6,
+    minHeight: 36,
     paddingVertical: 8,
-    paddingHorizontal: 14,
+    paddingHorizontal: 12,
     borderRadius: 8,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  learnBtnText:     { fontSize: 11, fontWeight: '700', color: '#fff' },
+  learnBtnText:     { fontSize: 11, fontWeight: FontWeight.bold, color: '#fff' },
   themeToggle: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
+    gap: 8,
+    minHeight: 36,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderRadius: Radius.lg,
-    marginTop: Spacing.xs,
+    marginHorizontal: 4,
+    marginTop: 2,
   },
   themeToggleEmoji: { fontSize: 16 },
-  themeToggleLabel: { fontSize: FontSize.sm },
+  themeToggleLabel: { fontSize: 12, fontWeight: FontWeight.medium },
 });

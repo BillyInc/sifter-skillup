@@ -321,12 +321,16 @@ export default function JudgmentRenderer({
   const [phase, setPhase] = useState<Phase>('write');
   const [response, setResponse] = useState('');
   const [inputError, setInputError] = useState<string | null>(null);
+  const [inputFocused, setInputFocused] = useState(false);
   const [partialResult, setPartialResult] = useState<DeterministicScoringResult | null>(null);
   const [finalResult, setFinalResult] = useState<DeterministicScoringResult | null>(null);
   const [confirmed, setConfirmed] = useState<Set<number>>(new Set());
 
   const minChars = isBoss ? Math.max(cfg.minChars * 2, 200) : cfg.minChars;
   const canSubmit = response.trim().length >= minChars;
+  const wordCount = response.trim().length > 0
+    ? response.trim().split(/\s+/).filter(Boolean).length
+    : 0;
 
   const handleSubmit = () => {
     if (!canSubmit) return;
@@ -486,18 +490,36 @@ export default function JudgmentRenderer({
         {/* Response input */}
         <View>
           <SectionLabel text="YOUR RESPONSE" />
+          <View style={s.inputGuide}>
+            <Text style={s.inputGuideTitle}>Make it easy to assess</Text>
+            <Text style={s.inputGuideText}>
+              Lead with your decision, back it with the scenario details, and end with the action you would take next.
+            </Text>
+          </View>
           <TextInput
             value={response}
             onChangeText={text => { setResponse(text); setInputError(null); }}
             placeholder={isBoss ? 'Write your complete analysis here. No hints.' : cfg.placeholder}
-            placeholderTextColor="#94a3b8"
+            placeholderTextColor={Colors.textMuted}
             multiline
             autoCapitalize="sentences"
             autoCorrect
-            style={[s.input, { borderColor: canSubmit ? cfg.color : Colors.border }]}
+            onFocus={() => setInputFocused(true)}
+            onBlur={() => setInputFocused(false)}
+            style={[
+              s.input,
+              {
+                borderColor: inputFocused || canSubmit ? cfg.color : Colors.border,
+                backgroundColor: inputFocused ? '#ffffff' : Colors.inputBg,
+              },
+            ]}
             textAlignVertical="top"
+            scrollEnabled
           />
-          <CharCount current={response.trim().length} min={minChars} />
+          <View style={s.inputMetaRow}>
+            <Text style={s.inputMetaText}>{wordCount} words</Text>
+            <CharCount current={response.trim().length} min={minChars} />
+          </View>
         </View>
 
         {inputError && (
@@ -526,12 +548,37 @@ const s = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
   },
   criteriaHint: { fontSize: 13, color: Colors.textSoft, lineHeight: 19, fontStyle: 'italic' },
-  input: {
-    backgroundColor: Colors.card, color: Colors.text,
-    fontSize: FontSize.sm, borderRadius: Radius.md,
-    borderWidth: 1.5, padding: Spacing.md,
-    minHeight: 180, lineHeight: 22,
+  inputGuide: {
+    backgroundColor: '#fff7ed',
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: '#fdba7440',
+    padding: Spacing.md,
+    marginBottom: Spacing.sm,
+    gap: 4,
   },
+  inputGuideTitle: {
+    fontSize: FontSize.xs,
+    fontWeight: '800',
+    color: '#c2410c',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+  },
+  inputGuideText: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  input: {
+    backgroundColor: Colors.inputBg, color: Colors.text,
+    fontSize: FontSize.md, borderRadius: Radius.lg,
+    borderWidth: 2, paddingHorizontal: Spacing.md, paddingVertical: Spacing.md,
+    minHeight: 240, lineHeight: 24,
+    marginBottom: Spacing.xs,
+  },
+  inputMetaRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  inputMetaText: { fontSize: FontSize.xs, color: Colors.textMuted, fontWeight: '700' },
   errorBox: {
     backgroundColor: '#fef2f2', borderRadius: Radius.md,
     padding: Spacing.md, borderWidth: 1, borderColor: '#fecaca',

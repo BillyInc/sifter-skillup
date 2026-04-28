@@ -152,7 +152,7 @@ const TRACK_DASHBOARD_CONFIG: Record<string, TrackDashboardConfig> = {
   'starknet-defi-navigator': {
     title: 'Starknet DeFi Dashboard',
     subtitle: 'Live pool data, yield, and on-chain execution.',
-    accentColor: '#EC4899',
+    accentColor: '#F59E0B',
     statsLabel: 'Starknet DeFi Performance',
     perfCardTitle: 'Live Pools & Yield Monitor',
     perfCardStat1Label: 'Pools Tracked',

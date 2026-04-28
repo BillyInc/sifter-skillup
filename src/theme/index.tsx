@@ -10,7 +10,7 @@
  *      animation presets, notification config, font stacks.
  *
  * Extra tokens added for Starknet:
- *   Colors.starknet = '#EC4899' (pink, matches Island 18 orbit)
+ *   Colors.starknet = '#F59E0B' (amber, aligned to the audit refresh)
  */
 
 import React, {
@@ -61,7 +61,8 @@ export const Shadow = {
   glow:      { shadowColor: '#000000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.12, shadowRadius: 14, elevation: 6 },
   glowGold:  { shadowColor: '#f59e0b', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
   glowGreen: { shadowColor: '#10b981', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.22, shadowRadius: 14, elevation: 6 },
-  glowPink:  { shadowColor: '#ec4899', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
+  glowAmber: { shadowColor: '#f59e0b', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
+  glowPink:  { shadowColor: '#f59e0b', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
 } as const;
 
 // ─── Color palette interface ───────────────────────────────────
@@ -103,7 +104,7 @@ export const LightColors: ColorPalette = {
   beginner: '#10B981', intermediate: '#F59E0B', pro: '#F59E0B',
   bitcoin: '#F7931A', ethereum: '#627EEA', defi: '#10B981', nft: '#8B5CF6',
   bridge: '#06B6D4', meme: '#EF4444', base: '#0052FF', ton: '#0088CC',
-  bnb: '#F0B90B', solana: '#9945FF', starknet: '#EC4899',
+  bnb: '#F0B90B', solana: '#9945FF', starknet: '#F59E0B',
   tabBar: '#FFFFFF', tabBarBorder: '#E5E7EB', tabBarActive: '#111111',
   inputBg: '#F5F5F5', inputBorder: '#E5E7EB',
   overlay: 'rgba(17,17,17,0.46)', shimmer: '#F5F5F5', shimmerHighlight: '#E5E7EB',
@@ -115,23 +116,23 @@ export const LightColors: ColorPalette = {
 // ─── Dark palette ─────────────────────────────────────────────
 
 export const DarkColors: ColorPalette = {
-  bg: '#0F172A', bgSecondary: '#111827', bgTertiary: '#1F2937',
-  card: '#111827', cardElevated: '#172033', navy: '#F9FAFB',
-  accent: '#F59E0B', accentSoft: '#1A1200', accentDim: '#D97706', accentDeep: '#FDE68A',
+  bg: '#090909', bgSecondary: '#111111', bgTertiary: '#1A1A1A',
+  card: '#121212', cardElevated: '#171717', navy: '#F9FAFB',
+  accent: '#F59E0B', accentSoft: '#221507', accentDim: '#D97706', accentDeep: '#FDE68A',
   green: '#34D399', greenSoft: '#052E28',
   red: '#F87171', redSoft: '#3A1014',
   gold: '#FBBF24', goldSoft: '#3B2A09',
   orange: '#FB923C', orangeSoft: '#3A1D09',
-  text: '#F9FAFB', textSoft: '#D1D5DB', textMuted: '#9CA3AF', textInverse: '#111111',
-  border: '#243041', borderDark: '#374151', borderFocus: '#F59E0B',
+  text: '#FAFAFA', textSoft: '#D4D4D8', textMuted: '#A1A1AA', textInverse: '#111111',
+  border: '#2A2A2A', borderDark: '#3A3A3A', borderFocus: '#F59E0B',
   beginner: '#34D399', intermediate: '#FBBF24', pro: '#F59E0B',
   bitcoin: '#F7931A', ethereum: '#7C96FF', defi: '#34D399', nft: '#A78BFA',
   bridge: '#22D3EE', meme: '#F87171', base: '#3B82F6', ton: '#38BDF8',
-  bnb: '#FBB024', solana: '#B57AFF', starknet: '#F472B6',
-  tabBar: '#111827', tabBarBorder: '#243041', tabBarActive: '#F9FAFB',
-  inputBg: '#111827', inputBorder: '#374151',
-  overlay: 'rgba(0,0,0,0.75)', shimmer: '#1A1A30', shimmerHighlight: '#222248',
-  stitch: '#F59E0B', stitchSoft: '#1A1200',
+  bnb: '#FBB024', solana: '#B57AFF', starknet: '#F59E0B',
+  tabBar: '#111111', tabBarBorder: '#2A2A2A', tabBarActive: '#F59E0B',
+  inputBg: '#181818', inputBorder: '#3A3A3A',
+  overlay: 'rgba(0,0,0,0.75)', shimmer: '#171717', shimmerHighlight: '#222222',
+  stitch: '#F59E0B', stitchSoft: '#221507',
   levelBadge: '#3B2A09', levelBadgeText: '#FBBF24',
   streakFire: '#FB923C', xpGreen: '#34D399',
 };
@@ -215,7 +216,7 @@ export const WORLD_THEMES: Record<string, WorldTheme> = {
   'code-citadel':           { id: 'code-citadel',           name: 'Code Citadel',           primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#00101f', '#002040'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🏰' },
   'shadow-vault':           { id: 'shadow-vault',           name: 'Shadow Vault',           primaryColor: '#EF4444', secondaryColor: '#F87171', bgGradient: ['#0f0000', '#200000'], glowColor: 'rgba(239,68,68,0.4)',   particleColor: '#F87171', emoji: '🛡️' },
   'logistics-labyrinth':    { id: 'logistics-labyrinth',    name: 'Logistics Labyrinth',    primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#000d1a', '#001f40'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🔗' },
-  'starknet-realm':         { id: 'starknet-realm',         name: 'Starknet Realm',         primaryColor: '#EC4899', secondaryColor: '#F472B6', bgGradient: ['#0a0015', '#1a0030'], glowColor: 'rgba(236,72,153,0.45)', particleColor: '#F472B6', emoji: '⚡' },
+  'starknet-realm':         { id: 'starknet-realm',         name: 'Starknet Realm',         primaryColor: '#F59E0B', secondaryColor: '#FBBF24', bgGradient: ['#120b00', '#251600'], glowColor: 'rgba(245,158,11,0.38)', particleColor: '#FBBF24', emoji: '⚡' },
   'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#111111', secondaryColor: '#374151', bgGradient: ['#0a0a0a', '#111111'], glowColor: 'rgba(0,0,0,0.25)',      particleColor: '#F59E0B', emoji: '⚡' },
 };
 
@@ -298,8 +299,8 @@ export const TRACK_TOOLS: Record<string, {
   'quant':                { color: '#1D4ED8', toolEmoji: '📊', screenLabel: 'Bloomberg Terminal',      deskItems: ['python-ide', 'probability-tree', 'backtest'] },
   'supply-chain':         { color: '#0EA5E9', toolEmoji: '🔗', screenLabel: 'Logistics Dashboard',     deskItems: ['sap-screen', 'shipping-map', 'inventory'] },
   'defi-research':        { color: '#10B981', toolEmoji: '🌊', screenLabel: 'DeFi Protocol Monitor',   deskItems: ['yield-curve', 'tvl-chart', 'liquidation'] },
-  'starknet':             { color: '#EC4899', toolEmoji: '⚡', screenLabel: 'Cairo Dev Terminal',      deskItems: ['zk-proof', 'contract-editor', 'tx-feed'] },
-  'starknet-defi-navigator': { color: '#EC4899', toolEmoji: '🧭', screenLabel: 'DeFi Navigator',      deskItems: ['pool-depth', 'yield-monitor', 'starkzap'] },
+  'starknet':             { color: '#F59E0B', toolEmoji: '⚡', screenLabel: 'Cairo Dev Terminal',      deskItems: ['zk-proof', 'contract-editor', 'tx-feed'] },
+  'starknet-defi-navigator': { color: '#F59E0B', toolEmoji: '🧭', screenLabel: 'DeFi Navigator',      deskItems: ['pool-depth', 'yield-monitor', 'starkzap'] },
   'options-trading':      { color: '#0369A1', toolEmoji: '🎯', screenLabel: 'Options Chain',           deskItems: ['greeks-chart', 'vol-surface', 'expiry-cal'] },
   'ai-ml':                { color: '#06B6D4', toolEmoji: '🤖', screenLabel: 'Model Training Monitor', deskItems: ['gpu-rig', 'loss-curve', 'neural-net'] },
   'default':              { color: '#111111', toolEmoji: '💼', screenLabel: 'Analyst Workstation',     deskItems: ['spreadsheet', 'notepad', 'coffee'] },
@@ -364,7 +365,7 @@ export function getRewardTier(xp: number): RewardTier {
   return 'bronze';
 }
 
-export const WEB_MAX_WIDTH = 1260;
+export const WEB_MAX_WIDTH = 1160;
 export const webContainer = Platform.OS === 'web'
-  ? { maxWidth: 1260, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 22, paddingTop: 20 }
+  ? { maxWidth: 1160, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 18, paddingTop: 18 }
   : { paddingHorizontal: 14, paddingTop: 12 };

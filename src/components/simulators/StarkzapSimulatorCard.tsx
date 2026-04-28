@@ -71,7 +71,7 @@ function ActionBtn({ label, onPress, loading, disabled, variant = 'primary', col
   variant?: 'primary' | 'ghost' | 'starknet'; colors: any;
 }) {
   const bg = variant === 'primary' ? colors.accent
-    : variant === 'starknet' ? '#ec4899'
+    : variant === 'starknet' ? '#f59e0b'
     : 'transparent';
   const border = variant === 'ghost' ? colors.border : 'transparent';
   const txtColor = variant === 'ghost' ? colors.textSoft : '#fff';
@@ -543,7 +543,7 @@ function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
             <Text style={[{ flex: 1, fontSize: FontSize.sm, fontWeight: '800', color: s.done ? colors.green : colors.text }]}>{s.label}</Text>
             {!s.done && step === s.key && (
               <TouchableOpacity
-                style={[{ backgroundColor: '#ec4899', borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm }]}
+                style={[{ backgroundColor: '#f59e0b', borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm }]}
                 onPress={() => handleStep(s.key)} disabled={loading}
               >
                 {loading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={{ color: '#fff', fontWeight: '800', fontSize: FontSize.xs }}>Execute</Text>}
@@ -562,9 +562,9 @@ function BossSim({ onComplete, onSkip, colors }: { onComplete: () => void; onSki
 
       {allDone && (
         <>
-          <View style={[{ backgroundColor: '#ec4899' + '15', borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' }]}>
+          <View style={[{ backgroundColor: '#f59e0b15', borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' }]}>
             <Text style={{ fontSize: 18 }}>⭐</Text>
-            <Text style={{ fontSize: FontSize.xl, fontWeight: '800', color: '#ec4899', marginTop: Spacing.sm }}>Island Complete!</Text>
+            <Text style={{ fontSize: FontSize.xl, fontWeight: '800', color: '#f59e0b', marginTop: Spacing.sm }}>Island Complete!</Text>
             <Text style={{ color: colors.textSoft, fontSize: FontSize.sm, textAlign: 'center', marginTop: 4 }}>You executed 3 real Starknet transactions.</Text>
           </View>
           <ActionBtn label="Complete Island →" onPress={onComplete} colors={colors} variant="starknet" />

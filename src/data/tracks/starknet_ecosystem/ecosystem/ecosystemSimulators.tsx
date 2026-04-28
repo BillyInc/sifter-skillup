@@ -151,7 +151,7 @@ function ActionBtn({ label, onPress, loading, disabled, variant = 'primary', col
 }) {
   const bg =
     variant === 'primary'  ? colors.accent :
-    variant === 'starknet' ? '#ec4899' :
+    variant === 'starknet' ? '#ffd700' :
     variant === 'success'  ? colors.green :
     'transparent';
   const border = variant === 'ghost' ? colors.border : 'transparent';
@@ -998,7 +998,7 @@ export function PackageInstallSim({ onComplete, onSkip, colors }: {
           <View style={[term.outputBox, { backgroundColor: '#0d0d1a' }]}>
             {running ? (
               <View style={{ flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' }}>
-                <ActivityIndicator color="#ec4899" size="small" />
+                <ActivityIndicator color="#ffd700" size="small" />
                 <Text style={term.outputText}>Installing…</Text>
               </View>
             ) : (
@@ -1055,7 +1055,7 @@ export function PackageInstallSim({ onComplete, onSkip, colors }: {
 
 const term = StyleSheet.create({
   commandLine: { flexDirection: 'row', padding: Spacing.sm, borderRadius: Radius.md, marginBottom: 2 },
-  prompt:      { color: '#ec4899', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13 },
+  prompt:      { color: '#ffd700', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13 },
   command:     { color: '#e2e8f0', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 13, flex: 1 },
   outputBox:   { padding: Spacing.sm, borderRadius: Radius.md },
   outputText:  { color: '#94a3b8', fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace', fontSize: 11, lineHeight: 18 },
@@ -2260,9 +2260,8 @@ const C = {
   cyan: '#06b6d4',
   accent: '#7c3aed',
   amber: '#f59e0b',
-  gold: '#eab308',
+  gold: '#ffd700',
   green: '#22c55e',
-  pink: '#ec4899',
   redSoft: '#450a0a',
   cyanSoft: '#083344',
   amberSoft: '#451a03',
@@ -2289,13 +2288,13 @@ function Btn({ label, onPress, loading, disabled, variant = 'primary' }: {
   onPress: () => void;
   loading?: boolean;
   disabled?: boolean;
-  variant?: 'primary' | 'green' | 'amber' | 'danger' | 'pink' | 'ghost';
+  variant?: 'primary' | 'green' | 'amber' | 'danger' | 'gold' | 'ghost';
 }) {
   const bg =
     variant === 'green' ? C.green :
     variant === 'amber' ? C.amber :
     variant === 'danger' ? C.red :
-    variant === 'pink' ? C.pink :
+    variant === 'gold' ? C.gold :
     variant === 'ghost' ? 'transparent' :
     C.accent;
   const borderColor = variant === 'ghost' ? C.border : 'transparent';
@@ -2788,7 +2787,7 @@ export function FinalBoss({ levelName = 'Senior Certified', labsCompleted = 9, a
 
   if (stage === 'scoring') return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-      <ActivityIndicator size="large" color={C.pink} />
+      <ActivityIndicator size="large" color={C.gold} />
       <Text style={[ss.sm, { color: C.textSoft, marginTop: 16, textAlign: 'center' }]}>
         Evaluating your senior analyst submission…
       </Text>
@@ -2807,7 +2806,7 @@ export function FinalBoss({ levelName = 'Senior Certified', labsCompleted = 9, a
         </Text>
       </View>
       {score >= 80
-        ? <Btn label="🎓 Claim Senior Certification →" onPress={onComplete} variant="pink" />
+        ? <Btn label="🎓 Claim Senior Certification →" onPress={onComplete} variant="gold" />
         : <>
             <Btn label="↩  Retry Final Boss" onPress={() => { setStage('writing'); setAnswers({}); setCurrentQ(0); }} variant="primary" />
             <Btn label="Continue anyway" onPress={onComplete} variant="ghost" />
@@ -2819,8 +2818,8 @@ export function FinalBoss({ levelName = 'Senior Certified', labsCompleted = 9, a
 
   return (
     <ScrollView contentContainerStyle={{ gap: 10, padding: 4 }}>
-      <View style={[ss.infoBanner, { backgroundColor: C.pink + '10', borderColor: C.pink + '40' }]}>
-        <Tag label="👑 Final Boss — Senior Interview" color={C.pink} />
+      <View style={[ss.infoBanner, { backgroundColor: C.gold + '10', borderColor: C.gold + '40' }]}>
+        <Tag label="👑 Final Boss — Senior Interview" color={C.gold} />
         <Text style={[ss.lg, { marginTop: 6 }]}>{levelName} Assessment</Text>
         <Text style={[ss.sm, { color: C.textSoft, marginTop: 4 }]}>
           {labsCompleted} labs · 4 senior questions · Minimum 60 words each · No hints
@@ -2831,10 +2830,10 @@ export function FinalBoss({ levelName = 'Senior Certified', labsCompleted = 9, a
         {QUESTIONS.map((q, i) => (
           <TouchableOpacity key={q.id} onPress={() => setCurrentQ(i)}
             style={[ss.chip, {
-              borderColor: words(q.id) >= minW ? C.green : currentQ === i ? C.pink : C.border,
-              backgroundColor: currentQ === i ? C.pink + '20' : 'transparent',
+              borderColor: words(q.id) >= minW ? C.green : currentQ === i ? C.gold : C.border,
+              backgroundColor: currentQ === i ? C.gold + '20' : 'transparent',
             }]}>
-            <Text style={[ss.xs, { color: words(q.id) >= minW ? C.green : currentQ === i ? C.pink : C.textSoft, fontWeight: '700' }]}>
+            <Text style={[ss.xs, { color: words(q.id) >= minW ? C.green : currentQ === i ? C.gold : C.textSoft, fontWeight: '700' }]}>
               Q{i + 1} {words(q.id) >= minW ? '✓' : ''}
             </Text>
           </TouchableOpacity>
@@ -2842,7 +2841,7 @@ export function FinalBoss({ levelName = 'Senior Certified', labsCompleted = 9, a
       </View>
 
       <Card>
-        <Text style={[ss.xs, { color: C.pink, fontWeight: '800', marginBottom: 6 }]}>QUESTION {currentQ + 1}</Text>
+        <Text style={[ss.xs, { color: C.gold, fontWeight: '800', marginBottom: 6 }]}>QUESTION {currentQ + 1}</Text>
         <Text style={[ss.sm, { color: C.text, lineHeight: 22 }]}>{QUESTIONS[currentQ].prompt}</Text>
       </Card>
 
@@ -2853,15 +2852,15 @@ export function FinalBoss({ levelName = 'Senior Certified', labsCompleted = 9, a
         multiline
         placeholder="Senior-level analysis — cite data, show calculations, acknowledge trade-offs…"
         placeholderTextColor={C.textMuted}
-        style={[ss.judgeInput, { color: C.text, borderColor: words(QUESTIONS[currentQ].id) >= minW ? C.pink + '60' : C.border, minHeight: 120 }]}
+        style={[ss.judgeInput, { color: C.text, borderColor: words(QUESTIONS[currentQ].id) >= minW ? C.gold + '60' : C.border, minHeight: 120 }]}
       />
-      <Text style={[ss.xs, { color: words(QUESTIONS[currentQ].id) >= minW ? C.pink : C.textMuted, textAlign: 'right' }]}>
+      <Text style={[ss.xs, { color: words(QUESTIONS[currentQ].id) >= minW ? C.gold : C.textMuted, textAlign: 'right' }]}>
         {words(QUESTIONS[currentQ].id)} / {minW}
       </Text>
 
       {currentQ < QUESTIONS.length - 1
         ? <Btn label={`Next Question (${currentQ + 2}/${QUESTIONS.length}) →`} onPress={() => setCurrentQ(q => q + 1)} variant="primary" disabled={words(QUESTIONS[currentQ].id) < minW} />
-        : <Btn label={allAnswered ? 'Submit Final Boss' : `Answer all questions first (${QUESTIONS.filter(q => words(q.id) >= minW).length}/${QUESTIONS.length})`} onPress={submit} disabled={!allAnswered} variant="pink" />
+        : <Btn label={allAnswered ? 'Submit Final Boss' : `Answer all questions first (${QUESTIONS.filter(q => words(q.id) >= minW).length}/${QUESTIONS.length})`} onPress={submit} disabled={!allAnswered} variant="gold" />
       }
       <Btn label="Skip" onPress={onSkip} variant="ghost" />
     </ScrollView>
