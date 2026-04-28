@@ -571,21 +571,6 @@ export default function AuthScreen() {
           <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
             <Text style={[styles.eyebrow, { color: colors.textMuted }]}>SKILL PLATFORM</Text>
             <Text style={[styles.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
-            <Text style={[styles.tagline, { color: colors.textSoft }]}>
-              A cleaner way to enter tracks, save progress, and keep learning moving.
-            </Text>
-
-            <View style={styles.featureList}>
-              {[
-                'Track-first onboarding',
-                'Saved progress across devices',
-                'Guest mode if you want to explore first',
-              ].map((item) => (
-                <View key={item} style={[styles.featureItem, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-                  <Text style={[styles.featureText, { color: colors.textSoft }]}>{item}</Text>
-                </View>
-              ))}
-            </View>
 
             <View style={styles.btnGroup}>
               <AuthButton label="Create account" onPress={() => setMode('signup')} colors={colors} />
@@ -617,10 +602,6 @@ export default function AuthScreen() {
                 variant="ghost"
                 colors={colors}
               />
-
-              <View style={[styles.authDivider, { borderTopColor: colors.border }]}>
-                <Text style={[styles.authDividerText, { color: colors.textMuted }]}>Explore without setup</Text>
-              </View>
 
               <AuthButton
                 label="Continue as Guest"
@@ -719,10 +700,6 @@ const styles = StyleSheet.create({
   starknetCard: { backgroundColor: '#0a0a1f' },
   eyebrow: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 1, textAlign: 'center' },
   appName: { fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' },
-  tagline: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
-  featureList: { gap: Spacing.xs, marginVertical: Spacing.sm },
-  featureItem: { borderRadius: Radius.md, borderWidth: 1, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
-  featureText: { fontSize: FontSize.xs, textAlign: 'center', fontWeight: '600' },
   btnGroup: { gap: Spacing.sm },
   btn: { borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center', justifyContent: 'center', minHeight: 50 },
   btnText: { fontSize: FontSize.sm, fontWeight: '800' },
@@ -744,8 +721,6 @@ const styles = StyleSheet.create({
   starknetOAuthBtn: { flex: 1, borderColor: '#334155', borderWidth: 1, borderRadius: Radius.md, paddingVertical: Spacing.md, alignItems: 'center', backgroundColor: '#1e1e38' },
   starknetOAuthBtnBusy: { opacity: 0.5 },
   starknetOAuthBtnText: { color: '#fff', fontWeight: '700', fontSize: FontSize.sm },
-  authDivider: { borderTopWidth: 1, marginTop: Spacing.xs, paddingTop: Spacing.sm },
-  authDividerText: { fontSize: FontSize.xs, textAlign: 'center', fontWeight: '700', letterSpacing: 0.3 },
   errorBox: { borderRadius: Radius.md, padding: Spacing.md },
   errorText: { fontSize: FontSize.sm, fontWeight: '600', textAlign: 'center' },
   backBtn: { alignSelf: 'flex-start', marginBottom: Spacing.md },
