@@ -22,8 +22,10 @@ import {
   webContainer,
 } from '../theme';
 import { Badge, SifterButton, SifterCard } from '../components/ui';
-import { WorkerCharacter, TheBolt } from '../components/CharacterSystem';
-import { FieldArtwork, fieldColor } from '../components/artwork/FieldArtwork';
+import { TheBolt } from '../components/CharacterSystem';
+import { fieldColor } from '../components/artwork/FieldArtwork';
+import TrackScene from '../components/artwork/TrackIsometricScene';
+import IslandGlobe, { DEFAULT_ISLAND_PINS } from '../components/artwork/IslandGlobe';
 import { useAuth } from '../hooks/useAuth';
 import { useResume } from '../hooks/useResume';
 import { xpEngine, type XPSnapshot } from '../lib/XPEngine';
@@ -190,7 +192,8 @@ function OverviewTrackCard({
 
 function TrackHeroCard({
   accentColor,
-  artFieldId,
+  trackId,
+  heroVisual,
   eyebrow,
   title,
   summary,
@@ -200,7 +203,8 @@ function TrackHeroCard({
   onContinue,
 }: {
   accentColor: string;
-  artFieldId: string;
+  trackId?: string;
+  heroVisual: 'globe' | 'isometric';
   eyebrow: string;
   title: string;
   summary: string;
@@ -237,7 +241,20 @@ function TrackHeroCard({
         </View>
 
         <View style={[styles.heroPanelVisual, { backgroundColor: `${accentColor}0D` }]}>
-          <FieldArtwork fieldId={artFieldId} size={154} />
+          {heroVisual === 'globe' ? (
+            <IslandGlobe
+              pins={DEFAULT_ISLAND_PINS}
+              width={270}
+              height={240}
+            />
+          ) : (
+            <TrackScene
+              trackId={trackId ?? 'default'}
+              accentColor={accentColor}
+              width={270}
+              height={200}
+            />
+          )}
           <View style={[styles.heroPanelMiniCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
             <Text style={[styles.heroPanelMiniLabel, { color: colors.textMuted }]}>Momentum</Text>
             <WebMiniChart color={accentColor} values={chartValues} />
@@ -352,6 +369,11 @@ export default function HomeScreen() {
   const stage = xp?.stage.stage ?? 1;
   const dailyGoal = XP_DAILY_GOALS[xp?.dailyGoalKey ?? 'regular']?.xp ?? 20;
   const accentColor = trackContext.color || colors.accent;
+  const isCryptoOrIsland =
+    trackContext.mode === 'island' ||
+    trackContext.artFieldId === 'crypto' ||
+    !trackContext.trackId;
+  const heroVisual = isCryptoOrIsland ? 'globe' : 'isometric';
   const continueHref = resumeHref || trackContext.continueHref || '/(tabs)/fields';
   const continueLabel = trackContext.mode === 'track'
     ? (resumeSummary ? 'Continue where you left off' : trackContext.continueLabel)
@@ -438,7 +460,8 @@ export default function HomeScreen() {
               {trackContext.mode === 'track' ? (
                 <TrackHeroCard
                   accentColor={accentColor}
-                  artFieldId={trackContext.artFieldId}
+                  trackId={trackContext.trackId ?? trackContext.artFieldId}
+                  heroVisual={heroVisual}
                   eyebrow={trackContext.heroEyebrow}
                   title={trackContext.heroTitle}
                   summary={heroSummary}
@@ -450,7 +473,7 @@ export default function HomeScreen() {
               ) : (
                 <WebCard accentBar accentColor={colors.accent} title="Progress Overview">
                   <View style={styles.webProgressCard}>
-                    <WorkerCharacter stage={stage} trackId="crypto" size={88} animate mood="neutral" />
+                    <IslandGlobe pins={DEFAULT_ISLAND_PINS} width={160} height={140} />
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.webStageName, { color: colors.accent }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
                       <Text style={[styles.webStageDesc, { color: colors.textSoft }]}>
@@ -674,10 +697,19 @@ export default function HomeScreen() {
             ) : null}
           </View>
           <View style={styles.mobileHeroBody}>
-            {trackContext.mode === 'track' ? (
-              <FieldArtwork fieldId={trackContext.artFieldId} size={124} />
+            {heroVisual === 'globe' ? (
+              <IslandGlobe
+                pins={DEFAULT_ISLAND_PINS}
+                width={120}
+                height={110}
+              />
             ) : (
-              <WorkerCharacter stage={stage} trackId="crypto" size={100} animate mood="neutral" />
+              <TrackScene
+                trackId={trackContext.trackId ?? trackContext.artFieldId}
+                accentColor={accentColor}
+                width={130}
+                height={110}
+              />
             )}
             <View style={{ flex: 1 }}>
               <Text style={[styles.mobileHeroTitle, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
