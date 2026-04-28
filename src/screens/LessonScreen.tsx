@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  SafeAreaView, StatusBar, Platform, Modal, TextInput, Share,
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, Pressable, Platform,
+  SafeAreaView, StatusBar, Modal, TextInput, Share,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -46,7 +46,6 @@ import LessonXPBar, { type LessonMood } from '../components/LessonXPBar';
 import CelebrationOverlay, { type CelebrationEventType } from '../components/CelebrationOverlay';
 import AIExplainer from '../components/AIExplainer';
 import LessonTransition from '../components/LessonTransition';
-import LabObject from '../components/LabObjects';
 
 // ── Types ─────────────────────────────────────────────────────
 interface Props {
@@ -244,6 +243,38 @@ function NotesPanel({ visible, levelId, topic, onClose }: {
 }
 
 // ── Top bar (upgraded with LessonXPBar) ──────────────────────
+function TopActionButton({
+  icon,
+  label,
+  onPress,
+  color,
+}: {
+  icon: string;
+  label: string;
+  onPress: () => void;
+  color?: string;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <View style={sty.topActionWrap}>
+      {Platform.OS === 'web' && hovered ? (
+        <View style={sty.topActionTooltip}>
+          <Text style={sty.topActionTooltipText}>{label}</Text>
+        </View>
+      ) : null}
+      <Pressable
+        onPress={onPress}
+        onHoverIn={() => setHovered(true)}
+        onHoverOut={() => setHovered(false)}
+        style={sty.topActionBtn}
+      >
+        <Text style={{fontSize:18,color:color ?? Colors.textSoft,fontWeight:'800'}}>{icon}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, onExport, onFlag,
   totalXp, sessionXp, correctStreak, mood, onAIExplainer }: {
   progress:number; hearts:number; onExit:()=>void;
@@ -268,6 +299,13 @@ function TopBar({ progress, hearts, onExit, isBookmarked, onBookmark, onNotes, o
         />
       </View>
 
+      <View style={sty.topActionsAccessible}>
+        <TopActionButton icon="💡" label="Explain" onPress={onAIExplainer} />
+        <TopActionButton icon={isBookmarked ? '🔖' : '🏷️'} label={isBookmarked ? 'Bookmarked' : 'Bookmark'} onPress={onBookmark} color={isBookmarked?Colors.gold:Colors.textSoft} />
+        <TopActionButton icon="📝" label="Notes" onPress={onNotes} />
+        <TopActionButton icon="🚩" label="Flag" onPress={onFlag} />
+        <TopActionButton icon="⬆️" label="Export" onPress={onExport} />
+      </View>
       <View style={sty.topActions}>
         <TouchableOpacity onPress={onAIExplainer} hitSlop={{top:8,bottom:8,left:8,right:8}}>
           <Text style={{fontSize:20}}>💡</Text>
@@ -304,6 +342,19 @@ function ReturnBanner({ topic, onReturn }: { topic: string; onReturn: () => void
 }
 
 // ── Concept card with term links ──────────────────────────────
+function LessonNavRow({ previousTopic, onPrevious }: {
+  previousTopic?: string | null; onPrevious?: (() => void) | null;
+}) {
+  if (!previousTopic || !onPrevious) return null;
+  return (
+    <View style={sty.lessonNavRow}>
+      <TouchableOpacity style={sty.lessonNavBtn} onPress={onPrevious} activeOpacity={0.85}>
+        <Text style={sty.lessonNavBtnText}>Previous lesson: {previousTopic}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 function ConceptCard({ q, onNext, levelId, onTermPress }: {
   q: Question; onNext: () => void; levelId: number; onTermPress: (link: TermLink) => void;
 }) {
@@ -811,6 +862,25 @@ export default function LessonScreen({
               }
             : null;
         })();
+  const previousTarget = isStarknetLabLesson && starknetLab && lessonIndex !== undefined && lessonIndex > 0
+    ? {
+        levelId: getStarknetLessonRuntimeId(
+          trackId as StarknetTrackId,
+          labNumber as number,
+          lessonIndex - 1,
+        ),
+        topic: starknetLab.lessons[lessonIndex - 1]?.title ?? 'Previous Lesson',
+      }
+    : (() => {
+        const prevLevelId = levelId - 1;
+        const prevLevel = getStarknetIslandLevel(prevLevelId) ?? getStarknetTrackBossLevel(prevLevelId) ?? getLevel(prevLevelId);
+        return prevLevel
+          ? {
+              levelId: prevLevelId,
+              topic: prevLevel.topic,
+            }
+          : null;
+      })();
 
   useEffect(() => {
     if (!lessonTopic) {
@@ -998,6 +1068,9 @@ export default function LessonScreen({
   const q        = state.questions[state.qIndex];
   const progress = (state.qIndex / state.questions.length) * 100;
   const isLast   = state.qIndex + 1 >= state.questions.length;
+  const isJudgmentSimulator =
+    q?.type === 'simulator'
+    && String(q.simulatorType ?? '').startsWith('judgment-');
   const sessionXp = state.xp ?? 0;
   const simulatorIslandId = q?.simulatorType === 'phase1-boss' ? levelId : getIslandForLevel(levelId);
   const showStarknetFaucet = Boolean(
@@ -1082,13 +1155,20 @@ export default function LessonScreen({
         onAIExplainer={handleAIExplainer}
       />
 
+      <LessonNavRow
+        previousTopic={previousTarget?.topic ?? null}
+        onPrevious={previousTarget && onNavigateToLesson ? () => onNavigateToLesson(previousTarget.levelId) : null}
+      />
+
       {showStarknetFaucet && user?.starknet_address ? (
         <View style={sty.faucetBanner}>
-          <Text style={sty.faucetBannerTitle}>Need fresh STRK for this Starknet lesson?</Text>
-          <Text style={sty.faucetBannerSub}>
-            Claim Sepolia test STRK here before you run a live wallet step.
-          </Text>
-          <View style={{ marginTop: Spacing.sm }}>
+          <View style={sty.faucetBannerRow}>
+            <View style={sty.faucetBannerCopy}>
+              <Text style={sty.faucetBannerTitle}>Need fresh STRK for this Starknet lesson?</Text>
+              <Text style={sty.faucetBannerSub}>
+                Claim Sepolia test STRK here before you run a live wallet step.
+              </Text>
+            </View>
             <StarknetFaucetButton walletAddress={user.starknet_address} compact />
           </View>
         </View>
@@ -1098,24 +1178,21 @@ export default function LessonScreen({
 
       {q?.type==='concept_card' && <ConceptCard key={state.qIndex} q={q} onNext={()=>{handleAnswerCorrect();setTimeout(advance,200);}} levelId={levelId} onTermPress={handleTermPress}/>}
       {q?.type==='simulator' && (
-        <>
-          <LabObject
-            key={`lab-object-${state.qIndex}`}
-            simulatorType={q.simulatorType ?? ''}
-            fieldColor={(user as any)?.activeFieldColor}
-          />
-          <SimulatorCard
-            key={`sim-${state.qIndex}`}
-            simulatorType={q.simulatorType ?? ''}
-            islandId={simulatorIslandId}
-            scenario={q.scenario}
-            scoringCriteria={q.scoringCriteria}
-            trackId={trackId}
-            labNumber={labNumber}
-            onComplete={() => { completeSimulator(); advance(); }}
-            onSkip={() => advance()}
-          />
-        </>
+        <View style={[sty.simulatorStage, isJudgmentSimulator && sty.judgmentSimulatorStage]}>
+          <View style={sty.simulatorCardWrap}>
+            <SimulatorCard
+              key={`sim-${state.qIndex}`}
+              simulatorType={q.simulatorType ?? ''}
+              islandId={simulatorIslandId}
+              scenario={q.scenario}
+              scoringCriteria={q.scoringCriteria}
+              trackId={trackId}
+              labNumber={labNumber}
+              onComplete={() => { completeSimulator(); advance(); }}
+              onSkip={() => advance()}
+            />
+          </View>
+        </View>
       )}
       {q?.type==='mcq'          && <MCQQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
       {q?.type==='true_false'   && <TrueFalseQuestion key={state.qIndex} q={q} onCorrect={handleAnswerCorrect} onWrong={handleAnswerWrong}/>}
@@ -1181,31 +1258,36 @@ function inferResumeLevel(labIndex: number): 'junior' | 'intermediate' | 'senior
 // ── Styles ────────────────────────────────────────────────────
 const sty = StyleSheet.create({
   screen:        {flex:1,backgroundColor:Colors.bg},
-  topBar:        {flexDirection:'row',alignItems:'center',height:44,paddingHorizontal:Spacing.md,paddingVertical:0,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm},
+  topBar:        {flexDirection:'row',alignItems:'center',height:44,paddingHorizontal:Spacing.md,paddingVertical:0,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border,gap:Spacing.sm,width:'100%',maxWidth:1120,alignSelf:'center'},
   exitBtn:       {padding:Spacing.sm},
   exitTxt:       {fontSize:16,color:Colors.textSoft},
   progressWrap:  {flex:1},
   progressBg:    {height:10,backgroundColor:Colors.border,borderRadius: 14},
   progressFill:  {height:10,backgroundColor:Colors.accent,borderRadius: 14},
-  topActions:    {flexDirection:'row',alignItems:'center',gap:6},
-  hearts:        {flexDirection:'row',gap:2},
-  heart:         {fontSize:14},
-  body:          {flex:1,padding:Spacing.md,width:'100%',maxWidth:860,alignSelf:'center'},
+  topActionsAccessible:{flexDirection:'row',alignItems:'center',gap:6},
+  topActions:    {display:'none'},
+  hearts:        {display:'none'},
+  heart:         {display:'none'},
+  topActionWrap: {position:'relative',alignItems:'center',justifyContent:'center'},
+  topActionBtn:  {minWidth:28,minHeight:28,alignItems:'center',justifyContent:'center',paddingHorizontal:4},
+  topActionTooltip:{position:'absolute',top:28,backgroundColor:Colors.text,borderRadius:Radius.sm,paddingHorizontal:Spacing.sm,paddingVertical:4,zIndex:20},
+  topActionTooltipText:{color:'#fff',fontSize:10,fontWeight:'700'},
+  body:          {flex:1,paddingHorizontal:Spacing.lg,paddingTop:Spacing.md,width:'100%',maxWidth:1040,alignSelf:'center'},
   bodyContent:   {paddingBottom:Spacing.xxl},
   card:          {backgroundColor:Colors.card,borderRadius:Radius.lg,borderWidth:1,borderColor:Colors.border,padding:Spacing.md},
   tierBadge:     {alignSelf:'flex-start',borderRadius:Radius.full,borderWidth:1.5,paddingHorizontal:Spacing.md,paddingVertical:3,marginBottom:Spacing.md},
   tierLabel:     {fontSize:FontSize.xs,fontWeight:'800',textTransform:'uppercase',letterSpacing:0.5},
   conceptTopic:  {fontSize:FontSize.lg,fontWeight: '800',color:Colors.text,lineHeight:24,marginBottom:Spacing.sm},
   divider:       {height:2,borderRadius: 14,marginBottom:Spacing.md,opacity:0.6},
-  conceptFact:   {fontSize:FontSize.sm,lineHeight:21,color:Colors.text},
+  conceptFact:   {fontSize:FontSize.md,lineHeight:28,color:Colors.text},
   lessonBodyWrap:{gap:Spacing.sm},
-  lessonParagraph:{fontSize:FontSize.sm,lineHeight:19,color:Colors.text},
+  lessonParagraph:{fontSize:FontSize.md,lineHeight:28,color:Colors.text},
   takeawayBox:   {backgroundColor:Colors.bgSecondary,borderRadius:Radius.lg,borderWidth:1,borderColor:Colors.border,padding:Spacing.sm,marginTop:Spacing.lg},
   takeawayLabel: {fontSize:9,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
-  takeawayText:  {fontSize:FontSize.sm,lineHeight:18,color:Colors.text},
+  takeawayText:  {fontSize:FontSize.md,lineHeight:24,color:Colors.text},
   analogy:       {backgroundColor:Colors.accentSoft,borderLeftWidth:4,borderLeftColor:Colors.accent,borderRadius:Radius.lg,padding:Spacing.sm,marginTop:Spacing.lg},
   analogyLabel:  {fontSize:9,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:4},
-  analogyText:   {fontSize:FontSize.sm,lineHeight:19,color:'#374151'},
+  analogyText:   {fontSize:FontSize.md,lineHeight:24,color:'#374151'},
   exampleSection:{marginTop:Spacing.lg,gap:Spacing.sm},
   exampleSectionLabel:{fontSize:FontSize.xs,fontWeight:'800',color:Colors.textSoft,textTransform:'uppercase',letterSpacing:0.5},
   exampleCard:   {backgroundColor:'#fff7ed',borderRadius:Radius.lg,borderWidth:1,borderColor:'#fdba7440',padding:Spacing.md,gap:Spacing.xs},
@@ -1229,23 +1311,31 @@ const sty = StyleSheet.create({
   termModalBtn:  {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:Spacing.md,alignItems:'center'},
   termModalBtnText:{color:'#fff',fontSize:FontSize.sm,fontWeight:'800'},
   // return banner
-  returnBanner:  {backgroundColor:Colors.accentSoft,borderBottomWidth:1,borderBottomColor:Colors.accent+'40',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm},
+  returnBanner:  {backgroundColor:Colors.accentSoft,borderBottomWidth:1,borderBottomColor:Colors.accent+'40',paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm,width:'100%',maxWidth:980,alignSelf:'center'},
   returnTxt:     {fontSize:FontSize.sm,fontWeight:'700',color:Colors.accent},
+  lessonNavRow:  {width:'100%',maxWidth:1120,alignSelf:'center',paddingHorizontal:Spacing.lg,paddingTop:Spacing.sm},
+  lessonNavBtn:  {alignSelf:'flex-start',backgroundColor:Colors.card,borderRadius:Radius.full,borderWidth:1,borderColor:Colors.border,paddingHorizontal:Spacing.md,paddingVertical:Spacing.sm},
+  lessonNavBtnText:{fontSize:FontSize.sm,fontWeight:'700',color:Colors.textSoft},
   // notes panel
   notePanel:     {flex:1,backgroundColor:Colors.bg,marginTop:60,borderTopLeftRadius:Radius.xl,borderTopRightRadius:Radius.xl,overflow:'hidden'},
   notePanelHead: {flexDirection:'row',alignItems:'center',padding:Spacing.lg,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border},
   notePanelTitle:{fontSize:FontSize.md,fontWeight:'800',color:Colors.text},
-  noteDraftRow:  {flexDirection:'row',gap:Spacing.sm,padding:Spacing.lg,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border},
-  noteDraftInput:{flex:1,minHeight:44,maxHeight:100,borderWidth:1.5,borderColor:Colors.border,borderRadius:Radius.lg,paddingHorizontal:Spacing.md,paddingVertical:Spacing.sm,fontSize:FontSize.sm,color:Colors.text,backgroundColor:Colors.bgSecondary},
-  noteSaveBtn:   {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingHorizontal:Spacing.lg,alignItems:'center',justifyContent:'center'},
+  noteDraftRow:  {flexDirection:'row',alignItems:'flex-start',gap:Spacing.sm,padding:Spacing.lg,backgroundColor:Colors.card,borderBottomWidth:1,borderBottomColor:Colors.border},
+  noteDraftInput:{flex:1,minHeight:128,maxHeight:220,borderWidth:1.5,borderColor:Colors.inputBorder,borderRadius:Radius.lg,paddingHorizontal:Spacing.md,paddingVertical:Spacing.md,fontSize:FontSize.md,color:Colors.text,backgroundColor:Colors.inputBg,textAlignVertical:'top',lineHeight:22},
+  noteSaveBtn:   {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingHorizontal:Spacing.lg,minHeight:52,alignItems:'center',justifyContent:'center'},
   noteSaveBtnTxt:{color:'#fff',fontSize:FontSize.sm,fontWeight:'800'},
   noteCard:      {backgroundColor:Colors.card,borderRadius:Radius.lg,padding:Spacing.md,borderWidth:1,borderColor:Colors.border,marginBottom:Spacing.sm},
   noteContent:   {fontSize:FontSize.sm,lineHeight:20,color:Colors.text},
   noteFooter:    {flexDirection:'row',justifyContent:'space-between',marginTop:Spacing.sm},
   noteDate:      {fontSize:FontSize.xs,color:Colors.textMuted},
-  faucetBanner:  {marginHorizontal:Spacing.lg, marginTop:Spacing.md, borderRadius:Radius.xl, borderWidth:1, borderColor:'#ec489940', backgroundColor:'#fff6fb', padding:Spacing.md},
-  faucetBannerTitle:{fontSize:FontSize.sm,fontWeight:'800',color:'#9d174d'},
+  faucetBanner:  {marginHorizontal:Spacing.lg, marginTop:Spacing.md, borderRadius:Radius.xl, borderWidth:1, borderColor:'#f59e0b40', backgroundColor:Colors.goldSoft, paddingHorizontal:Spacing.md, paddingVertical:Spacing.sm, width:'100%', maxWidth:1120, alignSelf:'center'},
+  faucetBannerRow:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:Spacing.md},
+  faucetBannerCopy:{flex:1},
+  faucetBannerTitle:{fontSize:FontSize.sm,fontWeight:'800',color:'#b45309'},
   faucetBannerSub:{fontSize:FontSize.xs,lineHeight:18,color:Colors.textSoft,marginTop:4},
+  simulatorStage:{flex:1,width:'100%',maxWidth:1040,alignSelf:'center',paddingHorizontal:Spacing.lg,paddingTop:Spacing.md,paddingBottom:Spacing.sm},
+  judgmentSimulatorStage:{maxWidth:1180,paddingTop:2},
+  simulatorCardWrap:{flex:1,minHeight:0},
   // questions
   qCtx:          {fontSize:FontSize.xs,fontWeight:'800',color:Colors.accent,textTransform:'uppercase',letterSpacing:0.5,marginBottom:Spacing.sm},
   qPrompt:       {fontSize:FontSize.sm,fontWeight:'700',color:Colors.text,lineHeight:20},
@@ -1272,7 +1362,7 @@ const sty = StyleSheet.create({
   blankBoxTxt:   {fontSize:FontSize.md,fontWeight:'800',color:'#94a3b8'},
   blankOpt:      {paddingHorizontal:Spacing.lg,paddingVertical:Spacing.md,borderRadius:Radius.full,borderWidth:2,borderColor:'#e2e8f0',backgroundColor:'#fff',minWidth:80,alignItems:'center'},
   blankOptTxt:   {fontSize:FontSize.md,fontWeight:'700',color:'#1e293b'},
-  feedbackBar:   {borderTopWidth:3,padding:Spacing.sm},
+  feedbackBar:   {borderTopWidth:3,padding:Spacing.md,width:'100%',maxWidth:1120,alignSelf:'center'},
   feedbackRow:   {flexDirection:'row',alignItems:'flex-start',gap:Spacing.md},
   feedbackIcon:  {fontSize: 18},
   feedbackTitle: {fontSize:FontSize.sm,fontWeight:'800'},
@@ -1287,10 +1377,10 @@ const sty = StyleSheet.create({
   perfectBadge:  {backgroundColor:Colors.gold,borderRadius:Radius.full,paddingHorizontal:Spacing.lg,paddingVertical:Spacing.sm,marginTop:Spacing.md},
   perfectTxt:    {fontSize:FontSize.sm,fontWeight:'800',color:'#fff',letterSpacing:0.5},
   completionWarning:{marginTop:Spacing.lg,paddingHorizontal:Spacing.lg,color:Colors.textSoft,textAlign:'center',lineHeight:20,maxWidth:320},
-  primaryBtn:    {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:Spacing.sm,alignItems:'center',width:'100%'},
+  primaryBtn:    {backgroundColor:Colors.accent,borderRadius:Radius.md,paddingVertical:14,paddingHorizontal:Spacing.lg,minHeight:52,alignItems:'center',justifyContent:'center',width:'100%'},
   primaryBtnTxt: {color:'#fff',fontSize:FontSize.sm,fontWeight:'800',letterSpacing:0.2},
-  ghostBtn:      {borderRadius:Radius.md,paddingVertical:Spacing.md,alignItems:'center',borderWidth:2,borderColor:Colors.border},
-  ghostTxt:      {color:Colors.textSoft,fontSize:FontSize.md,fontWeight:'700'},
+  ghostBtn:      {borderRadius:Radius.md,paddingVertical:14,paddingHorizontal:Spacing.lg,minHeight:52,alignItems:'center',justifyContent:'center',borderWidth:1.5,borderColor:Colors.border,backgroundColor:Colors.card},
+  ghostTxt:      {color:Colors.textSoft,fontSize:FontSize.sm,fontWeight:'700'},
 });
 
 function shuffle<T>(arr:T[]):T[]{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}

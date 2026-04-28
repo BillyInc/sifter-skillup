@@ -17,7 +17,7 @@ interface RoomMessageProps {
 }
 
 // Stage name badge colours
-const STAGE_COLORS = ['', '#94A3B8','#3B82F6','#22C55E','#F59E0B','#EF4444','#8B5CF6','#EC4899','#F59E0B'];
+const STAGE_COLORS = ['', '#94A3B8','#3B82F6','#22C55E','#F59E0B','#EF4444','#8B5CF6','#FBBF24','#F59E0B'];
 
 export default function RoomMessage({ message, isOwn, onReact, onLessonTap }: RoomMessageProps) {
   const { colors } = useTheme();

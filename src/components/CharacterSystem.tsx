@@ -150,12 +150,12 @@ const STAGE_TOKENS = [
   },
   // Stage 8 — Industry Expert
   {
-    outfitColor: '#ec4899',  // signature executive look
+    outfitColor: '#f59e0b',  // signature executive look
     pantsColor:  '#500724',
     hairColor:   '#0f172a',
     skinColor:   '#fbbf24',
     deskColor:   '#1e293b',
-    chairColor:  '#be185d',
+    chairColor:  '#d97706',
     hasMonitor:  true,
     monitorCount: 4,
     hasPlant:    true,

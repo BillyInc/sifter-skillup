@@ -15,6 +15,7 @@ import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, webContainer }
 import { ISLANDS, getIsland, isIslandUnlocked, type Island } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
 import { TrackChoiceScreen } from './PostIslandTrackSelection';
+import { WebPageHeader, WebShell, useIsWebWide } from '../components/web/WebGrid';
 
 type Tier = 'beginner' | 'intermediate' | 'pro';
 type IslandState = 'locked' | 'continue' | 'review' | 'ready';
@@ -123,12 +124,14 @@ function IslandCard({
   completed,
   current,
   onPress,
+  style,
 }: {
   island: Island;
   unlocked: boolean;
   completed: boolean;
   current: boolean;
   onPress: () => void;
+  style?: any;
 }) {
   const { colors } = useTheme();
   const state = getIslandState(unlocked, completed, current);
@@ -141,6 +144,7 @@ function IslandCard({
       onPress={unlocked ? onPress : undefined}
       style={[
         styles.islandCard,
+        style,
         {
           backgroundColor: colors.card,
           borderColor: current ? `${island.color}66` : colors.border,
@@ -217,6 +221,7 @@ export default function IslandMapScreen({ route }: any) {
   const router = useRouter();
   const { user } = useAuth();
   const { colors } = useTheme();
+  const isWebWide = useIsWebWide();
   const completedLevels: number[] = (user?.completedLevels ?? user?.completed_levels ?? []).map(Number);
   const currentLevel: number = user?.current_level ?? 1;
   const starknetWalletReady = !!(user?.starknet_address || user?.starknet_auth);
@@ -253,6 +258,110 @@ export default function IslandMapScreen({ route }: any) {
     }
     router.replace('/(tabs)/map' as any);
   };
+
+  if (isWebWide) {
+    return (
+      <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+        <LinearGradient colors={[colors.bg, colors.bgSecondary, colors.bg]} style={StyleSheet.absoluteFill} />
+        <WebShell>
+          <WebPageHeader
+            title="My Islands"
+            subtitle="Compact island cards with direct entry, progress, and realm access."
+            accentColor={colors.accent}
+            right={(
+              <TouchableOpacity onPress={handleBack} style={[styles.webBackBtn, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <Text style={[styles.webBackBtnText, { color: colors.text }]}>Back</Text>
+              </TouchableOpacity>
+            )}
+          />
+
+          <View style={[styles.heroCard, styles.webHeroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <LinearGradient
+              colors={[`${colors.accent}10`, colors.card, colors.card]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.heroGradient}
+            >
+              <View style={styles.heroTop}>
+                <View style={styles.heroHeaderText}>
+                  <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>Progress Surface</Text>
+                  <Text style={[styles.heroTitle, { color: colors.text }]}>Island Atlas</Text>
+                  <Text style={[styles.heroSub, { color: colors.textSoft }]}>
+                    Continue the real lesson route, review cleared islands, and keep Starknet progression in sync.
+                  </Text>
+                </View>
+                <View style={[styles.heroStat, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                  <Text style={[styles.heroStatValue, { color: colors.accent }]}>{completedLevels.length}</Text>
+                  <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>/ 310</Text>
+                </View>
+              </View>
+
+              <View style={styles.heroMetaRow}>
+                <View style={[styles.heroMetaChip, { backgroundColor: colors.bgSecondary }]}><Text style={[styles.heroMetaValue, { color: colors.text }]}>{currentLevel}</Text><Text style={[styles.heroMetaLabel, { color: colors.textMuted }]}>Current level</Text></View>
+                <View style={[styles.heroMetaChip, { backgroundColor: colors.bgSecondary }]}><Text style={[styles.heroMetaValue, { color: colors.text }]}>{clearedIslands}</Text><Text style={[styles.heroMetaLabel, { color: colors.textMuted }]}>Islands cleared</Text></View>
+                <View style={[styles.heroMetaChip, { backgroundColor: colors.bgSecondary }]}><Text style={[styles.heroMetaValue, { color: starkIslandUnlocked ? '#10B981' : colors.text }]}>{starkIslandUnlocked ? 'Ready' : 'Pending'}</Text><Text style={[styles.heroMetaLabel, { color: colors.textMuted }]}>Realm access</Text></View>
+              </View>
+
+              <View style={styles.heroProgressWrap}>
+                <View style={[styles.heroProgressTrack, { backgroundColor: colors.bgSecondary }]}>
+                  <View style={[styles.heroProgressFill, { backgroundColor: colors.accent, width: `${progressPct}%` }]} />
+                </View>
+                <View style={styles.heroProgressMeta}>
+                  <Text style={[styles.heroProgressText, { color: colors.textSoft }]}>{Math.round(progressPct)}% map completion</Text>
+                  <Text style={[styles.heroProgressText, { color: colors.textMuted }]}>{starkIslandUnlocked ? 'Island 18 unlocked' : starknetWalletReady ? 'Wallet ready for Island 18' : 'Clear Island 17 to unlock Starknet'}</Text>
+                </View>
+              </View>
+            </LinearGradient>
+          </View>
+
+          {tiers.map(tier => {
+            const tierIslands = mainIslands.filter(i => i.tier === tier);
+            return (
+              <View key={tier} style={styles.section}>
+                <View style={styles.sectionHeader}>
+                  <Text style={[styles.sectionEyebrow, { color: colors.textMuted }]}>{tier.toUpperCase()}</Text>
+                  <Text style={[styles.sectionTitle, { color: colors.text }]}>{getTierLabel(tier)}</Text>
+                  <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>{getTierCopy(tier)}</Text>
+                </View>
+                <View style={styles.webGrid}>
+                  {tierIslands.map(island => (
+                    <IslandCard
+                      key={island.id}
+                      island={island}
+                      unlocked={isIslandUnlocked(island, completedLevels)}
+                      completed={completedLevels.includes(island.bossLevel)}
+                      current={currentLevel >= island.start && currentLevel <= island.end}
+                      onPress={() => setSelected(island)}
+                      style={styles.webIslandCard}
+                    />
+                  ))}
+                </View>
+              </View>
+            );
+          })}
+
+          {starkIsland ? (
+            <View style={styles.section}>
+              <Text style={[styles.sectionEyebrow, { color: colors.textMuted }]}>SPECIAL ACCESS</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet Realm</Text>
+              <Text style={[styles.sectionCopy, { color: colors.textMuted }]}>Island 18 opens after Island 17, and your Starknet wallet state stays attached to the dedicated realm flow.</Text>
+              <IslandCard
+                island={starkIsland}
+                unlocked={starkIslandUnlocked}
+                completed={completedLevels.includes(310)}
+                current={currentLevel >= 291 && currentLevel <= 310}
+                onPress={() => setSelected(starkIsland)}
+                style={styles.webSpecialIslandCard}
+              />
+            </View>
+          ) : null}
+
+          {completedLevels.includes(310) ? <NextTrackBanner islandId={18} /> : null}
+        </WebShell>
+        <IslandDetailModal island={selected} open={!!selected} onClose={() => setSelected(null)} onEnter={handleEnter} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -369,6 +478,12 @@ export default function IslandMapScreen({ route }: any) {
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   content: { ...webContainer, paddingBottom: Spacing.xxxl },
+  webHeroCard: { marginBottom: 10 },
+  webGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  webIslandCard: { width: '32%', minWidth: 220 },
+  webSpecialIslandCard: { width: '32%', minWidth: 220 },
+  webBackBtn: { borderWidth: 1, borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 7 },
+  webBackBtnText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
   heroCard: {
     borderWidth: 1,
     borderRadius: 11,
@@ -417,6 +532,7 @@ const styles = StyleSheet.create({
   grid: { gap: Spacing.sm },
   islandCard: {
     minWidth: 170,
+    width: '100%',
     borderWidth: 1,
     borderRadius: 11,
     overflow: 'hidden',
@@ -452,6 +568,9 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
   },
   modalCard: {
+    width: '100%',
+    maxWidth: 360,
+    alignSelf: 'center',
     borderRadius: 11,
     borderWidth: 1,
     overflow: 'hidden',

@@ -24,7 +24,7 @@ import {
   type FieldDetail,
   type FieldSkillTrack,
 } from '../data/fieldDetails';
-import { FieldArtwork, fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
+import { fieldColor, fieldEmoji } from '../components/artwork/FieldArtwork';
 import { ISLANDS } from '../data/islands';
 import { useAuth } from '../hooks/useAuth';
 
@@ -33,6 +33,13 @@ type FieldSummary = {
   name: string;
   status: 'live' | 'coming_soon';
 };
+
+const STARKNET_TRACK_IDS = [
+  'starknet-islands',
+  'starknet-defi-navigator',
+  'starknet-ecosystem-deep-dive',
+  'cairo-builder',
+] as const;
 
 function StatusPill({
   label,
@@ -163,8 +170,11 @@ function FieldCard({
 }) {
   const { colors } = useTheme();
   const accentColor = fieldColor(field.id);
-  const isStarknet = field.id === 'starknet';
   const tracks = [...detail.generalTracks, ...detail.specificTracks];
+  const starknetTrackIds = new Set(STARKNET_TRACK_IDS);
+  const starknetTracks = tracks.filter((track) => starknetTrackIds.has(track.id));
+  const coreTracks = tracks.filter((track) => !starknetTrackIds.has(track.id));
+  const showsStarknetSubEcosystem = field.id === 'crypto' && starknetTracks.length > 0;
   const liveCount = tracks.filter((track) => track.status === 'live').length;
 
   return (
@@ -180,8 +190,10 @@ function FieldCard({
     >
       <TouchableOpacity activeOpacity={0.88} onPress={onToggle} style={styles.fieldCardPress}>
         <View style={styles.fieldCardTop}>
-          <View style={[styles.artworkFrame, { backgroundColor: `${accentColor}12` }]}>
-            <FieldArtwork fieldId={field.id} size={68} />
+          <View style={[styles.artworkFrame, { backgroundColor: `${accentColor}10`, borderColor: `${accentColor}20` }]}>
+            <View style={[styles.artworkBadge, { backgroundColor: colors.card }]}>
+              <Text style={styles.artworkBadgeText}>{fieldEmoji(field.id)}</Text>
+            </View>
           </View>
 
           <View style={styles.fieldMainCopy}>
@@ -231,12 +243,12 @@ function FieldCard({
 
       {expanded ? (
         <View style={[styles.expandedSection, { borderTopColor: colors.border }]}>
-          {isStarknet ? (
+          {showsStarknetSubEcosystem ? (
             <>
               <View style={styles.sectionHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet islands</Text>
+                <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet ecosystem</Text>
                 <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
-                  Open the Starknet realm and continue from Island 18.
+                  Starknet now lives inside Crypto as a live sub-ecosystem with its own island and advanced routes.
                 </Text>
               </View>
               <IslandStrip onIslandPress={onIslandPress} />
@@ -244,11 +256,11 @@ function FieldCard({
               <View style={styles.sectionHeader}>
                 <Text style={[styles.sectionTitle, { color: colors.text }]}>Starknet tracks</Text>
                 <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
-                  Only Starknet-related tracks are currently open.
+                  Continue from Island 18 into DeFi operations, ecosystem research, or Cairo development.
                 </Text>
               </View>
               <View style={styles.trackList}>
-                {tracks.map((track) => (
+                {starknetTracks.map((track) => (
                   <TrackRow
                     key={track.id}
                     track={track}
@@ -257,6 +269,27 @@ function FieldCard({
                   />
                 ))}
               </View>
+
+              {coreTracks.length > 0 ? (
+                <>
+                  <View style={styles.sectionHeader}>
+                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Core crypto tracks</Text>
+                    <Text style={[styles.sectionSub, { color: colors.textMuted }]}>
+                      Wider crypto and Web3 routes across research, security, governance, and product.
+                    </Text>
+                  </View>
+                  <View style={styles.trackList}>
+                    {coreTracks.map((track) => (
+                      <TrackRow
+                        key={track.id}
+                        track={track}
+                        accentColor={accentColor}
+                        onPress={(selectedTrack) => onTrackPress(field.id, selectedTrack)}
+                      />
+                    ))}
+                  </View>
+                </>
+              ) : null}
             </>
           ) : (
             <>
@@ -294,18 +327,20 @@ export default function FieldsScreen() {
     return getAllFieldDetails()
       .map((detail) => ({
         id: detail.fieldId,
-        name: detail.worldName.replace(
-          /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
-          '',
-        ) || detail.worldName,
+        name: detail.fieldId === 'crypto'
+          ? 'Crypto'
+          : detail.worldName.replace(
+              /\s(Borough|Quarter|Nexus|Network|Citadel|Hub|Ridge|District|Grid|Tower|Forum|Arena|Vault|Coast|Union|Centre|Park|Alleys|Circle|Point|Labs?)$/,
+              '',
+            ) || detail.worldName,
         status: [...detail.generalTracks, ...detail.specificTracks].some((track) => track.status === 'live')
           ? 'live'
           : 'coming_soon',
       }))
       .sort((a, b) => {
-        if (a.id === 'starknet') return -1;
-        if (b.id === 'starknet') return 1;
         if (a.status !== b.status) return a.status === 'live' ? -1 : 1;
+        if (a.id === 'crypto') return -1;
+        if (b.id === 'crypto') return 1;
         return a.name.localeCompare(b.name);
       });
   }, []);
@@ -315,8 +350,11 @@ export default function FieldsScreen() {
       return;
     }
 
+    const isStarknetTrack = STARKNET_TRACK_IDS.includes(track.id as (typeof STARKNET_TRACK_IDS)[number]);
+    const resolvedFieldId = isStarknetTrack ? 'starknet' : fieldId;
+
     try {
-      await updateActiveField(fieldId, fieldColor(fieldId), track.id, track.name);
+      await updateActiveField(resolvedFieldId, fieldColor(resolvedFieldId), track.id, track.name);
     } catch {
       // Best effort only. Navigation should still continue.
     }
@@ -337,7 +375,7 @@ export default function FieldsScreen() {
     if (track.id === 'starknet-defi-navigator' || track.navigateTo === 'StarknetTrack') {
       router.push({
         pathname: '/starknet-track' as any,
-        params: { trackId: track.id, fieldId, trackName: track.name },
+        params: { trackId: track.id, fieldId: resolvedFieldId, trackName: track.name },
       });
       return;
     }
@@ -345,7 +383,7 @@ export default function FieldsScreen() {
     if (track.id === 'starknet-ecosystem-deep-dive') {
       router.push({
         pathname: '/ecosystem-track' as any,
-        params: { trackId: track.id, fieldId, trackName: track.name },
+        params: { trackId: track.id, fieldId: resolvedFieldId, trackName: track.name },
       });
       return;
     }
@@ -353,7 +391,7 @@ export default function FieldsScreen() {
     if (track.id === 'cairo-builder') {
       router.push({
         pathname: '/cairo-builder-track' as any,
-        params: { trackId: track.id, fieldId, trackName: track.name },
+        params: { trackId: track.id, fieldId: resolvedFieldId, trackName: track.name },
       });
       return;
     }
@@ -493,11 +531,11 @@ const styles = StyleSheet.create({
   },
   fieldCard: {
     borderWidth: 1,
-    borderRadius: Radius.xl,
+    borderRadius: Radius.xxl,
     overflow: 'hidden',
   },
   fieldCardPress: {
-    padding: Spacing.md,
+    padding: Spacing.lg,
   },
   fieldCardTop: {
     flexDirection: 'row',
@@ -505,12 +543,23 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   artworkFrame: {
-    width: 84,
-    height: 84,
+    width: 72,
+    height: 72,
     borderRadius: Radius.lg,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  artworkBadge: {
+    width: 48,
+    height: 48,
+    borderRadius: Radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  artworkBadgeText: {
+    fontSize: 24,
   },
   fieldMainCopy: {
     flex: 1,
@@ -580,11 +629,11 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   islandCard: {
-    width: 132,
+    width: 144,
     borderWidth: 1,
-    borderRadius: Radius.lg,
-    padding: Spacing.sm,
-    gap: 6,
+    borderRadius: Radius.xl,
+    padding: Spacing.md,
+    gap: Spacing.sm,
   },
   islandIconWrap: {
     width: 42,

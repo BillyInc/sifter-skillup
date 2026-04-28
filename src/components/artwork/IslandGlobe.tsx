@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import Svg, {
   Defs,
   RadialGradient,
@@ -24,8 +25,8 @@ export interface IslandPin {
 
 export interface IslandGlobeProps {
   pins: IslandPin[];
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   activePin?: number | null;
   onPinPress?: (index: number) => void;
 }
@@ -66,7 +67,13 @@ export default function IslandGlobe({
   onPinPress,
 }: IslandGlobeProps) {
   return (
-    <Svg width={width} height={height} viewBox="0 0 420 420">
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 420 420"
+      preserveAspectRatio="xMidYMid meet"
+      style={Platform.OS === 'web' ? { display: 'block' } : undefined}
+    >
       <Defs>
         <RadialGradient id="oceanGrad" cx="38%" cy="35%" r="70%">
           <Stop offset="0%" stopColor="#5ab4f0" />
@@ -153,8 +160,20 @@ export default function IslandGlobe({
 
       {pins.map((pin, i) => {
         const isActive = activePin === i;
+        const isLocked = pin.done <= 0;
+        const resolvedColor = isLocked ? '#94a3b8' : pin.color;
         const calloutWidth = 118;
         const calloutHeight = 44;
+        const pinPressProps: any = onPinPress
+          ? (Platform.OS === 'web'
+              ? {
+                  onClick: () => onPinPress(i),
+                  style: { cursor: 'pointer' },
+                }
+              : {
+                  onPress: () => onPinPress(i),
+                })
+          : undefined;
         const showRight = pin.x < 230;
         const calloutX = clamp(
           showRight ? pin.x + 14 : pin.x - calloutWidth - 14,
@@ -167,9 +186,12 @@ export default function IslandGlobe({
 
         return (
           <G key={`${pin.name}-${i}`}>
-            <G onPress={() => onPinPress?.(i)}>
-              <Circle cx={pin.x} cy={pin.y} r={13} fill={pin.color} opacity={0.18} />
-              <Circle cx={pin.x} cy={pin.y} r={6} fill={pin.color} stroke="white" strokeWidth={1.8} />
+            <G {...pinPressProps}>
+              <Circle cx={pin.x} cy={pin.y} r={13} fill={resolvedColor} opacity={isLocked ? 0.12 : 0.18} />
+              <Circle cx={pin.x} cy={pin.y} r={6} fill={resolvedColor} stroke="white" strokeWidth={1.8} opacity={isLocked ? 0.72 : 1} />
+              {isLocked ? (
+                <Rect x={pin.x + 4} y={pin.y - 12} width={11} height={10} rx={3} fill="rgba(15,23,42,0.86)" />
+              ) : null}
             </G>
 
             {isActive ? (
@@ -207,7 +229,7 @@ export default function IslandGlobe({
                   width={progressWidth}
                   height={4}
                   rx={2}
-                  fill={pin.color}
+                  fill={resolvedColor}
                 />
                 <Text
                   x={calloutX + 10}

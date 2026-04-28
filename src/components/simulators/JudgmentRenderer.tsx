@@ -32,7 +32,7 @@ import * as Haptics from 'expo-haptics';
 import {
   SimShell, PrimaryBtn, GhostBtn, Card, SectionLabel,
   CriterionRow, ScoreScreen,
-  type SimBaseProps, type ScoringResult,
+  type SimBaseProps,
 } from './SimulatorShared';
 import {
   scoreResponseDeterministic,
@@ -238,18 +238,6 @@ function ResultsPanel({
   const pct = result.total > 0 ? result.score / result.total : 0;
   const passed = pct >= passThreshold;
 
-  const scoringResult: ScoringResult = {
-    criteriaResults: result.criteriaResults.map(r => ({
-      criterion: r.criterion,
-      passed: r.passed,
-      feedback: r.feedback,
-    })),
-    overallFeedback: result.overallFeedback,
-    score: result.score,
-    total: result.total,
-    xpEarned: result.xpEarned,
-  };
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={rp.header}>
@@ -321,12 +309,16 @@ export default function JudgmentRenderer({
   const [phase, setPhase] = useState<Phase>('write');
   const [response, setResponse] = useState('');
   const [inputError, setInputError] = useState<string | null>(null);
+  const [inputFocused, setInputFocused] = useState(false);
   const [partialResult, setPartialResult] = useState<DeterministicScoringResult | null>(null);
   const [finalResult, setFinalResult] = useState<DeterministicScoringResult | null>(null);
   const [confirmed, setConfirmed] = useState<Set<number>>(new Set());
 
   const minChars = isBoss ? Math.max(cfg.minChars * 2, 200) : cfg.minChars;
   const canSubmit = response.trim().length >= minChars;
+  const wordCount = response.trim().length > 0
+    ? response.trim().split(/\s+/).filter(Boolean).length
+    : 0;
 
   const handleSubmit = () => {
     if (!canSubmit) return;
@@ -366,7 +358,8 @@ export default function JudgmentRenderer({
     Haptics.selectionAsync();
     setConfirmed(prev => {
       const next = new Set(prev);
-      next.has(index) ? next.delete(index) : next.add(index);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
       return next;
     });
   };
@@ -396,7 +389,7 @@ export default function JudgmentRenderer({
   // ── Results phase ──────────────────────────────────────────────────────────
   if (phase === 'results' && finalResult) {
     return (
-      <SimShell title={cfg.label} subtitle="Here's how you did" icon={cfg.icon} label={`⚡ ${cfg.label}`}>
+      <SimShell title={cfg.label} subtitle="Here's how you did" icon={cfg.icon} label={`⚡ ${cfg.label}`} hideIcon>
         <ResultsPanel
           result={finalResult}
           isBoss={isBoss}
@@ -410,11 +403,10 @@ export default function JudgmentRenderer({
 
   // ── Reviewing phase (rubric reveal) ────────────────────────────────────────
   if (phase === 'reviewing' && partialResult) {
-    const selfAssessCount = partialResult.selfAssessCount;
     const canConfirm = true; // user can confirm even if they checked nothing (honest 0)
 
     return (
-      <SimShell title={cfg.label} subtitle="Review your response" icon={cfg.icon} label={`⚡ ${cfg.label}`}>
+      <SimShell title={cfg.label} subtitle="Review your response" icon={cfg.icon} label={`⚡ ${cfg.label}`} hideIcon>
         <ScrollView showsVerticalScrollIndicator={false}>
 
           {/* Your submitted response (read-only) */}
@@ -465,44 +457,68 @@ export default function JudgmentRenderer({
         subtitle={isBoss ? 'Portfolio Push Mode — No criteria visible until submission' : 'Write your response below'}
         icon={cfg.icon}
         label={`${isBoss ? '🏆 BOSS · ' : '⚡ '}${cfg.label}`}
+        hideIcon
       >
 
         {/* Scenario */}
-        <Card>
+        <Card style={s.scenarioCard}>
           <SectionLabel text="SCENARIO" color={cfg.color} />
           <Text style={s.scenarioText}>{scenario}</Text>
         </Card>
 
-        {/* Criteria count preview (not content — content shown after submit) */}
-        <Card>
-          <SectionLabel text={`${scoringCriteria.length} CRITERIA WILL BE ASSESSED`} />
-          <Text style={s.criteriaHint}>
-            {isBoss
-              ? 'Criteria will be revealed after submission. 80% required to pass.'
-              : `Your response will be checked against ${scoringCriteria.length} industry-standard criteria. Criteria are revealed after you submit.`}
-          </Text>
-        </Card>
-
         {/* Response input */}
-        <View>
-          <SectionLabel text="YOUR RESPONSE" />
+        <View style={s.responseSection}>
+          <View style={s.responseHeader}>
+            <SectionLabel text="YOUR RESPONSE" color={cfg.color} />
+            <Text style={s.responseHeaderText}>
+              Lead with your judgment, support it with facts from the prompt, and end with the action you would take next.
+            </Text>
+          </View>
+          <View style={s.inputGuide}>
+            <Text style={s.inputGuideTitle}>What strong answers do</Text>
+            <Text style={s.inputGuideText}>
+              Name the decision early, cite the relevant detail from the scenario, and explain the next move in plain language.
+            </Text>
+          </View>
           <TextInput
             value={response}
             onChangeText={text => { setResponse(text); setInputError(null); }}
             placeholder={isBoss ? 'Write your complete analysis here. No hints.' : cfg.placeholder}
-            placeholderTextColor="#94a3b8"
+            placeholderTextColor={Colors.textMuted}
             multiline
             autoCapitalize="sentences"
             autoCorrect
-            style={[s.input, { borderColor: canSubmit ? cfg.color : Colors.border }]}
+            onFocus={() => setInputFocused(true)}
+            onBlur={() => setInputFocused(false)}
+            style={[
+              s.input,
+              {
+                borderColor: inputFocused || canSubmit ? cfg.color : Colors.border,
+                backgroundColor: inputFocused ? '#ffffff' : Colors.inputBg,
+              },
+            ]}
             textAlignVertical="top"
+            scrollEnabled
           />
-          <CharCount current={response.trim().length} min={minChars} />
+          <View style={s.inputMetaRow}>
+            <Text style={s.inputMetaText}>{wordCount} words</Text>
+            <CharCount current={response.trim().length} min={minChars} />
+          </View>
         </View>
+
+        {/* Criteria count preview (not content — content shown after submit) */}
+        <Card style={s.criteriaCard}>
+          <SectionLabel text={`${scoringCriteria.length} CRITERIA WILL BE ASSESSED`} />
+          <Text style={s.criteriaHint}>
+            {isBoss
+              ? 'Criteria stay hidden until submission. You need to clear 80% to pass.'
+              : `Your response is judged against ${scoringCriteria.length} clear criteria. They appear after you submit so you can focus on thinking first.`}
+          </Text>
+        </Card>
 
         {inputError && (
           <View style={s.errorBox}>
-            <Text style={s.errorText}>⚠️ {inputError}</Text>
+            <Text style={s.errorText}>⚠ {inputError}</Text>
           </View>
         )}
 
@@ -521,17 +537,60 @@ export default function JudgmentRenderer({
 // ── Styles ────────────────────────────────────────────────────────────────────
 
 const s = StyleSheet.create({
+  scenarioCard: {
+    paddingBottom: Spacing.lg,
+  },
   scenarioText: {
-    fontSize: FontSize.sm, color: Colors.text, lineHeight: 22,
+    fontSize: FontSize.lg, color: Colors.text, lineHeight: 30,
     fontFamily: Platform.OS === 'ios' ? 'Georgia' : 'serif',
   },
-  criteriaHint: { fontSize: 13, color: Colors.textSoft, lineHeight: 19, fontStyle: 'italic' },
-  input: {
-    backgroundColor: Colors.card, color: Colors.text,
-    fontSize: FontSize.sm, borderRadius: Radius.md,
-    borderWidth: 1.5, padding: Spacing.md,
-    minHeight: 180, lineHeight: 22,
+  responseSection: {
+    gap: Spacing.sm,
   },
+  responseHeader: {
+    gap: 2,
+  },
+  responseHeaderText: {
+    fontSize: FontSize.sm,
+    color: Colors.textSoft,
+    lineHeight: 22,
+  },
+  criteriaCard: {
+    backgroundColor: '#f8fafc',
+  },
+  criteriaHint: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 22, fontStyle: 'italic' },
+  inputGuide: {
+    backgroundColor: '#fff7ed',
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: '#fdba7440',
+    padding: Spacing.md,
+    marginBottom: Spacing.sm,
+    gap: 4,
+  },
+  inputGuideTitle: {
+    fontSize: FontSize.xs,
+    fontWeight: '800',
+    color: '#c2410c',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+  },
+  inputGuideText: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 21 },
+  input: {
+    backgroundColor: Colors.inputBg, color: Colors.text,
+    fontSize: 20, borderRadius: Radius.xl,
+    borderWidth: 2, paddingHorizontal: Spacing.md, paddingVertical: Spacing.md,
+    minHeight: 360, lineHeight: 31,
+    marginBottom: Spacing.xs,
+  },
+  inputMetaRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: Spacing.sm,
+  },
+  inputMetaText: { fontSize: FontSize.sm, color: Colors.textMuted, fontWeight: '700' },
   errorBox: {
     backgroundColor: '#fef2f2', borderRadius: Radius.md,
     padding: Spacing.md, borderWidth: 1, borderColor: '#fecaca',
@@ -541,7 +600,7 @@ const s = StyleSheet.create({
 
 const rev = StyleSheet.create({
   responseText: {
-    fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20,
+    fontSize: FontSize.md, color: Colors.textSoft, lineHeight: 24,
     fontStyle: 'italic',
   },
   gate: {

@@ -10,11 +10,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { ALL_FIELDS, type Field } from '../data/fields';
 import { SKILL_TRACKS } from '../data/skills';
+import { findTrackById, getTrackHref } from '../lib/trackContext';
 import {
   Colors, Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
 } from '../theme';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { SifterButton, SifterCard } from '../components/ui';
+import { WebCard, WebEmptyState, WebPageHeader, WebShell, useIsWebWide } from '../components/web/WebGrid';
 
 type MainTab = 'browse' | 'search';
 
@@ -64,6 +66,19 @@ function getRelatedTracks(field: Field) {
   });
 }
 
+function getTrackActionHref(trackId: string): string | null {
+  if (['quant-trading', 'quant-research', 'quant-developer', 'quant-researcher'].includes(trackId)) {
+    return '/skills/quant-map';
+  }
+
+  const catalogTrack = findTrackById(trackId);
+  if (catalogTrack) {
+    return getTrackHref(catalogTrack);
+  }
+
+  return null;
+}
+
 function FieldCard({ field, onPress }: { field: Field; onPress: () => void }) {
   const { colors } = useTheme();
   const isLive = field.status === 'live';
@@ -95,6 +110,134 @@ function FieldCard({ field, onPress }: { field: Field; onPress: () => void }) {
         {field.salaryRange ? <Text style={[styles.fieldMeta, { color: colors.textMuted }]}>{field.salaryRange.mid}</Text> : null}
       </View>
     </TouchableOpacity>
+  );
+}
+
+function InlineTrackCard({
+  field,
+  track,
+}: {
+  field: Field;
+  track: (typeof SKILL_TRACKS)[number];
+}) {
+  const { colors } = useTheme();
+  const router = useRouter();
+  const href = getTrackActionHref(track.id);
+  const isLive = !track.comingSoon;
+  const isActionable = Boolean(href);
+  const labCount = 'sections' in track ? (track as any).sections?.length ?? 0 : (track as any).modules?.length ?? 0;
+
+  return (
+    <TouchableOpacity
+      activeOpacity={isActionable ? 0.88 : 1}
+      onPress={() => {
+        if (href) router.push(href as any);
+      }}
+      style={[
+        styles.inlineTrackCard,
+        {
+          backgroundColor: colors.bgSecondary,
+          borderColor: `${field.color}24`,
+        },
+      ]}
+    >
+      <View style={styles.inlineTrackTop}>
+        <View style={[styles.inlineTrackIconWrap, { backgroundColor: `${field.color}14`, borderColor: `${field.color}26` }]}>
+          <Text style={styles.inlineTrackIcon}>{track.icon}</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.inlineTrackName, { color: colors.text }]}>{track.name}</Text>
+          <Text style={[styles.inlineTrackTagline, { color: colors.textSoft }]} numberOfLines={2}>{track.tagline}</Text>
+        </View>
+        <View style={[styles.statusPill, { backgroundColor: isLive ? colors.greenSoft : colors.card }]}>
+          <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Soon'}</Text>
+        </View>
+      </View>
+
+      <View style={styles.inlineTrackMetaRow}>
+        <Text style={[styles.inlineTrackMeta, { color: colors.textMuted }]}>{track.estimatedHours}h</Text>
+        <Text style={[styles.inlineTrackMeta, { color: colors.textMuted }]}>{labCount} labs</Text>
+        <Text style={[styles.inlineTrackMeta, { color: colors.textMuted }]}>{track.earningPotential}</Text>
+      </View>
+
+      <Text style={[styles.inlineTrackDescription, { color: colors.textSoft }]} numberOfLines={2}>{track.description}</Text>
+
+      <View style={[styles.inlineTrackAction, { backgroundColor: isActionable ? field.color : colors.card }]}>
+        <Text style={[styles.inlineTrackActionText, { color: isActionable ? '#fff' : colors.textMuted }]}>{isActionable ? 'Open Track' : 'Track setup coming soon'}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function FieldAccordionCard({
+  field,
+  expanded,
+  onToggle,
+}: {
+  field: Field;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  const { colors } = useTheme();
+  const relatedTracks = getRelatedTracks(field);
+  const isLive = field.status === 'live';
+
+  return (
+    <WebCard
+      style={[
+        styles.fieldAccordionCard,
+        {
+          backgroundColor: colors.card,
+          borderColor: expanded ? `${field.color}50` : colors.border,
+        },
+      ]}
+      accentBar
+      accentColor={field.color}
+      onPress={onToggle}
+    >
+      <View style={styles.fieldAccordionTop}>
+        <View style={styles.fieldAccordionTitleWrap}>
+          <Text style={styles.fieldEmoji}>{field.emoji}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.fieldAccordionName, { color: colors.text }]}>{field.name}</Text>
+            <Text style={[styles.fieldAccordionTagline, { color: colors.textSoft }]} numberOfLines={2}>{field.tagline}</Text>
+          </View>
+        </View>
+        <View style={styles.fieldAccordionRight}>
+          <View style={[styles.statusPill, { backgroundColor: isLive ? colors.greenSoft : colors.bgSecondary }]}>
+            <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Soon'}</Text>
+          </View>
+          <Text style={[styles.fieldAccordionArrow, { color: field.color }]}>{expanded ? '-' : '+'}</Text>
+        </View>
+      </View>
+
+      <View style={styles.fieldAccordionMeta}>
+        <Text style={[styles.fieldAccordionMetaText, { color: colors.textMuted }]}>{field.careerCount} careers</Text>
+        {field.salaryRange ? <Text style={[styles.fieldAccordionMetaText, { color: colors.textMuted }]}>{field.salaryRange.mid}</Text> : null}
+      </View>
+
+      {expanded ? (
+        <View style={styles.fieldAccordionBody}>
+          <View style={[styles.inlineInfoCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+            <Text style={[styles.inlineInfoTitle, { color: colors.text }]}>Field Snapshot</Text>
+            <Text style={[styles.inlineInfoText, { color: colors.textSoft }]}>{field.description}</Text>
+          </View>
+
+          {relatedTracks.length ? (
+            <View style={styles.inlineTrackGrid}>
+              {relatedTracks.map((track) => (
+                <InlineTrackCard key={track.id} field={field} track={track} />
+              ))}
+            </View>
+          ) : (
+            <View style={[styles.inlineInfoCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+              <Text style={[styles.inlineInfoTitle, { color: colors.text }]}>Tracks coming soon</Text>
+              <Text style={[styles.inlineInfoText, { color: colors.textSoft }]}>This field is listed, but its dedicated sub-tracks are still being prepared.</Text>
+            </View>
+          )}
+        </View>
+      ) : null}
+    </WebCard>
   );
 }
 
@@ -356,10 +499,12 @@ function SkillQuiz({ onClose }: { onClose: () => void }) {
 
 export default function SkillsScreen() {
   const { colors } = useTheme();
+  const isWebWide = useIsWebWide();
   const [tab, setTab] = useState<MainTab>('browse');
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<Field | null>(null);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [expandedFieldId, setExpandedFieldId] = useState<string | null>(null);
 
   const searchResults = useMemo(() => {
     if (!search.trim()) {
@@ -377,6 +522,115 @@ export default function SkillsScreen() {
 
   const live = ALL_FIELDS.filter(field => field.status === 'live');
   const soon = ALL_FIELDS.filter(field => field.status !== 'live');
+
+  if (isWebWide) {
+    return (
+      <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+        <WebShell>
+          <WebPageHeader
+            title="Career Tracks"
+            subtitle="Compact laptop workspace for fields, sub-tracks, and direct entry points."
+            right={(
+              <TouchableOpacity
+                style={[styles.findPathButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+                onPress={() => setShowQuiz(true)}
+              >
+                <Text style={[styles.findPathButtonText, { color: colors.text }]}>Find my path</Text>
+              </TouchableOpacity>
+            )}
+            accentColor={colors.accent}
+          />
+
+          <View style={[styles.webSearchBar, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.searchIcon, { color: colors.textMuted }]}>⌕</Text>
+            <TextInput
+              style={[styles.searchInput, { color: colors.text }]}
+              placeholder="Search fields, sub-tracks, and career roles"
+              placeholderTextColor={colors.textMuted}
+              value={search}
+              onChangeText={setSearch}
+            />
+            {search.length ? (
+              <TouchableOpacity onPress={() => setSearch('')}>
+                <Text style={[styles.searchClear, { color: colors.textMuted }]}>×</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+
+          {!search.trim() ? (
+            <>
+              <WebCard style={[styles.compactHeroCard, { backgroundColor: colors.card, borderColor: colors.border }]} accentBar accentColor={colors.accent}>
+                <Text style={[styles.heroLabel, { color: colors.textMuted }]}>DISCOVERY</Text>
+                <Text style={[styles.compactHeroTitle, { color: colors.text }]}>Fields first, sub-tracks inline.</Text>
+                <Text style={[styles.compactHeroText, { color: colors.textSoft }]}>
+                  Click any field card to expand it in place. Live sub-tracks open directly into their workspace without sending you through a modal detour.
+                </Text>
+              </WebCard>
+
+              <Text style={[styles.webSectionTitle, { color: colors.text }]}>Live Fields</Text>
+              <View style={styles.webAccordionStack}>
+                {live.map((field) => (
+                  <FieldAccordionCard
+                    key={field.id}
+                    field={field}
+                    expanded={expandedFieldId === field.id}
+                    onToggle={() => setExpandedFieldId((current) => current === field.id ? null : field.id)}
+                  />
+                ))}
+              </View>
+
+              <Text style={[styles.webSectionTitle, { color: colors.text }]}>Coming Soon</Text>
+              <View style={styles.webAccordionStack}>
+                {soon.map((field) => (
+                  <FieldAccordionCard
+                    key={field.id}
+                    field={field}
+                    expanded={expandedFieldId === field.id}
+                    onToggle={() => setExpandedFieldId((current) => current === field.id ? null : field.id)}
+                  />
+                ))}
+              </View>
+            </>
+          ) : (
+            <>
+              {searchResults.fields.length ? (
+                <>
+                  <Text style={[styles.webSectionTitle, { color: colors.text }]}>Matching Fields</Text>
+                  <View style={styles.webAccordionStack}>
+                    {searchResults.fields.map((field) => (
+                      <FieldAccordionCard
+                        key={field.id}
+                        field={field}
+                        expanded={expandedFieldId === field.id}
+                        onToggle={() => setExpandedFieldId((current) => current === field.id ? null : field.id)}
+                      />
+                    ))}
+                  </View>
+                </>
+              ) : null}
+
+              {searchResults.tracks.length ? (
+                <>
+                  <Text style={[styles.webSectionTitle, { color: colors.text }]}>Matching Tracks</Text>
+                  <View style={styles.webInlineTrackOnlyGrid}>
+                    {searchResults.tracks.map((track) => {
+                      const field = ALL_FIELDS.find((item) => getRelatedTracks(item).some((candidate) => candidate.id === track.id)) ?? ALL_FIELDS[0];
+                      return <InlineTrackCard key={track.id} field={field} track={track} />;
+                    })}
+                  </View>
+                </>
+              ) : null}
+
+              {!searchResults.fields.length && !searchResults.tracks.length ? (
+                <WebEmptyState emoji="⌕" title="No results yet" sub="Try a field name, job title, or sub-track keyword." />
+              ) : null}
+            </>
+          )}
+        </WebShell>
+        {showQuiz ? <SkillQuiz onClose={() => setShowQuiz(false)} /> : null}
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
@@ -530,6 +784,21 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   findPathButtonText: { fontSize: FontSize.xs, fontWeight: FontWeight.heavy },
+  webSearchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    paddingHorizontal: 12,
+    gap: 8,
+    marginBottom: 10,
+  },
+  compactHeroCard: { marginBottom: 10 },
+  compactHeroTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 6 },
+  compactHeroText: { fontSize: FontSize.xs, lineHeight: 18 },
+  webSectionTitle: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 8, marginTop: 2 },
+  webAccordionStack: { gap: 8, marginBottom: 10 },
+  webInlineTrackOnlyGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 10 },
   tabBar: { flexDirection: 'row', borderBottomWidth: 1 },
   tab: { flex: 1, alignItems: 'center', paddingVertical: Spacing.sm },
   tabText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
@@ -555,6 +824,31 @@ const styles = StyleSheet.create({
   fieldTagline: { fontSize: FontSize.xs, lineHeight: 16, marginBottom: Spacing.sm },
   fieldMetaRow: { gap: 4 },
   fieldMeta: { fontSize: 10, fontWeight: FontWeight.medium },
+  fieldAccordionCard: { paddingTop: 14 },
+  fieldAccordionTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 },
+  fieldAccordionTitleWrap: { flexDirection: 'row', gap: 10, flex: 1 },
+  fieldAccordionRight: { alignItems: 'flex-end', gap: 6 },
+  fieldAccordionName: { fontSize: FontSize.md, fontWeight: FontWeight.black, marginBottom: 2 },
+  fieldAccordionTagline: { fontSize: FontSize.xs, lineHeight: 17 },
+  fieldAccordionArrow: { fontSize: 18, fontWeight: FontWeight.black, minWidth: 18, textAlign: 'center' },
+  fieldAccordionMeta: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 8 },
+  fieldAccordionMetaText: { fontSize: 10, fontWeight: FontWeight.medium },
+  fieldAccordionBody: { marginTop: 12, gap: 10 },
+  inlineInfoCard: { borderWidth: 1, borderRadius: Radius.lg, padding: 12 },
+  inlineInfoTitle: { fontSize: FontSize.xs, fontWeight: FontWeight.black, marginBottom: 4 },
+  inlineInfoText: { fontSize: FontSize.xs, lineHeight: 18 },
+  inlineTrackGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  inlineTrackCard: { width: '48%', minWidth: 240, borderRadius: Radius.lg, borderWidth: 1, padding: 12, gap: 8 },
+  inlineTrackTop: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
+  inlineTrackIconWrap: { width: 34, height: 34, borderRadius: 10, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  inlineTrackIcon: { fontSize: 16 },
+  inlineTrackName: { fontSize: FontSize.sm, fontWeight: FontWeight.black, marginBottom: 2 },
+  inlineTrackTagline: { fontSize: 10, lineHeight: 15 },
+  inlineTrackMetaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  inlineTrackMeta: { fontSize: 10, fontWeight: FontWeight.medium },
+  inlineTrackDescription: { fontSize: FontSize.xs, lineHeight: 18 },
+  inlineTrackAction: { borderRadius: Radius.md, paddingVertical: 9, alignItems: 'center' },
+  inlineTrackActionText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
   modalHero: { padding: Spacing.lg, alignItems: 'center', borderBottomWidth: 1 },
   closeButton: {
     position: 'absolute',
@@ -641,7 +935,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   searchIcon: { fontSize: 18 },
-  searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: Spacing.md },
+  searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: 10 },
   searchClear: { fontSize: 20 },
   resultSectionLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1, marginBottom: Spacing.sm, marginTop: Spacing.md },
   searchRow: {

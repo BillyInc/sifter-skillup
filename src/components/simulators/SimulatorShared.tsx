@@ -14,10 +14,10 @@ import { getSimulatorVisualTheme, type SimulatorVisualTheme } from '../../lib/vi
 // ── Shell ─────────────────────────────────────────────────────────────────────
 
 export function SimShell({
-  title, subtitle, icon, label, children, theme,
+  title, subtitle, icon, label, children, theme, hideIcon = false,
 }: {
   title: string; subtitle: string; icon: string;
-  label?: string; children: React.ReactNode; theme?: Partial<SimulatorVisualTheme>;
+  label?: string; children: React.ReactNode; theme?: Partial<SimulatorVisualTheme>; hideIcon?: boolean;
 }) {
   const visualTheme = { ...getSimulatorVisualTheme({}), ...theme };
   return (
@@ -28,7 +28,7 @@ export function SimShell({
       keyboardShouldPersistTaps="handled"
     >
       <View style={[sh.header, { backgroundColor: visualTheme.soft, borderColor: visualTheme.border }]}>
-        <Text style={sh.icon}>{icon}</Text>
+        {!hideIcon && <Text style={sh.icon}>{icon}</Text>}
         <View style={{ flex: 1 }}>
           <Text style={[sh.label, { color: visualTheme.accent }]}>{label ?? visualTheme.label}</Text>
           <Text style={sh.title}>{title}</Text>
@@ -61,14 +61,14 @@ const sh = StyleSheet.create({
 // ── Buttons ───────────────────────────────────────────────────────────────────
 
 export function PrimaryBtn({
-  label, onPress, disabled = false, color,
-}: { label: string; onPress: () => void; disabled?: boolean; color?: string }) {
+  label, onPress, disabled = false, color, compact = false,
+}: { label: string; onPress: () => void; disabled?: boolean; color?: string; compact?: boolean }) {
   return (
     <TouchableOpacity
       onPress={onPress} disabled={disabled} activeOpacity={0.85}
-      style={[btn.primary, disabled && btn.disabled, color ? { backgroundColor: color } : {}]}
+      style={[btn.primary, compact && btn.primaryCompact, disabled && btn.disabled, color ? { backgroundColor: color } : {}]}
     >
-      <Text style={btn.primaryText}>{label}</Text>
+      <Text style={[btn.primaryText, compact && btn.primaryTextCompact]}>{label}</Text>
     </TouchableOpacity>
   );
 }
@@ -86,8 +86,15 @@ const btn = StyleSheet.create({
     backgroundColor: Colors.accent, borderRadius: Radius.md,
     paddingVertical: 13, alignItems: 'center', width: '100%', marginTop: 4,
   },
+  primaryCompact: {
+    width: 'auto',
+    alignSelf: 'flex-start',
+    paddingVertical: 10,
+    paddingHorizontal: Spacing.lg,
+  },
   disabled:    { opacity: 0.4 },
   primaryText: { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
+  primaryTextCompact: { fontSize: FontSize.sm },
   ghost:       { paddingVertical: Spacing.sm, alignItems: 'center', marginTop: 4 },
   ghostText:   { color: Colors.textSoft, fontSize: FontSize.xs, fontWeight: '700' },
 });
@@ -175,7 +182,7 @@ export function ScoreScreen({
           <Text style={sc.feedbackText}>{overallFeedback}</Text>
         </View>
       ) : null}
-      <PrimaryBtn label="Complete ✓" onPress={onComplete} color={color !== Colors.textSoft ? color : undefined} />
+      <PrimaryBtn label="Complete ✓" onPress={onComplete} color={color !== Colors.textSoft ? color : undefined} compact />
     </Animated.View>
   );
 }

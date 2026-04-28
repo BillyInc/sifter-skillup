@@ -57,6 +57,10 @@ const registry: FieldDetail[] = [
       { id: 'web3-pm', name: 'Web3 Product Manager', type: 'SPECIFIC', worldThemeId: 'design-district', worldLabel: '🧭 Product District', tagline: 'Ship products with millions at stake', description: 'Define and drive product strategy for blockchain protocols, wallets, and DeFi applications.', status: 'coming_soon', navigateTo: 'World' },
       { id: 'tokenomics-designer', name: 'Tokenomics Designer', type: 'SPECIFIC', worldThemeId: 'blockchain-borough', worldLabel: '🪙 Token Lab', tagline: 'Design the economics of new money', description: 'Model token supply, distribution, incentive mechanisms, and governance structures for crypto protocols.', status: 'coming_soon', navigateTo: 'World' },
       { id: 'dao-governance', name: 'DAO Governance Analyst', type: 'SPECIFIC', worldThemeId: 'blockchain-borough', worldLabel: '🏛️ Governance Hall', tagline: 'Run organisations with code', description: 'Design and analyse DAO governance structures, voting mechanisms, treasury management, and protocol politics.', status: 'coming_soon', navigateTo: 'World' },
+      { id: 'starknet-islands', name: 'Starknet Islands', type: 'SPECIFIC', worldThemeId: 'starknet-realm', worldLabel: '⚡ Starknet Islands', tagline: 'Learn Starknet by doing with real Sepolia transactions as you level up', description: 'Account abstraction, gasless wallets, STRK swaps, staking, lending, and DCA. 20 interactive levels powered by the StarkZap SDK on Starknet Sepolia testnet. Every lesson is a real transaction.', status: 'live', navigateTo: 'IslandMap' },
+      { id: 'starknet-defi-navigator', name: 'Starknet DeFi Navigator', type: 'SPECIFIC', worldThemeId: 'starknet-realm', worldLabel: '🧭 DeFi Navigator', tagline: 'Go from Starknet Islands graduate to professional DeFi operator', description: '11 labs from DeFi mental models to institutional portfolio operations. Each lab uses Starknet Sepolia for live testnet transactions and the StarkZap SDK for execution. Junior · Intermediate · Senior · DeFi Navigator Certified.', status: 'live', navigateTo: 'StarknetTrack' },
+      { id: 'starknet-ecosystem-deep-dive', name: 'Starknet Ecosystem Deep Dive', type: 'SPECIFIC', worldThemeId: 'starknet-realm', worldLabel: '🔬 Ecosystem Deep Dive', tagline: 'Research protocols, map incentives, and publish ecosystem-grade analysis', description: '9 labs covering Starknet protocol structure, tokenomics, governance, grants, analytics, SQL, and protocol comparison. Built for researchers, analysts, and ecosystem contributors.', status: 'live', navigateTo: 'World' },
+      { id: 'cairo-builder', name: 'Cairo Builder', type: 'SPECIFIC', worldThemeId: 'starknet-realm', worldLabel: '🏗️ Cairo Builder', tagline: 'Write, test, deploy, and audit Cairo smart contracts on Starknet', description: 'A developer-first track covering Scarb, snforge, account abstraction, deployments, full-stack indexing, and production audit flows on Starknet Sepolia.', status: 'live', navigateTo: 'World' },
     ],
   },
 
@@ -790,7 +794,7 @@ export function getFieldDetail(fieldId: string): FieldDetail | undefined {
 }
 
 export function getAllFieldDetails(): FieldDetail[] {
-  return registry;
+  return registry.filter((detail) => detail.fieldId !== 'starknet');
 }
 
 export const LIVE_TRACK_IDS = new Set([

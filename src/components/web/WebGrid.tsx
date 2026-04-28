@@ -26,10 +26,10 @@ import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../../t
 // ─── Constants ──────────────────────────────────────────────────────────────────
 
 export const WEB_BREAKPOINT   = 768;
-export const WEB_MAX_WIDTH    = 1160;
+export const WEB_MAX_WIDTH    = 1088;
 export const WEB_SIDEBAR_W    = 204;
-export const GRID_GAP         = 12;
-export const GRID_GAP_SM      = 10;
+export const GRID_GAP         = 10;
+export const GRID_GAP_SM      = 8;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────────
 
@@ -307,23 +307,23 @@ const styles = StyleSheet.create({
     maxWidth: WEB_MAX_WIDTH,
     width: '100%',
     alignSelf: 'center',
-    paddingHorizontal: GRID_GAP + 4,
-    paddingTop: GRID_GAP + 4,
+    paddingHorizontal: GRID_GAP,
+    paddingTop: GRID_GAP,
   },
 
   pageHeader: {
-    marginBottom: GRID_GAP + 4,
+    marginBottom: GRID_GAP,
     position: 'relative',
-    paddingBottom: 12,
+    paddingBottom: 10,
   },
   pageTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '800',
     letterSpacing: -0.4,
     marginBottom: 2,
   },
   pageSubtitle: {
-    fontSize: FontSize.sm,
+    fontSize: FontSize.xs,
     fontWeight: FontWeight.medium,
   },
   pageHeaderRight: {
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
 
   card: {
     borderRadius: Radius.lg,
-    padding: 14,
+    padding: 12,
     borderWidth: 1,
     overflow: 'hidden',
   },
@@ -382,19 +382,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   cardTitle: {
-    fontSize: FontSize.sm,
+    fontSize: FontSize.xs,
     fontWeight: FontWeight.bold,
   },
 
   statTile: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 8,
     borderRadius: Radius.md,
-    padding: 12,
+    padding: 10,
     borderWidth: 1,
     marginBottom: GRID_GAP_SM,
   },
@@ -419,8 +419,8 @@ const styles = StyleSheet.create({
   listRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    paddingVertical: 9,
+    gap: 8,
+    paddingVertical: 8,
     borderBottomWidth: 1,
   },
   listRowIcon:      { fontSize: 16 },

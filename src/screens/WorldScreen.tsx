@@ -126,7 +126,7 @@ function getLabLessonCount(trackId: string, labId: string, labNumber?: string): 
 }
 
 function getTrackAccent(trackId: string, fallbackAccent: string) {
-  if (trackId === 'starknet-defi-navigator') return '#EC4899';
+  if (trackId === 'starknet-defi-navigator') return '#F59E0B';
   if (trackId === 'starknet-ecosystem-deep-dive') return '#6366F1';
   if (trackId === 'cairo-builder') return '#F97316';
   return fallbackAccent;
@@ -274,6 +274,7 @@ function LabWorldScreen({
 export default function WorldScreen() {
   const router = useRouter();
   const { colors } = useTheme();
+  const isWebWide = Platform.OS === 'web' && W >= 1100;
 
   const params = useLocalSearchParams<{
     worldId?: string;
@@ -342,8 +343,8 @@ export default function WorldScreen() {
   const [bg0, bg1] = worldTheme.bgGradient;
   const accentColor = getTrackAccent(trackId, track?.accentColor ?? worldTheme.primaryColor);
   const heroTrackId = trackId || fieldId || worldId || 'default';
-  const heroWidth = Math.min(W - 48, 560);
-  const heroHeight = Math.min(Math.max(heroWidth * 0.52, 220), 300);
+  const heroWidth = Math.min(W - 48, isWebWide ? 460 : 560);
+  const heroHeight = Math.min(Math.max(heroWidth * 0.5, 200), 280);
   const statusLabel = live ? 'Continue' : 'Locked';
   const statusCopy = live
     ? 'This track is live in the new shell and routes directly to the correct workspace.'
@@ -374,24 +375,25 @@ export default function WorldScreen() {
 
       <SafeAreaView style={styles.safe}>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-          <Animated.View style={[styles.worldHeroCard, headerStyle]}>
-            <TouchableOpacity style={styles.backBtn} onPress={handleBack}>
-              <Text style={styles.backBtnText}>{'<'} Back</Text>
+          <Animated.View style={[styles.worldHeroCard, isWebWide && { backgroundColor: colors.card, borderColor: colors.border }, headerStyle]}>
+            <TouchableOpacity style={[styles.backBtn, isWebWide && { backgroundColor: colors.bgSecondary }]} onPress={handleBack}>
+              <Text style={[styles.backBtnText, isWebWide && { color: colors.text }]}>{'<'} Back</Text>
             </TouchableOpacity>
             <Text style={[styles.surfaceEyebrow, { color: accentColor }]}>
               {field?.name ? `${field.name} World` : 'World Surface'}
             </Text>
-            <Text style={styles.worldName}>{worldTheme.name}</Text>
+            <Text style={[styles.worldName, isWebWide && { color: colors.text }]}>{worldTheme.name}</Text>
             {trackName !== 'World' && (
-              <Text style={styles.worldSub}>{trackName}</Text>
+              <Text style={[styles.worldSub, isWebWide && { color: colors.textSoft }]}>{trackName}</Text>
             )}
-            <Text style={styles.worldBodyText}>
+            <Text style={[styles.worldBodyText, isWebWide && { color: colors.textSoft }]}>
               {track?.description ?? detail?.worldDescription ?? 'Track-specific world view with a direct path into the right workspace.'}
             </Text>
 
-            <View style={styles.heroVisualWrap}>
+            <View style={[styles.heroVisualWrap, isWebWide && { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
               <TrackScene
                 trackId={heroTrackId}
+                fieldId={fieldId || undefined}
                 accentColor={accentColor}
                 width={heroWidth}
                 height={heroHeight}
@@ -399,22 +401,22 @@ export default function WorldScreen() {
             </View>
 
             <View style={styles.worldMetaRow}>
-              <View style={styles.worldMetaCard}>
+              <View style={[styles.worldMetaCard, isWebWide && { backgroundColor: colors.bgSecondary }]}>
                 <Text style={[styles.worldMetaValue, { color: accentColor }]}>{statusLabel}</Text>
-                <Text style={styles.worldMetaLabel}>State</Text>
+                <Text style={[styles.worldMetaLabel, isWebWide && { color: colors.textMuted }]}>State</Text>
               </View>
-              <View style={styles.worldMetaCard}>
-                <Text style={styles.worldMetaValue}>{trackName !== 'World' ? trackName : worldTheme.name}</Text>
-                <Text style={styles.worldMetaLabel}>Context</Text>
+              <View style={[styles.worldMetaCard, isWebWide && { backgroundColor: colors.bgSecondary }]}>
+                <Text style={[styles.worldMetaValue, isWebWide && { color: colors.text }]}>{trackName !== 'World' ? trackName : worldTheme.name}</Text>
+                <Text style={[styles.worldMetaLabel, isWebWide && { color: colors.textMuted }]}>Context</Text>
               </View>
             </View>
           </Animated.View>
 
           <Animated.View style={[styles.worldContent, contentStyle]}>
-            <View style={styles.worldInfoCard}>
+            <View style={[styles.worldInfoCard, isWebWide && { backgroundColor: colors.card, borderColor: colors.border }]}>
               <Text style={[styles.worldInfoLabel, { color: accentColor }]}>Workspace Status</Text>
-              <Text style={styles.worldInfoTitle}>{live ? 'Route is live' : 'Entry is gated'}</Text>
-              <Text style={styles.worldInfoText}>{statusCopy}</Text>
+              <Text style={[styles.worldInfoTitle, isWebWide && { color: colors.text }]}>{live ? 'Route is live' : 'Entry is gated'}</Text>
+              <Text style={[styles.worldInfoText, isWebWide && { color: colors.textSoft }]}>{statusCopy}</Text>
             </View>
 
             {live ? (
@@ -422,8 +424,8 @@ export default function WorldScreen() {
                 <Text style={styles.ctaBtnText}>Continue to {trackName}</Text>
               </TouchableOpacity>
             ) : (
-              <View style={styles.lockedBadge}>
-                <Text style={styles.lockedText}>Locked until the track goes live</Text>
+              <View style={[styles.lockedBadge, isWebWide && { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <Text style={[styles.lockedText, isWebWide && { color: colors.textMuted }]}>Locked until the track goes live</Text>
               </View>
             )}
           </Animated.View>
@@ -437,7 +439,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   safe: { flex: 1 },
   orbContainer: { position: 'absolute', left: -80, top: -60 },
-  scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.xl },
+  scrollContent: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
   backBtn: {
     alignSelf: 'flex-start',
     borderRadius: Radius.full,
@@ -450,20 +452,20 @@ const styles = StyleSheet.create({
   surfaceEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
   worldHeroCard: {
     gap: Spacing.sm,
-    padding: Spacing.lg,
-    borderRadius: Radius.xxl,
+    padding: Spacing.md,
+    borderRadius: Radius.xl,
     backgroundColor: 'rgba(255,255,255,0.08)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.14)',
   },
-  worldName: { fontSize: 18, fontWeight: '900', color: '#fff' },
-  worldSub: { fontSize: FontSize.md, color: 'rgba(255,255,255,0.72)' },
-  worldBodyText: { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.76)', lineHeight: 19, maxWidth: 540 },
+  worldName: { fontSize: 17, fontWeight: '900', color: '#fff' },
+  worldSub: { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.72)' },
+  worldBodyText: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.76)', lineHeight: 18, maxWidth: 520 },
   heroVisualWrap: {
-    marginTop: Spacing.sm,
+    marginTop: 6,
     alignSelf: 'center',
     width: '100%',
-    maxWidth: 560,
+    maxWidth: 460,
     borderRadius: Radius.xl,
     overflow: 'hidden',
     borderWidth: 1,
@@ -472,11 +474,11 @@ const styles = StyleSheet.create({
   },
   worldMetaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.sm, flexWrap: 'wrap' },
   worldMetaCard: {
-    minWidth: 120,
+    minWidth: 112,
     borderRadius: Radius.lg,
     backgroundColor: 'rgba(255,255,255,0.08)',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 9,
   },
   worldMetaValue: { fontSize: FontSize.sm, fontWeight: '800', color: '#fff', marginBottom: 2 },
   worldMetaLabel: { fontSize: 10, fontWeight: '700', color: 'rgba(255,255,255,0.52)' },
@@ -484,7 +486,7 @@ const styles = StyleSheet.create({
   worldInfoCard: {
     backgroundColor: 'rgba(255,255,255,0.08)',
     borderRadius: Radius.xl,
-    padding: Spacing.md,
+    padding: 12,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.12)',
   },
@@ -501,22 +503,22 @@ const styles = StyleSheet.create({
   },
   lockedText: { color: 'rgba(255,255,255,0.68)', fontSize: FontSize.sm, fontWeight: '700' },
   labScreen: { flex: 1 },
-  labScroll: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.lg },
-  backChip: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 12, paddingVertical: 8 },
+  labScroll: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
+  backChip: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 9 },
   backChipText: { fontSize: FontSize.xs, fontWeight: '800' },
-  labHeroCard: { borderRadius: Radius.xxl, borderWidth: 1, padding: 16, gap: Spacing.sm, width: '100%', maxWidth: 480, alignSelf: 'center' },
+  labHeroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.md, gap: Spacing.sm, width: '100%', maxWidth: 420, alignSelf: 'center' },
   labTitle: { fontSize: 20, fontWeight: '900' },
   labSub: { fontSize: 11, fontWeight: '700' },
   labHeroCopy: { fontSize: 11, lineHeight: 17 },
   labStatsRow: { flexDirection: 'row', gap: Spacing.sm, flexWrap: 'wrap', marginTop: Spacing.sm },
-  labStatCard: { borderRadius: Radius.lg, paddingHorizontal: 12, paddingVertical: 10, minWidth: 98 },
+  labStatCard: { borderRadius: Radius.xl, paddingHorizontal: 14, paddingVertical: 12, minWidth: 104 },
   labStatValue: { fontSize: FontSize.sm, fontWeight: '800', marginBottom: 2 },
   labStatLabel: { fontSize: 11, fontWeight: '700' },
   labInfoStack: { gap: Spacing.md },
-  infoCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, gap: Spacing.xs },
+  infoCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.md, gap: Spacing.sm },
   infoEyebrow: { fontSize: FontSize.xs, fontWeight: '800', textTransform: 'uppercase', letterSpacing: 0.8 },
   infoTitle: { fontSize: FontSize.md, fontWeight: '900' },
   infoBody: { fontSize: FontSize.sm, lineHeight: 20 },
-  primaryButton: { borderRadius: Radius.xl, paddingVertical: 10, alignItems: 'center', width: Platform.OS === 'web' ? 480 : undefined, maxWidth: '100%', alignSelf: 'center' },
+  primaryButton: { borderRadius: Radius.xl, paddingVertical: 11, alignItems: 'center', width: Platform.OS === 'web' ? 420 : undefined, maxWidth: '100%', alignSelf: 'center' },
   primaryButtonText: { color: '#fff', fontSize: 12, fontWeight: '800' },
 });

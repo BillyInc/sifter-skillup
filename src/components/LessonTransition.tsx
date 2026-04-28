@@ -375,7 +375,7 @@ export default function LessonTransition({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(5,5,16,0.92)',
+    backgroundColor: 'rgba(244,247,251,0.94)',
     alignItems: 'center',
     justifyContent: 'center',
   },

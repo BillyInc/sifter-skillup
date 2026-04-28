@@ -16,19 +16,19 @@ export interface TrackInfo {
 const tracks: TrackInfo[] = [
   {
     id: 'starknet-island',
-    name: 'Starknet World',
+    name: 'Starknet Islands',
     description: 'Account abstraction · Gasless transactions · STRK swaps · Staking · Lending · DCA · Powered by StarkZap SDK.',
-    fieldId: 'starknet',
-    accentColor: '#ec4899',
+    fieldId: 'crypto',
+    accentColor: '#F59E0B',
     route: '/world',
     loader: () => import('./starknet_ecosystem/island'),
   },
   {
     id: 'starknet-defi-navigator',
     name: 'Starknet DeFi Navigator',
-    description: 'Execute real swaps, staking, lending, and DCA on Starknet Sepolia via Starkzap.',
-    fieldId: 'starknet',
-    accentColor: '#EC4899',
+    description: 'Execute real swaps, staking, lending, and DCA on Starknet Sepolia via StarkZap.',
+    fieldId: 'crypto',
+    accentColor: '#F59E0B',
     route: '/starknet-track',
     loader: () => import('./starknet_ecosystem/navigator'),
   },
@@ -36,7 +36,7 @@ const tracks: TrackInfo[] = [
     id: 'starknet-ecosystem-deep-dive',
     name: 'Starknet Ecosystem Deep Dive',
     description: 'Research protocols, analyse on-chain data, publish findings, and write grant proposals.',
-    fieldId: 'starknet',
+    fieldId: 'crypto',
     accentColor: '#6366F1',
     route: '/ecosystem-track',
     loader: () => import('./starknet_ecosystem/ecosystem'),
@@ -45,7 +45,7 @@ const tracks: TrackInfo[] = [
     id: 'cairo-builder',
     name: 'Cairo Builder',
     description: 'Write, test, and deploy Cairo smart contracts to Starknet Sepolia with snforge.',
-    fieldId: 'starknet',
+    fieldId: 'crypto',
     accentColor: '#F97316',
     route: '/cairo-builder-track',
     loader: () => import('./starknet_ecosystem/builder/builderLessons'),
@@ -92,5 +92,7 @@ export function getTracksByField(fieldId: string): TrackInfo[] {
 }
 
 export function getStarknetTracks(): TrackInfo[] {
-  return getTracksByField('starknet');
+  return tracks.filter((track) =>
+    ['starknet-island', 'starknet-defi-navigator', 'starknet-ecosystem-deep-dive', 'cairo-builder'].includes(track.id)
+  );
 }

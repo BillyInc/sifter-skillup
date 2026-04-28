@@ -23,6 +23,7 @@ export interface FaucetResult {
   error?: string;
   fallbackUrl?: string;
   cooldownEnds?: Date;   // when user can claim again
+  simulated?: boolean;
 }
 
 export interface FaucetStatus {
@@ -48,6 +49,15 @@ export const STARKNET_FAUCET_PAGE_URL = 'https://faucet.starknet.io/';
 
 const CLAIM_KEY = (address: string) => `starknet_faucet_claim_${address}`;
 
+function normalizeWalletAddress(address: string): string {
+  return address.trim().toLowerCase();
+}
+
+function isProbablyStarknetAddress(address: string): boolean {
+  const normalized = normalizeWalletAddress(address);
+  return /^0x[0-9a-f]+$/.test(normalized) && normalized.length >= 10;
+}
+
 async function getLastClaim(address: string): Promise<Date | null> {
   try {
     const { default: AsyncStorage } = await import('@react-native-async-storage/async-storage');
@@ -66,7 +76,11 @@ async function saveLastClaim(address: string): Promise<void> {
 // ── Faucet status ─────────────────────────────────────────────────────────────
 
 export async function getFaucetStatus(walletAddress: string): Promise<FaucetStatus> {
-  const lastClaimed = await getLastClaim(walletAddress);
+  if (!isProbablyStarknetAddress(walletAddress)) {
+    return { canClaim: false, hoursRemaining: 0 };
+  }
+
+  const lastClaimed = await getLastClaim(normalizeWalletAddress(walletAddress));
   if (!lastClaimed) return { canClaim: true };
 
   const cooldownEnds = new Date(lastClaimed.getTime() + FAUCET_COOLDOWN_HOURS * 60 * 60 * 1000);
@@ -86,9 +100,18 @@ export async function claimFaucet(
   walletAddress: string,
   token: FaucetToken = 'STRK'
 ): Promise<FaucetResult> {
+  const normalizedAddress = normalizeWalletAddress(walletAddress);
+
+  if (!isProbablyStarknetAddress(normalizedAddress)) {
+    return {
+      success: false,
+      error: 'Connect a valid Starknet Sepolia address before requesting faucet funds.',
+      fallbackUrl: STARKNET_FAUCET_PAGE_URL,
+    };
+  }
 
   // Check local cooldown first
-  const status = await getFaucetStatus(walletAddress);
+  const status = await getFaucetStatus(normalizedAddress);
   if (!status.canClaim) {
     return {
       success: false,
@@ -100,12 +123,13 @@ export async function claimFaucet(
   // ── Demo mode (no real faucet call, just simulate) ─────────────────────────
   if (process.env.EXPO_PUBLIC_DEMO_MODE === 'true') {
     await new Promise(r => setTimeout(r, 2000));
-    await saveLastClaim(walletAddress);
+    await saveLastClaim(normalizedAddress);
     return {
       success: true,
       txHash: '0x' + Math.random().toString(16).slice(2, 66).padStart(64, '0'),
       amount: token === 'STRK' ? STRK_FAUCET_AMOUNT : ETH_FAUCET_AMOUNT,
       token,
+      simulated: true,
     };
   }
 
@@ -115,7 +139,7 @@ export async function claimFaucet(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        address: walletAddress,
+        address: normalizedAddress,
         token: token.toLowerCase(),  // 'strk' or 'eth'
       }),
     });
@@ -137,7 +161,7 @@ export async function claimFaucet(
     }
 
     const data = await response.json();
-    await saveLastClaim(walletAddress);
+    await saveLastClaim(normalizedAddress);
 
     return {
       success: true,
@@ -148,7 +172,7 @@ export async function claimFaucet(
 
   } catch {
     // Network error — try Alchemy as fallback
-    return await claimAlchemyFaucet(walletAddress, token);
+    return await claimAlchemyFaucet(normalizedAddress, token);
   }
 }
 
@@ -181,7 +205,7 @@ async function claimAlchemyFaucet(
     const data = await response.json();
 
     if (data.result) {
-      await saveLastClaim(walletAddress);
+      await saveLastClaim(normalizeWalletAddress(walletAddress));
       return {
         success: true,
         txHash: data.result,
