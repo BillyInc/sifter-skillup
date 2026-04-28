@@ -90,6 +90,8 @@ export default function SettingsScreen() {
           <Row label="Username" value={user?.username ?? 'Learner'} />
           <Row label="Email" value={user?.email || 'Not set'} />
           <Row label="Auth Provider" value={user?.auth_provider ?? 'guest'} />
+          <Row label="Starknet Address" value={starknetWalletAddress ?? user?.starknet_address ?? 'Not connected'} />
+          <Row label="Starknet Bridge" value={starknetReady ? 'Connected' : starknetWalletStatus} />
           <Row label="Active Field" value={user?.activeFieldId ?? user?.active_field_id ?? 'Not selected'} />
           <Row label="Active Track" value={user?.currentTrackName ?? user?.currentTrackId ?? 'Not selected'} />
         </SettingsCard>

@@ -18,6 +18,8 @@ import * as SecureStore from 'expo-secure-store';
 import * as Crypto from 'expo-crypto';
 import * as Clipboard from 'expo-clipboard';
 import { Linking, Platform } from 'react-native';
+import { useStarknetWalletBridge } from '../components/auth/StarknetWalletBridge';
+import { isStarkzapAvailable, STARKNET_TOKENS } from '../lib/starkzap';
 
 // ── Chain config (mirrors TESTNET_CHAINS_CONFIG in SimulatorCard_ADDITIONS) ──
 
@@ -155,11 +157,19 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   const chain       = ISLAND_TO_CHAIN[islandId] ?? 'ethereum-sepolia';
   const chainConfig = CHAIN_CONFIG[chain] ?? CHAIN_CONFIG['ethereum-sepolia'];
   const storeKey    = walletKey(chain);
+  const starknetBridge = useStarknetWalletBridge();
+  const isLiveStarknetWallet =
+    chain === 'starknet-sepolia' &&
+    isStarkzapAvailable() &&
+    starknetBridge.ready &&
+    !!starknetBridge.wallet &&
+    !!starknetBridge.address;
 
   const [address,         setAddress]         = useState<string | null>(null);
   const [isLoading,       setIsLoading]        = useState(true);
   const [showCreatePrompt,setShowCreatePrompt] = useState(false);
   const [copied,          setCopied]           = useState(false);
+  const [liveBalance,     setLiveBalance]      = useState<string | null>(null);
 
   // Load or auto-create demo wallet on mount
   useEffect(() => {
@@ -193,6 +203,32 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
     })();
     return () => { mounted = false; };
   }, [chain, storeKey]);
+
+  useEffect(() => {
+    if (!isLiveStarknetWallet) {
+      setLiveBalance(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const bal = await (starknetBridge.wallet as any).balanceOf(STARKNET_TOKENS.STRK);
+        if (!cancelled) {
+          setLiveBalance(bal?.toFormatted?.() ?? null);
+        }
+      } catch {
+        if (!cancelled) {
+          setLiveBalance(null);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isLiveStarknetWallet, starknetBridge.wallet]);
 
   const createWallet = useCallback(async () => {
     setIsLoading(true);
@@ -230,15 +266,18 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   }, [address]);
 
   // Starknet Island 18 uses the real StarkZap balance — use demo balance elsewhere
-  const balance = chainConfig.demoBalance;
+  const balance = isLiveStarknetWallet
+    ? (liveBalance ?? 'Loading STRK balance...')
+    : chainConfig.demoBalance;
+  const resolvedAddress = isLiveStarknetWallet ? (starknetBridge.address ?? address) : address;
 
   return {
-    address,
-    shortAddress:    address ? shortAddr(address) : '',
+    address: resolvedAddress,
+    shortAddress:    resolvedAddress ? shortAddr(resolvedAddress) : '',
     balance,
     chain,
     chainConfig,
-    isDemo:          true,
+    isDemo:          !isLiveStarknetWallet,
     hasBalance:      true,   // demo wallets show a balance for UX
     needsFaucet:     false,  // users can tap faucet button to get real testnet tokens
     isLoading,

@@ -1,7 +1,6 @@
 import React, { createContext, useContext } from 'react';
-import { Platform } from 'react-native';
 import type { StarkzapWallet } from '../../lib/starkzap';
-import { PRIVY_NATIVE_ENABLED } from '../../lib/config';
+import { PRIVY_ENABLED } from '../../lib/config';
 import { useStarkzapWallet } from '../../lib/starkzapPrivyAdapter';
 
 type StarknetWalletBridgeStatus = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error';
@@ -24,29 +23,7 @@ const DEFAULT_VALUE: StarknetWalletBridgeValue = {
 
 const StarknetWalletBridgeContext = createContext<StarknetWalletBridgeValue>(DEFAULT_VALUE);
 
-function StarknetWalletBridgeWeb({
-  children,
-  preferredAddress,
-}: {
-  children: React.ReactNode;
-  preferredAddress?: string | null;
-}) {
-  const fallbackAddress = preferredAddress?.trim() || null;
-
-  return (
-    <StarknetWalletBridgeContext.Provider value={{
-      wallet: null,
-      address: fallbackAddress,
-      status: fallbackAddress ? 'waiting-for-user' : 'waiting-for-user',
-      ready: false,
-      error: null,
-    }}>
-      {children}
-    </StarknetWalletBridgeContext.Provider>
-  );
-}
-
-function StarknetWalletBridgeNative({
+function StarknetWalletBridgeLive({
   children,
   preferredAddress,
 }: {
@@ -77,11 +54,7 @@ export function StarknetWalletBridgeProvider({
   children: React.ReactNode;
   preferredAddress?: string | null;
 }) {
-  if (Platform.OS === 'web') {
-    return <StarknetWalletBridgeWeb preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeWeb>;
-  }
-
-  if (!PRIVY_NATIVE_ENABLED) {
+  if (!PRIVY_ENABLED) {
     return (
       <StarknetWalletBridgeContext.Provider value={DEFAULT_VALUE}>
         {children}
@@ -89,7 +62,7 @@ export function StarknetWalletBridgeProvider({
     );
   }
 
-  return <StarknetWalletBridgeNative preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeNative>;
+  return <StarknetWalletBridgeLive preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeLive>;
 }
 
 export function useStarknetWalletBridge() {
