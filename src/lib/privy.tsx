@@ -107,3 +107,19 @@ export function useAppLoginWithOAuth(callbacks?: AppLoginCallbacks): AppLoginWit
     state: oauth.state,
   };
 }
+
+export function useAppSignRawHash(): {
+  signRawHash: (input: {
+    address: string;
+    chainType: 'starknet';
+    hash: `0x${string}`;
+  }) => Promise<{ signature: `0x${string}` }>;
+} {
+  if (isWeb) {
+    const { useSignRawHash } = require('@privy-io/react-auth/extended-chains') as typeof import('@privy-io/react-auth/extended-chains');
+    return useSignRawHash();
+  }
+
+  const { useSignRawHash } = require('@privy-io/expo/extended-chains') as typeof import('@privy-io/expo/extended-chains');
+  return useSignRawHash();
+}

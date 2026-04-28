@@ -7,10 +7,9 @@
  */
 
 import { useEffect, useMemo, useState } from 'react';
-import { usePrivy } from '@privy-io/expo';
-import { useSignRawHash } from '@privy-io/expo/extended-chains';
 import { PrivySigner } from 'starkzap';
 import { starkzapSdk, isStarkzapAvailable } from './starkzap';
+import { useAppPrivy, useAppSignRawHash } from './privy';
 
 type Status = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error';
 
@@ -36,8 +35,8 @@ function pickStarknetAccount(privyUser: any): StarknetLinkedAccount | null {
 }
 
 export function useStarkzapWallet(preferredAddress: string | null = null) {
-  const privy = usePrivy();
-  const { signRawHash } = useSignRawHash();
+  const privy = useAppPrivy();
+  const { signRawHash } = useAppSignRawHash();
   const [wallet, setWallet] = useState<any | null>(null);
   const [status, setStatus] = useState<Status>('unavailable');
   const [error, setError] = useState<Error | null>(null);
