@@ -58,7 +58,7 @@ export const Shadow = {
   sm: { shadowColor: '#000000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.07, shadowRadius: 8, elevation: 2 },
   md: { shadowColor: '#000000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.09, shadowRadius: 16, elevation: 4 },
   lg: { shadowColor: '#000000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.12, shadowRadius: 24, elevation: 8 },
-  glow:      { shadowColor: '#6366f1', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.22, shadowRadius: 14, elevation: 6 },
+  glow:      { shadowColor: '#000000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.12, shadowRadius: 14, elevation: 6 },
   glowGold:  { shadowColor: '#f59e0b', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
   glowGreen: { shadowColor: '#10b981', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.22, shadowRadius: 14, elevation: 6 },
   glowPink:  { shadowColor: '#ec4899', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.24, shadowRadius: 16, elevation: 8 },
@@ -93,21 +93,21 @@ export interface ColorPalette {
 export const LightColors: ColorPalette = {
   bg: '#F0F2F6', bgSecondary: '#F5F5F5', bgTertiary: '#E5E7EB',
   card: '#FFFFFF', cardElevated: '#FFFFFF', navy: '#111111',
-  accent: '#6366F1', accentSoft: '#EEF2FF', accentDim: '#8B5CF6', accentDeep: '#4338CA',
+  accent: '#111111', accentSoft: '#F5F5F5', accentDim: '#374151', accentDeep: '#000000',
   green: '#10B981', greenSoft: '#ECFDF5',
   red: '#EF4444', redSoft: '#FEF2F2',
   gold: '#F59E0B', goldSoft: '#FFF7ED',
   orange: '#F97316', orangeSoft: '#FFF7ED',
   text: '#111111', textSoft: '#374151', textMuted: '#6B7280', textInverse: '#FFFFFF',
-  border: '#E5E7EB', borderDark: '#D1D5DB', borderFocus: '#6366F1',
-  beginner: '#10B981', intermediate: '#F59E0B', pro: '#6366F1',
+  border: '#E5E7EB', borderDark: '#D1D5DB', borderFocus: '#111111',
+  beginner: '#10B981', intermediate: '#F59E0B', pro: '#F59E0B',
   bitcoin: '#F7931A', ethereum: '#627EEA', defi: '#10B981', nft: '#8B5CF6',
   bridge: '#06B6D4', meme: '#EF4444', base: '#0052FF', ton: '#0088CC',
   bnb: '#F0B90B', solana: '#9945FF', starknet: '#EC4899',
   tabBar: '#FFFFFF', tabBarBorder: '#E5E7EB', tabBarActive: '#111111',
   inputBg: '#F5F5F5', inputBorder: '#E5E7EB',
   overlay: 'rgba(17,17,17,0.46)', shimmer: '#F5F5F5', shimmerHighlight: '#E5E7EB',
-  stitch: '#6366F1', stitchSoft: '#EEF2FF',
+  stitch: '#111111', stitchSoft: '#F5F5F5',
   levelBadge: '#FFF7ED', levelBadgeText: '#B45309',
   streakFire: '#F97316', xpGreen: '#10B981',
 };
@@ -117,21 +117,21 @@ export const LightColors: ColorPalette = {
 export const DarkColors: ColorPalette = {
   bg: '#0F172A', bgSecondary: '#111827', bgTertiary: '#1F2937',
   card: '#111827', cardElevated: '#172033', navy: '#F9FAFB',
-  accent: '#818CF8', accentSoft: '#1E1B4B', accentDim: '#A78BFA', accentDeep: '#C7D2FE',
+  accent: '#F59E0B', accentSoft: '#1A1200', accentDim: '#D97706', accentDeep: '#FDE68A',
   green: '#34D399', greenSoft: '#052E28',
   red: '#F87171', redSoft: '#3A1014',
   gold: '#FBBF24', goldSoft: '#3B2A09',
   orange: '#FB923C', orangeSoft: '#3A1D09',
   text: '#F9FAFB', textSoft: '#D1D5DB', textMuted: '#9CA3AF', textInverse: '#111111',
-  border: '#243041', borderDark: '#374151', borderFocus: '#818CF8',
-  beginner: '#34D399', intermediate: '#FBBF24', pro: '#818CF8',
+  border: '#243041', borderDark: '#374151', borderFocus: '#F59E0B',
+  beginner: '#34D399', intermediate: '#FBBF24', pro: '#F59E0B',
   bitcoin: '#F7931A', ethereum: '#7C96FF', defi: '#34D399', nft: '#A78BFA',
   bridge: '#22D3EE', meme: '#F87171', base: '#3B82F6', ton: '#38BDF8',
   bnb: '#FBB024', solana: '#B57AFF', starknet: '#F472B6',
   tabBar: '#111827', tabBarBorder: '#243041', tabBarActive: '#F9FAFB',
   inputBg: '#111827', inputBorder: '#374151',
   overlay: 'rgba(0,0,0,0.75)', shimmer: '#1A1A30', shimmerHighlight: '#222248',
-  stitch: '#818CF8', stitchSoft: '#1E1B4B',
+  stitch: '#F59E0B', stitchSoft: '#1A1200',
   levelBadge: '#3B2A09', levelBadgeText: '#FBBF24',
   streakFire: '#FB923C', xpGreen: '#34D399',
 };
@@ -209,14 +209,14 @@ export interface WorldTheme {
 }
 
 export const WORLD_THEMES: Record<string, WorldTheme> = {
-  'quant-quarter':          { id: 'quant-quarter',          name: 'Quant Quarter',          primaryColor: '#6366F1', secondaryColor: '#8B5CF6', bgGradient: ['#0a0a1f', '#1a1040'], glowColor: 'rgba(99,102,241,0.4)',    particleColor: '#8B5CF6', emoji: '🏛️' },
+  'quant-quarter':          { id: 'quant-quarter',          name: 'Quant Quarter',          primaryColor: '#1D4ED8', secondaryColor: '#2563EB', bgGradient: ['#030712', '#0f172a'], glowColor: 'rgba(29,78,216,0.35)',   particleColor: '#3B82F6', emoji: '🏛️' },
   'blockchain-borough':     { id: 'blockchain-borough',     name: 'Blockchain Borough',     primaryColor: '#F7931A', secondaryColor: '#FBB024', bgGradient: ['#0f0a00', '#1f1200'], glowColor: 'rgba(247,147,26,0.4)',   particleColor: '#F7931A', emoji: '🔮' },
   'neural-nexus':           { id: 'neural-nexus',           name: 'Neural Nexus',           primaryColor: '#8B5CF6', secondaryColor: '#A78BFA', bgGradient: ['#0d0018', '#1a0030'], glowColor: 'rgba(139,92,246,0.45)', particleColor: '#A78BFA', emoji: '🧠' },
   'code-citadel':           { id: 'code-citadel',           name: 'Code Citadel',           primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#00101f', '#002040'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🏰' },
   'shadow-vault':           { id: 'shadow-vault',           name: 'Shadow Vault',           primaryColor: '#EF4444', secondaryColor: '#F87171', bgGradient: ['#0f0000', '#200000'], glowColor: 'rgba(239,68,68,0.4)',   particleColor: '#F87171', emoji: '🛡️' },
   'logistics-labyrinth':    { id: 'logistics-labyrinth',    name: 'Logistics Labyrinth',    primaryColor: '#0EA5E9', secondaryColor: '#38BDF8', bgGradient: ['#000d1a', '#001f40'], glowColor: 'rgba(14,165,233,0.4)',  particleColor: '#38BDF8', emoji: '🔗' },
   'starknet-realm':         { id: 'starknet-realm',         name: 'Starknet Realm',         primaryColor: '#EC4899', secondaryColor: '#F472B6', bgGradient: ['#0a0015', '#1a0030'], glowColor: 'rgba(236,72,153,0.45)', particleColor: '#F472B6', emoji: '⚡' },
-  'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#6366F1', secondaryColor: '#8B5CF6', bgGradient: ['#0a0a1f', '#111130'], glowColor: 'rgba(99,102,241,0.35)', particleColor: '#8B5CF6', emoji: '⚡' },
+  'default':                { id: 'default',                name: 'Sifter World',           primaryColor: '#111111', secondaryColor: '#374151', bgGradient: ['#0a0a0a', '#111111'], glowColor: 'rgba(0,0,0,0.25)',      particleColor: '#F59E0B', emoji: '⚡' },
 };
 
 export function getWorldTheme(id: string): WorldTheme {
@@ -295,14 +295,14 @@ export const TRACK_TOOLS: Record<string, {
   color: string; toolEmoji: string; screenLabel: string; deskItems: string[];
 }> = {
   'crypto':               { color: '#F7931A', toolEmoji: '₿',  screenLabel: 'On-Chain Terminal',      deskItems: ['wallet', 'price-feed', 'defi-dashboard'] },
-  'quant':                { color: '#6366F1', toolEmoji: '📊', screenLabel: 'Bloomberg Terminal',      deskItems: ['python-ide', 'probability-tree', 'backtest'] },
+  'quant':                { color: '#1D4ED8', toolEmoji: '📊', screenLabel: 'Bloomberg Terminal',      deskItems: ['python-ide', 'probability-tree', 'backtest'] },
   'supply-chain':         { color: '#0EA5E9', toolEmoji: '🔗', screenLabel: 'Logistics Dashboard',     deskItems: ['sap-screen', 'shipping-map', 'inventory'] },
   'defi-research':        { color: '#10B981', toolEmoji: '🌊', screenLabel: 'DeFi Protocol Monitor',   deskItems: ['yield-curve', 'tvl-chart', 'liquidation'] },
   'starknet':             { color: '#EC4899', toolEmoji: '⚡', screenLabel: 'Cairo Dev Terminal',      deskItems: ['zk-proof', 'contract-editor', 'tx-feed'] },
   'starknet-defi-navigator': { color: '#EC4899', toolEmoji: '🧭', screenLabel: 'DeFi Navigator',      deskItems: ['pool-depth', 'yield-monitor', 'starkzap'] },
-  'options-trading':      { color: '#8B5CF6', toolEmoji: '🎯', screenLabel: 'Options Chain',           deskItems: ['greeks-chart', 'vol-surface', 'expiry-cal'] },
+  'options-trading':      { color: '#0369A1', toolEmoji: '🎯', screenLabel: 'Options Chain',           deskItems: ['greeks-chart', 'vol-surface', 'expiry-cal'] },
   'ai-ml':                { color: '#06B6D4', toolEmoji: '🤖', screenLabel: 'Model Training Monitor', deskItems: ['gpu-rig', 'loss-curve', 'neural-net'] },
-  'default':              { color: '#6366F1', toolEmoji: '💼', screenLabel: 'Analyst Workstation',     deskItems: ['spreadsheet', 'notepad', 'coffee'] },
+  'default':              { color: '#111111', toolEmoji: '💼', screenLabel: 'Analyst Workstation',     deskItems: ['spreadsheet', 'notepad', 'coffee'] },
 };
 
 export function getTrackTools(trackId: string) {

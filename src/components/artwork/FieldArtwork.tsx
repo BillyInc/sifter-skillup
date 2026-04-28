@@ -12,22 +12,6 @@ import { getFieldColor, getFieldIcon } from '../../lib/visualThemes';
 
 // ─── Shared helpers ────────────────────────────────────────────────────────────
 
-function useLoop(duration: number, delay = 0) {
-  const v = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.delay(delay),
-        Animated.timing(v, { toValue: 1, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-        Animated.timing(v, { toValue: 0, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-      ])
-    );
-    loop.start();
-    return () => loop.stop();
-  }, [delay, duration, v]);
-  return v;
-}
-
 function useSpin(duration = 8000, delay = 0) {
   const v = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -59,65 +43,14 @@ function usePulse(min = 0.85, max = 1.1, duration = 1200, delay = 0) {
   return v;
 }
 
-function useFloat(range = 8, duration = 2000, delay = 0) {
-  const v = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.delay(delay),
-        Animated.timing(v, { toValue: -range, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-        Animated.timing(v, { toValue: range, duration, easing: Easing.inOut(Easing.sin), useNativeDriver: true }),
-      ])
-    );
-    loop.start();
-    return () => loop.stop();
-  }, [delay, duration, range, v]);
-  return v;
-}
-
-function useTravel(fromX: number, toX: number, duration = 3000, delay = 0) {
-  const v = useRef(new Animated.Value(fromX)).current;
-  useEffect(() => {
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.delay(delay),
-        Animated.timing(v, { toValue: toX, duration, easing: Easing.linear, useNativeDriver: true }),
-        Animated.timing(v, { toValue: fromX, duration: 0, useNativeDriver: true }),
-      ])
-    );
-    loop.start();
-    return () => loop.stop();
-  }, [delay, duration, fromX, toX, v]);
-  return v;
-}
-
 // ─── CRYPTO / WEB3 ─────────────────────────────────────────────────────────────
 // Blockchain nodes in a network with moving data packets.
 
 export function CryptoArtwork({ size = 200 }: { size?: number }) {
-  // Floating nodes
-  const float1 = useFloat(6, 2200, 0);
-  const float2 = useFloat(8, 1900, 400);
-  const float3 = useFloat(5, 2500, 800);
-  const float4 = useFloat(7, 2100, 200);
-  const float5 = useFloat(6, 2300, 600);
-
-  // Node pulses
-  const pulse1 = usePulse(0.8, 1.3, 1400, 0);
-  const pulse2 = usePulse(0.7, 1.2, 1600, 300);
-  const pulse3 = usePulse(0.9, 1.4, 1200, 600);
-
-  // Data packet traveling along edge
-  const packet1 = useTravel(-80, 60, 2000, 0);
-  const packet2 = useTravel(60, -60, 2500, 800);
-  const packet3 = useTravel(-40, 80, 1800, 400);
+  const centerPulse = usePulse(0.85, 1.1, 1400, 0);
 
   // Outer ring spin
   const ring = useSpin(12000);
-  const ring2 = useSpin(8000, 2000);
-
-  const opacity1 = useLoop(1800, 0);
-  const opacity2 = useLoop(2200, 600);
 
   const C = '#F97316'; // orange
   const DIM = size;
@@ -136,16 +69,6 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
         position: 'absolute',
         top: DIM * 0.05, left: DIM * 0.05,
       }]} />
-      <Animated.View style={[artwork.ring, {
-        width: DIM * 0.65, height: DIM * 0.65,
-        borderRadius: DIM * 0.33,
-        borderColor: C + '20',
-        borderWidth: 1,
-        transform: [{ rotate: ring2 }],
-        position: 'absolute',
-        top: DIM * 0.175, left: DIM * 0.175,
-      }]} />
-
       {/* Connection lines (static, visual) */}
       <View style={[artwork.line, {
         position: 'absolute', top: DIM * 0.25, left: DIM * 0.15,
@@ -166,19 +89,18 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
         transform: [{ rotate: '60deg' }],
       }]} />
 
-      {/* Floating nodes */}
+      {/* Static nodes */}
       {[
-        { x: 0.15, y: 0.2,  s: 20, pulse: pulse1, float: float1, delay: 0 },
-        { x: 0.7,  y: 0.15, s: 16, pulse: pulse2, float: float2, delay: 300 },
-        { x: 0.6,  y: 0.55, s: 22, pulse: pulse3, float: float3, delay: 600 },
-        { x: 0.1,  y: 0.6,  s: 14, pulse: pulse1, float: float4, delay: 200 },
-        { x: 0.4,  y: 0.78, s: 18, pulse: pulse2, float: float5, delay: 500 },
+        { x: 0.15, y: 0.2,  s: 20 },
+        { x: 0.7,  y: 0.15, s: 16 },
+        { x: 0.6,  y: 0.55, s: 22 },
+        { x: 0.1,  y: 0.6,  s: 14 },
+        { x: 0.4,  y: 0.78, s: 18 },
       ].map((n, i) => (
-        <Animated.View key={i} style={{
+        <View key={i} style={{
           position: 'absolute',
           left: DIM * n.x - n.s / 2,
           top: DIM * n.y - n.s / 2,
-          transform: [{ translateY: n.float }, { scale: n.pulse }],
         }}>
           {/* Outer glow */}
           <View style={{
@@ -198,28 +120,8 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
               <Text style={{ color: '#fff', fontSize: n.s * 0.55, textAlign: 'center', lineHeight: n.s, fontWeight: '800' }}>₿</Text>
             )}
           </View>
-        </Animated.View>
+        </View>
       ))}
-
-      {/* Data packets */}
-      <Animated.View style={[artwork.packet, {
-        backgroundColor: '#FFF',
-        top: DIM * 0.27,
-        transform: [{ translateX: packet1 }],
-        opacity: opacity1,
-      }]} />
-      <Animated.View style={[artwork.packet, {
-        backgroundColor: C,
-        top: DIM * 0.57,
-        transform: [{ translateX: packet2 }],
-        opacity: opacity2,
-      }]} />
-      <Animated.View style={[artwork.packet, {
-        backgroundColor: C + 'CC',
-        top: DIM * 0.42,
-        transform: [{ translateX: packet3 }],
-        opacity: opacity1,
-      }]} />
 
       {/* Center BTC glyph */}
       <Animated.View style={{
@@ -229,7 +131,7 @@ export function CryptoArtwork({ size = 200 }: { size?: number }) {
         borderRadius: DIM * 0.1,
         backgroundColor: C,
         alignItems: 'center', justifyContent: 'center',
-        transform: [{ scale: pulse1 }],
+        transform: [{ scale: centerPulse }],
         shadowColor: C, shadowOpacity: 0.8, shadowRadius: 12, elevation: 8,
       }}>
         <Text style={{ color: '#fff', fontSize: DIM * 0.1, fontWeight: '800' }}>₿</Text>
@@ -245,34 +147,16 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
   const C = '#6366F1';
   const DIM = size;
 
-  const chartAnim = useRef(new Animated.Value(0)).current;
-  const bar1      = usePulse(0.4, 1.0, 800, 0);
-  const bar2      = usePulse(0.5, 0.9, 900, 200);
-  const bar3      = usePulse(0.6, 1.0, 750, 400);
-  const bar4      = usePulse(0.3, 0.8, 1000, 100);
-  const bar5      = usePulse(0.7, 1.0, 850, 300);
-  const float1    = useFloat(4, 2000, 0);
-  const float2    = useFloat(5, 1800, 400);
+  const centerPulse = usePulse(0.85, 1.1, 1400, 0);
   const spin      = useSpin(20000);
 
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(chartAnim, { toValue: 1, duration: 3000, easing: Easing.out(Easing.quad), useNativeDriver: false }),
-        Animated.timing(chartAnim, { toValue: 0, duration: 0, useNativeDriver: false }),
-      ])
-    ).start();
-  }, [chartAnim]);
-
-  const lineWidth = chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0, DIM * 0.75] });
-
   const bars = [
-    { h: 0.3, x: 0.12, pulse: bar1 },
-    { h: 0.45, x: 0.24, pulse: bar2 },
-    { h: 0.35, x: 0.36, pulse: bar3 },
-    { h: 0.6, x: 0.48, pulse: bar4 },
-    { h: 0.5, x: 0.60, pulse: bar5 },
-    { h: 0.7, x: 0.72, pulse: bar1 },
+    { h: 0.3, x: 0.12 },
+    { h: 0.45, x: 0.24 },
+    { h: 0.35, x: 0.36 },
+    { h: 0.6, x: 0.48 },
+    { h: 0.5, x: 0.60 },
+    { h: 0.7, x: 0.72 },
   ];
 
   return (
@@ -305,7 +189,7 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
 
       {/* Candlestick bars */}
       {bars.map((b, i) => (
-        <Animated.View key={i} style={{
+        <View key={i} style={{
           position: 'absolute',
           bottom: DIM * 0.15,
           left: DIM * b.x,
@@ -313,17 +197,15 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
           height: DIM * b.h,
           borderRadius: 3,
           backgroundColor: i % 2 === 0 ? C + 'CC' : '#10B98180',
-          transform: [{ scaleY: b.pulse }],
-          transformOrigin: 'bottom',
         }} />
       ))}
 
       {/* Ascending price line */}
-      <Animated.View style={{
+      <View style={{
         position: 'absolute',
         bottom: DIM * 0.35,
         left: DIM * 0.1,
-        width: lineWidth,
+        width: DIM * 0.75,
         height: 2.5,
         backgroundColor: '#10B981',
         borderRadius: 2,
@@ -331,32 +213,8 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
         shadowColor: '#10B981', shadowOpacity: 0.9, shadowRadius: 6,
       }} />
 
-      {/* Price label floating */}
-      <Animated.View style={{
-        position: 'absolute',
-        top: DIM * 0.18,
-        right: DIM * 0.1,
-        transform: [{ translateY: float1 }],
-      }}>
-        <View style={{ backgroundColor: '#10B981', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
-          <Text style={{ color: '#fff', fontSize: DIM * 0.07, fontWeight: '800' }}>+2.81</Text>
-        </View>
-      </Animated.View>
-
-      {/* Sharpe ratio chip */}
-      <Animated.View style={{
-        position: 'absolute',
-        top: DIM * 0.35,
-        left: DIM * 0.1,
-        transform: [{ translateY: float2 }],
-      }}>
-        <View style={{ backgroundColor: C, borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 }}>
-          <Text style={{ color: '#fff', fontSize: DIM * 0.065, fontWeight: '700' }}>SR: 2.81</Text>
-        </View>
-      </Animated.View>
-
       {/* Center sigma */}
-      <View style={{
+      <Animated.View style={{
         position: 'absolute',
         top: DIM * 0.38, left: DIM * 0.38,
         width: DIM * 0.24, height: DIM * 0.24,
@@ -364,9 +222,10 @@ export function QuantArtwork({ size = 200 }: { size?: number }) {
         backgroundColor: C,
         alignItems: 'center', justifyContent: 'center',
         shadowColor: C, shadowOpacity: 0.7, shadowRadius: 10,
+        transform: [{ scale: centerPulse }],
       }}>
         <Text style={{ color: '#fff', fontSize: DIM * 0.14, fontWeight: '800' }}>Σ</Text>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -385,36 +244,7 @@ export function AIArtwork({ size = 200 }: { size?: number }) {
     [0.9, 0.45],
   ];
 
-  const pulses = [
-    usePulse(0.6, 1.2, 800, 0),
-    usePulse(0.6, 1.2, 880, 120),
-    usePulse(0.6, 1.2, 960, 240),
-    usePulse(0.6, 1.2, 1040, 360),
-    usePulse(0.6, 1.2, 1120, 480),
-    usePulse(0.6, 1.2, 1200, 600),
-    usePulse(0.6, 1.2, 1280, 720),
-    usePulse(0.6, 1.2, 1360, 840),
-    usePulse(0.6, 1.2, 1440, 960),
-    usePulse(0.6, 1.2, 1520, 1080),
-    usePulse(0.6, 1.2, 1600, 1200),
-    usePulse(0.6, 1.2, 1680, 1320),
-    usePulse(0.6, 1.2, 1760, 1440),
-  ];
-  const float = [
-    useFloat(3, 2000, 0),
-    useFloat(3, 2100, 150),
-    useFloat(3, 2200, 300),
-    useFloat(3, 2300, 450),
-    useFloat(3, 2400, 600),
-    useFloat(3, 2500, 750),
-    useFloat(3, 2600, 900),
-    useFloat(3, 2700, 1050),
-    useFloat(3, 2800, 1200),
-    useFloat(3, 2900, 1350),
-    useFloat(3, 3000, 1500),
-    useFloat(3, 3100, 1650),
-    useFloat(3, 3200, 1800),
-  ];
+  const centerPulse = usePulse(0.85, 1.1, 1400, 0);
   const spinBig = useSpin(18000);
 
   return (
@@ -450,11 +280,10 @@ export function AIArtwork({ size = 200 }: { size?: number }) {
 
       {/* Nodes */}
       {nodes.map(([x, y], i) => (
-        <Animated.View key={i} style={{
+        <View key={i} style={{
           position: 'absolute',
           left: DIM * x - 8,
           top: DIM * y - 8,
-          transform: [{ scale: pulses[i] }, { translateY: float[i] }],
         }}>
           <View style={{
             width: 16, height: 16, borderRadius: 8,
@@ -462,20 +291,21 @@ export function AIArtwork({ size = 200 }: { size?: number }) {
             borderWidth: 1.5, borderColor: '#fff3',
             shadowColor: C, shadowOpacity: 0.5, shadowRadius: 4,
           }} />
-        </Animated.View>
+        </View>
       ))}
 
       {/* Center brain icon */}
-      <View style={{
+      <Animated.View style={{
         position: 'absolute', top: DIM * 0.38, left: DIM * 0.38,
         width: DIM * 0.24, height: DIM * 0.24,
         borderRadius: DIM * 0.12,
         backgroundColor: C,
         alignItems: 'center', justifyContent: 'center',
         shadowColor: C, shadowOpacity: 0.7, shadowRadius: 10,
+        transform: [{ scale: centerPulse }],
       }}>
         <Text style={{ color: '#fff', fontSize: DIM * 0.12 }}>🧠</Text>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -487,12 +317,8 @@ export function SupplyChainArtwork({ size = 200 }: { size?: number }) {
   const C = '#10B981';
   const DIM = size;
 
-  const pkg1 = useTravel(-10, DIM * 0.6, 2400, 0);
-  const pkg2 = useTravel(DIM * 0.6, DIM * 0.1, 2800, 600);
-  const pkg3 = useTravel(-10, DIM * 0.5, 2000, 400);
   const spin   = useSpin(15000);
-  const pulse1 = usePulse(0.85, 1.15, 1400, 0);
-  const pulse2 = usePulse(0.80, 1.20, 1600, 300);
+  const centerPulse = usePulse(0.85, 1.1, 1400, 0);
 
   const hubs = [
     { x: 0.15, y: 0.25, label: '🏭' },
@@ -536,7 +362,6 @@ export function SupplyChainArtwork({ size = 200 }: { size?: number }) {
       {hubs.map((h, i) => (
         <Animated.View key={i} style={{
           position: 'absolute', left: DIM * h.x - 14, top: DIM * h.y - 14,
-          transform: [{ scale: i % 2 === 0 ? pulse1 : pulse2 }],
         }}>
           <View style={{
             width: 28, height: 28, borderRadius: 14,
@@ -548,31 +373,18 @@ export function SupplyChainArtwork({ size = 200 }: { size?: number }) {
         </Animated.View>
       ))}
 
-      {/* Moving packages */}
-      <Animated.View style={[artwork.packet, {
-        backgroundColor: C, width: 8, height: 8, borderRadius: 2,
-        top: DIM * 0.22, transform: [{ translateX: pkg1 }],
-      }]} />
-      <Animated.View style={[artwork.packet, {
-        backgroundColor: '#FFF', width: 6, height: 6, borderRadius: 2,
-        top: DIM * 0.42, transform: [{ translateX: pkg2 }],
-      }]} />
-      <Animated.View style={[artwork.packet, {
-        backgroundColor: C + 'CC', width: 7, height: 7, borderRadius: 2,
-        top: DIM * 0.62, transform: [{ translateX: pkg3 }],
-      }]} />
-
       {/* Center globe */}
-      <View style={{
+      <Animated.View style={{
         position: 'absolute', top: DIM * 0.38, left: DIM * 0.38,
         width: DIM * 0.24, height: DIM * 0.24,
         borderRadius: DIM * 0.12,
         backgroundColor: C,
         alignItems: 'center', justifyContent: 'center',
         shadowColor: C, shadowOpacity: 0.7, shadowRadius: 10,
+        transform: [{ scale: centerPulse }],
       }}>
         <Text style={{ fontSize: DIM * 0.12 }}>🌐</Text>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -584,16 +396,6 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
   const C = '#06B6D4';
   const DIM = size;
 
-  const lines = ['{  }', 'fn()', '[ ]', '===', '=>', '++', '</>'];
-  const falls = [
-    useTravel(-20, DIM + 20, 3000, 0),
-    useTravel(-20, DIM + 20, 3200, 300),
-    useTravel(-20, DIM + 20, 3400, 600),
-    useTravel(-20, DIM + 20, 3600, 900),
-    useTravel(-20, DIM + 20, 3800, 1200),
-    useTravel(-20, DIM + 20, 4000, 1500),
-    useTravel(-20, DIM + 20, 4200, 1800),
-  ];
   const pulse1 = usePulse(0.8, 1.2, 1200);
   const spin   = useSpin(14000);
 
@@ -608,19 +410,6 @@ export function SoftwareArtwork({ size = 200 }: { size?: number }) {
         borderStyle: 'dashed',
         transform: [{ rotate: spin }],
       }} />
-
-      {/* Falling code symbols */}
-      {lines.map((sym, i) => (
-        <Animated.Text key={i} style={{
-          position: 'absolute',
-          left: DIM * (0.1 + (i * 0.13)),
-          fontSize: DIM * 0.07,
-          color: C + (i % 2 === 0 ? 'CC' : '70'),
-          fontWeight: '700',
-          fontFamily: 'monospace',
-          transform: [{ translateY: falls[i] }],
-        }}>{sym}</Animated.Text>
-      ))}
 
       {/* Center terminal */}
       <Animated.View style={{
@@ -720,7 +509,20 @@ export function GenericArtwork({ size = 200, color = '#6366F1', emoji = '⚡' }:
 // ─── Router ────────────────────────────────────────────────────────────────────
 
 export function FieldArtwork({ fieldId, size = 180 }: { fieldId: string; size?: number }) {
-  return <GenericArtwork size={size} emoji={fieldEmoji(fieldId)} color={fieldColor(fieldId)} />;
+  switch (fieldId) {
+    case 'crypto':
+      return <CryptoArtwork size={size} />;
+    case 'quant':
+      return <QuantArtwork size={size} />;
+    case 'ai-ml':
+      return <AIArtwork size={size} />;
+    case 'supply-chain':
+      return <SupplyChainArtwork size={size} />;
+    case 'software-engineering':
+      return <SoftwareArtwork size={size} />;
+    default:
+      return <GenericArtwork size={size} emoji={fieldEmoji(fieldId)} color={fieldColor(fieldId)} />;
+  }
 }
 
 // ─── Field colour/emoji maps ───────────────────────────────────────────────────
@@ -799,5 +601,4 @@ const artwork = StyleSheet.create({
   root:   { overflow: 'hidden', alignItems: 'center', justifyContent: 'center' },
   ring:   { position: 'absolute' },
   line:   {},
-  packet: { position: 'absolute', width: 6, height: 6, borderRadius: 3 },
 });

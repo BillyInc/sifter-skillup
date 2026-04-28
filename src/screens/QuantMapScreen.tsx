@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  StatusBar, Modal, Alert,
+  StatusBar, Modal, Alert, Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIslands';
@@ -13,6 +13,7 @@ import LessonScreen from './LessonScreen';
 import { VRBridge } from '../lib/vrBridge';
 import type { VRScenarioKey } from '../lib/vrBridge';
 import DisclaimerFooter from '../components/DisclaimerFooter';
+import TrackScene from '../components/artwork/TrackIsometricScene';
 import {
   WebShell, WebPageHeader, WebRow, WebCol, WebCard,
   WebSectionLabel, WebStatTile, WebListRow, useIsWebWide,
@@ -30,6 +31,182 @@ const TIER_LABELS = {
   intermediate: 'Intermediate',
   advanced: 'Advanced',
   elite: 'Elite',
+};
+
+interface TrackDashboardConfig {
+  title: string;
+  subtitle: string;
+  accentColor: string;
+  statsLabel: string;
+  perfCardTitle: string;
+  perfCardStat1Label: string;
+  perfCardStat1Value: string;
+  perfCardStat2Label: string;
+  perfCardStat2Value: string;
+  labCardTitle: string;
+  labCardStat1: string;
+  labCardStat2: string;
+  simCardTitle: string;
+  simStat1: string;
+  simStat2: string;
+  notifText: string;
+  ctaButtonLabel: string;
+}
+
+const TRACK_DASHBOARD_CONFIG: Record<string, TrackDashboardConfig> = {
+  'quant-trader': {
+    title: 'Quant Trading Dashboard',
+    subtitle: 'Master the markets with elite quantitative models.',
+    accentColor: '#1D4ED8',
+    statsLabel: 'Quant Trading Performance Overview',
+    perfCardTitle: 'Active Algorithms & Sharpe Ratio',
+    perfCardStat1Label: 'Active Algorithms',
+    perfCardStat1Value: '4',
+    perfCardStat2Label: 'Sharpe Ratio',
+    perfCardStat2Value: '2.8',
+    labCardTitle: 'Strategy Lab',
+    labCardStat1: 'In Development: 2',
+    labCardStat2: 'Next: Alpha Generation',
+    simCardTitle: 'Backtesting',
+    simStat1: 'Total Runs: 12',
+    simStat2: 'CAGR: 12% · Drawdown: 5.1%',
+    notifText: 'Alert: Volatility Surface Anomaly in SPX Option Chain',
+    ctaButtonLabel: '⚡ Connect Market Data Feeds',
+  },
+  'supply-chain-analyst': {
+    title: 'Supply Chain Dashboard',
+    subtitle: 'Optimize every node from source to shelf.',
+    accentColor: '#0EA5E9',
+    statsLabel: 'Supply Chain Performance Overview',
+    perfCardTitle: 'Active Workflows & Efficiency',
+    perfCardStat1Label: 'Active Workflows',
+    perfCardStat1Value: '3',
+    perfCardStat2Label: 'Efficiency Score',
+    perfCardStat2Value: '87%',
+    labCardTitle: 'Operations Lab',
+    labCardStat1: 'Models in Dev: 2',
+    labCardStat2: 'Next: Demand Forecasting',
+    simCardTitle: 'Historical Simulations',
+    simStat1: 'Total Runs: 8',
+    simStat2: 'Cost Reduction: 9.3% · Fill Rate: 96%',
+    notifText: 'Alert: Port congestion risk detected on Pacific route',
+    ctaButtonLabel: '🔗 Connect ERP Data Feed',
+  },
+  'onchain-analyst': {
+    title: 'Onchain Intelligence Dashboard',
+    subtitle: 'Follow the money. Trace every wallet.',
+    accentColor: '#3B82F6',
+    statsLabel: 'Onchain Analysis Performance',
+    perfCardTitle: 'Active Investigations & Signal Score',
+    perfCardStat1Label: 'Active Investigations',
+    perfCardStat1Value: '5',
+    perfCardStat2Label: 'Signal Accuracy',
+    perfCardStat2Value: '91%',
+    labCardTitle: 'Protocol Lab',
+    labCardStat1: 'Wallets Flagged: 3',
+    labCardStat2: 'Next: MEV Bot Tracing',
+    simCardTitle: 'Historical Wallet Activity',
+    simStat1: 'Wallets Analysed: 24',
+    simStat2: 'Funds Traced: $2.4M · Accuracy: 88%',
+    notifText: 'Alert: Large wallet movement detected — $4.2M USDC',
+    ctaButtonLabel: '🔍 Connect Etherscan API',
+  },
+  'defi-researcher': {
+    title: 'DeFi Research Dashboard',
+    subtitle: 'Analyse protocols, yield, and liquidity flows.',
+    accentColor: '#10B981',
+    statsLabel: 'DeFi Protocol Performance Overview',
+    perfCardTitle: 'Protocols Tracked & Yield',
+    perfCardStat1Label: 'Protocols Tracked',
+    perfCardStat1Value: '6',
+    perfCardStat2Label: 'Best APR Found',
+    perfCardStat2Value: '24.3%',
+    labCardTitle: 'Yield Lab',
+    labCardStat1: 'Proposals Tracked: 4',
+    labCardStat2: 'Next: Liquidity Depth Analysis',
+    simCardTitle: 'Yield Simulations',
+    simStat1: 'Total Runs: 9',
+    simStat2: 'Avg Yield: 18.7% · Max Drawdown: 12%',
+    notifText: 'Alert: Governance vote live — Uniswap fee tier proposal',
+    ctaButtonLabel: '🌊 Connect DeFi Data Feeds',
+  },
+  'cairo-builder': {
+    title: 'Cairo Builder Dashboard',
+    subtitle: 'Deploy contracts. Ship on Starknet.',
+    accentColor: '#F59E0B',
+    statsLabel: 'Contract Deployment Overview',
+    perfCardTitle: 'Deployed Contracts & Coverage',
+    perfCardStat1Label: 'Contracts Deployed',
+    perfCardStat1Value: '4',
+    perfCardStat2Label: 'Test Coverage',
+    perfCardStat2Value: '78%',
+    labCardTitle: 'Cairo Lab',
+    labCardStat1: 'Contracts in Draft: 2',
+    labCardStat2: 'Next: Storage Optimization',
+    simCardTitle: 'Sepolia Test Runs',
+    simStat1: 'Total Test Runs: 18',
+    simStat2: 'Pass Rate: 89% · Avg Gas: 14,200',
+    notifText: 'Alert: Starknet Sepolia faucet funded — ready to deploy',
+    ctaButtonLabel: '⚡ Connect Starknet RPC',
+  },
+  'starknet-defi-navigator': {
+    title: 'Starknet DeFi Dashboard',
+    subtitle: 'Live pool data, yield, and on-chain execution.',
+    accentColor: '#EC4899',
+    statsLabel: 'Starknet DeFi Performance',
+    perfCardTitle: 'Live Pools & Yield Monitor',
+    perfCardStat1Label: 'Pools Tracked',
+    perfCardStat1Value: '7',
+    perfCardStat2Label: 'Best Pool APR',
+    perfCardStat2Value: '31.2%',
+    labCardTitle: 'StarkZap Lab',
+    labCardStat1: 'Txns Executed: 6',
+    labCardStat2: 'Next: Multi-hop Swap',
+    simCardTitle: 'Historical Pool Runs',
+    simStat1: 'Total Simulations: 11',
+    simStat2: 'IL Exposure: 3.2% · Best Route: JediSwap',
+    notifText: 'Alert: JediSwap pool rebalance detected — opportunity window',
+    ctaButtonLabel: '🧭 Connect Starknet Wallet',
+  },
+  'bug-bounty-hunter': {
+    title: 'Bug Bounty Dashboard',
+    subtitle: 'Find vulnerabilities. Report. Get paid.',
+    accentColor: '#EF4444',
+    statsLabel: 'Bounty Hunt Performance',
+    perfCardTitle: 'Active Hunts & Severity Score',
+    perfCardStat1Label: 'Active Hunts',
+    perfCardStat1Value: '3',
+    perfCardStat2Label: 'Avg Severity',
+    perfCardStat2Value: 'High',
+    labCardTitle: 'Recon Lab',
+    labCardStat1: 'Targets Mapped: 5',
+    labCardStat2: 'Next: Exploit PoC Development',
+    simCardTitle: 'Historical Reports',
+    simStat1: 'Reports Submitted: 7',
+    simStat2: 'Accepted: 5 · Bounty Est: $4,800',
+    notifText: 'Alert: New scope added to Immunefi — Aave V3 contracts',
+    ctaButtonLabel: '🐛 Connect Immunefi Feed',
+  },
+};
+
+const DEFAULT_DASHBOARD_CONFIG: TrackDashboardConfig = {
+  title: 'Track Dashboard',
+  subtitle: 'Select a track to see your progress overview.',
+  accentColor: '#111111',
+  statsLabel: 'Track Performance',
+  perfCardTitle: 'Progress Overview',
+  perfCardStat1Label: 'Labs Completed',
+  perfCardStat1Value: '—',
+  perfCardStat2Label: 'Score',
+  perfCardStat2Value: '—',
+  labCardTitle: 'Practice Lab',
+  labCardStat1: 'No active track',
+  labCardStat2: 'Go to Career Tracks to begin',
+  simCardTitle: 'Simulation History',
+  simStat1: 'No runs yet',
+  simStat2: '—',
+  notifText: 'Select a track from Career Tracks to see your dashboard.',
+  ctaButtonLabel: '🧭 Explore Tracks',
 };
 
 type LabState = 'locked' | 'continue' | 'review' | 'ready';
@@ -263,11 +440,109 @@ export default function QuantMapScreen() {
   const { user } = useAuth();
   const { completeLevel } = useProgress();
   const isWebWide = useIsWebWide();
+  const screenWidth = Dimensions.get('window').width;
+  const activeTrackId = user?.active_track_id ?? '';
+  const cfg = TRACK_DASHBOARD_CONFIG[activeTrackId] ?? DEFAULT_DASHBOARD_CONFIG;
+  const accentColor = cfg.accentColor;
   const [activeLevelId, setActiveLevelId] = useState<number | null>(null);
   const [vrPrompt, setVrPrompt] = useState<{ scenarioKey: VRScenarioKey; labName: string } | null>(null);
 
   const completed: number[] = (user?.completed_levels ?? []).map(l => typeof l === 'string' ? parseInt(l, 10) : l).filter((n): n is number => !isNaN(n));
   const currentLab = useMemo(() => getFirstActiveLab(completed), [completed]);
+
+  const dashboardHeader = (
+    <>
+      <View style={dashStyles.headerRow}>
+        <View style={dashStyles.headerCopy}>
+          <Text style={[dashStyles.headerTitle, { color: colors.text }]}>
+            {cfg.title}
+          </Text>
+          <Text style={[dashStyles.headerSubtitle, { color: colors.textSoft }]}>
+            {cfg.subtitle}
+          </Text>
+        </View>
+        <View style={[dashStyles.notifCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[dashStyles.notifLabel, { color: colors.textMuted }]}>NOTIFICATION</Text>
+          <Text style={[dashStyles.notifText, { color: colors.textSoft }]}>{cfg.notifText}</Text>
+          <TouchableOpacity
+            style={[dashStyles.ctaButton, { backgroundColor: colors.navy }]}
+          >
+            <Text style={[dashStyles.ctaButtonText, { color: colors.textInverse }]}>
+              {cfg.ctaButtonLabel}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={[dashStyles.scenePanel, { backgroundColor: colors.card, borderColor: colors.border }]}>
+        <Text style={[dashStyles.scenePanelTitle, { color: colors.text }]}>
+          {cfg.statsLabel}
+        </Text>
+        <Text style={[dashStyles.scenePanelSub, { color: colors.textMuted }]}>
+          Map your expertise across sectors.
+        </Text>
+        <TrackScene
+          trackId={activeTrackId}
+          accentColor={accentColor}
+          width={isWebWide ? 560 : screenWidth - 48}
+          height={isWebWide ? 300 : 200}
+        />
+      </View>
+
+      <Text style={[dashStyles.statsSection, { color: colors.textMuted }]}>
+        {cfg.statsLabel}
+      </Text>
+      <View style={dashStyles.statsRow}>
+        <View style={[dashStyles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[dashStyles.statsCardTitle, { color: colors.text }]}>
+            {cfg.perfCardTitle}
+          </Text>
+          <View style={dashStyles.statsCardRow}>
+            <Text style={[dashStyles.statsCardLabel, { color: colors.textMuted }]}>
+              {cfg.perfCardStat1Label}
+            </Text>
+            <Text style={[dashStyles.statsCardValue, { color: accentColor }]}>
+              {cfg.perfCardStat1Value}
+            </Text>
+          </View>
+          <View style={dashStyles.statsCardRow}>
+            <Text style={[dashStyles.statsCardLabel, { color: colors.textMuted }]}>
+              {cfg.perfCardStat2Label}
+            </Text>
+            <Text style={[dashStyles.statsCardValue, { color: accentColor }]}>
+              {cfg.perfCardStat2Value}
+            </Text>
+          </View>
+        </View>
+
+        <View style={[dashStyles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[dashStyles.statsCardTitle, { color: colors.text }]}>
+            {cfg.labCardTitle}
+          </Text>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+            {cfg.labCardStat1}
+          </Text>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+            {cfg.labCardStat2}
+          </Text>
+        </View>
+
+        <View style={[dashStyles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[dashStyles.statsCardTitle, { color: colors.text }]}>
+            {cfg.simCardTitle}
+          </Text>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+            {cfg.simStat1}
+          </Text>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+            {cfg.simStat2}
+          </Text>
+        </View>
+      </View>
+
+      <View style={[dashStyles.divider, { backgroundColor: colors.border }]} />
+    </>
+  );
 
   const handleLevelPress = (id: number) => setActiveLevelId(id);
 
@@ -304,6 +579,7 @@ export default function QuantMapScreen() {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
         <WebShell>
+          {dashboardHeader}
           <WebPageHeader
             title="Quant Quarter"
             subtitle={`${completedCount} / ${totalLevels} levels complete · ${labsUnlocked} labs unlocked`}
@@ -412,6 +688,7 @@ export default function QuantMapScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {dashboardHeader}
         <QuantHeader completedLevels={completed} />
 
         {QUANT_LABS.map(lab => (
@@ -504,6 +781,120 @@ const styles = StyleSheet.create({
   footer: { alignItems: 'center', gap: 6, paddingTop: Spacing.md },
   footerText: { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '600', textAlign: 'center' },
   footerSub: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'center' },
+});
+
+const dashStyles = StyleSheet.create({
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: 14,
+    marginBottom: 16,
+    flexWrap: 'wrap',
+  },
+  headerCopy: { flex: 1, minWidth: 200 },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: '900',
+    letterSpacing: -0.5,
+    marginBottom: 4,
+  },
+  headerSubtitle: {
+    fontSize: 13,
+    lineHeight: 18,
+    maxWidth: 340,
+  },
+  notifCard: {
+    minWidth: 220,
+    maxWidth: 280,
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 14,
+  },
+  notifLabel: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1,
+    marginBottom: 6,
+  },
+  notifText: {
+    fontSize: 11,
+    lineHeight: 16,
+    marginBottom: 10,
+  },
+  ctaButton: {
+    borderRadius: 8,
+    paddingVertical: 9,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+  },
+  ctaButtonText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  scenePanel: {
+    borderRadius: 14,
+    borderWidth: 1,
+    padding: 18,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  scenePanelTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    marginBottom: 2,
+  },
+  scenePanelSub: {
+    fontSize: 11,
+    marginBottom: 12,
+  },
+  statsSection: {
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+    marginBottom: 10,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 16,
+    flexWrap: 'wrap',
+  },
+  statsCard: {
+    flex: 1,
+    minWidth: 160,
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 14,
+    gap: 6,
+  },
+  statsCardTitle: {
+    fontSize: 12,
+    fontWeight: '800',
+    marginBottom: 6,
+  },
+  statsCardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statsCardLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+  },
+  statsCardValue: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  statsCardBody: {
+    fontSize: 11,
+    lineHeight: 17,
+  },
+  divider: {
+    height: 1,
+    marginBottom: 20,
+    marginHorizontal: -16,
+  },
 });
 
 export function PythonGateBanner({ chaptersCompleted, required }: { chaptersCompleted: number; required: number }) {
