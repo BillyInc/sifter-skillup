@@ -7,6 +7,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTheme, getWorldTheme, Spacing, Radius, FontSize, AnimPreset, webContainer } from '../theme';
 import { getFieldDetail } from '../data/fieldDetails';
 import { getField } from '../data/fields';
+import TrackScene from '../components/artwork/TrackIsometricScene';
 import {
   isStarknetTrack,
   getStarknetLab,
@@ -339,7 +340,10 @@ export default function WorldScreen() {
   };
 
   const [bg0, bg1] = worldTheme.bgGradient;
-  const accentColor = getTrackAccent(trackId, worldTheme.glowColor);
+  const accentColor = getTrackAccent(trackId, track?.accentColor ?? worldTheme.primaryColor);
+  const heroTrackId = trackId || fieldId || worldId || 'default';
+  const heroWidth = Math.min(W - 48, 560);
+  const heroHeight = Math.min(Math.max(heroWidth * 0.52, 220), 300);
   const statusLabel = live ? 'Continue' : 'Locked';
   const statusCopy = live
     ? 'This track is live in the new shell and routes directly to the correct workspace.'
@@ -384,6 +388,15 @@ export default function WorldScreen() {
             <Text style={styles.worldBodyText}>
               {track?.description ?? detail?.worldDescription ?? 'Track-specific world view with a direct path into the right workspace.'}
             </Text>
+
+            <View style={styles.heroVisualWrap}>
+              <TrackScene
+                trackId={heroTrackId}
+                accentColor={accentColor}
+                width={heroWidth}
+                height={heroHeight}
+              />
+            </View>
 
             <View style={styles.worldMetaRow}>
               <View style={styles.worldMetaCard}>
@@ -446,6 +459,17 @@ const styles = StyleSheet.create({
   worldName: { fontSize: 18, fontWeight: '900', color: '#fff' },
   worldSub: { fontSize: FontSize.md, color: 'rgba(255,255,255,0.72)' },
   worldBodyText: { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.76)', lineHeight: 19, maxWidth: 540 },
+  heroVisualWrap: {
+    marginTop: Spacing.sm,
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 560,
+    borderRadius: Radius.xl,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
+    backgroundColor: 'rgba(8,14,38,0.35)',
+  },
   worldMetaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.sm, flexWrap: 'wrap' },
   worldMetaCard: {
     minWidth: 120,
