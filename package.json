@@ -3,20 +3,20 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
+    "start": "node ./node_modules/expo/bin/cli start",
+    "android": "node ./node_modules/expo/bin/cli run:android",
+    "ios": "node ./node_modules/expo/bin/cli run:ios",
     "build:android": "eas build --platform android",
     "build:ios": "eas build --platform ios",
-    "web": "expo start --web",
-    "build:web": "expo export --platform web",
+    "web": "node ./node_modules/expo/bin/cli start --web",
+    "build:web": "node ./node_modules/expo/bin/cli export --platform web",
     "test": "jest",
     "gen:simulators": "ts-node scripts/generateSimulators.ts",
     "gen:simulators:all": "ts-node scripts/generateSimulators.ts --all",
     "gen:lab": "ts-node scripts/generateSimulators.ts --lab --file",
     "gen:interview": "ts-node scripts/generateSimulators.ts --interview --file",
     "gen:full": "ts-node scripts/generateSimulators.ts --all && ts-node scripts/generateSimulators.ts --lab --all",
-    "lint": "expo lint"
+    "lint": "node ./node_modules/expo/bin/cli lint"
   },
   "dependencies": {
     "@coinbase/wallet-mobile-sdk": "^0.1.0",
