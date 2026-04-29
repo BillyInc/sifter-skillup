@@ -131,11 +131,14 @@ import {
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
 import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
+import {
+  getStarknetSepoliaRpcConfigError,
+  isStarknetSepoliaRpcConfigured,
+  starknetSepoliaRpcCall,
+} from '../../../../lib/starknetRpc';
 import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 
 // ─── Starknet Sepolia ──────────────────────────────────────────────────────────
-
-const SEPOLIA_RPC = 'https://starknet-sepolia.public.blastapi.io/rpc/v0_7';
 
 // Entry-point selectors: sn_keccak(fn_name) = keccak256(fn_name) & ((1<<250)-1)
 // Verified by Python: from Crypto.Hash import keccak; k.update(name.encode()); hex(int(k.hexdigest(),16) & ((1<<250)-1))
@@ -155,14 +158,11 @@ const ADDR = {
 };
 
 async function rpcCall(method: string, params: any[] = []): Promise<any> {
-  const res = await fetch(SEPOLIA_RPC, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ jsonrpc: '2.0', method, params, id: 1 }),
-  });
-  const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
-  return data.result;
+  if (!isStarknetSepoliaRpcConfigured()) {
+    throw new Error(getStarknetSepoliaRpcConfigError());
+  }
+
+  return starknetSepoliaRpcCall(method, params);
 }
 
 // ─── Props ─────────────────────────────────────────────────────────────────────

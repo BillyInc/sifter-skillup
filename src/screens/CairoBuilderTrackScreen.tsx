@@ -8,6 +8,11 @@ import { useRouter } from 'expo-router';
 import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { getStarknetLabs } from '../data/tracks/starknet_ecosystem/starknetLessonRegistry';
+import {
+  getStarknetSepoliaRpcConfigError,
+  isStarknetSepoliaRpcConfigured,
+  starknetSepoliaRpcCall,
+} from '../lib/starknetRpc';
 
 const ACCENT = '#F97316';
 
@@ -108,6 +113,7 @@ export default function CairoBuilderTrackScreen() {
   const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [sepoliaBlock, setSepoliaBlock] = useState<string | null>(null);
+  const [sepoliaStatus, setSepoliaStatus] = useState<string | null>(null);
 
   const completedLevels: string[] = (user?.completed_levels ?? user?.completedLevels ?? []).map(String);
 
@@ -124,14 +130,21 @@ export default function CairoBuilderTrackScreen() {
   const currentLabId = CAIRO_LABS.find((lab) => isLabUnlocked(lab) && !isLabCompleted(lab))?.id;
 
   useEffect(() => {
-    fetch('https://starknet-sepolia.public.blastapi.io/rpc/v0_7', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'starknet_blockNumber', params: [] }),
-    })
-      .then(r => r.json())
-      .then(d => { if (d.result) setSepoliaBlock(`#${d.result}`); })
-      .catch(() => {});
+    if (!isStarknetSepoliaRpcConfigured()) {
+      setSepoliaStatus(getStarknetSepoliaRpcConfigError());
+      return;
+    }
+
+    starknetSepoliaRpcCall('starknet_blockNumber')
+      .then((result) => {
+        if (result !== undefined && result !== null) {
+          setSepoliaBlock(`#${result}`);
+          setSepoliaStatus(null);
+        }
+      })
+      .catch((error: any) => {
+        setSepoliaStatus(error?.message ?? 'Could not load the Starknet Sepolia block height.');
+      });
   }, []);
 
   useEffect(() => {
@@ -190,7 +203,7 @@ export default function CairoBuilderTrackScreen() {
               <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Labs cleared</Text>
             </View>
             <View style={[styles.heroStatCard, { backgroundColor: colors.bgSecondary }]}>
-              <Text style={[styles.heroStatValue, { color: colors.text }]}>{sepoliaBlock ?? '...'}</Text>
+              <Text style={[styles.heroStatValue, { color: colors.text }]}>{sepoliaBlock ?? 'RPC'}</Text>
               <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Sepolia block</Text>
             </View>
             <View style={[styles.heroStatCard, { backgroundColor: colors.bgSecondary }]}>
@@ -203,10 +216,16 @@ export default function CairoBuilderTrackScreen() {
         <View style={[styles.bannerCard, { backgroundColor: colors.card, borderColor: '#00FF8830' }]}>
           <Text style={[styles.bannerEyebrow, { color: '#00FF88' }]}>Sepolia Live</Text>
           <Text style={[styles.bannerTitle, { color: colors.text }]}>
-            {sepoliaBlock ? `Connected at block ${sepoliaBlock}` : 'Connecting to Starknet Sepolia'}
+            {sepoliaBlock
+              ? `Connected at block ${sepoliaBlock}`
+              : sepoliaStatus
+                ? 'Sepolia RPC needs attention'
+                : 'Connecting to Starknet Sepolia'}
           </Text>
           <Text style={[styles.bannerBody, { color: colors.textSoft }]}>
-            Deployments stay on-chain and testing remains grounded in the real Cairo toolchain.
+            {sepoliaStatus
+              ? sepoliaStatus
+              : 'Deployments stay on-chain and testing remains grounded in the real Cairo toolchain.'}
           </Text>
         </View>
 

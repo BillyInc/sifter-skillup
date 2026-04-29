@@ -46,6 +46,12 @@ import {
   type StructuralCheck,
   type StructuralValidation,
 } from './CairoBuilderCodeSandbox';
+import {
+  getStarknetSepoliaRpcConfigError,
+  getStarknetSepoliaRpcHeaders,
+  isStarknetSepoliaRpcConfigured,
+  STARKNET_SEPOLIA_RPC_URL,
+} from '../../lib/starknetRpc';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -152,7 +158,7 @@ export interface TxResult {
   error?: string;
 }
 
-const SEPOLIA_RPC = 'https://starknet-sepolia.public.blastapi.io/rpc/v0_7';
+const SEPOLIA_RPC = STARKNET_SEPOLIA_RPC_URL;
 
 export async function verifySepoliaTx(txHash: string): Promise<TxResult> {
   const cleanHash = txHash.trim();
@@ -162,10 +168,18 @@ export async function verifySepoliaTx(txHash: string): Promise<TxResult> {
     return { hash: cleanHash, verified: false, error: 'Invalid tx hash format. Must be 0x followed by 60–64 hex characters.' };
   }
 
+  if (!isStarknetSepoliaRpcConfigured()) {
+    return {
+      hash: cleanHash,
+      verified: false,
+      error: getStarknetSepoliaRpcConfigError(),
+    };
+  }
+
   try {
     const res = await fetch(SEPOLIA_RPC, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getStarknetSepoliaRpcHeaders(),
       body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'starknet_getTransactionReceipt',
