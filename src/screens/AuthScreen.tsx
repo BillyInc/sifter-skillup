@@ -572,19 +572,26 @@ export default function AuthScreen() {
             <Text style={[styles.eyebrow, { color: colors.textMuted }]}>SKILL PLATFORM</Text>
             <Text style={[styles.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
 
+            <TouchableOpacity
+              style={[styles.starknetCTA, { borderColor: `${STARKNET_THEME.palette.primary}50` }]}
+              onPress={() => setMode('starknet')}
+              activeOpacity={0.85}
+            >
+              <View style={styles.starknetCTAIconWrap}>
+                <Text style={styles.starknetCTAIcon}>SN</Text>
+              </View>
+              <View style={styles.starknetCTACopy}>
+                <Text style={[styles.starknetCTAEyebrow, { color: STARKNET_THEME.palette.primary }]}>STARKNET PATH</Text>
+                <Text style={[styles.starknetCTATitle, { color: STARKNET_THEME.palette.primary }]}>Continue with Starknet</Text>
+                <Text style={styles.starknetCTASub}>Privy sign-in and direct access to your live Starknet Sepolia wallet.</Text>
+              </View>
+              <View style={styles.starknetCTAAction}>
+                <Text style={[styles.starknetCTAActionText, { color: STARKNET_THEME.palette.primary }]}>Launch</Text>
+              </View>
+            </TouchableOpacity>
+
             <View style={styles.btnGroup}>
               <AuthButton label="Create account" onPress={() => setMode('signup')} colors={colors} />
-
-              <TouchableOpacity
-                style={[styles.starknetCTA, { borderColor: `${STARKNET_THEME.palette.primary}50` }]}
-                onPress={() => setMode('starknet')}
-                activeOpacity={0.85}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.starknetCTATitle, { color: STARKNET_THEME.palette.primary }]}>Use Starknet access</Text>
-                  <Text style={styles.starknetCTASub}>Privy sign-in, wallet sync, and direct return to Starknet content</Text>
-                </View>
-              </TouchableOpacity>
 
               {(isBaseAvailable() || Platform.OS === 'web') ? (
                 <AuthButton
@@ -712,9 +719,15 @@ const styles = StyleSheet.create({
   starknetCodeHelp: { color: 'rgba(255,255,255,0.7)', fontSize: FontSize.sm, lineHeight: 19 },
   starknetCodeTarget: { fontSize: FontSize.sm, fontWeight: '700', textAlign: 'left' },
   starknetCodeInput: { letterSpacing: 4, textAlign: 'center' },
-  starknetCTA: { borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#f59e0b10' },
-  starknetCTATitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#f59e0b' },
-  starknetCTASub: { fontSize: FontSize.xs, color: 'rgba(245,158,11,0.78)', marginTop: 2 },
+  starknetCTA: { borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#f59e0b10', flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, marginTop: Spacing.sm, marginBottom: Spacing.sm },
+  starknetCTAIconWrap: { width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(245,158,11,0.16)', alignItems: 'center', justifyContent: 'center' },
+  starknetCTAIcon: { fontSize: FontSize.xs, fontWeight: '900', color: '#f59e0b', letterSpacing: 0.8 },
+  starknetCTACopy: { flex: 1, gap: 3, paddingTop: 1 },
+  starknetCTAEyebrow: { fontSize: 10, fontWeight: '800', letterSpacing: 0.9 },
+  starknetCTATitle: { fontSize: FontSize.md, fontWeight: '900', color: '#f59e0b' },
+  starknetCTASub: { fontSize: FontSize.xs, color: 'rgba(245,158,11,0.78)', lineHeight: 17, maxWidth: 320 },
+  starknetCTAAction: { paddingHorizontal: Spacing.sm, paddingVertical: 6, borderRadius: 999, backgroundColor: 'rgba(245,158,11,0.14)', alignSelf: 'center' },
+  starknetCTAActionText: { fontSize: FontSize.xs, fontWeight: '800' },
   starknetOAuthBlock: { marginTop: Spacing.md, gap: Spacing.sm },
   starknetOAuthLabel: { color: 'rgba(255,255,255,0.45)', fontSize: FontSize.xs, textAlign: 'center' },
   starknetOAuthRow: { flexDirection: 'row', gap: Spacing.sm },
