@@ -19,20 +19,22 @@ export type StarkzapNetwork = 'mainnet' | 'sepolia';
 export interface StarkzapWallet {
   address: string;
   getChainId: () => string;
+  ensureReady?: (options?: any) => Promise<void>;
+  isDeployed?: () => Promise<boolean>;
   balanceOf: (token: StarkzapToken) => Promise<StarkzapAmount>;
-  transfer: (token: StarkzapToken, transfers: Array<{ to: string; amount: StarkzapAmount }>) => Promise<StarkzapTx>;
-  swap: (req: SwapRequest) => Promise<StarkzapTx>;
-  stake: (pool: string, amount: StarkzapAmount) => Promise<StarkzapTx>;
+  transfer: (token: StarkzapToken, transfers: Array<{ to: string; amount: StarkzapAmount }>, options?: any) => Promise<StarkzapTx>;
+  swap: (req: SwapRequest, options?: any) => Promise<StarkzapTx>;
+  stake: (pool: string, amount: StarkzapAmount, options?: any) => Promise<StarkzapTx>;
   getStakerPools?: (stakerAddress: string) => Promise<StarkzapPool[]>;
   getPoolPosition?: (pool: string) => Promise<StarkzapPoolPosition | null>;
-  claimPoolRewards?: (pool: string) => Promise<StarkzapTx>;
+  claimPoolRewards?: (pool: string, options?: any) => Promise<StarkzapTx>;
   lending: () => StarkzapLending;
   dca: () => StarkzapDca;
   getQuote: (req: SwapRequest) => Promise<SwapQuote>;
 }
 
 export interface StarkzapToken { symbol: string; address: string; decimals: number; }
-export interface StarkzapAmount { toUnit: () => string; toFormatted: () => string; isZero: () => boolean; }
+export interface StarkzapAmount { toBase?: () => bigint; toUnit: () => string; toFormatted: () => string; isZero: () => boolean; }
 export interface StarkzapTx { hash: string; explorerUrl: string; wait: () => Promise<void>; }
 export interface StarkzapPool { token: StarkzapToken; amount: StarkzapAmount; poolContract: string; }
 export interface StarkzapPoolPosition {
@@ -41,12 +43,12 @@ export interface StarkzapPoolPosition {
 }
 export interface StarkzapLending {
   getMarkets: () => Promise<any[]>;
-  deposit: (req: any) => Promise<StarkzapTx>;
-  borrow: (req: any) => Promise<StarkzapTx>;
+  deposit: (req: any, options?: any) => Promise<StarkzapTx>;
+  borrow: (req: any, options?: any) => Promise<StarkzapTx>;
   getPosition: (req: any) => Promise<any>;
 }
 export interface StarkzapDca {
-  create: (req: any) => Promise<StarkzapTx>;
+  create: (req: any, options?: any) => Promise<StarkzapTx>;
   previewCycle: (req: any) => Promise<{ amountOutBase: bigint }>;
   getOrders: (req?: any) => Promise<{ content: any[] }>;
 }
@@ -67,6 +69,7 @@ export interface SwapQuote {
 let _sdk: any = null;
 let _sdkMainnet: any = null;
 let _isAvailable = false;
+let _pkgExports: any = null;
 
 function tryLoadSdk() {
   try {
@@ -74,13 +77,15 @@ function tryLoadSdk() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const pkg = Platform.OS === 'web' ? 'starkzap' : 'starkzap-native';
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { StarkZap } = require(pkg);
+    _pkgExports = require(pkg);
+    const { StarkZap } = _pkgExports;
     _sdk = new StarkZap({ network: 'sepolia' });
     _sdkMainnet = new StarkZap({ network: 'mainnet' });
     _isAvailable = true;
   } catch {
     // starkzap-native not yet installed — run in mock/demo mode
     _isAvailable = false;
+    _pkgExports = null;
   }
 }
 
@@ -89,14 +94,28 @@ tryLoadSdk();
 export const starkzapSdk = _sdk;
 export const starkzapMainnet = _sdkMainnet;
 export const isStarkzapAvailable = () => _isAvailable;
+export const STARKNET_NETWORK = 'sepolia' as const;
+export const SPONSORED_FEE_MODE = { type: 'paymaster' } as const;
 
 // ── Token presets (mirrors mainnetTokens / sepoliaTokens from the SDK) ──────
-export const STARKNET_TOKENS = {
+const fallbackSepoliaTokens = {
   STRK: { symbol: 'STRK', address: '0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d', decimals: 18 },
-  USDC: { symbol: 'USDC', address: '0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8', decimals: 6 },
+  USDC: { symbol: 'USDC', address: '0x0512feac6339ff7889822cb5aa2a86c848e9d392bb0e3e237c008674feed8343', decimals: 6 },
   ETH:  { symbol: 'ETH',  address: '0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7', decimals: 18 },
-  wBTC: { symbol: 'wBTC', address: '0x03fe2b97c1fd336e750087d68b9b867997fd64a2661ff3ca5a7c771641e8e7ac', decimals: 8 },
+  wBTC: { symbol: 'wBTC', address: '0x020d208b9e57a7f92bfa9f61135446e0961afc340378be97dbd317453c0950ae', decimals: 8 },
 } as const;
+
+const sdkSepoliaTokens = _pkgExports?.sepoliaTokens ?? null;
+
+export const STARKNET_TOKENS = {
+  STRK: sdkSepoliaTokens?.STRK ?? fallbackSepoliaTokens.STRK,
+  USDC: sdkSepoliaTokens?.USDC ?? fallbackSepoliaTokens.USDC,
+  ETH:  sdkSepoliaTokens?.ETH ?? fallbackSepoliaTokens.ETH,
+  wBTC: sdkSepoliaTokens?.WBTC ?? sdkSepoliaTokens?.wBTC ?? fallbackSepoliaTokens.wBTC,
+} as const;
+
+export const STARKNET_SEPOLIA_VALIDATORS: Record<string, { name: string; stakerAddress: string }> = 
+  _pkgExports?.sepoliaValidators ?? {};
 
 // ── Amount helpers ───────────────────────────────────────────────────────────
 // Thin wrappers that work in both real-SDK mode and mock mode
@@ -107,6 +126,39 @@ export function formatAmount(raw: bigint, decimals: number, symbol: string): str
   const frac = raw % divisor;
   const fracStr = frac.toString().padStart(decimals, '0').slice(0, 4).replace(/0+$/, '');
   return fracStr ? `${whole}.${fracStr} ${symbol}` : `${whole} ${symbol}`;
+}
+
+export function createStarkzapAmount(amount: string | number, token: StarkzapToken): StarkzapAmount & { toBase: () => bigint } {
+  if (_pkgExports?.Amount?.parse) {
+    return _pkgExports.Amount.parse(amount, token as any);
+  }
+
+  const amountString = String(amount);
+  const [wholePart, fractionPart = ''] = amountString.split('.');
+  const paddedFraction = fractionPart.padEnd(token.decimals, '0').slice(0, token.decimals);
+  const normalizedBase = BigInt(`${wholePart}${paddedFraction || ''.padEnd(token.decimals, '0')}`);
+
+  return createStarkzapAmountFromBase(normalizedBase, token);
+}
+
+export function createStarkzapAmountFromBase(amount: string | bigint, token: StarkzapToken): StarkzapAmount & { toBase: () => bigint } {
+  const baseValue = typeof amount === 'bigint' ? amount : BigInt(amount);
+
+  if (_pkgExports?.Amount?.fromRaw) {
+    return _pkgExports.Amount.fromRaw(baseValue, token as any);
+  }
+
+  return {
+    toBase: () => baseValue,
+    toUnit: () => {
+      const divisor = BigInt(10) ** BigInt(token.decimals);
+      const whole = baseValue / divisor;
+      const fraction = (baseValue % divisor).toString().padStart(token.decimals, '0').replace(/0+$/, '');
+      return fraction ? `${whole}.${fraction}` : whole.toString();
+    },
+    toFormatted: () => formatAmount(baseValue, token.decimals, token.symbol),
+    isZero: () => baseValue === 0n,
+  };
 }
 
 // ── Mock data for demo / no-SDK mode ────────────────────────────────────────

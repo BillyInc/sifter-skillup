@@ -170,6 +170,7 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   const [showCreatePrompt,setShowCreatePrompt] = useState(false);
   const [copied,          setCopied]           = useState(false);
   const [liveBalance,     setLiveBalance]      = useState<string | null>(null);
+  const [liveBalanceBase, setLiveBalanceBase]  = useState<string | null>(null);
 
   // Load or auto-create demo wallet on mount
   useEffect(() => {
@@ -207,6 +208,7 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   useEffect(() => {
     if (!isLiveStarknetWallet) {
       setLiveBalance(null);
+      setLiveBalanceBase(null);
       return;
     }
 
@@ -217,10 +219,12 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
         const bal = await (starknetBridge.wallet as any).balanceOf(STARKNET_TOKENS.STRK);
         if (!cancelled) {
           setLiveBalance(bal?.toFormatted?.() ?? null);
+          setLiveBalanceBase(bal?.toUnit?.() ?? null);
         }
       } catch {
         if (!cancelled) {
           setLiveBalance(null);
+          setLiveBalanceBase(null);
         }
       }
     })();
@@ -250,27 +254,29 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
     Linking.openURL(chainConfig.faucetUrl).catch(() => {});
   }, [chainConfig.faucetUrl]);
 
+  const resolvedAddress = isLiveStarknetWallet ? (starknetBridge.address ?? address) : address;
+
+
   const openExplorer = useCallback(() => {
-    if (!address) return;
-    const url = `${chainConfig.explorerUrl}/address/${address}`;
+    if (!resolvedAddress) return;
+    const url = `${chainConfig.explorerUrl}/address/${resolvedAddress}`;
     Linking.openURL(url).catch(() => {});
-  }, [address, chainConfig.explorerUrl]);
+  }, [chainConfig.explorerUrl, resolvedAddress]);
 
   const copyAddress = useCallback(async () => {
-    if (!address) return;
+    if (!resolvedAddress) return;
     try {
-      await Clipboard.setStringAsync(address);
+      await Clipboard.setStringAsync(resolvedAddress);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
-  }, [address]);
+  }, [resolvedAddress]);
 
   // Starknet Island 18 uses the real StarkZap balance — use demo balance elsewhere
+  const liveHasBalance = liveBalanceBase !== null && Number(liveBalanceBase) > 0;
   const balance = isLiveStarknetWallet
     ? (liveBalance ?? 'Loading STRK balance...')
     : chainConfig.demoBalance;
-  const resolvedAddress = isLiveStarknetWallet ? (starknetBridge.address ?? address) : address;
-
   return {
     address: resolvedAddress,
     shortAddress:    resolvedAddress ? shortAddr(resolvedAddress) : '',
@@ -278,8 +284,8 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
     chain,
     chainConfig,
     isDemo:          !isLiveStarknetWallet,
-    hasBalance:      true,   // demo wallets show a balance for UX
-    needsFaucet:     false,  // users can tap faucet button to get real testnet tokens
+    hasBalance:      isLiveStarknetWallet ? liveHasBalance : true,
+    needsFaucet:     isLiveStarknetWallet ? !liveHasBalance : false,
     isLoading,
     showCreatePrompt,
     createWallet,

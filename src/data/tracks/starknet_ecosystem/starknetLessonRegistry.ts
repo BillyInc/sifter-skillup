@@ -46,6 +46,10 @@ import {
   PRIMER_L0_1,
   PRIMER_L0_2,
   PRIMER_L0_3,
+  LAB9_SQL_PRIMER_1,
+  LAB9_SQL_PRIMER_2,
+  LAB9_SQL_PRIMER_3,
+  LAB9_SQL_PRIMER_4,
   LAB1_LESSON_1 as ECO_L1_1,
   LAB1_LESSON_2 as ECO_L1_2,
   LAB1_LESSON_3 as ECO_L1_3,
@@ -95,6 +99,7 @@ import {
 
 // ─── Builder (Cairo) lessons ──────────────────────────────────────────────────
 import {
+  CAIRO_SETUP_LAB_LESSONS,
   CAIRO_LAB0_LESSONS,
   CAIRO_LAB1_PART_A,
   CAIRO_LAB1_PART_B,
@@ -291,7 +296,17 @@ const ECOSYSTEM_LABS_REF: StarknetLabRef[] = [
     labId: 'ecosystem-lab-9',
     labNumber: 9,
     bossLevelId: 4009,
-    lessons: [ECO_L9_1, ECO_L9_2, ECO_L9_3, ECO_L9_4, ECO_L9_5],
+    lessons: [
+      LAB9_SQL_PRIMER_1,
+      LAB9_SQL_PRIMER_2,
+      LAB9_SQL_PRIMER_3,
+      LAB9_SQL_PRIMER_4,
+      ECO_L9_1,
+      ECO_L9_2,
+      ECO_L9_3,
+      ECO_L9_4,
+      ECO_L9_5,
+    ],
   },
 ];
 
@@ -302,7 +317,7 @@ const BUILDER_LABS: StarknetLabRef[] = [
     labId: 'cairo-lab-0',
     labNumber: 0,
     bossLevelId: 5000,
-    lessons: [...CAIRO_LAB0_LESSONS],
+    lessons: [...CAIRO_SETUP_LAB_LESSONS, ...CAIRO_LAB0_LESSONS],
   },
   {
     trackId: 'cairo-builder',

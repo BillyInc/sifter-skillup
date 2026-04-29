@@ -24,6 +24,7 @@ export interface AuthoredLesson {
   interactiveSimulator?: { componentId?: string; title?: string };
   lessonSimulations?: {
     type: string;
+    simulatorId?: string;
     scenario: string;
     scoringCriteria: string[];
   }[];
