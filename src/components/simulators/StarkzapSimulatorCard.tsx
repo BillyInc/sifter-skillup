@@ -22,7 +22,7 @@
 import React, { useState, useEffect, type ReactNode } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
-  ActivityIndicator, Linking,
+  ActivityIndicator, Linking, Platform,
 } from 'react-native';
 import { useStarknetWalletBridge } from '../auth/StarknetWalletBridge';
 import {
@@ -146,7 +146,9 @@ function DemoBadge({ colors }: { colors: any }) {
   return (
     <View style={[dB.wrap, { backgroundColor: colors.goldSoft, borderColor: colors.gold + '40' }]}>
       <Text style={[dB.text, { color: colors.gold }]}>
-        🧪 Demo mode — install starkzap-native for real Sepolia transactions
+        {Platform.OS === 'web'
+          ? '🧪 Demo mode — the live Starknet web SDK did not initialize in this runtime.'
+          : '🧪 Demo mode — the live Starknet SDK is unavailable in this runtime.'}
       </Text>
     </View>
   );
@@ -186,8 +188,8 @@ function WalletReadyNotice({
     <StatusNotice
       colors={colors}
       tone="demo"
-      title="Connect wallet before continuing"
-      body={`These Starknet simulators need your Privy Starknet wallet connected first. Current bridge status: ${walletStatus ?? 'waiting-for-user'}.`}
+      title="Finish Starknet sign-in first"
+      body={`These Starknet simulators switch to live Sepolia reads and transactions after your Privy Starknet wallet connects. Current bridge status: ${walletStatus ?? 'waiting-for-user'}.`}
     />
   );
 }
@@ -224,7 +226,7 @@ function getErrorMessage(error: unknown) {
 
 function getLiveWalletError(starknetWallet: StarkzapWallet | null) {
   if (!isStarkzapAvailable()) return null;
-  if (!starknetWallet) return 'Connect a Starknet wallet before running the live Sepolia lesson.';
+  if (!starknetWallet) return 'Complete the Starknet Privy sign-in flow before running this live Sepolia lesson.';
   return null;
 }
 
@@ -812,11 +814,11 @@ function BalanceSim({ onComplete, onSkip, colors }: { onComplete: () => void; on
   const [balances, setBalances] = React.useState<{eth:string;strk:string}|null>(null);
 
   React.useEffect(() => {
-    // Try live RPC first
-    fetch('https://starknet-sepolia.public.blastapi.io/rpc/v0_7', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'starknet_blockNumber',params:[]}),
-    }).then(()=>setBalances({eth:'0.0142', strk:'12.50'})).catch(()=>setBalances({eth:'0.0142',strk:'12.50'}));
+    const timer = setTimeout(() => {
+      setBalances({ eth: '0.0142', strk: '12.50' });
+    }, 450);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
