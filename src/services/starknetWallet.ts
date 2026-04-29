@@ -4,6 +4,7 @@ import { API_BASE } from '../lib/config';
 export interface EnsuredStarknetWallet {
   address: string;
   walletId?: string | null;
+  publicKey?: string | null;
   created: boolean;
   persisted: boolean;
 }
@@ -36,6 +37,7 @@ export async function ensureStarknetWallet(
     return {
       address: data.address,
       walletId: data.wallet_id ?? null,
+      publicKey: data.public_key ?? null,
       created: Boolean(data.created),
       persisted: data.persisted !== false,
     };
