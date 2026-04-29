@@ -12,6 +12,8 @@
 // compiles without errors.
 
 // ── Type stubs (remove once starkzap-native is installed) ──────────────────
+import { Platform } from 'react-native';
+
 export type StarkzapNetwork = 'mainnet' | 'sepolia';
 
 export interface StarkzapWallet {
@@ -68,8 +70,11 @@ let _isAvailable = false;
 
 function tryLoadSdk() {
   try {
+    // Web needs the browser build; native platforms use the RN package.
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { StarkZap } = require('starkzap-native');
+    const pkg = Platform.OS === 'web' ? 'starkzap' : 'starkzap-native';
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { StarkZap } = require(pkg);
     _sdk = new StarkZap({ network: 'sepolia' });
     _sdkMainnet = new StarkZap({ network: 'mainnet' });
     _isAvailable = true;
