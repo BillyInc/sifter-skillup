@@ -30,12 +30,15 @@ export const WEB_MAX_WIDTH    = 1088;
 export const WEB_SIDEBAR_W    = 204;
 export const GRID_GAP         = 10;
 export const GRID_GAP_SM      = 8;
+export const WEB_STACK_BREAKPOINT = 1120;
+export const WEB_GRID_TWO_COL_BREAKPOINT = 1040;
+export const WEB_GRID_ONE_COL_BREAKPOINT = 720;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────────
 
 export function useIsWebWide() {
   const { width } = useWindowDimensions();
-  return Platform.OS === 'web' && width >= WEB_BREAKPOINT;
+  return Platform.OS === 'web' && width >= 960;
 }
 
 // ─── WebShell ───────────────────────────────────────────────────────────────────
@@ -76,6 +79,8 @@ export function WebPageHeader({
   accentColor?: string;
 }) {
   const { colors } = useTheme();
+  const { width } = useWindowDimensions();
+  const stackRight = Platform.OS === 'web' && width < WEB_STACK_BREAKPOINT;
   return (
     <View style={styles.pageHeader}>
       <View style={{ flex: 1 }}>
@@ -84,7 +89,11 @@ export function WebPageHeader({
           <Text style={[styles.pageSubtitle, { color: colors.textSoft }]}>{subtitle}</Text>
         )}
       </View>
-      {right && <View style={styles.pageHeaderRight}>{right}</View>}
+      {right && (
+        <View style={stackRight ? styles.pageHeaderRightStacked : styles.pageHeaderRight}>
+          {right}
+        </View>
+      )}
       <View style={[styles.pageHeaderLine, { backgroundColor: accentColor ?? colors.accent }]} />
     </View>
   );
@@ -124,20 +133,39 @@ export function WebRow({
   gap?: number;
   style?: any;
 }) {
+  const { width } = useWindowDimensions();
+  const shouldStack = Platform.OS === 'web' && width < WEB_STACK_BREAKPOINT;
+
   if (cols) {
-    // Equal-width grid: children get flex: 0 width=(100/cols)%
+    let effectiveCols = cols;
+    if (Platform.OS === 'web' && width < WEB_GRID_TWO_COL_BREAKPOINT) {
+      effectiveCols = Math.min(effectiveCols, 2);
+    }
+    if (Platform.OS === 'web' && width < WEB_GRID_ONE_COL_BREAKPOINT) {
+      effectiveCols = 1;
+    }
+
+    const totalGap = gap * Math.max(0, effectiveCols - 1);
+    const colWidth = effectiveCols === 1
+      ? '100%'
+      : `calc((100% - ${totalGap}px) / ${effectiveCols})`;
+
     const colWidth = `${100 / cols}%` as any;
     return (
       <View style={[styles.row, { gap, flexWrap: 'wrap' }, style]}>
         {React.Children.map(children, (child) =>
           child ? (
-            <View style={{ width: colWidth, paddingRight: 0 }}>{child}</View>
+            <View style={{ width: colWidth, minWidth: 0 }}>{child}</View>
           ) : null
         )}
       </View>
     );
   }
-  return <View style={[styles.row, { gap }, style]}>{children}</View>;
+  return (
+    <View style={[styles.row, { gap, flexDirection: shouldStack ? 'column' : 'row' }, style]}>
+      {children}
+    </View>
+  );
 }
 
 // ─── WebCol ───────────────────────────────────────────────────────────────────
@@ -153,7 +181,7 @@ export function WebCol({
   style?: any;
 }) {
   return (
-    <View style={[{ flex: weight }, style]}>{children}</View>
+    <View style={[{ flex: weight, minWidth: 0 }, style]}>{children}</View>
   );
 }
 
@@ -331,6 +359,13 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  pageHeaderRightStacked: {
+    marginTop: GRID_GAP_SM,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 8,
     alignItems: 'center',
   },
