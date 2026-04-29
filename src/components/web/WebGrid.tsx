@@ -149,8 +149,6 @@ export function WebRow({
     const colWidth = effectiveCols === 1
       ? '100%'
       : `calc((100% - ${totalGap}px) / ${effectiveCols})`;
-
-    const colWidth = `${100 / cols}%` as any;
     return (
       <View style={[styles.row, { gap, flexWrap: 'wrap' }, style]}>
         {React.Children.map(children, (child) =>

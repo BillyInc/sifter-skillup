@@ -6,6 +6,7 @@ import {
   getAuthoredLessonTopic,
   isAuthoredLesson,
   truncateAuthoredLessonText,
+  type AuthoredLessonExample,
   type AuthoredLesson,
 } from '../data/tracks/starknet_ecosystem/authoredLesson';
 
@@ -43,6 +44,7 @@ interface AuthoredLesson {
   interactiveSimulator?: { componentId?: string; title?: string };
   lessonSimulations?: Array<{
     type: string;
+    simulatorId?: string;
     scenario: string;
     scoringCriteria: string[];
   }>;
@@ -65,6 +67,10 @@ function isPrimaryInteractiveSimulationType(type?: string): boolean {
     || type === 'forum'
     || type === 'aggregate'
   );
+}
+
+function getAuthoredSimulatorType(type: string, simulatorId?: string): string {
+  return simulatorId ? `${type}:${simulatorId}` : type;
 }
 
 function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
@@ -99,13 +105,26 @@ function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
     const [primarySim] = primaryLessonSimulations;
     questions.push({
       type: 'simulator',
-      simulatorType: primarySim.type,
+      simulatorType: getAuthoredSimulatorType(primarySim.type, primarySim.simulatorId),
       scenario: primarySim.scenario,
       scoringCriteria: primarySim.scoringCriteria,
     });
   }
 
-  // 3. Guided-practice MCQs — authored by content team.
+  // 3. Remaining hands-on simulators/tasks — keep them ahead of guided practice.
+  const deferredPrimarySimulations = simId
+    ? primaryLessonSimulations
+    : primaryLessonSimulations.slice(1);
+  for (const sim of deferredPrimarySimulations) {
+    questions.push({
+      type: 'simulator',
+      simulatorType: getAuthoredSimulatorType(sim.type, sim.simulatorId),
+      scenario: sim.scenario,
+      scoringCriteria: sim.scoringCriteria,
+    });
+  }
+
+  // 4. Guided-practice MCQs — authored by content team.
   for (const gp of lesson.guidedPractice ?? []) {
     const options = gp.options ?? [];
     if (options.length < 2 || typeof gp.correct !== 'number') continue;
@@ -124,14 +143,11 @@ function buildAuthoredLessonQuestions(lesson: AuthoredLesson): Question[] {
     });
   }
 
-  // 4. Authored lesson simulations - keep tool practice ahead of judgment-only follow-ups.
-  const deferredPrimarySimulations = simId
-    ? primaryLessonSimulations
-    : primaryLessonSimulations.slice(1);
-  for (const sim of [...deferredPrimarySimulations, ...secondaryLessonSimulations]) {
+  // 5. Judgment-style follow-ups — after the hands-on task and concept checks.
+  for (const sim of secondaryLessonSimulations) {
     questions.push({
       type: 'simulator',
-      simulatorType: sim.type,
+      simulatorType: getAuthoredSimulatorType(sim.type, sim.simulatorId),
       scenario: sim.scenario,
       scoringCriteria: sim.scoringCriteria,
     });
