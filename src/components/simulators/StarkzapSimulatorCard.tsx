@@ -48,6 +48,7 @@ type WalletLessonId =
   | 'starkzap-wallet'
   | 'starkzap-gasless'
   | 'starkzap-swap'
+  | 'starkzap-btc-swap'
   | 'starkzap-stake'
   | 'starkzap-lend'
   | 'starkzap-borrow'
@@ -58,6 +59,8 @@ type WalletLessonId =
   | 'starkzap-boss'
   | 'starkzap-confidential'
   | 'starkzap-ecosystem-read'
+  | 'starkzap-gaming-read'
+  | 'starkzap-ecosystem-map'
   | 'starkzap-mainnet-push'
   | 'starkzap-package-install';
 
@@ -174,6 +177,36 @@ function formatTxError(error: unknown, fallback: string) {
 function isPositiveAmount(value: string) {
   const numeric = Number(value);
   return Number.isFinite(numeric) && numeric > 0;
+}
+
+async function ensureWalletExecutionReady(wallet: any, feeMode = SELF_PAID_FEE_MODE) {
+  if (!wallet?.ensureReady) {
+    return;
+  }
+
+  await wallet.ensureReady({
+    deploy: 'if_needed',
+    feeMode,
+  });
+}
+
+function isPaymasterConfigurationError(message: string) {
+  const normalized = message.toLowerCase();
+  return (
+    normalized.includes('x-paymaster-api-key') ||
+    normalized.includes('paymaster') ||
+    normalized.includes('sponsored') ||
+    normalized.includes('fee_mode')
+  );
+}
+
+function isAvnuDcaRouteError(message: string) {
+  const normalized = message.toLowerCase();
+  return (
+    normalized.includes('avnu prepare dca create failed') ||
+    normalized.includes('cannot read properties of undefined') ||
+    normalized.includes('reading \'0\'')
+  );
 }
 
 function WalletAuthPanel({ onWalletReady }: { onWalletReady?: () => void }) {
@@ -445,7 +478,12 @@ function GaslessSim({ onComplete, onSkip }: Props) {
       await tx.wait?.();
       setMessage(`Sponsored transaction accepted on Starknet Sepolia: ${tx.hash.slice(0, 12)}...`);
     } catch (cause: any) {
-      setMessage(cause?.message ?? 'The paymaster readiness step did not complete.');
+      const errorMessage = formatTxError(cause, 'The paymaster readiness step did not complete.');
+      if (isPaymasterConfigurationError(errorMessage)) {
+        setMessage('Paymaster sponsorship is not configured for this environment yet, so this lesson is falling back to demo mode on Sepolia.');
+      } else {
+        setMessage(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -476,15 +514,23 @@ function GaslessSim({ onComplete, onSkip }: Props) {
   );
 }
 
-function SwapSim({ onComplete, onSkip }: Props) {
+function SwapSim({ onComplete, onSkip, simulatorType }: Props) {
   const bridge = useStarknetWalletBridge();
+  const isBtcLesson = baseType(simulatorType) === 'starkzap-btc-swap';
   const [amount, setAmount] = useState('10');
-  const [tokenOut, setTokenOut] = useState<'USDC' | 'ETH'>('USDC');
+  const [tokenOut, setTokenOut] = useState<'USDC' | 'ETH' | 'WBTC'>(isBtcLesson ? 'WBTC' : 'USDC');
   const [quote, setQuote] = useState<string | null>(null);
   const [impact, setImpact] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
+
+  const outputToken =
+    tokenOut === 'ETH'
+      ? STARKNET_TOKENS.ETH
+      : tokenOut === 'WBTC'
+        ? STARKNET_TOKENS.wBTC
+        : STARKNET_TOKENS.USDC;
 
   const fetchQuote = useCallback(async () => {
     const wallet = bridge.wallet;
@@ -500,7 +546,6 @@ function SwapSim({ onComplete, onSkip }: Props) {
     try {
       if (wallet?.getQuote) {
         const tokenIn = STARKNET_TOKENS.STRK;
-        const outputToken = tokenOut === 'USDC' ? STARKNET_TOKENS.USDC : STARKNET_TOKENS.ETH;
         const result = await wallet.getQuote({
           tokenIn,
           tokenOut: outputToken,
@@ -515,7 +560,13 @@ function SwapSim({ onComplete, onSkip }: Props) {
             : '0.12%',
         );
       } else {
-        setQuote(tokenOut === 'USDC' ? MOCK.swapQuote.to : '≈ 0.0028 ETH');
+        setQuote(
+          tokenOut === 'USDC'
+            ? MOCK.swapQuote.to
+            : tokenOut === 'ETH'
+              ? '≈ 0.0028 ETH'
+              : '≈ 0.00012 WBTC',
+        );
         setImpact(MOCK.swapQuote.impact);
       }
     } catch (cause: any) {
@@ -523,7 +574,7 @@ function SwapSim({ onComplete, onSkip }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [amount, bridge.wallet, tokenOut]);
+  }, [amount, bridge.wallet, outputToken, tokenOut]);
 
   const executeSwap = useCallback(async () => {
     const wallet = bridge.wallet;
@@ -538,12 +589,11 @@ function SwapSim({ onComplete, onSkip }: Props) {
     }
 
     const tokenIn = STARKNET_TOKENS.STRK;
-    const outputToken = tokenOut === 'USDC' ? STARKNET_TOKENS.USDC : STARKNET_TOKENS.ETH;
-
     setLoading(true);
     setError(null);
     setResult(null);
     try {
+      await ensureWalletExecutionReady(wallet);
       const tx = await wallet.swap({
         tokenIn,
         tokenOut: outputToken,
@@ -563,8 +613,12 @@ function SwapSim({ onComplete, onSkip }: Props) {
     <SimShell
       icon="⇄"
       label="Dex Routing"
-      title="Preview a StarkZap Swap"
-      subtitle="Quote and submit a live swap from STRK into another Sepolia asset."
+      title={isBtcLesson ? 'Preview a BTC Route on Starknet' : 'Preview a StarkZap Swap'}
+      subtitle={
+        isBtcLesson
+          ? 'Quote and submit a live swap from STRK into a Bitcoin asset route on Starknet Sepolia.'
+          : 'Quote and submit a live swap from STRK into another Sepolia asset.'
+      }
     >
       <WalletStatusCard />
 
@@ -579,8 +633,14 @@ function SwapSim({ onComplete, onSkip }: Props) {
           onChangeText={setAmount}
         />
         <View style={s.chipRow}>
-          <Chip label="To USDC" active={tokenOut === 'USDC'} onPress={() => setTokenOut('USDC')} />
-          <Chip label="To ETH" active={tokenOut === 'ETH'} onPress={() => setTokenOut('ETH')} />
+          {isBtcLesson ? (
+            <Chip label="To wBTC" active />
+          ) : (
+            <>
+              <Chip label="To USDC" active={tokenOut === 'USDC'} onPress={() => setTokenOut('USDC')} />
+              <Chip label="To ETH" active={tokenOut === 'ETH'} onPress={() => setTokenOut('ETH')} />
+            </>
+          )}
         </View>
       </Card>
 
@@ -596,6 +656,7 @@ function SwapSim({ onComplete, onSkip }: Props) {
           <MetricRow label="You pay" value={`${amount} STRK`} />
           <MetricRow label="You receive" value={quote} accent />
           <MetricRow label="Price impact" value={impact ?? '0.12%'} />
+          <MetricRow label="Route type" value={isBtcLesson ? 'Bitcoin liquidity route' : 'Standard Starknet swap'} />
         </Card>
       ) : null}
 
@@ -678,6 +739,7 @@ function StakeSim({ onComplete, onSkip }: Props) {
     setLoading(true);
     setResult(null);
     try {
+      await ensureWalletExecutionReady(wallet);
       const tx = await wallet.stake(
         poolAddress as any,
         createStarkzapAmount(amount, STARKNET_TOKENS.STRK),
@@ -802,6 +864,7 @@ function LendSim({ onComplete, onSkip, simulatorType }: Props) {
     setLoading(true);
     setResult(null);
     try {
+      await ensureWalletExecutionReady(wallet);
       const lending = wallet.lending();
       const tx = isBorrow
         ? await lending.borrow({
@@ -925,6 +988,7 @@ function DcaSim({ onComplete, onSkip }: Props) {
     setLoading(true);
     setResult(null);
     try {
+      await ensureWalletExecutionReady(wallet);
       const tx = await wallet.dca().create({
         sellToken: STARKNET_TOKENS.STRK,
         buyToken: STARKNET_TOKENS.USDC,
@@ -936,7 +1000,12 @@ function DcaSim({ onComplete, onSkip }: Props) {
       await tx.wait?.();
       setResult(`DCA order submitted on Starknet Sepolia: ${tx.hash.slice(0, 12)}...`);
     } catch (error) {
-      setResult(formatTxError(error, 'DCA order creation failed.'));
+      const errorMessage = formatTxError(error, 'DCA order creation failed.');
+      if (isAvnuDcaRouteError(errorMessage)) {
+        setResult('AVNU DCA is unavailable for this route on Sepolia right now, so this lesson is falling back to a demo confirmation instead of surfacing the raw provider failure.');
+      } else {
+        setResult(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -1107,8 +1176,8 @@ function BuildSim({ onComplete, onSkip }: Props) {
     <SimShell
       icon="🛠️"
       label="Integration"
-      title="Wire Privy Into StarkZap"
-      subtitle="Review the live wallet path that powers these Starknet lessons."
+      title="How the StarkZap Lesson Integration Works"
+      subtitle="This is a builder-facing explainer for the wallet and SDK path behind the live Starknet lessons."
     >
       <Card>
         <SectionLabel text="Flow" />
@@ -1119,6 +1188,7 @@ function BuildSim({ onComplete, onSkip }: Props) {
           <MetricRow label="Auth hook" value="useStarknetPrivyLogin" accent />
           <MetricRow label="Backend" value="POST /api/wallets/create-starknet" />
           <MetricRow label="Bridge" value="useStarkzapWallet + PrivySigner" />
+          <MetricRow label="Purpose" value="Understand the lesson plumbing, not a user trade flow" />
         </View>
       </Card>
 
@@ -1177,6 +1247,7 @@ function ConfidentialSim({ onComplete, onSkip }: Props) {
           <MetricRow label="Privy Starknet wallet" value="Used for funding + execution" />
           <MetricRow label="Tongo private key" value={tongoConfigured ? 'Configured' : 'Missing'} accent={tongoConfigured} />
           <MetricRow label="Tongo contract" value={tongoConfigured ? 'Configured' : 'Missing'} accent={tongoConfigured} />
+          <MetricRow label="Target network" value="Starknet Sepolia support depends on your deployed Tongo contract" />
         </View>
       </Card>
 
@@ -1194,18 +1265,39 @@ function ConfidentialSim({ onComplete, onSkip }: Props) {
   );
 }
 
-function EcosystemReadSim({ onComplete, onSkip }: Props) {
+function EcosystemReadSim({ onComplete, onSkip, simulatorType }: Props) {
+  const type = baseType(simulatorType);
+  const title =
+    type === 'starkzap-gaming-read'
+      ? 'Gaming on Starknet Snapshot'
+      : type === 'starkzap-ecosystem-map'
+        ? 'Ecosystem Map Snapshot'
+        : 'Ecosystem Snapshot';
+  const subtitle =
+    type === 'starkzap-gaming-read'
+      ? 'Review how Starknet gaming fits into the wider ecosystem without forcing a DeFi action.'
+      : type === 'starkzap-ecosystem-map'
+        ? 'Review the major categories in the Starknet ecosystem map without running a transaction.'
+        : 'Quick read-only Starknet checkpoint.';
+  const focus =
+    type === 'starkzap-gaming-read'
+      ? 'Gaming studios, wallets, and on-chain player loops'
+      : type === 'starkzap-ecosystem-map'
+        ? 'Infrastructure, DeFi, identity, tooling, and consumer apps'
+        : 'General ecosystem checkpoint';
+
   return (
     <SimShell
       icon="📡"
       label="Ecosystem Read"
-      title="Ecosystem Snapshot"
-      subtitle="Quick read-only Starknet checkpoint."
+      title={title}
+      subtitle={subtitle}
     >
       <Card>
         <SectionLabel text="Snapshot" />
         <MetricRow label="Network" value="Starknet Sepolia / ecosystem data" accent />
         <MetricRow label="Explorer" value={STARKNET_SEPOLIA.explorer} />
+        <MetricRow label="Focus" value={focus} />
         <MetricRow label="Mode" value="Read-only lesson checkpoint" />
       </Card>
       <PrimaryBtn label="Continue" onPress={onComplete} />
@@ -1283,6 +1375,7 @@ export default function StarkzapSimulatorCard(props: Props) {
     case 'starkzap-gasless':
       return <GaslessSim {...props} />;
     case 'starkzap-swap':
+    case 'starkzap-btc-swap':
       return <SwapSim {...props} />;
     case 'starkzap-stake':
       return <StakeSim {...props} />;
@@ -1302,6 +1395,8 @@ export default function StarkzapSimulatorCard(props: Props) {
     case 'starkzap-confidential':
       return <ConfidentialSim {...props} />;
     case 'starkzap-ecosystem-read':
+    case 'starkzap-gaming-read':
+    case 'starkzap-ecosystem-map':
       return <EcosystemReadSim {...props} />;
     case 'starkzap-package-install':
       return <PackageInstallSim {...props} />;

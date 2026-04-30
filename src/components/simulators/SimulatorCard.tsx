@@ -4988,6 +4988,7 @@ const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
   // All starkzap-* types route through StarkzapSimulatorCard which handles
   // the actual SDK calls to Starknet Sepolia.
   'starkzap-swap':              (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-swap" />,
+  'starkzap-btc-swap':          (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-btc-swap" />,
   'starkzap-stake':             (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-stake" />,
   'starkzap-lend':              (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-lend" />,
   'starkzap-borrow':            (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-borrow" />,
@@ -4996,6 +4997,8 @@ const SIMULATORS: Record<string, React.ComponentType<SimProps>> = {
   'starkzap-balance':           (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-balance" />,
   'starkzap-confidential':      (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-confidential" />,
   'starkzap-ecosystem-read':    (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-ecosystem-read" />,
+  'starkzap-gaming-read':       (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-gaming-read" />,
+  'starkzap-ecosystem-map':     (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-ecosystem-map" />,
   'starkzap-mainnet-push':      (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-mainnet-push" />,
   'starkzap-package-install':   (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-package-install" />,
   'starkzap-wallet':            (p: any) => <StarkzapSimulatorCard {...p} simulatorType="starkzap-wallet" />,
