@@ -12,7 +12,7 @@ import { ensureStarknetWallet, type EnsuredStarknetWallet } from '../services/st
 import { useAppPrivy, useAppSignRawHash } from './privy';
 import {
   isStarkzapAvailable,
-  SELF_PAID_FEE_MODE,
+  SPONSORED_FEE_MODE,
   starkzapSdk,
 } from './starkzap';
 
@@ -240,7 +240,7 @@ export function useStarkzapWallet(input: PreferredWalletMeta | string | null = n
         const connected = await starkzapSdk.connectWallet({
           account: { signer },
           accountAddress: walletMeta.address,
-          feeMode: SELF_PAID_FEE_MODE,
+          feeMode: SPONSORED_FEE_MODE,
         });
 
         if (cancelled) {
@@ -248,14 +248,14 @@ export function useStarkzapWallet(input: PreferredWalletMeta | string | null = n
         }
 
         setWallet(connected);
-        setConnectionMode('self-paid');
+        setConnectionMode('sponsored');
         setError(null);
         setStatus('ready');
       } catch (cause: any) {
         if (cancelled) {
           return;
         }
-        setConnectionMode('self-paid');
+        setConnectionMode('sponsored');
         setError(cause instanceof Error ? cause : new Error(String(cause)));
         setStatus('error');
         setWallet(null);

@@ -14,7 +14,6 @@ import {
   createStarkzapAmountFromBase,
   isStarkzapAvailable,
   MOCK,
-  SELF_PAID_FEE_MODE,
   SPONSORED_FEE_MODE,
   STARKNET_NETWORK,
   STARKNET_SEPOLIA_VALIDATORS,
@@ -179,7 +178,7 @@ function isPositiveAmount(value: string) {
   return Number.isFinite(numeric) && numeric > 0;
 }
 
-async function ensureWalletExecutionReady(wallet: any, feeMode = SELF_PAID_FEE_MODE) {
+async function ensureWalletExecutionReady(wallet: any, feeMode = SPONSORED_FEE_MODE) {
   if (!wallet?.ensureReady) {
     return;
   }
@@ -599,7 +598,7 @@ function SwapSim({ onComplete, onSkip, simulatorType }: Props) {
         tokenOut: outputToken,
         amountIn: createStarkzapAmount(String(numeric), tokenIn),
         slippageBps: 50n,
-      }, { feeMode: SELF_PAID_FEE_MODE });
+      }, { feeMode: SPONSORED_FEE_MODE });
       await tx.wait?.();
       setResult(`Swap submitted on Starknet Sepolia: ${tx.hash.slice(0, 12)}...`);
     } catch (cause: any) {
@@ -743,7 +742,7 @@ function StakeSim({ onComplete, onSkip }: Props) {
       const tx = await wallet.stake(
         poolAddress as any,
         createStarkzapAmount(amount, STARKNET_TOKENS.STRK),
-        { feeMode: SELF_PAID_FEE_MODE },
+        { feeMode: SPONSORED_FEE_MODE },
       );
       await tx.wait?.();
       setResult(`Stake submitted on Starknet Sepolia: ${tx.hash.slice(0, 12)}...`);
@@ -873,12 +872,12 @@ function LendSim({ onComplete, onSkip, simulatorType }: Props) {
             amount: createStarkzapAmount(amount, STARKNET_TOKENS.USDC),
             collateralAmount: createStarkzapAmount(collateralAmount, STARKNET_TOKENS.STRK),
             user: wallet.address as any,
-          }, { feeMode: SELF_PAID_FEE_MODE })
+          }, { feeMode: SPONSORED_FEE_MODE })
         : await lending.deposit({
             token: STARKNET_TOKENS.STRK,
             amount: createStarkzapAmount(amount, STARKNET_TOKENS.STRK),
             receiver: wallet.address as any,
-          }, { feeMode: SELF_PAID_FEE_MODE });
+          }, { feeMode: SPONSORED_FEE_MODE });
       await tx.wait?.();
       setResult(`${isBorrow ? 'Borrow' : 'Deposit'} submitted on Starknet Sepolia: ${tx.hash.slice(0, 12)}...`);
     } catch (error) {
@@ -942,7 +941,8 @@ function DcaSim({ onComplete, onSkip }: Props) {
   const [total, setTotal] = useState('20');
   const [cadence, setCadence] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
   const [preview, setPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
 
   const frequency = cadence === 'daily' ? 'P1D' : cadence === 'weekly' ? 'P1W' : 'P1M';
@@ -958,7 +958,7 @@ function DcaSim({ onComplete, onSkip }: Props) {
       return;
     }
 
-    setLoading(true);
+    setPreviewLoading(true);
     setResult(null);
     try {
       const quote = await wallet.dca().previewCycle({
@@ -970,7 +970,7 @@ function DcaSim({ onComplete, onSkip }: Props) {
     } catch (error) {
       setResult(formatTxError(error, 'DCA preview could not be loaded.'));
     } finally {
-      setLoading(false);
+      setPreviewLoading(false);
     }
   }, [amount, bridge.wallet]);
 
@@ -985,7 +985,7 @@ function DcaSim({ onComplete, onSkip }: Props) {
       return;
     }
 
-    setLoading(true);
+    setOrderLoading(true);
     setResult(null);
     try {
       await ensureWalletExecutionReady(wallet);
@@ -996,7 +996,7 @@ function DcaSim({ onComplete, onSkip }: Props) {
         sellAmountPerCycle: createStarkzapAmount(amount, STARKNET_TOKENS.STRK),
         frequency,
         traderAddress: wallet.address as any,
-      }, { feeMode: SELF_PAID_FEE_MODE });
+      }, { feeMode: SPONSORED_FEE_MODE });
       await tx.wait?.();
       setResult(`DCA order submitted on Starknet Sepolia: ${tx.hash.slice(0, 12)}...`);
     } catch (error) {
@@ -1007,7 +1007,7 @@ function DcaSim({ onComplete, onSkip }: Props) {
         setResult(errorMessage);
       }
     } finally {
-      setLoading(false);
+      setOrderLoading(false);
     }
   }, [amount, bridge.wallet, frequency, total]);
 
@@ -1053,9 +1053,9 @@ function DcaSim({ onComplete, onSkip }: Props) {
       </Card>
 
       <PrimaryBtn
-        label={loading ? 'Working...' : 'Preview one DCA cycle'}
+        label={previewLoading ? 'Working...' : 'Preview one DCA cycle'}
         onPress={() => void previewCycle()}
-        disabled={loading}
+        disabled={previewLoading}
       />
       {preview ? (
         <Card>
@@ -1065,9 +1065,9 @@ function DcaSim({ onComplete, onSkip }: Props) {
         </Card>
       ) : null}
       <PrimaryBtn
-        label={loading ? 'Submitting order...' : 'Create DCA order'}
+        label={orderLoading ? 'Submitting order...' : 'Create DCA order'}
         onPress={() => void createOrder()}
-        disabled={loading}
+        disabled={orderLoading}
         color="#f59e0b"
       />
       {result ? <ResultBox correct={result.startsWith('DCA order submitted')} message={result} /> : null}
