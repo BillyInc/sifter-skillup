@@ -13,6 +13,14 @@ export default function LessonRoute() {
   };
 
   const handleDone = () => {
+    if (levelId >= 291 && levelId <= 310) {
+      router.replace({
+        pathname: '/map/island' as any,
+        params: { initialIsland: '18' },
+      });
+      return;
+    }
+
     if (router.canGoBack()) {
       router.back();
     } else {

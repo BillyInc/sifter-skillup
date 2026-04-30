@@ -9,7 +9,7 @@
  * Works on mobile (iOS/Android) AND web without any wallet extension.
  * Uses the shared chain mapping maintained in this hook.
  *
- * On first call for an island: generates a deterministic demo wallet.
+ * On first call for non-Starknet islands: generates a deterministic demo wallet.
  * On subsequent calls: returns the same wallet (stable across sessions).
  */
 
@@ -19,11 +19,12 @@ import * as Crypto from 'expo-crypto';
 import * as Clipboard from 'expo-clipboard';
 import { Linking, Platform } from 'react-native';
 import { useStarknetWalletBridge } from '../components/auth/StarknetWalletBridge';
-import { isStarkzapAvailable, STARKNET_TOKENS } from '../lib/starkzap';
+import { STARKNET_TOKENS } from '../lib/starkzap';
 
 // ── Chain config (mirrors TESTNET_CHAINS_CONFIG in SimulatorCard_ADDITIONS) ──
 
 export interface ChainConfig {
+  key: string;
   icon: string;
   name: string;
   shortName: string;
@@ -37,48 +38,56 @@ export interface ChainConfig {
 
 const CHAIN_CONFIG: Record<string, ChainConfig> = {
   'bitcoin-testnet4': {
+    key: 'bitcoin-testnet4',
     icon: '₿', name: 'Bitcoin Testnet4', shortName: 'BTC Testnet',
     nativeSymbol: 'tBTC', explorerUrl: 'https://mempool.space/testnet4',
     faucetUrl: 'https://mempool.space/testnet4/faucet', faucetLabel: 'Get test BTC',
     demoBalance: '0.0842 tBTC', color: '#f7931a',
   },
   'ethereum-sepolia': {
+    key: 'ethereum-sepolia',
     icon: '⟠', name: 'Ethereum Sepolia', shortName: 'ETH Sepolia',
     nativeSymbol: 'ETH', explorerUrl: 'https://sepolia.etherscan.io',
     faucetUrl: 'https://sepoliafaucet.com', faucetLabel: 'Get Sepolia ETH',
     demoBalance: '1.5 ETH', color: '#627eea',
   },
   'bnb-testnet': {
+    key: 'bnb-testnet',
     icon: '🟡', name: 'BNB Testnet', shortName: 'BNB Testnet',
     nativeSymbol: 'tBNB', explorerUrl: 'https://testnet.bscscan.com',
     faucetUrl: 'https://www.bnbchain.org/en/testnet-faucet', faucetLabel: 'Get tBNB',
     demoBalance: '2.5 tBNB', color: '#f0b90b',
   },
   'solana-devnet': {
+    key: 'solana-devnet',
     icon: '◎', name: 'Solana Devnet', shortName: 'SOL Devnet',
     nativeSymbol: 'SOL', explorerUrl: 'https://explorer.solana.com/?cluster=devnet',
     faucetUrl: 'https://faucet.solana.com', faucetLabel: 'Get devnet SOL',
     demoBalance: '5.0 SOL', color: '#9945ff',
   },
   'arbitrum-sepolia': {
+    key: 'arbitrum-sepolia',
     icon: '🔵', name: 'Arbitrum Sepolia', shortName: 'ARB Sepolia',
     nativeSymbol: 'ETH', explorerUrl: 'https://sepolia.arbiscan.io',
     faucetUrl: 'https://faucets.chain.link/arbitrum-sepolia', faucetLabel: 'Get ARB ETH',
     demoBalance: '0.5 ETH', color: '#28a0f0',
   },
   'base-sepolia': {
+    key: 'base-sepolia',
     icon: '🔵', name: 'Base Sepolia', shortName: 'Base Sepolia',
     nativeSymbol: 'ETH', explorerUrl: 'https://sepolia.basescan.org',
     faucetUrl: 'https://faucets.chain.link/base-sepolia', faucetLabel: 'Get Base ETH',
     demoBalance: '0.5 ETH', color: '#0052ff',
   },
   'ton-testnet': {
+    key: 'ton-testnet',
     icon: '💎', name: 'TON Testnet', shortName: 'TON Testnet',
     nativeSymbol: 'TON', explorerUrl: 'https://testnet.tonscan.org',
     faucetUrl: 'https://t.me/testgiver_ton_bot', faucetLabel: 'Get test TON (Telegram bot)',
     demoBalance: '50.0 TON', color: '#0088cc',
   },
   'starknet-sepolia': {
+    key: 'starknet-sepolia',
     icon: '⚡', name: 'Starknet Sepolia', shortName: 'STRK Sepolia',
     nativeSymbol: 'STRK', explorerUrl: 'https://sepolia.voyager.online',
     faucetUrl: 'https://starknet-faucet.vercel.app', faucetLabel: 'Get Sepolia STRK',
@@ -116,12 +125,16 @@ export interface SimulatorWallet {
   balance: string;
   chain: string;
   chainConfig: ChainConfig;
+  status: 'not_created' | 'waiting_for_connection' | 'needs_faucet' | 'ready';
   isDemo: boolean;             // true = demo address (no real keys)
+  isDemoMode: boolean;
+  connectionMode: 'sponsored' | 'self-paid' | null;
   hasBalance: boolean;
   needsFaucet: boolean;
   isLoading: boolean;
-  showCreatePrompt: boolean;
+  showCreatePrompt: () => void;
   createWallet: () => Promise<void>;
+  requestFaucet: () => void;
   openFaucet: () => void;
   openExplorer: () => void;
   copyAddress: () => Promise<void>;
@@ -158,24 +171,31 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   const chainConfig = CHAIN_CONFIG[chain] ?? CHAIN_CONFIG['ethereum-sepolia'];
   const storeKey    = walletKey(chain);
   const starknetBridge = useStarknetWalletBridge();
+  const isStarknetChain = chain === 'starknet-sepolia';
   const isLiveStarknetWallet =
-    chain === 'starknet-sepolia' &&
-    isStarkzapAvailable() &&
-    starknetBridge.ready &&
+    isStarknetChain &&
+    !!starknetBridge.address &&
     !!starknetBridge.wallet &&
-    !!starknetBridge.address;
+    starknetBridge.ready;
 
   const [address,         setAddress]         = useState<string | null>(null);
   const [isLoading,       setIsLoading]        = useState(true);
-  const [showCreatePrompt,setShowCreatePrompt] = useState(false);
   const [copied,          setCopied]           = useState(false);
   const [liveBalance,     setLiveBalance]      = useState<string | null>(null);
   const [liveBalanceBase, setLiveBalanceBase]  = useState<string | null>(null);
 
-  // Load or auto-create demo wallet on mount
+  // Load or auto-create demo wallet on mount for non-Starknet islands only.
   useEffect(() => {
     let mounted = true;
     (async () => {
+      if (isStarknetChain) {
+        if (mounted) {
+          setAddress(null);
+          setIsLoading(false);
+        }
+        return;
+      }
+
       try {
         let stored: string | null = null;
         if (Platform.OS !== 'web') {
@@ -196,14 +216,13 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
           if (mounted) setAddress(demo);
         }
       } catch {
-        // Fallback: show create prompt
-        if (mounted) setShowCreatePrompt(true);
+        if (mounted) setAddress(null);
       } finally {
         if (mounted) setIsLoading(false);
       }
     })();
     return () => { mounted = false; };
-  }, [chain, storeKey]);
+  }, [chain, isStarknetChain, storeKey]);
 
   useEffect(() => {
     if (!isLiveStarknetWallet) {
@@ -235,6 +254,9 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
   }, [isLiveStarknetWallet, starknetBridge.wallet]);
 
   const createWallet = useCallback(async () => {
+    if (isStarknetChain) {
+      return;
+    }
     setIsLoading(true);
     try {
       const demo = await generateDemoAddress(chain);
@@ -244,17 +266,26 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
         localStorage.setItem(storeKey, demo);
       }
       setAddress(demo);
-      setShowCreatePrompt(false);
     } finally {
       setIsLoading(false);
     }
-  }, [chain, storeKey]);
+  }, [chain, isStarknetChain, storeKey]);
 
   const openFaucet = useCallback(() => {
     Linking.openURL(chainConfig.faucetUrl).catch(() => {});
   }, [chainConfig.faucetUrl]);
 
-  const resolvedAddress = isLiveStarknetWallet ? (starknetBridge.address ?? address) : address;
+  const showCreatePrompt = useCallback(() => {
+    if (isStarknetChain) {
+      return;
+    }
+
+    void createWallet();
+  }, [createWallet, isStarknetChain]);
+
+  const resolvedAddress = isStarknetChain
+    ? (starknetBridge.address ?? null)
+    : address;
 
 
   const openExplorer = useCallback(() => {
@@ -272,23 +303,43 @@ export function useSimulatorWallet(islandId: number): SimulatorWallet {
     } catch {}
   }, [resolvedAddress]);
 
-  // Starknet Island 18 uses the real StarkZap balance — use demo balance elsewhere
+  // Starknet uses the real StarkZap balance when available. Other islands keep demo balances.
   const liveHasBalance = liveBalanceBase !== null && Number(liveBalanceBase) > 0;
-  const balance = isLiveStarknetWallet
-    ? (liveBalance ?? 'Loading STRK balance...')
+  const balance = isStarknetChain
+    ? (
+        !resolvedAddress
+          ? 'Sign in to load Starknet balance'
+          : liveBalance ?? 'Loading STRK balance...'
+      )
     : chainConfig.demoBalance;
+  const status = isStarknetChain
+    ? (
+        !resolvedAddress
+          ? 'waiting_for_connection'
+          : !starknetBridge.ready
+            ? 'waiting_for_connection'
+            : !liveHasBalance
+              ? 'needs_faucet'
+              : 'ready'
+      )
+    : (resolvedAddress ? 'ready' : 'not_created');
+
   return {
     address: resolvedAddress,
     shortAddress:    resolvedAddress ? shortAddr(resolvedAddress) : '',
     balance,
     chain,
     chainConfig,
-    isDemo:          !isLiveStarknetWallet,
+    status,
+    isDemo:          isStarknetChain ? false : !isLiveStarknetWallet,
+    isDemoMode:      isStarknetChain ? false : !isLiveStarknetWallet,
+    connectionMode:  isStarknetChain ? starknetBridge.connectionMode : null,
     hasBalance:      isLiveStarknetWallet ? liveHasBalance : true,
-    needsFaucet:     isLiveStarknetWallet ? !liveHasBalance : false,
+    needsFaucet:     isStarknetChain ? !!resolvedAddress && starknetBridge.ready && !liveHasBalance : false,
     isLoading,
     showCreatePrompt,
     createWallet,
+    requestFaucet:   openFaucet,
     openFaucet,
     openExplorer,
     copyAddress,

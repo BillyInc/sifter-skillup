@@ -839,7 +839,7 @@ In the Starkzap SDK, enabling gasless transactions is one line of code: feeMode:
 const L298: StarknetIslandLevel = {
   id: 298, mechanic: 'memory', tier: 'pro',
   topic: 'Bitcoin on Starknet: wBTC, lBTC, tBTC',
-  simulatorLesson: 'starkzap-swap',
+  simulatorLesson: 'starkzap-btc-swap',
   explanation: `When Bitcoin launched in 2009, it solved peer-to-peer digital money brilliantly. But Bitcoin sits idle — you cannot use it in DeFi, earn yield automatically, or lend it without a centralised intermediary.
 
 Wrapped Bitcoin solves this. You lock real BTC with a custodian, and they mint an equivalent token on Starknet representing your Bitcoin exactly. This token enters DeFi protocols, earns yield, and swaps — while your real BTC sits in custody.
@@ -1857,7 +1857,7 @@ Viewing keys allow selective disclosure: you can share a viewing key with an aud
 const L306: StarknetIslandLevel = {
   id: 306, mechanic: 'match3', tier: 'pro',
   topic: 'Gaming on Starknet',
-  simulatorLesson: 'starkzap-ecosystem-read',
+  simulatorLesson: 'starkzap-gaming-read',
   explanation: `Most online games have a hidden problem: the game company owns everything. Your items, your progress, your character — all stored on their servers. If the company shuts down, your 2,000 hours vanish. If they decide your character should be worthless, it is. You have no recourse.
 
 Fully on-chain games flip this. Every game state — character stats, item ownership, world events — is stored on the blockchain. No server can alter it. No company can take it back. The game continues existing even after the studio closes, because the rules are in immutable smart contracts.
@@ -1987,7 +1987,7 @@ Top games: Loot Survivor 2, Ponziland, Influence, Realms of Eternal.`,
 const L307: StarknetIslandLevel = {
   id: 307, mechanic: 'memory', tier: 'pro',
   topic: 'The Starknet Ecosystem Map',
-  simulatorLesson: 'starkzap-ecosystem-read',
+  simulatorLesson: 'starkzap-ecosystem-map',
   explanation: `Every mature blockchain ecosystem is a city — protocol layer (the roads), infrastructure (utilities), applications (buildings), and users. Starknet is a city in construction: the roads are built, utilities are running, the first buildings are occupied, but most of the skyline is not yet there.
 
 The core infrastructure: StarkWare built and maintains the Starknet protocol. Nethermind runs the node client — the software that validators use to participate. Pragma is the oracle — it feeds real-world data (asset prices, timestamps) to smart contracts that need external information. Without an oracle, a lending protocol cannot know the current price of ETH.

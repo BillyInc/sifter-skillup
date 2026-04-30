@@ -95,17 +95,15 @@ function TrackCard({
   );
 }
 
-export function TrackChoiceScreen({ compact = false }: { compact?: boolean }) {
+export function TrackChoiceScreen({ compact = false, showBackToFields = false }: { compact?: boolean; showBackToFields?: boolean }) {
   const router = useRouter();
   const { updateActiveField } = useAuth();
   const { colors } = useTheme();
 
-  const handlePress = async (track: typeof POST_ISLAND_TRACKS[number]) => {
-    try {
-      await updateActiveField('starknet', fieldColor('starknet'), track.id, track.name);
-    } catch {
+  const handlePress = (track: typeof POST_ISLAND_TRACKS[number]) => {
+    void updateActiveField('starknet', fieldColor('starknet'), track.id, track.name).catch(() => {
       // Best effort only.
-    }
+    });
     router.push(track.route as any);
   };
 
@@ -126,8 +124,18 @@ export function TrackChoiceScreen({ compact = false }: { compact?: boolean }) {
       </View>
 
       {POST_ISLAND_TRACKS.map(track => (
-        <TrackCard key={track.id} track={track} onPress={() => void handlePress(track)} />
+        <TrackCard key={track.id} track={track} onPress={() => handlePress(track)} />
       ))}
+
+      {showBackToFields ? (
+        <TouchableOpacity
+          style={[styles.backToFieldsBtn, { borderColor: colors.border, backgroundColor: colors.card }]}
+          onPress={() => router.replace('/(tabs)/fields' as any)}
+          activeOpacity={0.85}
+        >
+          <Text style={[styles.backToFieldsText, { color: colors.text }]}>Back To Fields</Text>
+        </TouchableOpacity>
+      ) : null}
     </ScrollView>
   );
 }
@@ -180,4 +188,16 @@ const styles = StyleSheet.create({
   ctaCopy: { fontSize: 11, fontWeight: FontWeight.medium, flex: 1, maxWidth: 240 },
   ctaButton: { borderRadius: Radius.full, paddingHorizontal: 14, paddingVertical: 8 },
   ctaText: { color: '#fff', fontSize: FontSize.xs, fontWeight: FontWeight.black },
+  backToFieldsBtn: {
+    marginTop: Spacing.sm,
+    borderRadius: Radius.full,
+    borderWidth: 1,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  backToFieldsText: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.black,
+  },
 });

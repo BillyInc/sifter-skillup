@@ -74,10 +74,13 @@ let _pkgExports: any = null;
 function tryLoadSdk() {
   try {
     // Web needs the browser build; native platforms use the RN package.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const pkg = Platform.OS === 'web' ? 'starkzap' : 'starkzap-native';
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    _pkgExports = require(pkg);
+    if (Platform.OS === 'web') {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      _pkgExports = require('starkzap');
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      _pkgExports = require('starkzap-native');
+    }
     const { StarkZap } = _pkgExports;
     _sdk = new StarkZap({ network: 'sepolia' });
     _sdkMainnet = new StarkZap({ network: 'mainnet' });
@@ -96,6 +99,7 @@ export const starkzapMainnet = _sdkMainnet;
 export const isStarkzapAvailable = () => _isAvailable;
 export const STARKNET_NETWORK = 'sepolia' as const;
 export const SPONSORED_FEE_MODE = { type: 'paymaster' } as const;
+export const SELF_PAID_FEE_MODE = 'user_pays' as const;
 
 // ── Token presets (mirrors mainnetTokens / sepoliaTokens from the SDK) ──────
 const fallbackSepoliaTokens = {

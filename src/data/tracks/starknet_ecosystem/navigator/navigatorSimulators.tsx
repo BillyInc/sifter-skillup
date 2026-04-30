@@ -53,7 +53,7 @@ import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
+import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
 import {
   StarknetAddressBanner, StarknetTxLink,
   STARKNET_SEPOLIA_CONFIG,
@@ -115,9 +115,12 @@ function InfoRow({ icon, label, value, colors, valueColor }: {
   );
 }
 
-function useAuth() {
-  const { wallet, address } = useStarkzapWallet();
-  return { starknetWallet: (wallet as StarkzapWallet | null) ?? null, starknetAddress: address };
+function useSimulatorAuth() {
+  const { starknetWallet, starknetWalletAddress } = useAppAuth();
+  return {
+    starknetWallet: (starknetWallet as StarkzapWallet | null) ?? null,
+    starknetAddress: starknetWalletAddress,
+  };
 }
 
 function mockTxHash() {
@@ -802,7 +805,7 @@ export function ValidatorPickerSim({ onComplete, onSkip, colors }: SimProps) {
 type ExitStep = 'staked' | 'intent_declared' | 'waiting' | 'ready' | 'withdrawn';
 
 export function StakeExitSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [step, setStep] = useState<ExitStep>('staked');
   const [loading, setLoading] = useState(false);
   const [fastForwarded, setFastForwarded] = useState(false);
@@ -1147,7 +1150,7 @@ export function HealthFactorSim({ onComplete, onSkip, colors }: SimProps) {
 type BorrowStep = 'setup' | 'confirming' | 'done';
 
 export function BorrowSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [step, setStep] = useState<BorrowStep>('setup');
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
@@ -1408,7 +1411,7 @@ export function DcaCalcSim({ onComplete, onSkip, colors }: SimProps) {
 // ══════════════════════════════════════════════════════════════════════════════
 
 export function YieldDcaSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [step, setStep] = useState<'setup' | 'reviewing' | 'deploying' | 'live'>('setup');
   const [loading, setLoading] = useState(false);
   const [supplyTx, setSupplyTx] = useState<string | null>(null);
@@ -2499,7 +2502,7 @@ type LockMintStep =
   | 'exploited' | 'burning' | 'attesting' | 'native_minted';
 
 export function BridgeLockMintSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [mode, setMode] = useState<'lock' | 'burn'>('lock');
   const [step, setStep] = useState<LockMintStep>('idle');
   const [loading, setLoading] = useState(false);
@@ -3288,7 +3291,7 @@ const RISK_COLOR: Record<RiskLevel, string> = {
 };
 
 export function BridgeRegisterSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [positions, setPositions] = useState<Pos[]>([
     { id: '1', name: 'Ekubo LP', chain: 'Starknet', value: 50000, apy: 16, bridge: 'Starkgate', risk: 'Low' },
     { id: '2', name: 'Aave USDC', chain: 'Ethereum', value: 40000, apy: 6, bridge: 'None', risk: 'None' },
@@ -3780,7 +3783,7 @@ export function PerpPositionSim({ onComplete, onSkip, colors }: SimProps) {
 type ConfStep = 'idle' | 'pub_sending' | 'pub_done' | 'conf_sending' | 'conf_done' | 'key_generated' | 'revealed';
 
 export function ConfidentialSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [step, setStep] = useState<ConfStep>('idle');
   const [loading, setLoading] = useState(false);
   const [pubTxHash, setPubTxHash] = useState<string | null>(null);
@@ -4061,7 +4064,7 @@ export function FlashLoanDefenceSim({ onComplete, onSkip, colors }: SimProps) {
 type MEVStep = 'setup' | 'sandwiching' | 'sandwiched' | 'protected' | 'swapping' | 'complete';
 
 export function MEVDefenceSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [slippage, setSlippage] = useState(5.0);
   const [step, setStep] = useState<MEVStep>('setup');
   const [loading, setLoading] = useState(false);
@@ -4206,7 +4209,7 @@ export function MEVDefenceSim({ onComplete, onSkip, colors }: SimProps) {
 type LSTStep = 'idle' | 'staking' | 'staked' | 'depositing' | 'collateral' | 'depeg';
 
 export function LiquidStakeSim({ onComplete, onSkip, colors }: SimProps) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [step, setStep] = useState<LSTStep>('idle');
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);

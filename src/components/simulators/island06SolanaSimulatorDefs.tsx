@@ -85,7 +85,7 @@ function PhantomBanner({ wallet }: { wallet: ReturnType<typeof useSimulatorWalle
     <AddressPill
       label="Your Phantom (Devnet)"
       address={wallet.address}
-      chain={wallet.chain}
+      chain={wallet.chainConfig.shortName}
       balance={wallet.balance}
       variant="mine"
       onCreateWallet={wallet.showCreatePrompt}

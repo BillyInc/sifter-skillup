@@ -171,7 +171,7 @@ function FieldCard({
   const { colors } = useTheme();
   const accentColor = fieldColor(field.id);
   const tracks = [...detail.generalTracks, ...detail.specificTracks];
-  const starknetTrackIds = new Set(STARKNET_TRACK_IDS);
+  const starknetTrackIds = new Set<string>(STARKNET_TRACK_IDS);
   const starknetTracks = tracks.filter((track) => starknetTrackIds.has(track.id));
   const coreTracks = tracks.filter((track) => !starknetTrackIds.has(track.id));
   const showsStarknetSubEcosystem = field.id === 'crypto' && starknetTracks.length > 0;
@@ -325,7 +325,7 @@ export default function FieldsScreen() {
 
   const fields = useMemo<FieldSummary[]>(() => {
     return getAllFieldDetails()
-      .map((detail) => ({
+      .map<FieldSummary>((detail) => ({
         id: detail.fieldId,
         name: detail.fieldId === 'crypto'
           ? 'Crypto'
@@ -352,12 +352,9 @@ export default function FieldsScreen() {
 
     const isStarknetTrack = STARKNET_TRACK_IDS.includes(track.id as (typeof STARKNET_TRACK_IDS)[number]);
     const resolvedFieldId = isStarknetTrack ? 'starknet' : fieldId;
-
-    try {
-      await updateActiveField(resolvedFieldId, fieldColor(resolvedFieldId), track.id, track.name);
-    } catch {
+    void updateActiveField(resolvedFieldId, fieldColor(resolvedFieldId), track.id, track.name).catch(() => {
       // Best effort only. Navigation should still continue.
-    }
+    });
 
     if (track.navigateTo === 'Quant') {
       router.push('/skills/quant-map' as any);

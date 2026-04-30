@@ -96,6 +96,8 @@ export interface UserProfile {
   current_track_id?: TrackId | null;
   current_track_name?: string | null;
   starknet_address?: StarknetAddress | null;
+  starknet_wallet_id?: string | null;
+  starknet_public_key?: string | null;
   starknet_auth: boolean;
   is_verified: boolean;
   is_admin: boolean;
