@@ -121,7 +121,7 @@ function WalletPromptBanner({ wallet }: { wallet: ReturnType<typeof useSimulator
       <Text style={{ fontSize: 20 }}>🚰</Text>
       <View style={{ flex: 1 }}>
         <Text style={{ fontWeight: '800', color: '#92400e' }}>Get test tokens from faucet</Text>
-        <Text style={{ fontSize: FontSize.xs, color: '#92400e', marginTop: 2 }}>{wallet.chain.faucetLabel}</Text>
+        <Text style={{ fontSize: FontSize.xs, color: '#92400e', marginTop: 2 }}>{wallet.chainConfig.faucetLabel}</Text>
       </View>
       <Text style={{ color: '#92400e', fontWeight: '800' }}>Get →</Text>
     </TouchableOpacity>
@@ -129,7 +129,7 @@ function WalletPromptBanner({ wallet }: { wallet: ReturnType<typeof useSimulator
   if (wallet.isDemoMode) return (
     <View style={{ padding: Spacing.sm, backgroundColor: '#f3f4f6', borderRadius: Radius.md }}>
       <Text style={{ fontSize: FontSize.xs, color: Colors.textSoft, fontWeight: '700' }}>
-        🎮 Demo mode — using simulated address. {wallet.chain.name} testnet unavailable.
+        🎮 Demo mode — using simulated address. {wallet.chainConfig.name} testnet unavailable.
       </Text>
     </View>
   );
@@ -158,8 +158,8 @@ export function TonWalletEnhancedSim({ onComplete, onSkip, islandId }: SimProps)
 
       <AddressPill
         label="Your TON Testnet Wallet"
-        address={wallet.address ?? wallet.chain.key}
-        chain={wallet.chain}
+        address={wallet.address ?? wallet.chainConfig.key}
+        chain={wallet.chainConfig.shortName}
         balance={wallet.balance}
         variant="mine"
         onCreateWallet={wallet.showCreatePrompt}
@@ -238,7 +238,7 @@ export function TonStakingEnhancedSim({ onComplete, onSkip, islandId }: SimProps
   return (
     <SimShell icon="🏦" title="Stake TON with a Validator" subtitle="See how TON staking rewards are calculated — from your own testnet wallet.">
       <WalletPromptBanner wallet={wallet} />
-      <AddressPill label="Your Staking Wallet" address={wallet.address} chain={wallet.chain} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
+      <AddressPill label="Your Staking Wallet" address={wallet.address} chain={wallet.chainConfig.shortName} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
 
       <Card>
         <Text style={s.fieldLabel}>AMOUNT TO STAKE (TON)</Text>
@@ -298,7 +298,7 @@ export function SolanaPumpEnhancedSim({ onComplete, onSkip, islandId }: SimProps
 
       {step === 'create' && (
         <>
-          <AddressPill label="Your Launch Wallet (Creator)" address={wallet.address} chain={wallet.chain} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
+          <AddressPill label="Your Launch Wallet (Creator)" address={wallet.address} chain={wallet.chainConfig.shortName} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
           <Card>
             <Text style={s.fieldLabel}>TOKEN NAME</Text>
             <TextInput style={s.input} value={tokenName} onChangeText={setTokenName} placeholder="e.g. DogeOnSteroids" placeholderTextColor={Colors.textMuted} />
@@ -393,7 +393,7 @@ export function NftMintEnhancedSim({ onComplete, onSkip, islandId }: SimProps) {
 
       {step === 'select' && (
         <>
-          <AddressPill label="Your Minting Wallet" address={wallet.address} chain={wallet.chain} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
+          <AddressPill label="Your Minting Wallet" address={wallet.address} chain={wallet.chainConfig.shortName} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
           <Card>
             <Text style={{ fontWeight: '800', fontSize: FontSize.xl, color: Colors.text }}>PixelPunks Collection</Text>
             <Text style={s.hint2}>10,000 unique PFPs. 4,200 remaining.</Text>
@@ -487,7 +487,7 @@ export function SendBitcoinEnhancedSim({ onComplete, onSkip, islandId }: SimProp
 
       {step === 'form' && (
         <>
-          <AddressPill label="Your Bitcoin Testnet4 Wallet" address={wallet.address} chain={wallet.chain} balance={`${BALANCE} tBTC`} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
+          <AddressPill label="Your Bitcoin Testnet4 Wallet" address={wallet.address} chain={wallet.chainConfig.shortName} balance={`${BALANCE} tBTC`} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
 
           <Card>
             <Text style={s.fieldLabel}>RECIPIENT ADDRESS (Testnet4)</Text>
@@ -566,7 +566,7 @@ export function BnbPancakeEnhancedSim({ onComplete, onSkip, islandId }: SimProps
   return (
     <SimShell icon="🥞" title="Swap on PancakeSwap" subtitle="Swap tBNB for CAKE on BSC Testnet from your own wallet.">
       <WalletPromptBanner wallet={wallet} />
-      <AddressPill label="Your BNB Testnet Wallet" address={wallet.address} chain={wallet.chain} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
+      <AddressPill label="Your BNB Testnet Wallet" address={wallet.address} chain={wallet.chainConfig.shortName} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
 
       <Card>
         <Text style={s.fieldLabel}>SWAP tBNB → CAKE (BSC Testnet)</Text>
@@ -620,7 +620,7 @@ export function AirdropFarmEnhancedSim({ onComplete, onSkip, islandId }: SimProp
   return (
     <SimShell icon="🪂" title="Build an Airdrop Strategy" subtitle="Choose your farming activities from your Arbitrum Sepolia wallet.">
       <WalletPromptBanner wallet={wallet} />
-      <AddressPill label="Your Farming Wallet (Arbitrum Sepolia)" address={wallet.address} chain={wallet.chain} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
+      <AddressPill label="Your Farming Wallet (Arbitrum Sepolia)" address={wallet.address} chain={wallet.chainConfig.shortName} balance={wallet.balance} variant="mine" onCreateWallet={wallet.showCreatePrompt} />
 
       <Text style={{ fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18 }}>
         Protocols track THIS wallet. One genuine wallet with real activity beats 10 farming wallets.

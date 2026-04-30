@@ -1,14 +1,17 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import type { StarkzapWallet } from '../../lib/starkzap';
 import { PRIVY_ENABLED } from '../../lib/config';
 import { useStarkzapWallet } from '../../lib/starkzapPrivyAdapter';
 
-type StarknetWalletBridgeStatus = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error';
+type StarknetWalletBridgeStatus = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error' | 'disconnected';
 
 interface StarknetWalletBridgeValue {
   wallet: StarkzapWallet | null;
   address: string | null;
   status: StarknetWalletBridgeStatus;
+  connectionMode: 'sponsored' | 'self-paid' | null;
+  connect: () => void;
+  disconnect: () => void;
   ready: boolean;
   error: Error | null;
 }
@@ -17,6 +20,9 @@ const DEFAULT_VALUE: StarknetWalletBridgeValue = {
   wallet: null,
   address: null,
   status: 'unavailable',
+  connectionMode: null,
+  connect: () => {},
+  disconnect: () => {},
   ready: false,
   error: null,
 };
@@ -26,11 +32,23 @@ const StarknetWalletBridgeContext = createContext<StarknetWalletBridgeValue>(DEF
 function StarknetWalletBridgeLive({
   children,
   preferredAddress,
+  preferredWalletId,
+  preferredPublicKey,
 }: {
   children: React.ReactNode;
   preferredAddress?: string | null;
+  preferredWalletId?: string | null;
+  preferredPublicKey?: string | null;
 }) {
-  const { wallet, address, status, error } = useStarkzapWallet(preferredAddress ?? null);
+  const [enabled, setEnabled] = useState(true);
+  const connect = useCallback(() => setEnabled(true), []);
+  const disconnect = useCallback(() => setEnabled(false), []);
+  const { wallet, address, status, error, connectionMode } = useStarkzapWallet({
+    preferredAddress: preferredAddress ?? null,
+    preferredWalletId: preferredWalletId ?? null,
+    preferredPublicKey: preferredPublicKey ?? null,
+    enabled,
+  });
 
   return (
     <StarknetWalletBridgeContext.Provider
@@ -38,6 +56,9 @@ function StarknetWalletBridgeLive({
         wallet: (wallet as StarkzapWallet | null) ?? null,
         address,
         status,
+        connectionMode,
+        connect,
+        disconnect,
         ready: status === 'ready' && !!wallet,
         error,
       }}
@@ -50,9 +71,13 @@ function StarknetWalletBridgeLive({
 export function StarknetWalletBridgeProvider({
   children,
   preferredAddress,
+  preferredWalletId,
+  preferredPublicKey,
 }: {
   children: React.ReactNode;
   preferredAddress?: string | null;
+  preferredWalletId?: string | null;
+  preferredPublicKey?: string | null;
 }) {
   if (!PRIVY_ENABLED) {
     return (
@@ -62,7 +87,15 @@ export function StarknetWalletBridgeProvider({
     );
   }
 
-  return <StarknetWalletBridgeLive preferredAddress={preferredAddress}>{children}</StarknetWalletBridgeLive>;
+  return (
+    <StarknetWalletBridgeLive
+      preferredAddress={preferredAddress}
+      preferredWalletId={preferredWalletId}
+      preferredPublicKey={preferredPublicKey}
+    >
+      {children}
+    </StarknetWalletBridgeLive>
+  );
 }
 
 export function useStarknetWalletBridge() {

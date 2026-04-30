@@ -64,12 +64,27 @@ class Settings:
     CELERY_RESULT_BACKEND: str = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 
     # ── CORS ──────────────────────────────────────────────────
-    ALLOWED_ORIGINS: list = [
+    _DEFAULT_ALLOWED_ORIGINS = [
         os.getenv("WEB_DASHBOARD_URL", "http://localhost:3000"),
-        "https://t.me", "https://web.telegram.org",
-        "http://localhost:5173", "http://localhost:8081",
-        "http://localhost:19006", "http://localhost:8082",
+        "https://t.me",
+        "https://web.telegram.org",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:8081",
+        "http://127.0.0.1:8081",
+        "http://localhost:8082",
+        "http://127.0.0.1:8082",
+        "http://localhost:19006",
+        "http://127.0.0.1:19006",
     ]
+    _EXTRA_ALLOWED_ORIGINS = [
+        origin.strip()
+        for origin in os.getenv("ALLOWED_ORIGINS", "").split(",")
+        if origin.strip()
+    ]
+    ALLOWED_ORIGINS: list = list(dict.fromkeys(_DEFAULT_ALLOWED_ORIGINS + _EXTRA_ALLOWED_ORIGINS))
 
     # ── Portfolio OAuth credentials ───────────────────────────
     GITHUB_CLIENT_ID: str     = os.getenv("GITHUB_CLIENT_ID", "")

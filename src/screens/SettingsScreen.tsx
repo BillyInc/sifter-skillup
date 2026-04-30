@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { FontSize, FontWeight, NOTIFICATION_CONFIG, Radius, Shadow, Spacing, useTheme, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { resolveTrackContext } from '../lib/trackContext';
+import { useStarknetWalletBridge } from '../components/auth/StarknetWalletBridge';
 
 function SettingsCard({
   title,
@@ -44,6 +45,7 @@ export default function SettingsScreen() {
   const router = useRouter();
   const { colors, isDark, toggle } = useTheme();
   const { user, signOut, starknetReady, starknetWalletAddress, starknetWalletStatus } = useAuth();
+  const starknetBridge = useStarknetWalletBridge();
   const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
   const workspaceHref = trackContext.mode === 'track' ? trackContext.continueHref : '/(tabs)/fields';
   const workspaceLabel = trackContext.mode === 'track' ? trackContext.trackName : 'No active workspace';
@@ -92,8 +94,20 @@ export default function SettingsScreen() {
           <Row label="Auth Provider" value={user?.auth_provider ?? 'guest'} />
           <Row label="Starknet Address" value={starknetWalletAddress ?? user?.starknet_address ?? 'Not connected'} />
           <Row label="Starknet Bridge" value={starknetReady ? 'Connected' : starknetWalletStatus} />
+          <Row label="Fee Mode" value={starknetBridge.connectionMode ?? 'self-paid'} />
           <Row label="Active Field" value={user?.activeFieldId ?? user?.active_field_id ?? 'Not selected'} />
           <Row label="Active Track" value={user?.currentTrackName ?? user?.currentTrackId ?? 'Not selected'} />
+          {user?.starknet_address ? (
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={starknetBridge.status === 'disconnected' ? starknetBridge.connect : starknetBridge.disconnect}
+              style={[styles.linkBtn, { borderColor: colors.border }]}
+            >
+              <Text style={[styles.linkBtnText, { color: colors.text }]}>
+                {starknetBridge.status === 'disconnected' ? 'Reconnect Starknet Wallet' : 'Disconnect Starknet Wallet'}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
         </SettingsCard>
 
         <SettingsCard title="WORKSPACE">

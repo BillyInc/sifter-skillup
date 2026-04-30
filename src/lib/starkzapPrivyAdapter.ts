@@ -10,9 +10,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { PrivySigner } from 'starkzap';
 import { ensureStarknetWallet, type EnsuredStarknetWallet } from '../services/starknetWallet';
 import { useAppPrivy, useAppSignRawHash } from './privy';
-import { isStarkzapAvailable, SPONSORED_FEE_MODE, starkzapSdk } from './starkzap';
+import {
+  isStarkzapAvailable,
+  SELF_PAID_FEE_MODE,
+  starkzapSdk,
+} from './starkzap';
 
-type Status = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error';
+type Status = 'unavailable' | 'waiting-for-user' | 'connecting' | 'ready' | 'error' | 'disconnected';
+type ConnectionMode = 'sponsored' | 'self-paid';
 
 interface StarknetLinkedAccount {
   id: string;
@@ -26,6 +31,13 @@ interface ResolvedWalletMeta {
   walletId: string;
   publicKey: string;
   source: 'linked' | 'backend';
+}
+
+interface PreferredWalletMeta {
+  preferredAddress?: string | null;
+  preferredWalletId?: string | null;
+  preferredPublicKey?: string | null;
+  enabled?: boolean;
 }
 
 function normalizeAddress(address: string | null | undefined) {
@@ -94,33 +106,63 @@ function toResolvedBackendMeta(wallet: EnsuredStarknetWallet | null): ResolvedWa
   };
 }
 
-export function useStarkzapWallet(preferredAddress: string | null = null) {
+function toResolvedPreferredMeta(input: PreferredWalletMeta): ResolvedWalletMeta | null {
+  if (!input.preferredAddress || !input.preferredWalletId || !input.preferredPublicKey) {
+    return null;
+  }
+
+  return {
+    address: input.preferredAddress,
+    walletId: input.preferredWalletId,
+    publicKey: input.preferredPublicKey,
+    source: 'backend',
+  };
+}
+
+export function useStarkzapWallet(input: PreferredWalletMeta | string | null = null) {
   const privy = useAppPrivy();
   const { signRawHash } = useAppSignRawHash();
+  const { getAccessToken, isReady, user } = privy;
   const [wallet, setWallet] = useState<any | null>(null);
   const [status, setStatus] = useState<Status>('unavailable');
   const [error, setError] = useState<Error | null>(null);
   const [backendWallet, setBackendWallet] = useState<EnsuredStarknetWallet | null>(null);
+  const [connectionMode, setConnectionMode] = useState<ConnectionMode>('self-paid');
+  const preferred = useMemo(
+    () => (
+      typeof input === 'string' || input === null
+        ? { preferredAddress: input ?? null, enabled: true }
+        : input
+    ),
+    [input],
+  );
+  const enabled = preferred.enabled !== false;
 
   const linkedAccount = useMemo(
-    () => pickStarknetAccount(privy.user, preferredAddress ?? null),
-    [preferredAddress, privy.user],
+    () => pickStarknetAccount(user, preferred.preferredAddress ?? null),
+    [preferred.preferredAddress, user],
   );
   const linkedWalletMeta = useMemo(() => toResolvedLinkedMeta(linkedAccount), [linkedAccount]);
+  const preferredWalletMeta = useMemo(() => toResolvedPreferredMeta(preferred), [preferred]);
   const backendWalletMeta = useMemo(() => toResolvedBackendMeta(backendWallet), [backendWallet]);
-  const walletMeta = linkedWalletMeta ?? backendWalletMeta;
+  const walletMeta = linkedWalletMeta ?? preferredWalletMeta ?? backendWalletMeta;
   const sdkReady = isStarkzapAvailable() && !!starkzapSdk;
-  const address = walletMeta?.address ?? preferredAddress ?? linkedAccount?.address ?? backendWallet?.address ?? null;
+  const address =
+    walletMeta?.address
+    ?? preferred.preferredAddress
+    ?? linkedAccount?.address
+    ?? backendWallet?.address
+    ?? null;
 
   useEffect(() => {
     setBackendWallet(null);
-  }, [privy.user?.id]);
+  }, [user?.id]);
 
   useEffect(() => {
-    if (!sdkReady || !privy.isReady || !privy.user?.id) {
+    if (!sdkReady || !isReady || !user?.id) {
       return;
     }
-    if (linkedWalletMeta || backendWalletMeta) {
+    if (linkedWalletMeta || preferredWalletMeta || backendWalletMeta) {
       return;
     }
 
@@ -128,7 +170,7 @@ export function useStarkzapWallet(preferredAddress: string | null = null) {
 
     void (async () => {
       try {
-        const token = await privy.getAccessToken();
+        const token = await getAccessToken();
         if (!token) {
           return;
         }
@@ -147,7 +189,15 @@ export function useStarkzapWallet(preferredAddress: string | null = null) {
     return () => {
       cancelled = true;
     };
-  }, [backendWalletMeta, linkedWalletMeta, privy.getAccessToken, privy.isReady, privy.user?.id, sdkReady]);
+  }, [
+    backendWalletMeta,
+    getAccessToken,
+    isReady,
+    linkedWalletMeta,
+    preferredWalletMeta,
+    sdkReady,
+    user?.id,
+  ]);
 
   useEffect(() => {
     if (!sdkReady) {
@@ -155,7 +205,13 @@ export function useStarkzapWallet(preferredAddress: string | null = null) {
       setWallet(null);
       return;
     }
-    if (!privy.user || !walletMeta) {
+    if (!enabled) {
+      setStatus('disconnected');
+      setWallet(null);
+      setError(null);
+      return;
+    }
+    if (!user || !walletMeta?.walletId || !walletMeta.publicKey || !walletMeta.address) {
       setStatus('waiting-for-user');
       setWallet(null);
       return;
@@ -184,12 +240,7 @@ export function useStarkzapWallet(preferredAddress: string | null = null) {
         const connected = await starkzapSdk.connectWallet({
           account: { signer },
           accountAddress: walletMeta.address,
-          feeMode: SPONSORED_FEE_MODE,
-        });
-
-        await connected.ensureReady?.({
-          deploy: 'if_needed',
-          feeMode: SPONSORED_FEE_MODE,
+          feeMode: SELF_PAID_FEE_MODE,
         });
 
         if (cancelled) {
@@ -197,11 +248,14 @@ export function useStarkzapWallet(preferredAddress: string | null = null) {
         }
 
         setWallet(connected);
+        setConnectionMode('self-paid');
+        setError(null);
         setStatus('ready');
       } catch (cause: any) {
         if (cancelled) {
           return;
         }
+        setConnectionMode('self-paid');
         setError(cause instanceof Error ? cause : new Error(String(cause)));
         setStatus('error');
         setWallet(null);
@@ -212,13 +266,14 @@ export function useStarkzapWallet(preferredAddress: string | null = null) {
       cancelled = true;
     };
   }, [
-    privy.user?.id,
+    enabled,
     sdkReady,
     signRawHash,
+    user,
     walletMeta?.address,
     walletMeta?.publicKey,
     walletMeta?.walletId,
   ]);
 
-  return { wallet, status, error, address };
+  return { wallet, status, error, address, connectionMode };
 }

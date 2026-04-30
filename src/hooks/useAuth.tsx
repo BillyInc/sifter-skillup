@@ -43,6 +43,8 @@ export interface UserProfile {
   currentFieldId: string;
   xp_stage: number;
   starknet_address?: string;
+  starknet_wallet_id?: string;
+  starknet_public_key?: string;
   starknet_auth?: boolean;
   starknet_email?: string;
   guild_id: string | null;
@@ -97,6 +99,7 @@ type BridgeState = {
   wallet: StarkzapWallet | null;
   address: string | null;
   status: string;
+  connectionMode: 'sponsored' | 'self-paid' | null;
   ready: boolean;
 };
 
@@ -104,6 +107,7 @@ const EMPTY_BRIDGE_STATE: BridgeState = {
   wallet: null,
   address: null,
   status: 'unavailable',
+  connectionMode: null,
   ready: false,
 };
 
@@ -121,9 +125,10 @@ function StarknetBridgeStateSync({
       wallet: bridge.wallet,
       address: bridge.address,
       status: bridge.status,
+      connectionMode: bridge.connectionMode,
       ready: bridge.ready,
     });
-  }, [bridge.address, bridge.ready, bridge.status, bridge.wallet, onChange]);
+  }, [bridge.address, bridge.connectionMode, bridge.ready, bridge.status, bridge.wallet, onChange]);
 
   return null;
 }
@@ -306,7 +311,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         quantDeveloperUnlocked,
       }}
     >
-      <StarknetWalletBridgeProvider preferredAddress={user?.starknet_address ?? null}>
+      <StarknetWalletBridgeProvider
+        preferredAddress={user?.starknet_address ?? null}
+        preferredWalletId={user?.starknet_wallet_id ?? null}
+        preferredPublicKey={user?.starknet_public_key ?? null}
+      >
         <StarknetBridgeStateSync onChange={setBridgeState} />
         {PRIVY_ENABLED ? <PrivyStarknetBootstrap user={user} refreshUser={refreshUser} /> : null}
         {children}
@@ -362,6 +371,8 @@ function _normalise(raw: any): UserProfile {
     currentFieldId: activeFieldId,
     xp_stage: raw.xp_stage ?? 1,
     starknet_address: raw.starknet_address,
+    starknet_wallet_id: raw.starknet_wallet_id,
+    starknet_public_key: raw.starknet_public_key,
     starknet_auth: raw.starknet_auth ?? false,
     starknet_email: raw.starknet_email,
     guild_id: raw.guild_id ?? null,

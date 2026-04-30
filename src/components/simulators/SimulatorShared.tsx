@@ -54,8 +54,8 @@ const sh = StyleSheet.create({
     fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent,
     textTransform: 'uppercase', letterSpacing: 0.8,
   },
-  title:    { fontSize: FontSize.md, fontWeight: '900', color: Colors.text, lineHeight: 21, marginTop: 1 },
-  subtitle: { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 17, marginTop: 2 },
+  title:    { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, lineHeight: 26, marginTop: 2 },
+  subtitle: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20, marginTop: 4 },
 });
 
 // ── Buttons ───────────────────────────────────────────────────────────────────
@@ -139,7 +139,7 @@ export function SectionLabel({ text, color }: { text: string; color?: string }) 
 
 const sec = StyleSheet.create({
   label: {
-    fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent,
+    fontSize: FontSize.sm, fontWeight: '800', color: Colors.accent,
     textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 6,
   },
 });
