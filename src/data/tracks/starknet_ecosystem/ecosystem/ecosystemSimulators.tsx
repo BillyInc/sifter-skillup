@@ -90,7 +90,7 @@ import {
   STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
+import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
 import { Colors, Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 import {
   STARKNET_SEPOLIA_CONFIG,
@@ -116,9 +116,12 @@ interface SimProps {
   colors?: any;
 }
 
-function useAuth() {
-  const { wallet, address } = useStarkzapWallet();
-  return { starknetWallet: (wallet as StarkzapWallet | null) ?? null, starknetAddress: address };
+function useSimulatorAuth() {
+  const { starknetWallet, starknetWalletAddress } = useAppAuth();
+  return {
+    starknetWallet: (starknetWallet as StarkzapWallet | null) ?? null,
+    starknetAddress: starknetWalletAddress,
+  };
 }
 
 // ─── Shared UI (unchanged from original) ──────────────────────────────────────
@@ -1094,7 +1097,7 @@ const MAINNET_CHECKLIST = [
 export function MainnetPushSim({ onComplete, onSkip, colors }: {
   onComplete: () => void; onSkip: () => void; colors: any;
 }) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [checks, setChecks]         = useState<string[]>([]);
   const [executing, setExecuting]   = useState(false);
   const [txHash, setTxHash]         = useState<string | null>(null);

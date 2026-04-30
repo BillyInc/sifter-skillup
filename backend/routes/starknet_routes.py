@@ -26,6 +26,20 @@ wallets_router = APIRouter(prefix="/api/wallets", tags=["wallets"])
 router = APIRouter()
 
 
+def _is_duplicate_error(exc: Exception) -> bool:
+    message = str(exc).lower()
+    return "duplicate" in message or "unique" in message or "already exists" in message
+
+
+def _is_active_privy_account(user_row: dict) -> bool:
+    return bool(
+        user_row.get("starknet_address")
+        and user_row.get("starknet_auth")
+        and user_row.get("starknet_wallet_id")
+        and user_row.get("auth_provider") not in _OVERWRITABLE_AUTH_PROVIDERS
+    )
+
+
 def _build_privy_jwks_url(app_id: str) -> str:
     return f"https://auth.privy.io/api/v1/apps/{app_id}/jwks.json"
 
@@ -492,8 +506,42 @@ async def starknet_auth_email(
             "last_login": datetime.now().isoformat(),
             "privy_did": privy_did,
         }
-        inserted = service.table("users").insert(new_payload).execute()
-        user_row = inserted.data[0] if inserted.data else new_payload
+        try:
+            inserted = service.table("users").insert(new_payload).execute()
+            user_row = inserted.data[0] if inserted.data else new_payload
+        except Exception as exc:
+            if not _is_duplicate_error(exc):
+                raise
+
+            fallback_row = None
+            if email:
+                fallback = (
+                    service.table("users")
+                    .select("*")
+                    .eq("email", email)
+                    .limit(1)
+                    .execute()
+                )
+                if fallback.data:
+                    fallback_row = fallback.data[0]
+
+            if fallback_row is None and wallet.get("address"):
+                fallback = (
+                    service.table("users")
+                    .select("*")
+                    .eq("starknet_address", wallet.get("address"))
+                    .limit(1)
+                    .execute()
+                )
+                if fallback.data:
+                    fallback_row = fallback.data[0]
+
+            if fallback_row is None:
+                raise HTTPException(409, "Account with this email already exists") from exc
+
+            user_row = fallback_row
+            is_new_user = False
+
         _update_user_wallet_fields(service, user_row["id"], wallet, email, privy_did=privy_did)
     else:
         update_fields = {
@@ -505,7 +553,9 @@ async def starknet_auth_email(
 
         existing_did = user_row.get("privy_did")
         if existing_did and existing_did != privy_did:
-            raise HTTPException(409, "Email is linked to a different Privy account")
+            if _is_active_privy_account(user_row):
+                raise HTTPException(409, "Email is linked to a different Privy account")
+            update_fields["privy_did"] = privy_did
 
         if not existing_did:
             update_fields["privy_did"] = privy_did

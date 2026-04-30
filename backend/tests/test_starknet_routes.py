@@ -1,14 +1,17 @@
 """
 Tests for starknet_routes.py.
 """
+import asyncio
 from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient
+from fastapi import BackgroundTasks
 
 import starknet_routes
 from auth import Auth
 from main import app
+from models import StarknetAuthRequest
 
 
 SAMPLE_USER = {
@@ -17,6 +20,84 @@ SAMPLE_USER = {
     "auth_provider": "guest",
     "starknet_auth": False,
 }
+
+
+class _FakeExecuteResult:
+    def __init__(self, data):
+        self.data = data
+
+
+class _FakeQuery:
+    def __init__(self, service, table_name, action):
+        self.service = service
+        self.table_name = table_name
+        self.action = action
+        self.payload = None
+        self.filters = {}
+
+    def select(self, *_args, **_kwargs):
+        self.action = "select"
+        return self
+
+    def eq(self, key, value):
+        self.filters[key] = value
+        return self
+
+    def limit(self, _value):
+        return self
+
+    def single(self):
+        return self
+
+    def insert(self, payload):
+        self.action = "insert"
+        self.payload = payload
+        return self
+
+    def update(self, payload):
+        self.action = "update"
+        self.payload = payload
+        return self
+
+    def execute(self):
+        return self.service.execute(self.table_name, self.action, self.payload, self.filters)
+
+
+class _FakeService:
+    def __init__(self, users, duplicate_insert=False):
+        self.users = users
+        self.duplicate_insert = duplicate_insert
+
+    def table(self, table_name):
+        return _FakeQuery(self, table_name, "select")
+
+    def execute(self, table_name, action, payload, filters):
+        if table_name != "users":
+            return _FakeExecuteResult([])
+
+        if action == "select":
+            rows = [
+                row for row in self.users
+                if all(row.get(key) == value for key, value in filters.items())
+            ]
+            if "id" in filters and rows:
+                return _FakeExecuteResult(rows[0])
+            return _FakeExecuteResult(rows)
+
+        if action == "insert":
+            if self.duplicate_insert:
+                raise Exception("duplicate key value violates unique constraint users_email_key")
+            inserted = dict(payload)
+            self.users.append(inserted)
+            return _FakeExecuteResult([inserted])
+
+        if action == "update":
+            for row in self.users:
+                if all(row.get(key) == value for key, value in filters.items()):
+                    row.update(payload)
+            return _FakeExecuteResult([])
+
+        raise AssertionError(f"Unexpected action: {action}")
 
 
 @pytest.fixture
@@ -66,6 +147,122 @@ class TestStarknetAuthEmail:
         )
         assert r.status_code == 200, r.text
         assert r.json()["success"] is True
+
+    def test_duplicate_insert_falls_back_to_existing_user(self, monkeypatch):
+        users = [{
+            "id": "existing-user",
+            "email": "alice@example.com",
+            "username": "alice",
+            "auth_provider": "email",
+            "starknet_auth": False,
+        }]
+        service = _FakeService(users, duplicate_insert=True)
+
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_ID", "app", raising=False)
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_SECRET", "secret", raising=False)
+        monkeypatch.setattr(starknet_routes.settings, "WELCOME_BONUS", 100, raising=False)
+        monkeypatch.setattr(starknet_routes.db, "get_service_client", lambda: service)
+        monkeypatch.setattr(starknet_routes, "_verify_privy_token", lambda _token: {"sub": "did:privy:new"})
+        monkeypatch.setattr(starknet_routes, "get_user_email", lambda _did: _async_result("alice@example.com"))
+        monkeypatch.setattr(
+            starknet_routes,
+            "_ensure_privy_starknet_wallet",
+            lambda _did: _async_result(({
+                "address": "0xabc",
+                "id": "wallet-1",
+                "public_key": "pub-1",
+            }, True)),
+        )
+        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
+
+        result = asyncio.run(starknet_routes.starknet_auth_email(
+            StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+            BackgroundTasks(),
+            None,
+        ))
+
+        assert result.success is True
+        assert result.data["user"]["id"] == "existing-user"
+        assert users[0]["starknet_wallet_id"] == "wallet-1"
+        assert users[0]["privy_did"] == "did:privy:new"
+
+    def test_incomplete_did_link_is_relinked(self, monkeypatch):
+        users = [{
+            "id": "existing-user",
+            "email": "alice@example.com",
+            "username": "alice",
+            "auth_provider": "guest",
+            "starknet_auth": False,
+            "privy_did": "did:privy:old",
+        }]
+        service = _FakeService(users)
+
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_ID", "app", raising=False)
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_SECRET", "secret", raising=False)
+        monkeypatch.setattr(starknet_routes.db, "get_service_client", lambda: service)
+        monkeypatch.setattr(starknet_routes, "_verify_privy_token", lambda _token: {"sub": "did:privy:new"})
+        monkeypatch.setattr(starknet_routes, "get_user_email", lambda _did: _async_result("alice@example.com"))
+        monkeypatch.setattr(
+            starknet_routes,
+            "_ensure_privy_starknet_wallet",
+            lambda _did: _async_result(({
+                "address": "0xdef",
+                "id": "wallet-2",
+                "public_key": "pub-2",
+            }, False)),
+        )
+        monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
+
+        result = asyncio.run(starknet_routes.starknet_auth_email(
+            StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+            BackgroundTasks(),
+            None,
+        ))
+
+        assert result.success is True
+        assert users[0]["privy_did"] == "did:privy:new"
+        assert users[0]["starknet_wallet_id"] == "wallet-2"
+
+    def test_active_did_conflict_still_raises_409(self, monkeypatch):
+        users = [{
+            "id": "existing-user",
+            "email": "alice@example.com",
+            "username": "alice",
+            "auth_provider": "privy_starknet",
+            "starknet_auth": True,
+            "starknet_address": "0xabc",
+            "starknet_wallet_id": "wallet-live",
+            "privy_did": "did:privy:old",
+        }]
+        service = _FakeService(users)
+
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_ID", "app", raising=False)
+        monkeypatch.setattr(starknet_routes.settings, "PRIVY_APP_SECRET", "secret", raising=False)
+        monkeypatch.setattr(starknet_routes.db, "get_service_client", lambda: service)
+        monkeypatch.setattr(starknet_routes, "_verify_privy_token", lambda _token: {"sub": "did:privy:new"})
+        monkeypatch.setattr(starknet_routes, "get_user_email", lambda _did: _async_result("alice@example.com"))
+        monkeypatch.setattr(
+            starknet_routes,
+            "_ensure_privy_starknet_wallet",
+            lambda _did: _async_result(({
+                "address": "0xabc",
+                "id": "wallet-live",
+                "public_key": "pub-live",
+            }, False)),
+        )
+
+        with pytest.raises(starknet_routes.HTTPException) as exc_info:
+            asyncio.run(starknet_routes.starknet_auth_email(
+                StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+                BackgroundTasks(),
+                None,
+            ))
+
+        assert exc_info.value.status_code == 409
+
+
+async def _async_result(value):
+    return value
 
 
 # ─────────────────────────────────────────────────────────────

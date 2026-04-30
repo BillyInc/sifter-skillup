@@ -130,7 +130,7 @@ import {
   isStarkzapAvailable,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
-import { useStarkzapWallet } from '../../../../lib/starkzapPrivyAdapter';
+import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
 import {
   getStarknetSepoliaRpcConfigError,
   isStarknetSepoliaRpcConfigured,
@@ -173,9 +173,12 @@ interface CardProps {
   onSkip: () => void;
 }
 
-function useAuth() {
-  const { wallet, address } = useStarkzapWallet();
-  return { starknetWallet: (wallet as StarkzapWallet | null) ?? null, starknetAddress: address };
+function useSimulatorAuth() {
+  const { starknetWallet, starknetWalletAddress } = useAppAuth();
+  return {
+    starknetWallet: (starknetWallet as StarkzapWallet | null) ?? null,
+    starknetAddress: starknetWalletAddress,
+  };
 }
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
@@ -747,7 +750,7 @@ mod Counter {
 }`;
 
 function DeploySim({ onComplete, onSkip, colors }: { onComplete: () => void; onSkip: () => void; colors: any }) {
-  const { starknetWallet } = useAuth();
+  const { starknetWallet } = useSimulatorAuth();
   const [phase, setPhase] = useState<'idle' | 'declaring' | 'deploying' | 'done'>('idle');
   const [classHash, setClassHash] = useState<string | null>(null);
   const [contractAddress, setContractAddress] = useState<string | null>(null);
