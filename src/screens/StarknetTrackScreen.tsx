@@ -266,6 +266,15 @@ export default function StarknetTrackScreen() {
 
   const currentLabId = LABS.find((lab) => !isLabLocked(lab) && !completedLabs.has(lab.id))?.id;
 
+  const handleBackPress = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.back();
+      return;
+    }
+
+    navigation.replace('/(tabs)/fields' as any);
+  }, [navigation]);
+
   async function handleConnectWallet() {
     if (!user) {
       navigation.push('/(auth)');
@@ -337,7 +346,7 @@ export default function StarknetTrackScreen() {
       >
         <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <TouchableOpacity
-            onPress={() => navigation.back()}
+            onPress={handleBackPress}
             style={[styles.backButton, { backgroundColor: colors.bgSecondary, borderColor: '#F59E0B30' }]}
             activeOpacity={0.85}
           >

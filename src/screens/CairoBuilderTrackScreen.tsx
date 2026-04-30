@@ -117,6 +117,15 @@ export default function CairoBuilderTrackScreen() {
 
   const completedLevels: string[] = (user?.completed_levels ?? user?.completedLevels ?? []).map(String);
 
+  const handleBackPress = useCallback(() => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+
+    router.replace('/(tabs)/fields' as any);
+  }, [router]);
+
   function isLabUnlocked(lab: LabDef): boolean {
     if (lab.number === 0) return true;
     const previousLab = CAIRO_LABS.find((candidate) => candidate.number === lab.number - 1);
@@ -188,7 +197,7 @@ export default function CairoBuilderTrackScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <TouchableOpacity onPress={() => router.back()} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
+          <TouchableOpacity onPress={handleBackPress} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
             <Text style={[styles.backButtonText, { color: colors.text }]}>{'<'} Back</Text>
           </TouchableOpacity>
           <Text style={[styles.heroEyebrow, { color: ACCENT }]}>Builder Workspace</Text>

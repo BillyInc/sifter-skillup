@@ -35,6 +35,7 @@ import StarknetFaucetButton from '../components/StarknetFaucetButton';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { shuffleOptionsWithCorrectTracking } from '../lib/shuffleOptions';
 import FlagModal from '../components/FlagModal';
+import { TrackChoiceScreen } from './PostIslandTrackSelection';
 import {
   deleteBookmark as deleteDiaryBookmark,
   getBookmarks as getDiaryBookmarks,
@@ -813,6 +814,7 @@ export default function LessonScreen({
   // ── Lesson transition ──────────────────────────────────────
   const [showTransition, setShowTransition]   = useState(false);
   const [pendingLevelId, setPendingLevelId]   = useState<number|null>(null);
+  const [showPostIslandTracks, setShowPostIslandTracks] = useState(false);
   const [showFlag, setShowFlag]               = useState(false);
   const [isFinishing, setIsFinishing]         = useState(false);
   const [completionWarning, setCompletionWarning] = useState<string | null>(null);
@@ -1014,6 +1016,10 @@ export default function LessonScreen({
   const handleCelebDismiss = () => {
     setShowCelebration(false);
     setCelebrationDone(true);
+    if (levelId === 310) {
+      setShowPostIslandTracks(true);
+      return;
+    }
     // Play portal transition when there is a next lesson in sequence;
     // skip it and call onComplete directly at track/island end.
     if (nextTarget) {
@@ -1109,13 +1115,17 @@ export default function LessonScreen({
         />
         {/* CompleteScreen is hidden while the portal transition is playing */}
         {!showCelebration && !showTransition && (
-          <CompleteScreen
-            stars={state.stars}
-            xp={sessionXp}
-            topic={lessonTopic}
-            warning={completionWarning}
-            onContinue={handleCelebDismiss}
-          />
+          showPostIslandTracks ? (
+            <TrackChoiceScreen showBackToFields />
+          ) : (
+            <CompleteScreen
+              stars={state.stars}
+              xp={sessionXp}
+              topic={lessonTopic}
+              warning={completionWarning}
+              onContinue={handleCelebDismiss}
+            />
+          )
         )}
         {/*
           LessonTransition MUST live here, not only in the main return.

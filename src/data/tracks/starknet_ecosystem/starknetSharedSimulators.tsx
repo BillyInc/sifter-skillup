@@ -369,6 +369,7 @@ export const STARKZAP_SIMULATOR_TYPES = [
   'starkzap-wallet',
   'starkzap-gasless',
   'starkzap-swap',
+  'starkzap-btc-swap',
   'starkzap-stake',
   'starkzap-lend',
   'starkzap-borrow',
@@ -379,6 +380,8 @@ export const STARKZAP_SIMULATOR_TYPES = [
   'starkzap-boss',
   // ── Ecosystem-only ────────────────────────────────────────────────────────
   'starkzap-ecosystem-read',
+  'starkzap-gaming-read',
+  'starkzap-ecosystem-map',
   'starkzap-mainnet-push',
   'starkzap-package-install',
   // ── Navigator-only (DeFi analysis tools) ─────────────────────────────────

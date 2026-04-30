@@ -187,6 +187,15 @@ export default function EcosystemTrackScreen() {
 
   const currentLabId = ECOSYSTEM_LABS.find(l => isLabUnlocked(l) && !isLabComplete(l))?.id;
 
+  const handleBackPress = useCallback(() => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+
+    router.replace('/(tabs)/fields' as any);
+  }, [router]);
+
   const handleLabPress = (lab: EcosystemLabDef) => {
     if (!isLabUnlocked(lab)) {
       Alert.alert(
@@ -224,7 +233,7 @@ export default function EcosystemTrackScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <TouchableOpacity onPress={() => router.back()} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
+          <TouchableOpacity onPress={handleBackPress} style={[styles.backButton, { backgroundColor: colors.bgSecondary }]}>
             <Text style={[styles.backButtonText, { color: colors.text }]}>{'<'} Back</Text>
           </TouchableOpacity>
           <Text style={[styles.heroEyebrow, { color: ACCENT }]}>Analyst Workspace</Text>

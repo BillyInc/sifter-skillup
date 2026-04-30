@@ -44,6 +44,14 @@ export default function LessonRoute() {
   // IslandMapScreen will then show the 3-track banner if boss 310 is done,
   // or the next island in sequence for any other completion.
   const handleDone = () => {
+    if (levelId >= 291 && levelId <= 310) {
+      router.replace({
+        pathname: '/map/island' as any,
+        params: { initialIsland: '18' },
+      });
+      return;
+    }
+
     if (
       !isBoss
       && trackId
