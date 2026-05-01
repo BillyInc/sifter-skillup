@@ -10,7 +10,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { API, API_BASE } from '../lib/api';
 import { getOrCreateDeviceId, onLoginSync } from '../lib/offlineStorage';
 import { setPendingPostAuthRedirect } from '../lib/postAuthRedirect';
-import { resolvePostAuthHref } from '../lib/resumeNavigation';
+
 import type { StarkzapWallet } from '../lib/starkzap';
 import {
   StarknetWalletBridgeProvider,
@@ -229,9 +229,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const isNewUser = Boolean(payload.is_new_user);
-      const nextPath = resolvePostAuthHref(payload.user, 'starknet-islands');
-      setPendingPostAuthRedirect(nextPath);
       await _handleAuthResponse({ token: payload.token, user: payload.user });
+
+      // New signups go to island 18; returning users go to homepage
+      const nextPath = isNewUser
+        ? '/map/island?initialIsland=18'
+        : '/(tabs)/home';
+      setPendingPostAuthRedirect(nextPath);
       return { isNewUser, nextPath };
     } catch (error) {
       setPendingPostAuthRedirect(null);
