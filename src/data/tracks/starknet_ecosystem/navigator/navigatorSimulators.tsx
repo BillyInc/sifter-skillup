@@ -51,6 +51,7 @@ import {
 import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 import {
   isStarkzapAvailable, starkzapSdk, STARKNET_TOKENS, MOCK,
+  SPONSORED_FEE_MODE,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
 import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
@@ -1170,7 +1171,7 @@ export function BorrowSim({ onComplete, onSkip, colors }: SimProps) {
         const tx = await w.lending().borrow({
           token: STARKNET_TOKENS.USDC,
           amount: { toUnit: () => '10000000' } as any, // 10 USDC
-        });
+        }, { feeMode: SPONSORED_FEE_MODE });
         setTxHash(tx.hash);
       } catch { setTxHash('0x' + Math.random().toString(16).slice(2, 14)); }
     } else {
@@ -4099,7 +4100,7 @@ export function MEVDefenceSim({ onComplete, onSkip, colors }: SimProps) {
           tokenIn: STARKNET_TOKENS.STRK, tokenOut: STARKNET_TOKENS.USDC,
           amountIn: { toUnit: () => '100000000000000000000' } as any,
           slippageBps: BigInt(Math.round(slippage * 100)),
-        });
+        }, { feeMode: SPONSORED_FEE_MODE });
         setTxHash(tx.hash);
       } catch { setTxHash(mockTxHash()); }
     } else {
@@ -4245,7 +4246,7 @@ export function LiquidStakeSim({ onComplete, onSkip, colors }: SimProps) {
       try {
         const w = starknetWallet as any;
         const pool = '0x0000000000000000000000000000000000000001';
-        const tx = await w.stake(pool, { toUnit: () => '1000000000000000000000' } as any);
+        const tx = await w.stake(pool, { toUnit: () => '1000000000000000000000' } as any, { feeMode: SPONSORED_FEE_MODE });
         setTxHash(tx.hash);
       } catch { setTxHash(mockTxHash()); }
     } else {
