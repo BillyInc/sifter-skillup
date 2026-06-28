@@ -250,7 +250,7 @@ export function selectSimulatorTypes(
 
 // ── Generation prompt builder ─────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `You are an expert curriculum designer for Sifter Skill_Up, a professional skills learning platform.
+const SYSTEM_PROMPT = `You are an expert curriculum designer for Sifter LevelUp, a professional skills learning platform.
 
 Your job: Given a lesson's content, generate simulator exercises that test whether the student has truly understood the lesson — not just memorised it.
 

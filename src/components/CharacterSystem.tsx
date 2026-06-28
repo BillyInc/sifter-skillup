@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Character System
+ * Sifter LevelUp — Character System
  * SVG-composed worker character across 8 XP stages.
  * Track-specific desk tools, idle animation, The Bolt celebratory character.
  *

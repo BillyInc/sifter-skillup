@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Celebration Overlay
+ * Sifter LevelUp — Celebration Overlay
  * Full-screen celebration triggered on lesson complete, lab complete, stage-up.
  * System palette confetti + The Bolt + XP burst. Auto-dismisses after 3.5s.
  *

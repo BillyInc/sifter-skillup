@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — SUPPLY CHAIN ANALYST Career Track
+// ⚡ Sifter LevelUp — SUPPLY CHAIN ANALYST Career Track
 // Junior Level — Continuation: j111 simulation + remaining lessons + Labs 3–10 complete
 // All with Maya narrative, inline definitions, image prompts, full spec fields
 
@@ -837,7 +837,7 @@ Write a structured analysis covering: which demand patterns the 12-month moving 
             {
               platform: `LinkedIn`,
               type: `primary`,
-              postContent: `Completed the ERP Systems module in the Sifter Skill_Up Supply Chain Analyst programme.
+              postContent: `Completed the ERP Systems module in the Sifter LevelUp Supply Chain Analyst programme.
 
 Skills verified:
 ✅ SAP navigation and transaction codes (MB52, ME2M, MD04)
@@ -847,7 +847,7 @@ Skills verified:
 
 The boss battle: navigate an unfamiliar ERP scenario, extract the right data, and produce a management recommendation — without hints.
 
-#SupplyChain #SAP #ERP #SifterSkillUp`,
+#SupplyChain #SAP #ERP #SifterLevelUp`,
             },
             {
               platform: `Personal Portfolio / Notion`,
@@ -861,7 +861,7 @@ Demonstrated competency in SAP/ERP navigation including:
 - Master data quality assessment
 - Custom data extraction using SE16N and equivalent tools
 
-**Verified by:** Sifter Skill_Up Junior Certification — [date]`,
+**Verified by:** Sifter LevelUp Junior Certification — [date]`,
             },
           ],
         },
@@ -969,7 +969,7 @@ APICS CPIM operational standards
 CSCMP supply chain management principles — junior analyst competency level
 
 ## Verified By
-Sifter Skill_Up — Junior Final Boss — [date]
+Sifter LevelUp — Junior Final Boss — [date]
 Intermediate Level Unlocked
 Verification: https://sifter.app/verify/[id]`,
             },
@@ -979,7 +979,7 @@ Verification: https://sifter.app/verify/[id]`,
         {
           platform: `LinkedIn`,
           type: `primary`,
-          postContent: `Completed the Junior level of the Sifter Skill_Up Supply Chain Analyst programme — including the unseen Final Boss.
+          postContent: `Completed the Junior level of the Sifter LevelUp Supply Chain Analyst programme — including the unseen Final Boss.
 
 The Final Boss: a dynamically generated supply chain crisis synthesising skills from across all 10 Junior labs. No hints. No lesson pointers. One shot.
 
@@ -989,7 +989,7 @@ Intermediate level now unlocked: Python, advanced inventory optimisation, S&OP, 
 
 Full portfolio: [GitHub link]
 
-#SupplyChain #APICS #CSCMP #SifterSkillUp`,
+#SupplyChain #APICS #CSCMP #SifterLevelUp`,
         },
       ],
       badgeEarned: `Junior Supply Chain Analyst — Level Complete`,

@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Base Ecosystem (Island 11, Levels 151–165)
+// ⚡ Sifter LevelUp — Base Ecosystem (Island 11, Levels 151–165)
 // Part B of 2 — Levels 159–165
 
 import type { Level } from './levels';

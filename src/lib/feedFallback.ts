@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Feed seeded fallback
+ * Sifter LevelUp — Feed seeded fallback
  *
  * Renders when `API.feedGetItems()` returns empty, errors, or the device is offline.
  * Shape matches the backend `FeedItem` from `src/types/api.ts`, so the same grouping

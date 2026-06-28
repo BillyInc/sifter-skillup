@@ -33,7 +33,7 @@ export default function OAuthConsentModal({
             <Text style={styles.eyebrow}>Connection Review</Text>
             <Text style={styles.title}>Connect to {platform}</Text>
             <Text style={styles.sub}>
-              Before you connect, here&apos;s exactly what Sifter Skill_Up will and won&apos;t do with your {platform} account.
+              Before you connect, here&apos;s exactly what Sifter LevelUp will and won&apos;t do with your {platform} account.
             </Text>
           </View>
 
@@ -68,7 +68,7 @@ export default function OAuthConsentModal({
 
           <View style={styles.agentNote}>
             <Text style={styles.agentText}>
-              By tapping &quot;Connect&quot;, you authorise Sifter Skill_Up to act as your limited agent
+              By tapping &quot;Connect&quot;, you authorise Sifter LevelUp to act as your limited agent
               for the specific actions listed above on {platform}, as described in our{' '}
               <Text style={styles.agentLink}>Terms of Service</Text>.
             </Text>

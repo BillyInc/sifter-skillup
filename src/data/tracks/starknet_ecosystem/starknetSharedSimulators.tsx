@@ -1,7 +1,7 @@
 /**
  * starknetSharedSimulators.tsx
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚡ Sifter SkillUp — Starknet Shared Simulator Infrastructure
+ * ⚡ Sifter LevelUp — Starknet Shared Simulator Infrastructure
  *
  * Imported by ALL four Starknet tracks:
  *   Island · Navigator · Ecosystem · Builder

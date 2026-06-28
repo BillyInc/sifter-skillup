@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — TON & Telegram (Island 12, Levels 166–180)
+// ⚡ Sifter LevelUp — TON & Telegram (Island 12, Levels 166–180)
 // Part B of 2 — Levels 174–180
 
 import type { Level } from './levels';

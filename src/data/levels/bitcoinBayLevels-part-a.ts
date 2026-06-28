@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Island Level Type Definitions
+ * Sifter LevelUp — Island Level Type Definitions
  * NEW FILE: src/data/levels/bitcoinBayLevels-part-a.ts
  *
  * This file provides the shared type interface used by all island level files.

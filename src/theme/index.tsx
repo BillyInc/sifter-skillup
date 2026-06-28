@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Design System v3
+ * Sifter LevelUp — Design System v3
  * ─────────────────────────────────────────────────────────────
  * REPLACES: src/theme/index.ts
  *
@@ -315,7 +315,7 @@ export function getTrackTools(trackId: string) {
 export const NOTIFICATION_CONFIG = {
   provider:         'resend' as const,
   fromEmail:        'learn@sifter.app',
-  fromName:         'Sifter Skill_Up',
+  fromName:         'Sifter LevelUp',
   minIntervalHours: 4,
   weeklyDigestDay:  0,
   weeklyDigestHour: 9,
@@ -369,3 +369,78 @@ export const WEB_MAX_WIDTH = 1088;
 export const webContainer = Platform.OS === 'web'
   ? { maxWidth: 1088, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 14, paddingTop: 14 }
   : { paddingHorizontal: 14, paddingTop: 12 };
+
+// ─── Brand ────────────────────────────────────────────────────
+// Sifter LevelUp brand constants. The name is intentionally also the
+// product's core call-to-action ("Level Up").
+
+export const Brand = {
+  name: 'Sifter LevelUp',
+  short: 'LevelUp',
+  tagline: 'See you at the top, fam.',
+  promise: 'See the domains, roles and jobs your programme unlocks — local, global, remote.',
+  // Accent used across brand surfaces (logo, splash, intro). Aligned to the
+  // existing gold/amber accent so it never clashes with the neutral UI.
+  primary: '#F59E0B',
+  primaryDeep: '#B45309',
+  onPrimary: '#FFFFFF',
+} as const;
+
+// ─── Career Intelligence tokens ───────────────────────────────
+// Domain match type (CCMAS v3.0): every programme→domain link is one of
+// Direct / Functional / Adjacent. Roles within a matched domain are scored
+// separately as Match / Adjacent by ESCO coverage. These colours are kept
+// deliberately distinct from the XP / level / streak colours above so the
+// two systems never visually collide.
+
+export type DomainMatchType = 'direct' | 'functional' | 'adjacent';
+export type RoleMatchType = 'match' | 'adjacent';
+
+export interface CareerBadgeStyle {
+  bg: string;
+  border: string;
+  text: string;
+  label: string;
+}
+
+// Light-mode badge styles. Green = Direct, Blue = Functional, Amber = Adjacent.
+export const DomainBadge: Record<DomainMatchType, CareerBadgeStyle> = {
+  direct:     { bg: '#ECFDF5', border: '#A7F3D0', text: '#047857', label: 'Direct' },
+  functional: { bg: '#EFF6FF', border: '#BFDBFE', text: '#1D4ED8', label: 'Functional' },
+  adjacent:   { bg: '#FFFBEB', border: '#FDE68A', text: '#B45309', label: 'Adjacent' },
+};
+
+export const DomainBadgeDark: Record<DomainMatchType, CareerBadgeStyle> = {
+  direct:     { bg: '#0C2A22', border: '#1E5345', text: '#34D399', label: 'Direct' },
+  functional: { bg: '#0E1E3A', border: '#244B85', text: '#7C96FF', label: 'Functional' },
+  adjacent:   { bg: '#2A2008', border: '#5C4715', text: '#F4B74A', label: 'Adjacent' },
+};
+
+// Role match label: "Match" (>=50% ESCO coverage) or "Adjacent" (20-49%).
+export const RoleBadge: Record<RoleMatchType, CareerBadgeStyle> = {
+  match:    { bg: '#ECFDF5', border: '#A7F3D0', text: '#047857', label: 'Match' },
+  adjacent: { bg: '#FFFBEB', border: '#FDE68A', text: '#B45309', label: 'Adjacent' },
+};
+
+export const RoleBadgeDark: Record<RoleMatchType, CareerBadgeStyle> = {
+  match:    { bg: '#0C2A22', border: '#1E5345', text: '#34D399', label: 'Match' },
+  adjacent: { bg: '#2A2008', border: '#5C4715', text: '#F4B74A', label: 'Adjacent' },
+};
+
+export function getDomainBadge(type: DomainMatchType, isDark = false): CareerBadgeStyle {
+  return (isDark ? DomainBadgeDark : DomainBadge)[type];
+}
+
+export function getRoleBadge(type: RoleMatchType, isDark = false): CareerBadgeStyle {
+  return (isDark ? RoleBadgeDark : RoleBadge)[type];
+}
+
+// Data freshness / provenance, shown next to any data point.
+export const DataFreshness = {
+  verified: { icon: '✅', label: 'Verified', color: '#10B981' },
+  inferred: { icon: '⚠️', label: 'Inferred', color: '#F59E0B' },
+  pending:  { icon: '🕐', label: 'Pending',  color: '#6B7280' },
+} as const;
+
+// Storage key for the first-launch intro carousel.
+export const INTRO_SEEN_KEY = '@sifter_levelup_intro_seen_v1';

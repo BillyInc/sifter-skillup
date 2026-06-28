@@ -1,4 +1,4 @@
-package app.sifterskillup
+package app.sifterlevelup
 
 import android.os.Build
 import android.os.Bundle

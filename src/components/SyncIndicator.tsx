@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — SyncIndicator (v2)
+ * Sifter LevelUp — SyncIndicator (v2)
  *
  * REPLACES: src/components/SyncIndicator.tsx
  *

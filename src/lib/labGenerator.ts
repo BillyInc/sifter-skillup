@@ -137,7 +137,7 @@ export interface GeneratedLabContent {
 
 // ── Generation prompts ────────────────────────────────────────────────────────
 
-const AGGREGATE_SYSTEM = `You are an expert curriculum designer for Sifter Skill_Up.
+const AGGREGATE_SYSTEM = `You are an expert curriculum designer for Sifter LevelUp.
 
 Generate 15 aggregate simulation scenarios for a lab. These draw randomly from all lessons in the lab and test at a higher difficulty than individual lesson simulations.
 
@@ -158,7 +158,7 @@ OUTPUT: valid JSON array only, no markdown:
   "scoringCriteria": ["...", "...", "...", "..."]
 }]`;
 
-const BOSS_SYSTEM = `You are an expert curriculum designer for Sifter Skill_Up.
+const BOSS_SYSTEM = `You are an expert curriculum designer for Sifter LevelUp.
 
 CRITICAL — THE PHASE STRUCTURE IS FIXED AND NEVER CHANGES:
 - Phase 1 (Learning Loop) is ALWAYS assisted: hints on, lesson pointers on, MCQ format. Every lab. Always.
@@ -188,7 +188,7 @@ OUTPUT JSON shape:
   "xpAwarded": 500
 }`
 
-const INTERVIEW_SYSTEM = `You are an expert curriculum designer for Sifter Skill_Up.
+const INTERVIEW_SYSTEM = `You are an expert curriculum designer for Sifter LevelUp.
 
 Generate a Final Boss interview simulation that acts as the Level completion gate.
 

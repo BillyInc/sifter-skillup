@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Firebase Cloud Messaging
+# Sifter LevelUp — Firebase Cloud Messaging
 # Sends push notifications for device enforcement
 # (e.g., logout when new device logs in)
 # ============================================

@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — Career Skill Tracks (Phase 2)
+// ⚡ Sifter LevelUp — Career Skill Tracks (Phase 2)
 // All tracks show as Coming Soon. Structure is final; tapping tracks will
 // be logged for interest analytics to prioritise build order.
 

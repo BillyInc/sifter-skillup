@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Starknet Feed Config
+ * Sifter LevelUp — Starknet Feed Config
  * NEW FILE: src/lib/starknetFeed.ts
  *
  * All Twitter/X accounts and news sources relevant to Starknet.
@@ -42,7 +42,7 @@ export const STARKNET_TWITTER_ACCOUNTS: StarknetTwitterAccount[] = [
   { handle: 'NethermindEth',  displayName: 'Nethermind',           category: 'tooling',   description: 'Juno full node client for Starknet. Also builds Papyrus and Cairo tooling.', url: 'https://twitter.com/NethermindEth',  priority: 1 },
   { handle: 'PragmaOracle',   displayName: 'Pragma Oracle',        category: 'tooling',   description: 'Native oracle on Starknet. Price feeds for DeFi protocols.', url: 'https://twitter.com/PragmaOracle',   priority: 2 },
   { handle: 'starknet_id',    displayName: 'Starknet ID',          category: 'tooling',   description: 'On-chain identity and naming system. .stark domain names.', url: 'https://twitter.com/starknet_id',    priority: 2 },
-  { handle: 'StarkzapHQ',     displayName: 'StarkZap',             category: 'tooling',   description: 'SDK powering Sifter Skill_Up Starknet lessons. Account abstraction made easy.', url: 'https://twitter.com/StarkzapHQ',     priority: 1 },
+  { handle: 'StarkzapHQ',     displayName: 'StarkZap',             category: 'tooling',   description: 'SDK powering Sifter LevelUp Starknet lessons. Account abstraction made easy.', url: 'https://twitter.com/StarkzapHQ',     priority: 1 },
   { handle: 'Voyager_online', displayName: 'Voyager Explorer',     category: 'tooling',   description: 'Block explorer for Starknet mainnet and Sepolia. Tx tracking, contract verification.', url: 'https://twitter.com/Voyager_online', priority: 2 },
 
   // ── Research & Community ──────────────────────────────────

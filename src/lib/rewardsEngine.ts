@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Rewards Engine
+ * Sifter LevelUp — Rewards Engine
  * Central engine for awarding XP, badges, merch credits, tokens, cash.
  * Every lesson completion, badge unlock, challenge win flows through here.
  *

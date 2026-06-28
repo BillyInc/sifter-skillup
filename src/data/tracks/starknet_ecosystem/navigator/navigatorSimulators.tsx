@@ -1,7 +1,7 @@
 /**
  * navigatorSimulators.tsx
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚡ Sifter SkillUp — Starknet DeFi Navigator: All Simulators (Combined)
+ * ⚡ Sifter LevelUp — Starknet DeFi Navigator: All Simulators (Combined)
  *
  * Synthesised from:
  *   · navigatorSimulators.tsx (sessions 1–4 — Labs 1–11 original sims)

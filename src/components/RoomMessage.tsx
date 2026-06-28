@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Room Message
+ * Sifter LevelUp — Room Message
  * Renders one message in a Track Room or Guild Chat.
  * Supports: text, lesson_share, portfolio_share, challenge_update, reward_celebrate.
  */

@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Offline Sync Engine
+# Sifter LevelUp — Offline Sync Engine
 #
 # PRIORITY #1 — this is the core of offline-first.
 #

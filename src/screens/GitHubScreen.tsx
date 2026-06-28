@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — GitHub Screen
+ * Sifter LevelUp — GitHub Screen
  *
  * Three modes depending on user state:
  *   1. NOT CONNECTED  → Explain what GitHub is + connect button
@@ -153,7 +153,7 @@ From the command line:
   git commit -m "Add Sharpe calc"  # save snapshot
   git push origin main             # upload to GitHub
 
-From Sifter Skill_Up, we handle all of this for you — tap "Push to GitHub" and your project files go straight to your repo.`,
+From Sifter LevelUp, we handle all of this for you — tap "Push to GitHub" and your project files go straight to your repo.`,
     quiz: {
       q: 'What does "push" do?',
       opts: ['Deletes your code', 'Uploads your commits from local to GitHub', 'Downloads someone else\'s code', 'Creates a new repo'],
@@ -177,7 +177,7 @@ A good quant portfolio README includes:
 Bad README: empty or "this is my project"
 Good README: "A Python implementation of the Markowitz minimum-variance optimiser using cvxpy. Inputs: daily returns DataFrame. Outputs: optimal weights, annual Sharpe, and risk contributions per asset."
 
-Sifter Skill_Up auto-generates a README for each portfolio push.`,
+Sifter LevelUp auto-generates a README for each portfolio push.`,
     quiz: {
       q: 'Why does every serious repo need a README?',
       opts: ['GitHub requires it', 'It explains what the project does so recruiters and collaborators understand it instantly', 'It makes the code run faster', 'It\'s only needed for open-source projects'],
@@ -549,7 +549,7 @@ function buildPortfolioFiles(user: any): Array<{ path: string; content: string }
 
   const readme = `# Quant Finance Portfolio — ${name}
 
-Built through [Sifter Skill_Up](https://sifter.app) · Generated ${date}
+Built through [Sifter LevelUp](https://sifter.app) · Generated ${date}
 
 ## About
 This repository contains Python implementations of core quantitative finance concepts,
@@ -580,7 +580,7 @@ Sifter Quant Trader · Labs 0–8 completed
 
   const sharpe = `"""
 Sharpe Ratio, Max Drawdown, Calmar, VaR, CVaR
-Sifter Skill_Up — Lab 8: Applied Quant Python
+Sifter LevelUp — Lab 8: Applied Quant Python
 """
 import numpy as np
 import pandas as pd
@@ -634,7 +634,7 @@ if __name__ == "__main__":
 
   const kelly = `"""
 Kelly Criterion — Optimal Position Sizing
-Sifter Skill_Up — Lab 8: Applied Quant Python
+Sifter LevelUp — Lab 8: Applied Quant Python
 """
 import numpy as np
 
@@ -679,7 +679,7 @@ if __name__ == "__main__":
 
   const markowitz = `"""
 Markowitz Minimum-Variance Portfolio
-Sifter Skill_Up — Lab 8: Applied Quant Python
+Sifter LevelUp — Lab 8: Applied Quant Python
 """
 import numpy as np
 import pandas as pd
@@ -751,7 +751,7 @@ if __name__ == "__main__":
 
   const bs = `"""
 Black-Scholes Option Pricer + Greeks
-Sifter Skill_Up — Lab 8: Applied Quant Python
+Sifter LevelUp — Lab 8: Applied Quant Python
 """
 import numpy as np
 from scipy.stats import norm
@@ -812,7 +812,7 @@ if __name__ == "__main__":
 
   const mc = `"""
 Monte Carlo GBM Simulation
-Sifter Skill_Up — Lab 8: Applied Quant Python
+Sifter LevelUp — Lab 8: Applied Quant Python
 """
 import numpy as np
 
@@ -869,7 +869,7 @@ if __name__ == "__main__":
 
   const ff = `"""
 Fama-French 3-Factor Attribution
-Sifter Skill_Up — Lab 8: Applied Quant Python
+Sifter LevelUp — Lab 8: Applied Quant Python
 """
 import pandas as pd
 import numpy as np

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Lesson Transition
+ * Sifter LevelUp — Lesson Transition
  * ─────────────────────────────────────────────────────────────
  *
  * Portal/door animation that plays between lessons (level-to-level).

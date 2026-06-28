@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — Master Field Registry
+// ⚡ Sifter LevelUp — Master Field Registry
 // 28 Fields from: Sifter_SkillUp_Master_Role_Directory_v2.pdf
 // + existing Crypto/Quant fields
 

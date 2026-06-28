@@ -1,4 +1,4 @@
-# Sifter Skill_Up
+# Sifter LevelUp
 
 Duolingo-style learning app for crypto literacy and quant finance.
 Deploys as: React Native mobile app + Telegram Mini App + Base App + Web Dashboard.

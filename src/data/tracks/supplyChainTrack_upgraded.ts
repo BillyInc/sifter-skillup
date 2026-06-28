@@ -1,5 +1,5 @@
 ```typescript
-// ⚡ Sifter Skill_Up — SUPPLY CHAIN ANALYST Career Track
+// ⚡ Sifter LevelUp — SUPPLY CHAIN ANALYST Career Track
 import { SkillTrack } from '../skillTypes';
 
 export const supplyChainAnalystTrack: SkillTrack = {

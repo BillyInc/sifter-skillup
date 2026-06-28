@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Notification Engine
+ * Sifter LevelUp — Notification Engine
  * Push notifications via Expo Push API.
  * Email notifications via Resend.
  * Rate-limited, streak-aware, personalised.

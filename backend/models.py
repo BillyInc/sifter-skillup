@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Pydantic Models
+# Sifter LevelUp — Pydantic Models
 # Extended: offline sync, device sessions,
 #           Starknet, feed, badges, challenges
 # ============================================
@@ -47,6 +47,20 @@ class UserUpdate(BaseModel):
     current_track_id:   Optional[str]            = None
     current_track_name: Optional[str]            = None
     xp_stage:           Optional[int]            = None
+    # 'student' | 'educator' | 'institution_admin' — defaults to student.
+    account_type:       Optional[str]            = None
+
+
+class UserProfile(BaseModel):
+    """Serialised user/profile shape returned to the client.
+
+    `account_type` mirrors the frontend AccountType union and defaults to
+    'student' so existing users (whose rows predate the column) are unaffected.
+    """
+    id:           str
+    username:     Optional[str] = None
+    avatar_url:   Optional[str] = None
+    account_type: str           = "student"
 
 
 # ── Level / Progress ──────────────────────────────────────────

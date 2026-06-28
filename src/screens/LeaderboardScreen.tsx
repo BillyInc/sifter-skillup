@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Leaderboard Screen (Full Rewrite)
+ * Sifter LevelUp — Leaderboard Screen (Full Rewrite)
  * 3-tier: Global · Field · Track. Weekly reset Sunday 23:59 UTC.
  *
  * 3 LAYOUTS:

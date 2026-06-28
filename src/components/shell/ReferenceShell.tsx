@@ -19,14 +19,10 @@ import { useAuth } from '../../hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '../../lib/trackContext';
 
 type NavId =
-  | 'dashboard'
-  | 'islands'
-  | 'tracks'
-  | 'guilds'
-  | 'portfolio'
-  | 'streaks'
-  | 'settings'
-  | 'feed'
+  | 'home'
+  | 'explore'
+  | 'opportunities'
+  | 'myworld'
   | 'profile';
 
 interface ShellNavItem {
@@ -46,103 +42,58 @@ interface ShellSearchItem {
 }
 
 const PRIMARY_NAV: ShellNavItem[] = [
-  { id: 'dashboard', label: 'Dashboard',      icon: '⊞', href: '/(tabs)/home',        sub: 'Overview' },
-  { id: 'islands',   label: 'My Islands',     icon: '🗺', href: '/map/island',  sub: 'Island 18 and beyond' },
-  { id: 'tracks',    label: 'Career Tracks',  icon: '🧭', href: '/(tabs)/fields',      sub: 'Skill paths' },
-  { id: 'guilds',    label: 'Guilds',         icon: '🛡', href: '/(tabs)/guild',       sub: 'Leaderboard and chat' },
-  { id: 'portfolio', label: 'Portfolio & XP', icon: '💼', href: '/(tabs)/portfolio',   sub: 'Artifacts and XP' },
-  { id: 'streaks',   label: 'Streaks',        icon: '🔥', href: '/(tabs)/streaks',     sub: 'Consistency' },
-  { id: 'settings',  label: 'Settings',       icon: '⚙', href: '/(tabs)/settings',    sub: 'Theme and preferences' },
+  { id: 'home',          label: 'Home',          icon: '🏠', href: '/(tabs)/home',          sub: 'Your snapshot' },
+  { id: 'explore',       label: 'Explore',       icon: '🔍', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
+  { id: 'opportunities', label: 'Opportunities', icon: '🌍', href: '/(tabs)/opportunities', sub: 'Internships & jobs' },
+  { id: 'myworld',       label: 'My World',      icon: '🔒', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
+  { id: 'profile',       label: 'Profile',       icon: '👤', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
 
 const MOBILE_NAV: { id: NavId; label: string; icon: string; href: string }[] = [
-  { id: 'dashboard', label: 'Home', icon: '⊞', href: '/(tabs)/home' },
-  { id: 'tracks', label: 'Tracks', icon: '🧭', href: '/(tabs)/fields' },
-  { id: 'feed', label: 'Feed', icon: '📺', href: '/(tabs)/feed' },
-  { id: 'profile', label: 'Profile', icon: '👤', href: '/(tabs)/profile' },
+  { id: 'home',          label: 'Home',    icon: '🏠', href: '/(tabs)/home' },
+  { id: 'explore',       label: 'Explore', icon: '🔍', href: '/(tabs)/explore' },
+  { id: 'opportunities', label: 'Jobs',    icon: '🌍', href: '/(tabs)/opportunities' },
+  { id: 'myworld',       label: 'My World', icon: '🔒', href: '/(tabs)/myworld' },
+  { id: 'profile',       label: 'Profile', icon: '👤', href: '/(tabs)/profile' },
 ];
 
-function isIslandWorkspace(trackContext: TrackContext): boolean {
-  return trackContext.continueHref.includes('/map/island');
+function buildPrimaryNav(_trackContext: TrackContext): ShellNavItem[] {
+  // LevelUp uses a fixed 5-destination information architecture.
+  return PRIMARY_NAV;
 }
 
-function buildPrimaryNav(trackContext: TrackContext): ShellNavItem[] {
-  if (trackContext.mode !== 'track') {
-    return PRIMARY_NAV;
-  }
-
-  const workspaceNav: ShellNavItem = isIslandWorkspace(trackContext)
-    ? {
-        id: 'islands',
-        label: 'My Islands',
-        icon: '🗺',
-        href: trackContext.continueHref,
-        sub: `${trackContext.trackName} map and lessons`,
-      }
-    : {
-        id: 'islands',
-        label: 'My Track',
-        icon: '🧭',
-        href: trackContext.continueHref,
-        sub: `${trackContext.trackName} workspace`,
-      };
-
-  return [
-    PRIMARY_NAV[0],
-    workspaceNav,
-    { ...PRIMARY_NAV[2], label: 'All Tracks', sub: 'Switch paths' },
-    ...PRIMARY_NAV.slice(3),
-  ];
-}
-
-function getPageMeta(trackContext: TrackContext, activeId: NavId, activeItem: ShellNavItem) {
-  if (trackContext.mode === 'track' && activeId === 'dashboard') {
-    return {
-      eyebrow: trackContext.heroEyebrow,
-      title: trackContext.trackName,
-    };
-  }
-
-  if (trackContext.mode === 'track' && activeId === 'islands') {
-    return {
-      eyebrow: isIslandWorkspace(trackContext) ? trackContext.heroEyebrow : activeItem.label,
-      title: isIslandWorkspace(trackContext) ? activeItem.label : trackContext.trackName,
-    };
-  }
-
+function getPageMeta(_trackContext: TrackContext, _activeId: NavId, activeItem: ShellNavItem) {
   return {
-    eyebrow: 'Sifter Workspace',
+    eyebrow: 'Sifter LevelUp',
     title: activeItem.label,
   };
 }
 
 function getActiveNavId(pathname: string | null): NavId {
-  if (!pathname) return 'dashboard';
-  if (pathname.includes('/profile')) return 'profile';
-  if (pathname.includes('/feed')) return 'feed';
-  if (pathname.includes('/settings')) return 'settings';
-  if (pathname.includes('/streaks')) return 'streaks';
-  if (pathname.includes('/portfolio')) return 'portfolio';
-  if (pathname.includes('/guild') || pathname.includes('/community')) return 'guilds';
-  if (pathname.includes('/quant-map')) return 'islands';
-  if (pathname.includes('/world')) return 'islands';
-  if (pathname.includes('/starknet-track')) return 'islands';
-  if (pathname.includes('/ecosystem-track')) return 'islands';
-  if (pathname.includes('/cairo-builder-track')) return 'islands';
-  if (pathname.includes('/map')) return 'islands';
-  if (pathname.includes('/skills')) return 'tracks';
-  if (pathname.includes('/fields')) return 'tracks';
-  if (pathname.includes('/home')) return 'dashboard';
-  return 'dashboard';
+  if (!pathname) return 'home';
+  if (pathname.includes('/profile') || pathname.includes('/settings')) return 'profile';
+  if (pathname.includes('/explore') || pathname.includes('/programme')
+    || pathname.includes('/domain') || pathname.includes('/role')) return 'explore';
+  if (pathname.includes('/opportunities') || pathname.includes('/opportunity')
+    || pathname.includes('/company')) return 'opportunities';
+  // Everything from the legacy learning app now lives under My World.
+  if (
+    pathname.includes('/myworld')
+    || pathname.includes('/map') || pathname.includes('/world')
+    || pathname.includes('/starknet-track') || pathname.includes('/ecosystem-track')
+    || pathname.includes('/cairo-builder-track') || pathname.includes('/track-room')
+    || pathname.includes('/quant') || pathname.includes('/fields') || pathname.includes('/skills')
+    || pathname.includes('/guild') || pathname.includes('/community')
+    || pathname.includes('/portfolio') || pathname.includes('/streaks')
+    || pathname.includes('/feed') || pathname.includes('/merchandise')
+  ) return 'myworld';
+  if (pathname.includes('/home')) return 'home';
+  return 'home';
 }
 
 function getActiveMobileNavId(activeId: NavId): NavId {
-  if (activeId === 'tracks') return 'tracks';
-  if (activeId === 'feed') return 'feed';
-  if (activeId === 'profile' || activeId === 'settings' || activeId === 'portfolio' || activeId === 'streaks') {
-    return 'profile';
-  }
-  return 'dashboard';
+  // The mobile bar mirrors the primary nav 1:1.
+  return activeId;
 }
 
 function readParam(value: string | string[] | undefined): string | null {
@@ -224,55 +175,14 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const isWide = Platform.OS === 'web' && width >= 1100;
 
   const searchItems = useMemo<ShellSearchItem[]>(() => {
-    const workspaceLabel = trackContext.mode === 'track'
-      ? (isIslandWorkspace(trackContext) ? 'My Islands' : 'My Track')
-      : 'My Islands';
-    const workspaceHint = trackContext.mode === 'track'
-      ? (isIslandWorkspace(trackContext)
-          ? `${trackContext.trackName} map and island lessons`
-          : `${trackContext.trackName} workspace`)
-      : 'Island map and lessons';
-    const base: ShellSearchItem[] = [
-      { id: 'dashboard', label: 'Dashboard', hint: 'Overview and workspace', href: '/(tabs)/home', keywords: ['dashboard', 'home', 'overview', 'workspace'] },
-      {
-        id: 'islands',
-        label: workspaceLabel,
-        hint: workspaceHint,
-        href: trackContext.mode === 'track' ? trackContext.continueHref : '/map/island',
-        keywords: ['islands', 'map', 'lessons', 'levels', 'workspace', 'current track', trackContext.trackName.toLowerCase(), trackContext.worldName.toLowerCase()],
-      },
-      {
-        id: 'tracks',
-        label: trackContext.mode === 'track' ? 'All Tracks' : 'Career Tracks',
-        hint: trackContext.mode === 'track' ? 'Switch to another path' : 'Browse skill paths',
-        href: '/(tabs)/fields',
-        keywords: ['tracks', 'skills', 'fields', 'career', 'switch track'],
-      },
-      { id: 'guilds', label: 'Guilds', hint: 'Guild hub, rankings, and chat', href: '/(tabs)/guild', keywords: ['guilds', 'guild', 'rankings', 'leaderboard', 'chat', 'community'] },
-      { id: 'feed', label: 'Feeds', hint: 'Track news, jobs, and signals', href: '/(tabs)/feed', keywords: ['feeds', 'feed', 'news', 'jobs', 'signals'] },
-      { id: 'portfolio', label: 'Portfolio & XP', hint: 'Artifacts, tasks, and XP', href: '/(tabs)/portfolio', keywords: ['portfolio', 'artifacts', 'xp', 'projects', 'work samples'] },
-      { id: 'streaks', label: 'Streaks', hint: 'Consistency and rewards', href: '/(tabs)/streaks', keywords: ['streaks', 'streak', 'consistency'] },
-      { id: 'settings', label: 'Settings', hint: 'Theme, notifications, wallet', href: '/(tabs)/settings', keywords: ['settings', 'preferences', 'theme', 'notifications', 'wallet'] },
-      { id: 'profile', label: 'Profile', hint: 'Your account and progress', href: '/(tabs)/profile', keywords: ['profile', 'account', 'progress'] },
+    return [
+      { id: 'home', label: 'Home', hint: 'Your snapshot and alerts', href: '/(tabs)/home', keywords: ['home', 'dashboard', 'overview'] },
+      { id: 'explore', label: 'Explore', hint: 'Programmes, domains and roles', href: '/(tabs)/explore', keywords: ['explore', 'programme', 'course', 'domain', 'role', 'search', 'jamb'] },
+      { id: 'opportunities', label: 'Opportunities', hint: 'Internships and jobs — local, global, remote', href: '/(tabs)/opportunities', keywords: ['opportunities', 'jobs', 'internships', 'graduate', 'remote', 'companies'] },
+      { id: 'myworld', label: 'My World', hint: 'Tracks, portfolio and guild (coming soon)', href: '/(tabs)/myworld', keywords: ['my world', 'tracks', 'learn', 'portfolio', 'guild', 'levels'] },
+      { id: 'profile', label: 'Profile', hint: 'Account, saved items and settings', href: '/(tabs)/profile', keywords: ['profile', 'account', 'saved', 'bookmarks', 'settings', 'notes'] },
     ];
-
-    if (trackContext.mode === 'track') {
-      base.unshift({
-        id: 'current-track',
-        label: trackContext.trackName,
-        hint: trackContext.tagline,
-        href: '/(tabs)/home',
-        keywords: [
-          trackContext.trackName.toLowerCase(),
-          trackContext.worldName.toLowerCase(),
-          trackContext.heroEyebrow.toLowerCase(),
-          'current track',
-        ],
-      });
-    }
-
-    return base;
-  }, [trackContext]);
+  }, []);
 
   const filteredSearchItems = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -303,7 +213,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
       openSearchResult(first.href);
       return;
     }
-    openSearchResult('/(tabs)/feed');
+    openSearchResult('/(tabs)/explore');
   };
 
   return (
@@ -325,7 +235,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             </View>
             <View>
               <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
-              <Text style={[styles.brandSub, { color: colors.gold }]}>SKILL_UP</Text>
+              <Text style={[styles.brandSub, { color: colors.gold }]}>LEVELUP</Text>
             </View>
           </View>
 
@@ -388,7 +298,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                     onFocus={() => setSearchFocused(true)}
                     onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
                     onSubmitEditing={handleSearchSubmit}
-                    placeholder={trackContext.mode === 'track' && (activeId === 'dashboard' || activeId === 'islands') ? trackContext.searchPlaceholder : 'Search screens, tracks, and tools'}
+                    placeholder="Search programmes, domains, roles and jobs"
                     placeholderTextColor={colors.textMuted}
                     style={[styles.searchInput, { color: colors.text }]}
                     returnKeyType="search"
@@ -414,10 +324,10 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
             <TouchableOpacity
               activeOpacity={0.85}
-              onPress={() => router.push('/(tabs)/feed' as any)}
+              onPress={() => router.push('/(tabs)/opportunities' as any)}
               style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
             >
-              <Text style={[styles.topbarActionLabel, { color: colors.text }]}>📺</Text>
+              <Text style={[styles.topbarActionLabel, { color: colors.text }]}>🌍</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -491,7 +401,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                 </View>
                 <View>
                   <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
-                  <Text style={[styles.brandSub, { color: colors.gold }]}>SKILL_UP</Text>
+                  <Text style={[styles.brandSub, { color: colors.gold }]}>LEVELUP</Text>
                 </View>
               </View>
               <TouchableOpacity onPress={() => setDrawerOpen(false)}>

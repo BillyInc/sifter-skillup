@@ -20,7 +20,7 @@ interface Props {
   onClose: () => void;
 }
 
-const APP_STORE_URL  = 'https://apps.apple.com/app/sifter-skillup/id0000000000';
+const APP_STORE_URL  = 'https://apps.apple.com/app/sifter-levelup/id0000000000';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.sifter.skillup';
 
 export default function ReviewModal({ visible, userId, context, onClose }: Props) {
@@ -101,7 +101,7 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
                 A store rating takes 10 seconds and helps other learners find us — especially in low-income regions where word-of-mouth matters most.
               </Text>
               <TouchableOpacity style={styles.submitBtn} onPress={handleStoreRedirect}>
-                <Text style={styles.submitText}>Rate Sifter Skill_Up ★★★★★</Text>
+                <Text style={styles.submitText}>Rate Sifter LevelUp ★★★★★</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={handleClose} style={styles.skipBtn}>
                 <Text style={styles.skipText}>No thanks</Text>

@@ -1,4 +1,4 @@
-package app.sifterskillup
+package app.sifterlevelup
 
 import android.app.Application
 import android.content.res.Configuration

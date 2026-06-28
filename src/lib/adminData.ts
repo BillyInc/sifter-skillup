@@ -1,0 +1,147 @@
+/**
+ * adminData — the single read API for the institutional / administrator side.
+ *
+ * Mirrors src/lib/careerData.ts exactly: ships the CONTRACT and the SEAM, not
+ * the data. Every method returns a `coming_soon` (or `locked`) {@link DataState}
+ * so the admin dashboard renders graceful states. When the institutional
+ * Supabase tables + FastAPI routes land, only these method bodies change.
+ *
+ * Privacy invariants encoded here:
+ *  - Intelligence reads are AGGREGATE, no student PII.
+ *  - Individual student reads return `locked` (consent-gated) by design — they
+ *    do not become `coming_soon`; they stay locked until consent exists.
+ */
+import {
+  type DataState,
+  comingSoon,
+  locked,
+} from "../types/career";
+import type {
+  InstitutionSummary,
+  ProgrammeDemandRow,
+  ProgrammeFilter,
+  DomainRankItem,
+  RankScope,
+  IntelligenceAlert,
+  SkillGapRow,
+  RoleDemandRow,
+  PeerInstitutionRow,
+  Organization,
+  EducatorProfile,
+  AffiliationStats,
+} from "../types/institution";
+
+// Flip per-area as real institutional data is wired (kept here so screens can
+// branch without importing backend details). All false in this phase.
+export const ADMIN_DATA_LIVE = {
+  institutionSummary: false,
+  programmeDemand: false,
+  domainRanking: false,
+  intelligenceAlerts: false,
+  skillsGap: false,
+  roleDemand: false,
+  peerComparison: false,
+  affiliation: false,
+} as const;
+
+export const adminData = {
+  // ─── Institution context ─────────────────────────────────────
+  /** The current educator's organisation (claim + verification status). */
+  async getMyOrganization(): Promise<DataState<Organization>> {
+    // TODO(admin-data): GET /api/institutions/me
+    return comingSoon<Organization>(
+      "Your institution profile comes online with the institutional rollout.",
+    );
+  },
+
+  /** Submit / refresh a verification claim (email domain, document, CAC…). */
+  async submitVerification(
+    _payload: Partial<EducatorProfile>,
+  ): Promise<DataState<Organization>> {
+    // TODO(admin-data): POST /api/institutions/verify
+    return comingSoon<Organization>(
+      "Verification review comes online with the institutional rollout.",
+    );
+  },
+
+  // ─── Aggregate intelligence (no PII) ─────────────────────────
+  /** The five boardroom stat-card numbers for the institution. */
+  async getInstitutionSummary(): Promise<DataState<InstitutionSummary>> {
+    // TODO(admin-data): GET /api/institutions/{id}/summary
+    return comingSoon<InstitutionSummary>(
+      "Institution intelligence is being populated.",
+    );
+  },
+
+  /** The Programme × Domain × Demand table rows (eligibility-aggregate). */
+  async getProgrammeDemand(
+    _filter: ProgrammeFilter = {},
+  ): Promise<DataState<ProgrammeDemandRow[]>> {
+    // TODO(admin-data): GET /api/institutions/{id}/programme-demand?...
+    return comingSoon<ProgrammeDemandRow[]>(
+      "Programme-domain-demand data is being populated.",
+    );
+  },
+
+  /** Domains ranked by posting volume (Nigerian / Global / Remote). */
+  async getDomainRanking(
+    _scope: RankScope = "nigerian",
+  ): Promise<DataState<DomainRankItem[]>> {
+    // TODO(admin-data): GET /api/institutions/{id}/domain-ranking?scope=
+    return comingSoon<DomainRankItem[]>(
+      "Domain demand rankings are being populated.",
+    );
+  },
+
+  /** Auto-surfaced signals (gaps, drift, opportunities). */
+  async getIntelligenceAlerts(): Promise<DataState<IntelligenceAlert[]>> {
+    // TODO(admin-data): GET /api/institutions/{id}/alerts
+    return comingSoon<IntelligenceAlert[]>(
+      "Intelligence alerts are being populated.",
+    );
+  },
+
+  /** Cross-programme skills-gap report. */
+  async getSkillsGapReport(): Promise<DataState<SkillGapRow[]>> {
+    // TODO(admin-data): GET /api/institutions/{id}/skills-gap
+    return comingSoon<SkillGapRow[]>(
+      "The skills-gap report is being populated.",
+    );
+  },
+
+  /** Role-level demand ranking. */
+  async getRoleDemand(): Promise<DataState<RoleDemandRow[]>> {
+    // TODO(admin-data): GET /api/institutions/{id}/role-demand
+    return comingSoon<RoleDemandRow[]>("Role demand is being populated.");
+  },
+
+  /** Peer-institution domain-coverage comparison. */
+  async getPeerComparison(): Promise<DataState<PeerInstitutionRow[]>> {
+    // TODO(admin-data): GET /api/institutions/{id}/peers
+    return comingSoon<PeerInstitutionRow[]>(
+      "Peer-institution benchmarks are being populated.",
+    );
+  },
+
+  // ─── Affiliation (aggregate attribution, self-reported) ──────
+  /** Aggregate count of students self-affiliated via the school code. */
+  async getAffiliationStats(): Promise<DataState<AffiliationStats>> {
+    // TODO(admin-data): GET /api/institutions/{id}/affiliation
+    return comingSoon<AffiliationStats>(
+      "Affiliation analytics come online with the school-code rollout.",
+    );
+  },
+
+  // ─── Individual student management (CONSENT-GATED) ───────────
+  /** Individual student visibility is locked by design — aggregate-only until a
+   *  (guardian) consent exists. Returns `locked`, never `coming_soon`. */
+  async getStudentRoster(): Promise<DataState<never[]>> {
+    // Intentionally locked: requires verified org + student/guardian consent.
+    return locked<never[]>(
+      "Individual student data stays private. Aggregate insights only — " +
+        "individual access requires verified consent.",
+    );
+  },
+};
+
+export type AdminDataClient = typeof adminData;

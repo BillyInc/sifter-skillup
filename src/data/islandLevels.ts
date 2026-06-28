@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Island Levels Aggregator
+ * Sifter LevelUp — Island Levels Aggregator
  * NEW FILE: src/data/islandLevels.ts
  *
  * Imports all island-specific level files and exports a single

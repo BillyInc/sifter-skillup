@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Feed Types
+ * Sifter LevelUp — Feed Types
  * Track-agnostic base + track-specific metadata shapes.
  */
 

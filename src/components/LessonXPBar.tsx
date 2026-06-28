@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Lesson XP Bar
+ * Sifter LevelUp — Lesson XP Bar
  * Animated progress bar shown during active lessons.
  * Fills + bounces on correct answer. Pulses on wrong answer.
  * Shows XP earned so far + stage progress.

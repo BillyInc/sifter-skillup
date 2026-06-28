@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — FastAPI Backend v2
+# Sifter LevelUp — FastAPI Backend v2
 # All routers registered, all middleware wired
 # ============================================
 import uuid, bcrypt, base64, secrets, urllib.parse, httpx
@@ -91,7 +91,7 @@ async def auth_telegram(body: dict, request: Request):
 async def auth_base_wallet(body: dict, request: Request):
     wallet_address = body.get("walletAddress", "").lower()
     signature = body.get("signature", "")
-    message = body.get("message", "Sign in to Sifter Skill_Up")
+    message = body.get("message", "Sign in to Sifter LevelUp")
     if not Auth.verify_base_wallet(wallet_address, signature, message):
         raise HTTPException(status_code=401, detail="Invalid wallet signature")
     existing = db.get_service_client().table("users").select("*").eq("wallet_address", wallet_address).execute()
@@ -182,6 +182,7 @@ def _create_user(telegram_id=None, wallet_address=None, username="Learner",
         "id": str(uuid.uuid4()), "telegram_id": telegram_id,
         "wallet_address": wallet_address, "email": email, "password_hash": password_hash,
         "username": username, "avatar_url": avatar_url, "auth_provider": auth_provider,
+        "account_type": "student",
         "points": settings.WELCOME_BONUS, "streak": 1,
         "last_played": date.today().isoformat(), "current_level": 1,
         "completed_levels": [], "perfect_levels": [], "python_chapters_completed": [],
@@ -202,6 +203,8 @@ async def get_me(current_user: dict = Depends(Auth.get_current_user)):
     rank_result = db.get_client().rpc("get_user_rank", {"user_id": current_user["id"]}).execute()
     current_user["rank"] = rank_result.data if rank_result.data else None
     current_user.pop("password_hash", None)
+    # Backward-compatible: legacy rows predate account_type — default to student.
+    current_user.setdefault("account_type", "student")
     return ResponseModel(data=current_user)
 
 
@@ -395,6 +398,12 @@ app.include_router(content_router)
 from routes.game_extra_routes import game_extra_router, users_extra_router
 app.include_router(game_extra_router)
 app.include_router(users_extra_router)
+
+from routes.career_routes import router as career_router
+app.include_router(career_router)
+
+from routes.institutions_routes import router as institutions_router
+app.include_router(institutions_router)
 
 if __name__ == "__main__":
     import uvicorn

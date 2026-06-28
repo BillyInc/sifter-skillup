@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — WatermelonDB Models
+ * Sifter LevelUp — WatermelonDB Models
  * One class per table in watermelonSchema.ts
  */
 

@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Device Session Enforcement
+# Sifter LevelUp — Device Session Enforcement
 #
 # Rule: one active device per user.
 # Second login on a different device:

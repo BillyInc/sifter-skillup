@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Merchandise Screen
+ * Sifter LevelUp — Merchandise Screen
  * Credits wallet + unlock-gated apparel catalogue.
  *
  * 3 LAYOUTS:

@@ -1,7 +1,7 @@
 # Firebase Setup for FCM Push Notifications
 
 ## Overview
-SkillUp uses Firebase Cloud Messaging (FCM) to notify old devices when a user logs in from a new device (single-device enforcement).
+LevelUp uses Firebase Cloud Messaging (FCM) to notify old devices when a user logs in from a new device (single-device enforcement).
 
 ## Setup Steps
 

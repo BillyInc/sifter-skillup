@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Base Component Library
+ * Sifter LevelUp — Base Component Library
  * Shared component primitives for the Sifter platform.
  *
  * Components:

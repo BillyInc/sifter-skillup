@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — In-App Toast Notification System
+ * Sifter LevelUp — In-App Toast Notification System
  *
  * In-app toasts that fire inside the app.
  * Works alongside the existing push notification engine.

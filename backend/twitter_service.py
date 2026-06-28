@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Twitter/X API v2 Feed
+# Sifter LevelUp — Twitter/X API v2 Feed
 # Fetches curated crypto/quant tweets for feed
 # ============================================
 

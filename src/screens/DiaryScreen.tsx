@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Diary Screen
+ * Sifter LevelUp — Diary Screen
  *
  * Encrypted local-only journal. Never syncs to backend.
  * Three modes:

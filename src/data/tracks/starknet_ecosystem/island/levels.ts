@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Starknet World Island (Levels 291–310)
+// ⚡ Sifter LevelUp — Starknet World Island (Levels 291–310)
 // Island #18 · Onboarding Track · Medium narrative standard (150-200 words)
 //
 // TEACHING STANDARD:
@@ -1300,7 +1300,7 @@ In Starkzap: wallet.getQuote() for a preview, wallet.swap() to execute. The swap
     {
       question: 'After executing wallet.swap({ tokenIn: STRK, tokenOut: USDC }), where can you verify the transaction?',
       options: [
-        'Only inside the SkillUp app — external verification is not possible',
+        'Only inside the LevelUp app — external verification is not possible',
         'On the Starknet Sepolia block explorer (sepolia.voyager.online) using the transaction hash',
         'On Etherscan — Starknet transactions appear on the Ethereum explorer',
         'You must email Starknet support for transaction confirmation',
@@ -2128,7 +2128,7 @@ The Starkzap SDK is what bridges the chain you have learned about and the users 
 
 For React Native specifically — this entire app — you use starkzap-native. It re-exports the full SDK API and adds a Metro helper (withStarkzap) for polyfill injection. The same code that works on web works on mobile.
 
-Starkzap is how SkillUp integrates with Starknet. Every simulator in this island is powered by the Starkzap SDK.`,
+Starkzap is how LevelUp integrates with Starknet. Every simulator in this island is powered by the Starkzap SDK.`,
   fact: 'Starknet dev stack: Cairo → Scarb (build) → snforge (test) → Starkli (deploy) → Starkzap SDK (frontend). For React Native: starkzap-native + withStarkzap Metro wrapper. wallet.execute() for arbitrary contract calls.',
   plain: 'Five tools, one job each. Write Cairo. Build with Scarb. Test with snforge. Deploy with Starkli. Connect users with Starkzap. This app runs on Starkzap — every live transaction in these lessons is real.',
   stars: [740, 910, 1135], target: 1135, coins: 74,
@@ -2139,14 +2139,14 @@ Starkzap is how SkillUp integrates with Starknet. Every simulator in this island
       outcome: 'The deploy command returns a class hash (the compiled bytecode identifier) and a contract address (the specific instance). The developer can now call increment() on their contract from a Starkzap-powered frontend. The transaction appears on Voyager Sepolia with the function call visible.',
     },
     {
-      contextTag: '[React Native integration, SkillUp-style]',
+      contextTag: '[React Native integration, LevelUp-style]',
       scenario: 'A developer adds Starkzap to an existing React Native/Expo app.',
       outcome: 'npm install starkzap-native. Wrap metro.config.js with withStarkzap(). Import StarkZap from starkzap-native. Create sdk = new StarkZap({ network: "sepolia" }). Call sdk.connectWallet(). Three configuration changes, 10 minutes — the app can now execute Starknet transactions.',
     },
     {
-      contextTag: '[Starkzap in SkillUp]',
-      scenario: 'A user completes the staking lesson in SkillUp and the simulator calls wallet.stake().',
-      outcome: 'The Starkzap SDK inside SkillUp sends a real transaction to the Starknet Sepolia staking contract. The user\'s testnet STRK balance decreases. Their staked position appears on Voyager. The transaction hash is displayed in the lesson. All of this happens gaslessly via the AVNU Paymaster — the user paid nothing.',
+      contextTag: '[Starkzap in LevelUp]',
+      scenario: 'A user completes the staking lesson in LevelUp and the simulator calls wallet.stake().',
+      outcome: 'The Starkzap SDK inside LevelUp sends a real transaction to the Starknet Sepolia staking contract. The user\'s testnet STRK balance decreases. Their staked position appears on Voyager. The transaction hash is displayed in the lesson. All of this happens gaslessly via the AVNU Paymaster — the user paid nothing.',
     },
   ],
   keyTakeaway: 'The Starknet dev stack is Cairo → Scarb → snforge → Starkli → Starkzap. Starkzap is the frontend SDK that connects users to any deployed contract, gaslessly, on web or React Native.',
@@ -2200,16 +2200,16 @@ Starkzap is how SkillUp integrates with Starknet. Every simulator in this island
       explanation: 'A Starknet call requires: contractAddress (which contract to call), entrypoint (which function on that contract), and calldata (the function arguments as an array of field elements). wallet.execute() takes an array of these call objects — multiple calls execute atomically in one transaction.',
     },
     {
-      question: 'Every live transaction in the SkillUp Starknet Island is executed via Starkzap. What happens to these transactions?',
+      question: 'Every live transaction in the LevelUp Starknet Island is executed via Starkzap. What happens to these transactions?',
       options: [
         'They are simulated inside the app and do not reach the blockchain',
-        'They are recorded on a private Starknet fork used only by SkillUp',
+        'They are recorded on a private Starknet fork used only by LevelUp',
         'They are real transactions on Starknet Sepolia — they get transaction hashes and appear on Voyager Sepolia',
         'They are sent to Starknet mainnet and cost real STRK',
       ],
       correct: 2,
-      hint: 'The Starkzap SDK sends real transactions. On which network are the SkillUp lessons configured?',
-      explanation: 'SkillUp\'s Starkzap integration uses Starknet Sepolia — the official testnet. Every swap, stake, and lend action in the simulator is a real transaction on Sepolia. It gets a hash. It appears on sepolia.voyager.online. It changes testnet state. The only difference from mainnet: testnet tokens have no real monetary value.',
+      hint: 'The Starkzap SDK sends real transactions. On which network are the LevelUp lessons configured?',
+      explanation: 'LevelUp\'s Starkzap integration uses Starknet Sepolia — the official testnet. Every swap, stake, and lend action in the simulator is a real transaction on Sepolia. It gets a hash. It appears on sepolia.voyager.online. It changes testnet state. The only difference from mainnet: testnet tokens have no real monetary value.',
     },
   ],
   lessonSimulations: [
@@ -2328,7 +2328,7 @@ What wins grants: a specific product that real users will use, a team with relev
       explanation: 'Voting on Snapshot is gasless — you connect your wallet, sign the vote cryptographically, and Snapshot records it. No transaction is sent to the blockchain. Your vote weight equals your STRK balance at the snapshot block. This makes participation accessible — no gas cost to engage in governance.',
     },
     {
-      question: 'Can a SkillUp Starknet user participate in Starknet governance after completing this island?',
+      question: 'Can a LevelUp Starknet user participate in Starknet governance after completing this island?',
       options: [
         'No — governance requires at least 10,000 STRK',
         'Yes — any STRK holder can vote on Snapshot regardless of amount. More STRK = more voting weight but any amount qualifies.',
@@ -2392,7 +2392,7 @@ This island was your introduction. The Starknet DeFi Navigator skill track, Cair
   examples: [
     {
       contextTag: '[The integration, all pieces connected]',
-      scenario: 'A SkillUp user has completed the entire Starknet Island. They reflect on what they actually did.',
+      scenario: 'A LevelUp user has completed the entire Starknet Island. They reflect on what they actually did.',
       outcome: 'They created a real Starknet wallet (AA, no seed phrase). Executed gasless transactions (AVNU Paymaster). Swapped STRK → USDC on AVNU (real DEX transaction). Staked STRK in a validator pool (real staking contract). Deposited USDC to Vesu (real lending protocol). Set up a DCA order (real recurring buy). Every action was a real Starknet Sepolia transaction. They have been "on-chain" the entire time.',
     },
     {
@@ -2402,7 +2402,7 @@ This island was your introduction. The Starknet DeFi Navigator skill track, Cair
     },
     {
       contextTag: '[The next step, builder framing]',
-      scenario: 'A SkillUp user finishes this island and wonders: "What do I build?"',
+      scenario: 'A LevelUp user finishes this island and wonders: "What do I build?"',
       outcome: 'They identify a gap: Starknet has no mobile-first DCA interface for new users. The Starkzap SDK provides the swap and DCA infrastructure. Cairo is not required — the contracts exist. They can build a frontend, submit it as a bounty entry, and apply for a SEED grant simultaneously. The infrastructure is ready. The builder is ready.',
     },
   ],
@@ -2421,9 +2421,9 @@ This island was your introduction. The Starknet DeFi Navigator skill track, Cair
       explanation: 'STARK proofs enable cheap, verifiable computation. Account Abstraction makes every wallet a smart contract (gasless, social login, session keys native). Cairo is the only language that compiles to automatically ZK-verifiable programs. These three work together — no other L2 has all three built natively from day one.',
     },
     {
-      question: 'A user completes the SkillUp Starknet Island and wants to verify their transactions were real. What should they do?',
+      question: 'A user completes the LevelUp Starknet Island and wants to verify their transactions were real. What should they do?',
       options: [
-        'Contact SkillUp support to request transaction records',
+        'Contact LevelUp support to request transaction records',
         'Visit sepolia.voyager.online, paste their wallet address, and see all their Starknet Sepolia transactions',
         'The transactions were simulated inside the app — they cannot be verified on-chain',
         'Download the Starknet official app and sync their transaction history',
@@ -2445,11 +2445,11 @@ This island was your introduction. The Starknet DeFi Navigator skill track, Cair
       explanation: 'Account Abstraction makes every Starknet account a smart contract. Recovery rules are programmable — you write code that says "allow this guardian address to recover this account." Ethereum EOAs cannot do this because their rules are fixed at the protocol level. AA makes recovery logic flexible.',
     },
     {
-      question: 'What is the difference between learning about Starknet on SkillUp and being on Starknet?',
+      question: 'What is the difference between learning about Starknet on LevelUp and being on Starknet?',
       options: [
         'There is no difference — all learning is theoretical',
-        'On SkillUp, Starknet Island lessons include live Starkzap SDK transactions on Sepolia — users are on Starknet while learning',
-        'Being on Starknet requires mainnet tokens — SkillUp uses a private simulation network',
+        'On LevelUp, Starknet Island lessons include live Starkzap SDK transactions on Sepolia — users are on Starknet while learning',
+        'Being on Starknet requires mainnet tokens — LevelUp uses a private simulation network',
         'Learning is passive reading; being on Starknet requires writing Cairo code',
       ],
       correct: 1,

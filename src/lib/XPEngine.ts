@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — XP Engine
+ * Sifter LevelUp — XP Engine
  * Singleton. Persists to AsyncStorage.
  * Import { xpEngine } and call methods directly.
  *

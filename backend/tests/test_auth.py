@@ -26,6 +26,6 @@ class TestBaseWalletAuth:
             response = client.post("/api/auth/base-wallet", json={
                 "walletAddress": "0x1234567890abcdef",
                 "signature": "invalid_sig",
-                "message": "Sign in to Sifter Skill_Up",
+                "message": "Sign in to Sifter LevelUp",
             })
             assert response.status_code == 401

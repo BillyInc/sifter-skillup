@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — SUPPLY CHAIN ANALYST Career Track
+// ⚡ Sifter LevelUp — SUPPLY CHAIN ANALYST Career Track
 // Junior Level — Lab 2: Excel — The Tool You'll Use Every Single Day
 // 18 Lessons | Phase 1 (Learning Loop) Only | No Portfolio Push
 // Maya is learning Excel from scratch — she's used it before but never properly

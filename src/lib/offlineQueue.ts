@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Offline Queue & Sync Engine
+ * Sifter LevelUp — Offline Queue & Sync Engine
  *
  * Strategy: offline-first, sync-when-available.
  * Mirrors how Candy Crush and similar games handle connectivity:

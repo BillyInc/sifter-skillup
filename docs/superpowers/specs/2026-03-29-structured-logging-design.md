@@ -6,7 +6,7 @@
 
 ## Overview
 
-Add comprehensive structured logging to Sifter Skill_Up for better debugging, monitoring, and observability. Frontend uses `react-native-logs`, backend uses `loguru`.
+Add comprehensive structured logging to Sifter LevelUp for better debugging, monitoring, and observability. Frontend uses `react-native-logs`, backend uses `loguru`.
 
 ## Architecture
 

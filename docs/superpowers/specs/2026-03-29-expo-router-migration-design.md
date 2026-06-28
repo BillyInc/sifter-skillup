@@ -6,7 +6,7 @@
 
 ## Overview
 
-Migrate Sifter Skill_Up from programmatic React Navigation to file-based expo-router routing. This improves deep linking, TypeScript integration, and code organization.
+Migrate Sifter LevelUp from programmatic React Navigation to file-based expo-router routing. This improves deep linking, TypeScript integration, and code organization.
 
 ## Architecture
 

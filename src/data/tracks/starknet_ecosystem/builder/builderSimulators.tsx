@@ -1,6 +1,6 @@
 /**
  * ================================================================
- * ⚡ Sifter SkillUp — Cairo Builder Track
+ * ⚡ Sifter LevelUp — Cairo Builder Track
  * ALL SIMULATORS — COMBINED FILE
  * Generated: 2026-04-13
  *
@@ -136,6 +136,7 @@ import {
   isStarknetSepoliaRpcConfigured,
   starknetSepoliaRpcCall,
 } from '../../../../lib/starknetRpc';
+import { StarknetAddressBanner } from '../starknetSharedSimulators';
 import { Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 
 // ─── Starknet Sepolia ──────────────────────────────────────────────────────────
@@ -1318,11 +1319,13 @@ function StarkzapSim({ scenarioId, onComplete, onSkip, colors }: {
   scenarioId: string; onComplete: () => void; onSkip: () => void; colors: any;
 }) {
   const sc = STARKZAP_SCENARIOS[scenarioId] ?? STARKZAP_SCENARIOS['stake-after-connect'];
+  const { starknetAddress } = useSimulatorAuth();
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <ScrollView contentContainerStyle={{ gap: Spacing.md }}>
       <SimHeader icon="⚡" title={sc.title} subtitle="Select the correct Starkzap SDK call." badge="⚡ STARKZAP SDK · GASLESS" colors={colors} />
+      <StarknetAddressBanner address={starknetAddress} />
 
       <View style={[{ backgroundColor: '#0f172a', borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1, borderColor: '#1e293b' }]}>
         <Text style={{ color: '#475569', fontSize: 10, fontWeight: '800', letterSpacing: 1, marginBottom: 6 }}>SCENARIO</Text>

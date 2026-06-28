@@ -1,5 +1,5 @@
 // =============================================================
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // ALL LABS — COMBINED FILE
 // Generated: 2026-04-13
 //
@@ -35,7 +35,7 @@
 // FILE: cairoBuilderSetupLab.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // SETUP LAB — YOUR BUILDER'S ENVIRONMENT
 // 6 lessons · No portfolio push · Runs BEFORE Lab 0
 // Prerequisite: Starknet Island (291–310) complete
@@ -1180,7 +1180,7 @@ Create README.md and add this content:
 
   # Cairo Builder Labs
 
-  My work from the Sifter SkillUp Cairo Builder track.
+  My work from the Sifter LevelUp Cairo Builder track.
 
   ## What This Is
 
@@ -1252,7 +1252,7 @@ STEP 6 — CREATE THE GITHUB REPOSITORY AND PUSH
 On GitHub:
   1. Click the + button in the top right → New repository
   2. Repository name: cairo-builder-labs
-  3. Description: My work from the Sifter SkillUp Cairo Builder track
+  3. Description: My work from the Sifter LevelUp Cairo Builder track
   4. Visibility: Public (so your Portfolio pushes are visible to potential employers)
   5. Do NOT initialise with README or .gitignore — you already have them
   6. Click Create repository
@@ -1754,7 +1754,7 @@ git push`,
 // FILE: cairoBuilderLab0.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 0 — FROM USER TO BUILDER
 // 6 lessons · No portfolio push
 // Prerequisite: Starknet Island (291–310) complete
@@ -3372,7 +3372,7 @@ mod tests {
 // FILE: cairoBuilderLab1_partA.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 1 — CAIRO FOUNDATIONS · LESSONS 1–4
 // Prerequisite: Setup Lab complete + Lab 0 complete
 //
@@ -4759,7 +4759,7 @@ mod Protocol {
 // FILE: cairoBuilderLab1_partB.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 1 — CAIRO FOUNDATIONS · LESSONS 5–8 + BUILD TASK + BOSS
 // Continues from cairoBuilderLab1_partA.ts
 //
@@ -6281,7 +6281,7 @@ export const CAIRO_LAB1_AGGREGATE_SIMS = {
 // FILE: cairoBuilderLab1Patch.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 1 PATCH — LESSONS 1.9, 1.10, 1.11
 // Slot: After Lab 1 Part B (Lesson 1.8), before Lab 2
 //
@@ -7063,7 +7063,7 @@ export const LAB1_PATCH_PLACEMENT = {
 // FILE: cairoBuilderLab2.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 2 — STARKNET CONTRACT ARCHITECTURE
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 1 complete
@@ -8841,7 +8841,7 @@ Phase 3: Add approve() and transfer_from(). All tests pass. Deploy to Sepolia.
 // FILE: cairoBuilderLab3.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 3 — ACCOUNT ABSTRACTION IN DEPTH
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 2 complete
@@ -10876,7 +10876,7 @@ Build a complete account contract implementing IAccount with:
 // FILE: cairoBuilderLab4.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 4 — TESTING AND TOOLING
 // 5 lessons · No portfolio push (Lab 5 is next push)
 // Prerequisite: Lab 3 complete
@@ -12835,7 +12835,7 @@ Required tests (minimum):
 // FILE: cairoBuilderLab4-1.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 4 — TESTING AND TOOLING
 // 5 lessons · No portfolio push (Lab 5 is next push)
 // Prerequisite: Lab 3 complete
@@ -14794,7 +14794,7 @@ Required tests (minimum):
 // FILE: cairoBuilderLab5.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 5 — FRONTEND INTEGRATION
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 4 complete
@@ -16852,7 +16852,7 @@ Required features:
 // FILE: cairoBuilderLab5-1.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 5 — FRONTEND INTEGRATION
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 4 complete
@@ -18910,7 +18910,7 @@ Required features:
 // FILE: cairoBuilderLab6.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 6 — CAIRO PATTERNS AND SECURITY
 // 8 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 5 complete
@@ -21685,7 +21685,7 @@ Build a production-quality USDC vault that:
 // FILE: cairoBuilderLab6-1.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 6 — CAIRO PATTERNS AND SECURITY
 // 8 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 5 complete
@@ -24460,7 +24460,7 @@ Build a production-quality USDC vault that:
 // FILE: cairoBuilderLab7.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 7 — BUILDING REAL DEFI PROTOCOLS
 // 7 lessons + 2 math bridges · Portfolio push Phase 3 ■
 // Prerequisite: Lab 6 complete
@@ -26633,7 +26633,7 @@ Build a complete DeFi protocol on Starknet Sepolia:
 // FILE: cairoBuilderLab9.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 9 — ADVANCED CAIRO
 // 8 lessons · No portfolio push (Lab 10 is next push)
 // Prerequisite: Lab 8 complete
@@ -27009,7 +27009,7 @@ REQUIRED   Arrays and structs — Lab 1, Lessons 1.2 and 1.3
 
 LAYER 1 — ANCHOR: BYTEARRAY FOR NFT NAMES
 
-In Lab 1, Lesson 1.1 you learned that felt252 holds at most 31 bytes — enough for "short string" identifiers but not enough for long text. The ERC-721 token standard requires a name() function. "Sifter SkillUp Cairo Builder Track Advanced Achievement Badge" is 58 characters — cannot fit in felt252.
+In Lab 1, Lesson 1.1 you learned that felt252 holds at most 31 bytes — enough for "short string" identifiers but not enough for long text. The ERC-721 token standard requires a name() function. "Sifter LevelUp Cairo Builder Track Advanced Achievement Badge" is 58 characters — cannot fit in felt252.
 
 Cairo's ByteArray type handles arbitrary-length strings. Every NFT collection on Starknet that has a descriptive name uses ByteArray for its token metadata.
 
@@ -27067,7 +27067,7 @@ LAYER 4 — BYTEARRAY FOR STRINGS
 
 \`\`\`cairo
 // Creating a ByteArray
-let name: ByteArray = "Sifter SkillUp Cairo Builder Track Achievement Badge";
+let name: ByteArray = "Sifter LevelUp Cairo Builder Track Achievement Badge";
 let symbol: ByteArray = "SCBTAB";
 
 // Appending to ByteArray
@@ -27129,10 +27129,10 @@ fn aggregate_prices(
 
   guidedPractice: [
     {
-      question: 'An NFT collection has the name "The Sifter SkillUp Cairo Builder Achievement Collection" (53 characters). Why must this use ByteArray instead of felt252?',
+      question: 'An NFT collection has the name "The Sifter LevelUp Cairo Builder Achievement Collection" (53 characters). Why must this use ByteArray instead of felt252?',
       options: [
         'A. felt252 only holds integers, not strings',
-        'B. felt252 holds at most 31 bytes — "The Sifter SkillUp Cairo Builder Achievement Collection" is 53 bytes, which exceeds the limit',
+        'B. felt252 holds at most 31 bytes — "The Sifter LevelUp Cairo Builder Achievement Collection" is 53 bytes, which exceeds the limit',
         'C. ByteArray is required for all token metadata by the ERC-721 standard',
         'D. felt252 cannot hold spaces',
       ],
@@ -28950,7 +28950,7 @@ Combine three Lab 9 techniques on the Lab 7 protocol:
 // FILE: cairoBuilderLab10.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 10 — FULL-STACK APPLICATION
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 9 complete
@@ -30939,7 +30939,7 @@ Tier 4: React Native analytics screen showing:
 // FILE: cairoBuilderLab10-1.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 10 — FULL-STACK APPLICATION
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 9 complete
@@ -32928,7 +32928,7 @@ Tier 4: React Native analytics screen showing:
 // FILE: cairoBuilderLab11.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 11 — PROTOCOL ECONOMICS AND TOKEN DESIGN
 // 5 lessons · No portfolio push (portfolio push is Lab 12)
 // Prerequisite: Lab 10 complete
@@ -34552,7 +34552,7 @@ Deliver:
 // FILE: cairoBuilderLab12.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LAB 12 — SECURITY RESEARCH AND AUDITING
 // 5 lessons · Portfolio push Phase 3 ■
 // Prerequisite: Lab 11 complete
@@ -36513,7 +36513,7 @@ export const CAIRO_BUILDER_TRACK_COMPLETE = {
 // FILE: cairoBuilderLabs8to12AndFinalBoss.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // LABS 8–12 + FINAL BOSS
 // Labs 8 (Dojo), 9 (Advanced Cairo), 10 (Full-Stack),
 // 11 (Token Economics), 12 (Security Research), Final Boss
@@ -37798,7 +37798,7 @@ export const CAIRO_LAB9_OUTLINE = {
       id: 'l9-2-advanced-types',
       title: 'Advanced Types: Tuples, Fixed Arrays, and ByteArray',
       dominantConcept: 'Tuples return multiple values cleanly; fixed-size arrays [T; N] have compile-time size guarantees; ByteArray handles UTF-8 strings for token names.',
-      anchor: 'ERC-721 token names are stored as ByteArray — the difference between a felt252 (31 bytes max) and a ByteArray (unlimited length) determines whether your NFT name can be "Sifter SkillUp Cairo Builder Track Advanced Achievement Badge 2025."',
+      anchor: 'ERC-721 token names are stored as ByteArray — the difference between a felt252 (31 bytes max) and a ByteArray (unlimited length) determines whether your NFT name can be "Sifter LevelUp Cairo Builder Track Advanced Achievement Badge 2025."',
       keyTermsIntroduced: ['(T, U) tuples', 'Snapshot and clone', 'ByteArray append'],
       codeTask: 'Write a function returning (u256, u256, bool) — AMM swap result with overflow flag.',
       simulators: ['sandbox-cairo (write)', 'cairo-snforge', 'judgment-communication'],
@@ -38202,7 +38202,7 @@ export const CAIRO_BUILDER_TRACK_SUMMARY = {
 // FILE: cairoBuilderPatches.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // PHASES 4, 5, 6 — REMAINING GAP FIXES
 //
 // PHASE 4: Lab 10 Systems Patches
@@ -39379,7 +39379,7 @@ export const GAP_FIX_SUMMARY = {
 // FILE: cairoBuilderBridgePython.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // PYTHON ORIENTATION BRIDGE
 // Slot: Between Lab 9, Lesson 9.5 and Lab 9, Lesson 9.6
 // 5 lessons — NO PRIOR PYTHON ASSUMED
@@ -40540,7 +40540,7 @@ export const PYTHON_BRIDGE_PLACEMENT = {
 // FILE: cairoBuilderBridgeSQL.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // SQL ORIENTATION BRIDGE
 // Slot: Between Lab 10.3 (FastAPI backend) and Lab 10.4 (SQL analytics)
 // 4 lessons — NO PRIOR SQL ASSUMED
@@ -41507,7 +41507,7 @@ export const SQL_BRIDGE_PLACEMENT = {
 // FILE: cairoBuilderToolingAppendix.ts
 // ─────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Cairo Builder Track
+// ⚡ Sifter LevelUp — Cairo Builder Track
 // TOOLING APPENDIX
 // 5 lessons — fills the critical tooling gaps identified in the gap review
 //

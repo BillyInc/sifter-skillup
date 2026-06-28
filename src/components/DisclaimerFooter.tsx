@@ -20,7 +20,7 @@ export default function DisclaimerFooter({ trackId }: Props) {
     <>
       <View style={styles.footer}>
         <Text style={styles.text}>
-          Sifter Skill_Up is a learning tool, not a job guarantee.{' '}
+          Sifter LevelUp is a learning tool, not a job guarantee.{' '}
         </Text>
         <TouchableOpacity onPress={() => setShowLearnMore(true)}>
           <Text style={styles.link}>Learn more</Text>

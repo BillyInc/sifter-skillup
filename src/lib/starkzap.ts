@@ -1,5 +1,5 @@
 /**
- * Starkzap SDK singleton for Sifter Skill_Up
+ * Starkzap SDK singleton for Sifter LevelUp
  * Provides a shared SDK instance and wallet helpers used by
  * StarkzapSimulatorCard and StarknetTrackScreen.
  *

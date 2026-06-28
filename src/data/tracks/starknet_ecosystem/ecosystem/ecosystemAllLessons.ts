@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // STARKNET ECOSYSTEM DEEP DIVE — ALL LESSONS (COMBINED)
-// ⚡ Sifter SkillUp
+// ⚡ Sifter LevelUp
 //
 // Generated from fixed source files. Issues resolved before merge:
 //   [1] Duplicate primer removed (ecosystemPrimer_module1.ts was identical)
@@ -33,7 +33,7 @@
 // Source: ecosystemPrimer_module.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // PRIMER MODULE — "Before You Begin"
 // Three mandatory micro-lessons. Unlocks before Lab 1.
 // No portfolio push. No build task.
@@ -711,7 +711,7 @@ export const PRIMER_MODULE_META = {
 // Source: ecosystemLab1_lessons1to3.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // JUNIOR · LAB 1 — PROTOCOL LANDSCAPE · LESSONS 1–3
 // Type classifications: L1.1 Type A · L1.2 Type A · L1.3 Type A
 // Learner: zero DeFi knowledge. Plain English first, always.
@@ -1333,7 +1333,7 @@ Knowing not just the category but the specific problem each protocol solves — 
 // Source: ecosystemLab1_lessons4to5_and_structure.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // JUNIOR · LAB 1 — PROTOCOL LANDSCAPE · LESSONS 4–5 + LAB STRUCTURE
 // Type classifications: L1.4 Type C · L1.5 Type A
 // Learner: zero DeFi knowledge. Plain English first, always.
@@ -1900,7 +1900,7 @@ export const LAB1_META = {
 // Source: ecosystemLab2_stark_technology.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // JUNIOR · LAB 2 — STARK TECHNOLOGY AND ZK FUNDAMENTALS
 // 5 Lessons + Aggregate Sims + Build Task + Boss Battle
 //
@@ -3026,7 +3026,7 @@ export const LAB2_META = {
 // Source: ecosystemLab3_tokenomics_governance.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // JUNIOR · LAB 3 — TOKENOMICS AND GOVERNANCE
 // 5 Lessons + Aggregate Sims + Build Task + Boss Battle
 //
@@ -4179,7 +4179,7 @@ export const LAB3_META = {
 // Source: ecosystemLab4_developer_ecosystem.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // JUNIOR · LAB 4 — DEVELOPER ECOSYSTEM AND TOOLING
 // 5 Lessons + Aggregate Sims + Build Task + Boss Battle
 //
@@ -5294,7 +5294,7 @@ export const LAB4_META = {
 // Source: ecosystemLab5_zk_vision.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // JUNIOR · LAB 5 — STARKNET'S ZK VISION AND ROADMAP
 // 5 Lessons + Aggregate Sims + Build Task + Boss Battle
 //
@@ -6411,7 +6411,7 @@ export const LAB5_META = {
 // Source: ecosystemLab6_research_methodology.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // INTERMEDIATE · LAB 6 — PROTOCOL RESEARCH METHODOLOGY
 // 5 Lessons + Aggregate Sims + Build Task + Boss Battle
 //
@@ -7634,7 +7634,7 @@ export const LAB6_META = {
 // Source: ecosystemLab7_lab8_combined.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // INTERMEDIATE · LAB 7 — CROSS-CHAIN COMPETITIVE ANALYSIS
 // INTERMEDIATE · LAB 8 — ECOSYSTEM GAPS AND OPPORTUNITY ANALYSIS
 //
@@ -9109,7 +9109,7 @@ export const LAB8_META = {
 // Source: ecosystemLab9_part1.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // SENIOR · LAB 9 — STRATEGIC ECOSYSTEM ANALYSIS
 // Part 1 of 2: SQL Primer Micro-Lessons (L0-SQL1 through L0-SQL4) + L9.1 + L9.2
 //
@@ -10099,7 +10099,7 @@ If results show that AVNU, Vesu, Nostra, and Extended all call the same Pragma o
 // Source: ecosystemLab9_part2.ts
 // ───────────────────────────────────────────────────────────────────────────────
 
-// ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive
+// ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive
 // SENIOR · LAB 9 — STRATEGIC ECOSYSTEM ANALYSIS
 // Part 2 of 2: L9.3–L9.5 + Aggregate Sims + Build Task + Boss Battle + Final Boss + Lab Meta
 //

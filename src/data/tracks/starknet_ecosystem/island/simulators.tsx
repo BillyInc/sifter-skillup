@@ -1,7 +1,7 @@
 /**
  * islandSimulators.tsx
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚡ Sifter SkillUp — Starknet Island (Island 18, Levels 291–310)
+ * ⚡ Sifter LevelUp — Starknet Island (Island 18, Levels 291–310)
  *
  * All simulator components and config for the Starknet Islands track.
  * Re-exports the core StarkzapSimulatorCard from the central components

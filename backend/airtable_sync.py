@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Airtable → Supabase CMS Sync
+# Sifter LevelUp — Airtable → Supabase CMS Sync
 #
 # Airtable is the content editor's home.
 # Supabase is the app's source of truth.

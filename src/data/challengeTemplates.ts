@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Challenge Templates
+ * Sifter LevelUp — Challenge Templates
  * FIELD_SUBMISSION_TYPES maps every field to its primary/secondary submission format.
  * CHALLENGE_TEMPLATES are seeded challenges — admins copy/adapt these.
  */

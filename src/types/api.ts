@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Backend API type definitions
+ * Sifter LevelUp — Backend API type definitions
  *
  * Mirror of backend/models.py Pydantic models. Keeping these in one
  * place lets us drop `any` from src/lib/api.ts return types and gives

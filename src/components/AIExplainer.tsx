@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — AI Explainer
+ * Sifter LevelUp — AI Explainer
  * Bottom sheet that explains a concept using claude-sonnet-4-20250514.
  * Rate-limited: 3 per lesson session. Blocked on portfolio/simulator screens.
  *
@@ -99,7 +99,7 @@ export default function AIExplainer({
         body: JSON.stringify({
           model:      'claude-sonnet-4-20250514',
           max_tokens: 1000,
-          system: `You are a patient, expert tutor on Sifter Skill_Up, a professional career learning platform.
+          system: `You are a patient, expert tutor on Sifter LevelUp, a professional career learning platform.
 The user is studying ${trackName} and has encountered a concept they don't understand.
 Break it down simply. Use a real-world analogy. Keep your explanation under 200 words.
 Never give answers to exercises or artifact tasks — only explain the underlying concept.

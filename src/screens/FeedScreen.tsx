@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Feed Screen
+ * Sifter LevelUp — Feed Screen
  * Tab name: 📰 Feed
  * Replaces Community + Guild.
  *

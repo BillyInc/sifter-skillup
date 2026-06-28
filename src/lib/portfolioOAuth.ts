@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — Portfolio OAuth helper
+// ⚡ Sifter LevelUp — Portfolio OAuth helper
 // Branches between native (sifter:// deep link — backend default) and web
 // (popup window + polling fallback). The backend redirects to sifter:// at the
 // end of every callback, which is unreachable from a browser. Rather than

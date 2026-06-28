@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Rewards Badge Component
+ * Sifter LevelUp — Rewards Badge Component
  * Displays a badge in a grid cell or as a large detail card.
  * Rarity glow: common=grey, rare=blue, epic=purple, legendary=gold shimmer.
  */

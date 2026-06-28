@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Memecoin Markets (Island 9, Levels 91–105)
+// ⚡ Sifter LevelUp — Memecoin Markets (Island 9, Levels 91–105)
 // Part B of 2 — Levels 99–105
 
 import type { Level } from './levels';

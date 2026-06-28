@@ -73,7 +73,7 @@ export const Auth = {
   async signInGuest() {
     if (!supabase) return notConfigured('Auth.signInGuest');
     const id = Math.random().toString(36).slice(2, 10);
-    const email = `guest_${id}@sifterskillup.app`;
+    const email = `guest_${id}@sifterlevelup.app`;
     const password = `guest_${id}_pwd`;
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;

@@ -1,5 +1,5 @@
 // @ts-nocheck
-// ⚡ Sifter Skill_Up — Python Mastery Program
+// ⚡ Sifter LevelUp — Python Mastery Program
 // Standalone shared track: 80 levels across 8 chapters (IDs 2001–2080)
 // General concept first → financial application second on every level
 // Wires into: Quant Trader, Quant Researcher, Quant Developer, Data Science, and any future track requiring Python

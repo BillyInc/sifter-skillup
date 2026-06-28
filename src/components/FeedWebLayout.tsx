@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Feed Web Layout (Phase 3)
+ * Sifter LevelUp — Feed Web Layout (Phase 3)
  * Two-column layout for web ≥768px.
  *
  * LEFT COLUMN  (scrollable, flex 3):

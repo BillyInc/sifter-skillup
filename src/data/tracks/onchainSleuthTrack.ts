@@ -1,6 +1,6 @@
 // ============================================================================
 // ON-CHAIN SLEUTH — COMPLETE CURRICULUM v2.1
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // Junior (6 labs) + Intermediate (4 labs) + Senior (5 labs)
 // 12 new lessons added v2.1: smart contracts, approvals, DeFi mechanics,
 // NFT fraud, address poisoning, stablecoin freeze, pig butchering,
@@ -2947,7 +2947,7 @@ Questions:
       // JUNIOR LAB 2
       // ============================================================
       // LAB 2: LINKING WALLETS ACROSS CHAINS — v2.0 UPGRADED
-// Upgraded to Sifter SkillUp Simulation System v2.0
+// Upgraded to Sifter LevelUp Simulation System v2.0
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // Boss Battle: two-phase (Learning Loop + Certification Attempt)
 // Portfolio artifact on pass
@@ -4837,7 +4837,7 @@ Mapped a three-vector fraud operation: approval drain campaign (89 victims, 0xDR
 ## Framework Applied
 Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique buyer ratio, approval drain mechanics, address poisoning campaign structure.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]\`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]\`,
               }],
               commitMessage: \`Junior Lab 2 — Cluster Analysis + NFT Fraud + Poisoning — Portfolio Push\`,
               badgeEarned: \`Cluster Analysis Expert\`,
@@ -4853,7 +4853,7 @@ Multi-vector fraud clustering: co-spending analysis, wash trading volume/unique 
       // JUNIOR LAB 3
       // ============================================================
       // LAB 3: FOLLOWING THROUGH MIXERS — v2.0 UPGRADED
-// Upgraded to Sifter SkillUp Simulation System v2.0
+// Upgraded to Sifter LevelUp Simulation System v2.0
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // Boss Battle: two-phase (Learning Loop + Certification Attempt)
 // Portfolio artifact on pass
@@ -6436,7 +6436,7 @@ Tornado Cash funds have OFAC SDN provenance. Coinbase and Binance (US-regulated)
       // JUNIOR LAB 4
       // ============================================================
       // LAB 4: OSINT — FINDING REAL PEOPLE BEHIND THE WALLETS — v2.0 UPGRADED
-// Upgraded to Sifter SkillUp Simulation System v2.0
+// Upgraded to Sifter LevelUp Simulation System v2.0
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // Boss Battle: two-phase (Learning Loop + Certification Attempt)
 // Portfolio artifact on pass
@@ -7904,7 +7904,7 @@ Mapped complete industrial pig butchering operation: 31 victims -> 4 collectors 
 ## Law Enforcement Package
 31 victim statements, LinkedIn evidence of systematic targeting, guaranteed-return fraud documentation, full on-chain cluster from victim wallets to exchange deposits.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]\`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]\`,
               }],
               commitMessage: \`Junior Lab 4 — OSINT + Pig Butchering — Portfolio Push\`,
               badgeEarned: \`OSINT Attribution Specialist\`,
@@ -7920,7 +7920,7 @@ Mapped complete industrial pig butchering operation: 31 victims -> 4 collectors 
       // JUNIOR LAB 5
       // ============================================================
       // LAB 5: PYTHON AUTOMATION & GRAPH THEORY — v2.0 UPGRADED
-// Upgraded to Sifter SkillUp Simulation System v2.0
+// Upgraded to Sifter LevelUp Simulation System v2.0
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // Boss Battle: two-phase (Learning Loop + Certification Attempt)
 // Portfolio artifact on pass
@@ -10175,7 +10175,7 @@ if __name__ == "__main__":
       // JUNIOR LAB 6
       // ============================================================
       // LAB 6: PROFESSIONAL PRACTICE — v2.0 UPGRADED
-// Upgraded to Sifter SkillUp Simulation System v2.0
+// Upgraded to Sifter LevelUp Simulation System v2.0
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // Boss Battle + Final Boss Junior: two-phase each
 // Portfolio artifacts on pass
@@ -11994,7 +11994,7 @@ Identified that suspect was actively monitoring the Discord channel where invest
 ## Framework Applied
 ZachXBT professional report standard: evidence-first, factual claims only, independent path verification, disclosure documentation, serial fraud pattern recognition.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]\`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]\`,
               }],
               commitMessage: \`Junior Lab 6 — Professional Investigation Certification — Portfolio Push\`,
               badgeEarned: \`Professional Investigator — Junior Certified\`,
@@ -12302,7 +12302,7 @@ All investigations documented at: github.com/[handle]/sifter-skillup-portfolio
       // INTERMEDIATE LAB 1
       // ============================================================
       // INTERMEDIATE LAB 1: REAL-TIME MONITORING SYSTEMS — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All labs at Intermediate level have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -14224,7 +14224,7 @@ Built a production multi-chain monitoring system for a $9M hack across Ethereum,
 ## Deployment
 VPS + PM2 (pm2 start, pm2 save, pm2 startup). Tron monitoring via Tronscan API (no API key required).
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]\`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]\`,
           }],
           commitMessage: \`Intermediate Lab 1 — Monitoring + Mempool + Safe — Portfolio Push\`,
           badgeEarned: \`Real-Time Monitor Builder\`,
@@ -14238,7 +14238,7 @@ VPS + PM2 (pm2 start, pm2 save, pm2 startup). Tron monitoring via Tronscan API (
       // INTERMEDIATE LAB 2
       // ============================================================
       // INTERMEDIATE LAB 2: ADVANCED PYTHON TOOLS — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Intermediate labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -15802,7 +15802,7 @@ Reviewed TRM Forensics report (TRM Score 84/100) on rogue employee's personal wa
 ## Key Decision
 Recommended treating the 84/100 score as warranting investigation (based on high-risk exchange interactions) while explicitly noting the co-spending claim as contested. Did not block the employee account based on the CoinJoin finding alone.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]\`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]\`,
           }],
           commitMessage: \`Intermediate Lab 2 — Platform + Professional Tools — Portfolio Push\`,
           badgeEarned: \`Investigation Platform Builder\`,
@@ -15816,7 +15816,7 @@ Recommended treating the 84/100 score as warranting investigation (based on high
       // INTERMEDIATE LAB 3
       // ============================================================
       // INTERMEDIATE LAB 3: WORKING WITH LAW ENFORCEMENT — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Intermediate labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -16975,7 +16975,7 @@ Produced a complete law enforcement package for the CosmicApes $4.8M Solana NFT 
 ## Framework Applied
 Law enforcement evidence standards: chain of custody documentation, affidavit epistemic requirements, and multi-jurisdictional coordination best practices.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Intermediate Lab 3 — Law Enforcement Package — Portfolio Push`,
@@ -16990,7 +16990,7 @@ Law enforcement evidence standards: chain of custody documentation, affidavit ep
       // INTERMEDIATE LAB 4
       // ============================================================
       // INTERMEDIATE LAB 4: BOUNTIES, CONSULTING & BUSINESS — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Intermediate labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -18107,7 +18107,7 @@ Developed a complete business stabilisation and growth plan for an 18-month-old 
 ## Framework Applied
 Small business formation, professional services pricing, client relationship management, and crypto-specific tax compliance best practices.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Intermediate Lab 4 — Business Plan — Portfolio Push`,
@@ -18134,7 +18134,7 @@ Small business formation, professional services pricing, client relationship man
       // SENIOR LAB 1
       // ============================================================
       // SENIOR LAB 1: NATION-STATE ACTORS — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Senior labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -19264,7 +19264,7 @@ Led a complete Lazarus Group attribution on a $520M cross-chain bridge hack. Pro
 ## Framework Applied
 Four-fingerprint attribution methodology: infrastructure reuse, code signatures, timing patterns, laundering signature. Scored per Senior attribution confidence scale.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Senior Lab 1 — Nation-State Attribution Package — Portfolio Push`,
@@ -19279,7 +19279,7 @@ Four-fingerprint attribution methodology: infrastructure reuse, code signatures,
       // SENIOR LAB 2
       // ============================================================
       // SENIOR LAB 2: PROTOCOL-LEVEL SECURITY CONSULTING — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Senior labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -20197,7 +20197,7 @@ Protocol was advised to remediate all 3 Critical findings and engage a re-review
 ## Framework Applied
 Investigator's security review methodology: attacker perspective vulnerability assessment, forensic readiness scoring, and proof-of-concept-driven severity classification.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Senior Lab 2 — Protocol Security Review — Portfolio Push`,
@@ -20212,7 +20212,7 @@ Investigator's security review methodology: attacker perspective vulnerability a
       // SENIOR LAB 3
       // ============================================================
       // SENIOR LAB 3: ADVANCED PRIVACY TECHNOLOGY — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Senior labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -20971,7 +20971,7 @@ Led a multi-privacy-tool investigation of a $35M DeFi hack. The attacker used To
 ## Framework Applied
 Privacy technology edge analysis: anonymity set calculation for ZK systems, Monero on-ramp/off-ramp subpoena strategy, CoinJoin change address tracking across multiple rounds.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Senior Lab 3 — Privacy Technology Investigation — Portfolio Push`,
@@ -20986,7 +20986,7 @@ Privacy technology edge analysis: anonymity set calculation for ZK systems, Mone
       // SENIOR LAB 4
       // ============================================================
       // SENIOR LAB 4: BUILDING THE INDUSTRY — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Senior labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -21805,7 +21805,7 @@ Mitigation: all grant conditions published publicly; methodology is independentl
 ## Compounding Strategy
 Forensic readiness tool (grant) -> conference talk demos tool -> attribution standard built on tool's methodology -> FBI curriculum uses both -> all four cite each other in every channel.
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Senior Lab 4 — Building the Industry — Portfolio Push`,
@@ -21820,7 +21820,7 @@ Forensic readiness tool (grant) -> conference talk demos tool -> attribution sta
       // SENIOR LAB 5
       // ============================================================
       // SENIOR LAB 5: COMPLEX LITIGATION SUPPORT — v2.0 UPGRADED
-// Sifter SkillUp Simulation System v2.0
+// Sifter LevelUp Simulation System v2.0
 // All Senior labs have Phase 1 + Phase 2 (portfolio push)
 // Every lesson: 3 examples, 5 guided practice, 3 simulations (different types)
 // aggregateSimulations AFTER lessons array, BEFORE bossMode
@@ -22635,7 +22635,7 @@ Retained as expert witness in a $200M civil forfeiture action involving an 82% c
 - 82% confidence standard: medical diagnosis analogy
 - Untraced $35M: finding $145k of $180k stolen at suspect's home
 
-## Verified by Sifter SkillUp — Portfolio Push — [date]`,
+## Verified by Sifter LevelUp — Portfolio Push — [date]`,
             },
           ],
           commitMessage: `Senior Lab 5 — Complex Litigation Support — Portfolio Push`,

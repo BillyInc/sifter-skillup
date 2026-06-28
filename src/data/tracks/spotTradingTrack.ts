@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — SPOT TRADING Career Track
+// ⚡ Sifter LevelUp — SPOT TRADING Career Track
 import { SkillTrack } from '../skillTypes';
 
 export const spotTradingTrack: SkillTrack = {
@@ -3649,7 +3649,7 @@ Scenario 3: An ETH DEX token drops 40% in 2 minutes after a smart contract explo
         },
     },
 ,
-// ⚡ Sifter Skill_Up — SPOT TRADING Career Track
+// ⚡ Sifter LevelUp — SPOT TRADING Career Track
 // UPGRADED TO FULL SIM-INSTRUCTION SPEC v2.0
 // Section 4 of 8: Risk Management
 
