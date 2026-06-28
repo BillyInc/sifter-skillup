@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Guild Leaderboard Prompt
+ * Sifter LevelUp — Guild Leaderboard Prompt
  * Shows the user's current guild rank and the XP gap to the next position.
  * Creates social competition urgency without them having to open the leaderboard.
  *

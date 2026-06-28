@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Portfolio Hub Screen
+ * Sifter LevelUp — Portfolio Hub Screen
  *
  * Multi-platform portfolio hub. Replaces the single GitHub screen for
  * career tracks where GitHub is secondary (e.g. Supply Chain Analyst).

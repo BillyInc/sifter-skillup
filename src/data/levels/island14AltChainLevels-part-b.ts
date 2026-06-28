@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Alt-Chain Ecosystems (Island 14, Levels 211–230)
+// ⚡ Sifter LevelUp — Alt-Chain Ecosystems (Island 14, Levels 211–230)
 // Part B of 2 — Levels 219–230 (Boss: L226)
 //
 // Chain: islandId=14

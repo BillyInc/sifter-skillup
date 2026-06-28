@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Authentication
+# Sifter LevelUp — Authentication
 # Handles: Telegram WebApp, Base wallet, email, guest
 # ============================================
 import hashlib
@@ -97,6 +97,9 @@ class Auth:
             result = db.get_service_client().table("users").select("*").eq("id", user_id).single().execute()
             if not result.data:
                 raise HTTPException(status_code=401, detail="User not found")
-            return result.data
+            user = result.data
+            # Backward-compatible: legacy rows predate account_type — default to student.
+            user.setdefault("account_type", "student")
+            return user
         except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")

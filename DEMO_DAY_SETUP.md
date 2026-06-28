@@ -1,4 +1,4 @@
-# Sifter SkillUp — Demo Day Setup Guide
+# Sifter LevelUp — Demo Day Setup Guide
 ## Starkzap Builder Bounty | Integration v2.1
 
 ---
@@ -265,4 +265,4 @@ Add credentials later by setting the matching `*_CLIENT_ID` / `*_CLIENT_SECRET` 
 
 ---
 
-*Sifter SkillUp — Integration v2.1 | Starkzap Builder Bounty | April 2026*
+*Sifter LevelUp — Integration v2.1 | Starkzap Builder Bounty | April 2026*

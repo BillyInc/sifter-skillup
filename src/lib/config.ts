@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up - Shared Configuration
+ * Sifter LevelUp - Shared Configuration
  * Single source of truth for app-wide constants.
  */
 

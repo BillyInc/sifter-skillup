@@ -1,6 +1,6 @@
 """
 boss_routes.py
-Sifter SkillUp — Boss Mode Routes
+Sifter LevelUp — Boss Mode Routes
 
 Routes:
   POST  /api/boss/start          — begin a boss session (Phase 1 or Phase 2)

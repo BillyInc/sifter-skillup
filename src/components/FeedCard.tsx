@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — FeedCard
+ * Sifter LevelUp — FeedCard
  * Renders any FeedItem type with the correct metadata widget.
  * v3 theme throughout. Based on your template scaffold.
  */

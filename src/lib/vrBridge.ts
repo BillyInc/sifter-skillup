@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — VR Bridge Layer
+// ⚡ Sifter LevelUp — VR Bridge Layer
 // This file defines the complete contract between the React Native app and
 // the future Unity/VR environment. All functions are currently no-ops that
 // log intent. When the Unity build is ready, replace implementations below

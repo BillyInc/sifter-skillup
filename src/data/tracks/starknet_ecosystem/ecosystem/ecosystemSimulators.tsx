@@ -1,7 +1,7 @@
 /**
  * ecosystemSimulators.tsx
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive: All Simulators
+ * ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive: All Simulators
  * Single unified file — React Native (Expo) + web compatible
  *
  * SYNTHESIS NOTE: This file merges three sources:
@@ -42,7 +42,7 @@
 /**
  * ecosystemSimulators.tsx
  * ─────────────────────────────────────────────────────────────────────────────
- * ⚡ Sifter SkillUp — Starknet Ecosystem Deep Dive: All Simulators (RN)
+ * ⚡ Sifter LevelUp — Starknet Ecosystem Deep Dive: All Simulators (RN)
  *
  * React Native version of the ecosystem simulator card.
  * Consolidated from StarkzapSimulatorCard_extended.tsx.
@@ -90,6 +90,10 @@ import {
   STARKNET_TOKENS, MOCK,
   type StarkzapWallet,
 } from '../../../../lib/starkzap';
+import {
+  isStarknetSepoliaRpcConfigured,
+  starknetSepoliaRpcCall,
+} from '../../../../lib/starknetRpc';
 import { useAuth as useAppAuth } from '../../../../hooks/useAuth';
 import { Colors, Spacing, Radius, FontSize, useTheme } from '../../../../theme';
 import {
@@ -287,14 +291,108 @@ const MOCK_ECOSYSTEM = {
   },
 };
 
+type EcosystemSnapshot = typeof MOCK_ECOSYSTEM;
+
+function formatCompactUsd(value: number) {
+  if (!Number.isFinite(value)) return MOCK_ECOSYSTEM.starknetTVL;
+  const formatted = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    maximumFractionDigits: value >= 1_000_000_000 ? 2 : 1,
+  }).format(value);
+  return `$${formatted}`;
+}
+
+function formatSignedPercent(value: number) {
+  if (!Number.isFinite(value)) return MOCK_ECOSYSTEM.tvl30dChange;
+  const sign = value > 0 ? '+' : '';
+  return `${sign}${value.toFixed(1)}%`;
+}
+
+async function fetchJson(url: string) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+async function fetchEcosystemSnapshot(): Promise<{
+  snapshot: EcosystemSnapshot;
+  mode: 'live' | 'mixed' | 'mock';
+}> {
+  const snapshot: EcosystemSnapshot = JSON.parse(JSON.stringify(MOCK_ECOSYSTEM));
+  let liveSignals = 0;
+
+  try {
+    const chains = await fetchJson(DEFI_LLAMA_STARKNET);
+    if (Array.isArray(chains)) {
+      const starknetChain = chains.find((chain: any) =>
+        String(chain?.name ?? chain?.chain ?? '').toLowerCase() === 'starknet');
+      if (starknetChain) {
+        const tvl = Number(starknetChain.tvl ?? starknetChain.tvlUsd ?? starknetChain.mcap ?? NaN);
+        const change30d = Number(
+          starknetChain.change_30d
+          ?? starknetChain.change30d
+          ?? starknetChain.mcap_change_30d
+          ?? NaN
+        );
+
+        if (Number.isFinite(tvl)) {
+          snapshot.starknetTVL = formatCompactUsd(tvl);
+          liveSignals += 1;
+        }
+        if (Number.isFinite(change30d)) {
+          snapshot.tvl30dChange = formatSignedPercent(change30d);
+          liveSignals += 1;
+        }
+      }
+    }
+  } catch {
+    // Fall back to curated data below.
+  }
+
+  if (isStarknetSepoliaRpcConfigured()) {
+    try {
+      const [blockNumberRaw, latestBlock] = await Promise.all([
+        starknetSepoliaRpcCall('starknet_blockNumber'),
+        starknetSepoliaRpcCall('starknet_getBlockWithTxHashes', ['latest']),
+      ]);
+      const blockNumber = Number(blockNumberRaw);
+      const txCount = Array.isArray(latestBlock?.transactions) ? latestBlock.transactions.length : null;
+
+      if (Number.isFinite(blockNumber)) {
+        snapshot.recentProof.blockRange = `${Math.max(blockNumber - 220, 0).toLocaleString()} - ${blockNumber.toLocaleString()}`;
+        snapshot.recentProof.submittedAt = `Block #${blockNumber.toLocaleString()} on Sepolia`;
+        liveSignals += 1;
+      }
+
+      if (typeof txCount === 'number') {
+        snapshot.recentProof.txCount = txCount.toLocaleString();
+        snapshot.voyagerStats.dailyTxs = `${txCount.toLocaleString()} latest-block txs`;
+        liveSignals += 1;
+      }
+    } catch {
+      // Keep fallback proof/network numbers if RPC is unavailable at runtime.
+    }
+  }
+
+  return {
+    snapshot,
+    mode: liveSignals >= 3 ? 'live' : liveSignals > 0 ? 'mixed' : 'mock',
+  };
+}
+
 export function EcosystemReadSim({ onComplete, onSkip, colors, mode }: {
   onComplete: () => void; onSkip: () => void; colors: any;
   mode?: 'tvl' | 'proof' | 'voyager' | 'full';
 }) {
+  const { starknetAddress } = useSimulatorAuth();
   const [loading, setLoading]   = useState(false);
   const [data, setData]         = useState<typeof MOCK_ECOSYSTEM | null>(null);
   const [queryLabel, setQueryLabel] = useState('');
   const [done, setDone]         = useState(false);
+  const [snapshotMode, setSnapshotMode] = useState<'live' | 'mixed' | 'mock'>('mock');
 
   const effectiveMode = mode ?? 'full';
 
@@ -306,11 +404,10 @@ export function EcosystemReadSim({ onComplete, onSkip, colors, mode }: {
       effectiveMode === 'voyager' ? 'Fetching Voyager network stats…' :
       'Fetching ecosystem data from DefiLlama + Voyager…'
     );
-    await simulateDelay(1800);
-    // In real mode, hit the actual APIs here:
-    // const res = await window.fetch(DEFI_LLAMA_STARKNET);
-    // const json = await res.json();
-    setData(MOCK_ECOSYSTEM);
+    await simulateDelay(600);
+    const snapshot = await fetchEcosystemSnapshot();
+    setData(snapshot.snapshot);
+    setSnapshotMode(snapshot.mode);
     setLoading(false);
     setDone(true);
   }, [effectiveMode]);
@@ -323,7 +420,19 @@ export function EcosystemReadSim({ onComplete, onSkip, colors, mode }: {
         subtitle="Read real on-chain data from DefiLlama and Voyager. No gas. No transactions."
         colors={colors}
       />
-      <DemoBadge colors={colors} message="Demo mode — add DEFI_LLAMA key in Settings for live data" />
+      <StarknetAddressBanner address={starknetAddress} />
+      <View style={[dB.wrap, {
+        backgroundColor: snapshotMode === 'live' ? colors.greenSoft : colors.goldSoft,
+        borderColor: snapshotMode === 'live' ? colors.green + '40' : colors.gold + '40',
+      }]}>
+        <Text style={[dB.text, { color: snapshotMode === 'live' ? colors.green : colors.gold }]}>
+          {snapshotMode === 'live'
+            ? 'Live Starknet Sepolia + ecosystem data loaded.'
+            : snapshotMode === 'mixed'
+              ? 'Live Starknet Sepolia data loaded. Some metrics used fallback demo values.'
+              : 'This simulator will fall back to curated demo values if live endpoints are unavailable.'}
+        </Text>
+      </View>
 
       {!done ? (
         <ActionBtn
@@ -374,10 +483,10 @@ export function EcosystemReadSim({ onComplete, onSkip, colors, mode }: {
           {/* Explorer link */}
           <TouchableOpacity
             style={[{ borderRadius: Radius.md, padding: Spacing.sm, alignItems: 'center', borderWidth: 1, borderColor: colors.border }]}
-            onPress={() => Linking.openURL('https://voyager.online')}
+            onPress={() => Linking.openURL(STARKNET_SEPOLIA_CONFIG.explorer)}
           >
             <Text style={{ color: colors.accent, fontWeight: '700', fontSize: FontSize.sm }}>
-              Open Voyager Explorer →
+              Open Voyager Sepolia Explorer →
             </Text>
           </TouchableOpacity>
           <TouchableOpacity

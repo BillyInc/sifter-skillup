@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Rewards Theme Tokens
+ * Sifter LevelUp — Rewards Theme Tokens
  * Badge rarity, submission types, reward table, and merch credit helpers.
  * Consumed by: rewardsEngine, RewardsBadge, ChallengeCard, MerchandiseScreen,
  *              challengeTemplates, types/social.

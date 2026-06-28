@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — TrackSearch
+ * Sifter LevelUp — TrackSearch
  * Modal for searching and selecting tracks to monitor.
  * Shows all available tracks, grouped by field.
  * Already-monitored tracks shown with remove option.

@@ -132,7 +132,7 @@ function buildOverviewContext(): TrackContext {
     fieldId: null,
     trackId: null,
     trackName: 'Dashboard',
-    worldName: 'Sifter Skill_Up',
+    worldName: 'Sifter LevelUp',
     tagline: 'Choose a live track and step into its world.',
     description: 'Browse your active islands, track options, guilds, streaks, and portfolio from one reference-style dashboard.',
     color: '#111111',

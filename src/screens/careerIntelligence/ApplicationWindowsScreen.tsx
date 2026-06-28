@@ -1,0 +1,144 @@
+/**
+ * ApplicationWindowsScreen — the Opportunities list of upcoming application
+ * windows and deadlines.
+ *
+ * This is a LIST screen, so it ships its own inline back+header chrome
+ * (mirroring DetailScaffold visually) and renders the body through
+ * DataStateView. Data comes from careerData.getApplicationWindows, which
+ * returns a `coming_soon` envelope in this phase — DataStateView renders the
+ * graceful "Coming soon" panel for it, and flips to real cards (or the empty
+ * state) automatically once data lands, with no changes here. Windows linked to
+ * an opportunity also surface an inline SubscribeButton (itself degrading
+ * gracefully while alerts are not yet live).
+ */
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { useTheme, Spacing, FontSize, webContainer } from "../../theme";
+import { careerData } from "../../lib/careerData";
+import {
+  comingSoon,
+  type DataState,
+  type ApplicationWindow,
+} from "../../types/career";
+import {
+  DataStateView,
+  ApplicationWindowCard,
+  SubscribeButton,
+} from "../../components/careerIntelligence";
+
+export function ApplicationWindowsScreen() {
+  const { colors } = useTheme();
+  const router = useRouter();
+  const [state, setState] =
+    useState<DataState<ApplicationWindow[]>>(comingSoon<ApplicationWindow[]>());
+
+  useEffect(() => {
+    let alive = true;
+    careerData.getApplicationWindows().then((res) => {
+      if (alive) setState(res);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  return (
+    <ScrollView
+      style={{ flex: 1, backgroundColor: colors.bg }}
+      contentContainerStyle={[styles.scroll, webContainer as object]}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.topRow}>
+        <TouchableOpacity
+          onPress={() => router.back()}
+          hitSlop={10}
+          style={styles.back}
+        >
+          <Text style={[styles.backText, { color: colors.accent }]}>
+            ← Back
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={[styles.eyebrow, { color: colors.textMuted }]}>
+        OPPORTUNITIES
+      </Text>
+      <Text style={[styles.title, { color: colors.text }]}>
+        Application Windows
+      </Text>
+      <Text style={[styles.subtitle, { color: colors.textSoft }]}>
+        🗓️ Upcoming openings & deadlines — don't miss these.
+      </Text>
+
+      <View style={{ marginTop: Spacing.md }}>
+        <DataStateView
+          state={state}
+          empty={(d) => d.length === 0}
+          emptyTitle="No upcoming windows"
+        >
+          {(windows) => (
+            <View style={{ gap: Spacing.md }}>
+              {windows.map((w) => (
+                <View key={w.id} style={{ gap: Spacing.sm }}>
+                  <ApplicationWindowCard
+                    title={w.title}
+                    status={w.status}
+                    whenLabel={w.whenLabel}
+                    onRemind={() => {}}
+                  />
+                  {w.opportunityId ? (
+                    <SubscribeButton
+                      target="application_window"
+                      targetId={w.id}
+                    />
+                  ) : null}
+                </View>
+              ))}
+            </View>
+          )}
+        </DataStateView>
+      </View>
+    </ScrollView>
+  );
+}
+
+export default ApplicationWindowsScreen;
+
+const styles = StyleSheet.create({
+  scroll: {
+    paddingVertical: Spacing.lg,
+    paddingHorizontal: Spacing.lg,
+    gap: Spacing.sm,
+    flexGrow: 1,
+  },
+  topRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  back: { paddingVertical: 4, minHeight: 44, justifyContent: "center" },
+  backText: { fontSize: FontSize.md, fontWeight: "700" },
+  eyebrow: {
+    fontSize: FontSize.xs,
+    fontWeight: "800",
+    letterSpacing: 1,
+    marginTop: Spacing.sm,
+  },
+  title: {
+    fontSize: FontSize.display,
+    fontWeight: "900",
+    lineHeight: FontSize.display * 1.15,
+  },
+  subtitle: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+    marginTop: Spacing.xs,
+  },
+});

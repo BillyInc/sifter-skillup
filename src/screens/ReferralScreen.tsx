@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Referral Screen
+ * Sifter LevelUp — Referral Screen
  *
  * Direct referral:    user A refers user B → A earns points when B signs up
  * Indirect referral:  user B refers user C → A earns a smaller bonus too
@@ -59,7 +59,7 @@ export default function ReferralScreen() {
   const handleShare = async () => {
     if (!stats) return;
     await Share.share({
-      message: `I'm building real career skills on Sifter Skill_Up — supply chain, quant, data science, and more. Use my link to join free: ${stats.referralUrl}`,
+      message: `I'm building real career skills on Sifter LevelUp — supply chain, quant, data science, and more. Use my link to join free: ${stats.referralUrl}`,
       url: stats.referralUrl,
     });
   };

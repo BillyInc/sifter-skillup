@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Challenge Card
+ * Sifter LevelUp — Challenge Card
  * Displays a monthly challenge in the ChallengeScreen list.
  * Adapts: list (mobile/narrow), grid (web wide).
  */

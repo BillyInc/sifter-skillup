@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Feed grouping utility
+ * Sifter LevelUp — Feed grouping utility
  *
  * Demoted from a fetch/aggregation layer to a *pure* client-side grouping helper.
  * All HTTP access now goes through `API.feedGetItems / feedReact / feedSubscribe`

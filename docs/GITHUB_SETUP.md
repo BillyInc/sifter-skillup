@@ -2,7 +2,7 @@
 
 ## What this does for users
 
-When a user connects GitHub inside Sifter Skill_Up they get:
+When a user connects GitHub inside Sifter LevelUp they get:
 
 1. **One-tap portfolio push** — their completed quant implementations (Sharpe, Kelly, Black-Scholes, Markowitz, Fama-French, Monte Carlo, backtester, momentum, pairs trading) are pushed as clean Python files to a public repo.
 2. **Auto-generated README** — professional documentation explaining what each file does.
@@ -18,7 +18,7 @@ When a user connects GitHub inside Sifter Skill_Up they get:
 
 1. Go to **github.com → Settings → Developer settings → OAuth Apps → New OAuth App**
 2. Fill in:
-   - **Application name:** `Sifter Skill_Up`
+   - **Application name:** `Sifter LevelUp`
    - **Homepage URL:** `https://yourdomain.com`
    - **Authorization callback URL:** `https://your-api-domain.com/api/github/callback`
 3. Click **Register application**

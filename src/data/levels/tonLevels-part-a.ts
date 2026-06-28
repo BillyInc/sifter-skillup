@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — TON & Telegram (Island 12, Levels 166–180)
+// ⚡ Sifter LevelUp — TON & Telegram (Island 12, Levels 166–180)
 // Part A of 2 — Levels 166–173
 //
 // RENUMBERING NOTE: This was formerly Island 13.

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — API Client
+ * Sifter LevelUp — API Client
  * All calls go through the FastAPI backend.
  * Set EXPO_PUBLIC_API_URL in your .env
  *

@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — Portfolio Platform Directory
+// ⚡ Sifter LevelUp — Portfolio Platform Directory
 // 28 Fields × N Platforms — drives the Portfolio Hub feature
 // Generated from: Sifter_SkillUp_Master_Role_Directory_v2.pdf
 

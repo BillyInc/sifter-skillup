@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up - useAuth
+ * Sifter LevelUp - useAuth
  *
  * Full UserProfile with all upgrade fields.
  * Adds: starknet auth, active field, track context,
@@ -24,6 +24,9 @@ export interface UserProfile {
   username: string;
   avatar_url: string | null;
   auth_provider: string;
+  /** Discriminates the student app from the institutional/admin side. Defaults
+   *  to 'student' (backend may omit it until the institutional slice lands). */
+  account_type?: 'student' | 'educator' | 'institution_admin';
   email: string;
   points: number;
   streak: number;
@@ -352,6 +355,7 @@ function _normalise(raw: any): UserProfile {
     username: raw.username ?? 'Learner',
     avatar_url: raw.avatar_url ?? null,
     auth_provider: raw.auth_provider ?? 'guest',
+    account_type: raw.account_type,
     email: raw.email ?? '',
     points: raw.points ?? 0,
     streak: raw.streak ?? 0,

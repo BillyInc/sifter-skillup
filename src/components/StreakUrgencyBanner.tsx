@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Streak Urgency Banner
+ * Sifter LevelUp — Streak Urgency Banner
  * Shown in-app when streak is at risk (< 4h remaining, not done today).
  * Shakes periodically to grab attention. Tapping dismisses for the session.
  *

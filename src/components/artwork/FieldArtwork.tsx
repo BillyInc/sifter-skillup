@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Field Artwork System
+ * Sifter LevelUp — Field Artwork System
  *
  * Each field gets a distinct animated illustration.
  * No external SVG library needed — pure React Native Animated Views.

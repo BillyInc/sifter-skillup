@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Social Rewards Routes
+# Sifter LevelUp — Social Rewards Routes
 # Share tracking · Portfolio attribution
 # Social blast · Referral bonuses
 # ============================================
@@ -124,7 +124,7 @@ async def my_shares(
 # ─────────────────────────────────────────────────────────────
 # Portfolio attribution
 # Records that a portfolio push happened and adds the
-# "Built on Sifter Skill_Up" attribution badge to the user.
+# "Built on Sifter LevelUp" attribution badge to the user.
 # ─────────────────────────────────────────────────────────────
 
 @router.post("/portfolio/attribution", response_model=ResponseModel)

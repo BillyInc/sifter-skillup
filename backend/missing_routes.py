@@ -1,5 +1,5 @@
 # ============================================================
-# Sifter Skill_Up — Missing Route Groups
+# Sifter LevelUp — Missing Route Groups
 # Covers all endpoints called by the frontend that were absent
 # from main.py. Import and include each router in main.py.
 #
@@ -303,7 +303,7 @@ async def social_blast(
 
     caption = (
         f"{body.message}\n\n"
-        f"— Verified by Sifter Skill_Up · sifter.app\n"
+        f"— Verified by Sifter LevelUp · sifter.app\n"
         f"Portfolio: {body.portfolioUrl}"
     )
 
@@ -387,14 +387,14 @@ async def _blast_to_platform(
         r = await client.post(
             "https://oauth.reddit.com/api/submit",
             data={
-                "sr": "SifterSkillUp",
+                "sr": "SifterLevelUp",
                 "kind": "link",
                 "title": caption[:300],
                 "url": portfolio_url,
             },
             headers={
                 "Authorization": f"Bearer {token}",
-                "User-Agent": "SifterSkillUp/1.0",
+                "User-Agent": "SifterLevelUp/1.0",
             },
         )
         url = r.json().get("json", {}).get("data", {}).get("url", portfolio_url)
@@ -587,7 +587,7 @@ async def trigger_notification(
         }
 
         msg = notification_messages.get(body.type, {
-            "title": "Sifter Skill_Up",
+            "title": "Sifter LevelUp",
             "body": "You have a new notification.",
         })
 

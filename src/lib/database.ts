@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — WatermelonDB Database Singleton
+ * Sifter LevelUp — WatermelonDB Database Singleton
  * Safe import — falls back gracefully if @nozbe/watermelondb not installed.
  * Install: npx expo install @nozbe/watermelondb
  */

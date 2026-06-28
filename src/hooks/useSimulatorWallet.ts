@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — useSimulatorWallet
+ * Sifter LevelUp — useSimulatorWallet
  * NEW FILE: src/hooks/useSimulatorWallet.ts
  *
  * Provides a testnet wallet address, balance, and helpers

@@ -1,5 +1,5 @@
 /**
- * Sifter SkillUp — Phase 1 Boss Registry
+ * Sifter LevelUp — Phase 1 Boss Registry
  *
  * Maps track boss level IDs → Phase1BossRenderer props.
  * ALL task pools contain real, topic-specific questions extracted from
@@ -788,7 +788,7 @@ export const PHASE1_BOSS_REGISTRY: Record<number, BossRegistryEntry> = {
     'The pack function uses value.leverage.into() then multiplies by 0x10000000000000000. What does this multiplication do?',
     'A packed read costs 2,000 gas and an unpack CPU operation costs 500 gas. An unpacked read per field costs 2,000 gas. At how many fields does packing break even on reads?',
     'Unpack uses (v & 0xFFFFFFFFFFFFFFFF_u256) to extract timestamp. What does the 0xFF...FF mask do?',
-    'An NFT collection has the name "The Sifter SkillUp Cairo Builder Achievement Collection" (53 characters). Why must this use ByteArray instead of felt252?',
+    'An NFT collection has the name "The Sifter LevelUp Cairo Builder Achievement Collection" (53 characters). Why must this use ByteArray instead of felt252?',
     'When should you use [T; 5] instead of Array<T> for storing oracle prices?',
     'let (amount_out, impact) = quote_and_impact(1000, 5000, 100). What is this called?',
     'A Diamond Router has LiquidationFacet at selector 0x1234. You deploy LiquidationFacetV2 and call register_facet(v2, [0x1234]). What happens to existing positions stored in the protocol?',

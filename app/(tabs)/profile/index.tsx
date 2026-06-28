@@ -1,5 +1,5 @@
-import ProfileScreen from '@/screens/ProfileScreen';
+import CareerProfileScreen from "@/screens/CareerProfileScreen";
 
 export default function ProfileTabScreen() {
-  return <ProfileScreen />;
+  return <CareerProfileScreen />;
 }

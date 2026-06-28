@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up - Skills & Career Explorer
+ * Sifter LevelUp - Skills & Career Explorer
  */
 
 import React, { useMemo, useState } from 'react';

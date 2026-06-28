@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Challenge Engine
+ * Sifter LevelUp — Challenge Engine
  * Manages challenge lifecycle: browsing, accepting invites,
  * team display, and submission flow.
  * Team assembly happens server-side — this is client-side only.

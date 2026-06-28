@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Share Engine
+ * Sifter LevelUp — Share Engine
  *
  * Level completion → share to socials (motivational, not portfolio)
  * Portfolio artifact earned → push to primary portfolio platform
@@ -25,14 +25,14 @@ export interface SharePayload {
 }
 
 const LEVEL_SHARE_MESSAGES = [
-  "Just cleared {level} on @SifterSkillUp 🏆 Building real {track} skills — one level at a time. {url}",
-  "⚡ {level} done on @SifterSkillUp. {track} is one of the highest-demand skills right now — and I'm building it. {url}",
+  "Just cleared {level} on @SifterLevelUp 🏆 Building real {track} skills — one level at a time. {url}",
+  "⚡ {level} done on @SifterLevelUp. {track} is one of the highest-demand skills right now — and I'm building it. {url}",
   "🎯 Another level cleared. {track} skills + verified portfolio = career momentum. {url}",
 ];
 
 const PORTFOLIO_SHARE_MESSAGES = [
-  "🏆 Just earned a verified {track} portfolio artifact on @SifterSkillUp — scored 100% on an unseen case study, assessed against industry standards. See it here: {portfolio}",
-  "⚡ New portfolio artifact: {artifact} — verified by @SifterSkillUp against APICS/CSCMP standards. Not a certificate. Actual proof. {portfolio}",
+  "🏆 Just earned a verified {track} portfolio artifact on @SifterLevelUp — scored 100% on an unseen case study, assessed against industry standards. See it here: {portfolio}",
+  "⚡ New portfolio artifact: {artifact} — verified by @SifterLevelUp against APICS/CSCMP standards. Not a certificate. Actual proof. {portfolio}",
   "📊 My {track} portfolio just grew. Every artifact earned by passing, not just completing. {portfolio}",
 ];
 

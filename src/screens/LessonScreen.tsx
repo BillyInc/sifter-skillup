@@ -137,7 +137,7 @@ function detectTermLinks(currentLevelId: number, text: string): TermLink[] {
 // ── Export helper ─────────────────────────────────────────────
 async function exportAll() {
   const [bm, notes] = await Promise.all([loadBookmarks(), loadNotes()]);
-  let txt = '============================\n  SIFTER SKILL_UP — MY STUDY EXPORT\n';
+  let txt = '============================\n  SIFTER LEVELUP — MY STUDY EXPORT\n';
   txt += `  ${new Date().toLocaleString()}\n============================\n\n`;
   txt += '── BOOKMARKS ───────────────────────────\n\n';
   if (bm.length) bm.forEach((b,i) => { txt += `${i+1}. ${b.topic}\n   ${b.fact}\n   Saved: ${new Date(b.savedAt).toLocaleDateString()}\n\n`; });

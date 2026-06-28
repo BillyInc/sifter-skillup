@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Database Layer
+# Sifter LevelUp — Database Layer
 # ============================================
 from supabase import create_client, Client
 from supabase.lib.client_options import SyncClientOptions

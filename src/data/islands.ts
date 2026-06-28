@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Island Definitions (19 islands)
+ * Sifter LevelUp — Island Definitions (19 islands)
  * REPLACES: src/data/islands.ts
  *
  * New numbering per README:

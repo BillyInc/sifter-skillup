@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Social Rewards Types
+ * Sifter LevelUp — Social Rewards Types
  * Single source of truth for all Social + Rewards types.
  * Import from here everywhere in the social rewards system.
  */

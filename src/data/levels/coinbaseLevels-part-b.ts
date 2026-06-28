@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Coinbase Deep Dive (Island 13, Levels 181–195)
+// ⚡ Sifter LevelUp — Coinbase Deep Dive (Island 13, Levels 181–195)
 // Part B of 2 — Levels 189–195
 
 import type { Level } from './levels';

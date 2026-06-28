@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Diary Engine
+ * Sifter LevelUp — Diary Engine
  *
  * Encrypted local-only diary. Never syncs to backend.
  * AES-256 encryption keyed to the user's device + userId.
@@ -219,7 +219,7 @@ export async function convertImportedContent(params: {
   // Trim to 2000 chars to keep API cost low and response fast
   const snippet = rawText.slice(0, 2000);
 
-  const systemPrompt = `You are Sifter Skill_Up's in-app teacher. Convert the pasted content into a lesson in our exact style:
+  const systemPrompt = `You are Sifter LevelUp's in-app teacher. Convert the pasted content into a lesson in our exact style:
 1. Open with a real-world story or event (1-2 sentences)
 2. Explain what the content means in plain English — no jargon without definition
 3. Give one concrete example with specific numbers

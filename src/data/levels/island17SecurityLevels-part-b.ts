@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Security & Research (Island 17, Levels 231–240)
+// ⚡ Sifter LevelUp — Security & Research (Island 17, Levels 231–240)
 // Part B of 2 — Levels 236–240 (Boss: L240)
 //
 // Chain: islandId=17

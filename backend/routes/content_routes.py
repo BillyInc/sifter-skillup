@@ -1,5 +1,5 @@
 # ============================================================
-# Sifter Skill_Up — Content Routes
+# Sifter LevelUp — Content Routes
 # /api/content/{track_id}/version  GET  — version check
 # /api/content/{track_id}          GET  — full content download
 # /api/content/manifest            GET  — all track versions

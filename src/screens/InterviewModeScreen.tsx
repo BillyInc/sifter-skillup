@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Interview Mode Screen
+ * Sifter LevelUp — Interview Mode Screen
  *
  * A complete simulated job interview for a specific role and seniority level.
  * Structured exactly as that industry runs real interviews — not a difficulty

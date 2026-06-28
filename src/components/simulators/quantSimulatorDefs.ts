@@ -626,7 +626,7 @@ export const QUANT_SIM_DEFS: Record<string, SimulatorDef> = {
 
   vrBriefingQuiz: {
     key: 'vrBriefingQuiz', title: 'VR Environment Briefing', icon: '🥽',
-    subtitle: 'Know the Skill_Up VR world before you enter it',
+    subtitle: 'Know the LevelUp VR world before you enter it',
     type: 'match',
     pairs: [
       { left: 'Quant Trading Floor', right: 'Live market simulation — real-time position management' },

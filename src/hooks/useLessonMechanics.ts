@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — useLessonMechanics
+ * Sifter LevelUp — useLessonMechanics
  * Single hook that manages all Phase 4 state for LessonScreen.
  * Drop this into LessonScreen and connect to the existing answer flow.
  *

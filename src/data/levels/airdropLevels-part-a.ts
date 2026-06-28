@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Airdrop Archipelago (Island 10, Levels 106–120)
+// ⚡ Sifter LevelUp — Airdrop Archipelago (Island 10, Levels 106–120)
 // Part A of 2 — Levels 106–113
 //
 // L106–L108: preserved exactly from islands9_18Levels.ts

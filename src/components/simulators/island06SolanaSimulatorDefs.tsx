@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Island 6 Solana Simulators
+// ⚡ Sifter LevelUp — Island 6 Solana Simulators
 // File: island06SolanaSimulatorDefs.tsx
 //
 // SIMULATORS EXPORTED (add all to SIMULATORS map in SimulatorCard.tsx):

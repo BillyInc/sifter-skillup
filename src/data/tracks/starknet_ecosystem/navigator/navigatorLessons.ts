@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // COMBINED LESSONS FILE — Labs 1 through 11
 // All lessons, boss modes, build tasks, and lab metadata in one file.
 // interactiveSimulator fields present on all 55 lessons.
@@ -9,7 +9,7 @@
 // LAB 1 · LESSONS 1–4
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 1 — DeFi Mental Models · LESSONS 1–4
 // Written to sim_instructions_v3 standard
 // Combine with navigatorLab1_lessons5to8.ts and navigatorLab1_boss.ts
@@ -647,7 +647,7 @@ A useful heuristic: if you cannot identify who is paying the yield and why they 
 // LAB 1 · LESSONS 5–8
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 1 — DeFi Mental Models · LESSONS 5–8
 // Combine with navigatorLab1_lessons1to4.ts and navigatorLab1_boss.ts
 
@@ -1143,7 +1143,7 @@ After any transaction, the block explorer tells you: was it accepted or reverted
     {
       contextTag: '[First swap on Starknet Sepolia]',
       context: 'Adaeze has completed the Starknet Island onboarding. She has 10 testnet STRK. She wants to execute her first swap: 5 STRK for testnet USDC.',
-      scenario: 'She opens the SkillUp swap simulator. The app calls wallet.getQuote() and returns: "5 STRK ≈ 0.62 USDC, price impact 0.03%, gas: sponsored." She confirms and the app calls wallet.swap().',
+      scenario: 'She opens the LevelUp swap simulator. The app calls wallet.getQuote() and returns: "5 STRK ≈ 0.62 USDC, price impact 0.03%, gas: sponsored." She confirms and the app calls wallet.swap().',
       outcome: 'The transaction submits. Within 4 seconds, tx.wait() resolves. The app shows a hash: 0x0312...a8f2. On sepolia.voyager.online she sees: status "Accepted on L2," events showing 5 STRK transferred to AVNU and 0.618 USDC returned to her wallet. Her first real Starknet transaction is complete.',
     },
     {
@@ -1154,7 +1154,7 @@ After any transaction, the block explorer tells you: was it accepted or reverted
     },
     {
       contextTag: '[Block explorer analysis after staking]',
-      context: 'After staking 5 STRK in the SkillUp stake simulator, Priya copies her transaction hash to sepolia.voyager.online.',
+      context: 'After staking 5 STRK in the LevelUp stake simulator, Priya copies her transaction hash to sepolia.voyager.online.',
       scenario: 'She wants to verify exactly what happened on-chain.',
       outcome: 'She sees four events: Approval (STRK allowance to staking contract), StakeEntered (amount, validator pool), Delegated (on-chain delegation recorded), Transfer (STRK from wallet to pool). The block explorer transforms "staking" into a concrete sequence of contract interactions she can verify herself.',
     },
@@ -1188,7 +1188,7 @@ After any transaction, the block explorer tells you: was it accepted or reverted
     {
       question: 'Where do you verify a completed Starknet swap?',
       options: [
-        'A. In the SkillUp app notification log — only the app can show transaction details',
+        'A. In the LevelUp app notification log — only the app can show transaction details',
         'B. On sepolia.voyager.online using your transaction hash — status, events, balance changes, gas used, and exact function called',
         'C. On Etherscan — Starknet transactions appear on the Ethereum explorer',
         'D. You cannot verify independently without specialised developer tools',
@@ -1276,7 +1276,7 @@ After any transaction, the block explorer tells you: was it accepted or reverted
 // LAB 1 · BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 1 — DeFi Mental Models
 // AGGREGATE SIMULATIONS + BUILD TASK + BOSS BATTLE
 // Portfolio push: NOT this lab. First push is Lab 2 Phase 2.
@@ -1458,7 +1458,7 @@ export const NAVIGATOR_LAB_1_META = {
 // LAB 2 · LESSONS 1–5
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 2 — TOKEN SWAPS AND AMMs · LESSONS 1–5
 // Written to sim_instructions_v3 + Lab 11 standard
 // FIRST PORTFOLIO PUSH: Lab 2 Phase 2 Boss
@@ -2233,7 +2233,7 @@ Swap timing has a secondary impact via front-running avoidance. Transactions sub
 // LAB 2 · BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 2 — TOKEN SWAPS AND AMMs
 // AGGREGATE SIMULATIONS + BUILD TASK + BOSS BATTLE
 // FIRST PORTFOLIO PUSH: Lab 2 Phase 2 Boss
@@ -2266,7 +2266,7 @@ export const LAB2_BUILD_TASK = {
   estimatedTime: '45–75 minutes',
 
   description: `
-Execute three swaps on Starknet Sepolia testnet using the SkillUp swap simulator
+Execute three swaps on Starknet Sepolia testnet using the LevelUp swap simulator
 or directly through the Starkzap SDK. Document each swap fully.
 
 SWAP 1 — Baseline execution
@@ -2483,7 +2483,7 @@ DeFi Trading Assistant — Starknet-focused fund
 ### Acceleration Trigger
 [User's specific condition for accelerating exit]
 
-## Verified by Sifter SkillUp — [date]
+## Verified by Sifter LevelUp — [date]
 [Platform verification link]`,
         },
       ],
@@ -2525,7 +2525,7 @@ export const NAVIGATOR_LAB_2_META = {
 // LAB 3 · LESSONS 1–3
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 3 — STAKING AND DELEGATION · LESSONS 1–3
 // Written to sim_instructions_v3 + Lab 11 standard
 // Portfolio push: Lab 3 Phase 2 Boss
@@ -2566,7 +2566,7 @@ Understanding this supply/demand dynamic for staking yield is essential. APY is 
     {
       contextTag: '[Starknet delegation, first-time staker]',
       context: 'A STRK holder with 2,000 tokens wants to earn staking rewards without running a validator node. She researches Starknet\'s delegation model.',
-      scenario: 'The holder finds a validator pool operated by Nethermind — a professional blockchain infrastructure company — with 8.2% gross APY and 5% commission. She calls wallet.stake(poolAddress, Amount.parse("2000", STRK)) via the SkillUp staking simulator. The SDK automatically detects this is her first entry and calls enter_delegation_pool.',
+      scenario: 'The holder finds a validator pool operated by Nethermind — a professional blockchain infrastructure company — with 8.2% gross APY and 5% commission. She calls wallet.stake(poolAddress, Amount.parse("2000", STRK)) via the LevelUp staking simulator. The SDK automatically detects this is her first entry and calls enter_delegation_pool.',
       outcome: 'The 2,000 STRK is now in the Nethermind pool. Rewards begin accumulating immediately — they accumulate continuously on-chain. Her net APY: 8.2% × (1 - 0.05) = 7.79%. Annual net reward: 2,000 × 7.79% = 155.8 STRK. She never ran any software. She can check her position anytime via wallet.getPoolPosition().',
     },
     {
@@ -3001,7 +3001,7 @@ Using wallet.getPoolPosition() regularly is the discipline that separates attent
 // LAB 3 · LESSONS 4–5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 3 — STAKING AND DELEGATION
 // LESSONS 4–5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Portfolio push: Lab 3 Phase 2 Boss
@@ -3546,7 +3546,7 @@ Staking Manager — Family Office Starknet Allocation
 **Break-even STRK price:** [calculated]
 **Conclusion:** [which strategy to recommend for this family office's objectives]
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 3 Staking and Delegation — Junior Starknet DeFi Navigator',
@@ -3578,7 +3578,7 @@ export const NAVIGATOR_LAB_3_META = {
 // LAB 4 · LESSONS 1–4
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 4 — LENDING AND BORROWING · LESSONS 1–4
 // Written to sim_instructions_v3 + Lab 11 standard
 // Portfolio push: Lab 4 Phase 2 Boss
@@ -4202,7 +4202,7 @@ The critical constraint that many first-time DeFi borrowers ignore: borrow APY i
 // LAB 4 · LESSON 5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 4 — LENDING AND BORROWING
 // LESSON 5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Portfolio push: Lab 4 Phase 2 Boss
@@ -4574,7 +4574,7 @@ DeFi Operations Lead — Starknet Fund
 
 **60-day cost of spike:** $[calculated]
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 4 Lending and Borrowing — Junior Starknet DeFi Navigator',
@@ -4605,7 +4605,7 @@ export const NAVIGATOR_LAB_4_META = {
 // LAB 5 · LESSONS 1–4
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 5 — DCA AND AUTOMATION · LESSONS 1–4
 // Written to sim_instructions_v3 + Lab 11 standard
 // Portfolio push: Lab 5 Phase 2 Boss
@@ -5228,7 +5228,7 @@ Portfolio rebalancing DCA is the most sophisticated application. If your portfol
 // LAB 5 · LESSON 5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // JUNIOR · LAB 5 — DCA AND AUTOMATION
 // LESSON 5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Portfolio push: Lab 5 Phase 2 Boss
@@ -5642,7 +5642,7 @@ would exceed the DCA amount itself.
 Labs completed: 1 (Mental Models) · 2 (Swaps) · 3 (Staking) · 4 (Lending) · 5 (DCA)
 Portfolio pushes: Labs 2, 3, 4, 5
 Total verified testnet transactions: [count]
-Verified by Sifter SkillUp — [date]`,
+Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 5 DCA & Automation — Junior Starknet DeFi Navigator COMPLETE',
@@ -5675,7 +5675,7 @@ export const NAVIGATOR_LAB_5_META = {
 // LAB 6 · LESSONS 1–4
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 6 — PORTFOLIO STRATEGY AND ALLOCATION · LESSONS 1–4
 // Written to sim_instructions_v3 + Lab 11 standard
 // Entry point to Intermediate level — assumes Junior Labs 1–5 complete
@@ -6322,7 +6322,7 @@ Position simplicity has real value. A single Vesu USDC deposit is a clean, audit
 // LAB 6 · LESSON 5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 6 — PORTFOLIO STRATEGY AND ALLOCATION
 // LESSON 5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Written to lesson_writing_instructions.txt standard
@@ -6778,7 +6778,7 @@ DeFi Allocation Manager — Starknet-Native Fund ($120,000 AUM)
 - Excess yield above 6% benchmark: ([APY] - 6%) × $[position size] = $[excess yield]
 - Conclusion: [excess yield is / is not] sufficient compensation. Position is [correctly sized / should be reduced to $X / should be removed].
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 6 Portfolio Strategy — Intermediate Starknet DeFi Navigator',
@@ -6810,7 +6810,7 @@ export const NAVIGATOR_LAB_6_META = {
 // LAB 7 · LESSONS 1–3
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 7 — ADVANCED LIQUIDITY PROVISION · LESSONS 1–3
 // Written to sim_instructions_v3 + Lab 11 standard
 // Portfolio push: Lab 7 Phase 2 Boss
@@ -7302,7 +7302,7 @@ The standard approach on Ekubo is to use multiple overlapping ranges. Deploy 50%
 // LAB 7 · LESSONS 4–5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 7 — ADVANCED LIQUIDITY PROVISION
 // LESSONS 4–5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE + META
 // Written to sim_instructions_v3 + Lab 11 standard
@@ -7888,7 +7888,7 @@ LP Strategy Manager — Starknet DeFi Portfolio ($90,000 AUM, $13,500 LP Budget)
 
 **Conclusion:** [LP / Vesu] is more appropriate for the opportunistic tier because [specific reasoning].
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 7 Advanced LP — Intermediate Starknet DeFi Navigator',
@@ -7925,7 +7925,7 @@ export const NAVIGATOR_LAB_7_META = {
 // LAB 8 · LESSONS 1–3
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 8 — BRIDGING AND CROSS-CHAIN CAPITAL MOVEMENT · LESSONS 1–3
 // Written to: lesson_writing_instructions.txt + sim_instructions_v3.md
 // Build task: Expanded Choice (4 options) — Labs 7–9 range per Section 20.5
@@ -8425,7 +8425,7 @@ For non-USDC assets — wSOL, for example — the Hyperlane transfer uses lock-a
 // LAB 8 · LESSONS 4–5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 8 — BRIDGING AND CROSS-CHAIN CAPITAL MOVEMENT
 // LESSONS 4–5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Written to: lesson_writing_instructions.txt + sim_instructions_v3.md
@@ -9262,7 +9262,7 @@ Cross-Chain Capital Lead — DeFi Fund ($300,000 AUM)
 - Action: [Action if required]
 - Time-to-settlement: Immediate — no bridge required
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 8 Bridging and Cross-Chain Capital Movement — Intermediate Starknet DeFi Navigator',
@@ -9296,7 +9296,7 @@ export const NAVIGATOR_LAB_8_META = {
 // LAB 9 · LESSONS 1–3
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 9 — ADVANCED DEFI PRIMITIVES · LESSONS 1–3
 // Written to: lesson_writing_instructions.txt v1.0 + sim_instructions_v3.md
 // Dominant-concept rule applied: one dominant concept per lesson.
@@ -9803,7 +9803,7 @@ Protocol defences have evolved. A time-weighted average price oracle — which c
 // LAB 9 · LESSONS 4–5 + BOSS + META
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // INTERMEDIATE · LAB 9 — ADVANCED DEFI PRIMITIVES
 // LESSONS 4–5 + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Written to: lesson_writing_instructions.txt v1.0 + sim_instructions_v3.md
@@ -10559,7 +10559,7 @@ Health factor: ($58,044 × 0.83) / $40,000 = [HF]
 **Minimum health factor policy for LST collateral positions:**
 Maintain HF > [N] to survive the combined stress scenario above with [margin] of buffer.
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 9 Advanced DeFi Primitives — Intermediate Starknet DeFi Navigator',
@@ -10593,7 +10593,7 @@ export const NAVIGATOR_LAB_9_META = {
 // LAB 10 · COMPLETE
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // SENIOR · LAB 10 — INSTITUTIONAL DEFI OPERATIONS
 // ALL LESSONS + AGGREGATE SIMS + BUILD TASK + BOSS BATTLE
 // Written to: lesson_writing_instructions.txt v1.0 + sim_instructions_v3.md
@@ -11617,7 +11617,7 @@ Emergency procedure trigger: [did it trigger / should it have]
 | 2 | [date] | Lending yield | USDC | — | $[amount] | $[amount] | $[amount] income |
 | 3 | [date] | Staking reward | STRK | — | [STRK] | $[amount] | $[amount] income |
 
-## Verified by Sifter SkillUp — [date]`,
+## Verified by Sifter LevelUp — [date]`,
         },
       ],
       commitMessage: 'Passed Lab 10 Institutional DeFi Operations — Senior Starknet DeFi Navigator',
@@ -11648,7 +11648,7 @@ export const NAVIGATOR_LAB_10_META = {
 // LAB 11 · COMPLETE
 // ════════════════════════════════════════════════════════════════════
 
-// ⚡ Sifter SkillUp — Starknet DeFi Navigator
+// ⚡ Sifter LevelUp — Starknet DeFi Navigator
 // SENIOR · LAB 11 — STRATEGY RESEARCH AND COMPETITIVE ANALYSIS
 // ALL LESSONS + AGGREGATE SIMS + BUILD TASK + BOSS + FINAL BOSS
 
@@ -11976,7 +11976,7 @@ Propose a Starknet ecosystem analytics tool. Include: problem statement with on-
       repoName: 'starknet-defi-portfolio',
       folderPath: '/senior/lab-11-strategy-research/',
       files: [{ filename: 'strategy-research-package.md', type: 'narrative' as const,
-        content: `# Lab 11 — Strategy Research and Competitive Analysis: Certification\n\n## Portfolio Defense\n**Protocol from Lab 10:** [Name] · Oracle: [Type] · Dependency: [Pragma/Starkgate/USDC/None]\n**Contagion path:** If [dependency] fails → [specific effect on this position]\n\n---\n\n## Document 1 — Starknet DeFi State Report\n\n### Section A — On-Chain Analysis\n| Protocol | TVL | Volume/TVL (7d) | Unique Users (30d) | Interpretation |\n|---|---|---|---|---|\n| Vesu | $[X]M | [Y]% | [Z] | [Interpretation] |\n| Ekubo | $[X]M | [Y]% | [Z] | [Interpretation] |\n\n### Section B — Dependency Map\n| Position | Value | Pragma? | USDC? |\n|---|---|---|---|\n| [Protocol] | $[X] | Yes/No | Yes/No |\n\n**Pragma total:** $[X] = [Y]% — [PASS/FAIL]\n**USDC total:** $[X] = [Y]% — [PASS/FAIL]\n\n### Section C — Falsifiable Thesis\n**Thesis:** [Specific claim]\n**Metric:** [Indicator] · **Time bound:** [Date] · **Verification:** [Dune query]\n**Failure conditions:** (1) [Event] (2) [Event] (3) [Event]\n\n---\n\n## Document 2 — SEED Grant Proposal\n**Problem:** [Specific gap with on-chain evidence]\n**Solution:** [Named specific tool]\n| Milestone | Month | Output | Success Criterion | Verification |\n|---|---|---|---|---|\n| 1 | [M] | [Output] | [Criterion] | [Method] |\n| 2 | [M] | [Output] | [Criterion] | [Method] |\n| 3 | [M] | [Output] | [Criterion] | [Method] |\n| Budget Item | Cost | Justification |\n|---|---|---|\n| [Item 1] | $[X] | [Hours × rate] |\n| [Item 2] | $[X] | [Justification] |\n| [Item 3] | $[X] | [Justification] |\n**Team:** [Skills from Labs 8–11]\n\n## Verified by Sifter SkillUp — [date]` }],
+        content: `# Lab 11 — Strategy Research and Competitive Analysis: Certification\n\n## Portfolio Defense\n**Protocol from Lab 10:** [Name] · Oracle: [Type] · Dependency: [Pragma/Starkgate/USDC/None]\n**Contagion path:** If [dependency] fails → [specific effect on this position]\n\n---\n\n## Document 1 — Starknet DeFi State Report\n\n### Section A — On-Chain Analysis\n| Protocol | TVL | Volume/TVL (7d) | Unique Users (30d) | Interpretation |\n|---|---|---|---|---|\n| Vesu | $[X]M | [Y]% | [Z] | [Interpretation] |\n| Ekubo | $[X]M | [Y]% | [Z] | [Interpretation] |\n\n### Section B — Dependency Map\n| Position | Value | Pragma? | USDC? |\n|---|---|---|---|\n| [Protocol] | $[X] | Yes/No | Yes/No |\n\n**Pragma total:** $[X] = [Y]% — [PASS/FAIL]\n**USDC total:** $[X] = [Y]% — [PASS/FAIL]\n\n### Section C — Falsifiable Thesis\n**Thesis:** [Specific claim]\n**Metric:** [Indicator] · **Time bound:** [Date] · **Verification:** [Dune query]\n**Failure conditions:** (1) [Event] (2) [Event] (3) [Event]\n\n---\n\n## Document 2 — SEED Grant Proposal\n**Problem:** [Specific gap with on-chain evidence]\n**Solution:** [Named specific tool]\n| Milestone | Month | Output | Success Criterion | Verification |\n|---|---|---|---|---|\n| 1 | [M] | [Output] | [Criterion] | [Method] |\n| 2 | [M] | [Output] | [Criterion] | [Method] |\n| 3 | [M] | [Output] | [Criterion] | [Method] |\n| Budget Item | Cost | Justification |\n|---|---|---|\n| [Item 1] | $[X] | [Hours × rate] |\n| [Item 2] | $[X] | [Justification] |\n| [Item 3] | $[X] | [Justification] |\n**Team:** [Skills from Labs 8–11]\n\n## Verified by Sifter LevelUp — [date]` }],
       commitMessage: 'Passed Lab 11 Strategy Research and Competitive Analysis — Senior Starknet DeFi Navigator',
       badgeEarned: 'Strategy Researcher Certified — Senior',
     },
@@ -12014,7 +12014,7 @@ export const DEFI_NAVIGATOR_FINAL_BOSS = {
   portfolioArtifact: {
     repoName: 'starknet-defi-portfolio', folderPath: '/certification/defi-navigator-final/',
     files: [{ filename: 'defi-navigator-certification.md', type: 'narrative' as const,
-      content: `# DeFi Navigator — Senior Certification\n\n## Day 1 Allocation\n| Protocol | Amount | % | APY | Oracle | Bridge | Dependency |\n|---|---|---|---|---|---|---|\n| [P1] | $[X] | [%] | [Y]% | [type] | [bridge/none] | [infra] |\n**Pragma-dependent:** $[X] ([Y]%) — [PASS/FAIL]\n**USDC-dependent:** $[X] ([Y]%) — [PASS/FAIL]\n\n## Incident Responses\n**Day 8 — Pragma Stale Price**\nAffected: [positions] · Trigger fired: [Yes/No] · Action: [action]\nLab 10 monitoring layer: [which layer detected]\n\n**Day 17 — Flash Loan Exploit (External)**\nOracle types: [list each position's oracle] · Vulnerable positions: [spot-oracle ones]\nAction: [preventive action or "none — all TWAP"] · Lab 9 reference: [defence applied]\n\n**Day 24 — STRK +28%, LP Out of Range**\nIL = 2√1.28/(1+1.28)−1 = [calculation] ≈ [result]%\nFee income: $[X] vs IL: $[Y] — [fee covers IL / does not cover]\nRebalance: [Yes/No] — [rationale] · Lab 7 reference: IL formula and break-even\n\n## Day 30 Performance\n| Position | Entry | Exit | Return |\n|---|---|---|---|\n| [P1] | $[X] | $[X] | [Y]% |\n**Total return:** [X]%\n**Passive STRK + staking:** 28.72%\n**Active vs passive:** [outperformed/underperformed] by [X]%\n\n## Lab Cross-References\nLab 8 bridge: [bridge, mechanism, trust model]\nLab 9 primitive: [which primitive, decision made]\nLab 10 monitoring: [layer that fired for each incident]\nLab 11 dependency map: [allocation passed/failed single-dependency limits]\n\n## DeFi Navigator Certification — Senior Level\nCandidate: [wallet address] · Verified by Sifter SkillUp — [date]` }],
+      content: `# DeFi Navigator — Senior Certification\n\n## Day 1 Allocation\n| Protocol | Amount | % | APY | Oracle | Bridge | Dependency |\n|---|---|---|---|---|---|---|\n| [P1] | $[X] | [%] | [Y]% | [type] | [bridge/none] | [infra] |\n**Pragma-dependent:** $[X] ([Y]%) — [PASS/FAIL]\n**USDC-dependent:** $[X] ([Y]%) — [PASS/FAIL]\n\n## Incident Responses\n**Day 8 — Pragma Stale Price**\nAffected: [positions] · Trigger fired: [Yes/No] · Action: [action]\nLab 10 monitoring layer: [which layer detected]\n\n**Day 17 — Flash Loan Exploit (External)**\nOracle types: [list each position's oracle] · Vulnerable positions: [spot-oracle ones]\nAction: [preventive action or "none — all TWAP"] · Lab 9 reference: [defence applied]\n\n**Day 24 — STRK +28%, LP Out of Range**\nIL = 2√1.28/(1+1.28)−1 = [calculation] ≈ [result]%\nFee income: $[X] vs IL: $[Y] — [fee covers IL / does not cover]\nRebalance: [Yes/No] — [rationale] · Lab 7 reference: IL formula and break-even\n\n## Day 30 Performance\n| Position | Entry | Exit | Return |\n|---|---|---|---|\n| [P1] | $[X] | $[X] | [Y]% |\n**Total return:** [X]%\n**Passive STRK + staking:** 28.72%\n**Active vs passive:** [outperformed/underperformed] by [X]%\n\n## Lab Cross-References\nLab 8 bridge: [bridge, mechanism, trust model]\nLab 9 primitive: [which primitive, decision made]\nLab 10 monitoring: [layer that fired for each incident]\nLab 11 dependency map: [allocation passed/failed single-dependency limits]\n\n## DeFi Navigator Certification — Senior Level\nCandidate: [wallet address] · Verified by Sifter LevelUp — [date]` }],
     commitMessage: 'DeFi Navigator Certification — Senior Level Complete',
     badgeEarned: 'DeFi Navigator Certified — Senior',
   },

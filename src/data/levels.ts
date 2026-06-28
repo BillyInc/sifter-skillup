@@ -3,7 +3,7 @@ import { ISLAND_LEVELS } from './islandLevels';
 // Re-export from tracks folder
 import { STARKNET_TRACK_BOSS_LEVELS } from './tracks/starknet_ecosystem/bossLevels';
 import { STARKNET_LEVELS } from './tracks/starknet_ecosystem/island/levels';
-// ⚡ Sifter Skill_Up — Level Data (270 levels, auto-converted)
+// ⚡ Sifter LevelUp — Level Data (270 levels, auto-converted)
 // DO NOT EDIT MANUALLY — edit the source levels.js and reconvert
 
 export type Mechanic = 'match3' | 'memory' | 'chain' | 'rugpull' | 'liquidation' | 'trait' | 'governance' | 'simulator' | 'boss';

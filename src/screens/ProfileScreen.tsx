@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Profile Screen (Phase 2)
+ * Sifter LevelUp — Profile Screen (Phase 2)
  * Worker character + XP stage ring + DeskScene.
  * Learning path, Portfolio link, Account section.
  */

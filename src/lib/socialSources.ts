@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Social Sources
+ * Sifter LevelUp — Social Sources
  * Verified social handles and accounts for every field and track.
  * Covers: Twitter/X, Instagram, Facebook, Medium, and independent blogs.
  *

@@ -1,5 +1,5 @@
 """
-guild_routes.py — Sifter SkillUp Guilds
+guild_routes.py — Sifter LevelUp Guilds
 Replaces community social-feed routes with a guild system:
   - Users join guilds by field/track
   - Guild leaderboards, XP pooling, and boss challenge coordination

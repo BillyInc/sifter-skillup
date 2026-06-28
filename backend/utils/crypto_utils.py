@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Token Encryption Utilities
+# Sifter LevelUp — Token Encryption Utilities
 # ============================================
 import os
 

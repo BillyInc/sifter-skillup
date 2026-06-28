@@ -1,8 +1,8 @@
-# SkillUp Missing Features Completion
+# LevelUp Missing Features Completion
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Complete Privy wallet SDK integration, Firebase Cloud Messaging (FCM) push notifications, and Twitter API feed integration for SkillUp.
+**Goal:** Complete Privy wallet SDK integration, Firebase Cloud Messaging (FCM) push notifications, and Twitter API feed integration for LevelUp.
 
 **Architecture:** 
 - **Privy SDK** integrates with frontend for wallet connection/authentication, backed by backend verification in Starknet routes
@@ -158,7 +158,7 @@ Expected: `firebase-admin` added to `pyproject.toml` and uv.lock.
 ```bash
 cat > backend/fcm_service.py << 'EOF'
 # ============================================
-# Sifter Skill_Up — Firebase Cloud Messaging
+# Sifter LevelUp — Firebase Cloud Messaging
 # Sends push notifications for device enforcement
 # (e.g., logout when new device logs in)
 # ============================================
@@ -405,7 +405,7 @@ Expected: Tweepy added to `pyproject.toml` and uv.lock.
 ```bash
 cat > backend/twitter_service.py << 'EOF'
 # ============================================
-# Sifter Skill_Up — Twitter/X API v2 Feed
+# Sifter LevelUp — Twitter/X API v2 Feed
 # Fetches curated crypto/quant tweets for feed
 # ============================================
 
@@ -657,7 +657,7 @@ cat > docs/FIREBASE_SETUP.md << 'EOF'
 # Firebase Setup for FCM Push Notifications
 
 ## Overview
-SkillUp uses Firebase Cloud Messaging (FCM) to notify old devices when a user logs in from a new device (single-device enforcement).
+LevelUp uses Firebase Cloud Messaging (FCM) to notify old devices when a user logs in from a new device (single-device enforcement).
 
 ## Setup Steps
 
@@ -725,7 +725,7 @@ cat > docs/TWITTER_SETUP.md << 'EOF'
 # Twitter/X API v2 Setup for Feed Content
 
 ## Overview
-SkillUp uses Twitter API v2 to fetch curated crypto and quant finance tweets for personalized feeds.
+LevelUp uses Twitter API v2 to fetch curated crypto and quant finance tweets for personalized feeds.
 
 ## Setup Steps
 

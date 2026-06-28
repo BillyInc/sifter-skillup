@@ -1,6 +1,6 @@
 """
 deterministic_score.py
-Sifter SkillUp — Deterministic answer scoring engine (Python port)
+Sifter LevelUp — Deterministic answer scoring engine (Python port)
 
 Shared by: interview_routes.py, boss_routes.py, community_routes.py (/api/ai/score)
 

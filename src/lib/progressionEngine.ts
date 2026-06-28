@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Progression Engine
+ * Sifter LevelUp — Progression Engine
  *
  * Dynamically computes tier assignment, topic mode, and scenario
  * uniqueness for ANY skill track. No hard-coded track logic.

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — useOrientation
+ * Sifter LevelUp — useOrientation
  *
  * NEW FILE: src/hooks/useOrientation.ts
  *

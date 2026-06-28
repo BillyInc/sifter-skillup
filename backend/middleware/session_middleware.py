@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Session Middleware
+# Sifter LevelUp — Session Middleware
 #
 # Validates X-Device-Id header on every
 # authenticated request. If the device_id

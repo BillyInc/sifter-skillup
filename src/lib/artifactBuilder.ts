@@ -60,7 +60,7 @@ function buildGitHubMarkdown(input: ArtifactInput): string {
 ## Track: ${input.trackName} — ${input.labTitle}
 **Level:** ${input.level.charAt(0).toUpperCase() + input.level.slice(1)}
 **Completed:** ${new Date(input.completedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-**Score:** ${input.scoring.score}/${input.scoring.total} criteria met (${pct}%)${input.verificationUrl ? `\n**Verified:** [Sifter Skill_Up](${input.verificationUrl})` : ''}
+**Score:** ${input.scoring.score}/${input.scoring.total} criteria met (${pct}%)${input.verificationUrl ? `\n**Verified:** [Sifter LevelUp](${input.verificationUrl})` : ''}
 
 ---
 
@@ -94,21 +94,21 @@ ${input.framework}
 
 ## About This Artifact
 
-This portfolio artifact was earned by completing a **${passed ? 'Phase 2 Certification' : 'Boss Battle Learning Loop'}** on [Sifter Skill_Up](https://sifter.app).
+This portfolio artifact was earned by completing a **${passed ? 'Phase 2 Certification' : 'Boss Battle Learning Loop'}** on [Sifter LevelUp](https://sifter.app).
 
 - All scenarios are **unseen at time of attempt** — no rehearsed answers
 - Scoring is performed by AI against explicit, published criteria
 - Artifacts are only generated on meeting **all required criteria**
 - The work above is the candidate's actual unedited submission
 
-*Verified by Sifter Skill_Up · ${input.trackName} · ${input.level.charAt(0).toUpperCase() + input.level.slice(1)} Level*
+*Verified by Sifter LevelUp · ${input.trackName} · ${input.level.charAt(0).toUpperCase() + input.level.slice(1)} Level*
 `;
 }
 
 // ── LinkedIn post builder ──────────────────────────────────────────────────────
 
 const LINKEDIN_TEMPLATES = [
-  `🏆 Just earned a verified portfolio artifact in {skill} on @SifterSkillUp.
+  `🏆 Just earned a verified portfolio artifact in {skill} on @SifterLevelUp.
 
 The challenge: an unseen {trackName} scenario, assessed against {framework} standards.
 Scored {score}/{total} on a rubric I couldn't see in advance.
@@ -117,11 +117,11 @@ This isn't a certificate. It's documented proof of what I can actually do.
 
 See the full artifact on my GitHub: {repoUrl}
 
-#SkillUp #{hashtag} #Portfolio`,
+#LevelUp #{hashtag} #Portfolio`,
 
   `⚡ New certification: {skill}
 
-Passed a {level}-level {trackName} Boss Battle on @SifterSkillUp — {score}/{total} criteria met on an unseen scenario.
+Passed a {level}-level {trackName} Boss Battle on @SifterLevelUp — {score}/{total} criteria met on an unseen scenario.
 
 No hints. No rehearsed answers. Just the scenario and a scoring rubric.
 
@@ -137,7 +137,7 @@ The scenario was generated fresh — I hadn't seen it before. The work above is 
 
 Full case study: {repoUrl}
 
-#{hashtag} #SifterSkillUp`,
+#{hashtag} #SifterLevelUp`,
 ];
 
 function buildLinkedInPost(input: ArtifactInput, repoUrl: string): string {

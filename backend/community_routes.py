@@ -1,5 +1,5 @@
 # ============================================================
-# Sifter Skill_Up — Community Routes
+# Sifter LevelUp — Community Routes
 # Full social platform backend for millions of users.
 #
 # Routes:
@@ -835,7 +835,7 @@ def _create_notification(recipient_id: str, actor_id: str, notif_type: str, post
 # AI SCORING PROXY — Anthropic API key lives only here, never in client
 # ─────────────────────────────────────────────────────────────
 
-SCORE_SYSTEM = """You are a professional skills evaluator for Sifter Skill_Up. Be direct, specific, and demanding.
+SCORE_SYSTEM = """You are a professional skills evaluator for Sifter LevelUp. Be direct, specific, and demanding.
 
 Respond ONLY with valid JSON. No preamble, no markdown. Exactly this shape:
 {"criteriaResults":[{"criterion":"exact text copied verbatim","passed":true,"feedback":"one specific sentence"}],"overallFeedback":"2-3 direct, actionable sentences.","score":4,"total":6,"xpEarned":100}

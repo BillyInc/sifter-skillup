@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Base MiniKit Configuration
+ * Sifter LevelUp — Base MiniKit Configuration
  *
  * This file configures the app for the Base App mini-app store.
  * After April 9 2026 Base moved to standard web app + wallet model (no Farcaster SDK).
@@ -25,7 +25,7 @@ export const minikitConfig = {
   },
   miniapp: {
     version: '1',
-    name: 'Sifter Skill_Up',
+    name: 'Sifter LevelUp',
     subtitle: 'Master crypto & career skills',
     description: 'From complete beginner to hire-ready professional. 270+ crypto levels, supply chain analyst track, onchain sleuth, quantitative finance. Guilds, streaks, portfolio push. Works offline.',
     screenshotUrls: [
@@ -43,7 +43,7 @@ export const minikitConfig = {
     tags: ['crypto', 'education', 'career', 'skills', 'supply-chain', 'quant', 'defi', 'offline'],
     heroImageUrl: `${ROOT_URL}/hero.png`,
     tagline: 'Master crypto & career skills',
-    ogTitle: 'Sifter Skill_Up — Real Skills. Real Careers.',
+    ogTitle: 'Sifter LevelUp — Real Skills. Real Careers.',
     ogDescription: 'The only platform that teaches crypto AND career tracks in one place. Supply Chain, Quant Finance, Onchain Sleuth — all with verified portfolio artifacts.',
     ogImageUrl: `${ROOT_URL}/og.png`,
   },
@@ -64,7 +64,7 @@ export const wagmiConfig = createConfig({
   chains: [base],
   connectors: [
     injected(),                    // MetaMask, Coinbase Wallet in-browser
-    baseAccount({ appName: 'Sifter Skill_Up' }),  // Base App native wallet
+    baseAccount({ appName: 'Sifter LevelUp' }),  // Base App native wallet
   ],
   storage: createStorage({ storage: cookieStorage }),
   ssr: true,

@@ -1,5 +1,5 @@
 /**
- * MascotLayer — Tool-based mascot system for Sifter Skill_Up.
+ * MascotLayer — Tool-based mascot system for Sifter LevelUp.
  *
  * Each skill track has a mascot that IS the primary tool of that trade:
  *   Spot/Futures/Options Trading  → 📈 The Chart

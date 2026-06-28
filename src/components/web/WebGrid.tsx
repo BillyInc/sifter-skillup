@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Web Grid System
+ * Sifter LevelUp — Web Grid System
  *
  * Primitives for 2–3 column dashboard layouts on web >= 768px.
  * Screens import these and render them inside isWebWide branches.

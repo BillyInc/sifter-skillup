@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Badge Definitions
+ * Sifter LevelUp — Badge Definitions
  * All badge archetypes. Instances (with earned_at, track_id) are stored in Supabase.
  */
 

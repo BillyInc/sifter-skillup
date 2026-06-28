@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — Quant Program: Lab / Environment Definitions
+// ⚡ Sifter LevelUp — Quant Program: Lab / Environment Definitions
 // Trader Track — Phase A
 // Level IDs: 1001–1090 (separate namespace from crypto 1–270)
 // Environment metaphor: Research Lab → Trading Floor → Interview Room

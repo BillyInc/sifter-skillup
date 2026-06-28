@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Sifter Skill_Up",
-    "slug": "sifter-skillup",
+    "name": "Sifter LevelUp",
+    "slug": "sifter-levelup",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "app.sifterskillup",
+      "bundleIdentifier": "app.sifterlevelup",
       "infoPlist": {
         "NSCameraUsageDescription": "Used to scan QR codes for wallet connection",
         "NSFaceIDUsageDescription": "Used to authenticate your account",
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#111827"
       },
-      "package": "app.sifterskillup",
+      "package": "app.sifterlevelup",
       "permissions": [
         "CAMERA",
         "USE_BIOMETRIC",
@@ -55,7 +55,7 @@
       },
       "telegramBotUsername": "SifterSkillUpBot",
       "baseChainId": 8453,
-      "baseMiniAppId": "sifter-skillup",
+      "baseMiniAppId": "sifter-levelup",
       "router": {}
     },
     "web": {

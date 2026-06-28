@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Character Reaction
+ * Sifter LevelUp — Character Reaction
  * Wraps WorkerCharacter with mood-driven animations.
  * Correct  → nod down + bounce up + brief green glow
  * Wrong    → head shake left-right + brief red flash

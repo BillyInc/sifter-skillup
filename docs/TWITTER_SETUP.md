@@ -1,7 +1,7 @@
 # Twitter/X API v2 Setup for Feed Content
 
 ## Overview
-SkillUp uses Twitter API v2 to fetch curated crypto and quant finance tweets for personalized feeds.
+LevelUp uses Twitter API v2 to fetch curated crypto and quant finance tweets for personalized feeds.
 
 ## Setup Steps
 

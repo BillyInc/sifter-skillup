@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Background Workers
+# Sifter LevelUp — Background Workers
 # Extended: Airtable sync, feed ingestion,
 #           session cleanup, streak resets
 # ============================================

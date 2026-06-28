@@ -1,5 +1,5 @@
 # ============================================================
-# Sifter Skill_Up — Portfolio Hub Backend Routes
+# Sifter LevelUp — Portfolio Hub Backend Routes
 # Append this to main.py (or import as router)
 #
 # Handles:
@@ -43,7 +43,7 @@ class CreateAccountRequest(BaseModel):
     email: str
     password: Optional[str] = None
     displayName: Optional[str] = None
-    sourcedFrom: str = "Sifter Skill_Up"
+    sourcedFrom: str = "Sifter LevelUp"
 
 class PortfolioItemCreate(BaseModel):
     title: str
@@ -57,7 +57,7 @@ class PushItemRequest(BaseModel):
     itemId: str
     platformIds: List[str]
     caption: str
-    sourceAttribution: str = "Sifter Skill_Up · sifter.app"
+    sourceAttribution: str = "Sifter LevelUp · sifter.app"
 
 class GeneratePackageRequest(BaseModel):
     itemId: str
@@ -402,7 +402,7 @@ async def _fetch_platform_profile(platform_id: str, access_token: str, config: d
         elif platform_id == "reddit":
             r = await client.get("https://oauth.reddit.com/api/v1/me",
                                   headers={"Authorization": f"Bearer {access_token}",
-                                           "User-Agent": "SifterSkillUp/1.0"})
+                                           "User-Agent": "SifterLevelUp/1.0"})
             data = r.json()
             username = data.get("name", "")
             profile_url = f"https://reddit.com/u/{username}"
@@ -432,7 +432,7 @@ async def create_platform_account(
 ):
     """
     Auto-create a portfolio account on a supported platform on behalf of the user.
-    The profile bio is pre-populated with Sifter Skill_Up attribution.
+    The profile bio is pre-populated with Sifter LevelUp attribution.
     """
     platform_id = body.platformId
 
@@ -444,7 +444,7 @@ async def create_platform_account(
     track = user_data.get("active_track", "crypto").replace("-", " ").title()
 
     bio = (
-        f"{body.displayName or body.username} | Learning {track} on Sifter Skill_Up. "
+        f"{body.displayName or body.username} | Learning {track} on Sifter LevelUp. "
         f"{completed} levels completed. Portfolio sourced from sifter.app"
     )
 
@@ -596,7 +596,7 @@ async def push_portfolio_item(
     """
     Push a portfolio item to one or more platforms.
     Uses stored OAuth access tokens to post on the user's behalf.
-    Sifter Skill_Up is always included in the attribution.
+    Sifter LevelUp is always included in the attribution.
     """
     # Fetch the item
     item_row = db.get_service_client().table("portfolio_items") \
@@ -736,7 +736,7 @@ async def _post_to_platform(platform_id: str, access_token: str, item: dict, cap
                                        "text": f"{item['description']}\n\n---\n\n{caption}",
                                    },
                                    headers={"Authorization": f"Bearer {access_token}",
-                                            "User-Agent": "SifterSkillUp/1.0"})
+                                            "User-Agent": "SifterLevelUp/1.0"})
             post_data = r.json().get("json", {}).get("data", {})
             return post_data.get("url", f"https://reddit.com/u/{username}")
 
@@ -839,9 +839,9 @@ async def generate_submission_package(
 
     # Platform-specific submission instructions
     platform_instructions = {
-        "upwork": "Upload this PDF as your portfolio sample. Set the project title and description from the cover sheet. Mention Sifter Skill_Up in your profile overview.",
+        "upwork": "Upload this PDF as your portfolio sample. Set the project title and description from the cover sheet. Mention Sifter LevelUp in your profile overview.",
         "fiverr": "Add this as a portfolio item in Gig Extras. Use the title and description from the cover sheet verbatim.",
-        "freelancer": "Upload to your portfolio under the relevant skill category. Reference Sifter Skill_Up in your bio.",
+        "freelancer": "Upload to your portfolio under the relevant skill category. Reference Sifter LevelUp in your bio.",
         "artstation": "Create a new project. Upload images/video, copy the description and tags from the cover sheet.",
         "researchgate": "Upload as a preprint or project. Copy abstract and keywords from the cover sheet.",
         "arxiv": "Submit as a preprint in the relevant subject area. Use the abstract and keywords provided.",
@@ -858,7 +858,7 @@ async def generate_submission_package(
     }
 
     instructions = platform_instructions.get(body.platformId,
-        f"Upload this content to your {body.platformId} profile. Reference Sifter Skill_Up as your learning platform.")
+        f"Upload this content to your {body.platformId} profile. Reference Sifter LevelUp as your learning platform.")
 
     package_content = _build_package_content(item, user, account, body.platformId, instructions)
 
@@ -884,9 +884,9 @@ def _build_package_content(item: dict, user: dict, account: dict, platform_id: s
             "author": user.get("username", ""),
             "platform_username": account.get("username", ""),
             "date": datetime.now().strftime("%B %Y"),
-            "learning_source": "Sifter Skill_Up — sifter.app",
+            "learning_source": "Sifter LevelUp — sifter.app",
             "learning_summary": f"{completed} levels completed in {track}",
-            "tagline": "This portfolio item was produced as part of structured career training on Sifter Skill_Up, a skills platform covering Crypto, Quant Finance, Cybersecurity, AI/ML, and 24 other professional fields.",
+            "tagline": "This portfolio item was produced as part of structured career training on Sifter LevelUp, a skills platform covering Crypto, Quant Finance, Cybersecurity, AI/ML, and 24 other professional fields.",
         },
         "workContent": {
             "title": item["title"],
@@ -899,8 +899,8 @@ def _build_package_content(item: dict, user: dict, account: dict, platform_id: s
         },
         "submissionInstructions": instructions,
         "attribution": {
-            "text": f"Produced as part of learning on Sifter Skill_Up (sifter.app). Field: {item.get('field_id', '').replace('-', ' ').title()}.",
-            "hashtags": ["#SifterSkillUp", f"#{item.get('field_id','').replace('-','')}"],
+            "text": f"Produced as part of learning on Sifter LevelUp (sifter.app). Field: {item.get('field_id', '').replace('-', ' ').title()}.",
+            "hashtags": ["#SifterLevelUp", f"#{item.get('field_id','').replace('-','')}"],
         },
     }
 

@@ -1,6 +1,6 @@
 // @ts-nocheck
 // ============================================================================
-// ⚡ Sifter Skill_Up — MEMECOIN TRADER Career Track
+// ⚡ Sifter LevelUp — MEMECOIN TRADER Career Track
 // From complete beginner → professional memecoin trader
 // Based on: pump.fun strategy guides, wallet hunting playbook, trader styles
 // framework, shitcoin learnings, Memes 2.0 thesis, Solana 101 guide

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — OrientationLayout
+ * Sifter LevelUp — OrientationLayout
  *
  * NEW FILE: src/components/OrientationLayout.tsx
  *

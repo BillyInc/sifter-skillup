@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up - Download Track Screen
+ * Sifter LevelUp - Download Track Screen
  * Shown when a user taps a track but content isn't downloaded yet.
  * Explains offline benefits, shows download size, starts download.
  * After download completes, navigates to the track map.

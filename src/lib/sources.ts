@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Feed Sources
+ * Sifter LevelUp — Feed Sources
  * Complete source registry for all 29 fields and every track.
  * RSS feeds, API endpoints, job boards, sentiment sources.
  *

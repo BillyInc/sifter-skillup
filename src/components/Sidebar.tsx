@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Sidebar (Web)
+ * Sifter LevelUp — Sidebar (Web)
  * Shown on web when width >= 768px. Tab bar hidden.
  * Navigation-aware: highlights active route.
  * Exports useSidebar() hook for layout decisions.
@@ -186,7 +186,7 @@ export default function Sidebar() {
         </View>
         <View>
           <Text style={[styles.brandName, { color: colors.text }]}>Sifter</Text>
-          <Text style={[styles.brandSub, { color: colors.accent }]}>SKILL_UP</Text>
+          <Text style={[styles.brandSub, { color: colors.accent }]}>LEVELUP</Text>
         </View>
       </View>
 

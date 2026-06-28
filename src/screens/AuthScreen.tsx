@@ -1,745 +1,210 @@
-import React, { useEffect, useRef, useState } from 'react';
+/**
+ * AuthScreen — Sifter LevelUp sign-in.
+ *
+ * First launch shows the brand intro carousel (once, gated by INTRO_SEEN_KEY),
+ * then this login screen. Email/password is live (existing useAuth methods);
+ * Google/Apple are stubbed pending backend OAuth (TODO(levelup-oauth)). Guest
+ * lands in Explore "browse everything" mode — no onboarding required.
+ *
+ * The previous Starknet / Base wallet / Telegram login surfaces were removed
+ * per the LevelUp redesign. The underlying useAuth methods remain so embedded
+ * wallet features can still run silently elsewhere.
+ */
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
   ActivityIndicator,
-  ScrollView,
-  Animated,
-  Dimensions,
-  Linking,
-  type ViewStyle,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuth } from '../hooks/useAuth';
-import { useStarknetPrivyLogin, type OAuthProvider } from '../hooks/useStarknetPrivyLogin';
-import { PRIVY_CONFIGURED, PRIVY_ENABLED } from '../lib/config';
-import { readPendingPrivyWebLogin } from '../lib/privyShared';
-import { useTheme, Spacing, Radius, FontSize, webContainer } from '../theme';
-import { SifterButton } from '../components/ui';
-import { getFieldVisualTheme } from '../lib/visualThemes';
+} from "react-native";
+import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "../hooks/useAuth";
+import { useTheme, Spacing, FontSize, Brand, INTRO_SEEN_KEY } from "../theme";
+import { SifterButton } from "../components/ui";
+import { LevelUpLogo } from "../components/brand/LevelUpLogo";
+import { IntroCarousel } from "../components/brand/IntroCarousel";
+import {
+  AuthScaffold,
+  AuthField,
+  SocialRow,
+  OrDivider,
+  LegalFooter,
+  ErrorNote,
+  InfoNote,
+} from "./auth/authShared";
 
-const { width: W, height: H } = Dimensions.get('window');
-const STARKNET_THEME = getFieldVisualTheme('starknet');
-const BASE_THEME = { accent: '#0052ff' };
-
-const welcomeContentStyle: ViewStyle = {
-  ...(webContainer as ViewStyle),
-  flexGrow: 1,
-  alignItems: 'center',
-  justifyContent: 'center',
-  paddingBottom: Spacing.xxxl,
-};
-
-const formContentStyle: ViewStyle = {
-  ...(webContainer as ViewStyle),
-  flexGrow: 1,
-  justifyContent: 'center',
-  paddingBottom: Spacing.xxxl,
-  alignItems: 'center',
-};
-
-type Mode = 'welcome' | 'login' | 'signup' | 'connecting' | 'starknet';
-
-function getTgInitData(): string | null {
-  if (Platform.OS === 'web' && typeof window !== 'undefined') {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg?.initData) {
-      return tg.initData;
-    }
-  }
-  return null;
-}
-
-function isTelegram(): boolean {
-  return !!getTgInitData();
-}
-
-function setupTg() {
-  if (Platform.OS !== 'web') {
-    return;
-  }
-  const tg = (window as any).Telegram?.WebApp;
-  if (!tg) {
-    return;
-  }
-  tg.expand();
-  tg.enableClosingConfirmation();
-}
-
-async function connectBaseWallet(): Promise<{ address: string; signature: string; message: string } | null> {
-  if (Platform.OS !== 'web') {
-    return null;
-  }
-  const eth = (window as any).ethereum;
-  if (!eth) {
-    Linking.openURL(`https://go.cb-w.com/dapp?cb_url=${encodeURIComponent(window.location.href)}`);
-    return null;
-  }
-  try {
-    const [address] = await eth.request({ method: 'eth_requestAccounts' }) as string[];
-    const message = `Sign in to Sifter Skill_Up\nAddress: ${address}\nTime: ${Date.now()}`;
-    const signature = await eth.request({
-      method: 'personal_sign',
-      params: [message, address.toLowerCase()],
-    }) as string;
-    return { address: address.toLowerCase(), signature, message };
-  } catch {
-    return null;
-  }
-}
-
-function isBaseAvailable(): boolean {
-  return Platform.OS === 'web' && typeof window !== 'undefined' && !!(window as any).ethereum;
-}
-
-function hasPendingPrivyWebLogin(): boolean {
-  return Platform.OS === 'web' && !!readPendingPrivyWebLogin();
-}
-
-function CircuitBackground({ isDark }: { isDark: boolean }) {
-  const pulse = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulse, { toValue: 1, duration: 3000, useNativeDriver: true }),
-        Animated.timing(pulse, { toValue: 0, duration: 3000, useNativeDriver: true }),
-      ]),
-    ).start();
-  }, [pulse]);
-
-  const dotColor = isDark ? 'rgba(148,163,184,0.18)' : 'rgba(148,163,184,0.12)';
-  const cols = Math.ceil(W / 40);
-  const rows = Math.ceil(H / 40);
-  const opacity = pulse.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] });
-  const dots = Array.from({ length: rows * cols }, (_, index) => {
-    const row = Math.floor(index / cols);
-    const col = index % cols;
-    return {
-      key: `${row}-${col}`,
-      left: col * 40 - 1,
-      top: row * 40 - 1,
-    };
-  });
-
-  return (
-    <Animated.View style={[StyleSheet.absoluteFillObject, { opacity }]} pointerEvents="none">
-      {dots.map((dot) => (
-        <View
-          key={dot.key}
-          style={{
-            position: 'absolute',
-            left: dot.left,
-            top: dot.top,
-            width: 3,
-            height: 3,
-            borderRadius: 1.5,
-            backgroundColor: dotColor,
-          }}
-        />
-      ))}
-    </Animated.View>
-  );
-}
-
-function AuthButton({
-  label,
-  onPress,
-  loading,
-  variant = 'primary',
-  colors,
-}: {
-  label: string;
-  onPress: () => void;
-  loading?: boolean;
-  variant?: 'primary' | 'ghost' | 'base';
-  colors: any;
-}) {
-  return (
-    <SifterButton
-      label={label}
-      onPress={onPress}
-      loading={loading}
-      variant={variant === 'ghost' ? 'ghost' : 'primary'}
-      color={variant === 'base' ? BASE_THEME.accent : colors.accent}
-      size="md"
-      fullWidth
-      style={styles.authButton}
-    />
-  );
-}
-
-function AuthInput({
-  placeholder,
-  value,
-  onChangeText,
-  secureTextEntry,
-  keyboardType,
-  colors,
-}: {
-  placeholder: string;
-  value: string;
-  onChangeText: (value: string) => void;
-  secureTextEntry?: boolean;
-  keyboardType?: any;
-  colors: any;
-}) {
-  return (
-    <TextInput
-      style={[styles.input, { backgroundColor: colors.inputBg, borderColor: colors.inputBorder, color: colors.text }]}
-      placeholder={placeholder}
-      placeholderTextColor={colors.textMuted}
-      value={value}
-      onChangeText={onChangeText}
-      secureTextEntry={secureTextEntry}
-      keyboardType={keyboardType}
-      autoCapitalize="none"
-      autoCorrect={false}
-    />
-  );
-}
-
-type StarknetOnReady = (
-  email: string,
-  starknetAddress?: string,
-  privyAccessToken?: string,
-) => void;
-
-function StarknetHeader() {
-  return (
-    <View style={{ alignItems: 'center', marginBottom: Spacing.xl }}>
-      <Text style={{ fontSize: FontSize.xs, fontWeight: '800', color: 'rgba(255,255,255,0.52)', textAlign: 'center', letterSpacing: 1, marginBottom: 8 }}>
-        STARKNET ACCESS
-      </Text>
-      <Text style={{ fontSize: FontSize.xxl, fontWeight: '800', color: '#fff', textAlign: 'center' }}>
-        Continue with Starknet
-      </Text>
-      <Text style={{ fontSize: FontSize.sm, color: 'rgba(255,255,255,0.68)', textAlign: 'center', marginTop: 6, lineHeight: 18 }}>
-        Sign in with Privy, sync your wallet, and return directly to the Starknet path.
-      </Text>
-    </View>
-  );
-}
-
-function StarknetBenefits() {
-  return (
-    <View style={[styles.starkBenefits, { borderColor: `${STARKNET_THEME.palette.primary}30` }]}>
-      {[
-        'Live Privy auth with backend wallet wiring',
-        'No seed phrase required',
-        'Land directly on Starknet Island #18',
-        'Use real Starknet wallet infrastructure, not demo mode',
-      ].map((text) => (
-        <View key={text} style={styles.benefitRow}>
-          <Text style={{ color: 'rgba(255,255,255,0.85)', fontSize: FontSize.sm, flex: 1 }}>{text}</Text>
-        </View>
-      ))}
-    </View>
-  );
-}
-
-function StarknetPrivyMode({ onBack, onReady }: { onBack: () => void; onReady: StarknetOnReady }) {
-  const { colors } = useTheme();
-  const [email, setEmail] = useState('');
-  const [code, setCode] = useState('');
-  const [localError, setLocalError] = useState('');
-  const privyLogin = useStarknetPrivyLogin();
-  const submittedReadyToken = useRef<string | null>(null);
-
-  const status = privyLogin.state.kind;
-  const busy = status === 'sending-code' || status === 'verifying';
-  const showCodeInput = status === 'awaiting-code' || status === 'verifying';
-  const displayError = localError || (privyLogin.state.kind === 'error' ? privyLogin.state.message : '');
-
-  useEffect(() => {
-    if (privyLogin.state.kind !== 'ready') {
-      return;
-    }
-
-    const readyKey = `${privyLogin.state.email}:${privyLogin.state.privyAccessToken}`;
-    if (submittedReadyToken.current === readyKey) {
-      return;
-    }
-
-    submittedReadyToken.current = readyKey;
-    onReady(
-      privyLogin.state.email,
-      privyLogin.state.starknetAddress,
-      privyLogin.state.privyAccessToken,
-    );
-  }, [onReady, privyLogin.state]);
-
-  async function handleSendCode() {
-    setLocalError('');
-    if (!email) {
-      return;
-    }
-    try {
-      await privyLogin.startEmail(email);
-    } catch (error: any) {
-      setLocalError(error?.message ?? 'Could not send code');
-    }
-  }
-
-  async function handleSubmitCode() {
-    setLocalError('');
-    try {
-      await privyLogin.submitEmailCode(email, code);
-    } catch (error: any) {
-      setLocalError(error?.message ?? 'Login failed');
-    }
-  }
-
-  async function handleOAuth(provider: OAuthProvider) {
-    setLocalError('');
-    try {
-      await privyLogin.startOAuth(provider, email);
-    } catch (error: any) {
-      setLocalError(error?.message ?? 'OAuth failed');
-    }
-  }
-
-  return (
-    <View style={[styles.card, styles.starknetCard, { borderColor: `${STARKNET_THEME.palette.primary}40` }]}>
-      <TouchableOpacity onPress={onBack} style={styles.backBtn}>
-        <Text style={[styles.backText, { color: STARKNET_THEME.palette.primary }]}>Back</Text>
-      </TouchableOpacity>
-
-      <StarknetHeader />
-      <StarknetBenefits />
-
-      {!showCodeInput ? (
-        <View style={styles.starknetInputGroup}>
-          <Text style={styles.starknetInputLabel}>Email address</Text>
-          <Text style={styles.starknetInputHint}>
-            Use the address you want tied to your Starknet workspace.
-          </Text>
-          <TextInput
-            style={[styles.input, styles.starknetInput]}
-            placeholder="you@example.com"
-            placeholderTextColor="rgba(255,255,255,0.35)"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            editable={!busy}
-          />
-        </View>
-      ) : (
-        <View style={styles.starknetInputGroup}>
-          <Text style={styles.starknetInputLabel}>Verification code</Text>
-          <Text style={styles.starknetCodeHelp}>
-            Enter the 6-digit code sent to
-          </Text>
-          <Text style={[styles.starknetCodeTarget, { color: colors.card }]}>
-            {email}
-          </Text>
-          <TextInput
-            style={[styles.input, styles.starknetInput, styles.starknetCodeInput]}
-            placeholder="000000"
-            placeholderTextColor="rgba(255,255,255,0.35)"
-            value={code}
-            onChangeText={setCode}
-            keyboardType="number-pad"
-            autoCapitalize="none"
-            autoCorrect={false}
-            maxLength={6}
-            editable={!busy}
-          />
-        </View>
-      )}
-
-      <TouchableOpacity
-        style={[styles.btn, { backgroundColor: STARKNET_THEME.palette.primary, opacity: busy ? 0.7 : 1 }]}
-        onPress={showCodeInput ? handleSubmitCode : handleSendCode}
-        disabled={busy || (!showCodeInput ? !email : code.length < 6)}
-        activeOpacity={0.85}
-      >
-        {busy ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }}>
-            <ActivityIndicator color="#fff" size="small" />
-            <Text style={[styles.btnText, { color: '#fff' }]}>
-              {status === 'verifying' ? 'Verifying...' : 'Sending code...'}
-            </Text>
-          </View>
-        ) : (
-          <Text style={[styles.btnText, { color: '#fff' }]}>
-            {showCodeInput ? 'Verify and Continue' : 'Send login code'}
-          </Text>
-        )}
-      </TouchableOpacity>
-
-      {!showCodeInput ? (
-        <View style={styles.starknetOAuthBlock}>
-          <Text style={styles.starknetOAuthLabel}>
-            or continue with
-          </Text>
-          <View style={styles.starknetOAuthRow}>
-            {(['google', 'apple', 'twitter'] as OAuthProvider[]).map((provider) => (
-              <TouchableOpacity
-                key={provider}
-                style={[styles.starknetOAuthBtn, busy && styles.starknetOAuthBtnBusy]}
-                onPress={() => handleOAuth(provider)}
-                disabled={busy}
-                activeOpacity={0.85}
-              >
-                <Text style={styles.starknetOAuthBtnText}>
-                  {provider === 'twitter' ? 'X' : provider[0].toUpperCase() + provider.slice(1)}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-      ) : null}
-
-      {displayError ? (
-        <Text style={{ color: '#f87171', fontSize: FontSize.xs, marginTop: Spacing.md, textAlign: 'center' }}>
-          {displayError}
-        </Text>
-      ) : null}
-    </View>
-  );
-}
-
-function StarknetUnavailableMode({ onBack }: { onBack: () => void }) {
-  const message = !PRIVY_CONFIGURED
-    ? 'Starknet auth is unavailable until Privy is configured. Demo-mode Starknet wallet creation has been disabled.'
-    : 'Starknet auth is currently unavailable on this device.';
-
-  return (
-    <View style={[styles.card, styles.starknetCard, { borderColor: `${STARKNET_THEME.palette.primary}40` }]}>
-      <TouchableOpacity onPress={onBack} style={styles.backBtn}>
-        <Text style={[styles.backText, { color: STARKNET_THEME.palette.primary }]}>Back</Text>
-      </TouchableOpacity>
-      <StarknetHeader />
-      <StarknetBenefits />
-      <Text style={{ color: 'rgba(255,255,255,0.75)', textAlign: 'center', lineHeight: 20 }}>
-        {message}
-      </Text>
-    </View>
-  );
-}
-
-function StarknetMode({
-  onBack,
-  onReady,
-}: {
-  onBack: () => void;
-  onReady: StarknetOnReady;
-}) {
-  if (PRIVY_ENABLED) {
-    return <StarknetPrivyMode onBack={onBack} onReady={onReady} />;
-  }
-  return <StarknetUnavailableMode onBack={onBack} />;
-}
+const SOCIAL_SOON =
+  "Google & Apple sign-in are coming soon — continue with email for now.";
 
 export default function AuthScreen() {
   const router = useRouter();
-  const {
-    signInEmail,
-    signUpEmail,
-    signInGuest,
-    authTelegram,
-    authBaseWallet,
-    authStarknet,
-    starknetLoading,
-  } = useAuth();
-  const { colors, isDark } = useTheme();
-  const [mode, setMode] = useState<Mode>(() => (hasPendingPrivyWebLogin() ? 'starknet' : 'welcome'));
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [emailLoading, setEmailLoading] = useState(false);
-  const [baseLoading, setBaseLoading] = useState(false);
-  const [guestLoading, setGuestLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { colors } = useTheme();
+  const { signInEmail, signInGuest } = useAuth();
 
-  const cardAnim = useRef(new Animated.Value(0)).current;
+  // 'loading' until we know whether the intro has been seen.
+  const [intro, setIntro] = useState<"loading" | "show" | "done">("loading");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [guestBusy, setGuestBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   useEffect(() => {
-    Animated.timing(cardAnim, { toValue: 1, duration: 480, useNativeDriver: true }).start();
-    if (isTelegram()) {
-      setupTg();
-      const initData = getTgInitData();
-      if (initData) {
-        setMode('connecting');
-        authTelegram(initData).catch(() => setMode('welcome'));
-      }
+    AsyncStorage.getItem(INTRO_SEEN_KEY)
+      .then((v) => setIntro(v ? "done" : "show"))
+      .catch(() => setIntro("done"));
+  }, []);
+
+  const handleLogin = async () => {
+    setError("");
+    setInfo("");
+    if (!email || !password) {
+      setError("Enter your email and password.");
+      return;
     }
-  }, [authTelegram, cardAnim]);
-
-  const routeToHome = () => {
-    router.replace('/(tabs)/home');
-  };
-
-  const run = async (fn: () => Promise<void>, setBusy: (value: boolean) => void) => {
-    setError('');
     setBusy(true);
     try {
-      await fn();
-      routeToHome();
-    } catch (cause: any) {
-      setError(cause.message || 'Something went wrong');
+      await signInEmail(email, password);
+      router.replace("/(tabs)/home");
+    } catch (e: any) {
+      setError(e?.message || "Could not sign you in.");
     } finally {
       setBusy(false);
     }
   };
 
-  const handleBase = async () => {
-    setError('');
-    setBaseLoading(true);
+  const handleGuest = async () => {
+    setError("");
+    setGuestBusy(true);
     try {
-      const result = await connectBaseWallet();
-      if (result) {
-        await authBaseWallet(result.address, result.signature, result.message);
-        routeToHome();
-      }
-    } catch (cause: any) {
-      setError(cause.message || 'Wallet error');
+      await signInGuest();
+      router.replace("/(tabs)/explore");
+    } catch (e: any) {
+      setError(e?.message || "Could not continue as guest.");
     } finally {
-      setBaseLoading(false);
+      setGuestBusy(false);
     }
   };
 
-  const handleStarknet = async (
-    starkEmail: string,
-    starknetAddress?: string,
-    privyAccessToken?: string,
-  ) => {
-    setError('');
-    setMode('connecting');
-    try {
-      await authStarknet(starkEmail, starknetAddress, privyAccessToken);
-    } catch (cause: any) {
-      setError(cause.message || 'Starknet error');
-      setMode('starknet');
-    }
-  };
-
-  const cardStyle = {
-    opacity: cardAnim,
-    transform: [{ translateY: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [32, 0] }) }],
-  };
-
-  if (mode === 'connecting') {
+  if (intro === "loading") {
     return (
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-        <CircuitBackground isDark={isDark} />
-        <View style={styles.center}>
-          <ActivityIndicator color={colors.accent} size="large" style={{ marginTop: Spacing.xl }} />
-          <Text style={[styles.connectingText, { color: colors.textSoft }]}>Signing you in...</Text>
-        </View>
+      <View style={[styles.splash, { backgroundColor: colors.bg }]}>
+        <LevelUpLogo size={104} animated />
+        <ActivityIndicator
+          color={Brand.primary}
+          style={{ marginTop: Spacing.xl }}
+        />
       </View>
     );
   }
 
-  if (mode === 'starknet') {
-    return (
-      <View style={[styles.screen, { backgroundColor: '#020208' }]}>
-        <CircuitBackground isDark />
-        <ScrollView contentContainerStyle={welcomeContentStyle} showsVerticalScrollIndicator={false}>
-          <Animated.View style={cardStyle}>
-            <StarknetMode onBack={() => { setMode('welcome'); setError(''); }} onReady={handleStarknet} />
-          </Animated.View>
-          {error ? <Text style={[styles.errorText, { color: '#f87171' }]}>{error}</Text> : null}
-          {starknetLoading ? <ActivityIndicator color={STARKNET_THEME.palette.primary} style={{ marginTop: Spacing.md }} /> : null}
-        </ScrollView>
-      </View>
-    );
-  }
-
-  if (mode === 'welcome') {
-    return (
-      <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-        <CircuitBackground isDark={isDark} />
-        {Platform.OS === 'web' ? (
-          <View style={[styles.statusBar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-            <View style={styles.statusDot} />
-            <Text style={[styles.statusText, { color: colors.textSoft }]}>SERVER STATUS: OPTIMAL</Text>
-            <Text style={{ color: colors.border }}>|</Text>
-            <Text style={[styles.statusText, { color: colors.textMuted }]}>SIFTER SKILL_UP</Text>
-          </View>
-        ) : null}
-        <ScrollView contentContainerStyle={welcomeContentStyle} showsVerticalScrollIndicator={false}>
-          <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
-            <Text style={[styles.eyebrow, { color: colors.textMuted }]}>SKILL PLATFORM</Text>
-            <Text style={[styles.appName, { color: colors.text }]}>Sifter Skill_Up</Text>
-
-            <TouchableOpacity
-              style={[styles.starknetCTA, { borderColor: `${STARKNET_THEME.palette.primary}50` }]}
-              onPress={() => setMode('starknet')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.starknetCTAIconWrap}>
-                <Text style={styles.starknetCTAIcon}>SN</Text>
-              </View>
-              <View style={styles.starknetCTACopy}>
-                <Text style={[styles.starknetCTAEyebrow, { color: STARKNET_THEME.palette.primary }]}>STARKNET PATH</Text>
-                <Text style={[styles.starknetCTATitle, { color: STARKNET_THEME.palette.primary }]}>Continue with Starknet</Text>
-                <Text style={styles.starknetCTASub}>Privy sign-in and direct access to your live Starknet Sepolia wallet.</Text>
-              </View>
-              <View style={styles.starknetCTAAction}>
-                <Text style={[styles.starknetCTAActionText, { color: STARKNET_THEME.palette.primary }]}>Launch</Text>
-              </View>
-            </TouchableOpacity>
-
-            <View style={styles.btnGroup}>
-              <AuthButton label="Create account" onPress={() => setMode('signup')} colors={colors} />
-
-              {(isBaseAvailable() || Platform.OS === 'web') ? (
-                <AuthButton
-                  label="Connect Base"
-                  onPress={handleBase}
-                  loading={baseLoading}
-                  variant="base"
-                  colors={colors}
-                />
-              ) : null}
-
-              <AuthButton
-                label="Log in"
-                onPress={() => setMode('login')}
-                variant="ghost"
-                colors={colors}
-              />
-
-              <AuthButton
-                label="Continue as Guest"
-                onPress={() => run(signInGuest, setGuestLoading)}
-                loading={guestLoading}
-                variant="ghost"
-                colors={colors}
-              />
-            </View>
-
-            {error ? (
-              <View style={[styles.errorBox, { backgroundColor: colors.redSoft }]}>
-                <Text style={[styles.errorText, { color: colors.red }]}>{error}</Text>
-              </View>
-            ) : null}
-          </Animated.View>
-        </ScrollView>
-      </View>
-    );
+  if (intro === "show") {
+    return <IntroCarousel onDone={() => setIntro("done")} />;
   }
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.bg }]}>
-      <CircuitBackground isDark={isDark} />
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <ScrollView contentContainerStyle={formContentStyle} keyboardShouldPersistTaps="handled">
-            <Animated.View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, cardStyle]}>
-              <TouchableOpacity onPress={() => setMode('welcome')} style={styles.backBtn}>
-                <Text style={[styles.backText, { color: colors.accent }]}>Back</Text>
-              </TouchableOpacity>
+    <AuthScaffold>
+      <Text style={[styles.tagline, { color: colors.textSoft }]}>
+        Every path. Every role. Every opportunity.
+      </Text>
 
-              <Text style={[styles.formTitle, { color: colors.text }]}>
-                {mode === 'login' ? 'Welcome back' : 'Create your account'}
-              </Text>
-              <Text style={[styles.formSub, { color: colors.textSoft }]}>
-                {mode === 'login' ? 'Return to your saved track and continue.' : 'Create an account to save your track setup and progress.'}
-              </Text>
+      <SocialRow onUnavailable={() => setInfo(SOCIAL_SOON)} />
+      <OrDivider />
 
-              {error ? (
-                <View style={[styles.errorBox, { backgroundColor: colors.redSoft }]}>
-                  <Text style={[styles.errorText, { color: colors.red }]}>{error}</Text>
-                </View>
-              ) : null}
+      <ErrorNote message={error} />
+      <InfoNote message={info} />
 
-              {mode === 'signup' ? (
-                <AuthInput placeholder="Username" value={username} onChangeText={setUsername} colors={colors} />
-              ) : null}
-              <AuthInput placeholder="Email address" value={email} onChangeText={setEmail} keyboardType="email-address" colors={colors} />
-              <AuthInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry colors={colors} />
+      <AuthField
+        label="Email address"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        placeholder="you@example.com"
+      />
+      <AuthField
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        secure
+        placeholder="••••••••"
+      />
 
-              <AuthButton
-                label={mode === 'login' ? 'Log in' : 'Create account'}
-                onPress={() => run(
-                  mode === 'login'
-                    ? () => signInEmail(email, password)
-                    : () => signUpEmail(email, password, username),
-                  setEmailLoading,
-                )}
-                loading={emailLoading}
-                colors={colors}
-              />
+      <TouchableOpacity
+        style={styles.forgot}
+        onPress={() => router.push("/(auth)/forgot-password")}
+        hitSlop={8}
+      >
+        <Text style={[styles.forgotText, { color: Brand.primaryDeep }]}>
+          Forgot password?
+        </Text>
+      </TouchableOpacity>
 
-              <TouchableOpacity
-                style={{ alignSelf: 'center', paddingVertical: Spacing.sm }}
-                onPress={() => { setError(''); setMode(mode === 'login' ? 'signup' : 'login'); }}
-              >
-                <Text style={{ fontWeight: '700', fontSize: FontSize.md, color: colors.accent }}>
-                  {mode === 'login' ? "Don't have an account? Create one" : 'Already have an account? Log in'}
-                </Text>
-              </TouchableOpacity>
+      <SifterButton
+        label="Sign In"
+        onPress={handleLogin}
+        loading={busy}
+        variant="track"
+        color={Brand.primary}
+        size="lg"
+        fullWidth
+      />
 
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginVertical: Spacing.md }}>
-                <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
-                <Text style={{ color: colors.textMuted, fontSize: FontSize.sm }}>or</Text>
-                <View style={{ flex: 1, height: 1, backgroundColor: colors.border }} />
-              </View>
+      <View style={styles.row}>
+        <Text style={[styles.muted, { color: colors.textMuted }]}>
+          Don't have an account?
+        </Text>
+        <TouchableOpacity
+          onPress={() => router.push("/(auth)/signup")}
+          hitSlop={8}
+        >
+          <Text style={[styles.link, { color: Brand.primaryDeep }]}>
+            Create account →
+          </Text>
+        </TouchableOpacity>
+      </View>
 
-              <AuthButton label="Continue as Guest" onPress={() => run(signInGuest, setGuestLoading)} loading={guestLoading} variant="ghost" colors={colors} />
-            </Animated.View>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </View>
+      <TouchableOpacity
+        style={styles.guest}
+        onPress={handleGuest}
+        disabled={guestBusy}
+        hitSlop={8}
+      >
+        <Text style={[styles.guestText, { color: colors.textSoft }]}>
+          {guestBusy ? "Opening…" : "Explore as guest"}
+        </Text>
+      </TouchableOpacity>
+
+      <LegalFooter action="continuing" />
+    </AuthScaffold>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1 },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  connectingText: { fontSize: FontSize.md, fontWeight: '600', marginTop: Spacing.lg },
-  statusBar: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.xl, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
-  statusDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#22c55e' },
-  statusText: { fontSize: FontSize.xs, fontWeight: '700', letterSpacing: 0.5 },
-  card: { width: '100%', maxWidth: 430, borderRadius: Radius.xl, padding: Spacing.lg, borderWidth: 1, gap: Spacing.sm },
-  starknetCard: { backgroundColor: '#0a0a1f' },
-  eyebrow: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 1, textAlign: 'center' },
-  appName: { fontSize: FontSize.xxxl, fontWeight: '900', textAlign: 'center' },
-  btnGroup: { gap: Spacing.sm },
-  btn: { borderRadius: Radius.lg, paddingVertical: Spacing.md, alignItems: 'center', justifyContent: 'center', minHeight: 50 },
-  btnText: { fontSize: FontSize.sm, fontWeight: '800' },
-  authButton: { width: '100%' },
-  input: { borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: 12, fontSize: FontSize.sm, width: '100%' },
-  starknetInputGroup: { gap: Spacing.xs, marginTop: Spacing.xs },
-  starknetInputLabel: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 0.8, color: 'rgba(255,255,255,0.88)', textTransform: 'uppercase' },
-  starknetInputHint: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.6)', lineHeight: 17 },
-  starknetInput: { backgroundColor: '#1e1e38', borderColor: '#334155', color: '#fff' },
-  starknetCodeHelp: { color: 'rgba(255,255,255,0.7)', fontSize: FontSize.sm, lineHeight: 19 },
-  starknetCodeTarget: { fontSize: FontSize.sm, fontWeight: '700', textAlign: 'left' },
-  starknetCodeInput: { letterSpacing: 4, textAlign: 'center' },
-  starknetCTA: { borderWidth: 1.5, borderRadius: Radius.lg, padding: Spacing.md, backgroundColor: '#f59e0b10', flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, marginTop: Spacing.sm, marginBottom: Spacing.sm },
-  starknetCTAIconWrap: { width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(245,158,11,0.16)', alignItems: 'center', justifyContent: 'center' },
-  starknetCTAIcon: { fontSize: FontSize.xs, fontWeight: '900', color: '#f59e0b', letterSpacing: 0.8 },
-  starknetCTACopy: { flex: 1, gap: 3, paddingTop: 1 },
-  starknetCTAEyebrow: { fontSize: 10, fontWeight: '800', letterSpacing: 0.9 },
-  starknetCTATitle: { fontSize: FontSize.md, fontWeight: '900', color: '#f59e0b' },
-  starknetCTASub: { fontSize: FontSize.xs, color: 'rgba(245,158,11,0.78)', lineHeight: 17, maxWidth: 320 },
-  starknetCTAAction: { paddingHorizontal: Spacing.sm, paddingVertical: 6, borderRadius: 999, backgroundColor: 'rgba(245,158,11,0.14)', alignSelf: 'center' },
-  starknetCTAActionText: { fontSize: FontSize.xs, fontWeight: '800' },
-  starknetOAuthBlock: { marginTop: Spacing.md, gap: Spacing.sm },
-  starknetOAuthLabel: { color: 'rgba(255,255,255,0.45)', fontSize: FontSize.xs, textAlign: 'center' },
-  starknetOAuthRow: { flexDirection: 'row', gap: Spacing.sm },
-  starknetOAuthBtn: { flex: 1, borderColor: '#334155', borderWidth: 1, borderRadius: Radius.md, paddingVertical: Spacing.md, alignItems: 'center', backgroundColor: '#1e1e38' },
-  starknetOAuthBtnBusy: { opacity: 0.5 },
-  starknetOAuthBtnText: { color: '#fff', fontWeight: '700', fontSize: FontSize.sm },
-  errorBox: { borderRadius: Radius.md, padding: Spacing.md },
-  errorText: { fontSize: FontSize.sm, fontWeight: '600', textAlign: 'center' },
-  backBtn: { alignSelf: 'flex-start', marginBottom: Spacing.md },
-  backText: { fontSize: FontSize.md, fontWeight: '700' },
-  formTitle: { fontSize: FontSize.xxl, fontWeight: '900' },
-  formSub: { fontSize: FontSize.sm, lineHeight: 19 },
-  starkBenefits: { borderWidth: 1, borderRadius: Radius.lg, padding: Spacing.md, gap: Spacing.sm },
-  benefitRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  splash: { flex: 1, alignItems: "center", justifyContent: "center" },
+  tagline: {
+    fontSize: FontSize.md,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: Spacing.sm,
+  },
+  forgot: { alignSelf: "flex-end", paddingVertical: 4 },
+  forgotText: { fontSize: FontSize.sm, fontWeight: "700" },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    marginTop: Spacing.xs,
+  },
+  muted: { fontSize: FontSize.sm },
+  link: { fontSize: FontSize.sm, fontWeight: "800" },
+  guest: {
+    alignSelf: "center",
+    paddingVertical: Spacing.sm,
+    marginTop: Spacing.xs,
+  },
+  guestText: { fontSize: FontSize.md, fontWeight: "700" },
 });

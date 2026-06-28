@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — External Resources
+ * Sifter LevelUp — External Resources
  * Curated per track. Turns the legal disclaimer into a feature.
  * Updated by the curriculum team as resources change.
  */

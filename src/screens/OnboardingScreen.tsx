@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up - Onboarding Screen
+ * Sifter LevelUp - Onboarding Screen
  */
 
 import React, { useMemo, useState } from 'react';

@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — SUPPLY CHAIN ANALYST Career Track
+// ⚡ Sifter LevelUp — SUPPLY CHAIN ANALYST Career Track
 // Junior Level — Lab 10 Capstone: Complete content
 // j111 simulation continuation + j112–j124 full lessons + bossMode with Phase 2
 
@@ -581,7 +581,7 @@ FreshFlow Distribution experienced a 40% increase in stockouts while simultaneou
 - Case Study (Notion): [link]
 
 ### Verified By
-Sifter Skill_Up — Junior Capstone Certification — [date]
+Sifter LevelUp — Junior Capstone Certification — [date]
 Credential: https://sifter.app/verify/[id]`,
                 },
                 {
@@ -608,13 +608,13 @@ ORDER BY otif_pct ASC;`,
               platform: `Tableau Public`,
               type: `primary`,
               dashboardTitle: `FreshFlow Distribution — Supply Chain KPI Dashboard`,
-              dashboardDescription: `Interactive supply chain performance dashboard showing OTIF by supplier, inventory health, and demand-supply alignment — built as part of Sifter Skill_Up Junior Supply Chain Analyst certification.`,
-              verificationTag: `Sifter Skill_Up Certified — Junior Level`,
+              dashboardDescription: `Interactive supply chain performance dashboard showing OTIF by supplier, inventory health, and demand-supply alignment — built as part of Sifter LevelUp Junior Supply Chain Analyst certification.`,
+              verificationTag: `Sifter LevelUp Certified — Junior Level`,
             },
             {
               platform: `LinkedIn`,
               type: `primary`,
-              postContent: `Completed the Junior Supply Chain Analyst capstone at Sifter Skill_Up — including the unseen Phase 2 boss battle.
+              postContent: `Completed the Junior Supply Chain Analyst capstone at Sifter LevelUp — including the unseen Phase 2 boss battle.
 
 The project: a full supply chain analysis for a fictional distributor experiencing simultaneous overstock AND stockouts.
 
@@ -631,7 +631,7 @@ Portfolio: [GitHub link]
 Dashboard: [Tableau link]
 Case study: [Notion link]
 
-#SupplyChain #DataAnalysis #SQL #PowerBI #SifterSkillUp`,
+#SupplyChain #DataAnalysis #SQL #PowerBI #SifterLevelUp`,
             },
             {
               platform: `Personal Portfolio / Notion`,
@@ -656,7 +656,7 @@ How can you have record-high inventory AND record-high stockouts simultaneously?
 [Quantified impact from boss battle scenario]
 
 ## Verified By
-Sifter Skill_Up — Junior Capstone Certification
+Sifter LevelUp — Junior Capstone Certification
 [Date] | [Verification link]`,
             },
           ],

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Streak Engine
+ * Sifter LevelUp — Streak Engine
  * Singleton. Persists to AsyncStorage.
  *
  * Usage:

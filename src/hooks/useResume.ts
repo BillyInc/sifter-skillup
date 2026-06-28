@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — useResume (v2, WatermelonDB)
+ * Sifter LevelUp — useResume (v2, WatermelonDB)
  *
  * REPLACES: src/hooks/useResume.ts
  *

@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 
 const SECTIONS = [
-  ['Who we are', 'Sifter Skill_Up is an educational platform operated by Sifter Technologies Ltd.'],
+  ['Who we are', 'Sifter LevelUp is an educational platform operated by Sifter Technologies Ltd.'],
   ['What the platform is', 'We provide learning content, simulations, artifacts, and guided practice. We are not a recruitment, legal, or financial advisory service.'],
   ['No employment guarantee', 'Completing a path or certification does not guarantee interviews, job offers, salary increases, or any specific career outcome.'],
   ['Interview mode', 'Interview Mode is practice based on common patterns. It is not a live feed of employer interview questions.'],

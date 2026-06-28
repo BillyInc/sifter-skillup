@@ -1,4 +1,4 @@
-// ⚡ Sifter SkillUp — Final Frontier (Island 16, Levels 196–210)
+// ⚡ Sifter LevelUp — Final Frontier (Island 16, Levels 196–210)
 // Part A of 2 — Levels 196–203
 //
 // Chain: Ethereum / Multi-chain (islandId=16)

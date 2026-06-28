@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Leaderboard Engine
+ * Sifter LevelUp — Leaderboard Engine
  * 3-tier: global / field / track, weekly reset every Sunday.
  */
 

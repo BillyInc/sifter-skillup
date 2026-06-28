@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — SUPPLY CHAIN ANALYST Career Track
+// ⚡ Sifter LevelUp — SUPPLY CHAIN ANALYST Career Track
 // Junior Level — Lab 1: Foundation — What Is Supply Chain?
 // 15 Lessons | Phase 1 (Learning Loop) Only | No Portfolio Push
 // Character: Maya — fresh graduate, first supply chain job

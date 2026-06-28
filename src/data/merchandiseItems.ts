@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Merchandise Items
+ * Sifter LevelUp — Merchandise Items
  * 28 field-specific apparel lines, one hoodie + tee per field minimum.
  * technical_embedding = the equation/symbol printed on the item.
  * shopify_product_id is blank until Shopify Plus is live.

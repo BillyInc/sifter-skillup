@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — useOfflineSync (v2, WatermelonDB)
+ * Sifter LevelUp — useOfflineSync (v2, WatermelonDB)
  *
  * REPLACES: src/hooks/useOfflineSync.ts
  *

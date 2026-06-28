@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Lab Objects
+ * Sifter LevelUp — Lab Objects
  * ─────────────────────────────────────────────────────────────
  *
  * Animated visual objects rendered above the SimulatorCard.

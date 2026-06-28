@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — CommentSheet
+ * Sifter LevelUp — CommentSheet
  * Threaded comments with image upload via expo-image-picker.
  * Full-screen modal on mobile, slide-up panel pattern.
  */

@@ -1,5 +1,5 @@
 # ============================================================
-# Sifter Skill_Up — Game Extra Routes
+# Sifter LevelUp — Game Extra Routes
 # Fixes endpoint mismatch: frontend calls /api/game/last-position
 # but missing_routes.py registered on /api/users/last-position
 #

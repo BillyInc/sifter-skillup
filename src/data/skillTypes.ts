@@ -1,4 +1,4 @@
-// ⚡ Sifter Skill_Up — Career Track Type Definitions
+// ⚡ Sifter LevelUp — Career Track Type Definitions
 // Shared types for both Coming Soon stubs and fully built live tracks.
 
 import { SkillCategory, SkillDifficulty } from './skills';

@@ -5104,6 +5104,7 @@ const BUILDER_SANDBOX_TYPES = new Set([
 
 function isEcosystemTrackSimulator(simulatorType: string) {
   return (
+    simulatorType === 'starkzap-wallet' ||
     simulatorType === 'aggregate' ||
     simulatorType === 'forum' ||
     simulatorType === 'boss-p1' ||

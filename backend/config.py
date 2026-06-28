@@ -1,5 +1,5 @@
 # ============================================
-# Sifter Skill_Up — Backend Configuration
+# Sifter LevelUp — Backend Configuration
 # Extended: device sessions, Starknet, Airtable,
 #           offline sync, feed, social rewards
 # ============================================
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Settings:
-    APP_NAME: str = "Sifter Skill_Up API"
+    APP_NAME: str = "Sifter LevelUp API"
     APP_VERSION: str = "2.0.0"
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
 

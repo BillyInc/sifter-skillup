@@ -1,9 +1,9 @@
-// ⚡ Sifter Skill_Up — Portfolio Screen (v2)
+// ⚡ Sifter LevelUp — Portfolio Screen (v2)
 // Tab 1 "My Track"  — only platforms for the user's active skill track
 // Tab 2 "My Work"   — auto-generated items from lesson/lab completion; no manual "Add" button
 // Tab 3 "All Platforms" — all 28 fields, expandable accordion
 // Connection modal  — Create new account OR Connect existing
-// Attribution       — every push tags "Sifter Skill_Up" as source
+// Attribution       — every push tags "Sifter LevelUp" as source
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
@@ -208,7 +208,7 @@ function PlatformConnectModal({
         username:   username.trim(),
         email:      email.trim(),
         displayName: username.trim(),
-        sourcedFrom: 'Sifter Skill_Up',
+        sourcedFrom: 'Sifter LevelUp',
       });
       if (result.success) {
         setDone(true);
@@ -378,7 +378,7 @@ function PlatformConnectModal({
 
                     <View style={mStyle.attributionBox}>
                       <Text style={mStyle.attributionText}>
-                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '800' }}>{'"'}Trained via Sifter Skill_Up{'"'}</Text> — so recruiters know where your skills came from.
+                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '800' }}>{'"'}Trained via Sifter LevelUp{'"'}</Text> — so recruiters know where your skills came from.
                       </Text>
                     </View>
 
@@ -460,7 +460,7 @@ function PushItemModal({
   onPushed: (platformId: string, postUrl: string) => void;
 }) {
   const [selected, setSelected] = useState<string[]>([]);
-  const [caption, setCaption]   = useState(`${item.title}\n\nBuild: Sifter Skill_Up · sifter.app`);
+  const [caption, setCaption]   = useState(`${item.title}\n\nBuild: Sifter LevelUp · sifter.app`);
   const [loading, setLoading]   = useState(false);
 
   function toggle(id: string) {
@@ -478,10 +478,10 @@ function PushItemModal({
         itemId: item.id,
         platformIds: selected,
         caption,
-        sourceAttribution: 'Sifter Skill_Up · sifter.app',
+        sourceAttribution: 'Sifter LevelUp · sifter.app',
       });
       results.forEach((r: { platformId: string; postUrl: string }) => onPushed(r.platformId, r.postUrl));
-      Alert.alert('Posted! 🎉', `Pushed to ${results.length} platform${results.length !== 1 ? 's' : ''} — credited to Sifter Skill_Up.`);
+      Alert.alert('Posted! 🎉', `Pushed to ${results.length} platform${results.length !== 1 ? 's' : ''} — credited to Sifter LevelUp.`);
       onClose();
     } catch {
       Alert.alert('Error', 'Some posts failed. Check your connections and try again.');
@@ -547,7 +547,7 @@ function PushItemModal({
                   textAlignVertical="top"
                 />
                 <View style={pushSt.attributionNote}>
-                  <Text style={pushSt.attributionNoteText}>&quot;Sifter Skill_Up | sifter.app&quot; is always included in the attribution field.</Text>
+                  <Text style={pushSt.attributionNoteText}>&quot;Sifter LevelUp | sifter.app&quot; is always included in the attribution field.</Text>
                 </View>
               </>
             )}
@@ -954,7 +954,7 @@ export default function PortfolioScreen() {
             <View style={s.trackBanner}>
               <Text style={s.trackBannerTitle}>Your track platforms</Text>
               <Text style={s.trackBannerBody}>
-                Connect these platforms. When you complete lessons and labs, your work will be pushed here automatically — credited to Sifter Skill_Up.
+                Connect these platforms. When you complete lessons and labs, your work will be pushed here automatically — credited to Sifter LevelUp.
               </Text>
             </View>
 

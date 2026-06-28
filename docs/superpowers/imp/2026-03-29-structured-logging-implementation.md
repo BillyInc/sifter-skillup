@@ -6,7 +6,7 @@
 
 ## Overview
 
-Implemented comprehensive structured logging for Sifter Skill_Up to improve debugging, monitoring, and observability across both frontend and backend.
+Implemented comprehensive structured logging for Sifter LevelUp to improve debugging, monitoring, and observability across both frontend and backend.
 
 ## Implementation Summary
 

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — Track Feed Config v4
+ * Sifter LevelUp — Track Feed Config v4
  * COMPLETE: all 181 tracks across 29 fields.
  * Social sections appended to every track.
  */

@@ -1,5 +1,5 @@
 /**
- * Sifter Skill_Up — WatermelonDB Schema
+ * Sifter LevelUp — WatermelonDB Schema
  *
  * Defines every table the local database holds.
  * Maps 1:1 to what lives in Supabase, but only the columns
