@@ -1,0 +1,1672 @@
+{
+ "discipline": "pharmacy",
+ "source_file": "pharmacy.txt",
+ "document_flags": [],
+ "programmes": [
+  {
+   "code": "CLI",
+   "name": "Pharmacy",
+   "qualification": "B.Sc",
+   "duration_years": 5,
+   "objectives": [],
+   "employability_skills": [],
+   "skills_21st_century": [],
+   "courses": [
+    {
+     "level": 100,
+     "code": "GST 111",
+     "title": "Communication in English",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "identify possible sound patterns in English Language",
+      "list notable language skills",
+      "classify word formation processes",
+      "construct simple and fairly complex sentences in English",
+      "apply logical and critical reasoning skills for meaningful presentations",
+      "demonstrate an appreciable level of the art of public speaking and listening; and",
+      "write simple and technical reports"
+     ],
+     "content_summary": "Sound patterns in English Language (vowels and consonants, phonetics and phonology). English word classes (lexical and grammatical words, definitions, forms, functions, usages, collocations). Sentence in English (types: structural and functional, simple and complex). Grammar and Usage (tense, mood, modality and concord, aspects of language use in everyday life). Logical and critical thinking and r"
+    },
+    {
+     "level": 100,
+     "code": "GST 112",
+     "title": "Nigerian Peoples and Culture",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times 83",
+      "list and identify the major linguistic groups in Nigeria",
+      "explain the gradual evolution of Nigeria as a political unit",
+      "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development;",
+      "enumerate the challenges of the Nigerian State towards nation building",
+      "analyse the role of the Judiciary in upholding people's fundamental rights",
+      "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+      "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problem."
+     ],
+     "content_summary": "Nigerian history, culture and art up to 1800 (Yoruba, Hausa and Igbo peoples and culture; peoples and culture of the ethnic minority groups). Nigeria under colonial rule (advent of colonial rule in Nigeria; colonial administration of Nigeria). Evolution of Nigeria as a political unit (amalgamation of Nigeria in 1914; formation of political parties in Nigeria; nationalist movement and struggle for "
+    },
+    {
+     "level": 100,
+     "code": "BIO 101",
+     "title": "General Biology I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain cell structure and organisations",
+      "summarise functions of cellular organelles",
+      "characterise living organisms and state their general reproduction",
+      "describe the interrelationship that exists between organisms",
+      "discuss the concept of heredity and evolution; and",
+      "enumerate habitat types and their characteristics"
+     ],
+     "content_summary": "Cell structure and organisation, functions of cellular organelles, characteristics and classification of living things, chromosomes, genes - their relationships and importance, general reproduction, interrelationships of organisms (competitions, parasitism, predation, symbiosis, commensalisms, mutualism, saprophytism). Heredity and evolution (introduction to Darwinism and Lamarkism, Mendelian laws"
+    },
+    {
+     "level": 100,
+     "code": "BIO 102",
+     "title": "General Biology II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "state the unique characteristics of plant and animal kingdoms",
+      "describe ecological adaptations in the plant and animal kingdoms",
+      "give a summary of the physiology of plants and animals",
+      "explain nutrition, respiration, excretion and reproduction in plants and animals; and",
+      "describe growth and development in plants and animals"
+     ],
+     "content_summary": "A generalised survey of the plant and animal kingdoms based mainly on study of similarities and differences in the external features, ecological adaptations of these forms. Briefs on physiology to include nutrition, respiration, circulatory system, excretion, reproduction, growth and development."
+    },
+    {
+     "level": 100,
+     "code": "BIO 107",
+     "title": "General Biology Practical I",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "outline common laboratory hazards",
+      "provide precautions on laboratory hazards",
+      "state the functions of the different parts of microscope",
+      "use the microscope and describe its maintenance",
+      "draw biological diagrams and illustrations; and",
+      "apply scaling and proportion to biological diagrams"
+     ],
+     "content_summary": "Common laboratory hazards: prevention and first aid. Measurements in biology. Uses and care of microscope: compound and dissecting microscope. Biological drawings and illustration, scaling, accuracy and proportion. Use of common laboratory apparatus and laboratory experiments designed to illustrate the topics covered in BIO 101."
+    },
+    {
+     "level": 100,
+     "code": "BIO 108",
+     "title": "General Biology Practical II",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "describe the anatomy of flowering plants",
+      "differentiate types of fruit and seeds",
+      "state ways of handling and caring for biological wares",
+      "describe the basic histology of animal tissues; and",
+      "identify various groups in the animal kingdom"
+     ],
+     "content_summary": "Anatomy of flowering plants. Primary vegetative body: stem, leaf and root to show the mature tissues, namely parenchyma, collenchyma, sclerenchyma, xylem and phloem. Types of fruits and seeds. Care and use of dissecting kits and other biological wares. Dissection and general histology 85 of animal tissues based on vertebrate forms. Morphology and functions of epithelial, muscular, nervous and conn"
+    },
+    {
+     "level": 100,
+     "code": "CHM 101",
+     "title": "General Chemistry I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "define atom, molecules and chemical reactions",
+      "discuss the modern electronic theory of atoms",
+      "write electronic configurations of elements on the periodic table",
+      "justify the trends of atomic radii, ionisation energies, electronegativity of the elements based on their position in the periodic table;",
+      "identify and balance oxidation � reduction equation and solve redox titration problems",
+      "illustrate shapes of simple molecules and hybridised orbitals",
+      "identify the characteristics of acids, bases and salts, and solve problems based on their quantitative relationship;",
+      "apply the principles of equilibrium to aqueous systems using lechatelier's principle to predict the effect of concentration, pressure and temperature changes on equilibrium mixtures;",
+      "analyse and perform calculations with the thermodynamic functions, enthalpy, entropy and free energy; and",
+      "determine rates of reactions and its dependence on concentration, time and temperature"
+     ],
+     "content_summary": "Atoms, molecules, elements and compounds and chemical reactions. Modern electronic theory of atoms. Electronic configuration, periodicity and building up of the periodic table. Hybridisation and shapes of simple molecules. Valence Forces; Structure of solids. Chemical equations and stoichiometry; Chemical bonding and intermolecular forces, kinetic theory of matter. Elementary thermochemistry; rate"
+    },
+    {
+     "level": 100,
+     "code": "CHM 102",
+     "title": "General Chemistry II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "state the importance and development of organic chemistry",
+      "define fullerenes and its applications",
+      "discuss electronic theory",
+      "determine structures in organic chemistry, qualitative and quantitative analysis in organic chemistry;",
+      "describe rules guiding nomenclature and functional group classes of organic chemistry",
+      "determine rate of reaction to predict mechanisms of reaction",
+      "identify classes of organic functional group with brief description of their chemistry",
+      "discuss comparative chemistry of group Ia, IIa and IVa elements; and",
+      "describe basic properties of transition metals"
+     ],
+     "content_summary": "Historical survey of the development and importance of Organic Chemistry; Fullerenes as fourth allotrope of carbon, uses as nanotubules, nanostructures, nanochemistry. Electronic theory in organic chemistry. Isolation and purification of organic compounds. Determination of structures of organic compounds including qualitative and quantitative analysis in organic chemistry. Nomenclature and functio"
+    },
+    {
+     "level": 100,
+     "code": "CHM 107",
+     "title": "General Chemistry Practical I",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "describe the general laboratory rules and safety procedures",
+      "collect scientific data and correctly carry out chemical experiments",
+      "identify the basic glassware and equipment in the laboratory",
+      "differentiate between primary and secondary standards",
+      "perform redox titrations",
+      "recording observations and measurements in the laboratory notebooks; and",
+      "analyse the data to arrive at scientific conclusions"
+     ],
+     "content_summary": "Laboratory experiments designed to reflect topics presented in CHM 101. These include acid-base titrations, qualitative analysis, redox reactions, gravimetric analysis, data analysis and presentation."
+    },
+    {
+     "level": 100,
+     "code": "CHM 108",
+     "title": "General Chemistry Practical II",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "identify the general laboratory rules and safety procedures",
+      "collect scientific data and correctly carry out chemical experiments",
+      "identify the basic glassware and equipment in the laboratory",
+      "identify and carry out preliminary tests which includes ignition, boiling point, melting point, test on known and unknown organic compounds;",
+      "execute solubility tests on known and unknown organic compounds",
+      "execute elemental tests on known and unknown compounds; and",
+      "conduct functional group/confirmatory test on known and unknown compounds which could be acidic / basic / neutral organic compounds."
+     ],
+     "content_summary": "Laboratory experiments designed to reflect topics presented in CHM 102."
+    },
+    {
+     "level": 100,
+     "code": "MTH 101",
+     "title": "Elementary Mathematics I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe basic definition of set, subset, union, intersection, complements and use of Venn diagrams;",
+      "solve quadratic equations",
+      "solve trigonometric functions 88",
+      "describe various types of numbers; and",
+      "solve some problems using Binomial theorem"
+     ],
+     "content_summary": "Elementary set theory, subsets, union, intersection, complements, Venn diagrams. Real numbers; integers, rational and irrational numbers, mathematical induction, real sequences and series, theory of quadratic equations, binomial theorem. Complex numbers; algebra of complex numbers; the Argand diagram. De-Moivre's theorem, nth roots of unity. Circular measure, trigonometric functions of angles of a"
+    },
+    {
+     "level": 100,
+     "code": "MTH 102",
+     "title": "Elementary Mathematics II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "recall types of rules in Differentiation and Integration",
+      "recall the meaning of Function of a real variable, graphs, limits and continuity; and",
+      "solve some applications of definite integrals in areas and volumes"
+     ],
+     "content_summary": "Function of a real variable, graphs, limits and idea of continuity. The derivative, as limit of rate of change. Techniques of differentiation. Extreme curve sketching; Integration as an inverse of differentiation. Methods of integration, Definite integrals. Application to areas, volumes."
+    },
+    {
+     "level": 100,
+     "code": "PHY 101",
+     "title": "General Physics I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "identify and deduce the physical quantities and their units",
+      "differentiate between vectors and scalars",
+      "describe and evaluate motion of systems based on the fundamental laws of mechanics",
+      "apply newton's laws to describe and solve simple problems of motion",
+      "evaluate work, energy, velocity, momentum, acceleration, and torque of moving or rotating objects;",
+      "explain and apply the principles of conservation of energy, linear and angular momentum",
+      "describe the laws governing motion under gravity; and",
+      "explain motion under gravity and quantitatively determine behaviour of objects moving under gravity."
+     ],
+     "content_summary": "Space and time; units and dimension. Vectors and scalars. Differentiation of vectors: displacement, velocity and acceleration; kinematics. Newton laws of motion (Inertial frames, Impulse, force and action at a distance, momentum conservation). Relative motion. Application of Newtonian mechanics. Equations of motion. Conservation principles in physics. Conservative forces, conservation of linear mo"
+    },
+    {
+     "level": 100,
+     "code": "PHY 102",
+     "title": "General Physics II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe the electric field and potential, and related concepts, for stationary charges",
+      "calculate electrostatic properties of simple charge distributions using Coulomb's law, Gauss's law and electric potential;",
+      "describe and determine the magnetic field for steady and moving charges",
+      "determine the magnetic properties of simple current distributions using Biot-Savart and Ampere's law;",
+      "describe electromagnetic induction and related concepts, and make calculations using Faraday's and Lenz's laws;",
+      "explain the basic physical of Maxwell's equations in integral form",
+      "evaluate DC circuits to determine the electrical parameters; and",
+      "determine the characteristics of AC voltages and currents in resistors, capacitors, and inductors."
+     ],
+     "content_summary": "Forces in nature; Electrostatics; electric charge and its properties, methods of charging; Coulomb's law and superposition; electric field and potential; Gauss's law; Capacitance; Electric dipoles; Energy in electric fields; Conductors and insulators, current, voltage and resistance, Ohm's law and analysis of DC circuits; Magnetic fields; Lorentz force; Biot-Savart and Amp�re's laws; magnetic dipo"
+    },
+    {
+     "level": 100,
+     "code": "PHY 107",
+     "title": "General Practical Physics I",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "conduct measurements of some physical quantities",
+      "make observations of events, collect and tabulate data",
+      "identify and evaluate some common experimental errors",
+      "plot and analyse graphs; and",
+      "draw conclusions from numerical and graphical analysis of data"
+     ],
+     "content_summary": "This introductory course emphasizes quantitative measurements, the treatment of measurement errors, and graphical analysis. A variety of experimental techniques will be employed. The experiments include studies of meters, the oscilloscope, mechanical systems, electrical and mechanical resonant systems, light, heat, viscosity and many others covered in PHY 101 and PHY 90 102. However, emphasis shou"
+    },
+    {
+     "level": 100,
+     "code": "PHY 108",
+     "title": "General Practical Physics II",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [],
+     "content_summary": null
+    },
+    {
+     "level": 100,
+     "code": "PCY 101",
+     "title": "Introduction to Pharmacy",
+     "units": 1,
+     "status": "C",
+     "lh": 15,
+     "ph": null,
+     "skills_learned": [
+      "define the role of Pharmacists in health services",
+      "identify opportunities in various practice areas of Pharmacy",
+      "identify various disciplines of Pharmacy",
+      "interpret prescriptions; and",
+      "identify different dosage forms"
+     ],
+     "content_summary": "Orientation to Pharmacy - the role of a Pharmacist in health services. Opportunities in Pharmacy. History of pharmacy. Evolution of the Pharmacy profession. Various disciplines of Pharmacy. Stages in the development of a new drug. Concept of dosage forms. The prescription. 200 Level Courses"
+    },
+    {
+     "level": 200,
+     "code": "GST 212",
+     "title": "Philosophy, Logic, Environment and Sustainable Development",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "analyse the concept of humanity, its origin, philosophy and cosmic environment",
+      "improve their logical and critical thinking skills",
+      "identify the basic roles of science and technology in human society",
+      "describe renewable and non-renewable environmental resources available in the Nigerian society;",
+      "identify resource conservation tools and techniques for sustainable environment",
+      "analyse environmental effects of plastics, and other wastes",
+      "suggest possible management techniques and solutions to identifiable environmental challenges faced in different areas of the Nigerian society; and",
+      "list and describe unethical behaviour patterns that can hinder human societal growth and development."
+     ],
+     "content_summary": "Concept of humanity, its origin, philosophy and cosmic environment. Concepts and techniques in logic and critical thinking. Science and technology in human society and services. Renewable and non-renewable environmental resources. Climate change and the principle of sustainable development. Environmental effects of plastics, and other waste products. Elements of environmental studies for productiv"
+    },
+    {
+     "level": 200,
+     "code": "ENT 211",
+     "title": "Entrepreneurship and Innovation",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking;",
+      "state the characteristics of an entrepreneur",
+      "analyse the importance of micro and small businesses in wealth creation, employment, and financial independence;",
+      "engage in entrepreneurial thinking",
+      "identify key elements in innovation",
+      "describe stages in enterprise formation, partnership and networking including business planning;",
+      "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; and",
+      "state the basic principles of e-commerce"
+     ],
+     "content_summary": "Concept of Entrepreneurship (Entrepreneurship, Intrapreneurship/Corporate Entrepreneurship). Theories, rationale and relevance of Entrepreneurship (Schumpeterian and other perspectives, risk-taking, necessity and opportunity-based entrepreneurship and creative destruction). Characteristics of Entrepreneurs (Opportunity seeker, Risk taker, Natural and Nurtured, Problem solver and change agent, Inno"
+    },
+    {
+     "level": 200,
+     "code": "ANA 201",
+     "title": "Basic Anatomy",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe the basic organization of the human body",
+      "describe the gross and microscopic structure of different organ systems; and",
+      "explain structure-function correlation"
+     ],
+     "content_summary": "Basic organization of the human body: A study of human biological structure at various levels of complexity: from sub-cellular to gross and microscopic structure of individual organ systems. 92 Structure-function correlations are emphasized. Integumentary system. Circulatory system. Lymphoid system. Alimentary system. Musculoskeletal system. Respiratory system. Urinary system. Genital system. Endo"
+    },
+    {
+     "level": 200,
+     "code": "ANA 202",
+     "title": "Neuroanatomy",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe the structural organization of the nervous system",
+      "describe the spinal cord, and the brain",
+      "describe the peripheral nervous system",
+      "discuss general embryology, teratology and genetic anatomy; and",
+      "explain the influence of drugs on foetal development"
+     ],
+     "content_summary": "Basic structural organization of the nervous system: The neuron (Soma and neurites). Centralization and Telencephalization. Neural Circuitry (receptors, effectors and the synapse). Fate of the Neural Crest. Spinal Cord: general topography, grey matter, ascending and descending pathways. Brain: general topography; brainstem, cerebellum, diencephalon, cerebrum. Meninges and ventricular system. Pia, "
+    },
+    {
+     "level": 200,
+     "code": "ANA 203",
+     "title": "Histology",
+     "units": 1,
+     "status": "C",
+     "lh": 15,
+     "ph": null,
+     "skills_learned": [
+      "explain the histology of lymphatic, alimentary and reproductive systems; and",
+      "describe the histology of the exocrine glands and organs of special senses"
+     ],
+     "content_summary": "The Tissues. The lymphatic system. The alimentary system. The exocrine glands. The urinary glands. The reproductive system. Organs of special senses. This will involve the use of plastic models and slides for Histology and class demonstrations. 93"
+    },
+    {
+     "level": 200,
+     "code": "BCH 201",
+     "title": "Biochemistry",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "list the importance of biochemistry in health sciences",
+      "explain the structure and function of proteins",
+      "describe digestion, absorption and transport across membranes; and",
+      "describe metabolism of carbohydrates, lipids, and amino acids"
+     ],
+     "content_summary": "Importance of biochemistry to the health Sciences - levels of medical care and biochemistry. Membranes and cell structure techniques used in biochemistry and medicine. Protein structure and function- primary, secondary and tertiary structure of proteins in blood. Digestion, absorption and transport across membranes. Protein calorie malnutrition. Metabolism - introduction of the study of intermedia"
+    },
+    {
+     "level": 200,
+     "code": "BCH 202",
+     "title": "Introductory Molecular Biology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe nucleic acids and their structure",
+      "explain genes and heredity, DNA replication and cell division",
+      "define recombinant DNA technology and list its uses",
+      "describe protein synthesis, hormones and their actions; and",
+      "name significant biochemical transformations of medical importance"
+     ],
+     "content_summary": "Nucleic acids - DNA, RNA and elementary treatment of their structure. Biochemistry of heredity. Discovery and properties of the genetic materials, DNA replication and cell division. Cloning and recombinant DNA Technology. Mutagens and mutation. Mechanism of protein synthesis. Biochemistry of hormones and hormonal action to include actions of cyclic-AMP, cyclic-GMP, adrenaline, glucagon and insulin"
+    },
+    {
+     "level": 200,
+     "code": "PIO 201",
+     "title": "Introductory and Blood Physiology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe cell physiology and transport system; and",
+      "discuss physiology of the cardiovascular, respiratory, renal, gastrointestinal and endocrine systems. 94"
+     ],
+     "content_summary": "Body fluids. Cell Physiology. Transport System. Excitable cells. Contractile tissues. Homoestasis. Control systems. Blood. Introductory autonomic nervous system. Cardiovascular and Respiratory Physiology: Cardiovascular physiology. Cardiac muscle. E.C.G., Haemodynamics. Systemic circulation. Events in cardiac cycle. Heart rate and its control. Blood pressure. Cardiac output. Introduction to mechan"
+    },
+    {
+     "level": 200,
+     "code": "PIO 202",
+     "title": "Neurophysiology and Special Senses",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe the organization of the CNS and its control systems",
+      "explain the state of sleep, memory and learning",
+      "discuss autonomic nervous system; and",
+      "describe special senses"
+     ],
+     "content_summary": "Neurophysiology: Organisation of the CNS and CNS control systems. Spinal reflexes. Excitation and Inhibition. Localization of functions in the cortex. Motor system. Pyramidal and extrapyramidal sensory systems. Reticular formation. Cerebellum: Control of posture. Neurobiology rhythms. Sleep and unconscious states. Memory, learning. Autonomic Nervous System: Parasympathetic and sympathetic neuroeff"
+    },
+    {
+     "level": 200,
+     "code": "PCG 201",
+     "title": "Introduction to Pharmacognosy",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe the scope of Pharmacognosy",
+      "define basic pharmcognostic terms",
+      "classify crude drugs",
+      "identify some natural drugs obtained from plant, animal and mineral sources",
+      "list some unrefined drugs that aid recovery from diseases of man and animals; and 95",
+      "identify important factors involved in preparation of natural drugs for commerce"
+     ],
+     "content_summary": "Historical development and scope of Pharmacognosy. Terminologies used in Pharmacognosy. Classification of crude drugs: Vegetable Drugs: Alphabetically, morphologically, pharmacologically, and chemically. Plant description: Pharmacognostic profile of selected plants, � taxonomy, morphology, and anatomy. The cell differentiation and organic cell contents � carbohydrates, proteins, fixed oils, gums a"
+    },
+    {
+     "level": 200,
+     "code": "PCH 201",
+     "title": "Physical Pharmaceutical Chemistry",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "state the principles of thermodynamics",
+      "explain chemical and ionic equilibria; and",
+      "list the effect of these on the feasibility of drug synthesis and solubility"
+     ],
+     "content_summary": "Review of principles of thermodynamics, chemical and ionic equilibria. Chemical kinetics relevant to pharmacy, effect of these on the feasibility of drug synthesis, mixing, solubility. Biological redox systems. Practicals: Conduct relevant experiments on mixing, solubility, drug synthesis and many others."
+    },
+    {
+     "level": 200,
+     "code": "PCH 202",
+     "title": "Inorganic Pharmaceutical Chemistry",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "explain atomic and molecular structures",
+      "explain the chemical and physical properties of inorganic elements and compounds and their uses in pharmacy and medicine; and",
+      "differentiate between normality and molarity"
+     ],
+     "content_summary": "Atomic and Molecular Structure: Electronic structure of atoms and molecules. Relationship between the electronic structure of elements and the formation of covalent, ionic and coordinative (dative) bonds. Nature and pharmaceutically important application of co-ordination compounds, metal complexes and chelating agents. 96 Comparative study of the physico-chemical properties, preparation and uses o"
+    },
+    {
+     "level": 200,
+     "code": "PCT 201",
+     "title": "Pharmaceutics",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "recall the fundamental operations in weighing",
+      "recognize errors in measurements and measuring techniques; and",
+      "describe the ethics of dispensing and identify different types of labels for the presentation of products."
+     ],
+     "content_summary": "Fundamental operations in weighing: Errors in using dispensing balances. Minimum weighable amounts and weighing techniques. Conical and beaker shaped measures for dispensing liquids. Errors in measurements and measuring technique. Household measures and weighing of small amounts of materials. Ethics of dispensing and presentation of products: General dispensing procedure. The prescription. Informa"
+    },
+    {
+     "level": 200,
+     "code": "PCT 202",
+     "title": "Pharmaceutical Preparations and Calculations",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "describe types of pharmaceutical preparations",
+      "list pharmaceutical solutions; and",
+      "identify factors affecting the solubilities of pharmaceutical solutions"
+     ],
+     "content_summary": "Percentages, proportional calculations and allegation. Calculations involving very small quantities. Types of Pharmaceutical preparations: Solutions, mixtures, linctuses, syrups, elixirs, oral liquids, emulsions, applications, lotions, gargles, mouth washes, nasal and ear drops. Divided and bulk powders, granules, cachets, capsules and tablets and many others. Pharmaceutical solutions and solubili"
+    },
+    {
+     "level": 200,
+     "code": "PCT 203",
+     "title": "Dispensing Practical I",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "use simple dispensing techniques",
+      "prepare simple solutions; and",
+      "use appropriate packaging and labeling requirements for simple solutions"
+     ],
+     "content_summary": "Introduction to dispensing, packaging and labelling requirements for dispensing, containers and closures. Weighing techniques, measurement of volumes, techniques in unit operations, trituration and mixing of solids. Preparation of simple solutions. Dilutions of simple solutions, syrup and aromatic waters."
+    },
+    {
+     "level": 200,
+     "code": "PCT 204",
+     "title": "Dispensing Practical II",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "prepare elixirs, syrups, mixtures, and suspensions",
+      "conduct measurements using aliquot methods; and",
+      "prepare different types of pharmaceutical powders"
+     ],
+     "content_summary": "Preparation of Liquid dosage forms, compounding, and dispensing of drugs, extemporaneous and bulk preparation of mixtures of liquids and solid drug ingredients. Preparation of collodions and paints, gargles, inhalants and drops (nasal and eye). Preparation of pharmaceutical powders (bulk, compound and divided). Prescription reading."
+    },
+    {
+     "level": 200,
+     "code": "PHM 201",
+     "title": "Introduction to Pharmaceutical Microbiology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "list the characteristics, and classify microorganisms",
+      "state the nutritional requirements of bacteria, and identify culture media",
+      "identify fungi, molds, viruses, other atypical organisms and parasites of public health importance; and",
+      "recognise basic techniques of culturing, isolation, identification and counting of bacteria"
+     ],
+     "content_summary": "Historical development of microbiology and the effects on health. General structure of the bacterial cell. The bacterial spore, its structure and resistance to inactivating agents. Systematic classification of bacteria and characteristics of major groups � Taxonomy. Protoplasts, spheroplasts and L-Forms. Nutritional requirements and growth of bacteria. Bacterial culture media and evolution of pure"
+    },
+    {
+     "level": 300,
+     "code": "GST 312",
+     "title": "Peace and Conflict Resolution",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "analyse the concepts of peace, conflict and security",
+      "list major forms, types and root causes of conflict and violence",
+      "differentiate between conflict and terrorism",
+      "enumerate security and peace building strategies; and",
+      "describe roles of international organisations, media and traditional institutions in peace building."
+     ],
+     "content_summary": "Concepts of Peace, Conflict and Security in a multi-ethnic nation. Types and Theories of Conflicts: Ethnic, Religious, Economic, Geo-political Conflicts; Structural Conflict Theory, Realist Theory of Conflict, Frustration-Aggression Conflict Theory. Root causes of Conflict and Violence in Africa: Indigene and settlers Phenomenon; Boundaries/boarder disputes; Political disputes; Ethnic disputes and"
+    },
+    {
+     "level": 300,
+     "code": "ENT 312",
+     "title": "Venture Creation",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "describe the key steps in venture creation",
+      "identify opportunities in problems and in high potential sectors regardless of geographical location;",
+      "state how original products, ideas, and concepts are developed",
+      "develop business concept for further incubation or pitching for funding",
+      "identify key sources of entrepreneurial finance 99",
+      "implement the requirements for establishing and managing micro and small enterprises",
+      "conduct entrepreneurial marketing and e-commerce",
+      "apply a wide variety of emerging technological solutions to entrepreneurship; and",
+      "appreciate why ventures fail due to lack of planning and poor implementation"
+     ],
+     "content_summary": "Opportunity Identification (Sources of business opportunities in Nigeria, Environmental scanning, Demand and supply gap/unmet needs/market gaps/market research, Unutilised resources, Social and climate conditions and Technology adoption gap). New business development (business planning, market research). Entrepreneurial Finance (Venture capital, Equity finance, Micro finance, Personal savings, Sma"
+    },
+    {
+     "level": 300,
+     "code": "PAA 399",
+     "title": "Students Industrial Work Experience",
+     "units": 3,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "prepare to handle industrial work they will likely meet after graduation",
+      "familiarise themselves with methods and techniques in handling equipment and machinery that may not be available in their institutions; and",
+      "transit from school to workplace easily"
+     ],
+     "content_summary": "This is a supervised work-experience progress of approximately three months' duration, commencing with the long vacation (following the end of the 300 level second semester examinations) as determined by the university calendar. During the programme, students are attached to pharmaceutical establishments including drug manufacturing units, hospital pharmacies, community pharmacies and many others."
+    },
+    {
+     "level": 300,
+     "code": "CLI 301",
+     "title": "Biopharmaceutics and Pharmacokinetics",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "skills_learned": [
+      "describe the fate of a drug after administration",
+      "describe pharmacokinetic parameters and learn their calculations",
+      "identify different dosage regimens including prolonged dosage form administration and their applications in therapy; and",
+      "discuss the relationship between pharmacokinetic parameters and pharmacologic response"
+     ],
+     "content_summary": "Definition of terminologies and symbols used in pharmacokinetics. Fate of drugs after administration. Physical significance of drug concentration in the blood. Biological factors in drug absorption. Physicochemical factors affecting drug absorption. Dosage form consideration in gastrointestinal absorption. Drug-drug and drug-food interactions. Bioavailability and bioequivalence with emphasis on pr"
+    },
+    {
+     "level": 300,
+     "code": "CLI 302",
+     "title": "Health Psychology",
+     "units": 1,
+     "status": "C",
+     "lh": 15,
+     "ph": null,
+     "skills_learned": [
+      "enumerate the general principles of psychology",
+      "describe medical sociology",
+      "explain the role of psychology in healthcare delivery; and",
+      "list the psychological factors in anxiety, depression and psychosomatic illnesses",
+      "identify personality profiles and explain their impact on communications skills and interpersonal relationships."
+     ],
+     "content_summary": "General principles of psychology. Medical sociology. Role of psychology in healthcare delivery. Management of aggression and stress. Psychological factors in anxiety, depression and psychosomatic illnesses. Personality Profiles and their impacts in communication skills and interpersonal                                                              relations."
+    },
+    {
+     "level": 300,
+     "code": "PCG 301",
+     "title": "Pharmacognosy I",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "identify natural sources and uses of resins and oleoresins",
+      "recall ethnomedicinal uses and ethnobotanical sources of phytoenzymes",
+      "classify and evaluate surgical fibers and sutures; and 101",
+      "describe pharmacognosical profile of toxicants of higher plants"
+     ],
+     "content_summary": "Resins and Oleoresins: Introduction, classification, active constituents and pharmacological uses of turpentine, benzoin, cannabis, myrrh and balsam enzymes: Enzymes obtained from plant sources (phytoenzymes) Papain, Bromelain and malt extract. Enzymes obtained from animal sources, renin, pepsin, pancreatin and pancrelipase. Surgical Dressings: Classification of fibers as vegetable, animal and syn"
+    },
+    {
+     "level": 300,
+     "code": "PCG 302",
+     "title": "Pharmacognosy II",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "recognize the current state of herbal medicine globally",
+      "prepare monograghs, and herbarium specimens",
+      "explain the principles involved in formulation of phytomedicines into dosage forms; and",
+      "assess herbal medicines for quality, efficacy, and safety"
+     ],
+     "content_summary": "History and present state of herbal medicines. The practitioners. The plant � collection, drying and storage, pests and pesticides. Hebarium: Hebarium specimen and voucher numbers. Research findings and documentation of medicinal plants. Selected examples of Nigerian medicinal plants: local names, geographical sources, macroscopy microscopy, ethnomedicinal uses, chemical constituents and toxicity "
+    },
+    {
+     "level": 300,
+     "code": "PCH 301",
+     "title": "Organic Pharmaceutical Chemistry",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "synthesis and relate functional groups of compounds to physical and chemical properties and the application of these groups in Pharmacy;",
+      "write the structure and discuss the chemistry of heterocyclic compounds especially those being used as drugs and Pharmaceuticals; and",
+      "synthesise some drugs"
+     ],
+     "content_summary": "Reactivity of organic compounds. General review of the concept of aromaticity in benzene and how this affects substitution in such structures. General review of organic reactions leading to interconversion and modification of functional groups through nucleophilic and electrophilic substitution, elimination, addition and rearrangement reactions. Utilization of these reactions for isolation, charac"
+    },
+    {
+     "level": 300,
+     "code": "PCH 302",
+     "title": "Pharmaceutical Analysis I",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain Official standards for active pharmaceutical ingredients (APIs) and formulated products;",
+      "describe Limit tests; and",
+      "identify sources of impurities in pharmaceuticals"
+     ],
+     "content_summary": "Official standards for pharmaceutical chemicals and formulated products. Drug description - solubility, test for identity, physical constants. Qualitative and quantitative assays of pure chemical entities in the case of pharmaceutical chemicals, or of the active pharmaceutical ingredients (APIs) in the case of formulated product. Limit tests. Sources of impurities in pharmaceuticals. Practicals: Q"
+    },
+    {
+     "level": 300,
+     "code": "PCT 301",
+     "title": "Physical Pharmaceutics I",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe adsorption and its mechanism",
+      "explain surface and interfacial phenomena",
+      "describe micelle formation and recall methods for the determination of the critical micelle concentration (CMC); and",
+      "classify colloids and enumerate properties of colloidal solutions 103"
+     ],
+     "content_summary": "Adsorption: The mechanism of adsorption: The Langmuir and Brunauer-Emmett-Teller (BET) isotherms. Chemisorption and factors affecting the amount adsorbed. Application of adsorption in pharmacy. Surface and Interfacial Phenomena: Surface tension, contact angle and the wetting of solids. Spreading of one liquid over another. Mechanism of capillary rise and effect of temperature. Method of determinin"
+    },
+    {
+     "level": 300,
+     "code": "PCT 302",
+     "title": "Rheology",
+     "units": 1,
+     "status": "C",
+     "lh": 15,
+     "ph": null,
+     "skills_learned": [
+      "describe flow characteristics of Newtonian fluids and effect of temperature on them; and",
+      "enumerate rheological properties of suspensions, emulsions, ointments and creams"
+     ],
+     "content_summary": "Newtonian fluids. Flow characteristics of Newtonian fluids and effect of temperature. Determination of viscosity - principles of capillary tube, Redwood and falling sphere viscometers, rotational viscometers. The flow properties of disperse systems and viscosity coefficients of collodial dispersions. Viscosity imparting agents in pharmacy. Non-Newtonian fluids. Plastic, pseudoplastic and dilatant "
+    },
+    {
+     "level": 300,
+     "code": "PCT 303",
+     "title": "Dispensing Practical III",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "prepare mixtures and suspensions",
+      "carry out measurements using aliquot methods; and",
+      "prepare different types of pharmaceutical powders"
+     ],
+     "content_summary": "Preparation of Liquid dosage forms -mixtures, suspensions, compounding, and dispensing of drugs, extemporaneous and bulk preparation of mixtures of liquids and solid drug ingredients. Prescription reading. 104"
+    },
+    {
+     "level": 300,
+     "code": "PCT 304",
+     "title": "Physical Pharmaceutics II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "list the factors affecting filtration and explain its mechanism",
+      "describe filter media and aids",
+      "enumerate principles of centrifugation",
+      "compare flocculated and deflocculated systems",
+      "differentiate and identify emulsion types",
+      "identify different types of creams, ointments, pastes, gels and their preparations; and",
+      "describe suppositories and pessaries, their methods of preparation and packaging"
+     ],
+     "content_summary": "Filtration: factors affecting filtration. Mechanism of filtration. Filter media and aids. Filtration equipment (continuous rotary vacuum filter, the filter press and the edge filters). Centrifugation: principles of centrifugation. Laboratory and large-scale centrifuges. Dispersed systems: Suspensions: factors affecting the preparation of a physically stable suspension. Flocculated and deflocculate"
+    },
+    {
+     "level": 300,
+     "code": "PCT 306",
+     "title": "Dispensing Practical IV",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "prepare emulsions, semi-solid dosage forms, suppositories and dispense these preparations to Out-patients and In-patients; and",
+      "read prescriptions, compound and dispense drugs"
+     ],
+     "content_summary": "Emulsions, lotions, liniments, semi-solid dosage forms, suppositories, prescription reading, compounding, and dispensing of drugs. 105"
+    },
+    {
+     "level": 300,
+     "code": "PHA 301",
+     "title": "General Principles of Pharmacology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe the basic principles and concepts in pharmacology",
+      "describe methods and measurements in pharmacology",
+      "explain process of drug development and clinical trials",
+      "discuss pharmacokinetic processes that a drug undergoes in the body",
+      "describe mechanisms of drug action, factors affecting drug action, relationships and to differentiate between agonists and antagonists; and",
+      "describe drug toxicity and adverse drug reactions"
+     ],
+     "content_summary": "Definition of pharmacology. Scope and sub-divisions of pharmacology. Methods and measurements in pharmacology: Drug development and evaluation. Biological assays. Clinical trials. Measurement and evaluation of toxicity. Pharmacokinetics: routes of drug administration, kinetics of drug absorption, distribution. Blood-brain-barrier, placental barrier, biotransformation and elimination. Pharmacodynam"
+    },
+    {
+     "level": 300,
+     "code": "PHA 302",
+     "title": "Autonomic/Neuropharmacology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "identify the mechanisms of actions of drugs on the ANS",
+      "describe the synthesis, release and degradation of acetylcholine, the structure � activity relationship for cholinergic agonists and antagonists;",
+      "describe mechanism of action, pharmacological actions, and adverse effects of cholinergic agonists and antagonists and their therapeutic applications;",
+      "describe synthesis, release, uptake and metabolism of noradrenaline",
+      "classify different adrenergic receptors and identify their locations",
+      "explain the mechanism of action, pharmacological actions and adverse effects of adrenergic agonists and antagonists and their therapeutic applications; and",
+      "discuss effect of drugs on some systems of the body and their therapeutic applications"
+     ],
+     "content_summary": "Review of the anatomy and physiology of the autonomic and somatic nervous systems. General principles of neurohumoral transmission. Cholinergic transmission: Synthesis, storage and release of acetylcholine. Muscarinic and nicotinic actions of acetylcholine. Muscarinic receptor agonists and antagonists. Cholinesterases and anticholinesterases. Drugs used in myasthenia gravis. Drugs affecting autono"
+    },
+    {
+     "level": 300,
+     "code": "PHM 301",
+     "title": "Pharmaceutical Microbiology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "list the factors affecting microbial death",
+      "describe the production and storage of water; and",
+      "identify sources of microbial contamination of pharmaceuticals"
+     ],
+     "content_summary": "Production and storage of water. Quality determination. Parenteral products. Pyrogens and pyrogen testing. Evaluation of microbial contents of pharmaceutical preparations and products. Sources of microbial contamination of Pharmaceuticals. Hospital and Factory sanitation and Hygiene. Practicals: Conduct relevant experiments pertaining to identification of sources of microbial contamination of phar"
+    },
+    {
+     "level": 300,
+     "code": "SAP 301",
+     "title": "Pharmacy Administration I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "recall and apply management principles in pharmacy practice",
+      "generate and develop business ideas; and",
+      "select an appropriate business location"
+     ],
+     "content_summary": "Definition of pharmacy business, management and administration. Management process. Importance of management in pharmacy business (customers/patients/public relationship, retail competition, selling and promotion in hospital and community pharmacies). Industrial pharmaceutical organisations (medical and sales representative). Marketing (concept, functions, marketing mix and communication, product "
+    },
+    {
+     "level": 400,
+     "code": "PAA 499",
+     "title": "Students Industrial Work Experience",
+     "units": 3,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "prepare to handle industrial work they will likely meet after graduation",
+      "familiarise themselves with methods and techniques in handling equipment and machinery that may not be available in their institutions; and",
+      "transit from school to workplace easily"
+     ],
+     "content_summary": "This is a supervised work-experience progress of approximately three months' duration, commencing with the long vacation (following the end of the 400 level second semester examinations) as determined by the university calendar. During the programme, students are attached to pharmaceutical establishments including drug manufacturing units, hospital pharmacies, community pharmacies and many others."
+    },
+    {
+     "level": 400,
+     "code": "BTG 401",
+     "title": "Pharmaceutical Biotechnology I",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "appraise basic techniques in biotechnology",
+      "describe the clinical importance of recombinant proteins",
+      "explain the use of biotechnology in the production of monoclonal and recombinant antibodies, and vaccine development;",
+      "identify potential biotechnological products; and",
+      "appraise biotechnological products in current use"
+     ],
+     "content_summary": "Basic techniques in biotechnology � cutting and joining of DNA molecules. Cloning techniques. Construction of RNA structure. Screening methods. DNA analysis. Mutagenesis. Polymerase Chain Reaction (PCR). Clinical importance of recombinant proteins such as human insulin, growth hormones and interferon. Pharmaceutical immunology including but not limited to Engineering antibodies for therapy � produ"
+    },
+    {
+     "level": 400,
+     "code": "CLI 401",
+     "title": "Introductory Clinical Pharmacy",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "outline the concept of clinical pharmacy",
+      "define and utilise medical terms and abbreviations; and",
+      "obtain patient medication profile"
+     ],
+     "content_summary": "Introduction to clinical pharmacy. Principles of clinical pharmacy. Clinical pharmacy in the tropics. Use of medical terms and abbreviations. Patient medication profile."
+    },
+    {
+     "level": 400,
+     "code": "CLI 402",
+     "title": "Pharmaceutical Immunology and Vaccines",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "state the principles of immunology",
+      "describe antigen/antibody reactions and their applications",
+      "recognise the importance of bacterial and viral vaccines; and",
+      "describe immunization procedures"
+     ],
+     "content_summary": "Principles of immunology. Antigen/antibody reactions and applications. Antibody production. Antigen/antibody reaction � allergy. Immunological products. Immunization procedures. Bacterial and viral vaccines. Diagnostic reagents. Immuno-sera."
+    },
+    {
+     "level": 400,
+     "code": "CLI 403",
+     "title": "Essentials of Nutrition",
+     "units": 1,
+     "status": "C",
+     "lh": 15,
+     "ph": null,
+     "skills_learned": [
+      "recall the importance of nutrition to good health",
+      "explain the use of nutritional products in therapeutics; and",
+      "describe the usefulness of total parenteral nutrition"
+     ],
+     "content_summary": "Nutrition and food health. Total parenteral nutrition in emergency cases such as shock, coma, and gastro-intestinal obstruction. Essential and non-essential amino acids formulation of total parental nutrition. 109"
+    },
+    {
+     "level": 400,
+     "code": "PAT 401",
+     "title": "Pathology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe the normal and the adopted cell",
+      "explain cell injury and cell death, inflammation and repair",
+      "discuss cancers and its clinical presentations; and",
+      "discuss the pathophysiology of immune diseases, some systemic diseases, infectious diseases, and deficiency disorders."
+     ],
+     "content_summary": "The normal cell and the adopted cell. Cell injury and cell death. Inflammation and repair. Neoplasia and its clinical aspects. Diseases of immunity. Systemic diseases: Diabetes mellitus, Iron storage disorders, Gout and urate deposits in the kidneys, Fluid and haemodynamic derangements. Infectious diseases. Deficiency diseases: protein-calorie malnutrition, vitamins and minerals deficiencies. Bloo"
+    },
+    {
+     "level": 400,
+     "code": "PAT 402",
+     "title": "Pathophysiology I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "recall the various pathophysiological mechanisms of disease processes involved in the disease conditions treated which are vital for the drug use decision-making process; and",
+      "apply the scientific knowledge essential for the application of pharmaceutical care"
+     ],
+     "content_summary": "The pathophysiological changes occurring in disease conditions which include cardiac, pulmonary and vascular organ systems, metabolic and endocrine disorders, pathophysiology of gastrointestinal and hepatic disorders. Effect of liver disease on drug disposition. Principles of enteral and parenteral nutrition. Monitoring of therapeutic outcomes."
+    },
+    {
+     "level": 400,
+     "code": "PCG 401",
+     "title": "General Phytochemical Methods in Drug Analysis",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "use the equipment provided",
+      "identify which of the equipment are applicable in natural products analysis; and",
+      "carry out simple analysis using paper and thin layer chromatography"
+     ],
+     "content_summary": "Plant collection, drying and processing. Extraction methods including marceration, percolation, Soxhlet and counter-current methods and other bioassay guided chemical tests. Separation and isolation of constituents. Chromatographic techniques- analytical and preparative (paper, conventional column, HPLC, GC, gel filtration, and affinity chromatography). Adsorbents in chromatography. Application in"
+    },
+    {
+     "level": 400,
+     "code": "PCG 402",
+     "title": "Secondary Plant Metabolites",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "describe the biological sources, biosynthesis, chemical constituents, and identification tests for secondary plant metabolites; and",
+      "recall uses, side effects, precautionary measures, and control of the selected secondary metabolites that were discussed."
+     ],
+     "content_summary": "Sources, biosynthesis, chemical constituents, identification tests, medicinal uses and toxicities, side effects, precautionary measures and control of the following secondary metabolites: Glycosides. Saponins � steroids, triterpenoids, carotinoids and many others. Natural steroids for the production of pharmaceuticals Tannins and Galls. Anthraquinones � purgative drugs � biological sources. Cardia"
+    },
+    {
+     "level": 400,
+     "code": "PCH 401",
+     "title": "Pharmaceutical Analysis II",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "describe and apply the principles of spectroscopic, chromatographic and other analytical techniques in quality control of medicines; and",
+      "perform qualitative and quantitative assay of drugs and other pharmaceuticals"
+     ],
+     "content_summary": "Absorption spectrophotometry. Infra-red (NIR, FTRI) spectroscopy. Fluorimetry. Atomic Absorption spectroscopy. Nuclear Magnetic Resonance (NMR) spectrometry, chromatographic methods (TLC, GC, LC and hyphenated systems). Mass spectrometry. Other methods such as Polarography, potentiometry; and polarimetry. Practicals: Conduct relevant experiments pertaining to spectroscopic, chromatographic and oth"
+    },
+    {
+     "level": 400,
+     "code": "PCH 402",
+     "title": "Medicinal Chemistry I �Drug Design",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe physicochemical approaches to drug design; and",
+      "discuss the nomenclature, physical and chemical properties, SAR, synthesis, assay, metabolism and uses of the classes of drugs listed."
+     ],
+     "content_summary": "Physicochemical approaches to drug design. Historical, Free-Welcon and Hansch approaches. The concept of isosterism. Bioisoterism as a tool in drug design. Structure-Activity-Relationship (SAR) in drug design. Anti-metabolite and pro-drug approach to design of new drugs. A study of the following classes of drugs in respect of their nomenclature, physical and chemical properties, SAR, synthesis, as"
+    },
+    {
+     "level": 400,
+     "code": "PCT 401",
+     "title": "Dosage Form Evaluation and Drug Stability",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe standards for tablets and capsules",
+      "describe in-vitro dissolution tests for solid dosage forms",
+      "recall physical factors influencing chemical and microbiological degradation; and",
+      "perform relevant practicals in dosage form evaluation and drug stability"
+     ],
+     "content_summary": "Standard for tablets and capsules. Formulation factors affecting the dissolution rates of solid dosage form. Liquids. Semi-solids. Tablets and Capsules. In-vitro dissolution tests for solid dosage forms. Natural convention: Non-sink methods such as solvometer, hanging pellet, and static disc methods. Forced convention: Non-sink methods such as wruble, beaker, oscillating tube rotating disc, Sounde"
+    },
+    {
+     "level": 400,
+     "code": "PCT 402",
+     "title": "Physical Pharmaceutics III",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe size classification 112",
+      "describe size distribution during comminution",
+      "explain mixing of powders and drying of solids",
+      "enumerate factors affecting the flow properties of powders; and",
+      "describe methods of manufacture of solid dosage forms � tablets and capsules production"
+     ],
+     "content_summary": "Size classification. Particle shape and size. Sieving and sifting. Determination of particle size. Comminution: General principles, size distribution during comminution and importance of fine particles in pharmacy, communiting machines. Mixing: Definition and objective of the mixing process. The degree of mixing and de-mixing of powders. Drying of solids: Freeze drying. Flow properties of powders."
+    },
+    {
+     "level": 400,
+     "code": "PHA 401",
+     "title": "Chemotherapy",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe the concept of chemotherapy and its application in the treatment of infections and malignancies; and",
+      "discuss different chemotherapeutic agents and their applications in treatment of infections and malignancies."
+     ],
+     "content_summary": "The pharmacology of the following drugs: Sulphonamides. Beta-lactam antibiotics (penicillins, cephalosporins, carbapenems, and monobactams). Tetracyclines. Chloramphenicol. Aminoglycosides. Miscellaneous antibiotics - macrolides, polymyxins, lincosamides, flouroquinolones, metronidazole, bacitracin. Chemotherapy of tuberculosis and leprosy. Antifungal agents. Chemotherapy of protozoan parasitic in"
+    },
+    {
+     "level": 400,
+     "code": "PHA 402",
+     "title": "Cardiovascular and Endocrine Pharmacology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "identify different classes of drugs and describe their application in cardiovascular disorders and",
+      "identify and describe drugs affecting the endocrine system and their therapeutic applications"
+     ],
+     "content_summary": "Physiology of the cardiovascular system. Cardiac glycosides. Anti-arrhythmics. Vasodilators. Anti- angina drugs. Anti-hypertensive drugs including diuretics, vasoactive peptides and their analogues. Drug treatment of shock. Cholesterol and hypocholesterolaemic drugs. Anti- coagulants and fibrinolytics. Oxytocin and the ergot alkaloids. Introduction to endocrine pharmacology. Hypothalamo-pituitary "
+    },
+    {
+     "level": 400,
+     "code": "PHA 404",
+     "title": "Clinical and Environmental Toxicology",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe toxicology and toxicant",
+      "identify and describe the different toxins; and",
+      "describe the toxicity and management of poisoning by these toxins"
+     ],
+     "content_summary": "Definition of toxicology and toxicant. Management of acute drug poisoning. Plant, bacterial and animal poisoning. Solvent poisoning. Pesticides and herbicides. Radiation toxicology. Air-borne poisoning. Food additives and food poisoning. Poisoning caused by animal bites. Heavy metals and chelating agents. Toxicity of drug-drug interactions. Management of poisons."
+    },
+    {
+     "level": 400,
+     "code": "PSM 402",
+     "title": "Biostatistics and Research Methodology",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain numerous study designs and best practices for their use",
+      "use and evaluate biostatistical and research methodologies in pharmaceutical care",
+      "evaluate the appropriateness of the research methodology designed to answer a research question or to test a hypothesis; and",
+      "select an appropriate statistical test, analyse data using a statistical computer package, explain and evaluate the results, and apply the results to decisions about research and practice."
+     ],
+     "content_summary": "Review of basic statistics including types of data, sampling methods, and presentation of data. Measures of central tendency. Paired and unpaired sample hypothesis: Parametric and non- parametric analysis. Multi-sample hypotheses and multiple comparisons including analysis of variance (one way and multi-factorial). Data transformations. Measures of association including 114 regression (simple, mul"
+    },
+    {
+     "level": 400,
+     "code": "SAP 401",
+     "title": "Pharmacy Laws and Ethics",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "relate the history of Pharmacy",
+      "list the various arms of the Pharmacy Profession",
+      "describe the role of the Pharmacist in each of these practice sector; and",
+      "recall the laws, regulations and ethics guiding the practice of Pharmacy"
+     ],
+     "content_summary": "History of pharmacy in Nigeria. Ethics of pharmacy profession in Nigeria. Laws related to the National Agency for Food and Drug Administration and Control (NAFDAC), National Drug Law Enforcement Agency (NDLEA), Standard Organization of Nigeria (SON), Pharmacists Council of Nigeria (PCN), WHO/FAO Codex Alimentarium Commission, United Nations Narcotic Commission, National Environmental Standards and"
+    },
+    {
+     "level": 400,
+     "code": "SAP 402",
+     "title": "Pharmacy Communication Skills",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "counsel patients regarding the use of their medications",
+      "communicate with other health care professionals and the public; and",
+      "deliver seminars and health presentations to lay audience and professional groups"
+     ],
+     "content_summary": "Principles of communication. Appearance as a mode of communication. Various styles of listening and response to patient interview and education. Interpersonal communication. Emphatic listening. Conflict management, assertiveness, patient education and counselling. Patient interview. Medication history taking. Pharmacist relationship with other health care professionals. Case studies and scenarios "
+    },
+    {
+     "level": 500,
+     "code": "PAA 502",
+     "title": "Veterinary Pharmacy and Agrochemicals",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "skills_learned": [
+      "explain formulation, storage and administration of veterinary drugs",
+      "list common animal diseases of ruminants and their treatment",
+      "identify common veterinary drugs, vaccines and other biologicals; and",
+      "describe use of insecticides, pesticides, disinfectants and recall their effects on veterinary animals."
+     ],
+     "content_summary": "Introduction to Veterinary Pharmacy. Formulation and storage of veterinary drugs. Administration of veterinary drugs. Growth promoters. Agrochemicals. Common animal diseases of ruminants (sheep, goats and cattle), horses, pigs, fish, small animals (cats and dogs) and poultry. Contagious bovine pleuropneumonia, foot and mouth disease, sleeping sickness, African swine fever, rinderpest, rabies, fowl"
+    },
+    {
+     "level": 500,
+     "code": "PAA 504",
+     "title": "Electronic Pharmacy",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "dispense medicines",
+      "access patient medication history; and",
+      "identify possible harmful interactions"
+     ],
+     "content_summary": "Definition of terminology. Risks. Types. Benefits. Requirements. Automated dispensing. Barcode medicine identification. Health information technology (HIT). Electronic prior authorisation (ePA); retrospective prior authorisation, prospective prior authorisation. Rational database, Queries, Forms Reports; Receipt of e-Prescriptions via Pharmacy Electronic Medical Records (EMR) platforms. Feedback m"
+    },
+    {
+     "level": 500,
+     "code": "BTG 501",
+     "title": "Pharmaceutical Biotechnology II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "appraise basic techniques in biotechnology",
+      "recognise techniques in cloning",
+      "recognise the role of biotechnology in vaccine development",
+      "describe vaccine production by recombinant DNA for prevention of viral and bacterial infections;",
+      "explain the layout and requirements of biotechnological manufacturing facilities; and",
+      "employ quality assurance in production and biosafety"
+     ],
+     "content_summary": "Vaccine production by recombinant DNA for prevention of viral and bacterial infections. Biotechnological manufacturing facility and environment. General layout, environmental requirements and associated quality assurance (QA) in production. Biosafety. Biotechnological products and Pharmaceutical Care - an overview of relevant information service to patients on storage, re-constitution, stability, "
+    },
+    {
+     "level": 500,
+     "code": "CLI 501",
+     "title": "Pharmacotherapeutics I",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "develop skills for planning rational therapeutic and non-drug therapy of selected diseases using knowledge of their pathophysiology; and",
+      "evaluate clinical outcomes of treatment and management plans for the diseases using case studies and WHO/other standard indicators/prescribing guidelines."
+     ],
+     "content_summary": "Application of the knowledge of the pathophysiology, clinical manifestations, epidemiology, diagnosis, biopharmaceutics and pharmaceutical care to develop skills in planning the rational therapeutic and non-drug therapy of selected diseases. Case studies and WHO/other standard indicators/prescribing guidelines employed as approaches to developing the ideas of rational drug therapy, monitoring drug"
+    },
+    {
+     "level": 500,
+     "code": "CLI 502",
+     "title": "Clinical Pharmacy Clerkship I",
+     "units": 3,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "apply previously acquired pharmaceutical knowledge in a patient care environment",
+      "utilize clinical pharmacy communication skills emphasizing empathy, education and ethics through interactions with a variety of patients on specific-drug related problems and medical diseases;",
+      "improve professional communication and interpersonal relationship with other health care providers through ongoing interactions related to patient care issues;",
+      "develop good problem-solving skills and professional judgment",
+      "perform drug information services to clinicians, patients and the community; and",
+      "consider appropriate selection of drugs and monitoring of drug therapy"
+     ],
+     "content_summary": "Areas where students will be posted to will include psychiatry and community pharmacy practice. Activities will cover history taking, medication records review, patient education and counselling, drug therapy monitoring, interventions and counter prescribing, health promotion, disease prevention and responding to symptoms. The students will be rotated through different sites including teaching and"
+    },
+    {
+     "level": 500,
+     "code": "CLI 503",
+     "title": "Pharmaceutical Care",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain the concept and philosophy of pharmaceutical care",
+      "describe its applications in the provision of patient-oriented care",
+      "analyse the cultural aspects of attitudes, beliefs and behaviours related to medical and non- medical uses of drugs; and",
+      "apply pathophysiologic, and pharmacotherapeutic considerations in the management of the listed illnesses."
+     ],
+     "content_summary": "Principles and concept of pharmaceutical care including health promotion, health defeating behaviours, proper nutrition; responding to symptoms; referral and intervention, counter prescribing. Interaction of healthcare professionals to provide care in hospitals, long-term care facilities, ambulatory and managed-care institutions. Role of government as payer and provider of healthcare, the effect o"
+    },
+    {
+     "level": 500,
+     "code": "CLI 504",
+     "title": "Clinical Pharmacokinetics",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "apply the knowledge of pharmacokinetics in choosing medications for individual patients",
+      "describe the effect of some disease/physiologic states on the pharmacokinetics of some drugs and",
+      "calculate and adjust drug dosages in individual patients with impaired drug elimination due to hepatic or renal dysfunction."
+     ],
+     "content_summary": "Linear and non-linear pharmacokinetics; compartment models (single and multiple compartment models) that describe disease progression with and without simultaneous drug treatment. Drug clearance: Hepatic elimination of drugs, Intravenous infusions, Multiple dosage regimens. Prolonged action dosage form administration. Bioavailability and bioequivalence including methods of determination. Clinical "
+    },
+    {
+     "level": 500,
+     "code": "PAT 502",
+     "title": "Pathophysiology II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain various pathophysiological mechanisms of disease processes involved in the disease conditions treated which are vital for the drug use decision-making process; and",
+      "acquire scientific knowledge essential for the application of pharmaceutical care"
+     ],
+     "content_summary": "Pathophysiology and clinical manifestation of selected haematologic and oncologic disorders. Rational use of supportive therapy in management of patients receiving chemotherapy. Appropriate therapy of common infectious diseases. Pathophysiology and clinical manifestations of selected diseases affecting the immune system, skin and eyes, acute and chronic renal disorders. Principles of fluid and ele"
+    },
+    {
+     "level": 500,
+     "code": "PCG 501",
+     "title": "Herbal, Complementary and other Alternative Medicines",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "list the benefits and risks of herbal medicines",
+      "name the importance of taking proper case history of patients on herbal therapy",
+      "identify other forms of alternative medicine practices",
+      "compare complementary and alternative medicines with orthodox medicines",
+      "identify and describe the use of specific plants in the treatment and management of diseases in animals and humans;",
+      "identify drug � herb interactions; and",
+      "state the role of regulatory agencies in controlling the use of herbal, complementary and alternative medicines."
+     ],
+     "content_summary": "Health conditions where herbalists are frequently consulted: Reasons for the rising trend towards alternative medicine: cultural, socioeconomic, immigration, and perceptions of conventional medicine. Global situation in the use of traditional medicine. Plant toxicants and antidotes and their biological sources. Drug-herb interactions. Clinical Pharmacognosy: Study of the rational use of herbs, her"
+    },
+    {
+     "level": 500,
+     "code": "PCG 502",
+     "title": "Clinical Pharmacognosy",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "appraise the concept of clinical pharmacognosy",
+      "describe the prevalent diseases in the environment and identify plants that are known for their management;",
+      "recognise poisonous plants as well as antidotes that can be administered in acute poisoning",
+      "identify herbal drug interactions",
+      "acquire knowledge of food plants of medicinal interest; and",
+      "utilize professional approach to traditional communication skills with reference to accurate rational dosage patterns towards achievement of expected outcomes in phytotherapy by 120 visiting selected natural medical centres/herbal clinics in their locations for practical experience."
+     ],
+     "content_summary": "Clinical practice: posting of students to designated selected natural medicinal institutions/herbal clinics. Familiarising them with patient/pharmacist, traditional healers/pharmacist interactions, developing communication skills with reference to weights and measurements that enhance accurate dosing in phytotherapy. Recognition of plants used in medicines, food and cosmetics, and their interrelat"
+    },
+    {
+     "level": 500,
+     "code": "PCH 501",
+     "title": "Pharmaceutical Quality System",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe basic test methods for essential drugs",
+      "illustrate how laboratory testing methods become official/monograph or pharmacopeial method; and",
+      "describe pharmaceutical quality system and its impact on quality of medicines"
+     ],
+     "content_summary": "Definitions and elements of pharmaceutical quality system. Concept and impact of a good quality system on the following: pharmaceutical manufacturing facilities, good manufacturing practices, good packaging practices, good compounding practices and many others. International Standard Organization (ISO) and WHO standards and certification/accreditation systems for pharmaceuticals, including vaccine"
+    },
+    {
+     "level": 500,
+     "code": "PCH 502",
+     "title": "Medicinal Chemistry II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain the chemistry of medicinal compounds and their synthesis where necessary; and",
+      "recall the metabolism and uses of various medicinal agents"
+     ],
+     "content_summary": "Study of the chemistry of medicinal compounds. The chemistry, nomenclature, physicochemical properties, stereochemistry, synthesis (where necessary), structure-activity-relationship, metabolism and uses of the following groups of drugs: 121 Antihypertensives, diuretics, steroids including steroidal hormones. Chemotherapeutic agents such as sulphonamides, anti-malarials, antibiotics, anthelmintics,"
+    },
+    {
+     "level": 500,
+     "code": "PCT 501",
+     "title": "Industrial Set-up and Formulation Processes",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "describe formulation and production of medicines",
+      "recognise present state and systematic development of pharmaceutical industry in Nigeria",
+      "scale up technologies from pilot to full scale for tablets and capsules; and",
+      "formulate herbal medicines and aerosol systems"
+     ],
+     "content_summary": "Formulation and production of medicines. Present state of Pharmaceutical industry in Nigeria. Systematic development of Pharmaceutical industry. Essential elements for setting up a viable Pharmaceutical industry including primary and auxiliary industries. Materials of construction, plant design, infrastructural facilities, building specifications. Production management. Potential and unexplored ra"
+    },
+    {
+     "level": 500,
+     "code": "PHA 501",
+     "title": "Central Nervous System Pharmacology",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": 45,
+     "skills_learned": [
+      "drugs acting on the CNS including drugs of abuse and dependence",
+      "drugs used in the management of psychiatric and neurological disorders; and",
+      "drugs used in pain and inflammation"
+     ],
+     "content_summary": "Review of the functional organization of the CNS. Local anaesthetics. Theories of general anaesthesia. General anaesthetic agents. Pre-anaesthetic medication. Hypnotics and sedatives. Centrally acting muscle relaxants. Alcohol and alcohol abuse. CNS stimulants. Drugs used in Parkinson's disease. Drugs used in other neurodegenerative diseases. Antipsychotics. Antidepressants and mood stabilizing dr"
+    },
+    {
+     "level": 500,
+     "code": "PHA 502",
+     "title": "Biochemical Pharmacology",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "describe the principles of biochemical pharmacology",
+      "enumerate various methods for screening of drugs; and",
+      "discuss biochemical mechanisms of drug action and drug resistance"
+     ],
+     "content_summary": "Principles of biochemical pharmacology. Pharmacological methods of screening various drugs such as analgesics. Screening of sedatives, hypnotics, neuroleptics, diuretics, muscle relaxants, local and general anaesthetics. General principles of drug evaluation � clinical trials, potency and toxicity. Statistical calculations of LD50, ED50, and data comparison (Student t-test). Drug antagonism and de"
+    },
+    {
+     "level": 500,
+     "code": "PHM 501",
+     "title": "Microbial Chemotherapy and Bacterial Genetics",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "reiterate a brief historical perspective of chemotherapy",
+      "describe the fundamental principles of rational chemotherapy",
+      "classify antimicrobial, antifungal and antiviral agents by their mechanism of action and chemical structure; and",
+      "describe the development of resistance to antibiotics by microorganisms and proffer solutions"
+     ],
+     "content_summary": "Brief historical perspective of chemotherapy. Fundamental principles of rational chemotherapy � selective toxicity principle. Classification of antimicrobial agents with special reference to mechanism of action and chemical structures. Drugs inhibiting cell wall synthesis (beta-lactam antibiotics). Inhibitors of protein synthesis (aminoglycosides, macrolides, tetracyclines). Drugs which interfere "
+    },
+    {
+     "level": 500,
+     "code": "PHM 502",
+     "title": "Preservation and Fermentation Biotechnology",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "discuss the general principles of spoilage and preservation against biodegradation",
+      "describe water and its quality standards",
+      "describe fermentation and product recovery; and 123",
+      "describe isolation of mutants and media development"
+     ],
+     "content_summary": "General principles of spoilage and preservation against biodegradation. Raw materials quality. Water and its purity. In-process microbiological controls. Quality Assurance of finished products. Limiting number of viable organisms. Principles of preservation of multiphase systems. Factory and Hospital hygiene. Code of Good Pharmaceutical Manufacturing Practice (GPMP). Fundamentals of industrial fer"
+    },
+    {
+     "level": 500,
+     "code": "SAP 501",
+     "title": "Pharmacy Administration II",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "establish and manage a pharmacy enterprise; and",
+      "manage human and material resources"
+     ],
+     "content_summary": "Starting and managing a Pharmacy Enterprise: Pharmacy financing and administration (sources and limitations of funds, choosing between new pharmacy and buying existing one, purchasing part-time interest in existing pharmacy) and healthcare financing (government and donor finance, revolving funds. Managing drug supply (drug procurement, quality assurance, storage, distribution, and inventory contro"
+    },
+    {
+     "level": 500,
+     "code": "SAP 502",
+     "title": "Pharmacoeconomics",
+     "units": 1,
+     "status": "C",
+     "lh": 15,
+     "ph": null,
+     "skills_learned": [
+      "recall the concept of Pharmacoeconomics and apply it in pharmacy practice; and",
+      "describe the National Health Insurance Scheme and its impact on the patient"
+     ],
+     "content_summary": "Definitions, overview of basic economics. Structure and politics of Nigerian health system. Healthcare costs. Pharmacoeconomic techniques i.e., cost minimization, cost effectiveness, cost utility, cost benefits. Pharmacoeconomic methods - objectives, study design, comparison of alternatives and cost assessment. Pharmaceutical outcomes. Health maintenance organizations (HMOs). National Health Insur"
+    },
+    {
+     "level": 500,
+     "code": "SAP 504",
+     "title": "Drug Informatics",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "identify various types of reference sources",
+      "apply systematic approach to answering drug information requests",
+      "generate drug information, evaluate the literature and communicate a drug information response;",
+      "recall the legal status of advice on drug information and its relationship to professional responsibility and negligence; and",
+      "describe the principles of pharmaco-informatics"
+     ],
+     "content_summary": "Information sources and services. Methods of use and the nature and status of information available such as books and journals. The pharmaceutical associations. Drug information centres, poison centres, self-help societies, industries and Internet-based information. Skills required in disseminating information. Limitations on the use of drug leaflets. Legal status of advice from local drug informa"
+    },
+    {
+     "level": 600,
+     "code": "PAA 602",
+     "title": "Project",
+     "units": 6,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [],
+     "content_summary": null
+    },
+    {
+     "level": 600,
+     "code": "BTG 601",
+     "title": "Pharmacogenetics and Genomics",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "explain the basic principles of human genetics and heredity as they apply to inter-individual variation in treatment response;",
+      "apply the principles of molecular and cellular biology to explain the genetic basis of variability in drug response;",
+      "outline how genetic variability in genes encoding drug metabolizing enzymes, drug transporting proteins, and drug receptors (targets) can contribute to variability in drug disposition and action, leading to changes in pharmacokinetics, pharmacodynamics, and clinical outcome;",
+      "describe the impact of pharmacogenetics and genomics in different therapeutic areas",
+      "discuss case studies reporting the clinical consequences of pharmacogenomics on therapeutic efficacy or toxicity; and",
+      "apply pharmacogenomic concepts to drug therapy to solve relevant problems in pharmaceutical care."
+     ],
+     "content_summary": "Genomics. Phenotyping, Genotyping. Drug metabolism and disposition. Drug-drug interactions. Implication and application in drug delivery systems."
+    },
+    {
+     "level": 600,
+     "code": "CLI 601",
+     "title": "Clinical Pharmacy Clerkship II",
+     "units": 6,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "apply previously acquired pharmaceutical knowledge in a patient care environment",
+      "utilize clinical pharmacy communication skills emphasizing empathy, education and ethics through interactions with a variety of patients on specific-drug related problems and medical diseases;",
+      "improve professional communication and interpersonal relationship with other health care providers through ongoing interactions related to patient care issues;",
+      "develop good problem-solving skills and professional judgment",
+      "perform drug information services to clinicians, patients and the community; and",
+      "consider appropriate selection of drugs and monitoring of drug therapy"
+     ],
+     "content_summary": "Areas where students will be posted to will include general practice medicine, obstetrics and gynaecology, surgery as well as first aid and cardiopulmonary resuscitation. Activities will cover history taking, medication records review, patient education and counselling, drug therapy monitoring, interventions and counter prescribing, health promotion, disease prevention and responding to symptoms. "
+    },
+    {
+     "level": 600,
+     "code": "CLI 602",
+     "title": "Clinical Pharmacy Clerkship III",
+     "units": 6,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "apply previously acquired pharmaceutical knowledge in a patient care environment",
+      "utilize clinical pharmacy communication skills emphasizing empathy, education and ethics through interactions with a variety of patients on specific-drug related problems and medical diseases;",
+      "improve professional communication and interpersonal relationship with other health care providers through ongoing interactions related to patient care issues;",
+      "develop good problem-solving skills and professional judgment",
+      "perform drug information services to clinicians, patients and the community; and",
+      "consider appropriate selection of drugs and monitoring of drug therapy"
+     ],
+     "content_summary": "Areas where students will be posted to will include paediatrics, internal medicine, critical care/drug information service. Activities will cover history taking, medication records review, patient education and counselling, drug therapy monitoring, interventions and counter prescribing, health promotion, disease prevention and responding to symptoms. The students will be rotated through different "
+    },
+    {
+     "level": 600,
+     "code": "CLI 603",
+     "title": "Emergency Preparedness",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "skills_learned": [
+      "respond to an emergency",
+      "demonstrate some first aid techniques",
+      "recall standard precautions; and",
+      "utilise aseptic techniques 127"
+     ],
+     "content_summary": "Emergency management. First Aid techniques: Cardio- Pulmonary Resuscitation (CPR), Abdominal thrust. Choking, Burns, Bites, Stings, Cuts, Sprain, Muscle Cramps. Infectious diseases; Personal Protective Equipment (PPEs). Hand washing, Standard Precautions. Aseptic techniques. Disaster and Humanitarian services. Practicals: Conduct training in first aid techniques and emergency management. Organisat"
+    },
+    {
+     "level": 600,
+     "code": "CLI 604",
+     "title": "Pharmacotherapeutics II",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "skills_learned": [
+      "apply their knowledge of pathophysiology in developing skills for planning rational therapeutic and non-drug therapy management of selected diseases; and",
+      "evaluate clinical outcomes of treatment and management plans for the diseases using case studies and WHO/other standard indicators/prescribing guidelines."
+     ],
+     "content_summary": "This course emphasises the application of the knowledge of the pathophysiology, clinical manifestations, epidemiology, diagnosis, biopharmaceutics and pharmaceutical care to develop skills in planning the rational therapeutic and non-drug therapy of selected diseases. Case studies and WHO/other standard indicators/prescribing guidelines are employed as approaches to developing the ideas of rationa"
+    },
+    {
+     "level": 600,
+     "code": "CLI 606",
+     "title": "Public Health Pharmacy and Pharmacoepidemiology",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "describe the principles and concept of Primary Health Care (PHC)",
+      "identify and use epidemiological methods in designing research",
+      "explain the place and role of Pharmacy and Pharmacy professionals in promoting public health; and",
+      "demonstrate knowledge on drug use and management in PHC including the Essential Drug List concept."
+     ],
+     "content_summary": "Overview of epidemiological methods (types of epidemiological studies, sampling techniques, sample size and power). Epidemiology, prevention and control of communicable and non- communicable diseases. Literature search, data gathering modalities, questionnaire design, approaches to data analysis, operational research and experimental design and report writing. Principles and concept of Primary Hea"
+    },
+    {
+     "level": 600,
+     "code": "PCH 601",
+     "title": "Radiopharmaceuticals",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "identify the types of radioactivity and radioactive decay particles and their measurements",
+      "describe the application of radio isotopes in research and clinical settings",
+      "describe the production, handling, and use of radiopharmaceuticals; and",
+      "calculate radiation doses for diagnosis and therapy"
+     ],
+     "content_summary": "Introduction to Radiopharmacy. Types of radioactivity and radio-active decay particles and their measurements. Pharmaceutical application of radio isotopes. Radiotherapy and dose calculations, dosing intervals, radiation safety determinations. Regulations guiding use of radiations in research and therapy. Nuclear medicine. Role of the International Atomic Energy Agency (IAEA) in production, utiliz"
+    },
+    {
+     "level": 600,
+     "code": "PCT 601",
+     "title": "Industrial Pharmacy",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "skills_learned": [
+      "correlate in-vitro and in-vivo tests of some selected drugs",
+      "discuss drug delivery systems and biotechnology, and manufacture of sterile products",
+      "explain all aspects of cGMP; and",
+      "explain the application of nanomedicines in biomedical sciences"
+     ],
+     "content_summary": "Correlation of in-vitro and in-vivo tests. Examples of correlation of in-vitro and in-vivo data of some drugs, such as aspirin, digoxin, griseofulvin and oxytetracycline tablets and capsules. Problems involved in obtaining perfect correlation. Regulatory affairs and clinical trials. Drug Delivery Systems and Biotechnology. Drug release mechanisms. Ocular, transdermal and transnasal delivery system"
+    },
+    {
+     "level": 600,
+     "code": "PCT 603",
+     "title": "Ethical Dispensing",
+     "units": 1,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "interpret prescriptions and medication orders",
+      "identify drug interactions",
+      "dispense drugs and counsel both in-patients and out-patients",
+      "utilise generic drugs to make substitutions; and",
+      "maintain records in prescription books and dangerous drugs register"
+     ],
+     "content_summary": "Handling of prescription (in- and out-patients). Patient counselling. Pharmacist and Doctor interactions. Re-constitution solutions. IV admixtures and rate of flow. Interpretation of prescriptions or medication orders: Expiry date, calculations associated with drug availability and pharmacokinetics, patient safety, dosage form non-bioequivalence, veterinary rugs and veterinary pharmacy practice, g"
+    },
+    {
+     "level": 600,
+     "code": "SAP 601",
+     "title": "Supply Chain Management of Drugs and other Health Commodities",
+     "units": null,
+     "status": "C",
+     "lh": null,
+     "ph": null,
+     "skills_learned": [
+      "describe the principles and practice of supply chain of drugs and other health commodities",
+      "describe the standard operating procedure for SCM facilities",
+      "manage human resources",
+      "recall the different inventory systems and determine stock status",
+      "demonstrate ability to select products, quantify and procure health commodities; and",
+      "monitor and supervise logistic systems"
+     ],
+     "content_summary": "Introduction to drugs and health commodities supply chain management; Standard operating procedure manual for SCM facilities and staff; logistics management information systems; Maximum-minimum inventory control system (max-min ICS). Adjusting the pipeline in the max- min ICS and assessing stock status. Storage of drugs and other health commodities; assessing health logistics systems; product sele"
+    }
+   ]
+  }
+ ]
+}

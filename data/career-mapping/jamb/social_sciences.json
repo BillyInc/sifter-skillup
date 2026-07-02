@@ -1,0 +1,133 @@
+[
+  {
+    "programme_name": "ANTHROPOLOGY",
+    "institutions": ["ABU", "EBSU", "UNICAL", "UNILAG", "UNIPORT"],
+    "utme_subjects": "Economics, Government/History and any of Biology, Chemistry, Physics, Geography and Mathematics",
+    "utme_requirements": "Five 'O' level credit passes to include English Language and any other four subjects from Arts, Social Science and Sciences",
+    "direct_entry": "Two 'A' level passes chosen from Arts and/or Social Science subjects",
+    "remarks": [
+      "UNILAG requires English Language plus any four other subjects from Arts, Social Sciences and Sciences",
+      "UNIPORT requires five 'O' level credit passes including English Language, Mathematics and any three subjects from Arts and Social Science subjects"
+    ]
+  },
+  {
+    "programme_name": "CRIMINOLOGY AND SECURITY STUDIES",
+    "institutions": ["EBSU", "FULAFIA", "NOUN", "RSU"],
+    "utme_subjects": "Government or History plus two other subjects from Arts and Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes to include English Language and any four subjects from Arts and Social Sciences",
+    "direct_entry": "Two 'A' level passes in Arts or Social Science subjects",
+    "remarks": []
+  },
+  {
+    "programme_name": "INDUSTRIAL RELATIONS AND PERSONNEL MANAGEMENT",
+    "institutions": ["ABU", "ABSU", "DELSU", "EBSU", "ESUT", "FULAFIA", "KSU", "LASU", "UNICAL", "UNILAG", "UNIUYO"],
+    "utme_subjects": "Government/History plus Economics and any other subject from Arts or Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts or Social Sciences and Sciences. Mathematics is compulsory for ABU, EBSU, ESUT, KSU, LASU and UNICAL",
+    "direct_entry": "Two 'A' level passes in Arts or Social Science subjects OR ND (Upper Credit) in relevant field",
+    "remarks": [
+      "ABU accepts passes in English Language and any four subjects from Arts and Social Sciences. Mathematics is compulsory",
+      "ABSU requires credit passes in English Language, Mathematics and any three subjects from Arts and Social Sciences",
+      "LASU accepts credit passes in English Language, Mathematics, Economics and two other subjects from Arts and Social Sciences"
+    ]
+  },
+  {
+    "programme_name": "INTERNATIONAL RELATIONS/STUDIES",
+    "institutions": ["ABU", "ABSU", "BIU", "BOWEN", "COVENANT", "EBSU", "FUOTUOKE", "IMSU", "KSU", "NOUN", "OOU", "RSU", "UNIBEN", "UNILAG"],
+    "utme_subjects": "Government/History and any two other subjects from Arts and Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts and Social Sciences. Mathematics is required for ABU, BOWEN, EBSU, KSU and UNILAG",
+    "direct_entry": "Two 'A' level passes in Arts and/or Social Science subjects",
+    "remarks": [
+      "ABU accepts Government or History and any two other subjects",
+      "BOWEN requires credit in English Language, Mathematics and any three other subjects from Arts or Social Sciences",
+      "COVENANT requires five credits including English Language, Mathematics, Government and any two other subjects from Arts or Social Sciences",
+      "UNILAG requires English Language, Mathematics and any three other subjects from Arts and Social Sciences"
+    ]
+  },
+  {
+    "programme_name": "PEACE STUDIES AND CONFLICT RESOLUTION",
+    "institutions": ["ABSU", "BIU", "FED-DUTSINMA", "FED-LAFIA", "FUOTUOKE", "IMSU", "NOUN", "UNICAL", "UNIPORT"],
+    "utme_subjects": "Government or History and any two other subjects from Arts or Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts, Social Sciences or Science subjects",
+    "direct_entry": "Two 'A' level passes in relevant Arts or Social Science subjects",
+    "remarks": [
+      "UNICAL requires any three subjects from Arts, Social Sciences or Sciences",
+      "UNIPORT accepts five credits in English Language, Mathematics and any three from Arts and Social Sciences"
+    ]
+  },
+  {
+    "programme_name": "POLITICAL SCIENCE",
+    "institutions": ["AAU", "ABU", "ABSU", "ADSU", "AFIT", "AUN", "BAUCHI", "BAYERO", "BENIN", "BIU", "BOWEN", "CALABAR", "COVENANT", "DELSU", "EBSU", "EKSU", "ESUT", "FUAM", "FULAFIA", "FUTO", "FUOTUOKE", "GOUU", "IBADAN", "ILORIN", "IMSU", "JOS", "KSU", "KWASU", "LASU", "MAIDUGURI", "MKAR", "NOUN", "OAU", "OOU", "OSU", "RSUST", "RSU", "TASUED", "UNICAL", "UNILAG", "UNILORIN", "UNIPORT", "UNIUYO", "UNN", "UYO"],
+    "utme_subjects": "Government or History plus any two other subjects from Arts and Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts and Social Sciences. Mathematics is required for ABU, BOWEN, COVENANT, EBSU, ESUT, FULAFIA, KSU, LASU, RSUST and UNILAG",
+    "direct_entry": "Two 'A' level passes in Arts or Social Science subjects",
+    "remarks": [
+      "ABU requires English Language, Mathematics and any three other subjects from Arts and Social Sciences",
+      "BOWEN requires English Language, Mathematics, Government and two other subjects from Arts or Social Sciences",
+      "COVENANT requires English Language, Mathematics, Government and two other Arts/Social Science subjects",
+      "ESUT accepts Government plus two other Social Science subjects",
+      "FULAFIA requires English Language, Mathematics and any three subjects from Arts and Social Sciences",
+      "UNILAG requires English Language, Mathematics and any three other subjects from Arts and Social Sciences"
+    ]
+  },
+  {
+    "programme_name": "PSYCHOLOGY",
+    "institutions": ["ABU", "ABSU", "ADSU", "AFIT", "BAUCHI", "BIU", "BOWEN", "COVENANT", "EBSU", "EKSU", "FULAFIA", "IMSU", "JOS", "KSU", "LASU", "NOUN", "OAU", "OOU", "RSUST", "UNIBEN", "UNICAL", "UNILAG", "UNILORIN", "UNIPORT", "UNIUYO", "UNN"],
+    "utme_subjects": "Biology and two other subjects from Arts and Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language, Mathematics, Biology and any two other subjects from Arts and Social Sciences",
+    "direct_entry": "Two 'A' level passes in Biology and one other subject from Arts or Social Sciences OR ND (Upper Credit) in relevant field",
+    "remarks": [
+      "ABU accepts English Language, Mathematics, Biology and two other Arts/Social Science subjects",
+      "COVENANT accepts Biology and any two subjects from Arts and Social Sciences",
+      "EBSU requires English Language, Biology, Mathematics and any two other subjects",
+      "FULAFIA requires Mathematics, Biology and one other subject from Arts or Social Sciences",
+      "UNICAL requires English Language, Mathematics, Biology and any two subjects from Arts and Social Sciences",
+      "UNILAG accepts Biology and two other subjects from Arts, Social Sciences or Sciences",
+      "UNIPORT requires English Language, Mathematics, Biology and any two subjects from Arts and Social Sciences"
+    ]
+  },
+  {
+    "programme_name": "PUBLIC ADMINISTRATION",
+    "institutions": ["AAU", "ABU", "ABSU", "ADSU", "BAUCHI", "BAYERO", "BIU", "CALABAR", "DELSU", "EBSU", "EKSU", "ESUT", "FULAFIA", "FUTO", "GOUU", "IBADAN", "ILORIN", "IMSU", "KSU", "KWASU", "LASU", "MAIDUGURI", "NOUN", "OAU", "OOU", "OSUSTECH", "RSUST", "RSU", "UNICAL", "UNILAG", "UNILORIN", "UNIPORT", "UNN", "UYO"],
+    "utme_subjects": "Government or History plus Economics and any other subject from Arts or Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts, Social Sciences and Sciences. Mathematics is compulsory for ABU, EBSU, ESUT, FULAFIA, KSU, LASU, RSUST and UNILAG",
+    "direct_entry": "Two 'A' level passes in Arts and/or Social Science subjects OR ND (Upper Credit) in relevant field",
+    "remarks": [
+      "ABU requires English Language, Mathematics and any three subjects from Arts and Social Sciences",
+      "EBSU accepts Government/History, Economics and one other Arts/Social Science subject",
+      "ESUT requires Government plus two other Social Science subjects",
+      "FULAFIA requires English Language, Mathematics and any three Arts/Social Science subjects",
+      "UNILAG requires English Language, Mathematics and three other Arts/Social Science subjects"
+    ]
+  },
+  {
+    "programme_name": "SOCIAL WORK",
+    "institutions": ["ABU", "ABSU", "BAUCHI", "BAYERO", "BOWEN", "CALABAR", "DELSU", "EBSU", "FULAFIA", "GOUU", "IBADAN", "IMSU", "KSU", "LASU", "NOUN", "OAU", "UNILAG", "UNILORIN", "UNIPORT", "UNIUYO"],
+    "utme_subjects": "Government or History plus Economics and any other subject from Arts or Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts, Social Sciences and Sciences. Mathematics is compulsory for ABU, EBSU, KSU, LASU and UNILAG",
+    "direct_entry": "Two 'A' level passes in Arts and/or Social Science subjects OR ND (Upper Credit) in Social Work or related field",
+    "remarks": [
+      "ABU requires English Language, Mathematics and any three Arts/Social Science subjects",
+      "BOWEN accepts English Language and any four subjects from Arts, Social Sciences or Sciences",
+      "EBSU requires English Language, Mathematics and three other Arts/Social Science subjects",
+      "UNILAG requires English Language, Mathematics and three other Arts/Social Science subjects",
+      "UNIPORT accepts English Language, Mathematics and three Arts/Social Science subjects"
+    ]
+  },
+  {
+    "programme_name": "SOCIOLOGY",
+    "institutions": ["ABU", "ABSU", "ADSU", "AFIT", "BAUCHI", "BAYERO", "BENIN", "BIU", "BOWEN", "CALABAR", "COVENANT", "DELSU", "EBSU", "EKSU", "ESUT", "FULAFIA", "FUTO", "GOUU", "IBADAN", "ILORIN", "IMSU", "JOS", "KSU", "KWASU", "LASU", "MAIDUGURI", "MKAR", "NOUN", "OAU", "OOU", "OSU", "RSUST", "TASUED", "UNICAL", "UNILAG", "UNILORIN", "UNIPORT", "UNIUYO", "UNN"],
+    "utme_subjects": "Government/History, Economics and any other subject from Arts or Social Sciences",
+    "utme_requirements": "Five 'O' level credit passes in English Language and any other four subjects from Arts, Social Sciences or Science subjects. Mathematics is compulsory for ABU, COVENANT, EBSU, ESUT, FULAFIA, KSU, LASU and UNILAG",
+    "direct_entry": "Two 'A' level passes in Arts and/or Social Science subjects",
+    "remarks": [
+      "ABU requires English Language, Mathematics and any three Arts/Social Science subjects",
+      "BOWEN accepts English Language and any four from Arts, Social Sciences or Sciences",
+      "COVENANT requires English Language, Mathematics and three Arts/Social Science subjects",
+      "EBSU accepts Government/History and two other Arts/Social Science subjects",
+      "ESUT requires Government and two other Social Science subjects",
+      "FULAFIA requires English Language, Mathematics and three Arts/Social Science subjects",
+      "UNILAG requires English Language, Mathematics and three Arts/Social Science subjects",
+      "UNIPORT accepts English Language, Mathematics and three Arts/Social Science subjects"
+    ]
+  }
+]

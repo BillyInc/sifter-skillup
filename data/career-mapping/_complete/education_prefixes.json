@@ -1,0 +1,381 @@
+[
+ {
+  "prefix": "EAE",
+  "n_courses": 68,
+  "sample_300lvl_titles": [
+   "Funding and Management of Adult Education",
+   "Teaching Principles and Practice in Adult Education",
+   "Comparative Adult Education"
+  ]
+ },
+ {
+  "prefix": "AGE",
+  "n_courses": 30,
+  "sample_300lvl_titles": [
+   "Horticulture Education",
+   "Ruminant Animal Production",
+   "Agricultural Marketing"
+  ]
+ },
+ {
+  "prefix": "ARA",
+  "n_courses": 28,
+  "sample_300lvl_titles": [
+   "Semantics",
+   "Introduction to Classical Arabic Criticism",
+   "The Novel I"
+  ]
+ },
+ {
+  "prefix": "CSC",
+  "n_courses": 11,
+  "sample_300lvl_titles": [
+   "Data Structures",
+   "Operating System",
+   "Artificial Intelligence"
+  ]
+ },
+ {
+  "prefix": "SED",
+  "n_courses": 11,
+  "sample_300lvl_titles": [
+   "Chemistry Methods I I",
+   "Entrepreneurship in Chemistry Education",
+   "Methods of Mathematics Teaching 11"
+  ]
+ },
+ {
+  "prefix": "BED",
+  "n_courses": 35,
+  "sample_300lvl_titles": [
+   "Financial Reporting for Business Educators",
+   "Nigerian Marketing System",
+   "Theories of Entrepreneurship"
+  ]
+ },
+ {
+  "prefix": "CRS",
+  "n_courses": 14,
+  "sample_300lvl_titles": [
+   "Old Testament Theology",
+   "New Testament Theology",
+   "The Nigerian Christian History"
+  ]
+ },
+ {
+  "prefix": "EDA",
+  "n_courses": 11,
+  "sample_300lvl_titles": [
+   "Music In Occupations",
+   "Nigerian Folk Arts And Crafts And Masks",
+   "Nigerian Indigenous Arts And Museums"
+  ]
+ },
+ {
+  "prefix": "THA",
+  "n_courses": 15,
+  "sample_300lvl_titles": [
+   "Educational Drama And Theatre",
+   "Basic Choreography And Kinaesthetics"
+  ]
+ },
+ {
+  "prefix": "EEC",
+  "n_courses": 19,
+  "sample_300lvl_titles": [
+   "maternal child health, care nutrition",
+   "Motor Development in Early Childhood Education (2 Units",
+   "Music and children"
+  ]
+ },
+ {
+  "prefix": "ECO",
+  "n_courses": 24,
+  "sample_300lvl_titles": [
+   "Intermediate Microeconomic Theory l",
+   "Intermediate Macroeconomic Theory l",
+   "Intermediate Microeconomics ll"
+  ]
+ },
+ {
+  "prefix": "EDM",
+  "n_courses": 18,
+  "sample_300lvl_titles": [
+   "Educational Finance and Economics",
+   "Legal Basis of Educational Management",
+   "Statistical and Quantitative Methods in Educational"
+  ]
+ },
+ {
+  "prefix": "ALL",
+  "n_courses": 42,
+  "sample_300lvl_titles": [
+   "Phonology of Efik/Ibibio Language II",
+   "Syntax of Efik/Ibibio Language II",
+   "Varieties of Poetry in Efik/Ibibio Language"
+  ]
+ },
+ {
+  "prefix": "ENG",
+  "n_courses": 22,
+  "sample_300lvl_titles": [
+   "Phonology of English",
+   "The English Language in Nigeria",
+   "Discourse Analysis"
+  ]
+ },
+ {
+  "prefix": "LIT",
+  "n_courses": 5,
+  "sample_300lvl_titles": [
+   "Creative Writing II"
+  ]
+ },
+ {
+  "prefix": "LAS",
+  "n_courses": 5,
+  "sample_300lvl_titles": [
+   "Issues in Language Education",
+   "Theories of Learning Applied to Language"
+  ]
+ },
+ {
+  "prefix": "EMT",
+  "n_courses": 13,
+  "sample_300lvl_titles": [
+   "Principles of Natural Resources Management",
+   "Metal and the Environment",
+   "Remote Sensing Techniques"
+  ]
+ },
+ {
+  "prefix": "FRE",
+  "n_courses": 24,
+  "sample_300lvl_titles": [
+   "Advanced Studies in French Phonetics",
+   "Introduction to Creative Writing",
+   "Translation"
+  ]
+ },
+ {
+  "prefix": "GEO",
+  "n_courses": 18,
+  "sample_300lvl_titles": [
+   "History of Geographical Thoughts",
+   "Geomorphology",
+   "Science of climate change"
+  ]
+ },
+ {
+  "prefix": "GRP",
+  "n_courses": 5,
+  "sample_300lvl_titles": [
+   "Geographic Instructional Resource Design and Utilization (2",
+   "Contemporary Teaching-Learning Issues in Geography",
+   "Entrepreneurship in Geography"
+  ]
+ },
+ {
+  "prefix": "GCE",
+  "n_courses": 18,
+  "sample_300lvl_titles": [
+   "Practicum in Guidance and Counselling I",
+   "Organisation and Administration of Guidance and Counselling in School",
+   "Career Counselling, Job Analysis and Job Evaluation"
+  ]
+ },
+ {
+  "prefix": "HED",
+  "n_courses": 5,
+  "sample_300lvl_titles": [
+   "Hausa Reading Skills and Research Methodology"
+  ]
+ },
+ {
+  "prefix": "HAUS",
+  "n_courses": 22,
+  "sample_300lvl_titles": [
+   "Hausa Written Prosody",
+   "Hausa Thought and Literature",
+   "Principles of Translation"
+  ]
+ },
+ {
+  "prefix": "EHE",
+  "n_courses": 30,
+  "sample_300lvl_titles": [
+   "Research Methods in Health Education",
+   "Substance Use and Abuse Prevention",
+   "Maternal, Infant & Child Health"
+  ]
+ },
+ {
+  "prefix": "HIS",
+  "n_courses": 19,
+  "sample_300lvl_titles": [
+   "Nigeria from 1900 � 1970",
+   "The Practice of History/Internship Training",
+   "Women in History"
+  ]
+ },
+ {
+  "prefix": "EHO",
+  "n_courses": 17,
+  "sample_300lvl_titles": [
+   "Advanced Textile and Fashion Design",
+   "Entrepreneurship in Home Economics",
+   "Advanced Clothing Design and Construction"
+  ]
+ },
+ {
+  "prefix": "IGB",
+  "n_courses": 19,
+  "sample_300lvl_titles": [
+   "Phonology of Igbo Language II",
+   "Varieties of Igbo Poetry",
+   "Syntax of Igbo Language II"
+  ]
+ },
+ {
+  "prefix": "ISS",
+  "n_courses": 26,
+  "sample_300lvl_titles": [
+   "Textual Studies of the Qur'a n II",
+   "Textual Studies of the Hadi th II",
+   "Islamic Economic System"
+  ]
+ },
+ {
+  "prefix": "IED",
+  "n_courses": 5,
+  "sample_300lvl_titles": [
+   "Islamic Education and Society in Sub-Saharan Africa before Colonialism",
+   "Trends and Issues in Islamic Education"
+  ]
+ },
+ {
+  "prefix": "CLA",
+  "n_courses": 8,
+  "sample_300lvl_titles": [
+   "Subject Method 1 (English Language Teaching Method for the Primary",
+   "Subject Methods II"
+  ]
+ },
+ {
+  "prefix": "LIS",
+  "n_courses": 18,
+  "sample_300lvl_titles": [
+   "Organization of Knowledge II",
+   "Collection Management",
+   "Reference and Information Services"
+  ]
+ },
+ {
+  "prefix": "MUS",
+  "n_courses": 23,
+  "sample_300lvl_titles": [
+   "Introduction to Music Technology",
+   "Tonal Counterpoint",
+   "Analysis of Tonal Music"
+  ]
+ },
+ {
+  "prefix": "POL",
+  "n_courses": 24,
+  "sample_300lvl_titles": [
+   "History of Political Thought",
+   "Logic and Methods of Political Science Research",
+   "Public Policy Analysis"
+  ]
+ },
+ {
+  "prefix": "PED",
+  "n_courses": 18,
+  "sample_300lvl_titles": [
+   "Theories of Child development II",
+   "Science in Primary Education",
+   "Studies in Primary Education Curriculum"
+  ]
+ },
+ {
+  "prefix": "ESS",
+  "n_courses": 27,
+  "sample_300lvl_titles": [
+   "Politics, Power and Government in Nigeria",
+   "Security and Law Related Education",
+   "Nationalism and Patriotism in Nigeria"
+  ]
+ },
+ {
+  "prefix": "ESP",
+  "n_courses": 19,
+  "sample_300lvl_titles": [
+   "Clinical -Diagnostic Teaching in Special Education",
+   "Total Communication and Deaf culture",
+   "Audiology and Aural Rehabilitation"
+  ]
+ },
+ {
+  "prefix": "SDS",
+  "n_courses": 20,
+  "sample_300lvl_titles": [
+   "Geography of Development and Underdevelopment",
+   "Natural and Renewable Energy Resources",
+   "Social Issues and Problems"
+  ]
+ },
+ {
+  "prefix": "ITE",
+  "n_courses": 21,
+  "sample_300lvl_titles": [
+   "Methods of Teaching Industrial and Technology Education (2",
+   "Occupational Analysis and Course Construction",
+   "Research Methods in Vocational Education"
+  ]
+ },
+ {
+  "prefix": "AUT",
+  "n_courses": 7,
+  "sample_300lvl_titles": [
+   "Automobile Workshop Practice",
+   "Auto-shop Safety and Highway Codes",
+   "Automotive Systems"
+  ]
+ },
+ {
+  "prefix": "EET",
+  "n_courses": 7,
+  "sample_300lvl_titles": [
+   "Measuring Instrument and Testing",
+   "Circuit Theory",
+   "Electrical Installation"
+  ]
+ },
+ {
+  "prefix": "MWT",
+  "n_courses": 7,
+  "sample_300lvl_titles": [
+   "Metal Fabrication and Welding",
+   "Machining Technology",
+   "Welding and Foundry Processes I"
+  ]
+ },
+ {
+  "prefix": "BCT",
+  "n_courses": 7,
+  "sample_300lvl_titles": [
+   "Building Construction II",
+   "Concrete Technology/System Building",
+   "Principles of Building Design"
+  ]
+ },
+ {
+  "prefix": "WWT",
+  "n_courses": 6,
+  "sample_300lvl_titles": [
+   "Upholstery/Ornamental Woodwork",
+   "Woodwork Practice",
+   "Structural Fittings, Fixtures and Wood Finishes"
+  ]
+ }
+]

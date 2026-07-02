@@ -1,0 +1,221 @@
+{
+ "programme": "Social Justice",
+ "mapping_type": "D_custom",
+ "qualification": "B.Sc",
+ "duration_years": 4,
+ "enrichment_basis": {
+  "strategy": "ccmas_related_courses",
+  "note": "No CCMAS standard exists for Social Justice. Built from the authoritative CCMAS national standard by drawing human-rights/welfare/inequality/ethics/constitutional courses from related CCMAS programmes (Social Work, Sociology, Law, Political Science, International Relations, Peace Studies, Social Standards, Philosophy). An INDUSTRY-CERTIFIED source (C-ISOWN body of knowledge / SWPCE) remains an OPTIONAL specialised top-layer for social-justice advocacy practice.",
+  "primary_related_ccmas": "SWK",
+  "optional_industry_doc": "C-ISOWN body of knowledge / SWPCE syllabus; NASoW (see TYPE_D_SOURCES.md)"
+ },
+ "courses": [
+  {
+   "level": 100,
+   "code": "SWK 111",
+   "title": "Introduction to Social Work",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 100,
+   "code": "SWK 112",
+   "title": "Introduction to Indigenous Social Welfare",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "SWK 212",
+   "title": "Social Work Theories",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "SWK 214",
+   "title": "Social Casework Principles, Ethics and Values",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "SWK 314",
+   "title": "Social Problems and Social Work",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "SWK 315",
+   "title": "Gender and Social Policy",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "SWK 412",
+   "title": "Social Work Intervention with Individuals, Families and Vulnerable Persons",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "SWK 421",
+   "title": "Social Work Legislation and Policy",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "SWK",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "SOC 302",
+   "title": "Social Inequality",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SOC",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "SOC 210",
+   "title": "Gender and Society",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SOC",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "SOC 205",
+   "title": "Elements of Social Work",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SOC",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 100,
+   "code": "POL 105",
+   "title": "Nigerian Constitutional Development",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "POL",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "IRS 403",
+   "title": "Human Rights",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "IRS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "PCR 201",
+   "title": "Fundamental Human Rights in Peace and Conflict",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "PCR",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "PCR 308",
+   "title": "Gender in War and Peace",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "PCR",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "CSS 205",
+   "title": "Human Rights and Criminal Justice Systems",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 100,
+   "code": "SST 103",
+   "title": "Introduction to Social Development and Welfare",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SST",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "SST 204",
+   "title": "Social Standards Principles, Ethics and Values",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SST",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "SST 306",
+   "title": "Gender Theories and Development Frameworks",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SST",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "SST 407",
+   "title": "Social Standards and Criminal Justice",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "SST",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "PHL 204",
+   "title": "Theories of Ethics",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "PPE",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "PUL 201",
+   "title": "Constitutional Law I",
+   "units": 4,
+   "status": "C",
+   "source_ccmas_programme": "LAW",
+   "source_ccmas_discipline": "Law"
+  },
+  {
+   "level": 200,
+   "code": "PUL 202",
+   "title": "Constitutional Law II",
+   "units": 4,
+   "status": "C",
+   "source_ccmas_programme": "LAW",
+   "source_ccmas_discipline": "Law"
+  }
+ ]
+}

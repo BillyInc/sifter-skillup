@@ -1,0 +1,209 @@
+[
+ {
+  "prefix": "ANA",
+  "n": 36,
+  "samples": [
+   "Anatomy of Upper and Lower Limbs",
+   "Anatomy of Upper and Lower Limbs",
+   "Histology of Basic Tissues"
+  ]
+ },
+ {
+  "prefix": "BCH",
+  "n": 26,
+  "samples": [
+   "General Biochemistry",
+   "General Biochemistry",
+   "Biochemistry Practical for Medical Students"
+  ]
+ },
+ {
+  "prefix": "PIO",
+  "n": 29,
+  "samples": [
+   "Introductory Physiology & Blood",
+   "Neurophysiology I",
+   "Introductory Physiology and Blood"
+  ]
+ },
+ {
+  "prefix": "PHA",
+  "n": 31,
+  "samples": [
+   "General Pharmacology",
+   "Introductory Pharmacology",
+   "General Pharmacology"
+  ]
+ },
+ {
+  "prefix": "PST",
+  "n": 58,
+  "samples": [
+   "Rehabilitation Physics/Biophysics",
+   "Introduction to Medical Rehabilitation",
+   "Programming for Rehabilitation"
+  ]
+ },
+ {
+  "prefix": "MCB",
+  "n": 9,
+  "samples": [
+   "Introduction to Microbiology & Infection Control",
+   "Introduction to Microbiology & Infection Control",
+   "Introduction to General Microbiology"
+  ]
+ },
+ {
+  "prefix": "AUD",
+  "n": 28,
+  "samples": [
+   "Paediatric Audiology",
+   "Clinical Externship Scheme",
+   "Introduction to Audiology"
+  ]
+ },
+ {
+  "prefix": "NSC",
+  "n": 34,
+  "samples": [
+   "Clinical Nursing Procedure",
+   "Foundations of Nursing",
+   "Foundations of Professional Nursing Practice I"
+  ]
+ },
+ {
+  "prefix": "CAM",
+  "n": 10,
+  "samples": [
+   "Introduction to Osteopathy",
+   "Introduction to Chiropractic",
+   "Introduction to Naturopathy"
+  ]
+ },
+ {
+  "prefix": "DNT",
+  "n": 29,
+  "samples": [
+   "Introduction to Dental Materials",
+   "Dental Material Science 1",
+   "Introduction to Dental Technology II Safety, Health and Care of"
+  ]
+ },
+ {
+  "prefix": "DTH",
+  "n": 24,
+  "samples": [
+   "Oral Anatomy and Physiology",
+   "Dental Instrumentation, Care and Maintenance",
+   "Phantom Head Practice"
+  ]
+ },
+ {
+  "prefix": "EHS",
+  "n": 26,
+  "samples": [
+   "Introduction to Environmental Health",
+   "Fundamentals of Epidemiology",
+   "Ecology and Environmental Management"
+  ]
+ },
+ {
+  "prefix": "HAM",
+  "n": 16,
+  "samples": [
+   "Ecology and General Introduction to Health Care/Hospital Administration",
+   "Strategic Planning and Management in Public and Private Hospitals",
+   "Human Resources Management in Healthcare Organisation"
+  ]
+ },
+ {
+  "prefix": "ITH",
+  "n": 23,
+  "samples": [
+   "Survey of Medical Informatics",
+   "Introduction to Problem Solving in Health Informatics",
+   "Introduction to Health Informatics"
+  ]
+ },
+ {
+  "prefix": "HIM",
+  "n": 26,
+  "samples": [
+   "Introduction to Health Information Science",
+   "Health Records Management I",
+   "Introduction to Information Technology and Organisational Information"
+  ]
+ },
+ {
+  "prefix": "MLS",
+  "n": 29,
+  "samples": [
+   "Introduction to Medical Laboratory Science",
+   "Basic Clinical Chemistry",
+   "Basic Haematology"
+  ]
+ },
+ {
+  "prefix": "NUT",
+  "n": 25,
+  "samples": [
+   "Introduction to Human Nutrition and Dietetics",
+   "Principles of Nutrition and Dietetics",
+   "Introduction to Clinical Nutrition"
+  ]
+ },
+ {
+  "prefix": "OCT",
+  "n": 26,
+  "samples": [
+   "Introduction to Occupational Therapy & Basic Procedures for",
+   "Occupational Therapy Theory and Practice",
+   "Pathology for Occupational Therapy"
+  ]
+ },
+ {
+  "prefix": "PHS",
+  "n": 19,
+  "samples": [
+   "Biostatistics",
+   "Introduction to Public Health",
+   "Biostatistics"
+  ]
+ },
+ {
+  "prefix": "OPT",
+  "n": 63,
+  "samples": [
+   "Optics Laboratory",
+   "Geometrical Optics",
+   "Physical Optics"
+  ]
+ },
+ {
+  "prefix": "POT",
+  "n": 20,
+  "samples": [
+   "First Aid in Prosthetics and Orthotics",
+   "Materials Technology",
+   "Lower Limb Orthotics I"
+  ]
+ },
+ {
+  "prefix": "RAD",
+  "n": 32,
+  "samples": [
+   "Basic Physics in Radiology",
+   "Basic Patient care, Hospital Practice and Professional Ethics",
+   "Radiobiology, Radiation Dosimetry and Protection"
+  ]
+ },
+ {
+  "prefix": "SLT",
+  "n": 19,
+  "samples": [
+   "Introduction to Speech-Language Therapy",
+   "Speech-Language Development Across the Span",
+   "Clinical Methods in Speech-Language Therapy"
+  ]
+ }
+]

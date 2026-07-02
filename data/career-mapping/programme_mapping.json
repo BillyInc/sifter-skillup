@@ -1,0 +1,2917 @@
+{
+ "pilot": "Law + Social Sciences",
+ "type_legend": {
+  "A_exact": "JAMB name == a CCMAS programme",
+  "B_granular": "JAMB name is a named variant/specialisation of a CCMAS programme",
+  "C_reclassified": "maps to a CCMAS programme in a DIFFERENT discipline (e.g. Administration) - out of this pilot discipline",
+  "D_custom": "NO CCMAS standard anywhere - must be enriched from related CCMAS courses and/or industry-certified documents"
+ },
+ "ccmas_with_no_jamb_offering": [
+  "PEP (Petroleum Economics & Policy Studies)",
+  "PPE (Politics, Philosophy & Economics)",
+  "SST (Social Standards)",
+  "DES (Development Studies - only appears combined)"
+ ],
+ "mappings": [
+  {
+   "jamb_name": "Civil Law",
+   "jamb_faculty": "Law",
+   "mapping_type": "B_granular",
+   "ccmas_code": "LAW",
+   "mapping_note": "JAMB stream label that maps to the single CCMAS LL.B programme (no separate 'Civil Law' CCMAS standard) — granular variant.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Islamic Law/Sharia Law",
+   "jamb_faculty": "Law",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ICL",
+   "mapping_note": "Islamic-law stream; closest CCMAS standard is Common & Islamic Law (LL.B).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Common and Islamic Law",
+   "jamb_faculty": "Law",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ICL",
+   "mapping_note": "Exact match to CCMAS Common and Islamic Law (LL.B Combined).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Public and International Law",
+   "jamb_faculty": "Law",
+   "mapping_type": "B_granular",
+   "ccmas_code": "LAW",
+   "mapping_note": "LL.B with public/international emphasis; CCMAS LL.B.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Criminology and Security Studies (printed under Law faculty block)",
+   "jamb_faculty": "Law",
+   "mapping_type": "A_exact",
+   "ccmas_code": "CSS",
+   "mapping_note": "Exact name match to CCMAS Criminology & Security Studies (Social Sciences). JAMB mis-files it under the Law faculty; corrected here.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Common Law",
+   "jamb_faculty": "Law",
+   "mapping_type": "B_granular",
+   "ccmas_code": "LAW",
+   "mapping_note": "LL.B common-law stream; maps to CCMAS LL.B.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Criminology and Penology",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CSS",
+   "mapping_note": "Penology-focused variant of CCMAS Criminology & Security Studies.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Criminology",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CSS",
+   "mapping_note": "General criminology variant of CCMAS Criminology & Security Studies.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Criminology and Security Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "CSS",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Demography and Social Statistics",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "DSS",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Demography and Statistics",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DSS",
+   "mapping_note": "Statistics-emphasis variant of CCMAS Demography & Social Statistics.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Demography and Social Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DSS",
+   "mapping_note": "Variant of CCMAS Demography & Social Statistics.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Population Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DSS",
+   "mapping_note": "Population-studies variant; nearest CCMAS standard is Demography & Social Statistics.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Economics and Statistics",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ECO",
+   "mapping_note": "Economics+Statistics variant of CCMAS Economics.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Economics and Development Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ECO",
+   "mapping_note": "Economics base; carries a Development-Studies component (CCMAS also has standalone Development Studies, DES).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Economics with/and Operation Research",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ECO",
+   "mapping_note": "Economics+OR variant of CCMAS Economics.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Peace and Development Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DES",
+   "mapping_note": "Blend of Development Studies (DES, primary) and Peace Studies (PCR, secondary) — both in-pilot Social Sciences.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Economics",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ECO",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Industrial Relations / Industrial and Labour Relations",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "EHR",
+   "mapping_note": "Resolved into Administration & Management discipline (EHR).",
+   "enrichment": null,
+   "ccmas_discipline": "Administration and Management"
+  },
+  {
+   "jamb_name": "Industrial Relations and Personnel Management / Industrial Relations and Human Resource Management",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "EHR",
+   "mapping_note": "Resolved into Administration & Management discipline (EHR).",
+   "enrichment": null,
+   "ccmas_discipline": "Administration and Management"
+  },
+  {
+   "jamb_name": "Intelligence and Security Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "D_custom",
+   "ccmas_code": null,
+   "mapping_note": "No CCMAS standard. Distinct from Criminology & Security Studies.",
+   "enrichment": {
+    "strategy": "ccmas_related_courses_resolved",
+    "related_ccmas": [
+     "CSS"
+    ],
+    "needs_industry_doc": false,
+    "industry_doc": "optional",
+    "source_file": "enrichment/intelligence_security.json",
+    "note": "ENRICHED from CCMAS (18 courses: CSS intelligence/security core + IRS/POL strategic + PCR/PSY/DSS). Industry doc now OPTIONAL top-layer."
+   }
+  },
+  {
+   "jamb_name": "International Relations",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "IRS",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "International Relations and Diplomacy",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Diplomacy-emphasis variant of CCMAS International Relations.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "International Relations and Diplomatic Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Variant of CCMAS International Relations.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "International Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Variant of CCMAS International Relations.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "International Studies and Diplomacy",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Variant of CCMAS International Relations.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "International and Comparative Politics",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "IR/comparative-politics blend; primary CCMAS International Relations (secondary Political Science).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "International Relationship & Strategic Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Strategic-studies variant of CCMAS International Relations.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "History and International Relations",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Primary maps to International Relations (in-pilot); History component is out-of-discipline (Arts), noted secondary.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "History and International Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "mapping_note": "Primary maps to International Relations (in-pilot); History component is out-of-discipline (Arts), noted secondary.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "LIBRARY SCIENCE",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "LIS",
+   "mapping_note": "Library-science variant of CCMAS Library & Information Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "LIBRARY AND INFORMATION SCIENCE",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "LIS",
+   "mapping_note": "Exact CCMAS match (LIS is unlisted in CCMAS Table 1.1 but has a full programme section).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Policy and Strategic Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "Policy/strategy variant; nearest CCMAS standard is Political Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Policy and Administrative Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "Primary maps to Political Science (in-pilot); Administration overlap is secondary/out-of-discipline.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Social Justice",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "D_custom",
+   "ccmas_code": null,
+   "mapping_note": "No CCMAS standard.",
+   "enrichment": {
+    "strategy": "ccmas_related_courses_resolved",
+    "related_ccmas": [
+     "SWK"
+    ],
+    "needs_industry_doc": false,
+    "industry_doc": "optional",
+    "source_file": "enrichment/social_justice.json",
+    "note": "ENRICHED from CCMAS (23 courses: SWK welfare/advocacy + LAW human-rights/constitutional + SOC inequality + POL/IRS/PCR/SST/PHL). Industry doc now OPTIONAL top-layer."
+   }
+  },
+  {
+   "jamb_name": "Political Science",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "POL",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science / International Law and Diplomacy",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci variant with IR/diplomacy emphasis.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science and Diplomacy",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci+diplomacy variant of CCMAS Political Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science and Public Administration",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci+PublicAdmin variant; primary CCMAS Political Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political and Administrative Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "Variant of CCMAS Political Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science and International Relations",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci+IR variant; primary CCMAS Political Science (secondary IRS).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science and International Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci+international-studies variant; primary CCMAS Political Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science and Conflict Resolution",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci+conflict-resolution variant; primary CCMAS Political Science (secondary PCR).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Political Science and Defence Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "PolSci+defence-studies variant of CCMAS Political Science.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Peace Studies and Conflict Resolution",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PCR",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Peace Strategic and Conflict Resolution",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PCR",
+   "mapping_note": "Likely source/OCR variant of Peace Studies & Conflict Resolution.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Peace and Conflict Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PCR",
+   "mapping_note": "Variant of CCMAS Peace Studies & Conflict Resolution.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Psychology",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PSY",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Public Administration",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PAD",
+   "mapping_note": "Resolved into Administration & Management discipline (PAD).",
+   "enrichment": null,
+   "ccmas_discipline": "Administration and Management"
+  },
+  {
+   "jamb_name": "Public Administration and Local Govt",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PAD",
+   "mapping_note": "Resolved into Administration & Management discipline (PAD).",
+   "enrichment": null,
+   "ccmas_discipline": "Administration and Management"
+  },
+  {
+   "jamb_name": "Public Administration and Policy Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PAD",
+   "mapping_note": "Resolved into Administration & Management discipline (PAD).",
+   "enrichment": null,
+   "ccmas_discipline": "Administration and Management"
+  },
+  {
+   "jamb_name": "Government and Public Administration",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "POL",
+   "mapping_note": "Government component maps to Political Science (in-pilot, primary); Public Administration component is Administration-discipline (secondary).",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Sociology and Anthroplogy",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "SOC",
+   "mapping_note": "Sociology base maps exactly (SOC); the Anthropology half has NO CCMAS standard and needs enrichment.",
+   "enrichment": {
+    "strategy": "hybrid_resolved",
+    "related_ccmas": [
+     "SOC"
+    ],
+    "needs_industry_doc": false,
+    "anthropology_component": "ENRICHED — see enrichment/anthropology.json (UNN/UNIZIK academic standard, 21 courses). Sociology half maps to CCMAS SOC.",
+    "source_file": "enrichment/anthropology.json"
+   }
+  },
+  {
+   "jamb_name": "Social Work",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "SWK",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Sociology",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "SOC",
+   "mapping_note": "Exact CCMAS match.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Sociology and Social Studies",
+   "jamb_faculty": "Social/Management Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "SOC",
+   "mapping_note": "Variant of CCMAS Sociology.",
+   "enrichment": null
+  },
+  {
+   "jamb_name": "Banking and Finance",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "FIN",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Finance / Banking and Finance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Business Administration",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "BUA",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Business Administration",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Marketing",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "MKT",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Marketing",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Entrepreneurship",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ENP",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Entrepreneurship",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Business Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BUA",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Business Administration",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Taxation",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "TAX",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Taxation",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Relations and Personnel Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "EHR",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Employment and Human Resource Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Hotel and Tourism Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "HTM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Hospitality and Tourism Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Insurance",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "INS",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Insurance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Procurement Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PRM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Procurement Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Finance",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "FIN",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Finance / Banking and Finance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Actuarial Science",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ACS",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Actuarial Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Procurement",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PRM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Procurement Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Mass Communication",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Secretarial Administration",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "OIM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Office and Information Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BUA",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Human Resources Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "EHR",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Employment and Human Resource Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Social Standards",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "SST",
+   "ccmas_discipline": "Social Sciences",
+   "mapping_note": "override->Social Standards",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Environmental Standards",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Project Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PMG",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "contain->Project Management",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "Local Government Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "LGD",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Local Government and Development Studies",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Accounting and Finance",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "FIN",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Finance / Banking and Finance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Cooperative and Rural Development",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CRD",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Co-operative and Rural Development",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Logistics and Supply Chain Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "LSM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Logistics and Supply Chain Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Development and Communication Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DES",
+   "ccmas_discipline": "Social Sciences",
+   "mapping_note": "contain->Development Studies",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "Public Relations and Advertising",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "override->Business Administration [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Transport and Logistics Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "TPM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Transport Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Insurance and Actuarial Science",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "INS",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Insurance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Office and Information Technology / Information Resource Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Information Technology [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Accountancy and Forensic Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ACC",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Accounting",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Finance and Investment",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "FIN",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Finance / Banking and Finance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Securities and Investment",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "SIM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Management Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BUA",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Business Administration",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Entrepreneurship and Innovation",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ENP",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Entrepreneurship",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Transport Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "TPM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Transport Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Tourism Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "HTM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Hospitality and Tourism Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Employment and Human Resource Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "EHR",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Employment and Human Resource Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Strategic Communication",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Accounting and Data Analytics",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ACC",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Accounting",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Finance and Financial Technology",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "FIN",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Finance / Banking and Finance",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Agribusiness and Economics",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ECO",
+   "ccmas_discipline": "Social Sciences",
+   "mapping_note": "override->Economics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Supply Chain Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Cooperative Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CRD",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Co-operative and Rural Development",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Cooperative Economics and Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CRD",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Economics [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Social Innovation and Entrepreneurship",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ENP",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Entrepreneurship",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Entrepreneurship and Business Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ENP",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Entrepreneurship",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Film and Video Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Transport and Tourism",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "TPM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Transport Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Aviation Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "A_exact",
+   "ccmas_code": "AVM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Aviation Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Aviation Security",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "AVM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Aviation Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Personnel Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "EHR",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Employment and Human Resource Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Relations and Human Resources Management",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "EHR",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Employment and Human Resource Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Islamic Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "International Relations and Strategic Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IRS",
+   "ccmas_discipline": "Social Sciences",
+   "mapping_note": "override->International Relations",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Marketing and Consumer Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MKT",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Marketing",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Information and Media Studies",
+   "jamb_faculty": "Administration",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Computer Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "CHM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Microbiology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "MCB",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Microbiology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Mathematics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "MTH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Mathematics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "PHYSICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "CYBER SECURITY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CYB",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Cybersecurity",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Statistics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "STA",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Software Engineering",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "SEN",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Software Engineering",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "PHYSICS WITH ELECTRONICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PHE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics with Electronics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "INFORMATION TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "IFT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Zoology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ZOO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Zoology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Botany",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "BOT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Botany",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Mathematics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "IMT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Mathematics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Plant Science and Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ICH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Science Laboratory Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "SLT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Science Laboratory Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "BIOLOGICAL SCIENCE(S)",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "INFORMATION SYSTEMS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "INS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Systems",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Data Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "DTS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Data Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Environmental Management and Toxicology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "EMT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Environmental Management and Toxicology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "FORENSIC SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "FRS",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Forensic Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Geophysics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "GPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Applied Geophysics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "INFORMATION AND COMMUNICATION TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "ICT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information and Communication Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Animal and Environmental Biology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ZOO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Zoology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geophysics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Applied Geophysics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "IPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geography",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Mathematics with Statistics / Mathematics/Statistics / Mathematics and Statistics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "STA",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Petroleum Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "PCM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Petroleum Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Pure and Industrial Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ICH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "APPLIED BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Food Science and Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Environmental Management",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "METEOROLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "MET",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Meteorology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Chemical Sciences",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Geology and Mining",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Mathematics with Computer Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Microbiology and Brewing / Applied Microbiology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MCB",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Brewing Science and Technology [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Pure and Applied Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CHM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Plant Biology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BOT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Botany",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Plant Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BOT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Botany",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Genetics and Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Environmental Health Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Pure and Applied Mathematics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MTH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Mathematics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Computer Science and Information Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IFT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "BIOCHEMISTRY AND MOLECULAR BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BCH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biochemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "INFORMATION AND COMMUNICATION SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ICT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information and Communication Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "COMPUTER SCIENCE WITH ECONOMICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "COMPUTER SCIENCE AND MATHEMATICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "COMPUTER WITH STATISTICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "STA",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "METEOROLOGY AND CLIMATE CHANGE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MET",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Meteorology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Electronics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Pure Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CHM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CHM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Biostatistics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "STA",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Statistics and Data Sciences",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DTS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Data Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Data Science and Analytics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DTS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Data Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Marine Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "MSE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Marine Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "INFORMATION TECHNOLOGY AND HEALTH INFORMATICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IFT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "MANAGEMENT INFORMATION SYSTEM",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "INS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Systems",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "INFORMATION SYSTEMS AND TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "INS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Systems",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "CYBER SECURITY SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CYB",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Cybersecurity",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "COMMUNICATIONS TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "INFORMATION SCIENCE AND MEDIA STUDIES",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "PURE AND APPLIED BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "APPLIED BIOLOGY AND BIOTECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "MARINE BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MSE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Marine Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "FISHERIES AND AQUACULTURE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Physics Electronics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Physics/Industrial Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Biochemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BCH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biochemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Chemistry and Industrial Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ICH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Fisheries",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Applied Geology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Surveying and Geoinformatics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Plant Biology and Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Zoology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ZOO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Zoology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geography and Geosciences",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Molecular Biology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Mathematics and Economics / Mathematics with Economics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ECO",
+   "ccmas_discipline": "Social Sciences",
+   "mapping_note": "override->Economics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Computer Science and Information Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "BIOTECHNOLOGY AND MOLECULAR BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "DATA MANAGEMENT",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DTS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "contain->Data Science",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "COMMUNICATION AND WIRELESS TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "TELECOMMUNICATION MANAGEMENT",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "TELECOMMUNICATION SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "TELECOMMUNICATION AND WIRELESS TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "COMMUNICATION AND DIGITAL MEDIA STUDIES",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "LIBRARY AND INFORMATION TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IFT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "INFORMATION AND MEDIA TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IFT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "contain->Information Technology",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "INFORMATION AND MEDIA SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "INFORMATION SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "MATHEMATICAL SCIENCES",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MTH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Mathematics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "COMPUTER SCIENCE WITH MATHEMATICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "ELECTRONICS AND COMPUTER TECHNOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "contain->Computer Science",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "ELECTRONICS AND COMPUTER SYSTEMS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "contain->Computer Science",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "ELECTRONICS AND COMMUNICATIONS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "ARCHEAOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "HUMAN BIOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "APPLIED BOTANY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BOT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Botany",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "APPLIED BIOLOGY AND GENETICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "CELL BIOLOGY & GENETICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "OPERATIONS RESEARCH",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "ENGINEERING PHYSICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "BIOINFORMATICS",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "ANTHROPOLOGY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "MARINE BIOLOGY & FISHERIES",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MSE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Marine Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "OCEANOGRAPHY",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "METEOROLOGY AND CLIMATE SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MET",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Meteorology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "NATURAL AND ENVIRONMENTAL SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "HOME SCIENCE",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Physics and Computer Electronic",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Electrons",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Physics with Solar Energy",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Physics and Energy Studies",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Physics with Computational Modeling",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Physics/Astrology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Physical Sciences (with options in i. Industrial Physics, ii. Physics with Electronics)",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Energy Studies",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Physics and Applied Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Pure and Applied Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Pure Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "PHY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Pure and Industrial Physics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Physics with Renewable Energy",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied and Renewable Energy",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Industrial Physics with Applied Geophysics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Applied Geophysics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Physics with Electronics and IT Application",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Physics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Mathematics and Computer Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IMT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Computer Science [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Mathematics /Applied Statistics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IMT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Industrial Mathematics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Mathematics with Statistics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "STA",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Applied Statistics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "STA",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industral Mathematics/Computer",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "IMT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Mathematics [adversarial-verify corrected]",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Chemistry and Chemical Entrepreneurship",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ENP",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Entrepreneurship",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial and Environmental Chemistry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CHM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Brewing Science and Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "A_exact",
+   "ccmas_code": "BST",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Brewing Science and Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Food Science & Nutrition",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Geological Sciences",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geology and Mineral Sciences",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geology and Geophysics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Applied Geophysics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geology and Applied Geophysics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GPH",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Applied Geophysics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geology and Petroleum Studies",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geology and Mineral Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "GEY",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Geology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Marine Geology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MSE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Marine Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geography and Environmental Management",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Building Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Statistics with Demography",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "DSS",
+   "ccmas_discipline": "Social Sciences",
+   "mapping_note": "override->Demography and Social Statistics",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Digital Entrepreneurship",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ENP",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Entrepreneurship",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Botany and Ecological Studies",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BOT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Botany",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Plant Science and Forestry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BOT",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Botany",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Plant Science and Microbiology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MCB",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Microbiology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Biotechnology and Food Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Ecology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Applied Ecology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Ecology and Environmental Studies",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Textile Science and Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Zoology and Aquaculture",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ZOO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Zoology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Animal Biology and Environment",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ZOO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Zoology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Conservation Biology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Conservation and Environmental Biology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Environmental Science and Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Environmental Biology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Environmental Biology and Fisheries",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BIO",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Marine Science and Technology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MSE",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Marine Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Aviation Business",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "AVM",
+   "ccmas_discipline": "Administration and Management",
+   "mapping_note": "override->Aviation Management",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Geoscience",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Earth Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Sport Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Microbiology and Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Microbiology/Parasitology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MCB",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Microbiology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Biology/Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Microbiology and Industrial Biotechnology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "BTG",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Biotechnology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Industrial Microbiology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "MCB",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Microbiology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Environmental Chemistry and Toxicology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "CHM",
+   "ccmas_discipline": "Sciences",
+   "mapping_note": "override->Chemistry",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Energy and Petroleum Studies",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Parasitology and Entomology",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Optometry",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "C_reclassified",
+   "ccmas_code": null,
+   "ccmas_discipline": null,
+   "mapping_note": "out of scope - belongs to a CCMAS discipline not yet mapped",
+   "enrichment": null,
+   "_m": "none"
+  },
+  {
+   "jamb_name": "Computer, Information and Communication Science",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "ICT",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Information and Communication Technology",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Computer Science and Informatics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Computing and Artificial Intelligence",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Computer with Electronics",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "contain->Computer Science",
+   "enrichment": null,
+   "_m": "contain"
+  },
+  {
+   "jamb_name": "Software Engineering and Digital Entrepreneurship",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "SEN",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Software Engineering",
+   "enrichment": null,
+   "_m": "override"
+  },
+  {
+   "jamb_name": "Robotics (Artificial Intelligence)",
+   "jamb_faculty": "Sciences",
+   "mapping_type": "B_granular",
+   "ccmas_code": "COS",
+   "ccmas_discipline": "Computing",
+   "mapping_note": "override->Computer Science",
+   "enrichment": null,
+   "_m": "override"
+  }
+ ],
+ "verification": "Adversarially reviewed; C_reclassified reserved for programmes whose PRIMARY CCMAS target is in another discipline (Administration). In-pilot-primary blends are B_granular with the out-of-discipline part noted secondary."
+}

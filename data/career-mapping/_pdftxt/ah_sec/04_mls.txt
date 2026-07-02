@@ -1,0 +1,1961 @@
+Overview
+The Medical Laboratory Science (MLS) programme has over the years transited from a 4-year
+Bachelor of Science (B.Sc.) to a 5-year Bachelor of Medical Laboratory Science (B.MLS) honours
+degree offered in many public and private Universities in Nigeria. This was necessitated by some
+inadequacies observed in the training curriculum and the need to build capacity at the
+undergraduate level to cater for advances in modern diagnostics and disease dynamics.
+
+Philosophy
+The broad philosophy of training in medical laboratory sciences are to Provide sound academic
+and professional background for the production of Medical Laboratory Scientists who would be
+capable of working anywhere in Nigeria. It is also aimed at producing Medical Laboratory
+Scientists who would satisfy internationally recognisable standards and who could undertake
+further training towards specialisation and Medical Laboratory Scientists with sufficient
+management ability to play a leadership role and entrepreneurship in employing others,
+establishing self, and also in training and general practice of laboratory sciences.
+
+Objectives
+The objectives of the bachelor honours degree programme in Medical laboratory sciences are to:
+1. provide sound academic and professional background for the production of Medical
+
+    Laboratory Scientists who would be capable of working anywhere in Nigeria;
+2. instil in students a sense of enthusiasm for the profession; an appreciation of its application
+
+    in different contexts (in areas such as general medicine, food and beverages, pharmaceutical
+    industries, utility departments such as water corporations; research institutions and many
+    others);
+3. involve the students in an intellectually stimulating and satisfying experience of learning,
+    studying and research;
+4. provide students with a broad and balanced foundation of medical laboratory knowledge and
+    practical skills; performing effectively in clinical diagnostic services, academics and quality
+    assurance; and function independently or in collaboration with other members of the health
+    team in the care of individuals and groups at all levels of health care;
+5. develop in students, the ability to apply their medical laboratory knowledge and skills to the
+    solution of theoretical and practical problems in laboratory medicine;
+6. develop in students through an education in medical laboratory sciences, a range of
+    transferable skills of value in medical and non-medical employment;
+7. provide students with a knowledge and skills base from which they can proceed to further
+    studies in specialised areas involving medical sciences;
+8. To generate in students, an appreciation of the importance of medical laboratory sciences in
+    an industrial, economic, environmental, health and social context;
+9. generate students with the ability to produce biological and diagnostic reagents as well as
+    being able to fabricate and maintain laboratory equipment; and
+10. empower graduates of Medical Laboratory Sciences with skills that will enable them engage
+    in income yielding ventures.
+
+Allied Health Sciences  328  New
+Unique Features of the Programme
+1. The BMLS curriculum aims at training a Medical Laboratory Scientist with an area of
+
+    specialisation in the subject area thus graduating with quasi specialisation at the first degree
+    level.
+2. Final year BMLS students specialising in the 6 core departmental areas of Medical Laboratory
+    Science take different parallel courses.
+
+Employability Skills
+1. Skills in safe handling of laboratory materials, taking into account specific and potential
+
+     hazards
+2. Skills required for the conduct of standard laboratory procedures involved in analytical and
+
+     diagnostic work
+3. Competence in planning, design and execution of practical investigation from the problem
+
+     recognition stage through to the evaluation and appraisal of results and findings - i.e. also
+     including the ability to select appropriate techniques and procedures
+4. Skills to operate standard laboratory instrumentation such as that used for laboratory
+     investigations
+5. Ability to interpret data derived from laboratory investigations in terms of their significance
+6. Ability to conduct risk assessments concerning some laboratory reagents and procedures
+
+21st Century Skills
+1. Collaboration and team work
+2. Creativity and imagination
+3. Critical thinking
+4. Problem solving
+5. Flexibility and adaptability
+6. Information Literacy
+7. Leadership
+8. Civic literacy and citizenship
+9. Social responsibility
+10. Technology literacy
+11. Initiative
+
+Admission and Graduation Requirements
+The modes of entry are UTME and Direct Entry. To be admitted into the B.MLS programme the
+candidate must meet these entry requirements.
+
+Admission Requirements
+The B.MLS degree programme shall run for 5 years for Unified Tertiary Matriculation Examination
+entry candidates and 4 years for Direct Entry candidates.
+
+Five-Year Degree Programme:
+In addition to appropriate UTME scores, five Senior Secondary Certificate (SSC) (or its equivalent)
+credit passes including Mathematics, Physics, Chemistry, Biology and English Language in not
+more than two sittings.
+
+Allied Health Sciences  329  New
+Direct Entry (DE)
+Candidates of Allied Health Science disciplines with BSc in Biochemistry, Anatomy, Physiology,
+Microbiology, Zoology, and candidates with GCE `A' level with minimum of credit passes in Biology,
+Chemistry and Physics in addition to the above Senior Secondary Certificate (SSC) credit passes,
+may enter the Programme at 200 Level. Holders of Medical Laboratory Technician (MLT)
+certificate of the Medical Laboratory Science Council of Nigeria who have at least five Senior
+Secondary Certificate credit passes in Physics, Chemistry, Biology, Mathematics and English
+Language (WAEC, NECO and NABTEB) at no more than 2 sittings are eligible for direct entry at
+200 level. The medical laboratory technician already has an appropriate academic knowledge and
+skill in Medical Laboratory Science.
+
+The B.MLS degree programme shall run for 5 years for UTME entry candidates and 4 years for
+Direct Entry candidates. The pass mark for core courses is 50%. The degree is a unclassified
+degree.
+
+Global Course Structure
+
+Preamble
+Courses shall be provided leading to the degree of Bachelor of Medical Laboratory Sciences which
+may be awarded to students who have successfully fulfilled all academic requirements. The
+training shall be a combination of teacher-directed, tutor-guided, self-learning and problem-based
+methods.
+
+100 Level               Course Title                    Unit(s) Status LH    PH
+   Course Code                                                             45
+   GST 111              Communication in English        2   C  15
+   GST 112                                                                     -
+   BIO 101              Nigerian People and Culture     2   C  30              -
+   BIO 102                                                                   45
+   BIO 107              General Biology I               2   C  30            45
+   BIO 108                                                                     -
+   CHM 101              General Biology II              2   C  30              -
+   CHM 102                                                                   45
+   CHM 107              General Biology Practical I     1   C  -             45
+   CHM 108                                                                   45
+   COS 101              General Biology Practical II    1   C  -
+                                                                               -
+   PHY 101              General Chemistry I             2   C  30              -
+   PHY 102                                                                   45
+   PHY 107              General Chemistry II            2   C  30            45
+   PHY 108
+                        General Chemistry Practical I   1   C  -
+
+                        General Chemistry Practical II  1   C  -
+
+                        Introduction to Computing 3         C  30
+
+                               Science
+
+                        General Physics I               2   C  30
+
+                        General Physics II              2   C  30
+
+                        General Physics Practical I     1   C  -
+
+                        General Physics Practical II    1   C  -
+
+                        Total                           25
+
+Allied Health Sciences                        330                          New
+200 Level
+
+Course Code Course Title                                           Unit(s) Status LH PH
+
+GST 212                 Philosophy, Logic and Human Existence      2   C  30   -
+
+ENT 211                 Entrepreneurship and Innovation            2   C  30   -
+
+ANA 203                 General and Systemic Embryology            2   C  30   -
+
+BCH 201                 General Biochemistry I                     2   C  30   -
+
+BCH 203                 General Biochemistry Practical             1   C  -    45
+
+ANA202                  Histology of Basic Tissues                 2   C  15 45
+
+MCB 201                 Introduction to General Microbiology       2   C  30   -
+
+MLS 201                 Introduction to Medical Laboratory         2   C  15 45
+
+                        Science
+
+PIO 201                 Introductory Physiology and Blood          2   C  30   -
+
+PIO 203                 Physiology of Excitable Tissues            2   C  30   -
+
+ANA 201                 Anatomy of Upper and Lower Limb            2   C  15 45
+
+BCH 202                 General Biochemistry II                    2   C  30   -
+
+PIO 214                 Introduction to Cardiovascular and         2   C  15   -
+
+                               Respiratory Physiology
+
+PIO 216                 Gastrointestinal Physiology                2   C  15 45
+
+STA 201                 Biostatistics                              2   C  30   -
+
+                        Total                                      29
+
+300 Level                                                          Unit(s) Status LH PH
+   Course Code Course Title
+
+GST 312                 Peace and Conflict Resolution              2   C  30 -
+
+ENT 312                 Venture Creation                           2   C  15 45
+
+MLS 302                 Basic Haematology                          2   C  15 45
+
+MLS 303                 Basic Microbiology                         2   C  15 45
+
+MLS 304                 Basic Histopathology                       2   C  15 45
+MLS 301                 Basic Clinical Chemistry
+MLS 307                 Practical Exercise I                       2   C  15 45
+
+                                                                   2   C  15 45
+
+MLS 305                 Basic Immunology                           2   C  15 45
+
+MLS 306                 Laboratory Posting I                       2   C  15 45
+
+MLS 308                 Fundamentals of blood group serology       2   C  15 45
+
+MLS 309                 Basic Medical Parasitology and entomology  2   C  15 45
+MLS 310
+PHA 301                 Biomedical Engineering                     2   C  15 45
+BCH 304
+                        Basic Pharmacology &Toxicology             2   C  15 45
+
+                        Chemistry and Metabolism of Amino acids    2   C  30 -
+
+                        aTnodtaPlroteins                           28
+
+Allied Health Sciences                            331                     New
+400 Level                                                       Unit(s) Status LH PH
+   Course Code Course Title
+
+MLS 402                 Medical Laboratory Haematology          2   C  15 45
+MLS 403                 Medical Laboratory Histopathology I
+MLS 404                 Medical Laboratory Microbiology I       2   C  15 45
+
+                                                                2   C  15 45
+
+MLS 405                 Lab Instrumentation & Techniques        2   C  15 45
+MLS 407                 Practical Exercise II
+MLS 410                 Clinical Chemistry I                    2   C  15 45
+MLS 408                 Laboratory Posting II
+                                                                2   C  15 45
+MLS 411                 Blood Group Serology
+                                                                2   C  15 45
+MLS 412                 Professional Ethics in Med Lab Science
+                                                                2   C  15 45
+
+                                                                2   C  15 45
+
+MLS 406                 Research Methodology                    2   C  15 45
+
+MLS 401                 Laboratory Management and Function,     2   C  15 45
+
+                               Laboratory practice
+
+                        Total                                   22
+
+500 Level               Course Title                            Unit(s) Status LH PH
+   Course Code          Practical Exercises III
+   MLS 503              Seminar                                 2   Cs -    90
+   MLS 505              Clinical Chemistry II
+   MLS 508              Medical Laboratory Haematology II       2   C  -    -
+   MLS 510              Medical Laboratory Histopathology II
+   MLS 512              Medical Laboratory Microbiology II      2   C  15 45
+   MLS 514              Laboratory Posting III
+   MLS 502              Research Project                        2   C  15 45
+   MLS 504              Total
+                                                                2   C  15 45
+
+                                                                2   C  15 45
+
+                                                                2   C  15 45
+
+                                                                6   C  - 270
+
+                                                                20
+
+Allied Health Sciences                        332                      New
+Course Contents and Learning Outcomes
+
+GST 111: Communication in English       (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. identify possible sound patterns in English Language;
+2. list notable Language skills;
+3. classify word formation processes;
+4. construct simple and fairly complex sentences in English;
+5. apply logical and critical reasoning skills for meaningful presentations;
+6. demonstrate an appreciable level of the art of public speaking and listening; and
+7. write simple and technical reports.
+
+Course Contents
+Sound patterns in English Language (vowels and consonants, phonetics and phonology). English
+word classes (lexical and grammatical words, definitions, forms, functions, usages, collocations).
+Sentence in English (types: structural and functional, simple and complex). Grammar and Usage
+(tense, mood, modality and concord, aspects of language use in everyday life). Logical and
+Critical Thinking and Reasoning Methods (Logic and Syllogism, Inductive and Deductive Argument
+and Reasoning Methods, Analogy, Generalisation and Explanations). Ethical considerations,
+Copyright Rules and Infringements. Writing Activities: (Pre-writing , Writing, Post writing, Editing
+and Proofreading; Brainstorming, outlining, Paragraphing, Types of writing, Summary, Essays,
+Letter, Curriculum Vitae, Report writing, Note making and many others. Mechanics of writing).
+Comprehension Strategies: (Reading and types of Reading, Comprehension Skills, 3RsQ).
+Information and Communication Technology in modern Language Learning. Language skills for
+effective communication. Major word formation processes. Writing and reading comprehension
+strategies. Logical and critical reasoning for meaningful presentations. Art of public speaking and
+listening.
+
+GST 112: Nigerian Peoples and Culture   (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. analyse the historical foundation of the Nigerian culture and arts in pre-colonial times;
+2. list and identify the major linguistic groups in Nigeria;
+3. explain the gradual evolution of Nigeria as a political unit;
+4. analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples
+
+    towards national development;
+5. enumerate the challenges of the Nigerian State towards Nation building;
+6. analyse the role of the Judiciary in upholding people's fundamental rights;
+7. identify acceptable norms and values of the major ethnic groups in Nigeria; and
+8. list and suggest possible solutions to identifiable Nigerian environmental, moral and value
+
+    problems.
+
+Allied Health Sciences             333                                                New
+Course Contents
+Nigerian history, culture and art up to 1800 (Yoruba, Hausa and Igbo peoples and culture; peoples
+and culture of the ethnic minority groups). Nigeria under colonial rule (advent of colonial rule in
+Nigeria; Colonial administration of Nigeria). Evolution of Nigeria as a political unit (amalgamation
+of Nigeria in 1914; formation of political parties in Nigeria; Nationalist movement and struggle for
+independence). Nigeria and challenges of nation building (military intervention in Nigerianpolitics;
+Nigerian Civil War). Concept of trade and economics of self-reliance (indigenous trade and market
+system; indigenous apprenticeship system among Nigeria people; trade, skill acquisition and self-
+reliance). Social justices and national development (law definition and classification. Judiciary and
+fundamental rights. Individual, norms and values (basic Nigeria norms and values, patterns of
+citizenship acquisition; citizenship and civic responsibilities; indigenous languages, usage and
+development; negative attitudes and conducts. Cultism, kidnapping and other related social
+vices). Re-orientation, moral and national values (The 3R's  Reconstruction, Rehabilitation and
+Re-orientation; Re-orientation Strategies: Operation Feed the Nation (OFN), Green Revolution,
+Austerity Measures, War Against Indiscipline (WAI), War Against Indiscipline and
+Corruption(WAIC), Mass Mobilisation for Self-Reliance, Social Justice and Economic Recovery
+(MAMSER), National Orientation Agency (NOA). Current socio-political and cultural developments
+in Nigeria.
+
+BIO 101: General Biology I                                              (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of lectures, students should be able to:
+1. explain cell's structure and organisations;
+2. summarise functions of cellular organelle;
+3. characterise living organisms and state their general reproduction;
+4. describe the interrelationship that exists between organisms;
+5. discuss the concept of heredity and evolution; and
+6. enumerate habitat types and their characteristics.
+
+Course Contents
+Cell structure and organisation. functions of cellular organelles. characteristics and classification
+of living things. chromosomes, genes their relationships and importance. General reproduction.
+Interrelationships of organisms (competitions, parasitism, predation, symbiosis, commensalisms,
+mutualism, saprophytism). Heredity and evolution (introduction to Darwinism and Lamarckism,
+Mendelian laws, explanation of key genetic terms). Elements of ecology and types of habitat.
+
+BIO 102: General Biology II                                             (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the lectures, students should be able to:
+1. List the characteristics, methods of identification and classification of Viruses, bacteria and
+
+    fungi;
+2. state the unique characteristics of plant and animal kingdoms;
+3. describe ecological adaptations in the plant and animal kingdoms;
+4. explain nutrition, respiration, excretion and reproduction in plants and animals; and
+5. describe growth and development in plants and animals.
+
+Allied Health Sciences       334                                        New
+Course Contents
+Basic characteristics, identification and classification of viruses, bacteria and fungi. A generalised
+survey of the plant and animal kingdoms based mainly on the study of similarities and differences
+in the external features. Ecological adaptations. Briefs on physiology to include nutrition,
+respiration, circulatory systems, excretion, reproduction, growth and development.
+
+BIO 107: General Biology Practical I                          (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. outline common laboratory hazards;
+2. provide precautions on laboratory hazards;
+3. state the functions of the different parts of microscope;
+4. use the microscope and describe its maintenance;
+5. draw biological diagrams and illustrations; and
+6. apply scaling and proportion to biological diagrams.
+
+Course Contents
+Common laboratory hazards: prevention and first aid. Measurements in biology. Uses and care of
+microscope. Compound and dissecting microscope. Biological drawings and illustration, scaling,
+accuracy and proportion; use of common laboratory apparatus and laboratory experiments
+designed to illustrate the topics covered in BIO 101.
+
+BIO 108: General Biology Practical II                         (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. describe the anatomy of flowering plants;
+2. differentiate types of fruit and seeds;
+3. state ways of handling and caring for biological wares;
+4. describe the basic histology of animal tissues; and
+5. identify various groups in the animal kingdom.
+
+Course Contents
+Anatomy of flowering plants, primary vegetative body: stem, leaf and root to show the mature
+tissues namely parenchyma, collenchyma, sclerenchyma, xylem and phloem. Types of fruits and
+seeds. Care and use of dissecting kits and other biological wares. Dissection and general histology
+of animal tissues based on vertebrate forms. Morphology and functions of epithelial, muscular,
+nervous and connective tissues. Examination of various groups of lower invertebrates under
+microscopes, identification of various groups of organisms in Animal Kingdom. And any
+experiment designed to emphasise the practical aspects of topics in BIO 102.
+
+Allied Health Sciences                 335                    New
+CHM 101: General Chemistry I        (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, the students should be able to:
+1. define atom, molecules and chemical reactions;
+2. discuss the Modern electronic theory of atoms;
+3. write electronic configurations of elements on the periodic table;
+4. rationalise the trends of atomic radii, ionization energies, electronegativity of the elements
+
+     based on their position in the periodic table;
+5. identify and balance oxidation  reduction equation and solve redox titration problems.
+6. draw shapes of simple molecules and hybridized orbitals;
+7. identify the characteristics of acids, bases and salts, and solve problems based on their
+
+     quantitative relationship;
+8. apply the principles of equilibrium to aqueous systems using Le Chatelier's principle to predict
+
+     the effect of concentration, pressure and temperature changes on equilibrium mixtures;
+9. analyse and perform calculations with the thermodynamic functions, enthalpy, entropy and
+
+     free energy; and
+10. determine rates of reactions and its dependence on concentration, time and temperature.
+
+Course Contents
+Atoms, molecules and chemical reactions. Modern electronic theory of atoms. Electronic
+configuration, periodicity and building up of the periodic table. Hybridization and shapes of simple
+molecules. Valence Forces. Structure of solids. Chemical equations and stoichiometry. Chemical
+bonding and intermolecular forces. Kinetic theory of matter. Elementary thermochemistry. Rates
+of reaction. Equilibrium and thermodynamics. Acids, bases and salts. Properties of gases. Redox
+reactions and introduction to electrochemistry. Radioactivity.
+
+CHM 102: General Chemistry II       (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, the students should be able to:
+1. state the importance and development of organic chemistry;
+2. define fullerenes and its applications;
+3. discuss electronic theory;
+4. determine the qualitative and quantitative of structures in organic chemistry;
+5. describe rules guiding nomenclature and functional group classes of organic chemistry;
+6. determine rate of reaction to predict mechanisms of reactions;
+7. identify classes of organic functional group with brief description of their chemistry;
+8. discuss comparative chemistry of group 1A, IIA and IVA elements; and
+9. describe basic properties of Transition metals.
+
+Allied Health Sciences         336  New
+Course Contents
+Historical survey of the development and importance of Organic Chemistry. Fullerenes as fourth
+allotrope of carbon, uses as nanotubules, nanostructures, nanochemistry. Electronic theory in
+organic chemistry. Isolation and purification of organic compounds. Determination of structures
+of organic compounds including qualitative and quantitative analysis in organic chemistry.
+Nomenclature and functional group classes of organic compounds. Introductory reaction
+mechanism and kinetics. Stereochemistry. The chemistry of alkanes, alkenes, alkynes, alcohols,
+ethers, amines, alkyl halides, nitriles, aldehydes, ketones, carboxylic acids and derivatives. The
+Chemistry of selected metals and non-metals. Comparative chemistry of group IA, IIA and IVA
+elements. Introduction to transition metal chemistry.
+
+CHM 107: General Chemistry Practical I   (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of the course the students should be able to:
+1. state the general laboratory rules and safety procedures;
+2. collect scientific data and correctly carrying out Chemical experiments;
+3. identify the basic glassware and equipment in the laboratory;
+4. state the differences between primary and secondary standards;
+5. perform redox titration;
+6. recording observations and measurements in the laboratory notebooks; and
+7. analyse the data to arrive at scientific conclusions.
+
+Course Contents
+Laboratory experiments designed to reflect topics presented in courses CHM 101 and CHM 102.
+These include acid-base titrations, qualitative analysis, redox reactions, gravimetric analysis, data
+analysis and presentation.
+
+CHM 108: General Chemistry Practical II  (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of this course, the students should be able to:
+1. identify the general laboratory rules and safety procedures;
+2. collect scientific data and correctly carrying out Chemical experiments;
+3. identify the basic glassware and equipment in the laboratory;
+4. identify and carry out preliminary tests which includes ignition, boiling point, melting point,
+
+    test on known and unknown organic compounds;
+5. perform solubility tests on known and unknown organic compounds;
+6. conduct elemental tests on known and unknown compounds; and
+7. conduct functional group/confirmatory test on known and unknown compounds which could
+
+    be acidic / basic / neutral organic compounds.
+
+Course Contents
+Continuation of CHM 107. Additional laboratory experiments to include functional group analysis,
+quantitative analysis using volumetric methods.
+
+Allied Health Sciences  337                                                  New
+COS 101: Introduction to Computing Sciences  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. explain basic components of computers and other computing devices;
+2. describe the various applications of computers;
+3. explain information processing and its roles in the society;
+4. describe the Internet, its various applications and its impact;
+5. explain the different areas of the computing discipline and its specialisations; and
+6. demonstrate practical skills on using computers and the internet.
+
+Course Contents
+Brief history of computing. Description of the basic components of a computer/computing
+device. Input/Output devices and peripherals. Hardware, software and human ware. Diverse
+and growing computer/digital applications. Information processing and its roles in society. The
+Internet, its applications and its impact on the world today. The different areas/programs of the
+computing discipline. The job specialisations for computing professionals. The future of
+computing.
+
+Lab Work: Practical demonstration of the basic parts of a computer. Illustration of different
+operating systems of different computing devices including desktops, laptops, tablets, smart
+boards and smart phones. Demonstration of commonly used applications such as word
+processors, spreadsheets, presentation software and graphics. Illustration of input and output
+devices including printers, scanners, projectors and smartboards. Practical demonstration of the
+Internet and its various applications. Illustration of browsers and search engines. How to access
+online resources.
+
+PHY 101: General Physics I (Mechanics)       (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the course, student should be able to;
+1. identify and deduce the physical quantities and their units;
+2. differentiate between vectors and scalars;
+3. describe and evaluate motion of systems on the basis of the fundamental laws of mechanics;
+4. apply Newton's laws to describe and solve simple problems of motion;
+5. evaluate work, energy, velocity, momentum, acceleration, and torque of moving or rotating
+
+     objects;
+6. explain and apply the principles of conservation of energy, linear and angular momentum;
+7. describe the laws governing motion under gravity; and
+8. explain motion under gravity and quantitatively determine behaviour of objects moving under
+
+     gravity.
+
+Allied Health Sciences  338                                                              New
+Course Contents
+Space and time. Units and dimension, Vectors and Scalars. Differentiation of vectors:
+displacement, velocity and acceleration. Kinematics. Newton laws of motion (Inertial frames,
+Impulse, force and action at a distance, momentum conservation). Relative motion. Application
+of Newtonian mechanics. Equations of motion.Conservation principles in physics. Conservative
+forces. Conservation of linear momentum. Kinetic energy and work. Potential energy. System of
+particles. Centre of mass. Rotational motion:Torque, vector product, moment, rotation of
+coordinate axes and angular momentum. Polar coordinates. Conservation of angular momentum.
+Circular motion. Moments of inertia. gyroscopes and precession. Gravitation: Newton's Law of
+Gravitation. Kepler's Laws of Planetary Motion. Gravitational Potential Energy. Escape velocity.
+Satellites motion and orbits.
+
+PHY 102: General Physics II (Electricity & Magnetism)               (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, the student should be able to:
+1. describe the electric field and potential, and related concepts, for stationary charges;
+2. calculate electrostatic properties of simple charge distributions using Coulomb's law, Gauss's
+
+    law and electric potential;
+3. describe and determine the magnetic field for steady and moving charges;
+4. determine the magnetic properties of simple current distributions using Biot-Savart and
+
+    Ampere's law;
+5. describe electromagnetic induction and related concepts, and make calculations using Faraday
+
+    and Lenz's laws;
+6. explain the basic physical of Maxwell's equations in integral form;
+7. evaluate DC circuits to determine the electrical parameters; and
+8. determine the characteristics of ac voltages and currents in resistors, capacitors, and
+
+    Inductors.
+
+Course Contents
+Forces in nature. Electrostatics; electric charge and its properties, methods of charging. Coulomb's
+law and superposition. electric field and potential. Gauss's law. Capacitance. Electric dipoles.
+Energy in electric fields. Conductors and insulators, current, voltage and resistance. Ohm's law
+and analysis of DC circuits. Magnetic fields. Lorentz force. Biot-Savart and Ampre's laws.
+magnetic dipoles. Dielectrics. Energy in magnetic fields. Electromotive force. Electromagnetic
+induction. Self and mutual inductances. Faraday and Lenz's laws. Step up and step-down
+transformers: Maxwell's equations. Electromagnetic oscillations and waves. AC voltages and
+currents applied to inductors, capacitors, resistance, and combinations.
+
+PHY 107: General Practical Physics I                                (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of the course, the student should be able to;
+1. conduct measurements of some physical quantities;
+2. make observations of events, collect and tabulate data;
+3. identify and evaluate some common experimental errors;
+4. plot and analyse graphs; and
+5. draw conclusions from numerical and graphical analysis of data.
+
+Allied Health Sciences                339                           New
+Course Contents
+This introductory course emphasises quantitative measurements. The treatment of measurement
+errors, and graphical analysis. A variety of experimental techniques should be employed. The
+experiments include studies of meters, the oscilloscope, mechanical systems, electrical and
+mechanical resonant systems. Light. Heat. Viscosity and many others, covered in PHY 101 and
+PHY 102. However, emphasis should be placed on the basic physical techniques for observation,
+measurements, data collection, analysis and deduction.
+
+PHY 108: General Practical Physics II                                   (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of this course, the student should be able to:
+1. conduct measurements of some physical quantities;
+2. make observations of events, collect and tabulate data;
+3. identify and evaluate some common experimental errors;
+4. plot and analyse graphs;
+5. draw conclusions from numerical and graphical analysis of data; and
+6. prepare and present practical reports.
+
+Course Contents
+This practical course is a continuation of PHY 107 and is intended to be taught during the second
+semester of the 100 level to cover the practical aspect of the theoretical courses that have been
+covered with emphasis on quantitative measurements. The treatment of measurement errors,
+and graphical analysis. However, emphasis should be placed on the basic physical techniques for
+observation, measurements, data collection, analysis and deduction.
+
+200 Level
+
+GST 212: Philosophy, Logic and Human Existence                          (2 Units C: LH 30)
+
+Learning Outcomes
+A student who has successfully gone through this course should be able to:
+1. enumerate the basic features of philosophy as an academic discipline;
+2. identify the main branches of philosophy & the centrality of logic in philosophical discourse;
+3. describe the elementary rules of reasoning;
+4. distinguish between valid and invalid arguments;
+5. think critically and assess arguments in texts, conversations and day-to-day discussions;
+6. critically asses the rationality or otherwise of human conduct under different existential
+
+    conditions;
+7. develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge;
+
+    and
+8. guide his or her actions, using the knowledge and expertise acquired in philosophy and logic.
+
+Allied Health Sciences                 340                              New
+Course Contents
+Scope of philosophy; notions, meanings, branches and problems of philosophy. Logic as an
+indispensable tool of philosophy. Elements of syllogism, symbolic logic-- the first nine rules of
+inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments,
+logic of form and logic of content -- deduction, induction and inferences. Creative and critical
+thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and
+human conduct, philosophy and religion, philosophy and human values, philosophy and character
+molding and many others.
+
+ENT 211: Entrepreneurship and Innovation  (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking,
+
+    new value creation, and risk taking;
+2. state the characteristics of an entrepreneur;
+3. analyse the importance of micro and small businesses in wealth creation, employment, and
+
+    financial independence;
+4. engage in entrepreneurial thinking;
+5. identify key elements in innovation;
+6. describe stages in enterprise formation, partnership and networking including business
+
+    planning;
+7. describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; and
+8. state the basic principles of e-commerce.
+
+Course Contents
+Concept of Entrepreneurship (Entrepreneurship, Intrapreneurship/Corporate Entrepreneurship).
+Theories, Rationale and relevance of Entrepreneurship (Schumpeterian and other perspectives,
+Risk-Taking, Necessity and opportunity-based entrepreneurship and Creative destruction).
+Characteristics of Entrepreneurs (Opportunity seeker, Risk taker, Natural and Nurtured, Problem
+solver and change agent, Innovator and creative thinker). Entrepreneurial thinking (Critical
+thinking, Reflective thinking, and Creative thinking). Innovation (Concept of innovation,
+Dimensions of innovation, Change and innovation, Knowledge and innovation). Enterprise
+formation, partnership and networking (Basics of Business Plan, Forms of business ownership,
+Business registration and Forming alliances and join ventures). Contemporary Entrepreneurship
+Issues (Knowledge, Skills and Technology, Intellectual property, Virtual office, Networking).
+Entrepreneurship in Nigeria (Biography of inspirational Entrepreneurs, Youth and women
+entrepreneurship, Entrepreneurship support institutions, Youth enterprise networks and
+Environmental and cultural barriers to entrepreneurship). Basic principles of e-commerce.
+
+Allied Health Sciences  341               New
+MCB 201: Introduction to General Microbiology                               (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, the students should be able to:
+1. explain the basic concepts and scope of microbiology;
+2. know the scope of microbiology layout of microbiology laboratory equipment and reagents
+
+    in microbiology; and
+3. explain the theory behind basic protocols in a microbiology laboratory.
+
+Course Contents
+The Kingdom Protista Organisation differences in eucaryotic cells classification and nomenclature
+of micro-organisms. Bacterial cell form, structure nutrition reproduction and metabolism. Bacterial
+genetics. A typical prokaryotic cell Viruses. Encaryotic Micro-organism-fungi microbial control,
+microbes in food, water and environment. Bacterial infection and virulence. Phagocytosis.
+Introduction to pathogenic microbiology. Laboratory animals, types breeding and uses.
+
+BCH 201: General Biochemistry I                                             (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the lectures, students should be able to:
+1. explain the structure of different macromolecules in biological system;
+2. identify types of chemical reactions involving these macromolecules;
+3. explain the various methods of isolation of these macromolecules;
+4. estimate the effects of acids and alkalis on the macromolecules;
+5. describe purification of macromolecules; and
+6. discuss quantification the various macromolecules.
+
+Course Contents
+Introductory chemistry of amino acids; their properties, reactions and biological functions.
+Classification of amino acids: neutral, basic and acidic; polar and non-polar; essential and non-
+essential amino acids. Peptides. Introductory chemistry and classification of proteins. Biological
+functions of proteins. Methods of their isolation, purification and identification. Primary,
+secondary, tertiary and quaternary structures of proteins. Basic principles of tests for proteins
+and amino acids. Introductory chemistry of carbohydrates, lipids and nucleic acids. Nomenclature
+of nucleosides, and nucleotides; effects of acid and alkali on hydrolysis of nucleic acids.
+
+BCH 202: General Biochemistry II                                            (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. explain the structure of the cell including its components;
+2. discuss the interrelationship between different organelles of the cell;
+3. recognise the differences between plant and animal cells;
+4. isolate the various organelles of both plant and animal cells; and
+5. discuss the influence of hydrogen ion concentration on cellular function.
+
+Allied Health Sciences            342                                         New
+Course Contents
+The cell theory. Structures and functions of major cell components. Cell types, constancy and
+diversity. Cell organelles of prokaryotes and eukaryotes. Chemical composition of cells.
+Centrifugation; Methods of cell fractionation. Structure, function and fractionation of extra-
+cellular organelles. Water, total body water and its distribution. Regulation of water and
+electrolyte balance. Disorder of water and electrolyte balance. Acidity and alkalinity, pH and pK
+values and their effects on cellular activities.
+
+BCH 203: General Biochemistry Practical I  (1 Unit C: PH 45)
+
+Learning Outcomes
+At the end of this course students should be able to:
+1. describe the laboratory experiments designed to reflect the topics covered; and
+2. explain the laboratory procedures used in the study of various biochemical processes.
+
+Course Contents
+Laboratory experiments designed to reflect the topics covered in BCH 201 and BCH 202.
+Introduction to laboratory methods and procedures employed in studying biochemical processes.
+
+ANA 202: Histology of Basic Tissues        (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course students should be able to:
+1. name common current histological techniques;
+2. enumerate the principles, techniques and functional applications of Histology;
+3. define and explain the cell in relation to its environment, surface components and content;
+4. explain the interrelationship and interdependency between cell structures and functions; and
+5. identify the microscopic appearance of tissues such as muscle, cartilage, etc in relation to
+
+    their staining.
+
+Course Contents
+Introduction to histology; Method of study in histology; Cell Membrane, Cellular organelles; Cell
+dynamics and cell cycle. Cytogenetics. Histochemistry and cytochemistry. Introduction to
+recombinant DNA; In situ hybridization histochemistry. Cell dynamics and cycle. Basic tissues of
+the body, the epithelial, connective tissues, muscle and nervous tissue. The microanatomy of the
+four basic tissues, namely: epithelial tissue, including glandular tissue, connective tissue, muscular
+tissue, and nervous tissue. Covering and Lining Epithelia. Glandular Epithelia. Connective tissue.
+Bone, Bone formation and Joints. Blood. Muscle. Nervous tissue (PNS). Nervous tissue (CNS).
+Cardiovascular system. Respiratory system. Integumentary system. Liver, Gallbladder and
+Pancreas. Gastro-intestinal system. Lymphatic tissue and the Immune system. Endocrine system.
+Urinary system. Female reproductive system. Male reproductive system. Eye.
+
+Allied Health Sciences               343   New
+ANA 203: General and Systemic Embryology  (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. explain how the embryo is form from the zygote;
+2. discuss the role of cleavage and gastrulation in animal development;
+3. demonstrate understanding of embryology and significance of prenatal diagnostic methods;
+4. describe structural features of primordia in tissue and organs at different developmental
+
+    stages;
+5. define risk periods in histo- and organogenesis; and
+6. analyse the most often observed developmental anomalies.
+
+Course Contents
+Spermatogenesis, oogenesis; ovarian follicles; ovulation; corpus luteum; menstruation; uterine
+cycle; hormonal control of uterine cycle; fertilization; cleavage; implantation; reproductive
+technologies-IVF/surrogacy/embryo transfer; embryo manipulation & potency/twinning;
+molecular embryology and transgenesis; gastrulation; notochord, neurulation; derivatives of the
+germ layers; folding of the embryo; fetal membranes; placenta; development of limbs and
+teratology. Growth and perinatology; congenital malformations  general introduction. The
+cardiovascular system, skin, structure of the nails and hair. Macrophagic system; cellular
+immunology; lymphoid organs; glands  endocrine and exocrine. Respiratory system. Digestive
+system. Urinary and genital systems. Electron micrograph studies of each organ.
+
+ANA 201: Anatomy of Upper and Lower Limb  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. define fundamental anatomical terminology and discuss the anatomical position;
+2. describe the anatomy of the musculoskeletal system, including the axial skeleton;
+
+    appendicular skeleton, appendicular and axial muscles, and arthrology;
+3. describe the general features of the bones of the upper and lower limbs;
+4. identify the major muscles of the upper and lower limbs;
+5. explain the types and structure of the joints of the upper and lower limbs;
+6. correlate between the attachment of the muscles and their functions on the different joints;
+7. identify the major nerves of the upper and lower limbs;
+8. describe the functional components of each of the major nerves and its distribution;
+9. identify and describe the course of the major superficial veins of the upper and lower limbs;
+
+    and
+10. name the major arteries of the upper and lower limbs.
+
+Course Contents
+Descriptive terms, plans and terms of relationship of the human body, terms of comparison,
+attachment of muscles, types of muscles, movements of joints. Osteology, principles of
+kinesiology, general organization of body system. Cutaneous innervation of the upper limb;
+pectoral region; breast; axilla; shoulder region; arm and cubital fossa; flexor compartment of
+forearm; extensor compartment of forearm; hand; venous and lymphatic drainage of the upper
+limb. Applied anatomy of nerves; blood supply of the upper limb. Cutaneous innervation of the
+lower limb; femoral triangle; adductor canal and medial side of the thigh; gluteal region; back of
+
+Allied Health Sciences  344               New
+the thigh, popliteal fossa; extensor compartment of the leg and dorsum of the foot; peroneal and
+flexor compartment of the leg; sole of the foot, arches of the foot; mechanism of walking; venous
+and lymphatic drainage of the lower limb; applied anatomy of the nerves and blood supply to the
+lower limb.
+
+PIO 201: Introductory Physiology and Blood  (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe the composition of a cell membrane;
+2. explain how a potential difference across a membrane will influence the distribution of a cation
+
+    and an anion;
+3. describe how transport rates of certain molecules and ions are accelerated by specific
+
+    membrane transport proteins;
+4. distinguish between active (primary and secondary) transport, facilitated diffusion, and
+
+    passive diffusion based on energy source and carrier protein involvement;
+5. identify the mechanisms and role of selective transporters for amino acids, neurotransmitters,
+
+    nutrients, etc.;
+6. explain the general concepts of homeostasis and the principles of positive and negative
+
+    feedback in physiological systems;
+7. identify the site of erythropoietin production, the stimulus for its release, and the target tissue
+
+    for erythropoietin action;
+8. discuss the normal balance of red blood cell synthesis and destruction, including how
+
+    imbalances in each lead to anemia or polycythemia;
+9. list and differentiate the various types of leukocytes;
+10. describe the role of thrombocytes in haemostasis; and
+11. list clotting factors and the discuss the mechanism of anti-coagulants.
+
+Course Contents
+Introduction and history of physiology. Structure and functions of cell membranes. Transport
+process. Special transport mechanism in amphibian bladder, kidney, gall bladder, intestine,
+astrocytes and exocrine glands. Biophysical principles. Homeostasis and control systems including
+temperature regulation. Biological rhythms. Composition and functions of blood. Haemopoiesis.
+WBC and differential count. Plasma proteins Coagulation, fibrinolysis and platelet functions. Blood
+groups ABO system  Rh system. Blood transfusion  indication for collection and storage of
+blood, hazards of blood transfusions. Reticulo- endothelial system. Imunity and immodeficiency
+disease and HIV.
+
+PIO 203: Physiology of Excitable Tissues    (2 Units: C: LH 30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. list the steps in excitation-contraction coupling in skeletal muscle;
+2. describe the structure of the neuromuscular junction;
+3. list some intracellular factors that can cause muscle fatigue;
+4. describe the distinguishing characteristics of multi-unit and unitary smooth muscles;
+
+Allied Health Sciences  345                 New
+5. explain the steps in the excitation-contraction coupling mechanism in cardiac muscle and
+    compare with skeletal muscle including different mechanisms for sarcoplasmic reticulum
+    calcium release;
+
+6. explain how the resting membrane potential is generated
+7. state the Nernst equation, and indicate how this equation accounts for both the chemical and
+
+    electrical driving forces that act on an ion;
+8. discuss the mechanisms by which an action potential is propagated along both nonmyelinated
+
+    and myelinated axons;
+9. describe the principle of the voltage clamp and how it is used to identify the ionic selectivity
+
+    of channels; and
+10. discuss the disorders that can occur at the neuromuscular junction.
+
+Course Contents
+Structure and classification of muscles, excitation and contraction theories and principles involved
+in muscles contraction, resting membrane and action potentials. Generation of impulses in
+excitable tissues. Nerve and neuromuscular transmissions. Simple reflex and spinal reflexes.
+Spinal cord ascending, descending pathways. Receptors. Thalamus-sensory motor cortex. Control
+of posture and movement. The reticular activating system, sleep, neural centers regulating
+Visceral functions. Neurophysiological basis of instinctive behaviour, conditioned reflexes learning,
+and temperature regulation. Sympathetic and parasympathetic pathways. Role in the various
+system especially cardiovascular, respiratory and gastro intestinal.
+
+PIO 214: Introduction to Cardiovascular and Respiratory Physiology (2 Units C: LH
+30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. state Starling's law of the heart and describe the application of the law in keeping the output
+
+    of the left and right ventricles equal;
+2. describe how ionic currents contribute to the four phases of the cardiac action potential;
+3. explain the ionic mechanism of pacemaker automaticity and rhythmicity, and identify cardiac
+
+    cells that have pacemaker potential and their spontaneous rate;
+4. identify neural and humoral factors that influence their rate;
+5. describe the various phases of ventricular systole and ventricular diastole;
+6. describe the timing and causes of the four heart sounds;
+7. explain why the ECG tracing looks different in each of the 12 leads;
+8. explain the principles underlying cardiac output measurements using the Fick principle, dye
+
+    dilution, and thermodilution methods;
+9. list the factors that shift laminar flow to turbulent flow;
+10. describe the relationship between velocity, viscosity, and audible events, such as murmurs
+
+    and bruits;
+11. describe how arterial systolic, diastolic, mean, and pulse pressure are affected by changes in
+
+    a) stroke volume, b) heart rate, c) arterial compliance, and d) total peripheral resistance;
+12. define the Starling equation and discuss how each component influences fluid movement
+
+    across the capillary wall;
+13. list the anatomical components of the baroreceptor reflex;
+14. explain three positive feedback mechanisms activated during severe hemorrhage that may
+
+    lead to circulatory collapse and death;
+
+Allied Health Sciences  346  New
+15. define compliance and identify two common clinical conditions in which lung compliance is
+    higher or lower than normal;
+
+16. list the factors that determine total lung capacity, functional residual capacity, and residual
+    volume;
+
+17. define surface tension and describe how it applies to lung mechanics, including the effects of
+    alveolar size and the role of surfactants;
+
+18. explain how the shape of the oxyhemoglobin dissociation curve influences the uptake and
+    delivery of oxygen;
+
+19. list the forms in which carbon dioxide is carried in the blood; and
+20. identify the regions in the central nervous system that play important roles in the generation
+
+    and control of normal respiration.
+
+Course Contents
+The heart; events of the cardiac cycle. Control of cardiac contractility. Cardiac electrophysiology.
+Properties of cardiac muscles. Cardiac output - measurement and control. Haemodynamics of
+circulation. Arterial blood pressure and its regulation. Cardiovascular reflexes. Peripheral
+resistance and local control of the circulation. Regional blood flow. Cardiovascular changes in
+exercise, haemorrhage and shock. Respiratory physiology  functions of upper respiratory tract.
+Mechanics of respiration including compliance. Surfactant. Lung volume and capacities.
+Pulmonary gas exchange. Blood gas transport. Pulmonary function tests. Nervous and chemical
+control of respiration. Response to hypoxia, high altitude, exercise and artificial respiration.
+
+PIO 204: Gastrointestinal Physiology       (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course students should be able to:
+1. compare and contrast the regulation of gut function by nerves, hormones, and paracrine
+
+    regulators;
+2. identify the cell type and anatomical location of the endocrine cells secreting major GI
+
+    hormones, such as gastrin, secretin, cholecystokinin (CCK), GLP-1, GLP-2, leptin, and motilin;
+3. list the physiological functions of the components of saliva;
+4. describe the role of HCl in the gastric digestion of carbohydrates and protein, and how
+
+    pepsinogen is activated;
+5. list the mechanisms contributing to gastric mucosal defense and how they can be
+
+    compromised by drugs or pathogens;
+6. list the stimuli that release secretin and CCK and explain the route by which these regulatory
+
+    peptides stimulate the pancreas;
+7. describe the cellular mechanisms for the hepatic uptake, conjugation, and secretion of bile
+
+    salts and bilirubin;
+8. describe the sequential digestion of ingested starch by enzymes of the salivary glands,
+
+    pancreas, and the intestinal apical membrane;
+9. describe the mechanisms and molecules mediating the solubilization and digestion of lipids in
+
+    the small intestine; and
+10. describe the disorders of motility that can lead to gastroparesis, achalasia, diarrhea,
+
+    constipation, megacolon and irritable bowel syndrome.
+
+Course Contents
+
+Allied Health Sciences                347  New
+Physiologic anatomy of the gastrointestinal tract, Review of smooth muscle function, Secretions
+in the G.I.T. and their control, Movements of the gastrointestinal tract, Digestion and absorption
+of various food substances, Physiologic anatomy of the liver and biliary system including their
+functions, Disorders of G.I.T, The gut as an endocrine organ. Nutrition: energy and other dietary
+requirements. Basal metabolic rate. Nitrogen balance. Amino acid deficiency. Hormonal control
+of nutritional needs, vitamins, mineral mechanisms. Food value of local foodstuffs. Diet sheets
+and nutritional deficiency states.
+
+MLS 201: Introduction to Medical Laboratory Science  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. define safety awareness for Medical Laboratory Personnel;
+2. describe steps used as precautionary measures;
+3. select the correct means of disposal of waste generated in the Medical Laboratories;
+4. list the types of samples used in the clinical laboratories;
+5. identify the preanalytical, pre-collection, collection and post collection variables that can
+
+    adversely affect laboratory results;
+6. list the proper drawing order for collection tubes; and
+7. describe the general steps for processing samples.
+
+Course Contents
+General introduction to Medical Microbiology, immunology and Histopathology, specimen
+collection, reception and registration. Safety precaution in Medical Microbiology Immunology and
+Histopathology Laboratories. Microscopy use and care of the microscope and other equipment
+sterilisation-principles and techniques. Glassware-care and maintenance. Refrigeration-Principle,
+uses and care. General introduction to clinical Chemistry, Haematology and Blood Transfusion
+Sciences. Storage and disposal of specimens. Specimen containers. Safety precaution in the
+chemical pathology, Haematology and Blood Bank Laboratories. Handling of Laboratory animals.
+
+STA 201: Biostastics                                 (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. explain the scope for statistical methods in health science;
+2. define the measures of location partition and dispersion;
+3. explain the elements of probability, probability distribution;
+4. describe the test for hypotheses concerning population means proportions and variances;
+5. compute for regression and correlation as well as conduct some non-parametric tests
+
+    reference to contingency table analysis; and
+6. explain the elements of design of experiments and analysis of variance.
+
+Allied Health Sciences  348                          New
+Course Contents
+Aims, characteristics and application of biostatistics in clinical and preventive medicine. Statistical
+data in bio-medical science-samples, population, variables, frequency distribution, vital and
+descriptive statistics, measurement of central tendencies-mean, median, mode, dispersion and
+presentation of data probability distribution, Hypothetical tests of statistical significance. Analysis
+of variance. Regression and correlation. Experimental designs and clinical trials.
+
+300 Level
+
+GST 312: Peace and Conflict Resolution  (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. analyse the concepts of peace, conflict and security;
+2. list major forms, types and root causes of conflict and violence;
+3. differentiate between conflict and terrorism;
+4. enumerate security and peace building strategies; and
+5. describe roles of international organisations, media and traditional institutions in peace
+
+    building.
+
+Course Contents
+Concepts of Peace, Conflict and Security in a multi-ethnic nation. Types and Theories of Conflicts:
+Ethnic, Religious, Economic, Geo-political Conflicts; Structural Conflict Theory, Realist Theory of
+Conflict, Frustration-Aggression Conflict Theory. Root causes of Conflict and Violence in Africa:
+Indigene and settlers Phenomenon; Boundaries/boarder disputes; Political disputes; Ethnic
+disputes and rivalries; Economic Inequalities; Social disputes; Nationalist Movements and
+Agitations; Selected Conflict Case Studies  Tiv-Junkun; ZangoKartaf, Chieftaincy and Land
+disputes and many others. Peace Building, Management of Conflicts and Security: Peace & Human
+Development. Approaches to Peace & Conflict Management --- (Religious, Government,
+Community Leaders and many others.). Elements of Peace Studies and Conflict Resolution:
+Conflict dynamics assessment Scales: Constructive & Destructive. Justice and Legal framework:
+Concepts of Social Justice; The Nigeria Legal System. Insurgency and Terrorism. Peace Mediation
+and Peace Keeping. Peace & Security Council (International, National and Local levels) Agents of
+Conflict resolution  Conventions, Treaties Community Policing: Evolution and Imperatives.
+Alternative Dispute Resolution, ADR. Dialogueb). Arbitration, c). Negotiation d). Collaboration
+and many others. Roles of International Organisations in Conflict Resolution. (a). The United
+Nations, UN and its Conflict Resolution Organs. (b). The African Union & Peace Security Council
+(c). ECOWAS in Peace Keeping. Mediaand Traditional Institutions in Peace Building. Managing
+Post-Conflict Situations/Crisis: Refugees. Internally Displaced Persons, IDPs. The role of NGOs in
+Post-Conflict Situations/Crisis
+
+Allied Health Sciences  349             New
+ENT 312: Venture Creation               (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students, through case study and practical approaches, should be able
+to:
+1. describe the key steps in venture creation;
+2. spot opportunities in problems and in high potential sectors regardless of geographical
+
+      location;
+3. state how original products, ideas, and concepts are developed;
+4. develop business concept for further incubation or pitching for funding;
+5. identify key sources of entrepreneurial finance;
+6. implement the requirements for establishing and managing micro and small enterprises;
+7. conduct entrepreneurial marketing and e-commerce;
+8. apply a wide variety of emerging technological solutions to entrepreneurship; and
+9. appreciate why ventures fail due to lack of planning and poor implementation.
+
+Course Contents
+Opportunity Identification (Sources of business opportunities in Nigeria, Environmental scanning,
+Demand and supply gap/unmet needs/market gaps/Market Research, Unutilised resources, Social
+and climate conditions and Technology adoption gap). New business development (business
+planning, market research). Entrepreneurial Finance (Venture capital, Equity finance, Micro
+finance, Personal savings, Small business investment organisations and Business plan
+competition). Entrepreneurial marketing and e-commerce (Principles of marketing, Customer
+Acquisition & Retention,B2B, C2C and B2C models of e-commerce, First Mover Advantage, E-
+commerce business models and Successful E-Commerce Companies,). Small Business
+Management/Family Business: Leadership & Management, Basic book keeping, Nature of family
+business and Family Business Growth Model. Negotiation and Business communication (Strategy
+and tactics of negotiation/bargaining, Traditional and modern business communication methods).
+Opportunity Discovery Demonstrations (Business idea generation presentations, Business idea
+Contest, Brainstorming sessions, Idea pitching). Technological Solutions (The Concept of
+Market/Customer Solution, Customer Solution and Emerging Technologies, Business Applications
+of New Technologies - Artificial Intelligence (AI), Virtual/Mixed Reality (VR), Internet of Things
+(IoTs), Blockchain, Cloud Computing, Renewable Energy and many others. Digital Business and
+E-Commerce Strategies).
+
+MLS 301: Basic Clinical Chemistry       (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. convert results from one unit format to another using si unit system;
+2. describe the physiology and biochemistry of the gastric secretion;
+3. list the test in urinalysis and microscopy profile;
+4. describe how laboratory tests are used in these disorders;
+5. discuss the mode of action of hormones in carbohydrate metabolism;
+6. discuss the type of lipids;
+7. describe the measurement of plasma lipid and lipoproteins;
+8. outline the factors affecting synthesis of protein;
+9. explain the functions of kidney; and
+
+Allied Health Sciences             350                                    New
+10. outline the causes of acidosis and alkalosis.
+
+Course Contents
+Traditional and S.I units in Clinical Chemistry; Reference values: Gastric function tests; Agents
+for Gastric stimulation. Ward procedures and Laboratory Investigation of Gastric Secretions.
+Intestinal function tests; Digestion and absorption; Causes of Malabsorption. Laboratory
+investigation of malabsorption. Renal function tests; functions of the kidney; Measurement of
+Renal plasma flow, Glomerular filtration rate  Creatinine clearance, Insulin clearance,
+Concentration and Dilution Tests; Urinary Acidification Tests, urine specific gravity/Osmolarity
+Dye Excretion test. Water and Electrolyte metabolism. Acid base balance; Definition and causes
+of acidosis and alkalosis; Blood buffers. Transport of blood gases; assessment of acid/base
+status. Lipids; definition and types of lipids; Formation of free fatty acids, ketone bodies and
+Lactate; Measurement of plasma lipids and lipoproteins. Plasma proteins and physiologic
+functions; factors affecting synthesis and catabolism. Methods for the determining of total protein
+in serum. Carbohydrate metabolism: Blood glucose homeostasis; hyperglycaemia diabetes
+mellitus  its causes and investigation; Hypoglycaemia  types causes and investigation.
+
+MLS 302: Basic Haematology                         (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss the basic concepts of origin, development and functions of blood cells;
+2. describe the methods of Haemoglobin estimation;
+3. describe the methods of cell counting;
+4. state simple tests used in blood coagulation; and
+5. explain blood films-normal and abnormal.
+
+Course Contents
+Origin, development and functions of blood cells. Synthesis and breakdown of haemoglobin.
+Methods of Haemoglobin estimation. Methods of cell counting. Absolute values. Introduction to
+Homeostasis. Principle and mode of action of common anticoagulants. Principle and components
+of Haematological stains. Simple tests used in blood coagulation. Blood films-normal and
+abnormal. Practical Classes.
+
+MLS 303: Basic Microbiology                        (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe the classification and nomenclature of microorganisms;
+2. explain the general properties of bacteria, structure, growth and reproduction requirements;
+3. state the general properties, structure and biology of viruses;
+4. describe the characteristics and general features of fungi and their diseases; and
+5. discuss about identification and demonstration of pathogens in the laboratory.
+
+Allied Health Sciences       351                                                    New
+Course Contents
+Scope of microbiology: Historical approach and many others. Classification and nomenclature of
+microorganisms. Introduction to the microbial world; Introduction to Bacteriology, Mycology,
+Virology and Parasitology (the protozoan).
+Bacteriology: The general properties of bacteria, structure, growth, reproduction, requirements
+both environmental and nutritional. Aspects of Bacterial metabolism, bacterial genetics and
+variation. Sterilisation in Microbiology, bacteria in health and disease: Antibiotics and
+chemotherapy; infection and immunity; introduction to laboratory techniques and methods
+including serology.
+Viruses: General properties, structure and biology of viruses, classification  various methods,
+reproduction, resistance, pathology, purification of viruses, propagation of viruses, immunity and
+diagnosis of viral infection, interferon and interference, inclusion bodies, cytopathic effects. Viral-
+host interactions and identification.
+Fungi: Morphology, groups and classification. Types of lesion and types of mycoses, growth
+requirements. Characteristics and general features of fungi and their diseases. Identification,
+and demonstration in the laboratory.
+
+MLS 304: Basic Histopathology                             (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss basic concepts of common fixing agents;
+2. describe the uses of fixing agents in Histopathology laboratory;
+3. explain basic histology of organs;
+4. describe tissue sectioning procedures; and
+5. conduct slide preparation and slides examination to illustrate normal and abnormal features.
+
+Course Contents
+Introduction to Histopathology. Fixation  Autolysis, bacterial decomposition. Effects of fixation,
+common fixing agents and their uses. Secondary fixation, post-fixation and post-chroming and
+post-mordanting. Fixation pigments, Decalcification  Aims and applications, decalcifying agents.
+Tests for clearing of decalcification. Dehydration, clearing and infiltration/embedding. Frozen
+and celloidin sections. Embedding media. Basic histology of organs. Principles and application
+of Exfoliate Cytology. Collection and fixation of specimens for cytological examination. Museum
+technique-colour restoration. Mounting in museum jars. Tissues and cellular injury inflammation.
+Healing and repairs. Gross appearance of diseased organs in routine post-mortem examination.
+Slide sections to illustrate common tumours.
+
+MLS 305: Basic Immunology                                 (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. explain the basic concepts of immunology;
+2. appreciate and explain animal vaccine production; and
+3. appreciate and explain human vaccine production.
+
+Allied Health Sciences         352                        New
+Course Contents
+The Historical background of Immunology. Classification of Immunity. Innate immunity.
+Development and structure of cells in the Immune System Cellular interaction the expression and
+regulation of immunity. Acquired Immunity.
+
+MLS 306: Laboratory Posting I       (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. state hazards encountered in medical laboratories and the safety precautions to be applied to
+
+    avoid disaster;
+2. describe how to set up common laboratory equipment like microscope, autoclave and their
+
+    application;
+3. describe how laboratory specimens are collected and processed; and
+4. discuss the basic organisation of a medical laboratory.
+
+Course Contents
+Laboratory hazards and precautions. General laboratory glassware and apparatus-composition of
+glass, cleaning of glassware, standardised glassware, general glassware. Apparatus-autoclave,
+centrifuge. Production of chemically pure water, elementary microscopy; refraction, refractive
+index, principal focus of a converging lens, principal focus of a diverging lens, component of a
+microscope, setting up of a microscope, some do's and do not's of the microscope, micrometry,
+Dark ground microscope, Flourescent microscope. Collection and reporting of specimens, ward
+etiquette, postage of specimen, preparation of specimen containers, swabs, collection of autopsy
+and biopsy specimens.
+
+MLS 307: Practical Exercise I       (2 Units C: LH 15; PH 45)
+
+The student is expected to carry out practical exercises in all the disciplines:
+Clinical Chemistry: Titration: presentation of volumetric analysis. Methods for chloride
+determination. Determination of bicarbonate in plasma, percentage purity of carbonate.
+Determination of the composition of the mixture NaOH/Na2CO3, NACL/HCL, specific gravity,
+reactions with ferric chloride, urobilinogen, bilirubin, indicant, myoglobin, cystine, protein, Bence-
+Jones protein, blood, reducing substances, ketone bodies, phenyl pyruvic acid. Spectroscopy of
+plasma and urine CSF analysis  sugar, protein.
+Haematology and BGS: Blood film, WBC count, haemoglobin estimation, Absolute values,
+eosinophil count, reticulocyte count. Osmotic Fragility. Blood grouping techniques, Antiserum
+titration, Anti-human globulin (AHG) direct and indirect, Antibody screening. Donor screening,
+secretor status.
+Histopathology: Preparation of fixatives, removal of formalin pigments, testing of end point of
+decalcification using chemical methods. General tissue staining by haematoxylin and counter-
+staining with eosin. Demonstration of elastic and collagen fibres. Prussian blue reaction for iron
+in tissues. Gram and Ziehl-Nielsen (Z-N) staining methods. Use of automatic tissue processors.
+Microtome.
+Medical Microbiology and Parasitology: Safety precautions in the Microbiology laboratory.
+Getting acquainted with basic tools of microbiologist. Preparation of films and basic staining
+techniques, the Gram stain, Ziehl-Nielsen stain, spores, capsule and negative staining procedures.
+Wet preparation and microscopy, Motility tests, Media preparation and culturing. Plate reading
+
+Allied Health Sciences         353  New
+Demonstration of the ubiquity of micro-organisms especially bacteria from different environment.
+Recognition of different types of haemolysis. Sensitivity testing. Use of autoclave. Wet mount for
+parasites. Identification of trophozoites, cysts and ova of different protozoa and helminths in
+stool. Thin and thick films preparation for malaria microfilaria and Trypanosome parasites.
+Staining techniques: Giemsa, Wrights, Fields and Leishman Stains. Identification of Trichomonas
+spp, Paragonimus spp, Trichuris spp, Schistosoma spp, other Helminthes and protozoa of medical
+importance. Skin snips. Urine microscopy. Concentration techniques for stool and sputum for
+ova and cysts. Examination and recognition of Helminthes from tissue Biopsy.
+
+MLS 308: Fundamentals of Blood Group Serology  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss the components of ABO;
+2. explain Rhesus blood group systems;
+3. acquire the skill for blood grouping techniques;
+4. appreciate the anomalies in ABO grouping;
+5. identify the subgroups of ABO system and variants of Rh system; and
+6. describe organisational structures of the Blood Bank, facilities and reagents.
+
+Course Contents
+ABO and Rhesus Blood Groups, Inheritance, distribution and Genetic Theory. Blood Grouping
+Techniques  principles, disadvantages and advantages. Preparation of antisera  antiserum
+titration, avidity, Potency and specificity. Plant lectins Preparation and Standardisation of
+antisera from lectins such as Dolichos biflorus Anticoagulants used in BGS, ACD, CPD-CPA-A and
+many others. Modes of Action, Side effects. Blood Bottles (MRC) and Plastic Bags  Advantages
+and disadvantages. Donor Screening- using CuSO4 method  other methods of screening.
+Preparation of blood products  cryoprecipitate, platelet rich plasma, packed cell fresh frozen
+plasma, fibrinogen and many others. Storage of blood and blood products  various methods,
+advantages and disadvantages Blood banking-organisation, structures, facilities and records.
+Blood group specific substances  synthesis, identification method(s) and application. Quality
+control of physical, chemical and reagent. Practical/tutorials ABO and Rhesus grouping methods,
+Antiserum Titration DCT and ICT antibody screening.
+
+MLS 309: Basic Medical Parasitology            (2 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. explain basic concepts of protozoa;
+2. discuss the basic concepts of helminthes of medical importance;
+3. describe the methods of demonstration of parasites in clinical samples;
+4. discuss the basic concepts of Arthropods of medical importance; and
+5. empower students with knowledge vectors of important diseases of man.
+
+Allied Health Sciences               354                                           New
+Course Contents
+Introduction to the parasites. Classification of protozoa, (the amoebas, the ciliates, the
+flagellates, Nematodes. (Ascaris, Strongloides, Trichuris, guineaworm, hookworms, Trichinella,
+Enterobius and many others). Life cycle and pathogenicity of Cestodes. (The tapeworms, Larval
+forms of cestodes). Life cycle and pathogenicity of the Trematodes (The Schistosome, Fasciola,
+Paragonimus, and many others). Methods of demonstration of parasites in blood, faeces, vagina,
+urine, urethra, pus from lung and liver, skin snips, and many others. Mechanisms of their disease
+production; Epidemiology and control of parasitic diseases.Arthropods of medical importance
+particularly members of the class Diptera, the crustaceans, Arachnida, Hexapoda, Myiasis and
+many others, their biology, life cycles and control. Life history as disease vectors; various diseases
+of importance transmissible by insects. Biology of mosquito in relation to transmission of malaria,
+filariasis, viral infections and many others.
+
+MLS 310: Biomedical Engineering              (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe the basic concepts of principles of use and maintenance repair of common apparatus
+
+    and laboratory equipment; and
+2. acquire skill of repair of common apparatus and laboratory equipment.
+
+Course Contents
+Workshop practice. Principles of use maintenance and repair of common apparatus and
+laboratory equipment. Principles of applied and general electronics. Circuit diagrams, Computer
+programming. Improvisation. Glass blowing and construction of simple laboratory equipment.
+Design techniques, improvement on existing equipment, review and modifications of laboratory
+methods.
+
+PHA 301: Basic Pharmacology and Toxicology:  (2 Units: C: 15 LH; 45 PH)
+
+Learning Outcomes
+At the end of this course students should be able to;
+1. identify the factors that influence the absorption of an orally administered drug;
+2. relate the factors that influence the rate of drug elimination;
+3. define drug distribution and factors that influence it;
+4. describe the major toxicities of the drugs prescribed;
+5. explain the role of the Medical Laboratory in the evaluation of exposure to poisons; and
+6. define pathologic mechanisms of toxicants.
+
+Course Contents
+Scope of Pharmacology. Origin and sources of drugs, routes of administration of drugs, drug
+receptors and receptor isolation. Pharmacokinetics, absorption of drugs excretion,
+biotransformation. Structure-activity relationship. Mode of action of drugs. Types of drug action.
+Drug action in man-compliance, individual variations, presence of other drugs, genetic effects,
+tolerance and tachyphylaxis, effects of diseases, drug toxicity adverse drug reactions, drug
+dependence and drug interactions. Antimicrobial Pharmacology chemotherapeutic agents, anti-
+metabolic base analogues, mitotic inhibitors, antibiotics, enzymes, alkylating agents and
+hormones. Radiation therapy, immune therapy and cancer therapy, synthesis and physiology of
+
+Allied Health Sciences           355         New
+neurotransmitters Biochemical basis of depression. Marcotics-Mechanism of action. Fluorescent,
+radio and chromatographic methods in drug studies. Methods of evaluation of toxins mutagens
+and carcinogens.
+
+400 Level
+
+MLS 401: Laboratory Management and Functions and General Laboratory Practice
+(2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss the basic concepts of medical laboratory design;
+2. discuss planning and organisation;
+3. explain accounts and budgeting, ordering, stock  card indexing;
+4. describe storage and occupational hazards;
+5. explain theory and practice of some common analytical techniques including tissue
+
+    processing;
+6. describe microscopy and other basic Microbiological Equipment use;
+7. discuss the principles of Histological Equipment; and
+8. discuss the principles and working of haematological and clinical chemistry equipment.
+
+Course Contents
+Principles and functions of Management. Personnel Management, Staff/Management
+relationships, stock control, record keeping. Management and administrative practices. Ecology
+of administration. Inventory and quality control Accounting and budgeting. Medico-legal aspects
+of medical laboratory Sciences. Professional ethics. Laboratory planning. Introduction to
+statistical procedures and biological research estimation, analysis of variance, tests of
+significance, goodness of fit, correlation and regression. Theory and practice of quality control 
+setting up quality control, various methods of quality control; factors affecting quality of output.
+Theory and practice of some common Analytical techniques including tissue processing,
+Microscopy and other basic Microbiological Equipment use, and principles of Histological
+Equipment, principles and working of haematological clinical chemistry Equipment; other applied
+techniques in the Medical Laboratory with emphasis on general Medical Laboratory
+Instrumentation. Practical Classes based on the above topics. General Review and appraisals of
+all subjects and practice of medical laboratory sciences to be examined as a common General
+paper.
+
+MLS 402: Medical Laboratory Haematology I  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. acquire knowledge and skill on the laboratory management of different types of anaemia; and
+2. acquire knowledge and skill on the laboratory identification of different Leukaemia.
+
+Allied Health Sciences  356                New
+Course Contents
+Iron metabolism, folate and B2 metabolism. Nomenclature, classification and investigation of
+common haemoglobinopathies, haemolytic anaemias, myeloproliferative disorders,
+lymphoproliferative disorders, haemostasis and disorders of haemostasis; investigation of
+bleeding disorders. Bone marrow. Practical classes.
+
+MLS 403: Medical Laboratory Histopathology I                (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss basic concepts of the cytology of normal cells;
+2. describe the epithelial cells; and
+3. discuss atypical and malignant cells.
+
+Course Contents
+DNA  demonstration by Feulgen techniques. Silver impregnation methods. Genes and genetic
+code. Tissue culture techniques; chromosome analysis. Autoradiography  Definition and
+principle of organisation of a medical museum. Methods of colour maintenance. Fixation and
+storage of museum specimens. Special museum techniques such as Dawson's Method. Principle
+of Photography Preparation of stained sections for micro photography. Preparation of specimens
+for preparation of stained sections for micro photography. Cytological normal cells. Histology of
+tissues. Atypical and malignant cells. Collection of cytological smears and processing and
+screening. Principles of general pathology. Systemic pathology. Gastrointestinal tract.
+Urogenital, cutaneous. Principle of Electron microscopy materials for electron microscopy.
+Respiratory  Tuberculosis. Nephropathy associated with infestations and infections. Embalming
+techniques and demonstrations and infections. Practical based on the topics.
+
+MLS 404: Medical Laboratory Microbiology I                  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe the basic concepts of epidemiology of communicable diseases;
+2. discuss disease spectrum; and
+3. explain basic concepts of disease control.
+
+Course Contents
+Epidemiology of communicable diseases and disease spectrum and control. Aspects of public
+Health and Environmental Microbiology. Applied Microbiology; aspects of food and Industrial
+Microbiology. Diagnostic Microbiology. Vaccine production and immunization. Preservation of
+cultures and cultural methods. Pathogenic mechanisms of bacteria. Antibiotic assays and
+monitoring from body fluids and many others, anaerobiosis and methods. Phage typing; Research
+Methods and other techniques in Microbiology. Use of metabolic pathways in identification of
+bacteria, fluorescent antibody methods. Quality control and Instrumentation. Practical based on
+the above topics.
+
+Allied Health Sciences  357                                               New
+MLS 405: Laboratory Instrumentation & Techniques                   (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe the principles instrumentation;
+2. explain care of basic equipment;
+3. describe the theory and practice of some common Analytical techniques; and
+4. discuss automation used in Medical Laboratory Science.
+
+Course Contents
+Instrument aspects of qualitative and quantitative analysis  theory and practise of some common
+analytical techniques: colourimetry, spectroflorimetry flame photometry, conductometry,
+polarography, and many others. Osmometry, Rephelometry, Turbidimetry, pH Measurement by
+ion specific electrodes  Separation techniques including electrophoresis, - paper, cellulose
+acetate, Agar gel, starch and polyacrylamide gel, Isoelectric focusing, Isotaphoresis,
+Chromatograpy  paper, Thin Layer Chromatography, Gas Liquid Chromatography, Ion exchange,
+gel filtration, molecular sieves; Dialysis filtration, solvent extraction, Centrifugation 
+Ultracentrifugation. Immuno-electrophoretic techniques, Radioimmunoassay, Competitive
+protein binding, Isotope dilution techniques, Enzyme Immuno Assays, Receptor Assays,
+Automation, Micro and Ultra micro Analysis. Practical based on the above topics. Theory and
+practice of some common Analytical techniques including tissue processing, Microscopy and other
+basic Microbiological Equipment, Principles and working of haematological Equipment, other
+applied techniques in the Medical Laboratory with emphasis on general Medical Laboratory
+Instrumentation. Practical exercises on the above topics.
+
+MLS 406: Research Methodology                                      (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course students should be able to:
+1. conduct a research project;
+2. discuss the role of research in health and social welfare; and
+3. discuss the designing a questionnaire.
+
+Course Contents
+Introduction to research methodology. Collection of literature review articles Problem definition.
+Sampling technique Experimental designs of medical and public health studies. Questionnaire
+design and collection analysis. Interpretation and utilization of research findings. The role of
+research in health and social welfare. The need for Institutional and Governmental ethical
+clearance for some research projects. Research proposals and sourcing of funding for research
+projects. Art of scholarly publications and Instructional design.
+
+Allied Health Sciences         358                                             New
+MLS 408: Laboratory Posting II                           (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss the basic tests expected to be carried out;
+2. deliver accurate and reliable results of basic laboratory test;
+3. recognise and practice as a team in the laboratory with the soul aim of producing cost effective
+
+    results for the management of patient;
+4. recognise and refer complex test to experience scientists; and
+5. guide junior students.
+
+Course Contents
+Basic medical laboratory tests in Medical Microbiology/Parasitology including Virology, Mycology
+and Bacteriology, chemical pathology, Haematology and Blood Transfusion science and
+Histopathology. Such tests include detection of malaria parasites in blood and intestinal parasites
+in stool. Wet preparation and Gram staining of biological specimens. Preparation of media and
+inoculation of specimen. Determination of Hb, PCV and processing of blood samples for
+Haematology and blood Transfusion examinations. Screening of blood donors and Determination
+of ABO and Rhesus blood groups. Urinalysis, estimation of glucose, urea. Processing of
+Histopathology specimens including fixation, staining and cutting of tissues.
+
+MLS 410: Clinical Chemistry I                            (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. acquire knowledge and skill required for the laboratory investigation of porphyrinaemia;
+2. describe the laboratory investigation of porphyria; and
+3. discuss laboratory investigation of porphyrinuria.
+
+Course Contents
+Porphyrin, causes, symptoms and laboratory investigation of porphyrinaemia, porphyria and
+Porphyrinuria, Haemoglobin, synthesis, function. Glycosylated haemoglobins. Abnormal
+haemoglobins and haemoglobinopathies, Liver function Tests.
+Mechanism of Enzyme action and kinetics: Clinical Enzymology; Isoenzymes in medicine,
+Coenzymes and Vitamins. Definition, causes, consequences and investigation of some inborn
+errors of metabolism; Phenylketonuria, galactosaemia fructose intolerance, Albinism,
+aminoaciduria, Endocrine glands and functions; the hypothalamus, the pituitary, the parathyroid,
+adrenal cortex, adrenal medulla, the gonads and reproductive endocrinology. Foeto-placental
+function. Calcium and bone metabolism. Pancreatic function tests. Basic neurochemistry, CSF
+ normal composition and changes in disease.
+
+MLS 411: Blood Group Serology                            (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss the components of ABO; and
+2. acquire the knowledge of Rhesus blood group systems.
+Course Contents
+
+Allied Health Sciences          359                      New
+Blood groups  Other blood groups such as MNS, Duff, Kell, Kidd and many others. Grouping
+techniques and antibody screening, clinical significance, secretor status, antenatal Serology 
+screening and Titration. Compatibility procedures  different methods, advantages and
+disadvantages, Blood Transfusion reactions  causes and types; Investigation, Risks attendant in
+blood transfusion  Diseases, Anaphylactic, haemolytic and allergic reactions. Screening of Donor
+blood for disease agents such as HbAgs, HIV, VDRL. Practical/tutorials. Compatibility procedures
+ advantages and disadvantages. Practical based on the above topics.
+
+MLS 412: Professional Ethics in Medical Laboratory Science (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course students should be able to:
+1. discuss ethics in the practice of Medical Laboratory Science;
+2. emphasise the significance of ethics of practice and confidentiality of results;
+3. discuss the Ethical issues involved in private practice; and
+4. describe the relationship between the Medial Laboratory Scientist and other members of the
+
+    Health team.
+
+Course Contents
+Introduction to the Science and profession of Medical Laboratory Science. The different arms of
+medical Laboratory Sciences. Hall marks characterizing the lives of all professions; licensing to
+practice, Group culture patterns. Justice, rights and responsibilities as a professional.
+The concept of duty, professional standards and Laboratory management. Authority and
+discipline. The use of reason. Personal relationships  inter and intra professional, Act of good
+faith. Place of religion in the hospital. Value judgment, exercise of professional judgment, skill
+and care charge and wellbeing of patients. Patients - professional relationship  confidentiality,
+communication skills; trust; seeking to safe guard patients, particularly in respect to health and
+safety and information. Research training, professional development, knowledge and skill, quality
+control in the field of medical laboratory sciences and practice: Reputation. Fulfilment of
+professional role with integrity, refraining from its misuse to the detriment of patients, employers
+and colleagues. Medico-legal aspects.
+
+500 Level
+
+MLS 502: Laboratory Posting III       (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. show or demonstrate competency in independent running of a medical laboratory as a full
+
+    fledge professional;
+2. display right administrative acumen in the running of a medical laboratory facility; and
+3. impart the right knowledge and professional know how to upcoming students and scientists.
+
+Allied Health Sciences           360  New
+Course Contents
+Conduct of complex and intellectually tasking medical laboratory tests independently in the
+specific area of specialisation. Organisation and leadership in the administration of the laboratory.
+Coordination with other professionals that utilise laboratory services. Innovative technologies like
+molecular biology techniques e.g PCR, antigen/antibody serological assays among others.
+
+MLS 503: Practical Exercises II                                           (2 Units C: PH 45)
+
+Each student carries out practical based on the area of major specialty.
+
+Clinical Chemistry
+Determination of blood glucose, glucose tolerance test. Determination of calcium and phosphate,
+uric acid, cholesterol, creatinine clearance, electrolytes and urea, total protein albumin and
+globulin. Plasma protein electrophoresis. Determination of plasma enzymes: - aspartate
+transaminase, alanine transaminase, acid and alkaline phosphatase. Demonstration. Blood gases
+and pH by Astrup Technique. Paper and thin layer chromatography, Immuno-electrophoresis and
+agar gel immuno-diffusion techniques.
+Demonstration: Radioimmunoassay of hormones in blood. Estimation of 17-oxo and Oxogenic
+steroids in urine. Estimation of urinary buffers. Calculation from first principle. Absorption and
+calibration curves. Colour Equivalence of artificial standards. Fractional test meal. Calculi
+analysis.
+
+Haematology and Blood Group Serology
+Investigations in paternity dispute. Investigation of haemorrhagic and preparation of
+cryoprecipitate, haemolytic disease of the new born (HDN), haemoglobinopathies, auto-immune
+haemolytic anaemia, enzymopathies. Preparation of anti-sera, bovine albumin, anti-human
+globulin. Gamma globulin neutralization test. Forensic application of Blood Group Serology.
+Differential leucocytes count. Cytochemical procedures. Advanced techniques such as
+Demonstration of Iron, Foetal Haemoglobin, Ham's Test and many others.
+
+Histopathology
+Special staining methods  PAS, Manson trichrome, Iron Impregnation Methods. Cytological
+staining methods and collection of cytological samples. Chromosome analysis. Autoradiography.
+Museum techniques. Cyto-screening and slide reporting. Cutting sections using the microtomes.
+Tissue (cell) culturing, Fungi, amyloid, enzyme and other specialized demonstration methods.
+
+Medical Microbiology and Parasitology
+Examination, culture and identification of bacteria in CSF pleural, ascitic fluid. Blood culture, High
+vaginal swab, wound swabs, ear, eye, nasal and other swabs. Stool bacteriology. Sputum
+bacteriology, Urine bacteriology. Systemic fungal culture and identification. Semen analysis.
+Special serological tests. ASO Widal, VDRL, rheumatoid factor, Complement fixation,
+neutralization, haemagglutination tests for identification of viruses. General identification of
+micro-organisms by animal inoculation. Biochemical tests for the identification of vibrio cholera,
+Shigella, Candida, Neisseria.
+
+Allied Health Sciences           361                                      New
+MLS 504: Research Project            (6 Units C: PH 270)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. explain laboratory procedures including safety precautions;
+2. carry out independent researches that will lead to tangible outcomes; and
+3. present outcome of their researches in seminars and conferences.
+
+Course Contents
+Independent research findings into selected areas/topics of interest to the supervising academic
+staff. Students will be required to carry out literature survey on the topics, perform experiments
+and produce reports (preferably at the end of second semester). Students will be subjected to
+both seminar and oral examination on the projects undertaken.
+
+MLS 505: Seminar                     (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. identify a topic of current interest in any branch of medical laboratory science;
+2. search for the appropriate literature in the chosen topic; and
+3. prepare and disseminate the knowledge using the appropriate format within a time frame.
+
+Course Contents
+A seminar on current concepts or advances on a specific topic in medical Laboratory Science. The
+aim is to develop in the student the ability to search for past and current literature on any given
+topic.
+
+MLS 508: Clinical Chemistry II       (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe basic concepts of general principles of enzymes kinetics;
+2. discuss analytical techniques employed in qualitative and quantitative determination of
+
+    enzymes; and
+3. describe basic concepts of activation.
+
+Course Contents
+Analytical Techniques. Birth of a new method, devising new techniques, biological trials and tests
+for acceptability. Solid/dry phase chemistry, dipstick technology, thin film technology.
+Immobilised enzymes. Analytical techniques employed in qualitative and quantitative
+determination of (a) Enzymes: phosphatases, transaminases, dehydrogenases, Kinases (b)
+Hormones: catecholamines and metabolites peptide and steroid hormones (c) Proteins: total
+proteins albumin and globulin, specific proteins (d) Lipids: cholesterol, triglycerides, glycerol, fatty
+acids and lipoproteins. (e) Trace elements  Fe, Cu Zn, Mg, Selenium (f) non-protein nitrogen 
+Urea, creatinine, creatine, uric acid, amino acids and ammonia Urinalysis; determination of urine
+specific gravity, osmolarity; qualitative tests for protein, glucose. and reducing substances, Ketone
+bodies, bilirubin urobilinogen and blood. Haemoglobin and haemoglobin derivatives in urine.
+Spectroscopy of haemoglobin and its derivatives in blood and urine.
+
+Allied Health Sciences          362                                           New
+MLS 510: Medical Laboratory Haematology II              (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. conduct advanced haematological procedures;
+2. discuss the disorders of Iron metabolism; and
+3. describe the different automation in Haematology.
+
+Course Contents
+Anaemias, Disorders of Iron metabolism, vitamin B12 and Folate deficiencies, Haemochromatosis
+and related storage disorders; Radioisotopes in Haematology; Automation in Haematology,
+Haemoglobinopathies. Cytochemical procedures, Lymphocyte Transformation Tests.
+Myelomatosis and order paraproteinemia. Test. Advanced Techniques.
+
+MLS 512: Medical Laboratory Histopathology II           (2 Units C : LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. describe the basic concepts of the methodology of Histochemistry; and
+2. describe basic concepts of the tissue culture technique.
+
+Course Contents
+Theory and Methodology of Histochemistry  Chromaffin tissues, Schmols, Diazo and Perls and
+other histochemical techniques. Enzyme histochemistry: Acid and alkaline phosphatase,
+Oxidative enzymes. Genetic diseases. Karyotype abnormalities. Chromosome techniques.
+Tissue culture technique. Chromosome staining techniques Slide reporting.
+
+MLS 514: Medical Laboratory Microbiology II             (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. discuss basic concepts of methods for the diagnosis of fungal infections; and
+2. discuss basic concepts of methods for the diagnosis of viral infections.
+
+Course Contents
+General characteristics of fungus diseases, types of mycoses and properties; opportunistic fungi
+Diagnosis and chemotherapy. Systemic mycoses (cryptococcosis, blastomycoses, histoplasmosis,
+coccidioidomycoses). Opportunistic mycoses (candidiasis, phycomycetes, aspergilloses and many
+others). subcutaneous mycoses. (such as maduro mycoses, sporotrichoses,
+chromoblastomycosis, and many others. Cutaneous mycoses  dermatophytosis. Superficial
+mycoses and many others. General properties, pathogenesis, diagnosis, epidemiology and control
+and recognition of fungi. Derma tropic and viscerotropic viruses. Smallpox, cowpox and
+vaccination; measles, rubella, chickenpox and shingles, Herpes viruses. Yellow fever; Lassa fever,
+Hep A and B, Influenza, Arbor viruses. The neurotropic viruses (rabies, poliomyelitis, encephalitis,
+lymphocytic choriomeningitis virus, mumps viral transformation and types of tumours and viruses.
+Oncogene theory and many others. Viral gastroenteritis; Miscellaneous viruses.
+
+Allied Health Sciences  363                                                       New
+Minimum Academic Standards
+
+Equipment
+
+Essential Equipment in various Disciplines
+
+Haematology/Blood TransfusionScience
+
+Autoanalyzers                               -       2
+                                                    1 per 2students
+Microscopes                                 -       1 per 10students
+                                                    1 per 4students
+Waterbath                                   -       1 per 4students
+                                                    1 per 4students
+Haematocritcentrifuge                       -       1 per 10students
+                                                    1 per 10 students
+Electrophoresis tank andpowerpack           -       1 per 4students
+                                                    1 per 10students
+Colorimeters                                -       1
+                                                    2
+Benchcentrifuges                            -       1
+
+WeighingBalance                             -       1 per 2students
+                                                    1per 10students
+Neubauercountingchamber                     -
+                                                    1 perstudent
+pH meter                                    -
+                                                    1per 10students
+Coldcentrifuge                              -
+                                                    1 per10
+Coagulometer                                -
+                                                    1 per10
+PlateletAggregometer                        -
+                                                    1 per5
+MedicalMicrobiology/Parasitology
+                                                    4
+Binocular microscopes                       -
+                                                    2
+Fluorescent microscope                      -
+                                                    2
+Magnifying lens                             -
+                                                    3
+Centrifuges                                 -
+                                                    3
+Incubators                                  -
+                                                    1 per4
+Anaerobic culture jars                      -
+                                                    1 per20
+Membrane/sietz filters                      -
+                                                    2
+Metler balance                              -
+                                                    1
+Autoclaves                                  -
+
+Deioniser                                   -
+
+Water baths                                 -
+
+Hot air ovens                               -
+
+Bunsen burners                              -
+
+Freezers                                    -
+
+Electron microscopes                        -
+
+Ultra-centrifuge                            -
+
+Chemical Pathology/Immunology
+
+Electronic balance                          -       2
+
+Allied Health Sciences                         364                     New
+Spectrophotometer          -               1per 20students
+                                           1per 20students
+pH Meters                  -               2
+
+Atomic absorption          -               2
+                                           6
+spectrophotometer                          2
+                                           2
+Auto analyzers             -               2
+                                           2
+Colorimeters               -               2
+                                           2
+Flame Photometer           -
+
+Water distiller            -
+
+Gas, Liquid, TLC chromatographs -
+
+Vacuum pumps               -
+
+Rotary evaporator          -
+
+Centrifuge                 -
+
+Histopathology/Cytology
+
+Microtome                  -               2Rotary/sledge
+                                           3
+Microtome knives           -               1per 2students
+                                           3
+Light microscopes          -               1
+                                           1
+Dissecting microscopes     -               2
+                                           1
+Slides of sections/slide projector -
+
+Cryostat with microtome    -
+
+Tissue processing machine  -
+
+Multihead Teaching Microscope -
+
+Staffing
+Academic Staff  The academic staff should have Ph.D. degrees in relevant disciplines of
+Medical Laboratory Science. The existing guideline that states that 70% and above of the
+academic staff should possess Ph.D shall apply.
+One academic staff per 15 students (1:15) should be equitably distributed in the disciplines.
+
+Staff Mix by Rank:
+The staff mix by rank of Professors, Senior Lecturers and Lecturer 1 and below of
+20:35:45 shall apply.
+
+Non-Academic Staff (Senior Technical Staff)
+This is comprised of qualified and registered Medical Laboratory Scientists and should
+be at least 25% of the strength of the Academic Staff in the department.
+
+Library
+
+Allied Health Sciences                365                                               New
+Each Unit of Medical Laboratory Science should have a well-stocked library with upto
+date journals and books relevant to Medical Laboratory Science.
+There should be computer based information service and e-Libraryfacilities.
+Establishment of an audiovisual Laboratory/Learning Resources with Phantoms, CD Roms, and
+many others.
+
+Classroom, Laboratories and Offices Space
+Classroom
+The standard requirement of 0.65m2 per full-time student should be maintained. Thus the
+minimum total space requirement for a faculty or department shall be the product of its total full
+time equivalent student enrolment (FTE) and the minimum space requirement per full-time
+equivalent i.e. (FTE) 0.65m.
+
+Office
+
+In this respect, each academic staff should have an office space of at least 25 square metres
+
+taking into cognisance the status/cadre of the staff
+
+In addition, there should be for the Faculty, a Dean's office and for each Department a Head of
+
+Department's office with attached offices for their supporting staff as specified below in m2:
+
+        Professor's office                            -  18.50
+
+        Head of Department's office                   -  18.50
+
+        Tutorial teaching staff's office              -  13.50
+
+        Other teaching staff space                    -  7.00
+
+        Technical staff space                         -  7.00
+
+        Secretarial space                             -  7.00
+
+        Staff research laboratory                     -  16.50
+
+        Seminar Space/per student                     -  1.85
+
+        Laboratory space (per student)                -  7.50
+
+Allied Health Sciences                    366                   New
+B. N.Sc. Nursing Science
+
