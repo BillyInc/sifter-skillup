@@ -1,0 +1,221 @@
+{
+ "programme": "Anthropology",
+ "mapping_type": "D_custom",
+ "discipline": "Social Sciences (custom — no CCMAS standard)",
+ "qualification": "B.Sc",
+ "duration_years": 4,
+ "enrichment_basis": {
+  "related_ccmas": [
+   "SOC"
+  ],
+  "note": "Anthropology has NO standalone CCMAS programme (confirmed). Enriched from (a) CCMAS Sociology (SOC) for the shared social-science core, and (b) the Nigerian academic curriculum standard below for the anthropology-specific body of knowledge."
+ },
+ "sources": [
+  {
+   "institution": "University of Nigeria, Nsukka (UNN) — Dept. of Sociology & Anthropology",
+   "url": "https://socialscs.unn.edu.ng/sociology-anthropology-course-modules/",
+   "role": "primary — dedicated ANT course list with units"
+  },
+  {
+   "institution": "Nnamdi Azikiwe University (UNIZIK) — Dept. of Sociology & Anthropology",
+   "url": "https://socialsciences.unizik.edu.ng/dept/sociology-and-anthropology/sociology-and-anthropology-course-descriptions/",
+   "role": "supplementary — foundational + ethnography courses"
+  },
+  {
+   "institution": "Nigerian Anthropological and Sociological Association (NASA)",
+   "url": "https://nasajournal.com.ng/",
+   "role": "professional body"
+  }
+ ],
+ "courses": [
+  {
+   "level": 100,
+   "code": "ANT 102",
+   "title": "Introduction to Anthropology",
+   "units": 4,
+   "status": "C",
+   "content": "Anthropological perspective; human origins/evolution; dating methods; origins of agriculture and cities; language and culture; concept of culture; socialization; kinship; uses of anthropology.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 100,
+   "code": "ANT 121",
+   "title": "Language in Society and Culture",
+   "units": 2,
+   "status": "C",
+   "content": "Social/cultural functions of language with reference to Nigeria and West Africa; language and social development; language problems of new states; language policy.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 200,
+   "code": "ANT 201",
+   "title": "History of Sociological and Anthropological Thought",
+   "units": 4,
+   "status": "C",
+   "content": "Early Western contributions to modern sociology; pioneers of social anthropology (England), cultural anthropology (America), ethnography (France); convergence and divergence.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 200,
+   "code": "ANT 212",
+   "title": "African Social Institutions",
+   "units": 4,
+   "status": "C",
+   "content": "Ethnographic description/analysis of African societies, peoples, cultures; cultural regions; social organization, institutions, polity, world views; impact of change and modernization.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 200,
+   "code": "ANT 214",
+   "title": "Symbolic Anthropology",
+   "units": 2,
+   "status": "C",
+   "content": "Key concepts via Durkheim, Evans-Pritchard, Levi-Strauss, Leach, Douglas; mythical thought, ritual, oral traditions as collective representation; relevance to African historiography.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 300,
+   "code": "ANT 303",
+   "title": "Nigerian Peoples and Cultures",
+   "units": 3,
+   "status": "C",
+   "content": "Survey of Nigeria's peoples/cultures: geographic distribution, linguistic classification, religion, world views, habitat, economy, kinship, marriage, descent, polities; continuity, conflict and change.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 300,
+   "code": "ANT 313",
+   "title": "Anthropology of Peasant Societies",
+   "units": 2,
+   "status": "C",
+   "content": "Historical evolution and definition of peasantry; social institutions, modes of production, property relations, social formations, types of peasant societies, social transformations.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 300,
+   "code": "ANT 321",
+   "title": "African Religious Systems",
+   "units": 2,
+   "status": "C",
+   "content": "Theories/concepts of African beliefs/practices; religious foundations of morality; symbols, rituals, worship; case studies; African religion in social change.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 300,
+   "code": "ANT 323",
+   "title": "Political Anthropology",
+   "units": 2,
+   "status": "C",
+   "content": "Social conditions affecting African government/politics; pressure groups across pre-colonial/colonial/post-colonial periods; colonialism, nationalism, imperialism, neo-colonialism, socialism, liberation movements.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 300,
+   "code": "ANT 328",
+   "title": "Traditional Legal Systems",
+   "units": 2,
+   "status": "C",
+   "content": "Concepts/nature of 'primitive' law; overlap between law, religion, political control; flexibility of applied law; law and morality; continuity and change in traditional law.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 300,
+   "code": "ANT 354",
+   "title": "Contemporary African Social Thought",
+   "units": 2,
+   "status": "C",
+   "content": "Social/political ideas of African thinkers (colonial and post-independence); pan-Africanism, ethnic nationalism, Ujaama, humanism, consciencism, revolution, traditional conservatism.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 400,
+   "code": "ANT 411",
+   "title": "Comparative African Social Institutions",
+   "units": 4,
+   "status": "C",
+   "content": "Advanced study of sub-Saharan Africa as ethnological region; African origins of early man; archaeological records; cultural regions; race and racism; language and population migration.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 400,
+   "code": "ANT 412",
+   "title": "Culture and Communication",
+   "units": 2,
+   "status": "C",
+   "content": "Interrelationships between culture and communication; defining culture and mass communication; media in culture change; Western information imperialism and acculturation in Africa.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 400,
+   "code": "ANT 421",
+   "title": "Race and Ethnic Relations",
+   "units": 4,
+   "status": "C",
+   "content": "Theories of race and their use to sustain power (Nazism, anti-semitism, colonial domination); growth of ethnic ideology in Africa and its use in acquiring political power.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 400,
+   "code": "ANT 423",
+   "title": "Urban Sociology and Anthropology",
+   "units": 4,
+   "status": "C",
+   "content": "Urbanization/urbanism phases; linear theory and critique; pre-industrial African cities; race, ethnicity, class in urban centres; rural migration theories; urban Nigeria, problems and prospects.",
+   "source_institution": "UNN"
+  },
+  {
+   "level": 100,
+   "code": "SOC 141",
+   "title": "Introduction to Anthropology",
+   "units": 2,
+   "status": "C",
+   "content": "Basic concepts, theories and methods in anthropological studies; foundation for advanced study.",
+   "source_institution": "UNIZIK"
+  },
+  {
+   "level": 100,
+   "code": "SOC 142",
+   "title": "Nigerian Heritage/Cultural Heritage",
+   "units": 2,
+   "status": "C",
+   "content": "Ethnic groups in Nigeria from traditional settings; culture, religion, occupation, marriage systems, behavioural differences among ethnic groups.",
+   "source_institution": "UNIZIK"
+  },
+  {
+   "level": 100,
+   "code": "SOC 143",
+   "title": "Introduction to African Societies and Cultures",
+   "units": 2,
+   "status": "C",
+   "content": "Different societies of the African continent; their culture, economy, politics, structure and unique characteristics.",
+   "source_institution": "UNIZIK"
+  },
+  {
+   "level": 200,
+   "code": "SOC 244",
+   "title": "Language and Culture in Society",
+   "units": 2,
+   "status": "C",
+   "content": "Language families and the culture of the societies that speak them; inter-disciplinary survey with linguistics.",
+   "source_institution": "UNIZIK"
+  },
+  {
+   "level": 300,
+   "code": "SOC 345",
+   "title": "African Social Thought",
+   "units": null,
+   "status": "C",
+   "content": "Legacies of African philosophies and political thinkers; communalism, Negritude, Pan-Africanism, Africans in Diaspora.",
+   "source_institution": "UNIZIK"
+  },
+  {
+   "level": 400,
+   "code": "SOC 446",
+   "title": "Regional Ethnography of Sub-Saharan Africa",
+   "units": 2,
+   "status": "C",
+   "content": "Descriptive/interpretative survey of the historical, political, social, cultural, economic factors shaping Africa south of the Sahara.",
+   "source_institution": "UNIZIK"
+  }
+ ]
+}

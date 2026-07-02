@@ -1,0 +1,176 @@
+{
+ "programme": "Intelligence and Security Studies",
+ "mapping_type": "D_custom",
+ "qualification": "B.Sc",
+ "duration_years": 4,
+ "enrichment_basis": {
+  "strategy": "ccmas_related_courses",
+  "note": "No CCMAS standard exists for Intelligence and Security Studies. Built from the authoritative CCMAS national standard by drawing security/intelligence/strategic courses from related CCMAS programmes (primarily Criminology & Security Studies, plus International Relations, Political Science, Peace Studies, Psychology, Demography). An INDUSTRY-CERTIFIED source (NDA dept handbook / ABUAD B.Sc / NISS Abuja) remains an OPTIONAL specialised top-layer for intelligence tradecraft.",
+  "primary_related_ccmas": "CSS",
+  "optional_industry_doc": "NDA Dept of Intelligence & Security Science handbook; ABUAD B.Sc; NISS Abuja EIMC (see TYPE_D_SOURCES.md)"
+ },
+ "courses": [
+  {
+   "level": 100,
+   "code": "CSS 101",
+   "title": "Introduction to Criminology and Security Studies",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 100,
+   "code": "CSS 102",
+   "title": "Introduction to Criminal Justice System",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "CSS 201",
+   "title": "Nigerian Law Enforcement and Security System",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "CSS 203",
+   "title": "Comparative Police and Policing Systems",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "CSS 204",
+   "title": "Applied Statistics in Criminology and Security Studies",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 200,
+   "code": "CSS 205",
+   "title": "Human Rights and Criminal Justice Systems",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "CSS 302",
+   "title": "Theoretical Perspectives on Security",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "CSS 303",
+   "title": "Research Methods in Criminology and Security Studies",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "CSS 304",
+   "title": "Intelligence and Investigation Management",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "CSS 402",
+   "title": "Democracy and Governance of Security Sector",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "CSS 403",
+   "title": "Contemporary Development in Criminology and Security Studies",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "CSS 406",
+   "title": "Comparative National Security Policy and Strategy",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "CSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "DSS 305",
+   "title": "Social Investigation (nature, evolution and organization)",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "DSS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "IRS 404",
+   "title": "Contemporary Strategic Studies",
+   "units": 3,
+   "status": "C",
+   "source_ccmas_programme": "IRS",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "POL 401",
+   "title": "Civil-Military Relations",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "POL",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "POL 403",
+   "title": "Contemporary Defence and Strategic Studies",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "POL",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 300,
+   "code": "PCR 301",
+   "title": "Terrorism and Global Conflicts",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "PCR",
+   "source_ccmas_discipline": "Social Sciences"
+  },
+  {
+   "level": 400,
+   "code": "PSY 401",
+   "title": "Psychology of Terrorism and Trauma Management",
+   "units": 2,
+   "status": "C",
+   "source_ccmas_programme": "PSY",
+   "source_ccmas_discipline": "Social Sciences"
+  }
+ ]
+}

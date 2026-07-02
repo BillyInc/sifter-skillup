@@ -1,0 +1,28 @@
+{
+ "map": {
+  "ANA": null,
+  "BCH": null,
+  "PIO": null,
+  "MCB": null,
+  "PHA": "Pharmacology",
+  "PST": "Physiotherapy",
+  "AUD": "Audiology",
+  "NSC": "Nursing Sciences",
+  "CAM": "Complementary and Alternative Medicine",
+  "DNT": "Dental Technology",
+  "DTH": "Dental Therapy",
+  "EHS": "Environmental Health Science",
+  "HAM": "Health Care Administration and Hospital Management",
+  "ITH": "Information Technology and Health Informatics",
+  "HIM": "Health Information Management",
+  "MLS": "Medical Laboratory Science",
+  "NUT": "Human Nutrition and Dietetics",
+  "OCT": "Occupational Therapy",
+  "PHS": "Public Health",
+  "OPT": "Optometry",
+  "POT": "Prosthetics and Orthotics",
+  "RAD": "Radiography",
+  "SLT": "Speech-Language Therapy"
+ },
+ "d2_not_covered": []
+}

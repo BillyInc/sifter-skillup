@@ -1,0 +1,206 @@
+{
+ "arts": {
+  "d2_count": 26,
+  "extracted": 25,
+  "d2_list": [
+   "African Languages and Literature Efik",
+   "African Languages and Literature Hausa",
+   "African Languages and Literature Ibibio",
+   "African Languages and Literature Igbo",
+   "African Languages and Literature Yoruba",
+   "African Traditional Religion",
+   "Arabic",
+   "Archaeology",
+   "Chinese Language",
+   "Christian Religious Studies",
+   "Christian Theology",
+   "Classics",
+   "English Language and Literature in English",
+   "Film Production",
+   "Folklore",
+   "History and Diplomatic Studies",
+   "History",
+   "Islamic Studies",
+   "Linguistics",
+   "Modern European Languages French",
+   "Modern European Languages German",
+   "Modern European Languages Russia",
+   "Music",
+   "Philosophy",
+   "Religious Studies",
+   "Theatre Arts"
+  ],
+  "missing": [
+   "African Languages and Literature Yoruba",
+   "Chinese Language"
+  ]
+ },
+ "pharmacy": {
+  "d2_count": 0,
+  "extracted": 1,
+  "d2_list": [],
+  "missing": []
+ },
+ "allied_health": {
+  "d2_count": 19,
+  "extracted": 8,
+  "d2_list": [
+   "Audiology",
+   "Complementary and Alternative Medicine",
+   "Dental Technology",
+   "Dental Therapy",
+   "Environmental Health Science",
+   "Health Care Administration and Hospital Management",
+   "Health Information Management",
+   "Information Technology and Health Informatics",
+   "Medical Laboratory Science",
+   "Nursing Sciences",
+   "Human Nutrition and Dietetics",
+   "Occupational Therapy",
+   "Optometry",
+   "Pharmacology",
+   "Physiotherapy",
+   "Prosthetics and Orthotics",
+   "Public Health",
+   "Radiography",
+   "Speech-Language Therapy"
+  ],
+  "missing": [
+   "Audiology",
+   "Dental Therapy",
+   "Environmental Health Science",
+   "Medical Laboratory Science",
+   "Nursing Sciences",
+   "Occupational Therapy",
+   "Optometry",
+   "Physiotherapy",
+   "Radiography",
+   "Speech-Language Therapy"
+  ]
+ },
+ "architecture": {
+  "d2_count": 6,
+  "extracted": 5,
+  "d2_list": [
+   "Architecture",
+   "Architectural Technology",
+   "Furniture Design",
+   "Interior Architecture Design",
+   "Landscape Architecture",
+   "Naval Architecture"
+  ],
+  "missing": [
+   "Architectural Technology"
+  ]
+ },
+ "veterinary": {
+  "d2_count": 0,
+  "extracted": 1,
+  "d2_list": [],
+  "missing": []
+ },
+ "basic_medical": {
+  "d2_count": 1,
+  "extracted": 2,
+  "d2_list": [
+   "Human Anatomy"
+  ],
+  "missing": []
+ },
+ "education": {
+  "d2_count": 39,
+  "extracted": 11,
+  "d2_list": [
+   "Adult and Continuing Education",
+   "Agricultural Education",
+   "Arabic",
+   "Biology",
+   "Business Education",
+   "Chemistry",
+   "Christian Religious Studies",
+   "Computer Science",
+   "Creative Arts Education",
+   "Early Childhood Education",
+   "Economics",
+   "Educational Management",
+   "Efik-Ibibio Education",
+   "English Language/Literature-in-English",
+   "Entrepreneurship Education",
+   "Environmental Education",
+   "French",
+   "Geography",
+   "Guidance and Counseling",
+   "Hausa",
+   "Health Education",
+   "History",
+   "Home Economics",
+   "Human Kinetics/Physical Education",
+   "Igbo",
+   "Integrated Science",
+   "Islamic Studies",
+   "Language Arts and Communication",
+   "Library and Information Science",
+   "Mathematics",
+   "Music",
+   "Physics",
+   "Political Science",
+   "Primary Education",
+   "Social Studies and Civic Education",
+   "Special Needs Education",
+   "Sustainable Development Studies",
+   "Technology Education",
+   "Yoruba"
+  ],
+  "missing": [
+   "Adult and Continuing Education",
+   "Chemistry",
+   "Christian Religious Studies",
+   "Creative Arts Education",
+   "Early Childhood Education",
+   "Educational Management",
+   "English Language/Literature-in-English",
+   "Entrepreneurship Education",
+   "Environmental Education",
+   "Geography",
+   "Guidance and Counseling",
+   "Hausa",
+   "Health Education",
+   "Home Economics",
+   "Human Kinetics/Physical Education",
+   "Igbo",
+   "Islamic Studies",
+   "Language Arts and Communication",
+   "Library and Information Science",
+   "Mathematics",
+   "Music",
+   "Physics",
+   "Political Science",
+   "Primary Education",
+   "Social Studies and Civic Education",
+   "Special Needs Education",
+   "Technology Education",
+   "Yoruba"
+  ]
+ },
+ "environmental_sciences": {
+  "d2_count": 12,
+  "extracted": 11,
+  "d2_list": [
+   "Building",
+   "Environmental Management",
+   "Clothing and Textile Design",
+   "Environmental Standards",
+   "Estate Management",
+   "Fine and Applied Arts",
+   "Fashion Design",
+   "Geography",
+   "Industrial Design",
+   "Quantity Surveying",
+   "Surveying and Geoinformatics",
+   "Urban and Regional Planning"
+  ],
+  "missing": [
+   "Industrial Design"
+  ]
+ }
+}

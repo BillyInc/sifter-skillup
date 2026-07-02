@@ -37,6 +37,7 @@ import {
   type Chartership,
   comingSoon,
 } from "../types/career";
+import { request } from "./api";
 
 /** A cluster of domains for the context-free Domain Explorer (no programme). */
 export interface DomainClusterGroup {
@@ -47,7 +48,7 @@ export interface DomainClusterGroup {
 // Flip to true per-area as real data is wired (kept here so screens can branch
 // without importing backend details). All false in this phase.
 export const CAREER_DATA_LIVE = {
-  universityMapping: false,
+  universityMapping: true,
   nceMapping: false,
   opportunities: false,
   elitePathways: false,
@@ -58,19 +59,33 @@ export const CAREER_DATA_LIVE = {
 export const careerData = {
   /** Search programmes by free text, optionally filtered by institution type. */
   async searchProgrammes(
-    _query: string,
-    _institutionType?: InstitutionType,
+    query: string,
+    institutionType?: InstitutionType,
   ): Promise<DataState<ProgrammeSearchResult[]>> {
-    // TODO(career-data): GET /api/career/programmes?q=&institutionType=
-    return comingSoon<ProgrammeSearchResult[]>(
-      "Programme search comes online with University & NCE first.",
-    );
+    const params = new URLSearchParams();
+    if (query) params.set("q", query);
+    if (institutionType) params.set("institution_type", institutionType);
+    const qs = params.toString();
+    try {
+      return await request<DataState<ProgrammeSearchResult[]>>(
+        `/api/career/programmes${qs ? `?${qs}` : ""}`,
+      );
+    } catch {
+      return comingSoon<ProgrammeSearchResult[]>(
+        "Programme search is temporarily unavailable.",
+      );
+    }
   },
 
   /** Full programme detail incl. its domain links (with match types). */
-  async getProgramme(_programmeId: string): Promise<DataState<Programme>> {
-    // TODO(career-data): GET /api/career/programmes/{id}
-    return comingSoon<Programme>("Programme intelligence is being populated.");
+  async getProgramme(programmeId: string): Promise<DataState<Programme>> {
+    try {
+      return await request<DataState<Programme>>(
+        `/api/career/programmes/${encodeURIComponent(programmeId)}`,
+      );
+    } catch {
+      return comingSoon<Programme>("Programme intelligence is being populated.");
+    }
   },
 
   /** All domains grouped by cluster, for the context-free Domain Explorer. */

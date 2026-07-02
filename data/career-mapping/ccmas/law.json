@@ -1,0 +1,2857 @@
+{
+ "discipline": "Law",
+ "source_file": "CCMAS_Law_COMBINED.md",
+ "document_flags": [
+  "FLAG-A: Glossary (p.15) lists course code \"PHY 105\" for Introduction to Social and Political Philosophy. Course tables and course content throughout the document consistently use \"PHL 105\". The PHL 105 rendering is used throughout this extraction as it is the majority usage. [FLAG FOR MANUAL REVIEW]",
+  "FLAG-B: ICL 101 (LL.B Common and Islamic Law, 100-level): Table (p.57) shows 2 units / LH 30. Course content section (p.63) shows 3 Units C: LH 45. Discrepancy in both units and contact hours. Both versions are recorded verbatim at P12 and P13 respectively. [FLAG FOR MANUAL REVIEW]",
+  "FLAG-C: ICL 304 (LL.B Common and Islamic Law, 300-level): Table (p.57–58) lists this course as \"Enterprise Appreciation\" / 2 units / LH 30 / C. Course content section (p.73–74) presents \"ICL 304: Islamic Family Law\" with 3 units / LH 45. Title, unit load, and contact hours all conflict. This is a major discrepancy in the source document. Both versions are recorded verbatim. [FLAG FOR MANUAL REVIEW — CRITICAL]",
+  "FLAG-D: LL.B Common and Islamic Law 500-level table (p.59): JIL 501, JIL 502, PPL 501, PPL 502 are listed with LH 60 and no PH column. Course content sections for all four courses show LH 45 / PH 45. The table also omits a PH column header for this level entirely. [FLAG FOR MANUAL REVIEW]",
+  "FLAG-E: LAW 599 in LL.B Common and Islamic Law 500-level table (p.59) shows LH 270 with no PH. The same course in the LL.B table shows LH 45 / PH 45. Course content text for both programmes is identical and does not specify LH/PH breakdown. [FLAG FOR MANUAL REVIEW]",
+  "FLAG-F: ENT 211 in LL.B Common and Islamic Law 200-level table (p.57): PH column appears blank. The same course in the LL.B table shows PH 15. [FLAG FOR MANUAL REVIEW]",
+  "FLAG-G: ICL 301 in course content section (p.73) is presented without the \"ICL\" prefix in the section heading, reading only \"301: Mu'amalat (Islamic Law of Transactions)\". The course code ICL 301 is used in this extraction as it appears in the 300-level table. [FLAG FOR MANUAL REVIEW]"
+ ],
+ "programmes": [
+  {
+   "code": "LAW",
+   "name": "Law",
+   "qualification": "LL.B",
+   "duration_years": 5,
+   "employability_skills": [
+    "Robust legal argument skills",
+    "Communication skills",
+    "Research and brief writing skills",
+    "Arbitration and Mediation competencies",
+    "Analytical skills to solving theoretical and practical legal problems",
+    "Practice management skills",
+    "Transactional skills, such as the ability to structure a legal transaction effectively",
+    "Legal drafting skills"
+   ],
+   "pathways": [
+    {
+     "id": "A",
+     "name": "Public, Constitutional & International Law"
+    },
+    {
+     "id": "B",
+     "name": "Labour, Social & Criminal Justice"
+    },
+    {
+     "id": "C",
+     "name": "Private, Commercial & Property Law"
+    },
+    {
+     "id": "D",
+     "name": "Islamic, Customary & Comparative Law"
+    },
+    {
+     "id": "E",
+     "name": "Interdisciplinary Non-Law"
+    }
+   ],
+   "courses": [
+    {
+     "level": 100,
+     "code": "GST 111",
+     "title": "Communication in English",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "identify possible sound patterns in the English Language",
+      "list notable Language skills",
+      "classify word-formation processes",
+      "construct simple and relatively complex sentences in English",
+      "apply logical and critical reasoning skills for meaningful presentations",
+      "demonstrate an appreciable level of the art of public speaking and listening; and",
+      "write technical and straightforward reports.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "GST 112",
+     "title": "Nigerian Peoples and Culture",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+      "list and identify the major linguistic groups in Nigeria",
+      "explain the gradual evolution of Nigeria as a political unit",
+      "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+      "enumerate the challenges of the Nigerian State towards Nation building",
+      "analyse the role of the Judiciary in upholding people's fundamental rights",
+      "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+      "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problems.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "PSY 101",
+     "title": "Introduction to Psychology",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "discuss the aim of studying psychology",
+      "discuss and critically evaluate the schools of Psychology",
+      "discuss the historical antecedents to modern Psychology",
+      "explain different areas of specialisation in Psychology",
+      "mention the methods of investigation, data collection and principles that guide scientific research; and",
+      "discuss the relationship between psychology and other disciplines and critically evaluate the controversies in psychology.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "PHL 105",
+     "title": "Introduction to Social and Political Philosophy",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [
+      "FLAG-A"
+     ],
+     "resolution": "FLAG-A RESOLVED: 'PHL 105' confirmed correct per NUC PDF (table + content agree); glossary 'PHY 105' is a typo (PHY=Physics, PHL=Philosophy). No value change.",
+     "skills_learned": [
+      "have acquired a good understanding of what Social and Political Philosophy is all about",
+      "be familiar with the notions of society, the origin of the state, the individual in society, political obligations, leadership and",
+      "appreciate their role as citizens and help shape their relationship with other constituents of society.\" > **NOTE — FLAG-A:** Course listed in Glossary as \"PHY 105\" but as \"PHL 105\" in table and content. See pre-extraction flags"
+     ],
+     "content_summary": "**Suggested Law Courses** | Course Title | Weight (Credit Units) | Elective Pathway Cluster | |---|---|---| | Administrative Law | 8 | Pathway A: Public, Constitutional & International Law | | Revenue/Taxation Law | 8 | Pathway A: Public, Constitutional & International Law | | Industrial Law or Labour Law | 8 | Pathway B: Labour, Social & Criminal Justice | | Oil and Gas Law | 8 | Pathway A: Publi"
+    },
+    {
+     "level": 100,
+     "code": "PUL 101",
+     "title": "Legal Methods I",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the various legal rules, methods, processes and reasoning",
+      "acquire basic knowledge of the fundamental concepts of law and the various legal systems",
+      "gain knowledge of the function of law in society; and",
+      "appreciate the various aspects and perspectives of law.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "PUL 102",
+     "title": "Legal Methods II",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the hierarchy and categories of sources of law",
+      "illustrate basic knowledge in the use of various legal materials and resources",
+      "identify basic knowledge in the way and style of legal writing; and",
+      "familiarise themselves with the ethics of the legal profession, including dress codes and modes\"",
+      "familiarise with the ethics of the legal profession, including dress codes and modes\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "LAW 101",
+     "title": "English for Legal Writing",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal terminology, rhetoric, logic, reasoning and legalism",
+      "list the tools and skills required by law students to study and display the ability to apply them",
+      "explain the fundamentals of English Grammar",
+      "demonstrate ability in both reading and writing skills consisting of presentations",
+      "organise ideas in writing of legal letters, reports, essays and examination answers; and",
+      "distinguish between main ideas from supporting details.\"",
+      "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal language, rhetoric, logic, reasoning and legalism"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "LAW 102",
+     "title": "Introduction to Logic",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "identify the basic features of logic as an academic discipline",
+      "identify the main branches of logic in philosophical discourse",
+      "describe the elementary rules of reasoning and application to logic",
+      "recognise arguments, deduction and induction, truth and validity",
+      "extrapolate and deploy expertise in logic to other areas of knowledge; and",
+      "apply the knowledge and expertise acquired in logic.\""
+     ],
+     "content_summary": "--- ### 200 Level ---"
+    },
+    {
+     "level": 200,
+     "code": "GST 212",
+     "title": "Philosophy, Logic and Human Existence",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "tell the basic features of philosophy as an academic discipline",
+      "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+      "explain the elementary rules of reasoning",
+      "distinguish between valid and invalid arguments",
+      "think critically and assess arguments in texts, conversations and day-to-day discussions",
+      "critically assess the rationality or otherwise of human conduct under different existential conditions",
+      "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge; and",
+      "use the knowledge and expertise acquired in philosophy and logic.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "ENT 211",
+     "title": "Entrepreneurship and Innovation",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [
+      "FLAG-F"
+     ],
+     "resolution": "FLAG-F RESOLVED: set LH 15 / PH 45 per NUC course-content section (the authoritative full spec). Structure-table figures were a column-misalignment/omission artifact.",
+     "skills_learned": [
+      "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk-taking",
+      "state the characteristics of an entrepreneur",
+      "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+      "engage in entrepreneurial thinking",
+      "identify key elements in innovation",
+      "describe stages in enterprise formation, partnership and networking, including business planning",
+      "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a",
+      "state the basic principles of e-commerce.\" > **NOTE:** The verbatim text shows \"7. describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a\" — the letter \"a\" at the end of item 7 appears to be a typographical error in the source document. Extracted verbatim as printed",
+      "analyse the importance of micro and small businesses in wealth creation, employment, and financial independence",
+      "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; and",
+      "state the basic principles of e-commerce.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 201",
+     "title": "Constitutional Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "gain basic knowledge on the fundamental concepts and doctrines of constitutional law and constitutionalism",
+      "tell the historical trends and constitutional developments in Nigeria and their relevance to the study of constitutional law today",
+      "identify and analyse constitutional law issues relating to federalism, the rule of law, separation of powers, human rights, systems of government, citizenship, judicial review, amongst others",
+      "compare the constitutional frameworks of one system and others; and",
+      "demonstrate understanding of the implementation, interpretation and case law on provisions of the constitution.\"",
+      "gain basic knowledge of the fundamental concepts and doctrines of constitutional Law and constitutionalism",
+      "demonstrate understanding of the implementation, interpretation and case law on provisions of the con situation.\" > **NOTE:** Item 5 reads \"con situation\" — appears to be a typographical error for \"constitution\" in the source document. Extracted verbatim"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 202",
+     "title": "Constitutional Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the basic safeguards of every constitution",
+      "explain the rationale behind some basic constitutional provisions such as human rights and separation of power",
+      "appreciate the strengths and weaknesses of various types of constitutions",
+      "tell the extent and scope of the powers of each arm of the government and whether one is superior to the other",
+      "demonstrate an understanding of election or appointment of any government officials into office; and",
+      "application of constitutional provisions to doctrines.\"",
+      "understand the rationale behind some basic constitutional provisions such as human rights and separation of power",
+      "know the extent and scope of the powers of each arm of the government and whether one is superior to the other"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 203",
+     "title": "Nigerian Legal System I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "tell the basic knowledge of legal concepts",
+      "describe historical trends and developments,",
+      "appreciate sources of the Nigerian Legal System; and",
+      "recognise the court system, the structure, hierarchy and appointment of Judicial officers in Nigeria\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 204",
+     "title": "Nigerian Legal System II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "differentiate between Common Law, Doctrines of Equity, Statutes and Customary/Islamic law",
+      "understand the compatibility and repugnancy doctrine",
+      "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis",
+      "appreciate the requirements of becoming a legal Practitioner, a judge or a member of a judicial body\"",
+      "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis; and"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "CIL 201",
+     "title": "Law of Contract I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles governing contractual relations in Nigeria, as these principles constitute the foundation of virtually all transactions",
+      "learn the various forms of terms expressed or implied in daily transactions; and",
+      "be informed on the contractual liability or responsibility of a party.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "CIL 202",
+     "title": "Law of Contract II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "fully appreciate the factors rendering an agreement unenforceable",
+      "differentiate between void, voidable and illegal contracts",
+      "appreciate the basis under which contractual relationships terminate; and",
+      "be introduced to ways of enforcing a contractual obligation.\""
+     ],
+     "content_summary": "--- ### 300 Level ---"
+    },
+    {
+     "level": 300,
+     "code": "GST 312",
+     "title": "Peace and Conflict Resolution",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "analyse the concepts of peace, conflict and security",
+      "list major forms, types and root causes of conflict and violence",
+      "differentiate between conflict and terrorism",
+      "enumerate security and peacebuilding strategies; and",
+      "describe roles of international organisations, media and traditional institutions in peacebuilding\"",
+      "describe roles of international organisations, media and traditional institutions in Peace building.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "ENT 312",
+     "title": "Venture Creation",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "describe the key steps in venture creation",
+      "spot opportunities in problems and high potential sectors regardless of geographical location",
+      "state how original products, ideas, and concepts are developed",
+      "develop a business concept for further incubation or pitching for funding",
+      "identify key sources of entrepreneurial finance",
+      "implement the requirements for establishing and managing micro and small enterprises",
+      "conduct entrepreneurial marketing and e-commerce",
+      "apply a wide variety of emerging technological solutions to entrepreneurship; and",
+      "appreciate why ventures fail due to lack of planning and poor implementation.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PUL 301",
+     "title": "Criminal Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles of criminal liability in Nigeria; and",
+      "appreciate the sources of criminal law in Nigeria and its importance in the maintenance of law and order in the society\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PUL 302",
+     "title": "Criminal Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "distinguish between various crimes and their effects on the individuals and the society",
+      "appreciate the administration of criminal justice in society",
+      "explain the principles of punishment; and",
+      "appreciate the application of statutes to the doctrines\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PPL 301",
+     "title": "Law of Torts I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 15,
+     "flags": [],
+     "skills_learned": [
+      "acquire basic knowledge and understanding of the fundamental principles of tort,",
+      "explain the concepts and history of tort law generally",
+      "appreciate the sources of law of tort; and",
+      "explain the contents of key legal issues in tort law.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PPL 302",
+     "title": "Law of Torts II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate principles of liability in tort and the relationship between tort and crime",
+      "explain scopes of trespass and nuisance",
+      "appreciate the principles of negligence, the duty of care and strict liability; and",
+      "comprehend defences and remedies in tort.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "CIL 303",
+     "title": "Commercial Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 15,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles governing the diverse forms of commercial transactions in Nigeria; and",
+      "familiarize with the legal provisions regulating selling and buying\"",
+      "familiarise themselves with the legal provisions regulating selling and buying\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "CIL 304",
+     "title": "Commercial Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency; and",
+      "understand the scope of an agency relationship with the principal and third party.\"",
+      "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency"
+     ],
+     "content_summary": "--- ### 400 Level ---"
+    },
+    {
+     "level": 400,
+     "code": "PUL 401",
+     "title": "Law of Evidence I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "describe the meaning and purposes of the evidentiary rules and burden of proof",
+      "appreciate the nature and types of evidence",
+      "comprehend the types and roles of witnesses in legal proceedings",
+      "appreciate the rules governing relevancy, weight and the admissibility of evidence at trial; and",
+      "demonstrate a clear understanding of the relationship between the theoretical context of the law of evidence and its practical application at trial.\"",
+      "understand the meaning and purposes of the evidentiary rules and burden of proof"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PUL 402",
+     "title": "Law of Evidence II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the importance of opinion",
+      "know when to refer to the character of a party/witness",
+      "describe compellability of witnesses; and",
+      "identify the need for corroboration in evidence.\"",
+      "understand compellability of witnesses; and"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 403",
+     "title": "Equity and Trusts I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles of equity vis-à-vis the Common Law and their relevance to legal practice and administration of justice in Nigeria; and",
+      "appreciate the origins of these principles, maxims and their legal implications.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 404",
+     "title": "Equity and Trusts II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the principles of trust",
+      "comprehend the practical use of trust in the society; and",
+      "appreciate options of administering an estate through trust.\"",
+      "Understand the principles of trust",
+      "Comprehend the practical use of trust in the society; and",
+      "Appreciate options of administering an estate through trust.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 405",
+     "title": "Property Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles governing property transactions in Nigeria",
+      "appreciate the nature and legal sources of these transactions; and",
+      "comprehend the significance of the real property to economic development and legal rights involved in real/landed property.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 406",
+     "title": "Property Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be familiar with the laws regulating property acquisition and disposition in Nigeria",
+      "appreciate the forms of titles over land",
+      "recognize the control and ownership of natural resources throughout the federation; and",
+      "appreciate the application of the requisite statutes to the principle of property Law\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "CLE 401",
+     "title": "Clinical and Moot Court Practice",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be actively engaged in the Moot/Mock Trial",
+      "have the fundamental exposure to the practice at law office and courtroom; and",
+      "have a grasp of legal drafting, advocacy, and developing the needed spirit and courage in addressing and comporting oneself before the court and the public.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "CLE 402",
+     "title": "Clinical and Moot Court Practice",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "familiarize themselves with the artistry of client relationships",
+      "experience practical community service by lawyers; and",
+      "gain legal awareness, creation and orientation strategy.\"",
+      "familiarize with the artistry of client relationships"
+     ],
+     "content_summary": "--- ### 500 Level ---"
+    },
+    {
+     "level": 500,
+     "code": "JIL 501",
+     "title": "Jurisprudence and Legal Theory I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the essential critical legal thinking skills using the diverse legal theories and concepts",
+      "appreciate the critical role of legal theories in legal reforms and administration of justice; and",
+      "appreciate the origins of these principles.\"",
+      "be well-equipped with the basic critical legal thinking skills using the diverse legal theories and concepts"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "JIL 502",
+     "title": "Jurisprudence and Legal Theory II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the purpose of law in society",
+      "differentiate between the major schools of law and their doctrines",
+      "compare various theories of law; and",
+      "understand the difference between law and other related concepts.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "PPL 501",
+     "title": "Company Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "have the basic knowledge and understanding of the evolution, nature, forms and structures of companies",
+      "tell how law steps in to regulate activities of and within companies",
+      "describe the legal framework on the forms of business organisations in Nigeria and the procedures for their incorporation",
+      "appreciate the legal basis for corporate power structure; understand the key stakeholders of companies and the legal processes for the alignment of their interests within the company",
+      "comprehend the framework for raising capital by companies; the regulators of various forms of companies in Nigeria; and",
+      "appreciate the principles and procedures for the liquidation of companies.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "PPL 502",
+     "title": "Company Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "get acquainted with Company Securities, shares and debentures",
+      "understand principles concerning company directors and other officers",
+      "appreciate company secretarial responsibilities",
+      "acquire basic knowledge concerning mergers and acquisitions; and",
+      "understand the process of winding up a company.\"",
+      "understand the process of winding up a company\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "LAW 599",
+     "title": "Long Essay",
+     "units": 6,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "Recognize the essential techniques of interpreting Islamic law's classical concepts and terminology.\""
+     ],
+     "content_summary": "--- ### 100 Level ---"
+    },
+    {
+     "level": null,
+     "code": "Administrative Law",
+     "title": "Administrative Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Revenue/Taxation Law",
+     "title": "Revenue/Taxation Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Industrial Law or Labour Law",
+     "title": "Industrial Law or Labour Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Oil and Gas Law",
+     "title": "Oil and Gas Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Public International Law",
+     "title": "Public International Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Conflict of Laws",
+     "title": "Conflict of Laws",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Family Law/The Family and the Law",
+     "title": "Family Law/The Family and the Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Conveyancing",
+     "title": "Conveyancing",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Criminology",
+     "title": "Criminology",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Introduction to Islamic Law",
+     "title": "Introduction to Islamic Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Law of Banking",
+     "title": "Law of Banking",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Law of Insurance",
+     "title": "Law of Insurance",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Law of Intellectual Property",
+     "title": "Law of Intellectual Property",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Maritime Law",
+     "title": "Maritime Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Human Rights and Nigerian Law",
+     "title": "Human Rights and Nigerian Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Customary Law",
+     "title": "Customary Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Environmental Law",
+     "title": "Environmental Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "African Comparative Law",
+     "title": "African Comparative Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Information and Communication Technologies Law",
+     "title": "Information and Communication Technologies Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Health Law or Law and Medicine",
+     "title": "Health Law or Law and Medicine",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Islamic Law of Crimes and Tort",
+     "title": "Islamic Law of Crimes and Tort",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Islamic Law of Transactions",
+     "title": "Islamic Law of Transactions",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the underlying philosophy of contractual transactions in Islam;",
+      "understand the meaning of and types of contracts in Islam;",
+      "appreciate legal concepts and theories of the various types of contracts in Islamic law; and",
+      "appreciate the rules and general principles guiding agency, hire-purchase and other forms of contracts."
+     ],
+     "content_summary": "Mu'amalat (Islamic Law of Transactions) (ICL 301): philosophy, meaning and types of contracts in Islam; legal concepts and theories of contracts; rules guiding agency, hire-purchase and other forms of contracts in Islamic law."
+    },
+    {
+     "level": null,
+     "code": "Islamic Law of Procedure and Evidence",
+     "title": "Islamic Law of Procedure and Evidence",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "gain a practical understanding of Islamic Law and procedures;",
+      "understand the general rules of evidence in Islamic law and its modes;",
+      "understand pre, during and post-trial procedures;",
+      "appreciate the principle of presumption of innocence, and the investigation and primary-questioning stage; and",
+      "understand the Indictment process."
+     ],
+     "content_summary": "Islamic Law of Procedure & Evidence (Murafa'at) (ICL 503): Islamic legal procedures; general rules and modes of evidence; pre-, during- and post-trial procedures; presumption of innocence, investigation and indictment process."
+    },
+    {
+     "level": null,
+     "code": "Islamic Family Law and Succession",
+     "title": "Islamic Family Law and Succession",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Islamic Jurisprudence",
+     "title": "Islamic Jurisprudence",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "understand the principles, concepts and doctrines of Islamic law;",
+      "acquire knowledge of interpretative rules and Interpretation of Islamic texts;",
+      "understand the different Islamic schools of law or jurisprudence (Hanafi, Maliki, Shaf'i, and the Hanbali schools); and",
+      "appreciate the theory of Ijtihad (\"Individual Reasoning\") and Fatwa."
+     ],
+     "content_summary": "Usul Al-Fiqh I (Islamic Jurisprudence) (ICL 501): principles, concepts and doctrines of Islamic law; interpretative rules and interpretation of Islamic texts; the Hanafi, Maliki, Shaf'i and Hanbali schools; theory of Ijtihad and Fatwa."
+    },
+    {
+     "level": null,
+     "code": "Economics",
+     "title": "Economics",
+     "units": null,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Elements of Business/Management",
+     "title": "Elements of Business/Management",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Political Science/Elements of Government",
+     "title": "Political Science/Elements of Government",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Philosophy",
+     "title": "Philosophy",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Social Relations",
+     "title": "Social Relations",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Psychology",
+     "title": "Psychology",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "English",
+     "title": "English",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Such other non-law courses as the faculty may determine from time to time",
+     "title": "Such other non-law courses as the faculty may determine from time to time",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    }
+   ],
+   "skills_profile": [
+    "Robust legal argument skills",
+    "Communication skills",
+    "Research and brief writing skills",
+    "Arbitration and Mediation competencies",
+    "Analytical skills to solving theoretical and practical legal problems",
+    "Practice management skills",
+    "Transactional skills, such as the ability to structure a legal transaction effectively",
+    "Legal drafting skills",
+    "identify possible sound patterns in the English Language",
+    "list notable Language skills",
+    "classify word-formation processes",
+    "construct simple and relatively complex sentences in English",
+    "apply logical and critical reasoning skills for meaningful presentations",
+    "demonstrate an appreciable level of the art of public speaking and listening; and",
+    "write technical and straightforward reports.\"",
+    "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+    "list and identify the major linguistic groups in Nigeria",
+    "explain the gradual evolution of Nigeria as a political unit",
+    "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+    "enumerate the challenges of the Nigerian State towards Nation building",
+    "analyse the role of the Judiciary in upholding people's fundamental rights",
+    "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+    "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problems.\"",
+    "discuss the aim of studying psychology",
+    "discuss and critically evaluate the schools of Psychology",
+    "discuss the historical antecedents to modern Psychology",
+    "explain different areas of specialisation in Psychology",
+    "mention the methods of investigation, data collection and principles that guide scientific research; and",
+    "discuss the relationship between psychology and other disciplines and critically evaluate the controversies in psychology.\"",
+    "have acquired a good understanding of what Social and Political Philosophy is all about",
+    "be familiar with the notions of society, the origin of the state, the individual in society, political obligations, leadership and",
+    "appreciate their role as citizens and help shape their relationship with other constituents of society.\" > **NOTE — FLAG-A:** Course listed in Glossary as \"PHY 105\" but as \"PHL 105\" in table and content. See pre-extraction flags",
+    "appreciate the various legal rules, methods, processes and reasoning",
+    "acquire basic knowledge of the fundamental concepts of law and the various legal systems",
+    "gain knowledge of the function of law in society; and",
+    "appreciate the various aspects and perspectives of law.\"",
+    "appreciate the hierarchy and categories of sources of law",
+    "illustrate basic knowledge in the use of various legal materials and resources",
+    "identify basic knowledge in the way and style of legal writing; and",
+    "familiarise themselves with the ethics of the legal profession, including dress codes and modes\"",
+    "familiarise with the ethics of the legal profession, including dress codes and modes\"",
+    "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal terminology, rhetoric, logic, reasoning and legalism",
+    "list the tools and skills required by law students to study and display the ability to apply them",
+    "explain the fundamentals of English Grammar",
+    "demonstrate ability in both reading and writing skills consisting of presentations",
+    "organise ideas in writing of legal letters, reports, essays and examination answers; and",
+    "distinguish between main ideas from supporting details.\"",
+    "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal language, rhetoric, logic, reasoning and legalism",
+    "identify the basic features of logic as an academic discipline",
+    "identify the main branches of logic in philosophical discourse",
+    "describe the elementary rules of reasoning and application to logic",
+    "recognise arguments, deduction and induction, truth and validity",
+    "extrapolate and deploy expertise in logic to other areas of knowledge; and",
+    "apply the knowledge and expertise acquired in logic.\"",
+    "tell the basic features of philosophy as an academic discipline",
+    "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+    "explain the elementary rules of reasoning",
+    "distinguish between valid and invalid arguments",
+    "think critically and assess arguments in texts, conversations and day-to-day discussions",
+    "critically assess the rationality or otherwise of human conduct under different existential conditions",
+    "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge; and",
+    "use the knowledge and expertise acquired in philosophy and logic.\"",
+    "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk-taking",
+    "state the characteristics of an entrepreneur",
+    "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+    "engage in entrepreneurial thinking",
+    "identify key elements in innovation",
+    "describe stages in enterprise formation, partnership and networking, including business planning",
+    "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a",
+    "state the basic principles of e-commerce.\" > **NOTE:** The verbatim text shows \"7. describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a\" — the letter \"a\" at the end of item 7 appears to be a typographical error in the source document. Extracted verbatim as printed",
+    "analyse the importance of micro and small businesses in wealth creation, employment, and financial independence",
+    "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; and",
+    "state the basic principles of e-commerce.\"",
+    "gain basic knowledge on the fundamental concepts and doctrines of constitutional law and constitutionalism",
+    "tell the historical trends and constitutional developments in Nigeria and their relevance to the study of constitutional law today",
+    "identify and analyse constitutional law issues relating to federalism, the rule of law, separation of powers, human rights, systems of government, citizenship, judicial review, amongst others",
+    "compare the constitutional frameworks of one system and others; and",
+    "demonstrate understanding of the implementation, interpretation and case law on provisions of the constitution.\"",
+    "gain basic knowledge of the fundamental concepts and doctrines of constitutional Law and constitutionalism",
+    "demonstrate understanding of the implementation, interpretation and case law on provisions of the con situation.\" > **NOTE:** Item 5 reads \"con situation\" — appears to be a typographical error for \"constitution\" in the source document. Extracted verbatim",
+    "appreciate the basic safeguards of every constitution",
+    "explain the rationale behind some basic constitutional provisions such as human rights and separation of power",
+    "appreciate the strengths and weaknesses of various types of constitutions",
+    "tell the extent and scope of the powers of each arm of the government and whether one is superior to the other",
+    "demonstrate an understanding of election or appointment of any government officials into office; and",
+    "application of constitutional provisions to doctrines.\"",
+    "understand the rationale behind some basic constitutional provisions such as human rights and separation of power",
+    "know the extent and scope of the powers of each arm of the government and whether one is superior to the other",
+    "tell the basic knowledge of legal concepts",
+    "describe historical trends and developments,",
+    "appreciate sources of the Nigerian Legal System; and",
+    "recognise the court system, the structure, hierarchy and appointment of Judicial officers in Nigeria\"",
+    "differentiate between Common Law, Doctrines of Equity, Statutes and Customary/Islamic law",
+    "understand the compatibility and repugnancy doctrine",
+    "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis",
+    "appreciate the requirements of becoming a legal Practitioner, a judge or a member of a judicial body\"",
+    "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis; and",
+    "be well-equipped with the basic principles governing contractual relations in Nigeria, as these principles constitute the foundation of virtually all transactions",
+    "learn the various forms of terms expressed or implied in daily transactions; and",
+    "be informed on the contractual liability or responsibility of a party.\"",
+    "fully appreciate the factors rendering an agreement unenforceable",
+    "differentiate between void, voidable and illegal contracts",
+    "appreciate the basis under which contractual relationships terminate; and",
+    "be introduced to ways of enforcing a contractual obligation.\"",
+    "analyse the concepts of peace, conflict and security",
+    "list major forms, types and root causes of conflict and violence",
+    "differentiate between conflict and terrorism",
+    "enumerate security and peacebuilding strategies; and",
+    "describe roles of international organisations, media and traditional institutions in peacebuilding\"",
+    "describe roles of international organisations, media and traditional institutions in Peace building.\"",
+    "describe the key steps in venture creation",
+    "spot opportunities in problems and high potential sectors regardless of geographical location",
+    "state how original products, ideas, and concepts are developed",
+    "develop a business concept for further incubation or pitching for funding",
+    "identify key sources of entrepreneurial finance",
+    "implement the requirements for establishing and managing micro and small enterprises",
+    "conduct entrepreneurial marketing and e-commerce",
+    "apply a wide variety of emerging technological solutions to entrepreneurship; and",
+    "appreciate why ventures fail due to lack of planning and poor implementation.\"",
+    "be well-equipped with the basic principles of criminal liability in Nigeria; and",
+    "appreciate the sources of criminal law in Nigeria and its importance in the maintenance of law and order in the society\"",
+    "distinguish between various crimes and their effects on the individuals and the society",
+    "appreciate the administration of criminal justice in society",
+    "explain the principles of punishment; and",
+    "appreciate the application of statutes to the doctrines\"",
+    "acquire basic knowledge and understanding of the fundamental principles of tort,",
+    "explain the concepts and history of tort law generally",
+    "appreciate the sources of law of tort; and",
+    "explain the contents of key legal issues in tort law.\"",
+    "appreciate principles of liability in tort and the relationship between tort and crime",
+    "explain scopes of trespass and nuisance",
+    "appreciate the principles of negligence, the duty of care and strict liability; and",
+    "comprehend defences and remedies in tort.\"",
+    "be well-equipped with the basic principles governing the diverse forms of commercial transactions in Nigeria; and",
+    "familiarize with the legal provisions regulating selling and buying\"",
+    "familiarise themselves with the legal provisions regulating selling and buying\"",
+    "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency; and",
+    "understand the scope of an agency relationship with the principal and third party.\"",
+    "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency",
+    "describe the meaning and purposes of the evidentiary rules and burden of proof",
+    "appreciate the nature and types of evidence",
+    "comprehend the types and roles of witnesses in legal proceedings",
+    "appreciate the rules governing relevancy, weight and the admissibility of evidence at trial; and",
+    "demonstrate a clear understanding of the relationship between the theoretical context of the law of evidence and its practical application at trial.\"",
+    "understand the meaning and purposes of the evidentiary rules and burden of proof",
+    "appreciate the importance of opinion",
+    "know when to refer to the character of a party/witness",
+    "describe compellability of witnesses; and",
+    "identify the need for corroboration in evidence.\"",
+    "understand compellability of witnesses; and",
+    "be well-equipped with the basic principles of equity vis-à-vis the Common Law and their relevance to legal practice and administration of justice in Nigeria; and",
+    "appreciate the origins of these principles, maxims and their legal implications.\"",
+    "appreciate the principles of trust",
+    "comprehend the practical use of trust in the society; and",
+    "appreciate options of administering an estate through trust.\"",
+    "Understand the principles of trust",
+    "be well-equipped with the basic principles governing property transactions in Nigeria",
+    "appreciate the nature and legal sources of these transactions; and",
+    "comprehend the significance of the real property to economic development and legal rights involved in real/landed property.\"",
+    "be familiar with the laws regulating property acquisition and disposition in Nigeria",
+    "appreciate the forms of titles over land",
+    "recognize the control and ownership of natural resources throughout the federation; and",
+    "appreciate the application of the requisite statutes to the principle of property Law\"",
+    "be actively engaged in the Moot/Mock Trial",
+    "have the fundamental exposure to the practice at law office and courtroom; and",
+    "have a grasp of legal drafting, advocacy, and developing the needed spirit and courage in addressing and comporting oneself before the court and the public.\"",
+    "familiarize themselves with the artistry of client relationships",
+    "experience practical community service by lawyers; and",
+    "gain legal awareness, creation and orientation strategy.\"",
+    "familiarize with the artistry of client relationships",
+    "be well-equipped with the essential critical legal thinking skills using the diverse legal theories and concepts",
+    "appreciate the critical role of legal theories in legal reforms and administration of justice; and",
+    "appreciate the origins of these principles.\"",
+    "be well-equipped with the basic critical legal thinking skills using the diverse legal theories and concepts",
+    "appreciate the purpose of law in society",
+    "differentiate between the major schools of law and their doctrines",
+    "compare various theories of law; and",
+    "understand the difference between law and other related concepts.\"",
+    "have the basic knowledge and understanding of the evolution, nature, forms and structures of companies",
+    "tell how law steps in to regulate activities of and within companies",
+    "describe the legal framework on the forms of business organisations in Nigeria and the procedures for their incorporation",
+    "appreciate the legal basis for corporate power structure; understand the key stakeholders of companies and the legal processes for the alignment of their interests within the company",
+    "comprehend the framework for raising capital by companies; the regulators of various forms of companies in Nigeria; and",
+    "appreciate the principles and procedures for the liquidation of companies.\"",
+    "get acquainted with Company Securities, shares and debentures",
+    "understand principles concerning company directors and other officers",
+    "appreciate company secretarial responsibilities",
+    "acquire basic knowledge concerning mergers and acquisitions; and",
+    "understand the process of winding up a company.\"",
+    "Recognize the essential techniques of interpreting Islamic law's classical concepts and terminology.\"",
+    "appreciate the underlying philosophy of contractual transactions in Islam",
+    "understand the meaning of and types of contracts in Islam",
+    "appreciate legal concepts and theories of the various types of contracts in Islamic law; and",
+    "appreciate the rules and general principles guiding agency, hire-purchase and other forms of contracts",
+    "gain a practical understanding of Islamic Law and procedures",
+    "understand the general rules of evidence in Islamic law and its modes",
+    "understand pre, during and post-trial procedures",
+    "appreciate the principle of presumption of innocence, and the investigation and primary-questioning stage; and",
+    "understand the Indictment process",
+    "understand the principles, concepts and doctrines of Islamic law",
+    "acquire knowledge of interpretative rules and Interpretation of Islamic texts",
+    "understand the different Islamic schools of law or jurisprudence (Hanafi, Maliki, Shaf'i, and the Hanbali schools); and",
+    "appreciate the theory of Ijtihad (\"Individual Reasoning\") and Fatwa"
+   ]
+  },
+  {
+   "code": "ICL",
+   "name": "Common and Islamic Law",
+   "qualification": "LL.B Common & Islamic Law (Combined)",
+   "duration_years": 5,
+   "employability_skills": [
+    "Robust legal argument skills;",
+    "Communication skills;",
+    "Research and brief writing skills;",
+    "Arbitration and Mediation competencies;",
+    "Analytical skills to solving theoretical and practical legal problems;",
+    "Practice management skills;",
+    "Transactional skills, such as the ability to structure a legal transaction effectively; and",
+    "Legal drafting skills"
+   ],
+   "pathways": [
+    {
+     "id": "A",
+     "name": "Public, Constitutional & International Law"
+    },
+    {
+     "id": "B",
+     "name": "Labour, Social & Criminal Justice"
+    },
+    {
+     "id": "C",
+     "name": "Private, Commercial & Property Law"
+    },
+    {
+     "id": "D",
+     "name": "Customary & Comparative Law"
+    },
+    {
+     "id": "E",
+     "name": "Interdisciplinary Non-Law"
+    }
+   ],
+   "courses": [
+    {
+     "level": 100,
+     "code": "GST 111",
+     "title": "Communication in English",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "identify possible sound patterns in the English Language",
+      "list notable Language skills",
+      "classify word-formation processes",
+      "construct simple and relatively complex sentences in English",
+      "apply logical and critical reasoning skills for meaningful presentations",
+      "demonstrate an appreciable level of the art of public speaking and listening; and",
+      "write technical and straightforward reports.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "GST 112",
+     "title": "Nigerian Peoples and Culture",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+      "list and identify the major linguistic groups in Nigeria",
+      "explain the gradual evolution of Nigeria as a political unit",
+      "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+      "enumerate the challenges of the Nigerian State towards Nation building",
+      "analyse the role of the Judiciary in upholding people's fundamental rights",
+      "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+      "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problems.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "PUL 101",
+     "title": "Legal Method I",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the various legal rules, methods, processes and reasoning",
+      "acquire basic knowledge of the fundamental concepts of law and the various legal systems",
+      "gain knowledge of the function of law in society; and",
+      "appreciate the various aspects and perspectives of law.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "PUL 102",
+     "title": "Legal Method II",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the hierarchy and categories of sources of law",
+      "illustrate basic knowledge in the use of various legal materials and resources",
+      "identify basic knowledge in the way and style of legal writing; and",
+      "familiarise themselves with the ethics of the legal profession, including dress codes and modes\"",
+      "familiarise with the ethics of the legal profession, including dress codes and modes\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "LAW 101",
+     "title": "English for Legal Writing",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal terminology, rhetoric, logic, reasoning and legalism",
+      "list the tools and skills required by law students to study and display the ability to apply them",
+      "explain the fundamentals of English Grammar",
+      "demonstrate ability in both reading and writing skills consisting of presentations",
+      "organise ideas in writing of legal letters, reports, essays and examination answers; and",
+      "distinguish between main ideas from supporting details.\"",
+      "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal language, rhetoric, logic, reasoning and legalism"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 100,
+     "code": "LAW 102",
+     "title": "Introduction to Logic",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "identify the basic features of logic as an academic discipline",
+      "identify the main branches of logic in philosophical discourse",
+      "describe the elementary rules of reasoning and application to logic",
+      "recognise arguments, deduction and induction, truth and validity",
+      "extrapolate and deploy expertise in logic to other areas of knowledge; and",
+      "apply the knowledge and expertise acquired in logic.\""
+     ],
+     "content_summary": "--- ### 200 Level ---"
+    },
+    {
+     "level": 100,
+     "code": "ICL 101",
+     "title": "Introduction to General Principle of Islamic Law",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [
+      "FLAG-B"
+     ],
+     "disputed": {
+      "nuc_structure_table": {
+       "units": 2,
+       "lh": 30
+      },
+      "nuc_content_section": {
+       "units": 3,
+       "lh": 45
+      },
+      "primary_used": "nuc_structure_table",
+      "note": "NUC PDF self-conflict on ICL 101 units & LH. Structure-table value kept as primary; content-section value retained here.",
+      "needs_owner_decision": false
+     },
+     "skills_learned": [
+      "acquire basic knowledge of Islamic law generally",
+      "understand the sources of Islamic law, the formation of Islamic jurisprudence, and the history of the development of Islamic law",
+      "familiarise themselves with some basic principles of Islamic law",
+      "explain the essential techniques of interpreting the classical concepts and terminologies of the law",
+      "assess critically contemporary issues in the field of Islamic law; and",
+      "undertake both written and oral analysis.\""
+     ],
+     "content_summary": "\"At the end of the Course, students are expected to: 1. acquire basic knowledge of Islamic law generally; 2. understand the sources of Islamic law, the formation of Islamic jurisprudence, and the history of the development of Islamic law; 3. familiarise themselves with some basic principles of Islamic law; 4. explain the essential techniques of interpreting the classical concepts and terminologies"
+    },
+    {
+     "level": 100,
+     "code": "ICL 104",
+     "title": "Arabic Language for Legal Studies",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "recognize the Arabic Alphabet and numbers",
+      "read, understand and construct sentences in the Arabic language",
+      "access the primary sources of Islamic law, the Qur'an and Hadith; and",
+      "have an idea of Arabic as the language of the revelation of Islamic Law; and",
+      "identify the intricacies of translations and interpretations of Islamic Law texts.\""
+     ],
+     "content_summary": "--- ### 200 Level ---"
+    },
+    {
+     "level": 200,
+     "code": "GST 212",
+     "title": "Logic, Philosophy and Human Existence",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "tell the basic features of philosophy as an academic discipline",
+      "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+      "explain the elementary rules of reasoning",
+      "distinguish between valid and invalid arguments",
+      "think critically and assess arguments in texts, conversations and day-to-day discussions",
+      "critically assess the rationality or otherwise of human conduct under different existential conditions",
+      "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge; and",
+      "use the knowledge and expertise acquired in philosophy and logic.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "ENT 211",
+     "title": "Entrepreneurship and Innovation",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [
+      "FLAG-F"
+     ],
+     "resolution": "FLAG-F RESOLVED: set LH 15 / PH 45 per NUC course-content section (the authoritative full spec). Structure-table figures were a column-misalignment/omission artifact.",
+     "skills_learned": [
+      "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk-taking",
+      "state the characteristics of an entrepreneur",
+      "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+      "engage in entrepreneurial thinking",
+      "identify key elements in innovation",
+      "describe stages in enterprise formation, partnership and networking, including business planning",
+      "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a",
+      "state the basic principles of e-commerce.\" > **NOTE:** The verbatim text shows \"7. describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a\" — the letter \"a\" at the end of item 7 appears to be a typographical error in the source document. Extracted verbatim as printed",
+      "analyse the importance of micro and small businesses in wealth creation, employment, and financial independence",
+      "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; and",
+      "state the basic principles of e-commerce.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 201",
+     "title": "Constitutional Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "gain basic knowledge on the fundamental concepts and doctrines of constitutional law and constitutionalism",
+      "tell the historical trends and constitutional developments in Nigeria and their relevance to the study of constitutional law today",
+      "identify and analyse constitutional law issues relating to federalism, the rule of law, separation of powers, human rights, systems of government, citizenship, judicial review, amongst others",
+      "compare the constitutional frameworks of one system and others; and",
+      "demonstrate understanding of the implementation, interpretation and case law on provisions of the constitution.\"",
+      "gain basic knowledge of the fundamental concepts and doctrines of constitutional Law and constitutionalism",
+      "demonstrate understanding of the implementation, interpretation and case law on provisions of the con situation.\" > **NOTE:** Item 5 reads \"con situation\" — appears to be a typographical error for \"constitution\" in the source document. Extracted verbatim"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 202",
+     "title": "Constitutional Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the basic safeguards of every constitution",
+      "explain the rationale behind some basic constitutional provisions such as human rights and separation of power",
+      "appreciate the strengths and weaknesses of various types of constitutions",
+      "tell the extent and scope of the powers of each arm of the government and whether one is superior to the other",
+      "demonstrate an understanding of election or appointment of any government officials into office; and",
+      "application of constitutional provisions to doctrines.\"",
+      "understand the rationale behind some basic constitutional provisions such as human rights and separation of power",
+      "know the extent and scope of the powers of each arm of the government and whether one is superior to the other"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "CIL 201",
+     "title": "Law of Contract I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles governing contractual relations in Nigeria, as these principles constitute the foundation of virtually all transactions",
+      "learn the various forms of terms expressed or implied in daily transactions; and",
+      "be informed on the contractual liability or responsibility of a party.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "CIL 202",
+     "title": "Law of Contract II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "fully appreciate the factors rendering an agreement unenforceable",
+      "differentiate between void, voidable and illegal contracts",
+      "appreciate the basis under which contractual relationships terminate; and",
+      "be introduced to ways of enforcing a contractual obligation.\""
+     ],
+     "content_summary": "--- ### 300 Level ---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 203",
+     "title": "Nigerian Legal System I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "tell the basic knowledge of legal concepts",
+      "describe historical trends and developments,",
+      "appreciate sources of the Nigerian Legal System; and",
+      "recognise the court system, the structure, hierarchy and appointment of Judicial officers in Nigeria\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "PUL 204",
+     "title": "Nigerian Legal System II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "differentiate between Common Law, Doctrines of Equity, Statutes and Customary/Islamic law",
+      "understand the compatibility and repugnancy doctrine",
+      "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis",
+      "appreciate the requirements of becoming a legal Practitioner, a judge or a member of a judicial body\"",
+      "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis; and"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "ICL 201",
+     "title": "Ayat And Hadith Al–Ahkam",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the basic knowledge of the Qur'an and Hadiths",
+      "learn how to derive the legal rules embodied in these two principal sources of Islamic law",
+      "develop capacity to review the theories and rules on the principles of creed and Da'wah; and",
+      "evaluate concepts, principles and rules from the principal sources of Islamic law and their applications to specific issues.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "ICL 203",
+     "title": "Islamic Law of Crime",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "acquire knowledge of basic Islamic principles of justice in enforcing states' criminal laws",
+      "understand principles and categories of criminal acts (Qisas and Diyya, Hudud, and Ta'azir crimes)",
+      "appreciate fundamental basics of criminal responsibility; and",
+      "understand the principle of punishment in the Islamic penal system.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 200,
+     "code": "ICL 204",
+     "title": "Islamic Law of Torts",
+     "units": 3,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the principles governing tort in Islamic law",
+      "understand the general characteristics of crime and tort",
+      "appreciate the concept of Dhamān in the Islamic law of tort",
+      "identify the types of torts to person and property",
+      "comprehend the Sharī'ah concept of liability for premises and liability for animals; and",
+      "familiarise themselves with the operation and application of Islamic law of torts in contemporary times.\""
+     ],
+     "content_summary": "--- ### 300 Level ---"
+    },
+    {
+     "level": 300,
+     "code": "GST 312",
+     "title": "Peace and Conflict Resolution",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "analyse the concepts of peace, conflict and security",
+      "list major forms, types and root causes of conflict and violence",
+      "differentiate between conflict and terrorism",
+      "enumerate security and peacebuilding strategies; and",
+      "describe roles of international organisations, media and traditional institutions in peacebuilding\"",
+      "describe roles of international organisations, media and traditional institutions in Peace building.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "ENT 312",
+     "title": "Venture Creation",
+     "units": 2,
+     "status": "C",
+     "lh": 15,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "describe the key steps in venture creation",
+      "spot opportunities in problems and high potential sectors regardless of geographical location",
+      "state how original products, ideas, and concepts are developed",
+      "develop a business concept for further incubation or pitching for funding",
+      "identify key sources of entrepreneurial finance",
+      "implement the requirements for establishing and managing micro and small enterprises",
+      "conduct entrepreneurial marketing and e-commerce",
+      "apply a wide variety of emerging technological solutions to entrepreneurship; and",
+      "appreciate why ventures fail due to lack of planning and poor implementation.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PUL 301",
+     "title": "Criminal Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles of criminal liability in Nigeria; and",
+      "appreciate the sources of criminal law in Nigeria and its importance in the maintenance of law and order in the society\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PUL 302",
+     "title": "Criminal Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "distinguish between various crimes and their effects on the individuals and the society",
+      "appreciate the administration of criminal justice in society",
+      "explain the principles of punishment; and",
+      "appreciate the application of statutes to the doctrines\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PPL 301",
+     "title": "Law of Torts I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "acquire basic knowledge and understanding of the fundamental principles of tort,",
+      "explain the concepts and history of tort law generally",
+      "appreciate the sources of law of tort; and",
+      "explain the contents of key legal issues in tort law.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "PPL 302",
+     "title": "Law of Torts II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate principles of liability in tort and the relationship between tort and crime",
+      "explain scopes of trespass and nuisance",
+      "appreciate the principles of negligence, the duty of care and strict liability; and",
+      "comprehend defences and remedies in tort.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "CIL 303",
+     "title": "Commercial Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles governing the diverse forms of commercial transactions in Nigeria; and",
+      "familiarize with the legal provisions regulating selling and buying\"",
+      "familiarise themselves with the legal provisions regulating selling and buying\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "CIL 304",
+     "title": "Commercial Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency; and",
+      "understand the scope of an agency relationship with the principal and third party.\"",
+      "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency"
+     ],
+     "content_summary": "--- ### 400 Level ---"
+    },
+    {
+     "level": 300,
+     "code": "ICL 301",
+     "title": "Muamalat (Islamic Law of Transaction)",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [
+      "FLAG-G"
+     ],
+     "resolution": "FLAG-G RESOLVED: code 'ICL 301' confirmed per NUC structure table; content heading merely dropped the 'ICL' prefix. No value change.",
+     "skills_learned": [
+      "Analytical skills",
+      "Research skills",
+      "Advocacy skills",
+      "Application",
+      "appreciate the underlying philosophy of contractual transactions in Islam",
+      "understand the meaning of and types of contracts in Islam",
+      "appreciate legal concepts and theories of the various types of contracts in Islamic law; and",
+      "appreciate the rules and general principles guiding agency, hire-purchase and other forms of contracts.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 300,
+     "code": "ICL 304",
+     "title": "Enterprise Appreciation",
+     "units": 2,
+     "status": "C",
+     "lh": 30,
+     "ph": null,
+     "flags": [
+      "FLAG-C"
+     ],
+     "disputed": {
+      "nuc_structure_table": {
+       "title": "Enterprise Appreciation",
+       "units": 2,
+       "lh": 30
+      },
+      "nuc_content_section": {
+       "title": "Islamic Family Law",
+       "units": 3,
+       "lh": 45
+      },
+      "primary_used": "nuc_structure_table",
+      "note": "CRITICAL: NUC PDF assigns two DIFFERENT courses to code ICL 304 (generic 'Enterprise Appreciation' in structure table vs 'Islamic Family Law' in content section). Structure-table kept as primary; owner must confirm true course identity.",
+      "needs_owner_decision": true
+     },
+     "skills_learned": [
+      "understand the nature, sources and principles governing Islamic family relations, including marriage, divorce and custody of children",
+      "appreciate rules and principles of Islamic law governing pre-marital, marital and post-marital relationships; and",
+      "identify the rights of children under Islamic law\" [LEARNING OUTCOMES FOR \"ENTERPRISE APPRECIATION\" (TABLE VERSION): NOT FOUND IN DOCUMENT]"
+     ],
+     "content_summary": "\"At the end of the Course, students are expected to: 1. understand the nature, sources and principles governing Islamic family relations, including marriage, divorce and custody of children; 2. appreciate rules and principles of Islamic law governing pre-marital, marital and post-marital relationships; and 3. identify the rights of children under Islamic law\" [LEARNING OUTCOMES FOR \"ENTERPRISE APP"
+    },
+    {
+     "level": 400,
+     "code": "PUL 401",
+     "title": "Law of Evidence I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "describe the meaning and purposes of the evidentiary rules and burden of proof",
+      "appreciate the nature and types of evidence",
+      "comprehend the types and roles of witnesses in legal proceedings",
+      "appreciate the rules governing relevancy, weight and the admissibility of evidence at trial; and",
+      "demonstrate a clear understanding of the relationship between the theoretical context of the law of evidence and its practical application at trial.\"",
+      "understand the meaning and purposes of the evidentiary rules and burden of proof"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PUL 402",
+     "title": "Law of Evidence II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the importance of opinion",
+      "know when to refer to the character of a party/witness",
+      "describe compellability of witnesses; and",
+      "identify the need for corroboration in evidence.\"",
+      "understand compellability of witnesses; and"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 403",
+     "title": "Equity and Trusts I",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles of equity vis-à-vis the Common Law and their relevance to legal practice and administration of justice in Nigeria; and",
+      "appreciate the origins of these principles, maxims and their legal implications.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 404",
+     "title": "Equity and Trusts II",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "appreciate the principles of trust",
+      "comprehend the practical use of trust in the society; and",
+      "appreciate options of administering an estate through trust.\"",
+      "Understand the principles of trust",
+      "Comprehend the practical use of trust in the society; and",
+      "Appreciate options of administering an estate through trust.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 405",
+     "title": "Property Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be well-equipped with the basic principles governing property transactions in Nigeria",
+      "appreciate the nature and legal sources of these transactions; and",
+      "comprehend the significance of the real property to economic development and legal rights involved in real/landed property.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "PPL 406",
+     "title": "Property Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "be familiar with the laws regulating property acquisition and disposition in Nigeria",
+      "appreciate the forms of titles over land",
+      "recognize the control and ownership of natural resources throughout the federation; and",
+      "appreciate the application of the requisite statutes to the principle of property Law\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "CLE 401",
+     "title": "Clinical and Moot Court Practice",
+     "units": 4,
+     "status": "C",
+     "lh": null,
+     "ph": 180,
+     "flags": [],
+     "skills_learned": [
+      "be actively engaged in the Moot/Mock Trial",
+      "have the fundamental exposure to the practice at law office and courtroom; and",
+      "have a grasp of legal drafting, advocacy, and developing the needed spirit and courage in addressing and comporting oneself before the court and the public.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "CLE 402",
+     "title": "Clinical and Moot Court Practice",
+     "units": 4,
+     "status": "C",
+     "lh": null,
+     "ph": 180,
+     "flags": [],
+     "skills_learned": [
+      "familiarize themselves with the artistry of client relationships",
+      "experience practical community service by lawyers; and",
+      "gain legal awareness, creation and orientation strategy.\"",
+      "familiarize with the artistry of client relationships"
+     ],
+     "content_summary": "--- ### 500 Level ---"
+    },
+    {
+     "level": 400,
+     "code": "ICL 401",
+     "title": "Islamic Property Law",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "understand the vesting of ownership of property in God",
+      "acquire basic knowledge of the concept of property and ownership of property",
+      "appreciate the freedom and rights to private ownership",
+      "understand the distinction between public property and private property; and",
+      "understand the protection and restrictions on private ownership.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 400,
+     "code": "ICL 402",
+     "title": "Islamic Company Law",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "understand the principles of Islamic Economics, Banking and Finance",
+      "appreciate the legal rules guiding Islamic Financial products and services",
+      "understand the nature and scope of Islamic finance and its relationship and differences with conventional finance",
+      "differentiate between conventional insurance and Takafu (Islamic Insurance); and",
+      "understand the conceptual basis of the modern practice of Islamic banking and finance.\""
+     ],
+     "content_summary": "--- ### 500 Level ---"
+    },
+    {
+     "level": 400,
+     "code": "ICL 403",
+     "title": "Mirath &Wasiyya (Islamic Law of Inheritance)",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [],
+     "skills_learned": [
+      "understand the nature, sources, relevance and principles governing the distribution of the estates of a deceased Muslim",
+      "understand the conditions under which heir could inherit; and",
+      "appreciate the principles and rules governing the administration of Wills (Wasiyya) and Endowment (Waqf)\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "JIL 501",
+     "title": "Jurisprudence and Legal Theory I",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": 45,
+     "flags": [
+      "FLAG-D"
+     ],
+     "disputed": {
+      "nuc_structure_table": {
+       "lh": 60
+      },
+      "nuc_content_section": {
+       "lh": 45
+      },
+      "primary_used": "nuc_structure_table",
+      "note": "NUC PDF self-conflict on LH (table 60 vs content 45). PH set to 45 (table omitted PH column — layout defect). LH structure-table value kept as primary; owner may confirm.",
+      "needs_owner_decision": true
+     },
+     "skills_learned": [
+      "be well-equipped with the essential critical legal thinking skills using the diverse legal theories and concepts",
+      "appreciate the critical role of legal theories in legal reforms and administration of justice; and",
+      "appreciate the origins of these principles.\"",
+      "be well-equipped with the basic critical legal thinking skills using the diverse legal theories and concepts"
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "JIL 502",
+     "title": "Jurisprudence and Legal Theory II",
+     "units": 4,
+     "status": "C",
+     "lh": 60,
+     "ph": 45,
+     "flags": [
+      "FLAG-D"
+     ],
+     "disputed": {
+      "nuc_structure_table": {
+       "lh": 60
+      },
+      "nuc_content_section": {
+       "lh": 45
+      },
+      "primary_used": "nuc_structure_table",
+      "note": "NUC PDF self-conflict on LH (table 60 vs content 45). PH set to 45 (table omitted PH column — layout defect). LH structure-table value kept as primary; owner may confirm.",
+      "needs_owner_decision": true
+     },
+     "skills_learned": [
+      "appreciate the purpose of law in society",
+      "differentiate between the major schools of law and their doctrines",
+      "compare various theories of law; and",
+      "understand the difference between law and other related concepts.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "PPL 501",
+     "title": "Company Law I",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [
+      "FLAG-D"
+     ],
+     "resolution": "FLAG-D RESOLVED: set LH 45 / PH 45 per NUC content section, corroborated by the LAW-programme structure table listing the identical course at 45/45. ICL table's LH 60 / blank PH was a table defect.",
+     "skills_learned": [
+      "have the basic knowledge and understanding of the evolution, nature, forms and structures of companies",
+      "tell how law steps in to regulate activities of and within companies",
+      "describe the legal framework on the forms of business organisations in Nigeria and the procedures for their incorporation",
+      "appreciate the legal basis for corporate power structure; understand the key stakeholders of companies and the legal processes for the alignment of their interests within the company",
+      "comprehend the framework for raising capital by companies; the regulators of various forms of companies in Nigeria; and",
+      "appreciate the principles and procedures for the liquidation of companies.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "PPL 502",
+     "title": "Company Law II",
+     "units": 4,
+     "status": "C",
+     "lh": 45,
+     "ph": 45,
+     "flags": [
+      "FLAG-D"
+     ],
+     "resolution": "FLAG-D RESOLVED: set LH 45 / PH 45 per NUC content section, corroborated by the LAW-programme structure table listing the identical course at 45/45. ICL table's LH 60 / blank PH was a table defect.",
+     "skills_learned": [
+      "get acquainted with Company Securities, shares and debentures",
+      "understand principles concerning company directors and other officers",
+      "appreciate company secretarial responsibilities",
+      "acquire basic knowledge concerning mergers and acquisitions; and",
+      "understand the process of winding up a company.\"",
+      "understand the process of winding up a company\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "ICL 501",
+     "title": "UsulFiqh (Islamic Jurisprudence) I",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "understand the principles, concepts and doctrines of Islamic law",
+      "acquire knowledge of interpretative rules and Interpretation of Islamic texts",
+      "understand the different Islamic schools of law or jurisprudence (Hanafi, Maliki, Shaf'i, and the Hanbali schools); and",
+      "appreciate the theory of Ijtihad (\"Individual Reasoning\") and Fatwa.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "ICL 503",
+     "title": "Murafa'at (Islamic law of Evidence & Procedure",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "gain a practical understanding of Islamic Law and procedures",
+      "understand the general rules of evidence in Islamic law and its modes",
+      "understand pre, during and post-trial procedures",
+      "appreciate the principle of presumption of innocence, and the investigation and primary-questioning stage; and",
+      "understand the Indictment process.\""
+     ],
+     "content_summary": "---"
+    },
+    {
+     "level": 500,
+     "code": "ICL 505",
+     "title": "Application of Sharia in Nigeria",
+     "units": 3,
+     "status": "C",
+     "lh": 45,
+     "ph": null,
+     "flags": [],
+     "skills_learned": [
+      "understand the practical application of Islamic Law in Nigerian Courts",
+      "comprehend the constitutional provisions of Islamic Law in Nigeria; and,",
+      "understand the universal applicability of Islamic Law.\""
+     ],
+     "content_summary": "--- ### 100 Level ---"
+    },
+    {
+     "level": 500,
+     "code": "LAW 599",
+     "title": "Long Essay",
+     "units": 6,
+     "status": "C",
+     "lh": 270,
+     "ph": null,
+     "flags": [
+      "FLAG-E"
+     ],
+     "disputed": {
+      "nuc_structure_table": {
+       "lh": 270,
+       "ph": null
+      },
+      "nuc_content_section": {
+       "lh": 45,
+       "ph": 45
+      },
+      "primary_used": "nuc_structure_table",
+      "note": "NUC PDF self-conflict: ICL 500-level table shows LH 270 (no PH) for the 6-unit Long Essay; the LAW-programme table shows LH 45 / PH 45; content text is silent. ICL-table value kept as primary; owner may confirm the contact-hour basis for the Long Essay.",
+      "needs_owner_decision": true
+     },
+     "skills_learned": [
+      "Recognize the essential techniques of interpreting Islamic law's classical concepts and terminology.\""
+     ],
+     "content_summary": "--- ### 100 Level ---"
+    },
+    {
+     "level": null,
+     "code": "Administrative Law",
+     "title": "Administrative Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Revenue/Taxation Law",
+     "title": "Revenue/Taxation Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Industrial Law or Labour Law",
+     "title": "Industrial Law or Labour Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Oil and Gas Law",
+     "title": "Oil and Gas Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Public International Law",
+     "title": "Public International Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Conflict of Laws",
+     "title": "Conflict of Laws",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Family Law/The Family and the Law",
+     "title": "Family Law/The Family and the Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Conveyancing",
+     "title": "Conveyancing",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Criminology",
+     "title": "Criminology",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Law of Banking",
+     "title": "Law of Banking",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Law of Insurance",
+     "title": "Law of Insurance",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Law of Intellectual Property",
+     "title": "Law of Intellectual Property",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Maritime Law",
+     "title": "Maritime Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Human Rights and Nigerian Law",
+     "title": "Human Rights and Nigerian Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Customary Law",
+     "title": "Customary Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Environmental Law",
+     "title": "Environmental Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "African Comparative Law",
+     "title": "African Comparative Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Information and Communication Technologies Law",
+     "title": "Information and Communication Technologies Law",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Health Law or Law and Medicine",
+     "title": "Health Law or Law and Medicine",
+     "units": 8,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Economics",
+     "title": "Economics",
+     "units": null,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Elements of Business/Management",
+     "title": "Elements of Business/Management",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Political Science/Elements of Government",
+     "title": "Political Science/Elements of Government",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Philosophy",
+     "title": "Philosophy",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Social Relations",
+     "title": "Social Relations",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Psychology",
+     "title": "Psychology",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "English",
+     "title": "English",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    },
+    {
+     "level": null,
+     "code": "Such other non-law courses as the faculty may determine from time to time",
+     "title": "Such other non-law courses as the faculty may determine from time to time",
+     "units": 6,
+     "status": "E",
+     "lh": null,
+     "ph": null,
+     "flags": [],
+     "skills_learned": []
+    }
+   ],
+   "skills_profile": [
+    "Robust legal argument skills",
+    "Communication skills",
+    "Research and brief writing skills",
+    "Arbitration and Mediation competencies",
+    "Analytical skills to solving theoretical and practical legal problems",
+    "Practice management skills",
+    "Transactional skills, such as the ability to structure a legal transaction effectively; and",
+    "Legal drafting skills",
+    "identify possible sound patterns in the English Language",
+    "list notable Language skills",
+    "classify word-formation processes",
+    "construct simple and relatively complex sentences in English",
+    "apply logical and critical reasoning skills for meaningful presentations",
+    "demonstrate an appreciable level of the art of public speaking and listening; and",
+    "write technical and straightforward reports.\"",
+    "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+    "list and identify the major linguistic groups in Nigeria",
+    "explain the gradual evolution of Nigeria as a political unit",
+    "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+    "enumerate the challenges of the Nigerian State towards Nation building",
+    "analyse the role of the Judiciary in upholding people's fundamental rights",
+    "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+    "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problems.\"",
+    "appreciate the various legal rules, methods, processes and reasoning",
+    "acquire basic knowledge of the fundamental concepts of law and the various legal systems",
+    "gain knowledge of the function of law in society; and",
+    "appreciate the various aspects and perspectives of law.\"",
+    "appreciate the hierarchy and categories of sources of law",
+    "illustrate basic knowledge in the use of various legal materials and resources",
+    "identify basic knowledge in the way and style of legal writing; and",
+    "familiarise themselves with the ethics of the legal profession, including dress codes and modes\"",
+    "familiarise with the ethics of the legal profession, including dress codes and modes\"",
+    "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal terminology, rhetoric, logic, reasoning and legalism",
+    "list the tools and skills required by law students to study and display the ability to apply them",
+    "explain the fundamentals of English Grammar",
+    "demonstrate ability in both reading and writing skills consisting of presentations",
+    "organise ideas in writing of legal letters, reports, essays and examination answers; and",
+    "distinguish between main ideas from supporting details.\"",
+    "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal language, rhetoric, logic, reasoning and legalism",
+    "identify the basic features of logic as an academic discipline",
+    "identify the main branches of logic in philosophical discourse",
+    "describe the elementary rules of reasoning and application to logic",
+    "recognise arguments, deduction and induction, truth and validity",
+    "extrapolate and deploy expertise in logic to other areas of knowledge; and",
+    "apply the knowledge and expertise acquired in logic.\"",
+    "acquire basic knowledge of Islamic law generally",
+    "understand the sources of Islamic law, the formation of Islamic jurisprudence, and the history of the development of Islamic law",
+    "familiarise themselves with some basic principles of Islamic law",
+    "explain the essential techniques of interpreting the classical concepts and terminologies of the law",
+    "assess critically contemporary issues in the field of Islamic law; and",
+    "undertake both written and oral analysis.\"",
+    "recognize the Arabic Alphabet and numbers",
+    "read, understand and construct sentences in the Arabic language",
+    "access the primary sources of Islamic law, the Qur'an and Hadith; and",
+    "have an idea of Arabic as the language of the revelation of Islamic Law; and",
+    "identify the intricacies of translations and interpretations of Islamic Law texts.\"",
+    "tell the basic features of philosophy as an academic discipline",
+    "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+    "explain the elementary rules of reasoning",
+    "distinguish between valid and invalid arguments",
+    "think critically and assess arguments in texts, conversations and day-to-day discussions",
+    "critically assess the rationality or otherwise of human conduct under different existential conditions",
+    "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge; and",
+    "use the knowledge and expertise acquired in philosophy and logic.\"",
+    "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk-taking",
+    "state the characteristics of an entrepreneur",
+    "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+    "engage in entrepreneurial thinking",
+    "identify key elements in innovation",
+    "describe stages in enterprise formation, partnership and networking, including business planning",
+    "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a",
+    "state the basic principles of e-commerce.\" > **NOTE:** The verbatim text shows \"7. describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; a\" — the letter \"a\" at the end of item 7 appears to be a typographical error in the source document. Extracted verbatim as printed",
+    "analyse the importance of micro and small businesses in wealth creation, employment, and financial independence",
+    "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world; and",
+    "state the basic principles of e-commerce.\"",
+    "gain basic knowledge on the fundamental concepts and doctrines of constitutional law and constitutionalism",
+    "tell the historical trends and constitutional developments in Nigeria and their relevance to the study of constitutional law today",
+    "identify and analyse constitutional law issues relating to federalism, the rule of law, separation of powers, human rights, systems of government, citizenship, judicial review, amongst others",
+    "compare the constitutional frameworks of one system and others; and",
+    "demonstrate understanding of the implementation, interpretation and case law on provisions of the constitution.\"",
+    "gain basic knowledge of the fundamental concepts and doctrines of constitutional Law and constitutionalism",
+    "demonstrate understanding of the implementation, interpretation and case law on provisions of the con situation.\" > **NOTE:** Item 5 reads \"con situation\" — appears to be a typographical error for \"constitution\" in the source document. Extracted verbatim",
+    "appreciate the basic safeguards of every constitution",
+    "explain the rationale behind some basic constitutional provisions such as human rights and separation of power",
+    "appreciate the strengths and weaknesses of various types of constitutions",
+    "tell the extent and scope of the powers of each arm of the government and whether one is superior to the other",
+    "demonstrate an understanding of election or appointment of any government officials into office; and",
+    "application of constitutional provisions to doctrines.\"",
+    "understand the rationale behind some basic constitutional provisions such as human rights and separation of power",
+    "know the extent and scope of the powers of each arm of the government and whether one is superior to the other",
+    "be well-equipped with the basic principles governing contractual relations in Nigeria, as these principles constitute the foundation of virtually all transactions",
+    "learn the various forms of terms expressed or implied in daily transactions; and",
+    "be informed on the contractual liability or responsibility of a party.\"",
+    "fully appreciate the factors rendering an agreement unenforceable",
+    "differentiate between void, voidable and illegal contracts",
+    "appreciate the basis under which contractual relationships terminate; and",
+    "be introduced to ways of enforcing a contractual obligation.\"",
+    "tell the basic knowledge of legal concepts",
+    "describe historical trends and developments,",
+    "appreciate sources of the Nigerian Legal System; and",
+    "recognise the court system, the structure, hierarchy and appointment of Judicial officers in Nigeria\"",
+    "differentiate between Common Law, Doctrines of Equity, Statutes and Customary/Islamic law",
+    "understand the compatibility and repugnancy doctrine",
+    "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis",
+    "appreciate the requirements of becoming a legal Practitioner, a judge or a member of a judicial body\"",
+    "acquire knowledge and understanding of the principles of judicial construction, interpretation and the doctrine of stare decisis; and",
+    "appreciate the basic knowledge of the Qur'an and Hadiths",
+    "learn how to derive the legal rules embodied in these two principal sources of Islamic law",
+    "develop capacity to review the theories and rules on the principles of creed and Da'wah; and",
+    "evaluate concepts, principles and rules from the principal sources of Islamic law and their applications to specific issues.\"",
+    "acquire knowledge of basic Islamic principles of justice in enforcing states' criminal laws",
+    "understand principles and categories of criminal acts (Qisas and Diyya, Hudud, and Ta'azir crimes)",
+    "appreciate fundamental basics of criminal responsibility; and",
+    "understand the principle of punishment in the Islamic penal system.\"",
+    "appreciate the principles governing tort in Islamic law",
+    "understand the general characteristics of crime and tort",
+    "appreciate the concept of Dhamān in the Islamic law of tort",
+    "identify the types of torts to person and property",
+    "comprehend the Sharī'ah concept of liability for premises and liability for animals; and",
+    "familiarise themselves with the operation and application of Islamic law of torts in contemporary times.\"",
+    "analyse the concepts of peace, conflict and security",
+    "list major forms, types and root causes of conflict and violence",
+    "differentiate between conflict and terrorism",
+    "enumerate security and peacebuilding strategies; and",
+    "describe roles of international organisations, media and traditional institutions in peacebuilding\"",
+    "describe roles of international organisations, media and traditional institutions in Peace building.\"",
+    "describe the key steps in venture creation",
+    "spot opportunities in problems and high potential sectors regardless of geographical location",
+    "state how original products, ideas, and concepts are developed",
+    "develop a business concept for further incubation or pitching for funding",
+    "identify key sources of entrepreneurial finance",
+    "implement the requirements for establishing and managing micro and small enterprises",
+    "conduct entrepreneurial marketing and e-commerce",
+    "apply a wide variety of emerging technological solutions to entrepreneurship; and",
+    "appreciate why ventures fail due to lack of planning and poor implementation.\"",
+    "be well-equipped with the basic principles of criminal liability in Nigeria; and",
+    "appreciate the sources of criminal law in Nigeria and its importance in the maintenance of law and order in the society\"",
+    "distinguish between various crimes and their effects on the individuals and the society",
+    "appreciate the administration of criminal justice in society",
+    "explain the principles of punishment; and",
+    "appreciate the application of statutes to the doctrines\"",
+    "acquire basic knowledge and understanding of the fundamental principles of tort,",
+    "explain the concepts and history of tort law generally",
+    "appreciate the sources of law of tort; and",
+    "explain the contents of key legal issues in tort law.\"",
+    "appreciate principles of liability in tort and the relationship between tort and crime",
+    "explain scopes of trespass and nuisance",
+    "appreciate the principles of negligence, the duty of care and strict liability; and",
+    "comprehend defences and remedies in tort.\"",
+    "be well-equipped with the basic principles governing the diverse forms of commercial transactions in Nigeria; and",
+    "familiarize with the legal provisions regulating selling and buying\"",
+    "familiarise themselves with the legal provisions regulating selling and buying\"",
+    "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency; and",
+    "understand the scope of an agency relationship with the principal and third party.\"",
+    "appreciate the nature and legal sources of common transactions such as the sale of goods, hire purchase and agency",
+    "Analytical skills",
+    "Research skills",
+    "Advocacy skills",
+    "Application",
+    "appreciate the underlying philosophy of contractual transactions in Islam",
+    "understand the meaning of and types of contracts in Islam",
+    "appreciate legal concepts and theories of the various types of contracts in Islamic law; and",
+    "appreciate the rules and general principles guiding agency, hire-purchase and other forms of contracts.\"",
+    "understand the nature, sources and principles governing Islamic family relations, including marriage, divorce and custody of children",
+    "appreciate rules and principles of Islamic law governing pre-marital, marital and post-marital relationships; and",
+    "identify the rights of children under Islamic law\" [LEARNING OUTCOMES FOR \"ENTERPRISE APPRECIATION\" (TABLE VERSION): NOT FOUND IN DOCUMENT]",
+    "describe the meaning and purposes of the evidentiary rules and burden of proof",
+    "appreciate the nature and types of evidence",
+    "comprehend the types and roles of witnesses in legal proceedings",
+    "appreciate the rules governing relevancy, weight and the admissibility of evidence at trial; and",
+    "demonstrate a clear understanding of the relationship between the theoretical context of the law of evidence and its practical application at trial.\"",
+    "understand the meaning and purposes of the evidentiary rules and burden of proof",
+    "appreciate the importance of opinion",
+    "know when to refer to the character of a party/witness",
+    "describe compellability of witnesses; and",
+    "identify the need for corroboration in evidence.\"",
+    "understand compellability of witnesses; and",
+    "be well-equipped with the basic principles of equity vis-à-vis the Common Law and their relevance to legal practice and administration of justice in Nigeria; and",
+    "appreciate the origins of these principles, maxims and their legal implications.\"",
+    "appreciate the principles of trust",
+    "comprehend the practical use of trust in the society; and",
+    "appreciate options of administering an estate through trust.\"",
+    "Understand the principles of trust",
+    "be well-equipped with the basic principles governing property transactions in Nigeria",
+    "appreciate the nature and legal sources of these transactions; and",
+    "comprehend the significance of the real property to economic development and legal rights involved in real/landed property.\"",
+    "be familiar with the laws regulating property acquisition and disposition in Nigeria",
+    "appreciate the forms of titles over land",
+    "recognize the control and ownership of natural resources throughout the federation; and",
+    "appreciate the application of the requisite statutes to the principle of property Law\"",
+    "be actively engaged in the Moot/Mock Trial",
+    "have the fundamental exposure to the practice at law office and courtroom; and",
+    "have a grasp of legal drafting, advocacy, and developing the needed spirit and courage in addressing and comporting oneself before the court and the public.\"",
+    "familiarize themselves with the artistry of client relationships",
+    "experience practical community service by lawyers; and",
+    "gain legal awareness, creation and orientation strategy.\"",
+    "familiarize with the artistry of client relationships",
+    "understand the vesting of ownership of property in God",
+    "acquire basic knowledge of the concept of property and ownership of property",
+    "appreciate the freedom and rights to private ownership",
+    "understand the distinction between public property and private property; and",
+    "understand the protection and restrictions on private ownership.\"",
+    "understand the principles of Islamic Economics, Banking and Finance",
+    "appreciate the legal rules guiding Islamic Financial products and services",
+    "understand the nature and scope of Islamic finance and its relationship and differences with conventional finance",
+    "differentiate between conventional insurance and Takafu (Islamic Insurance); and",
+    "understand the conceptual basis of the modern practice of Islamic banking and finance.\"",
+    "understand the nature, sources, relevance and principles governing the distribution of the estates of a deceased Muslim",
+    "understand the conditions under which heir could inherit; and",
+    "appreciate the principles and rules governing the administration of Wills (Wasiyya) and Endowment (Waqf)\"",
+    "be well-equipped with the essential critical legal thinking skills using the diverse legal theories and concepts",
+    "appreciate the critical role of legal theories in legal reforms and administration of justice; and",
+    "appreciate the origins of these principles.\"",
+    "be well-equipped with the basic critical legal thinking skills using the diverse legal theories and concepts",
+    "appreciate the purpose of law in society",
+    "differentiate between the major schools of law and their doctrines",
+    "compare various theories of law; and",
+    "understand the difference between law and other related concepts.\"",
+    "have the basic knowledge and understanding of the evolution, nature, forms and structures of companies",
+    "tell how law steps in to regulate activities of and within companies",
+    "describe the legal framework on the forms of business organisations in Nigeria and the procedures for their incorporation",
+    "appreciate the legal basis for corporate power structure; understand the key stakeholders of companies and the legal processes for the alignment of their interests within the company",
+    "comprehend the framework for raising capital by companies; the regulators of various forms of companies in Nigeria; and",
+    "appreciate the principles and procedures for the liquidation of companies.\"",
+    "get acquainted with Company Securities, shares and debentures",
+    "understand principles concerning company directors and other officers",
+    "appreciate company secretarial responsibilities",
+    "acquire basic knowledge concerning mergers and acquisitions; and",
+    "understand the process of winding up a company.\"",
+    "understand the principles, concepts and doctrines of Islamic law",
+    "acquire knowledge of interpretative rules and Interpretation of Islamic texts",
+    "understand the different Islamic schools of law or jurisprudence (Hanafi, Maliki, Shaf'i, and the Hanbali schools); and",
+    "appreciate the theory of Ijtihad (\"Individual Reasoning\") and Fatwa.\"",
+    "gain a practical understanding of Islamic Law and procedures",
+    "understand the general rules of evidence in Islamic law and its modes",
+    "understand pre, during and post-trial procedures",
+    "appreciate the principle of presumption of innocence, and the investigation and primary-questioning stage; and",
+    "understand the Indictment process.\"",
+    "understand the practical application of Islamic Law in Nigerian Courts",
+    "comprehend the constitutional provisions of Islamic Law in Nigeria; and,",
+    "understand the universal applicability of Islamic Law.\"",
+    "Recognize the essential techniques of interpreting Islamic law's classical concepts and terminology.\""
+   ]
+  }
+ ],
+ "flag_resolutions": {
+  "source_of_truth": "Official NUC CCMAS PDF (Law-ALL.pdf). Where the NUC PDF contradicts itself, both values are preserved; structure-table value is primary, no external data introduced.",
+  "resolved": [
+   "FLAG-A (PHL 105 confirmed)",
+   "FLAG-F (ENT 211 = LH15/PH45)",
+   "FLAG-G (ICL 301 confirmed)",
+   "FLAG-D PPL 501/502 (=45/45, corroborated)",
+   "FLAG-D JIL 501/502 PH omission (=45)"
+  ],
+  "needs_owner_decision": [
+   "FLAG-B (ICL 101 units/LH)",
+   "FLAG-C (ICL 304 course identity — CRITICAL)",
+   "FLAG-D JIL 501/502 LH (60 vs 45)",
+   "FLAG-E (LAW 599 Long Essay LH/PH)"
+  ]
+ }
+}

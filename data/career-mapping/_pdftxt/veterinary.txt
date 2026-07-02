@@ -1,0 +1,3818 @@
+Veterinary Medicine  1  New
+This publication is available in Open Access under the Attribution-ShareAlike
+3.0 IGO (CC-BY-SA 3.0 IGO) licence (http://creativecommons.org/licenses/by-
+sa/3.0/igo/). By using the content of this publication, the users accept to be
+bound by the terms of use of the license.
+The present licence applies exclusively to the text content of the publication.
+For the use of any material not clearly identified as belonging to the National
+Universities Commission, prior permission shall be requested from:
+publication.copyright@nuc.edu.ng
+This publication can be referenced as: Core Curriculum and Minimum
+Academic Standards (CCMAS) for Nigerian Universities
+
+For more information, please contact:
+Executive Secretary, National Universities Commission
+26 Aguiyi Ironsi Street, P.M.B. 237 Garki GPO, Maitama, Abuja, Nigeria
+Telephone:+2348027455412,+234054407741.Email: info@nuc.edu.ng.
+Website: www.nuc.edu.ng
+
+Lead Consultant: Peter A. Okebukola
+Coordinating NUC Director: Dr. Noel Biodun Saliu
+
+                          Formally unveiled by
+
+His Excellency, Professor Yemi Osinbajo, SAN, GCON
+Vice President, Federal Republic of Nigeria
+
+Veterinary Medicine  2  New
+Board of the National Universities Commission
+(During the period of development of the CCMAS)
+
+Emeritus Professor Ayo Banjo (Chairman)
+Professor Abubakar A. Rasheed (Executive Secretary)
+Chief Johnson Osinugo
+Hon. Ubong Donald Etiebet
+Dr. Dogara Bashir
+Dr. Babatunde M. Olokun
+Alh. Abdulsalam Moyosore
+Mr. Yakubu Aliyu
+Professor Rahila Plangnan Gowon
+Professor Sunday A. Bwala
+Professor Mala Mohammed Daura
+Professor Joseph Atubokiki Ajienka
+Professor Anthony N. Okere
+Professor Hussaini M. Tukur
+Professor Afis Ayinde Oladosu
+Professor I. O. Smith
+Perm. Sec. Fed. Min. of Education
+Perm. Sec. Fed. Min. of Finance
+Perm. Sec. Fed. Min. of Health
+Perm. Sec. Fed. Min. of Women Affairs & Soc. Dev.
+Perm. Sec. Service Policies & Strategies Office, OHCSF
+
+NUC Management
+(During the period of development of the CCMAS)
+
+Professor Abubakar A. Rasheed (Executive Secretary and Chairman)
+Dr. Suleiman Ramon-Yusuf (Deputy Executive Secretary)
+Mr. Sam M. Onazi (Director, Finance and Accounts) (now Deputy ES, Management
+Services)
+Dr. Noel B. Saliu (Director, Academic Planning)
+Mr. Chris J. Maiyaki (Director, Executive Secretary's Office) (now Deputy ES,
+Administration)
+Mrs. Constance Goddy-Nnadi (Director, Establishment of Private Universities)
+Mr. Ibrahim U. Yakasai (Director, Public Affairs)
+Dr. (Mrs.) Maryam Sali (now late) (Director, Accreditation)
+Mr. Boniface C. Odum (Director, Human Resources)
+Mrs. Lauretta N. Achor (Ag. Director, Students)
+Mal. Lawal M. Faruk (Ag. Director, Research, Innovation and Information Technology)
+Engr. Kayode S. Odedina (Ag. Director, Open, Distance and e-Learning)
+Mr. Ashafa Ladan (Ag. Director, Skills Development and Entrepreneurship)
+Mrs. Lydia Imoroa (Ag. Director, Inspection and Monitoring) (now substantive
+Director)
+Mr. Jide Olukoju (Deputy Director, Physical Planning and Development)
+Mr. Musa Zamuna (Deputy Director, Internationalization)
+Mal. Kabiru Abdullahi (Deputy Director, Establishment Matters)
+
+Veterinary Medicine  3  New
+Mrs. Rita U. Kenny-Ogwu (Deputy Director, Audit)
+Engr. Adamu H. Yakasai (Deputy Director, Procurement)
+Arc. Ikani Samuel (Deputy Director, Programme Accreditation)
+Barr. S.S. Adejoh (Director, Resource and Strategic Planning)
+Mr. Lawal Haruna Ajo (Deputy Director, Information)
+Mr. Mustapha Rasheed (Deputy Director, Master Plan and Infrastructure)
+Mrs. Margaret Oyedele (Deputy Director, IWES)
+Mr. Obi Ukwuagu (Deputy Director, Information and Communication Technology)
+Mrs. Alissabatu Balogun (Deputy Director, Federal University Monitoring)
+Barr. Paschal Eruaga (Chief Legal Officer)
+
+NUC Strategy Advisory Committee
+
+Professor Peter Okebukola, OFR            - Chairman
+Professor Ruqayyatu Ahmed Rufa'i, OON
+Professor Gambo Laraba Abdullahi          - Member
+Professor Nimi Briggs, OON
+Professor Michael Faborode                -  Member
+Professor Attahiru Jega, OFR
+Professor Chiedu F. Mafiana               -  Member
+Mr. Tope Toogun
+Dr. Suleiman Ramon-Yusuf                  -  Member
+Dr. Noel Biodun Saliu
+Mr. Christopher Maiyaki                   -  Member
+Dr. Maryam Sali (late)
+Dr. Joshua Atah                           -  Member
+
+                                          -  Member
+
+                                          -  Member
+
+                                          -  Member
+
+                                          -  Member
+
+                                          -  Member
+
+                                          -  Secretary
+
+Veterinary Medicine                    4                New
+List of Reviewers
+
+Title                Surname   First Name    Institution       Programme
+Professor            ALIU      Yusuf O.      Ahmadu Bello      Chairman/Veterinary
+                                             University,       Medicine
+Professor            OLADELE   Omolade       Zaria.            Co-Chairman
+Professor            MAMMAN    Mohammed      University of     /Veterinary Medicine
+Professor            OYEYEMI   Mathew        Ibadan            Veterinary Medicine
+Professor            SONIBARE  Adekayode     Ahmadu Bello      Veterinary Medicine
+                                             University,Zaria  Veterinary Medicine
+Professor            AMEEN     Saliu         University of
+Professor                      Eric          Ibadan            Veterinary Medicine
+Professor            OMOGBAI   Abdullahi Y.  Federal           Veterinary Medicine
+Dr.                            Suleiman      University of     Veterinary Medicine
+                     RIBADU                  Agriculture,      Veterinary Medicine
+                                             Abeokuta
+                     RAMON-                  University of
+                     YUSUF                   Ilorin
+                                             University of
+                                             Benin
+                                             University of
+                                             Abuja
+                                             University of
+                                             Abuja
+
+NUC Representative
+
+Title                Surname   First Name Programme
+Dr.                  AJANI
+                               Jimoh         Discipline        and  Programme
+
+                                             representative
+
+Veterinary Medicine                   5                             New
+Foreword
+
+In furtherance of the "change" mantra of the present administration, I published a
+roadmap to guide my Ministry on ways of addressing the multiple problems that faced
+the education sector of the country shortly after my assumption of office in 2016.
+Known as "Education for Change: Ministerial Strategic Plan ­ 2016-2019"
+(updated to 2018-2022), the content of the document reaffirms government's
+commitment to strengthening institutional structures and establishing innovative
+approaches that would quickly revamp the education sector.
+
+The nations' universities hold a pride of place in the execution of such a strategy,
+being at the peak of the educational system and charged in an overall manner, with
+the responsibility of catalysing the sustainable and inclusive growth and prosperity
+that the "change" mantra envisions. Thus, a "rapid revitalization of the Nigerian
+university system", which is proceeding apace, became imperative. Improvement in
+research, teaching and learning facilities, deepening ICT penetration and the provision
+of enhanced power supply in our university campuses are some of the areas receiving
+stringent attention. In the same vein, the need was felt to radically review the curricula
+which universities had used for more than a decade so as to put in place one that
+would more directly address local issues, meet international standards and is fit for
+purpose for the training of 21st century graduates.
+
+The National Universities Commission has concluded the review of the former
+Benchmark Minimum Academic Standards (BMAS) of 14 disciplines into those of Core
+Curriculum and Minimum Academic Standards (CCMAS) of 17 disciplines. I am
+therefore pleased to present these documents to the universities, the general public
+and the international community as I am sure that their application would
+tremendously uplift scholarship in our universities. I thank all and sundry who worked
+assiduously to bring this seminal enterprise to fruition.
+
+Malam Adamu Adamu
+Honourable Minister of Education
+
+Veterinary Medicine  6  New
+Preface
+
+Section 10 (1) of the Education (National Minimum Standards and Establishment of
+Institutions) Act, Cap E3, Laws of the Federation of Nigeria 2004, empowers the
+National Universities Commission to lay down minimum standards for all universities
+and other degree awarding institutions of higher learning in the Federation and the
+accreditation of their degrees and other academic awards. The earliest efforts at giving
+effect to this legal framework in the Nigerian University System (NUS) started in 1989
+following the collaboration between the Commission and Nigerian Universities, which
+led to the development of the Minimum Academic Standards (MAS) for all programmes
+in Nigerian universities. The MAS documents were subsequently approved by the
+Federal Government for use as a major instrument for quality assurance in the
+Nigerian University System (NUS). The documents were employed in the accreditation
+of programmes in the NUS for over a decade.
+
+In 2001, the Commission initiated a process to revise the documents because the said
+MAS documents were essentially content-based and merely prescriptive. In 2004, the
+Commission developed outcome-based benchmark statements for all the programmes
+through a workshop that allowed for exhaustive deliberations by relevant
+stakeholders. Following comments and feedback from the universities to the effect
+that the Benchmark-style Statements were too sketchy to meaningfully guide the
+development of curriculum and inadequate for the purpose of accreditation, the
+Commission, in 2007 put in place a mechanism for the merger of the Benchmark-style
+Statements and the revised Minimum Academic Standards, which birthed the
+Benchmark Minimum Academic Standards (BMAS). The resultant BMAS, an amalgam
+of the outcome-based Benchmark statements and the content-based MAS clearly
+articulated the Learning Outcomes and competencies expected of graduates of each
+academic programme in Nigerian Universities without being overly prescriptive while
+at the same time providing the requisite flexibility and innovativeness consistent with
+institutional autonomy. In all, the BMAS documents were developed for the thirteen
+existing disciplines namely, Administration and Management, Agriculture, Arts,
+Basic Medical Sciences, Education, Engineering and Technology,
+Environmental Sciences, Law, Medicine and Dentistry, Pharmaceutical
+Science, Sciences, Social Sciences and Veterinary Medicine.
+
+The Commission, in 2016, in its sustained commitment to make the NUS adaptable to
+global trends in higher education, constituted a group of relevant academic experts to
+develop a BMAS in Computing, thus increasing the number of disciplines in Nigerian
+Universities to fourteen.
+
+In keeping with its mandate of making university education in Nigeria more responsive
+to the needs of the society, the National Universities Commission commenced the
+journey to restructure the BMAS in 2018, introducing in its place, the Core
+Curriculum and Minimum Academic Standards (CCMAS), to reflect the 21st
+Century realities, in the existing and new disciplines and programmes in the Nigerian
+University System.The new CCMAS is a product of sustained stakeholder interactions
+over two years. The composition of each panel took into consideration, the triple helix
+
+Veterinary Medicine  7  New
+model, as a unique feature. This involved a blend of academic experts, academies,
+government (represented by NUC), professional bodies and of course, the private
+sector represented by the Nigerian Economic Summit Group (NESG). In order to enrich
+the draft documents, copies of each discipline were forwarded to all critical
+stakeholders including the relevant academic units in Nigerian Universities, the private
+sector, professional bodies and the academies for their comments and input. These
+inputs along with the curriculum of programmes obtained from some foreign and
+renowned universities served as major working materials for the various panels
+constituted for that purpose.
+
+Bearing in mind the need to adhere to covid-19 protocol as prescribed by the National
+Centre for Disease Control (NCDC), the Commission was compelled by prevailing
+circumstances to finalize the curriculum virtually. General Assemblies were also held
+via Zoom, comprising, the NUC Strategic Advisory Committee (STRADVCOM),
+Chairpersons/Co-Chairpersons of the various disciplines and Panel Members of the
+respective programmes. Each Discipline and Programme had NUC representatives
+who assisted panellists with all the tools and working materials. Several online
+meetings were held at programmes level, where the real business of developing the
+CCMAS took place. The products of the various programme-based virtual meetings
+were submitted to the corresponding discipline group and then to the National
+Universities Commission. These documents were further scrutinized and fine-tuned by
+a smaller group of versatile subject matter specialists and relevant private sector
+practitioners.
+
+In line with the dynamism in higher education provisioning, the Commission took
+cognizance of complaints by the universities on the high number of General Studies
+(GST) courses in the BMAS, and was subsequently streamlined. Entrepreneurship
+courses such as Venture Creation and Entrepreneurship, and innovation found
+generous space. In addition, the new curriculum unbundled the Bachelor of
+Agriculture, Bachelor of Science in Mass Communication and the Bachelor of
+Architecture Programmes, while establishing some emerging specializations in these
+fields as obtained globally. This is in furtherance of the goal of producing fit for
+purpose graduates. The Allied Health Sciences was also carved out as a new Discipline
+from the existing Basic Medical Sciences discipline.
+
+Preceding the completion of the curriculum review content and language editing, a 3-
+day validation workshop (face-to-face mode) involving critical stakeholders, including
+STRADVCOM, Vice-Chancellors and Directors of Academic Planning of Nigerian
+Universities, as well as the Nigerian Economic Summit Group (NESG) was organized
+by the Commission to validate the CCMAS documents, and to engender ownership for
+ease of implementation.
+
+Consequent upon the afore-mentioned processes, seventeen CCMAS documents were
+produced for the following academic disciplines in the NUS:
+
+    1. Administration and Management
+    2. Agriculture
+    3. Allied Health Sciences
+
+Veterinary Medicine  8  New
+    4. Architecture
+    5. Arts
+    6. Basic Medical Sciences
+    7. Computing
+    8. Communication and Media Studies
+    9. Education
+    10. Engineering and Technology
+    11. Environmental Sciences
+    12. Law
+    13. Medicine and Dentistry
+    14. Pharmaceutical Science
+    15. Sciences
+    16. Social Sciences
+    17. Veterinary Medicine
+
+The CCMAS documents are uniquely structured to provide for 70% of core courses for
+each programme, while allowing universities to utilise the remaining 30% for other
+innovative courses in their peculiar areas of focus. In addition to the overall Learning
+Outcomes for each discipline, there are also Learning Outcomes for each programme
+and course. In general, programmes are typically structured such that a student does
+not carry less than 30 credit units or more than 48 credit units per session.
+
+Consequently, the Commission is optimistic that the 2022 CCMAS documents will serve
+as a guide to Nigerian Universities in the design of curriculum for their programmes
+with regards to the minimum acceptable standards of input and process, as well as,
+measurable benchmark of knowledge, 21st century skills and competences expected
+to be acquired by an average graduate of each of the academic programmes, for self,
+national and global relevance.
+
+Professor Abubakar Adamu Rasheed, mni, MFR, FNAL, HLR
+
+Executive Secretary
+
+Veterinary Medicine  9  New
+Contents
+
+  Foreword ...........................................................................6
+
+  Preface ..............................................................................7
+
+  Introduction ..................................................................... 11
+
+  Doctor of Veterinary Medicine (DVM) ....................... 14
+
+     Overview ................................................................................... 14
+     Philosophy ................................................................................. 14
+     Objectives ................................................................................. 14
+     Unique Features of the Programme ............................................. 15
+     Employability Skills ..................................................................... 15
+     21st Century Skills...................................................................... 16
+     Admission and Graduation Requirements ..................................... 16
+     Global Course Structure .............................................................. 17
+     Minimum Academic Standards .................................................... 58
+
+Veterinary Medicine  10  New
+Introduction
+
+Two Acts provide the legal framework for the quality assurance and regulatory
+mandates of the National Universities Commission. The first is the National
+Universities Commission Act No. N81 Laws of Federation Nigeria (L.F.N.)
+2004.
+
+This Act sets up the National Universities Commission as a body corporate charged
+with the responsibility of advising the Federal and State Governments of all aspects of
+university education and the general development of universities in Nigeria. The
+second, Education (National Minimum Standard and Establishment of
+Institutions) Act No. E3 L.F.N. 2004, empowers the National Universities
+Commission to lay down minimum standards for all universities and other institutions
+of higher learning in the Federation and the accreditation of their degrees and other
+academic awards in formal consultation with the universities for that purpose, after
+obtaining prior approval therefor through the Minister, from the President.
+
+Following the enactment of NUC Act No. E3 L.F.N. 2004, the National Universities
+Commission developed the first set of Minimum Academic Standards (MAS) in 1989
+for all the academic programmes existing in the Nigerian University System (NUS) at
+that time under the 13 major disciplines of Administration, Agriculture, Arts, Education,
+Engineering and Technology, Environmental Sciences, Law, Medicine and Dentistry,
+Management Sciences, Pharmaceutical Science , Science, Social Sciences and
+Veterinary Medicine. The Minimum Academic Standard served as the reference
+documents for the first accreditation of programmes conducted in NUS in 1990.
+
+In its bid to review the Minimum Academic Standard documents, which was predicated
+on the fact that they were prescriptive, the Commission decided to develop the
+outcome-based Benchmark Statements for all programmes in the Nigerian University
+System in line with contemporary global practice in 1999. In the first comprehensive
+review of the Minimum Academic Standards by NUC, which was in 2004, the
+Commission decided to merge the Benchmark Statements and the revised Minimum
+Academic Standards into a new document called Benchmark Minimum Academic
+Standards (BMAS). These documents were approved for use in Nigerian universities
+in 2007. A second attempt at reviewing the BMAS was in 2011. It must however be
+noted that stand alone BMAS for new programmes were at different times developed
+by the Commission on request from some Nigerian universities.
+
+The Current Review of the BMAS
+
+The journey of the current curriculum review efforts commenced in 2018, when the
+National Universities Commission circulated the 2018 draft BMAS to all Nigerian
+universities and other stakeholders for their comments. In addition to the harvested
+comments, the curriculum of different programmes of some world-class universities
+were downloaded. The draft 2018 BMAS, compiled comments of Nigerian universities
+and other stakeholders and the downloaded curriculum of some foreign universities
+served as the working documents for the curriculum review panels. A multi-
+
+Veterinary Medicine  11  New
+stakeholder approach was deployed in constituting the panels for the curriculum
+review exercise. The constituted panels included:
+
+    i. Academic staff of Nigerian universities;
+    ii. Representatives of the Academies;
+    iii. Representatives of Professional bodies/associations
+    iv. Representatives of the private sector
+
+In addition to the reviewers working individually and in consultation with their subject
+area peers, over 512 cumulative online meetings of the general assembly (Vice-
+Chancellors, Discipline Chairmen/Chairpersons, programme-specific reviewers and
+Heads/representatives of international quality assurance agencies and institutions);
+Discipline groups; and programme groups were held between March and November,
+2021. Physical meetings were also held to finalize the curriculum review exercise.
+
+The reviewers carried out their assignments with a view to producing a curriculum for
+their respective programmes that will reflect both national and international
+expectations. Specifically, the reviewers focused on ensuring that the emerging
+curriculum will be adequate to train Nigerian university students in the 21st Century.
+By implication and in addition to current trends in the various programmatic areas, the
+curriculum will be ICT oriented, promote Artificial Intelligence, enhance skills
+acquisition (including soft skills), inculcate and sharpen entrepreneurship mindset of
+students and capable of steering the deployment of evolving technologies to deliver
+its content.
+
+The Core Curriculum and Minimum Academic Standards (CCMAS)
+The major highlights of the new curriculum are:
+
+    1. Change of nomenclature from Benchmarks Minimum Academic
+         Standards (BMAS) to Core Curriculum and Minimum Academic
+         Standards (CCMAS);
+
+    2. The curriculum provides for 70% minimum core courses requirements for
+         graduation. Nigerian universities are expected to provide the remaining 30%;
+
+    3. In consonance with global best practice, the curriculum is to stimulate blended
+         learning in its delivery;
+
+    4. Mass Communication has been unbundled to create a distinct discipline of
+         Communications comprising degree programmes in Advertising, Broadcasting,
+         Development Communication Studies, Film and Multimedia, Information and
+         Media Studies, Journalism and Media Studies, Mass Communication, Public
+         Relations and Strategic Communication;
+
+    5. Agriculture has been unbundled into programmes in its contributing
+         components of B.Sc Agricultural Economics, B.Sc. Animal Science, B.Sc. Crop
+         Science and B.Sc. Soil Science;
+
+    6. The unbundling of Architecture and introduction of Architecture as a new
+         discipline with programmes like Architecture, Architectural Technology,
+         Furniture Design, Interior Architecture Design, Landscape Architecture and
+         Naval architecture;
+
+    7. The split of the Basic Medical Sciences discipline into two ­ Basic Medical
+         Sciences and Allied Health Sciences;
+
+Veterinary Medicine  12  New
+    8. Reduction of the General Studies (GST) course from 36 credit units to 12 credit
+         units of 6 courses as follows:
+             i. Communication in English;
+             ii. Nigerian People and Culture;
+             iii. Philosophy, Logic and Human Existence;
+             iv. Entrepreneurship and Innovation;
+             v. Venture creation; and
+             vi. Peace and Conflict resolution.
+
+    9. Entrepreneurship has been repackaged with the introduction of programme-
+         specific entrepreneurship;
+
+    10. The number of academic disciplines has been increased from 14 to 17 as
+         follows:
+
+              i. Administration and Management
+              ii. Agriculture
+              iii. Allied Health Sciences
+              iv. Architecture
+              v. Arts
+              vi. Basic Medical Sciences
+              vii. Communications and Media Studies
+              viii. Computing
+              ix. Education
+              x. Engineering and Technology
+              xi. Environmental Sciences
+              xii. Law
+              xiii. Medicine and Dentistry
+              xiv. Pharmaceutical Science
+              xv. Sciences
+              xvi. Social Sciences
+              xvii. Veterinary Medicine
+
+Having reviewed the curriculum of Nigerian universities, the next steps will include
+training and retraining of academic staff of Nigerian universities to effectively deliver
+the content of the curriculum.
+
+Veterinary Medicine  13  New
+Doctor of Veterinary Medicine (DVM)
+
+Overview
+These Core Curriculum and Minimum Academic Standards (CCMAS) are designed for the
+education and training of undergraduate students wishing to obtain first degree in Veterinary
+Medicine in the Nigerian university system. Basic operational elements that serve to define
+the minimum academic standards required to achieve the cardinal goal of producing graduates
+in Veterinary Medicine are provided. This is to ensure sufficient academic background,
+practical and clinical exposure to face the challenges of a developing economy in the
+increasingly globalised world economy. It is pertinent to note that this CCMAS document is
+expected to guide institutions in the design of curricula for their Veterinary Medicine
+programme by stipulating the minimum requirements.
+
+The core professional courses of the Doctor of Veterinary Medicine (DVM) programme are
+designed to prepare students for three main areas of emphasis, namely: pre-clinical; para-
+clinical; and clinical courses that satisfy students' learning objectives. The pre-clinical courses
+at 200 and 300 levels are meant to prepare students for knowledge of normal body forms and
+functions in domestic and non-domestic animals. It begins at the molecular and cellular levels
+to whole organism. The para-clinical courses at the 300 and 400 levels will prepare students
+for application of central biological principles and mechanisms that underlie animal health and
+disease manifestations at organism and population levels in a diverse global society. The
+clinical courses at the 500 and 600 levels are to equip students with the ability to use problem-
+solving skills to analyse a patient, synthesise a diagnosis, use medical and surgical skills for
+case management, prevent diseases, institute biosecurity measures as well as identify
+zoonotic diseases and food safety issues and to promote awareness of the public.
+
+The Doctor of Veterinary Medicine degree in Nigeria is currently a single-track programme. It
+is presented as such in the current CCMAS document to enhance the development of strong
+comparative medicine and primary clinical skills for different species. This will ensure the
+versatility of veterinary graduates for the different sectors of animal and public health. The
+curriculum is competency-based to guarantee that graduates are career-ready and business-
+oriented.
+
+Philosophy
+The philosophy underlying the programme in Veterinary Medicine is the production of
+Veterinary Doctors with knowledge and practical skills to solve clinical problems and prevent
+diseases that affect animal health. It also pertains to relief of animal suffering, conservation
+of livestock resources, promotion of animal production and public health as well as
+advancement of veterinary knowledge. The programme will also provide a range of
+transferable skills that are of value in Veterinary Medicine and non-Veterinary employment
+and create in the graduates, entrepreneurial knowledge, a sense of public responsibility and
+a spirit of self-reliance. In addition, it will create awareness of the moral, ethical, legal, and
+professional obligations needed to function as part of a professional enterprise in a global
+society.
+
+Objectives
+The broad objective of Veterinary medical education is to achieve the goals and objectives of
+the national policy on food security, animal and public health in the context of global best practice
+of "One-World One-Health". Therefore, the curriculum has the following specific objectives:
+
+Veterinary Medicine  14  New
+1. development of resourceful, creative, and knowledgeable Veterinary Doctors to be
+    responsible for the health of domestic and non-domestic animals as well as public health;
+
+2. enable graduates to apply and compare the knowledge of normal animal body function,
+    pathophysiologic mechanisms and natural history of important domestic and non-domestic
+    animal disease manifestations in a diverse global society;
+
+3. training of Veterinary personnel with vast knowledge of causes of animal diseases having
+    requisite skills in therapeutics, disease management and control;
+
+4. understanding of transmission dynamics of zoonotic diseases, their importance to public
+    health and control strategies;
+
+5. production of Veterinary graduates with understanding of ethical principles of the
+    profession while discharging their duties; and
+
+6. production of Veterinary graduates with `Day One Competencies' including entrepreneurial
+    skills, registrable by the Veterinary Council of Nigeria.
+
+Unique Features of the Programme
+Some inherent outstanding features geared towards producing graduates with very high
+intellectual mind and diverse practical skills for self-reliance, national development and global
+best practices are highlighted below.
+ 1. Teaching and learning are competency-based with ample period assigned to clinical
+
+      exposure at the fifth and sixth years of the programme.
+
+ 2. Clinical management as a course has been introduced to acquaint students with setting-
+      up of veterinary clinic/hospital, client reception and patient management procedures.
+
+ 3. The structure of Veterinary Medicine programme being categorized into the pre-clinical,
+      para- clinical and clinical phases and the flow of subjects from one phase to another is
+      global standard.
+
+ 4. Common courses from the Faculty of Science and General Studies courses would be taken
+      at 100 level to 300 level.
+
+ 5. The programme will produce resourceful, creative, and knowledgeable Veterinary doctors
+      that will be responsible for the health of domestic and non-domestic animals using 21st
+      century skills.
+
+ 6. Graduates are prepared for entry-level practice in major domestic and non-domestic
+      animal species.
+
+ 7. The programme will also prepare graduates to pursue non-traditional practice careers
+      such as public health and biomedical research.
+
+ 8. Veterinary graduates will be equipped with ethical principles of the profession which they
+      will apply while discharging their duties.
+
+ 9. The curriculum is presented in a variety of formats including small and large group clinical
+      exercises, lectures, laboratory activities, field/farm engagements, seminar presentations
+      and discussions.
+
+ 10. Students are nurtured to acquire knowledge and skills in science, technology and
+      principles that will shape the future of Veterinary profession and encourage them to be
+      lifelong learners.
+
+Employability Skills
+Graduates of Veterinary Medicine should be able to:
+1. use problem-solving skills to analyse a patient and to synthesise a diagnosis or
+
+       differential diagnosis by applying appropriate use of clinical laboratory tests;
+2. apply basic medical skills to evaluate cases, develop a comprehensive treatment plan
+
+       and patient referral when indicated;
+
+Veterinary Medicine  15  New
+3. apply anaesthesia, manage pain, relieve animal suffering and apply basic surgical skills
+       in case management;
+
+4. manage emergencies and intensive cares in animals;
+5. identify ways to prevent disease, institute biosecurity measures, identify zoonotic
+
+       diseases and food safety issues and promote awareness on public and animal health;
+6. communicate effectively with clients and patients and exhibit ethical conduct while
+
+       interacting with a diverse population of clients; and
+7. manage people, funds, materials, and equipment.
+
+21st Century Skills
+ 1. Critical thinking
+ 2. Creativity
+ 3. Collaboration
+ 4. Communication
+ 5. Information literacy
+ 6. Media literacy
+ 7. Technology literacy
+ 8. Flexibility
+ 9. Leadership
+ 10. Initiative
+ 11. Productivity
+ 12. Social skills.
+
+Admission and Graduation Requirements
+
+Admission Requirements
+Candidates are admitted into the degree programme through any of the following two entry
+modes:
+1. Unified Tertiary Matriculation Examination (UTME)
+2. Direct Entry
+
+Unified Tertiary Matriculation Examination (UTME)
+
+Candidates should possess credit level passes in five subjects at O'Level in nationally
+recognised examinations including English Language, Mathematics, Physics, Biology and
+Chemistry at not more than two sittings. It is also desirable for candidates to have Agricultural
+Science at credit level.
+
+Direct Entry
+
+Candidates should possess at least two GCE Advanced level/IJMB passes in Chemistry,
+Biology/Zoology/Botany, with Physics or Mathematics as combination. Special consideration is
+given to candidates with first degrees in Zoology, Basic Medical Sciences and Animal
+Husbandry/Production. Holders of HND in Animal Health with minimum of Upper Grade level
+are eligible for consideration for admission into 200 level provided the candidates have met
+the O/L requirements.
+
+Duration
+
+The minimum duration of training in Veterinary Medicine programme is six academic sessions
+for candidates admitted through the UTME mode. Direct Entry candidates admitted to the 200
+level of the programme will spend a minimum of five academic sessions.
+
+Veterinary Medicine  16  New
+Graduation Requirements
+
+1. Candidates must have registered and passed all the compulsory and required courses
+    specified for the programme.
+
+2. Compulsory courses failed at any one phase may not be carried into the next phase.
+3. Students must satisfy the provisions of the professional conduct as required for registration
+
+    with the Veterinary Council of Nigeria.
+4. The maximum length of time for the award of the Doctor of Veterinary Medicine Degree
+
+    shall be eighteen semesters for the 6-year degree programme and sixteen semesters for
+    students admitted directly into the 200 level.
+5. Students who transfer from other universities shall be credited with only those courses
+    deemed relevant to the programme, which they have already passed prior to their transfer.
+    Such students shall however be required to pass the minimum number of units specified
+    for graduation for the number of sessions he/she has spent in the Faculty; provided that
+    no student shall spend less than five sessions (10 semesters) in order to earn a degree.
+    Students who transfer from another programme to the DVM programme for any approved
+    reason shall be credited with those units passed that are within the curriculum of the
+    programme to which they have transferred. Appropriate decisions on transfer cases shall
+    be subjected to the approval of Senate on the recommendation of the Faculty.
+
+Global Course Structure
+
+100 level
+
+Course Code Course Title                              Units Status LH PH
+
+GST 111              Communication in English         2        C  15 45
+
+GST 112              Nigerian Peoples and Culture     2        C  30 -
+
+BIO 101              General Biology I                2        C  30  -
+
+BIO 102              General Biology II               2        C  30  -
+
+BIO 107              General Biology Practical I      1        C  -   45
+
+BIO 108              General Biology Practical II     1        C  -   45
+
+CHM 101              General Chemistry I              2        C  30 -
+
+CHM 102              General Chemistry II             2        C  30  -
+
+CHM 107              General Practical Chemistry I    1        C  -   45
+
+CHM 108              General Practical Chemistry II   1        C  -   45
+
+PHY 101              General Physics I                2        C  30  -
+
+PHY 103              General Physics III              3        C  45 -
+
+PHY 107              General Practical Physics I      1        C  -   45
+
+PHY 108              General Practical Physics II     1        C  -   45
+
+VMD 101              Introduction to Veterinary Medicine 2     C     30 -
+
+                     Total                            27
+
+200 Level
+
+Course Code Course Title                                    Units Status LH PH
+
+GST 212              Philosophy,  Logic    and        Human 2  C     30 -
+                     Existence
+
+ENT 211              Entrepreneurship and Innovation 2         C     15 45
+
+VAN 201              Gross Veterinary Anatomy I             3  C     30 45
+
+Veterinary Medicine                               17                       New
+VAN 202              Gross Veterinary Anatomy II      3      C       30 45
+VAN 203                                                              30 45
+VPY 201              Histology                        3      C       30 45
+VPY 202                                                              30 45
+VPY 204              Veterinary Physiology I          3      C       30 45
+VBC 201                                                              30 45
+VBC 202              Veterinary Physiology II         3      C       30 45
+VBC 204                                                              15 45
+VHM 201              Veterinary Physiology III        3      C       15 45
+
+VHM 202              Biochemistry I                   3      C       15 45
+
+VHM 203              Biochemistry II                  3      C       15 45
+
+VHM 204              Introductory Molecular Biology   2      R       30 -
+VEX 299                                                              6 weeks
+Total                Food Animal Production and 2            C
+
+                     Management
+
+                     Companion and Wild Animal 2             C
+
+                     Management
+
+                     Poultry and Fish Production and 2       C
+
+                     Management
+
+                     Animal Welfare                   2      C
+
+                     Externship I                     2      C
+
+                                                      40
+
+300 Level            Course Title                     Units  Status  LH PH
+   Course Code       Peace and Conflict Resolution    2      C       30 -
+   GST 312           Venture Creation                 2      C       15 45
+   ENT 312           Embryology                       3      C       30 45
+   VAN 305           Comparative Gross Anatomy        2      C       15 45
+   VAN 307           Environmental Physiology         3      C       30 45
+   VPY 305           Reproductive Physiology and      2      C       15 45
+   VPY 307           Endocrinology
+                     Biochemistry III                 3      C       30 45
+   VBC 305           General Pharmacology             2      C       30 -
+   VPC 301           General Veterinary Parasitology  3      C       30 45
+   VPE 302           Introductory Microbiology        3      C       30 45
+   VMB 302           Principles of Immunology         2      C       30 -
+   VMB 304           Pathogenic Bacteriology          3      C       30 45
+   VMB 306           Principles of General Pathology  3      C       30 45
+   VPT 302           Wound Management                 2      C       15 45
+   VSR 302           Externship II                    2      C       6 weeks
+   VEX 399                                            37
+   Total:
+
+400 Level            Course Title                     Units Status LH PH
+   Course Code       Systemic Pharmacology
+   VPC 403           Chemotherapy                     3      C       30 45
+   VPC 404           Toxicology
+   VPC 405           Protozoology                     2      C       15 45
+   VPE 403           Helminthology
+   VPE 404           Entomology                       2      C       15 45
+   VPE 405           Systemic Virology and Mycology
+   VMB 407           Systemic Pathology               2      C       15 45
+   VPT 403
+                                                      2      C       15 45
+
+                                                      2      C       15 45
+
+                                                      3      C       30 45
+
+                                                      3      C       30 45
+
+Veterinary Medicine                             18                   New
+VPT 404              Pathology of Infectious and Non- 3         C  30 45
+
+VPH 401              Infectious Diseases                           30 -
+VSR 403                                                            15 45
+VSR 404              Wildlife Ecology and Conservation 2        C  15 45
+
+VMD 401              Anaesthesiology and Intensive Care 2       C  15 45
+VMD 402                                                            15 45
+VTP 401              Introductory Surgery and Basic 2           C  15 45
+VTP 402                                                            15 45
+                     Radiology
+VPM 402                                                            30 -
+                     Introductory Internal Medicine         2   C
+VHM 406                                                            15 45
+VEX 499              Clinical Management                    2   C  6 weeks
+Total
+                     Veterinary Gynaecology                 2   C
+
+                     Veterinary Andrology and Artificial 2      C
+
+                     Insemination
+
+                     Veterinary Extension and Rural 2           C
+
+                     Sociology
+
+                     Farm Animal Breeding and Genetics 2        C
+
+                     Externship III                         2   C
+
+                                                            42
+
+500 Level
+
+Course Code Course Title                             Unit(s) Status LH PH
+
+VAN 509              Applied and Radiographic Clinical 1        C  -   45
+
+                     Anatomy
+
+VPT 505              Clinical Pathology              2          C  15 45
+
+VPH 503              Food Hygiene and Safety         2          C  30 -
+
+VPH 504              Zoonoses and Environmental 2               C  30 -
+
+                     Health
+
+VPM 505              Epidemiology and Principles of 2           C  30 -
+
+                     Disease Prevention
+
+VPM 506              Veterinary          Administration, 2      C  30 -
+
+                     Jurisprudence and Ethics
+
+VPM 508              Veterinary Biostatistics and 2             C  30 -
+
+                     Economics
+
+VMD 503              Aquatic and Wild Animal Medicine 2         C  30 -
+
+VMD 504              Avian Medicine                  2          C  30 -
+
+VMD 505              Small Animal, Laboratory Animal 2          C  30 -
+
+                     and Microlivestock Medicine
+
+VMD 506              Ruminant Medicine               2          C  30 -
+
+VMD 507              Porcine Medicine                2          C  30 -
+
+VMD 508              Equine Medicine                 2          C  30
+
+VSR 505              Diagnostic Imaging              2          C  30 -
+
+VSR 506              Soft Tissue Surgery             2          C  30 -
+
+VSR 507              Orthopaedic Surgery             2          C  30 -
+
+VSR 508              Large Animal Lameness           2          C  30
+
+VTP 503              Veterinary Obstetrics and 2                C  30 -
+
+                     Neonatology
+
+VTP 504              Large Animal Theriogenology     2          C  30 -
+
+VTP 505              Small Animal, Laboratory Animal 2          C  30 -
+
+                     and Microlivestock
+
+                     Theriogenology
+
+VCH 501              Clinics I                       2          C  -   90
+
+VCH 502              Clinics II                      2          C  -   90
+
+Veterinary Medicine                            19                      New
+VEX 599              Externship IV                       2         C          6 weeks
+Total
+                                                         45        -
+
+600 Level            Course Title                           Units  Status  LH PH
+   Course Code       Computer Application in Veterinary     2      C
+   VPM 609           Medicine                                              15       45
+                     Applied Pharmacology                   2      C
+   VPC 607           Clinics I                              10     C       15       45
+   VCH 603           Veterinary Pharmacy,
+                     Agrochemicals and Quality Control      2      C       -        450
+   VPC 608           of Veterinary Pharmaceuticals
+                     Clinics II                             10     C       30       -
+   VCH 604           Clinical Seminar I                     1      C
+   VCH 605           Clinical Seminar II                    1      C       -        450
+   VCH 606           Research Project                       4      C
+   VRP 608           Rural Posting                          1      C       -        45
+   VEX 698                                                  33
+   Total                                                                   -        45
+
+                                                                           -        180
+
+                                                                           2 weeks
+
+NOTE:
+C = Compulsory
+LH = Lecture Hours per semester
+PH = Practical Hours per semester
+
+Course Contents and Learning Outcomes
+
+100 Level
+
+GST 111: Communication in English                            (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. identify possible sound patterns in English Language;
+2. list notable Language skills;
+3. classify word formation processes;
+4. construct simple and fairly complex sentences in English;
+5. apply logical and critical reasoning skills for meaningful presentations;
+6. demonstrate an appreciable level of the art of public speaking and listening; and
+7. write simple and technical reports.
+
+Course Contents
+Sound patterns in English Language (vowels and consonants, phonetics and phonology).
+English word classes (lexical and grammatical words, definitions, forms, functions, usages,
+collocations). Sentence in English (types: structural and functional, simple and complex).
+Grammar and Usage (tense, mood, modality and concord, aspects of language use in everyday
+life). Logical and Critical Thinking and Reasoning Methods (Logic and Syllogism, Inductive
+and Deductive Argument and Reasoning Methods, Analogy, Generalisation and Explanations).
+
+Veterinary Medicine                 20                                                New
+Ethical considerations, Copyright Rules and Infringements. Writing Activities: (Pre-writing ,
+Writing, Post writing, Editing and Proofreading; Brainstorming, outlining, Paragraphing, Types
+of writing, Summary, Essays, Letter, Curriculum Vitae, Report writing, Note making etc.
+Mechanics of writing). Comprehension Strategies: (Reading and types of Reading,
+Comprehension Skills, 3RsQ). Information and Communication Technology in modern
+Language Learning. Language skills for effective communication. Major word formation
+processes. Writing and reading comprehension strategies. Logical and critical reasoning for
+meaningful presentations. Art of public speaking and listening. Report writing.
+
+GST 112: Nigerian Peoples and Cultures  (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. analyse the historical foundation of the Nigerian culture and arts in pre-colonial times;
+2. list and identify the major linguistic groups in Nigeria;
+3. explain the gradual evolution of Nigeria as a political unit;
+4. analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples
+
+     towards national development;
+5. enumerate the challenges of the Nigerian State towards Nation building
+6. analyse the role of the Judiciary in upholding people's fundamental rights
+7. identify acceptable norms and values of the major ethnic groups in Nigeria; and
+8. list and suggest possible solutions to identifiable Nigerian environmental, moral and value
+
+     problems.
+
+Courses Contents
+Nigerian history, culture and art up to 1800 (Yoruba, Hausa and Igbo peoples and culture;
+peoples and culture of the ethnic minority groups). Nigeria under colonial rule (advent of
+colonial rule in Nigeria; Colonial administration of Nigeria). Evolution of Nigeria as a political
+unit (amalgamation of Nigeria in 1914; formation of political parties in Nigeria; Nationalist
+movement and struggle for independence). Nigeria and challenges of nation building (military
+intervention in Nigerian politics; Nigerian Civil War). Concept of trade and economics of self-
+reliance (indigenous trade and market system; indigenous apprenticeship system among
+Nigeria people; trade, skill acquisition and self-reliance). Social justices and national
+development (law definition and classification. Judiciary and fundamental rights. Individual,
+norms and values (basic Nigeria norms and values, patterns of citizenship acquisition;
+citizenship and civic responsibilities; indigenous languages, usage and development; negative
+attitudes and conducts. Cultism, kidnapping and other related social vices). Re-orientation,
+moral and national values (The 3R's ­ Reconstruction, Rehabilitation and Re-orientation; Re-
+orientation Strategies: Operation Feed the Nation (OFN), Green Revolution, Austerity
+Measures, War Against Indiscipline (WAI), War Against Indiscipline and Corruption(WAIC),
+Mass Mobilization for Self-Reliance, Social Justice and Economic Recovery (MAMSER), National
+Orientation Agency (NOA). Current socio-political and cultural developments in Nigeria.
+
+BIO 101: General Biology I              (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain cell structure and organizations;
+2. summarise functions of cellular organelles;
+3. characterise living organisms and state their general reproduction;
+4. describe the interrelationship that exists between organisms;
+5. discuss the concept of heredity and evolution; and
+
+Veterinary Medicine         21                                          New
+6. enumerate habitat types and their characteristics.
+
+Course Contents
+Cell structure and organisation, functions of cellular organelles, characteristics and
+classification of living things, chromosomes, genes and their relationships and importance,
+general reproduction, interrelationships of organisms (competitions, parasitism, predation,
+symbiosis, commensalisms, mutualism, saprophytism), heredity and evolution (introduction to
+Darwinism and Lamarkism, Mendelian laws, explanation of key genetic terms), elements of
+ecology and types of habitat.
+
+BIO 102: General Biology II               (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. state the unique characteristics of plant and animal kingdoms;
+2. describe ecological adaptations in the plant and animal kingdoms;
+3. give a summary of the physiology of plants and animals;
+4. explain nutrition, respiration, excretion and reproduction in plants and animals; and
+5. describe growth and development in plants and animals.
+
+Course Contents
+A general survey of the plant and animal kingdoms based mainly on study of similarities and
+differences in the external features, ecological adaptations of these forms. Briefs on physiology
+to include nutrition, respiration, circulatory systems, excretion, reproduction, growth and
+development.
+
+BIO 107: General Biology Practical I      (1 Unit C: PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. outline common laboratory hazards;
+2. provide precautions on laboratory hazards;
+3. state the functions of the different parts of microscope;
+4. use the microscope and describe its maintenance;
+5. draw biological diagrams and illustrations; and
+6. apply scaling and proportion to biological diagrams.
+
+Course Contents:
+Common laboratory hazards: prevention and first aid; measurements in biology; uses and
+care of microscope; compound and dissecting microscope. Biological drawings and illustration,
+scaling, accuracy and proportion; use of common laboratory apparatus and laboratory
+experiments designed to illustrate the topics covered in BIO 101.
+
+BIO 108: General Biology Practical II (1 Unit C: PH 45)
+
+Learning outcomes
+At the completion of this course, students should be able to:
+1. describe the anatomy of flowering plants;
+2. differentiate types of fruit and seeds;
+3. state ways of handling and caring for biological wares;
+4. describe the basic histology of animal tissues; and
+
+Veterinary Medicine                   22                       New
+5. identify various groups in the animal kingdom.
+
+Course Contents
+Anatomy of flowering plants, primary vegetative body: stem, leaf and root to show the mature
+tissues namely parenchyma, collenchyma, sclerenchyma, xylem and phloem. Types of fruits
+and seeds. Care and use of dissecting kits and other biological wares. Dissection and general
+histology of animal tissues based on vertebrate forms. Morphology and functions of epithelial,
+muscular, nervous and connective tissues. Examination of various groups of lower
+invertebrates under microscopes, identification of various groups of organisms in Animal
+Kingdom, and any experiment designed to emphasise the practical aspects of topics in BIO
+102.
+
+CHM 101: General Chemistry I       (3 Units C: LH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. define atom, molecules and chemical reactions;
+2. discuss the Modern electronic theory of atoms;
+3. write electronic configurations of elements on the periodic table;
+4. rationalise the trends of atomic radii, ionisation energies, electronegativity of the elements
+
+    based on their position in the periodic table;
+5. identify and balance oxidation ­ reduction equation and solve redox titration problems;
+6. draw shapes of simple molecules and hybridised orbitals;
+7. identify the characteristics of acids, bases and salts, and solve problems based on their
+
+    quantitative relationship;
+8. apply the principles of equilibrium to aqueous systems using LeChatelier's principle to
+
+    predict the effect of concentration, pressure and temperature changes on equilibrium
+    mixtures;
+9. analyse and perform calculations with the thermodynamic functions, enthalpy, entropy and
+    free energy; and
+10. determine rates of reactions and its dependence on concentration, time and temperature.
+
+Course Contents
+Atoms, molecules, elements and compounds and chemical reactions. Modern electronic theory
+of atoms. Electronic configuration, periodicity and building up of the periodic table.
+Hybridisation and shapes of simple molecules. Valence Forces; Structure of solids. Chemical
+equations and stoichiometry; Chemical bonding and intermolecular forces, kinetic theory of
+matter. Elementary thermochemistry; rates of reaction, equilibrium and thermodynamics.
+Acids, bases and salts. Properties of gases. Redox reactions and introduction to
+electrochemistry. Radioactivity.
+
+CHM 102: General Chemistry II                      (3 Units C: LH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. state the importance and development of organic chemistry;
+2. define fullerenes and its applications;
+3. discuss electronic theory;
+4. determine the qualitative and quantitative of structures in organic chemistry;
+5. state rules guiding nomenclature and functional group classes of organic chemistry;
+6. determine rate of reaction to predict mechanisms of reaction;
+
+Veterinary Medicine            23                                      New
+7. identify classes of organic functional group with brief description of their chemistry;
+8. discuss comparative chemistry of group 1A, IIA and IVA elements; and
+9. describe basic properties of Transition metals.
+
+Course Contents
+
+Historical survey of the development and importance of Organic Chemistry; Fullerenes as
+fourth allotrope of carbon, uses as nanotubules, nanostructures, nanochemistry. Electronic
+theory in organic chemistry. Isolation and purification of organic compounds. Determination
+of structures of organic compounds including qualitative and quantitative analysis in Organic
+Chemistry. Nomenclature and functional group classes of organic compounds. Introductory
+reaction mechanism and kinetics. Stereochemistry. The chemistry of alkanes, alkenes,
+alkynes, alcohols, ethers, amines, alkyl halides, nitriles, aldehydes, ketones, carboxylic acids
+and derivatives. The chemistry of selected metals and non-metals. Comparative chemistry of
+group IA, IIA and IVA elements. Introduction to transition metal chemistry.
+
+CHM 107: General Chemistry Practical I (1 Unit C: PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. state the general laboratory rules and safety procedures;
+2. collect scientific data and correctly carrying out Chemical experiments;
+3. identify the basic glassware and equipment in the laboratory;
+4. state the differences between primary and secondary standards;
+5. perform redox titration;
+6. recording observations and measurements in the laboratory notebooks; and
+7. analyse the data to arrive at scientific conclusions.
+
+Course Contents
+Laboratory experiments designed to reflect topics presented in courses CHM 101 and CHM
+102. These include acid-base titrations, qualitative analysis, redox reactions, gravimetric
+analysis, data analysis and presentation.
+
+CHM 108: General Chemistry Practical II  (1 Unit C: PH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. state the general laboratory rules and safety procedures;
+2. collect scientific data and correctly carrying out Chemical experiments;
+3. identify the basic glassware and equipment in the laboratory;
+4. identify and carry out preliminary tests which includes ignition, boiling point, melting point,
+
+    test on known and unknown organic compounds;
+5. carry out solubility tests on known and unknown organic compounds; and
+6. carry out elemental tests on known and unknown compounds;
+
+Course Contents
+Continuation of CHM 107. Additional laboratory experiments to include functional group
+analysis, quantitative analysis using volumetric methods. Carryout functional
+group/confirmatory test on known and unknown compounds which could be
+acidic/basic/neutral organic compounds.
+
+Veterinary Medicine  24                                                      New
+PHY 101: General Physics I (Mechanics)  (2 Units C: LH 30)
+
+Learning Outcomes
+At completion of the course, students should be able to:
+1. identify and deduce the physical quantities and their units;
+2. differentiate between vectors and scalars;
+3. describe and evaluate motion of systems on the basis of the fundamental laws of
+
+     mechanics;
+4. apply Newton's laws to describe and solve simple problems of motion;
+5. evaluate work, energy, velocity, momentum, acceleration, and torque of moving or
+
+     rotating objects;
+6. explain and apply the principles of conservation of energy, linear and angular momentum;
+7. describe the laws governing motion under gravity; and
+8. explain motion under gravity and quantitatively determine behaviour of objects moving
+
+     under gravity.
+
+Course Contents
+Space and time; units and dimension, vectors and scalars, differentiation of vectors:
+displacement, velocity and acceleration; kinematics; Newton laws of motion (Inertial frames,
+Impulse, force and action at a distance, momentum conservation); relative motion; application
+of Newtonian mechanics; Equations of motion; Conservation principles in physics,
+Conservative forces, conservation of linear momentum, Kinetic energy and work, Potential
+energy, System of particles, Centre of mass; Rotational motion; Torque, vector product,
+moment, rotation of coordinate axes and angular momentum. Polar coordinates; conservation
+of angular momentum; Circular motion; Moments of inertia, gyroscopes and precession;
+Gravitation: Newton's Law of Gravitation, Kepler's Laws of Planetary Motion, Gravitational
+Potential Energy, Escape velocity, Satellites motion and orbits.
+
+PHY 103: General Physics III (Electricity and Magnetism)  (3 Units C: LH 45)
+
+Learning Outcomes
+At the completion of this course, the Students should be able to;
+
+ 1. describe the electric field and potential, and related concepts, for stationary charges;
+ 2. calculate electrostatic properties of simple charge distributions using Coulomb's law,
+
+         Gauss's law and electric potential;
+ 3. describe and determine the magnetic field for steady and moving charges;
+ 4. determine the magnetic properties of simple current distributions using Biot-Savart and
+
+         Ampere's law;
+ 5. describe electromagnetic induction and related concepts, and make calculations using
+
+         Faraday and Lenz's laws;
+ 6. explain the basic physical of Maxwell's equations in integral form;
+ 7. evaluate DC circuits to determine the electrical parameters; and
+ 8. determine the characteristics of ac voltages and currents in resistors, capacitors, and
+
+         inductors.
+
+Course Contents
+Forces in nature; Electrostatics; electric charge and its properties, methods of charging;
+Coulomb's law and superposition; electric field and potential; Gauss's law; Capacitance;
+Electric dipoles; Energy in electric fields; Conductors and insulators, current, voltage and
+resistance, Ohm's law and analysis of DC circuits; Magnetic fields; Lorentz force; Biot-Savart
+and Ampère's laws; magnetic dipoles; Dielectrics; Energy in magnetic fields; Electromotive
+force; Electromagnetic induction; Self and mutual inductances; Faraday and Lenz's laws; Step
+
+Veterinary Medicine  25                                     New
+up and step down transformers: Maxwell's equations; Electromagnetic oscillations and waves;
+AC voltages and currents applied to inductors, capacitors, resistance, and combinations.
+
+PHY 107: General Practical Physics I          (1 Unit C: PH 45)
+
+Learning Outcomes
+On completion, the student should be able to:
+1. conduct measurements of some physical quantities;
+2. make observations of events, collect and tabulate data;
+
+3. identify and evaluate some common experimental errors;
+4. plot and analyse graphs; and
+5. draw conclusions from numerical and graphical analysis of data.
+
+Course Contents
+This introductory course emphasizes quantitative measurements. Experimental techniques.
+The treatment of measurement errors. Graphical analysis. The experiments include studies of
+meters, the oscilloscope, mechanical systems, electrical and mechanical resonant systems,
+light, heat, viscosity, etc. (covered in PHY 101, 102, 103 and PHY 104). However, emphasis
+should be placed on the basic physical techniques for observation, measurements, data
+collection, analysis, and deduction.
+
+PHY 108: General Practical Physics II         (1 Unit C: PH 45)
+
+Learning Outcomes
+On completion, the student should be able to:
+1. conduct measurements of some physical quantities;
+
+2. make observations of events, collect and tabulate data;
+3. identify and evaluate some common experimental errors;
+4. plot and analyse graphs;
+5. draw conclusions from numerical and graphical analysis of data; and
+6. prepare and present practical reports.
+
+Course Contents
+This practical course is a continuation of PHY 107 and is intended to be taught during the
+second semester of the 100 level to cover the practical aspect of the theoretical courses that
+have been covered with emphasis on quantitative measurements, the treatment of
+measurement errors, and graphical analysis. However, emphasis should be placed on the basic
+physical techniques for observation, measurements, data collection, analysis and deduction.
+
+VMD 101: Introduction to Veterinary Medicine  (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, student should be able to:
+1. present an overview of the discipline of Veterinary Medicine and existing opportunities;
+2. describe the different phases of the programme; and
+3. explain the importance of the different subjects to Veterinary practice.
+
+Course Contents
+History of the Veterinary profession in Nigeria. Organisation of veterinary services in Nigeria and
+clinical practice with reference to small animals, laboratory and exotic animals as well as equine
+practice. Nigerian livestock production (Ruminant, Swine, Poultry and Fish). Public Health and
+
+Veterinary Medicine                    26                               New
+the concept of `One World, One Health'. The importance of theriogenology and surgery in
+veterinary clinical practice. Prospects and job opportunities in the Veterinary profession.
+
+GST 212: Philosophy, Logic and Human Existence (2 Units C: LH 30)
+
+Learning Outcomes
+A student who has successfully gone through this course should be able to:
+1. enumerate the basic features of philosophy as an academic discipline;
+2. identify the main branches of philosophy & the centrality of logic in philosophical
+
+         discourse;
+3. determine the elementary rules of reasoning;
+4. distinguish between valid and invalid arguments;
+5. provide critical thinking and assess arguments in texts, conversations and day-to-day
+
+         discussions;
+6. critically asses the rationality or otherwise of human conduct under different existential
+
+         conditions;
+7. develop the capacity to extrapolate and deploy expertise in logic to other areas of
+
+         knowledge; and
+8. explain his or her actions, using the knowledge and expertise acquired in philosophy
+
+         and logic.
+
+Course Contents
+Scope of philosophy; notions, meanings, branches and problems of philosophy. Logic as an
+indispensable tool of philosophy. Elements of syllogism, symbolic logic-- the first nine rules of
+inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid
+arguments, logic of form and logic of content -- deduction, induction and inferences. Creative
+and critical thinking. Impact of philosophy on human existence. Philosophy and politics,
+philosophy and human conduct, philosophy and religion, philosophy and human values,
+philosophy and character moulding, etc.
+
+ENT 211: Entrepreneurship and Innovation (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity
+
+         seeking, new value creation, and risk taking
+2. state the characteristics of an entrepreneur;
+3. analyze the importance of micro and small businesses in wealth creation, employment,
+
+         and financial independence
+4. engage in entrepreneurial thinking;
+5. identify key elements in innovation;
+6. describe stages in enterprise formation, partnership and networking including business
+
+         planning;
+7. describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the
+
+         world;
+8. state the basic principles of e-commerce.
+
+Course Contents
+Concept of entrepreneurship (entrepreneurship, intrapreneurship/corporate
+entrepreneurship,). theories, rationale and relevance of entrepreneurship (schumpeterian and
+other perspectives, risk-taking, necessity and opportunity-based entrepreneurship and
+creative destruction). Characteristics of entrepreneurs (opportunity seeker, risk taker, natural
+
+Veterinary Medicine  27  New
+and nurtured, problem solver and change agent, innovator and creative thinker).
+Entrepreneurial thinking (critical thinking, reflective thinking, and creative thinking).
+Innovation (concept of innovation, dimensions of innovation, change and innovation,
+knowledge and innovation). Enterprise formation, partnership and networking (basics of
+business plan, forms of business ownership, business registration and forming alliances and
+joint ventures). Contemporary entrepreneurship issues (knowledge, skills and technology,
+intellectual property, virtual office, networking). Entrepreneurship in nigeria (biography of
+inspirational entrepreneurs, youth and women entrepreneurship, entrepreneurship support
+institutions, youth enterprise networks and environmental and cultural barriers to
+entrepreneurship). Basic principles of e-commerce.
+
+VHM 201: Food Animal Production and Management (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. identify livestock species (cattle, sheep and goats) by breed;
+2. handle food animals; and
+3. explain production systems and health management practices on farms.
+
+Course Contents
+Introduction to livestock husbandry. Livestock species, breeds and distribution. Animal
+behaviour. Livestock production systems: extensive, semi-intensive, intensive. Estimation of
+live-weight and age. Emphasis on birth weight, litter size, weaning age/weight, growth rate.
+Disbudding, dry hoof trimming. Tagging and branding. Restraint techniques and handling.
+Animal transportation. Nomadism, pasture management, animal housing.
+
+VHM 202: Companion and Wild Animal Management (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate the handling of companion animals such as dogs, cats, horses, etc and
+
+     analyse their behaviour; and
+2. demonstrate how to handle and provide care for wild animals in captivity.
+
+Course Contents:
+Housing and grooming of companion animals. Types/breeds of dogs and cats. Uses of dogs.
+Bathing tips, tooth care. Basic training of puppies and adult dogs. Husbandry of camels,
+horses, buffaloes, donkeys and their uses. Restraint techniques and animal handling. Feeds
+and feeding of companion animals. Kennel and stable management. Application of modern
+techniques in routine management and health of companion and wild animals. Animal
+transportation. Care of the hoof.
+
+VHM 203: Poultry and Fish Production and Management (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. identify the types and breeds of poultry and fish; and
+2. explain housing, feeding and other health management practices necessary for poultry
+
+     and fish production.
+
+Veterinary Medicine  28  New
+Course Contents
+History of the domestic fowl. Types and breeds of poultry. Special husbandry (housing and
+feeding) requirements of broilers, layers, breeders and cockerels. Special husbandry
+requirements of turkey, guinea fowl, duck, ostrich and quail. Hatchery management.
+Inspection and care of day-old chicks. Biosecurity measures on poultry farms. Conditions that
+affect the health of fish stock. Aquaculture biosecurity protocols. Strategies to manage and
+maintain the health and well-being of fish in aquaculture facilities. Monitoring fish health.
+Health consideration in fishpond management.
+
+VHM 204: Animal Welfare                   (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. state the legal and regulatory framework for animal welfare and animal euthanasia;
+2. demonstrate social responsibility for animal well-being and reducing animal suffering;
+3. determine the effective measures to apply when adverse events occur in animals; and
+4. select the best practices for animal use in research.
+
+Course Contents
+Definition of the term `Animal Welfare'. Legal and regulatory framework for animal welfare
+including right to kill. Animal population dynamics in relation to animal welfare. Humane
+transportation, killing, disposal and harvesting. Care of animals during disaster. Animal
+freedom and behaviour (freedom from pain, injury and disease, fear, stress and discomfort
+and freedom to express normal behaviour). Animal care in research (International standards
+and best practices in research and training). Provisions in the criminal and penal codes on
+animal mishandling and welfare.
+
+VAN 201: Gross Veterinary Anatomy I       (3 Units C: LH 30; PH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. explain the nomenclature of structures of the organ system;
+2. describe relative positions of organs in the body and the relationships with one another;
+
+    and
+3. correlate the knowledge acquired to radiology and surgery courses at the clinical levels.
+
+Course Contents
+Definition of anatomic terms. The basic gross anatomy of the animal body, skeletal system,
+respiratory, digestive, circulatory and lymphatic systems of a type animal. Comparative
+anatomy of internal organs. General plan of circulation, heart, arterial and venous systems.
+Pulmonary and systemic circulation. Respiratory system; pleural cavity (visceral and parietal
+pleura). Larynx and tracheal anatomy, differences in sheep and goat. Digestive system
+(ruminant). Lymphatic system; major lymph nodes in thorax and abdomen. General osteology,
+myology, arthrology.
+
+VAN 202: Gross Veterinary Anatomy II      (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain the nomenclature of structures of the organ system;
+2. describe relative positions of bones and organs in the body; and
+
+Veterinary Medicine                   29                             New
+3. demonstrate competence in dissection to see, in situ, the organs of the body and their
+         relationships with one another.
+
+Course Contents
+Urogenital System (Ruminant): Kidney (Large and Small Ruminants), ureter, bladder, and
+urethra. Male urogenital peculiarities (urethra to glans penis), urogenital folds, spermatic cord,
+testes and epididymis, inguinal canal, accessory sex organs. Female urogenital system,
+urethra to vulva, ovaries to vagina. Broad ligament. Recap blood and nerve supply to
+reproductive system. Neuroanatomy and structures in the head (Ruminant): superficial
+structures of the head, horn, canthus, commissures, nasal anatomy. Bones of the skull, special
+joints of the skull. Muscles of the head. Major blood and nerve supply to the head. Structures
+of the brain. Circle of Willis.
+
+VAN 203: Histology       (3 Units C: LH 30; PH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. identify each organ microscopically;
+2. demonstrate the practical skill to use the microscope; and
+3. identify histological uniqueness of some organs across species.
+
+Course Contents
+History and introduction to microscopy and microscopic techniques: History and introduction
+to the cell, membrane structure, and cell surface modification, nucleus, principle of protein
+synthesis, exocytosis and endocytosis, gap junction and cytoskeleton. Organelles:
+mitochondria, ribosomes, endoplasmic reticulum, Golgi apparatus, lysosomes. Epithelia tissue:
+different types, examples of where they are found, glandular epithelium (exocrine and
+endocrine). Connective tissue: Cells, fibres, ground substance. Muscular tissue: Skeletal,
+smooth, cardiac, basic ultrastructure of muscle unit. Nervous tissue: Basic neuron, neuron
+types, ultrastructure of neuron, myelin, synapse, glial cells, peripheral nerve ganglion, choroid
+plexus, sensory receptors, blood brain barrier. Systemic Histology: Microscopic study of the
+organ systems of the body of animals. Comparative Histology of the organ systems of animals.
+
+VBC 201: Biochemistry I (Chemistry and Biochemistry of Carbohydrate and
+Protein. Abnormalities of Carbohydrate and Protein Metabolism)
+(3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain the chemistry and biochemistry of carbohydrates and proteins;
+2. describe the abnormalities of carbohydrates, protein, amino acids; and
+3. explain haemoglobin metabolism.
+
+Course Contents
+Pathways of metabolism of glucose and fructose, and control of carbohydrate metabolism.
+The electron transport chain (ETC) and oxidative phosphorylation. Chemistry and structure of
+amino acids, peptides and peptic bonds, and metabolism of amino acids and amino sugars.
+Essential and non-essential amino acids. Classification, structure and functions of proteins.
+Urea cycle and its biochemical importance. Glucose-6-phosphate dehydrogenase (G6PD)
+deficiency. Inborn errors of metabolism of some amino acids e.g. (phenylketonuria,
+tyrosinosis, alkaptonuria, albinism, cystinuria). Structure, properties, and biochemical
+
+Veterinary Medicine  30                                             New
+functions of Haemoglobin, Porphyrins and Porphynurias. Functions of bile pigments; jaundice.
+Haemoglobinopathies, HBS, thalassemias, heamophilia, etc.
+
+VBC 202: Biochemistry II (Chemistry and Biochemistry of Lipids. Nutritional
+
+Biochemistry. Fluid and Electrolyte Balance)  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain the chemistry and biochemistry of lipids, nutritional biochemistry, fluid and
+
+    electrolyte balance; and
+2. describe major nutritional, vitamins, fluid and electrolyte deficiencies.
+
+Course Contents
+Introduction, classification, chemistry, and functions of lipids. Digestion and absorption of
+lipids, formation of chylomicrons, transport of lipids in blood stream, lipoproteins. Biosynthesis
+of fatty acids, the triacylglycerols, phospholipids, sphingolipids and regulatory mechanism
+involved. Metabolism of cholesterol, biosynthesis and deregulation into bile acids and bile salts,
+etc. Biochemistry of prostaglandins and nutritional biochemistry: General nutritional
+requirements. Energy aspects of diets, basal metabolic rates (BMR), and specific dynamic
+action. Major nutritional disorders e.g. obesity, marasmus, kwashiorkor, and marasmic-
+kwashiokor. The water-soluble vitamins, vitamin C and their biochemical importance in the
+body. The fat-soluble vitamins: A, D, E and K and their biochemical functions. Calcium and
+phosphorus metabolism and significance in the body. Trace elements: Mg2+, Mn2+, Zn2+, P,
+Co, Li2+, etc.
+
+Fluid and electrolyte balance: Fluid intake and output, total body water distribution in
+intracellular and extracellular fluids. Functions of electrolytes, dehydration, and its correction.
+Water and the major ions: HCO3 -, Cl-, Na+, K+, H+ Regulations of water balance. Iron: sources,
+absorption, distribution in the body and biochemical functions and excretion. Anaemia,
+heamochromatosis. Chemistry and biochemistry of carotenoid. Biochemistry of Vision.
+Coenzyme, structure, and roles in cellular metabolism.
+
+VBC 204: Introductory Molecular Biology (2 Units; C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe the principles and explain the interrelationships between structure, functions and
+
+    molecular mechanisms that underlie the functions of a normal cell; and
+2. acquire basic techniques in cell and molecular biology.
+
+Course Contents
+Sub-cellular and molecular basis of cell function and mode by which cells multiply, replicate
+and pass genetic information including DNA structure and protein synthesis. Methods of gene
+splicing and genetic engineering. Chemistry and structures of nucleic acids. Nomenclature of
+bases, nucleotides and nucleotide biosynthesis. Composition of DNA and RNA. The Watson-
+Crick DNA double helix. Genetic regulation of metabolism. Introduction to genetic engineering
+in veterinary medicine. Virus and oncogenes. Programmed cell death, Biochemistry of free
+radicals.
+
+Veterinary Medicine  31                                             New
+VPY 201: Veterinary Physiology I (Blood, Circulatory and Respiratory Systems)
+(3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe morphology, function and disorders of blood cells;
+2. describe oxygen supply to tissues and exchange of gasses in tissues; and
+3. explain control of breathing and mechanisms of body temperature regulation.
+
+Course Contents
+Structure and functions of blood, production, degradation of blood cells. Anaemia, blood
+coagulation, plasma proteins and blood volume measurement. Cardiovascular physiology:
+structure and functions of the heart; the dynamics of blood and lymph flow. Blood pressure
+and heart rate control and regulation. Circulation of blood through special organs e.g., lungs,
+heart, brain, liver, and kidneys. Respiratory Physiology involves the function of the respiratory
+system and properties of gas. Mechanism of respiration and gas exchange in the lungs
+Regulation of respiratory and buffers in the blood.
+
+VPY 202: Veterinary Physiology II (Endocrinology, Renal and Digestive Systems)
+(3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+ 1. determine the location of different endocrine glands;
+ 2. describe the functions of endocrine factors;
+ 3. explain the interrelationship between endocrine and nervous system;
+ 4. explain the involvement of endocrine system in animal production and glomerular
+
+      filtration;
+ 5. describe the functions of the kidneys, glomerular filtration, water excretion, acidification
+
+      of urine and bicarbonate excretion; and
+ 6. explain electrolyte (e.g., potassium and sodium) excretion.
+
+Course Contents
+Introduction to endocrine system as a control system in the body; endocrine organs and their
+secretions. Characteristics and mode of action of hormones. Mechanism of secretion,
+regulation and function of hormones from the pituitary, thyroid, parathyroid, adrenal,
+pancreas and thymus glands. Effects of hypo- and hyper-secretions of the above-named
+glands in various animals. Physiological control systems and feedback mechanisms. The role
+of the kidney in homeostasis. Nephron - the functional unit of the kidney. Glomerular filtration
+and tubular functions. Water and electrolyte excretion and absorption. Digestion in
+monogastric animals, prehension, mastication and swallowing. Saliva production and function.
+Gastric juice production, digestion, and absorption of food items. Digestion in the ruminant
+stomach and intestinal motility. Hormones of the gut Avian digestion.
+
+VPY 204: Veterinary Physiology III (Neuromuscular Physiology and Special
+
+Senses)                  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe the role of the nervous system in maintaining homeostasis;
+
+Veterinary Medicine  32                                                 New
+2. explain nerve cell communication;
+3. outline the structures and divisions of the nervous system including their roles;
+4. describe how the brain and the spinal cord are protected and nourished;
+5. distinguish between the parasympathetic and sympathetic division of the autonomic
+
+    nervous system;
+6. identify the special senses, their structure and function; and
+7. relate types of sensory receptors to their function and the nervous pathways to the central
+
+    nervous system.
+
+Course Contents
+Impulse propagation and conduction. Central and autonomic nervous systems. Reflex
+mechanisms and types. Neurotransmitters, motor functions of the spinal cord, ascending and
+descending fibre tracts of the spinal cord. The brain, hypothalamus, and limbic systems. Sleep
+and wakefulness. Physiological properties and functions of the autonomic nervous system,
+muscles and bones. Physiology of special senses, olfaction, gustation, hearing and vision.
+
+VEX 299: Externship I (Animal Husbandry) (6weeks)  (2 Units C: PH 90)
+
+Learning outcomes
+At the completion of this course, students should be able to:
+1. describe farm settings for specific animal species.
+2. handle and restrain farm animals for specific procedures.
+3. carry out specific farm practices like grooming, feeding, housing, etc.
+
+Course Contents
+A long vacation field practice of six weeks duration in a livestock, poultry or fish farm.
+Students are to participate in animal husbandry and health management activities on the
+farm under the supervision of the farm veterinary officer. Inspection visits may be conducted
+to such places by the staff of relevant departments to assess students' participation.
+
+GST 312: Peace and Conflict Resolution             (2 Units C: LH 30)
+
+Learning Outcomes
+At the end of the course, students should be able to:
+1. explain the concepts of peace, conflict and security;
+2. list major forms, types and root causes of conflict and violence;
+3. differentiate between conflict and terrorism;
+4. enumerate security and peace building strategies; and
+5. describe roles of international organisations, media and traditional institutions in peace
+
+    building.
+
+Course Contents
+Concepts of peace, conflict and security in a multi-ethnic nation. Types and theories of
+conflicts: ethnic, religious, economic, geo-political conflicts. Structural conflict theory, realist
+theory of conflict, frustration-aggression conflict theory. Root causes of conflict and violence
+in Africa: indigene and settlers' phenomena; boundary/boarder disputes; political disputes;
+ethnic disputes and rivalries. Economic inequalities; social dispute. Nationalist movements and
+agitations. Selected conflict case studies ­ Tiv-Junkun; Zango Kartaf. Chieftaincy and land
+disputes, etc. Peace building, management of conflicts and security. Peace and human
+development. Approaches to peace & conflict management --- (religious, government,
+community leaders etc.). elements of peace studies and conflict resolution. Conflict dynamics
+assessment scales. Constructive and destructive, justice and legal framework. Concepts of
+
+Veterinary Medicine                     33                                  New
+social justice; the Nigerian legal system. Insurgency and terrorism. Peace mediation and peace
+keeping. Peace and Security Council (international, national and local levels). Agents of conflict
+resolution ­ conventions, treaties, community policing. evolution and imperatives. Alternative
+Dispute Resolution (ADR). Dialogue, arbitration, negotiation, collaboration, etc. Roles of
+international organizations in conflict resolution - (a). the United Nations (UN) and its conflict
+resolution organs; the African Union and Peace Security Council. ECOWAS in peace keeping.
+The media and traditional institutions in peace building. Managing post-conflict situations;
+refugees. Internally Displaced Persons (IDPS). The role of NGOs in post-conflict situations.
+
+ENT 312: Venture Creation      (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students, through case study and practical approaches, should be
+able to:
+1. describe the key steps in venture creation;
+2. identify opportunities in problems and in high potential sectors regardless
+
+    of geographical location;
+3. state how original products, ideas, and concepts are developed;
+4. develop business concept for further incubation or pitching for funding;
+5. identify key sources of entrepreneurial finance;
+6. implement the requirements for establishing and managing micro and small enterprises;
+7. conduct entrepreneurial marketing and e-commerce;
+8. apply a wide variety of emerging technological solutions to entrepreneurship, and
+9. appreciate why ventures fail due to lack of planning and poor implementation.
+
+Course Contents
+Opportunity identification: sources of business opportunities in Nigeria, environmental
+scanning. Demand and supply gap/unmet needs/market gaps/market research. Unutilised
+resources, social and climate conditions and technology adoption gap. New business
+development: business planning, market research, etc. Entrepreneurial finance: venture
+capital, equity finance. Micro finance, personal savings, small business investment
+organizations and business plan competition. Entrepreneurial marketing and e-commerce.
+Principles of marketing, customer acquisition and retention. B2B, C2C and B2C models of e-
+commerce. First mover advantage, e-commerce business models and successful e-commerce
+companies. Small business management/family business. Leadership & management: basic
+book keeping, nature of family business and Family Business Growth Model. Negotiations and
+business communication: strategy and tactics of negotiation/bargaining. Traditional and
+modern business communication methods. Opportunity Discovery Demonstrations: business
+idea generation and presentations. Business idea contest, brainstorming sessions, idea
+pitching, etc. Technological Solutions: the concepts of market/customer solution, customer
+solution and emerging technologies. Business Applications of new technologies: Artificial
+Intelligence (AI), Virtual/Mixed Reality (VR), Internet of Things (IoTs), Blockchain, Cloud
+Computing, Renewable Energy, etc. Digital business and e-commerce strategies).
+
+VAN 305: Embryology            (3 Units C: LH 30; PH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. discuss embryological origin of mammalian and avian organs; and
+2. identify embryonic tissue and organ morphology and structure in clinical specimens.
+
+Veterinary Medicine        34  New
+Course Contents
+Introduction to embryology, fertilization, cleavage, establishment of germ layers, primitive
+streak. Basic formation of body configuration, nervous system, digestive and respiratory
+systems, mesoderm differentiation, mesonephrosis formation, circulatory system, extra-
+embryonic membranes. Differentiation and regulation. Mutation, radiation effect and
+teratogenesis. Normal development of mammalian and avian organ systems.
+
+VAN 307: Comparative Gross Anatomy      (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. compare gross anatomy of different animal species;
+2. apply the knowledge of anatomy acquired to clinical exercises including surgery;
+3. delineate the gross topographical and comparative gross anatomy of major domestic
+
+    animals and birds;
+4. identify the features of normal equine, ruminant, porcine, canine and avian gross
+
+    anatomy; and
+5. demonstrate further knowledge of the interrelationships among anatomical structures and
+
+    functions of the animal body.
+
+Course Contents
+General and Comparative studies of the digestive, reproductive, respiratory and circulatory
+systems, nervous, urogenital, endocrine, sense, and sex organs and integument of domestic
+animals. Basic differences in organ gross morphology amongst major domestic animals (pigs,
+cattle, dogs, horses) and birds. Comparative osteology and arthrology. Dental formula, buccal
+wall anatomy, simple versus complex stomachs, differences in small and large intestines.
+Foetal circulation. Anatomy of avian organ systems: Skeleton, myology, joints, digestive,
+circulatory, respiratory, urogenital and integument.
+
+VPY 305: Environmental Physiology       (3 Units C: LH 30; PH 45)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. explain various components of the environment and their impact on animal physiology;
+2. discuss how adaptation (biochemical, behavioural and ecological) techniques allow animals
+
+    to cope especially in extreme environments;
+3. explain the concept of homeostasis and allostatic techniques in various conditions;
+4. identify the role of epigenetic changes in developmental plasticity and how it could foster
+
+    adaptation in an extreme environment; and
+5. identify various environmental stressors and their effects on animal survival.
+6. Thermoregulation and short-term responses to exposure to heat and cold.
+
+Course Contents
+Physiologic response to heat and cold temperature regulation: body temperature. Function of
+renal system. Micturition, structure and general physiology of the skin. Water, electrolyte, and
+acid-base balance. Environment and its effects on animal adaptation and survival. Mechanisms
+adopted by animals to adjust to changes in environmental conditions including climate,
+weather, environmental temperature, humidity and pressure; salinity and altitude (sudden
+change or over a period). The impacts of animal and other biotic factors such as predation,
+desertification and pollution.
+
+Veterinary Medicine                 35  New
+VPY 307: Reproductive Physiology and Endocrinology  (2 Units C: LH
+15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe changes that occur in the reproductive system over the lifetime of an animal;
+2. distinguish the major hormones involved in reproduction and describe their role in
+
+    regulating reproduction in male and female animals;
+3. describe processes that can lead to dysfunction of the reproductive system;
+4. describe the basic properties of muscles;
+5. explain isotonic and isometric contraction; and
+6. describe electromyography.
+
+Course Contents
+Functions of male and female reproductive systems. The role of reproductive hormones in
+reproductive functions. Oestrus cycle, puberty, and lactation. Reproduction in males and
+females. Pregnancy. Spinal cord and brain stem functions.
+
+VBC 305: Biochemistry III (Hormones and their Characteristics)
+(3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. discuss the general characteristics of hormones, their biosynthesis and
+
+     molecular mechanisms of action; and
+2. explain how their synthesis is regulated and their assay methods.
+Course Contents
+General characteristics of hormones and the molecular mechanisms of action. Hormones
+of the adrenal cortex: the glucocorticoids and the mineralocorticoids-biosynthesis,
+regulation of biosynthesis and metabolic functions. Adrenocortical insufficiency: Addison's
+disease, hyper-aldosteronism. Hormones of testes, ovary, and the placental testosterone,
+androgens, estrogens, progesterone; biosynthesis, functions, metabolism, and
+regulations. Assay of hormones-biological, chemical, and radio-displacement assay.
+Hormones of the adrenohypophysis; ACTH, GH, TSH, LH, Prolactin, and MSH. The
+neurohypophysis; vasopressin and oxytocin.
+
+VPC 301: General Pharmacology                       (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. define pharmacology and drug, and identify their sources;
+2. describe routes of drug administration, their disposition in the body and how they are
+
+    excreted;
+3. explain drug interaction and toxic effects on the whole animal and the environment;
+4. explain basic concepts of mechanism of drug action, misuse, and abuse; and
+5. enumerate the legislations governing the development and use of drugs in animals.
+
+Course Contents
+
+Veterinary Medicine            36                                       New
+Definitions and historical development of Pharmacology. Sources and formulations of drugs.
+Mode of drug administration and disposition in the body (absorption, distribution,
+biotransformation and excretion). Mechanisms of drug action. Groups of chemotherapeutic
+agents, dosages, routes of administration, labelling and packaging. Prescription, interpretation
+and dispensing. The concept of drug misuse and abuse, and toxicity.
+
+VMB 302: Introductory Microbiology      (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain the contributions of scientists to microbiology;
+2. identify key features of prokaryotes, eukaryotes and viruses;
+3. recognize the key features of microscopy and techniques for staining microbes;
+4. discuss the physiology and biochemistry of microbial respiration and cell division;
+5. identify growth and biochemical characteristics of bacteria;
+6. list the agents for sterilisation and disinfection of surfaces and explain their effects on
+
+   viability of microbes; and
+7. explain the concept of antimicrobial resistance.
+
+Course Contents
+History of microbiology. Introduction to bacteriology, virology and mycology. Classification,
+nomenclature and morphology of bacteria, viruses, fungi and other pathogens of veterinary
+importance. Growth, enumeration, reproduction, isolation and identification of bacteria and
+viruses. Purification of viruses. Control of microbial population (sterilisation and disinfection).
+Environmental bacteriology. morphology and classification of viruses. Interference and
+interferon. Growth of viruses in tissue culture.
+
+VMB 304: Principles of Immunology       (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. define antigen, immunogen, and hapten;
+2. explain the concept of self or non-self, and relate the anatomy of immune organs and
+
+     tissues, to their functions;
+3. compare innate and acquired immune responses;
+4. explain antigen-antibody interactions in vitro and their diagnostic applications;
+5. determine the differences in immune responses to various pathogens including parasites
+
+     and tumor cells as well as the different mechanisms; and
+6. explain the different mechanisms involved in hypersensitivity reactions, immune defects
+
+     and autoimmunity.
+
+Course Contents
+Historical perspectives. Anatomy and histology of Immunological organs, macrophages,
+lymphocytes, and plasma cells. Immune responses. Antibody­antigen reaction,
+hypersensitivity reactions, auto-immune diseases, and immune-deficiency diseases. Principles
+of immunotherapy and vaccination; immunisation and immunological aspects of cancer.
+Immunological methods for diagnosis of diseases.
+
+VMB 306: Pathogenic Bacteriology        (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+
+Veterinary Medicine                 37  New
+At the completion of this course, students should be able to:
+1. describe different types of bacteria in relation to the diseases they cause in animals;
+2. explain key virulence factors associated with the different genera and species of
+
+      pathogenic bacteria including antimicrobial resistance;
+3. prepare culture and isolation of bacteria from clinical specimens and other samples
+4. use bacterial growth characteristics, microscopic appearances and dichotomous
+
+      biochemical tests to identify pathogenic Gram-positive, Gram-negative and higher
+      bacteria; and
+5. interpret other appropriate diagnostic assays for bacterial identifications and
+      antimicrobial sensitivity tests
+
+Course Contents
+Bacterial agents of veterinary importance with emphasis on mechanisms of disease
+production. Class of bacterial agents for each body system. Establishing different diagnostics
+for disease syndrome and developing diagnostic approach.
+
+VPE 302: General Veterinary Parasitology  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate knowledge of basic concepts and terminologies used in parasitology;
+2. determine parasites of veterinary and medical importance infecting organs of domestic
+
+      and non-domestic animals; and
+3. describe basic distinguishing features of parasites of veterinary importance.
+
+Course Contents
+Definitions, concepts and terminologies related to parasitology. Classification and economic
+importance of parasites of domestic animals. Specific parasites of the gastrointestinal tract
+and respiratory system. Structure, classification, life cycle and transmission of protozoan and
+other tick-borne parasites of domestic stock. Insects and ectoparasites of veterinary
+importance. Vectors and vector-borne diseases. Basic information on prevention and control
+of parasites of veterinary and medical importance.
+
+VPT 302: Principles of General Pathology  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain the nature of disease processes from the standpoint of interactions of causation
+
+     and effects on tissue and organ morphology and function: and
+2. classify these processes into degenerative, inflammatory, neoplastic, etc.
+
+Course Contents
+History of pathology. Definitions and terminologies in Veterinary Pathology. Degeneration and
+necrosis, circulatory disturbances. Inflammations and repair. Disturbances of growth.
+Neoplasia. Fundamental immunopathology. Lectures and practical demonstrations of
+veterinary disease processes with emphasis on degeneration and necrosis, circulatory
+disturbances, inflammation and repair. Disturbances of growth and neoplasia. Tissue reaction
+to injury and basic immunopathology.
+
+VSR 302: Wound Management                 (2 Units C: LH 15; PH 45)
+
+Veterinary Medicine        38             New
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe categories of wounds and decide the treatment required based on level of
+
+      contamination;
+2. identify signs of healing in wounds; and
+3. determine the therapy for malignant wounds and concurrent blood tests to preclude
+
+      toxicity during cancer therapy.
+
+Course Contents
+Signs and symptoms of wounds. Types of wounds. Wound dressing and management, types
+of bandages, their uses and management. Uses of honey in wound treatment. Cancer, causes
+of cancer. Carcinogens. Treatment of cancer.
+
+VEX 399: Externship II (Diagnostics) (6 weeks)  (2 Units C: PH 90)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. relate topics in Veterinary microbiology and pathology to disease diagnosis.
+2. carry out diagnostic procedures towards making confirmatory diagnosis in disease
+
+    occurrence.
+3. demonstrate laboratory ethics and conduct.
+
+Course Contents
+A long vacation field practice of six weeks duration in diagnostic laboratories during the long
+vacation following 300 level. Inspection visits may be conducted to such places by lecturers from
+the coordinating departments to assess student's participation.
+
+VPC 403: Systemic Pharmacology                  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain drug actions on different body systems including cardiovascular, respiratory, etc;
+2. determine dosage regimens of these drugs in the management of organ dysfunction;
+3. discuss the use of fluids, minerals, and vitamins to correct deficiencies; and
+4. explain adverse and secondary effects of drugs in the animal body.
+
+Couse Contents
+Drugs affecting organ systems and the reproductive systems. Vitamins, minerals, fluids and
+hormones influencing metabolism and body growth. Locally acting drugs as well as drugs used
+in treating non-infectious diseases.
+
+VPC 404: Chemotherapy                           (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the end of this course, students should be able to:
+1. define chemotherapy and chemotherapeutics and relate the history of chemotherapy;
+2. explain the basic mechanisms of action of chemotherapeutic agents (antibacterials,
+
+     anthelmintics, ectoparasitics, antiseptics/disinfectants, antiviral and antineoplastics);
+3. explain antimicrobial drug resistance and prudent use of anti-infectious agents; and
+
+Veterinary Medicine             39              New
+4. discuss immunological treatment of diseases as well as gene therapy.
+
+Course Contents
+History and development of modern chemotherapeutic agents. Use and misuse of
+chemotherapeutic agents in infectious disease control and neoplasia. Drug tolerance, drug
+resistance and hypersensitivity reactions in the use of antimicrobial and antitumour agents.
+Immunotherapy and gene therapy.
+
+VPC 405: Toxicology                         (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. define toxicology;
+2. explain and provide information on how to assess the likelihood of poisoning and possible
+
+    differential diagnoses;
+3. describe the procedures and therapy to implement in the event of poisoning;
+4. explain the agents that cause poisoning in animals and the environment;
+5. describe and carryout sample collection from both live and dead animals to obtain
+
+    laboratory confirmation of toxic agents in question; and
+6. carry out simple tests to determine potential toxicant and degree of toxicity.
+
+Course Contents
+General principles of toxicity and toxicological evaluation. Pesticide use and misuse. Heavy
+metal and chemical poisoning. Teratogenic toxicity. Poisonous plants in the environment.
+Mycotoxins. Animal venoms. Environmental toxicology including persistent organic pollutants.
+Study of diagnostic methods in poisoning, use of antidotes and preventive measures.
+
+VHM 406: Farm Animal Breeding and Genetics  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe the concepts of breeding and genetics and related terminologies;
+2. demonstrate the estimation of genetic parameters; and
+3. enumerate the importance of quality foundation to livestock production.
+
+Course Contents
+Variance, co-variances, partitioning of phenotypic variance. Genotype by environmental
+interaction. Statistical tools for studying inheritance. Estimation of genetic parameters
+(heritability, repeatability, genetic correlations); inbreeding, linebreeding and relationships,
+cross-breeding in practice, selection principles and methods; breeding (mating) systems;
+breeding plans for different farm animal species; foundation stock development. Genetic
+improvement for various livestock traits
+
+VSR 403 Anaesthesiology and Intensive Care  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. distinguish between anaesthesia and sedation and the drugs to achieve either;
+2. differentiate between classes of drugs and contraindications; and
+3. analyse emergencies and respond appropriately.
+
+Veterinary Medicine  40                                                           New
+Veterinary Medicine  41  New
+Course Contents
+General principles of anaesthesia and analgesia. Mode of administration of inhalant
+anaesthetics; effect on operational procedure, complications, and management of general
+anaesthesia in various species. Instrumentation and anaesthetic drugs commonly used as well
+as drugs for controlling pain. Crash cart drugs and supplies. Simple calculations of drug
+dosages.
+
+VSR 404: Introductory Surgery and Basic Radiology (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. conduct themselves professionally in surgical theatre and prepare for surgery;
+2. perform basic skills required to carry out surgical operations;
+3. explain the principles of image formation with every imaging modality;
+4. explain the meaning and distinction of radiology from diagnostic imaging; and
+5. demonstrate the use of diagnostic imaging instruments.
+
+Course Contents
+Definitions. Surgical preparation of the surgeon and patient, and instrumentation. Hospital
+design; clean and contaminated areas. Citing of specialised surgical areas like the radiology
+suite, intensive care unit and neonatal wards. Pre-and Post-operative management. Suture
+materials and patterns. Uses of radiology, instrumentation in radiology. Preparing and
+positioning patients for x-ray. Exposure and developing techniques. Exposure to
+ultrasonography, fluoroscopy, scintigraphy. Safety and techniques in radiology.
+
+VMB 407: Systemic Virology and Mycology  (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate knowledge of the morphology of various families of viruses and fungi of
+
+      veterinary and zoonotic importance;
+2. describe the pathogenesis of important viral and fungal diseases of domestic and wild
+
+      animals;
+3. demonstrate competence in laboratory tests for isolation, identification and
+
+      characterization of viruses and fungi; and
+4. demonstrate knowledge of vaccination and control of viral diseases of domestic and
+
+      companion animals.
+
+Course Contents
+Specific viruses of veterinary importance including viruses of Foot-and-mouth disease, Marek's
+disease, Equine encephalomyelitis, Canine parvovirus, Canine distemper, Feline
+pankoleukopaenia, Porcine circovirus, Severe acute respiratory syndrome (SARS-CoVs), etc.
+Fungi of veterinary importance including Dermatophytes, Aspergillus, and toxic fungi.
+
+VPE 403: Protozoology                    (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. classify protozoa of veterinary and medical importance;
+2. describe distinguishing features of parasites, host preferences and predilection sites.
+
+Veterinary Medicine    42                                           New
+3. illustrate life cycles of protozoa of veterinary importance;
+4. demonstrate basic laboratory and field diagnostic procedures for detecting protozoa of
+
+      veterinary importance; and
+5. propose appropriate control and preventive measures for protozoa of veterinary and
+
+      public health importance.
+
+Course Contents
+Introduction and classification of protozoa of Veterinary importance. Protozoa transmitted by
+insects ­ Trypanosome, Plasmodium, Leishmania, Leucocytozoon and Haemobartonella.
+Protozoa transmitted by resistant cysts: Eimeria, Balantidium, Giardia, Toxoplasma,
+Entamoeba, Sarcocystis and Bedsonia.
+
+VPE 404 Helminthology      (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. classify helminths of veterinary and medical importance;
+2. discuss the distinguishing features of parasites, host preferences and predilection sites;
+3. illustrate life cycles of helminths of veterinary and medical importance;
+4. demonstrate basic laboratory and field diagnostic procedures for detecting helminths of
+
+      veterinary and medical importance; and
+5. propose appropriate control and preventive measures for helminths of veterinary and
+
+      public health importance.
+
+Course Contents
+Identification, classification, and study of life cycle of helminths of veterinary and medical
+importance. Morphology, pathogenicity and control of helminths including: Platyhelminths,
+trematodes (Digenea and Aspidobothria) cestodes (Pseudophyllidea, Cyclophylidea);
+Nemathyhelminths. Nematodes (Trichostrongylloidea, Strongyloidea, Rhabdoitidea, Spirurids,
+Filaroidea). Aphasmida parasites. Laboratory tests which include egg counting techniques,
+larval culture, worm recovery and preservation of the helminths.
+
+VPE 405 Entomology         (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. classify ectoparasites of veterinary and medical importance;
+2. describe distinguishing features of ectoparasites, their host preferences and predilection
+
+    sites;
+3. illustrate life cycles of pathogens within various vectors of veterinary importance;
+4. demonstrate basic laboratory and field procedures for the collection and identification of
+
+    ectoparasites of veterinary importance; and
+5. propose appropriate control and preventive measures for ectoparasites of veterinary and
+
+    public health importance.
+
+Course Contents
+Introduction to phylum, Arthropoda, Order-Nematocera, Brachycera and Cyclorhapha,
+Acarology-Ixodidae, Argasidae, Siphonaptera (fleas), Phthiraptera (lice). Life cycles and
+vectorial capacity of members of phylum Arthropoda. Techniques needed for diagnosis.
+Binomial system of nomenclature. Ecology of vectors and their role in disease transmission,
+
+Veterinary Medicine    43  New
+distribution (local and worldwide) and population dynamics. Ectoparasitic control methods and
+insecticide resistance in vectors of veterinary and medical importance.
+
+VPT 403: Systemic Pathology              (3 Units C: LH 30; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+
+ 1. recognise the peculiarities of various body systems of animals in disease processes;
+ 2. describe common diseases that affect various systems and be conversant with their
+
+      gross- and histopathology;
+ 3. obtain, preserve and process diagnostic materials from either live animals or at post-
+
+      mortem;
+ 4. record and present their observations and findings; and
+ 5. conduct systematic derivation of morphological, tentative, differential, and definitive
+
+      diagnoses.
+
+Course Contents
+System-based study of the pathology of congenital, hemodynamic, inflammatory, infectious,
+metabolic, environmental, and neoplastic diseases that affect various systems of the animal
+body. The systems include alimentary, respiratory, cardiovascular, skin, special senses,
+musculoskeletal, nervous, haemopoietic, urinary, genital and endocrine. Introduction to
+routine post-mortem diagnostic procedures in various species of animals. Biopsy techniques
+and routine post-mortem sample collection procedures. Disease reporting and formulation of
+appropriate morphological and disease diagnosis. Ancillary tools in disease diagnosis.
+
+VPT 404: Pathology of Infectious and Non-infectious Diseases (3 Units C: LH 30;
+PH 45)
+
+Learning Outcomes
+
+At the completion of this course, students should be able to:
+1. identify specific clinical signs and lesions associated with infectious and non-infectious
+
+    diseases;
+2. deduce relevant differential diagnoses; and
+3. use knowledge acquired from Systemic Pathology and approach necropsy from disease
+
+    point of view.
+
+Course Contents
+Pathology of endemic and emerging diseases of animals (including poultry and fish species)
+that are of importance in the tropical environment. Aetiology, clinical manifestation, pathology
+and diagnosis of infectious and non-infectious diseases.
+
+VMD 401: Introductory Internal Medicine  (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe the concept of disease;
+2. identify diseased animals;
+3. use common clinical/diagnostic instruments; and
+4. interpret clinical findings.
+
+Veterinary Medicine          44                                     New
+Course Contents
+General systemic disease conditions of domestic and wild animals: Cardiovascular, digestive,
+nervous system, endocrine, etc. Use of common diagnostic instruments and diagnostic
+methods. Cardiopulmonary resuscitation in domestic and wildlife. General systemic ailments:
+shock, fever, anorexia, etc. Vital signs, reference values and interpretation of aberrations.
+Principles of treatment and prognosis.
+
+VMD 402: Clinical Management         (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+
+ 1. demonstrate competence at setting up veterinary clinic/hospital with its basic facilities;
+ 2. exhibit customer service skills;
+ 3. demonstrate skills for basic approach to examination of lethargic animals; and
+ 4. demonstrate competency at sample collection and preservation as well as general
+
+      hospital management.
+
+Course Contents
+The setting up of the veterinary clinic/hospital, client reception and basic facilities. Inpatient
+and outpatient management procedure. Clinic equipment for small and large animals. Cleaning
+and sterilisation of hospital equipment. Examination of sick animals. Collection and
+preservation of specimens from sick animals.
+
+VTP 401: Veterinary Gynaecology      (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. discuss causes and treatments of reproductive diseases in animals; and
+2. explain reproductive implications of the diseases.
+
+Course Contents
+Functions and clinical examination of female reproductive organs of large animals. Puberty
+and sexual reproductive glands and hormones. Oestrous cycle. Act of copulation. Fertilisation
+and gestation. Anomalies of foetal development, including genetic and acquired causes.
+Oogenesis. Disturbances of ovulation and nidation. Causes of infertility and sterility in female
+animals. Diseases that influence sexual functions.
+
+VTP 402: Veterinary Andrology and Artificial Insemination (2 Units C: LH 15; PH
+45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate clinical examination of male reproductive system;
+2. explain service behaviours of male animals;
+3. discuss male infertility and assisted reproductive techniques;
+4. discuss Artificial Insemination, its advantages and disadvantages;
+5. demonstrate semen collection, preservation, transportation, and insemination techniques;
+
+    and
+6. discuss reproductive disorders affecting insemination.
+
+Veterinary Medicine              45                                        New
+Course Contents
+Clinical examination of the male reproductive system. Service behaviours. Male infertility.
+Diseases of testes and accessory sex organs. Servicing ability and semen disorders. Inability
+of male to copulate or fertilise. History of artificial insemination, its advantages and
+disadvantages. Semen collection, evaluation, processing, preservation, transportation, and
+insemination techniques. Reproductive disorders affecting insemination.
+
+VPH 401: Wildlife Ecology and Conservation         (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. identify species, characteristics, habitat requirements and life cycles of selected wildlife
+
+    species;
+2. discuss the general principles of ecology and how it relates to terrestrial and/or aquatic
+
+    animal conservation;
+3. apply knowledge acquired to solve problems related to wildlife conservation and
+
+    management; and
+4. explain the importance of wildlife as reservoirs of infectious diseases of man and domestic
+
+    animals.
+
+Course Contents
+General principles of ecosystem and management. Ecology of wild animals. Challenges faced
+by wild animals while sharing the planet with humans and mitigation options. Wildlife
+conservation and its importance as reservoir of infectious diseases of domestic animals and
+man. Tools and techniques for monitoring wildlife habitats, communities, and population. Care
+and management of wild animal parks and zoological gardens.
+
+VPM 402: Veterinary Extension and Rural Sociology  (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students will be able to:
+1. examine the model extension efforts taken by individuals, groups and communities and
+
+     the reasons for success or failure of each effort;
+2. discuss livestock rearing patterns in urban, rural and traditional settings;
+3. explain perception, attitude and practices of rural dwellers and apply same to drive needed
+
+     changes in animal health; and
+4. execute farm, home and/or field visits to farmers to provide first-hand information on
+
+     national goals.
+
+Course Contents
+Importance of Veterinary Extension in controlling diseases such as ticks and tick-borne
+diseases, helminths, etc. Rural sociology. Extension targets. Adoption of extension
+technologies. Components of livestock production and public health extension. Extension
+promotion and delivery.
+
+ VEX 499: Externship III (Clinics and Public Health) (6 weeks) (2 Units C: PH 90)
+ Learning outcomes
+ At the completion of this course, students should be able to:
+1. receive and clerk clinical cases.
+2. carry out basic examinations towards achieving clinical diagnosis.
+3. collect clinical samples and handle appropriately.
+
+Veterinary Medicine  46                            New
+4. identify lethargic food animals during ante-mortem inspection.
+5. identify aberrations in animals slaughtered for meat.
+
+Course Contents
+A long vacation field practice of six-weeks duration in Clinics and Veterinary Hospitals including
+2 weeks in abattoir and control posts (under the supervision of a qualified veterinarian) during
+the long vacation following 400 level. Inspection visits may be conducted to such places by
+lecturers from the coordinating departments to assess student's participation.
+
+VAN 509: Applied and Radiographic Clinical Anatomy                 (1 Unit C: PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate a working translational knowledge of vital anatomical landmarks to clinical
+practice (medicine, surgery, and meat inspection); and
+2. identify radiographic distinct features embedded in anatomical structures.
+
+Course Contents
+Application of Radiography in the study of normal bones of domestic animals. Topographic
+consideration of structures of domestic animals often involved in surgery and veterinary
+practice. A review of anatomy relevant to meat inspection such as the lymph nodes and
+internal organs. Topographic consideration of structures of domestic animals often involved
+in surgery and medical practice, bleeding sites in domestic and laboratory animals. Clinical
+anatomy of simple and ruminant stomachs and intestines. Applied anatomy of mammary gland
+and inguinal region. Osteology of the head and paranasal sinuses, landmarks for stunning in
+the head, and for regional anaesthesia in the cranial region. Anatomical basis of castration
+and spaying in domestic animals. Landmarks for intra-articular injection of joints. Anatomical
+consideration of avian anaesthesia. Landmarks of pelvis and pelvic cavity relative to
+reproductive functions of the female. Management of anatomical specimen, embalming
+techniques, preservation of fluids and tissue dissection facilities.
+
+VPT 505: Clinical Pathology                         (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. employ the tools of Clinical Pathology to diagnose and monitor disease processes and
+
+    response to treatment; and
+2. describe the processes underlying abnormal laboratory results.
+
+Course Contents
+Laboratory testing and data interpretation in the areas of haematology, serum chemistry,
+urinalysis, organ function tests, body fluid analysis and diagnostic cytology. These processes
+are to confirm and/or support the disease processes and assess prognosis. They are also to
+assist in determining treatment options and monitoring response to treatment.
+
+Veterinary Medicine          47                                    New
+VMD 503: Aquatic and Wild Animal Medicine  (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+
+ 1. demonstrate knowledge of diseases and disorders of fish and other aquatic animals and
+      their control measures;
+
+ 2. explain the effects of poor water quality on the health of aquatic animals; and
+ 3. demonstrate knowledge of diseases that are specific to wild and captive animals and
+
+      their control measures.
+
+Course Contents
+Common bacterial, fungal, viral, and parasitic diseases of fish and other aquatic animals with
+emphasis on clinical signs, lesions, diagnosis and treatment. Vaccination regimes in
+aquaculture. Environmental conditions due to extremes of water quality parameters will be
+reviewed. Physical and chemical restraints of wild animals. Diseases specific to wild and
+captive animals.
+
+VMD 504: Avian Medicine                    (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. recognise sick birds;
+2. diagnose diseases and disorders of poultry and other birds using appropriate diagnostic tools
+
+    and methods: and
+3. treat and/or institute necessary measures to control their diseases.
+
+Course Contents
+Description, aetiology, clinical signs, diagnosis and treatment or management of diseases of
+poultry species e.g. bacterial (Salmonellosis, Pasteurellosis, Colisepticaemia, Mycoplasmosis, etc),
+viral (Newcastle disease, infectious bursal disease, avian encephalomyelitis, chicken infectious
+anaemia, avian influenza, etc), fungal (mycoses and mycotoxicoses), metabolic and nutritional
+(fatty liver syndrome, gout, nutritional deficiencies, etc), and diseases of pet/aviary birds.
+
+VMD 505: Small/Laboratory Animal and Microlivestock Medicine  (2 Units
+C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. recognise sick dogs, cats, and micro-livestock such as grass-cutters;
+2. diagnose diseases and disorders of these species using appropriate diagnostic tools and
+
+    methods: and
+3. institute treatment and other necessary control measures.
+
+Course Contents:
+Lectures on infectious diseases viz bacterial, fungal and algal, protozoal, viral, prions and
+rickettsia. Diseases of organ systems, e.g., cardiovascular, gastroenteric, nervous, etc; metabolic
+and nutritional diseases of dogs, cats, rabbits, guinea pigs and experimental animals as well as
+micro-livestock such as grass-cutters. Emphasis will be placed on clinical signs, diagnosis,
+treatment and control.
+
+Veterinary Medicine      48                                    New
+VMD 506: Ruminant Medicine      (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. identify sick domestic ruminants such as cattle, sheep and goats;
+2. diagnose diseases and disorders of these species using appropriate diagnostic tools and
+
+    methods; and
+3. institute treatment and other necessary control measures.
+
+Course Contents
+Infectious diseases of cattle, buffaloes, elands, antelopes, sheep and goats e.g. (bacterial {such
+as tetanus, tuberculosis, black quarters, and anthrax}, viral {such as Foot and Mouth Disease
+and Peste des Petit Ruminants}, fungal {such as cutaneous lymphatic diseases}, protozoal {such
+as babesiosis, trypanosomiasis, theileriosis}, rickettsial {such as toxoplasmosis and
+anaplasmosis}). Non-infectious diseases e.g. metabolic (such as ketosis, toxaemia, and milk
+fever) and nutritional (such as bloat, diarrhoea, and constipation). Emphasis will be placed on
+the epidemiology, clinical signs, diagnosis, treatment, and control.
+
+VMD 507: Porcine Medicine       (2 Units C : LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. identify sick pigs;
+2. diagnose diseases and disorders of this species using appropriate diagnostic tools and
+
+   methods; and
+3. institute treatment and other necessary control measures.
+
+Course Contents
+Diseases of the porcine species e.g., bacterial (Swine erysipelas, Swine dysentery, Infectious
+atrophic rhinitis, Colibacillosis, Salmonellosis, Clostridiosis etc), viral (African Swine Fever, Swine
+influenza, Transmissible gastroenteritis, Foot and Mouth Disease etc), parasitic (internal
+parasites, external parasites, coccidia etc), fungal (mycoses and mycotoxicoses), metabolic
+and nutritional diseases of pigs will be covered. Emphasis will be placed on the epidemiology,
+clinical signs, diagnosis, treatment and control of relevant diseases of importance.
+
+VMD 508: Equine Medicine        (2 Units C: LH 30)
+
+ Learning Outcomes
+ At the completion of this course, students should be able to:
+1. recognise sick horses and donkeys;
+2. diagnose diseases and disorders of equidae using appropriate diagnostic tools and methods;
+
+       and
+3. institute treatment and other necessary control measures.
+
+Course Contents
+Infectious, non-infectious (including metabolic and nutritional) diseases of equidae with reference
+to horses used for polo and security patrols of the mounted troops. Emphasis will be placed on the
+clinical signs, diagnosis, treatment and control of specific diseases of economic importance in the
+tropics. The course highlights problem-oriented approach in the management of equine diseases
+and disorders.
+
+Veterinary Medicine         49  New
+VSR 505: Diagnostic Imaging       (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. explain the principles of radiography and the process of taking radiographs using manual
+
+    and digital methods;
+2. use X-rays safely;
+3. explain the basis of ultrasonography and its specialised use in cardiology;
+4. state indications for Computed Tomography (CT) scan use and interpret images shown;
+
+    and
+5. recognise the use of imaging in theriogenology.
+
+Course Contents
+Introduction to X-rays, Radiation safety, X-ray film exposure and processing. Radiographic
+interpretation. Radiation therapy. Principles of ultrasound scanning. Applications of scanning
+in Veterinary Medicine. Echocardiography. Principles of CT scan. The uses of diagnostic imaging
+techniques in pregnancy diagnosis and in reproductive disorders. Review of clinical imaging cases.
+
+VSR 506: Soft Tissue Surgery      (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe the procedure required for preoperative assessment;
+2. explain the history, clinical signs, laboratory tests and diagnostic imaging carried out; and
+3. diagnose and treat lamenesses in animals.
+
+Course Contents
+Surgical management involving the head, neck and thorax as well as abdomen, limbs and
+lameness. Features of cosmetic surgery. Common operations of all regions will be discussed
+including indications and contraindications.
+
+VSR 507 Orthopaedic Surgery       (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students will be able to:
+1. describe lesions and decide treatment options that best fit the presentation;
+2. determine appropriate implants and treatment options; and
+3. determine the diagnostic method that best fits the clinical presentation and apply
+
+    treatment.
+
+Course Contents
+Fractures and fracture healing; examination and evaluation of the orthopaedic patient,
+reduction and fixation of fractures; nursing care, diagnosis and treatment of fractures of long
+bones, pelvis, spine and skull of animal species. Management of bone infections; nutritional,
+neoplastic bone and joint diseases. Use of implants and fixation devices.
+
+Veterinary Medicine           50                      New
+VSR 508: Large Animal Lameness                  (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students will be able to:
+1. determine diagnostic tests that are required in cases of large animal lameness.
+2. institute therapy and evaluate the effectiveness of therapy;
+3. discuss breed predisposition to lameness in categories of horses based on use; and
+4. explain how the lameness impacts the presentation of each individual case.
+
+Course Contents
+Causes, diagnosis and treatment of lameness in large animals with emphasis in horses.
+Lameness examination and its components - history, standing exam, movement exam, flexion
+and hoof tester exams, diagnostic anaesthesia and imaging the site of injury.
+
+VTP 503: Veterinary Obstetrics and Neonatology  (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. acquire necessary skills in examining animals in order to detect conception, parturition and
+
+    dystocia and its management;
+2. conduct neonatal care to reduce neonatal loss; and
+3. discuss neonatal periods in different animal species and physiological characteristics of
+
+    neonates.
+
+Course Contents
+Pregnancy in cow, mare, ewe, doe, sow, bitch and queen. Parturition in different animal
+species. Management of dystocia. Care of the new-born in cattle, horses, pigs, dogs. Factors
+influencing neonatal mortality. The neonatal periods in different species. Physiological
+characteristics of the neonate. Clinical examination of healthy and sick new-born. Congenital
+malformations of the neonate. Premature birth and its management. Obstetrical injuries
+affecting neonates.
+
+VTP 504: Large Animal Theriogenology            (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate case-based problem-solving skills in ruminants, equidae and swine pregnancy
+
+    and parturition; and
+2. explain reproductive defects such as postpartum acyclicity and induction of ovulation.
+
+Course Contents
+Review of anatomy and functions of different reproductive structures in ruminant, equine, and
+swine; Puberty and factors affecting its timing. Induction of puberty. Ovarian cycle, Oestrous
+cycle patterns and Ovulation. Behavioural characteristics of Oestrous in different species,
+Oestrous detection accuracy; Oestrous detection aids; false Oestrous. Fertilisation, Conception
+and Pregnancy: Fertilisation process and types; embryo development; formation and function
+of embryonic membranes and pregnancy establishment; identification of embryos; placenta;
+pregnancy recognition and its maintenance. Pregnancy diagnosis: Relevant methods of
+pregnancy diagnosis in ruminants, Equidae and swine and their efficacy.
+
+Veterinary Medicine                   51                            New
+VTP 505: Small/Laboratory Animal and Microlivestock Theriogenology (2 Units
+C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. differentiate the peculiarities of breeding, conception and parturition in dogs, cats, and
+
+    microlivestock such as grass-cutters;
+2. explain abnormal sexual behaviours of dogs and cats; and
+3. discuss fertilisation processes in these animal species.
+
+Course Contents
+Review of reproductive anatomy and functions of different reproductive structures in canine,
+feline and microlivestock such as grass-cutter. Puberty in bitches and queens. Oestrous cycle,
+its induction and prevention in bitches and queens. Breeding management of the bitch and
+queen. Physiology and endocrinology of canine and feline pregnancy. Fertilisation, Conception
+and Pregnancy: Fertilisation process and types; embryo development; formation and function
+of embryonic membranes and pregnancy establishment; identification of embryos; placenta;
+pregnancy recognition and its maintenance. Pseudocyesis and its complications. Management
+of pregnancy in the bitch and queen. Relevant methods of pregnancy diagnosis in the bitch
+and queen. Normal and abnormal parturitions in the dog and the bitch. Developmental
+congenital anomalies of reproductive tract. Inherited lethal and non-lethal defects in dogs and
+cats. Relationship of ovaries and mammary gland diseases. Abnormal sexual behaviour in
+canine and feline species.
+
+VPH 503: Food Hygiene and Safety            (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. express their social responsibility for detecting pathogens and lesions in food animals and
+
+    their products and how to control them;
+2. discuss public health importance of animal hygiene;
+3. conduct meat, milk, egg and fish inspection procedures; and
+4. describe specific non-infectious agents, including drug residues which pose health risk to
+
+    both humans and animals.
+
+Course Contents
+Principles of meat hygiene. Biological and chemical bases of meat hygiene. Ante-mortem and
+post-mortem inspection procedures. Inspection of poultry meat, eggs, milk, fish. Description
+of categories of slaughter facilities. Basic construction and principles of a functional abattoir.
+Methods of food preservation. Food micro-flora and spoilage. Food poisoning. Food-borne
+diseases. Detection of drug residues in meat, eggs and milk. Public health significance of food
+hygiene.
+
+VPH 504: Zoonoses and Environmental Health  (2 Units; C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. discuss diseases that are naturally transmitted from animals to man; and
+2. discuss the importance of a healthy environment to human and animal health.
+
+Veterinary Medicine               52                                            New
+Course Contents
+Concepts, definitions, and classification of zoonoses. Studies of specific bacterial, viral, prions,
+parasitic, rickettsial, protozoal and fungal zoonoses with emphasis on prevention, early
+detection, control, and eradication. Ecology, water sources and purification. Waste disposal.
+Public health significance of rodents, birds, flies and mosquitoes. Environment pollution and
+control.
+
+VPM 505 Epidemiology and Principles of Disease Prevention (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. discuss model epidemiological efforts taken by individuals, groups and communities in the
+
+    past and the reasons for success or failure of each effort;
+2. explain various sources of epidemiologic data including household survey, clinics, farms
+
+    and laboratories;
+3. explain the determinants of diseases and set goals for their epidemiological survey on
+
+    farms, homes and identified fields/communities; and
+4. determine and report the monthly/annual incidence of specific animal and/or human
+
+    illnesses and associated deaths in a given location.
+
+Course Contents
+Definition, scope and uses of epidemiology and disease prevention. Basic concepts of
+epidemiology. Ecology of disease. Disease-host-agent-environment. Web of causation.
+Statistical and biological significance of epidemiologic associations. Methods of epidemiologic
+investigations. Patterns of disease occurrence. Principles and procedures for screening
+diseases. Screening tests and evaluation. Vaccinations. Dairy Herd Health. Submission of
+specimens.
+
+VPM 506: Veterinary Administration, Jurisprudence and Ethics (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate knowledge of the basic framework of animal health-related legislation in
+
+    Nigeria and related global legislations;
+2. discuss the application of these laws to animal health and enterprises, including the issue
+
+    of health certificate, post-mortem certificate, clinical and professional practice certification,
+    etc;
+3. interpret and administer laws relating to ethical use of animals; and
+4. explain cruelty to animals and common offenses committed by animal owners.
+
+Course Contents
+Organisation of veterinary services at national and international levels. Legislation on
+veterinary practice at national and international levels. Control of animal importation,
+exportation and movements. Dogs and public health. Laws regulating meat inspection,
+veterinary drugs, fish and wildlife. Disease Reporting. National and international public health
+administration.
+
+Veterinary Medicine  53  New
+VPM 507: Veterinary Biostatistics and Economics  (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. conduct basic computer recording and be familiar with sampling methods;
+2. explain micro- and macro-economic concepts of livestock production systems and cost of
+
+    public health schemes;
+3. compute and interpret epidemiological measures, formulate simple, measurable and
+
+    relevant veterinary hypotheses;
+4. demonstrate acquaintance with relevant statistical software for veterinary application; and
+5. demonstrate knowledge and application of basic economic concepts in setting costs,
+
+    benefits and prices in food and non-food animal health enterprise.
+
+Course Contents
+Veterinary recording and data types. Classification and tabulation of data. Descriptive and
+inferential statistics. Measures of central tendency and variability. Population and sample
+inferences. Test of hypotheses, chi-square tests, normal and other distribution, t-tests,
+introduction to simple linear regression, sampling methods. Uses of statistics in veterinary
+practice and research. Basic micro- and macro-economics concepts. Cost of public health
+schemes. Demand and supply of veterinary services. Economics of livestock production.
+Economics of operating a veterinary practice and managing veterinary clinic/hospital. Benefit-
+cost analysis. Business organisations, administration, and promotion. Business
+management. Project appraisal and feasibility reports.
+
+VEX 599: Externship IV (Clinics) (6 weeks)       (2 Units C: PH 90)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. relate teachings in Veterinary medicine, surgery and theriogenology to cases presented at
+
+     Veterinary hospitals/clinics.
+2. analyze clinical presentations in lethargic animals and use ancillary diagnostic methods to
+
+     achieve disease diagnosis.
+3. demonstrate the knowledge of appropriate treatment regimen for diagnosed diseases.
+
+Course Contents
+A long vacation field practice of six weeks duration in Clinics and Veterinary Hospitals (under the
+supervision of a qualified veterinarian) during the long vacation following 500 level. Inspection
+visits may be conducted to such places by lecturers from the coordinating departments.
+
+VCH 503 Clinics I                                (2 Units; C) (PH 90)
+
+Learning outcomes
+At the completion of this course, students will be able to:
+1. receive and clerk clinical cases presented at the different clinics;
+2. examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a
+
+    confirmatory diagnosis;
+3. institute treatment and make recommendations as necessary; and
+4. carry out or organize prophylactic measures in Veterinary practice including vaccinations and
+
+    biosecurity.
+
+Veterinary Medicine  54                          New
+Course Contents
+Clinics I is to be further divided into clinical modules in Medicine, Surgery, Theriogenology, Public
+Health and Preventive Medicine & Diagnostics. Clinical exercises involving familiarization with
+methods of case reception, clinical manipulations, sample collection from clinical cases,
+diagnosis, and treatment should be undertaken.
+
+VCH 504 Clinics II                 (2 Units ; C) (PH 90)
+
+Learning outcomes
+At the completion of this course, students will be able to:
+1. receive and clerk clinical cases presented at the different clinics;
+2. examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a
+
+    confirmatory diagnosis;
+3. institute treatment and make recommendations as necessary; and
+4. carry out or organize prophylactic measures in Veterinary practice including vaccinations and
+
+    biosecurity.
+
+Course contents
+Clinics II is to be further divided into clinical modules in Medicine, Surgery, Theriogenology,
+Public Health and Preventive Medicine. During the rotations, the students participate in clinical
+practice involving case reception, clerking, clinical manipulations, sample collection, diagnosis
+and treatment.
+
+VPC 607: Applied Pharmacology      (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. demonstrate ability to accurately calculate and safely administer enteral, parenteral, and
+
+   percutaneous medications to patients in various clinical settings after making definitive
+   diagnosis; and
+2. demonstrate knowledge of the principles of drug action, interaction, correct dosing
+   regimen, adverse reactions, and other interactions.
+
+Course Contents
+Rational use and choice of drug therapy in specific treatments. Drug formulation and
+incompatibilities. Iatrogenic illnesses and prevention of drug toxicities. Principles of drug
+dependency, compounding and prescription. Common drug abbreviations. Apothecary and
+Avoirdupois weights, household equivalents of weights and measures. Therapeutic strategies
+in a veterinary hospital. Medicinal plants of veterinary importance.
+
+VPC 608: Veterinary Pharmacy, Agrochemicals and Quality Control of Veterinary
+
+Pharmaceuticals                    (2 Units C: LH 30)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+
+    1. define pharmacy with special reference to Veterinary Medicine and Agrochemicals;
+    2. have intimate knowledge of Veterinary Drug Formulations and storage;,animal growth
+
+         promoters and agrochemicals;
+
+Veterinary Medicine            55  New
+3. explain all the relevant aspects of veterinary drugs dosage forms and routes of drug
+    administration in veterinary practice;
+
+4. demonstrate knowledge of veterinary vaccines and other biologic preparations as well
+    as veterinary supplements.
+
+5. produce some Nigerian medicinal herbal compounds; and
+6. ascertain the requirements for registration and standardisation of Nigerian medicinal
+
+    herbs.
+
+Course Contents
+Definition and introduction to Veterinary pharmacy. Formulation and storage of Veterinary
+drugs and agrochemicals. Administration of Veterinary drugs. Growth promoters.
+Agrochemicals. Veterinary dosage forms and routes of drug administration in veterinary
+practice. Vaccines and other biologics. Vitamins, haematinics, dietary supplements, digestants
+Equipment, raw materials and facilities required for the production of Veterinary
+pharmaceuticals. Production, quality control of Veterinary products and some Nigerian
+medicinal herbs. Requirements for registration and standardisation of Nigerian medicinal
+herbs. Veterinary dosage forms. Formulations, packaging, labelling and storage of veterinary
+drugs and vaccines. Official specifications and standardisation of Veterinary dosage forms.
+and other feed additives. Insecticides, ascaricides and rodenticides. Disinfectants/antiseptics
+(topical and urinary).
+
+VPM 609: Computer Application in Veterinary Practice (2 Units C: LH 15; PH 45)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. describe computer hardware and software features;
+2. design and operate computer-based disease reporting systems;
+3. apply geographic information system in biologic risk management;
+4. use global positioning system in estimating pattern of spread of disease; and
+5. conduct digital animal population census.
+
+Course Contents
+History of computers. Hardware components. Operating and application software. Features
+and uses of word processing packages. Introduction to Spreadsheets. Database Management
+Systems and designing Computer-based veterinary disease reporting systems. Introduction to
+Geographic Information System (GIS) and its use in biological risk management. Use of Global
+Positioning System (GPS) in geo-referencing and estimating pattern of spread of disease. Computer
+aided animal population census and ecosystem health. Other uses of microcomputers in veterinary
+practice.
+
+VEX 698: Rural Posting      (1 Unit C :2 weeks)
+
+ Learning outcomes
+ At the completion of this course, students should be able to:
+1. apply knowledge of treatment of animal diseases in rural settings.
+2. demonstrate ability to communicate animal health issues with animal owners in rural
+
+    arears.
+ Course Contents
+ A two-week posting of students to serve in a rural area starting from the last two weeks of
+ the long vacation after the 500 level. Students will be involved in rural veterinary practice and
+ extension services. Student's participation and report is to be assessed by lecturers from the
+ coordinating departments.
+
+Veterinary Medicine     56                                                        New
+VCH 603: Clinics I               (10 Units C: PH 450)
+
+Learning Outcomes
+At the completion of this course, students should be able to:
+1. receive and clerk clinical cases presented at the different clinics.
+2. examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a
+
+       confirmatory diagnosis.
+3. institute treatment and make recommendations as necessary.
+4. carry out or organize prophylactic measures in Veterinary practice including vaccinations
+
+       and biosecurity.
+
+Course Contents
+Clinics I is to be further divided into clinical modules in Medicine, Surgery, Theriogenology,
+Public Health and Preventive Medicine & Diagnostics. Clinical exercises involving familiarization
+with methods of case reception, clinical manipulations, sample collection from clinical cases,
+diagnosis, hands-on training on surgical procedures, and treatment should be undertaken.
+
+VCH 604 : Clinics II             (10 Units C : PH 450)
+
+Learning outcomes
+At the completion of this course, students should be able to:
+1. receive and clerk clinical cases presented at the different clinics.
+2. examine animal patients clinically and utilize appropriate diagnostic tools to arrive at a
+
+       confirmatory diagnosis.
+3. institute treatment and make recommendations as necessary.
+4. manage emergencies and intensive cares in animals;
+5. carry out or organize prophylactic measures in Veterinary practice including vaccinations
+
+       and biosecurity.
+
+Course Contents
+Clinics II is to be further divided into clinical modules in Medicine, Surgery, Theriogenology,
+Public Health and Preventive Medicine. During the rotations, the students participate in clinical
+practice involving case reception, clerking, clinical manipulations, sample collection, diagnosis,
+hands-on training on surgical procedures, and treatment.
+
+VCH 605: Clinical Seminar I      (1 Unit C: PH 45)
+
+Learning outcomes
+At the completion of this course, students should be able to:
+1. demonstrate the art of clinical case investigation, treatment, documentation, and
+
+     presentation.
+2. demonstrate collaboration and teamwork skills.
+3. discuss clinical cases handled each week.
+
+Course Contents
+A course involving case workups and seminar presentations by each student during the first
+semester, to be coordinated by the Faculty. The course shall be assessed by lecturers in all
+clinical departments.
+
+Veterinary Medicine          57  New
+VCH 606: Clinical Seminar II                                  (1 Unit C: PH 45)
+
+Learning outcomes
+At the completion of this course, students should be able to:
+1. demonstrate the art of clinical case investigation, treatment, documentation, and
+
+     presentation.
+
+2. demonstrate collaboration and teamwork skills.
+3. discuss clinical cases handled each week.
+Course Contents
+A course involving case workups and seminar presentations by each student during the second
+semester, to be coordinated by the Faculty. The course shall be assessed by lecturers in all
+clinical departments.
+
+VRP 608: Research Project                                     (4 Unit C: PH 180)
+
+Course Contents
+A project involving a research topic in any subject area in Veterinary Medicine. Each student
+shall be allowed to carry out the study in his/her area of interest as may be moderated by the
+Faculty and the relevant Department.
+
+Minimum Academic Standards
+
+Staffing
+
+Academic Staff
+The NUC guidelines on staff/student ratio of 1:10 for Veterinary Medicine shall apply. However,
+there should be a minimum of six full-time equivalent of staff in a Department. The proportion
+of academic staff with Ph.D. should constitute not less than 70% of the teaching staff. All
+academic staff should be computer literate and continue to be productive in teaching,
+research, and publications.
+
+Administrative Support Staff
+The services of the administrative support staff are indispensable in the proper administration
+of Departments and Faculty offices. It is important to recruit very competent senior
+administrative staff that are computer literate.
+
+Technical Support Personnel
+The services of technical support staff such as laboratory technologists, radiographers and
+veterinary nurses/animal health technologists who are indispensable in the proper running of
+laboratories and clinics are required. It is important to recruit very competent senior technical
+staff to maintain teaching and research equipment. They are also to undergo regular trainings
+to keep them abreast of developments in animal health, equipment operation and
+maintenance.
+
+The NUC recommends the following physical space requirement:
+
+                                      m2
+
+Professor's Office                -   18.50
+
+Head of Department's Office       -   18.50
+
+Tutorial Teaching Staff's Office  -   13.50
+
+Other Teaching Staff Space        -   7.00
+
+Technical Staff Space             -   7.00
+
+Veterinary Medicine               58                          New
+Secretarial Space                     -   7.00
+Science Staff Research Laboratory
+Veterinary Staff Research Laboratory  -   16.50
+Seminar Space/per student
+Clinics Space                         -   14.50
+Laboratory Space
+                                      -   1.85
+
+                                          3.60
+
+                                      -   7.50
+
+Physical Facilities
+
+Departmental Equipment.
+
+Veterinary Anatomy
+Students learning objective in Veterinary Anatomy is to acquire knowledge of normal body
+structures, their forms in domestic and non-domestic animals at cellular, gross and
+developmental levels. The laboratories for these shall preserve whole animal bodies for
+students' dissection and have sufficient number of microscopes for students to view and study
+the slides on animal body cells.
+
+List of Equipment
+
+Veterinary Anatomy Laboratories/Workshops Equipment
+1. Gross Anatomy Laboratory allowing 1.9m2 per student
+2. Histology Laboratory allowing 1.9m2 per student
+3. Histotechnique (Preparation) Laboratory measuring 10m2
+4. Transmission Electron Microscopy Laboratory
+5. Walk-in Cold-Room (20m2)
+6. Anatomy Museum-10m2
+
+Gross Anatomy Laboratory
+Post-mortem Table (1 per 5 students)
+Giant Freezer
+Refrigerator (large)
+Storage Tanks - 4 m3
+Knife Sharpener
+Dissecting sets
+Weighing Balance
+Analytical Balance
+Hot Air Oven
+Electric Saw
+X-ray Viewing Machine
+Digital Camera
+
+Histology Laboratory
+Tissue Processor (automatic)
+Water Bath
+Microtome (Rotary)
+Freezing Microtome (Cryostat)
+Paraffin Embedder
+Bench Centrifuge
+Demonstration Microscope
+
+Veterinary Medicine                   59         New
+Binocular Microscope (1 per 2 students)
+Camera-mounted Microscope
+Still Camera with Kit
+PH Meter
+Transmission Electron Microscope
+
+Anatomy Museum
+Museum Specimen of Animal Species
+Articulated and Unarticulated Skeletons
+Models
+Embalmed Bodies
+
+Veterinary Physiology and Biochemistry
+Student's learning objectives in Veterinary Physiology and Biochemistry are to acquire
+knowledge of normal body functions in domestic and non-domestic animals at the molecular
+level (Biochemistry), cellular and gross (Physiology) levels. Laboratories should be able to
+harvest live animal tissues for study, both qualitative and quantitative assessment with
+sufficient number of equipment for students to observe, enumerate and experiment with
+animal body cells, tissues and organs.
+
+Physiology Laboratory Equipment:
+Physiograph (1 per 5 students)
+Kymograph (1 to 4 students)
+Spectrophotometer
+Analytical Balance
+Top-loading Balance
+Water Distiller
+Water Deionizer
+Autoclave
+Fume Chamber
+Haemoanalyser
+Haemocytometer
+Refrigerated Centrifuge
+Regular Centrifuge
+Microhaematocrit
+Refrigerator
+Deep Freezer
+Demonstration Microscope
+Binocular Microscope (1 to 2 students)
+Fluorescent Microscope
+PH Meter
+Soxhlet Extractor
+Rotary Evaporator
+Multimedia Projector
+Patient monitor
+
+Biochemistry Laboratory:
+Autoclave
+Water Bath
+Bench Centrifuge
+Micro-Centrifuge
+Water Distiller
+
+Veterinary Medicine  60  New
+PH Meter
+Vacuum Pump
+Spectrophotometer
+Kjehldhal auto analyser
+Fibre Digester
+Ether Extractor
+Gas Chromatography
+Electrophoresis
+Multimedia Projector
+
+Animal Management
+Students learning objective in animal health management is to acquire knowledge of the
+various breeds, feeds, nutrition, housing, restraint, and management of companion animals
+(dog, cat, donkey, and horse), farm animals (fish, poultry, ruminants and swine) and zoo
+animals. Horse stables, dog kennels and livestock farm are, therefore, required to keep some
+horses, dogs, and farm animals for training of students, and a nutrition laboratory for students
+to practice compounding of animal feed.
+
+Animal Management Laboratories/Workshops and Equipment
+
+Animal /Nutrition Laboratory
+Flame analyser
+Spectrophotometer
+Calorimeter
+Animal cages
+Water Bath
+Kjehldhal auto analyser
+Fibre Digester
+Ether Extractor
+Multimedia Projector
+Deep Freezer
+Refrigerator
+PH meter
+Weighing balance
+Top-loading Balance
+Autoclave
+Fume Chamber
+Large Drying Oven
+Vacuum Oven
+Rotary evaporator
+Flame analyser
+Water bath
+Grinding Machine
+Cold centrifuge
+Furnace
+Calorimeter
+Air oven
+Infrared spectrophotometer
+Fluorimeter
+Auto sampler
+Atomic Absorption Spectrophotometer
+Specpolus
+
+Veterinary Medicine  61  New
+Brabender Amylograph
+Brabender Frarinograph
+Gas Chromatography machine
+Water Distiller
+
+Wild Animal Management Studio
+Snake tongs (1 per 5students)
+Snake hooks (1 per 5students)
+Squeeze cages (1 per 5students)
+Dog catcher
+Crates
+Digital Camera
+Pole Syringes
+Dart Pistol
+Dart Rifle
+Deep freezer
+Weigh-bridge Scale
+GPS Instrument
+Blow pipe
+
+Veterinary Pharmacology and Toxicology
+Students learning objectives in Veterinary Pharmacology and Toxicology are to acquire
+knowledge of drugs and their effects on normal body functions and disease situation. This
+includes the effect of various therapeutic agents on disease causing agents and the side effects
+on animals at molecular, cellular and systemic levels. Laboratories in this Department shall
+prepare live animal tissues for experimentation and response to various active ingredients of
+drugs. Dose-effect response, toxicity reactions and effects of multiple dosing in drugs
+interactions.
+
+Veterinary Pharmacology and Toxicology Laboratories/Workshop
+1. Pharmacology and Pharmacy Laboratory (allowing 1.9 m2 per student)
+2. Toxicology Laboratory (allowing 1.9 m2 per student)
+3. Herpetarium
+4. Herbarium for Medicinal and Poisonous plants (50 m2)
+
+Pharmacology and Pharmacy Laboratory Equipment
+Giant Freezer
+Refrigerator
+Regular Centrifuge
+Refrigerated Centrifuge
+Haematocrit Centrifuge
+High Performance Liquid Chromatography
+Spectrophotometer
+pH Meter
+Colorimeter
+Soxhlet Extractor
+Fume Chamber
+Analytical Balance
+Top-loading Balance
+Water Distiller
+Rotary Evaporator
+Autoclave
+
+Veterinary Medicine  62  New
+Tissue Bath
+Fume Chamber
+Freeze Dryer
+
+Toxicology Laboratory Equipment
+Tissue Processor (automatic)
+Water Bath
+Water Distiller
+pH Meter
+Colorimeter
+Microtome
+Freezing Microtome (Cryostat)
+Bench Centrifuge
+Demonstration Microscope
+Binocular Microscope (1 per 2 students)
+Camera-mounted Microscope
+Still Camera with Kit
+
+Veterinary Microbiology
+Students learning objective in Veterinary Microbiology is to acquire knowledge of various
+pathogens (bacteria, fungi and viruses) that are of veterinary importance locally, nationally
+and globally. The laboratories in the Department should be capable of preparing students to
+culture, identify and possibly characterise these pathogens, with a view to understand how
+they cause disease in man and animals.
+
+Microbiology Laboratory Equipment
+Demonstration Microscope
+Binocular Microscope (1 to each Student)
+Phase Microscope
+Fluorescent Microscope
+Photo-Microscope
+Refrigerator
+Giant Freezer
+REVCO (Ultra low temperature) Freezer
+Weighing Balance
+Top-Loading Balance
+Analytical Balance (Metler-type)
+PH Meter
+ELISA Machine
+Colony Counter
+Hot Air Oven
+Autoclave
+Water Bath
+Multimedia Projector
+Digital Camera
+
+Virology Laboratory Equipment
+Egg Incubator
+PCR Machine
+Water Bath
+Giant Freezer (-80oC)
+Humidifier
+
+Veterinary Medicine  63  New
+Fume Chamber
+Bench Centrifuge
+
+Veterinary Parasitology and Entomology
+Students learning objective in Veterinary Parasitology and Entomology is to acquire knowledge
+of the various protozoa, helminths and arthropods that are of veterinary importance nationally
+and globally. The laboratories in the Department should be capable of preparing students to
+identify, characterise and culture parasites in-vitro and in-vivo with a view to understanding
+how they cause disease in man and animals.
+
+Parasitology Laboratory Equipment
+(allowing 1.9 m2 per student with Preparation Room-30 m2)
+Giant Freezer
+Demonstration Microscope
+Dissecting Microscope (1 per 5 students
+Binocular Microscope (1 per 2 students)
+Fluorescent Microscope
+Thermohygraph
+Humidifier
+Incubator
+Centrifuge (Bench-type)
+Hand Centrifuge
+Top-loading Balance
+Autoclave
+Liquid Nitrogen
+Multimedia Projector
+Digital Camera
+
+Entomology Laboratory Equipment
+(allowing 1.9 m2 per student with Preparation Room-30 m2)
+Giant Freezer
+-86oC freezer
+Refrigerator
+Demonstration Microscope
+Dissecting Microscope (1 per 5 students
+Binocular Microscope (1 per 2 students)
+Fluorescent Microscope
+Phase contrast microscope
+Thermohygraph
+Humidifier
+Incubator
+Air dryer/ dessicator
+Centrifuge (Bench-type)
+Hand Centrifuge
+Top-loading Balance
+Autoclave
+Suction pump
+Light/CO2 Insect traps
+Magnifying lens
+Dissecting kits
+Liquid Nitrogen tank
+
+Veterinary Medicine  64  New
+Multimedia Projector
+Digital Camera
+
+Veterinary Pathology
+Students learning objective in Veterinary Pathology is to acquire knowledge of diseases in
+animal body. The clear understanding of cellular, molecular and functional bases of disease in
+domestic and non-domestic animals shall be acquired, to the point of appreciating the
+individual clinical manifestation of diseases. The laboratories shall prepare animal tissues that
+have lesions at cellular and gross levels for students to study microscopically and on whole
+animal body at post-mortem.
+
+Veterinary Pathology Laboratories/Workshops
+1. Necropsy Room/Laboratory (100 m2)
+2. Histopathology Laboratory allowing 1.9 m2 per student
+3. Clinical Pathology Laboratory allowing 1.9 m2 per student
+4. Cold-Room (50 m2)
+
+Necropsy Room/Laboratory Equipment
+Necropsy Table (1 per 5 students)
+Giant Freezer
+Refrigerator
+Electric Rotary Saw
+Knife Sharpener
+Electric Saw
+Digital Camera
+Incinerator-4m2
+
+Histopathology Laboratory Equipment
+Tissue Processor (automatic)
+Water Bath
+Paraffin Embedder
+Microtome
+Haemanalyzer
+Haemocytometer
+Water Distiller
+PH Meter
+Freezing Microtome (Cryostat)
+Bench Centrifuge
+Demonstration Microscope
+Binocular Microscope (1 per 2 students)
+Camera-mounted Microscope
+Still Camera with Kit
+Multimedia Projector
+
+Clinical Pathology Laboratory Equipment
+Autoclave
+Haemoanalyser
+Haemocytometer
+Fluorescent Microscope
+Spectrophotometer
+
+Veterinary Medicine  65  New
+Bench Centrifuge
+Micro-Centrifuge
+Water Distiller
+pH Meter
+ELISA Reader
+Liquid Nitrogen
+REVCO (Ultra low temperature) Freezer
+
+Veterinary Medicine
+Students learning objectives in Veterinary Medicine are to acquire knowledge of diagnostics.
+Prepare students for ability to use problem-solving skills to analyse patient, synthesize
+diagnosis or differential diagnosis. Appropriate use of clinical laboratory testing and
+therapeutic skills for case management. Offer emergency and intensive care for a wide range
+of animal species. Clinics in this Department shall preferably be specific for each animal or
+each group of domestic animal species.
+
+Veterinary Medicine Laboratories/Workshops
+1. Large Animal Demonstration Hall-100 m2
+2. Small Animal Demonstration Hall-100 m2
+3. Avian/Poultry Clinic
+4. Research/Diagnostic Laboratories
+5. Aquatic Animal Clinic
+
+Veterinary Medicine Equipment
+Refrigerator
+Freezer
+Battery CagesCrush
+Weigh-bridge Scale
+Thermometer
+Wall mounted drug box
+ENT Set
+Tonometer
+Woods Lamb (UV-light)
+Haemanalyser
+Binoculars microscopes (1/5 students)
+Haematocrit centrifuge
+Centrifuges.
+Egg incubators
+Waterbaths
+Walk-on scale for large and small animals
+Debeaking machine
+Dan-inject dart gun (with accessories)
+Automatic syringe
+Poultry post-mortem tools/kit
+Post-mortem apron and gloves
+Veterinary blood pressure monitor
+Veterinary Pulse Oximeter
+Canine and Feline Urinary Catheter
+Warming pad
+Littman stethoscopes
+Video Otoscope
+
+Veterinary Medicine  66  New
+Aquatic Animal Research/Diagnostic Laboratory Equipment
+Deep freezer
+Refrigerator
+Metler balance
+Autoclave
+Camera-mounted microscope
+Dissolved Oxygen Meter
+Haemoanalyser
+TDS/Electrical Conductivity/Salinity Meter
+Dissecting sets
+Stainless Steel trays for dissection (1 per 5students)
+Multimedia Projector
+Projector screen
+
+Veterinary Surgery
+Students learning objectives in Veterinary Surgery are to prepare students for ability to use
+problem solving skills. Analyse patients, synthesise diagnosis or differential diagnosis and
+appropriate use of basic surgical skills for case management, pain relief and intensive care for
+a wide range of animal species.
+
+Veterinary Surgery Laboratories/Workshops
+1. Small Animal Surgical Theatre
+2. Large Animal Surgical Theatre
+3. One Exercise Yard (fenced) (50m2)
+4. Recovery (Hospitalization) Ward
+5. Radiology suite
+
+Veterinary Surgery Laboratories/Workshops Equipment
+General Surgical Packs (8)
+Orthopaedic General Packs
+Ophthalmic Surgical Packs
+Gastrointestinal Packs
+Jacobs Chuck
+Intra medullary Pins (various Sizes)
+Cerclage Wire (4 rolls)
+ASIF kit (2 sets)
+Screws (Cortical and Cancellous) various sizes (24 each)
+Enteroscope
+Arthroscope
+Derma Drill
+Power Drills ­ Saw, Drill and Drill bits (1 set each)
+P. O. P. Removal (Manual) (2)
+P. O. P. Removal (Powered) (2)
+X-Ray Viewers - 3 Units Set
+X-Ray Viewer
+X-Ray Dryer (2)
+Dark Room Facility
+High Resolution Camera and Flash (35mm)
+Multimedia Projector
+Auto Clave
+Computer
+Ultrasound multi-probe machines
+
+Veterinary Medicine  67  New
+Automatic processors for radiographs
+
+Theriogenology and Production
+Students learning objectives in theriogenology are to acquire knowledge of normal
+reproductive functions in domestic and non-domestic animals at hormonal, cellular and
+systemic levels. Students learn about diseases affecting reproduction in male and female
+animals and the process of delivery of new-born. Clinics and laboratory in this Department
+cover all aspects of examination and therapy, including surgical obstetrics for various animal
+species.
+
+Reproduction Laboratory (100 m2) Equipment
+Autoclave
+Giant Freezer
+Refrigerator
+Bench Centrifuge
+Nitrogen Flask
+pH Meter
+Water Distiller
+Incubator
+Water Bath
+Top-Loading Balance
+Analytical Balance
+Binocular Microscope (1 per 2 students)
+Demonstration Microscope
+Phase Microscope
+Calorimeter
+Digital Camera
+Camera-mounted Microscope
+
+Phantom Training Laboratory (100 m2) Equipment
+Electro ejaculator
+Artificial Insemination Equipment (Inseminator)
+Artificial Vagina
+Dummy (for semen collection)
+Obstetrical Equipment
+OB Gloves
+Vaginal Speculum (Large Animals)
+Vaginal Speculum (Small Animals)
+Tissue Processor (automatic)
+Water Bath
+Microtome
+Freezing Microtome (Cryostat)
+Digital Camera
+
+Veterinary Public Health and Preventive Medicine
+Students learning objectives in Veterinary Public Health and Preventive Medicine are to
+prepare students for ability to use problem-solving skills to analyse a herd of animals,
+synthesise a diagnosis or differential diagnosis about their state. To prepare students for
+appropriate use of clinical laboratory tests. To equip students with the competence to identify
+
+Veterinary Medicine                   68  New
+and prevent diseases. Identify organisms that require biosecurity measures, zoonotic diseases
+and food safety issues. To promote awareness of the public and animal health. Also, students
+are trained in the monitoring and evaluation of disease control projects.
+
+Public Health and Food Safety Laboratory Equipment
+Giant Freezer
+Refrigerator
+Meat Inspection Kit (1 per 5 Students)
+Knife Sharpener
+Hot Air Oven
+Fume Chamber
+pH Meter
+Weighing Balance
+Incubator
+HPLC
+Digital Camera
+Colony Counter
+Water Distiller
+Water bath
+Tissue Blender
+Automatic Multiple Pipette
+ELISA Reader
+Binocular Microscope
+Demonstration Microscope
+Grinding Machine
+Freeze Dryer
+Tissue Culture Chamber
+Multimedia Projector
+
+Epidemiology Laboratory Equipment
+Global Positioning System Instrument (Motorola)
+Compasses
+Ambulatory Vehicle (Four-wheel drive)
+Water Bath
+Dog catcher
+Snake tong
+Snake hook
+Pole syringe
+Umbrellas
+Camp beds (10)
+Bench Centrifuge
+Demonstration Microscope
+Binocular Microscope (1 per 2 students)
+Camera-mounted Microscope
+Still Camera with Kit
+
+Computer Laboratory
+Students of Veterinary Medicine are to be exposed to computing in all its facets so that they
+can utilize the expertise in the practical and analytical aspects of their training. The computer
+laboratory should be adequately equipped to ensure reasonable contact hours by students.
+
+Veterinary Medicine  69  New
+Most importantly the laboratory is expected to install software packages such as EPIINFO for
+epidemiological studies.
+1. Desktop Computers (20 Nos)
+2. Flatbed Scanners
+3. Software Packages for Epidemiological studies such as Epi-info, data analysis, Digital
+
+    mapping.
+4. Printers (4 No.s)
+5. Internet Modem
+
+Other Facilities
+Walk-in Cold-Room
+Centralized Facilities
+Dean's office, Subdeans' offices, Faculty Board room, etc. with adequate spaces
+
+Classroom and Lecture Room Facilities
+1. Faculty Board room
+2. Lecture theatres for every level
+3. Faculty Auditorium to sit 1000.
+4. Seminar rooms (one for each department)
+5. Adequate space for the Dean's office, Subdeans' offices, etc.
+6. Faculty bus for the movement of clinical students.
+
+Veterinary Teaching Hospital
+To enhance clinical training at undergraduate and postgraduate levels, a Veterinary Teaching
+Hospital (VTH) provides specialised facilities for effective teaching of clinical students. The
+training attempts to synthesize and practicalize all the information received over the earlier
+years.
+
+Clinics and Workshops
+1. Small Animal Operating Theatre-100 m2
+2. Large Animal Operating Theartre-100 m2
+3. Small Animal Clinic ­ 200 m2
+4. Infectious Diseases Unit/Clinic ­ 100 m2
+5. Large Animal Clinic ­ 200 m2
+6. Poultry Clinic-50 m2
+7. Fish Clinic
+8. Wild Animal Clinic
+9. Preventive Medicine Clinic-50 m2
+10. Diagnostic Laboratories (Bacteriology; Mycology; Parasitology; Clinical Pathology)
+11. Small Animal Hospital Wards ­ 100 m2.
+12. Large Animal Hospital Wards ­ 100 m2.
+13. Isolation Unit ­ 50 m2.
+14. Diagnostic Imaging Unit
+15. Reception and Records-15 m2
+16. Pharmacy-9 m2
+17. Accounts Unit ­ 15 m2
+
+Staff
+Director
+Coordinator of Veterinary Services/Deputy Director
+Interns/Residents Veterinary Doctors (10)
+Secretary
+
+Veterinary Medicine  70  New
+Veterinary Nurses/Animal Health Superintendents (15)
+Radiographers (3)
+Livestock Attendants (10)
+Drivers (2)
+Messengers/Cleaners
+Pharmacy Technicians (2)
+
+List of Equipment
+Large Animal Anaesthetic Machine
+Small Animal Anaesthetic Machine
+X-Ray Machine Fixed (2)
+Mobile X-ray machine (2)
+X-Ray Reading Facility (3)
+Ultrasound Equipment
+Autoclave
+Steam Sterilizer (2)
+Surgical Table Small Animal (6)
+Large Animal Surgical Table (2)
+Surgical Lamps (10)
+Freezer
+Refrigerator
+Ambulatory Van-Minibus
+Vehicle (Pick-Up Van)
+Video/CD Recorder
+Video/CD Player
+Multimedia Projector
+Computer (4)
+Binoculars microscopes
+Haematocrit centrifuge
+Centrifuges.
+Waterbaths
+Walk-on scale for large and small animals
+Debeaking machine
+Dan-inject dart gun (with accessories)
+Automatic syringe
+Poultry post-mortem tools/kit
+Post-mortem apron and gloves
+Veterinary blood pressure monitor
+Veterinary Pulse Oximeter
+Canine and Feline Urinary Catheter
+Warming pad
+Littman stethoscopes
+Video Otoscope
+Patient monitors (Small and Large Animals)
+
+Veterinary Teaching and Research Farm
+Each Faculty of Veterinary Medicine should have a Veterinary Teaching Farm with varieties of
+livestock for teaching and research by both staff and students.
+
+Space and Buildings
+Poultry Houses- 1000 m2
+Porcine House- 1000 m2
+
+Veterinary Medicine  71  New
+Caprine House- 1000 m2
+Cattle ranch
+Fish ponds (2)
+Horse stable
+Dog kennel
+
+List of Equipment/Tools
+Wheelbarrows (10)
+Transporting crates (poultry)
+Shovels
+Hanging scales
+Weighbridge Scale
+Halters
+Complete saddle
+Restraint tools
+Ambulatory vehicles (4 Wheel Drive & Coaster Bus)
+Crush (2)
+
+Staff
+ Chairman/Manager
+ Animal Attendants (7)
+
+Experimental Animal Unit
+Each Faculty of Veterinary Medicine should have an Experimental Animal Unit for keeping
+laboratory animals (mice, rats, guinea pigs and rabbits) for teaching and research by both
+staff and students.
+
+Space and Buildings
+Rabbitry-1000 m2
+House for Rats, mice, etc.
+Cages (Feeders and drinkers)
+
+Staff
+ Chairman/Manager
+ Animal Attendants (4)
+
+Veterinary Field Station
+Each Faculty of Veterinary Medicine should have an associated field station located in a
+suitable rural agricultural district to service contiguous States. It should be distinct from the
+Veterinary Teaching Hospital which is located within the University. The Veterinary Field
+Station is intended to provide instructional facilities for students on farm management, disease
+surveillance and control, and clinical research. It:
+i. provides a base for ambulatory clinics and extension services of the Veterinary Teaching
+
+     Hospital;
+ii. serves as a means of exposing veterinary students to rural veterinary practice;
+iii. provides opportunities for commercial livestock production and entrepreneurship; and
+iv. provides an opportunity for breeding and management related research aimed at boosting
+
+     livestock production and improved animal health delivery system.
+
+Space and Buildings
+At least 10 hectares of land for paddocks and arable cropping
+
+Veterinary Medicine  72  New
+Fish ponds (2)
+Poultry Houses (3)
+Cattle Shed (2)
+Sheep and Goats Units
+Rabbitry
+Feed Mill
+Administrative Offices
+Veterinary Clinic
+Diagnostic Laboratories
+Students Hostel (for 20 Students)
+
+Staff
+Manager
+Veterinary Clinicians (3)
+Veterinary Nurses/Animal Health Superintendents (4)
+Workshop Superintendent
+Motor Mechanics
+Motor Drivers
+Tractor Driver
+Animal Attendants
+Hostel Superintendent
+Cleaners
+Typist
+Security personnel
+
+List of Equipment
+Crush (2)
+Weighbridge (1)
+Refrigerator (2)
+Spray-race Machine (1)
+Battery Cages for 500 birds
+Vehicle (Toyota Hilux and Truck)
+Water supply
+60 KVA Generating Set
+
+Zoological Garden
+Each Faculty of Veterinary Medicine should have an associated zoological garden. Students
+should have free access to the garden for the purpose of learning some aspects of wild animal
+medicine. The garden should be equipped with varieties of wild animals, clinic, isolation, and
+quarantine centres.
+
+Library and Information Resources
+Each Faculty of Veterinary Medicine should have a separate Veterinary Faculty Library and
+separate reading rooms for pre-clinical, para-clinical and clinical students. The library should
+be well stocked with very current books, manuals, journals, and other non-book collections.
+The collection of books and other resources should have adequate spread and in-depth
+coverage of all the relevant specialization areas of each section denoted as department in the
+programme. Electronic library section should also be equipped with computers with access
+and subscription to robust e-resources and photocopying and book binding facilities. The
+library and reading rooms should have capacity to sit at least 30 per cent of all the veterinary
+students at any one time.
+
+Veterinary Medicine  73  New
+
