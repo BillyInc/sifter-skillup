@@ -1,0 +1,13 @@
+{
+  "jamb_name": "Home Science & Management",
+  "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Physics/Mathematics or one (1) social science subject (Economics or Geography)"],
+  "olevel_requirement": "Five (5) SSC credit passes including Chemistry, Biology/Agricultural Science, Mathematics and at least 'O' Level pass in English Language and Physics, and any one of General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity.",
+  "direct_entry": "Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting.",
+  "institution_waivers": [
+    {"institution": "MAKURDI", "note": "Accepts: (a) 'A' Level passes in Chemistry, Physics, Biology and Mathematics; (b) HND upper credit in relevant programs plus the UTME requirements to 300 level; (c) ND upper credit in relevant programs plus the UTME requirements to 200 level; (d) NCE lower credit in relevant subjects plus the UTME requirements to 100/200 level; (e) NCE merit in relevant subjects plus UTME requirements to 100 level (Food Science or Hotel Management or any relevant course). Requires five (5) SSC credit passes at not more than two (2) sittings: two (2) 'O' Level credit passes in Chemistry and Biology or Agricultural Science or Health Science, and three (3) 'O' Level credit passes in Geography, Physics, Mathematics, Food & Nutrition, Home Management, Clothing and Textiles and English Language. UTME requires Chemistry, Biology or Agricultural Science, Mathematics or Physics."},
+    {"institution": "UNN", "note": "As in Agricultural Economics. In addition to the UTME requirements, requires 'O' Level credit passes in Chemistry, Biology or Food and Nutrition or Agricultural Science. UTME requires Chemistry, Biology/Agricultural Science, and one (1) of Physics/Mathematics, Economics or Geography."},
+    {"institution": "RSU", "note": "Same as in Food Science and Technology. Requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry, Biology or Agric Science and any other subject."},
+    {"institution": "FUNAAB", "note": "Requires five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology and Physics. UTME requires Chemistry, Biology and Physics/Mathematics."},
+    {"institution": "PAAU", "note": "Requires credit passes at SSC in English Language, Chemistry, Biology or Agricultural Science, Mathematics, Nutrition/Home Economics and at least 'O' Level pass in Physics."}
+  ]
+}

@@ -1,0 +1,257 @@
+{
+ "domain_id": "D001",
+ "domain_name": "Software Engineering",
+ "role_count": 50,
+ "roles": [
+  {
+   "role": "software analyst",
+   "isco": 2512,
+   "aka": "software requirement analyst  ·  programming analyst  ·  software analysts  ·  programmer analyst  ·  application analyst"
+  },
+  {
+   "role": "search engine optimisation expert",
+   "isco": 2513,
+   "aka": "search engine optimisation experts  ·  search engine optimization expert  ·  search engine optimisation specialist  ·  search engine optimiser  ·  SEO expert"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "ICT disaster recovery analyst",
+   "isco": 2519,
+   "aka": "business continuity analyst  ·  ICT resilience analysts  ·  IT resilience analyst  ·  IT disaster recovery analyst  ·  business continuity strategist"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "mobile application developer",
+   "isco": 2514,
+   "aka": "cell phone app developer  ·  app programmer  ·  mobile app specialist  ·  app coder  ·  mobile app developer"
+  },
+  {
+   "role": "cloud architect",
+   "isco": 2512,
+   "aka": "aws cloud architect  ·  cloud solutions consultant"
+  },
+  {
+   "role": "cloud engineer",
+   "isco": 2512,
+   "aka": "hybrid cloud engineer  ·  cloud computing engineer  ·  cloud infrastructure engineer  ·  cloud software engineer  ·  cloud-native engineer"
+  },
+  {
+   "role": "ICT change and configuration manager",
+   "isco": 2519,
+   "aka": "configuration manager  ·  application lifecycle manager  ·  software change and configuration manager"
+  },
+  {
+   "role": "ICT application configurator",
+   "isco": 2514,
+   "aka": "app configurator  ·  software application configurator  ·  application configurators  ·  application software configurator"
+  },
+  {
+   "role": "ICT accessibility tester",
+   "isco": 2519,
+   "aka": "accessibility testers  ·  usability tester  ·  accessibility test specialist"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "embedded systems software developer",
+   "isco": 2514,
+   "aka": "embedded systems software developers  ·  embedded software developerl embedded systems engineer  ·  embedded systems designer  ·  embedded system software programmer  ·  embedded software programmer"
+  },
+  {
+   "role": "ICT usability tester",
+   "isco": 2519,
+   "aka": "usability developer  ·  usability specialist  ·  usability testers  ·  user-friendliness tester"
+  },
+  {
+   "role": "IoT developer",
+   "isco": 2512,
+   "aka": "IoT software developer"
+  },
+  {
+   "role": "numerical tool and process control programmer",
+   "isco": 2514,
+   "aka": "numerical tool setting operator  ·  numerical process control programmer  ·  numerical tool programmer  ·  numerical process control operator  ·  numerical process control set up operator"
+  },
+  {
+   "role": "data quality specialist",
+   "isco": 2519,
+   "aka": "data integrity officer  ·  data integrity specialist  ·  data quality officer  ·  data quality expert  ·  data quality specialists"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "ICT auditor manager",
+   "isco": 2519,
+   "aka": "ICT auditor managers  ·  ICT audit manager  ·  information technology audit manager  ·  IT audit manager"
+  },
+  {
+   "role": "cloud software developer",
+   "isco": 2512,
+   "aka": "cloud and infrastructure specialist  ·  cloud solutions specialist  ·  cloud consultant  ·  cloud deployment specialist  ·  cloud technical specialist"
+  },
+  {
+   "role": "user interface developer",
+   "isco": 2512,
+   "aka": "user interface engineer  ·  user interface developers  ·  UI programmer  ·  front end developer  ·  UI developer"
+  },
+  {
+   "role": "user interface designer",
+   "isco": 2513,
+   "aka": "UI designer  ·  accessibility designer  ·  user interface designers"
+  },
+  {
+   "role": "digital games developer",
+   "isco": 2513,
+   "aka": "digital games developers  ·  digital game developer  ·  computer games developer  ·  games programmer  ·  video games developer"
+  },
+  {
+   "role": "ICT quality assurance manager",
+   "isco": 2519,
+   "aka": "IT quality assurance manager  ·  ICT quality manager  ·  ICT principal testing manager  ·  ICT quality assurance managers  ·  ICT test manager"
+  },
+  {
+   "role": "web content manager",
+   "isco": 2513,
+   "aka": "content specialist  ·  web content specialist  ·  web content curatorspecialist  ·  web content administrators  ·  digital content"
+  },
+  {
+   "role": "industrial mobile devices software developer",
+   "isco": 2514,
+   "aka": "industrial mobile devices software programmer  ·  industrial mobile devices software coder  ·  handheld programmer  ·  handheld software developer"
+  },
+  {
+   "role": "ICT application developer",
+   "isco": 2514,
+   "aka": "application developer  ·  application software developers  ·  application designer  ·  app software developer  ·  software programmer"
+  },
+  {
+   "role": "web developer",
+   "isco": 2513,
+   "aka": "web application developer  ·  web developers  ·  web engineer  ·  web specialist  ·  web programmer"
+  },
+  {
+   "role": "cloud identity manager",
+   "isco": 2514,
+   "aka": "cloud identity risk manager  ·  cloud identity access manager  ·  cloud identity engineer"
+  },
+  {
+   "role": "cloud DevOps engineer",
+   "isco": 2512,
+   "aka": "devops analyst  ·  devops consultant  ·  cloud devops solution specialist  ·  devops administrator  ·  devops engineer"
+  },
+  {
+   "role": "software architect",
+   "isco": 2512,
+   "aka": "software architects  ·  software designer  ·  application architect"
+  },
+  {
+   "role": "software developer",
+   "isco": 2512,
+   "aka": "application developer  ·  solutions developer  ·  electric vehicle software development engineer  ·  programmer  ·  application programmer"
+  },
+  {
+   "role": "Software and Applications Developers",
+   "isco": 2512,
+   "aka": NaN
+  },
+  {
+   "role": "Full Stack Engineers",
+   "isco": 2512,
+   "aka": NaN
+  },
+  {
+   "role": "Software Quality Assurance Analysts and Testers",
+   "isco": 2514,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Network Support Specialists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Database Architects",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Data Warehousing Specialists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Programmers",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Web and Digital Interface Designers",
+   "isco": 2513,
+   "aka": NaN
+  },
+  {
+   "role": "Video Game Designers",
+   "isco": 2513,
+   "aka": NaN
+  },
+  {
+   "role": "Web Administrators",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Geographic Information Systems Technologists and Technicians",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Document Management Specialists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Penetration Testers",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Information Security Engineers",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Digital Forensics Analysts",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Blockchain Engineers",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Systems Engineers/Architects",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Information Technology Project Managers",
+   "isco": 2519,
+   "aka": NaN
+  }
+ ]
+}

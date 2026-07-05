@@ -1,0 +1,104 @@
+{
+  "reviews": [
+    {
+      "domain_id": "D017",
+      "domain_name": "Mechanical",
+      "verdict": "issues",
+      "remove_roles": [
+        {"role": "Drafters, All Other", "isco": 3118, "reason": "junk O*NET 'All Other' catch-all group label, aka=NaN"},
+        {"role": "Atmospheric and Space Scientists", "isco": 2145, "reason": "cross-domain contamination (atmospheric/space science, not mechanical), group label aka=NaN"},
+        {"role": "Materials Scientists", "isco": 2145, "reason": "cross-domain contamination (materials science, its own field), group label aka=NaN"},
+        {"role": "First-Line Supervisors of Mechanics, Installers, and Repairers", "isco": 3122, "reason": "junk group label aka=NaN; repair/maintenance supervision, not mechanical engineering"},
+        {"role": "Industrial and Production Engineers", "isco": 2144, "reason": "junk plural group label aka=NaN; industrial engineering is a separate discipline (ISCO 2141)"},
+        {"role": "Fuel Cell Engineers", "isco": 2144, "reason": "junk group label aka=NaN; fuel-cell/electrochemical work belongs to renewable energy (D019), not core mechanical"},
+        {"role": "chemical engineer", "isco": 2145, "reason": "cross-domain contamination; chemical engineering is its own domain"},
+        {"role": "chemical processing supervisor", "isco": 3122, "reason": "cross-domain contamination; chemical process operations, not mechanical"},
+        {"role": "clothing CAD technician", "isco": 3118, "reason": "cross-domain contamination; textile/fashion CAD, not mechanical"},
+        {"role": "civil drafter", "isco": 3118, "reason": "cross-domain; civil/structural drafting belongs to Civil (D018)"}
+      ],
+      "add_roles": [
+        {"role": "manufacturing engineer", "isco": 2144, "skills": ["manufacturing process design", "CAD/CAM", "lean manufacturing", "GD&T", "production line optimization", "DFM/DFA"], "reason": "core mechanical-manufacturing role; removing the 'Industrial and Production Engineers' junk label leaves a genuine gap for production/manufacturing engineering"}
+      ],
+      "overfanout_roles": [
+        "aerospace engineering drafter",
+        "electromechanical drafter",
+        "electrical drafter",
+        "marine engineering drafter",
+        "automotive engineering drafter",
+        "architectural drafter",
+        "rolling stock engineering drafter",
+        "electronics drafter",
+        "product development engineering drafter",
+        "heating, ventilation, air conditioning (and refrigeration) drafter",
+        "mechanical engineering drafter"
+      ],
+      "rename_to": null,
+      "notes": "ISCO 3118 drafter/CAD family is heavily fanned out (~15+ near-identical specialisations of generic 'drafter'/'computer-aided design operator'); listed the clearest ESCO fan-out duplicates in overfanout_roles — recommend collapsing to generic 'drafter' + a few high-signal specialisations (aerospace, mechanical, electronics, PCB). Kept 'architectural drafter' flagged though it also leans toward Civil/Architecture. Engineer side (2144) is otherwise clean and well-scoped."
+    },
+    {
+      "domain_id": "D018",
+      "domain_name": "Civil",
+      "verdict": "issues",
+      "remove_roles": [
+        {"role": "Drafters, Engineering Technicians, and Mapping Technicians", "isco": 3118, "reason": "junk O*NET group label, aka=NaN"},
+        {"role": "Civil Engineering Technologists and Technicians", "isco": 3112, "reason": "junk group label, aka=NaN"},
+        {"role": "First-Line Supervisors of Construction Trades and Extraction Workers", "isco": 3121, "reason": "junk group label, aka=NaN"},
+        {"role": "Transportation Engineers", "isco": 2142, "reason": "junk group label, aka=NaN (duplicates existing 'transport engineer')"},
+        {"role": "Water/Wastewater Engineers", "isco": 2142, "reason": "junk group label, aka=NaN (duplicates existing 'water engineer'/'drainage engineer')"},
+        {"role": "Architectural and Civil Drafters", "isco": 3112, "reason": "junk group label, aka=NaN; also wrong ISCO (drafters are 3118)"},
+        {"role": "Electrical and Electronics Drafters", "isco": 3112, "reason": "junk group label, aka=NaN; electrical/electronics drafting, not civil"},
+        {"role": "Aerospace Engineering and Operations Technologists and Technicians", "isco": 3112, "reason": "junk group label, aka=NaN; aerospace, cross-domain"},
+        {"role": "Electro-Mechanical and Mechatronics Technologists and Technicians", "isco": 3112, "reason": "junk group label, aka=NaN; mechatronics, cross-domain"},
+        {"role": "Robotics Technicians", "isco": 3112, "reason": "junk group label, aka=NaN; robotics, cross-domain"},
+        {"role": "Solar Energy Installation Managers", "isco": 3121, "reason": "junk group label, aka=NaN; solar/renewable, belongs to D019"},
+        {"role": "biomedical engineer", "isco": 2149, "reason": "cross-domain contamination; biomedical engineering, not civil"},
+        {"role": "robotics engineer", "isco": 2149, "reason": "cross-domain contamination; robotics/automation, not civil"},
+        {"role": "photonics engineer", "isco": 2149, "reason": "cross-domain contamination; photonics, not civil"},
+        {"role": "optical engineer", "isco": 2149, "reason": "cross-domain contamination; optics, not civil"},
+        {"role": "nanoengineer", "isco": 2149, "reason": "cross-domain contamination; nanotechnology, not civil"},
+        {"role": "bioengineer", "isco": 2149, "reason": "cross-domain contamination; bioengineering, not civil"},
+        {"role": "nuclear engineer", "isco": 2149, "reason": "cross-domain contamination; nuclear engineering, not civil"},
+        {"role": "autonomous driving specialist", "isco": 2149, "reason": "cross-domain contamination; automotive/AV, not civil"},
+        {"role": "wood technology engineer", "isco": 2149, "reason": "cross-domain contamination; wood/materials technology, not civil"},
+        {"role": "thermal engineer", "isco": 2149, "reason": "cross-domain contamination; thermal/mechanical, not civil"},
+        {"role": "acoustical engineer", "isco": 2149, "reason": "cross-domain contamination; acoustics, not core civil"},
+        {"role": "renewable energy engineer", "isco": 2149, "reason": "cross-domain; renewable energy belongs to D019"},
+        {"role": "solar energy engineer", "isco": 2149, "reason": "cross-domain; renewable energy belongs to D019"},
+        {"role": "onshore wind energy engineer", "isco": 2149, "reason": "cross-domain; renewable energy belongs to D019"},
+        {"role": "offshore renewable energy engineer", "isco": 2149, "reason": "cross-domain; renewable energy belongs to D019"},
+        {"role": "geothermal engineer", "isco": 2149, "reason": "cross-domain; renewable/geothermal belongs to D019"},
+        {"role": "alternative fuels engineer", "isco": 2149, "reason": "cross-domain; alternative fuels/hydrogen belongs to D019"},
+        {"role": "aerospace engineering drafter", "isco": 3118, "reason": "cross-domain drafter; aerospace, belongs to D017"},
+        {"role": "automotive engineering drafter", "isco": 3118, "reason": "cross-domain drafter; automotive, belongs to D017"},
+        {"role": "marine engineering drafter", "isco": 3118, "reason": "cross-domain drafter; marine/shipbuilding, belongs to D017"},
+        {"role": "electromechanical drafter", "isco": 3118, "reason": "cross-domain drafter; electromechanical, belongs to D017"},
+        {"role": "electrical drafter", "isco": 3118, "reason": "cross-domain drafter; electrical, belongs to D017/electrical"},
+        {"role": "mechanical engineering drafter", "isco": 3118, "reason": "cross-domain drafter; mechanical, belongs to D017"},
+        {"role": "electronics drafter", "isco": 3118, "reason": "cross-domain drafter; electronics, belongs to D017/electrical"},
+        {"role": "rolling stock engineering drafter", "isco": 3118, "reason": "cross-domain drafter; rolling stock, belongs to D017"},
+        {"role": "printed circuit board designer", "isco": 3118, "reason": "cross-domain; PCB design, electronics not civil"},
+        {"role": "clothing CAD technician", "isco": 3118, "reason": "cross-domain; textile/fashion CAD, not civil"}
+      ],
+      "add_roles": [
+        {"role": "structural engineer", "isco": 2142, "skills": ["structural analysis", "reinforced concrete design", "steel design", "finite element analysis", "building codes/Eurocodes", "load calculation"], "reason": "core civil discipline; currently only appears buried as an aka of 'installation engineer'/'calculation engineer', deserves a standalone role"}
+      ],
+      "overfanout_roles": [
+        "component engineer",
+        "innovation engineer",
+        "contract engineer",
+        "compliance engineer",
+        "application engineer",
+        "calculation engineer",
+        "design engineer",
+        "installation engineer",
+        "commissioning engineer",
+        "test engineer",
+        "research engineer",
+        "product development engineering drafter",
+        "heating, ventilation, air conditioning (and refrigeration) drafter"
+      ],
+      "rename_to": null,
+      "notes": "Domain is heavily over-stuffed (~105 roles) with generic ISCO 2149 'engineer, n.e.c.' entries and cross-domain contamination — roughly a third of the list is not civil. remove_roles covers 11 junk NaN group labels, ~11 unrelated engineering disciplines, 6 renewable-energy roles (D019), and 10 non-civil drafters (D017/electronics). overfanout_roles flags generic 2149 catch-all engineers that aren't civil-specific and should be centralised in a general-engineering bucket rather than duplicated here. A cluster of energy-assessment/advisory 3112 roles (domestic energy assessor, energy assessor, energy analyst, energy consultant, energy conservation officer) also lean toward an energy domain and are borderline — left in but worth a second pass. Genuine civil core (civil engineer, construction engineer, geological/geotechnical, drainage, water, transport, pipeline, rail project, airport planning, hydropower, bridge/building/railway inspectors, surveying/road/rail technicians, construction safety & quality) is sound."
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+ "domain_id": "D096",
+ "domain_name": "Agricultural",
+ "role_count": 41,
+ "roles": [
+  {
+   "role": "land-based machinery technician",
+   "isco": 7233,
+   "aka": "land-based machinery technicians  ·  landbased machinery technician  ·  land-based machinery mechanic"
+  },
+  {
+   "role": "fluid power technician",
+   "isco": 7233,
+   "aka": "hydraulic liquid mechanic  ·  fluid power supervisor  ·  hydraulic power technical operative  ·  hydraulic power machinist  ·  fluid power technical operator"
+  },
+  {
+   "role": "land-based machinery supervisor",
+   "isco": 8341,
+   "aka": "combined driver supervisor  ·  agricultural machinery supervisor  ·  tractor driver supervisor  ·  agricultural equipment supervisor  ·  farm machinery supervisor"
+  },
+  {
+   "role": "land-based machinery operator",
+   "isco": 8341,
+   "aka": "land-based machinery operators  ·  landbased machinery operator  ·  farm equipment operator  ·  forest tractor driver  ·  agricultural machinery operator"
+  },
+  {
+   "role": "greaser",
+   "isco": 7233,
+   "aka": "machine oiler  ·  machine greaser  ·  machinery lube technician  ·  bearing greaser  ·  lubrication technician"
+  },
+  {
+   "role": "rotating equipment mechanic",
+   "isco": 7233,
+   "aka": "rotating equipment maintainer  ·  rotating equipment maintenance worker  ·  compression equipment repairer  ·  compressor mechanic  ·  compressor repairman"
+  },
+  {
+   "role": "industrial machinery mechanic",
+   "isco": 7233,
+   "aka": "industrial machinery fitter  ·  electronic fitter  ·  industrial machine fitter  ·  mechanical engineering fitter  ·  industrial machine repairer"
+  },
+  {
+   "role": "pneumatic systems technician",
+   "isco": 7233,
+   "aka": "pneumatic vacuum system inspector  ·  gas system inspector  ·  Pneumatic systems inspector  ·  vacuum system installer  ·  pneumatic air system inspector"
+  },
+  {
+   "role": "forge equipment technician",
+   "isco": 7233,
+   "aka": "forge operations inspector  ·  foundry operations inspector  ·  foundry processing inspector  ·  moulding and casting inspector  ·  casting and forging technical operator"
+  },
+  {
+   "role": "moulding machine technician",
+   "isco": 7233,
+   "aka": "mould maker apprentice  ·  moulding operator  ·  mould filler  ·  mould dresser  ·  mould builder"
+  },
+  {
+   "role": "marine fitter",
+   "isco": 7233,
+   "aka": "naval vessels fitter  ·  maritime fitter  ·  shipfitter  ·  naval fitter  ·  ship fitter"
+  },
+  {
+   "role": "forestry equipment operator",
+   "isco": 8341,
+   "aka": "woodland equipment operator  ·  logging equipment operator  ·  woodcutter  ·  woodman  ·  logger"
+  },
+  {
+   "role": "fisheries assistant engineer",
+   "isco": 7233,
+   "aka": "assistant ship mechanic  ·  fisheries engineer's assistant  ·  fishing vessel assistant engineer  ·  assistant naval mechanic"
+  },
+  {
+   "role": "marine mechanic",
+   "isco": 7233,
+   "aka": "cargo ship mechanic  ·  container ship mechanic  ·  mechanic on a ship  ·  ship machinist  ·  merchant ship mechanic"
+  },
+  {
+   "role": "mining equipment mechanic",
+   "isco": 7233,
+   "aka": "heavy machines operators  ·  mining processing engineer  ·  mining mechanic  ·  heavy machines mechanic  ·  fitter"
+  },
+  {
+   "role": "construction equipment technician",
+   "isco": 7233,
+   "aka": "heavy equipment mechanic  ·  building equipment mechanic  ·  building equipment inspector  ·  building equipment servicer  ·  building construction equipment operator"
+  },
+  {
+   "role": "crane technician",
+   "isco": 7233,
+   "aka": "crane hoist mechanic  ·  crane service mechanic  ·  crane maintenance mechanic"
+  },
+  {
+   "role": "forestry machinery technician",
+   "isco": 7233,
+   "aka": "forest machine mechanic  ·  forestry machinery repairman  ·  forest machinery operative  ·  transportation equipment operator  ·  forest machine transporter operator"
+  },
+  {
+   "role": "agricultural machinery technician",
+   "isco": 7233,
+   "aka": "agricultural technician  ·  agricultural conservation technician  ·  agricultural production technician  ·  agricultural research technician  ·  agricultural equipment test technician"
+  },
+  {
+   "role": "Mechanics and Machinery Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Forest and Conservation Workers",
+   "isco": 8341,
+   "aka": NaN
+  },
+  {
+   "role": "Farm Equipment Mechanics and Service Technicians",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Automotive Body and Related Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Automotive Glass Installers and Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Bus and Truck Mechanics and Diesel Engine Specialists",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Mobile Heavy Equipment Mechanics, Except Engines",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Rail Car Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Recreational Vehicle Service Technicians",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Mechanical Door Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Control and Valve Installers and Repairers, Except Mechanical Door",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Home Appliance Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Millwrights",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Wind Turbine Service Technicians",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Commercial Divers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Locksmiths and Safe Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Manufactured Building and Mobile Home Installers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Signal and Track Switch Repairers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Helpers--Installation, Maintenance, and Repair Workers",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Installation, Maintenance, and Repair Workers, All Other",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Geothermal Technicians",
+   "isco": 7233,
+   "aka": NaN
+  },
+  {
+   "role": "Dredge Operators",
+   "isco": 8341,
+   "aka": NaN
+  }
+ ]
+}

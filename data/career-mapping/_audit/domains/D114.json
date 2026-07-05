@@ -1,0 +1,222 @@
+{
+ "domain_id": "D114",
+ "domain_name": "Assembly, Packaging",
+ "role_count": 43,
+ "roles": [
+  {
+   "role": "aircraft engine assembler",
+   "isco": 8211,
+   "aka": "civilian aircraft engine builder  ·  aeroplane engine builder  ·  jet aircraft engine assembler  ·  civilian aircraft engine assembler  ·  helicopter engine assembler"
+  },
+  {
+   "role": "semiconductor processor",
+   "isco": 8212,
+   "aka": "micro chip assembler  ·  microchip fabricator  ·  semiconductor assembler  ·  semiconductor manufacturing technician  ·  semi conductor manufacturing inspector"
+  },
+  {
+   "role": "dental instrument assembler",
+   "isco": 8212,
+   "aka": "dental mirror assembler  ·  dental instruments maker  ·  orthodontic instrument assembler  ·  dental instrument technician  ·  dental equipment assembler"
+  },
+  {
+   "role": "ammunition assembler",
+   "isco": 8219,
+   "aka": "ammunition worker  ·  ammunition factory operative  ·  munitions plant operative  ·  ammunition production worker  ·  munitions assembly worker"
+  },
+  {
+   "role": "mechatronics assembler",
+   "isco": 8211,
+   "aka": "assembler in mechatronic equipment manufacture  ·  robotic fitter  ·  robotic equipment operator  ·  constructor of mechatronic equipment  ·  mechatronic equipment constructor"
+  },
+  {
+   "role": "metal furniture machine operator",
+   "isco": 8219,
+   "aka": "metal furniture assembly worker  ·  metal furniture machine setter  ·  metal furniture machine operative  ·  metal furniture maker  ·  metal furniture machine worker"
+  },
+  {
+   "role": "medical device assembler",
+   "isco": 8219,
+   "aka": "medical instrument assembler  ·  medical instrument maker  ·  assembler of medical appliances  ·  medical instrument assembly worker  ·  medical appliance assembler"
+  },
+  {
+   "role": "wave soldering machine operator",
+   "isco": 8212,
+   "aka": "wave operator  ·  wave-soldering machine operative  ·  solderer of electronics  ·  operator of wave soldering machine  ·  wave-soldering machine operator"
+  },
+  {
+   "role": "electrical equipment assembler",
+   "isco": 8212,
+   "aka": "fabricator of electrical equipment  ·  assembler in electrical equipment production  ·  constructor of electrical equipment  ·  electrical equipment constructor  ·  electrical equipment production assembler"
+  },
+  {
+   "role": "surface-mount technology machine operator",
+   "isco": 8212,
+   "aka": "SMT machine operator  ·  electronics surface mount soldering machine operator  ·  soldering machine operative  ·  operator of surface-mount technology machine  ·  electronics surface mount soldering operative"
+  },
+  {
+   "role": "firework assembler",
+   "isco": 8219,
+   "aka": "pyrotechnics assembler  ·  firework assembly worker  ·  firework maker  ·  fireworks maker  ·  signal flare assembler"
+  },
+  {
+   "role": "plastic products assembler",
+   "isco": 8219,
+   "aka": "plastic parts assembler  ·  plastics process operator  ·  plastic products production operative  ·  assembler of plastic parts  ·  plastic products assembly operator"
+  },
+  {
+   "role": "electronic equipment assembler",
+   "isco": 8212,
+   "aka": "electrical and electronic equipment fabricator  ·  assembler electronic equipment products  ·  electronic equipment products production operative  ·  electronic assembler  ·  electronic equipment production operative"
+  },
+  {
+   "role": "jewellery assembler",
+   "isco": 8219,
+   "aka": "jewellery craftsperson  ·  jewelry craftswoman  ·  earring assembler  ·  assembler of jewelry  ·  jewelry craftsman"
+  },
+  {
+   "role": "battery assembler",
+   "isco": 8212,
+   "aka": "battery maker  ·  dry cell production operative  ·  welder specialised in battery components  ·  battery welder  ·  battery cell assembler"
+  },
+  {
+   "role": "rubber goods assembler",
+   "isco": 8219,
+   "aka": "rubber goods production assembler  ·  rubber goods production operative  ·  rubber goods finishing operator  ·  rubber products assembler  ·  rubber goods finisher"
+  },
+  {
+   "role": "motorcycle assembler",
+   "isco": 8211,
+   "aka": "cycle assembler  ·  bicycle builder  ·  scooter builder  ·  scooter constructor  ·  bike builder"
+  },
+  {
+   "role": "motor vehicle parts assembler",
+   "isco": 8211,
+   "aka": "motor vehicle parts tester  ·  auto parts assembler  ·  lorry parts assembler  ·  motor vehicle parts inspector  ·  car parts assembler"
+  },
+  {
+   "role": "wood products assembler",
+   "isco": 8219,
+   "aka": "wood products assembly worker  ·  wood products constructor  ·  wood products joiner  ·  stair assembler  ·  wood products fabricator"
+  },
+  {
+   "role": "rolling stock assembler",
+   "isco": 8211,
+   "aka": "rolling stock builder  ·  locomotive builder  ·  carriage builder  ·  wagon builder  ·  railway vehicle builder"
+  },
+  {
+   "role": "vessel engine assembler",
+   "isco": 8211,
+   "aka": "dual fuel engine assembler  ·  marine steam engine assembler  ·  marine engine builder  ·  boat engine builder  ·  boat engine assembler"
+  },
+  {
+   "role": "photographic equipment assembler",
+   "isco": 8212,
+   "aka": "assembler of projectors  ·  video camera assembler  ·  assembler of photographic equipment  ·  assembler of photo equipment  ·  projector assembler"
+  },
+  {
+   "role": "aircraft assembler",
+   "isco": 8211,
+   "aka": "flight control installer  ·  plane assembler  ·  aircraft rigging assembler  ·  helicopter assembler  ·  military aircraft assembler"
+  },
+  {
+   "role": "metal products assembler",
+   "isco": 8219,
+   "aka": "fabricator assembler  ·  metal product fabricator  ·  fabricator assembler metal products  ·  metal fabrication apprentice  ·  assembler"
+  },
+  {
+   "role": "industrial machinery assembler",
+   "isco": 8211,
+   "aka": "industrial machinery assembly line inspector  ·  sub assembler  ·  final assembler  ·  assembly line machine tender  ·  bench precision assembler"
+  },
+  {
+   "role": "motor vehicle engine assembler",
+   "isco": 8211,
+   "aka": "lorry engine assembler  ·  diesel engine builder  ·  truck engine builder  ·  electric engine builder  ·  lorry engine builder"
+  },
+  {
+   "role": "control panel assembler",
+   "isco": 8212,
+   "aka": "monitoring panel assembler  ·  control panel assembly technician  ·  process control panel assembler  ·  electrical control panel technician  ·  control panel technician"
+  },
+  {
+   "role": "wire harness assembler",
+   "isco": 8212,
+   "aka": "cable harness technician  ·  assembler of cable harnesses  ·  technician in wire harnesses  ·  fabricator of wire harnesses  ·  fabricator of cable harnesses"
+  },
+  {
+   "role": "electromechanical equipment assembler",
+   "isco": 8212,
+   "aka": "electromechanical equipment fabricator  ·  electro-mechanical equipment assembler  ·  electromechanical equipment production worker  ·  assembler of electro-mechanical equipment  ·  fabricator of electromechanical equipment"
+  },
+  {
+   "role": "furniture assembler",
+   "isco": 8219,
+   "aka": "furniture assembly operative  ·  furniture assembly technician  ·  wooden furniture assembler  ·  furniture assembly worker  ·  furniture hand assembler"
+  },
+  {
+   "role": "printed circuit board assembler",
+   "isco": 8212,
+   "aka": "printed circuit board fabricator  ·  PCB fabricator  ·  PCB assembler  ·  through-hole technology assembly operative  ·  through-hole technology assembler"
+  },
+  {
+   "role": "bicycle assembler",
+   "isco": 8219,
+   "aka": "bicycle trailer maker  ·  cycle maker  ·  cycle assembler  ·  bike trailer maker  ·  bike assembler"
+  },
+  {
+   "role": "electrical cable assembler",
+   "isco": 8212,
+   "aka": "cable and wire assembler  ·  assembler of electrical cables  ·  wire assembler  ·  electrical cable fabricator  ·  wire and cable assembler"
+  },
+  {
+   "role": "electronic musical instrument maker",
+   "isco": 8212,
+   "aka": "electronic musical instrument builder  ·  electronic musical instrument craftsman  ·  electric guitar builder  ·  electric guitar maker  ·  electric keyboard builder"
+  },
+  {
+   "role": "motor vehicle body assembler",
+   "isco": 8211,
+   "aka": "bus body assembler  ·  lorry body assembler  ·  car body assembler  ·  coach body assembler  ·  vehicle production body assembler"
+  },
+  {
+   "role": "motor vehicle assembler",
+   "isco": 8211,
+   "aka": "motor vehicle assemblies tester  ·  car factory worker  ·  motor vehicle assembly inspector  ·  car builder  ·  truck builder"
+  },
+  {
+   "role": "Assembly and Factory Workers",
+   "isco": 8212,
+   "aka": NaN
+  },
+  {
+   "role": "Structural Metal Fabricators and Fitters",
+   "isco": 8219,
+   "aka": NaN
+  },
+  {
+   "role": "Fiberglass Laminators and Fabricators",
+   "isco": 8219,
+   "aka": NaN
+  },
+  {
+   "role": "Timing Device Assemblers and Adjusters",
+   "isco": 8219,
+   "aka": NaN
+  },
+  {
+   "role": "Model Makers, Wood",
+   "isco": 8219,
+   "aka": NaN
+  },
+  {
+   "role": "Patternmakers, Wood",
+   "isco": 8219,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Numerically Controlled Tool Programmers",
+   "isco": 8219,
+   "aka": NaN
+  }
+ ]
+}

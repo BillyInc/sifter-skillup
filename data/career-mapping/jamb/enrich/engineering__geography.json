@@ -1,0 +1,16 @@
+{
+  "jamb_name": "Geography",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "KUST", "note": "Accepts two (2) 'A' Level passes with a minimum of C in Geography, Mathematics, Physics, Chemistry, Agriculture/Biology and Economics."},
+    {"institution": "MAUTY", "note": "Accepts a) IJMB/GCE two 'A' Level credit passes in Geography, Mathematics, Physics, Biology, Chemistry, Government, Economics; b) OND/HND with minimum of lower credit in Architecture, Surveying and Geoinformatics, URP, Environmental Management/Sciences and Meteorology."},
+    {"institution": "ABSU", "note": "Requires five (5) 'O' Level credit passes in English Language, Mathematics, Geography and any other two (2) subjects from Economics, Government, Physics, Chemistry, Biology, Technical Drawing, Fine Arts and Social Studies. Also requires credit in any two (2) of Arts, Sciences or Social Sciences subjects."},
+    {"institution": "JOS", "note": "Accepts IJMB passes including Geography. Also accepts ND/HND credit in Urban and Regional Planning or Land Surveying. Requires five (5) 'O' Level credit passes to include English Language, Mathematics and Geography in addition to any other two (2) Social Science or Science subjects; accepts credit in Zoology, Physics, Agricultural Science and credit in English Language."},
+    {"institution": "KUST", "note": "Accepts IJMB/ND/NCE in Geography and any other Science subject."},
+    {"institution": "MAUTY", "note": "Requires five (5) SSC credit passes to include English Language, Mathematics and Geography and any two from Physics, Chemistry, Biology/Agric Science, Economics, Commerce, Government and Tourism. Also requires Geography and any two of Biology/Agric Science, Chemistry, Physics, Mathematics, Tourism, Economics, Commerce and Government."},
+    {"institution": "IMSU", "note": "Requires Geography, Mathematics and any other subject."},
+    {"institution": "NDU", "note": "Accepts 'O' Level pass in Mathematics."}
+  ]
+}

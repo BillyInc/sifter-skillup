@@ -1,0 +1,5752 @@
+[
+ {
+  "domain_id": "D001",
+  "domain_name": "Software Engineering",
+  "role_name": "backend developer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "API design",
+   "server-side programming",
+   "databases",
+   "microservices",
+   "authentication"
+  ],
+  "source": "audit_add",
+  "reason": "one of the most common global SE role titles; only frontend/UI and full-stack present"
+ },
+ {
+  "domain_id": "D001",
+  "domain_name": "Software Engineering",
+  "role_name": "DevOps engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "CI/CD",
+   "Docker",
+   "Kubernetes",
+   "infrastructure as code",
+   "monitoring"
+  ],
+  "source": "audit_add",
+  "reason": "generic DevOps (non-cloud-specific) is a top global SE role and absent (only cloud DevOps listed)"
+ },
+ {
+  "domain_id": "D001",
+  "domain_name": "Software Engineering",
+  "role_name": "site reliability engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "SLO/SLI management",
+   "observability",
+   "automation",
+   "incident response",
+   "Kubernetes"
+  ],
+  "source": "audit_add",
+  "reason": "SRE is a mainstream global SE discipline distinct from generic dev, absent"
+ },
+ {
+  "domain_id": "D001",
+  "domain_name": "Software Engineering",
+  "role_name": "QA automation engineer",
+  "isco_group": "2514",
+  "essential_skills": [
+   "test automation frameworks",
+   "Selenium/Playwright",
+   "CI integration",
+   "scripting",
+   "API testing"
+  ],
+  "source": "audit_add",
+  "reason": "automation-focused QA is a major global SE role; only manual/analyst tester variants present"
+ },
+ {
+  "domain_id": "D002",
+  "domain_name": "Data Engineering",
+  "role_name": "analytics engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "dbt",
+   "SQL",
+   "data modelling",
+   "data transformation",
+   "BI enablement"
+  ],
+  "source": "audit_add",
+  "reason": "emerging mainstream role bridging data engineering and analytics; absent"
+ },
+ {
+  "domain_id": "D002",
+  "domain_name": "Data Engineering",
+  "role_name": "machine learning operations (MLOps) engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "ML pipelines",
+   "feature stores",
+   "model deployment",
+   "CI/CD for ML",
+   "data versioning"
+  ],
+  "source": "audit_add",
+  "reason": "MLOps/data-platform hybrid is a major emerging global role; absent"
+ },
+ {
+  "domain_id": "D002",
+  "domain_name": "Data Engineering",
+  "role_name": "ETL developer",
+  "isco_group": "2521",
+  "essential_skills": [
+   "ETL/ELT tools",
+   "SQL",
+   "data integration",
+   "scheduling/orchestration",
+   "data mapping"
+  ],
+  "source": "audit_add",
+  "reason": "classic high-volume global data-engineering title distinct from generic data engineer; absent"
+ },
+ {
+  "domain_id": "D003",
+  "domain_name": "Artificial Intelligence",
+  "role_name": "machine learning engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "model training",
+   "feature engineering",
+   "ML frameworks (PyTorch/TensorFlow)",
+   "model deployment",
+   "MLOps"
+  ],
+  "source": "audit_add",
+  "reason": "the single most common global AI role and it is absent"
+ },
+ {
+  "domain_id": "D003",
+  "domain_name": "Artificial Intelligence",
+  "role_name": "natural language processing engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "NLP",
+   "transformers",
+   "tokenization",
+   "language modelling",
+   "text classification"
+  ],
+  "source": "audit_add",
+  "reason": "core AI subfield role, absent"
+ },
+ {
+  "domain_id": "D003",
+  "domain_name": "Artificial Intelligence",
+  "role_name": "AI research scientist",
+  "isco_group": "2511",
+  "essential_skills": [
+   "deep learning",
+   "research methodology",
+   "mathematics/statistics",
+   "publication",
+   "experimentation"
+  ],
+  "source": "audit_add",
+  "reason": "foundational AI research role, absent"
+ },
+ {
+  "domain_id": "D003",
+  "domain_name": "Artificial Intelligence",
+  "role_name": "machine learning operations (MLOps) engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "ML pipelines",
+   "model monitoring",
+   "CI/CD for ML",
+   "model serving",
+   "feature stores"
+  ],
+  "source": "audit_add",
+  "reason": "major emerging global AI/ML infra role, absent"
+ },
+ {
+  "domain_id": "D003",
+  "domain_name": "Artificial Intelligence",
+  "role_name": "prompt engineer / generative AI engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "LLM prompting",
+   "RAG systems",
+   "fine-tuning",
+   "evaluation",
+   "vector databases"
+  ],
+  "source": "audit_add",
+  "reason": "fast-growing emerging global role in the generative-AI era, absent"
+ },
+ {
+  "domain_id": "D003",
+  "domain_name": "Artificial Intelligence",
+  "role_name": "AI ethics / responsible AI specialist",
+  "isco_group": "2511",
+  "essential_skills": [
+   "AI governance",
+   "bias auditing",
+   "model risk",
+   "regulatory compliance",
+   "fairness evaluation"
+  ],
+  "source": "audit_add",
+  "reason": "emerging global role driven by AI regulation, absent"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "penetration tester",
+  "isco_group": "2529",
+  "essential_skills": [
+   "exploitation",
+   "vulnerability assessment",
+   "OWASP",
+   "red teaming",
+   "reporting"
+  ],
+  "source": "audit_add",
+  "reason": "one of the most common global security roles; only 'ethical hacker' synonym listed, dedicated pentester title absent"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "security operations center (SOC) analyst",
+  "isco_group": "2529",
+  "essential_skills": [
+   "SIEM",
+   "threat detection",
+   "log analysis",
+   "incident triage",
+   "alert investigation"
+  ],
+  "source": "audit_add",
+  "reason": "core high-volume global security role; only folded into incident responder aka, deserves own entry"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "security architect",
+  "isco_group": "2529",
+  "essential_skills": [
+   "security architecture",
+   "threat modelling",
+   "zero trust",
+   "secure design",
+   "risk assessment"
+  ],
+  "source": "audit_add",
+  "reason": "senior global security design role, absent"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "application security engineer",
+  "isco_group": "2529",
+  "essential_skills": [
+   "SAST/DAST",
+   "secure coding",
+   "code review",
+   "DevSecOps",
+   "OWASP"
+  ],
+  "source": "audit_add",
+  "reason": "major global role securing software in the SDLC, absent"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "cloud security engineer",
+  "isco_group": "2529",
+  "essential_skills": [
+   "cloud IAM",
+   "CSPM",
+   "container security",
+   "cloud network security",
+   "compliance"
+  ],
+  "source": "audit_add",
+  "reason": "fast-growing global role as workloads move to cloud, absent"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "GRC analyst / security compliance analyst",
+  "isco_group": "2529",
+  "essential_skills": [
+   "ISO 27001",
+   "NIST",
+   "risk assessment",
+   "audit",
+   "policy"
+  ],
+  "source": "audit_add",
+  "reason": "widespread global governance-risk-compliance security role, absent"
+ },
+ {
+  "domain_id": "D004",
+  "domain_name": "Cybersecurity",
+  "role_name": "threat intelligence analyst",
+  "isco_group": "2529",
+  "essential_skills": [
+   "threat intel",
+   "IOCs",
+   "adversary tracking",
+   "OSINT",
+   "malware analysis"
+  ],
+  "source": "audit_add",
+  "reason": "established global security role, absent"
+ },
+ {
+  "domain_id": "D005",
+  "domain_name": "Cloud Computing",
+  "role_name": "cloud security engineer",
+  "isco_group": "2529",
+  "essential_skills": [
+   "cloud IAM",
+   "CSPM",
+   "container security",
+   "encryption",
+   "compliance"
+  ],
+  "source": "audit_add",
+  "reason": "core cloud sub-discipline and top global cloud role, absent"
+ },
+ {
+  "domain_id": "D005",
+  "domain_name": "Cloud Computing",
+  "role_name": "platform engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "Kubernetes",
+   "internal developer platforms",
+   "IaC (Terraform)",
+   "CI/CD",
+   "GitOps"
+  ],
+  "source": "audit_add",
+  "reason": "emerging mainstream role building cloud platforms, absent"
+ },
+ {
+  "domain_id": "D005",
+  "domain_name": "Cloud Computing",
+  "role_name": "site reliability engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "observability",
+   "SLOs",
+   "incident response",
+   "automation",
+   "Kubernetes"
+  ],
+  "source": "audit_add",
+  "reason": "cloud-native reliability role, absent (only cloud DevOps present)"
+ },
+ {
+  "domain_id": "D005",
+  "domain_name": "Cloud Computing",
+  "role_name": "cloud network engineer",
+  "isco_group": "2523",
+  "essential_skills": [
+   "VPC design",
+   "cloud routing",
+   "load balancing",
+   "hybrid connectivity",
+   "SD-WAN"
+  ],
+  "source": "audit_add",
+  "reason": "specialised global cloud role, absent"
+ },
+ {
+  "domain_id": "D005",
+  "domain_name": "Cloud Computing",
+  "role_name": "FinOps engineer / cloud cost analyst",
+  "isco_group": "2511",
+  "essential_skills": [
+   "cloud cost optimization",
+   "billing analytics",
+   "tagging governance",
+   "budgeting",
+   "rightsizing"
+  ],
+  "source": "audit_add",
+  "reason": "fast-growing emerging global cloud-financial-ops role, absent"
+ },
+ {
+  "domain_id": "D006",
+  "domain_name": "Internet of Things",
+  "role_name": "IoT firmware developer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "embedded C/C++",
+   "RTOS",
+   "device drivers",
+   "OTA firmware updates",
+   "microcontroller programming"
+  ],
+  "source": "audit_add",
+  "reason": "Core builder of the device-side software that runs on IoT endpoints; distinct from generic embedded systems engineer and central to IoT."
+ },
+ {
+  "domain_id": "D006",
+  "domain_name": "Internet of Things",
+  "role_name": "IoT network engineer",
+  "isco_group": "2523",
+  "essential_skills": [
+   "MQTT",
+   "LoRaWAN",
+   "Zigbee",
+   "low-power WAN",
+   "network provisioning",
+   "edge-to-cloud connectivity"
+  ],
+  "source": "audit_add",
+  "reason": "Designs and maintains the low-power/wide-area connectivity fabric specific to IoT device fleets."
+ },
+ {
+  "domain_id": "D007",
+  "domain_name": "UI/UX Design",
+  "role_name": "UX researcher",
+  "isco_group": "2513",
+  "essential_skills": [
+   "usability testing",
+   "user interviews",
+   "survey design",
+   "persona development",
+   "journey mapping",
+   "qualitative analysis"
+  ],
+  "source": "audit_add",
+  "reason": "The research half of UI/UX is core to the domain yet absent; distinct from the ICT usability tester (QA) role."
+ },
+ {
+  "domain_id": "D007",
+  "domain_name": "UI/UX Design",
+  "role_name": "interaction designer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "wireframing",
+   "prototyping",
+   "interaction patterns",
+   "Figma",
+   "information architecture",
+   "user flows"
+  ],
+  "source": "audit_add",
+  "reason": "Central UX practitioner role designing product interaction behaviour; a named specialty within UI/UX absent from the list."
+ },
+ {
+  "domain_id": "D007",
+  "domain_name": "UI/UX Design",
+  "role_name": "product designer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "design systems",
+   "prototyping",
+   "user research",
+   "UI design",
+   "cross-functional collaboration",
+   "Figma"
+  ],
+  "source": "audit_add",
+  "reason": "Dominant industry title for end-to-end digital product/UX design; a core UI/UX role missing entirely."
+ },
+ {
+  "domain_id": "D008",
+  "domain_name": "Telecommunications",
+  "role_name": "radio frequency (RF) engineer",
+  "isco_group": "2153",
+  "essential_skills": [
+   "RF propagation",
+   "antenna design",
+   "spectrum planning",
+   "signal modulation",
+   "link budget analysis",
+   "5G/LTE radio"
+  ],
+  "source": "audit_add",
+  "reason": "Core telecom engineering specialty for wireless/cellular network design; absent despite being central to modern telecom."
+ },
+ {
+  "domain_id": "D008",
+  "domain_name": "Telecommunications",
+  "role_name": "telecommunications equipment installer",
+  "isco_group": "7422",
+  "essential_skills": [
+   "cabling",
+   "fibre splicing",
+   "equipment mounting",
+   "line testing",
+   "signal troubleshooting"
+  ],
+  "source": "audit_add",
+  "reason": "Skilled-trade role that builds and maintains physical telecom infrastructure; a genuine telecom career track missing from the list."
+ },
+ {
+  "domain_id": "D009",
+  "domain_name": "Data Science",
+  "role_name": "machine learning engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "model training",
+   "feature engineering",
+   "MLOps",
+   "PyTorch/TensorFlow",
+   "model deployment",
+   "pipeline orchestration"
+  ],
+  "source": "audit_add",
+  "reason": "Core productionization role for data science/ML; distinct from AI engineer and data scientist and central to the field yet absent."
+ },
+ {
+  "domain_id": "D009",
+  "domain_name": "Data Science",
+  "role_name": "data science manager",
+  "isco_group": "2511",
+  "essential_skills": [
+   "team leadership",
+   "experiment prioritization",
+   "stakeholder communication",
+   "model roadmap",
+   "analytics strategy"
+  ],
+  "source": "audit_add",
+  "reason": "Leadership track native to data science teams; missing from an otherwise IC-heavy list."
+ },
+ {
+  "domain_id": "D010",
+  "domain_name": "Business Intelligence",
+  "role_name": "business intelligence developer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "SQL",
+   "ETL",
+   "data warehousing",
+   "Power BI/Tableau",
+   "dimensional modeling",
+   "OLAP cubes"
+  ],
+  "source": "audit_add",
+  "reason": "The core hands-on BI builder role (dashboards, semantic models, pipelines) is the defining occupation of the domain yet is absent — only manager/analyst titles are present."
+ },
+ {
+  "domain_id": "D010",
+  "domain_name": "Business Intelligence",
+  "role_name": "analytics engineer",
+  "isco_group": "2511",
+  "essential_skills": [
+   "dbt",
+   "SQL",
+   "data modeling",
+   "transformation pipelines",
+   "semantic layer",
+   "data testing"
+  ],
+  "source": "audit_add",
+  "reason": "Modern BI/analytics stack role bridging data engineering and analysis; central to contemporary BI and missing."
+ },
+ {
+  "domain_id": "D011",
+  "domain_name": "Quantitative Finance",
+  "role_name": "quantitative researcher",
+  "isco_group": 2413,
+  "essential_skills": [
+   "quantitative research",
+   "statistical modelling",
+   "Python",
+   "machine learning",
+   "financial mathematics"
+  ],
+  "source": "audit_add",
+  "reason": "Core quant-finance role explicitly missing; buy-side/hedge-fund alpha research is central to the domain."
+ },
+ {
+  "domain_id": "D011",
+  "domain_name": "Quantitative Finance",
+  "role_name": "quantitative developer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "C++/Python",
+   "low-latency systems",
+   "backtesting",
+   "software engineering",
+   "financial modelling"
+  ],
+  "source": "audit_add",
+  "reason": "Core quant-finance engineering role explicitly missing; builds pricing/execution/backtesting infrastructure."
+ },
+ {
+  "domain_id": "D011",
+  "domain_name": "Quantitative Finance",
+  "role_name": "quantitative analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "stochastic calculus",
+   "derivatives pricing",
+   "risk modelling",
+   "Python",
+   "numerical methods"
+  ],
+  "source": "audit_add",
+  "reason": "The archetypal 'quant' (pricing/risk quant) is absent though the domain is named Quantitative Finance."
+ },
+ {
+  "domain_id": "D011",
+  "domain_name": "Quantitative Finance",
+  "role_name": "risk analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "market risk",
+   "VaR modelling",
+   "credit risk",
+   "stress testing",
+   "statistics"
+  ],
+  "source": "audit_add",
+  "reason": "Quantitative risk management is a pillar of quant finance and no risk role is present."
+ },
+ {
+  "domain_id": "D012",
+  "domain_name": "FinTech Engineering",
+  "role_name": "data engineer",
+  "isco_group": 2521,
+  "essential_skills": [
+   "ETL pipelines",
+   "SQL",
+   "cloud data platforms",
+   "streaming data",
+   "Python"
+  ],
+  "source": "audit_add",
+  "reason": "FinTech runs on real-time transaction/market data pipelines; no data engineering role is present."
+ },
+ {
+  "domain_id": "D012",
+  "domain_name": "FinTech Engineering",
+  "role_name": "blockchain developer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "smart contracts",
+   "Solidity",
+   "distributed ledgers",
+   "cryptography",
+   "web3"
+  ],
+  "source": "audit_add",
+  "reason": "Blockchain/crypto engineering is a defining FinTech engineering specialism and is absent."
+ },
+ {
+  "domain_id": "D012",
+  "domain_name": "FinTech Engineering",
+  "role_name": "backend developer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "API design",
+   "microservices",
+   "payment integrations",
+   "databases",
+   "security"
+  ],
+  "source": "audit_add",
+  "reason": "Payments/banking APIs and microservices are the backbone of FinTech engineering; only generic software developer/analyst present."
+ },
+ {
+  "domain_id": "D012",
+  "domain_name": "FinTech Engineering",
+  "role_name": "DevOps engineer",
+  "isco_group": 2519,
+  "essential_skills": [
+   "CI/CD",
+   "cloud infrastructure",
+   "containerisation",
+   "monitoring",
+   "security compliance"
+  ],
+  "source": "audit_add",
+  "reason": "Regulated, high-availability FinTech systems require dedicated DevOps/SRE; missing from the engineering domain."
+ },
+ {
+  "domain_id": "D013",
+  "domain_name": "Investment Analysis",
+  "role_name": "equity research analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "equity valuation",
+   "financial modelling",
+   "industry analysis",
+   "DCF",
+   "report writing"
+  ],
+  "source": "audit_add",
+  "reason": "The definitive investment-analysis role (sell-side/buy-side equity research) is absent though it is the domain's namesake activity."
+ },
+ {
+  "domain_id": "D013",
+  "domain_name": "Investment Analysis",
+  "role_name": "portfolio manager",
+  "isco_group": 2412,
+  "essential_skills": [
+   "asset allocation",
+   "portfolio construction",
+   "risk-adjusted returns",
+   "security selection",
+   "performance attribution"
+  ],
+  "source": "audit_add",
+  "reason": "Investment analysis feeds portfolio management; a distinct PM role is missing amid many advisory roles."
+ },
+ {
+  "domain_id": "D013",
+  "domain_name": "Investment Analysis",
+  "role_name": "credit analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "credit risk assessment",
+   "financial statement analysis",
+   "fixed income",
+   "ratings",
+   "covenant analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Fixed-income/credit analysis is a core pillar of investment analysis and no dedicated credit-analysis role is present."
+ },
+ {
+  "domain_id": "D014",
+  "domain_name": "Actuarial Science",
+  "role_name": "actuary",
+  "isco_group": 2120,
+  "essential_skills": [
+   "actuarial modelling",
+   "probability theory",
+   "life/pensions mathematics",
+   "reserving",
+   "risk pricing"
+  ],
+  "source": "audit_add",
+  "reason": "The domain is named Actuarial Science yet the qualified actuary role only appears as a junk ISCO-group row ('Actuaries', NaN aka); a proper role is needed."
+ },
+ {
+  "domain_id": "D014",
+  "domain_name": "Actuarial Science",
+  "role_name": "pricing actuary",
+  "isco_group": 2120,
+  "essential_skills": [
+   "insurance pricing",
+   "GLM modelling",
+   "loss ratios",
+   "reserving",
+   "statistical software"
+  ],
+  "source": "audit_add",
+  "reason": "Pricing is a primary actuarial specialism (general insurance/life) and is absent as a distinct role."
+ },
+ {
+  "domain_id": "D014",
+  "domain_name": "Actuarial Science",
+  "role_name": "risk analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "risk modelling",
+   "solvency analysis",
+   "capital modelling",
+   "stress testing",
+   "statistics"
+  ],
+  "source": "audit_add",
+  "reason": "Actuarial work centres on quantitative risk/capital; only a junk 'Risk Management Specialists' group row exists, no real risk role."
+ },
+ {
+  "domain_id": "D014",
+  "domain_name": "Actuarial Science",
+  "role_name": "data scientist",
+  "isco_group": 2529,
+  "essential_skills": [
+   "predictive modelling",
+   "machine learning",
+   "statistics",
+   "Python/R",
+   "data analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Modern actuarial/insurance analytics increasingly overlaps data science; a quantitative modelling role complements the thin core."
+ },
+ {
+  "domain_id": "D015",
+  "domain_name": "Accounting",
+  "role_name": "management accountant",
+  "isco_group": 2411,
+  "essential_skills": [
+   "cost accounting",
+   "budgeting",
+   "variance analysis",
+   "management reporting",
+   "forecasting"
+  ],
+  "source": "audit_add",
+  "reason": "Management/cost accounting is a core branch of accounting distinct from financial accounting/audit and is not represented as a role."
+ },
+ {
+  "domain_id": "D015",
+  "domain_name": "Accounting",
+  "role_name": "payroll clerk",
+  "isco_group": 4313,
+  "essential_skills": [
+   "payroll processing",
+   "statutory deductions",
+   "timekeeping",
+   "payroll software",
+   "reconciliation"
+  ],
+  "source": "audit_add",
+  "reason": "Payroll is a standard accounting-clerk function (ISCO 4313) and is missing from an otherwise clerk-heavy domain."
+ },
+ {
+  "domain_id": "D016",
+  "domain_name": "Electrical",
+  "role_name": "electronics production supervisor",
+  "isco_group": "3122",
+  "essential_skills": [
+   "electronics assembly line supervision",
+   "SMT/PCB production control",
+   "quality inspection",
+   "production scheduling",
+   "health & safety compliance"
+  ],
+  "source": "audit_add",
+  "reason": "Electrical/electronics manufacturing supervision is a core electrical-domain occupation and the library only lists electrical-equipment (not electronics) production supervisor."
+ },
+ {
+  "domain_id": "D021",
+  "domain_name": "Architecture",
+  "role_name": "architectural technologist",
+  "isco_group": 3112,
+  "essential_skills": [
+   "building information modelling (BIM)",
+   "technical drawing",
+   "construction detailing",
+   "building regulations",
+   "CAD"
+  ],
+  "source": "audit_add",
+  "reason": "Core architecture-domain technician role bridging architect and construction; ESCO-recognised and missing from list."
+ },
+ {
+  "domain_id": "D021",
+  "domain_name": "Architecture",
+  "role_name": "quantity surveyor",
+  "isco_group": 2149,
+  "essential_skills": [
+   "cost estimation",
+   "construction contracts",
+   "tendering",
+   "measurement of works",
+   "budget control"
+  ],
+  "source": "audit_add",
+  "reason": "Standard built-environment/architecture-adjacent surveying profession absent despite many other surveyor roles present."
+ },
+ {
+  "domain_id": "D021",
+  "domain_name": "Architecture",
+  "role_name": "building services engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "HVAC design",
+   "electrical systems design",
+   "plumbing design",
+   "building energy modelling",
+   "MEP coordination"
+  ],
+  "source": "audit_add",
+  "reason": "Key architecture/construction design discipline (MEP) globally recognised, not represented."
+ },
+ {
+  "domain_id": "D022",
+  "domain_name": "Mining",
+  "role_name": "shot firer",
+  "isco_group": 8111,
+  "essential_skills": [
+   "explosive charge placement",
+   "blast pattern loading",
+   "detonation safety",
+   "misfire procedures",
+   "magazine handling"
+  ],
+  "source": "audit_add",
+  "reason": "Frontline blasting operative distinct from explosives engineer; standard mining occupation absent from list."
+ },
+ {
+  "domain_id": "D022",
+  "domain_name": "Mining",
+  "role_name": "coal mining operative",
+  "isco_group": 8111,
+  "essential_skills": [
+   "longwall operation",
+   "roof support",
+   "face conveyor operation",
+   "gas monitoring",
+   "ventilation checks"
+  ],
+  "source": "audit_add",
+  "reason": "Global core mining production role; only underground/surface generic miners present."
+ },
+ {
+  "domain_id": "D023",
+  "domain_name": "Medicine",
+  "role_name": "pathologist",
+  "isco_group": 2212,
+  "essential_skills": [
+   "histopathology",
+   "autopsy examination",
+   "laboratory diagnosis",
+   "tissue analysis",
+   "disease classification"
+  ],
+  "source": "audit_add",
+  "reason": "Core medical specialty; present only as US SOC row 'Physicians, Pathologists' but no ESCO-style discrete role."
+ },
+ {
+  "domain_id": "D023",
+  "domain_name": "Medicine",
+  "role_name": "medical practitioner (hospital physician)",
+  "isco_group": 2212,
+  "essential_skills": [
+   "clinical diagnosis",
+   "patient examination",
+   "treatment planning",
+   "prescribing",
+   "medical record-keeping"
+  ],
+  "source": "audit_add",
+  "reason": "Generic specialist physician role; list has many named sub-specialties but the 'doctors' entry is mis-mapped to ISCO 3256 assistant."
+ },
+ {
+  "domain_id": "D024",
+  "domain_name": "Nursing",
+  "role_name": "district nurse",
+  "isco_group": 2221,
+  "essential_skills": [
+   "home-based nursing care",
+   "wound management",
+   "medication administration",
+   "patient assessment",
+   "care coordination"
+  ],
+  "source": "audit_add",
+  "reason": "Community/home nursing is a core global nursing role only implied via aka on 'nurse responsible for general care'; warrants discrete entry."
+ },
+ {
+  "domain_id": "D024",
+  "domain_name": "Nursing",
+  "role_name": "mental health nurse",
+  "isco_group": 2221,
+  "essential_skills": [
+   "psychiatric assessment",
+   "therapeutic communication",
+   "medication management",
+   "crisis intervention",
+   "care planning"
+  ],
+  "source": "audit_add",
+  "reason": "Major nursing specialty worldwide; present only as an aka, not a standalone role."
+ },
+ {
+  "domain_id": "D025",
+  "domain_name": "Pharmacy",
+  "role_name": "dispensing technician (pharmacy)",
+  "isco_group": 3213,
+  "essential_skills": [
+   "medicine dispensing",
+   "prescription assembly",
+   "stock control",
+   "labelling accuracy",
+   "pharmacy law compliance"
+  ],
+  "source": "audit_add",
+  "reason": "Pharmaceutical-technicians occupation is thin (only pharmacy technician/assistant); dispensing technician is a distinct global support role."
+ },
+ {
+  "domain_id": "D025",
+  "domain_name": "Pharmacy",
+  "role_name": "pharmaceutical production technician",
+  "isco_group": 3111,
+  "essential_skills": [
+   "GMP compliance",
+   "batch manufacturing",
+   "quality control sampling",
+   "process documentation",
+   "cleanroom operation"
+  ],
+  "source": "audit_add",
+  "reason": "Industrial pharmacy has no shop-floor technician representation despite manufacturing pharmacists being listed."
+ },
+ {
+  "domain_id": "D026",
+  "domain_name": "Public Health",
+  "role_name": "epidemiologist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "disease surveillance",
+   "outbreak investigation",
+   "biostatistics",
+   "study design",
+   "population health data analysis"
+  ],
+  "source": "audit_add",
+  "reason": "defining public-health profession is entirely absent though disease surveillance officer and biostatistician are present"
+ },
+ {
+  "domain_id": "D027",
+  "domain_name": "Biomedical",
+  "role_name": "biomedical engineer",
+  "isco_group": 2149,
+  "essential_skills": [
+   "medical device design",
+   "biomaterials",
+   "signal processing",
+   "regulatory compliance (FDA/CE)",
+   "biomechanics",
+   "clinical instrumentation"
+  ],
+  "source": "audit_add",
+  "reason": "core biomedical engineering profession is absent despite the domain being named Biomedical"
+ },
+ {
+  "domain_id": "D027",
+  "domain_name": "Biomedical",
+  "role_name": "clinical research associate",
+  "isco_group": 2131,
+  "essential_skills": [
+   "clinical trial monitoring",
+   "GCP compliance",
+   "protocol adherence",
+   "case report form review",
+   "regulatory submissions"
+  ],
+  "source": "audit_add",
+  "reason": "clinical trials workforce is a central biomedical career path and is missing"
+ },
+ {
+  "domain_id": "D031",
+  "domain_name": "Sales",
+  "role_name": "account manager",
+  "isco_group": 3322,
+  "essential_skills": [
+   "account planning",
+   "client relationship management",
+   "upselling and cross-selling",
+   "CRM software",
+   "contract renewal",
+   "revenue retention"
+  ],
+  "source": "audit_add",
+  "reason": "the core B2B relationship-sales role globally is absent; library has commercial sales rep and sales manager but no account manager"
+ },
+ {
+  "domain_id": "D031",
+  "domain_name": "Sales",
+  "role_name": "key account manager",
+  "isco_group": 2433,
+  "essential_skills": [
+   "strategic account planning",
+   "stakeholder mapping",
+   "negotiation",
+   "forecasting",
+   "value proposition development",
+   "cross-functional coordination"
+  ],
+  "source": "audit_add",
+  "reason": "strategic large-account sales is a distinct, high-demand global career missing from the cluster"
+ },
+ {
+  "domain_id": "D031",
+  "domain_name": "Sales",
+  "role_name": "retail manager",
+  "isco_group": 1420,
+  "essential_skills": [
+   "store operations",
+   "staff scheduling",
+   "visual merchandising",
+   "P&L management",
+   "inventory control",
+   "customer experience"
+  ],
+  "source": "audit_add",
+  "reason": "retail store/branch manager (ISCO 1420) is missing; only shop supervisor (5222) and retail entrepreneur exist"
+ },
+ {
+  "domain_id": "D032",
+  "domain_name": "Project Management",
+  "role_name": "project manager",
+  "isco_group": 1213,
+  "essential_skills": [
+   "project planning",
+   "scope and schedule management",
+   "budget and cost control",
+   "risk management",
+   "stakeholder communication",
+   "Gantt/critical-path scheduling"
+  ],
+  "source": "audit_add",
+  "reason": "the defining role of the domain is entirely absent — only the junk group label 'Project Managers' exists; project support officer and programme manager cover adjacent scopes"
+ },
+ {
+  "domain_id": "D032",
+  "domain_name": "Project Management",
+  "role_name": "scrum master",
+  "isco_group": 2421,
+  "essential_skills": [
+   "Scrum facilitation",
+   "sprint planning",
+   "agile ceremonies",
+   "impediment removal",
+   "backlog coordination",
+   "team coaching"
+  ],
+  "source": "audit_add",
+  "reason": "agile delivery lead is a central modern project-management career globally and is missing"
+ },
+ {
+  "domain_id": "D033",
+  "domain_name": "Product Management",
+  "role_name": "product owner",
+  "isco_group": 1223,
+  "essential_skills": [
+   "backlog management",
+   "user story writing",
+   "prioritisation",
+   "stakeholder alignment",
+   "agile/Scrum delivery",
+   "roadmap definition"
+  ],
+  "source": "audit_add",
+  "reason": "the agile product-ownership role is the most common modern product-management job title globally and is absent (only product manager and CPO exist)"
+ },
+ {
+  "domain_id": "D035",
+  "domain_name": "Logistics",
+  "role_name": "fleet manager",
+  "isco_group": 1324,
+  "essential_skills": [
+   "fleet planning",
+   "vehicle maintenance scheduling",
+   "route optimisation",
+   "telematics",
+   "driver compliance",
+   "fuel and cost management"
+  ],
+  "source": "audit_add",
+  "reason": "core road-logistics management role is absent despite a full complement of driver and transport-ops roles"
+ },
+ {
+  "domain_id": "D036",
+  "domain_name": "Procurement",
+  "role_name": "category manager",
+  "isco_group": "3323",
+  "essential_skills": [
+   "category strategy",
+   "spend analysis",
+   "supplier negotiation",
+   "sourcing",
+   "contract management"
+  ],
+  "source": "audit_add",
+  "reason": "Core modern strategic-procurement role; library has purchaser/purchasing manager but no category ownership role."
+ },
+ {
+  "domain_id": "D038",
+  "domain_name": "Compliance, Regulation",
+  "role_name": "anti-money laundering officer",
+  "isco_group": "2422",
+  "essential_skills": [
+   "AML/CFT regulation",
+   "KYC/customer due diligence",
+   "transaction monitoring",
+   "suspicious activity reporting",
+   "sanctions screening",
+   "regulatory reporting"
+  ],
+  "source": "audit_add",
+  "reason": "Core modern financial-compliance role entirely absent despite domain being Compliance/Regulation."
+ },
+ {
+  "domain_id": "D039",
+  "domain_name": "Higher Education",
+  "role_name": "postdoctoral researcher",
+  "isco_group": "2310",
+  "essential_skills": [
+   "academic research",
+   "grant/proposal writing",
+   "peer-reviewed publishing",
+   "research methodology",
+   "data analysis",
+   "teaching support"
+  ],
+  "source": "audit_add",
+  "reason": "Core HE academic-career-ladder role absent (library has research assistant, assistant lecturer, lecturer, but no postdoc)."
+ },
+ {
+  "domain_id": "D040",
+  "domain_name": "Vocational",
+  "role_name": "vocational education assessor",
+  "isco_group": "2320",
+  "essential_skills": [
+   "competency-based assessment",
+   "NVQ/qualification standards",
+   "portfolio assessment",
+   "workplace observation",
+   "internal verification",
+   "feedback"
+  ],
+  "source": "audit_add",
+  "reason": "Core competency-based vocational-qualification role absent; library has trainers/teachers but no assessor/verifier of vocational competence."
+ },
+ {
+  "domain_id": "D041",
+  "domain_name": "Scientific Research",
+  "role_name": "geologist",
+  "isco_group": 2114,
+  "essential_skills": [
+   "mineralogy",
+   "stratigraphy",
+   "geological mapping",
+   "GIS",
+   "sample analysis",
+   "field surveying"
+  ],
+  "source": "audit_add",
+  "reason": "Core earth-science research role absent as standalone; only appears buried in environmental-scientist aka."
+ },
+ {
+  "domain_id": "D041",
+  "domain_name": "Scientific Research",
+  "role_name": "meteorologist",
+  "isco_group": 2112,
+  "essential_skills": [
+   "atmospheric modeling",
+   "weather forecasting",
+   "climate data analysis",
+   "remote sensing",
+   "statistics"
+  ],
+  "source": "audit_add",
+  "reason": "Major physical-science research discipline missing entirely from a Scientific Research domain."
+ },
+ {
+  "domain_id": "D041",
+  "domain_name": "Scientific Research",
+  "role_name": "microbiologist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "microbial culturing",
+   "aseptic technique",
+   "PCR",
+   "microscopy",
+   "assay development"
+  ],
+  "source": "audit_add",
+  "reason": "Only technician-level bio roles present; the professional life-science researcher is absent."
+ },
+ {
+  "domain_id": "D043",
+  "domain_name": "Journalism",
+  "role_name": "photojournalist",
+  "isco_group": 2642,
+  "essential_skills": [
+   "news photography",
+   "photo editing",
+   "visual storytelling",
+   "field reporting",
+   "captioning",
+   "media ethics"
+  ],
+  "source": "audit_add",
+  "reason": "Core journalism specialism absent; the domain has picture editor but no photojournalist/news photographer."
+ },
+ {
+  "domain_id": "D043",
+  "domain_name": "Journalism",
+  "role_name": "proofreader",
+  "isco_group": 2642,
+  "essential_skills": [
+   "proofreading",
+   "copy-marking",
+   "grammar and style",
+   "house-style enforcement",
+   "attention to detail"
+  ],
+  "source": "audit_add",
+  "reason": "Standard editorial-desk role missing from an otherwise deep editor cluster."
+ },
+ {
+  "domain_id": "D044",
+  "domain_name": "Graphic Design",
+  "role_name": "UX designer",
+  "isco_group": 2166,
+  "essential_skills": [
+   "user research",
+   "wireframing",
+   "prototyping",
+   "information architecture",
+   "usability testing",
+   "Figma"
+  ],
+  "source": "audit_add",
+  "reason": "Glaring modern gap: no user-experience designer in a graphic/digital design domain."
+ },
+ {
+  "domain_id": "D044",
+  "domain_name": "Graphic Design",
+  "role_name": "UI designer",
+  "isco_group": 2166,
+  "essential_skills": [
+   "interface design",
+   "design systems",
+   "visual hierarchy",
+   "typography",
+   "Figma",
+   "interaction design"
+  ],
+  "source": "audit_add",
+  "reason": "Core digital-design specialism absent alongside web/digital media designer."
+ },
+ {
+  "domain_id": "D044",
+  "domain_name": "Graphic Design",
+  "role_name": "motion graphics designer",
+  "isco_group": 2166,
+  "essential_skills": [
+   "After Effects",
+   "motion design",
+   "typography animation",
+   "compositing",
+   "storyboarding"
+  ],
+  "source": "audit_add",
+  "reason": "Standard graphic-design specialism missing between animator and graphic designer."
+ },
+ {
+  "domain_id": "D045",
+  "domain_name": "Public Administration",
+  "role_name": "civil registration officer",
+  "isco_group": 3354,
+  "essential_skills": [
+   "records management",
+   "vital-statistics registration",
+   "document verification",
+   "public service delivery",
+   "regulatory compliance"
+  ],
+  "source": "audit_add",
+  "reason": "Registrar of births/deaths/marriages is a core public-administration function entirely absent."
+ },
+ {
+  "domain_id": "D045",
+  "domain_name": "Public Administration",
+  "role_name": "urban planner",
+  "isco_group": 2164,
+  "essential_skills": [
+   "land-use planning",
+   "zoning regulation",
+   "GIS",
+   "public consultation",
+   "development control",
+   "policy analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Government planning inspector present but the professional town/urban planner (isco 2164) is missing."
+ },
+ {
+  "domain_id": "D050",
+  "domain_name": "Industrial Automation",
+  "role_name": "PLC programmer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "ladder logic",
+   "PLC programming",
+   "SCADA",
+   "HMI configuration",
+   "industrial networking",
+   "control system commissioning"
+  ],
+  "source": "audit_add",
+  "reason": "core industrial-automation role absent from the library"
+ },
+ {
+  "domain_id": "D050",
+  "domain_name": "Industrial Automation",
+  "role_name": "automation engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "control systems design",
+   "robotics integration",
+   "PLC/SCADA",
+   "industrial IoT",
+   "process automation",
+   "system commissioning"
+  ],
+  "source": "audit_add",
+  "reason": "central industrial-automation engineering role missing"
+ },
+ {
+  "domain_id": "D050",
+  "domain_name": "Industrial Automation",
+  "role_name": "instrumentation and control technician",
+  "isco_group": 3114,
+  "essential_skills": [
+   "instrument calibration",
+   "control loop tuning",
+   "sensor installation",
+   "field instrumentation",
+   "P&ID reading",
+   "fault diagnosis"
+  ],
+  "source": "audit_add",
+  "reason": "key automation maintenance role missing"
+ },
+ {
+  "domain_id": "D051",
+  "domain_name": "Real Estate",
+  "role_name": "property manager",
+  "isco_group": "3334",
+  "essential_skills": [
+   "tenant relations",
+   "lease administration",
+   "building maintenance coordination",
+   "rent collection",
+   "budgeting",
+   "vendor management"
+  ],
+  "source": "audit_add",
+  "reason": "Core residential/commercial property management role, distinct from real estate agent; absent"
+ },
+ {
+  "domain_id": "D051",
+  "domain_name": "Real Estate",
+  "role_name": "real estate broker",
+  "isco_group": "3334",
+  "essential_skills": [
+   "brokerage transactions",
+   "client representation",
+   "market valuation",
+   "negotiation",
+   "real estate law",
+   "agent supervision"
+  ],
+  "source": "audit_add",
+  "reason": "Licensed broker (supervises agents); present only as raw O*NET label"
+ },
+ {
+  "domain_id": "D051",
+  "domain_name": "Real Estate",
+  "role_name": "mortgage advisor",
+  "isco_group": "3312",
+  "essential_skills": [
+   "mortgage products",
+   "affordability assessment",
+   "loan application processing",
+   "credit evaluation",
+   "regulatory compliance"
+  ],
+  "source": "audit_add",
+  "reason": "Core real estate finance role linking buyers to lending; absent"
+ },
+ {
+  "domain_id": "D051",
+  "domain_name": "Real Estate",
+  "role_name": "conveyancer",
+  "isco_group": "3411",
+  "essential_skills": [
+   "property title transfer",
+   "conveyancing law",
+   "contract drafting",
+   "land registry filing",
+   "searches",
+   "client liaison"
+  ],
+  "source": "audit_add",
+  "reason": "Legal specialist handling property sale transactions; core to real estate; absent"
+ },
+ {
+  "domain_id": "D052",
+  "domain_name": "Construction Management",
+  "role_name": "quantity surveyor",
+  "isco_group": "2141",
+  "essential_skills": [
+   "cost estimation",
+   "bill of quantities",
+   "tender preparation",
+   "contract administration",
+   "value engineering",
+   "final account settlement"
+  ],
+  "source": "audit_add",
+  "reason": "Core construction management/cost role; entirely absent (only as construction manager aka)"
+ },
+ {
+  "domain_id": "D052",
+  "domain_name": "Construction Management",
+  "role_name": "site manager",
+  "isco_group": "1323",
+  "essential_skills": [
+   "site coordination",
+   "subcontractor management",
+   "construction scheduling",
+   "health & safety compliance",
+   "progress reporting",
+   "quality control"
+  ],
+  "source": "audit_add",
+  "reason": "Central construction management role; present only as aka strings"
+ },
+ {
+  "domain_id": "D053",
+  "domain_name": "Hospitality",
+  "role_name": "hotel receptionist",
+  "isco_group": "4224",
+  "essential_skills": [
+   "guest check-in/out",
+   "reservation handling",
+   "PMS operation",
+   "billing",
+   "guest enquiries",
+   "upselling"
+  ],
+  "source": "audit_add",
+  "reason": "Core front-desk hospitality role; present only as raw NaN group label"
+ },
+ {
+  "domain_id": "D053",
+  "domain_name": "Hospitality",
+  "role_name": "concierge",
+  "isco_group": "4224",
+  "essential_skills": [
+   "guest services",
+   "local recommendations",
+   "booking arrangements",
+   "request fulfilment",
+   "itinerary planning"
+  ],
+  "source": "audit_add",
+  "reason": "Core hotel guest-services role; present only as NaN group label"
+ },
+ {
+  "domain_id": "D053",
+  "domain_name": "Hospitality",
+  "role_name": "housekeeping supervisor",
+  "isco_group": "5153",
+  "essential_skills": [
+   "room inspection",
+   "housekeeping scheduling",
+   "linen/supplies management",
+   "cleanliness standards",
+   "staff training"
+  ],
+  "source": "audit_add",
+  "reason": "Core lodging operations role; present only as NaN group label"
+ },
+ {
+  "domain_id": "D053",
+  "domain_name": "Hospitality",
+  "role_name": "event manager",
+  "isco_group": "1431",
+  "essential_skills": [
+   "event planning",
+   "banquet coordination",
+   "venue logistics",
+   "supplier liaison",
+   "budgeting",
+   "client management"
+  ],
+  "source": "audit_add",
+  "reason": "Core hospitality events/banqueting role; absent"
+ },
+ {
+  "domain_id": "D054",
+  "domain_name": "Oil",
+  "role_name": "mud engineer",
+  "isco_group": "2146",
+  "essential_skills": [
+   "drilling fluid design",
+   "mud logging",
+   "rheology testing",
+   "wellbore stability",
+   "fluid loss control",
+   "chemical additive management"
+  ],
+  "source": "audit_add",
+  "reason": "Core upstream oil & gas drilling-fluids specialist; absent from domain"
+ },
+ {
+  "domain_id": "D054",
+  "domain_name": "Oil",
+  "role_name": "offshore installation manager",
+  "isco_group": "1322",
+  "essential_skills": [
+   "offshore platform operations",
+   "HSE management",
+   "emergency response",
+   "drilling supervision",
+   "regulatory compliance",
+   "crew management"
+  ],
+  "source": "audit_add",
+  "reason": "Senior offshore oil & gas operations role; absent"
+ },
+ {
+  "domain_id": "D054",
+  "domain_name": "Oil",
+  "role_name": "petroleum geologist",
+  "isco_group": "2114",
+  "essential_skills": [
+   "reservoir characterisation",
+   "seismic interpretation",
+   "well log analysis",
+   "basin modelling",
+   "prospect evaluation",
+   "formation evaluation"
+  ],
+  "source": "audit_add",
+  "reason": "Core upstream exploration role; present only as an aka of petroleum engineer"
+ },
+ {
+  "domain_id": "D055",
+  "domain_name": "Chemical Engineering",
+  "role_name": "process safety engineer",
+  "isco_group": "2145",
+  "essential_skills": [
+   "HAZOP analysis",
+   "process hazard assessment",
+   "relief system design",
+   "risk assessment",
+   "incident investigation",
+   "functional safety (SIL)"
+  ],
+  "source": "audit_add",
+  "reason": "Core chemical-engineering safety discipline; absent despite many process/operator roles"
+ },
+ {
+  "domain_id": "D056",
+  "domain_name": "Blockchain",
+  "role_name": "smart contract developer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "Solidity",
+   "smart contract security",
+   "EVM",
+   "Web3.js/ethers.js",
+   "Rust (Solana/ink!)",
+   "contract testing"
+  ],
+  "source": "audit_add",
+  "reason": "core blockchain build role absent from list; smart contract development is central to blockchain"
+ },
+ {
+  "domain_id": "D056",
+  "domain_name": "Blockchain",
+  "role_name": "blockchain security auditor",
+  "isco_group": 2529,
+  "essential_skills": [
+   "smart contract auditing",
+   "formal verification",
+   "Solidity",
+   "reentrancy/exploit analysis",
+   "gas optimization",
+   "static analysis tools"
+  ],
+  "source": "audit_add",
+  "reason": "distinct high-demand blockchain security specialization not covered by generic ethical hacker"
+ },
+ {
+  "domain_id": "D056",
+  "domain_name": "Blockchain",
+  "role_name": "cryptography engineer",
+  "isco_group": 2511,
+  "essential_skills": [
+   "applied cryptography",
+   "zero-knowledge proofs",
+   "elliptic curve cryptography",
+   "hashing",
+   "consensus algorithms",
+   "key management"
+  ],
+  "source": "audit_add",
+  "reason": "cryptographic engineering underpins blockchain protocols; not represented"
+ },
+ {
+  "domain_id": "D057",
+  "domain_name": "Digital Health",
+  "role_name": "health data analyst",
+  "isco_group": 2511,
+  "essential_skills": [
+   "healthcare data standards (HL7/FHIR)",
+   "SQL",
+   "population health analytics",
+   "data visualization",
+   "HIPAA/data privacy",
+   "clinical data modeling"
+  ],
+  "source": "audit_add",
+  "reason": "core digital-health analytics role absent; distinct from generic data analyst"
+ },
+ {
+  "domain_id": "D057",
+  "domain_name": "Digital Health",
+  "role_name": "clinical systems integration engineer",
+  "isco_group": 2511,
+  "essential_skills": [
+   "HL7 FHIR",
+   "interoperability",
+   "EHR integration",
+   "API development",
+   "healthcare interoperability standards",
+   "medical device interfaces"
+  ],
+  "source": "audit_add",
+  "reason": "interoperability engineering is central to digital health and not represented"
+ },
+ {
+  "domain_id": "D058",
+  "domain_name": "EdTech",
+  "role_name": "instructional designer",
+  "isco_group": 2356,
+  "essential_skills": [
+   "learning design",
+   "curriculum development",
+   "ADDIE/SAM models",
+   "authoring tools (Articulate/Captivate)",
+   "assessment design",
+   "LMS content authoring"
+  ],
+  "source": "audit_add",
+  "reason": "core EdTech role designing digital learning; conspicuously absent"
+ },
+ {
+  "domain_id": "D058",
+  "domain_name": "EdTech",
+  "role_name": "e-learning developer",
+  "isco_group": 2513,
+  "essential_skills": [
+   "SCORM/xAPI",
+   "HTML/CSS/JS",
+   "authoring tools",
+   "multimedia production",
+   "LMS integration",
+   "interactive content"
+  ],
+  "source": "audit_add",
+  "reason": "builds the digital learning content that defines EdTech; absent"
+ },
+ {
+  "domain_id": "D058",
+  "domain_name": "EdTech",
+  "role_name": "learning management system administrator",
+  "isco_group": 2522,
+  "essential_skills": [
+   "LMS administration (Moodle/Canvas)",
+   "user/course management",
+   "SSO/integration",
+   "reporting analytics",
+   "SCORM/LTI",
+   "system configuration"
+  ],
+  "source": "audit_add",
+  "reason": "operational backbone of EdTech platforms; absent (junk 'Online Learning Managers' row removed)"
+ },
+ {
+  "domain_id": "D058",
+  "domain_name": "EdTech",
+  "role_name": "learning experience designer",
+  "isco_group": 2356,
+  "essential_skills": [
+   "UX for learning",
+   "learner journey mapping",
+   "prototyping",
+   "accessibility (WCAG)",
+   "learning analytics",
+   "engagement design"
+  ],
+  "source": "audit_add",
+  "reason": "distinct modern EdTech role blending UX and pedagogy; not represented"
+ },
+ {
+  "domain_id": "D059",
+  "domain_name": "Space Technology",
+  "role_name": "aerospace engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "orbital mechanics",
+   "propulsion systems",
+   "aerodynamics",
+   "spacecraft structures",
+   "CAD/FEA",
+   "systems engineering"
+  ],
+  "source": "audit_add",
+  "reason": "the foundational space-technology engineering role, entirely absent"
+ },
+ {
+  "domain_id": "D059",
+  "domain_name": "Space Technology",
+  "role_name": "satellite systems engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "satellite bus design",
+   "payload integration",
+   "attitude determination & control (ADCS)",
+   "RF/communications systems",
+   "thermal management",
+   "orbital analysis"
+  ],
+  "source": "audit_add",
+  "reason": "core space role (satellite design/ops) not represented"
+ },
+ {
+  "domain_id": "D059",
+  "domain_name": "Space Technology",
+  "role_name": "spacecraft propulsion engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "rocket propulsion",
+   "combustion",
+   "fluid dynamics",
+   "propellant systems",
+   "thermodynamics",
+   "engine testing"
+  ],
+  "source": "audit_add",
+  "reason": "propulsion is central to space tech; missing"
+ },
+ {
+  "domain_id": "D059",
+  "domain_name": "Space Technology",
+  "role_name": "mission operations engineer",
+  "isco_group": 2153,
+  "essential_skills": [
+   "ground station operations",
+   "telemetry & command (TT&C)",
+   "mission planning",
+   "orbital tracking",
+   "flight software",
+   "anomaly resolution"
+  ],
+  "source": "audit_add",
+  "reason": "spacecraft/mission control operations role absent"
+ },
+ {
+  "domain_id": "D059",
+  "domain_name": "Space Technology",
+  "role_name": "avionics engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "embedded flight systems",
+   "guidance navigation & control (GNC)",
+   "sensor integration",
+   "fault-tolerant electronics",
+   "real-time systems",
+   "hardware-in-the-loop testing"
+  ],
+  "source": "audit_add",
+  "reason": "flight avionics engineering for spacecraft/launch vehicles missing"
+ },
+ {
+  "domain_id": "D060",
+  "domain_name": "Banking, Credit",
+  "role_name": "compliance officer",
+  "isco_group": 2411,
+  "essential_skills": [
+   "AML/KYC",
+   "regulatory compliance",
+   "financial crime monitoring",
+   "sanctions screening",
+   "audit",
+   "risk reporting"
+  ],
+  "source": "audit_add",
+  "reason": "AML/compliance is a core banking function and absent from the list"
+ },
+ {
+  "domain_id": "D060",
+  "domain_name": "Banking, Credit",
+  "role_name": "personal banker",
+  "isco_group": 3312,
+  "essential_skills": [
+   "retail banking products",
+   "customer relationship management",
+   "cross-selling",
+   "account servicing",
+   "loan origination",
+   "financial needs analysis"
+  ],
+  "source": "audit_add",
+  "reason": "front-line retail banking advisory role not distinctly represented"
+ },
+ {
+  "domain_id": "D060",
+  "domain_name": "Banking, Credit",
+  "role_name": "financial analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "financial modeling",
+   "credit assessment",
+   "financial statement analysis",
+   "valuation",
+   "forecasting",
+   "Excel"
+  ],
+  "source": "audit_add",
+  "reason": "core banking analytical role absent (distinct from credit-only analyst)"
+ },
+ {
+  "domain_id": "D061",
+  "domain_name": "Insurance",
+  "role_name": "actuary",
+  "isco_group": 2120,
+  "essential_skills": [
+   "actuarial modelling",
+   "probability & statistics",
+   "risk pricing",
+   "reserving",
+   "financial mathematics",
+   "regulatory reporting"
+  ],
+  "source": "audit_add",
+  "reason": "core insurance profession absent; actuaries price/reserve insurance risk. ISCO 2120."
+ },
+ {
+  "domain_id": "D061",
+  "domain_name": "Insurance",
+  "role_name": "insurance claims officer/adjuster clerk",
+  "isco_group": 4312,
+  "essential_skills": [
+   "claims data entry",
+   "policy verification",
+   "payment processing",
+   "customer records",
+   "documentation"
+  ],
+  "source": "audit_add",
+  "reason": "clerical claims support role missing (ISCO 4312 statistical/finance clerks)."
+ },
+ {
+  "domain_id": "D062",
+  "domain_name": "Trading",
+  "role_name": "commodities broker",
+  "isco_group": 3311,
+  "essential_skills": [
+   "commodity markets",
+   "order execution",
+   "hedging",
+   "market analysis",
+   "client dealing",
+   "settlement"
+  ],
+  "source": "audit_add",
+  "reason": "commodities broking is a core trading role absent (energy/futures present but general commodity broker missing). ISCO 3311."
+ },
+ {
+  "domain_id": "D063",
+  "domain_name": "Economics",
+  "role_name": "econometrician",
+  "isco_group": 2631,
+  "essential_skills": [
+   "econometric modelling",
+   "time-series analysis",
+   "regression",
+   "statistical inference",
+   "forecasting",
+   "data analysis"
+  ],
+  "source": "audit_add",
+  "reason": "quantitative economics specialism only buried as an economist alias; deserves its own role. ISCO 2631."
+ },
+ {
+  "domain_id": "D063",
+  "domain_name": "Economics",
+  "role_name": "financial economist / macroeconomist",
+  "isco_group": 2631,
+  "essential_skills": [
+   "macroeconomic modelling",
+   "monetary policy analysis",
+   "GDP/inflation analysis",
+   "economic forecasting",
+   "policy evaluation"
+  ],
+  "source": "audit_add",
+  "reason": "applied economics specialism missing. ISCO 2631."
+ },
+ {
+  "domain_id": "D064",
+  "domain_name": "Psychology, Counselling",
+  "role_name": "counsellor",
+  "isco_group": 2635,
+  "essential_skills": [
+   "active listening",
+   "counselling techniques",
+   "confidentiality",
+   "assessment",
+   "referral",
+   "empathy"
+  ],
+  "source": "audit_add",
+  "reason": "generic counsellor (the core of a Counselling domain) is absent; only specialist counsellors present. ISCO 2635."
+ },
+ {
+  "domain_id": "D064",
+  "domain_name": "Psychology, Counselling",
+  "role_name": "forensic psychologist",
+  "isco_group": 2634,
+  "essential_skills": [
+   "psychological assessment",
+   "offender profiling",
+   "risk assessment",
+   "expert testimony",
+   "rehabilitation programmes"
+  ],
+  "source": "audit_add",
+  "reason": "major applied-psychology specialism missing. ISCO 2634."
+ },
+ {
+  "domain_id": "D065",
+  "domain_name": "Translation, Interpretation",
+  "role_name": "terminologist",
+  "isco_group": 2643,
+  "essential_skills": [
+   "terminology management",
+   "glossary & termbase creation",
+   "term extraction",
+   "CAT tools",
+   "subject-domain research",
+   "terminological consistency"
+  ],
+  "source": "audit_add",
+  "reason": "core translation-industry specialism absent; terminologists manage the term resources translators depend on. ISCO 2643."
+ },
+ {
+  "domain_id": "D065",
+  "domain_name": "Translation, Interpretation",
+  "role_name": "translation reviser/proofreader",
+  "isco_group": 2643,
+  "essential_skills": [
+   "bilingual revision",
+   "proofreading",
+   "QA against source",
+   "style/terminology consistency",
+   "post-editing"
+  ],
+  "source": "audit_add",
+  "reason": "revision/QA is a distinct standard translation-workflow role, currently missing. ISCO 2643."
+ },
+ {
+  "domain_id": "D066",
+  "domain_name": "Veterinary Science",
+  "role_name": "veterinary surgeon (large/farm animal)",
+  "isco_group": "2250",
+  "essential_skills": [
+   "large-animal surgery",
+   "herd health management",
+   "obstetrics in livestock",
+   "lameness diagnosis",
+   "biosecurity"
+  ],
+  "source": "audit_add",
+  "reason": "core veterinary practice split (farm/production animal) is a major real-world specialisation absent from list; only companion/general covered"
+ },
+ {
+  "domain_id": "D066",
+  "domain_name": "Veterinary Science",
+  "role_name": "veterinary pathologist",
+  "isco_group": "2250",
+  "essential_skills": [
+   "necropsy",
+   "histopathology",
+   "clinical pathology",
+   "tissue sampling",
+   "disease diagnosis"
+  ],
+  "source": "audit_add",
+  "reason": "distinct veterinary specialty (diagnosis of animal disease) missing; the removed generic pathology roles do not cover it"
+ },
+ {
+  "domain_id": "D067",
+  "domain_name": "Dentistry",
+  "role_name": "oral and maxillofacial surgeon",
+  "isco_group": "2261",
+  "essential_skills": [
+   "dentoalveolar surgery",
+   "facial trauma management",
+   "dental implantology",
+   "local/general anaesthesia",
+   "surgical extraction"
+  ],
+  "source": "audit_add",
+  "reason": "core dental-surgical specialty absent; specialist dentist aka lists prostho/perio/gerodontics but not surgery"
+ },
+ {
+  "domain_id": "D068",
+  "domain_name": "Allied Health",
+  "role_name": "therapeutic radiographer",
+  "isco_group": "2269",
+  "essential_skills": [
+   "radiotherapy planning",
+   "linear accelerator operation",
+   "treatment dosimetry",
+   "patient positioning",
+   "oncology patient care"
+  ],
+  "source": "audit_add",
+  "reason": "radiotherapy delivery is a distinct allied-health profession only present as a junk NaN row ('Radiation Therapists'); imaging radiographers do not cover it"
+ },
+ {
+  "domain_id": "D068",
+  "domain_name": "Allied Health",
+  "role_name": "phlebotomist",
+  "isco_group": "3212",
+  "essential_skills": [
+   "venepuncture",
+   "specimen labelling",
+   "sample handling",
+   "infection control",
+   "patient identification"
+  ],
+  "source": "audit_add",
+  "reason": "common allied-health/clinical support role absent from list despite biomedical-science lab roles being present"
+ },
+ {
+  "domain_id": "D069",
+  "domain_name": "Aviation",
+  "role_name": "aerospace engineer",
+  "isco_group": "2144",
+  "essential_skills": [
+   "aircraft structural design",
+   "aerodynamics",
+   "flight systems integration",
+   "CAD/FEA",
+   "airworthiness certification"
+  ],
+  "source": "audit_add",
+  "reason": "core aviation/aerospace design profession entirely absent despite many maintenance/technician roles present"
+ },
+ {
+  "domain_id": "D069",
+  "domain_name": "Aviation",
+  "role_name": "aircraft ground handling agent",
+  "isco_group": "9333",
+  "essential_skills": [
+   "baggage handling",
+   "aircraft marshalling",
+   "ramp safety",
+   "loading/weight distribution",
+   "turnaround coordination"
+  ],
+  "source": "audit_add",
+  "reason": "airport ramp/ground operations is a major aviation-employment role absent from list"
+ },
+ {
+  "domain_id": "D071",
+  "domain_name": "Sports Management",
+  "role_name": "sports agent",
+  "isco_group": "3339",
+  "essential_skills": [
+   "athlete representation",
+   "contract negotiation",
+   "sponsorship dealmaking",
+   "brand management",
+   "career planning"
+  ],
+  "source": "audit_add",
+  "reason": "core commercial sports-management role (player representation) entirely absent; list is coaching/instruction-heavy with no athlete-business function"
+ },
+ {
+  "domain_id": "D071",
+  "domain_name": "Sports Management",
+  "role_name": "sports marketing and sponsorship manager",
+  "isco_group": "1221",
+  "essential_skills": [
+   "sponsorship acquisition",
+   "sports partnership management",
+   "event marketing",
+   "fan engagement",
+   "commercial rights negotiation"
+  ],
+  "source": "audit_add",
+  "reason": "sports commercial/sponsorship management is central to the domain and missing; only unrelated managers were present"
+ },
+ {
+  "domain_id": "D071",
+  "domain_name": "Sports Management",
+  "role_name": "sports event manager",
+  "isco_group": "1431",
+  "essential_skills": [
+   "tournament scheduling",
+   "venue operations",
+   "event logistics",
+   "matchday coordination",
+   "stakeholder liaison"
+  ],
+  "source": "audit_add",
+  "reason": "event/competition management is a defining sports-management function absent from the list"
+ },
+ {
+  "domain_id": "D072",
+  "domain_name": "Geospatial Science",
+  "role_name": "remote sensing specialist",
+  "isco_group": 2165,
+  "essential_skills": [
+   "satellite imagery analysis",
+   "photogrammetry",
+   "LiDAR processing",
+   "image classification",
+   "GIS integration"
+  ],
+  "source": "audit_add",
+  "reason": "Core geospatial discipline (remote sensing / earth observation) missing from list."
+ },
+ {
+  "domain_id": "D072",
+  "domain_name": "Geospatial Science",
+  "role_name": "geodesist",
+  "isco_group": 2165,
+  "essential_skills": [
+   "geodetic surveying",
+   "GNSS/GPS positioning",
+   "coordinate reference systems",
+   "datum transformation",
+   "geodetic network adjustment"
+  ],
+  "source": "audit_add",
+  "reason": "Geodesy is foundational to geospatial science and absent."
+ },
+ {
+  "domain_id": "D074",
+  "domain_name": "Occupational Health, Safety",
+  "role_name": "occupational hygienist",
+  "isco_group": 2263,
+  "essential_skills": [
+   "exposure assessment",
+   "industrial hygiene monitoring",
+   "noise/air/chemical sampling",
+   "risk assessment",
+   "control measure design"
+  ],
+  "source": "audit_add",
+  "reason": "Core OHS professional (industrial/occupational hygiene) missing from list."
+ },
+ {
+  "domain_id": "D074",
+  "domain_name": "Occupational Health, Safety",
+  "role_name": "fire safety officer",
+  "isco_group": 3112,
+  "essential_skills": [
+   "fire risk assessment",
+   "emergency evacuation planning",
+   "fire prevention regulations",
+   "safety inspection",
+   "incident investigation"
+  ],
+  "source": "audit_add",
+  "reason": "Central workplace-safety role absent; complements the inspector-heavy list."
+ },
+ {
+  "domain_id": "D075",
+  "domain_name": "Fashion, Textiles",
+  "role_name": "fashion designer",
+  "isco_group": 2166,
+  "essential_skills": [
+   "garment design",
+   "fashion illustration",
+   "trend forecasting",
+   "pattern development",
+   "collection development",
+   "textile selection"
+  ],
+  "source": "audit_add",
+  "reason": "Core role of a Fashion domain, present only as a NaN junk group-label row; add as a proper ESCO-style entry."
+ },
+ {
+  "domain_id": "D076",
+  "domain_name": "Maritime",
+  "role_name": "naval architect",
+  "isco_group": 2144,
+  "essential_skills": [
+   "ship hull design",
+   "hydrostatics & stability",
+   "naval architecture CAD (Maxsurf/Rhino)",
+   "structural analysis of vessels",
+   "resistance & propulsion analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Core maritime design profession absent; the marine-engineering side is present but vessel design is not."
+ },
+ {
+  "domain_id": "D076",
+  "domain_name": "Maritime",
+  "role_name": "vessel traffic service operator",
+  "isco_group": 3152,
+  "essential_skills": [
+   "vessel traffic monitoring",
+   "radar/AIS operation",
+   "maritime radio communication (VHF/GMDSS)",
+   "port navigation coordination",
+   "maritime safety regulations"
+  ],
+  "source": "audit_add",
+  "reason": "Shore-side maritime navigation/traffic control role missing from an otherwise crew-heavy list; ISCO 3152 ship/aircraft controllers."
+ },
+ {
+  "domain_id": "D079",
+  "domain_name": "Customs, Trade",
+  "role_name": "customs broker",
+  "isco_group": 3331,
+  "essential_skills": [
+   "tariff classification (HS codes)",
+   "customs declaration filing",
+   "trade compliance regulations",
+   "duty and tax calculation",
+   "incoterms",
+   "import/export documentation"
+  ],
+  "source": "audit_add",
+  "reason": "Core customs/trade occupation currently only present as an aka under 'customs and excise officer'; deserves standalone role as the central licensed intermediary for the domain."
+ },
+ {
+  "domain_id": "D082",
+  "domain_name": "Customer Service, Contact Centre",
+  "role_name": "call centre agent",
+  "isco_group": 4222,
+  "essential_skills": [
+   "inbound/outbound call handling",
+   "CRM software",
+   "active listening",
+   "complaint resolution",
+   "call scripting",
+   "KPI/AHT metrics"
+  ],
+  "source": "audit_add",
+  "reason": "Core contact-centre role missing; domain is named 'Contact Centre' yet has no explicit call-centre agent entry beyond generic CSR"
+ },
+ {
+  "domain_id": "D082",
+  "domain_name": "Customer Service, Contact Centre",
+  "role_name": "customer contact centre supervisor",
+  "isco_group": 4222,
+  "essential_skills": [
+   "team supervision",
+   "workforce scheduling",
+   "quality monitoring",
+   "escalation handling",
+   "call centre KPIs",
+   "coaching"
+  ],
+  "source": "audit_add",
+  "reason": "Supervisory tier of contact-centre operations absent; common progression role"
+ },
+ {
+  "domain_id": "D083",
+  "domain_name": "Travel, Tourism",
+  "role_name": "travel agency manager",
+  "isco_group": 1439,
+  "essential_skills": [
+   "travel product sourcing",
+   "team/branch management",
+   "supplier negotiation",
+   "GDS/booking systems",
+   "sales targets",
+   "customer service"
+  ],
+  "source": "audit_add",
+  "reason": "Management tier of travel retail is absent; travel agents present but no managerial role for the domain"
+ },
+ {
+  "domain_id": "D084",
+  "domain_name": "Payroll, Bookkeeping",
+  "role_name": "bookkeeper",
+  "isco_group": 3313,
+  "essential_skills": [
+   "double-entry bookkeeping",
+   "ledger reconciliation",
+   "accounts payable/receivable",
+   "trial balance",
+   "accounting software (e.g. QuickBooks/Xero)",
+   "VAT/sales-tax returns"
+  ],
+  "source": "audit_add",
+  "reason": "Domain is literally named 'Bookkeeping' yet has no bookkeeper role; core accounting-associate occupation (ISCO 3313) missing"
+ },
+ {
+  "domain_id": "D084",
+  "domain_name": "Payroll, Bookkeeping",
+  "role_name": "accounting assistant",
+  "isco_group": 4311,
+  "essential_skills": [
+   "data entry to ledgers",
+   "invoice processing",
+   "bank reconciliation",
+   "expense reports",
+   "spreadsheet skills",
+   "month-end support"
+  ],
+  "source": "audit_add",
+  "reason": "General bookkeeping/accounting clerk tier under 4311 not explicitly represented beyond billing clerk"
+ },
+ {
+  "domain_id": "D085",
+  "domain_name": "Retail Sales, Shop Operations",
+  "role_name": "retail store manager",
+  "isco_group": 1420,
+  "essential_skills": [
+   "store P&L/targets",
+   "staff scheduling & supervision",
+   "stock/inventory control",
+   "merchandising & store layout",
+   "loss prevention",
+   "customer experience management"
+  ],
+  "source": "audit_add",
+  "reason": "Managerial tier missing — domain has shop/checkout supervisors and retail entrepreneur but no ISCO-1420 retail/store manager, the standard progression above supervisor"
+ },
+ {
+  "domain_id": "D085",
+  "domain_name": "Retail Sales, Shop Operations",
+  "role_name": "shelf filler",
+  "isco_group": 9334,
+  "essential_skills": [
+   "stock replenishment",
+   "shelf rotation & date checking",
+   "planogram compliance",
+   "manual handling",
+   "stock room organisation",
+   "price labelling"
+  ],
+  "source": "audit_add",
+  "reason": "Core shop-operations elementary role (ISCO 9334) absent; back-of-house replenishment is central to 'Shop Operations' scope"
+ },
+ {
+  "domain_id": "D092",
+  "domain_name": "Culinary Arts, Catering",
+  "role_name": "chef",
+  "isco_group": 3434,
+  "essential_skills": [
+   "menu design",
+   "food preparation",
+   "kitchen team leadership",
+   "cost/portion control",
+   "food safety (HACCP)",
+   "recipe development"
+  ],
+  "source": "audit_add",
+  "reason": "core culinary role absent from domain; ISCO 3434 chefs; the deleted 'Chefs and Head Cooks' junk row shows the concept was intended but only as a group label"
+ },
+ {
+  "domain_id": "D092",
+  "domain_name": "Culinary Arts, Catering",
+  "role_name": "pastry cook",
+  "isco_group": 7512,
+  "essential_skills": [
+   "baking",
+   "pastry lamination",
+   "dessert plating",
+   "dough preparation",
+   "confectionery",
+   "oven operation"
+  ],
+  "source": "audit_add",
+  "reason": "standard ESCO culinary role missing; distinct from general cook; note ISCO 7512 bakers/pastry-cooks"
+ },
+ {
+  "domain_id": "D093",
+  "domain_name": "Electrical Installation, Wiring",
+  "role_name": "electrical engineering technician",
+  "isco_group": 3113,
+  "essential_skills": [
+   "circuit testing",
+   "electrical schematics",
+   "fault diagnosis",
+   "installation supervision",
+   "compliance/regulations",
+   "commissioning"
+  ],
+  "source": "audit_add",
+  "reason": "associate-professional tier absent; domain is all ISCO 74xx tradespeople with no 3113 technician bridge"
+ },
+ {
+  "domain_id": "D095",
+  "domain_name": "Motor Vehicle Mechanics, Repairs",
+  "role_name": "motor vehicle body repairer",
+  "isco_group": 7231,
+  "essential_skills": [
+   "panel beating",
+   "dent removal",
+   "welding",
+   "body alignment",
+   "spray painting prep",
+   "chassis straightening"
+  ],
+  "source": "audit_add",
+  "reason": "core panel/body-repair trade missing; domain has mechanical roles but no dedicated body-repair role (coachbuilder is a niche variant)"
+ },
+ {
+  "domain_id": "D096",
+  "domain_name": "Agricultural",
+  "role_name": "crop farmer",
+  "isco_group": 6111,
+  "essential_skills": [
+   "crop planting",
+   "soil preparation",
+   "irrigation",
+   "pest and weed control",
+   "harvesting",
+   "farm record-keeping"
+  ],
+  "source": "audit_add",
+  "reason": "the actual core agricultural production occupation is entirely absent; domain contains only machinery roles, no farming role"
+ },
+ {
+  "domain_id": "D096",
+  "domain_name": "Agricultural",
+  "role_name": "mixed crop and livestock farmer",
+  "isco_group": 6130,
+  "essential_skills": [
+   "crop husbandry",
+   "animal husbandry",
+   "feeding and breeding",
+   "land management",
+   "farm planning",
+   "produce marketing"
+  ],
+  "source": "audit_add",
+  "reason": "standard subsistence/mixed farming occupation missing; central to an 'Agricultural' domain"
+ },
+ {
+  "domain_id": "D096",
+  "domain_name": "Agricultural",
+  "role_name": "agronomist",
+  "isco_group": 2132,
+  "essential_skills": [
+   "crop science",
+   "soil analysis",
+   "yield optimisation",
+   "agronomic advisory",
+   "field trials",
+   "fertiliser/pesticide planning"
+  ],
+  "source": "audit_add",
+  "reason": "professional-tier agricultural adviser absent; domain has no 2132 farming/forestry adviser bridge"
+ },
+ {
+  "domain_id": "D096",
+  "domain_name": "Agricultural",
+  "role_name": "farmworker / agricultural labourer",
+  "isco_group": 9211,
+  "essential_skills": [
+   "planting",
+   "weeding",
+   "harvesting",
+   "crop handling",
+   "basic machinery assistance",
+   "livestock tending"
+  ],
+  "source": "audit_add",
+  "reason": "elementary agricultural worker missing entirely despite being the largest agricultural workforce category"
+ },
+ {
+  "domain_id": "D098",
+  "domain_name": "Precision Engineering, Toolmaking",
+  "role_name": "machinist / CNC machinist",
+  "isco_group": 7223,
+  "essential_skills": [
+   "CNC programming (G-code)",
+   "machine-tool setup",
+   "precision measurement (micrometers, calipers)",
+   "blueprint reading",
+   "tolerance control",
+   "tool selection"
+  ],
+  "source": "audit_add",
+  "reason": "core precision-engineering/toolmaking occupation absent from domain; the 7223 machining roles were fanned into D097 - a consolidated machinist role belongs here"
+ },
+ {
+  "domain_id": "D100",
+  "domain_name": "Plumbing, Pipefitting",
+  "role_name": "pipefitter / steamfitter",
+  "isco_group": 7126,
+  "essential_skills": [
+   "pipe cutting and threading",
+   "pipe bending",
+   "welding/brazing joints",
+   "blueprint and isometric reading",
+   "pressure testing",
+   "industrial pipe system installation"
+  ],
+  "source": "audit_add",
+  "reason": "named in domain title (Pipefitting) but no discrete pipefitter role present after junk rows removed; core global occupation ISCO-08 7126"
+ },
+ {
+  "domain_id": "D108",
+  "domain_name": "Printing Technology, Pre-press",
+  "role_name": "printing engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "print production process design",
+   "printing machinery specification",
+   "colour management systems",
+   "print workflow optimisation",
+   "materials/substrate selection",
+   "quality standards (ISO 12647)"
+  ],
+  "source": "audit_add",
+  "reason": "domain has trades workers (7321-7323) and a supervisor (3122) but no professional/engineering tier; printing/production engineers are a standard ESCO role for this sector"
+ },
+ {
+  "domain_id": "D108",
+  "domain_name": "Printing Technology, Pre-press",
+  "role_name": "print production manager",
+  "isco_group": 1321,
+  "essential_skills": [
+   "print production scheduling",
+   "press capacity planning",
+   "print cost estimating",
+   "supplier/substrate procurement",
+   "team management",
+   "print quality assurance"
+  ],
+  "source": "audit_add",
+  "reason": "no manufacturing-manager tier present; print/production managers head print plants and are a core sector role"
+ },
+ {
+  "domain_id": "D109",
+  "domain_name": "Metal Processing, Foundry",
+  "role_name": "foundry moulder",
+  "isco_group": 7211,
+  "essential_skills": [
+   "sand mould preparation",
+   "core making",
+   "pattern setting",
+   "molten metal pouring",
+   "casting defect inspection",
+   "mould release/finishing"
+  ],
+  "source": "audit_add",
+  "reason": "foundry is named in the domain title yet the craft foundry-moulder (ISCO 7211 moulders and coremakers) is absent; only machine-caster (8121) present"
+ },
+ {
+  "domain_id": "D109",
+  "domain_name": "Metal Processing, Foundry",
+  "role_name": "metallurgical technician",
+  "isco_group": 3117,
+  "essential_skills": [
+   "metal sample testing",
+   "alloy composition analysis",
+   "heat-treatment monitoring",
+   "metallography",
+   "quality control of castings",
+   "furnace process support"
+  ],
+  "source": "audit_add",
+  "reason": "metal processing/foundry has no technician tier; metallurgical/mining-metallurgy technicians (3117) are standard for this sector"
+ },
+ {
+  "domain_id": "D110",
+  "domain_name": "Chemical, Rubber",
+  "role_name": "chemical engineering technician",
+  "isco_group": 3116,
+  "essential_skills": [
+   "process parameter monitoring",
+   "batch record keeping",
+   "sampling and QC testing",
+   "reaction/plant troubleshooting",
+   "safety and hazmat handling",
+   "instrumentation checks"
+  ],
+  "source": "audit_add",
+  "reason": "domain is all machine-operator tier (8131/8141/8142) with no technician/professional tier; chemical engineering technicians (3116) are the standard supervisory-technician role for chemical/rubber plants"
+ },
+ {
+  "domain_id": "D111",
+  "domain_name": "Textile, Garment",
+  "role_name": "tailor",
+  "isco_group": 7531,
+  "essential_skills": [
+   "garment pattern drafting",
+   "hand and machine sewing",
+   "fabric measuring and cutting",
+   "garment fitting and alteration",
+   "bespoke garment construction",
+   "fabric/interfacing selection"
+  ],
+  "source": "audit_add",
+  "reason": "'Garment' is in the domain title yet the core craft tier (ISCO 7531 tailors, dressmakers and hatters) is entirely absent; domain is otherwise only machine-operator (81xx) tier"
+ },
+ {
+  "domain_id": "D111",
+  "domain_name": "Textile, Garment",
+  "role_name": "clothing/textile industrial engineer",
+  "isco_group": 2141,
+  "essential_skills": [
+   "garment production line balancing",
+   "time-and-motion study",
+   "sewing workflow optimisation",
+   "cut-order planning",
+   "production capacity planning",
+   "garment costing"
+  ],
+  "source": "audit_add",
+  "reason": "no professional/engineering tier present; industrial/production engineers for apparel manufacturing (2141) are a standard sector role bridging operator and management tiers"
+ },
+ {
+  "domain_id": "D114",
+  "domain_name": "Assembly, Packaging",
+  "role_name": "packaging and filling machine operator",
+  "isco_group": 8183,
+  "essential_skills": [
+   "machine setup and changeover",
+   "product filling and dosing",
+   "seal/closure integrity checks",
+   "fill-weight calibration",
+   "line quality inspection",
+   "jam clearing"
+  ],
+  "source": "audit_add",
+  "reason": "Domain name explicitly includes 'Packaging' but the domain contains zero packaging roles; this is the core ISCO 8183 packing/bottling machine operator occupation. It was found misfiled in D113 (Glass/Ceramics) and belongs here."
+ },
+ {
+  "domain_id": "D114",
+  "domain_name": "Assembly, Packaging",
+  "role_name": "labelling machine operator",
+  "isco_group": 8183,
+  "essential_skills": [
+   "label applicator setup",
+   "reel/ribbon changeover",
+   "barcode and print verification",
+   "label alignment adjustment",
+   "line speed control",
+   "quality checking"
+  ],
+  "source": "audit_add",
+  "reason": "Standard packaging-line occupation (ISCO 8183) missing from a domain that names Packaging."
+ },
+ {
+  "domain_id": "D114",
+  "domain_name": "Assembly, Packaging",
+  "role_name": "cartoning machine operator",
+  "isco_group": 8183,
+  "essential_skills": [
+   "carton erecting and forming",
+   "product loading",
+   "glue/heat-seal control",
+   "machine jam clearing",
+   "format changeover",
+   "output inspection"
+  ],
+  "source": "audit_add",
+  "reason": "Secondary-packaging line role (ISCO 8183) absent despite the domain's Packaging scope."
+ },
+ {
+  "domain_id": "D117",
+  "domain_name": "Railway",
+  "role_name": "railway conductor",
+  "isco_group": 5112,
+  "essential_skills": [
+   "ticket inspection",
+   "passenger safety announcements",
+   "train door operation",
+   "customer assistance",
+   "onboard revenue collection",
+   "emergency procedures"
+  ],
+  "source": "audit_add",
+  "reason": "genuine railway role missing from domain; the removed NaN row 'Railroad Conductors and Yardmasters' covered onboard conductor duties not represented by any ESCO role here. ISCO 5112 = transport conductors."
+ },
+ {
+  "domain_id": "D118",
+  "domain_name": "Crop Production, Horticulture",
+  "role_name": "crop protection / pesticide applicator",
+  "isco_group": 6113,
+  "essential_skills": [
+   "pesticide handling and mixing",
+   "spray equipment operation",
+   "integrated pest management",
+   "chemical safety and PPE",
+   "field spraying application rates",
+   "record-keeping for regulated chemicals"
+  ],
+  "source": "audit_add",
+  "reason": "genuine horticulture role missing; removed NaN row 'Pesticide Handlers, Sprayers, and Applicators, Vegetation' covered real vegetation spraying work not represented by any ESCO role here. ISCO 6113 = gardeners/horticultural growers."
+ },
+ {
+  "domain_id": "D118",
+  "domain_name": "Crop Production, Horticulture",
+  "role_name": "agricultural inspector",
+  "isco_group": 6111,
+  "essential_skills": [
+   "crop quality inspection",
+   "phytosanitary standards",
+   "field auditing",
+   "regulatory compliance checks",
+   "sampling and grading",
+   "reporting"
+  ],
+  "source": "audit_add",
+  "reason": "genuine agricultural role missing; removed NaN row 'Agricultural Inspectors' covered crop inspection not represented by existing roles. Note: inspection could also fit a regulatory/quality domain if one exists library-wide."
+ },
+ {
+  "domain_id": "D119",
+  "domain_name": "Livestock, Poultry, Dairy",
+  "role_name": "dairy farmer",
+  "isco_group": 6121,
+  "essential_skills": [
+   "dairy herd management",
+   "milking machine operation",
+   "milk hygiene and storage",
+   "animal health monitoring",
+   "feeding and nutrition",
+   "milk yield record-keeping"
+  ],
+  "source": "audit_add",
+  "reason": "domain is explicitly named 'Livestock, Poultry, Dairy' but no dairy-specific production role exists among the 14 ESCO roles (all are breeders/herders/grooms). ISCO 6121 = animal producers (livestock/dairy)."
+ },
+ {
+  "domain_id": "D119",
+  "domain_name": "Livestock, Poultry, Dairy",
+  "role_name": "animal breeder (livestock)",
+  "isco_group": 6121,
+  "essential_skills": [
+   "selective breeding",
+   "artificial insemination",
+   "pedigree/record management",
+   "animal welfare",
+   "genetics assessment",
+   "herd health"
+  ],
+  "source": "audit_add",
+  "reason": "general livestock animal-breeder role missing; the cross-domain 'Animal Breeders' NaN row wrongly filed under D118 crop production actually belongs here. Provides the umbrella breeding role alongside species-specific breeders."
+ },
+ {
+  "domain_id": "D120",
+  "domain_name": "Fisheries, Aquaculture",
+  "role_name": "aquaculture production manager",
+  "isco_group": 1311,
+  "essential_skills": [
+   "aquaculture operations planning",
+   "stock management",
+   "budgeting",
+   "staff supervision",
+   "biosecurity",
+   "regulatory compliance"
+  ],
+  "source": "audit_add",
+  "reason": "domain has many technician/worker roles and a hatchery manager but lacks a top-level aquaculture farm/production manager (ISCO 1311 agriculture/aquaculture production managers). Genuine hierarchy gap, not fabricated fan-out."
+ },
+ {
+  "domain_id": "D121",
+  "domain_name": "Forestry, Wildlife Management",
+  "role_name": "logger / tree feller",
+  "isco_group": 6210,
+  "essential_skills": [
+   "chainsaw operation",
+   "directional tree felling",
+   "timber harvesting",
+   "log measurement and bucking",
+   "forestry safety procedures",
+   "skidder/forwarder operation"
+  ],
+  "source": "audit_add",
+  "reason": "core forestry occupation missing after removing junk 'Fallers'/'Logging' NaN rows; ISCO 6210 = forestry and related workers"
+ },
+ {
+  "domain_id": "D121",
+  "domain_name": "Forestry, Wildlife Management",
+  "role_name": "wildlife / conservation officer",
+  "isco_group": 3143,
+  "essential_skills": [
+   "wildlife monitoring",
+   "habitat management",
+   "anti-poaching enforcement",
+   "species surveying",
+   "conservation planning",
+   "protected-area patrol"
+  ],
+  "source": "audit_add",
+  "reason": "domain name includes 'Wildlife Management' but no wildlife role existed among the 38; ISCO 3143 = forestry/wildlife technicians"
+ },
+ {
+  "domain_id": "D121",
+  "domain_name": "Forestry, Wildlife Management",
+  "role_name": "forester",
+  "isco_group": 2132,
+  "essential_skills": [
+   "silviculture planning",
+   "forest inventory and mensuration",
+   "sustainable harvest planning",
+   "forest health assessment",
+   "GIS mapping",
+   "reforestation management"
+  ],
+  "source": "audit_add",
+  "reason": "professional/managerial forestry role missing; the removed NaN 'Foresters' row covered this. ISCO 2132 = farming/forestry advisers/professionals"
+ },
+ {
+  "domain_id": "D122",
+  "domain_name": "Medical Laboratory Technology",
+  "role_name": "biomedical scientist",
+  "isco_group": "2131",
+  "essential_skills": [
+   "clinical sample analysis",
+   "laboratory quality control",
+   "haematology",
+   "clinical biochemistry",
+   "medical laboratory instrumentation"
+  ],
+  "source": "audit_add",
+  "reason": "Core lab-science professional role (analyses clinical specimens to diagnose disease); central to Medical Laboratory Technology and currently missing."
+ },
+ {
+  "domain_id": "D122",
+  "domain_name": "Medical Laboratory Technology",
+  "role_name": "blood bank technologist",
+  "isco_group": "3212",
+  "essential_skills": [
+   "blood typing",
+   "crossmatching",
+   "transfusion compatibility testing",
+   "blood component processing",
+   "immunohaematology"
+  ],
+  "source": "audit_add",
+  "reason": "Standard specialised medical-lab role (immunohaematology/transfusion) not represented; fits ISCO 3212."
+ },
+ {
+  "domain_id": "D123",
+  "domain_name": "Radiography, Medical Imaging",
+  "role_name": "radiology technician / general radiographic technologist",
+  "isco_group": "3211",
+  "essential_skills": [
+   "X-ray positioning",
+   "radiation dose optimisation",
+   "image acquisition QA",
+   "patient radiation protection",
+   "PACS operation"
+  ],
+  "source": "audit_add",
+  "reason": "Only added if the generic diagnostic radiographer entry is considered too narrow; otherwise coverage is adequate. Kept as optional — core imaging modalities are already present."
+ },
+ {
+  "domain_id": "D124",
+  "domain_name": "Community Health Extension",
+  "role_name": "community health extension worker (CHEW)",
+  "isco_group": "3253",
+  "essential_skills": [
+   "primary health care delivery",
+   "community health education",
+   "immunisation support",
+   "maternal and child health outreach",
+   "basic disease surveillance",
+   "health referral"
+  ],
+  "source": "audit_add",
+  "reason": "The eponymous core role of this Nigerian domain (CHEW) is not explicitly present; the closest is generic 'community health worker'. Add the domain-defining role."
+ },
+ {
+  "domain_id": "D124",
+  "domain_name": "Community Health Extension",
+  "role_name": "junior community health extension worker (JCHEW)",
+  "isco_group": "3253",
+  "essential_skills": [
+   "household health visits",
+   "health record keeping",
+   "first aid",
+   "community mobilisation",
+   "antenatal referral"
+  ],
+  "source": "audit_add",
+  "reason": "JCHEW is the recognised entry-level tier of the Nigerian CHEW cadre and a distinct qualification/role; central to this domain and currently missing."
+ },
+ {
+  "domain_id": "D125",
+  "domain_name": "Medical Secretarial",
+  "role_name": "medical secretary",
+  "isco_group": "3344",
+  "essential_skills": [
+   "medical terminology",
+   "clinical correspondence",
+   "appointment scheduling",
+   "medical records management",
+   "audio typing/transcription",
+   "patient confidentiality"
+  ],
+  "source": "audit_add",
+  "reason": "The domain-defining role ('medical secretary') is not explicitly listed — only broader admin/receptionist/transcriptionist rows. Add the eponymous role (ISCO 3344 medical secretaries)."
+ },
+ {
+  "domain_id": "D126",
+  "domain_name": "Complementary, Alternative",
+  "role_name": "chiropractor",
+  "isco_group": "2269",
+  "essential_skills": [
+   "spinal manipulation",
+   "musculoskeletal assessment",
+   "postural analysis",
+   "manual adjustment techniques",
+   "patient rehabilitation advice"
+  ],
+  "source": "audit_add",
+  "reason": "Established complementary/alternative practitioner discipline absent from the domain."
+ },
+ {
+  "domain_id": "D126",
+  "domain_name": "Complementary, Alternative",
+  "role_name": "naturopath",
+  "isco_group": "2230",
+  "essential_skills": [
+   "naturopathic assessment",
+   "nutritional therapy",
+   "herbal/botanical prescribing",
+   "lifestyle counselling",
+   "hydrotherapy"
+  ],
+  "source": "audit_add",
+  "reason": "Distinct CAM discipline currently only buried as an aka under 'complementary therapist'; promote to its own role."
+ },
+ {
+  "domain_id": "D127",
+  "domain_name": "Early Childhood Education, Nursery",
+  "role_name": "early years teacher",
+  "isco_group": 2342,
+  "essential_skills": [
+   "early childhood curriculum design",
+   "child development observation",
+   "play-based learning",
+   "safeguarding",
+   "parent communication",
+   "literacy and numeracy foundations"
+  ],
+  "source": "audit_add",
+  "reason": "core professional role for nursery/pre-primary teaching (ISCO 2342 early childhood educators) missing from domain"
+ },
+ {
+  "domain_id": "D127",
+  "domain_name": "Early Childhood Education, Nursery",
+  "role_name": "preschool teacher",
+  "isco_group": 2342,
+  "essential_skills": [
+   "lesson planning for young children",
+   "classroom management",
+   "developmental assessment",
+   "phonics instruction",
+   "social-emotional development support"
+  ],
+  "source": "audit_add",
+  "reason": "central role for the domain; ISCO 2342 early childhood educator, currently absent"
+ },
+ {
+  "domain_id": "D128",
+  "domain_name": "Social Welfare, Youth Services",
+  "role_name": "social worker",
+  "isco_group": 2635,
+  "essential_skills": [
+   "case management",
+   "needs assessment",
+   "safeguarding",
+   "crisis intervention",
+   "referral and advocacy",
+   "record keeping"
+  ],
+  "source": "audit_add",
+  "reason": "core frontline profession of social welfare, completely absent; ISCO 2635 social work professional"
+ },
+ {
+  "domain_id": "D128",
+  "domain_name": "Social Welfare, Youth Services",
+  "role_name": "youth worker",
+  "isco_group": 3412,
+  "essential_skills": [
+   "youth engagement",
+   "group facilitation",
+   "mentoring",
+   "behaviour support",
+   "community outreach",
+   "risk assessment"
+  ],
+  "source": "audit_add",
+  "reason": "central frontline youth services role (ISCO 3412 associate professionals in social work) missing"
+ },
+ {
+  "domain_id": "D128",
+  "domain_name": "Social Welfare, Youth Services",
+  "role_name": "social work assistant",
+  "isco_group": 3412,
+  "essential_skills": [
+   "client support",
+   "home visits",
+   "benefits guidance",
+   "documentation",
+   "liaison with services"
+  ],
+  "source": "audit_add",
+  "reason": "key associate-level welfare role (ISCO 3412) absent; domain currently only has managers"
+ },
+ {
+  "domain_id": "D130",
+  "domain_name": "Recruitment, Employment",
+  "role_name": "human resources officer",
+  "isco_group": 2423,
+  "essential_skills": [
+   "recruitment coordination",
+   "candidate screening",
+   "interview scheduling",
+   "onboarding",
+   "HR administration",
+   "employment law basics"
+  ],
+  "source": "audit_add",
+  "reason": "generalist HR/recruitment professional (ISCO 2423) commonly central to employment domain and absent"
+ },
+ {
+  "domain_id": "D131",
+  "domain_name": "Motorsport Engineering",
+  "role_name": "race engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "vehicle dynamics",
+   "tyre and setup optimisation",
+   "telemetry data analysis",
+   "race strategy",
+   "driver feedback interpretation",
+   "suspension tuning"
+  ],
+  "source": "audit_add",
+  "reason": "the single most defining role of motorsport engineering, entirely absent from the domain"
+ },
+ {
+  "domain_id": "D131",
+  "domain_name": "Motorsport Engineering",
+  "role_name": "vehicle dynamics engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "chassis dynamics modelling",
+   "suspension kinematics",
+   "simulation (multibody)",
+   "handling and grip optimisation",
+   "data acquisition",
+   "lap-time simulation"
+  ],
+  "source": "audit_add",
+  "reason": "core motorsport engineering discipline missing; distinguishes this domain from generic mechanical engineering"
+ },
+ {
+  "domain_id": "D131",
+  "domain_name": "Motorsport Engineering",
+  "role_name": "composites engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "carbon-fibre laminate design",
+   "autoclave curing",
+   "structural FEA",
+   "lightweighting",
+   "tub/monocoque design",
+   "NDT inspection"
+  ],
+  "source": "audit_add",
+  "reason": "chassis/bodywork composites are central to modern motorsport engineering and absent"
+ },
+ {
+  "domain_id": "D132",
+  "domain_name": "Space Science, Exploration",
+  "role_name": "aerospace engineer",
+  "isco_group": "2144",
+  "essential_skills": [
+   "orbital mechanics",
+   "propulsion systems",
+   "spacecraft design",
+   "systems engineering",
+   "aerodynamics"
+  ],
+  "source": "audit_add",
+  "reason": "core signature role for space science/exploration, missing under generic fan-out"
+ },
+ {
+  "domain_id": "D132",
+  "domain_name": "Space Science, Exploration",
+  "role_name": "spacecraft/satellite systems engineer",
+  "isco_group": "2144",
+  "essential_skills": [
+   "satellite subsystems",
+   "attitude control",
+   "thermal control",
+   "payload integration",
+   "telemetry"
+  ],
+  "source": "audit_add",
+  "reason": "signature space-hardware engineering role"
+ },
+ {
+  "domain_id": "D132",
+  "domain_name": "Space Science, Exploration",
+  "role_name": "astronaut",
+  "isco_group": "3155",
+  "essential_skills": [
+   "EVA operations",
+   "spaceflight training",
+   "life-support systems",
+   "microgravity procedures",
+   "mission operations"
+  ],
+  "source": "audit_add",
+  "reason": "iconic exploration role absent from list"
+ },
+ {
+  "domain_id": "D132",
+  "domain_name": "Space Science, Exploration",
+  "role_name": "flight/mission controller",
+  "isco_group": "3155",
+  "essential_skills": [
+   "mission operations",
+   "telemetry monitoring",
+   "flight procedures",
+   "ground control systems",
+   "anomaly response"
+  ],
+  "source": "audit_add",
+  "reason": "core space-operations role missing"
+ },
+ {
+  "domain_id": "D132",
+  "domain_name": "Space Science, Exploration",
+  "role_name": "astrophysicist",
+  "isco_group": "2111",
+  "essential_skills": [
+   "stellar physics",
+   "spectroscopy",
+   "computational astrophysics",
+   "radiation transport",
+   "observational astronomy"
+  ],
+  "source": "audit_add",
+  "reason": "signature space-science research role beyond generic astronomer"
+ },
+ {
+  "domain_id": "D132",
+  "domain_name": "Space Science, Exploration",
+  "role_name": "astrobiologist",
+  "isco_group": "2131",
+  "essential_skills": [
+   "extremophile biology",
+   "planetary habitability",
+   "biosignature detection",
+   "origin-of-life chemistry",
+   "spectroscopy"
+  ],
+  "source": "audit_add",
+  "reason": "specialised space-relevant bio role vs generic biologist fan-out"
+ },
+ {
+  "domain_id": "D133",
+  "domain_name": "Luxury",
+  "role_name": "watchmaker / horologist",
+  "isco_group": "7311",
+  "essential_skills": [
+   "mechanical movement assembly",
+   "escapement adjustment",
+   "complications",
+   "hairspring balancing",
+   "fine timing"
+  ],
+  "source": "audit_add",
+  "reason": "quintessential luxury craft (haute horlogerie) absent from list"
+ },
+ {
+  "domain_id": "D133",
+  "domain_name": "Luxury",
+  "role_name": "perfumer",
+  "isco_group": "2145",
+  "essential_skills": [
+   "fragrance composition",
+   "olfactory evaluation",
+   "essential oil formulation",
+   "accord building",
+   "raw-material sourcing"
+  ],
+  "source": "audit_add",
+  "reason": "core luxury-goods (haute parfumerie) role missing"
+ },
+ {
+  "domain_id": "D133",
+  "domain_name": "Luxury",
+  "role_name": "sommelier",
+  "isco_group": "5131",
+  "essential_skills": [
+   "wine tasting",
+   "food-wine pairing",
+   "cellar management",
+   "viticulture knowledge",
+   "service"
+  ],
+  "source": "audit_add",
+  "reason": "signature luxury hospitality role missing"
+ },
+ {
+  "domain_id": "D133",
+  "domain_name": "Luxury",
+  "role_name": "bespoke leather goods artisan / saddler",
+  "isco_group": "7318",
+  "essential_skills": [
+   "hand stitching",
+   "leather cutting",
+   "edge finishing",
+   "pattern making",
+   "hardware fitting"
+  ],
+  "source": "audit_add",
+  "reason": "luxury leather goods (handbags/saddlery) craft missing"
+ },
+ {
+  "domain_id": "D134",
+  "domain_name": "Naval Architecture, Marine Engineering",
+  "role_name": "marine surveyor",
+  "isco_group": "2149",
+  "essential_skills": [
+   "hull inspection",
+   "class survey",
+   "damage assessment",
+   "SOLAS/MARPOL compliance",
+   "condition surveys"
+  ],
+  "source": "audit_add",
+  "reason": "core naval/marine role, missing under generic fan-out"
+ },
+ {
+  "domain_id": "D134",
+  "domain_name": "Naval Architecture, Marine Engineering",
+  "role_name": "ship's electro-technical officer (ETO)",
+  "isco_group": "3151",
+  "essential_skills": [
+   "marine electrical systems",
+   "automation & control",
+   "navigation electronics",
+   "power management",
+   "troubleshooting"
+  ],
+  "source": "audit_add",
+  "reason": "signature marine engineering officer role missing"
+ },
+ {
+  "domain_id": "D134",
+  "domain_name": "Naval Architecture, Marine Engineering",
+  "role_name": "offshore installation engineer",
+  "isco_group": "2144",
+  "essential_skills": [
+   "offshore structures",
+   "mooring systems",
+   "subsea engineering",
+   "station-keeping",
+   "marine operations"
+  ],
+  "source": "audit_add",
+  "reason": "core marine/offshore engineering role missing"
+ },
+ {
+  "domain_id": "D135",
+  "domain_name": "Nuclear Engineering, Radiation Science",
+  "role_name": "nuclear engineer",
+  "isco_group": "2151",
+  "essential_skills": [
+   "reactor physics",
+   "neutronics",
+   "thermal-hydraulics",
+   "nuclear safety analysis",
+   "fuel cycle management"
+  ],
+  "source": "audit_add",
+  "reason": "primary signature role of the domain, missing under generic fan-out"
+ },
+ {
+  "domain_id": "D135",
+  "domain_name": "Nuclear Engineering, Radiation Science",
+  "role_name": "health physicist / radiation protection officer",
+  "isco_group": "2111",
+  "essential_skills": [
+   "dosimetry",
+   "radiation shielding",
+   "ALARA principles",
+   "contamination control",
+   "regulatory compliance (IAEA/ICRP)"
+  ],
+  "source": "audit_add",
+  "reason": "core radiation science role missing"
+ },
+ {
+  "domain_id": "D135",
+  "domain_name": "Nuclear Engineering, Radiation Science",
+  "role_name": "medical physicist",
+  "isco_group": "2111",
+  "essential_skills": [
+   "radiation dosimetry",
+   "treatment planning",
+   "imaging QA",
+   "radiation safety",
+   "linac calibration"
+  ],
+  "source": "audit_add",
+  "reason": "signature radiation-science clinical role missing"
+ },
+ {
+  "domain_id": "D135",
+  "domain_name": "Nuclear Engineering, Radiation Science",
+  "role_name": "radiochemist",
+  "isco_group": "2113",
+  "essential_skills": [
+   "radioisotope handling",
+   "nuclear chemistry",
+   "radiolabelling",
+   "hot-cell operations",
+   "waste characterisation"
+  ],
+  "source": "audit_add",
+  "reason": "core nuclear/radiation research role missing"
+ },
+ {
+  "domain_id": "D135",
+  "domain_name": "Nuclear Engineering, Radiation Science",
+  "role_name": "nuclear decommissioning engineer",
+  "isco_group": "2151",
+  "essential_skills": [
+   "radioactive waste management",
+   "decontamination",
+   "remote handling",
+   "radiological characterisation",
+   "project safety"
+  ],
+  "source": "audit_add",
+  "reason": "growing signature nuclear role missing"
+ },
+ {
+  "domain_id": "D137",
+  "domain_name": "Medical Physics, Radiation Therapy",
+  "role_name": "medical physicist",
+  "isco_group": 2111,
+  "essential_skills": [
+   "radiation dosimetry",
+   "treatment planning QA",
+   "ionising radiation safety",
+   "medical imaging physics",
+   "radiotherapy equipment calibration"
+  ],
+  "source": "audit_add",
+  "reason": "core role of the domain (Medical Physics) is entirely absent; ISCO 2111 physicists/astronomers covers clinical medical physicists"
+ },
+ {
+  "domain_id": "D137",
+  "domain_name": "Medical Physics, Radiation Therapy",
+  "role_name": "radiation protection technician",
+  "isco_group": 3111,
+  "essential_skills": [
+   "radiation monitoring",
+   "dosimetry badges",
+   "shielding checks",
+   "radiation safety protocols",
+   "contamination surveys"
+  ],
+  "source": "audit_add",
+  "reason": "central radiation-safety support role missing from a radiation-therapy domain"
+ },
+ {
+  "domain_id": "D137",
+  "domain_name": "Medical Physics, Radiation Therapy",
+  "role_name": "radiographer",
+  "isco_group": 2267,
+  "essential_skills": [
+   "diagnostic imaging",
+   "patient positioning",
+   "radiation dose optimisation",
+   "CT/MRI operation",
+   "image acquisition"
+  ],
+  "source": "audit_add",
+  "reason": "diagnostic radiography is a core adjacent clinical role to radiation therapy and is absent"
+ },
+ {
+  "domain_id": "D138",
+  "domain_name": "Biomedical Engineering",
+  "role_name": "clinical engineer",
+  "isco_group": 2149,
+  "essential_skills": [
+   "medical equipment management",
+   "clinical technology governance",
+   "biomedical device commissioning",
+   "healthcare technology risk assessment",
+   "regulatory compliance (IEC 60601)"
+  ],
+  "source": "audit_add",
+  "reason": "core hospital-based biomedical engineering role absent from the domain"
+ },
+ {
+  "domain_id": "D138",
+  "domain_name": "Biomedical Engineering",
+  "role_name": "biomaterials scientist",
+  "isco_group": 2149,
+  "essential_skills": [
+   "biocompatibility testing",
+   "implant materials",
+   "tissue scaffold design",
+   "polymer characterisation",
+   "in-vitro assays"
+  ],
+  "source": "audit_add",
+  "reason": "biomaterials is a defining biomedical engineering sub-discipline and is missing (materials engineer present is construction-focused)"
+ },
+ {
+  "domain_id": "D139",
+  "domain_name": "Game Design, Development",
+  "role_name": "game programmer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "C++",
+   "game engine architecture",
+   "gameplay systems",
+   "physics/collision",
+   "memory optimisation"
+  ],
+  "source": "audit_add",
+  "reason": "core modern game-dev role; distinct from generic 'digital games developer', absent as a dedicated engine/gameplay programmer"
+ },
+ {
+  "domain_id": "D139",
+  "domain_name": "Game Design, Development",
+  "role_name": "gameplay engineer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "Unity",
+   "Unreal Engine",
+   "C#",
+   "gameplay scripting",
+   "AI behaviour trees"
+  ],
+  "source": "audit_add",
+  "reason": "modern engine-based gameplay engineering role missing; D139 should hold modern game-dev variants"
+ },
+ {
+  "domain_id": "D139",
+  "domain_name": "Game Design, Development",
+  "role_name": "technical artist",
+  "isco_group": 2166,
+  "essential_skills": [
+   "shader authoring",
+   "Houdini",
+   "rigging",
+   "art pipeline tooling",
+   "real-time rendering"
+  ],
+  "source": "audit_add",
+  "reason": "bridge role between art and engineering is central to modern game dev and absent"
+ },
+ {
+  "domain_id": "D139",
+  "domain_name": "Game Design, Development",
+  "role_name": "level designer",
+  "isco_group": 2166,
+  "essential_skills": [
+   "level layout",
+   "game balancing",
+   "greyboxing",
+   "player flow",
+   "encounter design"
+  ],
+  "source": "audit_add",
+  "reason": "core game-design specialisation missing"
+ },
+ {
+  "domain_id": "D139",
+  "domain_name": "Game Design, Development",
+  "role_name": "game QA analyst",
+  "isco_group": 2519,
+  "essential_skills": [
+   "test case design",
+   "bug tracking (Jira)",
+   "regression testing",
+   "playtesting",
+   "build verification"
+  ],
+  "source": "audit_add",
+  "reason": "dedicated game QA role; 'digital games tester' present but analyst/lead tier missing"
+ },
+ {
+  "domain_id": "D140",
+  "domain_name": "Robotics Engineering, Systems Design",
+  "role_name": "robotics engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "ROS/ROS2",
+   "robot kinematics",
+   "motion planning",
+   "sensor fusion",
+   "control systems",
+   "C++/Python"
+  ],
+  "source": "audit_add",
+  "reason": "the defining role of the domain is not present as a standalone entry (only buried in mechatronics aka and the NaN junk row)"
+ },
+ {
+  "domain_id": "D140",
+  "domain_name": "Robotics Engineering, Systems Design",
+  "role_name": "robotics software engineer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "ROS",
+   "SLAM",
+   "perception pipelines",
+   "real-time control",
+   "Python/C++",
+   "Gazebo simulation"
+  ],
+  "source": "audit_add",
+  "reason": "modern robotics is software-heavy; dedicated robotics SW engineering role missing"
+ },
+ {
+  "domain_id": "D140",
+  "domain_name": "Robotics Engineering, Systems Design",
+  "role_name": "controls engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "PID/state-space control",
+   "PLC programming",
+   "motion control",
+   "actuator tuning",
+   "MATLAB/Simulink"
+  ],
+  "source": "audit_add",
+  "reason": "control-systems engineering is core to robotics/systems design and absent"
+ },
+ {
+  "domain_id": "D140",
+  "domain_name": "Robotics Engineering, Systems Design",
+  "role_name": "autonomous systems engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "path planning",
+   "computer vision",
+   "sensor integration",
+   "reinforcement learning",
+   "embedded systems"
+  ],
+  "source": "audit_add",
+  "reason": "autonomous robotics/AV systems is an emerging robotics variant this domain should hold"
+ },
+ {
+  "domain_id": "D142",
+  "domain_name": "Bioinformatics, Computational Biology",
+  "role_name": "bioinformatician / computational biologist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "sequence alignment",
+   "genomics data analysis",
+   "Python/R programming",
+   "statistical modelling",
+   "biological databases",
+   "pipeline development"
+  ],
+  "source": "audit_add",
+  "reason": "Core signature role of the domain; only 'bioinformatics scientist' present, the applied practitioner role is missing."
+ },
+ {
+  "domain_id": "D142",
+  "domain_name": "Bioinformatics, Computational Biology",
+  "role_name": "biostatistician",
+  "isco_group": 2120,
+  "essential_skills": [
+   "statistical genetics",
+   "survival analysis",
+   "R/SAS",
+   "clinical trial design",
+   "mixed models",
+   "genomic data statistics"
+  ],
+  "source": "audit_add",
+  "reason": "Signature computational-biology role bridging statistics and biology; absent."
+ },
+ {
+  "domain_id": "D142",
+  "domain_name": "Bioinformatics, Computational Biology",
+  "role_name": "computational genomics data scientist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "NGS data processing",
+   "variant calling",
+   "machine learning",
+   "cloud compute (Nextflow/Snakemake)",
+   "multi-omics integration",
+   "data visualization"
+  ],
+  "source": "audit_add",
+  "reason": "Central emerging role in the domain; absent."
+ },
+ {
+  "domain_id": "D143",
+  "domain_name": "Forensic Science, Digital Forensics",
+  "role_name": "forensic scientist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "trace evidence analysis",
+   "DNA profiling",
+   "toxicology",
+   "chain of custody",
+   "evidence documentation",
+   "laboratory instrumentation"
+  ],
+  "source": "audit_add",
+  "reason": "Core signature role of forensic science; currently only appears buried as an aka under criminal investigator."
+ },
+ {
+  "domain_id": "D143",
+  "domain_name": "Forensic Science, Digital Forensics",
+  "role_name": "forensic pathologist",
+  "isco_group": 2212,
+  "essential_skills": [
+   "autopsy",
+   "cause-of-death determination",
+   "histopathology",
+   "medico-legal reporting",
+   "toxicological interpretation",
+   "court testimony"
+  ],
+  "source": "audit_add",
+  "reason": "Signature forensic-medicine role; absent (generic 'specialised doctor' does not capture it)."
+ },
+ {
+  "domain_id": "D143",
+  "domain_name": "Forensic Science, Digital Forensics",
+  "role_name": "malware / reverse-engineering analyst",
+  "isco_group": 2529,
+  "essential_skills": [
+   "reverse engineering",
+   "disassembly (IDA/Ghidra)",
+   "memory forensics",
+   "malware triage",
+   "YARA rules",
+   "incident analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Signature digital-forensics role missing; complements digital forensics expert and incident responder."
+ },
+ {
+  "domain_id": "D017",
+  "domain_name": "Mechanical",
+  "role_name": "manufacturing engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "manufacturing process design",
+   "CAD/CAM",
+   "lean manufacturing",
+   "GD&T",
+   "production line optimization",
+   "DFM/DFA"
+  ],
+  "source": "audit_add",
+  "reason": "core mechanical-manufacturing role; removing the 'Industrial and Production Engineers' junk label leaves a genuine gap for production/manufacturing engineering"
+ },
+ {
+  "domain_id": "D018",
+  "domain_name": "Civil",
+  "role_name": "structural engineer",
+  "isco_group": 2142,
+  "essential_skills": [
+   "structural analysis",
+   "reinforced concrete design",
+   "steel design",
+   "finite element analysis",
+   "building codes/Eurocodes",
+   "load calculation"
+  ],
+  "source": "audit_add",
+  "reason": "core civil discipline; currently only appears buried as an aka of 'installation engineer'/'calculation engineer', deserves a standalone role"
+ },
+ {
+  "domain_id": "D019",
+  "domain_name": "Renewable Energy Engineering",
+  "role_name": "renewable energy engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "renewable energy systems design",
+   "grid integration",
+   "energy yield modelling",
+   "feasibility assessment",
+   "power systems analysis",
+   "energy storage integration"
+  ],
+  "source": "audit_add",
+  "reason": "Core anchor role for the domain existed only as junk NaN group-label row; add clean high-signal entry."
+ },
+ {
+  "domain_id": "D019",
+  "domain_name": "Renewable Energy Engineering",
+  "role_name": "wind energy engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "wind turbine design",
+   "aerodynamic load simulation",
+   "wind resource assessment",
+   "SCADA monitoring",
+   "turbine siting",
+   "energy yield analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Central renewable engineering role present only as junk NaN row; add clean entry with skills/ISCO."
+ },
+ {
+  "domain_id": "D019",
+  "domain_name": "Renewable Energy Engineering",
+  "role_name": "solar energy systems engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "photovoltaic system design",
+   "inverter selection",
+   "solar irradiance modelling",
+   "electrical layout design",
+   "PV performance analysis",
+   "energy storage sizing"
+  ],
+  "source": "audit_add",
+  "reason": "Central solar engineering role present only as junk NaN row; add clean entry."
+ },
+ {
+  "domain_id": "D019",
+  "domain_name": "Renewable Energy Engineering",
+  "role_name": "energy engineer",
+  "isco_group": 2149,
+  "essential_skills": [
+   "energy efficiency assessment",
+   "energy auditing",
+   "renewable systems modelling",
+   "load analysis",
+   "sustainability reporting"
+  ],
+  "source": "audit_add",
+  "reason": "Broad energy-engineering role present only as junk NaN row; add clean entry."
+ },
+ {
+  "domain_id": "D020",
+  "domain_name": "Environmental Engineering",
+  "role_name": "environmental protection specialist",
+  "isco_group": 2133,
+  "essential_skills": [
+   "environmental impact assessment",
+   "pollution control",
+   "environmental compliance auditing",
+   "remediation planning",
+   "environmental monitoring",
+   "environmental management systems"
+  ],
+  "source": "audit_add",
+  "reason": "Core environmental protection role present only as junk NaN group-label row; add clean entry (ISCO-08 2133 Environmental protection professionals)."
+ },
+ {
+  "domain_id": "D020",
+  "domain_name": "Environmental Engineering",
+  "role_name": "sustainability specialist",
+  "isco_group": 2133,
+  "essential_skills": [
+   "sustainability reporting",
+   "ESG assessment",
+   "carbon footprint analysis",
+   "life-cycle assessment",
+   "environmental management systems"
+  ],
+  "source": "audit_add",
+  "reason": "Sustainability role present only as junk NaN row (mismapped to 2141); add clean entry at 2133."
+ },
+ {
+  "domain_id": "D020",
+  "domain_name": "Environmental Engineering",
+  "role_name": "climate change analyst",
+  "isco_group": 2133,
+  "essential_skills": [
+   "greenhouse gas accounting",
+   "climate risk modelling",
+   "climate policy analysis",
+   "adaptation planning",
+   "emissions data analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Climate analysis role present only as junk NaN row; add clean entry at 2133."
+ },
+ {
+  "domain_id": "D029",
+  "domain_name": "Human Resources",
+  "role_name": "human resources business partner",
+  "isco_group": 2423,
+  "essential_skills": [
+   "workforce planning",
+   "employee relations",
+   "HR policy advisory",
+   "talent management",
+   "stakeholder management",
+   "organisational design"
+  ],
+  "source": "audit_add",
+  "reason": "core modern HR role (embedded strategic HR advisor) with no representation among current genuine-HR entries"
+ },
+ {
+  "domain_id": "D030",
+  "domain_name": "Marketing, Brand",
+  "role_name": "search engine optimisation specialist",
+  "isco_group": 2431,
+  "essential_skills": [
+   "keyword research",
+   "on-page optimisation",
+   "link building",
+   "web analytics",
+   "technical SEO",
+   "content optimisation"
+  ],
+  "source": "audit_add",
+  "reason": "core digital-marketing role whose only representation was the removed NaN 'Search Marketing Strategists' group label"
+ },
+ {
+  "domain_id": "D030",
+  "domain_name": "Marketing, Brand",
+  "role_name": "content marketing manager",
+  "isco_group": 2431,
+  "essential_skills": [
+   "content strategy",
+   "editorial planning",
+   "copywriting",
+   "SEO",
+   "campaign analytics",
+   "audience segmentation"
+  ],
+  "source": "audit_add",
+  "reason": "mainstream marketing role not represented among current entries (closest, advertising copywriter, is narrower)"
+ },
+ {
+  "domain_id": "D136",
+  "domain_name": "Aeronautical",
+  "role_name": "aircraft maintenance engineer",
+  "isco_group": 7232,
+  "essential_skills": [
+   "airframe & engine inspection",
+   "avionics troubleshooting",
+   "EASA Part-66 airworthiness",
+   "non-destructive testing",
+   "component overhaul",
+   "maintenance documentation"
+  ],
+  "source": "audit_add",
+  "reason": "core aeronautical role entirely absent; ISCO 7232 aircraft engine mechanics/repairers"
+ },
+ {
+  "domain_id": "D136",
+  "domain_name": "Aeronautical",
+  "role_name": "flight test engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "flight test planning",
+   "data acquisition & telemetry",
+   "aircraft performance analysis",
+   "flight instrumentation",
+   "certification/airworthiness testing",
+   "aerodynamics"
+  ],
+  "source": "audit_add",
+  "reason": "core aeronautical engineering role absent from the domain"
+ },
+ {
+  "domain_id": "D136",
+  "domain_name": "Aeronautical",
+  "role_name": "aeronautical engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "aircraft structural design",
+   "propulsion systems",
+   "aerodynamic analysis",
+   "CAD/CAE",
+   "airworthiness standards",
+   "materials selection"
+  ],
+  "source": "audit_add",
+  "reason": "named domain role absent as a distinct entry (only aerospace/aerodynamics variants present)"
+ },
+ {
+  "domain_id": "D144",
+  "domain_name": "Climate Science, Meteorology",
+  "role_name": "environmental scientist",
+  "isco_group": 2133,
+  "essential_skills": [
+   "environmental monitoring",
+   "GIS",
+   "field sampling",
+   "data analysis",
+   "climate impact assessment",
+   "reporting"
+  ],
+  "source": "audit_add",
+  "reason": "core climate/environment scientist role; replaces the removed group-label stub"
+ },
+ {
+  "domain_id": "D144",
+  "domain_name": "Climate Science, Meteorology",
+  "role_name": "climate change analyst",
+  "isco_group": 2133,
+  "essential_skills": [
+   "climate modelling",
+   "greenhouse gas accounting",
+   "policy analysis",
+   "data analysis",
+   "scenario forecasting"
+  ],
+  "source": "audit_add",
+  "reason": "central to climate science domain, currently absent"
+ },
+ {
+  "domain_id": "D144",
+  "domain_name": "Climate Science, Meteorology",
+  "role_name": "hydrologist",
+  "isco_group": 2114,
+  "essential_skills": [
+   "hydrological modelling",
+   "water cycle analysis",
+   "field measurement",
+   "GIS",
+   "statistical analysis"
+  ],
+  "source": "audit_add",
+  "reason": "water-cycle science tightly coupled to climate/meteorology"
+ },
+ {
+  "domain_id": "D144",
+  "domain_name": "Climate Science, Meteorology",
+  "role_name": "oceanographer",
+  "isco_group": 2114,
+  "essential_skills": [
+   "physical oceanography",
+   "ocean-atmosphere coupling",
+   "remote sensing",
+   "data analysis",
+   "field survey"
+  ],
+  "source": "audit_add",
+  "reason": "ocean-climate interaction, standard sibling of meteorology"
+ },
+ {
+  "domain_id": "D145",
+  "domain_name": "Neuroscience, Cognitive Science",
+  "role_name": "neuroscientist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "neuroimaging (fMRI/EEG)",
+   "electrophysiology",
+   "neural data analysis",
+   "experimental design",
+   "molecular/cellular neuroscience",
+   "scientific writing"
+  ],
+  "source": "audit_add",
+  "reason": "core role of the domain, entirely absent"
+ },
+ {
+  "domain_id": "D145",
+  "domain_name": "Neuroscience, Cognitive Science",
+  "role_name": "cognitive scientist",
+  "isco_group": 2131,
+  "essential_skills": [
+   "cognitive modelling",
+   "psychophysics",
+   "behavioural experiment design",
+   "statistical analysis",
+   "computational cognition"
+  ],
+  "source": "audit_add",
+  "reason": "core role naming the domain, absent"
+ },
+ {
+  "domain_id": "D145",
+  "domain_name": "Neuroscience, Cognitive Science",
+  "role_name": "neuropsychologist",
+  "isco_group": 2634,
+  "essential_skills": [
+   "neuropsychological assessment",
+   "cognitive testing",
+   "brain-behaviour analysis",
+   "clinical interviewing",
+   "report writing"
+  ],
+  "source": "audit_add",
+  "reason": "bridges neuroscience and psychology; standard domain role"
+ },
+ {
+  "domain_id": "D145",
+  "domain_name": "Neuroscience, Cognitive Science",
+  "role_name": "neurologist",
+  "isco_group": 2212,
+  "essential_skills": [
+   "clinical neurology",
+   "neurological examination",
+   "EEG/EMG interpretation",
+   "diagnosis of nervous-system disorders",
+   "patient management"
+  ],
+  "source": "audit_add",
+  "reason": "clinical neuroscience specialist medical practitioner"
+ },
+ {
+  "domain_id": "D146",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "role_name": "building services engineer",
+  "isco_group": 2149,
+  "essential_skills": [
+   "MEP design",
+   "HVAC systems",
+   "building electrical systems",
+   "energy modelling",
+   "building regulations",
+   "CAD/BIM"
+  ],
+  "source": "audit_add",
+  "reason": "eponymous role of the domain, entirely absent"
+ },
+ {
+  "domain_id": "D146",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "role_name": "HVAC engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "heating & ventilation design",
+   "air-conditioning systems",
+   "load calculation",
+   "ductwork sizing",
+   "refrigeration",
+   "commissioning"
+  ],
+  "source": "audit_add",
+  "reason": "core mechanical building service, absent"
+ },
+ {
+  "domain_id": "D146",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "role_name": "building electrical services engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "building power distribution",
+   "lighting design",
+   "cable sizing",
+   "earthing & protection",
+   "fire alarm systems",
+   "BS 7671 wiring regs"
+  ],
+  "source": "audit_add",
+  "reason": "core electrical building service, absent"
+ },
+ {
+  "domain_id": "D146",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "role_name": "building automation / BMS engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "BMS/BACnet",
+   "HVAC controls",
+   "energy management",
+   "KNX/Modbus",
+   "commissioning",
+   "smart-building integration"
+  ],
+  "source": "audit_add",
+  "reason": "controls sub-discipline; only smart home engineer partially covered it"
+ },
+ {
+  "domain_id": "D146",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "role_name": "fire protection engineer",
+  "isco_group": 2149,
+  "essential_skills": [
+   "sprinkler design",
+   "smoke control",
+   "fire detection systems",
+   "life-safety codes",
+   "hydraulic calculation"
+  ],
+  "source": "audit_add",
+  "reason": "standard building-services specialism, absent"
+ },
+ {
+  "domain_id": "D146",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "role_name": "lift and escalator engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "vertical transportation design",
+   "traffic analysis",
+   "lift installation",
+   "maintenance planning",
+   "EN 81 standards"
+  ],
+  "source": "audit_add",
+  "reason": "mechanical building-services specialism, absent"
+ },
+ {
+  "domain_id": "D147",
+  "domain_name": "Process Automation, SCADA, PLC",
+  "role_name": "automation engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "PLC programming",
+   "SCADA configuration",
+   "control system design",
+   "HMI development",
+   "industrial networks (Profibus/Ethernet-IP)",
+   "commissioning"
+  ],
+  "source": "audit_add",
+  "reason": "eponymous role of the domain, absent at professional level"
+ },
+ {
+  "domain_id": "D147",
+  "domain_name": "Process Automation, SCADA, PLC",
+  "role_name": "control systems engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "closed-loop control design",
+   "DCS/PLC",
+   "process control tuning",
+   "instrumentation",
+   "safety instrumented systems",
+   "functional testing"
+  ],
+  "source": "audit_add",
+  "reason": "core process-control engineering role, absent"
+ },
+ {
+  "domain_id": "D147",
+  "domain_name": "Process Automation, SCADA, PLC",
+  "role_name": "instrumentation and control engineer",
+  "isco_group": 2151,
+  "essential_skills": [
+   "field instrumentation",
+   "loop design",
+   "P&ID interpretation",
+   "calibration",
+   "SIS/SIL",
+   "C&I commissioning"
+  ],
+  "source": "audit_add",
+  "reason": "I&C is central to SCADA/PLC domain, absent"
+ },
+ {
+  "domain_id": "D147",
+  "domain_name": "Process Automation, SCADA, PLC",
+  "role_name": "PLC / SCADA programmer",
+  "isco_group": 3114,
+  "essential_skills": [
+   "ladder logic",
+   "structured text",
+   "SCADA/HMI scripting",
+   "Modbus/OPC",
+   "alarm management",
+   "fault diagnosis"
+  ],
+  "source": "audit_add",
+  "reason": "the PLC/SCADA implementation role named in the domain title, absent"
+ },
+ {
+  "domain_id": "D148",
+  "domain_name": "Offshore, Subsea",
+  "role_name": "subsea engineer",
+  "isco_group": 2144,
+  "essential_skills": [
+   "subsea production systems",
+   "pipeline/flowline design",
+   "structural analysis",
+   "ROV integration",
+   "hydraulics",
+   "flow assurance"
+  ],
+  "source": "audit_add",
+  "reason": "Core offshore/subsea engineering discipline entirely missing from a domain named Offshore, Subsea"
+ },
+ {
+  "domain_id": "D148",
+  "domain_name": "Offshore, Subsea",
+  "role_name": "offshore commercial diver",
+  "isco_group": 7541,
+  "essential_skills": [
+   "saturation diving",
+   "underwater welding",
+   "subsea inspection",
+   "NDT",
+   "dive safety",
+   "umbilical/bell operations"
+  ],
+  "source": "audit_add",
+  "reason": "Key subsea intervention occupation missing (ISCO 7541 divers)"
+ },
+ {
+  "domain_id": "D148",
+  "domain_name": "Offshore, Subsea",
+  "role_name": "remotely operated vehicle (ROV) pilot technician",
+  "isco_group": 3115,
+  "essential_skills": [
+   "ROV piloting",
+   "subsea navigation",
+   "hydraulic systems",
+   "sonar interpretation",
+   "tooling/manipulator ops"
+  ],
+  "source": "audit_add",
+  "reason": "Central subsea inspection/intervention role missing"
+ },
+ {
+  "domain_id": "D148",
+  "domain_name": "Offshore, Subsea",
+  "role_name": "marine engineer (offshore)",
+  "isco_group": 3151,
+  "essential_skills": [
+   "marine propulsion",
+   "dynamic positioning support",
+   "machinery maintenance",
+   "power systems",
+   "safety management"
+  ],
+  "source": "audit_add",
+  "reason": "Ships'/rig marine engineering role missing (ISCO 3151 ships' engineers)"
+ },
+ {
+  "domain_id": "D150",
+  "domain_name": "Religious Ministry, Theology",
+  "role_name": "religious education teacher",
+  "isco_group": 2330,
+  "essential_skills": [
+   "scripture pedagogy",
+   "curriculum design",
+   "comparative religion",
+   "classroom management",
+   "ethics instruction"
+  ],
+  "source": "audit_add",
+  "reason": "Theology teaching absent; secondary-level religious education is core to the theology side of the domain"
+ },
+ {
+  "domain_id": "D150",
+  "domain_name": "Religious Ministry, Theology",
+  "role_name": "pastoral care worker (religious associate professional)",
+  "isco_group": 3413,
+  "essential_skills": [
+   "pastoral counselling",
+   "community outreach",
+   "worship assistance",
+   "catechesis",
+   "prayer/ministry support"
+  ],
+  "source": "audit_add",
+  "reason": "Lay/associate ministry role missing; ISCO 3413 is defined specifically for religious associate professionals (evangelists, lay preachers, catechists)"
+ },
+ {
+  "domain_id": "D151",
+  "domain_name": "Criminology, Criminal Justice",
+  "role_name": "probation officer",
+  "isco_group": 2635,
+  "essential_skills": [
+   "offender risk assessment",
+   "supervision/case management",
+   "rehabilitation planning",
+   "pre-sentence reports",
+   "court liaison"
+  ],
+  "source": "audit_add",
+  "reason": "Community corrections is core to criminal justice and entirely absent"
+ },
+ {
+  "domain_id": "D151",
+  "domain_name": "Criminology, Criminal Justice",
+  "role_name": "forensic science technician",
+  "isco_group": 3111,
+  "essential_skills": [
+   "evidence collection",
+   "chain of custody",
+   "DNA/toxicology analysis",
+   "crime-scene processing",
+   "lab documentation"
+  ],
+  "source": "audit_add",
+  "reason": "Forensic science central to criminology but only appears buried in the criminal-investigator aka; distinct 3111 occupation deserves its own row"
+ },
+ {
+  "domain_id": "D152",
+  "domain_name": "Museum Curation, Cultural Heritage, Archives",
+  "role_name": "museum curator",
+  "isco_group": 2621,
+  "essential_skills": [
+   "collection management",
+   "exhibition planning",
+   "provenance research",
+   "acquisition/deaccession",
+   "cataloguing",
+   "condition assessment"
+  ],
+  "source": "audit_add",
+  "reason": "Core role of the domain (ISCO 2621 Archivists and curators) is entirely absent."
+ },
+ {
+  "domain_id": "D152",
+  "domain_name": "Museum Curation, Cultural Heritage, Archives",
+  "role_name": "archivist",
+  "isco_group": 2621,
+  "essential_skills": [
+   "archival appraisal",
+   "records arrangement & description",
+   "finding aids",
+   "preservation",
+   "access management",
+   "digitisation"
+  ],
+  "source": "audit_add",
+  "reason": "Core archives role (ISCO 2621) missing despite domain name including Archives."
+ },
+ {
+  "domain_id": "D152",
+  "domain_name": "Museum Curation, Cultural Heritage, Archives",
+  "role_name": "conservator",
+  "isco_group": 2621,
+  "essential_skills": [
+   "preventive conservation",
+   "materials analysis",
+   "conservation treatment",
+   "condition reporting",
+   "documentation",
+   "environmental monitoring"
+  ],
+  "source": "audit_add",
+  "reason": "Heritage conservation professional (ISCO 2621); distinct from listed art restorer technician, central to the domain."
+ },
+ {
+  "domain_id": "D152",
+  "domain_name": "Museum Curation, Cultural Heritage, Archives",
+  "role_name": "gallery/exhibition manager",
+  "isco_group": 1349,
+  "essential_skills": [
+   "exhibition logistics",
+   "loan agreements",
+   "budget management",
+   "installation coordination",
+   "programming"
+  ],
+  "source": "audit_add",
+  "reason": "Common heritage-sector management role not represented."
+ },
+ {
+  "domain_id": "D152",
+  "domain_name": "Museum Curation, Cultural Heritage, Archives",
+  "role_name": "cultural heritage officer",
+  "isco_group": 2621,
+  "essential_skills": [
+   "heritage legislation",
+   "site management",
+   "interpretation planning",
+   "stakeholder engagement",
+   "grant applications"
+  ],
+  "source": "audit_add",
+  "reason": "Named in domain (Cultural Heritage) but no dedicated role present."
+ },
+ {
+  "domain_id": "D153",
+  "domain_name": "Music Production, Sound Engineering",
+  "role_name": "music producer",
+  "isco_group": 2652,
+  "essential_skills": [
+   "arrangement",
+   "DAW production (Pro Tools/Ableton/Logic)",
+   "beat making",
+   "session direction",
+   "mixing",
+   "vocal comping"
+  ],
+  "source": "audit_add",
+  "reason": "Central modern music-production role not explicitly present (only implied in composer aka)."
+ },
+ {
+  "domain_id": "D153",
+  "domain_name": "Music Production, Sound Engineering",
+  "role_name": "live sound engineer (FOH)",
+  "isco_group": 3521,
+  "essential_skills": [
+   "front-of-house mixing",
+   "monitor mixing",
+   "PA system tuning",
+   "signal flow",
+   "gain staging",
+   "line-check/soundcheck"
+  ],
+  "source": "audit_add",
+  "reason": "Core live-audio engineering role missing; distinct from studio/mastering roles."
+ },
+ {
+  "domain_id": "D153",
+  "domain_name": "Music Production, Sound Engineering",
+  "role_name": "game audio designer",
+  "isco_group": 3521,
+  "essential_skills": [
+   "Wwise/FMOD middleware",
+   "interactive audio implementation",
+   "sound design",
+   "adaptive music systems",
+   "sound asset creation"
+  ],
+  "source": "audit_add",
+  "reason": "Modern audio role explicitly flagged for this domain (game audio); absent."
+ },
+ {
+  "domain_id": "D153",
+  "domain_name": "Music Production, Sound Engineering",
+  "role_name": "spatial/immersive audio engineer",
+  "isco_group": 3521,
+  "essential_skills": [
+   "Dolby Atmos mixing",
+   "ambisonics",
+   "binaural rendering",
+   "3D/object-based audio",
+   "immersive monitoring"
+  ],
+  "source": "audit_add",
+  "reason": "Modern audio role explicitly flagged for this domain (spatial audio); absent."
+ },
+ {
+  "domain_id": "D153",
+  "domain_name": "Music Production, Sound Engineering",
+  "role_name": "foley artist",
+  "isco_group": 3521,
+  "essential_skills": [
+   "foley performance",
+   "sound effect recording",
+   "sync-to-picture",
+   "prop sound library",
+   "post-production audio"
+  ],
+  "source": "audit_add",
+  "reason": "Post-production sound craft role absent; complements sound editor/designer."
+ },
+ {
+  "domain_id": "D153",
+  "domain_name": "Music Production, Sound Engineering",
+  "role_name": "dialogue/re-recording mixer",
+  "isco_group": 3521,
+  "essential_skills": [
+   "dialogue editing",
+   "ADR",
+   "stem mixing",
+   "loudness compliance",
+   "final mix",
+   "noise reduction"
+  ],
+  "source": "audit_add",
+  "reason": "Post-production audio mixing role absent; core to film/TV/streaming sound."
+ },
+ {
+  "domain_id": "D154",
+  "domain_name": "Exercise Science, Sports Therapy",
+  "role_name": "exercise physiologist",
+  "isco_group": 2269,
+  "essential_skills": [
+   "VO2max/cardiopulmonary testing",
+   "exercise prescription",
+   "metabolic assessment",
+   "clinical exercise rehab",
+   "ECG monitoring",
+   "body composition analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Core exercise-science profession entirely absent; central to the domain."
+ },
+ {
+  "domain_id": "D154",
+  "domain_name": "Exercise Science, Sports Therapy",
+  "role_name": "strength and conditioning coach",
+  "isco_group": 3423,
+  "essential_skills": [
+   "periodisation",
+   "resistance training programming",
+   "athletic performance testing",
+   "movement screening",
+   "load monitoring",
+   "injury-prevention programming"
+  ],
+  "source": "audit_add",
+  "reason": "Core applied exercise-science/sports-performance role missing."
+ },
+ {
+  "domain_id": "D154",
+  "domain_name": "Exercise Science, Sports Therapy",
+  "role_name": "athletic trainer",
+  "isco_group": 2269,
+  "essential_skills": [
+   "sports injury assessment",
+   "acute injury management",
+   "taping/bracing",
+   "return-to-play protocols",
+   "rehabilitation exercise",
+   "concussion management"
+  ],
+  "source": "audit_add",
+  "reason": "Core sports-therapy allied-health role missing (distinct from physiotherapist)."
+ },
+ {
+  "domain_id": "D154",
+  "domain_name": "Exercise Science, Sports Therapy",
+  "role_name": "sports scientist / performance analyst",
+  "isco_group": 2269,
+  "essential_skills": [
+   "biomechanical analysis",
+   "GPS/load monitoring",
+   "performance data analysis",
+   "movement analysis",
+   "physiological profiling",
+   "athlete monitoring systems"
+  ],
+  "source": "audit_add",
+  "reason": "Applied exercise-science research/analysis role missing; supports high-signal domain coverage."
+ },
+ {
+  "domain_id": "D154",
+  "domain_name": "Exercise Science, Sports Therapy",
+  "role_name": "sports nutritionist",
+  "isco_group": 2265,
+  "essential_skills": [
+   "performance nutrition planning",
+   "hydration strategy",
+   "supplement guidance",
+   "body-composition management",
+   "fuelling periodisation"
+  ],
+  "source": "audit_add",
+  "reason": "Sports-specific nutrition role missing (dietitian retained is general); complements exercise science."
+ },
+ {
+  "domain_id": "D155",
+  "domain_name": "Nanotechnology, Advanced Materials",
+  "role_name": "materials characterization scientist",
+  "isco_group": 2113,
+  "essential_skills": [
+   "electron microscopy (SEM/TEM)",
+   "X-ray diffraction (XRD)",
+   "atomic force microscopy (AFM)",
+   "spectroscopy (XPS/Raman)",
+   "sample preparation",
+   "microstructure analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Core characterization/microscopy role central to nanotech & advanced materials, entirely absent."
+ },
+ {
+  "domain_id": "D155",
+  "domain_name": "Nanotechnology, Advanced Materials",
+  "role_name": "computational materials scientist",
+  "isco_group": 2113,
+  "essential_skills": [
+   "DFT/first-principles modelling",
+   "molecular dynamics",
+   "materials informatics/ML",
+   "Python/scientific computing",
+   "phase-diagram/CALPHAD modelling"
+  ],
+  "source": "audit_add",
+  "reason": "Modern computational/materials-informatics role missing; high-signal for advanced materials."
+ },
+ {
+  "domain_id": "D155",
+  "domain_name": "Nanotechnology, Advanced Materials",
+  "role_name": "materials/polymer engineer",
+  "isco_group": 2149,
+  "essential_skills": [
+   "polymer synthesis",
+   "composite design",
+   "mechanical testing",
+   "materials selection",
+   "failure analysis",
+   "processing optimisation"
+  ],
+  "source": "audit_add",
+  "reason": "Applied advanced-materials engineering role (polymers/composites) absent."
+ },
+ {
+  "domain_id": "D155",
+  "domain_name": "Nanotechnology, Advanced Materials",
+  "role_name": "metallurgical engineer",
+  "isco_group": 2146,
+  "essential_skills": [
+   "alloy design",
+   "heat treatment",
+   "metallography",
+   "corrosion analysis",
+   "phase transformations",
+   "welding metallurgy"
+  ],
+  "source": "audit_add",
+  "reason": "Core advanced-materials (metals/alloys) engineering role absent."
+ },
+ {
+  "domain_id": "D156",
+  "domain_name": "Land Surveying, Cadastral Mapping",
+  "role_name": "geodesist",
+  "isco_group": 2165,
+  "essential_skills": [
+   "geodetic surveying",
+   "GNSS positioning",
+   "coordinate reference systems",
+   "geodetic datum adjustment",
+   "least-squares network adjustment"
+  ],
+  "source": "audit_add",
+  "reason": "Core land-surveying occupation (ISCO 2165) absent from the domain"
+ },
+ {
+  "domain_id": "D156",
+  "domain_name": "Land Surveying, Cadastral Mapping",
+  "role_name": "photogrammetrist",
+  "isco_group": 2165,
+  "essential_skills": [
+   "aerial photogrammetry",
+   "stereo compilation",
+   "orthophoto production",
+   "LiDAR data processing",
+   "digital terrain modelling"
+  ],
+  "source": "audit_add",
+  "reason": "Standard mapping/surveying occupation (ISCO 2165) supporting cadastral and topographic mapping; missing"
+ },
+ {
+  "domain_id": "D157",
+  "domain_name": "Tax Advisory, Transfer Pricing",
+  "role_name": "transfer pricing specialist",
+  "isco_group": 2411,
+  "essential_skills": [
+   "transfer pricing documentation",
+   "arm's-length principle analysis",
+   "intercompany transaction benchmarking",
+   "OECD transfer pricing guidelines",
+   "comparable company analysis",
+   "country-by-country reporting"
+  ],
+  "source": "audit_add",
+  "reason": "Named in the domain title (transfer pricing) yet no dedicated role present; core occupation (ISCO 2411)"
+ },
+ {
+  "domain_id": "D157",
+  "domain_name": "Tax Advisory, Transfer Pricing",
+  "role_name": "international tax consultant",
+  "isco_group": 2411,
+  "essential_skills": [
+   "cross-border tax planning",
+   "double taxation treaty analysis",
+   "permanent establishment assessment",
+   "withholding tax compliance",
+   "BEPS advisory"
+  ],
+  "source": "audit_add",
+  "reason": "Core tax-advisory occupation (ISCO 2411) covering the international/transfer-pricing scope; missing"
+ },
+ {
+  "domain_id": "D158",
+  "domain_name": "Corporate Finance, Investment Banking",
+  "role_name": "investment banker",
+  "isco_group": 2413,
+  "essential_skills": [
+   "capital raising",
+   "equity and debt underwriting",
+   "financial modelling",
+   "company valuation (DCF, comparables)",
+   "deal execution",
+   "pitch book preparation"
+  ],
+  "source": "audit_add",
+  "reason": "Core investment-banking occupation named in the domain title yet no dedicated front-office IB role present (ISCO 2413)"
+ },
+ {
+  "domain_id": "D158",
+  "domain_name": "Corporate Finance, Investment Banking",
+  "role_name": "corporate treasurer",
+  "isco_group": 2411,
+  "essential_skills": [
+   "cash and liquidity management",
+   "capital structure management",
+   "corporate funding",
+   "FX and interest-rate risk hedging",
+   "banking relationship management"
+  ],
+  "source": "audit_add",
+  "reason": "Core corporate-finance treasury occupation (ISCO 2411) missing from the domain"
+ },
+ {
+  "domain_id": "D159",
+  "domain_name": "Credit Analysis, Structured Finance",
+  "role_name": "structured finance analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "securitisation structuring",
+   "ABS/MBS/CLO modelling",
+   "cash-flow waterfall analysis",
+   "tranching and credit enhancement",
+   "rating agency methodology",
+   "collateral pool analysis"
+  ],
+  "source": "audit_add",
+  "reason": "Named in the domain title (structured finance) yet no dedicated structured-finance role present (ISCO 2413)"
+ },
+ {
+  "domain_id": "D159",
+  "domain_name": "Credit Analysis, Structured Finance",
+  "role_name": "fixed income analyst",
+  "isco_group": 2413,
+  "essential_skills": [
+   "bond valuation",
+   "yield curve analysis",
+   "duration and convexity",
+   "credit spread analysis",
+   "interest-rate risk assessment"
+  ],
+  "source": "audit_add",
+  "reason": "Core securities/credit-market occupation (ISCO 2413) supporting credit and structured-finance analysis; missing"
+ },
+ {
+  "domain_id": "D160",
+  "domain_name": "Fashion Styling, Image Consulting",
+  "role_name": "fashion stylist",
+  "isco_group": 3435,
+  "essential_skills": [
+   "wardrobe curation",
+   "trend forecasting",
+   "garment coordination",
+   "editorial/photoshoot styling",
+   "client fitting"
+  ],
+  "source": "audit_add",
+  "reason": "the defining role of the domain and entirely absent from the list"
+ },
+ {
+  "domain_id": "D160",
+  "domain_name": "Fashion Styling, Image Consulting",
+  "role_name": "wardrobe/personal shopper",
+  "isco_group": 5223,
+  "essential_skills": [
+   "client style profiling",
+   "retail sourcing",
+   "budget management",
+   "wardrobe planning"
+  ],
+  "source": "audit_add",
+  "reason": "core image-consulting service role, missing"
+ },
+ {
+  "domain_id": "D161",
+  "domain_name": "Humanitarian Aid, Emergency Response",
+  "role_name": "humanitarian project officer / aid worker",
+  "isco_group": 2422,
+  "essential_skills": [
+   "needs assessment",
+   "beneficiary registration",
+   "field coordination",
+   "donor reporting",
+   "cluster coordination",
+   "cash/voucher assistance"
+  ],
+  "source": "audit_add",
+  "reason": "core frontline aid-delivery role, absent"
+ },
+ {
+  "domain_id": "D161",
+  "domain_name": "Humanitarian Aid, Emergency Response",
+  "role_name": "emergency response / disaster relief coordinator",
+  "isco_group": 1112,
+  "essential_skills": [
+   "rapid needs assessment",
+   "contingency planning",
+   "incident command",
+   "inter-agency coordination",
+   "logistics coordination"
+  ],
+  "source": "audit_add",
+  "reason": "the defining emergency-response role for the domain, absent"
+ },
+ {
+  "domain_id": "D161",
+  "domain_name": "Humanitarian Aid, Emergency Response",
+  "role_name": "humanitarian logistics officer",
+  "isco_group": 1324,
+  "essential_skills": [
+   "emergency supply chain",
+   "warehousing",
+   "fleet/distribution management",
+   "procurement",
+   "last-mile delivery"
+  ],
+  "source": "audit_add",
+  "reason": "logistics is central to emergency response and missing"
+ },
+ {
+  "domain_id": "D162",
+  "domain_name": "Immigration Law, Asylum",
+  "role_name": "immigration lawyer / solicitor",
+  "isco_group": 2611,
+  "essential_skills": [
+   "immigration & asylum law",
+   "visa/application casework",
+   "appeals & tribunal advocacy",
+   "client interviewing",
+   "country-of-origin research"
+  ],
+  "source": "audit_add",
+  "reason": "the defining professional role of the domain, absent"
+ },
+ {
+  "domain_id": "D162",
+  "domain_name": "Immigration Law, Asylum",
+  "role_name": "immigration adviser / OISC caseworker",
+  "isco_group": 3411,
+  "essential_skills": [
+   "immigration rules knowledge",
+   "application preparation",
+   "asylum support advice",
+   "case file management",
+   "regulatory compliance (OISC)"
+  ],
+  "source": "audit_add",
+  "reason": "core regulated non-lawyer advice role central to asylum work, absent"
+ },
+ {
+  "domain_id": "D162",
+  "domain_name": "Immigration Law, Asylum",
+  "role_name": "immigration / border officer",
+  "isco_group": 3351,
+  "essential_skills": [
+   "immigration control",
+   "document verification",
+   "eligibility assessment",
+   "interviewing",
+   "casework decision-making"
+  ],
+  "source": "audit_add",
+  "reason": "government-side immigration role, missing"
+ },
+ {
+  "domain_id": "D163",
+  "domain_name": "Intellectual Property Law, Patents",
+  "role_name": "patent attorney / patent agent",
+  "isco_group": 2611,
+  "essential_skills": [
+   "patent drafting & prosecution",
+   "prior-art searching",
+   "patent claim analysis",
+   "USPTO/EPO procedure",
+   "technical subject-matter expertise"
+  ],
+  "source": "audit_add",
+  "reason": "the defining role of the patents domain and completely absent"
+ },
+ {
+  "domain_id": "D163",
+  "domain_name": "Intellectual Property Law, Patents",
+  "role_name": "trademark attorney",
+  "isco_group": 2611,
+  "essential_skills": [
+   "trademark clearance searching",
+   "registration & prosecution",
+   "opposition proceedings",
+   "brand-portfolio management",
+   "IP licensing"
+  ],
+  "source": "audit_add",
+  "reason": "core IP-law role, missing"
+ },
+ {
+  "domain_id": "D163",
+  "domain_name": "Intellectual Property Law, Patents",
+  "role_name": "IP paralegal / patent administrator",
+  "isco_group": 3411,
+  "essential_skills": [
+   "patent/trademark filing",
+   "renewal & docketing",
+   "IP portfolio records",
+   "regulatory deadline tracking"
+  ],
+  "source": "audit_add",
+  "reason": "essential IP support role, missing"
+ },
+ {
+  "domain_id": "D164",
+  "domain_name": "Urban Mobility, Smart City Systems",
+  "role_name": "geographic information systems specialist",
+  "isco_group": 2165,
+  "essential_skills": [
+   "GIS",
+   "spatial analysis",
+   "ArcGIS/QGIS",
+   "urban data modelling",
+   "remote sensing",
+   "digital mapping"
+  ],
+  "source": "audit_add",
+  "reason": "smart city systems depend on geospatial data; no GIS/spatial role present"
+ },
+ {
+  "domain_id": "D164",
+  "domain_name": "Urban Mobility, Smart City Systems",
+  "role_name": "public transport operations manager",
+  "isco_group": 1324,
+  "essential_skills": [
+   "transit service planning",
+   "fleet scheduling",
+   "dispatch operations",
+   "route optimisation",
+   "operations KPIs"
+  ],
+  "source": "audit_add",
+  "reason": "urban mobility operations management is core but absent (only planners/engineers present)"
+ },
+ {
+  "domain_id": "D165",
+  "domain_name": "Wellness Coaching, Lifestyle Medicine",
+  "role_name": "health and wellness coach",
+  "isco_group": 3423,
+  "essential_skills": [
+   "behaviour change coaching",
+   "motivational interviewing",
+   "goal setting",
+   "nutrition fundamentals",
+   "stress management",
+   "client accountability"
+  ],
+  "source": "audit_add",
+  "reason": "domain namesake role is entirely absent"
+ },
+ {
+  "domain_id": "D165",
+  "domain_name": "Wellness Coaching, Lifestyle Medicine",
+  "role_name": "yoga instructor",
+  "isco_group": 3423,
+  "essential_skills": [
+   "yoga asana",
+   "breathing techniques",
+   "meditation/mindfulness",
+   "class instruction",
+   "functional anatomy",
+   "injury modification"
+  ],
+  "source": "audit_add",
+  "reason": "core wellness/lifestyle practice missing from the set"
+ },
+ {
+  "domain_id": "D166",
+  "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+  "role_name": "machine learning engineer",
+  "isco_group": 2519,
+  "essential_skills": [
+   "deep learning",
+   "computer vision",
+   "sensor fusion",
+   "PyTorch/TensorFlow",
+   "model training & evaluation",
+   "data pipelines"
+  ],
+  "source": "audit_add",
+  "reason": "perception/prediction ML is the heart of self-driving; entirely absent"
+ },
+ {
+  "domain_id": "D166",
+  "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+  "role_name": "embedded systems engineer",
+  "isco_group": 2512,
+  "essential_skills": [
+   "C/C++",
+   "RTOS",
+   "firmware development",
+   "ROS",
+   "sensor integration (LiDAR/radar/camera)",
+   "hardware-software integration"
+  ],
+  "source": "audit_add",
+  "reason": "AV compute/embedded controls role missing"
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "XR Developer / XR Software Engineer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "Unity",
+   "Unreal Engine",
+   "C# / C++ programming",
+   "3D math and spatial reasoning",
+   "AR/VR SDKs (OpenXR, ARKit, ARCore, OpenXR)",
+   "real-time rendering",
+   "performance profiling and optimization",
+   "device hardware constraints"
+  ],
+  "source": "curated_creative",
+  "reason": "Core XR engineer track; publishes software in an XR coding language on Unity/Unreal. Absent from ESCO/O*NET."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "Augmented Reality (AR) Developer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "ARKit / ARCore",
+   "computer vision basics",
+   "Unity AR Foundation",
+   "C#",
+   "3D asset integration",
+   "SLAM / spatial anchoring",
+   "mobile performance optimization"
+  ],
+  "source": "curated_creative",
+  "reason": "AR-specialized subset of XR developer; Snap report cites majority of AR devs are early-career."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "Virtual Reality (VR) Developer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "VR SDKs (Meta/Oculus, OpenXR, SteamVR)",
+   "Unity or Unreal",
+   "C# / C++",
+   "locomotion and interaction systems",
+   "hand/controller input",
+   "comfort and motion-sickness mitigation",
+   "real-time optimization"
+  ],
+  "source": "curated_creative",
+  "reason": "VR-specialized subset of XR developer."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "XR / Immersive Experience Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "spatial UX design",
+   "3D interaction design",
+   "storyboarding and concept sketching",
+   "wireframing and prototyping",
+   "usability and accessibility principles",
+   "user-centered design",
+   "cross-functional collaboration"
+  ],
+  "source": "curated_creative",
+  "reason": "Designer track per source; grounds decisions in real data, OKRs, product needs."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "XR UX/UI Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "information architecture for complex workflows",
+   "high-fidelity prototyping",
+   "spatial interface design",
+   "usability testing",
+   "accessibility",
+   "visual/UI design for 3D",
+   "presentation and stakeholder communication"
+  ],
+  "source": "curated_creative",
+  "reason": "Cross-lists conceptually with UI/UX Design domain but core subject is immersive/spatial interfaces."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "XR Interaction Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "gesture and gaze interaction design",
+   "haptics",
+   "spatial affordances",
+   "prototyping",
+   "human factors",
+   "user research",
+   "3D environment reasoning"
+  ],
+  "source": "curated_creative",
+  "reason": "Named interaction-designer sub-track in source."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "Metaverse Architect / Virtual World Builder",
+  "isco_group": "2166",
+  "essential_skills": [
+   "3D world building",
+   "game engine environment design (Unity/Unreal)",
+   "digital economy and avatar systems",
+   "multi-user/networked spaces",
+   "level and space layout",
+   "asset pipelines",
+   "interoperability standards"
+  ],
+  "source": "curated_creative",
+  "reason": "Metaverse role; 0 present today. Straddles design and dev; classified to design anchor 2166."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "XR Technical Artist",
+  "isco_group": "2166",
+  "essential_skills": [
+   "shader authoring",
+   "real-time rendering pipelines",
+   "3D asset optimization for headsets",
+   "Unity/Unreal materials",
+   "rigging and tooling scripting (Python)",
+   "LOD and polycount budgeting",
+   "art-engineering bridge"
+  ],
+  "source": "curated_creative",
+  "reason": "Immersive-specific technical artist; overlaps Game Design domain but XR device constraints are the distinguishing subject."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "3D Environment Artist (XR)",
+  "isco_group": "2166",
+  "essential_skills": [
+   "3D modeling (Blender/Maya)",
+   "texturing and PBR materials",
+   "environment composition",
+   "optimization for real-time XR",
+   "photogrammetry",
+   "lighting",
+   "asset pipelines"
+  ],
+  "source": "curated_creative",
+  "reason": "Builds immersive spaces; XR performance budget distinguishes from general 3D artist."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "Mixed Reality (MR) Engineer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "HoloLens / Quest passthrough SDKs",
+   "spatial mapping and mesh understanding",
+   "occlusion and anchoring",
+   "C++ / C#",
+   "sensor fusion",
+   "real-time optimization",
+   "hardware/software limitation awareness"
+  ],
+  "source": "curated_creative",
+  "reason": "Blends physical + virtual; distinct MR toolchain."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "Spatial Computing Engineer",
+  "isco_group": "2513",
+  "essential_skills": [
+   "spatial anchors and world tracking",
+   "computer vision",
+   "3D reconstruction",
+   "OpenXR",
+   "sensor and depth data",
+   "low-latency rendering",
+   "edge/on-device performance"
+  ],
+  "source": "curated_creative",
+  "reason": "Apple Vision Pro-era title; emerging, absent from ESCO/O*NET."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "XR Narrative Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "immersive storytelling",
+   "branching narrative design",
+   "environmental storytelling",
+   "player agency and pacing",
+   "scriptwriting",
+   "spatial dramaturgy",
+   "collaboration with designers/artists"
+  ],
+  "source": "curated_creative",
+  "reason": "Named XR narrative-designer track in source; distinct from game narrative by spatial/embodied medium."
+ },
+ {
+  "domain_id": "NEW: XR & Immersive Technology",
+  "domain_name": "NEW: XR & Immersive Technology",
+  "role_name": "Volumetric Capture / Immersive Media Specialist",
+  "isco_group": "2166",
+  "essential_skills": [
+   "volumetric video capture",
+   "photogrammetry",
+   "camera arrays and depth sensors",
+   "point cloud / mesh processing",
+   "3D reconstruction pipelines",
+   "immersive media formats",
+   "post-production for XR"
+  ],
+  "source": "curated_creative",
+  "reason": "Production of volumetric/immersive assets; cross-lists with Media Production but core subject is immersive capture."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Live-Ops Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "live service / games-as-a-service design",
+   "event and content cadence planning",
+   "player retention and engagement metrics",
+   "monetization and reward loops",
+   "A/B testing and data analysis",
+   "cross-team coordination (art, eng, marketing)"
+  ],
+  "source": "curated_creative",
+  "reason": "Modern game-dev variant; designs ongoing content updates, seasons and events for live games. Absent from ESCO/O*NET game roles."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Game Producer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "production scheduling and milestones",
+   "agile/scrum project management",
+   "budget and scope management",
+   "cross-discipline team coordination",
+   "risk and dependency tracking",
+   "stakeholder and publisher communication"
+  ],
+  "source": "curated_creative",
+  "reason": "Owns delivery of a game project end-to-end; distinct producer track within game dev."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Gameplay Engineer / Gameplay Programmer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "C++ / C# programming",
+   "game engine internals (Unreal/Unity)",
+   "player mechanics and controls",
+   "physics and animation systems",
+   "AI behavior implementation",
+   "performance profiling and optimization"
+  ],
+  "source": "curated_creative",
+  "reason": "Implements the systems that make gameplay function; software-engineering track within game dev, anchored to 2512."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Technical Artist (Games)",
+  "isco_group": "2166",
+  "essential_skills": [
+   "shader and material authoring",
+   "rigging and skinning",
+   "art pipeline and tooling scripting (Python/MEL)",
+   "real-time rendering optimization",
+   "engine integration (Unity/Unreal)",
+   "bridging art and engineering teams"
+  ],
+  "source": "curated_creative",
+  "reason": "Art-engineering bridge role in game production; distinct from XR technical artist by non-immersive game context."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Narrative Designer (Games)",
+  "isco_group": "2166",
+  "essential_skills": [
+   "branching and interactive storytelling",
+   "character and world-building",
+   "dialogue and scriptwriting",
+   "quest and mission structure",
+   "narrative tooling and scripting",
+   "collaboration with design and writing teams"
+  ],
+  "source": "curated_creative",
+  "reason": "Designs story systems and player-driven narrative within games; distinct from XR narrative designer by medium."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Game Economy Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "virtual economy and currency design",
+   "monetization and pricing modeling",
+   "reward and progression loops",
+   "economic balancing and simulation",
+   "data analysis and player-spend metrics",
+   "sink/source and inflation management"
+  ],
+  "source": "curated_creative",
+  "reason": "Specialized designer for in-game economies (F2P, live-service); emerging modern variant absent from standard taxonomies."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "QA / Gameplay Tester",
+  "isco_group": "2166",
+  "essential_skills": [
+   "test planning and case design",
+   "bug reproduction and reporting",
+   "gameplay balance and usability feedback",
+   "regression and compatibility testing",
+   "issue-tracking tools (Jira)",
+   "attention to detail and systematic exploration"
+  ],
+  "source": "curated_creative",
+  "reason": "Quality assurance track within game dev; classified to game-design anchor 2166 as a games-specialized role."
+ },
+ {
+  "domain_id": "D139 Game Design",
+  "domain_name": "D139 Game Design",
+  "role_name": "Build / Tools Engineer (Games)",
+  "isco_group": "2512",
+  "essential_skills": [
+   "build automation and CI/CD pipelines",
+   "internal tooling development",
+   "version control and asset management",
+   "scripting (Python/C#)",
+   "engine build systems",
+   "developer workflow optimization"
+  ],
+  "source": "curated_creative",
+  "reason": "Builds pipelines and internal tools that support game production; software-engineering track anchored to 2512."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Professional Streamer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "live broadcasting and stream production (OBS/streaming software)",
+   "audience engagement and community building",
+   "on-camera presence and entertainment",
+   "content scheduling and consistency",
+   "platform monetization (subscriptions, donations, sponsorships)",
+   "personal branding"
+  ],
+  "source": "curated_creative",
+  "reason": "Core creator-economy role; broadcasts gameplay/content live on Twitch/YouTube. Absent from ESCO/O*NET."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Shoutcaster / Esports Caster",
+  "isco_group": "2656",
+  "essential_skills": [
+   "live play-by-play and color commentary",
+   "deep game knowledge and meta understanding",
+   "broadcast voice and improvisation",
+   "storytelling and hype-building",
+   "quick analysis under pressure",
+   "co-casting collaboration"
+  ],
+  "source": "curated_creative",
+  "reason": "Broadcast commentator for competitive matches; anchored to announcers/broadcast 2656."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Esports Coach",
+  "isco_group": "2654",
+  "essential_skills": [
+   "team strategy and drafting",
+   "individual and team performance coaching",
+   "VOD review and opponent scouting",
+   "practice and scrim planning",
+   "player psychology and team dynamics",
+   "in-game meta expertise"
+  ],
+  "source": "curated_creative",
+  "reason": "Trains and directs competitive teams; distinct professional track in esports. Absent from standard taxonomies."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Esports Analyst",
+  "isco_group": "2654",
+  "essential_skills": [
+   "match and statistical analysis",
+   "opponent scouting and data gathering",
+   "meta and trend analysis",
+   "VOD breakdown",
+   "data visualization and reporting",
+   "strategic recommendation"
+  ],
+  "source": "curated_creative",
+  "reason": "Provides data-driven insight to teams/broadcasts; emerging esports role absent from ESCO/O*NET."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Professional Content Creator",
+  "isco_group": "2654",
+  "essential_skills": [
+   "video and short-form content production",
+   "video editing and post-production",
+   "audience growth and analytics",
+   "platform algorithm literacy (YouTube/TikTok/Instagram)",
+   "brand partnerships and sponsorships",
+   "content strategy and storytelling"
+  ],
+  "source": "curated_creative",
+  "reason": "Creator-economy anchor role per WEF; produces monetized content across platforms. Absent from standard taxonomies."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Community Manager",
+  "isco_group": "2431",
+  "essential_skills": [
+   "community engagement and moderation",
+   "social media management",
+   "content calendar and campaign planning",
+   "player/fan feedback collection",
+   "crisis and reputation management",
+   "cross-team communication"
+  ],
+  "source": "curated_creative",
+  "reason": "Manages online communities for games/creators/esports orgs; anchored to marketing/PR 2431."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Influencer Marketing Manager",
+  "isco_group": "2431",
+  "essential_skills": [
+   "influencer sourcing and relationship management",
+   "campaign strategy and briefing",
+   "budget and contract negotiation",
+   "performance tracking and ROI analysis",
+   "brand alignment and compliance",
+   "cross-platform campaign coordination"
+  ],
+  "source": "curated_creative",
+  "reason": "Runs creator/influencer marketing campaigns; anchored to marketing 2431. Grew directly out of creator economy."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Esports Event Manager",
+  "isco_group": "1221",
+  "essential_skills": [
+   "event planning and logistics",
+   "venue and production coordination",
+   "sponsor and stakeholder management",
+   "budgeting and scheduling",
+   "broadcast and live-production oversight",
+   "team and vendor coordination"
+  ],
+  "source": "curated_creative",
+  "reason": "Organizes competitive tournaments and events; management track anchored to sales/marketing managers 1221."
+ },
+ {
+  "domain_id": "NEW: Esports & Creator Economy",
+  "domain_name": "NEW: Esports & Creator Economy",
+  "role_name": "Esports Team Manager",
+  "isco_group": "1431",
+  "essential_skills": [
+   "roster and player management",
+   "contract and salary administration",
+   "scheduling of practice, travel and competition",
+   "sponsorship and brand liaison",
+   "player welfare and performance support",
+   "team operations and logistics"
+  ],
+  "source": "curated_creative",
+  "reason": "Runs the day-to-day operations of a competitive esports roster; anchored to sports/recreation centre managers 1431. Distinct from Esports Event Manager (org vs event). Absent from ESCO/O*NET."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "Prompt Engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "prompt design and iteration",
+   "large language model behavior and capabilities",
+   "prompt-injection and safety awareness",
+   "evaluation and A/B testing of prompts",
+   "context-window and token optimization",
+   "domain framing and instruction tuning"
+  ],
+  "source": "curated_creative",
+  "reason": "AI-frontier role that emerged with generative LLMs; designs and optimizes prompts/instructions for LLM-based systems. Absent from ESCO/O*NET; anchored to software developers 2512."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "Generative-AI Engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "LLM application development",
+   "retrieval-augmented generation (RAG)",
+   "embeddings and vector databases",
+   "fine-tuning and adapters (LoRA)",
+   "orchestration frameworks (LangChain/LlamaIndex)",
+   "API integration and inference optimization"
+  ],
+  "source": "curated_creative",
+  "reason": "Builds production applications on top of foundation models; distinct from classic ML engineer by generative/LLM focus. Anchored to software developers 2512."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "MLOps Engineer",
+  "isco_group": "2512",
+  "essential_skills": [
+   "ML model deployment and serving",
+   "CI/CD for ML pipelines",
+   "model monitoring and drift detection",
+   "containerization and orchestration (Docker/Kubernetes)",
+   "feature stores and data versioning",
+   "experiment tracking (MLflow)"
+  ],
+  "source": "curated_creative",
+  "reason": "Operationalizes and maintains ML systems in production; DevOps-for-ML specialization. Anchored to software developers 2512."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "AI Product Manager",
+  "isco_group": "1330",
+  "essential_skills": [
+   "AI/ML product strategy and roadmapping",
+   "understanding of model capabilities and limits",
+   "data and evaluation requirements definition",
+   "cross-functional coordination (research, eng, design)",
+   "responsible-AI and risk trade-offs",
+   "stakeholder and go-to-market management"
+  ],
+  "source": "curated_creative",
+  "reason": "Owns AI-powered products; requires fluency in model behavior, data and evaluation. Anchored to ICT service managers 1330."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "AI Ethics / Safety Specialist",
+  "isco_group": "2422",
+  "essential_skills": [
+   "responsible-AI frameworks and governance",
+   "bias, fairness and harm assessment",
+   "AI risk and impact evaluation",
+   "regulatory and policy literacy (EU AI Act, NIST)",
+   "red-teaming and safety testing",
+   "stakeholder and cross-functional advisory"
+  ],
+  "source": "curated_creative",
+  "reason": "Assesses and mitigates societal, safety and governance risks of AI systems; emerging frontier role. Anchored to policy administration professionals 2422."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "Conversational-AI Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "conversation and dialogue design",
+   "user-intent modeling and flows",
+   "persona and tone-of-voice design",
+   "prompt and response crafting for assistants",
+   "usability testing of conversational UX",
+   "collaboration with NLP/engineering teams"
+  ],
+  "source": "curated_creative",
+  "reason": "Designs the interaction and dialogue for chatbots/voice assistants/LLM agents; UX-adjacent AI role. Anchored to multimedia designers 2166."
+ },
+ {
+  "domain_id": "D003 Artificial Intelligence",
+  "domain_name": "D003 Artificial Intelligence",
+  "role_name": "AI Research Scientist",
+  "isco_group": "2120",
+  "essential_skills": [
+   "deep learning theory and architectures",
+   "mathematics (linear algebra, probability, optimization)",
+   "research design and experimentation",
+   "PyTorch / JAX implementation",
+   "scientific writing and publication",
+   "novel model and algorithm development"
+  ],
+  "source": "curated_creative",
+  "reason": "Advances the state of the art in ML/AI through original research; math- and research-heavy. Anchored to mathematicians/statisticians 2120."
+ },
+ {
+  "domain_id": "D153 Music Production",
+  "domain_name": "D153 Music Production",
+  "role_name": "Spatial Audio Engineer",
+  "isco_group": "3521",
+  "essential_skills": [
+   "3D/immersive audio mixing (Dolby Atmos, Ambisonics)",
+   "binaural and HRTF processing",
+   "object-based audio workflows",
+   "spatial panning and room modeling",
+   "DAW and immersive plugin chains",
+   "acoustics and psychoacoustics"
+  ],
+  "source": "curated_creative",
+  "reason": "Frontier audio role driven by immersive/XR and Atmos music; mixes and engineers spatialized sound. Anchored to broadcasting/AV technicians 3521."
+ },
+ {
+  "domain_id": "D153 Music Production",
+  "domain_name": "D153 Music Production",
+  "role_name": "Game Audio Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "interactive and adaptive audio design",
+   "sound effect creation and foley",
+   "implementation in game engines (Unity/Unreal)",
+   "audio middleware (Wwise/FMOD)",
+   "music and ambience integration",
+   "mixing for interactive systems"
+  ],
+  "source": "curated_creative",
+  "reason": "Creates and implements interactive audio for games; bridges creative sound design and engine integration. Anchored to multimedia designers 2166."
+ },
+ {
+  "domain_id": "D153 Music Production",
+  "domain_name": "D153 Music Production",
+  "role_name": "Technical Sound Designer",
+  "isco_group": "2166",
+  "essential_skills": [
+   "audio systems and DSP design",
+   "scripting for audio (C#/Blueprint/Python)",
+   "middleware integration (Wwise/FMOD)",
+   "runtime performance and voice budgeting",
+   "procedural and generative audio",
+   "debugging audio in engine"
+  ],
+  "source": "curated_creative",
+  "reason": "Audio-engineering bridge role; builds the systems and tools that drive interactive sound. Distinct from game audio designer by technical/implementation focus. Anchored to multimedia designers 2166."
+ },
+ {
+  "domain_id": "D153 Music Production",
+  "domain_name": "D153 Music Production",
+  "role_name": "Audio Middleware Programmer (Wwise/FMOD)",
+  "isco_group": "2512",
+  "essential_skills": [
+   "C++ programming",
+   "Wwise / FMOD SDK integration",
+   "real-time audio engine architecture",
+   "DSP and signal processing",
+   "memory and CPU audio optimization",
+   "engine API and tooling development"
+  ],
+  "source": "curated_creative",
+  "reason": "Programs the audio engine layer and middleware integration; software-engineering track within audio. Anchored to software developers 2512."
+ },
+ {
+  "domain_id": "D153 Music Production",
+  "domain_name": "D153 Music Production",
+  "role_name": "Dialogue Editor",
+  "isco_group": "3521",
+  "essential_skills": [
+   "dialogue editing and cleanup",
+   "ADR and voice-over synchronization",
+   "noise reduction and restoration",
+   "DAW editing (Pro Tools)",
+   "consistency and continuity across takes",
+   "delivery to mix specifications"
+  ],
+  "source": "curated_creative",
+  "reason": "Edits and prepares recorded dialogue/voice-over for film, games and media; post-production audio specialization. Anchored to broadcasting/AV technicians 3521."
+ }
+]

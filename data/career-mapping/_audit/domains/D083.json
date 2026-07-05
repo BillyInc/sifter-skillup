@@ -1,0 +1,137 @@
+{
+ "domain_id": "D083",
+ "domain_name": "Travel, Tourism",
+ "role_count": 26,
+ "roles": [
+  {
+   "role": "environmental education officer",
+   "isco": 5113,
+   "aka": "ecotourism guide  ·  environmental educator  ·  environmental trainer  ·  environmental communications officer  ·  environmental public relations specialist"
+  },
+  {
+   "role": "park guide",
+   "isco": 5113,
+   "aka": "park ranger  ·  countryside ranger  ·  countryside manager  ·  heritage centre worker  ·  area ranger"
+  },
+  {
+   "role": "travel consultant",
+   "isco": 4221,
+   "aka": "tourism promotion agent  ·  business travel consultant  ·  business travel advisor  ·  leisure travel consultant  ·  travel advisor"
+  },
+  {
+   "role": "steward/stewardess",
+   "isco": 5111,
+   "aka": "steward  ·  stewardess  ·  flight attendant  ·  cabin crew"
+  },
+  {
+   "role": "tour organiser",
+   "isco": 4221,
+   "aka": "tour organizer  ·  tour leader  ·  excursion leader  ·  excursion escort  ·  travel and tourism tour manager"
+  },
+  {
+   "role": "ship steward/ship stewardess",
+   "isco": 5111,
+   "aka": "ferry stewardess  ·  cruise ship guest services associate  ·  ferry steward  ·  ship guest services associate  ·  ship steward"
+  },
+  {
+   "role": "ground steward/ground stewardess",
+   "isco": 4221,
+   "aka": "ground attendant  ·  meet and assist agent  ·  passenger service supervisor  ·  ground stewardess  ·  passenger service attendant"
+  },
+  {
+   "role": "passenger fare controller",
+   "isco": 5112,
+   "aka": "fare controller  ·  cable vehicle attendant  ·  ticket controller  ·  ticket conductor  ·  ticket inspector"
+  },
+  {
+   "role": "travel agent",
+   "isco": 4221,
+   "aka": "reservations agent  ·  travel booking agent  ·  sales agent  ·  travel sales agent"
+  },
+  {
+   "role": "zoo educator",
+   "isco": 5113,
+   "aka": "learning officer  ·  visitor educator  ·  education instructor  ·  schools engagement officer  ·  educator"
+  },
+  {
+   "role": "cabin crew manager",
+   "isco": 5111,
+   "aka": "manager of cabin crew  ·  inflight service manager  ·  customer service director  ·  flight service manager  ·  cabin service director"
+  },
+  {
+   "role": "railway passenger service agent",
+   "isco": 5112,
+   "aka": "railway station customer service representative  ·  railway customer service agent  ·  railway transportation service representative  ·  railway passenger agent  ·  railway customer transit agent"
+  },
+  {
+   "role": "railway sales agent",
+   "isco": 4221,
+   "aka": "railway station agent  ·  railway station counter agent  ·  agent for railway ticket sales  ·  counter sales agent  ·  railway tickets salesman"
+  },
+  {
+   "role": "tourist information officer",
+   "isco": 4221,
+   "aka": "tourist assistant  ·  tourist information agent  ·  tourist point information officer  ·  tourist receptionist  ·  tourist centre officer"
+  },
+  {
+   "role": "chief conductor",
+   "isco": 5112,
+   "aka": "train conductors supervisor  ·  chief guard  ·  train chief conductor  ·  conductor crew supervisor  ·  chief train conductor"
+  },
+  {
+   "role": "host/hostess",
+   "isco": 4221,
+   "aka": "hostess  ·  host  ·  airport host  ·  airport hostess  ·  airport host/hostess"
+  },
+  {
+   "role": "tourist guide",
+   "isco": 5113,
+   "aka": "museum guide  ·  palace guide  ·  city guide  ·  castle guide  ·  guide"
+  },
+  {
+   "role": "tour operator representative",
+   "isco": 4221,
+   "aka": "holiday rep  ·  holiday representative  ·  tour representative  ·  tour rep"
+  },
+  {
+   "role": "ticket sales agent",
+   "isco": 4221,
+   "aka": "ticket booking agent  ·  ticket reservation agent  ·  ticket agent"
+  },
+  {
+   "role": "train conductor",
+   "isco": 5112,
+   "aka": "train attendant  ·  train guard  ·  rail conductor  ·  railway conductor  ·  conductor on trains"
+  },
+  {
+   "role": "flight attendant",
+   "isco": 5111,
+   "aka": "air crew member  ·  steward  ·  cabin attendant  ·  inflight service attendant  ·  stewardess"
+  },
+  {
+   "role": "train attendant",
+   "isco": 5111,
+   "aka": "train on-board staff member  ·  train steward  ·  train on-board stewardess  ·  train on-board steward  ·  train on-board customer service representative"
+  },
+  {
+   "role": "Transportation Attendants and Conductors",
+   "isco": 5112,
+   "aka": NaN
+  },
+  {
+   "role": "Tour Guides and Escorts",
+   "isco": 5113,
+   "aka": NaN
+  },
+  {
+   "role": "Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products",
+   "isco": 2434,
+   "aka": NaN
+  },
+  {
+   "role": "Brokerage Clerks",
+   "isco": 4221,
+   "aka": NaN
+  }
+ ]
+}

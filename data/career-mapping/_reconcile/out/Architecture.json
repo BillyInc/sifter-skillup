@@ -1,0 +1,126 @@
+{
+ "reconciled": [
+  {
+   "programme": "Architecture",
+   "add": [
+    {"domain_id": "D051", "domain": "Real Estate & Property Management", "match_type": "functional", "why": "Design economics, costing and building-industry courses feed property development/management roles"},
+    {"domain_id": "D080", "domain": "Interior Design & Spatial Design", "match_type": "functional", "why": "Ergonomic space-making and enclosure/form design span interior spatial design"}
+   ],
+   "remove": [
+    {"domain_id": "D134", "why": "Naval architecture (ship design) is a distinct field; spurious direct link on building architecture"},
+    {"domain_id": "D011", "why": "Quantitative finance has no course basis"},
+    {"domain_id": "D158", "why": "Investment banking unrelated"},
+    {"domain_id": "D062", "why": "Capital-markets trading unrelated"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D015", "why": "No accounting course basis"},
+    {"domain_id": "D031", "why": "Sales/business development unrelated"},
+    {"domain_id": "D133", "why": "Luxury bespoke transport interiors unrelated to building architecture"},
+    {"domain_id": "D140", "why": "Robotics engineering unrelated"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping unrelated"}
+   ]
+  },
+  {
+   "programme": "Architectural Technology",
+   "add": [
+    {"domain_id": "D099", "domain": "Masonry, Bricklaying, Tiling, Plastering & General Building Trades", "match_type": "functional", "why": "Building Components & Methods and construction-techniques courses cover core building trades"}
+   ],
+   "remove": [
+    {"domain_id": "D161", "why": "Humanitarian/emergency response has no course basis"},
+    {"domain_id": "D009", "why": "No data-science course basis"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D131", "why": "Motorsport engineering unrelated"},
+    {"domain_id": "D056", "why": "No blockchain course basis"},
+    {"domain_id": "D002", "why": "BIM does not amount to a data-engineering career"},
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D136", "why": "Aeronautical engineering unrelated"},
+    {"domain_id": "D140", "why": "Robotics engineering unrelated"}
+   ]
+  },
+  {
+   "programme": "Furniture Design",
+   "add": [
+    {"domain_id": "D102", "domain": "Carpentry, Joinery, Wood Technology & Furniture Making", "match_type": "direct", "why": "Furniture production, joinery, wood fabrication and workshop practice are the programme's core purpose — promote from functional"}
+   ],
+   "remove": [
+    {"domain_id": "D163", "why": "No IP/patent course; spurious tech-law link"},
+    {"domain_id": "D162", "why": "Immigration law unrelated"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D037", "why": "Legal practice unrelated"},
+    {"domain_id": "D043", "why": "Journalism unrelated"},
+    {"domain_id": "D050", "why": "Industrial automation/robotics unrelated"},
+    {"domain_id": "D140", "why": "Robotics engineering unrelated"},
+    {"domain_id": "D121", "why": "Forestry/wildlife unrelated; timber sourcing is not forestry management"}
+   ]
+  },
+  {
+   "programme": "Interior Architecture and Design",
+   "add": [
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "functional", "why": "Building Systems & Construction and interior materials/construction courses"}
+   ],
+   "remove": [
+    {"domain_id": "D134", "why": "Naval architecture (ship design) is a distinct field; spurious direct link"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D001", "why": "No software-engineering course basis"},
+    {"domain_id": "D158", "why": "Investment banking unrelated"},
+    {"domain_id": "D056", "why": "No blockchain course basis"},
+    {"domain_id": "D140", "why": "Robotics engineering unrelated"},
+    {"domain_id": "D015", "why": "No accounting course basis"},
+    {"domain_id": "D157", "why": "Tax advisory unrelated"},
+    {"domain_id": "D136", "why": "Aeronautical engineering unrelated"},
+    {"domain_id": "D009", "why": "No data-science course basis"},
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D002", "why": "BIM does not amount to a data-engineering career"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D062", "why": "Capital-markets trading unrelated"},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping unrelated"}
+   ]
+  },
+  {
+   "programme": "Landscape Architecture",
+   "add": [
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "functional", "why": "Landscape Construction I & II and landscape structures/services courses"},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Plant Materials and planting/horticulture content"},
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "functional", "why": "Map reading, aerial-photo interpretation, contour and drainage-basin mapping courses"}
+   ],
+   "remove": [
+    {"domain_id": "D134", "why": "Naval architecture (ship design) unrelated; spurious direct link"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D140", "why": "Robotics engineering unrelated"},
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D062", "why": "Capital-markets trading unrelated"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D131", "why": "Motorsport engineering unrelated"},
+    {"domain_id": "D031", "why": "Sales/business development unrelated"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D016", "why": "No electrical-engineering course basis"},
+    {"domain_id": "D078", "why": "No social-science research course basis"},
+    {"domain_id": "D167", "why": "XR/immersive tech unrelated"},
+    {"domain_id": "D033", "why": "Product management unrelated"},
+    {"domain_id": "D049", "why": "Automotive engineering unrelated"},
+    {"domain_id": "D136", "why": "Aeronautical engineering unrelated"},
+    {"domain_id": "D017", "why": "No mechanical-engineering course basis"},
+    {"domain_id": "D030", "why": "Marketing/brand unrelated"}
+   ]
+  },
+  {
+   "programme": "Naval Architecture",
+   "add": [
+    {"domain_id": "D021", "domain": "Architecture & Urban Planning", "match_type": "adjacent", "why": "Shared design-studio and drawing methodology gives a foothold, but ship design is not building architecture — downgrade from direct"}
+   ],
+   "remove": [
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D140", "why": "Robotics engineering has no course basis"},
+    {"domain_id": "D136", "why": "Aeronautical engineering unrelated"},
+    {"domain_id": "D131", "why": "Motorsport engineering unrelated"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D049", "why": "Automotive engineering unrelated"},
+    {"domain_id": "D164", "why": "Smart-city/urban-mobility unrelated"},
+    {"domain_id": "D006", "why": "No IoT course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering unrelated"}
+   ]
+  }
+ ]
+}

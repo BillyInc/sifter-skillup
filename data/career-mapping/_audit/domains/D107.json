@@ -1,0 +1,362 @@
+{
+ "domain_id": "D107",
+ "domain_name": "Leather Technology, Shoemaking",
+ "role_count": 71,
+ "roles": [
+  {
+   "role": "bespoke footwear technician",
+   "isco": 7536,
+   "aka": "custom shoemaker  ·  customized shoe maker  ·  customised shoe maker  ·  customized footwear technician  ·  custom made footwear technician"
+  },
+  {
+   "role": "hand lasting operator",
+   "isco": 7536,
+   "aka": "hand laster  ·  hand lasting craftsman  ·  manual lasting operator  ·  hand lasting technician"
+  },
+  {
+   "role": "orthopaedic footwear technician",
+   "isco": 7536,
+   "aka": "orthotic technician  ·  orthopaedic shoe technician  ·  orthopaedic bootmaker  ·  Orthopedic footwear technician  ·  bespoke orthopaedic footwear technician"
+  },
+  {
+   "role": "tanner",
+   "isco": 7535,
+   "aka": "tanning machine operator  ·  spray finishing machine operator  ·  retanning machine operator  ·  drum operator  ·  beamhouse operator"
+  },
+  {
+   "role": "leather goods hand cutting operator",
+   "isco": 7536,
+   "aka": "die cutter  ·  die-cutting operator  ·  leather die-cutting operator  ·  leather cutter  ·  leather hand cutting operator"
+  },
+  {
+   "role": "leather goods manual operator",
+   "isco": 7536,
+   "aka": "hand operator  ·  manual operator  ·  leather parts manipulator  ·  leather components manipulator"
+  },
+  {
+   "role": "footwear CAD patternmaker",
+   "isco": 7536,
+   "aka": "CAD pattern-maker  ·  footwear pattern maker  ·  footwear CAD pattern cutter footwear pattern maker CAD operator  ·  CAD pattern maker  ·  footwear pattern-maker CAD operator"
+  },
+  {
+   "role": "footwear 3D developer",
+   "isco": 7536,
+   "aka": "footwear 3D expert  ·  3D footwear product designer and developer  ·  3D footwear expert  ·  footwear 3D computer aided design developer  ·  3D footwear developer"
+  },
+  {
+   "role": "leather goods finishing operator",
+   "isco": 7536,
+   "aka": "leather finishing operator  ·  leather wrapping operator"
+  },
+  {
+   "role": "footwear patternmaker",
+   "isco": 7536,
+   "aka": "pattern designer and cutter  ·  pattern designer and maker  ·  footwear pattern designer and cutter  ·  footwear pattern-maker  ·  footwear pattern cutter"
+  },
+  {
+   "role": "footwear hand sewer",
+   "isco": 7536,
+   "aka": "mocassin sewer  ·  mocassin hand stitcher  ·  hand sewer  ·  shoes hand sewer  ·  shoes hand stitcher"
+  },
+  {
+   "role": "shoe repairer",
+   "isco": 7536,
+   "aka": "cobbler  ·  boot maker  ·  shoe polisher  ·  shoe maker  ·  boot repairer"
+  },
+  {
+   "role": "leather goods hand stitcher",
+   "isco": 7536,
+   "aka": "leather goods hand sewer"
+  },
+  {
+   "role": "leather sorter",
+   "isco": 7535,
+   "aka": "grader  ·  leather grader  ·  leather seconds inspector-grader  ·  leather sorting supervisor  ·  leather inspector"
+  },
+  {
+   "role": "shoemaker",
+   "isco": 7536,
+   "aka": "custom shoemaker  ·  cobbler  ·  hand craft shoe maker  ·  shoe repairer  ·  traditional shoe manufacturer"
+  },
+  {
+   "role": "Shoe and Leather Workers and Repairers",
+   "isco": 7536,
+   "aka": NaN
+  },
+  {
+   "role": "Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers",
+   "isco": 7535,
+   "aka": NaN
+  },
+  {
+   "role": "Shoe Machine Operators and Tenders",
+   "isco": 7535,
+   "aka": NaN
+  },
+  {
+   "role": "tanning technician",
+   "isco": 3119,
+   "aka": "tanning process coordinator  ·  tanning expert  ·  tanning technologist  ·  tanning professional  ·  leather tanning technician"
+  },
+  {
+   "role": "leather goods production supervisor",
+   "isco": 3122,
+   "aka": "leather goods cutting room supervisor  ·  leather goods finishing room supervisor  ·  leather goods production foreman  ·  leather product manufacturing foreman  ·  leather product manufacturing forewoman"
+  },
+  {
+   "role": "footwear assembly supervisor",
+   "isco": 3122,
+   "aka": "assembly team leader  ·  assembly line supervisor  ·  lasting supervisor  ·  assembly room forewoman  ·  footwear lasting supervisor"
+  },
+  {
+   "role": "footwear production supervisor",
+   "isco": 3122,
+   "aka": "footwear finishing room supervisor  ·  footwear production foreman  ·  rubber footwear moulding supervisor  ·  footwear closing room supervisor  ·  footwear product inspection supervisor"
+  },
+  {
+   "role": "leather goods industrial engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  industrial engineer  ·  engineering technician  ·  leather goods manufacturing technician  ·  industrial engineering technician"
+  },
+  {
+   "role": "leather production planner",
+   "isco": 2141,
+   "aka": "leather production planner and scheduler  ·  leather production planners  ·  leather production control planner  ·  leather materials planner  ·  leather orders planner"
+  },
+  {
+   "role": "leather goods manufacturing technician",
+   "isco": 3119,
+   "aka": "leather goods worker  ·  leather goods industry forewoman  ·  leather goods technician  ·  leather goods cutting & finishing technician  ·  leather goods cutting and finishing technician"
+  },
+  {
+   "role": "leather goods quality control laboratory technician",
+   "isco": 3119,
+   "aka": "leather goods quality assurance laboratory technologist  ·  leather goods QC laboratory technician  ·  QC laboratory technician leather goods  ·  QC/QA laboratory technician leather goods  ·  leather goods QC/QA laboratory technician"
+  },
+  {
+   "role": "leather goods quality technician",
+   "isco": 3119,
+   "aka": "quality technologist  ·  leather goods quality technologist  ·  leather goods quality specialist  ·  leather goods quality engineer"
+  },
+  {
+   "role": "footwear quality technician",
+   "isco": 3119,
+   "aka": "footwear quality engineer  ·  footwear quality control technician  ·  footwear quality analyst"
+  },
+  {
+   "role": "footwear quality control laboratory technician",
+   "isco": 3119,
+   "aka": "footwear quality laboratory technician  ·  footwear quality control laboratory analyst  ·  footwear quality control engineer  ·  footwear quality control laboratory technologist"
+  },
+  {
+   "role": "footwear product developer",
+   "isco": 3119,
+   "aka": "footwear product engineer  ·  footwear product designer & developer  ·  footwear product development engineer  ·  footwear technologist  ·  footwear product technologist"
+  },
+  {
+   "role": "footwear production technician",
+   "isco": 3119,
+   "aka": "industry foreman  ·  shoe technician  ·  general foreman  ·  general forewoman  ·  industry forewoman specialized in shoemaking"
+  },
+  {
+   "role": "leather laboratory technician",
+   "isco": 3111,
+   "aka": "leather chemical tester  ·  leather chemist  ·  leather tester  ·  leather chemical laboratory technician  ·  leather chemical technician"
+  },
+  {
+   "role": "leather goods stitching machine operator",
+   "isco": 8153,
+   "aka": "leather saddle stitcher operator  ·  saddle stiching machine operator"
+  },
+  {
+   "role": "leather finishing operator",
+   "isco": 8155,
+   "aka": "milling drum operator  ·  finishing machinist  ·  plating machine operator  ·  leather embossing machine operator  ·  finishing range operator"
+  },
+  {
+   "role": "leather goods CAD patternmaker",
+   "isco": 7532,
+   "aka": "leatherware CAD pattern-maker  ·  leather goods CAD pattern-maker  ·  leather goods CAD operator  ·  leather goods CAD modelist  ·  CAD patternmaker leather goods"
+  },
+  {
+   "role": "footwear maintenance technician",
+   "isco": 8156,
+   "aka": "footwear maintenance mechanic  ·  footwear machinery repairer  ·  footwear machinery installer"
+  },
+  {
+   "role": "footwear production machine operator",
+   "isco": 8156,
+   "aka": "footwear production machine tender  ·  footwear production sewing machine operator  ·  footwear production machine sewer  ·  footwear production cutting machine operator  ·  footwear production machine cutter"
+  },
+  {
+   "role": "leather goods maintenance technician",
+   "isco": 8156,
+   "aka": "leather goods manufacturing equipment operator  ·  leather goods maintenance worker"
+  },
+  {
+   "role": "leather goods machine operator",
+   "isco": 8156,
+   "aka": "leather production worker  ·  leather production machinist  ·  leather production machine operator  ·  leather sewing machine operator  ·  leather products machinist"
+  },
+  {
+   "role": "leather production machine operator",
+   "isco": 8155,
+   "aka": "de-hairing machine operator  ·  leather production worker  ·  tanning machine operator  ·  leather production machinist  ·  leather production splitting machine operator"
+  },
+  {
+   "role": "leather goods patternmaker",
+   "isco": 7532,
+   "aka": "leatherware modelist  ·  leather goods pattern-maker  ·  leatherware pattern-maker  ·  leather goods pattern maker  ·  pattern maker leather goods"
+  },
+  {
+   "role": "leather measuring operator",
+   "isco": 8159,
+   "aka": "leather measuring operators  ·  measuring machine tender  ·  leather measurer  ·  pinwheels and optical leather measuring operator  ·  hide measuring machine operator"
+  },
+  {
+   "role": "leather goods packing operator",
+   "isco": 8183,
+   "aka": "leather goods packing worker  ·  packing attendant  ·  leather goods packing attendant  ·  packing worker"
+  },
+  {
+   "role": "footwear finishing and packing operator",
+   "isco": 8183,
+   "aka": "footwear finishing operator  ·  footwear finishing department operator"
+  },
+  {
+   "role": "leather goods artisanal worker",
+   "isco": 7318,
+   "aka": "bespoke leather craftsman  ·  leather craftsman  ·  luxury leather artisan  ·  leather repair worker  ·  leather artisan"
+  },
+  {
+   "role": "footwear quality controller",
+   "isco": 7543,
+   "aka": "footwear quality assurance controller  ·  footwear quality control inspector  ·  footwear quality control officer  ·  footwear quality control analyst  ·  footwear quality and compliance supervisor"
+  },
+  {
+   "role": "leather goods quality controller",
+   "isco": 7543,
+   "aka": "leather goods quality analyst  ·  leather goods quality inspector  ·  leather goods quality control officer"
+  },
+  {
+   "role": "footwear factory warehouse operator",
+   "isco": 4321,
+   "aka": "footwear warehouse operator  ·  footwear factory warehouse worker"
+  },
+  {
+   "role": "leather goods warehouse operator",
+   "isco": 4321,
+   "aka": "warehouse responsible  ·  warehouse operator for leather goods"
+  },
+  {
+   "role": "finished leather warehouse manager",
+   "isco": 1324,
+   "aka": "finished leather warehouse operations manager  ·  finished leather warehouse supervisor  ·  finished leather warehouse managers  ·  finished leather warehouse forewoman  ·  finished leather warehouse foreman"
+  },
+  {
+   "role": "leather raw materials purchasing manager",
+   "isco": 1324,
+   "aka": "leather purchasing and inventory co-ordinator  ·  leather raw materials purchaser  ·  leather raw materials purchase officer  ·  hide purchasing manager  ·  leather raw materials procurement manager"
+  },
+  {
+   "role": "hides, skins and leather products distribution manager",
+   "isco": 1324,
+   "aka": "graduate hides, skins and leather products distribution manager  ·  trainee hides, skins and leather products distribution manager  ·  hides, skins and leather products supply chain manager  ·  hides, skins and leather products distribution planner  ·  assistant hides, skins and leather products distribution manager"
+  },
+  {
+   "role": "import export manager in hides, skins and leather products",
+   "isco": 1324,
+   "aka": "graduate import manager in hides, skins and leather products  ·  customs compliance manager in hides, skins and leather products  ·  international trade manager in hides, skins and leather products  ·  trainee import manager in hides, skins and leather products  ·  senior import export manager in hides, skins and leather products"
+  },
+  {
+   "role": "import export specialist in hides, skins and leather products",
+   "isco": 3331,
+   "aka": "senior import specialist in hides, skins and leather products  ·  assistant import export specialist in hides, skins and leather products  ·  assistant export specialist in hides, skins and leather products  ·  trainee import specialist in hides, skins and leather products  ·  graduate export specialist in hides, skins and leather products"
+  },
+  {
+   "role": "wholesale merchant in hides, skins and leather products",
+   "isco": 3324,
+   "aka": "business to business seller in hides, skins and leather products  ·  assistant wholesale merchant in hides, skins and leather products  ·  wholesale buyer in hides, skins and leather products  ·  wholesaler in hides, skins and leather products  ·  senior wholesale merchant in hides, skins and leather products"
+  },
+  {
+   "role": "leather goods quality manager",
+   "isco": 1321,
+   "aka": "quality supervisor  ·  quality control manager  ·  quality managing director  ·  leather goods quality control manager  ·  quality assurance/quality control manager"
+  },
+  {
+   "role": "leather finishing operations manager",
+   "isco": 1321,
+   "aka": "finishing area supervisor  ·  drying supervisor  ·  drying manager  ·  staking  ·  pressing"
+  },
+  {
+   "role": "leather goods production manager",
+   "isco": 1321,
+   "aka": "leather research and development manager  ·  head of leather goods production  ·  production planning manager  ·  fashion production manager  ·  leather goods production supervisor"
+  },
+  {
+   "role": "footwear quality manager",
+   "isco": 1321,
+   "aka": "footwear quality coordinator  ·  footwear quality control manager  ·  footwear quality executive  ·  footwear quality assurance manager"
+  },
+  {
+   "role": "footwear production manager",
+   "isco": 1321,
+   "aka": "production planning manager  ·  fashion production manager  ·  head of footwear production  ·  footwear and sportswear production manager"
+  },
+  {
+   "role": "leather wet processing department manager",
+   "isco": 1321,
+   "aka": "leather wet processing manager  ·  beamhouse department manager  ·  leather wet processing department supervisor  ·  tanyard area supervisor"
+  },
+  {
+   "role": "leather production manager",
+   "isco": 1321,
+   "aka": "leather production director  ·  leather logistics manager  ·  leather production managers  ·  leather operations director  ·  leather manufacturing director"
+  },
+  {
+   "role": "shoe and leather accessories shop manager",
+   "isco": 1420,
+   "aka": "shoe store manager  ·  cobblers shop manager  ·  footwear store manager  ·  shop manager (footwear and leather goods retail store)  ·  leather accessories shop manager"
+  },
+  {
+   "role": "footwear product development manager",
+   "isco": 1223,
+   "aka": "pre-production manager  ·  product development team leader  ·  footwear production & development manager  ·  senior product developer  ·  footwear product manager"
+  },
+  {
+   "role": "leather goods product development manager",
+   "isco": 1223,
+   "aka": "leather goods pre-production manager  ·  product development coordinator leather goods  ·  leatherware product development supervisor  ·  leather goods product development supervisor  ·  leatherware product development director"
+  },
+  {
+   "role": "shoe and leather accessories specialised seller",
+   "isco": 5223,
+   "aka": "shoe and leather accessories salesperson  ·  sports shoes specialised seller  ·  sports shoes salesperson  ·  childrens shoes salesperson  ·  leather accessories salesperson"
+  },
+  {
+   "role": "footwear designer",
+   "isco": 2163,
+   "aka": "footwear technologist  ·  footwear designer and developer  ·  shoe stylist  ·  men's footwear designer  ·  women's footwear designer"
+  },
+  {
+   "role": "leather goods designer",
+   "isco": 2163,
+   "aka": "leather goods drawer  ·  leatherware designer  ·  leather goods fashion designer  ·  leather goods drafter  ·  fashion leather goods designer"
+  },
+  {
+   "role": "leather goods product developer",
+   "isco": 2163,
+   "aka": "leather technologist  ·  leather product engineer  ·  leatherware product developer  ·  leather product development engineer  ·  leatherware engineer"
+  },
+  {
+   "role": "textile, leather and footwear researcher",
+   "isco": 2149,
+   "aka": "textile and leather researcher  ·  textile, leather and footwear research worker  ·  textile, leather and footwear research analyst  ·  clothing and apparel researcher  ·  textile and clothing researcher"
+  },
+  {
+   "role": "footwear stitching machine operator",
+   "isco": 8156,
+   "aka": "shoe stitcher  ·  binding stitcher  ·  shoe sewing machine tender  ·  shoe sewing machine operator"
+  }
+ ]
+}

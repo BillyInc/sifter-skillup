@@ -1,0 +1,47 @@
+{
+ "domain_id": "D091",
+ "domain_name": "Driving Instruction",
+ "role_count": 8,
+ "roles": [
+  {
+   "role": "motorcycle instructor",
+   "isco": 5165,
+   "aka": "driving instructor  ·  motorcycle driving training instructor  ·  driver training instructor  ·  driver education instructor  ·  motorcycle driving instructor"
+  },
+  {
+   "role": "vessel steering instructor",
+   "isco": 5165,
+   "aka": "cruise ship instructor  ·  helm  ·  helmsman  ·  helm teacher  ·  ship steering teacher"
+  },
+  {
+   "role": "bus driving instructor",
+   "isco": 5165,
+   "aka": "driving instructor  ·  driver training instructor  ·  driver education instructor  ·  PCV driving instructor  ·  bus driver training instructor"
+  },
+  {
+   "role": "car driving instructor",
+   "isco": 5165,
+   "aka": "driving instructor  ·  driver education instructor  ·  car driver instructor  ·  car driver training instructor  ·  automobile driving instructor"
+  },
+  {
+   "role": "driving instructor",
+   "isco": 5165,
+   "aka": "learner driver instructor  ·  driving educator  ·  driving trainer  ·  teacher of driving  ·  instructor in driving"
+  },
+  {
+   "role": "truck driving instructor",
+   "isco": 5165,
+   "aka": "driving instructor  ·  driver training instructor  ·  driver education instructor  ·  HGV instructor  ·  lorry driving instructor"
+  },
+  {
+   "role": "Motor Vehicle Operators, All Other",
+   "isco": 5165,
+   "aka": NaN
+  },
+  {
+   "role": "Residential Advisors",
+   "isco": 5165,
+   "aka": NaN
+  }
+ ]
+}

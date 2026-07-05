@@ -1,0 +1,340 @@
+[
+ {
+  "programme": "Law",
+  "code": "LAW",
+  "technical_skills": [
+   "discuss the aim of studying psychology",
+   "discuss and critically evaluate the schools of Psychology",
+   "discuss the historical antecedents to modern Psychology",
+   "explain different areas of specialisation in Psychology",
+   "mention the methods of investigation, data collection and principles that guide scientific research; and",
+   "discuss the relationship between psychology and other disciplines and critically evaluate the controversies in psychology.\"",
+   "have acquired a good understanding of what Social and Political Philosophy is all about",
+   "be familiar with the notions of society, the origin of the state, the individual in society, political obligations, leadership and",
+   "appreciate their role as citizens and help shape their relationship with other constituents of society.\" > **NOTE — FLAG-A:** Course listed in Glossary as \"PHY 105\" but as \"PHL 105\" in table and content. See pre-extraction flags",
+   "appreciate the various legal rules, methods, processes and reasoning",
+   "acquire basic knowledge of the fundamental concepts of law and the various legal systems",
+   "gain knowledge of the function of law in society; and",
+   "appreciate the various aspects and perspectives of law.\"",
+   "appreciate the hierarchy and categories of sources of law",
+   "illustrate basic knowledge in the use of various legal materials and resources",
+   "identify basic knowledge in the way and style of legal writing; and",
+   "familiarise themselves with the ethics of the legal profession, including dress codes and modes\"",
+   "familiarise with the ethics of the legal profession, including dress codes and modes\"",
+   "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal terminology, rhetoric, logic, reasoning and legalism",
+   "list the tools and skills required by law students to study and display the ability to apply them",
+   "explain the fundamentals of English Grammar",
+   "demonstrate ability in both reading and writing skills consisting of presentations",
+   "organise ideas in writing of legal letters, reports, essays and examination answers; and",
+   "distinguish between main ideas from supporting details.\"",
+   "identify the basic features of logic as an academic discipline"
+  ],
+  "transferable_skills": [
+   "Robust legal argument skills",
+   "Communication skills",
+   "Research and brief writing skills",
+   "Arbitration and Mediation competencies",
+   "Analytical skills to solving theoretical and practical legal problems",
+   "Practice management skills",
+   "Transactional skills, such as the ability to structure a legal transaction effectively",
+   "Legal drafting skills",
+   "identify possible sound patterns in the English Language",
+   "list notable Language skills",
+   "classify word-formation processes",
+   "construct simple and relatively complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Psychology",
+   "Introduction to Social and Political Philosophy",
+   "Legal Methods I",
+   "Legal Methods II",
+   "English for Legal Writing",
+   "Introduction to Logic",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Constitutional Law I",
+   "Constitutional Law II",
+   "Nigerian Legal System I",
+   "Nigerian Legal System II",
+   "Law of Contract I",
+   "Law of Contract II",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Criminal Law I",
+   "Criminal Law II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D038",
+    "domain": "Compliance, Regulation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Common and Islamic Law",
+  "code": "ICL",
+  "technical_skills": [
+   "appreciate the various legal rules, methods, processes and reasoning",
+   "acquire basic knowledge of the fundamental concepts of law and the various legal systems",
+   "gain knowledge of the function of law in society; and",
+   "appreciate the various aspects and perspectives of law.\"",
+   "appreciate the hierarchy and categories of sources of law",
+   "illustrate basic knowledge in the use of various legal materials and resources",
+   "identify basic knowledge in the way and style of legal writing; and",
+   "familiarise themselves with the operation and application of Islamic law of torts in contemporary times.\"",
+   "familiarise with the ethics of the legal profession, including dress codes and modes\"",
+   "illustrate the understanding of principles, standards, and issues in law, including formalities and precision in the use of language; the uniqueness and distinctiveness of legal terminology, rhetoric, logic, reasoning and legalism",
+   "list the tools and skills required by law students to study and display the ability to apply them",
+   "explain the fundamentals of English Grammar",
+   "demonstrate ability in both reading and writing skills consisting of presentations",
+   "organise ideas in writing of legal letters, reports, essays and examination answers; and",
+   "distinguish between main ideas from supporting details.\"",
+   "identify the basic features of logic as an academic discipline",
+   "identify the main branches of logic in philosophical discourse",
+   "describe the elementary rules of reasoning and application to logic",
+   "recognise arguments, deduction and induction, truth and validity",
+   "extrapolate and deploy expertise in logic to other areas of knowledge; and",
+   "apply the knowledge and expertise acquired in logic.\"",
+   "acquire basic knowledge of Islamic law generally",
+   "understand the sources of Islamic law, the formation of Islamic jurisprudence, and the history of the development of Islamic law",
+   "familiarise themselves with some basic principles of Islamic law",
+   "explain the essential techniques of interpreting the classical concepts and terminologies of the law"
+  ],
+  "transferable_skills": [
+   "Robust legal argument skills",
+   "Communication skills",
+   "Research and brief writing skills",
+   "Arbitration and Mediation competencies",
+   "Analytical skills to solving theoretical and practical legal problems",
+   "Practice management skills",
+   "Transactional skills, such as the ability to structure a legal transaction effectively; and",
+   "Legal drafting skills",
+   "identify possible sound patterns in the English Language",
+   "list notable Language skills",
+   "classify word-formation processes",
+   "construct simple and relatively complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Legal Method I",
+   "Legal Method II",
+   "English for Legal Writing",
+   "Introduction to Logic",
+   "Introduction to General Principle of Islamic Law",
+   "Arabic Language for Legal Studies",
+   "Logic, Philosophy and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Constitutional Law I",
+   "Constitutional Law II",
+   "Law of Contract I",
+   "Law of Contract II",
+   "Nigerian Legal System I",
+   "Nigerian Legal System II",
+   "Ayat And Hadith Al–Ahkam",
+   "Islamic Law of Crime",
+   "Islamic Law of Torts",
+   "Peace and Conflict Resolution"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ }
+]

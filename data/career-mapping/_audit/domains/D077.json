@@ -1,0 +1,257 @@
+{
+ "domain_id": "D077",
+ "domain_name": "Security Services",
+ "role_count": 50,
+ "roles": [
+  {
+   "role": "crossing guard",
+   "isco": 5419,
+   "aka": "school crossing patrol officer  ·  school crossing guard"
+  },
+  {
+   "role": "industrial firefighter",
+   "isco": 5411,
+   "aka": "site emergency response team member  ·  industrial fireman  ·  industrial fire team member  ·  emergency response team member  ·  factory firefighter"
+  },
+  {
+   "role": "animal welfare inspector",
+   "isco": 5419,
+   "aka": "animal rescue operator  ·  animal welfare officer  ·  animal social worker  ·  animal welfare worker  ·  animal control officer"
+  },
+  {
+   "role": "life guard",
+   "isco": 5419,
+   "aka": "lifeguard  ·  pool attendant  ·  rescuer  ·  swimming pool lifeguard  ·  lifesaver"
+  },
+  {
+   "role": "security guard",
+   "isco": 5414,
+   "aka": "airport security guard  ·  security chief  ·  garden guardian  ·  security manager  ·  corporate security guard"
+  },
+  {
+   "role": "prison officer",
+   "isco": 5413,
+   "aka": "detention officer  ·  corrections officer  ·  gaoler  ·  turnkey  ·  prison warden"
+  },
+  {
+   "role": "security guard supervisor",
+   "isco": 5414,
+   "aka": "security chief  ·  security supervisor  ·  commercial security officers supervisor  ·  security guard manager  ·  security guard chief"
+  },
+  {
+   "role": "police detective",
+   "isco": 3355,
+   "aka": "chief detective  ·  detective inspector  ·  detective constable  ·  detective superintendent"
+  },
+  {
+   "role": "criminal investigator",
+   "isco": 3355,
+   "aka": "forensic scientist  ·  forensic science officer  ·  scenes of crime officer  ·  fingerprint officer  ·  crime scene investigator"
+  },
+  {
+   "role": "street warden",
+   "isco": 5419,
+   "aka": "countryside ranger  ·  neighborhood warden  ·  warden  ·  bylaw enforcement officer  ·  neighbourhood warden"
+  },
+  {
+   "role": "police officer",
+   "isco": 5412,
+   "aka": "highway patrol officer  ·  public roads surveillance officer  ·  mounted police officer  ·  law enforcement officer  ·  constable"
+  },
+  {
+   "role": "juvenile correctional officer",
+   "isco": 5413,
+   "aka": "youth correctional officer  ·  young offenders officer  ·  detention centre youth worker  ·  youth detention counselor  ·  correctional youth security officer"
+  },
+  {
+   "role": "pump operator",
+   "isco": 5411,
+   "aka": "fire fighter assistant  ·  fireman assistant  ·  fire appliance pump operator  ·  fire engine pump operator  ·  firewoman assistant"
+  },
+  {
+   "role": "door supervisor",
+   "isco": 5414,
+   "aka": "bouncer  ·  disco doorman  ·  nightclub doorman  ·  bar doorman"
+  },
+  {
+   "role": "aircraft marshaller",
+   "isco": 5419,
+   "aka": "aeroplane signal crewman  ·  aeroplane ground handler  ·  aeroplane marshaller  ·  aircraft ground handler  ·  ground marshaller"
+  },
+  {
+   "role": "gate guard",
+   "isco": 5414,
+   "aka": "gateman  ·  gate keeper  ·  security gate attendant  ·  security entrance attendant  ·  gate attendant"
+  },
+  {
+   "role": "firefighter",
+   "isco": 5411,
+   "aka": "fire brigade officer  ·  operational firefighter  ·  senior firefighter  ·  firewoman  ·  fireman"
+  },
+  {
+   "role": "crowd controller",
+   "isco": 5419,
+   "aka": "steward  ·  spectator controller  ·  crowd control worker"
+  },
+  {
+   "role": "marine firefighter",
+   "isco": 5411,
+   "aka": "marine fire technician  ·  harbour firefighter  ·  ship's firefighter  ·  shipboard firefighter  ·  vessel firefighter"
+  },
+  {
+   "role": "security alarm investigator",
+   "isco": 5414,
+   "aka": "alarm investigator  ·  surveillance-system monitor  ·  alarm specialist  ·  alarm system specialist  ·  alarm signal investigator"
+  },
+  {
+   "role": "game keeper",
+   "isco": 5419,
+   "aka": "gamekeeper  ·  game warden  ·  estate supervisor"
+  },
+  {
+   "role": "airport security officer",
+   "isco": 5414,
+   "aka": "airport security guard  ·  airport security professional  ·  airport security agent  ·  TSA agent  ·  air marshall"
+  },
+  {
+   "role": "civil enforcement officer",
+   "isco": 5419,
+   "aka": "civil enforcement supervisor  ·  civil enforcement agent  ·  parking attendant  ·  traffic warden  ·  parking manager"
+  },
+  {
+   "role": "coastguard watch officer",
+   "isco": 5419,
+   "aka": "maritime and coastguard officer  ·  coastguard  ·  coastguard officer  ·  coastguard rescue officer"
+  },
+  {
+   "role": "security consultant",
+   "isco": 5414,
+   "aka": "security chief  ·  security manager  ·  security supervisor  ·  security specialist  ·  security expert"
+  },
+  {
+   "role": "police inspector",
+   "isco": 3355,
+   "aka": "police superintendent  ·  superintendent  ·  chief inspector  ·  inspector of police"
+  },
+  {
+   "role": "mine rescue officer",
+   "isco": 5411,
+   "aka": "mining safety officer  ·  mine emergency response co-ordinator  ·  mine emergency officer  ·  auxiliary mine rescue worker  ·  mining rescue officer"
+  },
+  {
+   "role": "emergency response worker",
+   "isco": 5419,
+   "aka": "first responder  ·  emergency response team worker  ·  emergency response mission worker  ·  clean up worker  ·  aid worker"
+  },
+  {
+   "role": "hospitality establishment security officer",
+   "isco": 5414,
+   "aka": "hotel security manager  ·  hotel security officer  ·  hospitality establishment security guard  ·  hospitality security officer  ·  hospitality security manager"
+  },
+  {
+   "role": "bodyguard",
+   "isco": 5414,
+   "aka": "personal safety specialist  ·  close protection officer  ·  personal security worker  ·  protection officer  ·  personal protection officer"
+  },
+  {
+   "role": "armoured car guard",
+   "isco": 5414,
+   "aka": "car escort  ·  armoured van guard  ·  armoured car security guard  ·  armored car guard  ·  armoured truck escort"
+  },
+  {
+   "role": "First-Line Supervisors of Correctional Officers",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Police and Detectives",
+   "isco": 5411,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Firefighting and Prevention Workers",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Security Workers",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Protective Service Workers, All Other",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Fire Inspectors and Investigators",
+   "isco": 5411,
+   "aka": NaN
+  },
+  {
+   "role": "Forest Fire Inspectors and Prevention Specialists",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Bailiffs",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "Fish and Game Wardens",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "Parking Enforcement Workers",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "Customs and Border Protection Officers",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "Transit and Railroad Police",
+   "isco": 5412,
+   "aka": NaN
+  },
+  {
+   "role": "Animal Control Workers",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Private Detectives and Investigators",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Crossing Guards and Flaggers",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Transportation Security Screeners",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "School Bus Monitors",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "Retail Loss Prevention Specialists",
+   "isco": 5419,
+   "aka": NaN
+  }
+ ]
+}

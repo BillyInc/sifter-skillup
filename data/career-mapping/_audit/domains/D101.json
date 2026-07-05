@@ -1,0 +1,42 @@
+{
+ "domain_id": "D101",
+ "domain_name": "Painting, Decorating",
+ "role_count": 7,
+ "roles": [
+  {
+   "role": "construction painter",
+   "isco": 7131,
+   "aka": "commercial decorator  ·  commercial painter and decorator  ·  painter and decorator  ·  industrial painter  ·  construction decorator"
+  },
+  {
+   "role": "lacquer spray gun operator",
+   "isco": 7132,
+   "aka": "automatic paint booth operator  ·  paint booth operator  ·  spray gun operator  ·  lacquer spray gun specialist  ·  lacquer spraying machine operator"
+  },
+  {
+   "role": "paperhanger",
+   "isco": 7131,
+   "aka": "wallpaper decorator  ·  wall paperer  ·  wallpaper hanger  ·  paper hanger  ·  decorator paper hanger"
+  },
+  {
+   "role": "transport equipment painter",
+   "isco": 7132,
+   "aka": "vessel painter  ·  automotive refinisher  ·  automotive paint technician  ·  motor vehicle painter  ·  vehicle paint sprayer"
+  },
+  {
+   "role": "marine painter",
+   "isco": 7131,
+   "aka": "ship painter  ·  boat painter  ·  marine blaster  ·  naval painter  ·  maritime painter"
+  },
+  {
+   "role": "surface treatment operator",
+   "isco": 7132,
+   "aka": "surface treatment worker  ·  surface coatings technician  ·  anti- corrosion surface treatment operative  ·  vessel painter  ·  marine vessel painter"
+  },
+  {
+   "role": "Painters, Construction and Maintenance",
+   "isco": 7131,
+   "aka": NaN
+  }
+ ]
+}

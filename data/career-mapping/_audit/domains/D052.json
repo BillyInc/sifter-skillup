@@ -1,0 +1,587 @@
+{
+ "domain_id": "D052",
+ "domain_name": "Construction Management",
+ "role_count": 116,
+ "roles": [
+  {
+   "role": "insulation supervisor",
+   "isco": 3123,
+   "aka": "solid wall insulation installation supervisor  ·  insulation installers supervisor  ·  supervisor of installation of insulating materials  ·  cavity wall insulation installation supervisor  ·  loft insulation installation supervisor"
+  },
+  {
+   "role": "metal production manager",
+   "isco": 1321,
+   "aka": "development engineer  ·  facility manager  ·  operations manager  ·  plant manager  ·  site manager"
+  },
+  {
+   "role": "bricklaying supervisor",
+   "isco": 3123,
+   "aka": "bricklaying foreman  ·  bricklayer supervisor  ·  bricklayer foreman  ·  brick laying supervisor  ·  brickwork foreman"
+  },
+  {
+   "role": "bridge construction supervisor",
+   "isco": 3123,
+   "aka": "bridge construction project supervisor  ·  bridge building supervisor  ·  bridge construction site supervisor  ·  bridgebuilding supervisor"
+  },
+  {
+   "role": "bricklayer",
+   "isco": 7112,
+   "aka": "specialist brick layer  ·  industrial oven brickmason  ·  brick laying worker  ·  brick layer  ·  trowel occupation worker"
+  },
+  {
+   "role": "plumbing supervisor",
+   "isco": 3123,
+   "aka": "foreman plumber  ·  supervisor of plumbing  ·  supervising plumber  ·  commercial plumbing supervisor  ·  pipework supervisor"
+  },
+  {
+   "role": "domestic energy assessor",
+   "isco": 3112,
+   "aka": "residential energy seller  ·  residential energy sales promoter  ·  residential energy salesman  ·  domestic energy sales promoter  ·  residential energy sales representative"
+  },
+  {
+   "role": "door installer",
+   "isco": 7115,
+   "aka": "door fitter  ·  door joiner and fitter  ·  door installation specialist  ·  door installation worker  ·  door furniture fitter"
+  },
+  {
+   "role": "chemical production manager",
+   "isco": 1321,
+   "aka": "chemical manufacturing manager  ·  operations manager chemical production  ·  production manager of chemicals  ·  chemical process engineer  ·  chemical production quality supervisor"
+  },
+  {
+   "role": "construction general supervisor",
+   "isco": 3123,
+   "aka": "construction programme manager  ·  construction foreman  ·  building programme manager  ·  construction project supervisor  ·  building programme supervisor"
+  },
+  {
+   "role": "civil engineering technician",
+   "isco": 3112,
+   "aka": "civil engineering design technician  ·  civils technician  ·  hydraulic engineering superintendent  ·  civil engineering technical officer  ·  civil engineering services technician"
+  },
+  {
+   "role": "water systems engineering technician",
+   "isco": 3112,
+   "aka": "water pumping systems engineering technician  ·  water treatment systems engineering technician  ·  flood defence engineering technician  ·  water resource engineering technician  ·  flood prevention engineering technician"
+  },
+  {
+   "role": "tiling supervisor",
+   "isco": 3123,
+   "aka": "tile installation supervisor  ·  foreman tiler  ·  wall tiling supervisor  ·  surface tiling supervisor  ·  tiling worker supervisor"
+  },
+  {
+   "role": "construction scaffolder",
+   "isco": 7119,
+   "aka": "scaffolding labourer  ·  platform erector  ·  scaffold erector  ·  access platform erector  ·  scaffolder in construction"
+  },
+  {
+   "role": "paperhanger supervisor",
+   "isco": 3123,
+   "aka": "wall paperer supervisor  ·  decorator supervisor  ·  paper hanger supervisor  ·  wallpaper decorator supervisor  ·  wallpaper hanger supervisor"
+  },
+  {
+   "role": "geological engineer",
+   "isco": 2142,
+   "aka": "geotechnical engineer  ·  geological technology engineering expert  ·  site geological consultant  ·  soil analyst  ·  geologic engineer"
+  },
+  {
+   "role": "power lines supervisor",
+   "isco": 3123,
+   "aka": "power lines installation and commissioning supervisor  ·  overhead power lines installation supervisor  ·  electric powerline technician supervisor  ·  overhead power lines construction supervisor  ·  cable installation supervisor"
+  },
+  {
+   "role": "concrete finisher supervisor",
+   "isco": 3123,
+   "aka": "concrete finishing and laying supervisor  ·  flooring operative supervisor  ·  powerfloat finisher supervisor  ·  layer and finisher supervisor  ·  concrete finishing supervisor"
+  },
+  {
+   "role": "mine shift manager",
+   "isco": 3121,
+   "aka": "scheduling officer  ·  scheduling manager (mine)  ·  mine shift supervisor  ·  mine shifts manager  ·  mine shift managers"
+  },
+  {
+   "role": "energy conservation officer",
+   "isco": 3112,
+   "aka": "energy information officer  ·  energy management officer"
+  },
+  {
+   "role": "staircase installer",
+   "isco": 7115,
+   "aka": "stair installer  ·  staircase carpenter  ·  stairway carpenter  ·  staircase craftsman  ·  staircase fitter"
+  },
+  {
+   "role": "rail construction supervisor",
+   "isco": 3123,
+   "aka": "railtrack construction supervisor  ·  rail track construction supervisor  ·  railtrack maintenance supervisor  ·  railway construction and maintenance supervisor  ·  permanent way construction supervisor"
+  },
+  {
+   "role": "carpenter",
+   "isco": 7115,
+   "aka": "joiner  ·  woodworker  ·  heritage carpentry  ·  carpentry framer  ·  joiner supervisor"
+  },
+  {
+   "role": "construction engineer",
+   "isco": 2142,
+   "aka": "building engineer  ·  construction design engineer  ·  buildng construction engineer  ·  site engineer  ·  construction project engineer"
+  },
+  {
+   "role": "sewer construction supervisor",
+   "isco": 3123,
+   "aka": "sewer system construction supervisor  ·  sewer pipeline construction supervisor  ·  sewage pipelayer supervisor  ·  sewage system construction supervisor"
+  },
+  {
+   "role": "frame maker",
+   "isco": 7115,
+   "aka": "picture framemaker  ·  mirror frame maker  ·  frame repairer  ·  mirror framer  ·  frame-making machine setter"
+  },
+  {
+   "role": "lift installation supervisor",
+   "isco": 3123,
+   "aka": "supervisor of lift installations  ·  elevator installation supervisor  ·  lift installation engineer  ·  elevator construction supervisor  ·  lift installation foreman"
+  },
+  {
+   "role": "construction scaffolding supervisor",
+   "isco": 3123,
+   "aka": "scaffolding supervisor  ·  scaffolding foreman  ·  foreman scaffolder  ·  construction scaffolding foreman  ·  access platform erection supervisor"
+  },
+  {
+   "role": "construction quality manager",
+   "isco": 3112,
+   "aka": "construction quality and safety control supervisor  ·  construction quality and safety manager  ·  construction QA manager  ·  construction quality managers  ·  construction QA QS manager"
+  },
+  {
+   "role": "window installer",
+   "isco": 7115,
+   "aka": "window technician  ·  window fitter  ·  window installation team worker  ·  window installation team member"
+  },
+  {
+   "role": "clothing operations manager",
+   "isco": 1321,
+   "aka": "clothing operations director  ·  clothing operations area manager  ·  clothing production manager"
+  },
+  {
+   "role": "rail project engineer",
+   "isco": 2142,
+   "aka": "railway project engineer  ·  rail engineering project manager  ·  engineer in railway projects  ·  project engineer in railways  ·  engineering project manager"
+  },
+  {
+   "role": "construction safety manager",
+   "isco": 3112,
+   "aka": "health and safety manager  ·  safety officer  ·  safety manager  ·  construction safety supervisor  ·  safety advisor"
+  },
+  {
+   "role": "sewerage maintenance technician",
+   "isco": 3112,
+   "aka": "sewer pipe maintenance technician  ·  sewerage investigative cctv operative  ·  sewerage investigation technician  ·  cctv operative  ·  sewerage system maintenance technician"
+  },
+  {
+   "role": "corrosion technician",
+   "isco": 3112,
+   "aka": "offshore corrosion technician  ·  surface technician  ·  corrosion monitoring technician  ·  pipeline operations technician  ·  pipeline corrosion control technician"
+  },
+  {
+   "role": "metallurgical manager",
+   "isco": 1321,
+   "aka": "metallurgical engineer  ·  metallurgy manager  ·  plant metallurgist  ·  metallurgy specialist  ·  chief metallurgist"
+  },
+  {
+   "role": "fire protection technician",
+   "isco": 3112,
+   "aka": "fire protection service engineer  ·  senior fire engineer  ·  fire and security systems engineer  ·  fire alarm service technician  ·  fire suppression engineer"
+  },
+  {
+   "role": "railway infrastructure inspector",
+   "isco": 3112,
+   "aka": "railway infrastructure examiner  ·  railway infrastructure safety inspector  ·  railway infrastructure auditor  ·  railway infrastructure surveyor"
+  },
+  {
+   "role": "pipeline engineer",
+   "isco": 2142,
+   "aka": "subsea pipeline engineer  ·  pipeline field engineer  ·  main line station engineer  ·  pipeline engineering technician  ·  pipeline field technician"
+  },
+  {
+   "role": "dismantling supervisor",
+   "isco": 3123,
+   "aka": "dismantling team leader  ·  disassembly team leader  ·  disassembly supervisor"
+  },
+  {
+   "role": "house builder",
+   "isco": 7111,
+   "aka": "builder of houses  ·  builder  ·  home builder  ·  domestic property builder  ·  residential property builder"
+  },
+  {
+   "role": "mine supervisor",
+   "isco": 3121,
+   "aka": "quarrying supervisor  ·  mine foreman  ·  mine technical supervisor  ·  quarry supervisor  ·  mine production supervisor"
+  },
+  {
+   "role": "water conservation technician supervisor",
+   "isco": 3123,
+   "aka": "supervisor of water conservation systems installation  ·  manager for water conservation systems installation  ·  water conservation systems installation supervisor  ·  water recovery systems installation supervisor"
+  },
+  {
+   "role": "surveying technician",
+   "isco": 3112,
+   "aka": "engineering technician  ·  mapping technician  ·  land survey technician  ·  surveyor  ·  survey technician"
+  },
+  {
+   "role": "bridge inspector",
+   "isco": 3112,
+   "aka": "inspector of bridges  ·  structures inspector  ·  bridgemaster  ·  bridge engineer  ·  bridges and structures inspector"
+  },
+  {
+   "role": "manufacturing manager",
+   "isco": 1321,
+   "aka": "industrial production supervisor  ·  manufacturing production manager  ·  manufacturing plant manager  ·  manufacturing director"
+  },
+  {
+   "role": "roofing supervisor",
+   "isco": 3123,
+   "aka": "tinsmith supervisor  ·  asphalt roofing supervisor  ·  foreman roofer  ·  cladding installation supervisor  ·  house roofing supervisor"
+  },
+  {
+   "role": "construction painting supervisor",
+   "isco": 3123,
+   "aka": "decorating supervisor  ·  commercial painting and decorating supervisor  ·  industrial painting supervisor  ·  specialist painting supervisor  ·  painting and decorating supervisor"
+  },
+  {
+   "role": "construction safety inspector",
+   "isco": 3112,
+   "aka": "safety advisor  ·  health and safety advisor  ·  health and safety inspector  ·  site safety inspector  ·  construction health and safety inspector"
+  },
+  {
+   "role": "dredging supervisor",
+   "isco": 3123,
+   "aka": "dredging project supervisor  ·  dredge foreman  ·  dredging site supervisor  ·  dredge operator supervisor  ·  dredging operations supervisor"
+  },
+  {
+   "role": "rail maintenance technician",
+   "isco": 3112,
+   "aka": "rail inspector  ·  rail quality inspector  ·  permanent way inspector  ·  rail track inspector  ·  rail repairer"
+  },
+  {
+   "role": "road construction supervisor",
+   "isco": 3123,
+   "aka": "supervisor of road construction  ·  road construction project supervisor  ·  clerk of works  ·  supervisor of road construction operations  ·  road construction foreman"
+  },
+  {
+   "role": "terrazzo setter supervisor",
+   "isco": 3123,
+   "aka": "terrazzo team supervisor  ·  terrazzo layer supervisor  ·  terrazzo setter foreman  ·  terrazzo flooring supervisor  ·  concrete flooring supervisor"
+  },
+  {
+   "role": "carpenter supervisor",
+   "isco": 3123,
+   "aka": "joiner supervisor  ·  carpentry overseer  ·  carpentry foreman  ·  joinery supervisor  ·  supervisor of carpentry operations"
+  },
+  {
+   "role": "electrical supervisor",
+   "isco": 3123,
+   "aka": "electrical maintenance supervisor  ·  foreman electrician  ·  electrical systems supervisor  ·  electrical service supervisor  ·  electrical maintenance manager"
+  },
+  {
+   "role": "landfill supervisor",
+   "isco": 3112,
+   "aka": "waste disposal compliance supervisor  ·  solid waste processing supervisor  ·  landfill site supervisor  ·  solid waste collection supervisor  ·  solid waste treatment supervisor"
+  },
+  {
+   "role": "tent installer",
+   "isco": 7119,
+   "aka": "tent installer/warehouse worker  ·  tent installation crew member  ·  tent installer & warehouse worker  ·  tent crew installer  ·  tent installation worker"
+  },
+  {
+   "role": "engineering assistant",
+   "isco": 3112,
+   "aka": "technical supporter  ·  technical support worker  ·  technical aide  ·  technology assistant  ·  project support worker"
+  },
+  {
+   "role": "manufactured wooden building assembler",
+   "isco": 7119,
+   "aka": "prefab house joiner  ·  prefab house builder  ·  manufactured wooden building joiner  ·  prefabricated building assembler  ·  prefab house assembler"
+  },
+  {
+   "role": "waste management officer",
+   "isco": 1321,
+   "aka": "waste diversion manager  ·  waste disposal officer  ·  waste management compliance officer  ·  waste recycling officer  ·  waste management safety officer"
+  },
+  {
+   "role": "sewerage systems manager",
+   "isco": 1321,
+   "aka": "sewerage control engineer  ·  water and sewer manager  ·  wastewater infrastructure design lead  ·  wastewater manager  ·  sewerage system construction manager"
+  },
+  {
+   "role": "demolition supervisor",
+   "isco": 3123,
+   "aka": "demolition and dismantling supervisor  ·  demolition site supervisor  ·  demolition manager  ·  dismantling foreman  ·  demolition project manager"
+  },
+  {
+   "role": "drainage engineer",
+   "isco": 2142,
+   "aka": "drainage engineering specialist  ·  water and drainage engineer  ·  water resources engineer  ·  drainage engineering adviser  ·  drainage engineering consultant"
+  },
+  {
+   "role": "terrazzo setter",
+   "isco": 7114,
+   "aka": "concrete flooring worker  ·  terrazzo team worker  ·  terrazzo team member  ·  poured flooring worker  ·  epoxy terrazzo setter"
+  },
+  {
+   "role": "structural ironwork supervisor",
+   "isco": 3123,
+   "aka": "structural ironworks supervisor  ·  structural steelwork supervisor  ·  structural steel fitting supervisor  ·  steel erection supervisor  ·  steel fitting supervisor"
+  },
+  {
+   "role": "food production manager",
+   "isco": 1321,
+   "aka": "food production team leader  ·  food production supervisor  ·  production manager food and beverages"
+  },
+  {
+   "role": "concrete finisher",
+   "isco": 7114,
+   "aka": "cement mason  ·  powerfloat finisher  ·  concrete layer  ·  concrete finisher and layer  ·  concrete flooring operative"
+  },
+  {
+   "role": "transport engineer",
+   "isco": 2142,
+   "aka": "traffic engineer  ·  transportation project engineer  ·  transport infrastructure engineer  ·  transportation engineering adviser  ·  transportation engineer"
+  },
+  {
+   "role": "steeplejack",
+   "isco": 7119,
+   "aka": "MWEP operator  ·  rope access steeplejack  ·  suspended platform driver  ·  heightworker  ·  rope access technician"
+  },
+  {
+   "role": "fire safety tester",
+   "isco": 3112,
+   "aka": "fire inspection testing technologist  ·  fire inspection technician  ·  fire safety testing technology expert  ·  fire inspection testing technology specialist  ·  fire safety testing technology specialist"
+  },
+  {
+   "role": "plastering supervisor",
+   "isco": 3123,
+   "aka": "stucco supervisor  ·  dry lining supervisor  ·  plasterboarding supervisor  ·  plastering-supervisor"
+  },
+  {
+   "role": "crane crew supervisor",
+   "isco": 3123,
+   "aka": "crane supervisor  ·  crane operations supervisor  ·  lifting operations supervisor  ·  crane safety supervisor  ·  crane operator supervisor"
+  },
+  {
+   "role": "roofer",
+   "isco": 7121,
+   "aka": "asphalt roofer  ·  house roofer  ·  felt roofer  ·  tinsmith  ·  roof slater"
+  },
+  {
+   "role": "property developer",
+   "isco": 1323,
+   "aka": "land developer  ·  commercial developer  ·  real estate developer  ·  property developers  ·  house developer"
+  },
+  {
+   "role": "construction general contractor",
+   "isco": 1323,
+   "aka": "construction project manager  ·  construction site contractor  ·  construction contactor  ·  general contractor in construction"
+  },
+  {
+   "role": "airport planning engineer",
+   "isco": 2142,
+   "aka": "aviation development planner  ·  airport planning manager  ·  airport development engineer  ·  airport development director"
+  },
+  {
+   "role": "kitchen unit installer",
+   "isco": 7115,
+   "aka": "kitchen refurbishment team worker  ·  replacement kitchen installer  ·  kitchen joiner and fitter  ·  kitchen fitter  ·  kitchen installation specialist"
+  },
+  {
+   "role": "fire inspector",
+   "isco": 3112,
+   "aka": "fire prevention officer  ·  fire investigator"
+  },
+  {
+   "role": "fireplace installer",
+   "isco": 7115,
+   "aka": "chimney technician  ·  fireplace installation technician  ·  fireplace builder  ·  gas fireplace servicer  ·  fireplace technician"
+  },
+  {
+   "role": "operations manager",
+   "isco": 1321,
+   "aka": "operations supervisor  ·  business operations manager  ·  division operations manager  ·  operations director  ·  operations administrator"
+  },
+  {
+   "role": "energy assessor",
+   "isco": 3112,
+   "aka": "energy savings advisor  ·  EPC certification assessor  ·  energy consumption advisor  ·  energy performance certificate assessor  ·  household energy use assessor"
+  },
+  {
+   "role": "road maintenance technician",
+   "isco": 3112,
+   "aka": "road maintenance worker  ·  road inspector  ·  highways maintenance technician  ·  highways inspector  ·  highways technician"
+  },
+  {
+   "role": "green coffee coordinator",
+   "isco": 1321,
+   "aka": "coffee coordinator  ·  green coffee co-ordinator  ·  green coffee supervisor  ·  green coffee manager"
+  },
+  {
+   "role": "energy analyst",
+   "isco": 3112,
+   "aka": "energy and sustainability analyst  ·  energy advisor  ·  energy regulation specialist  ·  energy procurement analyst  ·  energy efficiency analyst"
+  },
+  {
+   "role": "glass installation supervisor",
+   "isco": 3123,
+   "aka": "foreman glazier  ·  window glass installation supervisor  ·  window installation supervisor  ·  plate glass installation supervisor  ·  fenestration installation supervisor"
+  },
+  {
+   "role": "civil engineer",
+   "isco": 2142,
+   "aka": "civil engineering adviser  ·  civil engineering specialist  ·  director of infrastructure projects  ·  harbour civil engineer  ·  civil engineering expert"
+  },
+  {
+   "role": "demolition worker",
+   "isco": 7119,
+   "aka": "demolition project worker  ·  topwoman  ·  topman  ·  mattockman  ·  demolition reclamation operative"
+  },
+  {
+   "role": "energy consultant",
+   "isco": 3112,
+   "aka": "energy advisor  ·  sustainability consultant  ·  energy and sustainability consultant  ·  energy saving advisor  ·  energy saving equipment advisor"
+  },
+  {
+   "role": "hydropower engineer",
+   "isco": 2142,
+   "aka": "hydropower systems engineer  ·  hydropower systems analyst"
+  },
+  {
+   "role": "underwater construction supervisor",
+   "isco": 3123,
+   "aka": "bridge pillar construction supervisor  ·  harbour construction supervisor  ·  construction diving supervisor  ·  marine construction project supervisor  ·  sub-sea construction project supervisor"
+  },
+  {
+   "role": "industrial production manager",
+   "isco": 1321,
+   "aka": "production manufacturing supervisor  ·  production control supervisor  ·  production line manager  ·  industrial production supervisor  ·  production manufacturing manager"
+  },
+  {
+   "role": "mining geotechnical engineer",
+   "isco": 2142,
+   "aka": "mine hydrologist  ·  mining hydrologist"
+  },
+  {
+   "role": "construction quality inspector",
+   "isco": 3112,
+   "aka": "construction quality control and safety supervisor  ·  construction quality control and safety inspector  ·  construction QA QS inspector  ·  construction QA QS supervisor"
+  },
+  {
+   "role": "building inspector",
+   "isco": 3112,
+   "aka": "asbestos inspector  ·  construction services inspector  ·  construction control surveyor  ·  buildings inspector  ·  building control officer"
+  },
+  {
+   "role": "construction manager",
+   "isco": 1323,
+   "aka": "development project cost manager  ·  construction project manager  ·  development project cost consultant  ·  construction project cost consultant  ·  construction cost consultant"
+  },
+  {
+   "role": "water engineer",
+   "isco": 2142,
+   "aka": "water resource engineer  ·  hydraulic engineer  ·  water systems engineer  ·  water management specialist"
+  },
+  {
+   "role": "industrial quality manager",
+   "isco": 1321,
+   "aka": "industrial quality supervisor  ·  quality control industrial engineer  ·  industrial quality control technologist  ·  industrial quality assessment manager  ·  industrial quality control manager"
+  },
+  {
+   "role": "Construction Laborers",
+   "isco": 9312,
+   "aka": NaN
+  },
+  {
+   "role": "Building Framers, Finishers, and Related Trades Workers",
+   "isco": 7115,
+   "aka": NaN
+  },
+  {
+   "role": "Manufacturing, Mining, Construction, and Distribution Managers",
+   "isco": 1322,
+   "aka": NaN
+  },
+  {
+   "role": "Quality Control Systems Managers",
+   "isco": 1321,
+   "aka": NaN
+  },
+  {
+   "role": "Geothermal Production Managers",
+   "isco": 1321,
+   "aka": NaN
+  },
+  {
+   "role": "Biofuels Production Managers",
+   "isco": 1321,
+   "aka": NaN
+  },
+  {
+   "role": "Biomass Power Plant Managers",
+   "isco": 1321,
+   "aka": NaN
+  },
+  {
+   "role": "Hydroelectric Production Managers",
+   "isco": 1321,
+   "aka": NaN
+  },
+  {
+   "role": "Boilermakers",
+   "isco": 7111,
+   "aka": NaN
+  },
+  {
+   "role": "Stonemasons",
+   "isco": 7112,
+   "aka": NaN
+  },
+  {
+   "role": "Terrazzo Workers and Finishers",
+   "isco": 7114,
+   "aka": NaN
+  },
+  {
+   "role": "Reinforcing Iron and Rebar Workers",
+   "isco": 7114,
+   "aka": NaN
+  },
+  {
+   "role": "Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",
+   "isco": 3123,
+   "aka": NaN
+  },
+  {
+   "role": "Helpers--Roofers",
+   "isco": 7119,
+   "aka": NaN
+  },
+  {
+   "role": "Construction and Related Workers, All Other",
+   "isco": 7119,
+   "aka": NaN
+  },
+  {
+   "role": "Weatherization Installers and Technicians",
+   "isco": 7119,
+   "aka": NaN
+  },
+  {
+   "role": "Excavating and Loading Machine and Dragline Operators, Surface Mining",
+   "isco": 7119,
+   "aka": NaN
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  }
+ ]
+}

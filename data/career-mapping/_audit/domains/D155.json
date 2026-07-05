@@ -1,0 +1,107 @@
+{
+ "domain_id": "D155",
+ "domain_name": "Nanotechnology, Advanced Materials",
+ "role_count": 20,
+ "roles": [
+  {
+   "role": "chemist",
+   "isco": 2113,
+   "aka": "chemistry technician  ·  pharmacologist  ·  chemical engineer  ·  toxicologist  ·  environmental chemist"
+  },
+  {
+   "role": "cosmetic chemist",
+   "isco": 2113,
+   "aka": "research chemist  ·  cosmetics formulation chemist  ·  cosmetics formulation development chemist  ·  skin care formulation chemist  ·  cosmetics formulator"
+  },
+  {
+   "role": "chemical application specialist",
+   "isco": 2113,
+   "aka": "specialist chemist  ·  chemical application technician  ·  technical application specialist chemist  ·  application specialist chemist  ·  product formulation chemist"
+  },
+  {
+   "role": "air separation plant operator",
+   "isco": 3133,
+   "aka": "air separation plant production operator  ·  air separation plant operative  ·  air separation plant worker  ·  oxygen plant operator  ·  oxygen gas plant operator"
+  },
+  {
+   "role": "analytical chemist",
+   "isco": 2113,
+   "aka": "chemist  ·  analytical chemistry analyst  ·  analytical chemistry scientist  ·  chemistry research analyst  ·  chrystalographer"
+  },
+  {
+   "role": "biogas technician",
+   "isco": 3133,
+   "aka": "landfill gas plant technician  ·  biogas equipment technician  ·  anaerobic digester technician  ·  biogas production technician  ·  biogas generation technician"
+  },
+  {
+   "role": "sensory scientist",
+   "isco": 2113,
+   "aka": "sensory and consumer research scientist  ·  consumer and sensory scientist  ·  sensory science consultant  ·  sensory research scientist  ·  chocolate scientist"
+  },
+  {
+   "role": "chemical processing plant controller",
+   "isco": 3133,
+   "aka": "process plant operator  ·  chemical plant and systems operator  ·  chemical plant and systems monitoring technician  ·  chemical operator  ·  chemical plant and systems monitor"
+  },
+  {
+   "role": "chemical tester",
+   "isco": 2113,
+   "aka": "metal chemical tester  ·  chemical quality control analyst  ·  chemical element analyst"
+  },
+  {
+   "role": "chemical plant control room operator",
+   "isco": 3133,
+   "aka": "panel board operator  ·  production control room operator  ·  closed-circuit television control room operator  ·  manufacturing control room operator  ·  production monitor"
+  },
+  {
+   "role": "gas processing plant supervisor",
+   "isco": 3133,
+   "aka": "gas processing safety controller  ·  gas compressor controller  ·  gas processing maintenance controller  ·  downstream gas processing controller  ·  gas processing controller"
+  },
+  {
+   "role": "fragrance chemist",
+   "isco": 2113,
+   "aka": "application engineer  ·  fragrance formulator  ·  fragrance developer  ·  perfume and cosmetics formulator  ·  fragrance product developer"
+  },
+  {
+   "role": "chemical engineer",
+   "isco": 2145,
+   "aka": "chemical technology engineering consultant  ·  chemical technology engineer  ·  pyrotechnics chemical engineer  ·  chemical technology engineering adviser  ·  chemical engineering expert"
+  },
+  {
+   "role": "gas station operator",
+   "isco": 3133,
+   "aka": "ethylene compressor operator  ·  gas pumping station operative  ·  butadiene compressor operator  ·  gas-compressor operative  ·  gas pumping station operator"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  },
+  {
+   "role": "nanomaterials engineer",
+   "isco": 2146,
+   "aka": "Nanotech Materials Specialist"
+  },
+  {
+   "role": "nanoelectronics specialist",
+   "isco": 2149,
+   "aka": "Nanoelectronics Engineer"
+  },
+  {
+   "role": "nanofabrication technician",
+   "isco": 3119,
+   "aka": "Cleanroom Process Technician"
+  },
+  {
+   "role": "advanced materials scientist",
+   "isco": 2113,
+   "aka": "Materials Research Scientist"
+  },
+  {
+   "role": "surface science engineer",
+   "isco": 2146,
+   "aka": "Thin Film Engineer"
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+  "jamb_name": "Political Science and Conflict",
+  "utme_subjects": ["Government/History", "and two (2) other Social Sciences or Arts subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
+  "direct_entry": "Two (2) 'A' Level passes to include Government or History.",
+  "institution_waivers": [
+    {"institution": "FED-WUKARI", "note": "Direct Entry candidates must obtain Two 'A' Level passes in Government/History/Economics/CRK/IRK/Commerce at GCE A/L, IJMB or Advanced NABTEB or a Merit pass at NCE in relevant subjects or at least a credit at OND/HND or a First Degree in relevant field from an approved University. Candidates must also satisfy the minimum O/L requirement for admission."},
+    {"institution": "FED-LOKOJA", "note": "Direct Entry: accepts, in addition to meeting the UTME Entry Requirements, 2 'A' Level passes to include History/Government & one other Arts or Social Science; NCE credit pass in minimum of 3 major subjects; ND upper credit in Pub. Adm. & LG Studies or other cognate courses; HND lower credit in Pub. Adm. & LG Studies or other cognate courses; Degree (Third Class) in Law or Education Courses & Arts, Soc. Sci. Courses."},
+    {"institution": "FED-KASHERE", "note": "Direct Entry: accepts ND/Accredited Diploma in any of the following disciplines: Pol. Science, Public Admin., Local Government, Law, Public Policy, Mass Communication at Credit passes or NCE with at least 9 points."},
+    {"institution": "FED-LOKOJA", "note": "UTME: requires Five (5) SSC credit passes to include English Language, Government/History plus two (2) Social Science subjects and any other subject. A credit in Mathematics is compulsory. Note: Civic Education is considered as part of Government and so will not count in reckoning."},
+    {"institution": "FED-WUKARI", "note": "UTME: Five (5) credits at not more than two sittings including English Language, Mathematics, Government/History/Civic Education and any two of the following: Economics, Geography, CRK/IRK, Literature in English, Commerce obtained from SSCE, NECO, NABTEB or its equivalent."},
+    {"institution": "FED-KASHERE", "note": "UTME: requires Five credit passes at SSCE (or its equivalent) in English, Mathematics, Government or History and any two of IRS/CRS, Economics/Commerce, Geography, Literature in English, Languages (Arabic, French, Hausa, Igbo, Yoruba and Fulfulde)."},
+    {"institution": "FED-LOKOJA", "note": "UTME Subjects: accepts History/Government plus one Social Science subject and any other Arts or Social Sciences subject. Note: Civic Education cannot be taken in lieu of Government."},
+    {"institution": "FED-WUKARI", "note": "UTME Subjects: requires Government/History and any two of CRK/IRS, Economics, Literature in English, Geography or Commerce."},
+    {"institution": "FED-KASHERE", "note": "UTME Subjects: requires Government and any two of IRS/CRS, Economics/Commerce, Geography and Literature in English."}
+  ]
+}

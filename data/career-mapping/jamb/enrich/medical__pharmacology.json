@@ -1,0 +1,15 @@
+{
+  "jamb_name": "Pharmacology",
+  "utme_subjects": ["English Language", "Physics", "Chemistry", "Biology"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+  "direct_entry": "Two (2) 'A' Level passes in any of Physics, Chemistry and Biology plus UTME entry requirements.",
+  "institution_waivers": [
+    {"institution": "ABUAD", "note": "Requires three (3) 'A' Level passes in Chemistry, Physics and Biology."},
+    {"institution": "LAGOS", "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology. B.Sc. Degree (first class/second class upper) in Medical related fields."},
+    {"institution": "DELSU", "note": "Requires a) HSC or GCE 'A' Level or its equivalent passes in Physics, Chemistry and Biology or Zoology (Botany may be accepted in lieu of Biology or Zoology); b) First degree in relevant Biological Sciences not below Second Class Lower Division."},
+    {"institution": "DELSU", "note": "UTME: requires SSCE 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in not more than two sittings."},
+    {"institution": "LAGOS", "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."},
+    {"institution": "OOU", "note": "UTME subjects: accepts any three (3) of Physics, Mathematics, Chemistry, Biology."},
+    {"institution": "LAGOS", "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."}
+  ]
+}

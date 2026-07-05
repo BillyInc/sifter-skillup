@@ -1,0 +1,207 @@
+{
+ "domain_id": "D056",
+ "domain_name": "Blockchain",
+ "role_count": 40,
+ "roles": [
+  {
+   "role": "ICT security administrator",
+   "isco": 2529,
+   "aka": "CISO  ·  IT security administrator  ·  information security administrator  ·  ICT security administrators  ·  network security administrator"
+  },
+  {
+   "role": "software analyst",
+   "isco": 2512,
+   "aka": "software requirement analyst  ·  programming analyst  ·  software analysts  ·  programmer analyst  ·  application analyst"
+  },
+  {
+   "role": "integration engineer",
+   "isco": 2511,
+   "aka": "IT integration engineer  ·  ICT integration engineers  ·  system integration engineer  ·  software integration engineer"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "digital forensics expert",
+   "isco": 2529,
+   "aka": "computer forensics consultant  ·  computer forensics investigator  ·  computer forensics expert  ·  digital forensics analyst  ·  digital forensics specialist"
+  },
+  {
+   "role": "cyber incident responder",
+   "isco": 2529,
+   "aka": "ICT security consultant  ·  cyber crisis expert  ·  information technology security consultant  ·  security operations center analyst  ·  cyber incident handler"
+  },
+  {
+   "role": "ICT disaster recovery analyst",
+   "isco": 2519,
+   "aka": "business continuity analyst  ·  ICT resilience analysts  ·  IT resilience analyst  ·  IT disaster recovery analyst  ·  business continuity strategist"
+  },
+  {
+   "role": "embedded system designer",
+   "isco": 2511,
+   "aka": "embedded system programmer  ·  embedded systems designers  ·  embedded software developer  ·  embedded system developer  ·  embedded systems programmer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "computer vision engineer",
+   "isco": 2511,
+   "aka": "computer vision applied scientist  ·  computer vision expert  ·  computer vision specialist  ·  computer vision project engineer  ·  smart technics computer vision engineer"
+  },
+  {
+   "role": "embedded systems security engineer",
+   "isco": 2529,
+   "aka": "cybersecurity engineer  ·  cyber security engineer  ·  IoT security engineer  ·  internet of thing security engineer  ·  embedded systems security expert"
+  },
+  {
+   "role": "data engineer",
+   "isco": 2511,
+   "aka": "data engineer expert  ·  research data engineer"
+  },
+  {
+   "role": "green ICT consultant",
+   "isco": 2511,
+   "aka": "IT environmental consultant  ·  green IT consultant  ·  green ICT consultants  ·  ICT environmental consultant  ·  ICT sustainability systems consultant"
+  },
+  {
+   "role": "blockchain developer",
+   "isco": 2512,
+   "aka": "DLT engineer  ·  blockchain development engineer  ·  decentralized ledger technology specialist  ·  blockchain engineer  ·  DLT specialist"
+  },
+  {
+   "role": "data scientist",
+   "isco": 2511,
+   "aka": "data expert  ·  research data scientist  ·  data research scientist  ·  electromobility data scientist"
+  },
+  {
+   "role": "chief ICT security officer",
+   "isco": 2529,
+   "aka": "information security manager  ·  CISO  ·  information security administrator  ·  IT security officer  ·  ICT security officer"
+  },
+  {
+   "role": "enterprise architect",
+   "isco": 2511,
+   "aka": "enterprise architects  ·  enterprise developer  ·  enterprise architecture manager  ·  enterprise designer"
+  },
+  {
+   "role": "artificial intelligence engineer",
+   "isco": 2511,
+   "aka": "intelligent systems designers  ·  artificial intelligence designer  ·  ICT intelligent systems designer  ·  AI system designer  ·  semantic technologies engineer"
+  },
+  {
+   "role": "ICT change and configuration manager",
+   "isco": 2519,
+   "aka": "configuration manager  ·  application lifecycle manager  ·  software change and configuration manager"
+  },
+  {
+   "role": "ICT business analysis manager",
+   "isco": 2511,
+   "aka": "IT business analysis manager  ·  IT commercial analysis manager  ·  IT business analysis director  ·  ICT business analysis managers  ·  lead IT business analyst"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "ICT research consultant",
+   "isco": 2511,
+   "aka": "IT research consultant  ·  ICT research advisor  ·  IT research specialist  ·  ICT research consultants  ·  IT research advisor"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "ethical hacker",
+   "isco": 2529,
+   "aka": "network security tester  ·  cybersecurity specialist  ·  cybersecurity tester  ·  ICT security tester  ·  system security tester"
+  },
+  {
+   "role": "cybersecurity risk manager",
+   "isco": 2529,
+   "aka": "cybersecurity specialist  ·  cybersecurity risk assurance consultant  ·  information security manager  ·  cyber risk manager  ·  cybersecurity risk assessor"
+  },
+  {
+   "role": "blockchain architect",
+   "isco": 2511,
+   "aka": "decentralized ledger technology specialist  ·  DLT specialist  ·  blockchain technology specialist  ·  DLT architect"
+  },
+  {
+   "role": "knowledge engineer",
+   "isco": 2529,
+   "aka": "linked data engineer  ·  taxonomist  ·  knowledge officer  ·  information engineer  ·  knowledge engineers"
+  },
+  {
+   "role": "ICT system analyst",
+   "isco": 2511,
+   "aka": "ICT system analysts  ·  ICT systems analysts  ·  ICT systems analyst  ·  system analyst  ·  IT system analyst"
+  },
+  {
+   "role": "ICT system developer",
+   "isco": 2511,
+   "aka": "systems programmer  ·  ICT system developers  ·  systems developer  ·  IT system developer  ·  chief ICT system developer"
+  },
+  {
+   "role": "ICT resilience manager",
+   "isco": 2529,
+   "aka": "IT resilience manager  ·  manager for vulnerability  ·  manager for IT resilience  ·  vulnerability manager  ·  disaster recovery manager"
+  },
+  {
+   "role": "ICT consultant",
+   "isco": 2511,
+   "aka": "ICT ERP consultant  ·  ICT advisor  ·  IT advisor  ·  IT consultant  ·  IT compliance consultant"
+  },
+  {
+   "role": "ICT system integration consultant",
+   "isco": 2511,
+   "aka": "network integration consultant  ·  system integration consultants  ·  systems integration consultant  ·  application integration consultant  ·  systems integration consultants"
+  },
+  {
+   "role": "IT auditor",
+   "isco": 2511,
+   "aka": "ICT auditor  ·  information technology auditor  ·  IT Quality Appraiser"
+  },
+  {
+   "role": "software architect",
+   "isco": 2512,
+   "aka": "software architects  ·  software designer  ·  application architect"
+  },
+  {
+   "role": "data analyst",
+   "isco": 2511,
+   "aka": "battery data analyst  ·  mine electrification data analyst  ·  data warehouse analyst  ·  data warehousing analyst  ·  battery materials data analyst"
+  },
+  {
+   "role": "ICT system architect",
+   "isco": 2511,
+   "aka": "systems architect  ·  IT systems architect  ·  information systems architect  ·  ICT system architects  ·  solution architect"
+  },
+  {
+   "role": "computer scientist",
+   "isco": 2511,
+   "aka": "IT researcher  ·  IT scientist  ·  ICT science researcher  ·  ICT researcher  ·  IT research scientist"
+  },
+  {
+   "role": "software developer",
+   "isco": 2512,
+   "aka": "application developer  ·  solutions developer  ·  electric vehicle software development engineer  ·  programmer  ·  application programmer"
+  },
+  {
+   "role": "user experience analyst",
+   "isco": 2511,
+   "aka": "user experience officer  ·  usability analyst  ·  user experience analysts"
+  },
+  {
+   "role": "ICT business analyst",
+   "isco": 2511,
+   "aka": "requirement engineer  ·  business process specialist  ·  IT business analyst  ·  ICT business analysts"
+  }
+ ]
+}

@@ -1,0 +1,142 @@
+{
+ "domain_id": "D057",
+ "domain_name": "Digital Health",
+ "role_count": 27,
+ "roles": [
+  {
+   "role": "physiotherapist",
+   "isco": 2264,
+   "aka": "respiratory therapist  ·  masseuse  ·  rehabilitation therapist  ·  occupational therapist  ·  osteopath"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "medical records clerk",
+   "isco": 3252,
+   "aka": "clerical officer  ·  clinical records administrator  ·  patients records assistant  ·  health records staff member  ·  medical records filing clerk"
+  },
+  {
+   "role": "picture archiving and communication systems administrator",
+   "isco": 3252,
+   "aka": "administrator of PACS  ·  PACS manager  ·  PACS administrator  ·  PACS interface analyst  ·  PACS administration manager"
+  },
+  {
+   "role": "healthcare institution manager",
+   "isco": 1342,
+   "aka": "general manager  ·  health service manager  ·  general manager healthcare  ·  healthcare director  ·  healthcare general manager"
+  },
+  {
+   "role": "clinical coder",
+   "isco": 3252,
+   "aka": "clinical records technician  ·  medical coder  ·  medical coding officer  ·  accredited clinical coder  ·  clinical coding officer"
+  },
+  {
+   "role": "waiting list coordinator",
+   "isco": 3252,
+   "aka": "senior waiting list coordinator  ·  waiting list manager  ·  hospital waiting list coordinator  ·  surgical waiting list coordinator  ·  manager of hospital waiting lists"
+  },
+  {
+   "role": "medical records manager",
+   "isco": 3252,
+   "aka": "supervisor of medical records  ·  health records manager  ·  manager of patient records  ·  patient records manager  ·  medical records supervisor"
+  },
+  {
+   "role": "specialised doctor",
+   "isco": 2212,
+   "aka": "specialized medical doctor  ·  specialized doctor  ·  hospital specialized doctor  ·  specialised medical doctor  ·  hospital specialised doctor"
+  },
+  {
+   "role": "advanced physiotherapist",
+   "isco": 2264,
+   "aka": "physiotherapy team leader  ·  clinical lead physiotherapist  ·  physiotherapy lead  ·  lead neuromuscular physiotherapist  ·  lead remedial physiotherapist"
+  },
+  {
+   "role": "clinical informatics manager",
+   "isco": 1342,
+   "aka": "health informatics manager  ·  supervisor of clinical informatics  ·  clinical information systems supervisor  ·  clinical information systems manager  ·  clinical informatics director"
+  },
+  {
+   "role": "Medical and Health Services Managers",
+   "isco": 1342,
+   "aka": NaN
+  },
+  {
+   "role": "Podiatrists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Occupational Therapists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Respiratory Therapists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Exercise Physiologists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Therapists, All Other",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Art Therapists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "Music Therapists",
+   "isco": 2264,
+   "aka": NaN
+  },
+  {
+   "role": "health informatics specialist",
+   "isco": 2512,
+   "aka": "Clinical Informatics Analyst"
+  },
+  {
+   "role": "telemedicine coordinator",
+   "isco": 3256,
+   "aka": "Telehealth Specialist"
+  },
+  {
+   "role": "digital health product manager",
+   "isco": 2421,
+   "aka": "Health Tech Product Manager"
+  },
+  {
+   "role": "mHealth developer",
+   "isco": 2512,
+   "aka": "Mobile Health App Developer"
+  },
+  {
+   "role": "electronic health records specialist",
+   "isco": 2512,
+   "aka": "EHR Implementation Specialist"
+  },
+  {
+   "role": "clinical informatics analyst",
+   "isco": 2511,
+   "aka": NaN
+  }
+ ]
+}

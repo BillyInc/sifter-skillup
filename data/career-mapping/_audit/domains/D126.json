@@ -1,0 +1,42 @@
+{
+ "domain_id": "D126",
+ "domain_name": "Complementary, Alternative",
+ "role_count": 7,
+ "roles": [
+  {
+   "role": "acupuncturist",
+   "isco": 2230,
+   "aka": "expert acupuncturist  ·  acupuncture therapist  ·  acupuncture practitioner  ·  acupuncture specialist  ·  advanced acupuncturist"
+  },
+  {
+   "role": "herbal therapist",
+   "isco": 3230,
+   "aka": "iridologist  ·  practitioner of herbal medicine  ·  herbal medicine therapist  ·  practitioner of herbal therapy  ·  medical herbalist"
+  },
+  {
+   "role": "homeopath",
+   "isco": 2230,
+   "aka": "homeopathic practitioner  ·  specialist homeopath  ·  homeopathic therapist  ·  expert homeopath  ·  practitioner of homeopathy"
+  },
+  {
+   "role": "aromatherapist",
+   "isco": 2230,
+   "aka": "traditional practitioner of aromatherapy  ·  clinical aromatherapy practitioner  ·  practitioner of aromatherapy  ·  relaxation therapist  ·  aromatherapy practitioner"
+  },
+  {
+   "role": "traditional chinese medicine therapist",
+   "isco": 2230,
+   "aka": "TCM specialist  ·  therapist in traditional chinese medicine  ·  therapist in TCM  ·  chinese medicine therapist  ·  specialist in traditional chinese medicine"
+  },
+  {
+   "role": "complementary therapist",
+   "isco": 2230,
+   "aka": "naturopath  ·  sustainable health practitioner  ·  natural health practitioner  ·  complementary practitioner  ·  holistic therapist"
+  },
+  {
+   "role": "Healthcare Diagnosing or Treating Practitioners, All Other",
+   "isco": 2230,
+   "aka": NaN
+  }
+ ]
+}

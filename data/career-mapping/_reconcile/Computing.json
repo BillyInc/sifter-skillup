@@ -1,0 +1,1185 @@
+[
+ {
+  "programme": "Computer Science",
+  "code": "COS",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "describe Real-valued functions of a real variable",
+   "solve some problems using Mean value Theorem and Taylor Series expansion; and",
+   "evaluate Line Integral, Surface Integral and Volume Integrals",
+   "define the following: order and degree of a differential equation",
+   "describe some techniques for solving first and second order linear and non-linear equations; and",
+   "solve some problems related to geometry and physics",
+   "develop solutions for a range of problems using object-oriented programming",
+   "use modules/packages/namespaces for programme organisation",
+   "use API in writing applications",
+   "apply divide and conquer strategy to searching and sorting problems using iterative and/or recursive solutions",
+   "explain the concept of exceptions in programming and how to handle exceptions in programmes",
+   "write simple multithreaded applications; and",
+   "design and implement simple GUI applications",
+   "convert logical statements from informal language to propositional and predicate logic expressions",
+   "describe the strengths and limitations of propositional and predicate logic"
+  ],
+  "transferable_skills": [
+   "creativity",
+   "information literacy",
+   "media literacy",
+   "flexibility",
+   "social skills",
+   "Problem solving",
+   "collaboration",
+   "global awareness",
+   "innovation skills",
+   "critical thinking",
+   "identify possible sound patterns in English language",
+   "list notable language skills"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Problem Solving",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Mathematical Methods I",
+   "Elementary Differential Equations",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Discrete Structures",
+   "SIWES I",
+   "Digital Logic Design"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Cybersecurity",
+  "code": "CYB",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "develop solutions for a range of problems using object-oriented programming",
+   "use modules/packages/namespaces for programme organisation",
+   "use API in writing applications",
+   "apply divide and conquer strategy to searching and sorting problems using iterative and/or recursive solutions",
+   "explain the concept of exceptions in programming and how to handle exceptions in programmes",
+   "write simple multithreaded applications; and",
+   "design and implement simple GUI applications",
+   "explain cybersecurity concepts, its methods, elements, and terminologies of cybersecurity -cyber, security, threat, attack, defence, and operations",
+   "describe common cyber-attacks and threats, cybersecurity issues, challenges and proffered solutions, and build an enhanced view of main actors of cyberspace and cyber operations",
+   "apply the techniques for identifying, detecting, and defending against cybersecurity threats, attacks and protecting information assets",
+   "explain the impact of cybersecurity on civil and military institutions, privacy, business and government applications",
+   "identify the methods and motives of cybersecurity incident perpetrators, and the countermeasures employed by organisations and agencies to prevent and detect those incidences and software application vulnerabilities; and",
+   "state the ethical obligations of security professionals, evaluate cybersecurity and national security strategies to the typologies of cyber-attacks that require policy tools and domestic response, and define the cybersecurity requirements and strategies evolving in the face of big risk",
+   "discuss cybercrimes, including computer crimes, internet fraud, e-commerce, and threats to the national infrastructure",
+   "review the policies, legal issues, investigative techniques and strategies, implications for investigation and enforcement on a global scale"
+  ],
+  "transferable_skills": [
+   "problem-solving skills",
+   "critical thinking",
+   "communication skills",
+   "creativity",
+   "collaboration",
+   "information literacy",
+   "global awareness",
+   "innovation skills",
+   "social skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Problem Solving",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Introduction to Cybersecurity and Strategy",
+   "Cybercrime, Law and Countermeasures",
+   "SIWES I",
+   "Systems Analysis and Design",
+   "Introduction to Software Engineering"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Data Science",
+  "code": "DTS",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "describe Real-valued functions of a real variable",
+   "solve some problems using Mean value Theorem and Taylor Series expansion; and",
+   "evaluate Line Integral, Surface Integral and Volume Integrals",
+   "solve various problems using the concepts of set theory",
+   "understand Algebraic structures; and",
+   "understand the meaning of logic in mathematics",
+   "solve some numerical solutions of algebraic and transcendental equations",
+   "describe curve fitting",
+   "discuss error analysis",
+   "calculate interpolation and approximation",
+   "solve some numerical differentiation and numerical integration problems; and",
+   "solve some numerical problems in ordinary differential equations with initial value problems",
+   "develop solutions for a range of problems using object-oriented programming",
+   "use modules/packages/namespaces for programme organisation",
+   "use API in writing applications"
+  ],
+  "transferable_skills": [
+   "creativity",
+   "information literacy",
+   "media literacy",
+   "flexibility",
+   "social skills",
+   "critical thinking",
+   "problem solving",
+   "global awareness",
+   "innovation skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Problem Solving",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Mathematical Methods I",
+   "Sets, Logic and Algebra I",
+   "Introduction to Numerical Analysis",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Introduction to Data Science",
+   "Statistical Computing Inference and Modelling"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Information and Communication Technology",
+  "code": "ICT",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "describe Real-valued functions of a real variable",
+   "solve some problems using Mean value Theorem and Taylor Series expansion; and",
+   "Evaluate Line Integral, Surface Integral, and Volume Integrals",
+   "define the following: order and degree of a differential equation",
+   "describe some techniques for solving first and second order linear and non-linear equations; and",
+   "solve some problems related to geometry and physics",
+   "develop solutions for a range of problems using object-oriented programming",
+   "use modules/packages/namespaces for programme organisation",
+   "use API in writing applications",
+   "apply divide and conquer strategy to searching and sorting problems using iterative and/or recursive solutions",
+   "explain the concept of exceptions in programming and how to handle exceptions in programmes",
+   "write simple multithreaded applications; and",
+   "design and implement simple GUI applications",
+   "identify components of the computer and know-how the components communicate",
+   "know the concept of data transfer and memory types and management"
+  ],
+  "transferable_skills": [
+   "critical thinking",
+   "creativity",
+   "media literacy",
+   "flexibility",
+   "social skills",
+   "problem solving",
+   "information literacy",
+   "global awareness",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Problem Solving",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Mathematical Methods",
+   "Elementary Differential Equations",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Introduction to Information and Communication Technology",
+   "SIWES I",
+   "Discrete Structures"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Information Systems",
+  "code": "INS",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving the problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "be familiar with the fundamentals of time series analysis",
+   "explain the principles of good programming and structured programming concepts",
+   "explain the programming constructs, syntax, and semantics of a higher-level language",
+   "describe the chosen programming language variables, types, expressions, statements, and assignment; simple input and output",
+   "describe the programme control structures, functions and parameter passing, and structured decomposition; and",
+   "develop simple programmes in the taught programming language as well as debug and test them",
+   "demonstrate the principles of good programming and structured programming concepts",
+   "demonstrate string processing, internal searching, sorting, and recursion",
+   "demonstrate the basic use of OOP concepts: classes, objects, inheritance, polymorphism, data abstraction",
+   "apply the tools for developing, compiling, interpreting, and debugging programmes; and",
+   "demonstrate the use of syntax and data objects, operators. Central flow constructs, objects and classes programming, Arrays, methods, Exceptions, Applets, and the Abstract, OLE, Persistence, Window Toolkit",
+   "discuss the foundations and concept of human-computer interface",
+   "explain the principles of human-computer interface",
+   "explain the design and development of the human-computer interface; and",
+   "explain the importance of user feedback"
+  ],
+  "transferable_skills": [
+   "creativity",
+   "information literacy",
+   "flexibility",
+   "social skills",
+   "problem solving",
+   "collaboration",
+   "global awareness",
+   "innovation skills",
+   "critical thinking skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Problem Solving",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Statistical Inference I",
+   "Introduction to Business II",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Human-Computer Interaction",
+   "Systems Analysis and Design",
+   "Introduction to Information Systems"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Information Technology",
+  "code": "IFT",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "develop solutions for a range of problems using object-oriented programming",
+   "use modules/packages/namespaces for programme organisation",
+   "use API in writing applications",
+   "apply divide and conquer strategy to searching and sorting problems using iterative and/or recursive solutions",
+   "explain the concept of exceptions in programming and how to handle exceptions in programmes",
+   "write simple multithreaded applications; and",
+   "design and implement simple GUI applications",
+   "state the origin of the internet and the world wide web",
+   "create simple web content using HTML, CSS, and JavaScript",
+   "use simple application frameworks to develop web content; and",
+   "appraise the impact of the world wide web on people's lives over time",
+   "explain the history and development of information technologies",
+   "describe information technology application domains",
+   "identify information technology and its related disciplines",
+   "analyse security, privacy, policy, and other social issues inherent in information technology; and"
+  ],
+  "transferable_skills": [
+   "creativity",
+   "information literacy",
+   "flexibility",
+   "social skills",
+   "problem solving",
+   "innovation skills",
+   "critical thinking",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Problem Solving",
+   "Philosophy, Logic, and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Introduction to Web Technologies",
+   "Introduction to Information Technology",
+   "Digital Logic Design",
+   "Computer Architecture and Organisation",
+   "SIWES I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Software Engineering",
+  "code": "SEN",
+  "technical_skills": [
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain problem solving processes",
+   "demonstrate problem solving skills",
+   "describe the concept of algorithms development and properties of algorithms",
+   "discuss the solution techniques of solving problem",
+   "solve computer problems using algorithms, flowcharts, pseudocode; etc.; and",
+   "solve problems using programming language using C, PYTHON, etc",
+   "describe Real-valued functions of a real variable",
+   "solve some problems using Mean value Theorem and Taylor Series expansion; and",
+   "evaluate Line Integral, Surface Integral and Volume Integrals",
+   "define the following: order and degree of a differential equation",
+   "describe some techniques for solving first and second order linear and non-linear equations; and",
+   "solve some problems related to geometry and physics",
+   "develop solutions for a range of problems using object-oriented programming",
+   "use modules/packages/namespaces for programme organisation",
+   "use API in writing applications",
+   "apply divide and conquer strategy to searching and sorting problems using iterative and/or recursive solutions",
+   "explain the concept of exceptions in programming and how to handle exceptions in programmes",
+   "write simple multithreaded applications; and",
+   "design and implement simple GUI applications",
+   "describe the concept of the software life cycle",
+   "explain the phases of requirements analysis, design, development, testing and maintenance in a typical software life cycle"
+  ],
+  "transferable_skills": [
+   "creative thinking",
+   "information literacy",
+   "media literacy",
+   "flexibility",
+   "social skills",
+   "problem solving",
+   "innovation skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples & Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Descriptive Statistics",
+   "Introduction to Computing Sciences",
+   "Introduction to Problem Solving",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Mathematical Methods I",
+   "Mathematical Methods II",
+   "Computer Programming I",
+   "Computer Programming II",
+   "Introduction to Software Engineering",
+   "SIWES I",
+   "Discrete Structures"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ }
+]

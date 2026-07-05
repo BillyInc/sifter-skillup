@@ -1,0 +1,187 @@
+{
+ "domain_id": "D012",
+ "domain_name": "FinTech Engineering",
+ "role_count": 36,
+ "roles": [
+  {
+   "role": "software analyst",
+   "isco": 2512,
+   "aka": "software requirement analyst  ·  programming analyst  ·  software analysts  ·  programmer analyst  ·  application analyst"
+  },
+  {
+   "role": "foreign exchange trader",
+   "isco": 3311,
+   "aka": "forex dealer  ·  foreign exchange handler  ·  forex handler  ·  foreign exchange dealer"
+  },
+  {
+   "role": "credit analyst",
+   "isco": 3312,
+   "aka": "credit clerk  ·  analyst of credits"
+  },
+  {
+   "role": "securities analyst",
+   "isco": 2413,
+   "aka": "securities research analyst  ·  corporate securities research analyst  ·  bonds analyst  ·  stock analyst  ·  securities research director"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "mergers and acquisitions analyst",
+   "isco": 2413,
+   "aka": "M&A analyst  ·  mergers and acquisitions banker  ·  mergers and acquisitions associate  ·  acquisition manager  ·  M&A specialist"
+  },
+  {
+   "role": "credit adviser",
+   "isco": 3312,
+   "aka": "credit intermediary  ·  debt counsellor  ·  certified credit counselor  ·  credit counselor"
+  },
+  {
+   "role": "insurance rating analyst",
+   "isco": 2413,
+   "aka": "insurance analyst  ·  insurance assessor  ·  insurance rater"
+  },
+  {
+   "role": "energy trader",
+   "isco": 3311,
+   "aka": "renewable energy share trader  ·  energy trading analyst  ·  renewable energy stock analyst  ·  energy market analyst  ·  energy market economist"
+  },
+  {
+   "role": "middle office analyst",
+   "isco": 2413,
+   "aka": "middle office associate  ·  transaction reporting specialist  ·  middle office specialist  ·  structured products middle office analyst  ·  derivatives middle office analyst"
+  },
+  {
+   "role": "credit manager",
+   "isco": 3312,
+   "aka": "consumer credit manager  ·  credit controller  ·  loan and credit manager  ·  credit administration manager  ·  credit control manager"
+  },
+  {
+   "role": "stock trader",
+   "isco": 3311,
+   "aka": "equity trader  ·  stock exchange floor trader  ·  investment dealer"
+  },
+  {
+   "role": "mortgage broker",
+   "isco": 3312,
+   "aka": "mortgage administrator  ·  officer for mortgage loan  ·  mortgage coordinator  ·  mortgage analyst  ·  mortgage loans officer"
+  },
+  {
+   "role": "securities trader",
+   "isco": 3311,
+   "aka": "securities sales agent  ·  securities sales director  ·  securities teller  ·  securities sales directors  ·  securities tellers"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "bank account manager",
+   "isco": 3312,
+   "aka": "banking officer  ·  consumer banker  ·  bank operations manager  ·  bank accounts manager  ·  account manager SME"
+  },
+  {
+   "role": "financial trader",
+   "isco": 3311,
+   "aka": "securities trader  ·  natural gas financial trader  ·  equity trader  ·  quantitative trader  ·  financial trading expert"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "securities underwriter",
+   "isco": 3311,
+   "aka": "securities administrator  ·  distribution administrator  ·  security underwriter"
+  },
+  {
+   "role": "financial analyst",
+   "isco": 2413,
+   "aka": "economic analyst  ·  credit analyst  ·  financial markets report writer  ·  financial markets analyst  ·  treasury analyst"
+  },
+  {
+   "role": "loan officer",
+   "isco": 3312,
+   "aka": "loans adviser  ·  loans controller  ·  loan processor  ·  commercial lender  ·  loans consultant"
+  },
+  {
+   "role": "stock broker",
+   "isco": 3311,
+   "aka": "stocks and shares broker  ·  stockbroker  ·  stockbroking dealer  ·  institutional stock broker"
+  },
+  {
+   "role": "mortgage loan underwriter",
+   "isco": 3312,
+   "aka": "mortgage compliance underwriter  ·  loan approval officer  ·  loan underwriter  ·  mortgage guideline underwriter"
+  },
+  {
+   "role": "credit risk analyst",
+   "isco": 3312,
+   "aka": "financial risk manager  ·  credit risk surveyor  ·  credit risk controller  ·  credit risk technician  ·  financial risk technician"
+  },
+  {
+   "role": "investment analyst",
+   "isco": 2413,
+   "aka": "portfolio analyst  ·  investment accounting analyst  ·  investment banking analyst  ·  investment banking business analyst  ·  investment compliance analyst"
+  },
+  {
+   "role": "financial broker",
+   "isco": 3311,
+   "aka": "financial services broker  ·  financial services adviser  ·  finance adviser  ·  finance broker  ·  financial services manager"
+  },
+  {
+   "role": "securities broker",
+   "isco": 3311,
+   "aka": "junior stock broker  ·  stock salesperson  ·  financial services sales agent  ·  investment broker"
+  },
+  {
+   "role": "student financial support coordinator",
+   "isco": 3312,
+   "aka": "financial support coordinator  ·  coordinator of student financial support services  ·  student finance officer  ·  coordinator of student financial support  ·  financial aid coordinator"
+  },
+  {
+   "role": "mutual fund broker",
+   "isco": 3311,
+   "aka": "mutual fund manager  ·  mutual fund sales representative  ·  mutual fund salesman  ·  mutual fund dealer  ·  mutual fund sales agent"
+  },
+  {
+   "role": "asset manager",
+   "isco": 3311,
+   "aka": "independent financial adviser  ·  asset portfolio manager  ·  asset management adviser  ·  wealth management advisor  ·  assets manager"
+  },
+  {
+   "role": "software developer",
+   "isco": 2512,
+   "aka": "application developer  ·  solutions developer  ·  electric vehicle software development engineer  ·  programmer  ·  application programmer"
+  },
+  {
+   "role": "foreign exchange broker",
+   "isco": 3311,
+   "aka": "forex trader  ·  broker in foreign exchange  ·  forex broker  ·  fx broker"
+  },
+  {
+   "role": "futures trader",
+   "isco": 3311,
+   "aka": "spreader  ·  futures contracts manager  ·  arbitrageur"
+  },
+  {
+   "role": "FinTech Engineers",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Securities, Commodities, and Financial Services Sales Agents",
+   "isco": 3311,
+   "aka": NaN
+  }
+ ]
+}

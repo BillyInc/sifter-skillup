@@ -1,0 +1,14 @@
+{
+  "jamb_name": "Systems Engineering",
+  "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+  "olevel_requirement": "Five (5) SSC credits including English Language, Mathematics, Further Mathematics, Physics and Chemistry.",
+  "direct_entry": "'A' Level passes in Pure/Applied or Pure and Mathematics, Physics and Chemistry.",
+  "institution_waivers": [
+    {"institution": "FUTA", "note": "UTME subjects: requires Mathematics, Chemistry and Physics."},
+    {"institution": "FUTO", "note": "UTME subjects: requires Mathematics, Chemistry and Physics."},
+    {"institution": "LAGOS", "note": "UTME subjects: requires English Language, Chemistry, Mathematics and Physics."},
+    {"institution": "ABU", "note": "UTME subjects: requires Mathematics, Physics and Chemistry."},
+    {"institution": "LAGOS", "note": "Direct Entry: Very good passes in JUPEB subjects: Physics, Mathematics and Chemistry. A' level Cambridge. HND/ND (Upper Credit) into 300L/200L includes engineering courses such as Chemical, Civil and Environmental, Computer, Electrical and Electronics, Metallurgical and Materials, Petroleum and Gas, Surveying and Geo-informatics."},
+    {"institution": "LAGOS", "note": "UTME: requires Five O/Level credit passes in English, Mathematics, Further Mathematics, Physics and Chemistry."}
+  ]
+}

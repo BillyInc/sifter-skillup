@@ -1,0 +1,31 @@
+{
+  "jamb_name": "Dentistry and Dental Technology",
+  "utme_subjects": ["Chemistry", "Physics", "Biology"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+  "direct_entry": "Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.",
+  "institution_waivers": [
+    {"institution": "FUTA", "note": "UTME subjects: requires Mathematics, Biology and Chemistry/Physics."},
+    {"institution": "FUTO", "note": "UTME subjects: requires Physics, Chemistry and Biology."},
+    {"institution": "BENIN", "note": "Direct entry accepts B.Sc. Second Class Lower in Biochemistry, Microbiology, Zoology, Botany, Anatomy, Physiology, Nursing, B.Sc. or ND Optometry, B.Pharmacy or Doctor of Pharmacy."},
+    {"institution": "IBADAN", "note": "Direct entry as in Medicine and Surgery."},
+    {"institution": "JOS", "note": "Accepts passes in IJMB/'A' Level in Physics, Chemistry and Zoology or Biology. Such candidates must also have obtained five (5) 'O' level credit passes in Physics, Chemistry, Biology or Zoology, English Language and Mathematics."},
+    {"institution": "LAGOS", "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology. B.Sc. Degree (first class/second class upper) in Medical related fields."},
+    {"institution": "OAU", "note": "Accepts B.Sc. with a minimum of second class Honours in relevant programme (Sciences)."},
+    {"institution": "PHC", "note": "Accepts Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC Passes in Physics, Chemistry and Biology including UTME entry requirements. First Degree (Second Class Honours - Upper division) in either Anatomy, Physiology, Biochemistry or any other related course including UTME entry requirements."},
+    {"institution": "ABU", "note": "Accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology."},
+    {"institution": "FUTO", "note": "Requires: a) At least three 'A' level passes not below Grade C in Biology and any two of Chemistry, Physics and Mathematics; b) ND/HND at Upper Credit level in Dental Technology, Dental Therapy and Dental Surgery Techniques; c) First Degree in health sciences; d) Very good passes in three JUPEB subjects namely Chemistry, Biology and Physics. It does not accept NCE. Candidates must in addition meet the 'O' Level requirements."},
+    {"institution": "UNN", "note": "Requires: a) Direct entry candidates in addition to satisfying the UTME requirements should also have three (3) 'A' Level passes in Biology or Zoology, Chemistry and Physics at one (1) sitting; b) Accepts B.Sc in related programme for admission into the five (5) year standard programme; c) MBBS may be admitted into the three (3) year clinical programme in Dentistry."},
+    {"institution": "UNN", "note": "UTME requires candidates in addition to minimum entry requirements to have 'O' level credit passes in English Language, Biology, Chemistry, Mathematics and Physics at not more than one (1) sitting."},
+    {"institution": "FUTO", "note": "UTME requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and Biology in not more than two (2) sittings."},
+    {"institution": "LAGOS", "note": "UTME requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."},
+    {"institution": "ABU", "note": "UTME requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."},
+    {"institution": "PHC", "note": "UTME requires Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics."},
+    {"institution": "JOS, CALABAR, UNN, BENIN, LAGOS and OAU", "note": "UTME subjects: require Physics as the other science subject."},
+    {"institution": "IBADAN", "note": "UTME subjects: Same as in Medicine and Surgery."},
+    {"institution": "MAIDUGURI", "note": "UTME subjects: requires Physics, Chemistry and Biology."},
+    {"institution": "FUTO", "note": "UTME subjects: requires Physics, Chemistry and Biology."},
+    {"institution": "LAGOS", "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."},
+    {"institution": "ABU", "note": "UTME subjects: requires Use of English, Physics, Chemistry and Biology."},
+    {"institution": "PHC", "note": "UTME subjects: requires Chemistry, Biology and Physics or Mathematics."}
+  ]
+}

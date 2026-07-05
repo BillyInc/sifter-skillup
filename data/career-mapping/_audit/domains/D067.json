@@ -1,0 +1,62 @@
+{
+ "domain_id": "D067",
+ "domain_name": "Dentistry",
+ "role_count": 11,
+ "roles": [
+  {
+   "role": "audiology technician",
+   "isco": 3214,
+   "aka": "audiology specialist service technician  ·  hearing aid technician  ·  hearing aid service technician  ·  hearing help technician  ·  hearing aid acoustician"
+  },
+  {
+   "role": "dental technician",
+   "isco": 2261,
+   "aka": "maxillo-facial prosthetic technologist  ·  chief dental technician  ·  dental prosthetist  ·  orthodontic technician  ·  maxillo-facial prosthetic technician"
+  },
+  {
+   "role": "prosthetist-orthotist",
+   "isco": 3214,
+   "aka": "prosthetic technologist  ·  certified prosthetist  ·  technologist in prosthetics  ·  prosthetic technician  ·  expert prosthetist"
+  },
+  {
+   "role": "specialist dentist",
+   "isco": 2261,
+   "aka": "prosthetic dentist  ·  periodontologist  ·  gerodontic specialist  ·  periodontician  ·  prosthodontic specialist"
+  },
+  {
+   "role": "dental chairside assistant",
+   "isco": 3251,
+   "aka": "qualified dental nurse  ·  trainee dental nurse  ·  dental assistant  ·  dental support worker  ·  orthodontic nurse"
+  },
+  {
+   "role": "dental hygienist",
+   "isco": 2261,
+   "aka": "trainee dental hygienist  ·  oral health specialist  ·  oral health practitioner  ·  dental therapist  ·  registered dental hygienist"
+  },
+  {
+   "role": "dental practitioner",
+   "isco": 2261,
+   "aka": "community dentist  ·  dentist  ·  principal dentist  ·  conservative dentist  ·  geriatric dentist"
+  },
+  {
+   "role": "Dentists, General",
+   "isco": 2261,
+   "aka": NaN
+  },
+  {
+   "role": "Orthodontists",
+   "isco": 2261,
+   "aka": NaN
+  },
+  {
+   "role": "Prosthodontists",
+   "isco": 2261,
+   "aka": NaN
+  },
+  {
+   "role": "Dentists, All Other Specialists",
+   "isco": 2261,
+   "aka": NaN
+  }
+ ]
+}

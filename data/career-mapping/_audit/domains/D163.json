@@ -1,0 +1,72 @@
+{
+ "domain_id": "D163",
+ "domain_name": "Intellectual Property Law, Patents",
+ "role_count": 13,
+ "roles": [
+  {
+   "role": "judge",
+   "isco": 2612,
+   "aka": "adjudicator  ·  recorder  ·  investigating magistrate  ·  inquisitorial magistrate  ·  appeal court judge"
+  },
+  {
+   "role": "data protection officer",
+   "isco": 2619,
+   "aka": "data compliance officer  ·  data protection and security officer  ·  DPO  ·  compliance officer data privacy  ·  privacy protection officer"
+  },
+  {
+   "role": "contract manager",
+   "isco": 2619,
+   "aka": "medical contract manager  ·  commercial contract manager  ·  construction contract manager  ·  contract compliance manager  ·  contract auditor"
+  },
+  {
+   "role": "legal consultant",
+   "isco": 2619,
+   "aka": "legal advisor  ·  legal nurse consultant  ·  city legal advisor  ·  business law consultant  ·  city legal adviser"
+  },
+  {
+   "role": "mediator",
+   "isco": 2619,
+   "aka": "arbitrator  ·  family mediator  ·  labour mediator  ·  advice worker  ·  alternative dispute resolution coordinator"
+  },
+  {
+   "role": "ombudsman",
+   "isco": 2619,
+   "aka": "information commissioner  ·  ombudswoman  ·  children's ombudsman"
+  },
+  {
+   "role": "regulatory affairs manager",
+   "isco": 2619,
+   "aka": "compliance manager  ·  regulatory manager  ·  bank compliance officer  ·  regulatory compliance officer  ·  regulatory affairs specialist"
+  },
+  {
+   "role": "legislative drafter",
+   "isco": 2619,
+   "aka": "researcher  ·  parliamentary drafter  ·  parliamentary draughtsman  ·  parliamentary draftsman  ·  parliamentary draftsperson"
+  },
+  {
+   "role": "human rights officer",
+   "isco": 2619,
+   "aka": "human rights project officer  ·  human rights program officer  ·  human rights lawyer  ·  human rights programme officer"
+  },
+  {
+   "role": "lawyer",
+   "isco": 2611,
+   "aka": "social law lawyer  ·  barrister  ·  medical lawyer  ·  industrial property lawyer  ·  procurement law lawyer"
+  },
+  {
+   "role": "prosecutor",
+   "isco": 2611,
+   "aka": "state attorney  ·  public prosecutor  ·  crown prosecutor  ·  prosecuting attorney"
+  },
+  {
+   "role": "notary",
+   "isco": 2619,
+   "aka": "common law notary  ·  public notary  ·  notarial officer  ·  civil law notary  ·  law signing agent"
+  },
+  {
+   "role": "corporate lawyer",
+   "isco": 2611,
+   "aka": "intellectual property lawyer  ·  business lawyer  ·  patent lawyer  ·  business solicitor  ·  corporate counsel"
+  }
+ ]
+}

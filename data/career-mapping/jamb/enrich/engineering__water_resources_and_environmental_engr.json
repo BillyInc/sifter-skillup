@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Water Resources and Environmental Engr",
+  "utme_subjects": ["Chemistry", "Mathematics", "Physics"],
+  "olevel_requirement": "Five (5) SSC credit passes in Physics, Chemistry, Mathematics, English Language and Biology",
+  "direct_entry": "'A' Level passes must include Physics or Chemistry, and Mathematics",
+  "institution_waivers": [
+    {"institution": "ABU", "note": "Requires: GCE 'A' level or IJMB passes in Mathematics, Physics or Chemistry; ND with Upper credit in Water Resources or Civil Engineering or related field from accredited institution; HND with at least Lower credit level in Water Resources or Civil Engineering or related field from accredited institution."},
+    {"institution": "ILORIN", "note": "A candidate for direct entry must possess UTME Ordinary level requirements as stated, plus GCE or IJMB Advanced level or equivalent qualification in Physics, Mathematics and Chemistry, OR National Diploma (at least Upper Credit) in Water Resources and Environmental Engineering or Civil Engineering."},
+    {"institution": "ILORIN", "note": "Accepts Ordinary level (WASC, NECO) Credits in five (5) subjects including English Language, Mathematics, Physics, Chemistry and Biology; UTME subjects require Physics, Chemistry and Mathematics."},
+    {"institution": "ABU", "note": "Accepts five (5) 'O' level credit passes in English Language, Mathematics, Chemistry, Physics, and any other science subject; UTME subjects require Mathematics, Chemistry and Physics."}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+ "brochure": "engineering",
+ "txt": "_jamb_txt/engineering.txt",
+ "missing_programmes": [
+  "Electrical Engineering",
+  "Mechanical Engineering",
+  "Chemical Engineering",
+  "Biomedical Engineering",
+  "Mechatronics Engineering",
+  "Agricultural Engineering",
+  "Agricultural and Bio-Resources Engineering",
+  "Production Engineering",
+  "Electronics Engineering",
+  "Electrical/Electronic Engineering",
+  "ICT Engineering",
+  "Land Surveying",
+  "Communication Technology",
+  "Project Management Technology",
+  "Biomedical Technology"
+ ]
+}

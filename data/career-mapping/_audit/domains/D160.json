@@ -1,0 +1,192 @@
+{
+ "domain_id": "D160",
+ "domain_name": "Fashion Styling, Image Consulting",
+ "role_count": 37,
+ "roles": [
+  {
+   "role": "performance lighting designer",
+   "isco": 2166,
+   "aka": "lighting designer and technician  ·  lighting technician and designer  ·  theatre lighting designer  ·  lighting designer & technician  ·  lighting technician & designer"
+  },
+  {
+   "role": "masseur/masseuse",
+   "isco": 5142,
+   "aka": "salon therapist  ·  deep tissue massage therapist  ·  thai massage therapist  ·  trigger point massage therapist  ·  professional masseuse"
+  },
+  {
+   "role": "illustrator",
+   "isco": 2166,
+   "aka": "book illustrator  ·  cartoon drawer  ·  inker  ·  comic drawer  ·  drawer"
+  },
+  {
+   "role": "spa attendant",
+   "isco": 5142,
+   "aka": "health club attendant  ·  mineral springs attendant  ·  steam room attendant  ·  hot springs attendant  ·  wellness consultant"
+  },
+  {
+   "role": "web designer",
+   "isco": 2166,
+   "aka": "website designer  ·  digital designer  ·  multimedia web designer  ·  marketing web designer  ·  interactive web designer"
+  },
+  {
+   "role": "set builder",
+   "isco": 3432,
+   "aka": "chief carpenter  ·  set dresser & builder  ·  set builder & designer  ·  set constructor  ·  set builder & dresser"
+  },
+  {
+   "role": "visual merchandiser",
+   "isco": 3432,
+   "aka": "assistant visual merchandiser  ·  image controller  ·  senior visual merchandiser  ·  retail visual strategy manager  ·  display designer"
+  },
+  {
+   "role": "stop-motion animator",
+   "isco": 2166,
+   "aka": "stop motion animators  ·  stop-motion animation artist  ·  puppet animator  ·  stop motion animator  ·  3D stop-motion animator"
+  },
+  {
+   "role": "photojournalist",
+   "isco": 3431,
+   "aka": "photo reporter  ·  image journalist  ·  multi media image journalist  ·  news photographer  ·  photo correspondent"
+  },
+  {
+   "role": "pedicurist",
+   "isco": 5142,
+   "aka": "mani-pedi attendant  ·  foot care attendant"
+  },
+  {
+   "role": "animator",
+   "isco": 2166,
+   "aka": "3D computer-generated imagery animator  ·  3D computer animation artist  ·  2D hand-drawn animator  ·  computer animation artist  ·  animators"
+  },
+  {
+   "role": "make-up artist",
+   "isco": 5142,
+   "aka": "make up artist  ·  theatre makeup artist  ·  prosthetics and make up artist  ·  prosthetics & make up artist  ·  prosthetics builder"
+  },
+  {
+   "role": "scenic painter",
+   "isco": 3432,
+   "aka": "scenery artist  ·  scenic artist  ·  scenic painter & artist  ·  scenery painter  ·  theatre scene painter"
+  },
+  {
+   "role": "3D animator",
+   "isco": 2166,
+   "aka": "CGI animator  ·  computer-generated imagery animator  ·  3D designer  ·  CGI designer"
+  },
+  {
+   "role": "make-up and hair designer",
+   "isco": 5142,
+   "aka": "hair and make-up artist  ·  hair designer & make-up artist  ·  hair and make up designer  ·  hair designer and make-up artist  ·  hair & make up designer"
+  },
+  {
+   "role": "photographer",
+   "isco": 3431,
+   "aka": "wedding photographer  ·  illustration photographer  ·  aerial photographer  ·  graphical industry photographer  ·  itinerant photographer"
+  },
+  {
+   "role": "graphic designer",
+   "isco": 2166,
+   "aka": "advertising artist  ·  graphic design expert  ·  graphic artist  ·  graphics designer  ·  graphic design specialist"
+  },
+  {
+   "role": "hair removal technician",
+   "isco": 5142,
+   "aka": "beauty treatment specialist  ·  epilation specialist  ·  wax depilation specialist  ·  hair removal specialist  ·  depilation specialist"
+  },
+  {
+   "role": "interior designer",
+   "isco": 3432,
+   "aka": "interior space planner  ·  space planner & interior decorator  ·  spatial designer  ·  interior & spatial designer  ·  spatial design expert"
+  },
+  {
+   "role": "weight loss consultant",
+   "isco": 5142,
+   "aka": "health and fitness consultant  ·  health and wellness consultant  ·  fitness and nutrition consultant  ·  weight loss counsellor  ·  nutritionist"
+  },
+  {
+   "role": "interior planner",
+   "isco": 3432,
+   "aka": "interior designer  ·  interior architect  ·  interior space planner  ·  spatial planner  ·  interior design consultant"
+  },
+  {
+   "role": "desktop publisher",
+   "isco": 2166,
+   "aka": "financial desktop publisher  ·  desktop designer  ·  electronic pre-press technician  ·  DTP operator  ·  advanced desktop publilsher"
+  },
+  {
+   "role": "set designer",
+   "isco": 3432,
+   "aka": "scene designer  ·  scenic artist and designer  ·  scenographer  ·  exibition designer  ·  scenery artist"
+  },
+  {
+   "role": "miniature set designer",
+   "isco": 3432,
+   "aka": "miniature set builder  ·  miniature model set designer  ·  miniature model set designer and builder  ·  miniature set constructor  ·  miniature maker"
+  },
+  {
+   "role": "animation layout artist",
+   "isco": 2166,
+   "aka": "2D layout animator  ·  3D layout artist  ·  animation layout designer  ·  3D layout animator  ·  2D layout artist"
+  },
+  {
+   "role": "aesthetician",
+   "isco": 5142,
+   "aka": "facial treatment operator  ·  cosmetician  ·  skin care specialist  ·  beautician  ·  facialist"
+  },
+  {
+   "role": "special effects artist",
+   "isco": 2166,
+   "aka": "senior special effects artist  ·  digital effects specialist  ·  special effects technician  ·  special effect image designer  ·  special effects animator"
+  },
+  {
+   "role": "3D modeller",
+   "isco": 2166,
+   "aka": "CGI modeller  ·  3D developer  ·  3D modellers  ·  3D artist  ·  computer-generated imagery modeller"
+  },
+  {
+   "role": "manicurist",
+   "isco": 5142,
+   "aka": "finger nail technician  ·  nail technician"
+  },
+  {
+   "role": "tanning consultant",
+   "isco": 5142,
+   "aka": "sun parlor worker  ·  tanning salon attendant  ·  sun parlour attendant  ·  sun parlor attendant  ·  solarium attendant"
+  },
+  {
+   "role": "performance video designer",
+   "isco": 2166,
+   "aka": "projection designer  ·  video & graphics designer  ·  video designer  ·  video & projection designer  ·  visual designer"
+  },
+  {
+   "role": "beauty salon attendant",
+   "isco": 5142,
+   "aka": "suntan salon attendant  ·  sun parlor worker  ·  tanning salon attendant  ·  sun parlour attendant  ·  suntan salon worker"
+  },
+  {
+   "role": "digital media designer",
+   "isco": 2166,
+   "aka": "digital media designers  ·  digital media developer  ·  multimedia developer  ·  digital multimedia designer  ·  interactive media designer"
+  },
+  {
+   "role": "digital artist",
+   "isco": 2166,
+   "aka": "digital matte painter  ·  computer-generated imagery artist  ·  digital matte artist  ·  computer artist  ·  digital games artist"
+  },
+  {
+   "role": "personal stylist",
+   "isco": 5142,
+   "aka": "corporate image consultant  ·  wardrobe consultant  ·  image consultant  ·  fashion advisor  ·  personal style advisor"
+  },
+  {
+   "role": "digital games designer",
+   "isco": 2166,
+   "aka": "digital game designer  ·  digital games designers  ·  video games designer  ·  virtual games designer  ·  computer games designer"
+  },
+  {
+   "role": "merchandiser",
+   "isco": 3432,
+   "aka": "retail merchandising associate  ·  merchandising controller  ·  merchandising associate  ·  merchandise planner  ·  retail merchandising controller"
+  }
+ ]
+}

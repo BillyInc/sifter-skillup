@@ -1,0 +1,21 @@
+{
+  "jamb_name": "English and Literary Studies",
+  "utme_subjects": ["Literature in English", "one other Arts subject", "and another Arts or Social Science subject"],
+  "olevel_requirement": "Five (5) SSC credit passes to include Literature in English and English Language.",
+  "direct_entry": "Two (2) `A' Level passes to include Literature in English and one other Arts subject.",
+  "institution_waivers": [
+    {"institution": "AAUA", "note": "Accepts ND upper credit in Mass Communication. Does not accept NCE."},
+    {"institution": "ABU", "note": "Accepts Two `A' level papers including English at IJMB/NCE, or a minimum of Merit at Diploma. Candidates with Diploma must also possess pass in Literature in English. General English/Use of English at NCE satisfies `O' level English requirement."},
+    {"institution": "ABUJA", "note": "Accepts two (2) `A' Level passes to include Literature in English and one other Arts subject."},
+    {"institution": "CALABAR", "note": "Accepts NCE with Literature in English as the teaching subject."},
+    {"institution": "CHRISTOPHER", "note": "Accepts HND, ND or NCE with credit passes in the relevant programmes/subjects."},
+    {"institution": "NDU", "note": "Requires pass in Literature in English at the `A' Level or NCE merit and a pass in at least any Arts subject."},
+    {"institution": "OAU", "note": "Same as in English Language."},
+    {"institution": "RSU", "note": "Accepts Admission to Year II: OND/ND (Upper Credit) relevant to the discipline. HND (Lower Credit) relevant to the Programme. In addition, all such candidates above must also satisfy the U.M.E. entry requirements. Admission into Year III: Degree relevant to the Programme. HND (Upper Credit) relevant to the Programme from a recognized Institution."},
+    {"institution": "UNIOSUN", "note": "Accepts two (2) `A' Level passes to include Literature in English and other Arts subjects or NCE in English/Political Science."},
+    {"institution": "UNN", "note": "Accepts NCE merit in English Language in addition to the UTME requirements."},
+    {"institution": "UNIHEZ", "note": "Accepts Two (2) A Level passes to include Literature in English and one other Arts subject."},
+    {"institution": "KASU", "note": "Accepts Two `A' passes to include Literature in English and one other Arts subjects. NCE merit pass including English provided they merit `O' Level requirements. ND/HND Lower credit in related field and IJMB 7 points and above."},
+    {"institution": "DELSU", "note": "Requires a) In addition to the five (5) `O' Level credit passes at SSC or its equivalent, candidates must possess at least merit passes in not less than two art subjects, including literature, at the GCE `A' Level or H.S.C. Examination or their equivalent. b) A pass in `A' Level General Paper or NCE General English is not accepted in lieu of an `O' Level credit pass in SSC or its equivalent English Language. Literature courses taken at OND will not be accepted for admission into the department."}
+  ]
+}

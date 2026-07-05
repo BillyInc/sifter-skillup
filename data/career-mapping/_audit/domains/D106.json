@@ -1,0 +1,147 @@
+{
+ "domain_id": "D106",
+ "domain_name": "Garment Making, Tailoring, Dressmaking",
+ "role_count": 28,
+ "roles": [
+  {
+   "role": "clothing product grader",
+   "isco": 7532,
+   "aka": "pattern developer/grader  ·  apparel grader  ·  fabric pattern grader  ·  clothing patternmaker  ·  clothing product tester"
+  },
+  {
+   "role": "wearing apparel patternmaker",
+   "isco": 7532,
+   "aka": "sewing layout pattern technician  ·  bespoke wearing apparel patternmaker  ·  pattern grader  ·  apparel patternmaker  ·  wearing apparel pattern worker"
+  },
+  {
+   "role": "digital prototyper",
+   "isco": 7532,
+   "aka": "digital patternmaker  ·  pattern making machine operator  ·  digital prototype operator  ·  digital prototype technician  ·  digital pattern maker"
+  },
+  {
+   "role": "marine upholsterer",
+   "isco": 7534,
+   "aka": "marine upholstery finisher  ·  marine interior furniture maker  ·  marine soft furnishing maker  ·  marine furniture maker  ·  marine upholstery maker"
+  },
+  {
+   "role": "sewing machinist",
+   "isco": 7533,
+   "aka": "seamstress  ·  sewing operator  ·  sewer  ·  sew on machinist  ·  sewing worker"
+  },
+  {
+   "role": "dressmaker",
+   "isco": 7531,
+   "aka": "seamstress  ·  seamster  ·  custom dressmaker  ·  tailor  ·  couture dressmaker"
+  },
+  {
+   "role": "railway car upholsterer",
+   "isco": 7534,
+   "aka": "multiple unit upholsterer  ·  train coach upholstery worker  ·  train carriage upholstery worker  ·  train coach upholsterer  ·  carriage upholsterer"
+  },
+  {
+   "role": "embroiderer",
+   "isco": 7533,
+   "aka": "hand decorator  ·  embroidery digitiser  ·  embroidery puncher  ·  embroidery finisher  ·  embroidery operator"
+  },
+  {
+   "role": "clothing CAD patternmaker",
+   "isco": 7532,
+   "aka": "computer patternmaker  ·  fabric CAD pattern maker  ·  clothing CAD pattern maker  ·  fabric CAD patternmaker"
+  },
+  {
+   "role": "glove maker",
+   "isco": 7533,
+   "aka": "glove manufacturers  ·  industrial leather gloves manufacturer  ·  sports glove manufacturer  ·  glove manufacturer"
+  },
+  {
+   "role": "doll maker",
+   "isco": 7533,
+   "aka": "porcelain doll maker  ·  dollmaker  ·  doll repairer  ·  porcelain dollmaker  ·  dolls accessories maker"
+  },
+  {
+   "role": "clothing cutter",
+   "isco": 7532,
+   "aka": "cloth cutting machine operator  ·  bespoke clothing cutter  ·  garment cutter  ·  clothing marker  ·  clothing cutter operator"
+  },
+  {
+   "role": "mattress maker",
+   "isco": 7534,
+   "aka": "mattress builder  ·  soft furnishing maker  ·  mattress-making machine operative  ·  mattress-making machine setter  ·  mattress-making machine operator"
+  },
+  {
+   "role": "upholsterer",
+   "isco": 7534,
+   "aka": "chair maker  ·  seat builder  ·  mattress builder  ·  mattress maker  ·  chair builder"
+  },
+  {
+   "role": "tailor",
+   "isco": 7531,
+   "aka": "seamstress  ·  suit maker  ·  alterations sewer  ·  seamster  ·  couturier"
+  },
+  {
+   "role": "costume maker",
+   "isco": 7531,
+   "aka": "costume builder  ·  costume and prop maker  ·  costumer  ·  costume & prop maker  ·  set costumer"
+  },
+  {
+   "role": "wig and hairpiece maker",
+   "isco": 7531,
+   "aka": "hairpiece maker  ·  senior wig maker  ·  wig-hairpiece maker  ·  wig builder  ·  wig consultant"
+  },
+  {
+   "role": "aircraft interior technician",
+   "isco": 7534,
+   "aka": "aircraft seating technician  ·  aircraft interior design technician  ·  aircraft interior lighting technician  ·  aircraft instrument mecanic  ·  aircraft interior instrument operative"
+  },
+  {
+   "role": "motor vehicle upholsterer",
+   "isco": 7534,
+   "aka": "motorcycle trimmer  ·  lorry upholstery worker  ·  motorcycle upholstery worker  ·  bus trimmer  ·  coach trimmer"
+  },
+  {
+   "role": "furniture upholsterer",
+   "isco": 7534,
+   "aka": "chair maker  ·  craftswoman upholster  ·  seat builder  ·  mattress builder  ·  mattress maker"
+  },
+  {
+   "role": "hide grader",
+   "isco": 7531,
+   "aka": "wet-blue grader  ·  crust grader  ·  crust sorter  ·  skin grader  ·  hide graders"
+  },
+  {
+   "role": "milliner",
+   "isco": 7531,
+   "aka": "custom headwear manufacturer  ·  hatter  ·  headwear manufacturer  ·  headgear manufacturer  ·  hat maker"
+  },
+  {
+   "role": "Garment and Related Trades Workers",
+   "isco": 7531,
+   "aka": NaN
+  },
+  {
+   "role": "Sewing Machine Operators",
+   "isco": 7532,
+   "aka": NaN
+  },
+  {
+   "role": "Sewers, Hand",
+   "isco": 7533,
+   "aka": NaN
+  },
+  {
+   "role": "Tailors, Dressmakers, and Custom Sewers",
+   "isco": 7531,
+   "aka": NaN
+  },
+  {
+   "role": "Fabric and Apparel Patternmakers",
+   "isco": 7534,
+   "aka": NaN
+  },
+  {
+   "role": "Pressers, Textile, Garment, and Related Materials",
+   "isco": 7534,
+   "aka": NaN
+  }
+ ]
+}

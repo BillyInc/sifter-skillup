@@ -1,0 +1,72 @@
+{
+ "domain_id": "D105",
+ "domain_name": "Handicraft, Basketry, Textile Craft",
+ "role_count": 13,
+ "roles": [
+  {
+   "role": "weaver",
+   "isco": 7318,
+   "aka": "weaving machinist  ·  weaving machine operator  ·  needle loom operator  ·  textile weaver  ·  fabric weaver"
+  },
+  {
+   "role": "sports equipment repair technician",
+   "isco": 7319,
+   "aka": "sports equipment technician  ·  archery bows repairer  ·  sporting goods repair technician  ·  sporting goods repairer  ·  camping equipment repair technician"
+  },
+  {
+   "role": "knitter",
+   "isco": 7318,
+   "aka": "traditional knitter  ·  knitting pattern designer  ·  lacemaker  ·  hand knitter  ·  warp knitter"
+  },
+  {
+   "role": "toymaker",
+   "isco": 7317,
+   "aka": "toy designer  ·  gismo repairer  ·  hand toymaker  ·  soft toymaker  ·  plastic toy maker"
+  },
+  {
+   "role": "carpet handicraft worker",
+   "isco": 7318,
+   "aka": "handemade carpet worker  ·  carpet worker  ·  traditional carpet worker  ·  traditional carpet maker  ·  hand carpet maker"
+  },
+  {
+   "role": "wicker furniture maker",
+   "isco": 7317,
+   "aka": "rattan furniture manufacturer  ·  wicker furniture assembler  ·  wicker furniture weaver  ·  wicker furniture creator  ·  wicker furniture manufacturer"
+  },
+  {
+   "role": "brush maker",
+   "isco": 7317,
+   "aka": "mop factory operative  ·  broom production plant worker  ·  broom production plant operative  ·  brush production plant worker  ·  brush assembler"
+  },
+  {
+   "role": "artisan papermaker",
+   "isco": 7317,
+   "aka": "artisan paper creator  ·  artisan paper producer  ·  paper creator  ·  artisan paper manufacturer  ·  artisan paper fabricator"
+  },
+  {
+   "role": "basketmaker",
+   "isco": 7317,
+   "aka": "reed weaving handicraft worker  ·  basket reed weaver  ·  basket weaver  ·  basket weaving handicraft worker  ·  artisan basket weaver"
+  },
+  {
+   "role": "carpet weaver",
+   "isco": 7318,
+   "aka": "carpet maker  ·  rug weaver  ·  carpet weavers  ·  carpet-weaving machine operator  ·  rug maker"
+  },
+  {
+   "role": "woodcarver",
+   "isco": 7317,
+   "aka": "traditional woodcarver  ·  craft woodcarver  ·  artisan woodworker  ·  artisanal woodcarver  ·  artisan"
+  },
+  {
+   "role": "candle maker",
+   "isco": 7319,
+   "aka": "candle moulder  ·  candle production inspector  ·  candlemaker  ·  candle former  ·  wax candle maker"
+  },
+  {
+   "role": "fishing net maker",
+   "isco": 7318,
+   "aka": "drift net maker  ·  maker of fishing nets  ·  fisheries net maker"
+  }
+ ]
+}

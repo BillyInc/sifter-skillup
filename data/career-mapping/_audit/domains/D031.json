@@ -1,0 +1,682 @@
+{
+ "domain_id": "D031",
+ "domain_name": "Sales",
+ "role_count": 135,
+ "roles": [
+  {
+   "role": "hardware and paint specialised seller",
+   "isco": 5223,
+   "aka": "home decorating specialised seller  ·  home decorating salesperson  ·  hardware and paint do it yourself salesperson  ·  hardware and paint specialized seller  ·  paint and accessories specialised seller"
+  },
+  {
+   "role": "auction house manager",
+   "isco": 1221,
+   "aka": "auctioneer  ·  auction house director  ·  valuer  ·  auction house administrator"
+  },
+  {
+   "role": "fish and seafood specialised seller",
+   "isco": 5223,
+   "aka": "fish stall specialised seller  ·  fish stall salesperson  ·  fresh seafood salesperson  ·  fishmongers shop specialised seller  ·  fisheries shop salesperson"
+  },
+  {
+   "role": "green coffee buyer",
+   "isco": 3323,
+   "aka": "coffee buyer  ·  green coffee procurement specialist  ·  green coffee acquisition specialist  ·  green coffee purchaser"
+  },
+  {
+   "role": "motor vehicles parts advisor",
+   "isco": 5223,
+   "aka": "bus parts advisor  ·  bus and coach service operative  ·  fleet parts operative  ·  light vehicle service operative  ·  PCV parts advisor"
+  },
+  {
+   "role": "wholesale merchant in perfume and cosmetics",
+   "isco": 3324,
+   "aka": "business to business seller in perfume and cosmetics  ·  B2B sales consultant in perfume and cosmetics  ·  wholesale trader in perfume and cosmetics  ·  business to business sales consultant in perfume and cosmetics  ·  trainee wholesale merchant in perfume and cosmetics"
+  },
+  {
+   "role": "shop assistant",
+   "isco": 5223,
+   "aka": "garden centre shop assistant  ·  filling station shop assistant  ·  senior shop assistant  ·  hypermarket shop assistant  ·  outlet centre shop assistant"
+  },
+  {
+   "role": "ammunition specialised seller",
+   "isco": 5223,
+   "aka": "hunting equipment salesperson  ·  weapon specialised seller  ·  ammunition salesperson  ·  firearms specialised seller  ·  weapon salesperson"
+  },
+  {
+   "role": "chief marketing officer",
+   "isco": 1221,
+   "aka": "chief commercial officer  ·  director of marketing  ·  head of marketing  ·  chief commercial strategy officer  ·  senior marketing officer"
+  },
+  {
+   "role": "sporting accessories specialised seller",
+   "isco": 5223,
+   "aka": "sports salesperson  ·  sporting accessories specialized seller  ·  sports goods specialised seller  ·  sporting equipment specialised seller  ·  sporting articles salesperson"
+  },
+  {
+   "role": "renewable energy consultant",
+   "isco": 2433,
+   "aka": "sustainable energy market consultant  ·  renewable energy survey consultant  ·  renewable energy market consultant  ·  sustainable energy consultant  ·  sustainable energy technical consultant"
+  },
+  {
+   "role": "bookshop specialised seller",
+   "isco": 5223,
+   "aka": "stationery specialised seller  ·  stationery salesperson  ·  magazine and bookshop specialised seller  ·  antique book specialised seller  ·  magazine and book salesperson"
+  },
+  {
+   "role": "clothing specialised seller",
+   "isco": 5223,
+   "aka": "professional wear salesperson  ·  professional wear specialised seller  ·  women's fashion specialised seller  ·  clothing salesperson  ·  clothes salesperson"
+  },
+  {
+   "role": "commercial sales representative",
+   "isco": 3322,
+   "aka": "sales executive  ·  sales and marketing consultant  ·  field sales executive  ·  sales and marketing executive  ·  sales consultant"
+  },
+  {
+   "role": "motor vehicle aftersales manager",
+   "isco": 1221,
+   "aka": "van aftersales specialist  ·  van aftersales co-ordinator  ·  car aftersales co-ordinator  ·  motor vehicle aftersales manger  ·  motor vehicles aftersales manager"
+  },
+  {
+   "role": "wholesale merchant in household goods",
+   "isco": 3324,
+   "aka": "senior wholesale merchant in household goods  ·  graduate wholesale merchant in household goods  ·  trainee wholesale merchant in household goods  ·  wholesale buyer in household goods  ·  wholesale merchandiser in household goods"
+  },
+  {
+   "role": "online sales channel manager",
+   "isco": 1221,
+   "aka": "e-commerce manager  ·  internet order manager  ·  digital sales manager  ·  mail-order and internet manager  ·  mail order manager"
+  },
+  {
+   "role": "confectionery specialised seller",
+   "isco": 5223,
+   "aka": "sweet specialised seller  ·  sugar confectionery specialised seller  ·  candy salesperson  ·  pastry and confectionery salesperson  ·  pastry and confectionery specialised seller"
+  },
+  {
+   "role": "purchaser",
+   "isco": 3323,
+   "aka": "supply agent  ·  purchasing office worker  ·  purchasing and supply office worker  ·  procurement and supply agent  ·  purchasing assistant"
+  },
+  {
+   "role": "commodity broker",
+   "isco": 3324,
+   "aka": "commodity dealer  ·  commodities broker"
+  },
+  {
+   "role": "commercial director",
+   "isco": 1221,
+   "aka": "chief commercial officer  ·  marketing director  ·  commercial marketing specialist  ·  CCO  ·  international commercial director"
+  },
+  {
+   "role": "technical sales representative in agricultural machinery and equipment",
+   "isco": 2433,
+   "aka": "graduate technical sales representative in agricultural machinery and equipment  ·  agricultural machinery and equipment field salesperson  ·  agricultural machinery and equipment field saleswoman  ·  assistant technical sales engineer in agricultural machinery and equipment  ·  senior technical sales engineer in agricultural machinery and equipment"
+  },
+  {
+   "role": "wholesale merchant in electronic and telecommunications equipment and parts",
+   "isco": 3324,
+   "aka": "wholesaler in electronic and telecommunications equipment and parts  ·  B2B sales consultant in electronic and telecommunications equipment and parts  ·  business to business sales consultant in electronic and telecommunications equipment and parts  ·  senior wholesale merchant in electronic and telecommunications equipment and parts  ·  assistant wholesale merchant in electronic and telecommunications equipment and parts"
+  },
+  {
+   "role": "bakery specialised seller",
+   "isco": 5223,
+   "aka": "bread and pastries salesperson  ·  bakers shop salesperson  ·  bakery specialized seller  ·  patisserie specialised seller  ·  bakery department specialised seller"
+  },
+  {
+   "role": "wholesale merchant in fish crustaceans and molluscs",
+   "isco": 3324,
+   "aka": "B2B sales consultant in fish, crustaceans and molluscs  ·  wholesale merchant in fish, crustaceans and mollusks  ·  senior wholesale merchant in fish, crustaceans and molluscs  ·  assistant wholesale merchant in fish, crustaceans and molluscs  ·  business to business sales consultant in fish, crustaceans and molluscs"
+  },
+  {
+   "role": "wholesale merchant in computer peripheral equipment and software",
+   "isco": 3324,
+   "aka": "wholesale buyer in computer peripheral equipment and software  ·  assistant wholesale merchant in computer peripheral equipment and software  ·  trainee wholesale merchant in computer peripheral equipment and software  ·  B2B sales consultant in computer peripheral equipment and software  ·  graduate wholesale merchant in computer peripheral equipment and software"
+  },
+  {
+   "role": "car leasing agent",
+   "isco": 5223,
+   "aka": "car leasing office manager  ·  fleet leasing agent  ·  vehicle leasing sales agent  ·  fleet leasing consultant  ·  car leasing team leader"
+  },
+  {
+   "role": "pet and pet food specialised seller",
+   "isco": 5223,
+   "aka": "pet salesperson  ·  pet superstore specialised seller  ·  animal salesperson  ·  pet and pet food specialized seller  ·  animal food specialised seller"
+  },
+  {
+   "role": "audiology equipment specialised seller",
+   "isco": 5223,
+   "aka": "hearing help specialised seller  ·  hearing aid salesperson  ·  audiology equipment salesperson  ·  audiology salesperson  ·  hearing help salesperson"
+  },
+  {
+   "role": "wholesale merchant",
+   "isco": 3324,
+   "aka": "graduate wholesale merchant  ·  wholesale buyer  ·  wholesale manager  ·  business to business sales consultant  ·  business to business seller"
+  },
+  {
+   "role": "computer games, multimedia and software specialised seller",
+   "isco": 5223,
+   "aka": "computer software and multimedia salesperson  ·  computer games specialised seller  ·  multimedia software specialised seller  ·  software multimedia salesperson  ·  computer games and software specialised seller"
+  },
+  {
+   "role": "destination manager",
+   "isco": 1221,
+   "aka": "destination development manager  ·  organisation manager  ·  destination marketing manager  ·  destination management organisation (DMO) manager  ·  tourism strategy manager"
+  },
+  {
+   "role": "wholesale merchant in pharmaceutical goods",
+   "isco": 3324,
+   "aka": "wholesale merchandiser in pharmaceutical goods  ·  business to business sales consultant in pharmaceutical goods  ·  wholesale buyer in pharmaceutical goods  ·  wholesaler in pharmaceutical goods  ·  assistant wholesale merchant in pharmaceutical goods"
+  },
+  {
+   "role": "technical sales representative in hardware, plumbing and heating equipment",
+   "isco": 2433,
+   "aka": "technical salesperson in hardware, plumbing and heating equipment  ·  technical sales representative in heating equipment  ·  technical salesman in hardware, plumbing and heating equipment  ·  senior technical sales representative in hardware, plumbing and heating equipment  ·  graduate technical sales engineer in hardware, plumbing and heating equipment"
+  },
+  {
+   "role": "second-hand goods specialised seller",
+   "isco": 5223,
+   "aka": "second-hand goods specialized seller  ·  army surplus goods specialised seller  ·  second-hand goods salesperson  ·  army surplus goods salesperson  ·  second hand goods specialised seller"
+  },
+  {
+   "role": "furniture specialised seller",
+   "isco": 5223,
+   "aka": "home articles specialised seller  ·  home furnishings salesperson  ·  home furnishing salesperson  ·  home furnishing specialised seller  ·  lightning equipment and accessories salesperson"
+  },
+  {
+   "role": "non-vessel operating common carrier",
+   "isco": 3324,
+   "aka": "freight forwarder  ·  NVOCC  ·  shipment consolidator"
+  },
+  {
+   "role": "electricity sales representative",
+   "isco": 3322,
+   "aka": "electricity sales consultant  ·  electricity salesman  ·  electric power seller  ·  residential electricity sales representative  ·  electricity saleswoman"
+  },
+  {
+   "role": "computer and accessories specialised seller",
+   "isco": 5223,
+   "aka": "computer specialised seller  ·  computer hardware salesperson  ·  computer salesperson  ·  consumer electronics specialised seller  ·  computer and peripheral units specialised seller"
+  },
+  {
+   "role": "fruit and vegetables specialised seller",
+   "isco": 5223,
+   "aka": "greengrocers store specialised seller  ·  greengrocery counter salesperson  ·  fruiterers shop salesperson  ·  fruit and vegetables specialized seller  ·  organic fruit and vegetable specialised seller"
+  },
+  {
+   "role": "technical sales representative in mining and construction machinery",
+   "isco": 2433,
+   "aka": "mining and construction machinery field saleswoman  ·  senior technical sales engineer in mining and construction machinery  ·  mining and construction machinery field salesman  ·  senior technical sales representative in mining and construction machinery  ·  mining and construction machinery technical field sales representative"
+  },
+  {
+   "role": "bid manager",
+   "isco": 1221,
+   "aka": "tender manager  ·  proposal manager  ·  sales project manager  ·  bid and project manager  ·  commercial bid manager"
+  },
+  {
+   "role": "specialised seller",
+   "isco": 5223,
+   "aka": "specialised sales advisor  ·  specialized trader  ·  specialized salesperson  ·  specialised salesperson  ·  specialised trader"
+  },
+  {
+   "role": "eyewear and optical equipment specialised seller",
+   "isco": 5223,
+   "aka": "contact lens and glasses salesperson  ·  spectacle specialised seller  ·  eyewear and optical equipment specialized seller  ·  eyewear salesperson  ·  opticians specialised seller"
+  },
+  {
+   "role": "wholesale merchant in meat and meat products",
+   "isco": 3324,
+   "aka": "wholesale trader in meat and meat products  ·  senior wholesale merchant in meat and meat products  ·  wholesaler in meat and meat products  ·  business to business sales consultant in meat and meat products  ·  graduate wholesale merchant in meat and meat products"
+  },
+  {
+   "role": "wholesale merchant in dairy products and edible oils",
+   "isco": 3324,
+   "aka": "business to business sales consultant in dairy products and edible oils  ·  assistant wholesale merchant in dairy products and edible oils  ·  senior wholesale merchant in dairy products and edible oils  ·  wholesaler in dairy products and edible oils  ·  business to business seller in dairy products and edible oils"
+  },
+  {
+   "role": "beverages specialised seller",
+   "isco": 5223,
+   "aka": "off-licence store specialised salesperson  ·  soft and alcoholic beverages store specialised salesperson  ·  beverages store specialised seller  ·  beverages specialized seller  ·  off-licence store specialised seller"
+  },
+  {
+   "role": "wholesale merchant in machinery, industrial equipment, ships and aircraft",
+   "isco": 3324,
+   "aka": "assistant wholesale merchant in machinery, industrial equipment, ships and aircraft  ·  wholesale merchandiser in machinery, industrial equipment, ships and aircraft  ·  wholesale buyer in machinery, industrial equipment, ships and aircraft  ·  trainee wholesale merchant in machinery, industrial equipment, ships and aircraft  ·  graduate wholesale merchant in machinery, industrial equipment, ships and aircraft"
+  },
+  {
+   "role": "wholesale merchant in furniture, carpets and lighting equipment",
+   "isco": 3324,
+   "aka": "wholesale trader in furniture, carpets and lighting equipment  ·  business to business seller in furniture, carpets and lighting equipment  ·  B2B sales consultant in furniture, carpets and lighting equipment  ·  business to business sales consultant in furniture, carpets and lighting equipment  ·  wholesale merchandiser in furniture, carpets and lighting equipment"
+  },
+  {
+   "role": "motor vehicles specialised seller",
+   "isco": 5223,
+   "aka": "used car specialised seller  ·  motor vehicles specialized seller  ·  salesperson motor trade  ·  dealership salesperson  ·  used car salesperson"
+  },
+  {
+   "role": "wholesale merchant in sugar, chocolate and sugar confectionery",
+   "isco": 3324,
+   "aka": "wholesale sugar trader"
+  },
+  {
+   "role": "tourism product manager",
+   "isco": 1221,
+   "aka": "tourism distribution manager  ·  tourism product developer"
+  },
+  {
+   "role": "wholesale merchant in coffee, tea, cocoa and spices",
+   "isco": 3324,
+   "aka": "senior wholesale merchant in coffee, tea, cocoa and spices  ·  wholesaler in coffee, tea, cocoa and spices  ·  graduate wholesale merchant in coffee, tea, cocoa and spices  ·  business to business sales consultant in coffee, tea, cocoa and spices  ·  B2B sales consultant in coffee, tea, cocoa and spices"
+  },
+  {
+   "role": "marketing manager",
+   "isco": 1221,
+   "aka": "market manager  ·  sales and marketing manager  ·  marketing director  ·  promotions manager  ·  telemarketing manager"
+  },
+  {
+   "role": "building materials specialised seller",
+   "isco": 5223,
+   "aka": "trade counter salesperson  ·  do it yourself shop specialised seller  ·  building materials do it yourself salesperson  ·  DIY shop specialised seller  ·  building materials DIY specialised seller"
+  },
+  {
+   "role": "sales processor",
+   "isco": 5223,
+   "aka": "order entry and transfer co-ordinator  ·  e-commerce sales order processor  ·  order entry and transfer processor  ·  graduate sales order processor  ·  order processing salesperson"
+  },
+  {
+   "role": "cosmetics and perfume specialised seller",
+   "isco": 5223,
+   "aka": "beauty and aroma salesperson  ·  make-up and cosmetics salesperson  ·  perfume salesperson  ·  cosmetics and perfume specialized seller  ·  cosmetics and toilet articles salesperson"
+  },
+  {
+   "role": "wholesale merchant in waste and scrap",
+   "isco": 3324,
+   "aka": "assistant wholesale merchant in waste and scrap  ·  business to business seller in waste and scrap  ·  B2B sales consultant in waste and scrap  ·  senior wholesale merchant in waste and scrap  ·  wholesaler in waste and scrap"
+  },
+  {
+   "role": "licensing manager",
+   "isco": 1221,
+   "aka": "assistant international licensing manager  ·  trainee brand licensing manager  ·  senior international licensing manager  ·  graduate brand licensing manager  ·  senior licensing manager"
+  },
+  {
+   "role": "wholesale merchant in office machinery and equipment",
+   "isco": 3324,
+   "aka": "office furniture wholesale trader  ·  wholesale broker in office machinery and equipment  ·  wholesale representative in office machinery and equipment"
+  },
+  {
+   "role": "wholesale merchant in watches and jewellery",
+   "isco": 3324,
+   "aka": "wholesale merchant in watches and jewelry  ·  business to business sales consultant in watches and jewellery  ·  trainee wholesale merchant in watches and jewellery  ·  B2B sales consultant in watches and jewellery  ·  wholesaler in watches and jewellery"
+  },
+  {
+   "role": "jewellery and watches specialised seller",
+   "isco": 5223,
+   "aka": "diamond specialised seller  ·  diamonds and precious metal jewellery specialised seller  ·  diamond salesperson  ·  jewelry and watches specialized seller  ·  jewellery salesperson"
+  },
+  {
+   "role": "toys and games specialised seller",
+   "isco": 5223,
+   "aka": "toy and game superstore specialised seller  ·  toy salesperson  ·  toy and game superstore salesperson  ·  kids toy shop specialised seller  ·  models and games salesperson"
+  },
+  {
+   "role": "sales engineer",
+   "isco": 2433,
+   "aka": "coach sales engineer  ·  PCV sales engineer  ·  bus sales technician  ·  bus and coach sales technician  ·  heavy vehicle sales technician"
+  },
+  {
+   "role": "domestic appliances specialised seller",
+   "isco": 5223,
+   "aka": "electrical home appliances salesperson  ·  electrical appliances specialised seller  ·  domestic appliances superstore salesperson  ·  home and electrical appliances shop specialised seller  ·  electrical household goods specialised seller"
+  },
+  {
+   "role": "wholesale merchant in agricultural raw materials, seeds and animal feeds",
+   "isco": 3324,
+   "aka": "business to business seller in agricultural raw materials, seeds and animal feeds  ·  wholesale buyer in agricultural raw materials, seeds and animal feeds  ·  wholesaler in agricultural raw materials, seeds and animal feeds  ·  business to business sales consultant in agricultural raw materials, seeds and animal feeds  ·  senior wholesale merchant in agricultural raw materials, seeds and animal feeds"
+  },
+  {
+   "role": "orthopaedic supplies specialised seller",
+   "isco": 5223,
+   "aka": "orthopaedic articles specialized seller  ·  orthopaedic supplies specialized seller  ·  surgical supplies specialized seller  ·  Orthopedic supplies specialized seller  ·  orthohouse specialized seller"
+  },
+  {
+   "role": "wholesale merchant in china and other glassware",
+   "isco": 3324,
+   "aka": "wholesale trade manager in china and other glassware  ·  wholesale trader in china and other glassware  ·  wholesale broker in china and other glassware  ·  wholesale buyer in china and other glassware"
+  },
+  {
+   "role": "shipbroker",
+   "isco": 3324,
+   "aka": "shipping broker"
+  },
+  {
+   "role": "meat and meat products specialised seller",
+   "isco": 5223,
+   "aka": "butchery store salesperson  ·  butchers assistant  ·  meat and meat products store specialised seller  ·  butchery department salesperson  ·  butchery store specialised seller"
+  },
+  {
+   "role": "after-sales service technician",
+   "isco": 2433,
+   "aka": "after-sales support technician  ·  field technician  ·  workshop technician  ·  sales support technician  ·  help-desk technician"
+  },
+  {
+   "role": "wholesale merchant in machine tools",
+   "isco": 3324,
+   "aka": "wholesale trader in machine tools  ·  B2B sales consultant in machine tools  ·  assistant wholesale merchant in machine tools  ·  senior wholesale merchant in machine tools  ·  wholesale buyer in machine tools"
+  },
+  {
+   "role": "set buyer",
+   "isco": 3323,
+   "aka": "assistant production buyer  ·  property buyer  ·  set decoration buyer  ·  production buyer"
+  },
+  {
+   "role": "sales assistant",
+   "isco": 5223,
+   "aka": "department store sales assistant  ·  hypermarket sales assistant  ·  senior sales assistant  ·  supermarket sales assistant  ·  filling station sales assistant"
+  },
+  {
+   "role": "wholesale merchant in electrical household appliances",
+   "isco": 3324,
+   "aka": "business to business seller in electrical household appliances  ·  business to business sales consultant in electrical household appliances  ·  graduate wholesale merchant in electrical household appliances  ·  trainee wholesale merchant in electrical household appliances  ·  assistant wholesale merchant in electrical household appliances"
+  },
+  {
+   "role": "audio and video equipment specialised seller",
+   "isco": 5223,
+   "aka": "home entertainment shop salesperson  ·  audio and video specialised seller  ·  hi-fi specialised seller  ·  audio and video equipment specialized seller  ·  audio and video equipment salesperson"
+  },
+  {
+   "role": "aftersales service manager",
+   "isco": 1221,
+   "aka": "after sales service manager  ·  aftersales coordinator"
+  },
+  {
+   "role": "wholesale merchant in office furniture",
+   "isco": 3324,
+   "aka": "sales agent of office furniture"
+  },
+  {
+   "role": "wholesale merchant in hardware, plumbing and heating equipment and supplies",
+   "isco": 3324,
+   "aka": "wholesaler in hardware, plumbing and heating equipment and supplies  ·  trainee wholesale merchant in hardware, plumbing and heating equipment and supplies  ·  graduate wholesale merchant in hardware, plumbing and heating equipment and supplies  ·  wholesale buyer in hardware, plumbing and heating equipment and supplies  ·  assistant wholesale merchant in hardware, plumbing and heating equipment and supplies"
+  },
+  {
+   "role": "sales manager",
+   "isco": 1221,
+   "aka": "sales commercial manager  ·  sales director  ·  sales executive  ·  group sales manager  ·  area sales manager"
+  },
+  {
+   "role": "medical goods specialised seller",
+   "isco": 5223,
+   "aka": "medical goods salesperson  ·  pharmacy salesperson  ·  drugstore specialised seller  ·  chemist shop specialised seller  ·  retail chemist shop salesperson"
+  },
+  {
+   "role": "wholesale merchant in mining, construction and civil engineering machinery",
+   "isco": 3324,
+   "aka": "wholesaler in mining, construction and civil engineering machinery  ·  wholesale trader in mining, construction and civil engineering machinery  ·  wholesale buyer in mining, construction and civil engineering machinery  ·  trainee wholesale merchant in mining, construction and civil engineering machinery  ·  B2B sales consultant in mining, construction and civil engineering machinery"
+  },
+  {
+   "role": "medical sales representative",
+   "isco": 2433,
+   "aka": "medical device seller  ·  medical saleswoman  ·  clinical representative  ·  clinical device sales representative  ·  medical salesman"
+  },
+  {
+   "role": "tobacco specialised seller",
+   "isco": 5223,
+   "aka": "purveyor of tobacco and tobacco products  ·  cigarette specialised seller  ·  cigar and cigarette salesperson  ·  cigar and cigarette specialised seller  ·  tobacco salesperson"
+  },
+  {
+   "role": "technical sales representative in machinery and industrial equipment",
+   "isco": 2433,
+   "aka": "plant machinery sales representative  ·  graduate technical sales engineer in machinery and industrial equipment  ·  trainee technical sales engineer in machinery and industrial equipment  ·  senior technical sales representative in machinery and industrial equipment  ·  technical salespeople in machinery and industrial equipment"
+  },
+  {
+   "role": "wholesale merchant in metals and metal ores",
+   "isco": 3324,
+   "aka": "wholesale merchandiser in metals and metal ores  ·  B2B sales consultant in metals and metal ores  ·  business to business seller in metals and metal ores  ·  graduate wholesale merchant in metals and metal ores  ·  wholesale buyer in metals and metal ores"
+  },
+  {
+   "role": "ICT buyer",
+   "isco": 3323,
+   "aka": "ICT buyers  ·  IT buyer  ·  ICT purchaser  ·  ICT procurer  ·  ICT procurement officer"
+  },
+  {
+   "role": "shop supervisor",
+   "isco": 5222,
+   "aka": "shop general supervisor  ·  shop staff supervisor  ·  retail shop supervisor  ·  boutique supervisor  ·  retail store supervisor"
+  },
+  {
+   "role": "technical sales representative in chemical products",
+   "isco": 2433,
+   "aka": "trainee technical sales engineer in chemical products  ·  graduate technical sales engineer in chemical products  ·  chemical products field salesperson  ·  senior technical sales representative in chemical products  ·  chemical products technical field sales representative"
+  },
+  {
+   "role": "retail entrepreneur",
+   "isco": 5221,
+   "aka": "retail innovator  ·  retail business entrepreneur  ·  shopping entrepreneur  ·  retail product developer  ·  retail business developer"
+  },
+  {
+   "role": "flower and garden specialised seller",
+   "isco": 5223,
+   "aka": "nursery shop salesperson  ·  plants specialised seller  ·  plant nursery specialised seller  ·  garden centre salesperson  ·  garden centre specialised seller"
+  },
+  {
+   "role": "timber trader",
+   "isco": 3323,
+   "aka": "timber merchant  ·  lumber trader  ·  timber seller  ·  wood merchant  ·  trader of timber"
+  },
+  {
+   "role": "banking products manager",
+   "isco": 1221,
+   "aka": "financial institution products manager  ·  credit products manager  ·  internet banking executive  ·  internet banking manager  ·  e-banking products manager"
+  },
+  {
+   "role": "checkout supervisor",
+   "isco": 5222,
+   "aka": "customer service manager  ·  till team leader  ·  counter manager  ·  check out clerk  ·  check out manager"
+  },
+  {
+   "role": "wholesale merchant in chemical products",
+   "isco": 3324,
+   "aka": "graduate wholesale merchant in chemical products  ·  trainee wholesale merchant in chemical products  ·  business to business sales consultant in chemical products  ·  business to business seller in chemical products  ·  wholesaler in chemical products"
+  },
+  {
+   "role": "wholesale merchant in tobacco products",
+   "isco": 3324,
+   "aka": "wholesale merchandiser in tobacco products  ·  graduate wholesale merchant in tobacco products  ·  trainee wholesale merchant in tobacco products  ·  wholesaler in tobacco products  ·  assistant wholesale merchant in tobacco products"
+  },
+  {
+   "role": "technical sales representative",
+   "isco": 2433,
+   "aka": "field salesman  ·  field salesperson  ·  field saleswoman  ·  technical field sales representative  ·  assistant technical sales representative"
+  },
+  {
+   "role": "costume buyer",
+   "isco": 3323,
+   "aka": "costume purchaser  ·  costumes buyer  ·  buyer of costumes  ·  costume and composite effects buyer"
+  },
+  {
+   "role": "press and stationery specialised seller",
+   "isco": 5223,
+   "aka": "newsagents shop specialised seller  ·  newspapers and magazines salesperson  ·  press and stationery specialized seller  ·  newsagents shop salesperson  ·  stationery specialised seller"
+  },
+  {
+   "role": "standalone public buyer",
+   "isco": 3323,
+   "aka": "procurement expert  ·  small contracting authority public buyer  ·  public buyer  ·  public procurer  ·  small contracting authority public procurer"
+  },
+  {
+   "role": "wholesale merchant in wood and construction materials",
+   "isco": 3324,
+   "aka": "wholesaler in wood and construction materials  ·  wholesale trader in wood and construction materials  ·  wholesale buyer in wood and construction materials  ·  trainee wholesale merchant in wood and construction materials  ·  wholesale merchandiser in wood and construction materials"
+  },
+  {
+   "role": "promotion manager",
+   "isco": 1221,
+   "aka": "promotions manager  ·  marketing and promotion manager  ·  promotions coordinator  ·  promotion coordinator  ·  promotion director"
+  },
+  {
+   "role": "floor and wall coverings specialised seller",
+   "isco": 5223,
+   "aka": "floor and wall coverings salesperson  ·  interior decoration specialised seller  ·  wallpaper and accessories salesperson  ·  wallpaper specialised seller  ·  carpet salesperson"
+  },
+  {
+   "role": "category manager",
+   "isco": 1221,
+   "aka": "product category specialist  ·  recycling equipment category manager  ·  FMCG category manager  ·  raw materials category specialist  ·  general merchandise category manager"
+  },
+  {
+   "role": "purchase planner",
+   "isco": 3323,
+   "aka": "purchasing coordinator  ·  senior supply chain planner  ·  assistant purchase planner  ·  assistant buyer planner  ·  trainee buyer planner"
+  },
+  {
+   "role": "digital marketing manager",
+   "isco": 1221,
+   "aka": "social media specialist  ·  digital marketing specialist  ·  digital marketing and communication professional  ·  web marketing specialist  ·  digital marketing technician"
+  },
+  {
+   "role": "wholesale merchant in live animals",
+   "isco": 3324,
+   "aka": "wholesale merchandiser in live animals  ·  wholesale trader in live animals  ·  business to business seller in live animals  ·  wholesale buyer in live animals  ·  business to business sales consultant in live animals"
+  },
+  {
+   "role": "music and video shop specialised seller",
+   "isco": 5223,
+   "aka": "music and video salesperson  ·  record specialised seller  ·  record shop specialised seller  ·  music and video shop specialized seller  ·  sheet music salesperson"
+  },
+  {
+   "role": "wholesale merchant in beverages",
+   "isco": 3324,
+   "aka": "wholesale trader in beverages  ·  business to business seller in beverages  ·  wholesale buyer in beverages  ·  business to business sales consultant in beverages  ·  trainee wholesale merchant in beverages"
+  },
+  {
+   "role": "delicatessen specialised seller",
+   "isco": 5223,
+   "aka": "delicatessen salesperson  ·  delicatessen department specialised seller  ·  delicatessen department salesperson  ·  fine foods specialised seller  ·  fine foods salesperson"
+  },
+  {
+   "role": "waste broker",
+   "isco": 3324,
+   "aka": "mining waste broker  ·  mine waste broker  ·  lower tier waste broker  ·  animal waste broker  ·  upper tier waste broker"
+  },
+  {
+   "role": "commodity trader",
+   "isco": 3324,
+   "aka": "commodity exchange floor trader  ·  commodities trader  ·  commodities trading manager  ·  commodity handler"
+  },
+  {
+   "role": "technical sales representative in office machinery and equipment",
+   "isco": 2433,
+   "aka": "assistant technical sales representative in office machinery and equipment  ·  graduate technical sales engineer in office machinery and equipment  ·  graduate technical sales representative in office machinery and equipment  ·  senior technical sales representative in office machinery and equipment  ·  office machinery and equipment inside technical sales representative"
+  },
+  {
+   "role": "wholesale merchant in agricultural machinery and equipment",
+   "isco": 3324,
+   "aka": "assistant wholesale merchant in agricultural machinery and equipment  ·  business to business sales consultant in agricultural machinery and equipment  ·  wholesale trader in agricultural machinery and equipment  ·  senior wholesale merchant in agricultural machinery and equipment  ·  graduate wholesale merchant in agricultural machinery and equipment"
+  },
+  {
+   "role": "wholesale merchant in flowers and plants",
+   "isco": 3324,
+   "aka": "trainee wholesale merchant in flowers and plants  ·  assistant wholesale merchant in flowers and plants  ·  business to business sales consultant in flowers and plants  ·  wholesale trader in flowers and plants  ·  wholesale merchandiser in flowers and plants"
+  },
+  {
+   "role": "telecommunications equipment specialised seller",
+   "isco": 5223,
+   "aka": "mobile phone specialised seller  ·  mobile phone and devices specialised seller  ·  mobile phone and accessories salesperson  ·  mobile phone and accessories specialised seller  ·  mobile phone and devices salesperson"
+  },
+  {
+   "role": "specialised antique dealer",
+   "isco": 5223,
+   "aka": "antiques dealer  ·  specialised seller of antiques  ·  antiques and collectibles shop salesperson  ·  antiques specialised dealer  ·  antiques specialised merchant"
+  },
+  {
+   "role": "personal shopper",
+   "isco": 5223,
+   "aka": "international personal shopper  ·  global personal shopper  ·  online personal shopper"
+  },
+  {
+   "role": "solar energy sales consultant",
+   "isco": 2433,
+   "aka": "industrial solar energy sales consultant  ·  solar power sales representative  ·  solar energy sales advisor  ·  solar power sales advisor  ·  domestic solar energy sales consultant"
+  },
+  {
+   "role": "wholesale merchant in fruit and vegetables",
+   "isco": 3324,
+   "aka": "B2B sales consultant in fruit and vegetables  ·  wholesale trader in fruit and vegetables  ·  wholesale buyer in fruit and vegetables  ·  business to business sales consultant in fruit and vegetables  ·  business to business seller in fruit and vegetables"
+  },
+  {
+   "role": "renewable energy sales representative",
+   "isco": 3322,
+   "aka": "renewable energy sales rep  ·  alternative energy seller  ·  alternative energy sales rep  ·  renewable energy sales promoter  ·  renewable energy salesperson"
+  },
+  {
+   "role": "Business Development Professionals",
+   "isco": 2433,
+   "aka": NaN
+  },
+  {
+   "role": "Sales and Marketing Professionals",
+   "isco": 2433,
+   "aka": NaN
+  },
+  {
+   "role": "Sales Representatives, Wholesale and Manufacturing",
+   "isco": 3322,
+   "aka": NaN
+  },
+  {
+   "role": "Sales and Purchasing Agents and Brokers",
+   "isco": 3323,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Retail Sales Workers",
+   "isco": 1420,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Non-Retail Sales Workers",
+   "isco": 5222,
+   "aka": NaN
+  },
+  {
+   "role": "Counter and Rental Clerks",
+   "isco": 5221,
+   "aka": NaN
+  },
+  {
+   "role": "Parts Salespersons",
+   "isco": 5221,
+   "aka": NaN
+  },
+  {
+   "role": "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",
+   "isco": 3322,
+   "aka": NaN
+  },
+  {
+   "role": "Solar Sales Representatives and Assessors",
+   "isco": 3322,
+   "aka": NaN
+  },
+  {
+   "role": "Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",
+   "isco": 3322,
+   "aka": NaN
+  },
+  {
+   "role": "Telemarketers",
+   "isco": 3324,
+   "aka": NaN
+  },
+  {
+   "role": "technical sales representative in the textile machinery industry",
+   "isco": 2433,
+   "aka": "textile industry machinery field salesman  ·  textile industry machinery outside technical sales representative  ·  textile industry machinery inside technical sales representative  ·  senior technical sales representative in the textile industry machinery  ·  graduate technical sales representative in the textile industry machinery"
+  },
+  {
+   "role": "Advertising Sales Agents",
+   "isco": 3321,
+   "aka": NaN
+  }
+ ]
+}

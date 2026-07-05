@@ -1,0 +1,122 @@
+{
+ "domain_id": "D120",
+ "domain_name": "Fisheries, Aquaculture",
+ "role_count": 23,
+ "roles": [
+  {
+   "role": "aquaculture hatchery manager",
+   "isco": 6221,
+   "aka": "aquaculture hatchery supervisor  ·  manager of aquaculture hatchery  ·  fish farm hatchery supervisor"
+  },
+  {
+   "role": "water-based aquaculture technician",
+   "isco": 6221,
+   "aka": "water-based fisheries technician  ·  technician in water-based aquaculture  ·  water-based fish farm technician"
+  },
+  {
+   "role": "harvest diver",
+   "isco": 7541,
+   "aka": "harvesting diver"
+  },
+  {
+   "role": "on foot aquatic resources collector",
+   "isco": 9216,
+   "aka": "shellfish collector  ·  crustacean collector  ·  on foot seaweed collector"
+  },
+  {
+   "role": "deep-sea fishery worker",
+   "isco": 6223,
+   "aka": "deep-sea fisherman  ·  deep-sea fisherwoman"
+  },
+  {
+   "role": "fisheries boatman",
+   "isco": 6222,
+   "aka": "local fisheries boatwoman  ·  local boatman  ·  local fishing vessel skipper  ·  local fisheries boatman  ·  fisheries boatwoman"
+  },
+  {
+   "role": "shotfirer",
+   "isco": 7542,
+   "aka": "explosives technician  ·  shot firer  ·  demolition operative  ·  shot-firer  ·  blast crew operator"
+  },
+  {
+   "role": "aquaculture cage mooring worker",
+   "isco": 9216,
+   "aka": "fish farm cage mooring worker  ·  fish cage mooring worker  ·  fisheries cage mooring worker"
+  },
+  {
+   "role": "aquaculture cage technician",
+   "isco": 6221,
+   "aka": "cage technician  ·  fish cage technician  ·  aquaculture support worker  ·  technician in aquaculture cages"
+  },
+  {
+   "role": "construction commercial diver",
+   "isco": 7541,
+   "aka": "underwater welder  ·  offshore diver  ·  surface supplied diver  ·  commercial diver in construction industry  ·  inshore diver"
+  },
+  {
+   "role": "aquaculture rearing technician",
+   "isco": 6221,
+   "aka": "fish rearing technician  ·  technician in aquaculture rearing  ·  fish culturist"
+  },
+  {
+   "role": "aquaculture hatchery worker",
+   "isco": 6221,
+   "aka": "fish farm hatchery worker  ·  aquatic animals hatchery worker"
+  },
+  {
+   "role": "water-based aquaculture worker",
+   "isco": 9216,
+   "aka": "water-based fish culture worker  ·  worker in water-based aquaculture  ·  water-based fish farm worker  ·  water-based fisheries worker"
+  },
+  {
+   "role": "rescue diver",
+   "isco": 7541,
+   "aka": "lifeguard  ·  dive emergency worker  ·  underwater rescue worker  ·  emergency rescue diver  ·  para-rescue diver"
+  },
+  {
+   "role": "fisheries master",
+   "isco": 6223,
+   "aka": "master of fishing vessel  ·  fishing vessel captain"
+  },
+  {
+   "role": "aquaculture husbandry worker",
+   "isco": 6221,
+   "aka": "fish farming husbandry worker  ·  aquaculture on-growing worker  ·  aquatic animals husbandry worker"
+  },
+  {
+   "role": "aquaculture mooring manager",
+   "isco": 6221,
+   "aka": "fish culture mooring manager  ·  aquaculture mooring supervisor  ·  fishery mooring manager  ·  fish farm mooring manager  ·  fish farm mooring operator"
+  },
+  {
+   "role": "aquaculture harvesting technician",
+   "isco": 6221,
+   "aka": "aquatic harvester  ·  aquaculture harvest technician  ·  harvesting technician  ·  water harvesting inspector  ·  fish farm harvesting technician"
+  },
+  {
+   "role": "aquaculture husbandry technician",
+   "isco": 6221,
+   "aka": "fish farm husbandry technician  ·  technician in aquaculture husbandry  ·  aquaculture on-growing technician  ·  fisheries husbandry technician"
+  },
+  {
+   "role": "aquaculture hatchery technician",
+   "isco": 6221,
+   "aka": "technician in aquaculture hatchery  ·  fish farm hatchery technician  ·  fish hatchery technician"
+  },
+  {
+   "role": "aquaculture recirculation technician",
+   "isco": 6221,
+   "aka": "technician in aquaculture recirculation  ·  fishery recirculation technician  ·  fish farm recirculation technician"
+  },
+  {
+   "role": "aquaculture harvesting worker",
+   "isco": 9216,
+   "aka": "harvesting worker  ·  aquatic animals harvesting worker  ·  fish farming harvesting worker"
+  },
+  {
+   "role": "fisheries boatmaster",
+   "isco": 6223,
+   "aka": "boatmaster  ·  boat captain  ·  fishery boatmaster  ·  local fishery boatmaster  ·  coastal skipper"
+  }
+ ]
+}

@@ -1,0 +1,107 @@
+{
+ "domain_id": "D073",
+ "domain_name": "Library, Archive",
+ "role_count": 20,
+ "roles": [
+  {
+   "role": "information manager",
+   "isco": 2622,
+   "aka": "academic information coordinator  ·  information scientist  ·  information officer  ·  documentalist  ·  knowledge manager"
+  },
+  {
+   "role": "library assistant",
+   "isco": 4411,
+   "aka": "library services assistant  ·  library clerk  ·  assistant librarian  ·  library technician  ·  senior library assistant"
+  },
+  {
+   "role": "big data archive librarian",
+   "isco": 3433,
+   "aka": "digital documentation archivist  ·  archive librarian  ·  documentation archivist  ·  computer tape librarian  ·  digital archivists"
+  },
+  {
+   "role": "art handler",
+   "isco": 3433,
+   "aka": "museum technician  ·  museology technician  ·  fine arts packer  ·  art conservator  ·  gallery technician"
+  },
+  {
+   "role": "librarian",
+   "isco": 2622,
+   "aka": "library assistant  ·  library technical assistant  ·  literature researcher  ·  catalogue librarian  ·  special collections librarian"
+  },
+  {
+   "role": "exhibition curator",
+   "isco": 2621,
+   "aka": "exhibition superintendent  ·  exhibits coordinator  ·  art gallery curator  ·  exhibits preparator  ·  exhibits manager"
+  },
+  {
+   "role": "conservator",
+   "isco": 2621,
+   "aka": "furniture conservation officer  ·  building conservation officer  ·  furniture conservator  ·  books conservator"
+  },
+  {
+   "role": "exhibition registrar",
+   "isco": 2621,
+   "aka": "museum objects cataloguer  ·  museum cataloguer  ·  museum registrar"
+  },
+  {
+   "role": "collection manager",
+   "isco": 2621,
+   "aka": "conservator  ·  museum technician  ·  curator  ·  collections manager"
+  },
+  {
+   "role": "museum scientist",
+   "isco": 2621,
+   "aka": "conservationist scientist  ·  museum researcher  ·  museum administrator"
+  },
+  {
+   "role": "taxidermist",
+   "isco": 3433,
+   "aka": "bird taxidermist  ·  animal taxidermist  ·  taxidermy technician"
+  },
+  {
+   "role": "cultural visitor services manager",
+   "isco": 2621,
+   "aka": "mediation and education manager  ·  education and visitor services manager  ·  museum interpretation developer  ·  visitor service and education manager  ·  visitor engagement manager"
+  },
+  {
+   "role": "archivist",
+   "isco": 2621,
+   "aka": "cadastral archivist  ·  archives and manuscripts librarian  ·  land register archivist  ·  archives researcher  ·  digital archivist"
+  },
+  {
+   "role": "zoo registrar",
+   "isco": 2621,
+   "aka": "aquarium record keeper  ·  collections registrar  ·  zoo registrar and records coordinator  ·  animals registrar  ·  aquarium registrar"
+  },
+  {
+   "role": "cultural archive manager",
+   "isco": 2621,
+   "aka": "archive manager  ·  cultural archive and records manager  ·  archivist  ·  cultural records manager  ·  cultural archive services manager"
+  },
+  {
+   "role": "Librarians and Media Collections Specialists",
+   "isco": 2622,
+   "aka": NaN
+  },
+  {
+   "role": "Library Technicians",
+   "isco": 4411,
+   "aka": NaN
+  },
+  {
+   "role": "Curators",
+   "isco": 2622,
+   "aka": NaN
+  },
+  {
+   "role": "Museum Technicians and Conservators",
+   "isco": 2622,
+   "aka": NaN
+  },
+  {
+   "role": "curator of horticulture",
+   "isco": 2131,
+   "aka": "conservation horticulturist  ·  curator & horticulturist  ·  curator and horticulturist  ·  curator of botany  ·  garden curator"
+  }
+ ]
+}

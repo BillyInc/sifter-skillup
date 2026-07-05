@@ -1,0 +1,20 @@
+{
+  "jamb_name": "Literature in English",
+  "utme_subjects": ["Literature in English", "and any other two subjects from Arts or Social Sciences"],
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "AAUA", "note": "Requires five (5) `O' Level credit passes to include English Language, Literature in English, Mathematics, one Arts subject and two (2) of the following: CRS/IRS, Igbo Language/Yoruba Language/Hausa Language, History/Government, French, Fine Arts or Music."},
+    {"institution": "CHRISTOPHER", "note": "Maximum of two (2) sittings."},
+    {"institution": "FED-OYE EKITI", "note": "Requires five (5) credits passes at SSC (or its equivalent) including English Language, Literature in English, plus at least a pass in Mathematics."},
+    {"institution": "KASU", "note": "O'Level: requires Five `O' level credit passes to include English Language, Mathematics, Literature in English and two other subjects in Arts or Social Sciences. UTME: accepts Literature in English and two other subjects in Arts or Social Sciences."},
+    {"institution": "PAAU", "note": "Require five (5) `O' level credit passes to include English Language, Literature in English and three (3) other subjects in Arts or Social Sciences."},
+    {"institution": "NDU", "note": "Requires five (5) `O' Level credit passes in English Language, Literature in English and any other three (3) subjects, two (2) of which must be Arts subjects."},
+    {"institution": "UNN", "note": "Requires a Science subject."},
+    {"institution": "DELSU", "note": "O'Level: a) At least five (5) SSCE/NECO/GCE O' Level credit passes at not more than two sittings, which may include Mathematics, English Language, Literature in English, and three other subjects in Arts and Social Science. b) TC II Certificate with Credit/Merit passes in at least five relevant subjects obtained at not more than two sittings. UTME: accepts Literature in English, an Art subject and any other subject from Social Science."},
+    {"institution": "LCITY", "note": "Requires five (5) credit passes at SSC or its equivalent to include English Language, Literature in English and any three (3) Arts subjects."},
+    {"institution": "UNIHEZ", "note": "O'Level: requires Five (5) SSC credit passes to include Literature in English and English Language. A Pass in Mathematics is required. UTME: requires Literature in English, one other Arts subject and another Arts or Social Science subject."},
+    {"institution": "ABU", "note": "O'Level: requires Five `O' level credit passes to include Literature in English and English Language. UTME: requires Use of English, one Arts subject and two other Arts or Social Science subjects."},
+    {"institution": "RSU", "note": "O'Level: requires Five (5) WASC/GCE/SSCE/NECO `O' level credit passes in English Language, Mathematics, Literature in English and any other two (2) subjects. UTME: requires English Language, Literature in English, Government/History and Christian Religious Knowledge/Islamic Religious Studies."}
+  ]
+}

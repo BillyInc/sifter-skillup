@@ -1,0 +1,142 @@
+{
+ "domain_id": "D093",
+ "domain_name": "Electrical Installation, Wiring",
+ "role_count": 27,
+ "roles": [
+  {
+   "role": "automotive battery technician",
+   "isco": 7412,
+   "aka": "dry cell tester  ·  installer of automotive batteries  ·  bus battery technician  ·  battery installer  ·  automobile battery technician"
+  },
+  {
+   "role": "cable jointer",
+   "isco": 7413,
+   "aka": "cable installation electrician  ·  electricity cable jointer  ·  electrical cable maintenance worker  ·  cable maintenance electrician  ·  low voltage electricity cable jointer"
+  },
+  {
+   "role": "building electrician",
+   "isco": 7411,
+   "aka": "installation electrician  ·  maintenance electrician  ·  electrical maintenance technician  ·  electrical systems installer  ·  electrical installer"
+  },
+  {
+   "role": "ski lift operator",
+   "isco": 7412,
+   "aka": "ski lift mechanic"
+  },
+  {
+   "role": "electrician",
+   "isco": 7411,
+   "aka": "wirewoman  ·  installation electrician  ·  maintenance electrician  ·  electrical maintenance technician  ·  electrical systems installer"
+  },
+  {
+   "role": "electrical mechanic",
+   "isco": 7412,
+   "aka": "installation electrician  ·  maintenance electrician  ·  electrician  ·  production electrician  ·  electrical maintenance mechanic"
+  },
+  {
+   "role": "domestic electrician",
+   "isco": 7411,
+   "aka": "electrician  ·  residential electrician  ·  domestic and commercial electrician"
+  },
+  {
+   "role": "industrial electrician",
+   "isco": 7411,
+   "aka": "electrical technician  ·  electrician  ·  marine electrician  ·  industrial electrical technician  ·  industrial maintenance electrician"
+  },
+  {
+   "role": "theme park technician",
+   "isco": 7412,
+   "aka": "aquatic technician  ·  ride maintenance engineer  ·  engineering supervisor  ·  ride mechanical engineer"
+  },
+  {
+   "role": "automotive electrician",
+   "isco": 7412,
+   "aka": "auto technician  ·  motor vehicle electrician  ·  autoelectrical technician  ·  vehicle body electrician  ·  auto electrician"
+  },
+  {
+   "role": "overhead line worker",
+   "isco": 7413,
+   "aka": "linesman  ·  overhead linesman  ·  overhead transmission and distribution linesperson  ·  high voltage lineworker  ·  low voltage lineworker"
+  },
+  {
+   "role": "solar energy technician",
+   "isco": 7411,
+   "aka": "photovoltaic system technician  ·  solar energy system designer  ·  solar farm technician  ·  PV field technician  ·  solar operations and maintenance technician"
+  },
+  {
+   "role": "power tool repair technician",
+   "isco": 7412,
+   "aka": "power compressor inspector  ·  machine repairer  ·  power compressor repairman  ·  power tool maintainer  ·  power tool equipment repairer"
+  },
+  {
+   "role": "ground lighting officer",
+   "isco": 7412,
+   "aka": "airfield lighting officer  ·  ground lighting engineer  ·  airport ground lighting engineer  ·  airport lighting officer  ·  airfield ground lighting engineer"
+  },
+  {
+   "role": "geothermal technician",
+   "isco": 7412,
+   "aka": "geothermal power plants technician  ·  geothermal energy installer  ·  geothermal heating installer  ·  geothermal installer  ·  geothermal energy technician"
+  },
+  {
+   "role": "marine electrician",
+   "isco": 7412,
+   "aka": "marine design electrician  ·  vessel electronics repair technician  ·  naval electrician  ·  electro-technical maritime officer  ·  marine installation electrician"
+  },
+  {
+   "role": "mining electrician",
+   "isco": 7412,
+   "aka": "auto electrician  ·  maintenance electrician  ·  plant electrician  ·  mine machinery specialist  ·  maintenance electricians"
+  },
+  {
+   "role": "electricity distribution technician",
+   "isco": 7413,
+   "aka": "lineswoman  ·  electricity power line worker  ·  powerline worker  ·  linesman  ·  linewoman"
+  },
+  {
+   "role": "event electrician",
+   "isco": 7411,
+   "aka": "event/generator electrician  ·  mobile power team member  ·  generator technician and event electrician  ·  mobile power crew member  ·  live event electrician"
+  },
+  {
+   "role": "street lighting electrician",
+   "isco": 7413,
+   "aka": "street lighting operative  ·  street light repair electrician  ·  street light electrician  ·  highway lighting operative  ·  street lighting repair electrician"
+  },
+  {
+   "role": "household appliances repair technician",
+   "isco": 7412,
+   "aka": "AC repairer  ·  washing machine servicer  ·  refrigerator repairer  ·  window air conditioner repairer  ·  dishwasher repairer"
+  },
+  {
+   "role": "lift technician",
+   "isco": 7412,
+   "aka": "lift maintenance engineer  ·  elevator erecting mechanic  ·  lift maintenance technician  ·  lift construction worker  ·  lift erector"
+  },
+  {
+   "role": "rolling stock electrician",
+   "isco": 7412,
+   "aka": "rolling stock builder  ·  rail workshop engineering technician  ·  wagon electrician  ·  locomotive builder  ·  railway workshop engineering technician"
+  },
+  {
+   "role": "electric meter technician",
+   "isco": 7411,
+   "aka": "electricity meter test technician  ·  electric meter installer  ·  electricity meter installation technician  ·  electricity meter maintenance operative  ·  smart meter installer"
+  },
+  {
+   "role": "Electrical Equipment Installers and Repairers",
+   "isco": 7412,
+   "aka": NaN
+  },
+  {
+   "role": "Electric Motor, Power Tool, and Related Repairers",
+   "isco": 7412,
+   "aka": NaN
+  },
+  {
+   "role": "Industrial Machinery Mechanics",
+   "isco": 7412,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,187 @@
+{
+ "domain_id": "D159",
+ "domain_name": "Credit Analysis, Structured Finance",
+ "role_count": 36,
+ "roles": [
+  {
+   "role": "insurance claims handler",
+   "isco": 3315,
+   "aka": "claims adjuster  ·  travelling insurance assessor  ·  claims examiner  ·  insurance claims analyst  ·  civil damages inspector"
+  },
+  {
+   "role": "credit analyst",
+   "isco": 3312,
+   "aka": "credit clerk  ·  analyst of credits"
+  },
+  {
+   "role": "securities analyst",
+   "isco": 2413,
+   "aka": "securities research analyst  ·  corporate securities research analyst  ·  bonds analyst  ·  stock analyst  ·  securities research director"
+  },
+  {
+   "role": "mergers and acquisitions analyst",
+   "isco": 2413,
+   "aka": "M&A analyst  ·  mergers and acquisitions banker  ·  mergers and acquisitions associate  ·  acquisition manager  ·  M&A specialist"
+  },
+  {
+   "role": "credit adviser",
+   "isco": 3312,
+   "aka": "credit intermediary  ·  debt counsellor  ·  certified credit counselor  ·  credit counselor"
+  },
+  {
+   "role": "financial auditor",
+   "isco": 2411,
+   "aka": "auditor  ·  finance auditor  ·  internal auditor  ·  audit manager  ·  chartered accountant"
+  },
+  {
+   "role": "insurance rating analyst",
+   "isco": 2413,
+   "aka": "insurance analyst  ·  insurance assessor  ·  insurance rater"
+  },
+  {
+   "role": "foreclosure specialist",
+   "isco": 3315,
+   "aka": "bankruptcy coordinator  ·  foreclosure manager  ·  bankruptcy manager  ·  foreclosure coordinator  ·  foreclosure consultant"
+  },
+  {
+   "role": "middle office analyst",
+   "isco": 2413,
+   "aka": "middle office associate  ·  transaction reporting specialist  ·  middle office specialist  ·  structured products middle office analyst  ·  derivatives middle office analyst"
+  },
+  {
+   "role": "credit manager",
+   "isco": 3312,
+   "aka": "consumer credit manager  ·  credit controller  ·  loan and credit manager  ·  credit administration manager  ·  credit control manager"
+  },
+  {
+   "role": "mortgage broker",
+   "isco": 3312,
+   "aka": "mortgage administrator  ·  officer for mortgage loan  ·  mortgage coordinator  ·  mortgage analyst  ·  mortgage loans officer"
+  },
+  {
+   "role": "budget analyst",
+   "isco": 2411,
+   "aka": "budget and policy analyst  ·  budget accountant  ·  budget officer  ·  cost and planning analyst"
+  },
+  {
+   "role": "tax advisor",
+   "isco": 2411,
+   "aka": "fiscal advisor  ·  tax specialist  ·  tax expert  ·  tax evaluator  ·  tax preparer"
+  },
+  {
+   "role": "bank account manager",
+   "isco": 3312,
+   "aka": "banking officer  ·  consumer banker  ·  bank operations manager  ·  bank accounts manager  ·  account manager SME"
+  },
+  {
+   "role": "financial controller",
+   "isco": 2411,
+   "aka": "finance manager  ·  financial administrator  ·  accounting supervisor  ·  financial accountant  ·  accountant"
+  },
+  {
+   "role": "public finance accountant",
+   "isco": 2411,
+   "aka": "finance accountant  ·  public finance officer  ·  treasury accountant  ·  treasury officer  ·  public finance manager"
+  },
+  {
+   "role": "cost analyst",
+   "isco": 2411,
+   "aka": "quantity surveyor  ·  cost accountant  ·  cost accounting clerk  ·  cost recovery estimator  ·  cost and budget analyst"
+  },
+  {
+   "role": "grants management officer",
+   "isco": 2411,
+   "aka": "grants officer  ·  proposals manager"
+  },
+  {
+   "role": "financial analyst",
+   "isco": 2413,
+   "aka": "economic analyst  ·  credit analyst  ·  financial markets report writer  ·  financial markets analyst  ·  treasury analyst"
+  },
+  {
+   "role": "loan officer",
+   "isco": 3312,
+   "aka": "loans adviser  ·  loans controller  ·  loan processor  ·  commercial lender  ·  loans consultant"
+  },
+  {
+   "role": "financial fraud examiner",
+   "isco": 2411,
+   "aka": "fraud analyst  ·  fraud examiner  ·  fraud prevention analyst  ·  fraud investigations manager  ·  financial fraud investigator"
+  },
+  {
+   "role": "insurance fraud investigator",
+   "isco": 3315,
+   "aka": "insurance fraud auditor  ·  insurance policy processing worker  ·  insurance auditors  ·  insurance fraud examiner  ·  insurance fraud inspector"
+  },
+  {
+   "role": "mortgage loan underwriter",
+   "isco": 3312,
+   "aka": "mortgage compliance underwriter  ·  loan approval officer  ·  loan underwriter  ·  mortgage guideline underwriter"
+  },
+  {
+   "role": "property appraiser",
+   "isco": 3315,
+   "aka": "valuation surveyors  ·  building appraiser  ·  appraiser of properties  ·  property assessors  ·  residential appraiser"
+  },
+  {
+   "role": "credit risk analyst",
+   "isco": 3312,
+   "aka": "financial risk manager  ·  credit risk surveyor  ·  credit risk controller  ·  credit risk technician  ·  financial risk technician"
+  },
+  {
+   "role": "investment analyst",
+   "isco": 2413,
+   "aka": "portfolio analyst  ·  investment accounting analyst  ·  investment banking analyst  ·  investment banking business analyst  ·  investment compliance analyst"
+  },
+  {
+   "role": "real estate surveyor",
+   "isco": 3315,
+   "aka": "real estate surveyors  ·  municipal assessor  ·  real estate analyst"
+  },
+  {
+   "role": "student financial support coordinator",
+   "isco": 3312,
+   "aka": "financial support coordinator  ·  coordinator of student financial support services  ·  student finance officer  ·  coordinator of student financial support  ·  financial aid coordinator"
+  },
+  {
+   "role": "accounting analyst",
+   "isco": 2411,
+   "aka": "accounting systems analyst  ·  accounts analyst  ·  accounting specialist  ·  accounting methods analyst"
+  },
+  {
+   "role": "audit supervisor",
+   "isco": 2411,
+   "aka": "audit checker  ·  auditing supervisor  ·  audit leader  ·  audit inspector  ·  audit examiner"
+  },
+  {
+   "role": "bankruptcy trustee",
+   "isco": 2411,
+   "aka": "insolvency practitioner  ·  insolvency trustee  ·  bankruptcy analyst  ·  trustees in bankruptcy  ·  trustee in bankruptcy"
+  },
+  {
+   "role": "dividend analyst",
+   "isco": 2411,
+   "aka": "dividends clerk  ·  dividend and coupon analyst  ·  dividend calculation clerk  ·  dividends analyst  ·  dividend clerk"
+  },
+  {
+   "role": "loss adjuster",
+   "isco": 3315,
+   "aka": "field claims adjuster  ·  insurance loss adjuster  ·  civil claims adjuster  ·  insurance claims adjudicator  ·  damage appraiser"
+  },
+  {
+   "role": "personal property appraiser",
+   "isco": 3315,
+   "aka": "personal items claims adjuster  ·  personal property claims assessor  ·  personal property valuer  ·  personal items valuer  ·  personal property assessor"
+  },
+  {
+   "role": "accountant",
+   "isco": 2411,
+   "aka": "accounting technician  ·  bookkeeper  ·  accounting supervisor  ·  accounting officer  ·  certified public accountant"
+  },
+  {
+   "role": "gemmologist",
+   "isco": 3315,
+   "aka": "jewellery gemologist  ·  gemmology researcher  ·  consultant gemologist  ·  consultant gemmologist  ·  gem stone appraiser"
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "domain_id": "D099",
+ "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+ "role_count": 34,
+ "roles": [
+  {
+   "role": "tile fitter",
+   "isco": 7122,
+   "aka": "tiler  ·  marble setter  ·  floor tiler  ·  tilefitter  ·  surface tiler"
+  },
+  {
+   "role": "bricklayer",
+   "isco": 7112,
+   "aka": "specialist brick layer  ·  industrial oven brickmason  ·  brick laying worker  ·  brick layer  ·  trowel occupation worker"
+  },
+  {
+   "role": "resilient floor layer",
+   "isco": 7122,
+   "aka": "laminate floor installer  ·  resilient flooring installer  ·  linoleum installer  ·  resilient floor installer  ·  floor layer (resilient)"
+  },
+  {
+   "role": "vehicle glazier",
+   "isco": 7125,
+   "aka": "mobile windscreen fitter  ·  mobile windscreen repair technician  ·  smart repair technician  ·  auto glazier  ·  mobile vehicle glass technician"
+  },
+  {
+   "role": "ceiling installer",
+   "isco": 7123,
+   "aka": "domestic ceiling installer  ·  commercial ceiling installer  ·  ceiling fixer  ·  ceiling tile installer  ·  suspended ceiling installer"
+  },
+  {
+   "role": "chimney sweep supervisor",
+   "isco": 7133,
+   "aka": "lump sweeper supervisor  ·  flue sweeper supervisor  ·  smoke-stack sweeper supervisor  ·  funnel sweeper supervisor  ·  chimney-sweeping chief"
+  },
+  {
+   "role": "hardwood floor layer",
+   "isco": 7122,
+   "aka": "timber floor layer  ·  installer of harwood floors  ·  parquet floor installer  ·  wood floor layer  ·  parquet floor layer"
+  },
+  {
+   "role": "stone engraver",
+   "isco": 7113,
+   "aka": "stone carver  ·  stone etcher  ·  laser engraver  ·  engraver of stone  ·  bespoke stone engraver"
+  },
+  {
+   "role": "house builder",
+   "isco": 7111,
+   "aka": "builder of houses  ·  builder  ·  home builder  ·  domestic property builder  ·  residential property builder"
+  },
+  {
+   "role": "plate glass installer",
+   "isco": 7125,
+   "aka": "glazing installer  ·  glazier  ·  plate glass window installer  ·  glass pane installer  ·  glass installer"
+  },
+  {
+   "role": "asbestos abatement worker",
+   "isco": 7133,
+   "aka": "asbestos removal team operative  ·  asbestos abatement team operative  ·  asbestos contamination assessor  ·  asbestos removal team worker  ·  asbestos abatement team worker"
+  },
+  {
+   "role": "chimney sweep",
+   "isco": 7133,
+   "aka": "funnel sweeper  ·  smoke-stack sweeper  ·  chimney-sweeping technician  ·  sweeper  ·  chimney sweeper"
+  },
+  {
+   "role": "terrazzo setter",
+   "isco": 7114,
+   "aka": "concrete flooring worker  ·  terrazzo team worker  ·  terrazzo team member  ·  poured flooring worker  ·  epoxy terrazzo setter"
+  },
+  {
+   "role": "building exterior cleaner",
+   "isco": 7133,
+   "aka": "building restoration operative  ·  exterior cleaner  ·  floor sweeper  ·  building restoration worker  ·  building cleaning worker"
+  },
+  {
+   "role": "concrete finisher",
+   "isco": 7114,
+   "aka": "cement mason  ·  powerfloat finisher  ·  concrete layer  ·  concrete finisher and layer  ·  concrete flooring operative"
+  },
+  {
+   "role": "insulation worker",
+   "isco": 7124,
+   "aka": "lagger  ·  insulation installation worker  ·  energy saving materials installer  ·  insulator  ·  cavity insulation installer"
+  },
+  {
+   "role": "decontamination worker",
+   "isco": 7133,
+   "aka": "environmental decontamination technician  ·  environmental remediation worker  ·  environmental decontamination worker  ·  soil decontamination worker  ·  radio-active decontamination worker"
+  },
+  {
+   "role": "carpet fitter",
+   "isco": 7122,
+   "aka": "commercial carpet layer  ·  carpet layer  ·  commercial and industrial carpet fitter  ·  commercial carpet fitter  ·  industrial carpet fitter"
+  },
+  {
+   "role": "stonemason",
+   "isco": 7113,
+   "aka": "mason  ·  structural stoneworker  ·  stone mason  ·  heritage stone mason  ·  stone cutter"
+  },
+  {
+   "role": "plasterer",
+   "isco": 7123,
+   "aka": "heritage plasterer  ·  plaster worker  ·  solid plasterer  ·  plaster labourer  ·  fibrous plasterer"
+  },
+  {
+   "role": "Brickmasons and Blockmasons",
+   "isco": 7111,
+   "aka": NaN
+  },
+  {
+   "role": "Floor Layers, Except Carpet, Wood, and Hard Tiles",
+   "isco": 7122,
+   "aka": NaN
+  },
+  {
+   "role": "Cement Masons and Concrete Finishers",
+   "isco": 7114,
+   "aka": NaN
+  },
+  {
+   "role": "Glaziers",
+   "isco": 7125,
+   "aka": NaN
+  },
+  {
+   "role": "Insulation Workers, Mechanical",
+   "isco": 7124,
+   "aka": NaN
+  },
+  {
+   "role": "Plasterers and Stucco Masons",
+   "isco": 7123,
+   "aka": NaN
+  },
+  {
+   "role": "Segmental Pavers",
+   "isco": 7113,
+   "aka": NaN
+  },
+  {
+   "role": "Carpet Installers",
+   "isco": 7124,
+   "aka": NaN
+  },
+  {
+   "role": "Floor Sanders and Finishers",
+   "isco": 7122,
+   "aka": NaN
+  },
+  {
+   "role": "Tile and Stone Setters",
+   "isco": 7122,
+   "aka": NaN
+  },
+  {
+   "role": "Tapers",
+   "isco": 7124,
+   "aka": NaN
+  },
+  {
+   "role": "Construction and Building Inspectors",
+   "isco": 7113,
+   "aka": NaN
+  },
+  {
+   "role": "Energy Auditors",
+   "isco": 7113,
+   "aka": NaN
+  },
+  {
+   "role": "Maintenance and Repair Workers, General",
+   "isco": 7133,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "domain_id": "D119",
+ "domain_name": "Livestock, Poultry, Dairy",
+ "role_count": 17,
+ "roles": [
+  {
+   "role": "bee breeder",
+   "isco": 6123,
+   "aka": "bees rearer  ·  bee rearer  ·  bee specialist  ·  beekeeper  ·  bees breeder"
+  },
+  {
+   "role": "fur animals breeder",
+   "isco": 6129,
+   "aka": "fur animal rearer  ·  fur animals specialist  ·  fur animal breeder"
+  },
+  {
+   "role": "horse breeder",
+   "isco": 6121,
+   "aka": "horse rearer  ·  stud specialist  ·  racehorse breeder"
+  },
+  {
+   "role": "shepherd",
+   "isco": 6121,
+   "aka": "sheep herder  ·  flock manager  ·  sheep flock specialist  ·  flock movement specialist  ·  sheep flock manager"
+  },
+  {
+   "role": "equine yard manager",
+   "isco": 6121,
+   "aka": "riding school manager  ·  horse stable manager  ·  stable manager  ·  horse yard manager  ·  equine stable manager"
+  },
+  {
+   "role": "livestock worker",
+   "isco": 9212,
+   "aka": "husbandry worker  ·  stockman  ·  farm animal worker  ·  animal husbandry worker  ·  stable worker"
+  },
+  {
+   "role": "equine worker",
+   "isco": 9212,
+   "aka": "horse worker  ·  equine technician  ·  horse and pony technician  ·  horse and pony worker"
+  },
+  {
+   "role": "poultry sexer",
+   "isco": 6122,
+   "aka": "sexer  ·  chicken sexer  ·  poultry sex identification specialist  ·  turkey sexer  ·  chick sexer"
+  },
+  {
+   "role": "catcher",
+   "isco": 9212,
+   "aka": "poultry gatherer  ·  chicken herder  ·  chicken catcher  ·  poultry catcher  ·  chicken gatherer"
+  },
+  {
+   "role": "sheep breeder",
+   "isco": 6121,
+   "aka": "shearer  ·  sheep rearer  ·  sheep specialist  ·  sheep breeders  ·  goat breeder"
+  },
+  {
+   "role": "cattle breeder",
+   "isco": 6121,
+   "aka": "cattle specialist  ·  cattle rearer"
+  },
+  {
+   "role": "groom",
+   "isco": 9212,
+   "aka": "riding coach  ·  stud hand  ·  horse groom  ·  trek assistant  ·  jockey"
+  },
+  {
+   "role": "poultry breeder",
+   "isco": 6122,
+   "aka": "chicken breeder  ·  poultry specialist  ·  poultry rearer"
+  },
+  {
+   "role": "pig breeder",
+   "isco": 6121,
+   "aka": "pig specialist  ·  pig rearer"
+  },
+  {
+   "role": "Farmworkers, Farm, Ranch, and Aquacultural Animals",
+   "isco": 6121,
+   "aka": NaN
+  },
+  {
+   "role": "Agricultural Workers, All Other",
+   "isco": 6123,
+   "aka": NaN
+  },
+  {
+   "role": "Fishing and Hunting Workers",
+   "isco": 6129,
+   "aka": NaN
+  }
+ ]
+}

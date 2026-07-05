@@ -65,6 +65,14 @@ def by_code(disc, code):
         if c==code: return (disc, c, n)
     return None
 
+def by_name(disc, name_sub):
+    """Resolve a programme within a discipline by canonical-name substring.
+    Needed where codes are non-unique (Engineering GET, Arts YOU/ALL)."""
+    nl=name_sub.lower()
+    for n,c,_ in canon[disc]:
+        if nl in n.lower(): return (disc, c, n)
+    return None
+
 def classify(jname, disciplines):
     jl = jname.lower(); jt = set(toks(jname))
     # 1) curated override (substring)

@@ -1,0 +1,87 @@
+{
+ "domain_id": "D090",
+ "domain_name": "Animal Care, Grooming",
+ "role_count": 16,
+ "roles": [
+  {
+   "role": "animal care attendant",
+   "isco": 5164,
+   "aka": "animal retail caretaker  ·  animal rescue officer  ·  animal keeping specialist  ·  animal retail carer  ·  animal care provider"
+  },
+  {
+   "role": "kennel worker",
+   "isco": 5164,
+   "aka": "pet caretaker  ·  kennel attendant  ·  kennel keeper  ·  pound attendant"
+  },
+  {
+   "role": "animal handler",
+   "isco": 5164,
+   "aka": "animal carer  ·  stud animal handler  ·  animal handlers  ·  animal care assistant"
+  },
+  {
+   "role": "dog trainer",
+   "isco": 5164,
+   "aka": "greyhound trainer  ·  sheepdog trainer  ·  dog training instructor  ·  guide dog trainer  ·  canine behaviourist"
+  },
+  {
+   "role": "dog breeder",
+   "isco": 5164,
+   "aka": "dogs breeder"
+  },
+  {
+   "role": "horse trainer",
+   "isco": 5164,
+   "aka": "riding instructor  ·  horse riding coach  ·  horse riding instructor  ·  racehorse trainer  ·  equine trainer"
+  },
+  {
+   "role": "animal groomer",
+   "isco": 5164,
+   "aka": "animal grooming service provider  ·  animal groomers  ·  animal grooming specialist  ·  dog grooming specialist  ·  dog groomer"
+  },
+  {
+   "role": "zoo section leader",
+   "isco": 5164,
+   "aka": "head of section  ·  zoo team leader  ·  section leader-aquarium  ·  lead zoo keeper  ·  senior zookeeper"
+  },
+  {
+   "role": "guide dog instructor",
+   "isco": 5164,
+   "aka": "guide dog trainer  ·  assistance dog instructor  ·  hearing dog instructor  ·  guide dog mobility instructor  ·  seeing-eye dog trainer"
+  },
+  {
+   "role": "cattle pedicure",
+   "isco": 5164,
+   "aka": "cattle pedicure specialist  ·  cattle hoof trimmer"
+  },
+  {
+   "role": "animal shelter worker",
+   "isco": 5164,
+   "aka": "animal shelter helper  ·  animal washer  ·  animal shelter employee  ·  animal shelter assistant  ·  animal helper"
+  },
+  {
+   "role": "pet sitter",
+   "isco": 5164,
+   "aka": "pet sitters  ·  companion animal sitter  ·  dog sitter  ·  dog walker  ·  cat sitter"
+  },
+  {
+   "role": "kennel supervisor",
+   "isco": 5164,
+   "aka": "pet boarding manager  ·  dog/cat boarding manager  ·  dog/cat kennel manager  ·  pet boarding supervisor  ·  kennel operator"
+  },
+  {
+   "role": "zookeeper",
+   "isco": 5164,
+   "aka": "animal care worker  ·  zoo animal caretaker  ·  zoo presenter and animal keeper  ·  zoo keeper  ·  zookeeper & tour guide"
+  },
+  {
+   "role": "animal trainer",
+   "isco": 5164,
+   "aka": "cat behaviourist  ·  dog training specialist  ·  animal behaviour trainer  ·  canine training specialist  ·  pet trainer"
+  },
+  {
+   "role": "Animal Caretakers",
+   "isco": 5164,
+   "aka": NaN
+  }
+ ]
+}

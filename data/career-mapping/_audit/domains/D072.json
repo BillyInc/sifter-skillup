@@ -1,0 +1,157 @@
+{
+ "domain_id": "D072",
+ "domain_name": "Geospatial Science",
+ "role_count": 30,
+ "roles": [
+  {
+   "role": "mine surveyor",
+   "isco": 2165,
+   "aka": "mine planning surveyor  ·  mine plan maker  ·  planner of mining operations  ·  mining surveyor  ·  mine surveyors"
+  },
+  {
+   "role": "mine geologist",
+   "isco": 2114,
+   "aka": "geologist  ·  geological engineer  ·  geophysicist  ·  mineralogist  ·  exploration geologist"
+  },
+  {
+   "role": "cadastral technician",
+   "isco": 2165,
+   "aka": "cadastral surveyor  ·  cadastral mapping technician  ·  cadastral land surveyor  ·  land agent"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "hydrographic surveyor",
+   "isco": 2165,
+   "aka": "hydrography surveyor  ·  hydrographic science researcher  ·  hydrographic research analyst  ·  hydrographic scientist  ·  hydrographic analyst"
+  },
+  {
+   "role": "oceanographer",
+   "isco": 2114,
+   "aka": "marine geologist  ·  marine physicist  ·  oceanography scientist  ·  oceanography science researcher  ·  oceanographers"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "hydrologist",
+   "isco": 2114,
+   "aka": "hydrological engineer  ·  surface hydrologist  ·  hydrology research analyst  ·  hydrology researcher  ·  hydrology scientist"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "hydrogeologist",
+   "isco": 2114,
+   "aka": "pore pressure engineer  ·  formation evaluation engineer  ·  consultant hydrogeologist  ·  consultant hydrologist  ·  hydrogeological consultant"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "palaeontologist",
+   "isco": 2114,
+   "aka": "palaeontology scholar  ·  palaeontology science researcher  ·  micropalaeontologist  ·  palaeontology scientist  ·  palaeontology researcher"
+  },
+  {
+   "role": "mineralogist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  offshore mineralogist  ·  mineralogy expert  ·  mineralogy consultant  ·  process mineralogy consultant"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "environmental geologist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  environmental consultant  ·  environmentalist  ·  environmental geology analyst  ·  environmental geology researcher"
+  },
+  {
+   "role": "geographic information systems specialist",
+   "isco": 2165,
+   "aka": "Earth Observation expert  ·  GIS specialist  ·  geomatics technician  ·  GIS technician  ·  geographic information systems consultant"
+  },
+  {
+   "role": "geophysicist",
+   "isco": 2114,
+   "aka": "geophysical engineer  ·  project geophysicist  ·  consultant geophysicist  ·  field seismologist  ·  exploration geophysicist"
+  },
+  {
+   "role": "exploration geologist",
+   "isco": 2114,
+   "aka": "mineralogist  ·  economic geologist  ·  field exploration geologist  ·  exploration geology research scientist  ·  exploratory geologist"
+  },
+  {
+   "role": "cartographer",
+   "isco": 2165,
+   "aka": "cartographic draftsperson  ·  cartographic researcher  ·  cartographic analyst  ·  cartographic research scientist  ·  map maker"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "seismologist",
+   "isco": 2114,
+   "aka": "seismologists  ·  seismology research analyst  ·  seismology analyst  ·  seismology researcher  ·  seismology scientist"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "geologist",
+   "isco": 2114,
+   "aka": "field geologist  ·  geologist engineer  ·  geology science researcher  ·  geology research analyst  ·  site geologist"
+  },
+  {
+   "role": "geochemist",
+   "isco": 2114,
+   "aka": "geo-technician  ·  geoscience technician  ·  exploration geochemist  ·  consultant geochemist  ·  petroleum technician"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "land surveyor",
+   "isco": 2165,
+   "aka": "surveyor  ·  surveying engineer  ·  surveyors  ·  geomatics surveyor"
+  },
+  {
+   "role": "mud logger",
+   "isco": 2114,
+   "aka": "mudlogger  ·  surface logging technician  ·  surface logging specialist  ·  logging geologist  ·  surface logger"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  }
+ ]
+}

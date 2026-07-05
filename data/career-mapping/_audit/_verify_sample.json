@@ -1,0 +1,554 @@
+[
+ {
+  "domain_id": "D161",
+  "role": "housing policy officer",
+  "reason": "public policy cluster, not humanitarian/emergency",
+  "domain_name": "Humanitarian Aid, Emergency Response"
+ },
+ {
+  "domain_id": "D161",
+  "role": "procurement category specialist",
+  "reason": "corporate procurement, cross-domain",
+  "domain_name": "Humanitarian Aid, Emergency Response"
+ },
+ {
+  "domain_id": "D161",
+  "role": "criminologist",
+  "reason": "social-science research cluster",
+  "domain_name": "Humanitarian Aid, Emergency Response"
+ },
+ {
+  "domain_id": "D161",
+  "role": "public administration manager",
+  "reason": "government/senior-official cluster",
+  "domain_name": "Humanitarian Aid, Emergency Response"
+ },
+ {
+  "domain_id": "D134",
+  "role": "quarry engineer",
+  "reason": "ISCO 2146 mining; contamination",
+  "domain_name": "Naval Architecture, Marine Engineering"
+ },
+ {
+  "domain_id": "D134",
+  "role": "metallurgical technician",
+  "reason": "ISCO 3117 mining/metallurgy; contamination",
+  "domain_name": "Naval Architecture, Marine Engineering"
+ },
+ {
+  "domain_id": "D134",
+  "role": "chemical metallurgist",
+  "reason": "ISCO 2146 metallurgy; contamination",
+  "domain_name": "Naval Architecture, Marine Engineering"
+ },
+ {
+  "domain_id": "D134",
+  "role": "process metallurgist",
+  "reason": "ISCO 2146 metallurgy; contamination",
+  "domain_name": "Naval Architecture, Marine Engineering"
+ },
+ {
+  "domain_id": "D076",
+  "role": "dismantling engineer",
+  "reason": "Generic engineering (ISCO 2149); not maritime — mass engineering fan-out contamination.",
+  "domain_name": "Maritime"
+ },
+ {
+  "domain_id": "D076",
+  "role": "biomedical engineer",
+  "reason": "Biomedical engineering (2149); not maritime.",
+  "domain_name": "Maritime"
+ },
+ {
+  "domain_id": "D076",
+  "role": "dependability engineer",
+  "reason": "Reliability/RAMS engineering (2149); not maritime.",
+  "domain_name": "Maritime"
+ },
+ {
+  "domain_id": "D076",
+  "role": "quantity surveyor",
+  "reason": "Construction cost surveying (2149); not maritime.",
+  "domain_name": "Maritime"
+ },
+ {
+  "domain_id": "D146",
+  "role": "medical device engineer",
+  "reason": "electronics/medtech product engineering, not building MEP",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical"
+ },
+ {
+  "domain_id": "D146",
+  "role": "hydroelectric plant operator",
+  "reason": "utility power generation, not building services",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical"
+ },
+ {
+  "domain_id": "D146",
+  "role": "fossil-fuel power plant operator",
+  "reason": "utility power generation",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical"
+ },
+ {
+  "domain_id": "D146",
+  "role": "water treatment systems operator",
+  "reason": "municipal water treatment, not building MEP",
+  "domain_name": "Building Services Engineering — Mechanical, Electrical"
+ },
+ {
+  "domain_id": "D138",
+  "role": "dismantling engineer",
+  "reason": "disassembly/dismantling planning; ESCO 2149 fan-out, not biomedical",
+  "domain_name": "Biomedical Engineering"
+ },
+ {
+  "domain_id": "D138",
+  "role": "dependability engineer",
+  "reason": "reliability/RAMS engineering; ESCO 2149 fan-out, not biomedical",
+  "domain_name": "Biomedical Engineering"
+ },
+ {
+  "domain_id": "D138",
+  "role": "quantity surveyor",
+  "reason": "construction cost management; wrong ISCO mapping and off-domain",
+  "domain_name": "Biomedical Engineering"
+ },
+ {
+  "domain_id": "D138",
+  "role": "renewable energy engineer",
+  "reason": "energy engineering; ESCO 2149 fan-out, not biomedical",
+  "domain_name": "Biomedical Engineering"
+ },
+ {
+  "domain_id": "D053",
+  "role": "tobacco shop manager",
+  "reason": "ISCO 1420 retail; ESCO specialised-seller fan-out, not hospitality",
+  "domain_name": "Hospitality"
+ },
+ {
+  "domain_id": "D053",
+  "role": "audiology equipment shop manager",
+  "reason": "ISCO 1420 retail fan-out",
+  "domain_name": "Hospitality"
+ },
+ {
+  "domain_id": "D053",
+  "role": "telecommunication equipment shop manager",
+  "reason": "ISCO 1420 retail fan-out",
+  "domain_name": "Hospitality"
+ },
+ {
+  "domain_id": "D053",
+  "role": "domestic appliances shop manager",
+  "reason": "ISCO 1420 retail fan-out",
+  "domain_name": "Hospitality"
+ },
+ {
+  "domain_id": "D162",
+  "role": "youth information worker",
+  "reason": "social-work cluster, unrelated to immigration law",
+  "domain_name": "Immigration Law, Asylum"
+ },
+ {
+  "domain_id": "D162",
+  "role": "child care social worker",
+  "reason": "social-work cluster",
+  "domain_name": "Immigration Law, Asylum"
+ },
+ {
+  "domain_id": "D162",
+  "role": "court clerk",
+  "reason": "generic court-administration cluster",
+  "domain_name": "Immigration Law, Asylum"
+ },
+ {
+  "domain_id": "D162",
+  "role": "data protection officer",
+  "reason": "compliance cluster, cross-domain",
+  "domain_name": "Immigration Law, Asylum"
+ },
+ {
+  "domain_id": "D071",
+  "role": "fact checker",
+  "reason": "ISCO 2642 journalism/editorial; cross-domain (Media/Journalism)",
+  "domain_name": "Sports Management"
+ },
+ {
+  "domain_id": "D071",
+  "role": "newspaper editor",
+  "reason": "ISCO 2642 editorial; cross-domain (Media/Journalism)",
+  "domain_name": "Sports Management"
+ },
+ {
+  "domain_id": "D071",
+  "role": "foreign correspondent",
+  "reason": "ISCO 2642 news reporting; cross-domain (Media/Journalism)",
+  "domain_name": "Sports Management"
+ },
+ {
+  "domain_id": "D071",
+  "role": "vlogger",
+  "reason": "ISCO 2642 online content creator; cross-domain (Media/Digital)",
+  "domain_name": "Sports Management"
+ },
+ {
+  "domain_id": "D149",
+  "role": "criminologist",
+  "reason": "criminology/social science research, belongs to D151",
+  "domain_name": "Diplomacy, International Relations"
+ },
+ {
+  "domain_id": "D149",
+  "role": "sociologist",
+  "reason": "social science research, not diplomacy/IR",
+  "domain_name": "Diplomacy, International Relations"
+ },
+ {
+  "domain_id": "D149",
+  "role": "media scientist",
+  "reason": "media studies research, cross-domain",
+  "domain_name": "Diplomacy, International Relations"
+ },
+ {
+  "domain_id": "D149",
+  "role": "archaeologist",
+  "reason": "archaeology/social science, cross-domain",
+  "domain_name": "Diplomacy, International Relations"
+ },
+ {
+  "domain_id": "D064",
+  "role": "polygraph examiner",
+  "reason": "cross-domain contamination; forensic/security operator mislabeled as psychology (2634)",
+  "domain_name": "Psychology, Counselling"
+ },
+ {
+  "domain_id": "D064",
+  "role": "legal guardian",
+  "reason": "social-care associate; guardianship/welfare, not psychology/counselling",
+  "domain_name": "Psychology, Counselling"
+ },
+ {
+  "domain_id": "D064",
+  "role": "volunteer mentor",
+  "reason": "social-care associate (3412), not psychology/counselling",
+  "domain_name": "Psychology, Counselling"
+ },
+ {
+  "domain_id": "D064",
+  "role": "foster care support worker",
+  "reason": "social-care/child welfare, Social Work domain",
+  "domain_name": "Psychology, Counselling"
+ },
+ {
+  "domain_id": "D069",
+  "role": "officer of the watch",
+  "reason": "ISCO 3152 maritime deck officer; cross-domain (Maritime), not aviation",
+  "domain_name": "Aviation"
+ },
+ {
+  "domain_id": "D069",
+  "role": "maritime pilot",
+  "reason": "ISCO 3152 ship pilot; cross-domain (Maritime)",
+  "domain_name": "Aviation"
+ },
+ {
+  "domain_id": "D069",
+  "role": "helmsman",
+  "reason": "ISCO 3152 ship steersman; cross-domain (Maritime)",
+  "domain_name": "Aviation"
+ },
+ {
+  "domain_id": "D069",
+  "role": "deck officer",
+  "reason": "ISCO 3152 ship's mate; cross-domain (Maritime)",
+  "domain_name": "Aviation"
+ },
+ {
+  "domain_id": "D135",
+  "role": "hydroelectric plant operator",
+  "reason": "ISCO 3131 hydro power; contamination",
+  "domain_name": "Nuclear Engineering, Radiation Science"
+ },
+ {
+  "domain_id": "D135",
+  "role": "fossil-fuel power plant operator",
+  "reason": "ISCO 3131 fossil power; contamination",
+  "domain_name": "Nuclear Engineering, Radiation Science"
+ },
+ {
+  "domain_id": "D135",
+  "role": "solar power plant operator",
+  "reason": "ISCO 3131 solar power; contamination",
+  "domain_name": "Nuclear Engineering, Radiation Science"
+ },
+ {
+  "domain_id": "D135",
+  "role": "offshore renewable energy plant operator",
+  "reason": "ISCO 3131 marine renewables; contamination",
+  "domain_name": "Nuclear Engineering, Radiation Science"
+ },
+ {
+  "domain_id": "D051",
+  "role": "housing policy officer",
+  "reason": "ISCO 2422 govt policy analyst; core function is public policy, not real estate",
+  "domain_name": "Real Estate"
+ },
+ {
+  "domain_id": "D051",
+  "role": "procurement category specialist",
+  "reason": "ISCO 2422 procurement; no real estate core function",
+  "domain_name": "Real Estate"
+ },
+ {
+  "domain_id": "D051",
+  "role": "public employment service manager",
+  "reason": "ISCO 1120 jobcentre mgmt; unrelated to real estate",
+  "domain_name": "Real Estate"
+ },
+ {
+  "domain_id": "D051",
+  "role": "social service consultant",
+  "reason": "ISCO 2422 welfare/social planning; not real estate",
+  "domain_name": "Real Estate"
+ },
+ {
+  "domain_id": "D132",
+  "role": "food production engineer",
+  "reason": "ISCO 2141 food/agri industry, no space relevance; contamination",
+  "domain_name": "Space Science, Exploration"
+ },
+ {
+  "domain_id": "D132",
+  "role": "mine geologist",
+  "reason": "ISCO 2114 mining, not space science; geology fan-out",
+  "domain_name": "Space Science, Exploration"
+ },
+ {
+  "domain_id": "D132",
+  "role": "hydrologist",
+  "reason": "ISCO 2114 water science; contamination",
+  "domain_name": "Space Science, Exploration"
+ },
+ {
+  "domain_id": "D132",
+  "role": "hydrogeologist",
+  "reason": "ISCO 2114 groundwater; contamination",
+  "domain_name": "Space Science, Exploration"
+ },
+ {
+  "domain_id": "D136",
+  "role": "telecommunications engineer",
+  "reason": "ISCO 2153 telecom engineer, cross-domain (telecommunications), no aeronautical relevance",
+  "domain_name": "Aeronautical"
+ },
+ {
+  "domain_id": "D136",
+  "role": "metallurgical technician",
+  "reason": "metallurgy/mining technician, cross-domain (materials/mining)",
+  "domain_name": "Aeronautical"
+ },
+ {
+  "domain_id": "D136",
+  "role": "microelectronics engineering technician",
+  "reason": "microelectronics technician, cross-domain (electronics)",
+  "domain_name": "Aeronautical"
+ },
+ {
+  "domain_id": "D136",
+  "role": "welding engineer",
+  "reason": "welding engineer, cross-domain (manufacturing)",
+  "domain_name": "Aeronautical"
+ },
+ {
+  "domain_id": "D153",
+  "role": "performance video operator",
+  "reason": "Live-event visuals/projection (theatre/stage tech), not music production. Contamination.",
+  "domain_name": "Music Production, Sound Engineering"
+ },
+ {
+  "domain_id": "D153",
+  "role": "automated fly bar operator",
+  "reason": "Theatre rigging/automation (ISCO 3435 artistic/cultural technicians); stagecraft, not audio.",
+  "domain_name": "Music Production, Sound Engineering"
+ },
+ {
+  "domain_id": "D153",
+  "role": "presenter",
+  "reason": "Broadcast announcer (ISCO 2656); not sound engineering.",
+  "domain_name": "Music Production, Sound Engineering"
+ },
+ {
+  "domain_id": "D153",
+  "role": "audio describer",
+  "reason": "Accessibility narration (ISCO 2656); belongs in broadcasting/media, not music production.",
+  "domain_name": "Music Production, Sound Engineering"
+ },
+ {
+  "domain_id": "D049",
+  "role": "drone pilot",
+  "reason": "UAV pilot (3153), aviation not automotive",
+  "domain_name": "Automotive Engineering"
+ },
+ {
+  "domain_id": "D049",
+  "role": "helicopter pilot",
+  "reason": "aviation pilot (3153), off-domain",
+  "domain_name": "Automotive Engineering"
+ },
+ {
+  "domain_id": "D049",
+  "role": "airline transport pilot",
+  "reason": "aviation pilot (3153), off-domain",
+  "domain_name": "Automotive Engineering"
+ },
+ {
+  "domain_id": "D049",
+  "role": "commercial pilot",
+  "reason": "aviation pilot (3153), off-domain",
+  "domain_name": "Automotive Engineering"
+ },
+ {
+  "domain_id": "D140",
+  "role": "telecommunications engineer",
+  "reason": "telecoms/broadcast engineering (2153); off-domain",
+  "domain_name": "Robotics Engineering, Systems Design"
+ },
+ {
+  "domain_id": "D140",
+  "role": "precision mechanics supervisor",
+  "reason": "machine-shop supervision (3122); manufacturing-supervisor contamination, not robotics engineering",
+  "domain_name": "Robotics Engineering, Systems Design"
+ },
+ {
+  "domain_id": "D140",
+  "role": "welding engineer",
+  "reason": "welding engineering (2144); off-domain mechanical",
+  "domain_name": "Robotics Engineering, Systems Design"
+ },
+ {
+  "domain_id": "D140",
+  "role": "equipment engineer",
+  "reason": "generic equipment engineering (2144); off-domain",
+  "domain_name": "Robotics Engineering, Systems Design"
+ },
+ {
+  "domain_id": "D020",
+  "role": "commissioning technician",
+  "reason": "Generic commissioning role; not environmental-specific; 3119 fan-out.",
+  "domain_name": "Environmental Engineering"
+ },
+ {
+  "domain_id": "D020",
+  "role": "offshore renewable energy technician",
+  "reason": "Renewable energy technician; belongs in Renewable Energy Engineering (D019), not environmental.",
+  "domain_name": "Environmental Engineering"
+ },
+ {
+  "domain_id": "D020",
+  "role": "transport health and safety inspector",
+  "reason": "Road/transport safety; belongs in transport/OHS domain, not environmental engineering.",
+  "domain_name": "Environmental Engineering"
+ },
+ {
+  "domain_id": "D020",
+  "role": "air separation plant operator",
+  "reason": "Industrial gas production; cross-domain contamination via 3133 fan-out.",
+  "domain_name": "Environmental Engineering"
+ },
+ {
+  "domain_id": "D058",
+  "role": "administrative assistant",
+  "reason": "generic clerical role, not EdTech",
+  "domain_name": "EdTech"
+ },
+ {
+  "domain_id": "D058",
+  "role": "corporate trainer",
+  "reason": "generic L&D role, not education-technology specific",
+  "domain_name": "EdTech"
+ },
+ {
+  "domain_id": "D058",
+  "role": "science teacher secondary school",
+  "reason": "ESCO subject fan-out — generic subject teacher, not EdTech",
+  "domain_name": "EdTech"
+ },
+ {
+  "domain_id": "D058",
+  "role": "fundraising assistant",
+  "reason": "generic clerical/fundraising role, unrelated to EdTech",
+  "domain_name": "EdTech"
+ },
+ {
+  "domain_id": "D154",
+  "role": "medical physics expert",
+  "reason": "Medical radiation physics/dosimetry; belongs in medical physics/imaging domain, not exercise science.",
+  "domain_name": "Exercise Science, Sports Therapy"
+ },
+ {
+  "domain_id": "D154",
+  "role": "horse riding instructor",
+  "reason": "Equestrian recreation instructor; outdoor/leisure sports contamination, not exercise science/therapy.",
+  "domain_name": "Exercise Science, Sports Therapy"
+ },
+ {
+  "domain_id": "D154",
+  "role": "activity leader",
+  "reason": "Leisure/holiday activities leader; recreation contamination.",
+  "domain_name": "Exercise Science, Sports Therapy"
+ },
+ {
+  "domain_id": "D154",
+  "role": "biomedical scientist",
+  "reason": "Clinical laboratory science; belongs in biomedical/lab domain.",
+  "domain_name": "Exercise Science, Sports Therapy"
+ },
+ {
+  "domain_id": "D059",
+  "role": "ICT test analyst",
+  "reason": "generic software QA role; ESCO test fan-out, not space technology",
+  "domain_name": "Space Technology"
+ },
+ {
+  "domain_id": "D059",
+  "role": "air traffic safety technician",
+  "reason": "aviation ATC role, not space technology",
+  "domain_name": "Space Technology"
+ },
+ {
+  "domain_id": "D059",
+  "role": "aircraft engine specialist",
+  "reason": "aircraft maintenance, not space",
+  "domain_name": "Space Technology"
+ },
+ {
+  "domain_id": "D059",
+  "role": "drone pilot",
+  "reason": "UAV/aviation, not space technology",
+  "domain_name": "Space Technology"
+ },
+ {
+  "domain_id": "D063",
+  "role": "historian",
+  "reason": "cross-domain contamination; History/social science domain",
+  "domain_name": "Economics"
+ },
+ {
+  "domain_id": "D063",
+  "role": "political scientist",
+  "reason": "cross-domain contamination; Political Science domain",
+  "domain_name": "Economics"
+ },
+ {
+  "domain_id": "D063",
+  "role": "genealogist",
+  "reason": "cross-domain contamination; social science/heritage domain",
+  "domain_name": "Economics"
+ },
+ {
+  "domain_id": "D063",
+  "role": "philosopher",
+  "reason": "cross-domain contamination; Philosophy domain",
+  "domain_name": "Economics"
+ }
+]

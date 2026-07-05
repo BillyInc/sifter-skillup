@@ -1,0 +1,402 @@
+{
+ "domain_id": "D028",
+ "domain_name": "General Management",
+ "role_count": 79,
+ "roles": [
+  {
+   "role": "accounting manager",
+   "isco": 1211,
+   "aka": "financial director  ·  head of accounts  ·  accounts payable manager  ·  financial accounts supervisor  ·  accounting office manager"
+  },
+  {
+   "role": "foundry manager",
+   "isco": 1219,
+   "aka": "production controller  ·  engineering manager  ·  foundry plant manager  ·  foundry operations manager  ·  foundry production manager"
+  },
+  {
+   "role": "public employment service manager",
+   "isco": 1120,
+   "aka": "careers advice manager  ·  DWP manager  ·  jobcentre manager  ·  job centre manager  ·  national careers service manager"
+  },
+  {
+   "role": "branch manager",
+   "isco": 1213,
+   "aka": "regional director  ·  regional manager  ·  international business manager  ·  branch office administrator  ·  subsidiary manager"
+  },
+  {
+   "role": "secretary of state",
+   "isco": 1111,
+   "aka": "minister of state  ·  undersecretary of state  ·  state secretary  ·  senior minister  ·  under secretary of state"
+  },
+  {
+   "role": "quality services manager",
+   "isco": 1219,
+   "aka": "quality assurance supervisor  ·  quality control manager  ·  quality assurance services manager  ·  quality assurance coordinator  ·  quality control services manager"
+  },
+  {
+   "role": "corporate social responsibility manager",
+   "isco": 1219,
+   "aka": "sustainability project manager  ·  corporate sustainability reporting manager  ·  sustainable services manager  ·  chief sustainability officer  ·  corporate responsibility director"
+  },
+  {
+   "role": "EU funds manager",
+   "isco": 1213,
+   "aka": "EU policy and funding expert  ·  regional policy officer  ·  EU projects supervisor  ·  policy officer for EU funds  ·  EU fund manager in Joint Secretariat"
+  },
+  {
+   "role": "business intelligence manager",
+   "isco": 2421,
+   "aka": "market intelligence manager  ·  business research analyst  ·  business intelligence specialist  ·  business research consultant  ·  business intelligence analyst"
+  },
+  {
+   "role": "manufacturing cost estimator",
+   "isco": 2421,
+   "aka": "manufacturing cost analyst  ·  manufacturing estimate clerk  ·  production cost estimator  ·  estimator  ·  manufacturing cost recovery technician"
+  },
+  {
+   "role": "sustainability manager",
+   "isco": 1213,
+   "aka": "sustainable business manager  ·  sustainable business process manager  ·  sustainability analyst  ·  sustainability specialist  ·  sustainability coordinator"
+  },
+  {
+   "role": "financial manager",
+   "isco": 1211,
+   "aka": "CFO  ·  financial director  ·  finance manager  ·  chief financial officer  ·  financial administrator"
+  },
+  {
+   "role": "business service manager",
+   "isco": 1219,
+   "aka": "professional services consultant  ·  service operations manager  ·  professional services manager  ·  corporate services consultant  ·  professional services executive"
+  },
+  {
+   "role": "corporate treasurer",
+   "isco": 1211,
+   "aka": "treasury analyst  ·  corporate treasury officer  ·  company treasurer  ·  corporate treasury controller  ·  corporate financial officer and treasurer"
+  },
+  {
+   "role": "government minister",
+   "isco": 1111,
+   "aka": "assembley minister  ·  prime minister  ·  minister of state  ·  member of parliament  ·  minister"
+  },
+  {
+   "role": "budget manager",
+   "isco": 1211,
+   "aka": "budget coordinator  ·  money manager  ·  budget and planning manager  ·  budget and policy manager  ·  budgeting manager"
+  },
+  {
+   "role": "airport chief executive",
+   "isco": 1120,
+   "aka": "airport manager  ·  airport chief operating officer  ·  airport general manager  ·  airport CEO  ·  general director of airport"
+  },
+  {
+   "role": "strategic planning manager",
+   "isco": 1213,
+   "aka": "strategy manager  ·  corporate strategist  ·  business continuity planning director  ·  business continuity strategy director  ·  strategic development manager"
+  },
+  {
+   "role": "logistics analyst",
+   "isco": 2421,
+   "aka": "supply chain analyst  ·  distribution and logistics consultant  ·  logistics consultant  ·  logistics and distribution analyst  ·  logistics and supply chain analyst"
+  },
+  {
+   "role": "business manager",
+   "isco": 1213,
+   "aka": "general manager  ·  corporate service manager  ·  business unit manager  ·  operations manager  ·  vice-president"
+  },
+  {
+   "role": "water treatment plant manager",
+   "isco": 1219,
+   "aka": "water treatment manager  ·  water distribution plant manager  ·  water plant superintendent  ·  water treatment plant supervisor  ·  water treatment facility manager"
+  },
+  {
+   "role": "health safety and environmental manager",
+   "isco": 1213,
+   "aka": "HSE coordinator  ·  chief HSE officer  ·  corporate HSE manager  ·  HSE and sustainability service manager"
+  },
+  {
+   "role": "member of parliament",
+   "isco": 1111,
+   "aka": "assembly member  ·  legislative member  ·  member of european parliament"
+  },
+  {
+   "role": "business analyst",
+   "isco": 2421,
+   "aka": "management consultant  ·  standardisation manager  ·  business strategy analyst  ·  organisational developer  ·  standardisation expert"
+  },
+  {
+   "role": "policy manager",
+   "isco": 1213,
+   "aka": "policy coordinator  ·  business ethicist  ·  policy advocacy manager  ·  sustainability manager  ·  environmental policy manager"
+  },
+  {
+   "role": "manufacturing facility manager",
+   "isco": 1219,
+   "aka": "manufacturing production manager  ·  manufacturing plant manager  ·  manufacturing director  ·  manufacturing coordinator  ·  manufacturing facility maintenance manager"
+  },
+  {
+   "role": "business consultant",
+   "isco": 2421,
+   "aka": "business process consultant"
+  },
+  {
+   "role": "chief executive officer",
+   "isco": 1120,
+   "aka": "managing director  ·  president  ·  CEO  ·  company executive director  ·  chairman"
+  },
+  {
+   "role": "mayor",
+   "isco": 1111,
+   "aka": "council leader  ·  mayoress  ·  leader of the council  ·  civic leader  ·  lady mayoress"
+  },
+  {
+   "role": "city councillor",
+   "isco": 1111,
+   "aka": "elected representative  ·  city councilor  ·  councillor  ·  county councillor  ·  local councillor"
+  },
+  {
+   "role": "social entrepreneur",
+   "isco": 1120,
+   "aka": "eco-entrepreneur  ·  green entrepreneur  ·  social business founder  ·  social business venture founder  ·  social enterprise founder"
+  },
+  {
+   "role": "senator",
+   "isco": 1111,
+   "aka": "senate member  ·  senate representative"
+  },
+  {
+   "role": "chemical plant manager",
+   "isco": 1219,
+   "aka": "chemical plant technial manager  ·  chemical plant operations executive  ·  manager of chemical plant  ·  chemical production plant managing director  ·  chemical production facility manager"
+  },
+  {
+   "role": "defence administration officer",
+   "isco": 1219,
+   "aka": "civil servant  ·  defense administration officer  ·  defence administration manager  ·  administration officer of defence  ·  administration manager of defence"
+  },
+  {
+   "role": "procurement department manager",
+   "isco": 1213,
+   "aka": "procurement officer  ·  head of procurement department  ·  procurement director  ·  procurement coordinator  ·  head of procurement unit"
+  },
+  {
+   "role": "animal facility manager",
+   "isco": 1120,
+   "aka": "aquarium CEO  ·  aquarium managing director  ·  zoo COO  ·  aquarium COO  ·  zoo managing director"
+  },
+  {
+   "role": "department manager",
+   "isco": 1219,
+   "aka": "business unit manager  ·  unit manager  ·  business unit coordinator  ·  department coordinator  ·  unit director"
+  },
+  {
+   "role": "process officer",
+   "isco": 2421,
+   "aka": "chief process officer  ·  process improvement officer  ·  process management coordinator  ·  business process improvement coordinator  ·  business process advisor"
+  },
+  {
+   "role": "building information modelling consultant",
+   "isco": 2421,
+   "aka": "BIM consultant  ·  building information modelling specialist  ·  BIM specialist"
+  },
+  {
+   "role": "director of compliance and information security",
+   "isco": 1213,
+   "aka": "cybersecurity compliance director  ·  IT compliance manager  ·  manager of compliance and information security  ·  cyber legal advisor  ·  compliance and information security manager"
+  },
+  {
+   "role": "facilities manager",
+   "isco": 1219,
+   "aka": "facilities coordinator  ·  facilities superintendent  ·  building cleaning and maintenance manager  ·  facilities administrator  ·  facilities maintenance manager"
+  },
+  {
+   "role": "wood factory manager",
+   "isco": 1219,
+   "aka": "natural wood factory manager  ·  wood factory coordinator  ·  wood factory executive  ·  solid wood factory manager  ·  furniture factory manager"
+  },
+  {
+   "role": "bank treasurer",
+   "isco": 1211,
+   "aka": "CFO  ·  chief financial officer  ·  treasury clerk  ·  deputy bank treasurer  ·  financial institution treasurer"
+  },
+  {
+   "role": "project manager",
+   "isco": 1219,
+   "aka": "special project manager  ·  project expediter  ·  project leader  ·  projects manager  ·  project coordinator"
+  },
+  {
+   "role": "chief operating officer",
+   "isco": 1120,
+   "aka": "managing director  ·  chief operations officer  ·  executive vice-president  ·  deputy chief executive officer  ·  chief administrative officer"
+  },
+  {
+   "role": "programme manager",
+   "isco": 1213,
+   "aka": "program management coordinator  ·  program director  ·  programme management coordinator  ·  programme director  ·  projects portfolio manager"
+  },
+  {
+   "role": "lean manager",
+   "isco": 2421,
+   "aka": "lean coach  ·  lean project manager  ·  lean facilitator  ·  lean director  ·  operational excellence manager"
+  },
+  {
+   "role": "power plant manager",
+   "isco": 1219,
+   "aka": "electric power station engineer  ·  power generation networks manager  ·  demand generation manager  ·  power plant coordinator  ·  energy generation manager"
+  },
+  {
+   "role": "social security administrator",
+   "isco": 1213,
+   "aka": "benefits officer  ·  social security advisor  ·  community services administrator  ·  administrative officer  ·  community services director"
+  },
+  {
+   "role": "governor",
+   "isco": 1111,
+   "aka": "regional governor  ·  state governor  ·  viceroy  ·  prefect"
+  },
+  {
+   "role": "tourism policy director",
+   "isco": 1213,
+   "aka": "director of economic development  ·  tourism policy manager  ·  director of visitor attractions  ·  policy director tourism  ·  economic development director"
+  },
+  {
+   "role": "security manager",
+   "isco": 1219,
+   "aka": "cybersecurity specialist  ·  security operations manager  ·  security systems manager  ·  security management specialist  ·  chief security guard"
+  },
+  {
+   "role": "Digital Transformation Specialists",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Strategic Advisors",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Management and Organisation Analysts",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Managing Directors and Chief Executives",
+   "isco": 1120,
+   "aka": NaN
+  },
+  {
+   "role": "General and Operations Managers",
+   "isco": 1120,
+   "aka": NaN
+  },
+  {
+   "role": "Business Services and Administration Managers",
+   "isco": 1211,
+   "aka": NaN
+  },
+  {
+   "role": "Administrative Services Managers",
+   "isco": 1211,
+   "aka": NaN
+  },
+  {
+   "role": "Chief Executives",
+   "isco": 1120,
+   "aka": NaN
+  },
+  {
+   "role": "Chief Sustainability Officers",
+   "isco": 1120,
+   "aka": NaN
+  },
+  {
+   "role": "Treasurers and Controllers",
+   "isco": 1211,
+   "aka": NaN
+  },
+  {
+   "role": "Investment Fund Managers",
+   "isco": 1211,
+   "aka": NaN
+  },
+  {
+   "role": "Compensation and Benefits Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Training and Development Managers",
+   "isco": 1213,
+   "aka": NaN
+  },
+  {
+   "role": "Education Administrators, All Other",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Postmasters and Mail Superintendents",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Property, Real Estate, and Community Association Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Emergency Management Directors",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Funeral Home Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Personal Service Managers, All Other",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Fitness and Wellness Coordinators",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Spa Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Regulatory Affairs Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Compliance Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Loss Prevention Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Wind Energy Operations Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Wind Energy Development Managers",
+   "isco": 1219,
+   "aka": NaN
+  },
+  {
+   "role": "Brownfield Redevelopment Specialists and Site Managers",
+   "isco": 1219,
+   "aka": NaN
+  }
+ ]
+}

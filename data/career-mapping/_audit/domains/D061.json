@@ -1,0 +1,122 @@
+{
+ "domain_id": "D061",
+ "domain_name": "Insurance",
+ "role_count": 23,
+ "roles": [
+  {
+   "role": "insurance claims handler",
+   "isco": 3315,
+   "aka": "claims adjuster  ·  travelling insurance assessor  ·  claims examiner  ·  insurance claims analyst  ·  civil damages inspector"
+  },
+  {
+   "role": "foreclosure specialist",
+   "isco": 3315,
+   "aka": "bankruptcy coordinator  ·  foreclosure manager  ·  bankruptcy manager  ·  foreclosure coordinator  ·  foreclosure consultant"
+  },
+  {
+   "role": "credit union manager",
+   "isco": 1346,
+   "aka": "credit unions examiner  ·  financial cooperative manager  ·  credit union specialist  ·  credit union branch manager  ·  credit union principal examiner"
+  },
+  {
+   "role": "property insurance underwriter",
+   "isco": 3321,
+   "aka": "home office insurance underwriter  ·  property underwriter  ·  property insurance assessor  ·  property and automobile underwriter"
+  },
+  {
+   "role": "insurance agency manager",
+   "isco": 1346,
+   "aka": "insurance company manager  ·  life insurance agency manager  ·  insurance institution manager  ·  insurance agency road assistance manager  ·  car insurance agency manager"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "bank manager",
+   "isco": 1346,
+   "aka": "financial institution branch manager  ·  bank executive officer  ·  bank branch manager  ·  financial services branch manager  ·  retail bank manager"
+  },
+  {
+   "role": "insurance risk consultant",
+   "isco": 3321,
+   "aka": "risk and insurance consultant  ·  insurance analyst  ·  insurance adviser  ·  insurance consultant  ·  insurance risk associate"
+  },
+  {
+   "role": "insurance claims manager",
+   "isco": 1346,
+   "aka": "insurance claims service manager  ·  head of insurance claims office  ·  insurance claims director  ·  claims director  ·  insurance claims administrator"
+  },
+  {
+   "role": "insurance broker",
+   "isco": 3321,
+   "aka": "insurance agent  ·  property and casualty insurance agent and broker  ·  life insurance broker  ·  insurance sales person  ·  commercial insurance broker"
+  },
+  {
+   "role": "insurance fraud investigator",
+   "isco": 3315,
+   "aka": "insurance fraud auditor  ·  insurance policy processing worker  ·  insurance auditors  ·  insurance fraud examiner  ·  insurance fraud inspector"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "property appraiser",
+   "isco": 3315,
+   "aka": "valuation surveyors  ·  building appraiser  ·  appraiser of properties  ·  property assessors  ·  residential appraiser"
+  },
+  {
+   "role": "real estate surveyor",
+   "isco": 3315,
+   "aka": "real estate surveyors  ·  municipal assessor  ·  real estate analyst"
+  },
+  {
+   "role": "pension scheme manager",
+   "isco": 1346,
+   "aka": "pensions manager  ·  pension adviser  ·  pension services manager  ·  pensions adviser  ·  individual pension adviser"
+  },
+  {
+   "role": "brokerage firm director",
+   "isco": 1346,
+   "aka": "brokerage senior manager  ·  brokerage supervisor  ·  brokerage chief executive  ·  brokerage firm supervisor  ·  brokerage managing director"
+  },
+  {
+   "role": "loss adjuster",
+   "isco": 3315,
+   "aka": "field claims adjuster  ·  insurance loss adjuster  ·  civil claims adjuster  ·  insurance claims adjudicator  ·  damage appraiser"
+  },
+  {
+   "role": "insurance underwriter",
+   "isco": 3321,
+   "aka": "commercial underwriter  ·  group insurance underwriter  ·  liability risk assessor  ·  casualty insurance underwriter  ·  commercial insurance underwriter"
+  },
+  {
+   "role": "personal property appraiser",
+   "isco": 3315,
+   "aka": "personal items claims adjuster  ·  personal property claims assessor  ·  personal property valuer  ·  personal items valuer  ·  personal property assessor"
+  },
+  {
+   "role": "gemmologist",
+   "isco": 3315,
+   "aka": "jewellery gemologist  ·  gemmology researcher  ·  consultant gemologist  ·  consultant gemmologist  ·  gem stone appraiser"
+  },
+  {
+   "role": "Insurance Underwriters, Valuers, and Loss Assessors",
+   "isco": 3315,
+   "aka": NaN
+  },
+  {
+   "role": "Claims Adjusters, Examiners, and Investigators",
+   "isco": 3315,
+   "aka": NaN
+  },
+  {
+   "role": "Insurance Appraisers, Auto Damage",
+   "isco": 2421,
+   "aka": NaN
+  }
+ ]
+}

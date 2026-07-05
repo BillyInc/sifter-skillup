@@ -1,0 +1,172 @@
+{
+ "domain_id": "D144",
+ "domain_name": "Climate Science, Meteorology",
+ "role_count": 33,
+ "roles": [
+  {
+   "role": "weather forecaster",
+   "isco": 2112,
+   "aka": "meteorology scientist  ·  meteorology researcher  ·  meteorology analyst  ·  meteorology research analyst  ·  meteorology science researcher"
+  },
+  {
+   "role": "commissioning technician",
+   "isco": 3119,
+   "aka": "senior commissioning technician"
+  },
+  {
+   "role": "chemist",
+   "isco": 2113,
+   "aka": "chemistry technician  ·  pharmacologist  ·  chemical engineer  ·  toxicologist  ·  environmental chemist"
+  },
+  {
+   "role": "cosmetic chemist",
+   "isco": 2113,
+   "aka": "research chemist  ·  cosmetics formulation chemist  ·  cosmetics formulation development chemist  ·  skin care formulation chemist  ·  cosmetics formulator"
+  },
+  {
+   "role": "offshore renewable energy technician",
+   "isco": 3119,
+   "aka": "offshore wind turbine technician  ·  offshore renewable energy installer  ·  MRE installer  ·  ORE technician  ·  marine renewable energy installer"
+  },
+  {
+   "role": "chemical application specialist",
+   "isco": 2113,
+   "aka": "specialist chemist  ·  chemical application technician  ·  technical application specialist chemist  ·  application specialist chemist  ·  product formulation chemist"
+  },
+  {
+   "role": "meteorologist",
+   "isco": 2112,
+   "aka": "atmospheric scientist  ·  meteorology scientist  ·  meteorology researcher  ·  atmospheric research scientist  ·  meteorology analyst"
+  },
+  {
+   "role": "photonics engineering technician",
+   "isco": 3119,
+   "aka": "photonics engineering technologist  ·  photonic systems engineering technician  ·  laser technician  ·  electro-optical technologist  ·  technician in photonic systems"
+  },
+  {
+   "role": "aviation meteorologist",
+   "isco": 2112,
+   "aka": "meteorologist  ·  meteorological technician  ·  meteorological aviation inspector  ·  airline meteorologist  ·  air meteorologist"
+  },
+  {
+   "role": "utilities inspector",
+   "isco": 3119,
+   "aka": "pipeline inspector  ·  turbine inspector  ·  sewer inspector  ·  utilities supervisor  ·  streetworks inspector"
+  },
+  {
+   "role": "climatologist",
+   "isco": 2112,
+   "aka": "climatology scientist  ·  climate research scientist  ·  climatology research analyst  ·  climatology scholar  ·  climate scientist"
+  },
+  {
+   "role": "metal additive manufacturing operator",
+   "isco": 3119,
+   "aka": "metal AM technician  ·  metal AM operator  ·  AM operator  ·  metal additive manufacturing technician  ·  AM technician"
+  },
+  {
+   "role": "product development engineering technician",
+   "isco": 3119,
+   "aka": "product development systems engineer  ·  product development mechanical engineer  ·  product development specialist  ·  product development engineer  ·  production test operator"
+  },
+  {
+   "role": "process engineering technician",
+   "isco": 3119,
+   "aka": "process engineering supervisor  ·  engineering operational inspector  ·  production supervisor  ·  manufacturing engineering operations supervisor  ·  manufacturing engineering supervisor"
+  },
+  {
+   "role": "analytical chemist",
+   "isco": 2113,
+   "aka": "chemist  ·  analytical chemistry analyst  ·  analytical chemistry scientist  ·  chemistry research analyst  ·  chrystalographer"
+  },
+  {
+   "role": "automation engineering technician",
+   "isco": 3119,
+   "aka": "marine sensor technician  ·  technician for food industry digitalisation  ·  technologist in automated systems  ·  technician in automated systems  ·  marine automation technician"
+  },
+  {
+   "role": "astronomer",
+   "isco": 2111,
+   "aka": "astronomers  ·  astronomy research scientist  ·  astronomy science researcher  ·  astronomy researcher  ·  astronomy scholar"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "robotics engineering technician",
+   "isco": 3119,
+   "aka": "robotics engineering technologist  ·  robot technician  ·  technician in robotic systems  ·  robot technologist  ·  automation control engineering inspector"
+  },
+  {
+   "role": "physicist",
+   "isco": 2111,
+   "aka": "physics scholar  ·  forensic physicist  ·  neurologist  ·  physics analyst  ·  physics scientist"
+  },
+  {
+   "role": "airport maintenance technician",
+   "isco": 3119,
+   "aka": "specialist in airport maintenance  ·  airport maintenance technical officer  ·  technician in airport maintenance  ·  airport maintenance officer  ·  maintenance technician at airports"
+  },
+  {
+   "role": "sensory scientist",
+   "isco": 2113,
+   "aka": "sensory and consumer research scientist  ·  consumer and sensory scientist  ·  sensory science consultant  ·  sensory research scientist  ·  chocolate scientist"
+  },
+  {
+   "role": "pipeline compliance coordinator",
+   "isco": 3119,
+   "aka": "pipeline safety inspector  ·  roadside pipeline coordinator  ·  pipeline inspector  ·  pipeline compliance inspector  ·  pipeline compliance and safety inspector"
+  },
+  {
+   "role": "quality engineering technician",
+   "isco": 3119,
+   "aka": "battery quality technician  ·  quality technologist  ·  quality technology specialist  ·  quality specialist  ·  quality technician"
+  },
+  {
+   "role": "chemical tester",
+   "isco": 2113,
+   "aka": "metal chemical tester  ·  chemical quality control analyst  ·  chemical element analyst"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "food technician",
+   "isco": 3119,
+   "aka": "food tech specialist  ·  technician for sustainable food industry  ·  food technology specialist  ·  food technology expert  ·  food tech expert"
+  },
+  {
+   "role": "cosmologist",
+   "isco": 2111,
+   "aka": "evolutionary cosmologist  ·  cosmology scientist  ·  observational cosmologist  ·  theoretical cosmologist  ·  cosmology data scientist"
+  },
+  {
+   "role": "industrial engineering technician",
+   "isco": 3119,
+   "aka": "industrial tool design quality control inspector  ·  industrial tool design technologist  ·  industrial tool development inspector  ·  industrial tool technologist  ·  industrial tool design inspector"
+  },
+  {
+   "role": "aviation safety officer",
+   "isco": 3119,
+   "aka": "airfield safety supervisor  ·  aviation security officer  ·  transportation security officer  ·  airport security supervisor  ·  flight safety officer"
+  },
+  {
+   "role": "fragrance chemist",
+   "isco": 2113,
+   "aka": "application engineer  ·  fragrance formulator  ·  fragrance developer  ·  perfume and cosmetics formulator  ·  fragrance product developer"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  },
+  {
+   "role": "Environmental Scientists and Specialists, Including Health",
+   "isco": 2113,
+   "aka": NaN
+  }
+ ]
+}

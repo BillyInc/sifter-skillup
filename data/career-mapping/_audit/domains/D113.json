@@ -1,0 +1,212 @@
+{
+ "domain_id": "D113",
+ "domain_name": "Glass, Ceramics, Building Materials",
+ "role_count": 41,
+ "roles": [
+  {
+   "role": "cigar brander",
+   "isco": 8183,
+   "aka": "branding machine operative  ·  cigar brander tender  ·  cigar producer  ·  cigar wrapping machine tender  ·  machine operative cigar production"
+  },
+  {
+   "role": "heat sealing machine operator",
+   "isco": 8183,
+   "aka": "heat sealing machine worker  ·  heat seal operative  ·  hot bar sealer setter  ·  heat seal machine worker  ·  continuous heat sealer setter"
+  },
+  {
+   "role": "boiler operator",
+   "isco": 8182,
+   "aka": "boiler operative  ·  steam boiler operator  ·  boiler worker  ·  heating system operator  ·  boiler maintenance technician"
+  },
+  {
+   "role": "tunnel kiln operator",
+   "isco": 8181,
+   "aka": "dryer kiln operative  ·  drying tunnel operator  ·  tunnel kiln operative  ·  tunnel kiln worker  ·  clay tunnel kiln operator"
+  },
+  {
+   "role": "auger press operator",
+   "isco": 8181,
+   "aka": "auger extrusion press operator  ·  manual control auger press worker  ·  manual control auger press operative  ·  drain tile press operator  ·  auger press operative manual control"
+  },
+  {
+   "role": "glass polisher",
+   "isco": 8181,
+   "aka": "glass finisher  ·  glass edge grinder  ·  plate glass polisher  ·  glass production polisher  ·  glass grinder"
+  },
+  {
+   "role": "edge bander operator",
+   "isco": 8189,
+   "aka": "banding machine operator  ·  adhesive bonding machine worker  ·  edge bander operative  ·  edgebander operative  ·  banding machine worker"
+  },
+  {
+   "role": "drawing kiln operator",
+   "isco": 8181,
+   "aka": "drawing kiln worker  ·  flat glass kiln operator  ·  glass production operative  ·  drawing kiln operative  ·  glassmaker"
+  },
+  {
+   "role": "cylinder filler",
+   "isco": 8183,
+   "aka": "compressed gas filler  ·  gas filling plant operative  ·  yardhand filler  ·  gas cylinder operative  ·  cylinder refiller"
+  },
+  {
+   "role": "kiln firer",
+   "isco": 8181,
+   "aka": "bisque kiln operator  ·  kiln hand  ·  decorating-kiln operator  ·  glost kiln operator  ·  kiln woman"
+  },
+  {
+   "role": "clay kiln burner",
+   "isco": 8181,
+   "aka": "dry kiln operator  ·  retort kiln operative  ·  field kiln operator  ·  periodic kiln burner  ·  dry kiln burner"
+  },
+  {
+   "role": "steam plant operator",
+   "isco": 8182,
+   "aka": "steam boiler operator  ·  steam heating operator  ·  steam power plant maintenance operator  ·  steam plant maintenance worker  ·  steam plant safety operator"
+  },
+  {
+   "role": "clay products dry kiln operator",
+   "isco": 8181,
+   "aka": "dryer kiln operative  ·  drying tunnel operator  ·  dryer kiln operator  ·  clay dryer kiln operator  ·  drying tunnel kiln operative"
+  },
+  {
+   "role": "canning and bottling line operator",
+   "isco": 8183,
+   "aka": "canner  ·  canning operative  ·  canning and bottling worker  ·  canning and bottling operative"
+  },
+  {
+   "role": "slitter operator",
+   "isco": 8189,
+   "aka": "slitting machinist  ·  steel slitter operative  ·  paper slitter operator  ·  paper slitter operative  ·  slitting line setter"
+  },
+  {
+   "role": "glass annealer",
+   "isco": 8181,
+   "aka": "lehr kiln operative  ·  lehr kiln operator  ·  lehr operative  ·  glass annealing kiln operative  ·  glass annealing kiln worker"
+  },
+  {
+   "role": "fibre machine tender",
+   "isco": 8181,
+   "aka": "forming machine setter  ·  fibre machine operator  ·  glass fibre machine operator  ·  extruding and forming machine setter  ·  staple fibre machine tender"
+  },
+  {
+   "role": "packaging and filling machine operator",
+   "isco": 8183,
+   "aka": "packaging and filling operator  ·  packaging and filling machine worker  ·  packaging and filling operative  ·  packaging and filling worker"
+  },
+  {
+   "role": "brick and tile caster",
+   "isco": 8181,
+   "aka": "castables operative  ·  brick caster  ·  brick and tile making machine operator  ·  brick and tile-making machine operator  ·  caster (brick and tile)"
+  },
+  {
+   "role": "dry press operator",
+   "isco": 8181,
+   "aka": "dry press tender  ·  brick presser  ·  dry-press operator  ·  dry press worker  ·  brick & tile dry press operator"
+  },
+  {
+   "role": "glass forming machine operator",
+   "isco": 8181,
+   "aka": "glass forming machine operative  ·  glass production operator  ·  glass moulder  ·  glass forming and finishing machine operator  ·  glass forming machine worker"
+  },
+  {
+   "role": "Stationary Engineers and Boiler Operators",
+   "isco": 8182,
+   "aka": NaN
+  },
+  {
+   "role": "Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",
+   "isco": 8114,
+   "aka": NaN
+  },
+  {
+   "role": "Packaging and Filling Machine Operators and Tenders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Nuclear Power Reactor Operators",
+   "isco": 8182,
+   "aka": NaN
+  },
+  {
+   "role": "Power Distributors and Dispatchers",
+   "isco": 8182,
+   "aka": NaN
+  },
+  {
+   "role": "Power Plant Operators",
+   "isco": 8182,
+   "aka": NaN
+  },
+  {
+   "role": "Biomass Plant Technicians",
+   "isco": 8182,
+   "aka": NaN
+  },
+  {
+   "role": "Hydroelectric Plant Technicians",
+   "isco": 8182,
+   "aka": NaN
+  },
+  {
+   "role": "Mixing and Blending Machine Setters, Operators, and Tenders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Cutters and Trimmers, Hand",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Cutting and Slicing Machine Setters, Operators, and Tenders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Dental Laboratory Technicians",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Numerically Controlled Tool Operators",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Adhesive Bonding Machine Operators and Tenders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Cooling and Freezing Equipment Operators and Tenders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Etchers and Engravers",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Tire Builders",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Helpers--Production Workers",
+   "isco": 8183,
+   "aka": NaN
+  },
+  {
+   "role": "Refractory Materials Repairers, Except Brickmasons",
+   "isco": 7413,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,598 @@
+{
+ "reconciled": [
+  {
+   "programme": "Arabic",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Grammar, linguistics, literature and research-methods courses train the classic Arabic-teaching/academic path."},
+    {"domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match_type": "adjacent", "why": "Arabic is the liturgical language of Islam and Qur'anic/classical texts; a common foothold into religious scholarship."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "adjacent", "why": "Study skills, note-taking, library use and classical-text handling transfer to Arabic manuscript/archive work."}
+   ],
+   "remove": [
+    {"domain_id": "D004", "why": "No cybersecurity content; spurious tech link."},
+    {"domain_id": "D056", "why": "No blockchain content in any course."},
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D007", "why": "No UI/UX or product design content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D062", "why": "No trading/capital-markets content."},
+    {"domain_id": "D009", "why": "No data science/statistics content."},
+    {"domain_id": "D005", "why": "No cloud/DevOps content."},
+    {"domain_id": "D010", "why": "No business-intelligence content."},
+    {"domain_id": "D013", "why": "No investment/asset-management content."},
+    {"domain_id": "D002", "why": "No data engineering content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D008", "why": "No telecoms/network content."},
+    {"domain_id": "D143", "why": "No forensic-science content."}
+   ]
+  },
+  {
+   "programme": "Archaeology",
+   "add": [
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "direct", "why": "Museum Archaeology, Field Archaeology, heritage and Archaeology of Nigeria courses ARE the programme's core purpose — should be direct, not just functional."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "functional", "why": "Curation, recording and stewardship of archaeological/heritage resources maps to archive & information management."},
+    {"domain_id": "D053", "domain": "Hospitality & Tourism Management", "match_type": "adjacent", "why": "Archaeo-tourism is named explicitly in the public-archaeology outcomes; heritage-tourism foothold."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "functional", "why": "Science in Archaeology, dating methods, Quaternary studies give applied lab/field research skills."}
+   ],
+   "remove": [
+    {"domain_id": "D151", "why": "No criminology/criminal-justice content; forensic analogy is spurious."},
+    {"domain_id": "D074", "why": "No occupational-health/safety course basis."},
+    {"domain_id": "D144", "why": "Quaternary studies are not climate-science careers; no meteorology content."},
+    {"domain_id": "D014", "why": "No actuarial/risk content."},
+    {"domain_id": "D143", "why": "No digital-forensics/criminal-investigation content."},
+    {"domain_id": "D058", "why": "No EdTech/learning-design content."},
+    {"domain_id": "D030", "why": "Generic; no marketing course basis."},
+    {"domain_id": "D026", "why": "No public-health content."},
+    {"domain_id": "D029", "why": "Generic; no HR course basis."},
+    {"domain_id": "D021", "why": "No architecture/urban-planning content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D007", "why": "No UI/UX content."}
+   ]
+  },
+  {
+   "programme": "African Tradition Religion",
+   "add": [
+    {"domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match_type": "direct", "why": "ATR IS a religion; the whole programme (belief, ancestorship, worship, spirit world) is religious scholarship/ministry — should be direct, not omitted."},
+    {"domain_id": "D126", "domain": "Complementary, Alternative & Traditional Medicine", "match_type": "functional", "why": "Dedicated 'Introducing African Herbal Medicine' course maps directly to traditional-medicine practice."},
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "functional", "why": "African Indigenous Knowledge System, culture and heritage preservation courses map to cultural-heritage work."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Research Methods and Theory in the Humanities support academic/teaching careers in religious studies."}
+   ],
+   "remove": [
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D044", "why": "No graphic-design course basis."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D143", "why": "No forensic-science content."},
+    {"domain_id": "D024", "why": "Herbal medicine is not nursing; covered correctly by D126."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content."},
+    {"domain_id": "D130", "why": "Generic entrepreneurship link; no recruitment basis."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D026", "why": "No public-health course basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D030", "why": "Generic entrepreneurship spillover; no marketing content."},
+    {"domain_id": "D063", "why": "No economics course."},
+    {"domain_id": "D043", "why": "No journalism course basis."},
+    {"domain_id": "D149", "why": "Globalisation mention is too thin for a diplomacy career link."}
+   ]
+  },
+  {
+   "programme": "Chinese Studies",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Grammar, literature, civilisation and research-methodology courses feed Chinese-language teaching and academia."},
+    {"domain_id": "D053", "domain": "Hospitality & Tourism Management", "match_type": "adjacent", "why": "Fluency plus cultural knowledge is a standard foothold into China-facing tourism/hospitality roles."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading content; 'Trading' inferred only from generic entrepreneurship."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D157", "why": "No tax-advisory content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D150", "why": "No religious-studies course basis."},
+    {"domain_id": "D032", "why": "Generic; no project-management content."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D081", "why": "Generic clerical link with no course basis."}
+   ]
+  },
+  {
+   "programme": "Christian Religious Studies",
+   "add": [
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Hebrew Grammar & Syntax and Greek Grammar & Syntax train biblical-language translation and exegesis."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Hermeneutics, exegesis, church history and research methods support theology teaching/research."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "adjacent", "why": "Pastoral/community-facing dimension of religious studies is a standard foothold into faith-based social work."}
+   ],
+   "remove": [
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D157", "why": "No tax-advisory content."},
+    {"domain_id": "D158", "why": "No corporate-finance content."},
+    {"domain_id": "D159", "why": "No credit-analysis content."},
+    {"domain_id": "D015", "why": "No accounting content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D028", "why": "Generic; no management content."},
+    {"domain_id": "D037", "why": "No legal-practice course basis."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."}
+   ]
+  },
+  {
+   "programme": "Christian Theology",
+   "add": [
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Introduction to Greek I/II and Hebrew Grammar & Syntax train original-language biblical translation."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Theology, hermeneutics, exegesis and research methods support seminary/academic teaching."},
+    {"domain_id": "D153", "domain": "Music Production, Sound Engineering & Audio Technology", "match_type": "adjacent", "why": "Dedicated 'Christian Music' course gives a foothold into worship/church music."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "adjacent", "why": "Great-Commission/community-service outcomes map to faith-based community work."}
+   ],
+   "remove": [
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D032", "why": "Generic; no project-management content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D082", "why": "No contact-centre course basis."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."}
+   ]
+  },
+  {
+   "programme": "Classics",
+   "add": [
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "direct", "why": "Interpreting Athenian vases, Roman coins and Greek/Roman civilisation is the classic route into antiquities/museum curation."},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Greek Language I/II and Latin Language I/II plus 'Latin roots of English words' train classical-language translation."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Greek/Roman history, epic poetry and research methods feed classics teaching and academia."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "adjacent", "why": "Classical-text scholarship transfers to rare-book/archive and information work."}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D139", "why": "No game-design content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D033", "why": "No product-management content."},
+    {"domain_id": "D028", "why": "Generic; no management content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D058", "why": "No EdTech course basis."}
+   ]
+  },
+  {
+   "programme": "Efik",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Phonology, morphology, syntax and research methods train indigenous-language teaching and academic linguistics."},
+    {"domain_id": "D070", "domain": "Performing Arts & Entertainment", "match_type": "functional", "why": "Efik Oral Literature, chanting and public-speaking outcomes map to performance/oral-arts work."},
+    {"domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "adjacent", "why": "Indigenous-language competence is a foothold into local-language broadcasting/media."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D009", "why": "No data-science content."},
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D139", "why": "No game-design content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D010", "why": "No business-intelligence content."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D007", "why": "No UI/UX content."}
+   ]
+  },
+  {
+   "programme": "English Language and Literature",
+   "add": [
+    {"domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Strong writing/composition and literature skills are a foothold into content writing and the creator economy."},
+    {"domain_id": "D058", "domain": "EdTech & Learning Experience Design", "match_type": "adjacent", "why": "English-language teaching plus Digital Humanities tools maps to ELT/EdTech content."}
+   ],
+   "remove": [
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."}
+   ]
+  },
+  {
+   "programme": "Film Production",
+   "add": [
+    {"domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "functional", "why": "Screenwriting, direction, cinematography and internet-streaming/Nollywood focus map directly to the video creator economy."}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D073", "why": "No library/archive course basis."},
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D080", "why": "Production design is not interior design; no such course basis."},
+    {"domain_id": "D149", "why": "No diplomacy content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D063", "why": "Film-business mention is too thin for an economics-career link."}
+   ]
+  },
+  {
+   "programme": "Folklore Studies",
+   "add": [
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "direct", "why": "'Folklore and Tangible Heritage', identity and material-folklore courses are core cultural-heritage/curation work."},
+    {"domain_id": "D070", "domain": "Performing Arts & Entertainment", "match_type": "functional", "why": "Poetic recitations, occupational chants and folkloric performance courses map to performance arts."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "functional", "why": "Transcription, documentation and archiving of folklore maps to archive/information management."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "adjacent", "why": "Research methods and theory support folklore scholarship/teaching."}
+   ],
+   "remove": [
+    {"domain_id": "D162", "why": "No immigration-law content."},
+    {"domain_id": "D002", "why": "No data-engineering content."},
+    {"domain_id": "D009", "why": "No data-science content."},
+    {"domain_id": "D033", "why": "No product-management content."},
+    {"domain_id": "D010", "why": "No business-intelligence content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D044", "why": "No graphic-design course basis."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D149", "why": "No diplomacy content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D046", "why": "No social-work course basis."}
+   ]
+  },
+  {
+   "programme": "Hausa",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Phonology, morphology, syntax and literary-history courses train Hausa teaching and academic linguistics."},
+    {"domain_id": "D070", "domain": "Performing Arts & Entertainment", "match_type": "adjacent", "why": "Hausa poetry, drama and narratology courses give a foothold into performance/oral arts."},
+    {"domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "adjacent", "why": "Hausa-language competence is a route into large Hausa-language broadcasting/media markets."},
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "adjacent", "why": "Pre-Danfodio literature, orthography history and Ajami support cultural-heritage/manuscript work."}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D044", "why": "No graphic-design course basis."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D063", "why": "No economics course basis."}
+   ]
+  },
+  {
+   "programme": "History/History and Diplomatic Studies",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "direct", "why": "History's core professional destination is higher-education teaching and historical research."},
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "functional", "why": "Archaeology of Nigeria, world civilisations and historical sources map to museums/heritage/archives."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "functional", "why": "Working with primary sources and citations transfers to archival/records work."}
+   ],
+   "remove": [
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D062", "why": "History of the slave trade is not a trading-career link."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."}
+   ]
+  },
+  {
+   "programme": "Ibibio",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Phonology, morphology, syntax and phonemic-analysis courses train indigenous-language teaching/linguistics."},
+    {"domain_id": "D070", "domain": "Performing Arts & Entertainment", "match_type": "functional", "why": "Ibibio Oral Literature and public-speaking/creative-writing outcomes map to oral/performance arts."},
+    {"domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "adjacent", "why": "Indigenous-language competence is a foothold into local-language broadcasting/media."},
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "adjacent", "why": "Ibibio history, culture and orthography feed cultural-heritage documentation."}
+   ],
+   "remove": [
+    {"domain_id": "D149", "why": "No diplomacy course basis."},
+    {"domain_id": "D063", "why": "No economics course basis."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D009", "why": "No data-science content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D139", "why": "No game-design content."},
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D060", "why": "No banking content."}
+   ]
+  },
+  {
+   "programme": "Igbo",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Phonology, morphology, syntax and literature-survey courses train Igbo teaching/academic linguistics."},
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "adjacent", "why": "People, culture, history and oral-literature courses feed cultural-heritage work."},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Standard-orthography reading/writing plus linguistics support Igbo translation/interpretation (present but under-weighted)."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D158", "why": "No corporate-finance content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D044", "why": "No graphic-design course basis."},
+    {"domain_id": "D063", "why": "No economics course basis."}
+   ]
+  },
+  {
+   "programme": "Islamic Studies",
+   "add": [
+    {"domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match_type": "direct", "why": "Tawhid, Ibadat, Qur'an, Hadith and Islamic thought courses ARE religious scholarship/ministry — currently missing entirely."},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Arabic Language Drills and Qur'anic textual studies train Arabic reading/translation."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Islamic philosophy, education and history courses feed teaching/academic careers."},
+    {"domain_id": "D149", "domain": "Diplomacy, International Relations & Foreign Affairs", "match_type": "adjacent", "why": "Islam-in-Africa and civilisation courses give an interfaith/international-relations foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D162", "why": "No immigration-law content."},
+    {"domain_id": "D158", "why": "No corporate-finance content."},
+    {"domain_id": "D157", "why": "No tax-advisory content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D159", "why": "No credit-analysis content."},
+    {"domain_id": "D163", "why": "No IP-law content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D015", "why": "No accounting content."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."}
+   ]
+  },
+  {
+   "programme": "Linguistics",
+   "add": [
+    {"domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match_type": "functional", "why": "'Language Pathologies, Dysfunction and Disabilities' and speech/hearing-disorder outcomes map to speech-language/clinical work."},
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "adjacent", "why": "Speech-language-pathology content is a foothold into speech therapy/rehabilitation."},
+    {"domain_id": "D058", "domain": "EdTech & Learning Experience Design", "match_type": "adjacent", "why": "Applied linguistics plus Digital Humanities supports language-learning technology design."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "adjacent", "why": "Language documentation transfers to archival/information management of language resources."}
+   ],
+   "remove": [
+    {"domain_id": "D146", "why": "No building-services engineering content; absurd link."},
+    {"domain_id": "D008", "why": "No telecoms/network-engineering content."},
+    {"domain_id": "D056", "why": "No blockchain content."},
+    {"domain_id": "D164", "why": "No urban-mobility content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D028", "why": "Generic; no management content."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D033", "why": "No product-management content."},
+    {"domain_id": "D063", "why": "No economics course basis."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D151", "why": "No criminology content; forensic-linguistics link too thin."}
+   ]
+  },
+  {
+   "programme": "Modern European Languages B.A (French)",
+   "add": [
+    {"domain_id": "D053", "domain": "Hospitality & Tourism Management", "match_type": "adjacent", "why": "French fluency plus Francophone-neighbours focus is a standard foothold into tourism/hospitality and language services."}
+   ],
+   "remove": [
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D143", "why": "No forensic-science content."},
+    {"domain_id": "D144", "why": "No climate-science content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D063", "why": "No economics course basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."}
+   ]
+  },
+  {
+   "programme": "Modern European Languages B.A (German)",
+   "add": [
+    {"domain_id": "D083", "domain": "Travel, Tourism & Reservations Operations", "match_type": "functional", "why": "Outcomes explicitly name work 'as German facilitators in tourist centers, hotels, airports' — direct tourism/reservations fit."},
+    {"domain_id": "D053", "domain": "Hospitality & Tourism Management", "match_type": "adjacent", "why": "Same tourism/hospitality destination for German-language graduates."}
+   ],
+   "remove": [
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D143", "why": "No forensic-science content."},
+    {"domain_id": "D144", "why": "No climate-science content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D063", "why": "No economics course basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."}
+   ]
+  },
+  {
+   "programme": "Modern European Languages (Russian)",
+   "add": [
+    {"domain_id": "D149", "domain": "Diplomacy, International Relations & Foreign Affairs", "match_type": "functional", "why": "Russian-language proficiency is a classic route into foreign-affairs/international-relations roles (missing)."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Grammar, literature-in-perspective and research-methods courses feed teaching and academia."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "adjacent", "why": "Russian literature/reading scholarship transfers to library/information work."}
+   ],
+   "remove": [
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D009", "why": "No data-science content."},
+    {"domain_id": "D128", "why": "No social-welfare course basis."},
+    {"domain_id": "D001", "why": "No software engineering content."},
+    {"domain_id": "D008", "why": "No telecoms content."},
+    {"domain_id": "D161", "why": "No humanitarian-aid course basis."},
+    {"domain_id": "D010", "why": "No business-intelligence content."},
+    {"domain_id": "D139", "why": "No game-design content."},
+    {"domain_id": "D033", "why": "No product-management content."},
+    {"domain_id": "D143", "why": "No forensic-science content."},
+    {"domain_id": "D002", "why": "No data-engineering content."},
+    {"domain_id": "D056", "why": "No blockchain content."},
+    {"domain_id": "D080", "why": "No interior-design content."}
+   ]
+  },
+  {
+   "programme": "Music",
+   "add": [
+    {"domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "functional", "why": "Performance, composition and musicianship skills map to the modern music creator/streaming economy."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Music theory, harmony, history and ensemble training feed music-education/teaching careers."}
+   ],
+   "remove": [
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D021", "why": "No architecture content; acoustics analogy is spurious."},
+    {"domain_id": "D144", "why": "No climate-science content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D149", "why": "No diplomacy content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D161", "why": "No humanitarian-aid course basis."},
+    {"domain_id": "D063", "why": "No economics course basis."},
+    {"domain_id": "D043", "why": "No journalism course basis."},
+    {"domain_id": "D078", "why": "Music is not a social-science field; no such course basis."}
+   ]
+  },
+  {
+   "programme": "Philosophy",
+   "add": [
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "direct", "why": "Philosophy's core professional destination is academic teaching and research."},
+    {"domain_id": "D037", "domain": "Legal Practice & Corporate Law", "match_type": "adjacent", "why": "Logic, argumentation and critical-thinking training is a well-established foothold into law."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "adjacent", "why": "Social and political philosophy and ethics feed policy/public-administration roles."},
+    {"domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match_type": "adjacent", "why": "Philosophy of religion and metaphysics give a foothold into theological/ministry study."}
+   ],
+   "remove": [
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D009", "why": "No data-science content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D043", "why": "No journalism course basis."},
+    {"domain_id": "D158", "why": "No corporate-finance content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D028", "why": "Generic; no management content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D004", "why": "No cybersecurity content."},
+    {"domain_id": "D008", "why": "No telecoms content."}
+   ]
+  },
+  {
+   "programme": "Religious Studies",
+   "add": [
+    {"domain_id": "D149", "domain": "Diplomacy, International Relations & Foreign Affairs", "match_type": "adjacent", "why": "Comparative religion and interfaith study give a foothold into interfaith/diplomatic work (present but under-weighted)."}
+   ],
+   "remove": [
+    {"domain_id": "D162", "why": "No immigration-law content."},
+    {"domain_id": "D163", "why": "No IP-law content."},
+    {"domain_id": "D037", "why": "No legal-practice course basis."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D058", "why": "No EdTech course basis."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D063", "why": "No economics course basis."}
+   ]
+  },
+  {
+   "programme": "Sharcah",
+   "add": [
+    {"domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match_type": "direct", "why": "Qur'an exegesis, Hadith, Islamic rituals and jurisprudence are core religious scholarship — currently missing."},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Arabic grammar and Qur'anic/Hadith textual studies train Arabic reading/translation."},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "History of Islamic law and sources-of-Shari'ah courses feed teaching/academic careers."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading content; Islamic-transaction jurisprudence is legal, not a trading career."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D158", "why": "No corporate-finance content."},
+    {"domain_id": "D060", "why": "No banking-practice course basis."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D157", "why": "No tax-advisory content."},
+    {"domain_id": "D159", "why": "No credit-analysis content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D030", "why": "Generic; no marketing content."},
+    {"domain_id": "D028", "why": "Generic; no management content."},
+    {"domain_id": "D051", "why": "No real-estate content."},
+    {"domain_id": "D032", "why": "Generic; no project-management content."},
+    {"domain_id": "D015", "why": "No accounting content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."}
+   ]
+  },
+  {
+   "programme": "Theatre Arts",
+   "add": [
+    {"domain_id": "D153", "domain": "Music Production, Sound Engineering & Audio Technology", "match_type": "functional", "why": "'Basic Speech Arts, Music and Acting Techniques' and theatre sound work map to audio/sound production."},
+    {"domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "adjacent", "why": "Beginning Theatre Design and Technology gives a foothold into visual/scenic design."},
+    {"domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "functional", "why": "Directing, playwriting and media-arts skills feed the entertainment/content creator economy."}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis."},
+    {"domain_id": "D149", "why": "No diplomacy content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D013", "why": "No investment-analysis content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D008", "why": "No telecoms content."},
+    {"domain_id": "D029", "why": "Generic; no HR content."},
+    {"domain_id": "D011", "why": "No quantitative-finance content."},
+    {"domain_id": "D031", "why": "Generic; no sales content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D060", "why": "No banking content."},
+    {"domain_id": "D001", "why": "No software engineering content."}
+   ]
+  },
+  {
+   "programme": "African Languages and Literature Yoruba",
+   "add": [
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "functional", "why": "'The Culture of Yoruba People', oral literature and history feed cultural-heritage/curation work."},
+    {"domain_id": "D030", "domain": "Marketing, Brand & Communications", "match_type": "functional", "why": "Dedicated 'Yoruba in Broadcasting and Advertising' course maps to advertising/communications."},
+    {"domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Yoruba drama/cinema/film courses give a foothold into indigenous-language content creation (Nollywood/creator economy)."}
+   ],
+   "remove": [
+    {"domain_id": "D085", "why": "No retail-sales content; absurd link."},
+    {"domain_id": "D106", "why": "No garment-making content; absurd link."},
+    {"domain_id": "D144", "why": "No climate-science content."},
+    {"domain_id": "D021", "why": "No architecture content."},
+    {"domain_id": "D162", "why": "No immigration-law content."},
+    {"domain_id": "D080", "why": "No interior-design content."},
+    {"domain_id": "D130", "why": "Generic; no recruitment basis."},
+    {"domain_id": "D081", "why": "Generic clerical link; no course basis."},
+    {"domain_id": "D007", "why": "No UI/UX content."},
+    {"domain_id": "D063", "why": "No economics course basis."}
+   ]
+  }
+ ]
+}

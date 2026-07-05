@@ -1,0 +1,42 @@
+{
+ "domain_id": "D087",
+ "domain_name": "Hairdressing, Barbering",
+ "role_count": 7,
+ "roles": [
+  {
+   "role": "hairdresser",
+   "isco": 5141,
+   "aka": "hair colour specialist  ·  wig stylist  ·  hair cutter  ·  hair-care specialist  ·  scalp treatment specialist"
+  },
+  {
+   "role": "barber",
+   "isco": 5141,
+   "aka": "haircutter"
+  },
+  {
+   "role": "hairdresser assistant",
+   "isco": 5141,
+   "aka": "shampooer  ·  hair salon assistant  ·  hair stylist assistant  ·  hair dryer  ·  hair salon attendant"
+  },
+  {
+   "role": "hair stylist",
+   "isco": 5141,
+   "aka": "hair & wig stylist  ·  hair and wig stylist  ·  hair & wig artist  ·  hair and wig artist  ·  hair artist"
+  },
+  {
+   "role": "performance hairdresser",
+   "isco": 5141,
+   "aka": "hair & wig stylist  ·  hair and wig stylist  ·  hair & wig artist  ·  hair and wig artist  ·  hair artist"
+  },
+  {
+   "role": "Hairdressers, Hairstylists, and Cosmetologists",
+   "isco": 5141,
+   "aka": NaN
+  },
+  {
+   "role": "Makeup Artists, Theatrical and Performance",
+   "isco": 5141,
+   "aka": NaN
+  }
+ ]
+}

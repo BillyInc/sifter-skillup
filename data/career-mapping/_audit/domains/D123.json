@@ -1,0 +1,57 @@
+{
+ "domain_id": "D123",
+ "domain_name": "Radiography, Medical Imaging",
+ "role_count": 10,
+ "roles": [
+  {
+   "role": "clinical perfusion scientist",
+   "isco": 3211,
+   "aka": "clinical perfusionist  ·  clinical perfusion techinician  ·  medical perfusionist  ·  medical perfusion expert  ·  clinical perfusion expert"
+  },
+  {
+   "role": "radiation therapist",
+   "isco": 3211,
+   "aka": "radiotherapy technologist  ·  therapeutic radiography practitioner  ·  therapeutic radiographer  ·  technologist in radiotherapy  ·  RTT"
+  },
+  {
+   "role": "radiographer",
+   "isco": 3211,
+   "aka": "Radiologic Technologist, Diagnostic Radiographer"
+  },
+  {
+   "role": "CT technologist",
+   "isco": 3211,
+   "aka": "Computed Tomography Technologist"
+  },
+  {
+   "role": "MRI technologist",
+   "isco": 3211,
+   "aka": "Magnetic Resonance Imaging Technologist"
+  },
+  {
+   "role": "mammographer",
+   "isco": 3211,
+   "aka": "Mammography Technologist"
+  },
+  {
+   "role": "diagnostic medical sonographer",
+   "isco": 3211,
+   "aka": "Ultrasound Technologist"
+  },
+  {
+   "role": "nuclear medicine technologist",
+   "isco": 3211,
+   "aka": NaN
+  },
+  {
+   "role": "radiation therapist",
+   "isco": 3211,
+   "aka": "Therapeutic Radiographer"
+  },
+  {
+   "role": "fluoroscopy technologist",
+   "isco": 3211,
+   "aka": "Interventional Radiology Technologist"
+  }
+ ]
+}

@@ -1,0 +1,159 @@
+{
+ "reconciled": [
+  {
+   "programme": "Computer Science",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "CS core produces AI/ML engineers; algorithms, probability/random variables, EDA and Python programming are the direct substrate for ML — a glaring scorer omission."},
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "functional", "why": "Outcome 'design and implement simple GUI applications' plus problem-solving/HCI grounding supports interface and product design work."},
+    {"domain_id": "D139", "domain": "Game Design, Development & Interactive Entertainment", "match_type": "functional", "why": "OOP, GUI, multithreading and graphics-capable programming are the technical foundation for game development."},
+    {"domain_id": "D167", "domain": "XR & Immersive Technology", "match_type": "adjacent", "why": "General programming/graphics foundation is a transferable foothold into AR/VR engineering — an emerging-tech target for Computing."}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "Economics: no economics/econometrics course — spurious link off generic Descriptive Statistics."},
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance/markets course — over-link via shared statistics content."},
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course; probability alone does not make a quant-finance link for a general CS degree."},
+    {"domain_id": "D013", "why": "Investment Analysis: no finance/investment course — spurious."},
+    {"domain_id": "D014", "why": "Actuarial Science: no actuarial/finance course — over-link via generic statistics."},
+    {"domain_id": "D061", "why": "Insurance & Underwriting: no insurance content — spurious."},
+    {"domain_id": "D146", "why": "Building Services Engineering (MEP): no MEP/building content — clearly wrong."},
+    {"domain_id": "D149", "why": "Diplomacy & International Relations: no IR content — spurious generic-skill match."},
+    {"domain_id": "D078", "why": "Social Sciences & Behavioural Research: no social-science course — over-link via 'social skills' transferable."}
+   ]
+  },
+  {
+   "programme": "Cybersecurity",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Threat detection/anomaly analytics rests on ML; programming, probability and EDA courses provide the AI/ML substrate."},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Cybercrime Law & Countermeasures plus outcomes on policy tools, national-security strategy and organisational countermeasures map directly to compliance/governance."},
+    {"domain_id": "D077", "domain": "Security Services & Public Safety", "match_type": "adjacent", "why": "Defence of information assets and impact on civil/military institutions is a transferable foothold into protective security services."}
+   ],
+   "remove": [
+    {"domain_id": "D012", "why": "FinTech Engineering: no finance/payments course — spurious."},
+    {"domain_id": "D063", "why": "Economics: no economics course — over-link off generic statistics."},
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance/markets course — spurious."},
+    {"domain_id": "D013", "why": "Investment Analysis: no investment course — spurious."},
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course — over-link via statistics."},
+    {"domain_id": "D010", "why": "Business Intelligence: no BI/analytics course — spurious."},
+    {"domain_id": "D149", "why": "Diplomacy & International Relations: security-policy mention is too thin; no IR course."},
+    {"domain_id": "D130", "why": "Recruitment & Staffing: no HR/recruitment content — spurious generic-skill match."},
+    {"domain_id": "D078", "why": "Social Sciences: no social-science course — over-link via 'social skills'."},
+    {"domain_id": "D140", "why": "Robotics Engineering: no robotics/embedded course in a cybersecurity curriculum — over-link via generic programming."}
+   ]
+  },
+  {
+   "programme": "Data Science",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "direct", "why": "Data Science is the canonical pipeline into ML; Intro to Data Science, Statistical Computing/Inference & Modelling, numerical analysis and Python make AI/ML a purpose-level target, not a stretch."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "EDA, statistical modelling and data-science tooling directly underpin BI/analytics reporting roles."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance/markets course — spurious."},
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course — over-link via statistics/probability."},
+    {"domain_id": "D014", "why": "Actuarial Science: no actuarial course — spurious."},
+    {"domain_id": "D061", "why": "Insurance & Underwriting: no insurance content — spurious."},
+    {"domain_id": "D013", "why": "Investment Analysis: no investment course — spurious."},
+    {"domain_id": "D063", "why": "Economics: no economics course — over-link off statistics."},
+    {"domain_id": "D012", "why": "FinTech Engineering: no finance course — spurious."},
+    {"domain_id": "D060", "why": "Banking, Credit & Retail Finance: no banking course — spurious finance over-link."},
+    {"domain_id": "D158", "why": "Corporate Finance & Investment Banking: no finance course — spurious."},
+    {"domain_id": "D159", "why": "Credit Analysis & Structured Finance: no finance course — spurious."},
+    {"domain_id": "D030", "why": "Marketing & Brand: no marketing course; analytics affinity is not enough without domain courses."},
+    {"domain_id": "D078", "why": "Social Sciences: no social-science course — over-link."},
+    {"domain_id": "D006", "why": "Internet of Things: no embedded/IoT course in a data-science curriculum — spurious."},
+    {"domain_id": "D004", "why": "Cybersecurity: no security course — over-link via generic programming."},
+    {"domain_id": "D140", "why": "Robotics Engineering: no robotics/control course — over-link via programming."}
+   ]
+  },
+  {
+   "programme": "Information and Communication Technology",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Programming, probability, EDA and broad computing foundation support AI/ML application work in a general ICT degree."},
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "functional", "why": "GUI application outcomes and broad ICT product exposure support interface/product design."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "Actuarial Science: no actuarial course — spurious statistics over-link."},
+    {"domain_id": "D061", "why": "Insurance & Underwriting: no insurance content — spurious."},
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance course — spurious."},
+    {"domain_id": "D012", "why": "FinTech Engineering: no finance/payments course — spurious."},
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course — over-link via statistics."},
+    {"domain_id": "D063", "why": "Economics: no economics course — spurious."},
+    {"domain_id": "D013", "why": "Investment Analysis: no investment course — spurious."},
+    {"domain_id": "D030", "why": "Marketing & Brand: no marketing course — spurious."},
+    {"domain_id": "D078", "why": "Social Sciences: no social-science course — over-link."},
+    {"domain_id": "D060", "why": "Banking, Credit & Retail Finance: no banking course — spurious finance over-link."},
+    {"domain_id": "D010", "why": "Business Intelligence: no BI/analytics course — spurious."}
+   ]
+  },
+  {
+   "programme": "Information Systems",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Programming plus statistical inference and time-series analysis support applied ML within enterprise systems."},
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "functional", "why": "Dedicated Human-Computer Interaction course (design, user feedback, HCI principles) is a strong, explicit UI/UX foothold."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Systems Analysis & Design plus business courses and statistical inference underpin BI/analytics reporting roles."},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Systems Analysis & Design and IS delivery lifecycle map to IT project/programme delivery."},
+    {"domain_id": "D033", "domain": "Product Management", "match_type": "functional", "why": "IS bridges business and tech (Intro to Business, systems analysis, HCI) — a natural foothold into digital product management."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "Actuarial Science: no actuarial course — spurious statistics over-link."},
+    {"domain_id": "D061", "why": "Insurance & Underwriting: no insurance content — spurious."},
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance course — spurious."},
+    {"domain_id": "D013", "why": "Investment Analysis: no investment course — spurious."},
+    {"domain_id": "D063", "why": "Economics: no economics course; Intro to Business is not economics — spurious."},
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course — over-link via statistics."},
+    {"domain_id": "D056", "why": "Blockchain: no blockchain/DLT course — spurious over-link."},
+    {"domain_id": "D012", "why": "FinTech Engineering: no finance course — spurious."},
+    {"domain_id": "D151", "why": "Criminology & Criminal Justice: no criminology course — spurious."},
+    {"domain_id": "D140", "why": "Robotics Engineering: no robotics/embedded course — over-link via programming."},
+    {"domain_id": "D158", "why": "Corporate Finance & Investment Banking: no finance course — spurious."},
+    {"domain_id": "D157", "why": "Tax Advisory & Revenue Law: no tax/law course — clearly wrong."},
+    {"domain_id": "D130", "why": "Recruitment & Staffing: no HR course — spurious generic-skill match."},
+    {"domain_id": "D078", "why": "Social Sciences: no social-science course — over-link."},
+    {"domain_id": "D159", "why": "Credit Analysis & Structured Finance: no finance course — spurious."},
+    {"domain_id": "D060", "why": "Banking, Credit & Retail Finance: no banking course — spurious."}
+   ]
+  },
+  {
+   "programme": "Information Technology",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Programming, probability and EDA plus broad IT application-domain exposure support applied AI/ML work."},
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "functional", "why": "Intro to Web Technologies (HTML/CSS/JavaScript, web content, application frameworks) is a strong explicit foothold into UI/UX and web/product design."}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "Economics: no economics course — spurious statistics over-link."},
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance course — spurious."},
+    {"domain_id": "D012", "why": "FinTech Engineering: no finance/payments course — spurious."},
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course — over-link via statistics."},
+    {"domain_id": "D014", "why": "Actuarial Science: no actuarial course — spurious."},
+    {"domain_id": "D013", "why": "Investment Analysis: no investment course — spurious."},
+    {"domain_id": "D061", "why": "Insurance & Underwriting: no insurance content — spurious."},
+    {"domain_id": "D078", "why": "Social Sciences: no social-science course — over-link."},
+    {"domain_id": "D060", "why": "Banking, Credit & Retail Finance: no banking course — spurious finance over-link."},
+    {"domain_id": "D033", "why": "Product Management: no management/product course; too thin for IT infrastructure focus."},
+    {"domain_id": "D030", "why": "Marketing & Brand: no marketing course — spurious."}
+   ]
+  },
+  {
+   "programme": "Software Engineering",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Programming, algorithms, probability and EDA plus the software lifecycle support building/shipping ML-enabled software — a core modern SE path."},
+    {"domain_id": "D005", "domain": "Cloud Computing & DevOps", "match_type": "functional", "why": "Software lifecycle (build/test/deploy/maintain) plus API and multithreaded application skills map directly to cloud/DevOps engineering — missing from the scorer."},
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "functional", "why": "GUI application design and the requirements/design phases of the software lifecycle support UI/UX and product design work."},
+    {"domain_id": "D139", "domain": "Game Design, Development & Interactive Entertainment", "match_type": "functional", "why": "OOP, GUI, multithreading and full software lifecycle are the engineering foundation for game development."},
+    {"domain_id": "D167", "domain": "XR & Immersive Technology", "match_type": "adjacent", "why": "Software engineering skills are a transferable foothold into building AR/VR/immersive applications."}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "Quantitative Finance: no finance course — over-link via statistics."},
+    {"domain_id": "D014", "why": "Actuarial Science: no actuarial course — spurious."},
+    {"domain_id": "D062", "why": "Trading & Capital Markets: no finance course — spurious."},
+    {"domain_id": "D063", "why": "Economics: no economics course — spurious."},
+    {"domain_id": "D151", "why": "Criminology & Criminal Justice: no criminology course — spurious."},
+    {"domain_id": "D013", "why": "Investment Analysis: no investment course — spurious."},
+    {"domain_id": "D010", "why": "Business Intelligence: no BI/analytics course — spurious."},
+    {"domain_id": "D130", "why": "Recruitment & Staffing: no HR course — spurious generic-skill match."},
+    {"domain_id": "D146", "why": "Building Services Engineering (MEP): no MEP/building content — clearly wrong."},
+    {"domain_id": "D030", "why": "Marketing & Brand: no marketing course — spurious."},
+    {"domain_id": "D078", "why": "Social Sciences: no social-science course — over-link."}
+   ]
+  }
+ ]
+}

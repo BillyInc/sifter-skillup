@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Fulfulde",
+  "utme_subjects": ["Any three (3) Arts subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes in Arts/Social Science subjects.",
+  "direct_entry": "Two (2) `A' Level passes in Arts and Social Science subjects.",
+  "institution_waivers": [
+    {
+      "institution": "MAIDUGURI",
+      "note": "DIRECT ENTRY: MAIDUGURI accepts Certificate in Fulfulde and NCE in Fulfulde."
+    }
+  ]
+}

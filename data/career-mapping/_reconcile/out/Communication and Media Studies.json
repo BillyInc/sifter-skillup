@@ -1,0 +1,263 @@
+{
+  "reconciled": [
+    {
+      "programme": "ADVERTISING — P12, P13, P14",
+      "add": [
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "functional", "why": "Advertising Production Techniques (Multimedia/Interactive), Media Planning/Buying & Execution and TVC/radio commercial production are core media-production work." },
+        { "domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "functional", "why": "Copywriting, print ad layouts, storyboards and creative content development are visual-communication design skills." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Digital marketing, creative content marketing and product-launch content transfer directly to creator-economy/branded-content roles." }
+      ],
+      "remove": [
+        { "domain_id": "D008", "why": "Telecommunications engineering is unrelated; spurious tech over-link." },
+        { "domain_id": "D063", "why": "Economics link comes only from generic research/entrepreneurship courses, not the programme's purpose." },
+        { "domain_id": "D078", "why": "Social-science research is not a destination for an advertising craft programme." },
+        { "domain_id": "D130", "why": "Recruitment/staffing agency operations unrelated." },
+        { "domain_id": "D013", "why": "Investment analysis over-link from generic finance mismatch." },
+        { "domain_id": "D062", "why": "Trading & capital markets unrelated to advertising." },
+        { "domain_id": "D012", "why": "FinTech engineering unrelated." },
+        { "domain_id": "D149", "why": "Diplomacy/international relations unrelated over-link." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from 'Data Analysis in Communication Research' generic course." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D002", "why": "Data engineering unrelated." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from generic data course." },
+        { "domain_id": "D014", "why": "Actuarial science unrelated." },
+        { "domain_id": "D004", "why": "Cybersecurity unrelated." },
+        { "domain_id": "D060", "why": "Banking/credit unrelated." },
+        { "domain_id": "D029", "why": "HR over-link from Entrepreneurship generic course." },
+        { "domain_id": "D033", "why": "Product management is a stretch; 'product launch' here means marketing launch, not product-management practice." }
+      ]
+    },
+    {
+      "programme": "BROADCASTING — P12, P13, P14",
+      "add": [
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "direct", "why": "Radio Production, Television Production and broadcast writing are the programme's core purpose — the scorer missed the single most direct domain." },
+        { "domain_id": "D153", "domain": "Music Production, Sound Engineering & Audio Technology", "match_type": "functional", "why": "Radio production, studio management, actualities and audio montage teach audio-engineering skills." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Broadcast content-creation and audience skills transfer to streaming/creator-economy roles." },
+        { "domain_id": "D071", "domain": "Sports Management & Fitness", "match_type": "adjacent", "why": "Sport Broadcasting course provides a foothold into sports-media roles." }
+      ],
+      "remove": [
+        { "domain_id": "D078", "why": "Social-science research not a destination for a broadcast-production programme." },
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D149", "why": "Diplomacy unrelated over-link." },
+        { "domain_id": "D063", "why": "Economics over-link from generic courses." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D060", "why": "Banking/credit unrelated." },
+        { "domain_id": "D158", "why": "Corporate finance/IB unrelated." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D140", "why": "Robotics engineering unrelated." },
+        { "domain_id": "D001", "why": "Software engineering unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from generic 'Data Analysis in Communication Research'." },
+        { "domain_id": "D014", "why": "Actuarial science unrelated." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from generic data course." },
+        { "domain_id": "D008", "why": "Telecommunications engineering unrelated." },
+        { "domain_id": "D159", "why": "Credit analysis/structured finance unrelated." },
+        { "domain_id": "D033", "why": "Product management over-link, not supported by courses." }
+      ]
+    },
+    {
+      "programme": "DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14",
+      "add": [
+        { "domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "direct", "why": "Communication and Rural Development, Participatory Communication for Development and community-mobilisation are the programme's core purpose." },
+        { "domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Communication and political development, development policy and government campaign work map to public administration." },
+        { "domain_id": "D026", "domain": "Public Health & Epidemiology", "match_type": "functional", "why": "Health Communication course teaches designing health campaigns and behaviour-change communication." },
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "functional", "why": "Media for Development and Development Communication & Broadcasting produce media content." },
+        { "domain_id": "D128", "domain": "Social Welfare, Youth Services & Community Care Management", "match_type": "adjacent", "why": "Community-development and participatory-communication skills transfer to social-welfare programme delivery." },
+        { "domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "adjacent", "why": "Communication for Agriculture and Food Security gives a foothold into agricultural-extension/agribusiness comms." }
+      ],
+      "remove": [
+        { "domain_id": "D078", "why": "Social-science research is a generic over-link, not a destination." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D063", "why": "Economics over-link from generic courses." },
+        { "domain_id": "D004", "why": "Cybersecurity unrelated." },
+        { "domain_id": "D008", "why": "Telecommunications engineering unrelated." },
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D130", "why": "Recruitment/staffing unrelated." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D001", "why": "Software engineering unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from generic 'Data Analysis in Communication Research'." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from generic data course." },
+        { "domain_id": "D033", "why": "Product management not supported by courses." },
+        { "domain_id": "D029", "why": "HR over-link from Entrepreneurship generic course." },
+        { "domain_id": "D031", "why": "Sales over-link, not the programme's purpose." },
+        { "domain_id": "D028", "why": "General management over-link from generic entrepreneurship course." }
+      ]
+    },
+    {
+      "programme": "FILM & MULTIMEDIA — P12, P13, P14",
+      "add": [
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "direct", "why": "Introduction to Film Production, Scriptwriting, Animation and Digital Photography are the programme's core film/media-production purpose." },
+        { "domain_id": "D070", "domain": "Performing Arts & Entertainment", "match_type": "functional", "why": "Film production, scriptwriting and entertainment content map to the performing-arts/entertainment industry." },
+        { "domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "functional", "why": "Animation, digital photography and multimedia design are visual-communication craft." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Digital content creation and multimedia skills transfer to creator-economy/streaming production." },
+        { "domain_id": "D153", "domain": "Music Production, Sound Engineering & Audio Technology", "match_type": "adjacent", "why": "Film production involves sound/audio post-production, a transferable foothold." }
+      ],
+      "remove": [
+        { "domain_id": "D078", "why": "Social-science research is a generic over-link." },
+        { "domain_id": "D063", "why": "Economics over-link from generic courses." },
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D149", "why": "Diplomacy unrelated over-link for a film craft programme." },
+        { "domain_id": "D001", "why": "Software engineering unrelated." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D008", "why": "Telecommunications engineering unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from generic research course." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from generic data course." },
+        { "domain_id": "D002", "why": "Data engineering unrelated." },
+        { "domain_id": "D161", "why": "Humanitarian aid unrelated to a film-production programme." },
+        { "domain_id": "D130", "why": "Recruitment/staffing unrelated." },
+        { "domain_id": "D033", "why": "Product management not supported by courses." },
+        { "domain_id": "D007", "why": "UI/UX product design over-link from 'Digital Literacy'; not the film-craft purpose." },
+        { "domain_id": "D043", "why": "Journalism is not this programme's purpose — film criticism/analysis is not news journalism; spurious cross-media link." },
+        { "domain_id": "D031", "why": "Sales over-link from generic entrepreneurship course." }
+      ]
+    },
+    {
+      "programme": "INFORMATION AND MEDIA STUDIES — P12, P13, P14",
+      "add": [
+        { "domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "direct", "why": "Introduction to Information Science, Information Systems and Networks, Data Management and Information Literacy & Research are the core information-science purpose the scorer missed." },
+        { "domain_id": "D043", "domain": "Journalism & Digital Publishing", "match_type": "functional", "why": "Writing for the Media and media production across print/broadcast/online support journalism/publishing." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Digital Media and Culture plus media production transfer to creator-economy roles." }
+      ],
+      "remove": [
+        { "domain_id": "D078", "why": "Social Sciences & Behavioural Research is the scorer's generic over-link; this programme leads to media/information practice, not behavioural research." },
+        { "domain_id": "D063", "why": "Economics over-link from Media Economics generic course, not a destination." },
+        { "domain_id": "D004", "why": "Cybersecurity over-link from 'Information Systems and Networks'; not the purpose." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D001", "why": "Software engineering over-link from information-systems course." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from Data Management/Data Analysis generic courses." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D008", "why": "Telecommunications engineering over-link from networks course." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from data-management course." },
+        { "domain_id": "D149", "why": "Diplomacy unrelated over-link." },
+        { "domain_id": "D002", "why": "Data engineering unrelated." },
+        { "domain_id": "D007", "why": "UI/UX design not supported by courses." },
+        { "domain_id": "D033", "why": "Product management not supported by courses." },
+        { "domain_id": "D005", "why": "Cloud computing over-link from information-systems course." }
+      ]
+    },
+    {
+      "programme": "JOURNALISM AND MEDIA STUDIES — P12, P13, P14",
+      "add": [
+        { "domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "functional", "why": "Editing and Publishing, desktop publishing and Photojournalism teach layout/visual-communication skills." },
+        { "domain_id": "D030", "domain": "Marketing, Brand & Communications", "match_type": "adjacent", "why": "Media writing and digital publishing transfer to content/brand communications roles." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Digital Journalism and online publishing skills transfer to independent creator/newsletter economy." }
+      ],
+      "remove": [
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D078", "why": "Social-science research is a generic over-link, not the journalism purpose." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D149", "why": "Diplomacy unrelated over-link." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D063", "why": "Economics over-link from generic courses." },
+        { "domain_id": "D158", "why": "Corporate finance/IB unrelated." },
+        { "domain_id": "D060", "why": "Banking/credit unrelated." },
+        { "domain_id": "D014", "why": "Actuarial science unrelated." },
+        { "domain_id": "D159", "why": "Credit analysis/structured finance unrelated." },
+        { "domain_id": "D007", "why": "UI/UX design over-link from Digital Journalism; not the purpose." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D157", "why": "Tax advisory unrelated." },
+        { "domain_id": "D001", "why": "Software engineering unrelated." },
+        { "domain_id": "D015", "why": "Accounting unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from generic research course." },
+        { "domain_id": "D008", "why": "Telecommunications engineering unrelated." }
+      ]
+    },
+    {
+      "programme": "MASS COMMUNICATION — P12, P13, P14",
+      "add": [
+        { "domain_id": "D043", "domain": "Journalism & Digital Publishing", "match_type": "direct", "why": "News Reporting & Writing, Copy Editing, Newspaper/Magazine Production, Feature/Editorial Writing and Online Journalism are core journalism — scorer only rated it functional." },
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "direct", "why": "Radio Production, Television Production and Broadcast Writing/Reporting are core media-production purpose." },
+        { "domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "functional", "why": "Newspaper/magazine production, copy editing and photojournalism involve layout/visual communication." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Online journalism and broadcast content skills transfer to creator-economy roles." }
+      ],
+      "remove": [
+        { "domain_id": "D063", "why": "Economics over-link from generic courses." },
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D149", "why": "Diplomacy unrelated over-link." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D060", "why": "Banking/credit unrelated." },
+        { "domain_id": "D158", "why": "Corporate finance/IB unrelated." },
+        { "domain_id": "D061", "why": "Insurance unrelated." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from generic research course." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from generic data course." },
+        { "domain_id": "D164", "why": "Urban mobility/smart city unrelated." },
+        { "domain_id": "D001", "why": "Software engineering unrelated." },
+        { "domain_id": "D029", "why": "HR over-link from Entrepreneurship generic course." },
+        { "domain_id": "D033", "why": "Product management not supported by courses." },
+        { "domain_id": "D014", "why": "Actuarial science unrelated." },
+        { "domain_id": "D078", "why": "Scorer marked Social Sciences 'direct' but mass comm leads to journalism/media practice, not behavioural research; downgrade removal." }
+      ]
+    },
+    {
+      "programme": "PUBLIC RELATIONS — P12, P13, P14",
+      "add": [
+        { "domain_id": "D030", "domain": "Marketing, Brand & Communications", "match_type": "direct", "why": "Principles of PR, Media Relations, Writing for PR and Marketing & Advertising in PR make marketing/brand communications the programme's core purpose — scorer only rated it functional." },
+        { "domain_id": "D031", "domain": "Sales & Business Development", "match_type": "functional", "why": "Marketing and Advertising in PR plus stakeholder/business-development communication support sales & BD (advertising→sales, a known scorer miss)." },
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "functional", "why": "Media Relations and Digital/Social Media for PR involve producing media content and press materials." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Digital and Social Media for PR skills transfer to influencer/creator-economy communications." },
+        { "domain_id": "D128", "domain": "Social Welfare, Youth Services & Community Care Management", "match_type": "adjacent", "why": "Public Relations for the not-for-profit sector gives a foothold into NGO/community-relations roles." }
+      ],
+      "remove": [
+        { "domain_id": "D062", "why": "Scorer marked Trading 'direct' — entirely spurious; unrelated to PR." },
+        { "domain_id": "D013", "why": "Scorer marked Investment Analysis 'direct' — spurious finance mismatch." },
+        { "domain_id": "D026", "why": "Scorer marked Public Health 'direct' — over-link; PR is not clinical public health." },
+        { "domain_id": "D063", "why": "Economics over-link from generic environment-of-PR course." },
+        { "domain_id": "D078", "why": "Social-science research generic over-link." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D060", "why": "Banking/credit unrelated." },
+        { "domain_id": "D061", "why": "Insurance unrelated." },
+        { "domain_id": "D158", "why": "Corporate finance/IB unrelated." },
+        { "domain_id": "D014", "why": "Actuarial science unrelated." },
+        { "domain_id": "D130", "why": "Recruitment/staffing unrelated." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D084", "why": "Payroll/bookkeeping unrelated." },
+        { "domain_id": "D029", "why": "HR over-link from Entrepreneurship generic course." },
+        { "domain_id": "D008", "why": "Telecommunications engineering unrelated." },
+        { "domain_id": "D159", "why": "Credit analysis/structured finance unrelated." },
+        { "domain_id": "D149", "why": "Scorer marked Diplomacy 'direct' — over-link; PR is not foreign affairs, though political PR is adjacent. Remove the erroneous direct link." }
+      ]
+    },
+    {
+      "programme": "STRATEGIC COMMUNICATION — P12, P13, P14",
+      "add": [
+        { "domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Strategic Political Communication and publics analysis map to government/policy communication roles." },
+        { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "functional", "why": "Strategic Content Creation and Digital Media Skills involve producing media content across platforms." },
+        { "domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "functional", "why": "Strategic content creation and digital media skills include visual-communication design." },
+        { "domain_id": "D168", "domain": "Esports & Creator Economy", "match_type": "adjacent", "why": "Social media content creation across platforms transfers directly to creator-economy/influencer strategy." }
+      ],
+      "remove": [
+        { "domain_id": "D063", "why": "Economics over-link from generic courses." },
+        { "domain_id": "D062", "why": "Trading unrelated." },
+        { "domain_id": "D149", "why": "Diplomacy over-link; only political-communication course, not foreign affairs." },
+        { "domain_id": "D078", "why": "Social-science research generic over-link." },
+        { "domain_id": "D013", "why": "Investment analysis unrelated." },
+        { "domain_id": "D011", "why": "Quantitative finance unrelated." },
+        { "domain_id": "D012", "why": "FinTech unrelated." },
+        { "domain_id": "D029", "why": "HR over-link from Entrepreneurship generic course." },
+        { "domain_id": "D130", "why": "Recruitment/staffing unrelated." },
+        { "domain_id": "D008", "why": "Telecommunications engineering unrelated." },
+        { "domain_id": "D009", "why": "Data Science over-link from generic research course." },
+        { "domain_id": "D161", "why": "Humanitarian aid unrelated." },
+        { "domain_id": "D001", "why": "Software engineering over-link from Critical Web Literacy course." },
+        { "domain_id": "D056", "why": "Blockchain unrelated." },
+        { "domain_id": "D014", "why": "Actuarial science unrelated." },
+        { "domain_id": "D007", "why": "UI/UX design over-link from Digital Media Skills; not the purpose." },
+        { "domain_id": "D010", "why": "Business intelligence over-link from generic data course." },
+        { "domain_id": "D061", "why": "Insurance unrelated." }
+      ]
+    }
+  ]
+}

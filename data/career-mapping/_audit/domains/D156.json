@@ -1,0 +1,177 @@
+{
+ "domain_id": "D156",
+ "domain_name": "Land Surveying, Cadastral Mapping",
+ "role_count": 34,
+ "roles": [
+  {
+   "role": "mine surveyor",
+   "isco": 2165,
+   "aka": "mine planning surveyor  ·  mine plan maker  ·  planner of mining operations  ·  mining surveyor  ·  mine surveyors"
+  },
+  {
+   "role": "microelectronics engineering technician",
+   "isco": 3114,
+   "aka": "micro-electronics engineering technician  ·  microelectronics technologist  ·  microelectronic equipment technologist  ·  technician in microelectronic engineering  ·  technologist in microelectronics"
+  },
+  {
+   "role": "aerospace engineering drafter",
+   "isco": 3118,
+   "aka": "aerospace draftsperson  ·  aerospace draughtsperson  ·  aerospace draughter  ·  aeronautical draughter  ·  aerospace engineering draughting specialist"
+  },
+  {
+   "role": "electromechanical drafter",
+   "isco": 3118,
+   "aka": "electromechanical engineering drafter  ·  electromechanic draughtsperson  ·  electromechanical drafting expert  ·  electro-mechanical draughtsman  ·  electromechanical drafting specialist"
+  },
+  {
+   "role": "microelectronics maintenance technician",
+   "isco": 3114,
+   "aka": "microelectronics maintenance and repair technician  ·  industrial maintenance technician  ·  microelectronic devices maintenance technician  ·  maintenance and repair technician  ·  microelectronic systems maintenance technician"
+  },
+  {
+   "role": "electrical drafter",
+   "isco": 3118,
+   "aka": "electrical draughter  ·  electric draughtsperson  ·  electrical draughtsperson  ·  electrical drafting adviser  ·  draughter in electrical systems"
+  },
+  {
+   "role": "cadastral technician",
+   "isco": 2165,
+   "aka": "cadastral surveyor  ·  cadastral mapping technician  ·  cadastral land surveyor  ·  land agent"
+  },
+  {
+   "role": "microsystem engineering technician",
+   "isco": 3114,
+   "aka": "technician in microsystems  ·  micro-system engineering technician  ·  microsystem technologist  ·  microelectromechanical systems technician  ·  microelectromechanical systems technologist"
+  },
+  {
+   "role": "electronics engineering technician",
+   "isco": 3114,
+   "aka": "industrial electronics engineering technician  ·  electronic equipment technician  ·  technologist in electronics engineering  ·  signal processing technician  ·  technician in electronic equipment"
+  },
+  {
+   "role": "marine engineering drafter",
+   "isco": 3118,
+   "aka": "marine draughter  ·  naval engineering drafter  ·  marine draftsperson  ·  marine drafter  ·  shipbuilding drafter"
+  },
+  {
+   "role": "instrumentation engineering technician",
+   "isco": 3114,
+   "aka": "C&I technologist  ·  technologist in control and instrumentation equipment  ·  control and instrumentation technologist  ·  control and instrumentation engineering technician  ·  technician in instrumentation engineering"
+  },
+  {
+   "role": "civil drafter",
+   "isco": 3118,
+   "aka": "civil design drafter  ·  civil engineering drafter  ·  civil draftswoman  ·  structural drafter"
+  },
+  {
+   "role": "automotive engineering drafter",
+   "isco": 3118,
+   "aka": "automotive drafting specialist  ·  automotive drafting expert  ·  automotive draftsperson  ·  automotive draughter  ·  automotive drafter"
+  },
+  {
+   "role": "architectural drafter",
+   "isco": 3118,
+   "aka": "architecture draftsperson  ·  architectural draughter  ·  architectural drafting consultant  ·  architectural draughtsperson  ·  architectural draftsperson"
+  },
+  {
+   "role": "mechanical engineering drafter",
+   "isco": 3118,
+   "aka": "machinery engineering draughtsperson  ·  mechanical engineering draughting apprentice  ·  mechanical technology drafter  ·  machinery engineering draftsperson  ·  mechanical design drafting engineer"
+  },
+  {
+   "role": "computer hardware engineering technician",
+   "isco": 3114,
+   "aka": "PC hardware technician  ·  computer hardware technician  ·  IT engineering technician  ·  IT hardware engineering technician  ·  PC hardware engineering technician"
+  },
+  {
+   "role": "rolling stock engineering drafter",
+   "isco": 3118,
+   "aka": "rolling stock draughtsperson  ·  rolling stock engineering draughtsperson  ·  rolling stock engineering drafting specialist  ·  rolling stock engineering drafting adviser  ·  rolling stock engineering drafting expert"
+  },
+  {
+   "role": "hydrographic surveyor",
+   "isco": 2165,
+   "aka": "hydrography surveyor  ·  hydrographic science researcher  ·  hydrographic research analyst  ·  hydrographic scientist  ·  hydrographic analyst"
+  },
+  {
+   "role": "3D printing technician",
+   "isco": 3118,
+   "aka": "3D printer operator  ·  printing machine technician  ·  3D printer repairman  ·  3D printing operator  ·  3D printing prototyping technician"
+  },
+  {
+   "role": "computer-aided design operator",
+   "isco": 3118,
+   "aka": "CAD design specialist  ·  CAM operator  ·  computer aided design designer  ·  computer aided manufacturing operator  ·  CAM draftsman"
+  },
+  {
+   "role": "sensor engineering technician",
+   "isco": 3114,
+   "aka": "technician in sensor engineering  ·  electronics sensor technician  ·  sensor and actuator technician  ·  sensor systems technician  ·  electronic sensor technician"
+  },
+  {
+   "role": "clothing CAD technician",
+   "isco": 3118,
+   "aka": "clothing CAD specialist  ·  clothing computer-assisted designer technician  ·  clothing computer aided designer technician  ·  clothing CAD operator  ·  fashion CAD technician"
+  },
+  {
+   "role": "printed circuit board designer",
+   "isco": 3118,
+   "aka": "PCB design specialist  ·  printed circuit board (PCB) designer  ·  circuit board designer  ·  PCB design expert  ·  PCB designer"
+  },
+  {
+   "role": "geographic information systems specialist",
+   "isco": 2165,
+   "aka": "Earth Observation expert  ·  GIS specialist  ·  geomatics technician  ·  GIS technician  ·  geographic information systems consultant"
+  },
+  {
+   "role": "drafter",
+   "isco": 3118,
+   "aka": "CAD draughter  ·  drafting specialist  ·  drafting expert  ·  drafting consultant  ·  computer aided design draughter"
+  },
+  {
+   "role": "cartographer",
+   "isco": 2165,
+   "aka": "cartographic draftsperson  ·  cartographic researcher  ·  cartographic analyst  ·  cartographic research scientist  ·  map maker"
+  },
+  {
+   "role": "computer hardware test technician",
+   "isco": 3114,
+   "aka": "computer hardware inspector  ·  inspector of computer hardware  ·  computer hardware testing technician  ·  computer hardware tester  ·  tester of computer hardware"
+  },
+  {
+   "role": "product development engineering drafter",
+   "isco": 3118,
+   "aka": "product development engineering draftsperson  ·  product development engineering drafting expert  ·  product development engineering drafting adviser  ·  product development engineering drafting specialist  ·  product development engineering draughtsperson"
+  },
+  {
+   "role": "electronics drafter",
+   "isco": 3118,
+   "aka": "electronics engineering drafter  ·  electronics drafting specialist  ·  electronics draftsperson  ·  electronic drafter  ·  electronics design drafter"
+  },
+  {
+   "role": "land surveyor",
+   "isco": 2165,
+   "aka": "surveyor  ·  surveying engineer  ·  surveyors  ·  geomatics surveyor"
+  },
+  {
+   "role": "optoelectronic engineering technician",
+   "isco": 3114,
+   "aka": "opto-electronic technician  ·  opto-electronic engineering technician  ·  technician in optoelectronics  ·  technician in optoelectronic systems  ·  technologist in optoelectronic systems"
+  },
+  {
+   "role": "heating, ventilation, air conditioning (and refrigeration) drafter",
+   "isco": 3118,
+   "aka": "heating, ventilation, air conditioning, and refrigeration drafter  ·  ​heating, ventilation, air conditioning, and refrigeration draughter  ·  HVACR draughtsperson  ·  HVACR drafting specialist  ·  heating, ventilation, air conditioning engineering draughter"
+  },
+  {
+   "role": "Surveyors",
+   "isco": 2165,
+   "aka": NaN
+  },
+  {
+   "role": "Mechanical Drafters",
+   "isco": 3118,
+   "aka": NaN
+  }
+ ]
+}

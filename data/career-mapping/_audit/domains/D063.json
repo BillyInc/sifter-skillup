@@ -1,0 +1,242 @@
+{
+ "domain_id": "D063",
+ "domain_name": "Economics",
+ "role_count": 47,
+ "roles": [
+  {
+   "role": "housing policy officer",
+   "isco": 2422,
+   "aka": "policy officer  ·  housing policy analyst  ·  affordable housing policy officer  ·  housing policy development officer  ·  senior housing policy officer"
+  },
+  {
+   "role": "procurement category specialist",
+   "isco": 2422,
+   "aka": "procurement associate category specialist  ·  market specialist  ·  supply specialist  ·  associate category specialist  ·  category specialist"
+  },
+  {
+   "role": "historian",
+   "isco": 2633,
+   "aka": "diplomatic historian  ·  economic historian  ·  historians  ·  political historian  ·  military historian"
+  },
+  {
+   "role": "business economics researcher",
+   "isco": 2631,
+   "aka": "fiscal economics strategist  ·  economic analyst  ·  fiscal economics analyst  ·  business advisor  ·  financial market advisor"
+  },
+  {
+   "role": "social service consultant",
+   "isco": 2422,
+   "aka": "welfare consultant  ·  social service planning consultant  ·  social services expert  ·  social planning consultant  ·  community development consultant"
+  },
+  {
+   "role": "regional development policy officer",
+   "isco": 2422,
+   "aka": "regional policy officer  ·  policy officer for regional development  ·  regional development policy analyst  ·  regional development policy researcher  ·  legal policy officer for regional development"
+  },
+  {
+   "role": "competition policy officer",
+   "isco": 2422,
+   "aka": "policy manager  ·  civil servant  ·  competition policy manager  ·  entrepreneurship policy officer  ·  policy manager for competition"
+  },
+  {
+   "role": "economic policy officer",
+   "isco": 2631,
+   "aka": "economic policy researcher  ·  economic policy advisor  ·  economical policy officer  ·  economic policy specialist  ·  policy officer for economy"
+  },
+  {
+   "role": "community development officer",
+   "isco": 2422,
+   "aka": "social development officer  ·  outreach support worker  ·  local community development officer"
+  },
+  {
+   "role": "humanitarian advisor",
+   "isco": 2422,
+   "aka": "humanitarian consultant  ·  humanitarian affairs advisor  ·  humanitarian assistance advisor  ·  charity worker  ·  non governmental organisation officer"
+  },
+  {
+   "role": "intelligence officer",
+   "isco": 2422,
+   "aka": "cyber investigator  ·  intelligence research specialist  ·  cyber threat intelligence specialist  ·  research & intelligence officer  ·  counter-terrorism analyst"
+  },
+  {
+   "role": "political scientist",
+   "isco": 2633,
+   "aka": "war researcher  ·  peace researcher  ·  public administration researcher  ·  political analyst  ·  political scholar"
+  },
+  {
+   "role": "fiscal affairs policy officer",
+   "isco": 2422,
+   "aka": "fiscal policy analyst  ·  fiscal policy consultant  ·  tax policy officer  ·  fiscal policy developer  ·  fiscal policy specialist"
+  },
+  {
+   "role": "economic adviser",
+   "isco": 2631,
+   "aka": "policy analyst  ·  economic development officer  ·  economic policy researcher  ·  economic policy advisor  ·  economics consultant"
+  },
+  {
+   "role": "legal policy officer",
+   "isco": 2422,
+   "aka": "legal and compliance policy officer  ·  legal policy advisor  ·  legal policy specialist  ·  legal affairs policy officer"
+  },
+  {
+   "role": "genealogist",
+   "isco": 2633,
+   "aka": "genealogy expert  ·  ancestry expert  ·  family tree researcher"
+  },
+  {
+   "role": "cultural policy officer",
+   "isco": 2422,
+   "aka": "cultural policy coordinator  ·  culture policy officer  ·  arts worker  ·  arts administrator  ·  cultural policy director"
+  },
+  {
+   "role": "healthcare consultant",
+   "isco": 2422,
+   "aka": "management consultant  ·  healthcare advisor  ·  healthcare management adivsor  ·  healthcare management consultant  ·  retirement healthcare advisor"
+  },
+  {
+   "role": "government planning inspector",
+   "isco": 2422,
+   "aka": "planning officer  ·  planning and development surveyor  ·  housing and planning inspector  ·  planning inspector  ·  national infrastructure examining inspector"
+  },
+  {
+   "role": "employment programme coordinator",
+   "isco": 2422,
+   "aka": "program coordinator employment  ·  employment program manager  ·  job creation advisor  ·  employment programme manager  ·  programme coordinator employment"
+  },
+  {
+   "role": "immigration policy officer",
+   "isco": 2422,
+   "aka": "government policy manager  ·  asylum policy officer  ·  refugee policy officer  ·  immigration policy analyst"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "international relations officer",
+   "isco": 2422,
+   "aka": "international manager  ·  inter governmental cooperation officer  ·  international development officer  ·  international relations director"
+  },
+  {
+   "role": "sports programme coordinator",
+   "isco": 2422,
+   "aka": "sports development officer  ·  recreation officer  ·  community development officer  ·  recreation programme coordinator  ·  sports development coordinator"
+  },
+  {
+   "role": "monitoring and evaluation officer",
+   "isco": 2422,
+   "aka": "monitoring and reporting analyst  ·  MEL officer  ·  social impact assessment specialist  ·  economic impact assessment officer  ·  evaluator"
+  },
+  {
+   "role": "political affairs officer",
+   "isco": 2422,
+   "aka": "political consultant  ·  political aide  ·  political advisor  ·  political campaign officer  ·  campaigner"
+  },
+  {
+   "role": "agricultural policy officer",
+   "isco": 2422,
+   "aka": "agronomist  ·  agriculture policy officer  ·  agriculture policy manager  ·  policy manager agriculture  ·  farming advisor"
+  },
+  {
+   "role": "economist",
+   "isco": 2631,
+   "aka": "econophysicist  ·  economics scholar  ·  economics scientist  ·  economics researcher  ·  econometrician"
+  },
+  {
+   "role": "economic development coordinator",
+   "isco": 2631,
+   "aka": "economist  ·  economic development consultant  ·  economic development officer  ·  socio economic development coordinator  ·  regeneration manager"
+  },
+  {
+   "role": "labour market policy officer",
+   "isco": 2422,
+   "aka": "labour policy officer  ·  labor market policy analyst  ·  labour policy consultant  ·  labour policy analyst  ·  labour market policy analyst"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "tax policy analyst",
+   "isco": 2631,
+   "aka": "tax analyst  ·  pecunary consultant  ·  tax research analyst  ·  fiscal policy analyst  ·  contributions advisor"
+  },
+  {
+   "role": "environmental policy officer",
+   "isco": 2422,
+   "aka": "policy officer  ·  environmental officer  ·  environmental policy researcher  ·  principal environmental policy officer  ·  senior environmental policy officer"
+  },
+  {
+   "role": "philosopher",
+   "isco": 2633,
+   "aka": "philosophy expert  ·  philosophy student  ·  philosophy scholar  ·  moralist"
+  },
+  {
+   "role": "trade development officer",
+   "isco": 2422,
+   "aka": "trade development director  ·  import and export officer  ·  import & export director  ·  import and export director  ·  senior trade development officer"
+  },
+  {
+   "role": "policy officer",
+   "isco": 2422,
+   "aka": "policy researcher  ·  policy advisor  ·  strategy manager  ·  strategy advisor  ·  policy coordinator"
+  },
+  {
+   "role": "public procurement specialist",
+   "isco": 2422,
+   "aka": "public sector procurement practitioner  ·  public procurement expert  ·  public procurement practitioner  ·  public sector procurement specialist  ·  public sector procurement expert"
+  },
+  {
+   "role": "public health policy officer",
+   "isco": 2422,
+   "aka": "general manager  ·  healthcare services planning officer  ·  healthcare planning officer  ·  healthcare planner  ·  health service manager"
+  },
+  {
+   "role": "social services policy officer",
+   "isco": 2422,
+   "aka": "social policy specialist  ·  social policy analyst  ·  social services policy advisor  ·  social services policy researcher  ·  social policy officer"
+  },
+  {
+   "role": "parliamentary assistant",
+   "isco": 2422,
+   "aka": "MP's PA  ·  MP's assistant  ·  MSP's parliamentary assistant  ·  MP's parliamentary assistant  ·  constituency assistant"
+  },
+  {
+   "role": "foreign affairs officer",
+   "isco": 2422,
+   "aka": "international affairs analyst  ·  foreign affairs manager  ·  foreign affairs analyst  ·  international relations manager  ·  foreign affairs specialist"
+  },
+  {
+   "role": "education policy officer",
+   "isco": 2422,
+   "aka": "policy officer  ·  education policy specialist  ·  education policy analyst  ·  policy officer for education  ·  education policy advisor"
+  },
+  {
+   "role": "recreation policy officer",
+   "isco": 2422,
+   "aka": "recreation policy advisor  ·  sports policy advisor  ·  sports and recreation policy officer  ·  sports and recreation policy specialist  ·  sports and recreation policy analyst"
+  },
+  {
+   "role": "civil service administrative officer",
+   "isco": 2422,
+   "aka": "government administrative officer  ·  local authority administrator  ·  public administrative officer"
+  },
+  {
+   "role": "Compliance Officers",
+   "isco": 2422,
+   "aka": NaN
+  },
+  {
+   "role": "Urban and Regional Planners",
+   "isco": 2633,
+   "aka": NaN
+  },
+  {
+   "role": "Geographers",
+   "isco": 2633,
+   "aka": NaN
+  }
+ ]
+}

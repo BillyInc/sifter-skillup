@@ -1,0 +1,362 @@
+{
+ "domain_id": "D110",
+ "domain_name": "Chemical, Rubber",
+ "role_count": 71,
+ "roles": [
+  {
+   "role": "nonwoven filament machine operator",
+   "isco": 8131,
+   "aka": "non woven filament machine operator  ·  non woven yarn worker  ·  non-woven yarn worker  ·  nonwoven filament machinist  ·  non-woven filament machine operator"
+  },
+  {
+   "role": "nitroglycerin separator operator",
+   "isco": 8131,
+   "aka": "nitroglycerin separator operative  ·  nitroglycerin- separator operative  ·  nitro-separator operator  ·  chemical equipment operative  ·  nitroglycerin separator worker"
+  },
+  {
+   "role": "tissue paper perforating and rewinding operator",
+   "isco": 8143,
+   "aka": "tissue paper perforating and rewinding operative  ·  tissue paper perforating and rewinding technician  ·  toilet paper machine technician  ·  tissue paper perforating and rewinding machine operator  ·  tissue paper perforating and rewinding machine technician"
+  },
+  {
+   "role": "lime kiln operator",
+   "isco": 8131,
+   "aka": "lime kiln operative  ·  regenerative kiln operator  ·  lime kiln worker  ·  flare kiln operator  ·  draw kiln operator"
+  },
+  {
+   "role": "granulator machine operator",
+   "isco": 8131,
+   "aka": "granulator  ·  pharmaceutical granulating machine operative  ·  pharmaceutical granulation operative  ·  granulation operator  ·  granulating machine operative"
+  },
+  {
+   "role": "sectional belt mould assembler",
+   "isco": 8141,
+   "aka": "V-belt moulder  ·  v-belt mould assembler  ·  v-belt mold assembler"
+  },
+  {
+   "role": "tyre vulcaniser",
+   "isco": 8141,
+   "aka": "tyre mender  ·  tyre vulcanizer  ·  tyre technician  ·  tire repairer  ·  tire mender"
+  },
+  {
+   "role": "pesticide mixer",
+   "isco": 8131,
+   "aka": "fungicide mixer  ·  insecticide mixing machine operator  ·  herbicide mixing machine operator  ·  fungicide mixing machine setter  ·  fungicide mixing machine operator"
+  },
+  {
+   "role": "pyrotechnics drying room attendant",
+   "isco": 8131,
+   "aka": "fireworks drying room attendant  ·  pyrotechnics production worker  ·  drying room fireworks maker  ·  firework drying room attendant  ·  drying room firework maker"
+  },
+  {
+   "role": "gauger",
+   "isco": 8131,
+   "aka": "oil refiner  ·  oil gauger  ·  oil well gauger  ·  gager  ·  well gauger"
+  },
+  {
+   "role": "lacquer maker",
+   "isco": 8131,
+   "aka": "lacquer mixer  ·  synthetic paint and varnish maker  ·  lacquer maker (paint & varnish)  ·  maker of lacquer  ·  synthetic paint & varnish maker"
+  },
+  {
+   "role": "tyre builder",
+   "isco": 8141,
+   "aka": "tyre production plant operative  ·  tyre tread builder  ·  tire maker  ·  tyre production worker  ·  tire tread builder"
+  },
+  {
+   "role": "anaerobic digestion plant operator",
+   "isco": 8131,
+   "aka": "waste treatment plant operator  ·  effluent plant operator  ·  processing plant technician  ·  biogas plant operator  ·  plant process operator"
+  },
+  {
+   "role": "fiberglass laminator",
+   "isco": 8142,
+   "aka": "fiberglass-spraying machine operator  ·  fibreglass-spraying machine operator  ·  fibreglass laminator  ·  fibreglass lamination technician  ·  boat hull laminator"
+  },
+  {
+   "role": "paper cutter operator",
+   "isco": 8143,
+   "aka": "paper cutting machine operator  ·  paper cutting machine specialist  ·  shearer specialist  ·  shearer technician  ·  paper cutting machine technician"
+  },
+  {
+   "role": "soap chipper",
+   "isco": 8131,
+   "aka": "soap chipping machine operative  ·  soap chipping machine tender  ·  soap chipping machine feeder  ·  soap chipping machine worker  ·  soap chipper feeder"
+  },
+  {
+   "role": "nitrator operator",
+   "isco": 8131,
+   "aka": "tetryl-nitrator operator  ·  explosives monitoring and storage worker  ·  biazzi nitrator operator  ·  binitrotoluene operator  ·  nitroglycerin nitrator operator"
+  },
+  {
+   "role": "distillation operator",
+   "isco": 8131,
+   "aka": "petroleum refinery operator  ·  oil refinery expert  ·  petroleum refinery technician  ·  distillation process expert  ·  refinery technician"
+  },
+  {
+   "role": "soap drier operator",
+   "isco": 8131,
+   "aka": "operator of soap flake drier machine  ·  operator of soap flake dryer machine  ·  soap dryer machine tender  ·  soap drier tender  ·  viscous soap machine worker"
+  },
+  {
+   "role": "soap maker",
+   "isco": 8131,
+   "aka": "soap factory operator  ·  soap and cosmetics maker  ·  maker of soap  ·  soap boiler  ·  artisan soap maker"
+  },
+  {
+   "role": "plodder operator",
+   "isco": 8131,
+   "aka": "soap compression machine worker  ·  plodding-machine minder  ·  plodder operative  ·  plodding-machine operator  ·  soap production operative"
+  },
+  {
+   "role": "insulating tube winder",
+   "isco": 8142,
+   "aka": "tube winding machine operative  ·  tube winding machine setter  ·  tube winder  ·  convolute tube winder  ·  winder, insulating tubes"
+  },
+  {
+   "role": "plastic heat treatment equipment operator",
+   "isco": 8142,
+   "aka": "materials engineer  ·  heat treat operator  ·  heat treating operator  ·  heat treat technician  ·  metallurgical process engineer"
+  },
+  {
+   "role": "injection moulding operator",
+   "isco": 8142,
+   "aka": "plastic molding operator  ·  plastic injection molding operator  ·  plastic moulder  ·  plastic injection molding machine operator  ·  injection molding machine operator"
+  },
+  {
+   "role": "chemical mixer",
+   "isco": 8131,
+   "aka": "chemicals blender  ·  chemical batch mixer  ·  chemical process worker  ·  chemical mixer operative  ·  chemicals batch blender"
+  },
+  {
+   "role": "rubber cutting machine tender",
+   "isco": 8141,
+   "aka": "cutting machine tender  ·  rubber cutting machine operative  ·  rubber slab cutter  ·  rubber cutter tender  ·  rubber slab production worker"
+  },
+  {
+   "role": "envelope maker",
+   "isco": 8143,
+   "aka": "envelope making machine technician  ·  envelope making machine operator  ·  envelope machine worker  ·  envelope machine specialist  ·  envelope machine technician"
+  },
+  {
+   "role": "V-belt finisher",
+   "isco": 8141,
+   "aka": "belt finisher  ·  V-belt finishing operator  ·  friction belt finisher  ·  belt brander  ·  belt measurer"
+  },
+  {
+   "role": "vacuum forming machine operator",
+   "isco": 8142,
+   "aka": "thermo-forming machine tender  ·  plastic molding machine setter  ·  vacuum forming machine operative  ·  vacuum molding machine operative  ·  vacuum forming machine tender"
+  },
+  {
+   "role": "paper stationery machine operator",
+   "isco": 8143,
+   "aka": "paper stationery machinist  ·  paper puncher technician  ·  paper perforator technician  ·  paper stationery machine specialist  ·  paper stationery machine technician"
+  },
+  {
+   "role": "paper bag machine operator",
+   "isco": 8143,
+   "aka": "paper bag machine specialist  ·  paper bag constructing machine operator  ·  paper bag machinist  ·  paper bag machine technician  ·  paper bag machine worker"
+  },
+  {
+   "role": "fibreglass machine operator",
+   "isco": 8142,
+   "aka": "fiberglass-spraying machine operator  ·  operator of fibreglass-spraying machine  ·  lead machine operator  ·  fibreglass-spraying machine operator  ·  fibreglass spraying machine technician"
+  },
+  {
+   "role": "capsule filling machine operator",
+   "isco": 8131,
+   "aka": "filling machine operator  ·  pharmaceutical machine operator  ·  capsule machine operative  ·  pharmaceutical machine operative  ·  capsule filler"
+  },
+  {
+   "role": "mine control room operator",
+   "isco": 8131,
+   "aka": "mining supervisor  ·  panel controller  ·  mine monitor  ·  mining control room operator  ·  mine operator"
+  },
+  {
+   "role": "fertiliser mixer",
+   "isco": 8131,
+   "aka": "fertilizer mixing machine operative  ·  fertilizer mixing machine operator  ·  mixer of fertilizer  ·  mixer of fertiliser  ·  fertiliser mixing machine operator"
+  },
+  {
+   "role": "plastic furniture machine operator",
+   "isco": 8142,
+   "aka": "plastic furniture production process worker  ·  plastic furniture maker  ·  plastic furniture production operative  ·  plastic furniture assembly worker  ·  plastic furniture machine setter"
+  },
+  {
+   "role": "filament winding operator",
+   "isco": 8142,
+   "aka": "FRP winding machine operator  ·  fiberglass container winding operator  ·  fibreglass container winding operator  ·  filament winder operator  ·  winding machine operative"
+  },
+  {
+   "role": "paint mixer",
+   "isco": 8131,
+   "aka": "paint mixer operative  ·  paint mixer worker  ·  paint maker  ·  paint mixer operator  ·  paint production worker"
+  },
+  {
+   "role": "blow moulding machine operator",
+   "isco": 8142,
+   "aka": "plastic process machine operator  ·  blow moulding machine operative  ·  plastics production machine operative  ·  blow moulding technician  ·  plastic blow moulding machine operative"
+  },
+  {
+   "role": "plastic rolling machine operator",
+   "isco": 8142,
+   "aka": "plastic rolling machine worker  ·  plastics processing machine operative  ·  plastic rolling machine tender  ·  plastic rolling machine setter/operator  ·  plastic roll-forming machine operative"
+  },
+  {
+   "role": "belt builder",
+   "isco": 8141,
+   "aka": "belt technician  ·  rubber belt builder  ·  conveyor belt vulcaniser  ·  belt maintenance engineer  ·  conveyor belt technician"
+  },
+  {
+   "role": "V-belt builder",
+   "isco": 8141,
+   "aka": "rubber V-belt skiver  ·  v-belt forming machine operator  ·  V-belt former and cutter  ·  v-belt builder  ·  V-belt skiver"
+  },
+  {
+   "role": "coking furnace operator",
+   "isco": 8131,
+   "aka": "industrial coke oven worker  ·  coking oven operator  ·  coke quencher operator  ·  coking furnace technician  ·  coker"
+  },
+  {
+   "role": "cake press operator",
+   "isco": 8142,
+   "aka": "plastic production process operative  ·  plastic cake press worker  ·  plastic cake press operative  ·  plastic cake press operator  ·  cake press operative"
+  },
+  {
+   "role": "optical disc moulding machine operator",
+   "isco": 8142,
+   "aka": "optical disc moulding machine tender  ·  molding machine tender  ·  optical disc moulding machine worker  ·  optical disc moulding machine specialist  ·  optical disc molding machine tender"
+  },
+  {
+   "role": "record press operator",
+   "isco": 8142,
+   "aka": "record press technician  ·  record press specialist  ·  record press machinist  ·  record pressing machine technician  ·  vinyl record press tender"
+  },
+  {
+   "role": "rubber products machine operator",
+   "isco": 8141,
+   "aka": "rubber-products machine operator  ·  rubber production operator  ·  banbury operator  ·  rubber production operative  ·  rubber processing machine operative"
+  },
+  {
+   "role": "nitroglycerin neutraliser",
+   "isco": 8131,
+   "aka": "nitroglycerin neutralizer  ·  nitroglycerin production operator  ·  nitroglycerin production worker  ·  nitroglycerine neutralizer  ·  nitroglycerin production operative"
+  },
+  {
+   "role": "pultrusion machine operator",
+   "isco": 8142,
+   "aka": "reinforced fibreglass maker  ·  pultrusion process operator  ·  pultruded fibreglass worker  ·  pultrusion operator  ·  pultrusion machine worker"
+  },
+  {
+   "role": "absorbent pad machine operator",
+   "isco": 8143,
+   "aka": "diaper machine technician  ·  absorbent pad machine technician  ·  absorbent pad machine specialist  ·  absorbent pad machine operative  ·  tampon machine technician"
+  },
+  {
+   "role": "varnish maker",
+   "isco": 8131,
+   "aka": "varnish cooker  ·  varnish blender  ·  maker of varnish  ·  kettle charger  ·  varnish production worker"
+  },
+  {
+   "role": "soap tower operator",
+   "isco": 8131,
+   "aka": "tower operative (soap)  ·  tower operator (soap)  ·  tower operator  ·  soap plant worker  ·  soap powder production operative"
+  },
+  {
+   "role": "pill maker operator",
+   "isco": 8131,
+   "aka": "pillmaker operator  ·  piling machine operative  ·  tablet making machine tender  ·  tablet making machine operative  ·  pill production operative"
+  },
+  {
+   "role": "fermenter operator",
+   "isco": 8131,
+   "aka": "chemicals fermentation operative  ·  chemicals fermenter operative  ·  fermentation process worker  ·  chemicals fermenter operator  ·  fermentation worker"
+  },
+  {
+   "role": "perfume production machine operator",
+   "isco": 8131,
+   "aka": "perfume production machine worker  ·  fragrance plant worker  ·  fragrance production machine tender  ·  perfume production machine tender  ·  perfume production worker"
+  },
+  {
+   "role": "wax bleacher",
+   "isco": 8131,
+   "aka": "candle production operative  ·  candlewax bleacher  ·  candle production operator  ·  wax bleacher (chemical)  ·  bees-wax bleacher"
+  },
+  {
+   "role": "rubber dipping machine operator",
+   "isco": 8141,
+   "aka": "rubber processing machine operative  ·  rubber process machine operator  ·  rubber processing machine operator  ·  rubber dipping machine operative  ·  drop-machine operator"
+  },
+  {
+   "role": "foam rubber mixer",
+   "isco": 8141,
+   "aka": "foam rubber mixing machine setter  ·  cushion molder  ·  foam rubber molding machine operator  ·  foam mattress molder  ·  foam rubber moulding machine worker"
+  },
+  {
+   "role": "V-belt coverer",
+   "isco": 8141,
+   "aka": "V-belt covering machine operative  ·  V-belt covering machine minder  ·  rubber V-belt coverer  ·  V-belt covering machine worker  ·  rubber belt coverer"
+  },
+  {
+   "role": "corrugator operator",
+   "isco": 8143,
+   "aka": "corrugating machine technician  ·  corrugated paper maker  ·  carton machine technician  ·  carton machine operator  ·  corrugator specialist"
+  },
+  {
+   "role": "compression moulding machine operator",
+   "isco": 8142,
+   "aka": "compression moulding machine operative  ·  molding machine setter  ·  production operator (plastic moulding)  ·  moulding machine operative  ·  moulding machine setter"
+  },
+  {
+   "role": "tracer powder blender",
+   "isco": 8131,
+   "aka": "tracer powder maker  ·  flammable chemical blender  ·  flammable chemical mixer  ·  igniter powder mixer  ·  igniter powder blender"
+  },
+  {
+   "role": "paperboard products assembler",
+   "isco": 8143,
+   "aka": "cardboard products assembly operator  ·  paper plate maker  ·  cardboard box constructor  ·  corrugated box assembler  ·  corrugated box maker"
+  },
+  {
+   "role": "coagulation operator",
+   "isco": 8141,
+   "aka": "coagulation worker  ·  latex coagulation operator  ·  rubber production process operator  ·  rubber production process machine operator  ·  rubber coagulation operative"
+  },
+  {
+   "role": "cosmetics production machine operator",
+   "isco": 8131,
+   "aka": "cosmetics production machine operative  ·  cosmetics production worker  ·  cosmetics production operator  ·  cosmetics production machine worker  ·  cosmetics production operative"
+  },
+  {
+   "role": "Chemical Processing Plant Operators",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+   "isco": 8142,
+   "aka": NaN
+  },
+  {
+   "role": "Photographic Process Workers and Processing Machine Operators",
+   "isco": 8141,
+   "aka": NaN
+  },
+  {
+   "role": "Paper Goods Machine Setters, Operators, and Tenders",
+   "isco": 8143,
+   "aka": NaN
+  },
+  {
+   "role": "Semiconductor Processing Technicians",
+   "isco": 8141,
+   "aka": NaN
+  }
+ ]
+}

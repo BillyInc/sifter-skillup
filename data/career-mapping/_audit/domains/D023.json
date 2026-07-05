@@ -1,0 +1,267 @@
+{
+ "domain_id": "D023",
+ "domain_name": "Medicine",
+ "role_count": 52,
+ "roles": [
+  {
+   "role": "medical laboratory assistant",
+   "isco": 3212,
+   "aka": "biomedical laboratory research assistant  ·  clinical research assistant  ·  assistant clinical researcher  ·  assistant in medical laboratory  ·  medical lab assistant"
+  },
+  {
+   "role": "doctors",
+   "isco": 3256,
+   "aka": "healthcare assistant  ·  medical assistant  ·  surgery assistant  ·  physician's assistant  ·  cast assistant"
+  },
+  {
+   "role": "healthcare institution manager",
+   "isco": 1342,
+   "aka": "general manager  ·  health service manager  ·  general manager healthcare  ·  healthcare director  ·  healthcare general manager"
+  },
+  {
+   "role": "audiology technician",
+   "isco": 3214,
+   "aka": "audiology specialist service technician  ·  hearing aid technician  ·  hearing aid service technician  ·  hearing help technician  ·  hearing aid acoustician"
+  },
+  {
+   "role": "clinical perfusion scientist",
+   "isco": 3211,
+   "aka": "clinical perfusionist  ·  clinical perfusion techinician  ·  medical perfusionist  ·  medical perfusion expert  ·  clinical perfusion expert"
+  },
+  {
+   "role": "general practitioner",
+   "isco": 2211,
+   "aka": "general medical practitioner"
+  },
+  {
+   "role": "prosthetist-orthotist",
+   "isco": 3214,
+   "aka": "prosthetic technologist  ·  certified prosthetist  ·  technologist in prosthetics  ·  prosthetic technician  ·  expert prosthetist"
+  },
+  {
+   "role": "specialised doctor",
+   "isco": 2212,
+   "aka": "specialized medical doctor  ·  specialized doctor  ·  hospital specialized doctor  ·  specialised medical doctor  ·  hospital specialised doctor"
+  },
+  {
+   "role": "radiation therapist",
+   "isco": 3211,
+   "aka": "radiotherapy technologist  ·  therapeutic radiography practitioner  ·  therapeutic radiographer  ·  technologist in radiotherapy  ·  RTT"
+  },
+  {
+   "role": "clinical informatics manager",
+   "isco": 1342,
+   "aka": "health informatics manager  ·  supervisor of clinical informatics  ·  clinical information systems supervisor  ·  clinical information systems manager  ·  clinical informatics director"
+  },
+  {
+   "role": "Health and Education Services Managers",
+   "isco": 1342,
+   "aka": NaN
+  },
+  {
+   "role": "Oral and Maxillofacial Surgeons",
+   "isco": 2213,
+   "aka": NaN
+  },
+  {
+   "role": "Nurse Practitioners",
+   "isco": 2214,
+   "aka": NaN
+  },
+  {
+   "role": "Family Medicine Physicians",
+   "isco": 2211,
+   "aka": NaN
+  },
+  {
+   "role": "Architectural and Engineering Managers",
+   "isco": 1342,
+   "aka": NaN
+  },
+  {
+   "role": "Biofuels/Biodiesel Technology and Product Development Managers",
+   "isco": 1342,
+   "aka": NaN
+  },
+  {
+   "role": "Chiropractors",
+   "isco": 2211,
+   "aka": NaN
+  },
+  {
+   "role": "Audiologists",
+   "isco": 2213,
+   "aka": NaN
+  },
+  {
+   "role": "Anesthesiologists",
+   "isco": 2211,
+   "aka": NaN
+  },
+  {
+   "role": "Cardiologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Dermatologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Emergency Medicine Physicians",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "General Internal Medicine Physicians",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Neurologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Obstetricians and Gynecologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Pediatricians, General",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Physicians, Pathologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Psychiatrists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Radiologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Allergists and Immunologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Hospitalists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Urologists",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Physical Medicine and Rehabilitation Physicians",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Preventive Medicine Physicians",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Sports Medicine Physicians",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Ophthalmologists, Except Pediatric",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Orthopedic Surgeons, Except Pediatric",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Pediatric Surgeons",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Surgeons, All Other",
+   "isco": 2212,
+   "aka": NaN
+  },
+  {
+   "role": "Medical and Clinical Laboratory Technologists",
+   "isco": 3212,
+   "aka": NaN
+  },
+  {
+   "role": "Cytogenetic Technologists",
+   "isco": 3212,
+   "aka": NaN
+  },
+  {
+   "role": "Cytotechnologists",
+   "isco": 3212,
+   "aka": NaN
+  },
+  {
+   "role": "Histotechnologists",
+   "isco": 3212,
+   "aka": NaN
+  },
+  {
+   "role": "Histology Technicians",
+   "isco": 3212,
+   "aka": NaN
+  },
+  {
+   "role": "Emergency Medical Technicians",
+   "isco": 2219,
+   "aka": NaN
+  },
+  {
+   "role": "Orthotists and Prosthetists",
+   "isco": 2219,
+   "aka": NaN
+  },
+  {
+   "role": "Athletic Trainers",
+   "isco": 2219,
+   "aka": NaN
+  },
+  {
+   "role": "Genetic Counselors",
+   "isco": 2219,
+   "aka": NaN
+  },
+  {
+   "role": "Surgical Assistants",
+   "isco": 2219,
+   "aka": NaN
+  },
+  {
+   "role": "Midwives",
+   "isco": 2219,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Appliance Technicians",
+   "isco": 3214,
+   "aka": NaN
+  },
+  {
+   "role": "Ophthalmic Laboratory Technicians",
+   "isco": 3214,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,182 @@
+{
+ "domain_id": "D094",
+ "domain_name": "Electronics Servicing, ICT Equipment",
+ "role_count": 35,
+ "roles": [
+  {
+   "role": "telecommunications technician",
+   "isco": 7422,
+   "aka": "telecoms systems technician  ·  communication technician  ·  telecommunications installer  ·  technician in telecommunications  ·  telecommunications service technician"
+  },
+  {
+   "role": "microelectronics engineering technician",
+   "isco": 3114,
+   "aka": "micro-electronics engineering technician  ·  microelectronics technologist  ·  microelectronic equipment technologist  ·  technician in microelectronic engineering  ·  technologist in microelectronics"
+  },
+  {
+   "role": "smart home installer",
+   "isco": 7421,
+   "aka": "home automation installer  ·  connected devices installer  ·  domotics installer  ·  home automation technician  ·  domotics technician"
+  },
+  {
+   "role": "marine electronics technician",
+   "isco": 7421,
+   "aka": "marine electronics wiring technician  ·  marine instrument operative  ·  marine electronic networks technician  ·  marine electronics repair technician  ·  marine electrical operator"
+  },
+  {
+   "role": "microelectronics maintenance technician",
+   "isco": 3114,
+   "aka": "microelectronics maintenance and repair technician  ·  industrial maintenance technician  ·  microelectronic devices maintenance technician  ·  maintenance and repair technician  ·  microelectronic systems maintenance technician"
+  },
+  {
+   "role": "microsystem engineering technician",
+   "isco": 3114,
+   "aka": "technician in microsystems  ·  micro-system engineering technician  ·  microsystem technologist  ·  microelectromechanical systems technician  ·  microelectromechanical systems technologist"
+  },
+  {
+   "role": "electronics engineering technician",
+   "isco": 3114,
+   "aka": "industrial electronics engineering technician  ·  electronic equipment technician  ·  technologist in electronics engineering  ·  signal processing technician  ·  technician in electronic equipment"
+  },
+  {
+   "role": "instrumentation engineering technician",
+   "isco": 3114,
+   "aka": "C&I technologist  ·  technologist in control and instrumentation equipment  ·  control and instrumentation technologist  ·  control and instrumentation engineering technician  ·  technician in instrumentation engineering"
+  },
+  {
+   "role": "communication infrastructure maintainer",
+   "isco": 7422,
+   "aka": "telecoms infrastructure technician  ·  communication equipment maintainer  ·  telecoms infrastructure engineer  ·  cable technician  ·  communication infrastructure maintainers"
+  },
+  {
+   "role": "radio technician",
+   "isco": 7422,
+   "aka": "radio technicians  ·  radio communications technician"
+  },
+  {
+   "role": "computer hardware engineering technician",
+   "isco": 3114,
+   "aka": "PC hardware technician  ·  computer hardware technician  ·  IT engineering technician  ·  IT hardware engineering technician  ·  PC hardware engineering technician"
+  },
+  {
+   "role": "ATM repair technician",
+   "isco": 7421,
+   "aka": "automated teller machine repair technician  ·  ATM servicer  ·  cash machine repair technician  ·  automatic teller machine repair technician  ·  cashpoint repair technician"
+  },
+  {
+   "role": "sensor engineering technician",
+   "isco": 3114,
+   "aka": "technician in sensor engineering  ·  electronics sensor technician  ·  sensor and actuator technician  ·  sensor systems technician  ·  electronic sensor technician"
+  },
+  {
+   "role": "railway electronic technician",
+   "isco": 7421,
+   "aka": "electrical train electrician  ·  rail electrician  ·  locomotive electrician  ·  overhead power engineer  ·  electrical rail electrician"
+  },
+  {
+   "role": "mobile devices technician",
+   "isco": 7422,
+   "aka": "cell phone devices technician  ·  mobile equipment technician  ·  mobile hardware technician  ·  mobile technician  ·  mobile devices technicians"
+  },
+  {
+   "role": "office equipment repair technician",
+   "isco": 7421,
+   "aka": "office facility repair inspector  ·  electronic service technician  ·  office facilities inspector  ·  office equipment service inspector  ·  office facilities manager"
+  },
+  {
+   "role": "computer hardware repair technician",
+   "isco": 7422,
+   "aka": "computer repairman  ·  computer hardware repairer  ·  computer expert  ·  computer technical support agent  ·  computer technician"
+  },
+  {
+   "role": "tramways technician",
+   "isco": 7421,
+   "aka": "aerial cable lineman  ·  tramways electrical technician  ·  transit maintenance technician  ·  lift station maintenance technician  ·  aerial technician"
+  },
+  {
+   "role": "fibre optic installer",
+   "isco": 7422,
+   "aka": "fibre optic technician  ·  fibre optic splicer"
+  },
+  {
+   "role": "computer hardware test technician",
+   "isco": 3114,
+   "aka": "computer hardware inspector  ·  inspector of computer hardware  ·  computer hardware testing technician  ·  computer hardware tester  ·  tester of computer hardware"
+  },
+  {
+   "role": "security alarm technician",
+   "isco": 7422,
+   "aka": "security alarm installer  ·  burglar alarm technician  ·  security alarm engineer  ·  intruder alarm installer  ·  fire alarm technician"
+  },
+  {
+   "role": "telecommunications equipment maintainer",
+   "isco": 7422,
+   "aka": "telecom equipment maintainer  ·  telecoms equipment maintenance engineer  ·  telecommunications equipment maintainers  ·  telecoms equipment maintainer  ·  telecommunications maintenance technician"
+  },
+  {
+   "role": "avionics technician",
+   "isco": 7421,
+   "aka": "avionics test technician  ·  avionics inspection technician  ·  avionics maintenance technician  ·  avionics installation technician  ·  avionics systems technician"
+  },
+  {
+   "role": "optoelectronic engineering technician",
+   "isco": 3114,
+   "aka": "opto-electronic technician  ·  opto-electronic engineering technician  ·  technician in optoelectronics  ·  technician in optoelectronic systems  ·  technologist in optoelectronic systems"
+  },
+  {
+   "role": "vehicle electronics installer",
+   "isco": 7421,
+   "aka": "auto technician  ·  vehicle electronics technician  ·  vehicle electronics repairer  ·  motor vehicle technician (auto electronics)  ·  motor vehicle technician, auto electronics"
+  },
+  {
+   "role": "mobile phone repair technician",
+   "isco": 7422,
+   "aka": "cellullar phone technician  ·  hand held phone technician  ·  cell phone repair technician  ·  LCD technician  ·  mobile phone repairman"
+  },
+  {
+   "role": "consumer electronics repair technician",
+   "isco": 7421,
+   "aka": "consumer electronics technician  ·  trouble-shooter  ·  consumer electronics repairman  ·  repairer  ·  repairman"
+  },
+  {
+   "role": "Telecommunications Equipment Installers and Repairers, Except Line Installers",
+   "isco": 7422,
+   "aka": NaN
+  },
+  {
+   "role": "Audiovisual Equipment Installers and Repairers",
+   "isco": 7421,
+   "aka": NaN
+  },
+  {
+   "role": "Computer, Automated Teller, and Office Machine Repairers",
+   "isco": 7421,
+   "aka": NaN
+  },
+  {
+   "role": "Electrical and Electronics Installers and Repairers, Transportation Equipment",
+   "isco": 7421,
+   "aka": NaN
+  },
+  {
+   "role": "Electrical and Electronics Repairers, Commercial and Industrial Equipment",
+   "isco": 7421,
+   "aka": NaN
+  },
+  {
+   "role": "Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",
+   "isco": 7421,
+   "aka": NaN
+  },
+  {
+   "role": "Electronic Equipment Installers and Repairers, Motor Vehicles",
+   "isco": 7421,
+   "aka": NaN
+  },
+  {
+   "role": "Security and Fire Alarm Systems Installers",
+   "isco": 7421,
+   "aka": NaN
+  }
+ ]
+}

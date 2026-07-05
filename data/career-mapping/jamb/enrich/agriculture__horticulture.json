@@ -1,0 +1,17 @@
+{
+  "jamb_name": "Horticulture",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "IBADAN", "note": "IBADAN requires five (5) credit passes including English Language, Biology/Agricultural Science, Chemistry, Mathematics and any one of Geography, Physics or Economics."},
+    {"institution": "UMUDIKE", "note": "UMUDIKE accepts Five (5) 'O' Level credit passes at not more than two (2) sittings to include: English Language, Mathematics, Chemistry, Biology, or Agricultural Science and any other science subjects; requires at least 'O' Level pass in Physics. 'O' Level credit in Agricultural Science must be backed up with at least 'O' Level pass in Biology."},
+    {"institution": "OOU", "note": "OOU, EKSU and ILORIN accept 'O' Level pass in Physics."},
+    {"institution": "IMSU", "note": "IMSU accepts 'O' Level pass in Mathematics, along with 'O' Level credit pass in Physics and vice versa."},
+    {"institution": "ABU", "note": "ABU requires five (5) `O' level credit passes including English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."},
+    {"institution": "IBADAN", "note": "IBADAN, EKSU, ILORIN and TASUED require 'O' Level credit pass in Agricultural Science and a pass in Biology."},
+    {"institution": "UDU", "note": "UDU and AAU accept 'O' Level pass in English Language."},
+    {"institution": "BIU", "note": "BIU requires at least 'O' Level pass in Physics."},
+    {"institution": "BAYERO", "note": "BAYERO requires five (5) `O' Level passes to include English Language, Mathematics, Chemistry any two (2) of Biology/Agric Science, Physics, Geography and Economics."}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "jamb_name": "Mass Communication",
+  "utme_subjects": ["Any three (3) Arts and Social Science subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language.",
+  "direct_entry": "Two (2) 'A' Level passes in relevant subjects.",
+  "institution_waivers": [
+    {"institution": "AJAYI", "note": "Direct Entry: requires two (2) 'A' Level passes or their equivalent in Literature in English and one other Arts or Social Science subject, plus three (3) 'O' Level credit passes."},
+    {"institution": "UNN", "note": "Direct Entry: candidates must possess HSC/GCE 'A' Level with passes in two (2) Arts subjects plus the UTME requirements."},
+    {"institution": "JOS", "note": "Direct Entry: accepts same in Mass Communication plus 'O' Level pass in Mathematics."},
+    {"institution": "AJAYI", "note": "UTME: requires five (5) 'O' Level credit passes to include English Language, Literature in English and three (3) other subjects from Arts or Social Sciences."},
+    {"institution": "COVENANT", "note": "UTME: requires five (5) 'O' Level credit passes in English Language, Mathematics, Literature in English, one Science subject from Biology, Health/General Science, Agricultural Science, Physics and Chemistry, one from Social Sciences or Arts (e.g. Geography, Economics, Government, Commerce, Principle of Account, Book Keeping; Arts such as CRS, History, etc.)."},
+    {"institution": "JOS", "note": "UTME: requires 'O' Level credit pass in Literature in English."},
+    {"institution": "UNN", "note": "UTME: requires credit level passes in Literature in English and an approved science subject plus 'O' Level pass in Mathematics."},
+    {"institution": "BINGHAM", "note": "UTME Subjects: requires Literature in English."},
+    {"institution": "JOS", "note": "UTME Subjects: requires Literature in English."},
+    {"institution": "UNN", "note": "UTME Subjects: requires Literature in English and any two (2) subjects out of which one must be in the Arts or Social Sciences."}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Archaeology",
+  "utme_subjects": ["Any two (2) subjects from Arts, Social Sciences and one of History, Religious Studies, Government and Geography"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language and one of the following subjects, Religious Studies, Geography, Economics and History.",
+  "direct_entry": "Two (2) 'A' Level passes in Arts or Social Sciences and one Science subject.",
+  "institution_waivers": [
+    {"institution": "ABU", "note": "ABU accepts Two 'A' level/IJMB in Geography/Biology/History or any other Subject. NCE with minimum of Merit. ABU Diploma in related subjects. UTME: ABU requires Five 'O' level credit passes which must include English Language and other Science/Arts/Social Science subjects. UTME SUBJECTS: ABU requires Use of English and any other three Subjects."},
+    {"institution": "IBADAN", "note": "IBADAN accepts 'A' Level passes in any two (2) Arts subjects. UTME: IBADAN requires five (5) 'O' Level credit passes at one sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, History, Literature in English, Government, Geography, Religious Studies, Economics, Biology, Hausa/Igbo/Yoruba."},
+    {"institution": "JOS", "note": "JOS accepts NCE Merit or ND lower credit. UTME: JOS requires five (5) 'O' Level credit passes to include English Language, History/Government, Geography and any Social Sciences/Arts subjects."},
+    {"institution": "UNN", "note": "UNN requires a) two (2) 'A' Level passes or ND/HND credit or NCE merit plus the UTME requirements b) Candidates combining Archaeology with Science/Social Sciences must satisfy the requirements in the respective programmes. UTME: UNN requires five (5) 'O' Level credit passes to include English Language and any Science subject as well as 'O' Level pass in Mathematics or its equivalent. UTME SUBJECTS: UNN accepts any three (3) subjects."}
+  ]
+}

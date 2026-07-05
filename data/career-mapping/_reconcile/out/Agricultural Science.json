@@ -1,0 +1,309 @@
+{
+ "reconciled": [
+  {
+   "programme": "Agribusiness",
+   "add": [
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "direct", "why": "Programme IS agribusiness — agriculture as an enterprise is its explicit purpose; was missing the anchor direct link."},
+    {"domain_id": "D034", "domain": "Supply Chain Management", "match_type": "functional", "why": "Agribusiness runs agricultural value/supply chains from farm to market — core functional destination."},
+    {"domain_id": "D028", "domain": "General Management & Strategy", "match_type": "functional", "why": "Business/enterprise management of agricultural firms is central to agribusiness."},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Intro to Crop Production + agriculture foundation courses give production knowledge underpinning the trade."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Capital-markets trading — no course basis; artefact of generic 'money/banking' line in intro economics."},
+    {"domain_id": "D013", "why": "Investment analysis/asset management — no finance course; spurious."},
+    {"domain_id": "D011", "why": "Quantitative finance — no quantitative-finance course; spurious."},
+    {"domain_id": "D158", "why": "Corporate finance / investment banking — no basis."},
+    {"domain_id": "D078", "why": "Social-science behavioural research — generic, not the programme's purpose."},
+    {"domain_id": "D014", "why": "Actuarial science — no statistics/actuarial course."},
+    {"domain_id": "D061", "why": "Insurance & underwriting — no basis."},
+    {"domain_id": "D060", "why": "Banking/credit — only a macro 'money creation' mention, not a functional destination."},
+    {"domain_id": "D159", "why": "Credit analysis / structured finance — no basis."},
+    {"domain_id": "D157", "why": "Tax advisory — no tax course."},
+    {"domain_id": "D015", "why": "Accounting & financial reporting — no accounting course listed."},
+    {"domain_id": "D142", "why": "Bioinformatics/genomics — general biology only, no computational-biology course."},
+    {"domain_id": "D041", "why": "Scientific R&D — agribusiness is an applied-business track, not research."},
+    {"domain_id": "D152", "why": "Museum curation/heritage — no basis; artefact of 'Nigerian Peoples & Culture' GST."},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping clerking — no basis."},
+    {"domain_id": "D051", "why": "Real estate & property management — no basis."}
+   ]
+  },
+  {
+   "programme": "B. Agriculture",
+   "add": [
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "direct", "why": "General agriculture degree — agricultural science is its purpose; anchor direct was missing."},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Principles of Agronomy + crop-production skills across the syllabus."},
+    {"domain_id": "D119", "domain": "Livestock, Poultry, Dairy & Animal Production", "match_type": "functional", "why": "Animal-resources and farm-animal identification skills in the foundation courses."},
+    {"domain_id": "D121", "domain": "Forestry, Wildlife Management & Pest Control", "match_type": "functional", "why": "Forestry/wildlife and forest-resource management skills are explicit in the syllabus."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D019", "why": "Renewable energy engineering — no energy course; spurious."},
+    {"domain_id": "D091", "why": "Driving instruction — no basis; spurious."},
+    {"domain_id": "D072", "why": "Geospatial/GIS — no surveying or GIS course in general agriculture foundation."},
+    {"domain_id": "D016", "why": "Electrical & electronics engineering — no basis."},
+    {"domain_id": "D134", "why": "Naval architecture / marine engineering — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / investment banking — no basis."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics/genomics — general biology only."},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping — no basis."},
+    {"domain_id": "D026", "why": "Public health/epidemiology — no basis."},
+    {"domain_id": "D060", "why": "Banking/credit — only macro mention, no functional basis."}
+   ]
+  },
+  {
+   "programme": "Agricultural Economics",
+   "add": [
+    {"domain_id": "D034", "domain": "Supply Chain Management", "match_type": "functional", "why": "Agricultural marketing and value-chain economics are core to the field."},
+    {"domain_id": "D028", "domain": "General Management & Strategy", "match_type": "functional", "why": "Farm/agribusiness management is a standard destination for ag-economics graduates."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Economics-and-policy analysis (welfare economics, national income, trade) supports agricultural policy work."},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Principles of Crop Production + production-economics grounding."},
+    {"domain_id": "D119", "domain": "Livestock, Poultry, Dairy & Animal Production", "match_type": "functional", "why": "Animal-resources economics within the agricultural foundation."}
+   ],
+   "remove": [
+    {"domain_id": "D096", "why": "Machinery mechanics wrongly marked DIRECT — mechanization is a side mention, not the purpose of ag-economics."},
+    {"domain_id": "D062", "why": "Trading/capital markets — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D157", "why": "Tax advisory — no tax course."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D078", "why": "Behavioural-science research — generic, covered better by economics link."},
+    {"domain_id": "D159", "why": "Credit analysis / structured finance — no basis."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D060", "why": "Banking/credit — only macro 'money creation' mention."},
+    {"domain_id": "D015", "why": "Accounting — no accounting course listed."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D152", "why": "Museum/heritage — no basis."},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping — no basis."},
+    {"domain_id": "D041", "why": "Scientific R&D — ag-economics is an applied social-science track, not lab research."}
+   ]
+  },
+  {
+   "programme": "Agricultural Extension",
+   "add": [
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Extension IS rural community development and advisory outreach — its true home; rural sociology and social-change skills are explicit."},
+    {"domain_id": "D040", "domain": "Vocational & Technical Training", "match_type": "functional", "why": "Extension is adult/farmer education and technical training on agricultural practice."},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Principles of Soil Science + agronomy/crop knowledge extension officers must transmit."}
+   ],
+   "remove": [
+    {"domain_id": "D096", "why": "Machinery mechanics wrongly DIRECT — mechanization mention only, not extension's purpose."},
+    {"domain_id": "D124", "why": "Community HEALTH extension is a different (primary-health-care) domain; agricultural extension is not health delivery — replaced by D046 community development."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D157", "why": "Tax advisory — no basis."},
+    {"domain_id": "D060", "why": "Banking/credit — only macro mention."},
+    {"domain_id": "D159", "why": "Credit analysis — no basis."},
+    {"domain_id": "D030", "why": "Marketing/brand — not an extension destination."},
+    {"domain_id": "D015", "why": "Accounting — no basis."},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping — no basis."},
+    {"domain_id": "D031", "why": "Sales & business development — not extension's purpose."}
+   ]
+  },
+  {
+   "programme": "Animal Science",
+   "add": [
+    {"domain_id": "D090", "domain": "Animal Care, Grooming & Pet Services", "match_type": "functional", "why": "Animal handling/husbandry transfers as a foothold, but it is adjacent (pet-service domain) not the direct production purpose — downgraded from direct."}
+   ],
+   "remove": [
+    {"domain_id": "D090", "why": "Re-added as functional; pet-care/grooming is not the DIRECT purpose of a livestock-production degree."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics/genomics — breeding is taught but no computational-genomics course."},
+    {"domain_id": "D026", "why": "Public health — no basis (veterinary link already covers animal health)."},
+    {"domain_id": "D078", "why": "Behavioural-science research — generic, not animal science."},
+    {"domain_id": "D138", "why": "Biomedical engineering / device design — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D060", "why": "Banking/credit — only macro mention."}
+   ]
+  },
+  {
+   "programme": "Crop Science",
+   "add": [
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Explicit skills on crop distribution across climatic regions and agro-ecological zones link to agro-climatology."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D027", "why": "Biomedical/biotech research — no biotech course; spurious."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D161", "why": "Humanitarian aid / emergency response — no basis; spurious."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D026", "why": "Public health — no basis."}
+   ]
+  },
+  {
+   "programme": "Family and Consumer Sciences",
+   "add": [
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Food and nutrition is a core pillar of family/consumer sciences (home economics)."},
+    {"domain_id": "D092", "domain": "Culinary Arts, Catering & Food Service Operations", "match_type": "functional", "why": "Food preparation, catering and household food service are standard FCS competencies."},
+    {"domain_id": "D075", "domain": "Fashion, Textiles & Apparel", "match_type": "functional", "why": "Clothing and textiles is a classic FCS/home-economics strand."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Family welfare and community/home management orientation of the discipline."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D149", "why": "Diplomacy / international relations — no basis; spurious."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D041", "why": "Scientific R&D — FCS is an applied home-science track, not lab research."},
+    {"domain_id": "D161", "why": "Humanitarian aid — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics — no basis."},
+    {"domain_id": "D152", "why": "Museum/heritage — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."},
+    {"domain_id": "D073", "why": "Library/archive management — no basis."},
+    {"domain_id": "D151", "why": "Criminology / criminal justice — no basis; spurious."},
+    {"domain_id": "D090", "why": "Animal care/grooming — no basis for a family/consumer track."},
+    {"domain_id": "D119", "why": "Livestock production — not an FCS destination."}
+   ]
+  },
+  {
+   "programme": "Fisheries and Aquaculture",
+   "add": [
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Fisheries sits within the agricultural foundation; shared agriculture syllabus provides the base."},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Seafood technology and fish processing/preservation are part of the field."},
+    {"domain_id": "D119", "domain": "Livestock, Poultry, Dairy & Animal Production", "match_type": "functional", "why": "Explicit animal-production skills (feeds, housing, breeding, health) applied to aquatic stock."},
+    {"domain_id": "D066", "domain": "Veterinary Science & Animal Health", "match_type": "functional", "why": "Fish health management and anatomy/physiology skills are listed."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D159", "why": "Credit analysis — no basis."},
+    {"domain_id": "D060", "why": "Banking/credit — only macro mention."},
+    {"domain_id": "D157", "why": "Tax advisory — no basis."},
+    {"domain_id": "D026", "why": "Public health — no basis."},
+    {"domain_id": "D072", "why": "Geospatial/GIS — no surveying or GIS course."}
+   ]
+  },
+  {
+   "programme": "B.Sc./B.Tech Food Science and Technology",
+   "add": [
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "functional", "why": "Food microbiology/biotechnology is relevant but adjacent — downgraded from DIRECT to functional; not the programme's core identity."},
+    {"domain_id": "D092", "domain": "Culinary Arts, Catering & Food Service Operations", "match_type": "functional", "why": "Food preparation/service and product development connect food technology to catering operations."},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Food processing is a unit-operations / process-industry discipline (thermal processing, preservation)."}
+   ],
+   "remove": [
+    {"domain_id": "D027", "why": "Re-added as functional; biotech research is not the DIRECT purpose — Food Science & Technology (D048) is the anchor."},
+    {"domain_id": "D142", "why": "Bioinformatics/genomics — no computational-biology course."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D121", "why": "Forestry/wildlife — not a food-technology destination."},
+    {"domain_id": "D020", "why": "Environmental engineering — no basis for food track."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."},
+    {"domain_id": "D138", "why": "Biomedical engineering — no basis."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."}
+   ]
+  },
+  {
+   "programme": "Forest Resources and Wildlife Management",
+   "add": [
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Forest ecology, ecosystems and sustainable-management skills connect to climate/carbon and atmospheric science."}
+   ],
+   "remove": [
+    {"domain_id": "D029", "why": "Human Resources wrongly marked DIRECT — no HR content; spurious."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D027", "why": "Biomedical/biotech research — no biotech course."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D026", "why": "Public health — no basis."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."}
+   ]
+  },
+  {
+   "programme": "Horticulture and Landscape Management",
+   "add": [
+    {"domain_id": "D021", "domain": "Architecture & Urban Planning", "match_type": "functional", "why": "Landscape design and green-space/urban planting management give a landscape-architecture foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D027", "why": "Biomedical/biotech — no biotech course."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D119", "why": "Livestock production — not a horticulture destination."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."},
+    {"domain_id": "D149", "why": "Diplomacy / international relations — no basis; spurious."},
+    {"domain_id": "D066", "why": "Veterinary/animal health — no animals in a horticulture track."}
+   ]
+  },
+  {
+   "programme": "Soil Science",
+   "add": [
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "direct", "why": "Soil science is a branch of agricultural science — upgraded to the DIRECT anchor (was only functional)."},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Soil-crop management, fertility and agronomy skills underpin crop production."},
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Explicit skill on climate-change / soil-management relationships."},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Sustainable soil use, land degradation and environmental soil management."}
+   ],
+   "remove": [
+    {"domain_id": "D047", "why": "Removed as functional; re-added as DIRECT (soil science IS agricultural science)."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D019", "why": "Renewable energy engineering — no basis."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."},
+    {"domain_id": "D091", "why": "Driving instruction — no basis; spurious."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D093", "why": "Electrical installation trades — no basis."},
+    {"domain_id": "D009", "why": "Data science — no data/statistics-programming course."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D027", "why": "Biomedical/biotech — no biotech course."},
+    {"domain_id": "D030", "why": "Marketing/brand — not a soil-science destination."}
+   ]
+  },
+  {
+   "programme": "Water Resources Management and Agro-Meteorology",
+   "add": [
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "functional", "why": "Watershed mapping, hydrology and agro-meteorological data map to GIS/geospatial analysis."},
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Irrigation, crop-water requirements and agro-meteorology applied to crop production."}
+   ],
+   "remove": [
+    {"domain_id": "D029", "why": "Human Resources wrongly marked DIRECT — no HR content; spurious."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D142", "why": "Bioinformatics — general biology only."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D027", "why": "Biomedical/biotech — no biotech course."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D019", "why": "Renewable energy engineering — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D066", "why": "Veterinary/animal health — no basis."},
+    {"domain_id": "D026", "why": "Public health — no basis."},
+    {"domain_id": "D030", "why": "Marketing/brand — not relevant."},
+    {"domain_id": "D074", "why": "OHSE — no meaningful safety course basis for this track."}
+   ]
+  }
+ ]
+}

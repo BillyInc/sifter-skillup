@@ -1,0 +1,127 @@
+{"reviews":[
+{"domain_id":"D092","domain_name":"Culinary Arts, Catering","verdict":"issues",
+"remove_roles":[
+ {"role":"Chefs and Cooks","isco":5120,"reason":"junk group-label row (aka=NaN), SOC/ISCO occupation-group header, not a role"},
+ {"role":"Food and Beverage Serving Workers","isco":5131,"reason":"junk group-label row (aka=NaN), SOC minor-group header"},
+ {"role":"Chefs and Head Cooks","isco":3434,"reason":"junk group-label row (aka=NaN), SOC group header; duplicates missing 'chef' concept"},
+ {"role":"Fast Food and Counter Workers","isco":5241,"reason":"junk group-label row (aka=NaN), SOC group header; ISCO 5241 is wrong (models/casino, mislabeled)"},
+ {"role":"Waiters and Waitresses","isco":5131,"reason":"junk group-label row (aka=NaN), SOC group header duplicating waiter/waitress"},
+ {"role":"Dishwashers","isco":9412,"reason":"junk group-label row (aka=NaN), SOC group header duplicating kitchen porter"},
+ {"role":"Food Preparation Workers","isco":9411,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Dining Room and Cafeteria Attendants and Bartender Helpers","isco":9411,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Food Preparation and Serving Related Workers, All Other","isco":9412,"reason":"junk group-label row (aka=NaN), residual SOC catch-all category"},
+ {"role":"Slaughterers and Meat Packers","isco":9411,"reason":"junk group-label row (aka=NaN) AND cross-domain contamination: meat processing/slaughtering, not culinary arts (belongs in food processing ISCO 7511)"}
+],
+"add_roles":[
+ {"role":"chef","isco":3434,"skills":["menu design","food preparation","kitchen team leadership","cost/portion control","food safety (HACCP)","recipe development"],"reason":"core culinary role absent from domain; ISCO 3434 chefs; the deleted 'Chefs and Head Cooks' junk row shows the concept was intended but only as a group label"},
+ {"role":"pastry cook","isco":7512,"skills":["baking","pastry lamination","dessert plating","dough preparation","confectionery","oven operation"],"reason":"standard ESCO culinary role missing; distinct from general cook; note ISCO 7512 bakers/pastry-cooks"}
+],
+"overfanout_roles":[
+ {"role":"sommelier","reason":"wine sommelier / sommelier / head sommelier / beer sommelier is an ESCO fan-out of one occupation (ISCO 5131) into commodity variants; keep 'sommelier' and optionally 'head sommelier', consider collapsing 'wine sommelier' and 'beer sommelier'"},
+ {"role":"cook","reason":"cook / fish cook / grill cook / diet cook / industrial cook are ESCO subject/commodity fan-out of ISCO 5120; retain a couple, but fish/grill/diet are variant granularity of one occupation"}
+],
+"rename_to":null,
+"notes":"10 junk aka=NaN group-label rows removed (one, Slaughterers and Meat Packers, also cross-domain). Core 'chef' and 'pastry cook' roles missing. Heavy ESCO commodity fan-out on sommelier and cook variants."},
+{"domain_id":"D093","domain_name":"Electrical Installation, Wiring","verdict":"issues",
+"remove_roles":[
+ {"role":"Electrical Equipment Installers and Repairers","isco":7412,"reason":"junk group-label row (aka=NaN), SOC occupation-group header"},
+ {"role":"Electric Motor, Power Tool, and Related Repairers","isco":7412,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Industrial Machinery Mechanics","isco":7412,"reason":"junk group-label row (aka=NaN) AND cross-domain: machinery mechanics (ISCO 7233) belong in mechanical maintenance, not electrical wiring"},
+ {"role":"ski lift operator","isco":7412,"reason":"cross-domain contamination: leisure/lift ride operation, not electrical installation"},
+ {"role":"theme park technician","isco":7412,"reason":"cross-domain contamination: amusement-ride mechanical maintenance, not electrical wiring"},
+ {"role":"power tool repair technician","isco":7412,"reason":"cross-domain: small-engine/power-tool repair, not electrical installation & wiring"}
+],
+"add_roles":[
+ {"role":"electrical engineering technician","isco":3113,"skills":["circuit testing","electrical schematics","fault diagnosis","installation supervision","compliance/regulations","commissioning"],"reason":"associate-professional tier absent; domain is all ISCO 74xx tradespeople with no 3113 technician bridge"}
+],
+"overfanout_roles":[
+ {"role":"electrician","reason":"electrician / building / domestic / industrial / event / marine / mining electrician are ESCO context fan-out of ISCO 7411/7412; keep 'electrician' plus 1-2 distinct specialisations, collapse the rest"},
+ {"role":"lineworker","reason":"cable jointer / overhead line worker / electricity distribution technician / street lighting electrician are ISCO 7413 distribution-line fan-out; retain overhead line worker + one distribution role"}
+],
+"rename_to":null,
+"notes":"3 junk aka=NaN group rows removed (Industrial Machinery Mechanics also cross-domain). ski lift operator, theme park technician, power tool repair technician are contamination. Strong ESCO context fan-out across electrician variants and 7413 line workers. Missing a 3113 technician tier."},
+{"domain_id":"D094","domain_name":"Electronics Servicing, ICT Equipment","verdict":"issues",
+"remove_roles":[
+ {"role":"Telecommunications Equipment Installers and Repairers, Except Line Installers","isco":7422,"reason":"junk group-label row (aka=NaN), SOC occupation-group header"},
+ {"role":"Audiovisual Equipment Installers and Repairers","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Computer, Automated Teller, and Office Machine Repairers","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Electrical and Electronics Installers and Repairers, Transportation Equipment","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Electrical and Electronics Repairers, Commercial and Industrial Equipment","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Electrical and Electronics Repairers, Powerhouse, Substation, and Relay","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Electronic Equipment Installers and Repairers, Motor Vehicles","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header; overlaps vehicle electronics installer"},
+ {"role":"Security and Fire Alarm Systems Installers","isco":7421,"reason":"junk group-label row (aka=NaN), SOC group header duplicating security alarm technician"},
+ {"role":"avionics technician","isco":7421,"reason":"cross-domain contamination: aircraft avionics maintenance belongs in aviation/aerospace maintenance domain, not general ICT/electronics servicing"}
+],
+"add_roles":[],
+"overfanout_roles":[
+ {"role":"microelectronics/microsystem engineering technician","reason":"microelectronics / microsystem / sensor / optoelectronic / instrumentation engineering technician are ESCO subject fan-out of ISCO 3114; keep electronics engineering technician + microelectronics, collapse the sensor/optoelectronic/microsystem subject variants"},
+ {"role":"computer hardware technician","reason":"computer hardware engineering technician / computer hardware repair technician / computer hardware test technician are activity fan-out of one occupation; retain one repair + one engineering technician"},
+ {"role":"mobile devices technician","reason":"mobile devices technician / mobile phone repair technician overlap heavily (ISCO 7422); collapse to one"},
+ {"role":"telecommunications equipment maintainer","reason":"telecommunications technician / equipment maintainer / communication infrastructure maintainer overlap (ISCO 7422); retain telecommunications technician + one maintainer"}
+],
+"rename_to":null,
+"notes":"8 junk aka=NaN SOC group rows removed. avionics technician is aviation cross-domain contamination. Substantial ESCO subject fan-out in the 3114 microelectronics/sensor/optoelectronic cluster and duplicate computer-hardware / mobile / telecom technician variants. Otherwise a coherent electronics-servicing domain."},
+{"domain_id":"D095","domain_name":"Motor Vehicle Mechanics, Repairs","verdict":"issues",
+"remove_roles":[
+ {"role":"Bicycle Repairers","isco":7234,"reason":"junk group-label row (aka=NaN), SOC group header duplicating bicycle mechanic"},
+ {"role":"Tire Repairers and Changers","isco":7234,"reason":"junk group-label row (aka=NaN), SOC group header duplicating tyre fitter"}
+],
+"add_roles":[
+ {"role":"motor vehicle body repairer","isco":7231,"skills":["panel beating","dent removal","welding","body alignment","spray painting prep","chassis straightening"],"reason":"core panel/body-repair trade missing; domain has mechanical roles but no dedicated body-repair role (coachbuilder is a niche variant)"}
+],
+"overfanout_roles":[
+ {"role":"vehicle technician","reason":"vehicle technician / roadside vehicle technician / vehicle maintenance attendant / automotive brake technician are ESCO context/subject fan-out of ISCO 7231; keep vehicle technician + brake technician, collapse the maintenance-attendant/roadside variants"}
+],
+"rename_to":null,
+"notes":"2 junk aka=NaN SOC group rows removed. Otherwise a tight, on-topic vehicle-repair domain (ISCO 7231/7234). Some ESCO context fan-out on the generic 7231 vehicle technician variants. Added a dedicated body/panel repair role."},
+{"domain_id":"D096","domain_name":"Agricultural","verdict":"issues",
+"remove_roles":[
+ {"role":"Mechanics and Machinery Repairers","isco":7233,"reason":"junk group-label row (aka=NaN), SOC/ISCO occupation-group header"},
+ {"role":"Forest and Conservation Workers","isco":8341,"reason":"junk group-label row (aka=NaN), SOC group header"},
+ {"role":"Farm Equipment Mechanics and Service Technicians","isco":7233,"reason":"junk group-label row (aka=NaN), SOC group header duplicating agricultural machinery technician"},
+ {"role":"Automotive Body and Related Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: automotive body repair, not agricultural"},
+ {"role":"Automotive Glass Installers and Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: automotive glazing, not agricultural"},
+ {"role":"Bus and Truck Mechanics and Diesel Engine Specialists","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: motor vehicle mechanics (ISCO 7231), not agricultural"},
+ {"role":"Mobile Heavy Equipment Mechanics, Except Engines","isco":7233,"reason":"junk group-label row (aka=NaN), SOC group header; heavy-equipment (construction) not agricultural"},
+ {"role":"Rail Car Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: rail rolling-stock repair, not agricultural"},
+ {"role":"Recreational Vehicle Service Technicians","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: RV service, not agricultural"},
+ {"role":"Mechanical Door Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: building door repair, not agricultural"},
+ {"role":"Control and Valve Installers and Repairers, Except Mechanical Door","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: industrial valve/instrument repair, not agricultural"},
+ {"role":"Home Appliance Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: domestic appliance repair, not agricultural"},
+ {"role":"Millwrights","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: industrial millwright, not agricultural"},
+ {"role":"Wind Turbine Service Technicians","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: wind energy maintenance, not agricultural"},
+ {"role":"Commercial Divers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: commercial diving (ISCO 7541), grossly mislabeled to 7233"},
+ {"role":"Locksmiths and Safe Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: locksmithing (ISCO 7222), not agricultural"},
+ {"role":"Manufactured Building and Mobile Home Installers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: modular building installation, not agricultural"},
+ {"role":"Signal and Track Switch Repairers","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: rail signalling repair, not agricultural"},
+ {"role":"Helpers--Installation, Maintenance, and Repair Workers","isco":7233,"reason":"junk group-label row (aka=NaN), SOC helper catch-all group header"},
+ {"role":"Installation, Maintenance, and Repair Workers, All Other","isco":7233,"reason":"junk group-label row (aka=NaN), SOC residual catch-all header"},
+ {"role":"Geothermal Technicians","isco":7233,"reason":"junk group-label row (aka=NaN) AND cross-domain: geothermal energy tech, not agricultural"},
+ {"role":"Dredge Operators","isco":8341,"reason":"junk group-label row (aka=NaN) AND cross-domain: dredging plant operation, not agricultural"},
+ {"role":"marine fitter","isco":7233,"reason":"cross-domain contamination: shipbuilding/marine fitting, not agricultural"},
+ {"role":"fisheries assistant engineer","isco":7233,"reason":"cross-domain contamination: fishing-vessel marine engineering, not agricultural machinery"},
+ {"role":"marine mechanic","isco":7233,"reason":"cross-domain contamination: ship/marine engine mechanics, not agricultural"},
+ {"role":"mining equipment mechanic","isco":7233,"reason":"cross-domain contamination: mining machinery maintenance, not agricultural"},
+ {"role":"construction equipment technician","isco":7233,"reason":"cross-domain contamination: construction/heavy plant, not agricultural"},
+ {"role":"crane technician","isco":7233,"reason":"cross-domain contamination: crane/hoist maintenance, not agricultural"},
+ {"role":"forge equipment technician","isco":7233,"reason":"cross-domain contamination: forge/foundry equipment, not agricultural"},
+ {"role":"moulding machine technician","isco":7233,"reason":"cross-domain contamination: plastics/casting moulding equipment, not agricultural"},
+ {"role":"pneumatic systems technician","isco":7233,"reason":"cross-domain contamination: generic industrial pneumatics, not agricultural"},
+ {"role":"rotating equipment mechanic","isco":7233,"reason":"cross-domain contamination: industrial compressor/rotating plant, not agricultural"},
+ {"role":"industrial machinery mechanic","isco":7233,"reason":"cross-domain contamination: generic industrial machinery, not agricultural"},
+ {"role":"greaser","isco":7233,"reason":"cross-domain contamination: generic industrial lubrication technician, not agricultural"},
+ {"role":"fluid power technician","isco":7233,"reason":"cross-domain contamination: generic industrial hydraulics/fluid-power, not agricultural"}
+],
+"add_roles":[
+ {"role":"crop farmer","isco":6111,"skills":["crop planting","soil preparation","irrigation","pest and weed control","harvesting","farm record-keeping"],"reason":"the actual core agricultural production occupation is entirely absent; domain contains only machinery roles, no farming role"},
+ {"role":"mixed crop and livestock farmer","isco":6130,"skills":["crop husbandry","animal husbandry","feeding and breeding","land management","farm planning","produce marketing"],"reason":"standard subsistence/mixed farming occupation missing; central to an 'Agricultural' domain"},
+ {"role":"agronomist","isco":2132,"skills":["crop science","soil analysis","yield optimisation","agronomic advisory","field trials","fertiliser/pesticide planning"],"reason":"professional-tier agricultural adviser absent; domain has no 2132 farming/forestry adviser bridge"},
+ {"role":"farmworker / agricultural labourer","isco":9211,"skills":["planting","weeding","harvesting","crop handling","basic machinery assistance","livestock tending"],"reason":"elementary agricultural worker missing entirely despite being the largest agricultural workforce category"}
+],
+"overfanout_roles":[
+ {"role":"land-based machinery technician","reason":"land-based machinery technician / agricultural machinery technician / forestry machinery technician are near-duplicate ISCO 7233 agricultural-machinery roles; keep agricultural machinery technician + forestry machinery technician, collapse the generic land-based variant"},
+ {"role":"land-based machinery operator","reason":"land-based machinery operator / supervisor / forestry equipment operator are ISCO 8341 context fan-out; retain operator + supervisor + one forestry — the legitimate agricultural equipment operators"}
+],
+"rename_to":null,
+"notes":"Severe domain-identity failure: labelled 'Agricultural' but ~85% of rows are ISCO 7233 industrial/marine/mining/construction machinery contamination plus a huge junk aka=NaN SOC group-label block. 22 junk group rows removed (nearly all also cross-domain: automotive, rail, wind turbine, diver, locksmith, geothermal, dredge). 12 further cross-domain machinery fan-out roles removed (marine/mining/construction/forge/pneumatic/industrial). Genuinely agricultural survivors: agricultural machinery technician, land-based machinery technician/operator/supervisor, forestry equipment operator, forestry machinery technician. NO actual farming/crop/livestock production roles existed — added crop farmer, mixed farmer, agronomist, farmworker. Domain needs substantial rebuild toward ISCO 61xx/92xx agricultural production, not just 7233 machinery."}
+]}

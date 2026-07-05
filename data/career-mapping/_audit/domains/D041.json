@@ -1,0 +1,232 @@
+{
+ "domain_id": "D041",
+ "domain_name": "Scientific Research",
+ "role_count": 45,
+ "roles": [
+  {
+   "role": "chemist",
+   "isco": 2113,
+   "aka": "chemistry technician  ·  pharmacologist  ·  chemical engineer  ·  toxicologist  ·  environmental chemist"
+  },
+  {
+   "role": "biotechnical technician",
+   "isco": 3141,
+   "aka": "biotechnical laboratory specialist  ·  biotechnical laboratory worker  ·  biotechnical laboratory employee  ·  biotechnological technician  ·  biotechnical laboratory technician"
+  },
+  {
+   "role": "cosmetic chemist",
+   "isco": 2113,
+   "aka": "research chemist  ·  cosmetics formulation chemist  ·  cosmetics formulation development chemist  ·  skin care formulation chemist  ·  cosmetics formulator"
+  },
+  {
+   "role": "environmental scientist",
+   "isco": 2133,
+   "aka": "geologist  ·  mineral technician  ·  geological technician  ·  soil scientist  ·  land survey technician"
+  },
+  {
+   "role": "chemical application specialist",
+   "isco": 2113,
+   "aka": "specialist chemist  ·  chemical application technician  ·  technical application specialist chemist  ·  application specialist chemist  ·  product formulation chemist"
+  },
+  {
+   "role": "agricultural technician",
+   "isco": 3142,
+   "aka": "agricultural research assistant  ·  bacteriological testing coordinator  ·  horticultural technician  ·  aquaculture technician  ·  biotechnician"
+  },
+  {
+   "role": "water quality analyst",
+   "isco": 2133,
+   "aka": "water quality specialist  ·  drinking water quality technician  ·  potable water quality laboratory analyst  ·  drinking water quality specialist  ·  potable water quality analyst"
+  },
+  {
+   "role": "botanical technician",
+   "isco": 3141,
+   "aka": "horticulturist  ·  forest technician  ·  green house operations supervisor  ·  field botany technician  ·  naturalist"
+  },
+  {
+   "role": "biology technician",
+   "isco": 3141,
+   "aka": "biologist  ·  marine biologist  ·  biology laboratory technician  ·  animal technician  ·  biological technologist"
+  },
+  {
+   "role": "pipeline environmental project manager",
+   "isco": 2133,
+   "aka": "supervisor of pipeline environmental projects  ·  pipeline environmental impact manager  ·  pipeline environmental impact analyst  ·  manager of pipeline environmental projects  ·  pipeline environmental project supervisor"
+  },
+  {
+   "role": "scientific laboratory technician",
+   "isco": 3141,
+   "aka": "laboratory technology specialist  ·  lab assistant  ·  chemistry laboratory assistant  ·  laboratory assistant  ·  laboratory technology expert"
+  },
+  {
+   "role": "analytical chemist",
+   "isco": 2113,
+   "aka": "chemist  ·  analytical chemistry analyst  ·  analytical chemistry scientist  ·  chemistry research analyst  ·  chrystalographer"
+  },
+  {
+   "role": "astronomer",
+   "isco": 2111,
+   "aka": "astronomers  ·  astronomy research scientist  ·  astronomy science researcher  ·  astronomy researcher  ·  astronomy scholar"
+  },
+  {
+   "role": "environmental programme coordinator",
+   "isco": 2133,
+   "aka": "environmental consultant  ·  environmental auditor  ·  environmental officer  ·  programme coordinator environment  ·  environmental health officer"
+  },
+  {
+   "role": "airport environment officer",
+   "isco": 2133,
+   "aka": "airport environmental officer  ·  airport environmental expert  ·  airport environmental planning expert"
+  },
+  {
+   "role": "soil scientist",
+   "isco": 2133,
+   "aka": "soil analyst  ·  senior soil scientist  ·  soil biology specialist  ·  soil technician  ·  soil wetland scientist"
+  },
+  {
+   "role": "groundwater monitoring technician",
+   "isco": 2133,
+   "aka": "environmental protection technician  ·  environmental conservation technician  ·  groundwater protection technician  ·  groundwater laboratory technician  ·  groundwater sampling technician"
+  },
+  {
+   "role": "physicist",
+   "isco": 2111,
+   "aka": "physics scholar  ·  forensic physicist  ·  neurologist  ·  physics analyst  ·  physics scientist"
+  },
+  {
+   "role": "nature conservation officer",
+   "isco": 2133,
+   "aka": "forester  ·  park ranger  ·  fish and game warden  ·  countryside ranger  ·  zoo field conservation officer"
+  },
+  {
+   "role": "sensory scientist",
+   "isco": 2113,
+   "aka": "sensory and consumer research scientist  ·  consumer and sensory scientist  ·  sensory science consultant  ·  sensory research scientist  ·  chocolate scientist"
+  },
+  {
+   "role": "ecologist",
+   "isco": 2133,
+   "aka": "environmental scientist  ·  conservationist scientist  ·  aquaculture ecologist  ·  ecologists  ·  wildlife ecologist"
+  },
+  {
+   "role": "biochemistry technician",
+   "isco": 3141,
+   "aka": "biochemistry lab technician  ·  biology technician  ·  biochemistry laboratory technician  ·  biology technologist  ·  chemist"
+  },
+  {
+   "role": "chemical tester",
+   "isco": 2113,
+   "aka": "metal chemical tester  ·  chemical quality control analyst  ·  chemical element analyst"
+  },
+  {
+   "role": "aquaculture site supervisor",
+   "isco": 3142,
+   "aka": "fish farm site manager  ·  fish culture site manager  ·  fish farm site supervisor  ·  supervisor of aquaculture sites  ·  fishery site supervisor"
+  },
+  {
+   "role": "viticulture adviser",
+   "isco": 3142,
+   "aka": "viniculture adviser  ·  wine production adviser  ·  viticulturist  ·  viniculturist  ·  adviser on viticulture"
+  },
+  {
+   "role": "cosmologist",
+   "isco": 2111,
+   "aka": "evolutionary cosmologist  ·  cosmology scientist  ·  observational cosmologist  ·  theoretical cosmologist  ·  cosmology data scientist"
+  },
+  {
+   "role": "aquaculture environmental analyst",
+   "isco": 2133,
+   "aka": "fish farming environmental specialist  ·  specialist in aquaculture environmental analysis  ·  aquaculture environmental scientist  ·  aquaculture environmental specialist  ·  marine scientist"
+  },
+  {
+   "role": "countryside officer",
+   "isco": 2133,
+   "aka": "park ranger  ·  natural areas maintenance team leader  ·  rural areas officer  ·  countryside officers"
+  },
+  {
+   "role": "fragrance chemist",
+   "isco": 2113,
+   "aka": "application engineer  ·  fragrance formulator  ·  fragrance developer  ·  perfume and cosmetics formulator  ·  fragrance product developer"
+  },
+  {
+   "role": "conservation scientist",
+   "isco": 2133,
+   "aka": "wildlife biologist  ·  environmental scientist  ·  park naturalist  ·  park ranger  ·  conservationist"
+  },
+  {
+   "role": "environmental technician",
+   "isco": 2133,
+   "aka": "environmental protection technician  ·  environmental conservation technician  ·  pollution control technician  ·  groundwater protection technician  ·  pollution prevention technician"
+  },
+  {
+   "role": "bacteriology technician",
+   "isco": 3141,
+   "aka": "biochemistry lab technician  ·  biology technician  ·  biochemistry laboratory technician  ·  biology technologist  ·  chemist"
+  },
+  {
+   "role": "aquaculture quality supervisor",
+   "isco": 3142,
+   "aka": "supervisor of aquaculture quality  ·  fish farming supervisor  ·  aquaculture quality manager"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  },
+  {
+   "role": "natural resources consultant",
+   "isco": 2133,
+   "aka": "natural resource consultant  ·  natural resources adviser  ·  natural resources specialist  ·  natural resources expert  ·  resources consultant"
+  },
+  {
+   "role": "air pollution analyst",
+   "isco": 2133,
+   "aka": "environmental analyst  ·  air quality consultant  ·  air environment technician  ·  air quality monitoring technician  ·  air quality technician"
+  },
+  {
+   "role": "zoology technician",
+   "isco": 3141,
+   "aka": "zookeeper  ·  zoologist  ·  wildlife biologist  ·  wildlife manager  ·  zoology lab technician"
+  },
+  {
+   "role": "Environmental Restoration Planners",
+   "isco": 2113,
+   "aka": NaN
+  },
+  {
+   "role": "Industrial Ecologists",
+   "isco": 2113,
+   "aka": NaN
+  },
+  {
+   "role": "Physical Scientists, All Other",
+   "isco": 2111,
+   "aka": NaN
+  },
+  {
+   "role": "Remote Sensing Scientists and Technologists",
+   "isco": 2111,
+   "aka": NaN
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "physicist",
+   "isco": 2111,
+   "aka": "physics scholar  ·  forensic physicist  ·  neurologist  ·  physics analyst  ·  physics scientist"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  }
+ ]
+}

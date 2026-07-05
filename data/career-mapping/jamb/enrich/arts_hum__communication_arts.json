@@ -1,0 +1,14 @@
+{
+  "jamb_name": "Communication Arts",
+  "utme_subjects": ["Any three (3) Arts or Social Science subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes or equivalent including English Language, Literature in English, Arts/Music depending on the combination.",
+  "direct_entry": "Two 'A' Level passes or equivalent in Arts or Social Science subjects.",
+  "institution_waivers": [
+    {"institution": "IBADAN", "note": "Direct Entry: accepts ND upper credit Mass Communication plus 'O' Level credit pass in Literature in English; accepts two (2) 'A' Level passes to include Literature in English and one other Arts or Social Science subject."},
+    {"institution": "BOWEN", "note": "UTME: requires five (5) 'O' Level credit passes to include English Language, Literature in English and any other three (3) Arts or Social Science subjects."},
+    {"institution": "IBADAN", "note": "UTME: requires five (5) 'O' Level credit passes at one sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, Literature in English and any other three (3) or four (4) subjects from Arts, Social Sciences or Sciences. Note that Government and Economics are not Arts subjects."},
+    {"institution": "UYO", "note": "Accepts a D7 in Mathematics."},
+    {"institution": "BOWEN and IGBINEDION", "note": "UTME Subjects: accept any other subjects in addition to Literature in English."},
+    {"institution": "UYO", "note": "UTME Subjects: Music/Literature in English/Fine Arts and any two (2) Arts or Social Science subjects."}
+  ]
+}

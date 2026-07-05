@@ -1,0 +1,100 @@
+{"reviews":[
+{
+"domain_id":"D102",
+"domain_name":"Carpentry, Joinery, Wood Technology",
+"verdict":"issues",
+"remove_roles":[
+"Cabinetmakers and Bench Carpenters (ISCO 7522, aka=NaN junk group-label row; duplicates 'cabinet maker')",
+"Sawing Machine Setters, Operators, and Tenders, Wood (ISCO 7521, aka=NaN junk group-label row)",
+"Woodworking Machine Setters, Operators, and Tenders, Except Sawing (ISCO 7523, aka=NaN junk group-label row)",
+"Woodworkers, All Other (ISCO 7521, aka=NaN junk 'All Other' group-label row)",
+"construction scaffolder (ISCO 7119, construction/scaffolding trade, not woodworking; cross-domain contamination)",
+"tent installer (ISCO 7119, event/construction labour, not woodworking; cross-domain)",
+"steeplejack (ISCO 7119, height/rope-access construction, not woodworking; cross-domain)",
+"demolition worker (ISCO 7119, demolition/construction, not woodworking; cross-domain)",
+"basketmaker (ISCO 7317, belongs to Handicraft/Basketry domain D105; cross-domain)"
+],
+"add_roles":[],
+"overfanout_roles":[],
+"rename_to":null,
+"notes":"4 aka=NaN junk group-label rows removed. Several ISCO 7119 general-construction roles (scaffolder, tent installer, steeplejack, demolition worker) are cross-domain contamination from construction. 'manufactured wooden building assembler' (7119) is borderline but wood-specific so kept. basketmaker overlaps D105. Core woodworking roles (carpenter, cabinet maker, joiner-type installers, woodturner, woodcarver, kiln/treatment ops) are correct."
+},
+{
+"domain_id":"D103",
+"domain_name":"Jewellery Making, Goldsmithing",
+"verdict":"issues",
+"remove_roles":[
+"Jewelers and Precious Stone and Metal Workers (ISCO 7313, aka=NaN junk group-label row)",
+"Team Assemblers (ISCO 7313 misclassified — generic assembly-line occupation, not jewellery; aka=NaN junk group-label row; cross-domain)",
+"Gem and Diamond Workers (ISCO 7313, aka=NaN junk group-label row; overlaps 'precious stone cutter/setter')"
+],
+"add_roles":[],
+"overfanout_roles":[],
+"rename_to":null,
+"notes":"3 aka=NaN junk group-label rows removed, one of which ('Team Assemblers') is also a misclassified generic occupation. Remaining 10 roles are all genuine ISCO 7313 jewellery/goldsmithing trades and are clean and correctly scoped."
+},
+{
+"domain_id":"D104",
+"domain_name":"Pottery, Ceramics, Glass",
+"verdict":"issues",
+"remove_roles":[
+"Artists and Related Workers, All Other (ISCO 7316, aka=NaN junk 'All Other' group-label row)",
+"Grinding and Polishing Workers, Hand (ISCO 7315, aka=NaN junk group-label row)",
+"Molders, Shapers, and Casters, Except Metal and Plastic (ISCO 7314, aka=NaN junk group-label row)",
+"Furniture Finishers (ISCO 7315, aka=NaN junk group-label row; also cross-domain furniture)",
+"Painting, Coating, and Decorating Workers (ISCO 7316, aka=NaN junk group-label row)",
+"Coating, Painting, and Spraying Machine Setters, Operators, and Tenders (ISCO 7316, aka=NaN junk group-label row)",
+"Stone Cutters and Carvers, Manufacturing (ISCO 7314, aka=NaN junk group-label row; also stone not ceramics/glass)",
+"Glass Blowers, Molders, Benders, and Finishers (ISCO 7314, aka=NaN junk group-label row; duplicates 'glass-blower')",
+"Potters, Manufacturing (ISCO 7314, aka=NaN junk group-label row; duplicates 'production potter')",
+"sports equipment repair technician (ISCO 7319, sporting-goods repair, not ceramics/glass; cross-domain)",
+"candle maker (ISCO 7319, wax/candle craft, not ceramics/glass; cross-domain)",
+"wood painter (ISCO 7316, wood decoration — ESCO painter fan-out; belongs to woodworking, cross-domain)",
+"metal engraver (ISCO 7316, metalwork engraving — ESCO engraver fan-out; not ceramics/glass; cross-domain)",
+"sign maker (ISCO 7316, signage/advertising trade — ESCO fan-out; not ceramics/glass; cross-domain)"
+],
+"add_roles":[],
+"overfanout_roles":[
+"ESCO painter/decorator fan-out (7316): ceramic painter, decorative painter, glass painter, porcelain painter are all retained as legitimately ceramics/glass, but wood painter/metal engraver/sign maker are the off-domain tail and removed above"
+],
+"rename_to":null,
+"notes":"9 aka=NaN junk group-label rows removed (rows 82-125). Additional ESCO subject fan-out from the painter/engraver family pulled in wood painter, metal engraver, sign maker (off-domain). Non-ceramic craft roles sports equipment repair tech and candle maker (both 7319) are cross-domain. Core pottery/ceramics/glass roles (potter, caster, glass-blower, beveller, ceramic/porcelain/glass painters, glass engraver, hand brick moulder) are correct."
+},
+{
+"domain_id":"D105",
+"domain_name":"Handicraft, Basketry, Textile Craft",
+"verdict":"issues",
+"remove_roles":[
+"sports equipment repair technician (ISCO 7319, sporting-goods/camping-equipment repair, not textile/basketry handicraft; cross-domain contamination — same contaminant seen in D104)",
+"woodcarver (ISCO 7317, wood-carving trade belongs to Carpentry/Wood Technology D102 where it also appears; cross-domain duplicate)"
+],
+"add_roles":[],
+"overfanout_roles":[],
+"rename_to":null,
+"notes":"No aka=NaN junk rows. Core textile/basketry/handicraft roles (weaver, knitter, basketmaker, carpet weaver/handicraft worker, fishing net maker, artisan papermaker, brush maker, wicker furniture maker, toymaker) are correct. 'candle maker' (7319) is a borderline generic craft occupation but genuine handicraft, so retained. Removed sports equipment repair tech (clear cross-domain) and woodcarver (belongs to woodworking D102)."
+},
+{
+"domain_id":"D106",
+"domain_name":"Garment Making, Tailoring, Dressmaking",
+"verdict":"issues",
+"remove_roles":[
+"Garment and Related Trades Workers (ISCO 7531, aka=NaN junk group-label row)",
+"Sewing Machine Operators (ISCO 7532, aka=NaN junk group-label row; duplicates 'sewing machinist')",
+"Sewers, Hand (ISCO 7533, aka=NaN junk group-label row)",
+"Tailors, Dressmakers, and Custom Sewers (ISCO 7531, aka=NaN junk group-label row; duplicates 'tailor'/'dressmaker')",
+"Fabric and Apparel Patternmakers (ISCO 7534 mislabeled, aka=NaN junk group-label row; duplicates patternmaker roles)",
+"Pressers, Textile, Garment, and Related Materials (ISCO 7534 mislabeled, aka=NaN junk group-label row)",
+"aircraft interior technician (ISCO 7534, aircraft cabin/interior fit-out trade — transport interiors, not garment sewing; cross-domain)",
+"railway car upholsterer (ISCO 7534, rail transport-interior upholstery — ESCO upholsterer fan-out into transport; cross-domain)",
+"marine upholsterer (ISCO 7534, marine transport-interior upholstery — ESCO upholsterer fan-out; cross-domain)",
+"motor vehicle upholsterer (ISCO 7534, automotive trim/upholstery — ESCO upholsterer fan-out into transport; cross-domain)",
+"hide grader (ISCO 7531 mislabeled — leather/hide grading is a tanning/leather-prep trade, ISCO 7535 family; not garment making; cross-domain)"
+],
+"add_roles":[],
+"overfanout_roles":[
+"ESCO upholsterer fan-out (7534): the upholsterer occupation fans out into marine/railway car/motor vehicle/aircraft interior variants. Generic 'upholsterer', 'furniture upholsterer' and 'mattress maker' are retained as adjacent soft-furnishings trades, but the transport-interior variants (marine, railway, motor vehicle, aircraft) are off-domain and removed above"
+],
+"rename_to":null,
+"notes":"6 aka=NaN junk group-label rows removed (rows 117-144), several also duplicating real roles. Main content issue is ESCO 7534 upholsterer fan-out pulling in transport-interior trades (aircraft, railway, marine, motor vehicle) that are not garment/tailoring. hide grader (7531) is misclassified leather-prep, cross-domain. Core garment roles (patternmakers, cutters, sewing machinist, dressmaker, tailor, embroiderer, costume maker, milliner, wig maker, glove maker, doll maker) are correct."
+}
+]}

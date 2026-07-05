@@ -1,0 +1,74 @@
+{"reviews":[
+{
+"domain_id":"D011",
+"domain_name":"Quantitative Finance",
+"verdict":"issues",
+"remove_roles":["financial auditor","budget analyst","tax advisor","financial controller","public finance accountant","cost analyst","grants management officer","financial fraud examiner","accounting analyst","audit supervisor","bankruptcy trustee","dividend analyst","accountant"],
+"add_roles":[
+{"role":"quantitative researcher","isco":2413,"skills":["quantitative research","statistical modelling","Python","machine learning","financial mathematics"],"reason":"Core quant-finance role explicitly missing; buy-side/hedge-fund alpha research is central to the domain."},
+{"role":"quantitative developer","isco":2512,"skills":["C++/Python","low-latency systems","backtesting","software engineering","financial modelling"],"reason":"Core quant-finance engineering role explicitly missing; builds pricing/execution/backtesting infrastructure."},
+{"role":"quantitative analyst","isco":2413,"skills":["stochastic calculus","derivatives pricing","risk modelling","Python","numerical methods"],"reason":"The archetypal 'quant' (pricing/risk quant) is absent though the domain is named Quantitative Finance."},
+{"role":"risk analyst","isco":2413,"skills":["market risk","VaR modelling","credit risk","stress testing","statistics"],"reason":"Quantitative risk management is a pillar of quant finance and no risk role is present."}
+],
+"overfanout_roles":["stock trader","securities trader","financial trader","stock broker","securities broker","financial broker","foreign exchange broker","futures trader","mutual fund broker","securities underwriter"],
+"rename_to":null,
+"notes":"Domain is heavily miscomposed: ~13 pure accounting/audit/tax roles (ISCO 2411) belong in Accounting (D015), not Quantitative Finance. Large over-fanout of near-duplicate trader/broker/dealer roles (10+ ISCO 3311 sales agents) dilutes the quant-finance signal. The genuinely quantitative core (mathematician 2120, statistician 2120, securities/financial/investment analyst 2413) is thin and the four true quant roles were missing/added. 'Credit Analysts' has NaN aka and odd capitalization/pluralization (data hygiene)."
+},
+{
+"domain_id":"D012",
+"domain_name":"FinTech Engineering",
+"verdict":"issues",
+"remove_roles":["foreign exchange trader","credit analyst","securities analyst","mergers and acquisitions analyst","credit adviser","insurance rating analyst","energy trader","middle office analyst","credit manager","stock trader","mortgage broker","securities trader","bank account manager","financial trader","securities underwriter","financial analyst","loan officer","stock broker","mortgage loan underwriter","credit risk analyst","investment analyst","financial broker","securities broker","student financial support coordinator","mutual fund broker","asset manager","foreign exchange broker","futures trader"],
+"add_roles":[
+{"role":"data engineer","isco":2521,"skills":["ETL pipelines","SQL","cloud data platforms","streaming data","Python"],"reason":"FinTech runs on real-time transaction/market data pipelines; no data engineering role is present."},
+{"role":"blockchain developer","isco":2512,"skills":["smart contracts","Solidity","distributed ledgers","cryptography","web3"],"reason":"Blockchain/crypto engineering is a defining FinTech engineering specialism and is absent."},
+{"role":"backend developer","isco":2512,"skills":["API design","microservices","payment integrations","databases","security"],"reason":"Payments/banking APIs and microservices are the backbone of FinTech engineering; only generic software developer/analyst present."},
+{"role":"DevOps engineer","isco":2519,"skills":["CI/CD","cloud infrastructure","containerisation","monitoring","security compliance"],"reason":"Regulated, high-availability FinTech systems require dedicated DevOps/SRE; missing from the engineering domain."}
+],
+"overfanout_roles":["ICT test analyst","software tester","ICT system tester","ICT integration tester"],
+"rename_to":null,
+"notes":"Domain name says 'FinTech Engineering' but ~28 of 36 roles are finance sales/broker/credit/lending roles (ISCO 3311/3312), not engineering. Only software analyst, software developer, and four QA/test roles are genuinely engineering, and the four test roles are near-duplicate over-fanout of one ICT-testing concept. Core FinTech engineering roles (data/backend/blockchain/DevOps) were missing and added. Two junk rows: 'FinTech Engineers' and 'Securities, Commodities, and Financial Services Sales Agents' have NaN aka and are ISCO group labels, not roles (data hygiene)."
+},
+{
+"domain_id":"D013",
+"domain_name":"Investment Analysis",
+"verdict":"issues",
+"remove_roles":["insurance claims handler","foreclosure specialist","insurance fraud investigator","property appraiser","real estate surveyor","loss adjuster","personal property appraiser","gemmologist","financial auditor","budget analyst","tax advisor","financial controller","public finance accountant","cost analyst","grants management officer","financial fraud examiner","accounting analyst","audit supervisor","bankruptcy trustee","dividend analyst","accountant"],
+"add_roles":[
+{"role":"equity research analyst","isco":2413,"skills":["equity valuation","financial modelling","industry analysis","DCF","report writing"],"reason":"The definitive investment-analysis role (sell-side/buy-side equity research) is absent though it is the domain's namesake activity."},
+{"role":"portfolio manager","isco":2412,"skills":["asset allocation","portfolio construction","risk-adjusted returns","security selection","performance attribution"],"reason":"Investment analysis feeds portfolio management; a distinct PM role is missing amid many advisory roles."},
+{"role":"credit analyst","isco":2413,"skills":["credit risk assessment","financial statement analysis","fixed income","ratings","covenant analysis"],"reason":"Fixed-income/credit analysis is a core pillar of investment analysis and no dedicated credit-analysis role is present."}
+],
+"overfanout_roles":["foreign exchange trader","stock trader","securities trader","financial trader","stock broker","financial broker","securities broker","mutual fund broker","asset manager","securities underwriter","foreign exchange broker","futures trader","investment adviser","corporate banking adviser","relationship banking manager"],
+"rename_to":null,
+"notes":"57 roles is bloated and mixed. A strong, correct investment-advisory core exists (ISCO 2412: investment manager/adviser, corporate investment banker, venture capitalist, fund manager, risk managers). But the domain is polluted by (a) 7 insurance/property/gemstone appraisal & claims roles (ISCO 3315) that belong to Insurance/Valuation, (b) ~13 accounting/audit/tax roles (ISCO 2411) that belong to Accounting, and (c) heavy over-fanout of near-duplicate trader/broker/sales-agent roles (ISCO 3311). Analysis-side roles (equity research, credit, portfolio management) were thin and added. 'Financial and Investment Advisers' is a junk ISCO-group row with NaN aka (data hygiene)."
+},
+{
+"domain_id":"D014",
+"domain_name":"Actuarial Science",
+"verdict":"issues",
+"remove_roles":["business intelligence manager","manufacturing cost estimator","logistics analyst","business analyst","business consultant","process officer","building information modelling consultant","lean manager","foreclosure specialist","property appraiser","real estate surveyor","gemmologist","personal property appraiser","securities analyst","mergers and acquisitions analyst","middle office analyst","financial analyst","investment analyst"],
+"add_roles":[
+{"role":"actuary","isco":2120,"skills":["actuarial modelling","probability theory","life/pensions mathematics","reserving","risk pricing"],"reason":"The domain is named Actuarial Science yet the qualified actuary role only appears as a junk ISCO-group row ('Actuaries', NaN aka); a proper role is needed."},
+{"role":"pricing actuary","isco":2120,"skills":["insurance pricing","GLM modelling","loss ratios","reserving","statistical software"],"reason":"Pricing is a primary actuarial specialism (general insurance/life) and is absent as a distinct role."},
+{"role":"risk analyst","isco":2413,"skills":["risk modelling","solvency analysis","capital modelling","stress testing","statistics"],"reason":"Actuarial work centres on quantitative risk/capital; only a junk 'Risk Management Specialists' group row exists, no real risk role."},
+{"role":"data scientist","isco":2529,"skills":["predictive modelling","machine learning","statistics","Python/R","data analysis"],"reason":"Modern actuarial/insurance analytics increasingly overlaps data science; a quantitative modelling role complements the thin core."}
+],
+"overfanout_roles":["insurance claims handler","insurance fraud investigator","loss adjuster","insurance broker","insurance underwriter","property insurance underwriter","insurance risk consultant"],
+"rename_to":null,
+"notes":"Actuarial core is very thin and largely unqualified: only actuarial consultant, actuarial assistant, mathematician and statistician are on-target; the actual 'Actuaries' entry is a junk ISCO-group row with NaN aka. The domain is dominated by off-topic clusters: ~7 generic business/management consulting roles (ISCO 2421: business analyst, lean manager, BIM consultant, logistics analyst, etc.), ~7 insurance underwriting/broking/claims roles (ISCO 3315/3321) that belong to an Insurance domain, and property/gemstone appraisers. Several junk group-label rows with NaN aka ('Risk Management Specialists','Actuaries','Insurance Sales Agents') need data hygiene. True actuarial roles (actuary, pricing actuary, quantitative risk) were added."
+},
+{
+"domain_id":"D015",
+"domain_name":"Accounting",
+"verdict":"issues",
+"remove_roles":["insurance clerk","property assistant","foreign exchange cashier","sales support assistant","Accountants and Auditors","Bookkeeping, Accounting, and Auditing Clerks","Bill and Account Collectors","Billing and Posting Clerks","Procurement Clerks"],
+"add_roles":[
+{"role":"management accountant","isco":2411,"skills":["cost accounting","budgeting","variance analysis","management reporting","forecasting"],"reason":"Management/cost accounting is a core branch of accounting distinct from financial accounting/audit and is not represented as a role."},
+{"role":"payroll clerk","isco":4313,"skills":["payroll processing","statutory deductions","timekeeping","payroll software","reconciliation"],"reason":"Payroll is a standard accounting-clerk function (ISCO 4313) and is missing from an otherwise clerk-heavy domain."}
+],
+"overfanout_roles":["financial markets back office administrator","back office specialist","investment clerk"],
+"rename_to":null,
+"notes":"Most coherent domain in the batch: the professional accounting/audit core (ISCO 2411 accountant, financial auditor, audit supervisor, tax advisor, controller, cost analyst, etc.) and clerk tier (ISCO 3313/4311/4312 bookkeeper, accounting assistant, billing/tax/auditing clerks) are correctly placed. Main problems are data hygiene: 5 junk ISCO-group-label rows with NaN aka ('Accountants and Auditors','Bookkeeping, Accounting, and Auditing Clerks','Bill and Account Collectors','Billing and Posting Clerks','Procurement Clerks') duplicate existing real roles and should be removed. A few peripheral non-accounting clerks (insurance clerk, property/real-estate assistant, forex cashier, sales support) belong to other domains. Management accountant and payroll clerk added to round out the core."
+}
+]}

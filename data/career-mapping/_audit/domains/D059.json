@@ -1,0 +1,212 @@
+{
+ "domain_id": "D059",
+ "domain_name": "Space Technology",
+ "role_count": 41,
+ "roles": [
+  {
+   "role": "air traffic safety technician",
+   "isco": 3155,
+   "aka": "air traffic safety electronics hardware specialist  ·  air traffic safety electronics technician  ·  air traffic safety electronics engineer  ·  air traffic safety electronics software specialist  ·  air traffic safety hardware specialist"
+  },
+  {
+   "role": "telecommunications engineer",
+   "isco": 2153,
+   "aka": "radio engineer  ·  transmission engineer  ·  broadcast engineer  ·  communications designer  ·  telecoms engineer"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "aircraft engine specialist",
+   "isco": 7232,
+   "aka": "civilian aircraft engine specialist  ·  rotary maintenance specialist  ·  helicopter mechanic  ·  military aircraft engine specialist  ·  light aircraft engine specialist"
+  },
+  {
+   "role": "drone pilot",
+   "isco": 3153,
+   "aka": "civil drone operator  ·  unmanned aircraft pilot  ·  remote piloted aircraft (RPA) pilot  ·  unmanned aircraft systems operator  ·  unmanned aerial vehicles (UAVs) pilot"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "air traffic controller",
+   "isco": 3154,
+   "aka": "flight controller  ·  air traffic controller instructor  ·  air traffic control officer  ·  controller of air traffic  ·  air traffic control specialist"
+  },
+  {
+   "role": "helicopter pilot",
+   "isco": 3153,
+   "aka": "commercial helicopter pilot  ·  airline helicopter transport pilot  ·  helicopter operator  ·  pilot of helicopters"
+  },
+  {
+   "role": "aeronautical information service officer",
+   "isco": 3154,
+   "aka": "officer in aeronautical information  ·  aeronautical data service officer  ·  aeronautical information officer"
+  },
+  {
+   "role": "airline transport pilot",
+   "isco": 3153,
+   "aka": "aircraft captain  ·  captain  ·  airline pilot  ·  airline aeroplane captain  ·  airline transportation pilot"
+  },
+  {
+   "role": "commercial pilot",
+   "isco": 3153,
+   "aka": "captain  ·  airline pilot  ·  pilot of commercial aircraft  ·  pilot of commercial aeroplanes"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "aircraft gas turbine engine overhaul technician",
+   "isco": 7232,
+   "aka": "aircraft gas turbine engine maintenance technician  ·  aviation gas turbine engine maintenance technician  ·  aviation gas turbine engine repair technician  ·  aeroplane engine mechanic  ·  aircraft gas turbine engine repair technician"
+  },
+  {
+   "role": "co-pilot",
+   "isco": 3153,
+   "aka": "aircraft co-pilot  ·  multi-crew pilot  ·  aircraft first officer"
+  },
+  {
+   "role": "aircraft maintenance engineer",
+   "isco": 3153,
+   "aka": "aviation systems technician  ·  air transportation engineer"
+  },
+  {
+   "role": "private pilot",
+   "isco": 3153,
+   "aka": "light aircraft pilot  ·  private airplane captain  ·  private airplane pilot  ·  private aircraft captain  ·  corporate pilot"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "aircraft maintenance technician",
+   "isco": 7232,
+   "aka": "aircraft instrument operator  ·  aviation maintenance technician  ·  aeroplane technician  ·  avionics mechanical technician  ·  avionics instrument inspector"
+  },
+  {
+   "role": "airport operations officer",
+   "isco": 3154,
+   "aka": "airport director  ·  operations officer  ·  aerodrome operations supervisor  ·  head of airport operations  ·  airport operations manager"
+  },
+  {
+   "role": "aircraft pilot",
+   "isco": 3153,
+   "aka": "aircraft first officer  ·  aeroplane pilot  ·  aircraft captain  ·  aircraft second officer  ·  helicopter pilot"
+  },
+  {
+   "role": "aircraft de-icer installer",
+   "isco": 7232,
+   "aka": "aircraft de-icing equipment installer  ·  aircraft de-icing equipment technician  ·  aircraft de-icing equipment installation technician  ·  aeroplane de-icer installer  ·  spacecraft de-icer installer"
+  },
+  {
+   "role": "aviation inspector",
+   "isco": 3154,
+   "aka": "transportation inspector  ·  aircraft inspection officer  ·  aircraft maintenance inspector  ·  aviation maintenance inspector  ·  aircraft quality inspector"
+  },
+  {
+   "role": "aircraft maintenance coordinator",
+   "isco": 7232,
+   "aka": "civilian aircraft maintenance coordinator  ·  aviation maintenance scheduler  ·  civilian aircraft maintenance manager  ·  military aircraft maintenance manager  ·  piston aircraft maintenance manager"
+  },
+  {
+   "role": "flight instructor",
+   "isco": 3153,
+   "aka": "pilot trainer  ·  flying instructor  ·  occupational flight instructor  ·  flight simulation instructor  ·  practitioner of flight instruction"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "second officer",
+   "isco": 3153,
+   "aka": "flight engineer  ·  inflight engineer"
+  },
+  {
+   "role": "astronaut",
+   "isco": 3153,
+   "aka": "scientific cosmonaut  ·  spacecraft pilot  ·  science officer  ·  shuttle commander  ·  spacecraft crew member"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "flight operations officer",
+   "isco": 3154,
+   "aka": "director of airport operations  ·  aviation dispatch officer  ·  manager of flight operations  ·  director of flight operations  ·  flight operations supervisor"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "aeronautical information specialist",
+   "isco": 3154,
+   "aka": "aeronautical information manager  ·  aeronautical data specialist  ·  specialist in aeronautical information"
+  },
+  {
+   "role": "Bridge and Lock Tenders",
+   "isco": 3155,
+   "aka": NaN
+  },
+  {
+   "role": "Aircraft Service Attendants",
+   "isco": 3155,
+   "aka": NaN
+  },
+  {
+   "role": "Traffic Technicians",
+   "isco": 3155,
+   "aka": NaN
+  },
+  {
+   "role": "Transportation Inspectors",
+   "isco": 3155,
+   "aka": NaN
+  },
+  {
+   "role": "Transportation Vehicle, Equipment and Systems Inspectors, Except Aviation",
+   "isco": 3155,
+   "aka": NaN
+  }
+ ]
+}

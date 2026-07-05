@@ -1,0 +1,162 @@
+{
+ "domain_id": "D015",
+ "domain_name": "Accounting",
+ "role_count": 31,
+ "roles": [
+  {
+   "role": "financial auditor",
+   "isco": 2411,
+   "aka": "auditor  ·  finance auditor  ·  internal auditor  ·  audit manager  ·  chartered accountant"
+  },
+  {
+   "role": "auditing clerk",
+   "isco": 4312,
+   "aka": "account audit clerk  ·  audit office worker  ·  audit technician  ·  audit clerk  ·  audit control clerk"
+  },
+  {
+   "role": "financial markets back office administrator",
+   "isco": 4312,
+   "aka": "operations manager  ·  back office administrator  ·  broker assistant  ·  back office payments assistant  ·  settlements administrator"
+  },
+  {
+   "role": "budget analyst",
+   "isco": 2411,
+   "aka": "budget and policy analyst  ·  budget accountant  ·  budget officer  ·  cost and planning analyst"
+  },
+  {
+   "role": "tax advisor",
+   "isco": 2411,
+   "aka": "fiscal advisor  ·  tax specialist  ·  tax expert  ·  tax evaluator  ·  tax preparer"
+  },
+  {
+   "role": "sales support assistant",
+   "isco": 4311,
+   "aka": "group sales assistant  ·  sales clerical assistant  ·  sales accounts clerk  ·  sales officer  ·  salesclerk"
+  },
+  {
+   "role": "financial controller",
+   "isco": 2411,
+   "aka": "finance manager  ·  financial administrator  ·  accounting supervisor  ·  financial accountant  ·  accountant"
+  },
+  {
+   "role": "public finance accountant",
+   "isco": 2411,
+   "aka": "finance accountant  ·  public finance officer  ·  treasury accountant  ·  treasury officer  ·  public finance manager"
+  },
+  {
+   "role": "cost analyst",
+   "isco": 2411,
+   "aka": "quantity surveyor  ·  cost accountant  ·  cost accounting clerk  ·  cost recovery estimator  ·  cost and budget analyst"
+  },
+  {
+   "role": "tax clerk",
+   "isco": 4312,
+   "aka": "tax compliance officer  ·  tax collection clerk  ·  fiscal clerk  ·  tax collection officer  ·  tax collection assistant"
+  },
+  {
+   "role": "grants management officer",
+   "isco": 2411,
+   "aka": "grants officer  ·  proposals manager"
+  },
+  {
+   "role": "insurance clerk",
+   "isco": 4312,
+   "aka": "insurance agent  ·  insurance management assistant  ·  insurance reconciliation clerk  ·  insurance accounts clerk  ·  personal lines insurance clerk"
+  },
+  {
+   "role": "financial fraud examiner",
+   "isco": 2411,
+   "aka": "fraud analyst  ·  fraud examiner  ·  fraud prevention analyst  ·  fraud investigations manager  ·  financial fraud investigator"
+  },
+  {
+   "role": "back office specialist",
+   "isco": 4312,
+   "aka": "back office administrator  ·  back office clerk  ·  back office officer  ·  financial office specialist"
+  },
+  {
+   "role": "foreign exchange cashier",
+   "isco": 4312,
+   "aka": "foreign exchange clerk  ·  bank foreign exchange office clerk  ·  foreign exchange teller  ·  bank foreign exchange cashier  ·  money exchanger"
+  },
+  {
+   "role": "billing clerk",
+   "isco": 4311,
+   "aka": "accounting officer  ·  accounts receivables clerk  ·  posting clerk  ·  financial administration clerk  ·  financial clerk"
+  },
+  {
+   "role": "grants administrator",
+   "isco": 3313,
+   "aka": "grants and contracts officer  ·  grants administration funding officer  ·  grants and contracts administrator  ·  proposals administrator  ·  grants & contracts officer"
+  },
+  {
+   "role": "accounting assistant",
+   "isco": 3313,
+   "aka": "billing and accounting assistant  ·  assistant accountant  ·  junior accountant  ·  finance assistant  ·  accountant assistant"
+  },
+  {
+   "role": "bookkeeper",
+   "isco": 3313,
+   "aka": "general bookkeeper  ·  accounting bookkeeper  ·  accounting clerk  ·  accounting technician  ·  accounts clerk"
+  },
+  {
+   "role": "property assistant",
+   "isco": 4312,
+   "aka": "viewing and sales assistant  ·  real estate assistant  ·  real estate clerk  ·  property clerk  ·  real estate agent assistant"
+  },
+  {
+   "role": "accounting analyst",
+   "isco": 2411,
+   "aka": "accounting systems analyst  ·  accounts analyst  ·  accounting specialist  ·  accounting methods analyst"
+  },
+  {
+   "role": "audit supervisor",
+   "isco": 2411,
+   "aka": "audit checker  ·  auditing supervisor  ·  audit leader  ·  audit inspector  ·  audit examiner"
+  },
+  {
+   "role": "bankruptcy trustee",
+   "isco": 2411,
+   "aka": "insolvency practitioner  ·  insolvency trustee  ·  bankruptcy analyst  ·  trustees in bankruptcy  ·  trustee in bankruptcy"
+  },
+  {
+   "role": "dividend analyst",
+   "isco": 2411,
+   "aka": "dividends clerk  ·  dividend and coupon analyst  ·  dividend calculation clerk  ·  dividends analyst  ·  dividend clerk"
+  },
+  {
+   "role": "accountant",
+   "isco": 2411,
+   "aka": "accounting technician  ·  bookkeeper  ·  accounting supervisor  ·  accounting officer  ·  certified public accountant"
+  },
+  {
+   "role": "investment clerk",
+   "isco": 4312,
+   "aka": "investment administrator  ·  investment secretary  ·  investment assistant"
+  },
+  {
+   "role": "Accountants and Auditors",
+   "isco": 2411,
+   "aka": NaN
+  },
+  {
+   "role": "Bookkeeping, Accounting, and Auditing Clerks",
+   "isco": 4311,
+   "aka": NaN
+  },
+  {
+   "role": "Bill and Account Collectors",
+   "isco": 4311,
+   "aka": NaN
+  },
+  {
+   "role": "Billing and Posting Clerks",
+   "isco": 4311,
+   "aka": NaN
+  },
+  {
+   "role": "Procurement Clerks",
+   "isco": 4311,
+   "aka": NaN
+  }
+ ]
+}

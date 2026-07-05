@@ -1,0 +1,18 @@
+{
+  "jamb_name": "Public Health Technology",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "DELSU", "note": "requires SSC 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in one sitting."},
+    {"institution": "FUTO", "note": "requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and Biology in not more than two (2) sittings."},
+    {"institution": "ILORIN", "note": "accepts five (5) 'O' Level Credits, Pass in English Language, Mathematics, Physics, Chemistry and Biology."},
+    {"institution": "ABU", "note": "requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."},
+    {"institution": "PHC", "note": "requires Five (5) SSC credit passes in Mathematics, Chemistry, Biology, Physics and English Language."},
+    {"institution": "JABU", "note": "Candidate must normally possess the Senior Secondary School WAEC or NECO certificate or General Certificate of Education (GCE) Ordinary Level or their equivalent with credit passes in English Language, Biology, Chemistry, Mathematics and Physics at not more than two (2) sittings, together with an acceptable pass in the UTME and in the Joseph Ayo Babalola University Screening Examination/Interview."},
+    {"institution": "FUTO", "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."},
+    {"institution": "ILORIN", "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."},
+    {"institution": "ABU", "note": "UTME SUBJECTS: requires Use of English, Physics, Chemistry and Biology."},
+    {"institution": "PHC", "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."}
+  ]
+}

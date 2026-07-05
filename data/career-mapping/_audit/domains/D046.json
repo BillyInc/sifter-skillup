@@ -1,0 +1,567 @@
+{
+ "domain_id": "D046",
+ "domain_name": "Social Work",
+ "role_count": 112,
+ "roles": [
+  {
+   "role": "legal guardian",
+   "isco": 3412,
+   "aka": "conservator  ·  department of work and pensions appointee  ·  court-appointed guardian  ·  foster parent  ·  intervenor"
+  },
+  {
+   "role": "criminologist",
+   "isco": 2632,
+   "aka": "criminology scientist  ·  criminology research scientist  ·  criminology studies scientist  ·  criminology studies research scientist  ·  criminology researcher"
+  },
+  {
+   "role": "youth information worker",
+   "isco": 2635,
+   "aka": "youth counsellor  ·  youth mentor  ·  youth advisor  ·  youth information consultant  ·  youth information provider"
+  },
+  {
+   "role": "nanny",
+   "isco": 5311,
+   "aka": "au pair  ·  dry nurse  ·  live-in baby sitter  ·  nursemaid  ·  duenna"
+  },
+  {
+   "role": "child care social worker",
+   "isco": 2635,
+   "aka": "social worker (children and families)  ·  childcare social worker  ·  social worker family safeguarding team  ·  children's social worker  ·  child protection social worker"
+  },
+  {
+   "role": "missionary",
+   "isco": 2636,
+   "aka": "city missionary  ·  missionary preacher  ·  christian social worker  ·  missions pastor  ·  intercessory missionary"
+  },
+  {
+   "role": "sociologist",
+   "isco": 2632,
+   "aka": "urban sociology science researcher  ·  sociologists  ·  rural sociology science researcher  ·  urban sociology analyst  ·  sociology science researcher"
+  },
+  {
+   "role": "business economics researcher",
+   "isco": 2631,
+   "aka": "fiscal economics strategist  ·  economic analyst  ·  fiscal economics analyst  ·  business advisor  ·  financial market advisor"
+  },
+  {
+   "role": "consultant social worker",
+   "isco": 2635,
+   "aka": "policy advisor  ·  social work researcher  ·  social work academic  ·  social work consultant  ·  social work educator"
+  },
+  {
+   "role": "media scientist",
+   "isco": 2632,
+   "aka": "media science researcher  ·  media studies scholar  ·  media research analyst  ·  media research scientist  ·  media analyst"
+  },
+  {
+   "role": "education welfare officer",
+   "isco": 2635,
+   "aka": "education engagement officer  ·  school social worker  ·  attendance support officer  ·  social worker in education  ·  education and family engagement officer"
+  },
+  {
+   "role": "volunteer mentor",
+   "isco": 3412,
+   "aka": "host culture volunteer mentor  ·  peer mentor  ·  volunteer support person  ·  volunteer mentor for community needs  ·  community needs volunteer mentor"
+  },
+  {
+   "role": "foster care support worker",
+   "isco": 3412,
+   "aka": "foster care worker  ·  support worker (foster care)  ·  supervising social worker  ·  independent placement support worker  ·  placement supervisor"
+  },
+  {
+   "role": "archaeologist",
+   "isco": 2632,
+   "aka": "archaeology analyst  ·  marine archaeology research analyst  ·  excavation director  ·  archaeologist scientist  ·  archaeology science researcher"
+  },
+  {
+   "role": "child welfare worker",
+   "isco": 3412,
+   "aka": "children and families welfare officer  ·  welfare officer (children)  ·  child welfare officer  ·  children's welfare officer  ·  children and families welfare worker"
+  },
+  {
+   "role": "monk/nun",
+   "isco": 3413,
+   "aka": "monk  ·  nun"
+  },
+  {
+   "role": "child care worker",
+   "isco": 5311,
+   "aka": "nursery school worker  ·  nursery school assistant  ·  early childhood worker  ·  child care assistant  ·  day care assistant"
+  },
+  {
+   "role": "economic policy officer",
+   "isco": 2631,
+   "aka": "economic policy researcher  ·  economic policy advisor  ·  economical policy officer  ·  economic policy specialist  ·  policy officer for economy"
+  },
+  {
+   "role": "social work researcher",
+   "isco": 2632,
+   "aka": "social research worker  ·  social science researcher  ·  social work research manager  ·  social research interviewer  ·  social scientist"
+  },
+  {
+   "role": "gerontology social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  older adults community care social worker  ·  geriatric social worker  ·  seniors social worker  ·  social care gerontologist"
+  },
+  {
+   "role": "child day care worker",
+   "isco": 5311,
+   "aka": "childcare worker  ·  child caregiver  ·  childcarer  ·  daycare worker  ·  children and families care worker"
+  },
+  {
+   "role": "behavioural scientist",
+   "isco": 2632,
+   "aka": "behavioural science scholar  ·  behavioural science research analyst  ·  behavioural science analyst  ·  behavioural science researcher"
+  },
+  {
+   "role": "social worker",
+   "isco": 2635,
+   "aka": "community worker  ·  community counsellor  ·  cultural mediator  ·  social outreach worker  ·  community services officer"
+  },
+  {
+   "role": "youth offending team worker",
+   "isco": 2635,
+   "aka": "youth offender team worker  ·  juvenile probation social worker  ·  juvenile probation officer  ·  youth offender social worker  ·  youth offending team officer"
+  },
+  {
+   "role": "benefits advice worker",
+   "isco": 2635,
+   "aka": "social security social worker  ·  welfare benefits social worker  ·  employment and benefits advice worker  ·  welfare rights adviser  ·  welfare rights counsellor"
+  },
+  {
+   "role": "family support worker",
+   "isco": 3412,
+   "aka": "family service worker  ·  intensive family support worker  ·  children and families support worker  ·  family engagement worker  ·  family advice worker"
+  },
+  {
+   "role": "residential childcare worker",
+   "isco": 3412,
+   "aka": "childcare worker  ·  children's support worker  ·  children's home worker  ·  residential care worker  ·  special needs support worker"
+  },
+  {
+   "role": "housing support worker",
+   "isco": 3412,
+   "aka": "housing officer  ·  housing advisor  ·  support worker (housing)  ·  senior housing support worker  ·  assistant housing support worker"
+  },
+  {
+   "role": "educational psychologist",
+   "isco": 2634,
+   "aka": "students psycology specialist  ·  educational psychology specialist  ·  students psychologist  ·  school psychology practitioner  ·  psychologist in education institution"
+  },
+  {
+   "role": "social work assistant",
+   "isco": 3412,
+   "aka": "social work assistant team member  ·  support work assistant practitioner  ·  assistant social worker  ·  social work assistant practitioner  ·  assistant support worker"
+  },
+  {
+   "role": "residential home older adult care worker",
+   "isco": 3412,
+   "aka": "residential support worker (older adults)  ·  support worker (older adults in care)  ·  older adult services worker  ·  residential support worker  ·  supported living support worker"
+  },
+  {
+   "role": "psychologist",
+   "isco": 2634,
+   "aka": "psychology researcher  ·  occupational psychologist  ·  practitioner of counselling psychology  ·  expert in counselling psychology  ·  expert counselling psychologist"
+  },
+  {
+   "role": "economic adviser",
+   "isco": 2631,
+   "aka": "policy analyst  ·  economic development officer  ·  economic policy researcher  ·  economic policy advisor  ·  economics consultant"
+  },
+  {
+   "role": "social counsellor",
+   "isco": 2635,
+   "aka": "social therapist  ·  crisis counsellor  ·  crisis intervension counsellor  ·  social counselling worker  ·  crisis situation counselor"
+  },
+  {
+   "role": "mental health support worker",
+   "isco": 3412,
+   "aka": "mental health social care worker  ·  support time and recovery worker  ·  mental health recovery worker  ·  mental healthcare support worker  ·  mental health community outreach worker"
+  },
+  {
+   "role": "drug and alcohol addiction counsellor",
+   "isco": 2635,
+   "aka": "drug and alcohol worker  ·  drug and alcohol addiction counselor  ·  alcohol counsellor  ·  substance abuse counsellor  ·  addictions counsellor"
+  },
+  {
+   "role": "pastoral worker",
+   "isco": 3413,
+   "aka": "parish worker  ·  church pastoral worker  ·  ministry pastoral worker  ·  religious worker  ·  lay worker"
+  },
+  {
+   "role": "residential home young people care worker",
+   "isco": 3412,
+   "aka": "residential support worker (young adults)  ·  support worker (young people in care)  ·  residential support worker (young people)  ·  children's services worker  ·  residential support worker (children)"
+  },
+  {
+   "role": "clinical social worker",
+   "isco": 2635,
+   "aka": "clinical social support worker"
+  },
+  {
+   "role": "homelessness worker",
+   "isco": 2635,
+   "aka": "homeless care worker  ·  homelessness support worker  ·  homeless case worker  ·  homeless guidance worker  ·  homeless support worker"
+  },
+  {
+   "role": "probation officer",
+   "isco": 2635,
+   "aka": "probation services officer  ·  parole officer  ·  prison department social worker"
+  },
+  {
+   "role": "communication scientist",
+   "isco": 2632,
+   "aka": "communication analyst  ·  communication studies research scientist  ·  communication science researcher  ·  communication studies researcher  ·  communication studies analyst"
+  },
+  {
+   "role": "religion scientific researcher",
+   "isco": 2636,
+   "aka": "religious studies researcher  ·  theologist  ·  theologian  ·  theology scholar  ·  theology researcher"
+  },
+  {
+   "role": "hospital social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  palliative care social worker  ·  hospital discharge social worker  ·  medical social worker  ·  public health social worker"
+  },
+  {
+   "role": "crisis situation social worker",
+   "isco": 2635,
+   "aka": "crisis intervention counsellor  ·  crisis situation counsellor  ·  emergency social worker  ·  crisis situation worker  ·  crisis intervention social worker"
+  },
+  {
+   "role": "school bus attendant",
+   "isco": 5311,
+   "aka": "school bus assistant  ·  school bus transportation attendant  ·  school bus chief attendant  ·  school bus transportation aide  ·  school bus aide"
+  },
+  {
+   "role": "residential home adult care worker",
+   "isco": 3412,
+   "aka": "adult services worker"
+  },
+  {
+   "role": "polygraph examiner",
+   "isco": 2634,
+   "aka": "polygraph instructor  ·  polygraph operator  ·  signals analyst  ·  polygraphist  ·  lie detector operator"
+  },
+  {
+   "role": "family planning counsellor",
+   "isco": 2635,
+   "aka": "sexual health lead  ·  family planning advisor  ·  reproductive health advisor  ·  family planning social counsellor  ·  sexual health advisor"
+  },
+  {
+   "role": "community care case worker",
+   "isco": 2635,
+   "aka": "independent living coordinator  ·  community care social worker  ·  domiciliary care manager  ·  domiciliary care supervisor"
+  },
+  {
+   "role": "social care worker",
+   "isco": 3412,
+   "aka": "care worker  ·  senior care worker  ·  senior social care worker  ·  social care assistant  ·  community social care worker"
+  },
+  {
+   "role": "victim support officer",
+   "isco": 2635,
+   "aka": "victims caseworker  ·  domestic abuse support worker  ·  victim support social worker  ·  relief worker  ·  victim care officer"
+  },
+  {
+   "role": "crisis helpline operator",
+   "isco": 3412,
+   "aka": "crisis helpline worker  ·  crisis hotline operator  ·  distress helpline operator  ·  telephone crisis support  ·  telephone crisis counselor"
+  },
+  {
+   "role": "family social worker",
+   "isco": 2635,
+   "aka": "family services social worker  ·  family support worker"
+  },
+  {
+   "role": "health psychologist",
+   "isco": 2634,
+   "aka": "health psychology researcher  ·  research health psychologist  ·  practitioner of healthcare psychology  ·  consultant health psychologist  ·  consultant in health psychology"
+  },
+  {
+   "role": "thanatology researcher",
+   "isco": 2632,
+   "aka": "thanatologist  ·  researcher in the psychology of death and dying  ·  thanatological researcher  ·  researcher in thanatology  ·  fellow in thanatology"
+  },
+  {
+   "role": "military welfare worker",
+   "isco": 2635,
+   "aka": "air force social worker  ·  military and veterans social worker  ·  navy social worker  ·  army welfare officer  ·  forces welfare worker"
+  },
+  {
+   "role": "economist",
+   "isco": 2631,
+   "aka": "econophysicist  ·  economics scholar  ·  economics scientist  ·  economics researcher  ·  econometrician"
+  },
+  {
+   "role": "criminal justice social worker",
+   "isco": 2635,
+   "aka": "family court advisor  ·  prison social worker  ·  probation social worker  ·  family court adviser"
+  },
+  {
+   "role": "disability support worker",
+   "isco": 3412,
+   "aka": "learning disability support assistant  ·  disability carer  ·  disability support assistant  ·  disability care personal assistant  ·  disability care worker"
+  },
+  {
+   "role": "marriage counsellor",
+   "isco": 2635,
+   "aka": "marriage and family counsellor  ·  family therapist  ·  marriage guidance counsellor  ·  marriage counselling team member  ·  marital crisis counsellor"
+  },
+  {
+   "role": "economic development coordinator",
+   "isco": 2631,
+   "aka": "economist  ·  economic development consultant  ·  economic development officer  ·  socio economic development coordinator  ·  regeneration manager"
+  },
+  {
+   "role": "chaplain",
+   "isco": 2636,
+   "aka": "university chaplain  ·  lay representative  ·  imam  ·  military chaplain  ·  hospital chaplain"
+  },
+  {
+   "role": "mental health social worker",
+   "isco": 2635,
+   "aka": "social worker (mental health)  ·  approved mental health professional  ·  mental health social support worker  ·  mental health community social worker  ·  care coordinator (mental health)"
+  },
+  {
+   "role": "migrant social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  cultural mediator social worker  ·  asylum advice worker  ·  migrant re-settlement worker  ·  immigrant advice worker"
+  },
+  {
+   "role": "anthropologist",
+   "isco": 2632,
+   "aka": "arts scientist  ·  cultural scientist  ·  linguistic anthropologist  ·  ethnologist  ·  television scientist"
+  },
+  {
+   "role": "psychotherapist",
+   "isco": 2634,
+   "aka": "positive psychotherapist  ·  cognitive behavioural therapist  ·  expert psychotherapist  ·  practitioner of psychotherapy  ·  transpersonal psychotherapist"
+  },
+  {
+   "role": "enterprise development worker",
+   "isco": 2635,
+   "aka": "social entrepreneur  ·  enterprise development manager  ·  corporate social worker  ·  industry social worker  ·  business social worker"
+  },
+  {
+   "role": "tax policy analyst",
+   "isco": 2631,
+   "aka": "tax analyst  ·  pecunary consultant  ·  tax research analyst  ·  fiscal policy analyst  ·  contributions advisor"
+  },
+  {
+   "role": "social work supervisor",
+   "isco": 2635,
+   "aka": "social services team manager  ·  social work programme manager  ·  social work programme supervisor  ·  social work team manager  ·  senior social worker"
+  },
+  {
+   "role": "youth worker",
+   "isco": 2635,
+   "aka": "senior youth worker  ·  youth project team worker  ·  youth support worker  ·  youth centre worker  ·  social worker youth justice"
+  },
+  {
+   "role": "sexual violence counsellor",
+   "isco": 2635,
+   "aka": "victim support worker  ·  sexual violence counselor  ·  sexual violence advisor  ·  sexual assault social counselor  ·  domestic violence counsellor"
+  },
+  {
+   "role": "geographer",
+   "isco": 2632,
+   "aka": "economic geographer  ·  geographers  ·  biogeographer  ·  cultural geographer  ·  physical geographer"
+  },
+  {
+   "role": "palliative care social worker",
+   "isco": 2635,
+   "aka": "hospice worker  ·  palliative care assistant  ·  palliative care supervisor  ·  hospice care assistant  ·  hospice carer"
+  },
+  {
+   "role": "clinical psychologist",
+   "isco": 2634,
+   "aka": "expert in clinical psychology  ·  specialist clinical psychologist  ·  practitioner of clinical psychology  ·  hospital psychologist  ·  psychologist in hospital"
+  },
+  {
+   "role": "babysitter",
+   "isco": 5311,
+   "aka": "baby-sitter  ·  childminder"
+  },
+  {
+   "role": "employment support worker",
+   "isco": 2635,
+   "aka": "employment rights worker  ·  employment social worker  ·  supported employment worker  ·  employment support social worker  ·  employability support worker"
+  },
+  {
+   "role": "adult community care worker",
+   "isco": 3412,
+   "aka": "community carer  ·  community carer worker  ·  independent living advisor"
+  },
+  {
+   "role": "community social worker",
+   "isco": 2635,
+   "aka": "community support worker  ·  community outreach worker  ·  housing social worker  ·  community welfare social worker  ·  social development worker"
+  },
+  {
+   "role": "substance misuse worker",
+   "isco": 2635,
+   "aka": "substanse abuse social worker  ·  social worker (substance misuse)  ·  drug and alcohol worker  ·  addiction social worker  ·  substance mis-use counsellor"
+  },
+  {
+   "role": "rehabilitation support worker",
+   "isco": 2635,
+   "aka": "reablement officer  ·  occupational therapy support worker  ·  rehabilitation worker  ·  rehabilitation social worker  ·  rehabilitation outreach worker"
+  },
+  {
+   "role": "minister of religion",
+   "isco": 2636,
+   "aka": "monk  ·  nun  ·  minister of the church  ·  pastor  ·  priest"
+  },
+  {
+   "role": "au pair",
+   "isco": 5311,
+   "aka": "childminder  ·  baby sitter  ·  child caretaker"
+  },
+  {
+   "role": "care home worker",
+   "isco": 3412,
+   "aka": "residential care home worker  ·  care home manager  ·  care support worker  ·  care home supervisor  ·  care home assistant"
+  },
+  {
+   "role": "bereavement counsellor",
+   "isco": 2635,
+   "aka": "bereavement social counsellor  ·  family bereavement counsellor  ·  bereavement advice counsellor  ·  family and bereavement support officer  ·  bereavement support worker"
+  },
+  {
+   "role": "social pedagogue",
+   "isco": 2635,
+   "aka": "social outreach worker  ·  practitioner in social pedagogy  ·  community social pedagogue  ·  community education practitioner  ·  qualified social pedagogue"
+  },
+  {
+   "role": "life coach",
+   "isco": 3412,
+   "aka": "life mentor  ·  personal development counsellor  ·  life coaches"
+  },
+  {
+   "role": "community development social worker",
+   "isco": 2635,
+   "aka": "social development worker  ·  community advocate  ·  social worker-community development  ·  community animateur  ·  community development team leader"
+  },
+  {
+   "role": "Social Work and Counselling Professionals",
+   "isco": 2635,
+   "aka": NaN
+  },
+  {
+   "role": "Community and Social Service Specialists, All Other",
+   "isco": 3412,
+   "aka": NaN
+  },
+  {
+   "role": "Religious Workers, All Other",
+   "isco": 3413,
+   "aka": NaN
+  },
+  {
+   "role": "Environmental Economists",
+   "isco": 2631,
+   "aka": NaN
+  },
+  {
+   "role": "Survey Researchers",
+   "isco": 2634,
+   "aka": NaN
+  },
+  {
+   "role": "Industrial-Organizational Psychologists",
+   "isco": 2634,
+   "aka": NaN
+  },
+  {
+   "role": "Clinical and Counseling Psychologists",
+   "isco": 2634,
+   "aka": NaN
+  },
+  {
+   "role": "School Psychologists",
+   "isco": 2634,
+   "aka": NaN
+  },
+  {
+   "role": "Anthropologists and Archeologists",
+   "isco": 2632,
+   "aka": NaN
+  },
+  {
+   "role": "Social Scientists and Related Workers, All Other",
+   "isco": 2632,
+   "aka": NaN
+  },
+  {
+   "role": "Transportation Planners",
+   "isco": 2632,
+   "aka": NaN
+  },
+  {
+   "role": "Substance Abuse and Behavioral Disorder Counselors",
+   "isco": 2636,
+   "aka": NaN
+  },
+  {
+   "role": "Educational, Guidance, and Career Counselors and Advisors",
+   "isco": 2636,
+   "aka": NaN
+  },
+  {
+   "role": "Mental Health Counselors",
+   "isco": 2634,
+   "aka": NaN
+  },
+  {
+   "role": "Rehabilitation Counselors",
+   "isco": 2634,
+   "aka": NaN
+  },
+  {
+   "role": "Counselors, All Other",
+   "isco": 2635,
+   "aka": NaN
+  },
+  {
+   "role": "Healthcare Social Workers",
+   "isco": 2635,
+   "aka": NaN
+  },
+  {
+   "role": "Mental Health and Substance Abuse Social Workers",
+   "isco": 2635,
+   "aka": NaN
+  },
+  {
+   "role": "Social Workers, All Other",
+   "isco": 2635,
+   "aka": NaN
+  },
+  {
+   "role": "Health Education Specialists",
+   "isco": 2636,
+   "aka": NaN
+  },
+  {
+   "role": "Probation Officers and Correctional Treatment Specialists",
+   "isco": 2635,
+   "aka": NaN
+  },
+  {
+   "role": "Social and Human Service Assistants",
+   "isco": 3413,
+   "aka": NaN
+  },
+  {
+   "role": "Clergy",
+   "isco": 2636,
+   "aka": NaN
+  },
+  {
+   "role": "Directors, Religious Activities and Education",
+   "isco": 2636,
+   "aka": NaN
+  }
+ ]
+}

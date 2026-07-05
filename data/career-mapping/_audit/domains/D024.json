@@ -1,0 +1,262 @@
+{
+ "domain_id": "D024",
+ "domain_name": "Nursing",
+ "role_count": 51,
+ "roles": [
+  {
+   "role": "paramedic in emergency responses",
+   "isco": 3258,
+   "aka": "emergency medical technician  ·  paramedic practitioner  ·  ambulance paramedic  ·  expert paramedic  ·  emergency response paramedic"
+  },
+  {
+   "role": "medical records clerk",
+   "isco": 3252,
+   "aka": "clerical officer  ·  clinical records administrator  ·  patients records assistant  ·  health records staff member  ·  medical records filing clerk"
+  },
+  {
+   "role": "anaesthetic technician",
+   "isco": 3259,
+   "aka": "anesthetic technician  ·  surgical technician  ·  surgical interventions anaesthetic technician  ·  technician for anaesthetics in surgeries  ·  technician for anesthetics in surgeries"
+  },
+  {
+   "role": "specialist nurse",
+   "isco": 2221,
+   "aka": "gerontological nurse practitioner  ·  specialist nurse practitioner  ·  company nurse  ·  vascular nurse  ·  paediatric nurse practitioner"
+  },
+  {
+   "role": "maternity support worker",
+   "isco": 3222,
+   "aka": "maternity care assistant  ·  assistant to midwife  ·  midwifery assistant  ·  midwifery care assistant  ·  midwife care assistant"
+  },
+  {
+   "role": "picture archiving and communication systems administrator",
+   "isco": 3252,
+   "aka": "administrator of PACS  ·  PACS manager  ·  PACS administrator  ·  PACS interface analyst  ·  PACS administration manager"
+  },
+  {
+   "role": "advanced nurse practitioner",
+   "isco": 2221,
+   "aka": "lead practice nurse  ·  advanced nurse manager  ·  operating room nurse manager  ·  clinical nurse  ·  clinical matron"
+  },
+  {
+   "role": "clinical coder",
+   "isco": 3252,
+   "aka": "clinical records technician  ·  medical coder  ·  medical coding officer  ·  accredited clinical coder  ·  clinical coding officer"
+  },
+  {
+   "role": "emergency ambulance driver",
+   "isco": 3258,
+   "aka": "assistant in emergency care  ·  ambulance emergency medical technician  ·  ECA  ·  technician in emergency medical care  ·  medical emergency assistant"
+  },
+  {
+   "role": "chiropractic assistant",
+   "isco": 3259,
+   "aka": "assistant etiopath  ·  chiropractic support worker  ·  assistant neuromusculoskeletal therapist  ·  chiropractic's assistant  ·  assistant to chiropractic"
+  },
+  {
+   "role": "dietetic technician",
+   "isco": 3259,
+   "aka": "clinical dietetic technician  ·  dietetic assistant  ·  diet technician  ·  clinical diet technician  ·  medical dietetics technician"
+  },
+  {
+   "role": "respiratory therapy technician",
+   "isco": 3259,
+   "aka": "respiratory care supervisor  ·  respiratory therapist  ·  respiratory technician  ·  breathing technician  ·  oxygen therapy technician"
+  },
+  {
+   "role": "nurse assistant",
+   "isco": 5321,
+   "aka": "healthcare nurse  ·  state enrolled nurse  ·  assistant nurse  ·  nursing auxiliary  ·  auxiliary nurse"
+  },
+  {
+   "role": "nurse responsible for general care",
+   "isco": 2221,
+   "aka": "healthcare nurse  ·  district nurse  ·  learning disability nurse  ·  practice nurse  ·  mental health nurse"
+  },
+  {
+   "role": "waiting list coordinator",
+   "isco": 3252,
+   "aka": "senior waiting list coordinator  ·  waiting list manager  ·  hospital waiting list coordinator  ·  surgical waiting list coordinator  ·  manager of hospital waiting lists"
+  },
+  {
+   "role": "midwife",
+   "isco": 2222,
+   "aka": "community midwife  ·  foetal nurse  ·  neonatal nurse practitioner  ·  consultant midwife  ·  obstetric nurse"
+  },
+  {
+   "role": "medical records manager",
+   "isco": 3252,
+   "aka": "supervisor of medical records  ·  health records manager  ·  manager of patient records  ·  patient records manager  ·  medical records supervisor"
+  },
+  {
+   "role": "temperature screener",
+   "isco": 3259,
+   "aka": "entrance screener  ·  covid temperature screener  ·  temperature checker  ·  health screener"
+  },
+  {
+   "role": "first aid instructor",
+   "isco": 3253,
+   "aka": "educator in first aid  ·  trainer in first aid  ·  instructor in first aid techniques  ·  instructor in first aid  ·  first aid educator"
+  },
+  {
+   "role": "covid tester",
+   "isco": 3259,
+   "aka": "testing support assistant  ·  mobile screening nurse  ·  covid community testing facilitator  ·  coronavirus tester  ·  testing supervisor"
+  },
+  {
+   "role": "community health worker",
+   "isco": 3253,
+   "aka": "community first responder  ·  community healthcare support worker  ·  community support worker  ·  community healthcare worker  ·  community carer"
+  },
+  {
+   "role": "assistant clinical psychologist",
+   "isco": 3259,
+   "aka": "psychology assistant  ·  psychological assistant  ·  personality assessment coordinator  ·  assistant psychologist"
+  },
+  {
+   "role": "healthcare assistant",
+   "isco": 5321,
+   "aka": "assistant healthcarer  ·  maternity care assistant  ·  health care assistant  ·  resident care assistant  ·  primary healthcare assistant"
+  },
+  {
+   "role": "Nursing Professionals",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Registered Nurses",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Nurse Midwives",
+   "isco": 2222,
+   "aka": NaN
+  },
+  {
+   "role": "Licensed Practical and Licensed Vocational Nurses",
+   "isco": 3221,
+   "aka": NaN
+  },
+  {
+   "role": "Nursing Assistants",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Acute Care Nurses",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Advanced Practice Psychiatric Nurses",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Critical Care Nurses",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Clinical Nurse Specialists",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Nurse Anesthetists",
+   "isco": 2221,
+   "aka": NaN
+  },
+  {
+   "role": "Cardiovascular Technologists and Technicians",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Diagnostic Medical Sonographers",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Nuclear Medicine Technologists",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Radiologic Technologists and Technicians",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Dosimetrists",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Hearing Aid Specialists",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Neurodiagnostic Technologists",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Ophthalmic Medical Technologists",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Patient Representatives",
+   "isco": 3258,
+   "aka": NaN
+  },
+  {
+   "role": "Home Health Aides",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Personal Care Aides",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Orderlies",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Psychiatric Aides",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Dental Assistants",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Assistants",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Pharmacy Aides",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Veterinary Assistants and Laboratory Animal Caretakers",
+   "isco": 5321,
+   "aka": NaN
+  },
+  {
+   "role": "Phlebotomists",
+   "isco": 5321,
+   "aka": NaN
+  }
+ ]
+}

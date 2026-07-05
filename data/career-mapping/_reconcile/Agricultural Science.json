@@ -1,0 +1,2199 @@
+[
+ {
+  "programme": "Agribusiness",
+  "code": "AGB",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Introduction to Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "B. Agriculture",
+  "code": "ANS",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Agronomy",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Agricultural Economics",
+  "code": "AGE",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Agricultural Extension",
+  "code": "AGX",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "the role of the soil as a component of the environment",
+   "the various disciplines of Soil and Job opportunities as Soil Scientists",
+   "how soils are formed and the need to use the soil sustainably",
+   "the various physical, chemical and biological activities taking place in the soil in order to prescribe appropriate management needs",
+   "the need to survey, classify and map soil for various purposes",
+   "the various challenges facing the soil under different situations; and",
+   "relationship between climate change, soil management and utilization",
+   "define rural sociology and make valid comparison with urban sociology on the basis of their special attributes",
+   "define and comprehend the basic sociological terms as used in the field of sociology",
+   "discuss the major rural social institutions, their functions and roles; and",
+   "describe leadership dynamics and other rural social processes and their roles in changing the lives of rural dwellers",
+   "distinguish between data collection and analysis methods",
+   "differentiate between qualitative and quantitative research methods; and",
+   "undertake research after graduation with minimal supervision",
+   "define basic agronomic terminologies",
+   "have knowledge of and basis of crop distribution across climatic regions",
+   "have knowledge on crop grouping and distinct crop types",
+   "have introductory knowledge of soil and its classification; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Introduction to Agricultural Economics",
+   "Principles of Soil Science"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Animal Science",
+  "code": "ANS",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Crop Science",
+  "code": "CPS",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D118",
+    "domain": "Crop Production, Horticulture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Family and Consumer Sciences",
+  "code": "FCS",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and innovation",
+   "Principles of Agronomy",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Fisheries and Aquaculture",
+  "code": "FAA",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals",
+   "Feeds and feeding management of farm animals",
+   "Housing and management systems of different livestock",
+   "Principles of animal health management",
+   "Animal breeding and breed improvement principles; and",
+   "Basic anatomy and physiology of the living systems (histology, circulatory, respiratory, digestive, reproductive, etc)"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D120",
+    "domain": "Fisheries, Aquaculture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "B.Sc./B.Tech Food Science and Technology",
+  "code": "FST",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Agronomy",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D048",
+    "domain": "Food Science",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Forest Resources and Wildlife Management",
+  "code": "FWM",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "identify the natural ecosystems",
+   "understand the ecology of some selected tree species",
+   "understand the system of tree identification and description; and",
+   "identify the silvicultural characteristics of savanna tree species",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals",
+   "Feeds and feeding management of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Taxonomy and Autecology of Tropical Trees",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D118",
+    "domain": "Crop Production, Horticulture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D120",
+    "domain": "Fisheries, Aquaculture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Horticulture and Landscape Management",
+  "code": "HLM",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D118",
+    "domain": "Crop Production, Horticulture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Soil Science",
+  "code": "SOS",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Water Resources Management and Agro-Meteorology",
+  "code": "WMA",
+  "technical_skills": [
+   "have a broad understanding of the concepts and dimensions of agriculture in modern times with emphasis on Nigeria and the tropics",
+   "acquire basic knowledge and understanding of the roles of agriculture and the place of soil, crop and animal resources in the production process as well as the constraints they face",
+   "be familiar with the role of technologies in the transformation of agriculture; and",
+   "explain potentials and constraints to sustainable agricultural production",
+   "explain the history of agricultural development and the role of the public and private sectors",
+   "identify and analyse the factors of agricultural production and the role of various resources; and",
+   "explain constraints of technology and mechanization, and the role of agricultural extension transformation",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "explain basic economic theories, construct the supply and demand curves and use these to determine market equilibrium",
+   "discuss the basic workings of the economy, national income determination from the output and income perspectives, and the condition for equilibrium of the national economy",
+   "define the concepts of international trade and balance of payment",
+   "discuss the process of money creation and banking in the national economy",
+   "explain the concept of welfare economics",
+   "define and make valid comparison on agricultural extension methodologies world over",
+   "categorize the major rural social institutions, processes, and the need for social changes in rural communities; and",
+   "explain the dynamics of leadership for social changes",
+   "enumerate the potentials of renewable natural resources",
+   "identify important forest tree species as well as wildlife species in the various vegetation zones of Nigeria",
+   "establish small scale bee farm, snail farm, cane rat farm",
+   "elucidate the importance of forestry and wildlife to the national economy; and",
+   "raise seedlings of economic tree species",
+   "Prospects and problems of the animal industry",
+   "Identification/description of types of farm animals"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Agriculture I",
+   "Introduction to Agriculture II",
+   "General Biology I",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Principles of Crop Production",
+   "Introduction to Agricultural Economics, Extension and Rural Sociology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   }
+  ]
+ }
+]

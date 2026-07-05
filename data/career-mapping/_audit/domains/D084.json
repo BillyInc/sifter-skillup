@@ -1,0 +1,77 @@
+{
+ "domain_id": "D084",
+ "domain_name": "Payroll, Bookkeeping",
+ "role_count": 14,
+ "roles": [
+  {
+   "role": "auditing clerk",
+   "isco": 4312,
+   "aka": "account audit clerk  ·  audit office worker  ·  audit technician  ·  audit clerk  ·  audit control clerk"
+  },
+  {
+   "role": "financial markets back office administrator",
+   "isco": 4312,
+   "aka": "operations manager  ·  back office administrator  ·  broker assistant  ·  back office payments assistant  ·  settlements administrator"
+  },
+  {
+   "role": "sales support assistant",
+   "isco": 4311,
+   "aka": "group sales assistant  ·  sales clerical assistant  ·  sales accounts clerk  ·  sales officer  ·  salesclerk"
+  },
+  {
+   "role": "tax clerk",
+   "isco": 4312,
+   "aka": "tax compliance officer  ·  tax collection clerk  ·  fiscal clerk  ·  tax collection officer  ·  tax collection assistant"
+  },
+  {
+   "role": "insurance clerk",
+   "isco": 4312,
+   "aka": "insurance agent  ·  insurance management assistant  ·  insurance reconciliation clerk  ·  insurance accounts clerk  ·  personal lines insurance clerk"
+  },
+  {
+   "role": "payroll clerk",
+   "isco": 4313,
+   "aka": "payroll accounts clerk  ·  wages clerk  ·  payroll bookeeper  ·  payroll officer  ·  payroll technician"
+  },
+  {
+   "role": "back office specialist",
+   "isco": 4312,
+   "aka": "back office administrator  ·  back office clerk  ·  back office officer  ·  financial office specialist"
+  },
+  {
+   "role": "foreign exchange cashier",
+   "isco": 4312,
+   "aka": "foreign exchange clerk  ·  bank foreign exchange office clerk  ·  foreign exchange teller  ·  bank foreign exchange cashier  ·  money exchanger"
+  },
+  {
+   "role": "billing clerk",
+   "isco": 4311,
+   "aka": "accounting officer  ·  accounts receivables clerk  ·  posting clerk  ·  financial administration clerk  ·  financial clerk"
+  },
+  {
+   "role": "property assistant",
+   "isco": 4312,
+   "aka": "viewing and sales assistant  ·  real estate assistant  ·  real estate clerk  ·  property clerk  ·  real estate agent assistant"
+  },
+  {
+   "role": "investment clerk",
+   "isco": 4312,
+   "aka": "investment administrator  ·  investment secretary  ·  investment assistant"
+  },
+  {
+   "role": "Statistical, Finance and Insurance Clerks",
+   "isco": 4312,
+   "aka": NaN
+  },
+  {
+   "role": "Accounting, Bookkeeping and Payroll Clerks",
+   "isco": 4311,
+   "aka": NaN
+  },
+  {
+   "role": "Payroll and Timekeeping Clerks",
+   "isco": 4313,
+   "aka": NaN
+  }
+ ]
+}

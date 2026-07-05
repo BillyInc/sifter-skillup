@@ -1,0 +1,9 @@
+{
+  "jamb_name": "Kanuri",
+  "utme_subjects": ["Literature in English", "and any other two (2) subjects in Arts and the Social Sciences"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language and Literature in English.",
+  "direct_entry": "Two (2) 'A' Level passes to include Literature in English.",
+  "institution_waivers": [
+    {"institution": "MAIDUGURI", "note": "Direct Entry: accepts a) Certificate in Kanuri; b) NCE with Kanuri major."}
+  ]
+}

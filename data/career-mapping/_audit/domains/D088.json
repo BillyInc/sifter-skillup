@@ -1,0 +1,77 @@
+{
+ "domain_id": "D088",
+ "domain_name": "Beauty Therapy, Aesthetics",
+ "role_count": 14,
+ "roles": [
+  {
+   "role": "masseur/masseuse",
+   "isco": 5142,
+   "aka": "salon therapist  ·  deep tissue massage therapist  ·  thai massage therapist  ·  trigger point massage therapist  ·  professional masseuse"
+  },
+  {
+   "role": "spa attendant",
+   "isco": 5142,
+   "aka": "health club attendant  ·  mineral springs attendant  ·  steam room attendant  ·  hot springs attendant  ·  wellness consultant"
+  },
+  {
+   "role": "pedicurist",
+   "isco": 5142,
+   "aka": "mani-pedi attendant  ·  foot care attendant"
+  },
+  {
+   "role": "make-up artist",
+   "isco": 5142,
+   "aka": "make up artist  ·  theatre makeup artist  ·  prosthetics and make up artist  ·  prosthetics & make up artist  ·  prosthetics builder"
+  },
+  {
+   "role": "make-up and hair designer",
+   "isco": 5142,
+   "aka": "hair and make-up artist  ·  hair designer & make-up artist  ·  hair and make up designer  ·  hair designer and make-up artist  ·  hair & make up designer"
+  },
+  {
+   "role": "hair removal technician",
+   "isco": 5142,
+   "aka": "beauty treatment specialist  ·  epilation specialist  ·  wax depilation specialist  ·  hair removal specialist  ·  depilation specialist"
+  },
+  {
+   "role": "weight loss consultant",
+   "isco": 5142,
+   "aka": "health and fitness consultant  ·  health and wellness consultant  ·  fitness and nutrition consultant  ·  weight loss counsellor  ·  nutritionist"
+  },
+  {
+   "role": "aesthetician",
+   "isco": 5142,
+   "aka": "facial treatment operator  ·  cosmetician  ·  skin care specialist  ·  beautician  ·  facialist"
+  },
+  {
+   "role": "manicurist",
+   "isco": 5142,
+   "aka": "finger nail technician  ·  nail technician"
+  },
+  {
+   "role": "tanning consultant",
+   "isco": 5142,
+   "aka": "sun parlor worker  ·  tanning salon attendant  ·  sun parlour attendant  ·  sun parlor attendant  ·  solarium attendant"
+  },
+  {
+   "role": "beauty salon attendant",
+   "isco": 5142,
+   "aka": "suntan salon attendant  ·  sun parlor worker  ·  tanning salon attendant  ·  sun parlour attendant  ·  suntan salon worker"
+  },
+  {
+   "role": "personal stylist",
+   "isco": 5142,
+   "aka": "corporate image consultant  ·  wardrobe consultant  ·  image consultant  ·  fashion advisor  ·  personal style advisor"
+  },
+  {
+   "role": "Manicurists and Pedicurists",
+   "isco": 5142,
+   "aka": NaN
+  },
+  {
+   "role": "Shampooers",
+   "isco": 5142,
+   "aka": NaN
+  }
+ ]
+}

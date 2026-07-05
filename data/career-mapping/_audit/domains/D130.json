@@ -1,0 +1,47 @@
+{
+ "domain_id": "D130",
+ "domain_name": "Recruitment, Employment",
+ "role_count": 8,
+ "roles": [
+  {
+   "role": "employment agent",
+   "isco": 3333,
+   "aka": "job placement officer"
+  },
+  {
+   "role": "Recruiters and Technical Recruiters",
+   "isco": 3333,
+   "aka": NaN
+  },
+  {
+   "role": "Compensation, Benefits, and Job Analysis Specialists",
+   "isco": 3333,
+   "aka": NaN
+  },
+  {
+   "role": "talent acquisition specialist",
+   "isco": 3333,
+   "aka": "In-house Recruiter, TA Specialist"
+  },
+  {
+   "role": "executive search consultant",
+   "isco": 3333,
+   "aka": "Headhunter, Search Consultant"
+  },
+  {
+   "role": "recruitment consultant",
+   "isco": 3333,
+   "aka": "Agency Recruiter, Staffing Consultant"
+  },
+  {
+   "role": "employment services manager",
+   "isco": 1212,
+   "aka": "Recruitment Manager"
+  },
+  {
+   "role": "employer branding specialist",
+   "isco": 2423,
+   "aka": "Talent Brand Manager"
+  }
+ ]
+}

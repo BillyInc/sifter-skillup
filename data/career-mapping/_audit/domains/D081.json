@@ -1,0 +1,147 @@
+{
+ "domain_id": "D081",
+ "domain_name": "Office Administration, Secretarial",
+ "role_count": 28,
+ "roles": [
+  {
+   "role": "membership administrator",
+   "isco": 4110,
+   "aka": "membership and subscription administrator  ·  membership sales administrator  ·  administrative support officer  ·  account administrator  ·  regional membership administrator"
+  },
+  {
+   "role": "typist",
+   "isco": 4131,
+   "aka": "shorthand typist  ·  word processor  ·  transcription typist  ·  braille typist  ·  audio typist"
+  },
+  {
+   "role": "mail clerk",
+   "isco": 4412,
+   "aka": "mail room clerk  ·  post office mail clerk  ·  sorting clerk  ·  mail sorter"
+  },
+  {
+   "role": "advertising assistant",
+   "isco": 4419,
+   "aka": "advertising trainee  ·  advertising space clerk  ·  executive advertising assistant  ·  publicity assistant  ·  advertising campaign assistant"
+  },
+  {
+   "role": "secretary",
+   "isco": 4120,
+   "aka": "administrative assistant  ·  office receptionist  ·  personal assistant  ·  corporate secretary  ·  office administrative assistant"
+  },
+  {
+   "role": "data entry clerk",
+   "isco": 4132,
+   "aka": "statistical clerk  ·  data steward  ·  data entry inspector  ·  data-entry clerk  ·  payment entry clerk"
+  },
+  {
+   "role": "office clerk",
+   "isco": 4110,
+   "aka": "clerical assistant  ·  correspondence clerk"
+  },
+  {
+   "role": "postman/postwoman",
+   "isco": 4412,
+   "aka": "courier  ·  in house courier  ·  bike courier  ·  motorcycle messenger  ·  postman"
+  },
+  {
+   "role": "file clerk",
+   "isco": 4415,
+   "aka": "filing office helper  ·  documentation specialist  ·  record filing clerk  ·  file keeper  ·  digitalisation assistant"
+  },
+  {
+   "role": "foreign language correspondence clerk",
+   "isco": 4419,
+   "aka": "foreign correspondence clerk  ·  foreign language correspondence assistant  ·  foreign correspondent assistant  ·  foreign language correspondence officer  ·  foreign language correspondent clerk"
+  },
+  {
+   "role": "human resources assistant",
+   "isco": 4416,
+   "aka": "human resources executive assistant  ·  human resources associate  ·  human resources administrative assistant  ·  human resources secretary"
+  },
+  {
+   "role": "proofreader",
+   "isco": 4413,
+   "aka": "proof reader  ·  proof reading clerk"
+  },
+  {
+   "role": "Building Caretakers, Cleaners and Housekeepers",
+   "isco": 5153,
+   "aka": NaN
+  },
+  {
+   "role": "Administrative Assistants and Executive Secretaries",
+   "isco": 3343,
+   "aka": NaN
+  },
+  {
+   "role": "Postal Service Clerks",
+   "isco": 4412,
+   "aka": NaN
+  },
+  {
+   "role": "Human Resources Assistants, Except Payroll and Timekeeping",
+   "isco": 4416,
+   "aka": NaN
+  },
+  {
+   "role": "Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",
+   "isco": 4120,
+   "aka": NaN
+  },
+  {
+   "role": "Data Entry Keyers",
+   "isco": 4132,
+   "aka": NaN
+  },
+  {
+   "role": "Word Processors and Typists",
+   "isco": 4131,
+   "aka": NaN
+  },
+  {
+   "role": "Desktop Publishers",
+   "isco": 4413,
+   "aka": NaN
+  },
+  {
+   "role": "Mail Clerks and Mail Machine Operators, Except Postal Service",
+   "isco": 4412,
+   "aka": NaN
+  },
+  {
+   "role": "Office Clerks, General",
+   "isco": 4110,
+   "aka": NaN
+  },
+  {
+   "role": "Office and Administrative Support Workers, All Other",
+   "isco": 4419,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Office and Administrative Support Workers",
+   "isco": 4110,
+   "aka": NaN
+  },
+  {
+   "role": "Communications Equipment Operators, All Other",
+   "isco": 4419,
+   "aka": NaN
+  },
+  {
+   "role": "Office Machine Operators, Except Computer",
+   "isco": 4415,
+   "aka": NaN
+  },
+  {
+   "role": "Proofreaders and Copy Markers",
+   "isco": 4419,
+   "aka": NaN
+  },
+  {
+   "role": "Statistical Assistants",
+   "isco": 4419,
+   "aka": NaN
+  }
+ ]
+}

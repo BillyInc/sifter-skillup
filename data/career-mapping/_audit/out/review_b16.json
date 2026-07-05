@@ -1,0 +1,121 @@
+{
+ "reviews": [
+  {
+   "domain_id": "D082",
+   "domain_name": "Customer Service, Contact Centre",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Client Information and Customer Service Workers", "reason": "junk group-label row (aka=NaN), ISCO 4222 minor-group label not a role"},
+    {"role": "Social Science Research Assistants", "reason": "junk group-label row (aka=NaN); ISCO 4227 but belongs to research/market-research support, contamination"},
+    {"role": "Medical Records Specialists", "reason": "junk group-label row (aka=NaN); ISCO 3252 health information — belongs to health-admin domain, not contact centre"},
+    {"role": "Switchboard Operators, Including Answering Service", "reason": "junk group-label row (aka=NaN); duplicates existing 'telephone switchboard operator'"},
+    {"role": "Customer Service Representatives", "reason": "junk group-label row (aka=NaN); duplicates existing 'customer service representative'"},
+    {"role": "Hotel, Motel, and Resort Desk Clerks", "reason": "junk group-label row (aka=NaN); hospitality reception — cross-domain (Travel/Tourism D083)"},
+    {"role": "Telephone Operators", "reason": "junk group-label row (aka=NaN); mismapped to 4226, duplicates switchboard/telephone operator"},
+    {"role": "Correspondence Clerks", "reason": "junk group-label row (aka=NaN); mismapped to 4226 (actually 4415 correspondence/records clerk)"},
+    {"role": "Credit Authorizers, Checkers, and Clerks", "reason": "junk group-label row (aka=NaN); financial clerk (ISCO 4312/4211) — cross-domain contamination"},
+    {"role": "Interviewers, Except Eligibility and Loan", "reason": "junk group-label row (aka=NaN); mismapped to 4226, overlaps market research interviewer"},
+    {"role": "Library Assistants, Clerical", "reason": "junk group-label row (aka=NaN); ISCO 4411 library clerk — cross-domain, not customer service"},
+    {"role": "Loan Interviewers and Clerks", "reason": "junk group-label row (aka=NaN); banking/finance clerk (ISCO 4312) — cross-domain contamination"},
+    {"role": "New Accounts Clerks", "reason": "junk group-label row (aka=NaN); bank clerk (ISCO 4212/4211) — cross-domain contamination"},
+    {"role": "Order Clerks", "reason": "junk group-label row (aka=NaN); stock/order clerk (ISCO 4321) — cross-domain, not contact centre"},
+    {"role": "Reservation and Transportation Ticket Agents and Travel Clerks", "reason": "junk group-label row (aka=NaN); travel clerk (ISCO 4221) — cross-domain (Travel/Tourism D083)"},
+    {"role": "Information and Record Clerks, All Other", "reason": "junk group-label row (aka=NaN); residual O*NET catch-all bucket, not a role"},
+    {"role": "Medical Secretaries and Administrative Assistants", "reason": "junk group-label row (aka=NaN); ISCO 3344 — duplicates 'medical administrative assistant'/'medical transcriptionist', health-admin"}
+   ],
+   "add_roles": [
+    {"role": "call centre agent", "isco": 4222, "skills": ["inbound/outbound call handling", "CRM software", "active listening", "complaint resolution", "call scripting", "KPI/AHT metrics"], "reason": "Core contact-centre role missing; domain is named 'Contact Centre' yet has no explicit call-centre agent entry beyond generic CSR"},
+    {"role": "customer contact centre supervisor", "isco": 4222, "skills": ["team supervision", "workforce scheduling", "quality monitoring", "escalation handling", "call centre KPIs", "coaching"], "reason": "Supervisory tier of contact-centre operations absent; common progression role"}
+   ],
+   "overfanout_roles": [
+    {"role": "medical administrative assistant", "reason": "medical reception/transcription cluster (medical admin assistant, medical transcriptionist, medical practice manager, front line medical receptionist, veterinary receptionist) is over-represented for a general customer-service domain; belongs to health-admin"}
+   ],
+   "rename_to": null,
+   "notes": "17 valid ESCO roles + 17 aka=NaN O*NET group-label rows. All 17 NaN rows removed: many mismapped to ISCO 4226 lazily, several are cross-domain (finance clerks, library, travel/reservation, medical records) or duplicates of existing ESCO roles. After cleanup domain is coherent around reception, switchboard, CSR, live chat, market-research/survey interviewing, emergency dispatch. Note heavy medical-reception fan-out remains a health-admin overlap."
+  },
+  {
+   "domain_id": "D083",
+   "domain_name": "Travel, Tourism",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Transportation Attendants and Conductors", "reason": "junk group-label row (aka=NaN); ISCO 5112 minor-group label — duplicates existing train conductor/train attendant/chief conductor"},
+    {"role": "Tour Guides and Escorts", "reason": "junk group-label row (aka=NaN); ISCO 5113 group label — duplicates existing 'tourist guide'/'tour organiser'"},
+    {"role": "Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products", "reason": "junk group-label row (aka=NaN); ISCO 2434 technical sales — cross-domain contamination, not travel/tourism"},
+    {"role": "Brokerage Clerks", "reason": "junk group-label row (aka=NaN); mismapped to 4221 — actually securities/finance clerk (ISCO 4312), cross-domain contamination"}
+   ],
+   "add_roles": [
+    {"role": "travel agency manager", "isco": 1439, "skills": ["travel product sourcing", "team/branch management", "supplier negotiation", "GDS/booking systems", "sales targets", "customer service"], "reason": "Management tier of travel retail is absent; travel agents present but no managerial role for the domain"}
+   ],
+   "overfanout_roles": [
+    {"role": "steward/stewardess", "reason": "cabin/transport-crew cluster is dense (steward/stewardess, flight attendant, ship steward, ground steward, train attendant, train steward, cabin crew manager) with near-duplicate ESCO entries — steward/stewardess and flight attendant overlap heavily"}
+   ],
+   "rename_to": null,
+   "notes": "22 valid ESCO roles + 4 aka=NaN rows, all removed (2 group-label duplicates, 2 cross-domain: technical sales rep and brokerage/finance clerk). Core is coherent: travel agents/consultants, tour operators/guides, air+rail+ship crew, tourist information, park/eco/zoo educators. Rail-crew and cabin-crew ESCO fan-out is heavy but legitimate; flagged steward/stewardess vs flight attendant near-duplication."
+  },
+  {
+   "domain_id": "D084",
+   "domain_name": "Payroll, Bookkeeping",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Statistical, Finance and Insurance Clerks", "reason": "junk group-label row (aka=NaN); ISCO 4312 minor-group label, not a role"},
+    {"role": "Accounting, Bookkeeping and Payroll Clerks", "reason": "junk group-label row (aka=NaN); ISCO 4311 unit-group label, not a role"},
+    {"role": "Payroll and Timekeeping Clerks", "reason": "junk group-label row (aka=NaN); ISCO 4313 group label — duplicates existing 'payroll clerk'"},
+    {"role": "property assistant", "reason": "real-estate clerk (real estate agent assistant) — cross-domain contamination (property/real estate), not payroll/bookkeeping despite 4312 mapping"}
+   ],
+   "add_roles": [
+    {"role": "bookkeeper", "isco": 3313, "skills": ["double-entry bookkeeping", "ledger reconciliation", "accounts payable/receivable", "trial balance", "accounting software (e.g. QuickBooks/Xero)", "VAT/sales-tax returns"], "reason": "Domain is literally named 'Bookkeeping' yet has no bookkeeper role; core accounting-associate occupation (ISCO 3313) missing"},
+    {"role": "accounting assistant", "isco": 4311, "skills": ["data entry to ledgers", "invoice processing", "bank reconciliation", "expense reports", "spreadsheet skills", "month-end support"], "reason": "General bookkeeping/accounting clerk tier under 4311 not explicitly represented beyond billing clerk"}
+   ],
+   "overfanout_roles": [
+    {"role": "financial markets back office administrator", "reason": "cluster of finance back-office/markets clerks (financial markets back office administrator, back office specialist, foreign exchange cashier, investment clerk, insurance clerk) leans toward securities/banking back-office rather than payroll/bookkeeping — borderline finance-clerk fan-out"}
+   ],
+   "rename_to": null,
+   "notes": "11 valid ESCO + 3 aka=NaN group-label rows (all removed). 'property assistant' additionally removed as real-estate cross-domain. Key gap: no 'bookkeeper' despite domain name — added, plus generic accounting assistant. Remaining finance back-office clerks (FX, investment, back office, insurance) are 4312 and stretch the domain toward general financial-clerk territory; flagged as fan-out not removed since domain acts as a broad clerical-finance bucket."
+  },
+  {
+   "domain_id": "D085",
+   "domain_name": "Retail Sales, Shop Operations",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Shop Salespersons", "reason": "junk group-label row (aka=NaN); ISCO 5221 unit-group label — duplicates existing sales assistant/specialised seller"},
+    {"role": "Telemarketers", "reason": "junk group-label row (aka=NaN); telephone sales — cross-domain (contact centre D082), overlaps existing 'call centre agent'"},
+    {"role": "Door-To-Door Sales Workers, News and Street Vendors", "reason": "junk group-label row (aka=NaN); ISCO 5243/5211 group label — duplicates 'door to door seller'/'market vendor'/'street food vendor'"},
+    {"role": "Cashiers and Ticket Clerks", "reason": "junk group-label row (aka=NaN); mismapped to 5223 (actually 5230) — duplicates 'cashier'/'ticket issuing clerk'"},
+    {"role": "Retail Salespersons", "reason": "junk group-label row (aka=NaN); ISCO 5221 group label — duplicates 'sales assistant'/'shop assistant'"},
+    {"role": "Models", "reason": "junk group-label row (aka=NaN); mismapped to 5230 (actually 5241) — duplicates 'fashion model'/'art model' and is itself cross-domain (arts/modelling)"},
+    {"role": "Door-to-Door Sales Workers, News and Street Vendors, and Related Workers", "reason": "junk group-label row (aka=NaN); ISCO 5211 group label — duplicate of the other door-to-door NaN row"},
+    {"role": "Demonstrators and Product Promoters", "reason": "junk group-label row (aka=NaN); mismapped to 5230 (actually 5242) — duplicates 'promotions demonstrator'"},
+    {"role": "Sales and Related Workers, All Other", "reason": "junk group-label row (aka=NaN); ISCO 5249 residual catch-all bucket, not a role"},
+    {"role": "food service worker", "reason": "ISCO 5246 catering/kitchen assistant — cross-domain (food service/hospitality), not retail shop operations"},
+    {"role": "quick service restaurant team leader", "reason": "ISCO 5246 fast-food supervision — cross-domain (food service/hospitality), not retail shop operations"},
+    {"role": "fashion model", "reason": "ISCO 5241 modelling occupation — cross-domain (arts/media), not retail sales; ESCO fan-out artefact"},
+    {"role": "art model", "reason": "ISCO 5241 life/art model — cross-domain (arts/creative), not retail sales"}
+   ],
+   "add_roles": [
+    {"role": "retail store manager", "isco": 1420, "skills": ["store P&L/targets", "staff scheduling & supervision", "stock/inventory control", "merchandising & store layout", "loss prevention", "customer experience management"], "reason": "Managerial tier missing — domain has shop/checkout supervisors and retail entrepreneur but no ISCO-1420 retail/store manager, the standard progression above supervisor"},
+    {"role": "shelf filler", "isco": 9334, "skills": ["stock replenishment", "shelf rotation & date checking", "planogram compliance", "manual handling", "stock room organisation", "price labelling"], "reason": "Core shop-operations elementary role (ISCO 9334) absent; back-of-house replenishment is central to 'Shop Operations' scope"}
+   ],
+   "overfanout_roles": [
+    {"role": "rental service representative", "reason": "ISCO 5249 commodity fan-out: 11 equipment-specific variants (in other machinery, personal/household goods, water transport, office machinery, air transport, construction/civil engineering, trucks, recreational/sports goods, agricultural machinery, video tapes/disks, cars/light vehicles) plus generic 'rental service representative', 'vehicle rental agent', 'rental manager', 'car leasing agent' — collapse equipment variants into the generic role"},
+    {"role": "specialised seller", "reason": "ISCO 5223 commodity fan-out: ~40 product-category 'X specialised seller' entries (hardware/paint, fish, bakery, clothing, confectionery, jewellery, cosmetics, toys, furniture, electronics, tobacco, textile, footwear, etc.) — legitimate but massive ESCO subject fan-out; consider collapsing long tail under generic 'specialised seller' with category as attribute"}
+   ],
+   "rename_to": null,
+   "notes": "74 ESCO roles + 9 aka=NaN group-label rows (all removed). Domain dominated by two ESCO commodity fan-outs: ~40 '5223 specialised seller' variants and ~15 '5249 rental service representative' variants — flagged as overfanout, not deleted (each is a valid retail niche). Cross-domain removals: food-service (2), modelling (2). Gaps filled: ISCO-1420 store manager and ISCO-9334 shelf filler. Core retail (sales assistant, shop assistant, cashier, personal shopper, market/street vendors, specialised antique dealer) is coherent."
+  },
+  {
+   "domain_id": "D086",
+   "domain_name": "Gaming, Betting",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Gambling Change Persons and Booth Cashiers", "reason": "junk group-label row (aka=NaN); ISCO 4212 SOC label — duplicates existing 'casino cashier'"},
+    {"role": "Gambling Cage Workers", "reason": "junk group-label row (aka=NaN); ISCO 4312 SOC label — cage/banking function duplicates 'casino cashier', mismapped to 4312"},
+    {"role": "Gambling Surveillance Officers and Gambling Investigators", "reason": "junk group-label row (aka=NaN); ISCO 5419 SOC label — casino-security function, not covered elsewhere but imported as a bare group label"},
+    {"role": "First-Line Supervisors of Gambling Services Workers", "reason": "junk group-label row (aka=NaN); ISCO 5169 SOC supervisory label — duplicates 'casino pit boss'/'gaming supervisor'"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "Confirmed NOT conflated with esports/video-gaming — every role is casino/betting/lottery gambling (bookmaker, croupier/gaming dealer, bingo caller, odds compiler, pit boss, race-track/tote, lottery operator) and the two developer/QA entries are gambling-game (betting/lottery) engineering, correctly gambling-industry. ISCO 4212 'Bookmakers, croupiers and related gaming workers' correctly applied throughout. Only defect: 4 aka=NaN SOC group-label rows (all duplicates of existing roles) removed. 13 ESCO roles retained; domain otherwise clean and coherent. Note: casino surveillance/security is a real gambling role only present via the removed NaN row — could be re-added as a proper ESCO-sourced entry later if desired."
+  }
+ ]
+}

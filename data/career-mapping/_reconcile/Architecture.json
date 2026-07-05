@@ -1,0 +1,938 @@
+[
+ {
+  "programme": "Architecture",
+  "code": "ARC",
+  "technical_skills": [
+   "define and explain what architecture is, where it started from and who is an architect",
+   "discuss the nature of architecture as a discipline, a profession and a practice",
+   "distinguish between the terms; profession, discipline and practice",
+   "describe what architects do, how they do their work and the scales at which they work",
+   "describe the relationship between types of beam and frame structures, form and aesthetics",
+   "discuss what the building industry is and the role of the architect in the building industry",
+   "demonstrate the importance of history to the architect",
+   "discuss what design is and why it is important to our lives; and",
+   "demonstrate an understanding of factors and policies influencing costs in a construction project and in the construction business",
+   "create ergonomically effective spaces with appropriate relationships with human dimensions",
+   "interpret the relationship between enclosure and form",
+   "integrate passive design principles to design projects given",
+   "make presentation drawings in 2D CAD format and in freehand; and",
+   "demonstrate familiarity with residential, and educational building typologies; and",
+   "create spaces using appropriate human body dimensions and in response to simple functional needs",
+   "analyse sites in relation to basic climatic factors",
+   "think conceptually for small design problems Architecture 34 New",
+   "analyse design problems, as a basis for developing ideas",
+   "describe the various types, designs and construction techniques associated with each of these elements",
+   "identify the conditions/rationale for choosing each type or design of these elements",
+   "describe the characteristics and properties of the materials used for each of these structural elements",
+   "identify sustainable issues in substructure materials and construction",
+   "create, draw and label different foundation plans and sections in 2D",
+   "demonstrate the use of software packages for taking measurements on site/spaces such as level, sun seeker, my measures, and magic plan",
+   "set-out a simple building on site; and"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Architecture I",
+   "Architectural Design Studio I",
+   "Architectural Design Studio II",
+   "Building Components and Methods I",
+   "Building Components and Methods II",
+   "History of World and Traditional Architecture",
+   "Building Materials and Workshop Practice",
+   "Building Structures I",
+   "Building Structures II",
+   "Architectural Design Studio III",
+   "Students Industrial Work Experience Scheme (SIWES)",
+   "Building Components and Methods III",
+   "Entrepreneurship for Architects",
+   "Building Structures III",
+   "Building Services I",
+   "Building Information Modelling",
+   "Design Studio IV",
+   "Architectural Design Studio V",
+   "Building Components and Methods IV",
+   "Building Services II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D099",
+    "domain": "Masonry, Bricklaying, Tiling, Plastering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D052",
+    "domain": "Construction Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D102",
+    "domain": "Carpentry, Joinery, Wood Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D018",
+    "domain": "Civil",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D133",
+    "domain": "Luxury",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Architectural Technology",
+  "code": "ARST",
+  "technical_skills": [
+   "identify the concept and scope of architectural science and technology",
+   "enumerate the role of the architectural ethnologist in the society; identify and discuss the tools and methodologies of the architectural science technologist",
+   "enumerate the origins and the development of architectural technologist over the years",
+   "identify the roles of ARCON in registering and regulating the practice of architectural science technology",
+   "recognize and apply architectural technologist's specific knowledge and practice to solve related design tasks",
+   "develop and nurture their ability to work independently; and",
+   "develop capacity for team work",
+   "perform critical evaluation of design parameters",
+   "explore the technical and environmental aspects associated with the built environment and building; and",
+   "evaluate performance requirements for medium size buildings",
+   "evaluate design factors in order to produce design solutions which will satisfy performance, production and procurement criteria",
+   "select and specify materials and components relevant to the design of a simple residential structure; and",
+   "establish the purpose, methods and techniques for preparing detailed design solutions",
+   "identify basic building components and materials",
+   "demonstrate the process of erecting a simple building",
+   "identify basic tools and instrument used in building construction; and",
+   "identify modern building systems Architecture 64 New",
+   "identify different construction techniques in use",
+   "identify different structural systems; and",
+   "design simple construction details",
+   "analyse the basic building science principles and the appropriate application and performance of various construction materials, products, components, and assemblies common to the Nigerian construction industry, including their environmental impact and reuse",
+   "demonstrate systematic knowledge of developing architectural forms based on structural systems; Architecture 65 New",
+   "demonstrate the current knowledge and the latest trends in structural systems of contemporary architecture; and",
+   "analyse contemporary works of architecture with regard to dependencies on the applied structural system and evaluating the correctness of choosing this system",
+   "distinguish and know the impact of material selection"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Architectural Science &Technology",
+   "Architectural Science Design and Technology Studio I",
+   "Architectural Science Design and Technology Studio II",
+   "Components and Methods I",
+   "Components and Methods II",
+   "Building Structures II",
+   "Materials Science and Technology I",
+   "Architectural Science Technology Design Studio III",
+   "Components and Methods III",
+   "Building Structures III",
+   "Building Services I (Water Supply and Sanitation)",
+   "Energy Efficient Design",
+   "Students Industrial Work Experience Scheme (SIWES)",
+   "Entrepreneurship Practices for Architectural Technologists",
+   "Architectural Science Design Technology Studio IV",
+   "Building Services II � Acoustics Studies",
+   "Building Information Modelling (BIM)",
+   "Environmental Science Laboratory",
+   "Architectural Science Design and Technology Studio V",
+   "Building Services III (Advanced Lighting Design)"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D018",
+    "domain": "Civil",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D131",
+    "domain": "Motorsport Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D052",
+    "domain": "Construction Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Furniture Design",
+  "code": "FUD",
+  "technical_skills": [
+   "analyse human actions in enclose spaces",
+   "identify factors that describe different types of spaces",
+   "design and adapt furniture to human needs",
+   "enumerate the characteristics of the human body and use anthropometric and ergonomic terminology correctly in written and oral communications",
+   "develop the ability to carry out measurement of the size and proportions of the human body based on a given percentile; Architecture 87 New",
+   "identify anthropometric data that would directly impact on the design of objects and furniture solutions",
+   "incorporate anthropometric and ergonomic data into a basic furniture design and ensure that users can carry out their activities in a safe, efficient and satisfying manner; and",
+   "identify the stress factors on human systems",
+   "distinguish the usage of different points of pencils and apply them in sketching",
+   "analyse and apply the geometric patterns in nature",
+   "explore the fundamentals of drawing equipment and method of presentation",
+   "create, compose sheets using different drawing tools on different mediums",
+   "identify and understand measurement and scaling techniques for representing furniture and landscape elements; and",
+   "integrate the usage of variety of forms as a medium for indoor and outdoor sketching",
+   "represent objects orthographically in 2 dimensions",
+   "communicate design concepts graphically manually",
+   "manipulate the computer to represent concepts and ideas graphically in 2 dimensions",
+   "differentiate between the functional aspects of various furniture forms",
+   "identify common materials and processes used to fabricate furniture; and",
+   "articulate key considerations of a furniture design project using standard design vocabulary",
+   "represent objects in 3 dimensions, axonometric, perspectives and many others",
+   "use basic theories of design to develop furniture in different styles",
+   "apply principles of universal design to create comfortable furniture",
+   "express concepts with appropriate terms and reflect the design by developing furniture of different categories; and",
+   "identify seating typologies and impact of culture on them"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Furniture Design",
+   "Spatial Dynamics of Ergonomics and Anthropometrics in Interior",
+   "Free Hand Drawing",
+   "Furniture Design Studio I",
+   "Furniture Design Studio II",
+   "Furniture Production I",
+   "Furniture Production II",
+   "Basic Joinery",
+   "Materials, Techniques and Colour in Furniture Design",
+   "Materials and Techniques I",
+   "Introduction to body Physiology",
+   "Students Industrial Work Experience Scheme (SIWES)",
+   "Furniture Design Studio III",
+   "Wood Fabrication",
+   "Working Drawing and Detailing",
+   "Product Marketing and Merchandising",
+   "Plastic Product Fabrication",
+   "Local Arts and Crafts Practices I",
+   "Production Workshop Practice",
+   "Product Production and Exhibition"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D104",
+    "domain": "Pottery, Ceramics, Glass",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D106",
+    "domain": "Garment Making, Tailoring, Dressmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D133",
+    "domain": "Luxury",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D099",
+    "domain": "Masonry, Bricklaying, Tiling, Plastering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D052",
+    "domain": "Construction Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D102",
+    "domain": "Carpentry, Joinery, Wood Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D050",
+    "domain": "Industrial Automation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Interior Architecture and Design",
+  "code": "IAD",
+  "technical_skills": [
+   "produce sketches of still life, figures, and compositions in space",
+   "translate ideas and concepts of interior spaces into sketches",
+   "demonstrate analytical and expressive fluency in the language of the mark",
+   "demonstrate creative problem-solving skills through imaginative compositions",
+   "identify the physical proportions of the human body",
+   "recognise physical, cognitive and organizational issues in ergonomics",
+   "illustrate the relationship between human proportions, activity, and space requirement and",
+   "relate the physical proportions and dimensions of the human body to furniture and equipment design",
+   "recognize the role of the interior architect/designer in the society",
+   "define the scope of the interior architecture and design profession",
+   "describe the fundamental elements of interior design; and",
+   "review the interior design process Architecture 112 New",
+   "describe and trace the roots of the interior architecture and design profession",
+   "distinguish the key characteristics and elements of various historical periods in interior architecture and design; and",
+   "identify the contributions of various historical styles in art and architecture to contemporary interior architecture and design",
+   "discuss the key spaces and activities in residential buildings",
+   "identify the key functional and aesthetic requirements for residential interiors",
+   "analyse user needs in residential buildings; and",
+   "develop conceptual design and working drawings for residential building interiors",
+   "classify commercial spaces and discuss the activities that take place within them",
+   "analyse user needs in commercial spaces; and",
+   "describe the key theoretical underpinnings of interior architecture and design",
+   "identify the key principles of interior design; and",
+   "apply interior architecture and design theories and principles in their works",
+   "identify the fundamental concepts of environmental psychology"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Freehand Drawing, Visualization and Representation in Anthropometrics",
+   "Introduction to Interior Architecture and Design",
+   "History of Interior Architecture and Design",
+   "Interior Design Studio I",
+   "Interior Design Studio II",
+   "Theory and Fundamentals of Interior Architecture and Design",
+   "Colour Theory and Psychology of Interior Spaces",
+   "Building Systems and Construction",
+   "Fabrics and Soft Furnishing",
+   "Interior Design Studio III",
+   "Students Industrial Work Experience Scheme (SIWES)",
+   "Interior Materials and Construction I",
+   "Business Practices in Interior Architecture and Design",
+   "Furniture Design and Production",
+   "Indoor Thermal Comfort",
+   "Interior Lighting",
+   "Digital Media and BIM for Interiors",
+   "Interior Design Studio III",
+   "Interior Design Studio IV",
+   "Interior Materials and Construction II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Landscape Architecture",
+  "code": "LAA",
+  "technical_skills": [
+   "demonstrate knowledge of the components of landscape architecture",
+   "recognize the constituents of landscapes including, landforms, vegetation, hydrology and structure that are manipulated in designs to meet the needs of a people; and",
+   "produce in a creative, imaginative and visual sensitivity natural environmental design and planning",
+   "describe how man fits his cultural system into contextual ecosystem which influences productivity of the later",
+   "identify nature's developmental order as foundation for societal developmental economics",
+   "determine prime position of harmonious relationship between man and nature",
+   "identify the interdependence of man and environment as a working system",
+   "identify the characteristics of different eco types; and",
+   "describe the concept of natural succession as a foundation for ecological design 200 Level (2 Units C: LH 30)",
+   "appraise the importance of site analysis with environmental suitability studies in community planning",
+   "demonstrate how to depend on demography in infrastructure provision",
+   "identify standards for landscape design; and",
+   "apply the use of landscape element in land use and technical report writing",
+   "analyse landscape design planning schemes",
+   "identify design component of landscaping; and",
+   "produce a schematic landscape design and planning language in productive land use technical report writing",
+   "demonstrate the art of contour interpretation",
+   "organize drainage networks and drainage basin mapping; and",
+   "propose a watershed planning and management scheme",
+   "discuss philosophies, principles that influenced open space design and planning in various dispensations",
+   "identify the political, economic, social and religious functions of these spaces on time and space; and",
+   "describe the relationship between natural and cultural landscapes and system",
+   "describe worldview and approach to urban open space establishment and use for the diverse nations that constitute Nigeria",
+   "identify the influence of western open spaces planning on landscape design in Nigeria and",
+   "describe the history of open spaces with emphasis on traditional Nigerian settlement"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Landscape Architecture",
+   "Interface of Human Ecosystems and Ecology",
+   "Landscape Architecture Studio I",
+   "Landscape Architecture Studio II",
+   "Introductions to Map Reading and Aerial Photo Interpretation",
+   "History of Landscape Architecture",
+   "History of Landscape Architecture II",
+   "Plant Materials I",
+   "Landscape Theory",
+   "Computer Aided Design",
+   "Landscape Structures I",
+   "Landscape Components, Services and Methods",
+   "Landscape Construction I",
+   "Landscape Architectural Entrepreneurship Scheme",
+   "Tourism Planning and Development",
+   "Students Industrial Work Experience Scheme",
+   "Landscape Architecture Studio IV",
+   "Landscape Architecture Studio V",
+   "Landscape Construction II -",
+   "Basics of Historic/Heritage Landscapes Preservation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D131",
+    "domain": "Motorsport Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D167",
+    "domain": "XR & Immersive Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D049",
+    "domain": "Automotive Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Naval Architecture",
+  "code": "NARC",
+  "technical_skills": [
+   "identify the various sectors of the shipbuilding industry in Nigeria (military, fishing, transport and recreational)",
+   "identify different types of ships including men of war, logistics, transport of various design and propulsion",
+   "interpret naval architectural terminology, concepts and principles",
+   "identify the different types of marine offshore installations",
+   "distinguish mooring and anchorage systems; and",
+   "describe basic design concepts of naval architecture",
+   "demonstrating the basic concepts of fluid mechanics",
+   "work with actual examples to demonstrate the importance of fluid mechanics in ship design",
+   "apply the principles learned to set engineering projects",
+   "identify hydrostatic principles and apply them to calculation of equilibrium of floating bodies",
+   "calculate the stability of marine vehicles",
+   "identify the operation of vessels in different marine environments; and",
+   "produce ship lines drawings, calculation of ship hydrostatic characteristics, analysis of intact and damaged stability, ship model testing, and hull structure strength calculations",
+   "demonstrate the basic concepts of fluid mechanics",
+   "demonstrate the importance of fluid mechanics in ship design with actual designs; and",
+   "produce advanced preliminary conceptualization and design",
+   "distinguish between different design stages; and",
+   "engage in further work in stability calculations",
+   "identify the principles uses of marine, electrical and electronic engineering and their applications in the marine environment",
+   "use CAD and CAM software for simple designs; and",
+   "comprehend describe the processes involved in the stages of marine design, construction and laboratory tests",
+   "describe the concepts of the mechanical properties of materials",
+   "apply relevant theoretical background for advanced structural analysis and design courses and",
+   "solve basic engineering problems in solid mechanics",
+   "describe the nature and composition of various ship building materials"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Naval Architecture",
+   "Fluid Mechanics, Hydrostatics and Stability",
+   "Ship Design and Drawing I",
+   "Ship Design and Drawing II",
+   "Engineering Applications for Naval Architects",
+   "Mechanics of Ship Structure",
+   "Ship Construction Materials",
+   "Marine Engines and Fuels",
+   "Ship Building Services",
+   "Ship Hydrodynamics",
+   "Ship Design and Drawing III",
+   "Marine Environment and Marine Pollution",
+   "Mechanics of Ship Structure II",
+   "Dockyard Design",
+   "Ship Interior Design",
+   "Resistance and Propulsion of Ships",
+   "Students Industrial Work Experience Scheme (SIWES)",
+   "Business Practices in Naval Architecture and Design",
+   "Ship Design and Construction Project",
+   "Marine Acoustics"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D076",
+    "domain": "Maritime",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D148",
+    "domain": "Offshore, Subsea",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D131",
+    "domain": "Motorsport Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D018",
+    "domain": "Civil",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D049",
+    "domain": "Automotive Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   }
+  ]
+ }
+]

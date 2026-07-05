@@ -1,0 +1,232 @@
+{
+ "domain_id": "D040",
+ "domain_name": "Vocational",
+ "role_count": 45,
+ "roles": [
+  {
+   "role": "primary school teaching assistant",
+   "isco": 5312,
+   "aka": "primary school TA  ·  primary school assistant  ·  primary school paraprofessional  ·  elementary school teaching assistant  ·  primary school teaching aide"
+  },
+  {
+   "role": "maritime instructor",
+   "isco": 2320,
+   "aka": "ship pilot trainer  ·  specialist maritime training instructor  ·  instructor in maritime training  ·  maritime trainer  ·  occupational boating instructor"
+  },
+  {
+   "role": "corporate trainer",
+   "isco": 2424,
+   "aka": "corporate education professional  ·  professional development coach  ·  trainer of corporate employees  ·  corporate professional trainer  ·  workplace training specialist"
+  },
+  {
+   "role": "hospitality vocational teacher",
+   "isco": 2320,
+   "aka": "hospitality and catering instructor  ·  vocational instructor in hospitality and catering  ·  educator in hospitality and catering  ·  vocational teacher of catering and hospitality  ·  vocational hospitality and catering teacher"
+  },
+  {
+   "role": "special educational needs assistant",
+   "isco": 5312,
+   "aka": "teaching assistant in special educational needs  ·  inclusive education assistant  ·  special educational needs teaching assistant  ·  SEN TA  ·  special education assistant"
+  },
+  {
+   "role": "food service vocational teacher",
+   "isco": 2320,
+   "aka": "teacher of food and hospitality  ·  vocational teacher in food service  ·  cooking teacher  ·  food service vocational instructor  ·  food service teacher"
+  },
+  {
+   "role": "occupational driving instructor",
+   "isco": 2320,
+   "aka": "LGV driving instructor  ·  specialist driving instructor  ·  passenger carrying vehicle instructor  ·  PCV driving instructor  ·  instructor in occupational driving"
+  },
+  {
+   "role": "business administration vocational teacher",
+   "isco": 2320,
+   "aka": "business administration teacher  ·  vocational teacher of business administration  ·  vocational instructor in business management  ·  business management teacher  ·  business administration educator"
+  },
+  {
+   "role": "air traffic instructor",
+   "isco": 2320,
+   "aka": "air traffic control trainer  ·  air traffic control instructor  ·  air traffic trainer  ·  instructor of air traffic control"
+  },
+  {
+   "role": "digital literacy teacher",
+   "isco": 2356,
+   "aka": "digital literacy trainer  ·  computer literacy instructor  ·  computer literacy teacher  ·  digital literacy teaching practitioner  ·  digital literacy instructor"
+  },
+  {
+   "role": "electricity and energy vocational teacher",
+   "isco": 2320,
+   "aka": "electricity and energy instructor  ·  teaching practitioner in electricity and energy  ·  vocational teacher in electricity and energy  ·  teacher of electricity and energy  ·  electricity and energy vocational trainer"
+  },
+  {
+   "role": "industrial arts vocational teacher",
+   "isco": 2320,
+   "aka": "industrial arts educator  ·  industrial arts instructor  ·  industrial arts vocational instructor  ·  industrial arts teacher  ·  technical handicraft instructor"
+  },
+  {
+   "role": "early years teaching assistant",
+   "isco": 5312,
+   "aka": "reception teaching assistant  ·  assistant in early years teaching  ·  preschool teaching aide  ·  early childhood teaching aide  ·  early childhood teaching assistant"
+  },
+  {
+   "role": "beauty vocational teacher",
+   "isco": 2320,
+   "aka": "hair and beauty instructor  ·  vocational cosmetology teacher  ·  hair and beauty educator  ·  hair and beauty teacher  ·  vocational beauty teacher"
+  },
+  {
+   "role": "travel and tourism vocational teacher",
+   "isco": 2320,
+   "aka": "vocational instructor in travel and tourism  ·  travel and tourism teacher  ·  vocational travel and tourism teacher  ·  trainer in travel and tourism  ·  travel and tourism instructor"
+  },
+  {
+   "role": "electronics and automation vocational teacher",
+   "isco": 2320,
+   "aka": "vocational teacher in electronics and automation  ·  electronics and automation instructor  ·  electronics and automation trainer  ·  electronics and automation vocational instructor  ·  electronics and automation teacher"
+  },
+  {
+   "role": "sign language teacher",
+   "isco": 2353,
+   "aka": "british sign language teacher  ·  sign language tutor  ·  sign language trainer  ·  british sign language trainer  ·  british sign language tutor"
+  },
+  {
+   "role": "occupational railway instructor",
+   "isco": 2320,
+   "aka": "metro driving instructor  ·  tram driver instructor  ·  trolley driver instructor  ·  engine driver instructor  ·  railway instruction practitioner"
+  },
+  {
+   "role": "police trainer",
+   "isco": 2320,
+   "aka": "law enforcement trainer  ·  police officer trainer  ·  trainer of police  ·  specialist police trainer  ·  police tutor"
+  },
+  {
+   "role": "medical laboratory technology vocational teacher",
+   "isco": 2320,
+   "aka": "instructor in medical laboratory technology  ·  medical laboratory technology teacher  ·  medical laboratory technology instructor  ·  medical laboratory technology educator  ·  vocational instructor in medical laboratory technology"
+  },
+  {
+   "role": "secondary school teaching assistant",
+   "isco": 5312,
+   "aka": "teaching assistant in secondary schools  ·  assistant in secondary school teaching  ·  secondary school instructional assistant  ·  secondary school teaching aide  ·  high school teaching assistant"
+  },
+  {
+   "role": "vocational teacher",
+   "isco": 2320,
+   "aka": "vocational college lecturer  ·  vocational instructor  ·  vocational university tutor  ·  vocational educator  ·  vocational college teacher"
+  },
+  {
+   "role": "auxiliary nursing and midwifery vocational teacher",
+   "isco": 2320,
+   "aka": "vocational teacher in auxiliary nursing and midwifery  ·  auxiliary nursing and midwifery teacher  ·  auxiliary nursing and midwifery instructor  ·  auxiliary nursing and midwifery vocational trainer  ·  educator in auxiliary nursing and midwifery"
+  },
+  {
+   "role": "armed forces training and education officer",
+   "isco": 2320,
+   "aka": "military training and education officer  ·  armed forces instructor  ·  military trainer  ·  military academy instructor  ·  military instructor"
+  },
+  {
+   "role": "transport technology vocational teacher",
+   "isco": 2320,
+   "aka": "vocational teacher in transportation technology  ·  transportation technology vocational instructor  ·  transportation technician instructor  ·  vocational instructor in transportation technology  ·  teacher in transportation technology"
+  },
+  {
+   "role": "agriculture, forestry and fishery vocational teacher",
+   "isco": 2320,
+   "aka": "agriculture, forestry, and fishery vocational instructor  ·  vocational teacher in agriculture, fishery, and forestry  ·  vocational teacher of agriculture, forestry and fishery  ·  agriculture, forestry, and fishery vocational trainer  ·  trainer in agriculture, forestry and fishery"
+  },
+  {
+   "role": "hairdressing vocational teacher",
+   "isco": 2320,
+   "aka": "vocational hairdressing teacher  ·  barbering instructor  ·  vocational hairdressing instructor  ·  hairdressing educator  ·  hairdressing teacher"
+  },
+  {
+   "role": "language school teacher",
+   "isco": 2353,
+   "aka": "language school instructor  ·  teacher in a language school  ·  teacher of english to speakers of other languages  ·  TESOL practitioner  ·  instructor in language school"
+  },
+  {
+   "role": "business and marketing vocational teacher",
+   "isco": 2320,
+   "aka": "marketing teacher  ·  vocational teacher of marketing and business  ·  sales and marketing vocational teacher  ·  business and marketing teacher  ·  instructor in sales and marketing"
+  },
+  {
+   "role": "design and applied arts vocational teacher",
+   "isco": 2320,
+   "aka": "art and design instructor  ·  vocational design and applied arts educator  ·  vocational teacher in art and design  ·  design and applied arts teacher  ·  teacher of applied arts and crafts"
+  },
+  {
+   "role": "ICT trainer",
+   "isco": 2356,
+   "aka": "distance-learning trainer  ·  system trainer  ·  ICT trainers  ·  IT trainer  ·  blended learning trainer"
+  },
+  {
+   "role": "firefighter instructor",
+   "isco": 2320,
+   "aka": "firefighter trainer  ·  instructor of firefighters  ·  instructor in fire academy  ·  fire academy trainer  ·  fire instructor"
+  },
+  {
+   "role": "cabin crew instructor",
+   "isco": 2320,
+   "aka": "flight attendant instructor  ·  cabin service instructor  ·  flight attendant trainer  ·  instructor of cabin crew  ·  inflight service instructor"
+  },
+  {
+   "role": "business coach",
+   "isco": 2424,
+   "aka": "professional development coach  ·  corporate coach  ·  leadership coach  ·  business development coach  ·  personal development coach"
+  },
+  {
+   "role": "physical education vocational teacher",
+   "isco": 2320,
+   "aka": "vocational PE teacher  ·  vocational teacher of PE  ·  instructor in physical education  ·  vocational instructor in physical education  ·  vocational teacher of physical education"
+  },
+  {
+   "role": "Vocational Education Teachers",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Training and Development Specialists",
+   "isco": 2424,
+   "aka": NaN
+  },
+  {
+   "role": "Postsecondary Teachers, All Other",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "Secondary School Teachers, Except Special and Career/Technical Education",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Instructional Coordinators",
+   "isco": 2351,
+   "aka": NaN
+  },
+  {
+   "role": "Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",
+   "isco": 2356,
+   "aka": NaN
+  },
+  {
+   "role": "Tutors",
+   "isco": 2356,
+   "aka": NaN
+  },
+  {
+   "role": "Teachers and Instructors, All Other",
+   "isco": 2356,
+   "aka": NaN
+  },
+  {
+   "role": "Farm and Home Management Educators",
+   "isco": 5312,
+   "aka": NaN
+  },
+  {
+   "role": "Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education",
+   "isco": 2356,
+   "aka": NaN
+  }
+ ]
+}

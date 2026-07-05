@@ -1,0 +1,210 @@
+{"reviews":[
+{
+  "domain_id": "D056",
+  "domain_name": "Blockchain",
+  "verdict": "issues",
+  "remove_roles": [
+    {"role": "digital forensics expert", "isco": 2529, "reason": "generic cybersecurity/forensics role, not blockchain-specific; cross-domain contamination from Cybersecurity"},
+    {"role": "cyber incident responder", "isco": 2529, "reason": "generic SOC/cybersecurity role; belongs to Cybersecurity domain"},
+    {"role": "ICT disaster recovery analyst", "isco": 2519, "reason": "generic IT resilience role, no blockchain relevance"},
+    {"role": "embedded system designer", "isco": 2511, "reason": "embedded systems, unrelated to blockchain/DLT"},
+    {"role": "computer vision engineer", "isco": 2511, "reason": "computer vision/AI role, unrelated to blockchain"},
+    {"role": "embedded systems security engineer", "isco": 2529, "reason": "IoT/embedded security, not blockchain"},
+    {"role": "green ICT consultant", "isco": 2511, "reason": "sustainability IT role, no blockchain relevance"},
+    {"role": "ICT change and configuration manager", "isco": 2519, "reason": "generic IT ops/config management, not blockchain"},
+    {"role": "ICT integration tester", "isco": 2519, "reason": "generic QA testing role; ESCO test fan-out"},
+    {"role": "knowledge engineer", "isco": 2529, "reason": "taxonomy/linked-data role, unrelated to blockchain"},
+    {"role": "ICT resilience manager", "isco": 2529, "reason": "generic disaster recovery/resilience management, not blockchain"},
+    {"role": "software tester", "isco": 2519, "reason": "generic QA role; ESCO test fan-out, not blockchain"},
+    {"role": "ICT system tester", "isco": 2519, "reason": "generic QA role; ESCO test fan-out"},
+    {"role": "ICT test analyst", "isco": 2519, "reason": "generic QA role; ESCO test fan-out"},
+    {"role": "user experience analyst", "isco": 2511, "reason": "generic UX role, not blockchain-specific"}
+  ],
+  "add_roles": [
+    {"role": "smart contract developer", "isco": 2512, "skills": ["Solidity", "smart contract security", "EVM", "Web3.js/ethers.js", "Rust (Solana/ink!)", "contract testing"], "reason": "core blockchain build role absent from list; smart contract development is central to blockchain"},
+    {"role": "blockchain security auditor", "isco": 2529, "skills": ["smart contract auditing", "formal verification", "Solidity", "reentrancy/exploit analysis", "gas optimization", "static analysis tools"], "reason": "distinct high-demand blockchain security specialization not covered by generic ethical hacker"},
+    {"role": "cryptography engineer", "isco": 2511, "skills": ["applied cryptography", "zero-knowledge proofs", "elliptic curve cryptography", "hashing", "consensus algorithms", "key management"], "reason": "cryptographic engineering underpins blockchain protocols; not represented"}
+  ],
+  "overfanout_roles": [
+    {"role": "data analyst", "reason": "aka fanned out into unrelated commodity variants (battery data analyst, mine electrification data analyst, battery materials data analyst) — ESCO commodity fan-out"},
+    {"role": "data scientist", "reason": "aka includes electromobility data scientist — cross-domain commodity fan-out"}
+  ],
+  "rename_to": null,
+  "notes": "Domain is heavily contaminated with generic ICT/cybersecurity/QA/data roles. Only blockchain developer, blockchain architect, and (added) smart-contract/security/crypto roles are genuinely on-topic. Many kept ICT roles (software developer, software architect, data engineer, enterprise architect) are plausibly adjacent to blockchain engineering so retained, but the domain reads as a generic-IT dump rather than a curated blockchain library."
+},
+{
+  "domain_id": "D057",
+  "domain_name": "Digital Health",
+  "verdict": "issues",
+  "remove_roles": [
+    {"role": "Medical and Health Services Managers", "isco": 1342, "reason": "junk O*NET group-label row (aka=NaN); duplicates healthcare institution manager / clinical informatics manager"},
+    {"role": "Podiatrists", "isco": 2264, "reason": "junk group-label row (aka=NaN); clinical specialty unrelated to digital health"},
+    {"role": "Occupational Therapists", "isco": 2264, "reason": "junk group-label row (aka=NaN); clinical therapy, not digital health"},
+    {"role": "Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists", "isco": 2264, "reason": "junk O*NET group-label row (aka=NaN); clinical, not digital health"},
+    {"role": "Respiratory Therapists", "isco": 2264, "reason": "junk group-label row (aka=NaN); clinical therapy, not digital health"},
+    {"role": "Exercise Physiologists", "isco": 2264, "reason": "junk group-label row (aka=NaN); clinical, not digital health"},
+    {"role": "Therapists, All Other", "isco": 2264, "reason": "junk O*NET catch-all group row (aka=NaN)"},
+    {"role": "Art Therapists", "isco": 2264, "reason": "junk group-label row (aka=NaN); clinical therapy, unrelated"},
+    {"role": "Music Therapists", "isco": 2264, "reason": "junk group-label row (aka=NaN); clinical therapy, unrelated"},
+    {"role": "physiotherapist", "isco": 2264, "reason": "clinical rehab role, not digital health; aka fans out into masseuse/osteopath (ESCO subject fan-out)"},
+    {"role": "advanced physiotherapist", "isco": 2264, "reason": "clinical rehab role, not digital health"},
+    {"role": "specialised doctor", "isco": 2212, "reason": "generic clinical physician role, not digital health"},
+    {"role": "ICT test analyst", "isco": 2519, "reason": "generic QA role; ESCO test fan-out, not digital-health specific"},
+    {"role": "software tester", "isco": 2519, "reason": "generic QA role; ESCO test fan-out"},
+    {"role": "clinical informatics analyst", "isco": 2511, "reason": "duplicate of clinical informatics manager/health informatics specialist scope (aka=NaN); redundant with clinical informatics manager and health informatics specialist"}
+  ],
+  "add_roles": [
+    {"role": "health data analyst", "isco": 2511, "skills": ["healthcare data standards (HL7/FHIR)", "SQL", "population health analytics", "data visualization", "HIPAA/data privacy", "clinical data modeling"], "reason": "core digital-health analytics role absent; distinct from generic data analyst"},
+    {"role": "clinical systems integration engineer", "isco": 2511, "skills": ["HL7 FHIR", "interoperability", "EHR integration", "API development", "healthcare interoperability standards", "medical device interfaces"], "reason": "interoperability engineering is central to digital health and not represented"}
+  ],
+  "overfanout_roles": [
+    {"role": "physiotherapist", "reason": "aka fans out into unrelated therapies (respiratory therapist, masseuse, occupational therapist, osteopath) — ESCO subject fan-out"}
+  ],
+  "rename_to": null,
+  "notes": "Large block of O*NET junk group-label rows (all therapist categories with aka=NaN) plus clinical/rehab roles that belong in a Healthcare domain, not Digital Health. Genuine digital-health roles: PACS administrator, clinical informatics manager, health informatics specialist, telemedicine coordinator, digital health product manager, mHealth developer, EHR specialist. clinical informatics analyst overlaps existing informatics roles."
+},
+{
+  "domain_id": "D058",
+  "domain_name": "EdTech",
+  "verdict": "issues",
+  "remove_roles": [
+    {"role": "administrative assistant", "isco": 3343, "reason": "generic clerical role, not EdTech"},
+    {"role": "corporate trainer", "isco": 2424, "reason": "generic L&D role, not education-technology specific"},
+    {"role": "science teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out — generic subject teacher, not EdTech"},
+    {"role": "fundraising assistant", "isco": 3343, "reason": "generic clerical/fundraising role, unrelated to EdTech"},
+    {"role": "history teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out — generic subject teacher"},
+    {"role": "executive assistant", "isco": 3343, "reason": "generic clerical role, not EdTech"},
+    {"role": "classical languages teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "religious education teacher at secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "scopist", "isco": 3343, "reason": "transcription/clerical role, unrelated to EdTech"},
+    {"role": "education administrator", "isco": 3343, "reason": "generic school-office clerical role, not education technology"},
+    {"role": "physics teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "music teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "project support officer", "isco": 3343, "reason": "generic PMO/clerical role, unrelated to EdTech"},
+    {"role": "secondary school teacher", "isco": 2330, "reason": "generic teacher, not EdTech-specific"},
+    {"role": "business studies and economics teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "art teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "geography teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "management assistant", "isco": 3343, "reason": "generic clerical role, not EdTech"},
+    {"role": "biology teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "physical education teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "court reporter", "isco": 3343, "reason": "legal transcription/clerical role, unrelated to EdTech"},
+    {"role": "editorial assistant", "isco": 3343, "reason": "publishing/clerical role, unrelated to EdTech"},
+    {"role": "literature teacher at secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "supply chain assistant", "isco": 3343, "reason": "logistics/clerical role, unrelated to EdTech"},
+    {"role": "procurement support officer", "isco": 3343, "reason": "procurement/clerical role, unrelated to EdTech"},
+    {"role": "business coach", "isco": 2424, "reason": "generic coaching role, not EdTech"},
+    {"role": "philosophy teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "mathematics teacher at secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "drama teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "modern languages teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "international student exchange coordinator", "isco": 3343, "reason": "generic education-admin/clerical role, not education technology"},
+    {"role": "chemistry teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out"},
+    {"role": "Online Learning Managers", "isco": 1345, "reason": "junk O*NET group-label row (aka=NaN) — though title is on-topic, replace with curated role"},
+    {"role": "Special Education Teachers, All Other", "isco": 2330, "reason": "junk O*NET catch-all group row (aka=NaN)"},
+    {"role": "Adapted Physical Education Specialists", "isco": 2330, "reason": "junk O*NET group-label row (aka=NaN); not EdTech"},
+    {"role": "ICT teacher secondary school", "isco": 2330, "reason": "ESCO subject fan-out — subject teacher; digital literacy teacher and ICT trainer already cover the EdTech-relevant instruction"},
+    {"role": "ICT test analyst", "isco": 2519, "reason": "generic QA role; ESCO test fan-out, not EdTech"},
+    {"role": "software tester", "isco": 2519, "reason": "generic QA role; ESCO test fan-out"}
+  ],
+  "add_roles": [
+    {"role": "instructional designer", "isco": 2356, "skills": ["learning design", "curriculum development", "ADDIE/SAM models", "authoring tools (Articulate/Captivate)", "assessment design", "LMS content authoring"], "reason": "core EdTech role designing digital learning; conspicuously absent"},
+    {"role": "e-learning developer", "isco": 2513, "skills": ["SCORM/xAPI", "HTML/CSS/JS", "authoring tools", "multimedia production", "LMS integration", "interactive content"], "reason": "builds the digital learning content that defines EdTech; absent"},
+    {"role": "learning management system administrator", "isco": 2522, "skills": ["LMS administration (Moodle/Canvas)", "user/course management", "SSO/integration", "reporting analytics", "SCORM/LTI", "system configuration"], "reason": "operational backbone of EdTech platforms; absent (junk 'Online Learning Managers' row removed)"},
+    {"role": "learning experience designer", "isco": 2356, "skills": ["UX for learning", "learner journey mapping", "prototyping", "accessibility (WCAG)", "learning analytics", "engagement design"], "reason": "distinct modern EdTech role blending UX and pedagogy; not represented"}
+  ],
+  "overfanout_roles": [
+    {"role": "secondary school teacher", "reason": "aka fans out into every subject variant (science/language/geography/PE) — ESCO subject fan-out mirrored by the many standalone subject-teacher rows"}
+  ],
+  "rename_to": null,
+  "notes": "Domain is dominated by ESCO subject fan-out (14+ secondary-subject teacher rows) and generic clerical/assistant roles that have nothing to do with education technology, plus junk O*NET group rows. Only digital literacy teacher and ICT trainer are genuinely EdTech-adjacent; the true EdTech build/design roles (instructional designer, e-learning developer, LMS admin, LX designer) were entirely missing and are added."
+},
+{
+  "domain_id": "D059",
+  "domain_name": "Space Technology",
+  "verdict": "issues",
+  "remove_roles": [
+    {"role": "ICT test analyst", "isco": 2519, "reason": "generic software QA role; ESCO test fan-out, not space technology"},
+    {"role": "air traffic safety technician", "isco": 3155, "reason": "aviation ATC role, not space technology"},
+    {"role": "aircraft engine specialist", "isco": 7232, "reason": "aircraft maintenance, not space"},
+    {"role": "drone pilot", "isco": 3153, "reason": "UAV/aviation, not space technology"},
+    {"role": "food production engineer", "isco": 2141, "reason": "food industry role — cross-domain contamination"},
+    {"role": "air traffic controller", "isco": 3154, "reason": "aviation ATC, not space"},
+    {"role": "helicopter pilot", "isco": 3153, "reason": "aviation piloting, not space"},
+    {"role": "aeronautical information service officer", "isco": 3154, "reason": "aviation info services, not space"},
+    {"role": "airline transport pilot", "isco": 3153, "reason": "aviation piloting, not space"},
+    {"role": "commercial pilot", "isco": 3153, "reason": "aviation piloting, not space"},
+    {"role": "industrial engineer", "isco": 2141, "reason": "generic manufacturing engineering, not space-specific"},
+    {"role": "maintenance and repair engineer", "isco": 2141, "reason": "generic maintenance engineering, not space"},
+    {"role": "manufacturing engineer", "isco": 2141, "reason": "generic manufacturing (aka fans into battery manufacturing), not space"},
+    {"role": "aircraft gas turbine engine overhaul technician", "isco": 7232, "reason": "aircraft engine maintenance, not space"},
+    {"role": "co-pilot", "isco": 3153, "reason": "aviation piloting, not space"},
+    {"role": "aircraft maintenance engineer", "isco": 3153, "reason": "aircraft maintenance, not space"},
+    {"role": "private pilot", "isco": 3153, "reason": "aviation piloting, not space"},
+    {"role": "food and beverage packaging technologist", "isco": 2141, "reason": "food/packaging role — cross-domain contamination"},
+    {"role": "packaging production manager", "isco": 2141, "reason": "packaging industry role — contamination"},
+    {"role": "aircraft maintenance technician", "isco": 7232, "reason": "aircraft maintenance, not space"},
+    {"role": "airport operations officer", "isco": 3154, "reason": "airport operations, aviation not space"},
+    {"role": "aircraft pilot", "isco": 3153, "reason": "aviation piloting, not space"},
+    {"role": "aircraft de-icer installer", "isco": 7232, "reason": "aircraft ground service (aka spuriously includes 'spacecraft de-icer installer' — ESCO fan-out), not space"},
+    {"role": "aviation inspector", "isco": 3154, "reason": "aviation inspection, not space"},
+    {"role": "aircraft maintenance coordinator", "isco": 7232, "reason": "aircraft maintenance scheduling, not space"},
+    {"role": "flight instructor", "isco": 3153, "reason": "aviation flight training, not space"},
+    {"role": "process engineer", "isco": 2141, "reason": "generic manufacturing process engineering (battery aka), not space"},
+    {"role": "automation engineer", "isco": 2141, "reason": "generic automation engineering, not space"},
+    {"role": "second officer", "isco": 3153, "reason": "aviation flight crew, not space"},
+    {"role": "production engineer", "isco": 2141, "reason": "generic production engineering, not space"},
+    {"role": "surface engineer", "isco": 2141, "reason": "generic surface/corrosion engineering, not space-specific"},
+    {"role": "flight operations officer", "isco": 3154, "reason": "aviation flight ops/dispatch, not space"},
+    {"role": "homologation engineer", "isco": 2141, "reason": "automotive homologation — cross-domain contamination"},
+    {"role": "aeronautical information specialist", "isco": 3154, "reason": "aviation information, not space"},
+    {"role": "Bridge and Lock Tenders", "isco": 3155, "reason": "junk O*NET group row (aka=NaN); maritime, wholly unrelated"},
+    {"role": "Aircraft Service Attendants", "isco": 3155, "reason": "junk O*NET group row (aka=NaN); aviation ground service"},
+    {"role": "Traffic Technicians", "isco": 3155, "reason": "junk O*NET group row (aka=NaN); road traffic, unrelated"},
+    {"role": "Transportation Inspectors", "isco": 3155, "reason": "junk O*NET group row (aka=NaN); generic transport inspection"},
+    {"role": "Transportation Vehicle, Equipment and Systems Inspectors, Except Aviation", "isco": 3155, "reason": "junk O*NET group row (aka=NaN); generic transport inspection"}
+  ],
+  "add_roles": [
+    {"role": "aerospace engineer", "isco": 2144, "skills": ["orbital mechanics", "propulsion systems", "aerodynamics", "spacecraft structures", "CAD/FEA", "systems engineering"], "reason": "the foundational space-technology engineering role, entirely absent"},
+    {"role": "satellite systems engineer", "isco": 2144, "skills": ["satellite bus design", "payload integration", "attitude determination & control (ADCS)", "RF/communications systems", "thermal management", "orbital analysis"], "reason": "core space role (satellite design/ops) not represented"},
+    {"role": "spacecraft propulsion engineer", "isco": 2144, "skills": ["rocket propulsion", "combustion", "fluid dynamics", "propellant systems", "thermodynamics", "engine testing"], "reason": "propulsion is central to space tech; missing"},
+    {"role": "mission operations engineer", "isco": 2153, "skills": ["ground station operations", "telemetry & command (TT&C)", "mission planning", "orbital tracking", "flight software", "anomaly resolution"], "reason": "spacecraft/mission control operations role absent"},
+    {"role": "avionics engineer", "isco": 2144, "skills": ["embedded flight systems", "guidance navigation & control (GNC)", "sensor integration", "fault-tolerant electronics", "real-time systems", "hardware-in-the-loop testing"], "reason": "flight avionics engineering for spacecraft/launch vehicles missing"}
+  ],
+  "overfanout_roles": [
+    {"role": "manufacturing engineer", "reason": "aka fans out into battery/EV commodity variants — ESCO commodity fan-out (and role itself is off-domain)"}
+  ],
+  "rename_to": null,
+  "notes": "Extreme contamination: the domain is ~90% aviation (pilots, ATC, aircraft maintenance) plus food/packaging/automotive/manufacturing and junk O*NET transport-inspector group rows. The ONLY genuinely space-specific role is 'astronaut' (kept). No actual space-engineering roles exist in the list, so all five core space roles are added. telecommunications engineer kept as satellite-comms adjacent; ICT test analyst removed as generic QA fan-out. Recommend near-total rebuild of this domain."
+},
+{
+  "domain_id": "D060",
+  "domain_name": "Banking, Credit",
+  "verdict": "issues",
+  "remove_roles": [
+    {"role": "Relationship Managers", "isco": 3312, "reason": "junk O*NET group-label row (aka=NaN); duplicates bank account manager"},
+    {"role": "Credit and Loans Officers", "isco": 3312, "reason": "junk O*NET group-label row (aka=NaN); duplicates loan officer / credit analyst"},
+    {"role": "Bank Tellers and Related Clerks", "isco": 4211, "reason": "junk O*NET group-label row (aka=NaN); duplicates bank teller"},
+    {"role": "Tellers", "isco": 4211, "reason": "junk O*NET group-label row (aka=NaN); duplicates bank teller"},
+    {"role": "Financial Clerks, All Other", "isco": 3341, "reason": "junk O*NET catch-all group row (aka=NaN)"},
+    {"role": "Natural Sciences Managers", "isco": 1346, "reason": "junk group row (aka=NaN) and cross-domain contamination — science management mis-mapped via ISCO 1346, wholly unrelated to banking"},
+    {"role": "Clinical Research Coordinators", "isco": 1346, "reason": "junk group row (aka=NaN); healthcare research, cross-domain contamination via ISCO 1346"},
+    {"role": "Water Resource Specialists", "isco": 1346, "reason": "junk group row (aka=NaN); environmental role, cross-domain contamination via ISCO 1346"},
+    {"role": "insurance collector", "isco": 4214, "reason": "insurance domain, not banking/credit"},
+    {"role": "insurance agency manager", "isco": 1346, "reason": "insurance domain, not banking/credit"},
+    {"role": "insurance claims manager", "isco": 1346, "reason": "insurance domain, not banking/credit"},
+    {"role": "insurance clerk", "isco": 4312, "reason": "insurance domain, not banking/credit"},
+    {"role": "property assistant", "isco": 4312, "reason": "real estate clerical role — cross-domain contamination"},
+    {"role": "tax clerk", "isco": 4312, "reason": "tax administration, not banking/credit"},
+    {"role": "post office counter clerk", "isco": 4211, "reason": "postal services role, not banking/credit"}
+  ],
+  "add_roles": [
+    {"role": "compliance officer", "isco": 2411, "skills": ["AML/KYC", "regulatory compliance", "financial crime monitoring", "sanctions screening", "audit", "risk reporting"], "reason": "AML/compliance is a core banking function and absent from the list"},
+    {"role": "personal banker", "isco": 3312, "skills": ["retail banking products", "customer relationship management", "cross-selling", "account servicing", "loan origination", "financial needs analysis"], "reason": "front-line retail banking advisory role not distinctly represented"},
+    {"role": "financial analyst", "isco": 2413, "skills": ["financial modeling", "credit assessment", "financial statement analysis", "valuation", "forecasting", "Excel"], "reason": "core banking analytical role absent (distinct from credit-only analyst)"}
+  ],
+  "overfanout_roles": [],
+  "rename_to": null,
+  "notes": "Core banking/credit coverage is genuinely strong (credit analyst/manager/adviser, bank teller/manager, loan officer, mortgage roles, credit union manager, FX cashier, credit risk analyst). Issues are: a block of junk O*NET group rows (aka=NaN) that duplicate existing roles, three severe cross-domain contaminants mis-mapped via ISCO 1346 (Natural Sciences Managers, Clinical Research Coordinators, Water Resource Specialists), an insurance sub-cluster that belongs to a separate Insurance domain, plus tax/postal/real-estate clerical strays. student financial support coordinator and auditing clerk are borderline but retained."
+}
+]}

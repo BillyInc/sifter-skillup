@@ -1,0 +1,3313 @@
+{
+ "faculty": "Arts and Humanities",
+ "source": "arts_hum.txt",
+ "degree": "B.A",
+ "note": "Deterministic name-variations + institution lists; requirement columns + per-institution waivers enriched from brochure.",
+ "programmes": [
+  {
+   "jamb_name": "Arabic Studies",
+   "institutions": [
+    "ABU",
+    "ABUJA",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "BASU",
+    "BAYERO",
+    "EKSU",
+    "EL-TAYEB",
+    "EUI",
+    "FED-DUTSINMA",
+    "FED-GASHUA",
+    "FED-GUSAU",
+    "FED-KASHERE",
+    "ARTS",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "FOUNTAIN",
+    "ICONIC-OU",
+    "ILORIN",
+    "JOS",
+    "KASU",
+    "KWASU",
+    "LAPAI",
+    "LASU",
+    "LASUED",
+    "MAIDUGURI",
+    "MAITAMA",
+    "NASARAWA",
+    "NAUB",
+    "NOUN-ELUON",
+    "RUFAI-DEG",
+    "SLUK",
+    "SOSU",
+    "SUMMIT",
+    "TSUJ",
+    "UDU",
+    "UMYUK",
+    "UNI-ILESA",
+    "YSU",
+    "ZAMFARA"
+   ],
+   "utme_subjects": [
+    "Arabic and two (2) subjects from Arts and/or Social Sciences"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Arabic and three (3) other relevant subjects.",
+   "direct_entry": "Two (2) 'A' Level passes in Arabic and any other Arts subject.",
+   "institution_waivers": [
+    {
+     "institution": "ABU",
+     "note": "ABU accepts Two 'A' level/IJMB passes including Arabic at IJMB/NCE, or a minimum of Merit at Diploma in Arabic or with other subjects."
+    },
+    {
+     "institution": "ABUJA",
+     "note": "ABUJA accepts a minimum of ten (10) points in NCE or ND upper credit in addition to the 'O' Level requirements."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN accepts NCE merit in Arabic or Social Sciences subjects. ILORIN accepts: a) At least two (2) 'A' Level passes to include Arabic and any other Arts/Social Science Subject. b) Unilorin Diploma and other relevant Diploma: BUK, ABU, KWASU (this satisfies both A/L and O/L admission requirements by Direct Entry) provided the candidates meet other requirements for admission. c) Candidates who did not offer Arabic at UTME but meet UTME entry requirements may be considered into 100 level. d) Candidates who do not offer Arabic at O/L but meet UTME entry requirements may be considered for admission. e) Candidates with Senior/Higher Islamic Studies Certificate as O/L for entry qualification for Arabic Studies and related programmes."
+    },
+    {
+     "institution": "KWASU",
+     "note": "KWASU accepts IJMB, Cambridge, NCE and SISC."
+    },
+    {
+     "institution": "LASU",
+     "note": "LASU accepts a) Two (2) 'A' Level passes in Arabic and any other Arts subject plus five (5) 'O' Level credit passes in other related Arts subjects. b) Qualifications obtained from recognized Arabic Institutions are accepted in lieu of Arabic 'O' Level subjects for the fulfillment of other entry requirements. NCE merit in Arabic is acceptable."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "IBADAN accept NCE merit in Arabic and other Arts or Social Science subjects."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "FED-KASHERE accepts Two 'A' Level credit passes in Arabic and any other Arts subject."
+    },
+    {
+     "institution": "KASU",
+     "note": "KASU accepts NCE in Arabic/Islamic Studies minimum of merit pass. Two 'A' level passes in Arabic."
+    }
+   ],
+   "first_line": 68,
+   "line_range": [
+    68,
+    136
+   ],
+   "scope": [
+    68,
+    137
+   ]
+  },
+  {
+   "jamb_name": "Arabic Language and Literature Studies",
+   "institutions": [
+    "CAILS",
+    "ISTIQAMA",
+    "NDA",
+    "MK-UNI",
+    "ARABIC LITERARY",
+    "STUDY AND",
+    "TRANSLATION",
+    "UMYUK",
+    "ARTS",
+    "LINGUISTICS/ARABIC",
+    "YSU",
+    "LITERATURE",
+    "IBADAN",
+    "PAAU",
+    "UNIOSUN",
+    "ARABIC AND ISLAMIC",
+    "STUDIES",
+    "ARABIC AND LITERARY",
+    "UDU"
+   ],
+   "utme_subjects": [
+    "Arabic and two (2) subjects from Arts and/or Social Sciences (same as in Arabic Studies)"
+   ],
+   "olevel_requirement": "Same as in Arabic Studies (Five (5) SSC credit passes in English Language, Arabic and three (3) other relevant subjects).",
+   "direct_entry": "Two (2) 'A' Level passes in the relevant subjects.",
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "IBADAN requires two (2) 'A' Level passes in Arabic and any other Arts or Social Science subject."
+    }
+   ],
+   "first_line": 137,
+   "line_range": [
+    137,
+    299
+   ],
+   "scope": [
+    137,
+    300
+   ]
+  },
+  {
+   "jamb_name": "Archaeology",
+   "institutions": [
+    "ABU",
+    "IBADAN",
+    "JOS",
+    "UNN",
+    "ARCHAEOLOGY/HISTORY",
+    "ARCHAEOLOGY AND",
+    "ARTS",
+    "HERITAGE STUDIES"
+   ],
+   "utme_subjects": [
+    "Any two (2) subjects from Arts, Social Sciences and one of History, Religious Studies, Government and Geography"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and one of the following subjects, Religious Studies, Geography, Economics and History.",
+   "direct_entry": "Two (2) 'A' Level passes in Arts or Social Sciences and one Science subject.",
+   "institution_waivers": [
+    {
+     "institution": "ABU",
+     "note": "ABU accepts Two 'A' level/IJMB in Geography/Biology/History or any other Subject. NCE with minimum of Merit. ABU Diploma in related subjects. UTME: ABU requires Five 'O' level credit passes which must include English Language and other Science/Arts/Social Science subjects. UTME SUBJECTS: ABU requires Use of English and any other three Subjects."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "IBADAN accepts 'A' Level passes in any two (2) Arts subjects. UTME: IBADAN requires five (5) 'O' Level credit passes at one sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, History, Literature in English, Government, Geography, Religious Studies, Economics, Biology, Hausa/Igbo/Yoruba."
+    },
+    {
+     "institution": "JOS",
+     "note": "JOS accepts NCE Merit or ND lower credit. UTME: JOS requires five (5) 'O' Level credit passes to include English Language, History/Government, Geography and any Social Sciences/Arts subjects."
+    },
+    {
+     "institution": "UNN",
+     "note": "UNN requires a) two (2) 'A' Level passes or ND/HND credit or NCE merit plus the UTME requirements b) Candidates combining Archaeology with Science/Social Sciences must satisfy the requirements in the respective programmes. UTME: UNN requires five (5) 'O' Level credit passes to include English Language and any Science subject as well as 'O' Level pass in Mathematics or its equivalent. UTME SUBJECTS: UNN accepts any three (3) subjects."
+    }
+   ],
+   "first_line": 300,
+   "line_range": [
+    300,
+    372
+   ],
+   "scope": [
+    300,
+    373
+   ]
+  },
+  {
+   "jamb_name": "Classical Studies",
+   "institutions": [
+    "IBADAN"
+   ],
+   "utme_subjects": [
+    "Literature in English or History and any other two (2) subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes at one sitting or Six (6) SSC credit passes at two (2) sittings to include English Language, Literature in English or History, one Arts or Social Science subject and any other subject.",
+   "direct_entry": "(i) Two (2) 'A' Level passes including Literature in English or History. (ii) NCE in relevant subjects.",
+   "institution_waivers": [],
+   "first_line": 373,
+   "line_range": [
+    373,
+    384
+   ],
+   "scope": [
+    373,
+    385
+   ]
+  },
+  {
+   "jamb_name": "Christian Religious",
+   "institutions": [
+    "STUDIES",
+    "ANCHOR-UNI",
+    "BABCOCK",
+    "BIU",
+    "CALABAR",
+    "CALEB",
+    "CLIFFORD",
+    "DOMINICAN-UNI",
+    "ECWA",
+    "EUI",
+    "EKSU",
+    "FED-KASHERE",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "FED-WUKARI",
+    "GSU",
+    "JOS",
+    "ARTS",
+    "KASU",
+    "KKU",
+    "PAAU",
+    "LAGOS",
+    "LASU",
+    "LASUED",
+    "LTS",
+    "NASARAWA",
+    "OBONG",
+    "OOU",
+    "PACOT",
+    "REDEEMED",
+    "REDEEMERS",
+    "SPIRITAN",
+    "TASUED",
+    "TSUJ",
+    "UDA",
+    "UNIHEZ",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "STUDIES AND RELIGIOUS",
+    "COMMUNICATIONS",
+    "ABUJA",
+    "FINE ARTS/FINE AND",
+    "APPLIED ARTS",
+    "BENIN",
+    "DELSU",
+    "AEFUNA",
+    "IAUED",
+    "KWASU",
+    "UNN"
+   ],
+   "utme_subjects": [
+    "CRS",
+    "and any two Arts subjects",
+    "and any other subject"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, CRS and three (3) other relevant subjects.",
+   "direct_entry": "Two (2) 'A' Level passes/NCE to include CRS/Religious Studies.",
+   "institution_waivers": [
+    {
+     "institution": "ABUJA",
+     "note": "Accepts a minimum of ten (10) points in NCE merit or ND upper credit in addition to the UTME requirements."
+    },
+    {
+     "institution": "AJAYI",
+     "note": "Accepts NCE Merit in Religious Studies."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Accepts NCE Merit in Religious Studies."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts: a) Two (2) 'A' Level passes/NCE to include CRS/Religious Studies. b) Diploma in Religious Studies or Theology of London or an accredited Nigerian University or Affiliated institutions."
+    },
+    {
+     "institution": "KWASU",
+     "note": "Accepts IJMB, Cambridge and NCE."
+    },
+    {
+     "institution": "LASU",
+     "note": "Accepts a) two (2) 'A' Level passes, including CRS or Religious Studies at not more than two (2) sittings, plus five (5) 'O' Level credit passes or its equivalent, including English Language at not more than two (2) sittings. b) NCE Merit in CRS and five (5) 'O' Level credit passes in other relevant subjects including English Language. Also requires fulfillment of the UTME requirements."
+    },
+    {
+     "institution": "OOU",
+     "note": "Also requires fulfillment of the UTME requirements."
+    },
+    {
+     "institution": "NASARAWA",
+     "note": "Accepts NCE merit in CRS."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts Passes at the GCE A/level or its equivalents. One of the A/level Subjects should be CRS. NCE with credit or merit in CRS."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "Requires Two 'A' Level credit passes in CRS/Religious Studies and any other Arts subject."
+    },
+    {
+     "institution": "KASU",
+     "note": "Accepts NCE Christian Religious Knowledge/Theology with a merit pass. ND Christian Religious Knowledge/Theology Lower Credit. Two 'A' level passes in CRS/Religious Studies."
+    }
+   ],
+   "first_line": 385,
+   "line_range": [
+    385,
+    530
+   ],
+   "scope": [
+    385,
+    439
+   ]
+  },
+  {
+   "jamb_name": "Christian Studies",
+   "institutions": [
+    "AJAYI",
+    "ILORIN",
+    "KWASU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 439,
+   "line_range": [
+    439,
+    443
+   ],
+   "scope": [
+    439,
+    531
+   ]
+  },
+  {
+   "jamb_name": "Creative Arts",
+   "institutions": [
+    "DOU",
+    "LAGOS",
+    "PHC",
+    "UNN",
+    "TASUED",
+    "FINE ARTS AND DESIGN",
+    "LASU",
+    "ARTS",
+    "FED-LAFIA",
+    "LCITY",
+    "WIGWE",
+    "FINE ARTS AND",
+    "INDUSTRIAL DESIGN",
+    "DELSUT",
+    "CREATIVE AND VISUAL",
+    "ENVIRONMENTAL",
+    "SCIENCE",
+    "ABSU",
+    "VISUAL AND APPLIED",
+    "AEFUNA",
+    "ANIMATION AND VISUAL",
+    "DRAMA/DRAMATIC/PERF",
+    "ORMING ARTS",
+    "ABUJA",
+    "BENIN",
+    "DELSU",
+    "KASU",
+    "OAU",
+    "THEATRE AND",
+    "PERFORMING ARTS",
+    "ABU",
+    "BAYERO",
+    "LASUED",
+    "THEATRE AND FILM",
+    "STUDIES",
+    "FED-OTUOKE",
+    "JOS",
+    "TSUJ",
+    "THEATRE ARTS",
+    "ABUAD",
+    "ATIBA",
+    "BOWEN",
+    "BSU",
+    "BOUEDST",
+    "CALABAR",
+    "COOU",
+    "EKSU",
+    "EVANGEL",
+    "FED-LOKOJA",
+    "GREGORY",
+    "IAUED",
+    "IBADAN",
+    "IGBINEDION",
+    "IMSU",
+    "KASU-KABBA",
+    "LAUTECH",
+    "PAAU",
+    "MAIDUGURI",
+    "MC-IBRU",
+    "NASARAWA",
+    "NDU",
+    "PAUL",
+    "PLASU",
+    "REDEEMERS",
+    "RSU",
+    "UDA",
+    "UNI-AFRICA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNIZIK",
+    "UYO",
+    "WESLEYUNI",
+    "AAUA",
+    "AJAYI",
+    "AKSU",
+    "ELIZADE",
+    "ILORIN",
+    "KWASU",
+    "OOU",
+    "PERFORMING AND",
+    "HENSARD",
+    "THEATRE AND MEDIA",
+    "AAU",
+    "FED-OYE EKITI",
+    "FILM ARTS",
+    "NFI-DEG"
+   ],
+   "utme_subjects": [
+    "Fine Arts",
+    "and two other Arts subjects or Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and Fine Arts.",
+   "direct_entry": "(i) Two (2) 'A' Level passes in Arts or Fine Arts and any other subject. (ii) ND upper credit / HND lower credit from recognised institutions. For holders of NTC, the relevant subjects could be General Wood work, Building/Engineering Drawing, Introduction to Building Construction; Decorative Painting; Spray Painting, Lining, Sign and Design; Wall hanging, Colour Mixing/Matching and Glazing; Printing Origination; Machine Printing and Finishing; General Metal Work, Basic Electricity, Spinning, Weaving, Surface Design and Printing; Bleaching, Dyeing and Finishing; Graphic Design; Graphic Printing and Ceramics.",
+   "institution_waivers": [
+    {
+     "institution": "BENIN",
+     "note": "DE: requires 'A' Level passes in Fine Arts and any other subjects, which must include Literature in English; accepts ND upper credit or HND lower credit in Fine Arts subjects from recognised institutions. O'Level: accepts five (5) 'O' Level credit passes to include English Language and one Arts subject; also accepts candidates without Fine Arts at 'O' Level. UTME subjects: accepts two (2) Arts subjects and any other subject."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "DE: requires very good passes in three JUPEB/A' Level subjects â€” Theatre Arts: Literature in English and any two of Igbo/Yoruba, CRS/IRS, French, History, Government, Music and Visual Arts; Visual Arts: Visual Arts and any two of Igbo/Yoruba, CRS/IRS, French, History, Government and Music; Music: Music and any two from Literature in English, Igbo/Yoruba, CRS/IRS, French, History, Government, Economics, Chemistry, Biology, Further Mathematics and Visual Arts. Also accepts HND/OND at Upper Credit Level in Drama/Theatre and Music; NCE Music and Diploma or Advanced level in Music from the Royal School of Music London, Trinity College London and Musical Society of Nigeria (MUSON). O'Level: (a) Theatre Arts â€” Five O/Level credit passes in English Language, Literature-in-English, Mathematics and any other two subjects one of which must be an Arts subject; (b) Music â€” Five O/Level credit passes in English Language, Mathematics, two Arts subjects (may include Music) and any other subject; (c) Visual Arts â€” Five O/Level credit passes in English Language, Mathematics, two Arts subjects (may include any one of Fine Arts/Visual Arts/Photography/Craft Practice/Dyeing & Bleaching/Painting & Decoration) and any other subject. UTME subjects: accepts English Language, any one of Fine Arts/Literature-in-English/Music, one Arts subject and any Science or Social Science."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "DE: accepts NCE with Fine/Creative Arts (Major)."
+    },
+    {
+     "institution": "UNN",
+     "note": "DE: (a) three (3) GCE 'A' Level passes in Fine Arts or Technical Drawing plus the UTME requirements; (b) HND holders with an average of B grade with the UTME requirements into 300 level; (c) ND credit or NCE merit with the UTME requirements; (d) candidates would be interviewed. O'Level: requires five (5) 'O' Level credit passes to include English Language, Fine and Applied Arts and one Science subject; candidates with NBC/NTC must have five (5) 'O' Level credit passes including English language, Technical drawing, Painting and Decorating and a Science subject."
+    },
+    {
+     "institution": "NDU",
+     "note": "DE: requires a pass in Literature in English at the 'A' Level GCE, or HSC or merit NCE, and in another Arts subject, Fine and Industrial Arts or Theatre Arts. O'Level: requires five (5) 'O' Level credit passes in English Language and any four (4) of Literature in English, Fine Arts, History, Geography, Economics and Religious Studies at not more than two (2) sittings. UTME subjects: accepts any three (3) subjects."
+    },
+    {
+     "institution": "PHC",
+     "note": "DE: accepts A/level passes in GCE or HSC or IJMB or JUPEB in two (2) Art subjects including Literature in English, in addition to UTME entry requirements in two (2) Arts subjects including English Language, with an overall merit level Pass from a recognized College of Education. O'Level: requires Five (5) O Level Credits in English Language and any other four (4) subjects from Literature in English, History/Government, CRK/IRK, Economics, Mathematics, Biology, Chemistry, Agricultural Science, Physics, Igbo/Hausa/Yoruba, Fine Art, Geography, Commerce. UTME subjects: requires any other three (3) subjects from the same list."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "DE: in addition to the UTME requirements, candidates must have any of the following â€” OND in Fine Arts/Industrial Arts at Lower Credit level / HND / NCE: Fine Arts at Merit Level; IJMB minimum of 9 points. O'Level: requires Five (5) credit passes at SSCE, GCE, NECO and NABTEB O' Level including English Language, Mathematics and three other relevant subjects in not more than two sittings; credit level pass in Fine Arts/Visual Arts is an added advantage."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DE: (a) OND in Fine Art with a minimum grade of credit; (b) Diploma in Fine and Applied Arts, DELSU, with at least merit grade; (c) 'A' Level passes in Fine and Applied Arts and at least one other subject. O'Level: candidates without Fine Art/Visual Arts should possess at least five (5) 'O' Level credits which may include Mathematics, English Language and four other subjects from Arts, Social Science and Science. UTME subjects: requires any three (3) subjects from Arts and Social Science."
+    },
+    {
+     "institution": "IAUED",
+     "note": "DE: applicants holding NCE with merit level and above from Ignatius Ajuru University of Education or any other recognized institution admitted for the BA.Ed programme in addition to completing the JAMB Direct Entry requirements; OR (a) Two (2) A Level passes in Arts or Fine Arts and any other subject; (b) ND upper credit / HND lower credit from recognised institutions. O'Level: requires SSCE or GCE O'level with five credit passes at not more than two sittings including English Language and Mathematics, other three from Arts or Social Sciences; candidates without a credit in Fine Art may be considered where need be; Grade II Teacher's Certificate, technical college graduates with NABTEB, NTC, City and Guilds with related craft certificates accepted with credit passes including English language and Fine Arts. UTME subjects: requires English Language and any three (3) from History, Government, Economics, Religious and Cultural Studies, Music, Fine Art, Commerce, Igbo, Literature in English, Social Studies, Accounting, or any other Arts or Social Sciences course."
+    },
+    {
+     "institution": "ABSU",
+     "note": "O'Level: (a) 'O' Level credit pass in English Language provided Fine Art grade is not below B3; (b) 'O' Level credit passes in Mathematics and any three (3) subjects from Arts, Social Sciences and Sciences."
+    }
+   ],
+   "first_line": 531,
+   "line_range": [
+    531,
+    1223
+   ],
+   "scope": [
+    531,
+    1224
+   ]
+  },
+  {
+   "jamb_name": "Linguistics/Edo",
+   "institutions": [
+    "BENIN",
+    "ENGLISH AND",
+    "INTERNATIONAL",
+    "ARTS",
+    "STUDIES",
+    "UNIOSUN",
+    "ENGLISH LANGUAGE",
+    "AAU",
+    "ABU",
+    "ABUAD",
+    "ADSU",
+    "AJAYI",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "ALETHEIA",
+    "APU",
+    "ARTSHUR-JARVIS",
+    "ATIBA",
+    "AUE",
+    "AUGUSTINE",
+    "BASU",
+    "BAYERO",
+    "BIU",
+    "BOSU",
+    "BOWEN",
+    "BSU",
+    "CARITAS",
+    "CHRISLAND",
+    "CHRISTOPHER",
+    "CLIFFORD",
+    "COOU",
+    "COVENANT",
+    "CROWN-HILL",
+    "EUI",
+    "EDWIN CLARK",
+    "EKSU",
+    "ELIZADE",
+    "EVANGEL",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-GASHUA",
+    "FED-GUSAU",
+    "FED-KASHERE",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "AEFUNA",
+    "FOUNTAIN",
+    "GSU",
+    "IAUED",
+    "ICONIC-OU",
+    "ISTIQAMA",
+    "IGBINEDION",
+    "IJEBUODE-DEG",
+    "ILORIN",
+    "JOS",
+    "KOLADAISI",
+    "KWASU",
+    "LAGOS",
+    "LAPAI",
+    "LASUED",
+    "LEGACY",
+    "MADONNA",
+    "MCPHERSON",
+    "MKAR",
+    "MK-UNI",
+    "MOUNTAIN TOP",
+    "NASARAWA",
+    "MAITAMA",
+    "NDA",
+    "NAUB",
+    "NOUN",
+    "OAU",
+    "OOU",
+    "PAUL",
+    "PHC",
+    "PLASU",
+    "POL-ACAD",
+    "REDEEMERS",
+    "RITMAN",
+    "RSU",
+    "SALEM",
+    "SAU",
+    "SLUK",
+    "SOSU",
+    "SPIRITAN",
+    "TASUED",
+    "TSUJ",
+    "UAGRIC-IMO",
+    "UDU",
+    "UNI-ILESA",
+    "UMYUK",
+    "UNI-AFRICA",
+    "UNIKINGS",
+    "UYO",
+    "VISION-UNI",
+    "YSU",
+    "ZAMFARA",
+    "AND LITERATURE",
+    "ABSU",
+    "ASPOL-DEG",
+    "AUN",
+    "EBSU",
+    "FED-WUKARI",
+    "KASU-KABBA",
+    "IBADAN",
+    "NILE",
+    "UNIZIK",
+    "AND COMMUNICATION",
+    "FEDOTUOKE",
+    "LINGUISTICS/ENGLISH"
+   ],
+   "utme_subjects": [
+    "Two (2) relevant Arts subjects",
+    "and any other subject"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes or TC II merits including English Language, Literature in English and a Nigerian Language preferably Edo. 'O' Level pass in Mathematics is optional.",
+   "direct_entry": "(i) Two (2) 'A' Level passes in GCE or HSC or a recognised equivalent in any two (2) Arts subjects. (ii) NCE in any two (2) Arts subjects with an overall Merit level pass.",
+   "institution_waivers": [
+    {
+     "institution": "BENIN",
+     "note": "Accepts 'O' Level pass in English Language for candidates with 'O' Level distinction pass in Literature in English."
+    }
+   ],
+   "first_line": 1224,
+   "line_range": [
+    1224,
+    1927
+   ],
+   "scope": [
+    1224,
+    1928
+   ]
+  },
+  {
+   "jamb_name": "English and Literary Studies",
+   "institutions": [
+    "STUDIES",
+    "ABUJA",
+    "ADUN",
+    "AKSU",
+    "AL-ANSAR",
+    "ANCHOR-UNI",
+    "BABCOCK",
+    "BINGHAM",
+    "BOUEDST",
+    "CALABAR",
+    "CALEB",
+    "COAL-CITY",
+    "DELSU",
+    "DOU",
+    "EKSU",
+    "KOMU",
+    "ESUTECH",
+    "FED-OYE EKITI",
+    "GOUU",
+    "GREGORY",
+    "IMSU",
+    "PAAU",
+    "KWASU",
+    "ARTS",
+    "LAUTECH",
+    "LCITY",
+    "LUX-MUNDI",
+    "MAIDUGURI",
+    "MC-IBRU",
+    "NDU",
+    "OBONG",
+    "SUMMIT",
+    "TAU",
+    "TRINITY",
+    "UDA",
+    "UNIHEZ",
+    "UNN",
+    "VERITAS"
+   ],
+   "utme_subjects": [
+    "Literature in English",
+    "one other Arts subject",
+    "and another Arts or Social Science subject"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include Literature in English and English Language.",
+   "direct_entry": "Two (2) `A' Level passes to include Literature in English and one other Arts subject.",
+   "institution_waivers": [
+    {
+     "institution": "AAUA",
+     "note": "Accepts ND upper credit in Mass Communication. Does not accept NCE."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts Two `A' level papers including English at IJMB/NCE, or a minimum of Merit at Diploma. Candidates with Diploma must also possess pass in Literature in English. General English/Use of English at NCE satisfies `O' level English requirement."
+    },
+    {
+     "institution": "ABUJA",
+     "note": "Accepts two (2) `A' Level passes to include Literature in English and one other Arts subject."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Accepts NCE with Literature in English as the teaching subject."
+    },
+    {
+     "institution": "CHRISTOPHER",
+     "note": "Accepts HND, ND or NCE with credit passes in the relevant programmes/subjects."
+    },
+    {
+     "institution": "NDU",
+     "note": "Requires pass in Literature in English at the `A' Level or NCE merit and a pass in at least any Arts subject."
+    },
+    {
+     "institution": "OAU",
+     "note": "Same as in English Language."
+    },
+    {
+     "institution": "RSU",
+     "note": "Accepts Admission to Year II: OND/ND (Upper Credit) relevant to the discipline. HND (Lower Credit) relevant to the Programme. In addition, all such candidates above must also satisfy the U.M.E. entry requirements. Admission into Year III: Degree relevant to the Programme. HND (Upper Credit) relevant to the Programme from a recognized Institution."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "Accepts two (2) `A' Level passes to include Literature in English and other Arts subjects or NCE in English/Political Science."
+    },
+    {
+     "institution": "UNN",
+     "note": "Accepts NCE merit in English Language in addition to the UTME requirements."
+    },
+    {
+     "institution": "UNIHEZ",
+     "note": "Accepts Two (2) A Level passes to include Literature in English and one other Arts subject."
+    },
+    {
+     "institution": "KASU",
+     "note": "Accepts Two `A' passes to include Literature in English and one other Arts subjects. NCE merit pass including English provided they merit `O' Level requirements. ND/HND Lower credit in related field and IJMB 7 points and above."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires a) In addition to the five (5) `O' Level credit passes at SSC or its equivalent, candidates must possess at least merit passes in not less than two art subjects, including literature, at the GCE `A' Level or H.S.C. Examination or their equivalent. b) A pass in `A' Level General Paper or NCE General English is not accepted in lieu of an `O' Level credit pass in SSC or its equivalent English Language. Literature courses taken at OND will not be accepted for admission into the department."
+    }
+   ],
+   "first_line": 1928,
+   "line_range": [
+    1928,
+    1978
+   ],
+   "scope": [
+    1928,
+    1979
+   ]
+  },
+  {
+   "jamb_name": "English Studies",
+   "institutions": [
+    "AAUA",
+    "BABCOCK",
+    "KASU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 1979,
+   "line_range": [
+    1979,
+    1983
+   ],
+   "scope": [
+    1979,
+    1984
+   ]
+  },
+  {
+   "jamb_name": "Literature in English",
+   "institutions": [
+    "ABU",
+    "BASU",
+    "BOSU",
+    "CHRISLAND",
+    "CHRISTOPHER",
+    "ARTS",
+    "CLIFFORD",
+    "GREGORY",
+    "JOS",
+    "OAU",
+    "PAUL",
+    "RSU",
+    "UDU",
+    "UNIOSUN",
+    "WESLEYUNI"
+   ],
+   "utme_subjects": [
+    "Literature in English",
+    "and any other two subjects from Arts or Social Sciences"
+   ],
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "AAUA",
+     "note": "Requires five (5) `O' Level credit passes to include English Language, Literature in English, Mathematics, one Arts subject and two (2) of the following: CRS/IRS, Igbo Language/Yoruba Language/Hausa Language, History/Government, French, Fine Arts or Music."
+    },
+    {
+     "institution": "CHRISTOPHER",
+     "note": "Maximum of two (2) sittings."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "Requires five (5) credits passes at SSC (or its equivalent) including English Language, Literature in English, plus at least a pass in Mathematics."
+    },
+    {
+     "institution": "KASU",
+     "note": "O'Level: requires Five `O' level credit passes to include English Language, Mathematics, Literature in English and two other subjects in Arts or Social Sciences. UTME: accepts Literature in English and two other subjects in Arts or Social Sciences."
+    },
+    {
+     "institution": "PAAU",
+     "note": "Require five (5) `O' level credit passes to include English Language, Literature in English and three (3) other subjects in Arts or Social Sciences."
+    },
+    {
+     "institution": "NDU",
+     "note": "Requires five (5) `O' Level credit passes in English Language, Literature in English and any other three (3) subjects, two (2) of which must be Arts subjects."
+    },
+    {
+     "institution": "UNN",
+     "note": "Requires a Science subject."
+    },
+    {
+     "institution": "DELSU",
+     "note": "O'Level: a) At least five (5) SSCE/NECO/GCE O' Level credit passes at not more than two sittings, which may include Mathematics, English Language, Literature in English, and three other subjects in Arts and Social Science. b) TC II Certificate with Credit/Merit passes in at least five relevant subjects obtained at not more than two sittings. UTME: accepts Literature in English, an Art subject and any other subject from Social Science."
+    },
+    {
+     "institution": "LCITY",
+     "note": "Requires five (5) credit passes at SSC or its equivalent to include English Language, Literature in English and any three (3) Arts subjects."
+    },
+    {
+     "institution": "UNIHEZ",
+     "note": "O'Level: requires Five (5) SSC credit passes to include Literature in English and English Language. A Pass in Mathematics is required. UTME: requires Literature in English, one other Arts subject and another Arts or Social Science subject."
+    },
+    {
+     "institution": "ABU",
+     "note": "O'Level: requires Five `O' level credit passes to include Literature in English and English Language. UTME: requires Use of English, one Arts subject and two other Arts or Social Science subjects."
+    },
+    {
+     "institution": "RSU",
+     "note": "O'Level: requires Five (5) WASC/GCE/SSCE/NECO `O' level credit passes in English Language, Mathematics, Literature in English and any other two (2) subjects. UTME: requires English Language, Literature in English, Government/History and Christian Religious Knowledge/Islamic Religious Studies."
+    }
+   ],
+   "first_line": 1984,
+   "line_range": [
+    1984,
+    2135
+   ],
+   "scope": [
+    1984,
+    2136
+   ]
+  },
+  {
+   "jamb_name": "French",
+   "institutions": [
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ANCHOR-UNI",
+    "BABCOCK",
+    "BAYERO",
+    "BENIN",
+    "BSU",
+    "BOUEDST",
+    "CALABAR",
+    "COVENANT",
+    "CROWN-HILL",
+    "DELSU",
+    "EBSU",
+    "ARTS",
+    "EKSU",
+    "FED-DUTSINMA",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "AEFUNA",
+    "FOUNTAIN",
+    "GREGORY",
+    "IAUED",
+    "IBADAN",
+    "IGBINEDION",
+    "ILORIN",
+    "IMSU",
+    "JOS",
+    "KASU",
+    "KWASU",
+    "LAGOS",
+    "LAPAI",
+    "LASU",
+    "LASUED",
+    "LCITY",
+    "MAIDUGURI",
+    "NDA",
+    "NASARAWA",
+    "NAUB",
+    "OAU",
+    "OOU",
+    "PHC",
+    "POL-ACAD",
+    "REDEEMERS",
+    "SAU",
+    "TASUED",
+    "TSUJ",
+    "UDA",
+    "UDU",
+    "UMYUK",
+    "UNIOSUN",
+    "UNIZIK",
+    "UNN",
+    "UYO"
+   ],
+   "utme_subjects": [
+    "French",
+    "and any other two (2) subjects from Arts and Social Sciences"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes including French and English Language plus one other Arts subject.",
+   "direct_entry": "Two (2) `A' Level passes including French and one other Arts subject.",
+   "institution_waivers": [
+    {
+     "institution": "AAU",
+     "note": "Accepts a) NCE merit in French and one other Arts subject. b) NCE Double major in French."
+    },
+    {
+     "institution": "ABSU",
+     "note": "Accepts a) Candidates with two (2) `A' Level passes in Arts into the 4-year programme. b) Two (2) `A' Level passes including French at IJMB/NCE. General English/Use of English at NCE satisfies UTME English Language requirement."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "Accepts NCE in French and any French Baccalaureate `A' Level."
+    },
+    {
+     "institution": "BSU",
+     "note": "Accepts two (2) NCE passes to include French and one other Arts subject."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Accepts a) Five (5) `O' Level credit passes at not more than two (2) sittings to include English Language, plus two (2) `A' Level passes one of which must be in French. b) Four (4) `O' Level credit passes at not more than two (2) sittings to include English Language, plus three (3) `A' Level passes one of which must be in French. c) Five (5) `O' Level credit passes at not more than two (2) sittings to include English Language, plus two (2) NCE merit or credit passes of which one must be in French."
+    },
+    {
+     "institution": "DELSU",
+     "note": "a) Candidate must have at least a merit pass in French and one other Art subject at the NCE level. b) GCE A/L passes should include French and one other Arts subject. c) Certified Diploma in French from a recognized Institute like the Nigerian French Language Village and the likes will be accepted in place of A level French."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Accepts NCE merit including French and one other subject from Arts and Social Science subject. Ibadan accepts candidates without `O' level in French."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts at least two A level passes including french and one other Arts or Social science subjects. This is applicable for NCE, OND, IJMB, JUPEB, and GCE A level."
+    },
+    {
+     "institution": "KWASU",
+     "note": "Accepts ND, NCE with French as principal subject. Requires three (3) `A' Level passes in relevant subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts Very good passes in JUPEB/A' Level subjects: French and any two of Igbo/Yoruba, CRS/IRS, History, Government, Literature-in-English, Music and Fine Arts. NCE in French/NFLV, Diploma/DiplÃ´me SupÃ©rieur (MODULE III), DALF (France), CEGEP (Canada), Baccalaureate, CAP and BTS."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts NCE merit pass in French (Nigeria French Language Village) and the likes."
+    }
+   ],
+   "first_line": 2136,
+   "line_range": [
+    2136,
+    2221
+   ],
+   "scope": [
+    2136,
+    2222
+   ]
+  },
+  {
+   "jamb_name": "Portuguese/English",
+   "institutions": [
+    "LASU",
+    "MODERN AND EUROPEAN",
+    "LANGUAGES",
+    "UNIZIK",
+    "EUROPEAN LANGUAGES",
+    "DOU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 2222,
+   "line_range": [
+    2222,
+    2231
+   ],
+   "scope": [
+    2222,
+    2232
+   ]
+  },
+  {
+   "jamb_name": "German",
+   "institutions": [
+    "ARTS",
+    "IBADAN",
+    "LAGOS",
+    "OAU",
+    "UNN",
+    "RUSSIAN"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 2232,
+   "line_range": [
+    2232,
+    3993
+   ],
+   "scope": [
+    2232,
+    2251
+   ]
+  },
+  {
+   "jamb_name": "French and German/Russian",
+   "institutions": [
+    "INTERNATIONAL",
+    "RELATIONS",
+    "BABCOCK",
+    "NOUN"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 2251,
+   "line_range": [
+    2251,
+    2257
+   ],
+   "scope": [
+    2251,
+    2258
+   ]
+  },
+  {
+   "jamb_name": "International Studies and",
+   "institutions": [
+    "UNIOSUN",
+    "FRENCH WITH GERMAN/",
+    "UNN",
+    "ASIAN STUDIES",
+    "DOU",
+    "ARTS",
+    "LINGUISTICS/FRENCH",
+    "FED-DUTSE",
+    "AEFUNA",
+    "LINGUISTICS/HAUSA",
+    "TSUJ",
+    "YSU",
+    "ABU",
+    "AL-QALAM",
+    "BASU",
+    "BAYERO",
+    "FED-DUTSINMA",
+    "FED-GUSAU",
+    "FED-KASHERE",
+    "FED-LAFIA",
+    "ILORIN",
+    "KASU",
+    "LASUED",
+    "MAIDUGURI",
+    "MAITAMA",
+    "NASARAWA",
+    "NAUB",
+    "POL-ACAD",
+    "SLUK",
+    "SOSU",
+    "UDU",
+    "UMYUK",
+    "AAU",
+    "AAUA",
+    "ABSU",
+    "ABUAD",
+    "ADUN",
+    "AJAYI",
+    "AKSU",
+    "AUE",
+    "BABCOCK",
+    "BOWEN",
+    "BOUEDST",
+    "CALABAR",
+    "CHRISLAND",
+    "COOU",
+    "DELSU",
+    "EUI",
+    "EDWIN CLARK",
+    "EKSU",
+    "KOMU",
+    "EVANGEL",
+    "FED-GASHUA",
+    "FED-KEBBI",
+    "FED-OTUOKE",
+    "FED-OYE EKITI",
+    "GOUU",
+    "GREGORY",
+    "IMSU",
+    "JABU",
+    "JOS",
+    "PAAU",
+    "LAPAI",
+    "LASU",
+    "MK-UNI",
+    "PLASU",
+    "REDEEMERS",
+    "RENAISSANCE",
+    "RITMAN",
+    "UDA",
+    "UNI-AFRICA",
+    "UNIHEZ",
+    "UNI-ILESA",
+    "UYO",
+    "VERITAS",
+    "ZAMFARA",
+    "HISTORY/SOCIOLOGY",
+    "AND DIPLOMACY",
+    "BENIN",
+    "BIU",
+    "INTERNATIONAL",
+    "RELATIONS",
+    "DIPLOMACY",
+    "ELIZADE"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "UNIOSUN",
+     "note": "Direct Entry: requires 'A' Level passes in French and Government or History and any other Arts or Social Science subject."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Direct Entry: accepts NCE to include a pass in French, and accepts Baccalaureat de l'enseignement a merite secondaire or equivalent."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Direct Entry: UNIZIK, EKSU, JOS and UYO accept NCE plus 'O' Level credit pass in English Language."
+    },
+    {
+     "institution": "UNN",
+     "note": "Direct Entry: accepts a) NCE merit in two (2) relevant subjects as well as the UTME requirements; b) Two (2) passes at GCE 'A' Level/HSC or its equivalent, DALF certificate or an acceptable Baccalaureate Certificate in relevant subjects."
+    },
+    {
+     "institution": "UYO",
+     "note": "Direct Entry: accepts NCE with credit in French."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "Direct Entry: accepts two (2) 'A' Level credit passes in French plus three (3) 'O' Level credits in three (3) subjects at not more than two (2) sittings; or three (3) 'A' Level passes plus two (2) 'O' Level credits in two (2) subjects at not more than two (2) sittings; also two (2) merit passes at NCE in French and Education, or one merit or lower credit plus at least four (4) relevant subjects in SSC/GCE."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Direct Entry: requires English Language, Mathematics and any other three Arts or Social Science subjects."
+    },
+    {
+     "institution": "ABU",
+     "note": "Direct Entry: accepts Two 'A' level papers including French at IJMB/NCE, or a minimum of Merit at Diploma in French or with other Arts/Social Science subjects."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "Direct Entry: in addition to UTME requirements, DE candidates must have any of: 2 GCE (Advanced Level) credit passes one of which must be French; NCE merit pass in French and any other relevant subjects; ND lower credit pass in French and any relevant subjects/HND; IJMB minimum of 9 points in three subjects, one of which must be French."
+    },
+    {
+     "institution": "KASU",
+     "note": "Direct Entry: accepts Two 'A' passes to include French at IJMB/NCE; General English, Use of English at NCE, Lower Credit in National Diploma in addition to 'O' Level requirements; Baccalaureate merit or equivalent from Francophone countries; Alliance Francaise Higher Diploma Upper Level in addition to 'O' Level requirements."
+    },
+    {
+     "institution": "IAUED",
+     "note": "Direct Entry: accepts a) GCE 'A' Level or Baccalaureate equivalent from Francophone countries; b) Merit in French at NCE level; c) DELF B1/B2 or DALF C1/C2; d) Diploma in French (Nigeria French Language Village) in addition to departmental UTME requirements, qualifying the candidate into 200 level."
+    },
+    {
+     "institution": "ABSU",
+     "note": "UTME: requires 'O' Level credit passes in English Language and four (4) other subjects for the 5-year Programme."
+    },
+    {
+     "institution": "BSU",
+     "note": "UTME: requires five (5) 'O' Level credit passes in Arts and Social Sciences including French and English Language."
+    },
+    {
+     "institution": "BSU",
+     "note": "UTME: BSU, DELSU require five (5) 'O' Level credit passes in Literature in English and other Arts or Social Science subject."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME: requires five (5) 'O' Level credit passes at not more than two (2) sittings to include English Language, Literature in English, Mathematics, Government, History, CRS, Commerce, Agricultural Science or Biology, Geography, Economics and any Nigerian Indigenous Language. Knowledge of French or Spanish is only an advantage but NOT a requirement."
+    },
+    {
+     "institution": "COVENANT",
+     "note": "UTME: requires five (5) 'O' Level credit passes in French, English Language, Mathematics, one Science subject from Biology, Health/General Science, Agricultural Science, Physics and Chemistry, or its equivalent of CEF or PIDELF awarded by Alliance Francaise or the Pre-Degree Certificate in French from any recognised University."
+    },
+    {
+     "institution": "EKSU",
+     "note": "UTME: EKSU and UYO accept Proficiency Certificate in French. UYO accepts Proficiency Certificate in French from University of UYO and certificate in French from the Alliance Francaise."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: accepts five (5) or six (6) 'O' Level credit passes at one or two (2) sittings to include Literature in English and other Arts and Social Science subjects."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME: accepts English Language, Mathematics and any other three Arts or Social Science subjects."
+    },
+    {
+     "institution": "KASU",
+     "note": "UTME: accepts Five 'O' Level credit passes to include English Language, Mathematics, French and two other subjects in Arts or Social Sciences."
+    },
+    {
+     "institution": "KWASU",
+     "note": "UTME: requires three (3) other Arts subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five 'O' Level credit passes in English Language, Mathematics and any three Arts or Social Sciences. Civic Education and Computer Studies are also accepted."
+    },
+    {
+     "institution": "NASARAWA",
+     "note": "UTME: accepts NCE merit pass in French."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME: 'O' Level credit pass in French is not compulsory."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "UTME: accepts five (5) 'O' Level credit passes or its equivalent in English Language, French, and any other three (3) Arts or Social Science subjects, and 'O' Level credit pass in Mathematics at not more than two (2) sittings."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "UTME: requires five (5) 'O' Level credit passes or its equivalent in English Language, Government or History and any other three (3) subjects."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "UTME: accepts five (5) 'O' Level credit passes to include English Language, French and two (2) other Arts subjects and one Social Science subject."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "UTME: UNIZIK, BENIN and OAU accept candidates with no previous knowledge of French. For BENIN, candidates should have 'O' Level credit passes in English Language and Literature in English, while UNIZIK gives accelerated course in French in the first year."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: requires/accepts for a) French Single Honours, minimum five (5) 'O' Level credit passes to include French, English Language, one science subject and two (2) other Arts subjects one of which must be Literature in English; b) German Single Honours, minimum five (5) 'O' Level credit passes including English Language, one science subject and three (3) other Arts subjects one of which must be Literature in English (Goethe Institute language proficiency certificate an advantage); c) French with German/Russia, 'O' Level credit passes to include English Language, French, one science subject and two (2) other Arts subjects one of which must be Literature in English; d) candidates successful in its one year preparatory programme in French, minimum score of 40% plus UTME requirements."
+    },
+    {
+     "institution": "NDA",
+     "note": "UTME: requires two (2) Arts and Social Science subjects from Economics, Geography, Government, Civic Education, History, Arabic, CRS/IS and any other Nigerian Language."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME: accepts Five (5) credit level passes at SSCE/NECO/GCE 'O' Level which may include Mathematics, English Language and four other subjects from Arts and Social Science."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME: accepts Five (5) SSC credits in English Language and any other four (4) subjects from French, Literature in English, History/Government, CRK/IRK, Economics, Mathematics, Biology, Chemistry, Agricultural Science, Physics, Igbo/Hausa/Yoruba, Fine Art, Geography, Commerce."
+    },
+    {
+     "institution": "IAUED",
+     "note": "UTME: requires 'O' Level credit passes at GCE, WAEC/SSCE or NECO level in five subjects in the Arts and Social Sciences, including English and Mathematics, at not more than two (2) sittings."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME: requires Five 'O' Level credit passes to include English Language and French plus any other Arts or Social Sciences subjects."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "UTME: requires Five (5) Credit passes at SSCE, GCE, NECO and NABTEB 'O' Level examination including English Language, Literature in English, Mathematics and two other relevant subjects in not more than two sittings."
+    },
+    {
+     "institution": "ABSU",
+     "note": "UTME Subjects: accepts Literature in English and two (2) other Arts or Social Science subjects."
+    },
+    {
+     "institution": "BABCOCK",
+     "note": "UTME Subjects: requires Literature in English."
+    },
+    {
+     "institution": "BENIN",
+     "note": "UTME Subjects: accepts any three (3) subjects from Arts, Science or Social Sciences."
+    },
+    {
+     "institution": "BSU",
+     "note": "UTME Subjects: BSU and UNN require French, Literature in English and any other Arts subject."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME Subjects: requires Literature in English, CRS and either History or Government."
+    },
+    {
+     "institution": "KWASU",
+     "note": "UTME Subjects: requires two (2) other Arts subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME Subjects: accepts English Language and any three Arts or Social Sciences."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME Subjects: OAU, IBADAN, EKSU, OOU, UNIZIK and ABSU accept any three (3) subjects from Arts and Social Sciences."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "UTME Subjects: requires Government or History plus any other Arts Subjects."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "UTME Subjects: accepts any three (3) Arts or Social Science subject. French is not compulsory."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME Subjects: requires one Arts subject and any other two (2) from Arts and Social Sciences."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "UTME Subjects: requires any three (3) subjects."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME Subjects: requires French and any other two (2) subjects from Literature in English, History/Government, CRK/IRK, Economics, Mathematics, Biology, Chemistry, Agricultural Science, Physics, Igbo/Hausa/Yoruba, Fine Art, Geography, Commerce."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "UTME Subjects: requires French and any other two (2) Arts subjects."
+    },
+    {
+     "institution": "IAUED",
+     "note": "UTME Subjects: requires English Language and any three from Mathematics, History, Government, Economics, Religious & Cultural Studies, Music, Fine Arts, Commerce, Igbo, Yoruba, Literature in English, Social Studies, Accounting or any other course in Arts and Social Sciences."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME Subjects: requires English Language and any other three Arts or Social Science Subjects."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME Subjects: requires Use of English, French and any other two subjects from Arts or Social Sciences."
+    },
+    {
+     "institution": "KASU",
+     "note": "UTME Subjects: requires French and two other subjects in Arts or Social Sciences."
+    }
+   ],
+   "first_line": 2258,
+   "line_range": [
+    2258,
+    3261
+   ],
+   "scope": [
+    2258,
+    2757
+   ]
+  },
+  {
+   "jamb_name": "History",
+   "institutions": [
+    "ABU",
+    "ABUJA",
+    "ADSU",
+    "BAYERO",
+    "BENIN",
+    "BSU",
+    "COOU",
+    "FED- LAFIA",
+    "FED-DUTSINMA",
+    "FED-LOKOJA",
+    "AEFUNA",
+    "GSU",
+    "IBADAN",
+    "JABU",
+    "KASU",
+    "LAPAI",
+    "LEGACY",
+    "LAUTECH",
+    "ARTS",
+    "MAIDUGURI",
+    "MAITAMA",
+    "NASARAWA",
+    "NDA",
+    "OAU",
+    "PHC",
+    "SAU",
+    "SOSU",
+    "UDU",
+    "UMYUK",
+    "UNIKINGS",
+    "UNIZIK",
+    "UNN",
+    "YSU",
+    "DIPLOMATIC STUDIES",
+    "ANCHOR-UNI",
+    "CALEB",
+    "CHRISTOPHER",
+    "CRAWFORD",
+    "CLIFFORD",
+    "COAL-CITY",
+    "CROWN-HILL",
+    "ELIZADE",
+    "FED-KASHERE",
+    "FED-WUKARI",
+    "HENSARD",
+    "IAUED",
+    "KASU-KABBA",
+    "KOLADAISI",
+    "LASUED",
+    "MCPHERSON",
+    "OOU",
+    "RSU",
+    "SALEM",
+    "SPIRITAN",
+    "SUMMIT",
+    "TASUED",
+    "DIPLOMACY",
+    "NDU",
+    "INTERNATIONAL",
+    "RELATIONS",
+    "AL-HIKMAH",
+    "EBSU",
+    "FOUNTAIN",
+    "KWASU",
+    "PAUL",
+    "VERITAS",
+    "COMPARATIVE POLITICS",
+    "AUN",
+    "SHARIAH",
+    "ISTIQAMA",
+    "AL-QALAM",
+    "QURANIC STUDIES",
+    "HADITH STUDIES",
+    "HISTORY AND",
+    "TSUJ"
+   ],
+   "utme_subjects": [
+    "History",
+    "and any other two (2) subjects from Arts and Social Sciences"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include History and English Language.",
+   "direct_entry": "Two (2) 'A' Level passes in History and any other related subjects.",
+   "institution_waivers": [
+    {
+     "institution": "ABU",
+     "note": "Accepts Two 'A' level passes including History at IJMB or NCE. General English/Use of English at NCE satisfies 'O' level English requirement."
+    },
+    {
+     "institution": "ABUJA",
+     "note": "Accepts: a) ND lower credit with the UTME requirements plus two (2) years post qualification; b) a minimum of ten (10) points in NCE or ND upper credit in addition to the UTME requirements or two (2) 'A' Level passes including History or Government and one other Arts subject."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Accepts 'A' Level pass in Government in lieu of History, NCE credit in History; Government or Social Studies."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "Accepts Two 'A' level passes in History or/and Government and any other related subject. OND/NCE with good grades in any relevant area."
+    },
+    {
+     "institution": "GSU",
+     "note": "Accepts NCE merit in History as Major subject."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Accepts two (2) 'A' Level/NCE passes in History and any other related subject."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Requires Very good passes in three JUPEB/A' Level subjects: History and/or Government and any two or one of Igbo/Yoruba, CRS/IRS, Literature-in-English, French, Music and Fine Arts."
+    },
+    {
+     "institution": "SAU",
+     "note": "Accepts two (2) 'A' Level passes in History and Government, NCE credit in relevant subjects."
+    },
+    {
+     "institution": "NAUB",
+     "note": "Requires two (2) 'A' Level passes in History and any other related subject."
+    }
+   ],
+   "first_line": 2757,
+   "line_range": [
+    2757,
+    3500
+   ],
+   "scope": [
+    2757,
+    2809
+   ]
+  },
+  {
+   "jamb_name": "History and Strategic Studies",
+   "institutions": [
+    "STUDIES",
+    "LAGOS",
+    "AND",
+    "DOU",
+    "MILITARY HISTORY",
+    "ARTS",
+    "NAUB",
+    "HISTORY AND"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "MAIDUGURI",
+     "note": "MAIDUGURI and UDU accept NCE merit pass in relevant subjects."
+    },
+    {
+     "institution": "UDU",
+     "note": "MAIDUGURI and UDU accept NCE merit pass in relevant subjects."
+    },
+    {
+     "institution": "UNN",
+     "note": "Requires a minimum of five (5) 'O' Level credit passes to include History or Government, English Language, and a science subject."
+    },
+    {
+     "institution": "UNIKINGS",
+     "note": "Requires two (2) 'A' Level passes to include History and one other Arts subject."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "Accepts candidates with a minimum of 9 points in IJMB/HSC/GCE 'A' Level/NCE in History or Social Studies and any other relevant subject."
+    },
+    {
+     "institution": "FED-LOKOJA",
+     "note": "In addition to meeting the UTME Entry Requirements; 2 A' Level Passes in History/Government & any other Arts or Social Science; IJMB minimum of 8 points with passes in relevant subject; NCE Credit pass in three (3) major subjects; ND upper credit in relevant courses from any recognized institution; HND lower credit in relevant courses from any recognized institution; Minimum of 3rd Class in Law or Education Courses and any Arts or Social Science Courses."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "In addition to the UTME requirements, DE candidates must have any of the following: IJMB Minimum of 9 points in relevant subjects; NCE Minimum of Merit pass in History or any other relevant courses; Diploma/OND Minimum of Lower credit pass in History or any other relevant courses/HND."
+    },
+    {
+     "institution": "KASU",
+     "note": "Accepts Two 'A' Level passes including History/Government and any Art subjects. NCE merit pass. 7 points and above IJMB/GCE (Advanced Level) Upper credit ND/HND Lower Credit in History or related fields."
+    },
+    {
+     "institution": "SOSU",
+     "note": "Accepts Two merit passes at NCE one of which must be History. A Diploma in Arts or Social Science at lower credit level."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME: Requires Five 'O' level credit passes to include English Language, History or Government. UTME SUBJECTS: Requires Use of English, History or Government and any other two Arts or Social Science subjects."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "UTME: Requires Five 'O' level Credits to include History/Government/Civic Education, English Language, Mathematics and any other two subjects from Arts or Social Sciences. UTME SUBJECTS: Requires English Language, History/Government/Civic Education and any two subjects from Arts or Social Sciences."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Accepts five (5) 'O' Level credit passes at one sitting or six (6) at two sittings to include English Language, History, Government, and any other subjects from the Arts and Social Sciences. The sixth could be from Science."
+    },
+    {
+     "institution": "NDA",
+     "note": "Requires five (5) 'O' Level credit passes in English Language, Mathematics, History and two (2) other subjects from Commerce, Geography, Economics, French, Arabic, Account and Government."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME: Requires five (5) 'O' Level credit passes to include History and English Language plus one Arts subject and any other two subjects from Arts or Social Sciences. Accepts Government in lieu of History. UTME SUBJECTS: Requires History and any two (2) Arts subjects."
+    },
+    {
+     "institution": "REDEEMER'S",
+     "note": "Accepts 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "SAU",
+     "note": "UTME: SAU and BENIN require 'O' Level credit passes in English Language, History/Government and one other Arts subject. UTME SUBJECTS: Accepts Government in lieu of History."
+    },
+    {
+     "institution": "BENIN",
+     "note": "UTME: SAU and BENIN require 'O' Level credit passes in English Language, History/Government and one other Arts subject. UTME SUBJECTS: Accepts History or Government, one Arts subject and any other subject."
+    },
+    {
+     "institution": "UNIKINGS",
+     "note": "UTME: Requires five (5) credit passes at SSC in English Language, Government and three (3) other Arts subjects."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: Accepts five (5) 'O' Level credit passes in Government in lieu of History and three (3) other Arts or Social Science subjects; also requires five (5) 'O' Level credit passes in English Language, History/Government plus any three other subjects. UTME SUBJECTS: Accepts History or Government and two other Arts or Social Science subjects."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "UTME: Requires five (5) 'O' Level credit passes at SSC in English Language, Mathematics, one of History, Government or Civic Education and any other two (2) Arts or Social Science subjects at not more than two sittings. UTME SUBJECTS: Requires History, Government or Civic Education and any other Arts or Social Science subject."
+    },
+    {
+     "institution": "SOSU",
+     "note": "UTME: Requires Five (5) SSC credit passes to include English Language and Mathematics, History/Government/Civic Education, and any other two (2) Arts or Social Science subjects at not more than two sittings. UTME SUBJECTS: Requires History or Government and any other two Arts or Social science subjects."
+    },
+    {
+     "institution": "KASU",
+     "note": "UTME: Requires Five 'O' level credit passes to include English Language, Mathematics, History or Government and two other subjects in Arts or Social sciences. UTME SUBJECTS: Requires History or Government and two other subjects in Arts or Social Sciences."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: Requires Five 'O' Level credit passes in English Language, Mathematics, History/Government and any two of Literature-in-English, CRS/IRS, Civic Education and any Nigerian Language. UTME SUBJECTS: Requires English Language, History and/or Government and any one or two Arts or Social Sciences."
+    },
+    {
+     "institution": "FED-LOKOJA",
+     "note": "UTME: Requires Five SSC credit passes to include History/Government, English Language and any other three from Arts or Social Sciences. UTME SUBJECTS: Accepts Five SSC credit passes in not more than 2 sittings to include History/Government, English Language and any other three from Arts or Social Sciences."
+    },
+    {
+     "institution": "ABUJA",
+     "note": "UTME SUBJECTS: ABUJA and FED-LOKOJA accept Government in lieu of History."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "UTME SUBJECTS: Requires History/Government and any other two subjects from Arts & Social Science."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "UTME SUBJECTS: Requires Literature in English, History/Government and any other Arts or Social Science subject."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "UTME SUBJECTS: Requires History/Civic/Government and any other two (2) subjects."
+    }
+   ],
+   "first_line": 2809,
+   "line_range": [
+    2809,
+    3068
+   ],
+   "scope": [
+    2809,
+    3501
+   ]
+  },
+  {
+   "jamb_name": "Economics",
+   "institutions": [
+    "EVANGEL",
+    "FED-DUTSE",
+    "FED-KASHERE",
+    "FED-LOKOJA",
+    "FED-WUKARI",
+    "UMYUK",
+    "ARTS",
+    "ECONOMICS AND",
+    "DEVELOPMENT STUDIES",
+    "FEDOTUOKE",
+    "IGBO",
+    "ABSU",
+    "COOU",
+    "EBSU",
+    "AEFUNA",
+    "IBADAN",
+    "ILORIN",
+    "LAGOS",
+    "LASUED",
+    "NAUB",
+    "POL-ACAD"
+   ],
+   "utme_subjects": [
+    "Economics",
+    "Mathematics",
+    "and any of Government, History, Geography, Literature in English, French and CRS/IRS"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Economics and at least two (2) other relevant subjects from Commerce, Government and Accounting.",
+   "direct_entry": "ND/NCE with upper/merit credit in the relevant programme in addition to five (5) credit passes at SSC at not more than two (2) sittings.",
+   "institution_waivers": [
+    {
+     "institution": "FED-WUKARI",
+     "note": "Direct Entry candidates must obtain a pass in Two A/L Subjects one of which must be Economics, Accounting, Business Management, Government or Geography from GCE A/L, IJMB or Advanced NABTEB or a Merit pass at NCE Level or at least a credit in OND/HND in relevant fields. Candidates must also satisfy the O/L requirement for admission. UTME: Accepts Five (5) credits at not more than two sittings including English Language, Mathematics and Economics and any two from: Commerce/Financial Accounting, Business Methods/Insurance/Book Keeping, Government/History/Civic Education, Literature in English, Geography, and Statistics (SSCE, NECO, NABTEB or equivalent)."
+    },
+    {
+     "institution": "FED-LOKOJA",
+     "note": "In addition to meeting the UTME Entry Requirements; 2 A' Level Passes in Economics & any one of Mathematics, Statistics, Geography, Financial Accounts, Business Management, History and Government; IJMB minimum of 10 points with passes in relevant subjects; NCE Credit pass in 2 NCE teaching subjects including Economics; ND upper credit in Dip. in Accounts, Business Administration, Marketing & Banking & Finance (not more than 5 yrs); HND lower credit in same (not more than 5 yrs); Degree (Third Class) in relevant courses from any recognized institution. UTME: Accepts Five SSC credit passes to include English Language, Mathematics, Economics and any two of Arts or Social Science subjects."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "Accepts Two 'A' Level passes in Economics and any of History/Government, Science, Social Science and Management subjects or Credit passes at NCE or ND or IJMB with at least 9 points in relevant subjects. UTME: Requires Five credit passes at SSCE (or its equivalent) in English, Mathematics, Economics and two other relevant subjects preferable in Commerce, Government and Accounting."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "Accepts a) Two (2) 'A' Level passes in Economics and any one (1) of Mathematics, Statistics, Geography, Physics, Chemistry, Agricultural Science, Accounting, Business Management, History and Government; b) ND credit in the relevant programme in addition to five (5) 'O' Level credit passes including English Language and Mathematics at not more than two (2) sittings. UTME: Accepts any two (2) Arts or Social Science subjects as the fourth (4th) and fifth (5th) subjects."
+    }
+   ],
+   "first_line": 3501,
+   "line_range": [
+    3501,
+    3630
+   ],
+   "scope": [
+    3501,
+    3631
+   ]
+  },
+  {
+   "jamb_name": "African and Asian Studies",
+   "institutions": [
+    "STUDIES",
+    "UNIZIK",
+    "ARTS",
+    "LINGUISTICS/IGBO",
+    "AEFUNA",
+    "IMSU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 3631,
+   "line_range": [
+    3631,
+    3680
+   ],
+   "scope": [
+    3631,
+    3683
+   ]
+  },
+  {
+   "jamb_name": "Linguistics",
+   "institutions": [
+    "PEACELAND-UNI",
+    "AFRICAN LANGUAGES",
+    "DOU",
+    "OTHER",
+    "LANGUAGES",
+    "UNN",
+    "ARTS",
+    "ISLAMIC STUDIES",
+    "ABUJA",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "BASU",
+    "BAYERO",
+    "BOSU",
+    "BOUEDST",
+    "CAILS",
+    "CUAB",
+    "EKSU",
+    "FED-DUTSINMA",
+    "FED-GASHUA",
+    "FED-GUSAU",
+    "FED-KASHERE",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "AEFUNA",
+    "FED-WUKARI",
+    "FOUNTAIN",
+    "GSU",
+    "IBADAN",
+    "ICONIC-OU",
+    "ILORIN",
+    "ISTIQAMA",
+    "JOS",
+    "KASU",
+    "PAAU",
+    "KWASU",
+    "LAGOS",
+    "LAPAI",
+    "LASU",
+    "LASUED",
+    "MAIDUGURI",
+    "NASARAWA",
+    "MAITAMA",
+    "MK-UNI",
+    "NOUN",
+    "OOU",
+    "RUFAI-DEG",
+    "SLUK",
+    "SOSU",
+    "SUMMIT",
+    "TASUED",
+    "TSUJ",
+    "UDU",
+    "UMYUK",
+    "UNIOSUN",
+    "YSU",
+    "ZAMFARA",
+    "ISLAMIC RELIGIOUS",
+    "STUDIES",
+    "UNI-ILESA",
+    "BENIN",
+    "HENSARD",
+    "LINGUISTICS AND",
+    "NIGERIAN LANGUAGES",
+    "UNI-AFRICA",
+    "LANGUAGE",
+    "LITERATURE",
+    "ABSU",
+    "EUROPEAN",
+    "SAU",
+    "AAUA",
+    "ABUAD",
+    "BSU",
+    "CALABAR",
+    "DELSU",
+    "EBSU",
+    "KOMU",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "IGBINEDION",
+    "KASU-KABBA",
+    "LAUTECH",
+    "OAU",
+    "POL-ACAD",
+    "UDA",
+    "UNIZIK",
+    "UYO",
+    "COMMUNICATION",
+    "PHC",
+    "AFRICAN LANGUAGE",
+    "LINGUISTICS /YORUBA",
+    "URHOBO"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "OAU",
+     "note": "Requires five (5) 'O' Level credit passes in English Language, one Arts subject and three (3) other subjects from Sciences, Social Sciences or Arts."
+    },
+    {
+     "institution": "UNN",
+     "note": "Requires five (5) 'O' Level credit passes to include English Language and one Science subject. Candidates for Linguistics must possess 'O' Level credit pass in Literature in English while candidates for Linguistics and Nigerian Language must possess 'O' Level credit pass in the Nigerian language to be combined with Linguistics."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Requires five O/Level credit passes in English Language, Mathematics and any three Arts, Science or Social Sciences. Social Studies and Civic Education are also accepted."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Accepts Chinese in lieu of Igbo (UTME subjects)."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME subjects: requires Igbo or any other Language and any other two (2) subjects. For Linguistics (Option), requires Literature in English and two (2) other subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language and any three Arts, Science or Social Sciences."
+    }
+   ],
+   "first_line": 3683,
+   "line_range": [
+    3683,
+    4359
+   ],
+   "scope": [
+    3683,
+    3922
+   ]
+  },
+  {
+   "jamb_name": "Kanuri",
+   "institutions": [
+    "MAIDUGURI",
+    "LINGUISTICS AND",
+    "LANGUAGES AND"
+   ],
+   "utme_subjects": [
+    "Literature in English",
+    "and any other two (2) subjects in Arts and the Social Sciences"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and Literature in English.",
+   "direct_entry": "Two (2) 'A' Level passes to include Literature in English.",
+   "institution_waivers": [
+    {
+     "institution": "MAIDUGURI",
+     "note": "Direct Entry: accepts a) Certificate in Kanuri; b) NCE with Kanuri major."
+    }
+   ],
+   "first_line": 3922,
+   "line_range": [
+    3922,
+    3929
+   ],
+   "scope": [
+    3922,
+    3994
+   ]
+  },
+  {
+   "jamb_name": "Russian with French/German",
+   "institutions": [
+    "FRENCH/GERMAN",
+    "IBADAN",
+    "ARTS"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "UNN",
+     "note": "Direct Entry: accepts a) NCE merit in relevant subjects as well as UTME requirements; b) Two (2) GCE 'A' level passes or its equivalent and three (3) other 'O' Level credit passes."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: accepts 'O' Level credit passes in Literature in English and other Arts and Social Science subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics and any three Arts or Social Sciences. Civic Education and Computer Studies are also accepted."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME: 'O' Level credit pass in German is not compulsory."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: requires 'O' Level credit passes in English Language and four (4) other subjects. History or Literature in English will be an advantage."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME Subjects: requires Literature in English plus one Arts subject and any other Arts or Social Science subject."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME Subjects: requires English Language and any three Arts or Social Sciences."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME Subjects: requires any three (3) subjects."
+    }
+   ],
+   "first_line": 3994,
+   "line_range": [
+    3994,
+    4053
+   ],
+   "scope": [
+    3994,
+    4360
+   ]
+  },
+  {
+   "jamb_name": "Mass Communication",
+   "institutions": [
+    "AJAYI",
+    "COVENANT",
+    "EVANGEL",
+    "HAVILLA",
+    "JOS",
+    "NOUN",
+    "NUS",
+    "NTA-TVC",
+    "SALEM",
+    "UNN",
+    "INFORMATION AND MEDIA",
+    "STUDIES",
+    "ARTS"
+   ],
+   "utme_subjects": [
+    "Any three (3) Arts and Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language.",
+   "direct_entry": "Two (2) 'A' Level passes in relevant subjects.",
+   "institution_waivers": [
+    {
+     "institution": "AJAYI",
+     "note": "Direct Entry: requires two (2) 'A' Level passes or their equivalent in Literature in English and one other Arts or Social Science subject, plus three (3) 'O' Level credit passes."
+    },
+    {
+     "institution": "UNN",
+     "note": "Direct Entry: candidates must possess HSC/GCE 'A' Level with passes in two (2) Arts subjects plus the UTME requirements."
+    },
+    {
+     "institution": "JOS",
+     "note": "Direct Entry: accepts same in Mass Communication plus 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "AJAYI",
+     "note": "UTME: requires five (5) 'O' Level credit passes to include English Language, Literature in English and three (3) other subjects from Arts or Social Sciences."
+    },
+    {
+     "institution": "COVENANT",
+     "note": "UTME: requires five (5) 'O' Level credit passes in English Language, Mathematics, Literature in English, one Science subject from Biology, Health/General Science, Agricultural Science, Physics and Chemistry, one from Social Sciences or Arts (e.g. Geography, Economics, Government, Commerce, Principle of Account, Book Keeping; Arts such as CRS, History, etc.)."
+    },
+    {
+     "institution": "JOS",
+     "note": "UTME: requires 'O' Level credit pass in Literature in English."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: requires credit level passes in Literature in English and an approved science subject plus 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "BINGHAM",
+     "note": "UTME Subjects: requires Literature in English."
+    },
+    {
+     "institution": "JOS",
+     "note": "UTME Subjects: requires Literature in English."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME Subjects: requires Literature in English and any two (2) subjects out of which one must be in the Arts or Social Sciences."
+    }
+   ],
+   "first_line": 4360,
+   "line_range": [
+    4360,
+    4411
+   ],
+   "scope": [
+    4360,
+    4412
+   ]
+  },
+  {
+   "jamb_name": "Music",
+   "institutions": [
+    "AJAYI",
+    "BABCOCK",
+    "BENIN",
+    "BOUEDST",
+    "BOWEN",
+    "CALABAR",
+    "COOU",
+    "DELSU",
+    "AEFUNA",
+    "ARTS",
+    "FED-LOKOJA",
+    "GOUU",
+    "IAUED",
+    "IBADAN",
+    "JOS",
+    "KASU-KABBA",
+    "LASU",
+    "LASUED",
+    "MC-IBRU",
+    "MOUNTAIN TOP",
+    "OAU",
+    "OOU",
+    "PHC",
+    "UDA",
+    "UNI-ILESA",
+    "UNIZIK",
+    "UNN",
+    "UYO"
+   ],
+   "utme_subjects": [
+    "Music",
+    "one other Arts subject",
+    "any other subject"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes including Music and English Language.",
+   "direct_entry": "Two (2) 'A' Level passes to include Music.",
+   "institution_waivers": [
+    {
+     "institution": "BOWEN",
+     "note": "DE: accepts 'A' Level pass in Mathematics or other Arts or Social Science subjects. O'Level: accepts Music Society of Nigeria's Grade V certificate, Trinity College of Music Grade V certificate and Associated Board of Royal School of Music Grade V certificate and other Arts or Social Science subjects. UTME subject: requires any of Literature in English or CRS as the other subject."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DE: accepts (a) NCE in Music with merit pass and above, (b) DELSU Diploma in Music with merit pass and above, (c) ND in Music with upper credit and above; does not insist on 'O' Level credit pass in Music; both UTME and DE candidates must pass departmental audition. O'Level: requires five credits which may include Mathematics, English Language and four other subjects from Arts, Social Science and Science. UTME subject: requires three subjects from Arts, Social Science and Science."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "DE: accepts (a) ND/HND upper credit in Music into 200 level, (b) 'A' Level pass in Music plus any other two 'A' Level subjects into 200 level, (c) NCE credit/merit Music major into 200 level, (d) Grade VIII Theory ABRSM or MUSON Certificate with any good HND or degree certificate into 200 level. O'Level: 'O' Level credit pass in Music is not compulsory. UTME subject: accepts any other three Arts or Social Science subjects."
+    },
+    {
+     "institution": "JOS",
+     "note": "DE: accepts Music major in relevant programme such as Theatre Arts, ND Music credit or NCE credit/merit in Music Education, IJMB 'A' Level in Music in addition to UTME requirements. O'Level: requires five 'O' Level credit passes to include English Language, Literature in English and any Arts/Social Science subjects at not more than two sittings."
+    },
+    {
+     "institution": "LASU",
+     "note": "DE: accepts (a) NCE merit in Music Education, Music Technology/Music, (b) ND Music/Music Technology, (c) (a) and (b) in addition to five 'O' Level credit passes at not more than two sittings to include English Language and any combination of Arts and Sciences. UTME subject: accepts Music plus any two (2) other subjects."
+    },
+    {
+     "institution": "OAU",
+     "note": "DE: accepts passes in three (3) subjects including Music: (a) NCE credit in Music, (b) ABRSM London Grade VIII (theory and practical) or equivalent, (c) Diploma in Music at upper credit from OAU or any other recognized higher institution. O'Level: accepts English Language, one Arts or Humanities subject and three from Biology, Physics, Chemistry, ICT, Economics, Geography, Agricultural Science, Accounting, Mathematics; requires 'O' level credit passes in another Language, African or European; credit pass in Music not compulsory. UTME subject: accepts any three (3) subjects from Arts, Social Sciences or Sciences."
+    },
+    {
+     "institution": "PHC",
+     "note": "DE: accepts at least two A/Level passes in GCE, HSC, JUPEB or IJMB in any two Arts subjects, Music single or double major with overall merit from a College of Education, Grade 8 (Theory and Practical) of ABRSM or MUSON, Licentiate Certificate, or Diploma from Department of Music University of Port Harcourt, all including UTME entry requirements. O'Level: requires five SSC credits in English Language and any other four from Music, Literature in English, History/Government, CRK/IRK, Economics, Mathematics, Biology, Chemistry, Agricultural Science, Physics, Igbo/Hausa/Yoruba, Fine Art, Geography, Commerce. UTME subject: requires any three (3) subjects from the listed set."
+    },
+    {
+     "institution": "UNN",
+     "note": "DE: accepts (a) for three years: NCE single/double major and ND in Music, Music Society of Nigeria's Grade V Certificate, Trinity College of Music Grade V certificate, ABRSM Grade V certificate; (b) for two years: NCE merit double major in Music Education. O'Level: requires candidates to pass Audition held on the last Thursday and Friday of August every year. UTME subject: accepts any three (3) subjects."
+    },
+    {
+     "institution": "UYO",
+     "note": "DE: accepts ND. O'Level: does not insist on a credit pass in Music at 'O' Level; a Grade V certificate in ABRSM or MUSON is an added advantage; requires candidates to pass Audition held on the last Thursday and Friday of August every year."
+    },
+    {
+     "institution": "IAUED",
+     "note": "DE: Post NCE and Post Diploma in Music/Music Education (3 years). O'Level: requires 'O' Level credit passes at GCE, WAEC/SSCE or NECO in five subjects: English Language and Mathematics and any three from CRS, History, Literature in English, Biology, Physics, Chemistry, Integrated Science, Commerce, Government, Economics, Physical and Health Studies, Technical Studies. UTME subject: requires English Language and any three from the same list."
+    },
+    {
+     "institution": "MOUNTAIN TOP",
+     "note": "DE: in addition to 'O' Level requirements requires (i) Two 'A' Level passes including Music, (ii) JUPEB Music, (iii) OND with minimum Upper Credit, (iv) NCE (Music Major) not less than Merit, (v) minimum Grade 7 Certificate from ABRSM, MIMS, MUSON or TCM; Conversion Programme (3rd year) considers Distinction in Music at HND or Diploma from ABRSM, MIMS, MUSON, TCM or other recognized institutions. O'Level: requires five 'O' Level SSC credit passes at not more than two sittings to include English Language and four subjects from Social Sciences, Arts and Natural Sciences (Music credit desirable, not mandatory); a minimum Grade 5 Certificate of ABRSM/MIMS/MUSON/TCM accepted as equivalent of an SSC Music credit pass. UTME subject: requires any three subjects."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "O'Level: does not require 'O' Level credit pass in Music but accepts 'O' Level pass in English Language. UTME subject: accepts any three (3) Arts or Social Science subjects; Music is not compulsory."
+    }
+   ],
+   "first_line": 4412,
+   "line_range": [
+    4412,
+    4754
+   ],
+   "scope": [
+    4412,
+    4755
+   ]
+  },
+  {
+   "jamb_name": "Peace Studies",
+   "institutions": [
+    "LASU"
+   ],
+   "utme_subjects": [
+    "Government",
+    "any other two (2) Arts or Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and four relevant subjects.",
+   "direct_entry": "Any two (2) 'A' Level passes.",
+   "institution_waivers": [],
+   "first_line": 4755,
+   "line_range": [
+    4755,
+    4760
+   ],
+   "scope": [
+    4755,
+    4761
+   ]
+  },
+  {
+   "jamb_name": "Philosophy",
+   "institutions": [
+    "AAU",
+    "ARTS",
+    "AAUA",
+    "ABSU",
+    "ABUJA",
+    "AIM",
+    "AKSU",
+    "AUGUSTINE",
+    "CIWA",
+    "BENIN",
+    "BINGHAM",
+    "BMSE",
+    "BOWEN",
+    "BSU",
+    "CALABAR",
+    "CLARETIAN",
+    "COOU",
+    "CUN",
+    "DELSU",
+    "DOMINICAN-UNI",
+    "DOU",
+    "EBSU",
+    "EKSU",
+    "KOMU",
+    "EVANGEL",
+    "FED- LAFIA",
+    "FED-LOKOJA",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "AEFUNA",
+    "FED-WUKARI",
+    "FOUNTAIN",
+    "IBADAN",
+    "IMSU",
+    "JABU",
+    "PAAU",
+    "LAGOS",
+    "LAUTECH",
+    "MADONNA",
+    "MKAR",
+    "NASARAWA",
+    "NATIONAL",
+    "NDU",
+    "NOUN-ELUON",
+    "OAU",
+    "OOU",
+    "PHC",
+    "POPE",
+    "REDEEMERS",
+    "RSU",
+    "SAIK",
+    "SAU",
+    "SPIRITAN-NSK",
+    "ST-ALBERT",
+    "ST-JOSEPH",
+    "ST PETER & PAUL",
+    "SWSO",
+    "TANSIAN",
+    "UDA",
+    "UHIELE",
+    "UNIOSUN",
+    "UNIZIK",
+    "UYO",
+    "VERITAS"
+   ],
+   "utme_subjects": [
+    "Any three (3) subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and four (4) other relevant subjects.",
+   "direct_entry": "Any two (2) 'A' Level passes.",
+   "institution_waivers": [
+    {
+     "institution": "AAU",
+     "note": "Accepts three (3) 'A' Level passes with two (2) 'O' Level credit passes or two (2) 'A' Level passes with three (3) 'O' Level credit passes."
+    },
+    {
+     "institution": "AAUA",
+     "note": "Requires two (2) 'A' Level subjects or ND in Law, Religious Studies or Philosophy from approved institutions or NCE merit."
+    },
+    {
+     "institution": "AUGUSTINE",
+     "note": "Accepts NCE merit/ND credit in relevant subjects/programme in addition to five (5) 'O' Level credit passes or equivalent."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Accepts (a) an overall NCE credit in the Liberal Arts, (b) first degree in any programme, (c) ND or HND upper credit in Mass Communication."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "Accepts two (2) 'A' Level passes in Philosophy and any other subject."
+    },
+    {
+     "institution": "BSU",
+     "note": "Accepts NCE/'A' level passes including CRS, African Religion or its equivalent."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Accepts any two (2) 'A' Level passes in relevant subjects."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Requires two (2) 'A' Level passes in one Arts subject and any other Arts/Social Sciences/Sciences subject."
+    },
+    {
+     "institution": "IMSU",
+     "note": "No Direct Entry."
+    },
+    {
+     "institution": "EKSU",
+     "note": "No Direct Entry."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Requires very good passes in three (3) JUPEB/'A' Level subjects: (a) any three of Literature in English, Igbo/Yoruba, CRS/IRS, French, History, Economics, Government, Chemistry, Physics, Biology but at least one Arts subject; (b) related programmes with a minimum of 55% average score; (c) NCE credit in two teaching subjects one of which must be an Arts subject; (d) candidates must also satisfy the UTME requirements."
+    },
+    {
+     "institution": "NDU",
+     "note": "Accepts (a) a minimum of two (2) 'A' Level relevant subjects and three (3) 'O' Level subjects including 'O' Level pass in Mathematics, (b) NCE merit in any Arts or Science subjects, especially Mathematics."
+    },
+    {
+     "institution": "OAU",
+     "note": "Requires one of the two (2) 'A' Levels to be an Arts subject."
+    },
+    {
+     "institution": "OOU",
+     "note": "Requires 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Requires 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "SAU",
+     "note": "Accepts two (2) 'A' Level subjects to include Government and any other two (2) Arts subjects or NCE in Government or History."
+    },
+    {
+     "institution": "UYO",
+     "note": "Requires passes in two (2) 'A' Level subjects or ND or NCE in cognate programme/subject at credit/merit level."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "Accepts two 'A' level passes obtained at GCE/IJMB/Advanced NABTEB or a Merit pass at NCE or at least a Credit at ND/HND in any of the Arts, Social Science or Management Science subjects and at least ND/HND in relevant field; candidates must also satisfy the O'Level requirements for admission in any Arts and Social Science subject."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts very good passes in three JUPEB/'A' Level subjects: any three of Literature-in-English, Igbo/Yoruba, CRS/IRS, French, History, Economics, Government, Chemistry, Physics, Biology, Geography but at least one Arts subject."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts at least two (2) A/level passes in GCE, HSC, JUPEB or IJMB in any Arts subject in addition to UTME entry requirements in any two Arts subjects."
+    }
+   ],
+   "first_line": 4761,
+   "line_range": [
+    4761,
+    4880
+   ],
+   "scope": [
+    4761,
+    4882
+   ]
+  },
+  {
+   "jamb_name": "Religious Studies",
+   "institutions": [
+    "AAUA",
+    "ABUAD",
+    "BOUEDST",
+    "COAL-CITY",
+    "GOUU",
+    "HENSARD",
+    "RELIGIONS AND AFRICAN",
+    "CULTURE",
+    "AFRICAN TRADITIONAL",
+    "RELIGION",
+    "FED-WUKARI",
+    "ARTS",
+    "AAU",
+    "ABSU",
+    "AEFUNA",
+    "AICI",
+    "AKSU",
+    "APOSTOLIC",
+    "AUE",
+    "AUGUSTINE",
+    "BABCOCK",
+    "BCT-BENIN",
+    "BENIN",
+    "BINGHAM",
+    "BSU",
+    "CALABAR",
+    "CALVARY",
+    "CIWA",
+    "COOU",
+    "CST-NDU",
+    "DELSU",
+    "DOU",
+    "EBSU",
+    "EKSU",
+    "EVANGEL",
+    "FED-OYE EKITI",
+    "GITS",
+    "HARVEST",
+    "IAUED",
+    "IBADAN",
+    "IMMANUEL",
+    "IMSU",
+    "JETS",
+    "JOS",
+    "KOMU",
+    "LCITY",
+    "MADONNA",
+    "MCPHERSON",
+    "MKAR",
+    "MOUNTAIN TOP",
+    "NASARAWA",
+    "NBTSO",
+    "NCBC",
+    "NDU",
+    "OAU",
+    "PAUL",
+    "PTC",
+    "RSU",
+    "SAMS",
+    "SAMUEL",
+    "SAU",
+    "SBS",
+    "ST PETER & PAUL",
+    "SUMMIT",
+    "SWSO",
+    "TANSIAN",
+    "TCNN",
+    "TTC",
+    "UDA",
+    "UMCA",
+    "UNIKINGS",
+    "UNINIGER",
+    "UUST-DEG",
+    "WATSI",
+    "RELIGION AND HUMAN",
+    "RELATIONS",
+    "UNIZIK",
+    "RELIGIOUS AND",
+    "CULTURAL STUDIES",
+    "PHC",
+    "UYO",
+    "RELIGIONS AND INTER-",
+    "VERITAS",
+    "ILORIN"
+   ],
+   "utme_subjects": [
+    "CRS/IRS",
+    "any other two (2) subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and CRS/IRS.",
+   "direct_entry": "Two (2) 'A' Level subjects to include Religious Studies (CRS/IRS).",
+   "institution_waivers": [
+    {
+     "institution": "AAU",
+     "note": "Accepts two (2) 'A' Level passes, to include CRS and one other Arts subject."
+    },
+    {
+     "institution": "AAUA",
+     "note": "Accepts ND, NCE or two (2) 'A' Level passes from the Arts or Social Sciences programme."
+    },
+    {
+     "institution": "ABSU and DELSU",
+     "note": "Accept NCE/ND/HND in Religious or Social Studies or 'A' Level in three (3) subjects including Religious Studies."
+    },
+    {
+     "institution": "AUE",
+     "note": "Requires two (2) 'A' Level passes to include Literature in English and other Arts subjects or NCE credit in English Language/Political Science."
+    },
+    {
+     "institution": "AUGUSTINE",
+     "note": "Accepts two (2) 'A' Level passes in any relevant subjects, NCE credit and ND credit in relevant subjects/programme in addition to UTME requirements."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Accepts: a) two (2) 'A' Level passes in Arts and Social Sciences at one sitting; b) NCE credit in CRS or IS/Arabic studies or Religious Studies or Social Studies with an overall credit level pass; c) ND credit in Mass Communication; d) any other three (3) subjects."
+    },
+    {
+     "institution": "BSU",
+     "note": "Accepts NCE/'A' Level passes in CRS, African Religion or its equivalent."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Also accepts NCE in Religious Studies."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Accepts NCE merit in Religious Studies."
+    },
+    {
+     "institution": "IMSU and PHC",
+     "note": "No Direct Entry."
+    },
+    {
+     "institution": "JABU",
+     "note": "Accepts five (5) 'O' Level credit passes in relevant subjects plus ND or HND."
+    },
+    {
+     "institution": "JOS",
+     "note": "Accepts two (2) or three (3) year ND/NCE merit."
+    },
+    {
+     "institution": "MCPHERSON",
+     "note": "Accepts NCE credit/merit and good passes in JUPEB/IJMB in relevant subjects."
+    },
+    {
+     "institution": "MOUNTAIN TOP",
+     "note": "Requires: a) at least two (2) GCE 'A' Level passes to include Christian Religious Knowledge or Foundation/JUPEB from Mountain Top University or other recognized Universities; b) a pass in two principal subjects at the NCE Level/A-Level plus five subjects at credit level in GCE, SSCE and NECO including English Language and Mathematics; c) a Three-Year Diploma in Theology recognized by the University plus five credits at GCE 'O' Level including English Language and Mathematics; d) a Diploma in Religious Studies or in the relevant Arts programmes."
+    },
+    {
+     "institution": "NDU",
+     "note": "Accepts: a) a minimum of two (2) 'A' Level passes, one of which must be in English Language, CRS, Government, any Nigeria Language or any Arts subject; b) NCE merit in CRS or IS."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts two (2) 'A' Level passes including CRS/IRS."
+    },
+    {
+     "institution": "SAU and OAU",
+     "note": "Accept NCE in Religious Studies (CRS or IS)."
+    },
+    {
+     "institution": "UNIKINGS",
+     "note": "Requires two (2) 'A' Level passes to include Christian Religious Studies and one other Arts subject."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Accepts NCE merit in Religious Studies with four (4) 'O' Level credit passes in other subjects."
+    },
+    {
+     "institution": "UYO",
+     "note": "Requires two (2) 'A' Level passes including CRS or NCE Merit in three (3) subjects, including CRS."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires: a) two (2) A/L passes in CRS and one other Arts subject; b) merit pass in NCE, one of the subjects must be Religious Studies; c) merit pass in DELSU Diploma in Law, Social Studies Education, Religious Studies Education and Guidance and Counselling."
+    },
+    {
+     "institution": "IAUED",
+     "note": "Accepts five (5) 'O' Level credit passes including English Language, Christian Religious Studies or Islamic Religious Studies and any other three (3) relevant subjects in not more than two sittings."
+    }
+   ],
+   "first_line": 4882,
+   "line_range": [
+    4882,
+    5545
+   ],
+   "scope": [
+    4882,
+    5287
+   ]
+  },
+  {
+   "jamb_name": "Theology",
+   "institutions": [
+    "BOUEDST",
+    "BINGHAM",
+    "MADONNA",
+    "WESLEYUNI",
+    "ARTS",
+    "CHRISTIAN THEOLOGY",
+    "NOUN",
+    "VERITAS",
+    "COMPARATIVE"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "PHC",
+     "note": "PHC accepts at least two (2) A/Level passes in GCE or HSC or JUPEB or IJMB in any Arts subject in addition to UTME entry requirements. NCE in any two Arts subjects with an overall merit level pass from a recognized College of Education in addition to UTME entry requirements."
+    },
+    {
+     "institution": "MOUNTAIN TOP",
+     "note": "MOUNTAIN TOP accepts: a) Five credits in General Certificate of Education, Ordinary Level and NECO at least two of which must be a GCE Advanced Level including Christian Religious Knowledge as in UTME above; and then b) A pass in two principal subjects at the NCE Level/A/L, or JUPEB and/or the equivalent plus five subjects at credit level in GCE O/L, SSCE, NECO, and TC II are acceptable in MTU."
+    }
+   ],
+   "first_line": 5287,
+   "line_range": [
+    5287,
+    5495
+   ],
+   "scope": [
+    5287,
+    5546
+   ]
+  },
+  {
+   "jamb_name": "Yoruba",
+   "institutions": [
+    "AAUA",
+    "BOUEDST",
+    "EKSU",
+    "FOUNTAIN",
+    "ARTS",
+    "IBADAN",
+    "ILORIN",
+    "KWASU",
+    "LAGOS",
+    "LASUED",
+    "LAUTECH",
+    "LCITY",
+    "NAUB",
+    "OAU",
+    "OOU",
+    "POL-ACAD",
+    "UNIOSUN"
+   ],
+   "utme_subjects": [
+    "Yoruba",
+    "and two (2) other subjects in Arts or Social Sciences"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include Yoruba and English Language.",
+   "direct_entry": "Two (2) `A' Level passes to include Yoruba or Literature in English.",
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "DIRECT ENTRY: IBADAN accepts two (2) `A' Level passes to include Yoruba and another Arts or Social Science subject. It accepts NCE credit/merit in Yoruba and another Arts or Social Science subject."
+    },
+    {
+     "institution": "OAU",
+     "note": "DIRECT ENTRY: OAU accepts NCE merit in Yoruba."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "DIRECT ENTRY: LAGOS accepts very good passes in three JUPEB/A' Level subjects in Yoruba/Igbo and any two of History, CRS/IRS, French, Government, Music, Visual Arts and Literature in English. NCE (Merit) in two subjects to include a Nigerian Language."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "DIRECT ENTRY: ILORIN requires a) At least two (2) `A' Level passes to include Yoruba and any other Arts/Social Science; b) NCE/Diploma (Upper Credit) in Yoruba and Social Science subject."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: IBADAN requires five (5) `O' Level credit passes at one sitting or six (6) `O' Level credit passes at two (2) sittings including English Language and two (2) Arts subjects, one of which must be Yoruba."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME: ILORIN accepts five (5) `O' Level credit passes to include Yoruba, English Language, Mathematics and two (2) other Arts/Social Science subjects. It also accepts candidates who do not offer Yoruba (Language/Literature) but meet other UTME entry requirements."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME: OAU requires five (5) `O' Level credit passes to include English Language and any Arts subject."
+    },
+    {
+     "institution": "AAUA",
+     "note": "UTME: AAUA requires five (5) `O' Level credit passes to include English Language, Yoruba, Mathematics and any two subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: LAGOS requires five O/Level credit passes in English Language, Mathematics and any three Arts, Science or Social Sciences. Social Studies and Civic Education are also accepted."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME SUBJECTS: IBADAN requires Yoruba and two (2) other subjects in Arts or Social Sciences."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME SUBJECTS: OAU requires three (3) subjects from Arts and/or Social Sciences."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME SUBJECTS: OOU requires Yoruba and two (2) Arts subjects."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME SUBJECTS: ILORIN requires Yoruba and two (2) other subjects in Arts/Social Science."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME SUBJECTS: LAGOS requires English Language and any three Arts, Science or Social Sciences."
+    }
+   ],
+   "first_line": 5546,
+   "line_range": [
+    5546,
+    5625
+   ],
+   "scope": [
+    5546,
+    5626
+   ]
+  },
+  {
+   "jamb_name": "Anthropology",
+   "institutions": [
+    "IBADAN"
+   ],
+   "utme_subjects": [
+    "Any three (3) of History, CRS/IRS, Geography, Economics, Literature in English and French"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include one of Government/History, Religious Studies, Geography and Economics.",
+   "direct_entry": "Any two (2) `A' Level passes in Arts subjects.",
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "DIRECT ENTRY: IBADAN accepts 'A' Level passes in Geography, Economics, Government and Sociology."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: IBADAN requires 'O' Level credit passes in English Language and any other three (3) Arts subjects."
+    }
+   ],
+   "first_line": 5626,
+   "line_range": [
+    5626,
+    5628
+   ],
+   "scope": [
+    5626,
+    5629
+   ]
+  },
+  {
+   "jamb_name": "Fulfulde",
+   "institutions": [
+    "MAIDUGURI",
+    "ARTS",
+    "LINGUISTICS AND"
+   ],
+   "utme_subjects": [
+    "Any three (3) Arts subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Arts/Social Science subjects.",
+   "direct_entry": "Two (2) `A' Level passes in Arts and Social Science subjects.",
+   "institution_waivers": [
+    {
+     "institution": "MAIDUGURI",
+     "note": "DIRECT ENTRY: MAIDUGURI accepts Certificate in Fulfulde and NCE in Fulfulde."
+    }
+   ],
+   "first_line": 5629,
+   "line_range": [
+    5629,
+    5651
+   ],
+   "scope": [
+    5629,
+    5652
+   ]
+  },
+  {
+   "jamb_name": "Efik-Ibibio",
+   "institutions": [
+    "UYO"
+   ],
+   "utme_subjects": [
+    "Literature in English",
+    "and two (2) other Arts or Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes or equivalent including English",
+   "direct_entry": "Two (2) 'A' Level passes or equivalent in Arts or Social Science subjects.",
+   "institution_waivers": [
+    {
+     "institution": "UYO",
+     "note": "UYO accepts NCE merit in Efik/Ibibio."
+    }
+   ],
+   "first_line": 5652,
+   "line_range": [
+    5652,
+    5654
+   ],
+   "scope": [
+    5652,
+    5655
+   ]
+  },
+  {
+   "jamb_name": "Communication Arts",
+   "institutions": [
+    "BOWEN",
+    "UYO",
+    "COMMUNICATION AND",
+    "LANGUAGE ARTS",
+    "IBADAN",
+    "COMMUNICATION",
+    "STUDIES",
+    "CIWA",
+    "ARTS",
+    "MODERN LANGUAGES",
+    "UNN",
+    "PROGRAMME A",
+    "PROGRAMME B",
+    "CHINESE STUDIES",
+    "KASU",
+    "LAGOS",
+    "UNIZIK",
+    "LASU",
+    "GEOGRAPHY",
+    "FED-KASHERE",
+    "FED- LAFIA",
+    "FED-LOKOJA",
+    "AEFUNA"
+   ],
+   "utme_subjects": [
+    "Any three (3) Arts or Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes or equivalent including English Language, Literature in English, Arts/Music depending on the combination.",
+   "direct_entry": "Two 'A' Level passes or equivalent in Arts or Social Science subjects.",
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "Direct Entry: accepts ND upper credit Mass Communication plus 'O' Level credit pass in Literature in English; accepts two (2) 'A' Level passes to include Literature in English and one other Arts or Social Science subject."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "UTME: requires five (5) 'O' Level credit passes to include English Language, Literature in English and any other three (3) Arts or Social Science subjects."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: requires five (5) 'O' Level credit passes at one sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, Literature in English and any other three (3) or four (4) subjects from Arts, Social Sciences or Sciences. Note that Government and Economics are not Arts subjects."
+    },
+    {
+     "institution": "UYO",
+     "note": "Accepts a D7 in Mathematics."
+    },
+    {
+     "institution": "BOWEN and IGBINEDION",
+     "note": "UTME Subjects: accept any other subjects in addition to Literature in English."
+    },
+    {
+     "institution": "UYO",
+     "note": "UTME Subjects: Music/Literature in English/Fine Arts and any two (2) Arts or Social Science subjects."
+    }
+   ],
+   "first_line": 5655,
+   "line_range": [
+    5655,
+    5831
+   ],
+   "scope": [
+    5655,
+    5832
+   ]
+  },
+  {
+   "jamb_name": "Political Science and Conflict",
+   "institutions": [
+    "EVANGEL",
+    "FED-KASHERE",
+    "FED-LOKOJA",
+    "FED-OTUOKE",
+    "FED-WUKARI",
+    "PLASU",
+    "CONFLICT RESOLUTION",
+    "AL-HIKMAH",
+    "ARTS",
+    "PSYCHOLOGY",
+    "COVENANT",
+    "MKAR"
+   ],
+   "utme_subjects": [
+    "Government/History",
+    "and two (2) other Social Sciences or Arts subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Government/History and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes to include Government or History.",
+   "institution_waivers": [
+    {
+     "institution": "FED-WUKARI",
+     "note": "Direct Entry candidates must obtain Two 'A' Level passes in Government/History/Economics/CRK/IRK/Commerce at GCE A/L, IJMB or Advanced NABTEB or a Merit pass at NCE in relevant subjects or at least a credit at OND/HND or a First Degree in relevant field from an approved University. Candidates must also satisfy the minimum O/L requirement for admission."
+    },
+    {
+     "institution": "FED-LOKOJA",
+     "note": "Direct Entry: accepts, in addition to meeting the UTME Entry Requirements, 2 'A' Level passes to include History/Government & one other Arts or Social Science; NCE credit pass in minimum of 3 major subjects; ND upper credit in Pub. Adm. & LG Studies or other cognate courses; HND lower credit in Pub. Adm. & LG Studies or other cognate courses; Degree (Third Class) in Law or Education Courses & Arts, Soc. Sci. Courses."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "Direct Entry: accepts ND/Accredited Diploma in any of the following disciplines: Pol. Science, Public Admin., Local Government, Law, Public Policy, Mass Communication at Credit passes or NCE with at least 9 points."
+    },
+    {
+     "institution": "FED-LOKOJA",
+     "note": "UTME: requires Five (5) SSC credit passes to include English Language, Government/History plus two (2) Social Science subjects and any other subject. A credit in Mathematics is compulsory. Note: Civic Education is considered as part of Government and so will not count in reckoning."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "UTME: Five (5) credits at not more than two sittings including English Language, Mathematics, Government/History/Civic Education and any two of the following: Economics, Geography, CRK/IRK, Literature in English, Commerce obtained from SSCE, NECO, NABTEB or its equivalent."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "UTME: requires Five credit passes at SSCE (or its equivalent) in English, Mathematics, Government or History and any two of IRS/CRS, Economics/Commerce, Geography, Literature in English, Languages (Arabic, French, Hausa, Igbo, Yoruba and Fulfulde)."
+    },
+    {
+     "institution": "FED-LOKOJA",
+     "note": "UTME Subjects: accepts History/Government plus one Social Science subject and any other Arts or Social Sciences subject. Note: Civic Education cannot be taken in lieu of Government."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "UTME Subjects: requires Government/History and any two of CRK/IRS, Economics, Literature in English, Geography or Commerce."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "UTME Subjects: requires Government and any two of IRS/CRS, Economics/Commerce, Geography and Literature in English."
+    }
+   ],
+   "first_line": 5832,
+   "line_range": [
+    5832,
+    5938
+   ],
+   "scope": [
+    5832,
+    5939
+   ]
+  },
+  {
+   "jamb_name": "Sociology",
+   "institutions": [
+    "COVENANT",
+    "EVANGEL",
+    "FED-KASHERE",
+    "PLASU",
+    "SALEM",
+    "SOCIOLOGY AND",
+    "ANTHROPOLGY",
+    "FED-OTUOKE",
+    "ARTS",
+    "CRIMINOLOGY",
+    "SECURITY STUDIES",
+    "FED-DUTSE"
+   ],
+   "utme_subjects": [
+    "and any two (2) relevant subjects from Arts, Social Sciences or Sciences as specified by the institution"
+   ],
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "FED-KASHERE",
+     "note": "Direct Entry: accepts Credit/merit pass in relevant ND/NCE or three 'A' Level in IJMB with minimum of 9 points."
+    },
+    {
+     "institution": "PLASU",
+     "note": "UTME: requires 'O' Level credit passes in English Language and three (3) Social Sciences or Arts subjects plus at least 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "UTME: requires Five credit passes at SSCE (or its equivalent) in English, Mathematics, Government/History and two other Arts or Social Sciences subjects."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "UTME Subjects: requires Government or History plus two other Arts or Social Science."
+    }
+   ],
+   "first_line": 5939,
+   "line_range": [
+    5939,
+    6005
+   ],
+   "scope": [
+    5939,
+    6005
+   ]
+  },
+  {
+   "jamb_name": "Drama/Dramatic Arts/Performing Arts",
+   "institutions": [
+    "ABUJA",
+    "BENIN",
+    "DELSU",
+    "KASU",
+    "LASU",
+    "OAU",
+    "PHC",
+    "ABU",
+    "BAYERO",
+    "FED-OTUOKE",
+    "UNN",
+    "JOS",
+    "TSUJ",
+    "ABUAD",
+    "AEFUNA",
+    "ATIBA",
+    "BOWEN",
+    "BSU",
+    "BOUEDST",
+    "CALABAR",
+    "COOU",
+    "EKSU",
+    "EVANGEL",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "GREGORY",
+    "IAUED",
+    "IBADAN",
+    "IGBINEDION",
+    "IMSU",
+    "KASU-KABBA",
+    "LAUTECH",
+    "PAAU",
+    "MAIDUGURI",
+    "MC-IBRU",
+    "NASARAWA",
+    "NDU",
+    "PAUL",
+    "PLASU",
+    "REDEEMERS",
+    "RSU",
+    "UDA",
+    "UNI-AFRICA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNIZIK",
+    "UYO",
+    "WESLEYUNI",
+    "WIGWE",
+    "LASUED",
+    "AAUA",
+    "AJAYI",
+    "AKSU",
+    "ELIZADE",
+    "ILORIN",
+    "KWASU",
+    "LCITY",
+    "OOU",
+    "HENSARD",
+    "AAU",
+    "FED-OYE EKITI",
+    "NFI-DEG"
+   ],
+   "utme_subjects": [
+    "Literature in English",
+    "and two (2) other relevant subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and Arts subjects.",
+   "direct_entry": "Two (2) `A' Level passes in Arts, Social Sciences or Science subjects.",
+   "institution_waivers": [
+    {
+     "institution": "ABU",
+     "note": "Accepts Two `A' level passes in English, Performing Arts, Journalism, Mass Communication, Creative Arts, Music and Dance, Literature in English, or any Nigerian Language at IJMB/NCE, or a minimum of Merit at Diploma."
+    },
+    {
+     "institution": "ABUJA",
+     "note": "Accepts a minimum of ten (10) points in NCE or ND upper credit in addition to UTME requirements OR two (2) `A' Level passes including Literature in English and one other Arts subject; NCE merit or ND upper credit in Theatre Arts with four (4) `O' Level credit passes."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Requires two (2) 'A' Level passes in GCE or HSC in any two Arts subjects; accepts NCE merit in Music."
+    },
+    {
+     "institution": "BOWEN/OAU/BENIN/DELSU",
+     "note": "Require 'A' Level pass in Literature in English."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Accepts ND credit in Mass Communication; ND in Mass Communication, Business Management, or Statistics."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Accepts NCE (Merit and above) in Theatre Arts or Drama; Diploma (Upper Credit and above) in related Arts; Two (2) A level passes one of which must be in Literature in English."
+    },
+    {
+     "institution": "JOS",
+     "note": "Accepts certificate in Drama, Theatre Arts, Mass Communication and Music; 'A' Level passes to include Literature in English."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "Accepts two (2) `A' Level or NCE in two (2) arts subjects and Diploma in Theatre Arts or Mass Communications."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Requires `A' Level candidates to possess English Language and Literature in English at 'O' Level credit passes; accepts ABRSM Grade V and above in lieu."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts A/level passes in GCE or HSC or IJMB or JUPEB in two (2) Art or Social Science subjects including UTME entry requirements."
+    },
+    {
+     "institution": "KWASU",
+     "note": "Two (2) `A' Level passes in Arts and one Social Science subject; ND upper credit in visual or Theatre Arts; NCE merit."
+    },
+    {
+     "institution": "LASU",
+     "note": "NCE merit in Theatre/Performing/Creative or Communication Arts plus five (5) 'O' Level credit passes; recognized certificate in Dramatic Arts."
+    },
+    {
+     "institution": "NDU",
+     "note": "Accepts `A' Level pass in Literature in English or NCE merit, and one other Arts subject."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts two (2) 'A' Level passes to include Literature in English or Yoruba."
+    },
+    {
+     "institution": "OOU",
+     "note": "Two (2) 'A' Level passes in Arts, Social Sciences or Science; ND upper credit and NCE merit; conducts audition before selection."
+    },
+    {
+     "institution": "PLASU",
+     "note": "Degree in any programme; HND lower credit; ND lower credit; IJMB seven (7) points, all with UTME requirements."
+    },
+    {
+     "institution": "REDEEMERS",
+     "note": "Requires Literature in English and any other Arts subject."
+    },
+    {
+     "institution": "UNN",
+     "note": "ND/NCE in Theatre Arts or relevant; ND in Mass Communication, Fine and Applied Arts, Music, Management etc. plus UTME requirements."
+    },
+    {
+     "institution": "UYO",
+     "note": "Accepts ND upper credit, HND lower credit and NCE merit in relevant programme plus UTME requirements."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "Requires two (2) `A' level passes in Language and any other one Arts subject."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "2 GCE (A-Level) lower credit passes or equivalent; NCE merit and Diploma at Lower credit in Theatre Arts, Creative Arts, Journalism, Mass Communication, Music, Dance or Fine Arts; IJMB minimum 9 points."
+    },
+    {
+     "institution": "KASU",
+     "note": "For Theatre Arts Two `A' passes to include Literature in English and one other Arts subject; ND/HND Upper credit and IJMB 7 points."
+    },
+    {
+     "institution": "RSU",
+     "note": "Admission into Year III: Degree/HND (Upper Credit) relevant; Year II: OND/ND (Upper Credit) or HND (Lower Credit) relevant, plus UME requirements."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Fine Art/Fine and Applied Arts",
+   "institutions": [
+    "BENIN",
+    "CALABAR",
+    "DELSU",
+    "AEFUNA",
+    "IAUED",
+    "KWASU",
+    "LASUED",
+    "TASUED",
+    "UNN",
+    "DOU",
+    "LAGOS",
+    "PHC",
+    "LASU",
+    "FED-LAFIA",
+    "LCITY",
+    "WIGWE",
+    "DELSUT",
+    "ABSU"
+   ],
+   "utme_subjects": [
+    "Fine Arts and any other subjects",
+    "or Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and Fine Arts.",
+   "direct_entry": "(i) Two (2) `A' Level passes in Arts or Fine Arts and any other subject. (ii) ND upper credit / HND lower credit from recognised institutions.",
+   "institution_waivers": [
+    {
+     "institution": "BENIN",
+     "note": "Requires 'A' Level passes in Fine Arts and any other subjects which must include Literature in English; accepts ND upper credit or HND lower credit in Fine Arts. Accepts candidates without Fine Arts at 'O' Level."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Requires Very good passes in three JUPEB/A' Level subjects (Theatre Arts / Visual Arts / Music combinations); accepts HND/OND at Upper Credit in Drama/Theatre and Music; NCE Music; Diploma/Advanced level in Music from Royal School of Music, Trinity College London and MUSON."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "Accepts NCE with Fine/Creative Arts (Major)."
+    },
+    {
+     "institution": "UNN",
+     "note": "Three (3) GCE 'A' Level passes in Fine Arts or Technical Drawing plus UTME requirements; HND holders with average B grade with UTME requirements into 300 level; ND credit or NCE merit with UTME requirements; candidates interviewed."
+    },
+    {
+     "institution": "NDU",
+     "note": "Requires a pass in Literature in English at 'A' Level GCE, or HSC or merit NCE, and in other Arts subject, Fine and Industrial Arts or Theatre Arts."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts A/level passes in GCE or HSC or IJMB or JUPEB in two (2) Art subjects including Literature in English, plus UTME entry requirements in two (2) Arts subjects including English Language, with overall merit level Pass from a recognized College of Education."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "OND in Fine Arts/Industrial Arts at Lower Credit / HND; NCE Fine Arts at Merit Level; IJMB minimum of 9 points."
+    },
+    {
+     "institution": "DELSU",
+     "note": "OND in Fine Art (minimum grade of credit); Diploma in Fine and Applied Arts (DELSU) with at least merit grade; A Level passes in Fine and Applied Arts and at least one other subject."
+    },
+    {
+     "institution": "IAUED",
+     "note": "Applicants who hold the NCE with merit level and above from Ignatius Ajuru University of Education or recognized institution admitted for the BA.Ed programme; candidates without a credit in Fine Art may be considered where needed."
+    },
+    {
+     "institution": "ABSU",
+     "note": "'O' Level credit pass in English Language provided Fine Art grade is not below B3; 'O' Level credit passes in Mathematics and any three (3) subjects from Arts, Social Sciences and Sciences."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Psychology",
+   "institutions": [
+    "COVENANT",
+    "EVANGEL",
+    "MKAR",
+    "PLASU"
+   ],
+   "utme_subjects": [
+    "Government",
+    "and any other two (2) Arts and Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Biology and any two (2) relevant subjects from Arts, Social Sciences or Sciences as specified by the institution.",
+   "direct_entry": "",
+   "institution_waivers": []
+  },
+  {
+   "jamb_name": "Hausa",
+   "institutions": [
+    "ABU",
+    "AL-QALAM",
+    "BASU",
+    "BAYERO",
+    "FED-DUTSINMA",
+    "FED-GUSAU",
+    "FED-KASHERE",
+    "FED-LAFIA",
+    "ILORIN",
+    "KASU",
+    "LASUED",
+    "MAIDUGURI",
+    "MAITAMA",
+    "NASARAWA",
+    "NAUB",
+    "POL-ACAD",
+    "SLUK",
+    "SOSU",
+    "TSUJ",
+    "UDU",
+    "UMYUK",
+    "YSU"
+   ],
+   "utme_subjects": [
+    "Hausa",
+    "Literature in English",
+    "and any of Economics, Government, History and Arabic"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language and Hausa.",
+   "direct_entry": "Two (2) `A' Level passes in Hausa and any other relevant subjects.",
+   "institution_waivers": [
+    {
+     "institution": "ABU",
+     "note": "Accepts Two `A' level passes including Hausa at IJMB/NCE, or a minimum of Merit at Diploma in Hausa with other subjects. General English/Use of English at NCE satisfies 'O' level English requirement."
+    },
+    {
+     "institution": "BAYERO/MAIDUGURI/UDU",
+     "note": "Accept NCE with Hausa major."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "Accepts candidates with minimum of 9 points in IJMB/HSC/GCE 'A' Level/NCE in Hausa and any other Arts or Social Science subject; minimum lower credit pass in Diploma in Hausa."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "Accepts Two 'A' Level credit passes in Hausa and any other Arts subject."
+    },
+    {
+     "institution": "KASU",
+     "note": "Two `A' Level/IJMB passes in Hausa and any other relevant subject; NCE merit pass and ND/HND in Hausa Translation at Lower credit plus general 'O' Level requirements."
+    },
+    {
+     "institution": "SOSU",
+     "note": "A minimum of merit in NCE or at least lower credit in Diploma in Mass Communication or Translation."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "Two `A' level passes in Hausa and one other Arts subject; ND/NCE with good grades in the relevant area."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Igbo",
+   "institutions": [
+    "ABSU",
+    "COOU",
+    "EBSU",
+    "AEFUNA",
+    "IBADAN",
+    "ILORIN",
+    "LAGOS",
+    "LASUED",
+    "NAUB",
+    "POL-ACAD",
+    "UNIZIK",
+    "IMSU",
+    "PEACELAND-UNI",
+    "DOU",
+    "OAU",
+    "UNN"
+   ],
+   "utme_subjects": [
+    "Igbo",
+    "and two (2) subjects from Arts and Social Sciences"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include Igbo, English Language and any other Arts subject.",
+   "direct_entry": "(i) Two (2) `A' Level passes in Igbo and one (1) Arts/Social Sciences subject. (ii) NCE in Igbo and one Arts subject.",
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "Accepts NCE merit/credit in Igbo and another Arts or Social Sciences; two (2) `A' Level passes to include Yoruba and another Arts or Social Science subject."
+    },
+    {
+     "institution": "IMSU",
+     "note": "Accepts 'A' Level passes/NCE merit."
+    },
+    {
+     "institution": "UNN",
+     "note": "Accepts `A' Level passes or NCE merit in at least one Language and one other subject plus UTME requirements. For Linguistics/Nigerian Language requires 'O' Level credit in the Nigerian language."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Very good passes in three JUPEB/A' Level subjects in Igbo/Yoruba and any two of History, CRS/IRS, French, Government, Music, Visual Arts and Literature-in-English; NCE (Merit) in two subjects including a Nigerian Language; LASU Diploma in Communication Arts."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Accepts Chinese in lieu of Igbo (UTME subject)."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Modern Language and Translation",
+   "institutions": [
+    "UNN",
+    "KASU",
+    "LAGOS",
+    "UNIZIK"
+   ],
+   "utme_subjects": [
+    "Programme A: French and any other two (2) subjects",
+    "Programme B: any three (3) subjects"
+   ],
+   "olevel_requirement": "For Programme A: five (5) SSC credit passes including English Language and French. For Programme B: credit passes in English Language and four (4) other subjects.",
+   "direct_entry": "(i) Two (2) `A' Level passes or NCE in French for French programme. (ii) Two (2) `A' Level passes or NCE in any subjects.",
+   "institution_waivers": [
+    {
+     "institution": "LAGOS",
+     "note": "Does not accept Direct Entry. Requires Five O/Level credit passes in English Language, Mathematics and any three Arts, Science or Social Sciences; Social Studies and Civic Education accepted."
+    },
+    {
+     "institution": "UNN",
+     "note": "Accepts French only: Passes in French and any other subject at NCE, `A' Levels plus `O' Level credit pass in English Language or equivalent. For Programme B, 'A' Level passes in History or Literature in English and four (4) other subjects."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Accepts any three (3) Arts or Social Science subjects (UTME)."
+    }
+   ],
+   "note": "Best-match extraction from the 'B.A. (SINGLE AND COMBINED HONS) IN MODERN LANGUAGES' block (with CHINESE STUDIES sub-programme). The index distinguishes item 58 'Modern European Languages' and item 59 'Modern Language and Translation'; neither appears with a discrete heading, so institutions are taken from the MODERN LANGUAGES / CHINESE STUDIES block. Naming discrepancy noted."
+  },
+  {
+   "jamb_name": "Geography and Environmental Studies",
+   "institutions": [
+    "FED-KASHERE",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "AEFUNA"
+   ],
+   "utme_subjects": [
+    "Geography",
+    "and any two (2) other Arts or Social Science subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Geography and any other three (3) subjects from Arts/Social Sciences with at least 'O' Level pass in Mathematics.",
+   "direct_entry": "No Direct Entry.",
+   "institution_waivers": [
+    {
+     "institution": "FED-LOKOJA",
+     "note": "In addition to UTME requirements: 2 A' Level Passes in Geography and any one of History/Government, Economics, Biology/Agricultural Science, Chemistry, Physics, Geology & Mathematics; NCE credit pass in Geography; ND upper credit or HND lower credit in Cartography, Land Surveying & GIS/Geo-informatics; Degree (Third Class) from Economics, Geology, Land Surveying, Cartography, GIS/Geo-Informatics."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "Three `A' Level credit passes in Geography and any two of Economics, Biology, Physics, Mathematics or Chemistry; or ND in Urban & Regional Planning, Town Planning, Geo-informatics/Land Surveying, Estate Mgt. at Upper Credit."
+    }
+   ],
+   "note": "Heading in source text is 'GEOGRAPHY'; index item 30 names it 'Geography and Environmental'."
+  }
+ ]
+}

@@ -1,0 +1,132 @@
+{
+ "domain_id": "D150",
+ "domain_name": "Religious Ministry, Theology",
+ "role_count": 25,
+ "roles": [
+  {
+   "role": "missionary",
+   "isco": 2636,
+   "aka": "city missionary  ·  missionary preacher  ·  christian social worker  ·  missions pastor  ·  intercessory missionary"
+  },
+  {
+   "role": "digital literacy teacher",
+   "isco": 2356,
+   "aka": "digital literacy trainer  ·  computer literacy instructor  ·  computer literacy teacher  ·  digital literacy teaching practitioner  ·  digital literacy instructor"
+  },
+  {
+   "role": "religion scientific researcher",
+   "isco": 2636,
+   "aka": "religious studies researcher  ·  theologist  ·  theologian  ·  theology scholar  ·  theology researcher"
+  },
+  {
+   "role": "ICT trainer",
+   "isco": 2356,
+   "aka": "distance-learning trainer  ·  system trainer  ·  ICT trainers  ·  IT trainer  ·  blended learning trainer"
+  },
+  {
+   "role": "chaplain",
+   "isco": 2636,
+   "aka": "university chaplain  ·  lay representative  ·  imam  ·  military chaplain  ·  hospital chaplain"
+  },
+  {
+   "role": "club host/club hostess",
+   "isco": 5169,
+   "aka": "promo worker  ·  drinks host  ·  party hostess  ·  vip hostess  ·  promo boy"
+  },
+  {
+   "role": "escort",
+   "isco": 5169,
+   "aka": "sex worker  ·  gigolo  ·  out call girl  ·  social escort  ·  lady of the night"
+  },
+  {
+   "role": "minister of religion",
+   "isco": 2636,
+   "aka": "monk  ·  nun  ·  minister of the church  ·  pastor  ·  priest"
+  },
+  {
+   "role": "dating service consultant",
+   "isco": 5169,
+   "aka": "marriage broker  ·  dating agency manager  ·  dating agency consultant  ·  matchmaker  ·  matchmaking consultant"
+  },
+  {
+   "role": "Marriage and Family Therapists",
+   "isco": 2636,
+   "aka": NaN
+  },
+  {
+   "role": "Personal Care and Service Workers, All Other",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Entertainment and Recreation Workers, Except Gambling Services",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Personal Service Workers",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Gambling Dealers",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Gambling and Sports Book Writers and Runners",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Gambling Service Workers, All Other",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Motion Picture Projectionists",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Ushers, Lobby Attendants, and Ticket Takers",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Costume Attendants",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Locker Room, Coatroom, and Dressing Room Attendants",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Entertainment Attendants and Related Workers, All Other",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Crematory Operators",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Skincare Specialists",
+   "isco": 5169,
+   "aka": NaN
+  },
+  {
+   "role": "Travel Guides",
+   "isco": 5169,
+   "aka": NaN
+  }
+ ]
+}

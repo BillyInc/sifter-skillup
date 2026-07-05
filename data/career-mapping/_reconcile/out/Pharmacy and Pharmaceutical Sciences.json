@@ -1,0 +1,39 @@
+{
+ "reconciled": [
+  {
+   "programme": "Bachelor of Pharmacy",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "functional", "why": "Pharmacists are an allied-health profession embedded in the clinical patient-care team"}
+   ],
+   "remove": [
+    {"domain_id": "D066", "why": "No veterinary course; human-pharmacy focus"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D135", "why": "No nuclear content"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D009", "why": "ICT/statistics intro does not amount to a data-science career"},
+    {"domain_id": "D155", "why": "No nanomaterials course"},
+    {"domain_id": "D047", "why": "Pharmacognosy of plant drugs is not agribusiness/agricultural science"}
+   ]
+  },
+  {
+   "programme": "Doctor of Pharmacy",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "functional", "why": "PharmD clinicians are an allied-health profession within the clinical care team"}
+   ],
+   "remove": [
+    {"domain_id": "D066", "why": "No veterinary course; human-pharmacy focus"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D135", "why": "No nuclear content"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D047", "why": "Pharmacognosy of plant drugs is not agricultural science"},
+    {"domain_id": "D155", "why": "No nanomaterials course"},
+    {"domain_id": "D078", "why": "No social-science research course basis"}
+   ]
+  }
+ ]
+}

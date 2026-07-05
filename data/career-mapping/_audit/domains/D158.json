@@ -1,0 +1,177 @@
+{
+ "domain_id": "D158",
+ "domain_name": "Corporate Finance, Investment Banking",
+ "role_count": 34,
+ "roles": [
+  {
+   "role": "securities analyst",
+   "isco": 2413,
+   "aka": "securities research analyst  ·  corporate securities research analyst  ·  bonds analyst  ·  stock analyst  ·  securities research director"
+  },
+  {
+   "role": "mergers and acquisitions analyst",
+   "isco": 2413,
+   "aka": "M&A analyst  ·  mergers and acquisitions banker  ·  mergers and acquisitions associate  ·  acquisition manager  ·  M&A specialist"
+  },
+  {
+   "role": "financial auditor",
+   "isco": 2411,
+   "aka": "auditor  ·  finance auditor  ·  internal auditor  ·  audit manager  ·  chartered accountant"
+  },
+  {
+   "role": "insurance rating analyst",
+   "isco": 2413,
+   "aka": "insurance analyst  ·  insurance assessor  ·  insurance rater"
+  },
+  {
+   "role": "business intelligence manager",
+   "isco": 2421,
+   "aka": "market intelligence manager  ·  business research analyst  ·  business intelligence specialist  ·  business research consultant  ·  business intelligence analyst"
+  },
+  {
+   "role": "manufacturing cost estimator",
+   "isco": 2421,
+   "aka": "manufacturing cost analyst  ·  manufacturing estimate clerk  ·  production cost estimator  ·  estimator  ·  manufacturing cost recovery technician"
+  },
+  {
+   "role": "middle office analyst",
+   "isco": 2413,
+   "aka": "middle office associate  ·  transaction reporting specialist  ·  middle office specialist  ·  structured products middle office analyst  ·  derivatives middle office analyst"
+  },
+  {
+   "role": "credit union manager",
+   "isco": 1346,
+   "aka": "credit unions examiner  ·  financial cooperative manager  ·  credit union specialist  ·  credit union branch manager  ·  credit union principal examiner"
+  },
+  {
+   "role": "budget analyst",
+   "isco": 2411,
+   "aka": "budget and policy analyst  ·  budget accountant  ·  budget officer  ·  cost and planning analyst"
+  },
+  {
+   "role": "logistics analyst",
+   "isco": 2421,
+   "aka": "supply chain analyst  ·  distribution and logistics consultant  ·  logistics consultant  ·  logistics and distribution analyst  ·  logistics and supply chain analyst"
+  },
+  {
+   "role": "insurance agency manager",
+   "isco": 1346,
+   "aka": "insurance company manager  ·  life insurance agency manager  ·  insurance institution manager  ·  insurance agency road assistance manager  ·  car insurance agency manager"
+  },
+  {
+   "role": "tax advisor",
+   "isco": 2411,
+   "aka": "fiscal advisor  ·  tax specialist  ·  tax expert  ·  tax evaluator  ·  tax preparer"
+  },
+  {
+   "role": "financial controller",
+   "isco": 2411,
+   "aka": "finance manager  ·  financial administrator  ·  accounting supervisor  ·  financial accountant  ·  accountant"
+  },
+  {
+   "role": "business analyst",
+   "isco": 2421,
+   "aka": "management consultant  ·  standardisation manager  ·  business strategy analyst  ·  organisational developer  ·  standardisation expert"
+  },
+  {
+   "role": "business consultant",
+   "isco": 2421,
+   "aka": "business process consultant"
+  },
+  {
+   "role": "bank manager",
+   "isco": 1346,
+   "aka": "financial institution branch manager  ·  bank executive officer  ·  bank branch manager  ·  financial services branch manager  ·  retail bank manager"
+  },
+  {
+   "role": "public finance accountant",
+   "isco": 2411,
+   "aka": "finance accountant  ·  public finance officer  ·  treasury accountant  ·  treasury officer  ·  public finance manager"
+  },
+  {
+   "role": "cost analyst",
+   "isco": 2411,
+   "aka": "quantity surveyor  ·  cost accountant  ·  cost accounting clerk  ·  cost recovery estimator  ·  cost and budget analyst"
+  },
+  {
+   "role": "grants management officer",
+   "isco": 2411,
+   "aka": "grants officer  ·  proposals manager"
+  },
+  {
+   "role": "financial analyst",
+   "isco": 2413,
+   "aka": "economic analyst  ·  credit analyst  ·  financial markets report writer  ·  financial markets analyst  ·  treasury analyst"
+  },
+  {
+   "role": "insurance claims manager",
+   "isco": 1346,
+   "aka": "insurance claims service manager  ·  head of insurance claims office  ·  insurance claims director  ·  claims director  ·  insurance claims administrator"
+  },
+  {
+   "role": "financial fraud examiner",
+   "isco": 2411,
+   "aka": "fraud analyst  ·  fraud examiner  ·  fraud prevention analyst  ·  fraud investigations manager  ·  financial fraud investigator"
+  },
+  {
+   "role": "process officer",
+   "isco": 2421,
+   "aka": "chief process officer  ·  process improvement officer  ·  process management coordinator  ·  business process improvement coordinator  ·  business process advisor"
+  },
+  {
+   "role": "building information modelling consultant",
+   "isco": 2421,
+   "aka": "BIM consultant  ·  building information modelling specialist  ·  BIM specialist"
+  },
+  {
+   "role": "investment analyst",
+   "isco": 2413,
+   "aka": "portfolio analyst  ·  investment accounting analyst  ·  investment banking analyst  ·  investment banking business analyst  ·  investment compliance analyst"
+  },
+  {
+   "role": "lean manager",
+   "isco": 2421,
+   "aka": "lean coach  ·  lean project manager  ·  lean facilitator  ·  lean director  ·  operational excellence manager"
+  },
+  {
+   "role": "accounting analyst",
+   "isco": 2411,
+   "aka": "accounting systems analyst  ·  accounts analyst  ·  accounting specialist  ·  accounting methods analyst"
+  },
+  {
+   "role": "audit supervisor",
+   "isco": 2411,
+   "aka": "audit checker  ·  auditing supervisor  ·  audit leader  ·  audit inspector  ·  audit examiner"
+  },
+  {
+   "role": "pension scheme manager",
+   "isco": 1346,
+   "aka": "pensions manager  ·  pension adviser  ·  pension services manager  ·  pensions adviser  ·  individual pension adviser"
+  },
+  {
+   "role": "brokerage firm director",
+   "isco": 1346,
+   "aka": "brokerage senior manager  ·  brokerage supervisor  ·  brokerage chief executive  ·  brokerage firm supervisor  ·  brokerage managing director"
+  },
+  {
+   "role": "bankruptcy trustee",
+   "isco": 2411,
+   "aka": "insolvency practitioner  ·  insolvency trustee  ·  bankruptcy analyst  ·  trustees in bankruptcy  ·  trustee in bankruptcy"
+  },
+  {
+   "role": "dividend analyst",
+   "isco": 2411,
+   "aka": "dividends clerk  ·  dividend and coupon analyst  ·  dividend calculation clerk  ·  dividends analyst  ·  dividend clerk"
+  },
+  {
+   "role": "accountant",
+   "isco": 2411,
+   "aka": "accounting technician  ·  bookkeeper  ·  accounting supervisor  ·  accounting officer  ·  certified public accountant"
+  },
+  {
+   "role": "Financial Managers",
+   "isco": 1346,
+   "aka": NaN
+  }
+ ]
+}

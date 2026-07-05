@@ -1,0 +1,11 @@
+{
+ "brochure": "education",
+ "txt": "_jamb_txt/education.txt",
+ "missing_programmes": [
+  "Theatre Arts (Education)",
+  "Statistics Education",
+  "Sport Management (Education)",
+  "Social Work and Community Development",
+  "Transport Planning and Management"
+ ]
+}

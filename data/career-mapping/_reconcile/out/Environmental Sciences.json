@@ -1,0 +1,282 @@
+{
+ "reconciled": [
+  {
+   "programme": "Building",
+   "add": [
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "direct", "why": "A Building degree IS construction technology/management — Building Construction & Materials I/II, mechanics, site work; anchor direct was missing."},
+    {"domain_id": "D099", "domain": "Masonry, Bricklaying, Tiling, Plastering & General Building Trades", "match_type": "functional", "why": "Building construction and materials courses cover the core building trades."},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "functional", "why": "Land Surveying I & II are in the syllabus — setting-out/measurement foothold."},
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "functional", "why": "Land-surveying content gives a geospatial/site-mapping foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D113", "why": "Glass/ceramics/building-materials PLANT operations wrongly marked DIRECT — that is factory plant work, not building construction."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis (only 'economics for builders')."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D078", "why": "Behavioural-science research — generic."},
+    {"domain_id": "D016", "why": "Electrical & electronics engineering — no electrical course."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D009", "why": "Data science — intro computing only, no data-science course."},
+    {"domain_id": "D164", "why": "Urban mobility / transport planning — no transport course."},
+    {"domain_id": "D012", "why": "FinTech engineering — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D056", "why": "Blockchain — no basis; spurious."},
+    {"domain_id": "D017", "why": "Mechanical & industrial engineering — 'strength of materials' is structural (civil) content, kept under D018."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D131", "why": "Motorsport engineering — no basis; spurious."},
+    {"domain_id": "D020", "why": "Environmental engineering — no environmental course in this building syllabus."}
+   ]
+  },
+  {
+   "programme": "Clothing and Textile Design",
+   "add": [
+    {"domain_id": "D075", "domain": "Fashion, Textiles & Apparel", "match_type": "direct", "why": "Textile design, fabrics and clothing construction ARE the programme's purpose — upgraded to the DIRECT anchor (was only functional)."}
+   ],
+   "remove": [
+    {"domain_id": "D075", "why": "Removed as functional; re-added as DIRECT."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D072", "why": "Geospatial/GIS — no surveying course."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D021", "why": "Architecture / urban planning — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D041", "why": "Scientific R&D — applied design track, not lab research."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D133", "why": "Luxury aviation/marine/auto interiors — no basis; spurious."},
+    {"domain_id": "D009", "why": "Data science — only 'statistical computing', no data-science destination."},
+    {"domain_id": "D063", "why": "Economics — no economics course in this syllabus."}
+   ]
+  },
+  {
+   "programme": "Environmental Management",
+   "add": [
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Population-and-environmental-change and environmental-protection content link to climate/atmospheric science."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Elements of Environmental Management + environmental protection map to environmental policy/administration."},
+    {"domain_id": "D051", "domain": "Real Estate & Property Management", "match_type": "functional", "why": "Introduction to Valuation gives a land/property-valuation foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D138", "why": "Biomedical engineering — no basis; spurious."},
+    {"domain_id": "D151", "why": "Criminology / criminal justice — no basis; spurious."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D155", "why": "Nanotechnology / materials science — no basis."},
+    {"domain_id": "D132", "why": "Space science / mission systems — no basis; spurious."},
+    {"domain_id": "D143", "why": "Forensic science — no basis; spurious."},
+    {"domain_id": "D142", "why": "Bioinformatics — no basis."},
+    {"domain_id": "D026", "why": "Public health/epidemiology — no basis."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."},
+    {"domain_id": "D018", "why": "Civil & structural engineering — no structural course."},
+    {"domain_id": "D027", "why": "Biomedical/biotech research — no biotech course."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D019", "why": "Renewable energy engineering — no energy course."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."}
+   ]
+  },
+  {
+   "programme": "ENVIRONMENTAL STANDARDS",
+   "add": [
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Global Warming and Climate Change + ecosystems are explicit courses."},
+    {"domain_id": "D121", "domain": "Forestry, Wildlife Management & Pest Control", "match_type": "functional", "why": "Wildlife Conservation and Land Use + Natural Resources Conservation courses."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Environmental standards are set/administered as public environmental policy."},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "'Environmental standards' + environmental ethics map directly to regulatory compliance and governance."}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D006", "why": "IoT / embedded systems — no basis."},
+    {"domain_id": "D012", "why": "FinTech — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D009", "why": "Data science — intro computing only."},
+    {"domain_id": "D021", "why": "Architecture / urban planning — no architecture course."},
+    {"domain_id": "D010", "why": "Business intelligence — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D149", "why": "Diplomacy / international relations — no basis; spurious."}
+   ]
+  },
+  {
+   "programme": "Estate management",
+   "add": [
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "functional", "why": "Building Construction and Materials + development knowledge underpin property development."},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "functional", "why": "Basic Surveying I & II support boundary/land measurement in estate practice."}
+   ],
+   "remove": [
+    {"domain_id": "D149", "why": "Diplomacy / international relations — no basis; spurious."},
+    {"domain_id": "D001", "why": "Software engineering — intro computer only, no software-engineering basis."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — property investment mention only, no finance course; spurious."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D009", "why": "Data science — no basis."},
+    {"domain_id": "D056", "why": "Blockchain — no basis; spurious."},
+    {"domain_id": "D033", "why": "Product management — no basis."},
+    {"domain_id": "D151", "why": "Criminology — no basis; spurious."},
+    {"domain_id": "D008", "why": "Telecommunications engineering — no basis."},
+    {"domain_id": "D002", "why": "Data engineering — no basis."},
+    {"domain_id": "D164", "why": "Urban mobility / transport — no transport course."}
+   ]
+  },
+  {
+   "programme": "Fashion design",
+   "add": [],
+   "remove": [
+    {"domain_id": "D012", "why": "FinTech — no basis."},
+    {"domain_id": "D073", "why": "Library/archive management — no basis."},
+    {"domain_id": "D133", "why": "Luxury aviation/marine interiors — no basis; spurious."},
+    {"domain_id": "D164", "why": "Urban mobility / transport — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D063", "why": "Economics — no economics course (merchandising ≠ economics domain)."},
+    {"domain_id": "D009", "why": "Data science — no basis."},
+    {"domain_id": "D108", "why": "Printing technology — no print course."},
+    {"domain_id": "D166", "why": "Autonomous vehicles — no basis; spurious."},
+    {"domain_id": "D136", "why": "Aeronautical engineering — no basis; spurious."},
+    {"domain_id": "D001", "why": "Software engineering — no basis."},
+    {"domain_id": "D008", "why": "Telecommunications engineering — no basis."}
+   ]
+  },
+  {
+   "programme": "Fine and Applied Arts",
+   "add": [
+    {"domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match_type": "direct", "why": "Fine & Applied Arts (2D/3D, digital art, design fundamentals, draughtsmanship) IS visual art & design — upgraded to DIRECT anchor."},
+    {"domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match_type": "functional", "why": "Art Appreciation + History of Art + African/Contemporary Art give a heritage/curation foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D070", "why": "Performing Arts & Entertainment wrongly marked DIRECT — this is VISUAL/applied art, not performing arts."},
+    {"domain_id": "D063", "why": "Economics — no economics course."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D089", "why": "Funeral/mortuary services — no basis; spurious."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D164", "why": "Urban mobility / transport — no basis."},
+    {"domain_id": "D039", "why": "Higher education / academic research — no basis."},
+    {"domain_id": "D098", "why": "Precision engineering / toolmaking — no basis."},
+    {"domain_id": "D073", "why": "Library/archive — no basis (heritage covered by D152)."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D003", "why": "AI/ML — digital-art course is not machine learning."},
+    {"domain_id": "D029", "why": "Human resources — no basis; spurious."},
+    {"domain_id": "D058", "why": "EdTech — no basis."},
+    {"domain_id": "D043", "why": "Journalism / digital publishing — no basis."}
+   ]
+  },
+  {
+   "programme": "Geography",
+   "add": [
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "direct", "why": "Remote Sensing & GIS, geomorphology, practical/field geography — geospatial science IS the programme's core; upgraded to DIRECT."},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "functional", "why": "Field studies, remote sensing and practical geography give a mapping/geomatics foothold."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Human geography + spatial organisation of society link to planning and spatial policy."}
+   ],
+   "remove": [
+    {"domain_id": "D072", "why": "Removed as functional; re-added as DIRECT."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D155", "why": "Nanotechnology — no basis."},
+    {"domain_id": "D103", "why": "Jewellery making — no basis; spurious."},
+    {"domain_id": "D146", "why": "Building services engineering — no basis."},
+    {"domain_id": "D016", "why": "Electrical engineering — no basis."},
+    {"domain_id": "D021", "why": "Architecture — no architecture course."},
+    {"domain_id": "D136", "why": "Aeronautical engineering — no basis; spurious."},
+    {"domain_id": "D111", "why": "Textile machine operations — no basis; spurious."},
+    {"domain_id": "D164", "why": "Urban mobility / transport — no transport course."}
+   ]
+  },
+  {
+   "programme": "Quantity Surveying",
+   "add": [
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "direct", "why": "Quantity surveying IS construction cost management — measurement of building works, tendering & estimating; anchor direct was missing."},
+    {"domain_id": "D036", "domain": "Procurement & Contract Management", "match_type": "functional", "why": "Tendering & Estimating I/II and contract administration are core QS work."},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "QS delivers cost/programme control on construction projects."},
+    {"domain_id": "D018", "domain": "Civil & Structural Engineering", "match_type": "functional", "why": "Measurement and description of building works requires structural/construction knowledge."}
+   ],
+   "remove": [
+    {"domain_id": "D156", "why": "Land Surveying/geomatics wrongly marked DIRECT — QS measures cost of building works, not land; construction management (D052) is the true anchor."},
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D014", "why": "Actuarial science — no basis."},
+    {"domain_id": "D062", "why": "Trading — no basis."},
+    {"domain_id": "D013", "why": "Investment analysis — no basis."},
+    {"domain_id": "D061", "why": "Insurance — no basis."},
+    {"domain_id": "D158", "why": "Corporate finance / IB — no basis."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D149", "why": "Diplomacy — no basis; spurious."},
+    {"domain_id": "D060", "why": "Banking/credit — no basis."},
+    {"domain_id": "D029", "why": "Human resources — no basis."},
+    {"domain_id": "D159", "why": "Credit analysis — no basis."},
+    {"domain_id": "D157", "why": "Tax advisory — no basis."},
+    {"domain_id": "D130", "why": "Recruitment/staffing — no basis; spurious."},
+    {"domain_id": "D072", "why": "Geospatial/GIS — QS is not a geospatial destination."}
+   ]
+  },
+  {
+   "programme": "Surveying and Geoinformatics",
+   "add": [],
+   "remove": [
+    {"domain_id": "D011", "why": "Quantitative finance — no basis."},
+    {"domain_id": "D063", "why": "Economics — no economics course in this syllabus."},
+    {"domain_id": "D149", "why": "Diplomacy — no basis; spurious."},
+    {"domain_id": "D012", "why": "FinTech — no basis."},
+    {"domain_id": "D078", "why": "Behavioural research — generic."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D164", "why": "Urban mobility / transport — no transport course."},
+    {"domain_id": "D056", "why": "Blockchain — no basis; spurious."},
+    {"domain_id": "D006", "why": "IoT / embedded systems — no basis."},
+    {"domain_id": "D134", "why": "Naval architecture — no basis."},
+    {"domain_id": "D007", "why": "UI/UX product design — no basis."},
+    {"domain_id": "D001", "why": "Software engineering — 'computer applications to surveying' is not software engineering."},
+    {"domain_id": "D030", "why": "Marketing — no basis."},
+    {"domain_id": "D144", "why": "Climate/atmospheric science — geodetic astronomy is positioning, not meteorology."}
+   ]
+  },
+  {
+   "programme": "Urban and Regional Planning",
+   "add": [
+    {"domain_id": "D051", "domain": "Real Estate & Property Management", "match_type": "functional", "why": "Housing Studies + land-use planning give a property/development foothold."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Urbanisation/population studies and participatory planning link to community development."}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D156", "why": "Land surveying/geomatics — only remote sensing (covered by D072), no surveying course."},
+    {"domain_id": "D146", "why": "Building services engineering — no basis."},
+    {"domain_id": "D151", "why": "Criminology — no basis; spurious."},
+    {"domain_id": "D149", "why": "Diplomacy — no basis; spurious."},
+    {"domain_id": "D028", "why": "General management — weak/generic, not a planning destination."},
+    {"domain_id": "D012", "why": "FinTech — no basis."},
+    {"domain_id": "D144", "why": "Climate science — no climate course."},
+    {"domain_id": "D037", "why": "Legal practice — no planning-law course listed."},
+    {"domain_id": "D010", "why": "Business intelligence — no basis."},
+    {"domain_id": "D033", "why": "Product management — no basis."},
+    {"domain_id": "D062", "why": "Trading — no basis."}
+   ]
+  },
+  {
+   "programme": "Industrial Design",
+   "add": [
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "direct", "why": "Industrial design IS product design (CAD, design fundamentals, metal/ceramics/graphics design) — upgraded to DIRECT anchor."},
+    {"domain_id": "D075", "domain": "Fashion, Textiles & Apparel", "match_type": "functional", "why": "Introduction to Textiles and Fashion Design is part of the syllabus."}
+   ],
+   "remove": [
+    {"domain_id": "D007", "why": "Removed as functional; re-added as DIRECT."},
+    {"domain_id": "D012", "why": "FinTech — no basis."},
+    {"domain_id": "D166", "why": "Autonomous vehicles — no basis; spurious."},
+    {"domain_id": "D139", "why": "Game design — no game-development course."},
+    {"domain_id": "D056", "why": "Blockchain — no basis; spurious."},
+    {"domain_id": "D010", "why": "Business intelligence — no basis."},
+    {"domain_id": "D043", "why": "Journalism / publishing — no basis."},
+    {"domain_id": "D160", "why": "Fashion styling / image consulting — replaced by the broader D075 textiles/fashion link."},
+    {"domain_id": "D002", "why": "Data engineering — no basis."},
+    {"domain_id": "D065", "why": "Translation / linguistics — no basis; spurious."},
+    {"domain_id": "D136", "why": "Aeronautical engineering — no basis; spurious."},
+    {"domain_id": "D140", "why": "Robotics engineering — no basis; spurious."},
+    {"domain_id": "D009", "why": "Data science — no basis."},
+    {"domain_id": "D006", "why": "IoT / embedded systems — no basis."},
+    {"domain_id": "D146", "why": "Building services engineering — no basis."},
+    {"domain_id": "D001", "why": "Software engineering — CAD use is not software engineering."}
+   ]
+  }
+ ]
+}

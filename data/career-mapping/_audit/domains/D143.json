@@ -1,0 +1,137 @@
+{
+ "domain_id": "D143",
+ "domain_name": "Forensic Science, Digital Forensics",
+ "role_count": 26,
+ "roles": [
+  {
+   "role": "ICT security administrator",
+   "isco": 2529,
+   "aka": "CISO  ·  IT security administrator  ·  information security administrator  ·  ICT security administrators  ·  network security administrator"
+  },
+  {
+   "role": "digital forensics expert",
+   "isco": 2529,
+   "aka": "computer forensics consultant  ·  computer forensics investigator  ·  computer forensics expert  ·  digital forensics analyst  ·  digital forensics specialist"
+  },
+  {
+   "role": "cyber incident responder",
+   "isco": 2529,
+   "aka": "ICT security consultant  ·  cyber crisis expert  ·  information technology security consultant  ·  security operations center analyst  ·  cyber incident handler"
+  },
+  {
+   "role": "biotechnical technician",
+   "isco": 3141,
+   "aka": "biotechnical laboratory specialist  ·  biotechnical laboratory worker  ·  biotechnical laboratory employee  ·  biotechnological technician  ·  biotechnical laboratory technician"
+  },
+  {
+   "role": "embedded systems security engineer",
+   "isco": 2529,
+   "aka": "cybersecurity engineer  ·  cyber security engineer  ·  IoT security engineer  ·  internet of thing security engineer  ·  embedded systems security expert"
+  },
+  {
+   "role": "chief ICT security officer",
+   "isco": 2529,
+   "aka": "information security manager  ·  CISO  ·  information security administrator  ·  IT security officer  ·  ICT security officer"
+  },
+  {
+   "role": "botanical technician",
+   "isco": 3141,
+   "aka": "horticulturist  ·  forest technician  ·  green house operations supervisor  ·  field botany technician  ·  naturalist"
+  },
+  {
+   "role": "biology technician",
+   "isco": 3141,
+   "aka": "biologist  ·  marine biologist  ·  biology laboratory technician  ·  animal technician  ·  biological technologist"
+  },
+  {
+   "role": "police detective",
+   "isco": 3355,
+   "aka": "chief detective  ·  detective inspector  ·  detective constable  ·  detective superintendent"
+  },
+  {
+   "role": "criminal investigator",
+   "isco": 3355,
+   "aka": "forensic scientist  ·  forensic science officer  ·  scenes of crime officer  ·  fingerprint officer  ·  crime scene investigator"
+  },
+  {
+   "role": "scientific laboratory technician",
+   "isco": 3141,
+   "aka": "laboratory technology specialist  ·  lab assistant  ·  chemistry laboratory assistant  ·  laboratory assistant  ·  laboratory technology expert"
+  },
+  {
+   "role": "astronomer",
+   "isco": 2111,
+   "aka": "astronomers  ·  astronomy research scientist  ·  astronomy science researcher  ·  astronomy researcher  ·  astronomy scholar"
+  },
+  {
+   "role": "ethical hacker",
+   "isco": 2529,
+   "aka": "network security tester  ·  cybersecurity specialist  ·  cybersecurity tester  ·  ICT security tester  ·  system security tester"
+  },
+  {
+   "role": "cybersecurity risk manager",
+   "isco": 2529,
+   "aka": "cybersecurity specialist  ·  cybersecurity risk assurance consultant  ·  information security manager  ·  cyber risk manager  ·  cybersecurity risk assessor"
+  },
+  {
+   "role": "physicist",
+   "isco": 2111,
+   "aka": "physics scholar  ·  forensic physicist  ·  neurologist  ·  physics analyst  ·  physics scientist"
+  },
+  {
+   "role": "knowledge engineer",
+   "isco": 2529,
+   "aka": "linked data engineer  ·  taxonomist  ·  knowledge officer  ·  information engineer  ·  knowledge engineers"
+  },
+  {
+   "role": "biochemistry technician",
+   "isco": 3141,
+   "aka": "biochemistry lab technician  ·  biology technician  ·  biochemistry laboratory technician  ·  biology technologist  ·  chemist"
+  },
+  {
+   "role": "specialised doctor",
+   "isco": 2212,
+   "aka": "specialized medical doctor  ·  specialized doctor  ·  hospital specialized doctor  ·  specialised medical doctor  ·  hospital specialised doctor"
+  },
+  {
+   "role": "ICT resilience manager",
+   "isco": 2529,
+   "aka": "IT resilience manager  ·  manager for vulnerability  ·  manager for IT resilience  ·  vulnerability manager  ·  disaster recovery manager"
+  },
+  {
+   "role": "cosmologist",
+   "isco": 2111,
+   "aka": "evolutionary cosmologist  ·  cosmology scientist  ·  observational cosmologist  ·  theoretical cosmologist  ·  cosmology data scientist"
+  },
+  {
+   "role": "police inspector",
+   "isco": 3355,
+   "aka": "police superintendent  ·  superintendent  ·  chief inspector  ·  inspector of police"
+  },
+  {
+   "role": "bacteriology technician",
+   "isco": 3141,
+   "aka": "biochemistry lab technician  ·  biology technician  ·  biochemistry laboratory technician  ·  biology technologist  ·  chemist"
+  },
+  {
+   "role": "zoology technician",
+   "isco": 3141,
+   "aka": "zookeeper  ·  zoologist  ·  wildlife biologist  ·  wildlife manager  ·  zoology lab technician"
+  },
+  {
+   "role": "Life Scientists, All Other",
+   "isco": 2111,
+   "aka": NaN
+  },
+  {
+   "role": "Life, Physical, and Social Science Technicians, All Other",
+   "isco": 3141,
+   "aka": NaN
+  },
+  {
+   "role": "Physicians, All Other",
+   "isco": 2212,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,197 @@
+{
+ "domain_id": "D121",
+ "domain_name": "Forestry, Wildlife Management",
+ "role_count": 38,
+ "roles": [
+  {
+   "role": "precision device inspector",
+   "isco": 7543,
+   "aka": "precision device quality control supervisor  ·  precision device quality assurance supervisor  ·  precision instrument quality control inspector  ·  precision instrument inspector  ·  precision instrument supervisor"
+  },
+  {
+   "role": "electrical equipment inspector",
+   "isco": 7543,
+   "aka": "electrical equipment tester  ·  electrical appliance inspector  ·  supervisor of electrical equipment  ·  electrical QA inspector  ·  electrical testing and inspection engineer"
+  },
+  {
+   "role": "pest management worker",
+   "isco": 7544,
+   "aka": "worker in pest management activities  ·  exterminator  ·  pest control service technician  ·  fumigator  ·  pest management professional"
+  },
+  {
+   "role": "electronic equipment inspector",
+   "isco": 7543,
+   "aka": "QA inspector for electronic equipment  ·  electronic testing and inspection engineer  ·  inspector of electronic equipment  ·  electronic testing engineer  ·  inspector of electronics"
+  },
+  {
+   "role": "printed circuit board test technician",
+   "isco": 7543,
+   "aka": "PCB test operator  ·  printed circuit board test operator  ·  test technician for printed circuit boards  ·  test technician for PCBs  ·  printed circuit board tester"
+  },
+  {
+   "role": "automotive test driver",
+   "isco": 7543,
+   "aka": "motor vehicle test driver  ·  automobile test technician  ·  test driver  ·  auto test driver  ·  car test and development driver"
+  },
+  {
+   "role": "engineered wood board grader",
+   "isco": 7543,
+   "aka": "board grader  ·  particleboard grader  ·  engineered board grader  ·  engineered wood board tester  ·  engineered wood board qaulity tester"
+  },
+  {
+   "role": "pulp grader",
+   "isco": 7543,
+   "aka": "pulp tester  ·  pulp and paper qaulity tester  ·  pulp quality tester  ·  pulp and paper tester  ·  pulp and paper quality grader"
+  },
+  {
+   "role": "clothing quality inspector",
+   "isco": 7543,
+   "aka": "garment quality controller  ·  garment and textile quality controller  ·  clothing quality control inspector  ·  clothing quality control supervisor"
+  },
+  {
+   "role": "automated optical inspection operator",
+   "isco": 7543,
+   "aka": "automated optical inspection machines operator  ·  AOI operator  ·  PCB inspector  ·  AOI machine operator  ·  PCB assembly inspector"
+  },
+  {
+   "role": "battery test technician",
+   "isco": 7543,
+   "aka": "battery quality technician  ·  battery test engineer  ·  technician in battery inspection  ·  battery tester  ·  battery test laboratory technology specialist"
+  },
+  {
+   "role": "pesticides sprayer",
+   "isco": 7544,
+   "aka": "spray technician  ·  trees sprayer  ·  pesticides applicator  ·  lawn care chemical applicator  ·  sprayer of pesticides"
+  },
+  {
+   "role": "product quality inspector",
+   "isco": 7543,
+   "aka": "product inspector  ·  quality control inspector  ·  quality inspector  ·  product quality monitor  ·  quality assurance inspector"
+  },
+  {
+   "role": "consumer goods inspector",
+   "isco": 7543,
+   "aka": "assembly inspector  ·  consumer goods quality inspector  ·  consumer goods quality control inspector  ·  consumer goods assembly inspector  ·  consumer products assembly line inspector"
+  },
+  {
+   "role": "product assembly inspector",
+   "isco": 7543,
+   "aka": "assembly inspector  ·  consumer goods quality inspector  ·  assembled products quality control inspector  ·  products  ·  consumer goods quality control inspector"
+  },
+  {
+   "role": "forest worker",
+   "isco": 9215,
+   "aka": "woodland assistant  ·  silviculture worker  ·  woodland worker  ·  forestry assistant  ·  forestry worker"
+  },
+  {
+   "role": "non-destructive testing specialist",
+   "isco": 7543,
+   "aka": "non-destructive testing technology expert  ·  non-destructive testing technologist  ·  nondestructive test specialist  ·  nondestructive testing specialist  ·  non-destructive testing technician"
+  },
+  {
+   "role": "motor vehicle assembly inspector",
+   "isco": 7543,
+   "aka": "assembly inspector  ·  motor vehicle quality control inspector  ·  motor vehicle quality compliance inspector  ·  motor vehicle assembly line inspector  ·  motor vehicle quality inspector"
+  },
+  {
+   "role": "vessel assembly inspector",
+   "isco": 7543,
+   "aka": "boat assembly quality inspector  ·  boat assembly safety inspector  ·  ship quality compliance inspector  ·  ship engineering compliance inspector  ·  boat assembly inspector"
+  },
+  {
+   "role": "lumber grader",
+   "isco": 7543,
+   "aka": "head lumber tester  ·  lumber tester  ·  head lumber proofer  ·  head lumber quality tester  ·  lumber quality tester"
+  },
+  {
+   "role": "product quality controller",
+   "isco": 7543,
+   "aka": "production inspector  ·  assembly inspector  ·  product compliance inspector  ·  manufacturing product quality controller  ·  product inspector"
+  },
+  {
+   "role": "aircraft assembly inspector",
+   "isco": 7543,
+   "aka": "aircraft assembly maintenance inspector  ·  aircraft assembly repair inspector  ·  aircraft assembly test inspector  ·  aviation assembly repair inspector  ·  aircraft assembly safety inspector"
+  },
+  {
+   "role": "control panel tester",
+   "isco": 7543,
+   "aka": "electric control panel inspector and tester  ·  panels tester  ·  control panel inspector  ·  electro-mechanical test technician  ·  panel wireman"
+  },
+  {
+   "role": "veneer grader",
+   "isco": 7543,
+   "aka": "plywood tester  ·  plywood grader  ·  veneer quailty grader  ·  veneer rater  ·  veneer tester"
+  },
+  {
+   "role": "metal product quality control inspector",
+   "isco": 7543,
+   "aka": "mechanical supervisor  ·  metal quality superintendent  ·  metal production manager  ·  metal fabricating supervisor  ·  melter supervisor"
+  },
+  {
+   "role": "rolling stock assembly inspector",
+   "isco": 7543,
+   "aka": "locomotive quality compliance supervisor  ·  locomotive assembly quality inspector  ·  rail vehicle assembly quality inspector  ·  rolling stock quality compliance inspector  ·  traction quality compliance supervisor"
+  },
+  {
+   "role": "product grader",
+   "isco": 7543,
+   "aka": "grader  ·  product inspector  ·  product quality inspector  ·  quality inspector  ·  product quality monitor"
+  },
+  {
+   "role": "cigar inspector",
+   "isco": 7543,
+   "aka": "cigar checker  ·  cigar examiner  ·  tobacco products inspector  ·  cigar quality checker  ·  cigar product tester"
+  },
+  {
+   "role": "forest ranger",
+   "isco": 6210,
+   "aka": "woodland officer  ·  woodland ranger  ·  forestry officer"
+  },
+  {
+   "role": "Foresters",
+   "isco": 6210,
+   "aka": NaN
+  },
+  {
+   "role": "Pest Control Workers",
+   "isco": 7544,
+   "aka": NaN
+  },
+  {
+   "role": "Fallers",
+   "isco": 6210,
+   "aka": NaN
+  },
+  {
+   "role": "Logging Equipment Operators",
+   "isco": 6210,
+   "aka": NaN
+  },
+  {
+   "role": "Log Graders and Scalers",
+   "isco": 6210,
+   "aka": NaN
+  },
+  {
+   "role": "Logging Workers, All Other",
+   "isco": 6210,
+   "aka": NaN
+  },
+  {
+   "role": "Coin, Vending, and Amusement Machine Servicers and Repairers",
+   "isco": 7544,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "Pesticide Handlers, Sprayers, and Applicators, Vegetation",
+   "isco": 7544,
+   "aka": NaN
+  }
+ ]
+}

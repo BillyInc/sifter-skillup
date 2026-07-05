@@ -1,0 +1,177 @@
+{
+ "domain_id": "D082",
+ "domain_name": "Customer Service, Contact Centre",
+ "role_count": 34,
+ "roles": [
+  {
+   "role": "medical administrative assistant",
+   "isco": 3344,
+   "aka": "medical receptionist  ·  healthcare assistant  ·  medical assistant  ·  personal assistant  ·  administrative assistant in medical institution"
+  },
+  {
+   "role": "telephone switchboard operator",
+   "isco": 4223,
+   "aka": "receptionist  ·  telephone operator  ·  switchboard operator  ·  telephone answering service operator  ·  switchboard receptionist"
+  },
+  {
+   "role": "customer service representative",
+   "isco": 4225,
+   "aka": "customer experience manager  ·  customer relations officer  ·  information office worker  ·  customer service officer  ·  customer service person"
+  },
+  {
+   "role": "hotel concierge",
+   "isco": 4229,
+   "aka": "guest services manager  ·  guest concierge  ·  guest assistance manager  ·  concierge"
+  },
+  {
+   "role": "front line medical receptionist",
+   "isco": 4226,
+   "aka": "medical care front line receptionist  ·  front desk receptionist  ·  front desk assistant  ·  medical institution front line receptionist  ·  medical receptionist"
+  },
+  {
+   "role": "medical transcriptionist",
+   "isco": 3344,
+   "aka": "medical transcriber  ·  clinical transcriber  ·  clinical transcriptionist  ·  medical transcription suite typist  ·  medical secretary-audio typist"
+  },
+  {
+   "role": "emergency medical dispatcher",
+   "isco": 4223,
+   "aka": "medical dispatcher  ·  emergency call operator  ·  dispatcher of emergency medical vehicles  ·  emergency medical services dispatcher  ·  dispatch employee"
+  },
+  {
+   "role": "night auditor",
+   "isco": 4224,
+   "aka": "overnight customer care manager  ·  night time customer auditor  ·  night customer care manager  ·  overnight auditor"
+  },
+  {
+   "role": "market research interviewer",
+   "isco": 4227,
+   "aka": "marketing recruiter  ·  market research analyst  ·  market research representative  ·  phone interviewer  ·  mystery shopper"
+  },
+  {
+   "role": "hospitality establishment receptionist",
+   "isco": 4224,
+   "aka": "reception worker  ·  reservations clerk  ·  hotel receptionist  ·  reception assistant  ·  reception area clerk"
+  },
+  {
+   "role": "medical practice manager",
+   "isco": 3344,
+   "aka": "medical practice director of operations  ·  general practice manager  ·  health centre administrator  ·  medical practice administrator  ·  medical practice supervisor"
+  },
+  {
+   "role": "camping ground operative",
+   "isco": 4224,
+   "aka": "camping facility worker  ·  camp-site operator  ·  camp-site worker  ·  camp-site operative  ·  campgrounds operative"
+  },
+  {
+   "role": "survey enumerator",
+   "isco": 4227,
+   "aka": "census worker  ·  census taker  ·  commercial census taker  ·  street surveyor  ·  census interviewer"
+  },
+  {
+   "role": "customer contact centre information clerk",
+   "isco": 4222,
+   "aka": "customer information center assistant  ·  client services clerk  ·  customer helpdesk clerk  ·  customer contact center information clerk  ·  customer representative"
+  },
+  {
+   "role": "veterinary receptionist",
+   "isco": 4226,
+   "aka": "vet secretary  ·  veterinary receptionists  ·  veterinary practice administration officer  ·  veterinary practice secretary  ·  animal care receptionist"
+  },
+  {
+   "role": "receptionist",
+   "isco": 4226,
+   "aka": "front desk receptionist  ·  medical receptionist  ·  corporate receptionist  ·  office receptionist  ·  receiving clerk"
+  },
+  {
+   "role": "live chat operator",
+   "isco": 4222,
+   "aka": "virtual chat operator  ·  virtual chat agent  ·  online chat agent  ·  live chat agent  ·  real time chat operator"
+  },
+  {
+   "role": "Client Information and Customer Service Workers",
+   "isco": 4222,
+   "aka": NaN
+  },
+  {
+   "role": "Social Science Research Assistants",
+   "isco": 4227,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Records Specialists",
+   "isco": 3252,
+   "aka": NaN
+  },
+  {
+   "role": "Switchboard Operators, Including Answering Service",
+   "isco": 4223,
+   "aka": NaN
+  },
+  {
+   "role": "Customer Service Representatives",
+   "isco": 4222,
+   "aka": NaN
+  },
+  {
+   "role": "Hotel, Motel, and Resort Desk Clerks",
+   "isco": 4224,
+   "aka": NaN
+  },
+  {
+   "role": "Telephone Operators",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Correspondence Clerks",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Credit Authorizers, Checkers, and Clerks",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Interviewers, Except Eligibility and Loan",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Library Assistants, Clerical",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Loan Interviewers and Clerks",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "New Accounts Clerks",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Order Clerks",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Reservation and Transportation Ticket Agents and Travel Clerks",
+   "isco": 4226,
+   "aka": NaN
+  },
+  {
+   "role": "Information and Record Clerks, All Other",
+   "isco": 4229,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Secretaries and Administrative Assistants",
+   "isco": 3344,
+   "aka": NaN
+  }
+ ]
+}

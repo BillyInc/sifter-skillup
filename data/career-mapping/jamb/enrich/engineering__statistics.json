@@ -1,0 +1,10 @@
+{
+  "jamb_name": "Statistics",
+  "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Physics and Chemistry",
+  "direct_entry": "Two (2) 'A' level passes in Mathematics, Physics or Chemistry",
+  "institution_waivers": [
+    {"institution": "FUTO", "note": "Direct Entry: a) at least two (2) 'A' level passes not below Grade C in Mathematics and Physics; b) ND/HND at Upper Credit level in Physics, Mathematics, Statistics, Chemistry, Geology, Computer Science or Engineering; c) First Degree in Physics, Mathematics, Statistics, Chemistry, Geology, Computer Science or Engineering; d) very good passes in three JUPEB subjects namely Chemistry, Physics and Mathematics. Does not accept NCE; candidates must also meet 'O' Level requirements."},
+    {"institution": "FUTO", "note": "UTME: requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and any other science subject in not more than two sittings; at least a Pass required in Biology. UTME SUBJECTS: Mathematics, Chemistry and Physics."}
+  ]
+}

@@ -1,0 +1,72 @@
+{
+ "domain_id": "D095",
+ "domain_name": "Motor Vehicle Mechanics, Repairs",
+ "role_count": 13,
+ "roles": [
+  {
+   "role": "refurbishing technician",
+   "isco": 7231,
+   "aka": "gas engine refurbishing technician  ·  diesel engine refurbishing technician  ·  car engine refurbishing technician  ·  petrol engine technician  ·  mechanical refurbishing inspector"
+  },
+  {
+   "role": "vehicle restoration technician",
+   "isco": 7231,
+   "aka": "car restoration technician  ·  restoration technician  ·  old vehicle restorer  ·  car interior restorer  ·  old car restorer"
+  },
+  {
+   "role": "diesel engine mechanic",
+   "isco": 7231,
+   "aka": "mechanical body fitter  ·  diesel mechanic  ·  mechanical bogie fitter  ·  railway diesel mechanic  ·  mechanic diesel engine"
+  },
+  {
+   "role": "vehicle maintenance supervisor",
+   "isco": 7231,
+   "aka": "service station manager  ·  bus and coach maintenance supervisor  ·  heavy vehicle maintenance supervisor  ·  bus maintenance supervisor  ·  bus maintenance manager"
+  },
+  {
+   "role": "bicycle mechanic",
+   "isco": 7234,
+   "aka": "cycle mechanic  ·  bike shop attendant  ·  bicycle shop attendant  ·  bike mechanic  ·  bicycle maintenance technician"
+  },
+  {
+   "role": "vehicle maintenance attendant",
+   "isco": 7231,
+   "aka": "fast-fit service technician  ·  bus maintenance attendant  ·  PCV maintenance attendant  ·  fast-fit maintenance attendant  ·  heavy vehicle maintenance attendant"
+  },
+  {
+   "role": "vehicle technician",
+   "isco": 7231,
+   "aka": "car mechanic  ·  automotive technician  ·  LGV technician  ·  truck mechanic  ·  heavy vehicle technician"
+  },
+  {
+   "role": "coachbuilder",
+   "isco": 7231,
+   "aka": "caravan-body coachbuilder  ·  coach-body builder  ·  automobile panel beater  ·  coach builder  ·  vintage vehicle coachbuilder"
+  },
+  {
+   "role": "tyre fitter",
+   "isco": 7231,
+   "aka": "machinist  ·  fitter and turner  ·  tire fitter  ·  tyre inspector  ·  garage assistant"
+  },
+  {
+   "role": "automotive brake technician",
+   "isco": 7231,
+   "aka": "automotive braking systems technician  ·  truck brake technician  ·  lorry brake technician  ·  brake technician  ·  car brake technician"
+  },
+  {
+   "role": "roadside vehicle technician",
+   "isco": 7231,
+   "aka": "PCV roadside technician  ·  bus roadside technician  ·  bus and coach roadside technician  ·  mobile vehicle mechanic  ·  truck recovery technician"
+  },
+  {
+   "role": "Bicycle Repairers",
+   "isco": 7234,
+   "aka": NaN
+  },
+  {
+   "role": "Tire Repairers and Changers",
+   "isco": 7234,
+   "aka": NaN
+  }
+ ]
+}

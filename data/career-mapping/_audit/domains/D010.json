@@ -1,0 +1,267 @@
+{
+ "domain_id": "D010",
+ "domain_name": "Business Intelligence",
+ "role_count": 52,
+ "roles": [
+  {
+   "role": "integration engineer",
+   "isco": 2511,
+   "aka": "IT integration engineer  ·  ICT integration engineers  ·  system integration engineer  ·  software integration engineer"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "embedded system designer",
+   "isco": 2511,
+   "aka": "embedded system programmer  ·  embedded systems designers  ·  embedded software developer  ·  embedded system developer  ·  embedded systems programmer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "computer vision engineer",
+   "isco": 2511,
+   "aka": "computer vision applied scientist  ·  computer vision expert  ·  computer vision specialist  ·  computer vision project engineer  ·  smart technics computer vision engineer"
+  },
+  {
+   "role": "data engineer",
+   "isco": 2511,
+   "aka": "data engineer expert  ·  research data engineer"
+  },
+  {
+   "role": "business intelligence manager",
+   "isco": 2421,
+   "aka": "market intelligence manager  ·  business research analyst  ·  business intelligence specialist  ·  business research consultant  ·  business intelligence analyst"
+  },
+  {
+   "role": "manufacturing cost estimator",
+   "isco": 2421,
+   "aka": "manufacturing cost analyst  ·  manufacturing estimate clerk  ·  production cost estimator  ·  estimator  ·  manufacturing cost recovery technician"
+  },
+  {
+   "role": "green ICT consultant",
+   "isco": 2511,
+   "aka": "IT environmental consultant  ·  green IT consultant  ·  green ICT consultants  ·  ICT environmental consultant  ·  ICT sustainability systems consultant"
+  },
+  {
+   "role": "data scientist",
+   "isco": 2511,
+   "aka": "data expert  ·  research data scientist  ·  data research scientist  ·  electromobility data scientist"
+  },
+  {
+   "role": "enterprise architect",
+   "isco": 2511,
+   "aka": "enterprise architects  ·  enterprise developer  ·  enterprise architecture manager  ·  enterprise designer"
+  },
+  {
+   "role": "artificial intelligence engineer",
+   "isco": 2511,
+   "aka": "intelligent systems designers  ·  artificial intelligence designer  ·  ICT intelligent systems designer  ·  AI system designer  ·  semantic technologies engineer"
+  },
+  {
+   "role": "ICT business analysis manager",
+   "isco": 2511,
+   "aka": "IT business analysis manager  ·  IT commercial analysis manager  ·  IT business analysis director  ·  ICT business analysis managers  ·  lead IT business analyst"
+  },
+  {
+   "role": "logistics analyst",
+   "isco": 2421,
+   "aka": "supply chain analyst  ·  distribution and logistics consultant  ·  logistics consultant  ·  logistics and distribution analyst  ·  logistics and supply chain analyst"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "business analyst",
+   "isco": 2421,
+   "aka": "management consultant  ·  standardisation manager  ·  business strategy analyst  ·  organisational developer  ·  standardisation expert"
+  },
+  {
+   "role": "business consultant",
+   "isco": 2421,
+   "aka": "business process consultant"
+  },
+  {
+   "role": "ICT research consultant",
+   "isco": 2511,
+   "aka": "IT research consultant  ·  ICT research advisor  ·  IT research specialist  ·  ICT research consultants  ·  IT research advisor"
+  },
+  {
+   "role": "data quality specialist",
+   "isco": 2519,
+   "aka": "data integrity officer  ·  data integrity specialist  ·  data quality officer  ·  data quality expert  ·  data quality specialists"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "blockchain architect",
+   "isco": 2511,
+   "aka": "decentralized ledger technology specialist  ·  DLT specialist  ·  blockchain technology specialist  ·  DLT architect"
+  },
+  {
+   "role": "process officer",
+   "isco": 2421,
+   "aka": "chief process officer  ·  process improvement officer  ·  process management coordinator  ·  business process improvement coordinator  ·  business process advisor"
+  },
+  {
+   "role": "building information modelling consultant",
+   "isco": 2421,
+   "aka": "BIM consultant  ·  building information modelling specialist  ·  BIM specialist"
+  },
+  {
+   "role": "ICT system analyst",
+   "isco": 2511,
+   "aka": "ICT system analysts  ·  ICT systems analysts  ·  ICT systems analyst  ·  system analyst  ·  IT system analyst"
+  },
+  {
+   "role": "ICT system developer",
+   "isco": 2511,
+   "aka": "systems programmer  ·  ICT system developers  ·  systems developer  ·  IT system developer  ·  chief ICT system developer"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "ICT consultant",
+   "isco": 2511,
+   "aka": "ICT ERP consultant  ·  ICT advisor  ·  IT advisor  ·  IT consultant  ·  IT compliance consultant"
+  },
+  {
+   "role": "ICT system integration consultant",
+   "isco": 2511,
+   "aka": "network integration consultant  ·  system integration consultants  ·  systems integration consultant  ·  application integration consultant  ·  systems integration consultants"
+  },
+  {
+   "role": "lean manager",
+   "isco": 2421,
+   "aka": "lean coach  ·  lean project manager  ·  lean facilitator  ·  lean director  ·  operational excellence manager"
+  },
+  {
+   "role": "IT auditor",
+   "isco": 2511,
+   "aka": "ICT auditor  ·  information technology auditor  ·  IT Quality Appraiser"
+  },
+  {
+   "role": "statistical assistant",
+   "isco": 3314,
+   "aka": "administrative assistant  ·  IT expert  ·  statistician  ·  computer expert  ·  statistician's assistant"
+  },
+  {
+   "role": "data analyst",
+   "isco": 2511,
+   "aka": "battery data analyst  ·  mine electrification data analyst  ·  data warehouse analyst  ·  data warehousing analyst  ·  battery materials data analyst"
+  },
+  {
+   "role": "ICT system architect",
+   "isco": 2511,
+   "aka": "systems architect  ·  IT systems architect  ·  information systems architect  ·  ICT system architects  ·  solution architect"
+  },
+  {
+   "role": "computer scientist",
+   "isco": 2511,
+   "aka": "IT researcher  ·  IT scientist  ·  ICT science researcher  ·  ICT researcher  ·  IT research scientist"
+  },
+  {
+   "role": "user experience analyst",
+   "isco": 2511,
+   "aka": "user experience officer  ·  usability analyst  ·  user experience analysts"
+  },
+  {
+   "role": "ICT business analyst",
+   "isco": 2511,
+   "aka": "requirement engineer  ·  business process specialist  ·  IT business analyst  ·  ICT business analysts"
+  },
+  {
+   "role": "Business Intelligence Analysts",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Cost Estimators",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Logisticians",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Logistics Engineers",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Project Management Specialists",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Business Operations Specialists, All Other",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Business Continuity Planners",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Sustainability Specialists",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Online Merchants",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Security Management Specialists",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Appraisers of Personal and Business Property",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Credit Counselors",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Financial Specialists, All Other",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Financial Quantitative Analysts",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Fraud Examiners, Investigators and Analysts",
+   "isco": 2421,
+   "aka": NaN
+  }
+ ]
+}

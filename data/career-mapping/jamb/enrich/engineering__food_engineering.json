@@ -1,0 +1,10 @@
+{
+  "jamb_name": "Food Engineering",
+  "utme_subjects": ["Chemistry", "Mathematics", "Physics"],
+  "olevel_requirement": "Five (5) SSC credit passes to include Mathematics, English Language, Physics, Chemistry and Biology.",
+  "direct_entry": "(i) 'A' Level passes in Mathematics and Physics or Chemistry. (ii) ND upper credit/HND lower credit in relevant programmes.",
+  "institution_waivers": [
+    {"institution": "ILORIN", "note": "Direct Entry: apart from relevant programmes and 'O' Level requirements: a) first degree in Physical Sciences at Second Class lower level may be admitted into 200 Level. b) HND upper credit or distinction in relevant Engineering programmes or College of Technology after NYSC may be admitted to 300 level. c) first degree in Engineering programmes may be admitted into 300 level of any other Engineering programme."},
+    {"institution": "ILORIN", "note": "UTME: requires 'O' Level credit pass in Biology as the fifth subject. A candidate with 'O' Level credit passes in Further Mathematics and Technical Drawing has added advantage."}
+  ]
+}

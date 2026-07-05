@@ -1,0 +1,14 @@
+{
+  "jamb_name": "Human Nutrition and Dietetics",
+  "utme_subjects": ["Chemistry", "Biology", "Physics"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+  "direct_entry": "Two (2) 'A' Level passes in Chemistry, Biology and Physics plus the UTME requirement.",
+  "institution_waivers": [
+    {"institution": "ABUAD", "note": "DIRECT ENTRY: requires three (3) 'A' Level passes in Chemistry, Physics and Biology."},
+    {"institution": "BOWEN", "note": "DIRECT ENTRY: requires at least two (2) 'A' Level passes to include Chemistry and any of Biology, Botany, Zoology, Agricultural Science, Physics or Geography."},
+    {"institution": "IBADAN", "note": "DIRECT ENTRY: preference will be given to the Professional Certificates of a) Nigeria Registered Nurse or equivalent b) Own Certificate of Food Science and Applied Nutrition c) ND in Agriculture; d) Public Health Inspectorate Certificate."},
+    {"institution": "BOWEN", "note": "UTME: requires five (5) 'O' level credit passes in English Language, Physics, Chemistry, Mathematics, Biology/Agricultural Science, Geography/Economics."},
+    {"institution": "IBADAN", "note": "UTME: same as in Medicine and Surgery."},
+    {"institution": "IBADAN", "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."}
+  ]
+}

@@ -1,0 +1,212 @@
+{
+ "domain_id": "D029",
+ "domain_name": "Human Resources",
+ "role_count": 41,
+ "roles": [
+  {
+   "role": "administrative assistant",
+   "isco": 3343,
+   "aka": "executive administrative assistant  ·  general office clerk  ·  administrative office worker  ·  office clerk  ·  clerical assistant"
+  },
+  {
+   "role": "recruitment consultant",
+   "isco": 2423,
+   "aka": "job placement officer  ·  temporary labour officer  ·  employment agent  ·  employee recruiter  ·  job placement consultant"
+  },
+  {
+   "role": "corporate trainer",
+   "isco": 2424,
+   "aka": "corporate education professional  ·  professional development coach  ·  trainer of corporate employees  ·  corporate professional trainer  ·  workplace training specialist"
+  },
+  {
+   "role": "field survey manager",
+   "isco": 3341,
+   "aka": "field survey supervisor  ·  manager of field survey  ·  survey field manager  ·  field survey operational manager  ·  field survey coodinator"
+  },
+  {
+   "role": "fundraising assistant",
+   "isco": 3343,
+   "aka": "philanthropy assistant  ·  fundraising secretary  ·  fundraising administrative assistant  ·  fundraising officer  ·  fundraising clerk"
+  },
+  {
+   "role": "compensation analyst",
+   "isco": 2423,
+   "aka": "compensation advisor  ·  incentive compensation analyst  ·  compensation coordinator  ·  compensation manager  ·  benefits and compensation analyst"
+  },
+  {
+   "role": "labour relations officer",
+   "isco": 2423,
+   "aka": "industrial liaison officer  ·  industrial relations officer  ·  union representative  ·  labour policy officer"
+  },
+  {
+   "role": "executive assistant",
+   "isco": 3343,
+   "aka": "executive administrative assistant  ·  assistant manager  ·  personal assistant  ·  executive secretary  ·  foreign language correspondent executive assistant"
+  },
+  {
+   "role": "call centre analyst",
+   "isco": 3341,
+   "aka": "CRM data analyst  ·  call centre reporting analyst  ·  marketing data analyst  ·  call center agent  ·  trainee data analyst"
+  },
+  {
+   "role": "volunteer manager",
+   "isco": 1212,
+   "aka": "volunteering development manager  ·  volunteer program coordinator  ·  volunteer program manager  ·  volunteer engagement coordinator  ·  community engagement coordinator"
+  },
+  {
+   "role": "scopist",
+   "isco": 3343,
+   "aka": "freelance scopist"
+  },
+  {
+   "role": "education administrator",
+   "isco": 3343,
+   "aka": "school secretary  ·  school administrator  ·  specialist education administrator  ·  specialist administrator in education  ·  college administrator"
+  },
+  {
+   "role": "call centre quality auditor",
+   "isco": 3341,
+   "aka": "contact centre quality auditor  ·  call centre quality analyst  ·  call centre quality assurance auditor  ·  call centre quality controller  ·  call center quality auditor"
+  },
+  {
+   "role": "project support officer",
+   "isco": 3343,
+   "aka": "real estate PMO  ·  project management support officer  ·  PMO  ·  project management officer  ·  real estate project support officer"
+  },
+  {
+   "role": "career guidance advisor",
+   "isco": 2423,
+   "aka": "career coach  ·  career guidance education advisor  ·  counsellor in career guidance  ·  career guidance counsellor  ·  mentor for prior learning"
+  },
+  {
+   "role": "call centre supervisor",
+   "isco": 3341,
+   "aka": "telemarketing manager  ·  customer service supervisor  ·  outbound call center supervisor  ·  customer contact centre supervisor  ·  outbound call centre supervisor"
+  },
+  {
+   "role": "occupational analyst",
+   "isco": 2423,
+   "aka": "organizational structure analyst  ·  corporate business consultant  ·  corporate business analyst  ·  job analyst"
+  },
+  {
+   "role": "office manager",
+   "isco": 3341,
+   "aka": "office coordinator  ·  administrative services manager  ·  office supervisor  ·  administrative manager  ·  administrative supervisor"
+  },
+  {
+   "role": "management assistant",
+   "isco": 3343,
+   "aka": "office administrator  ·  assistant manager  ·  project assistant  ·  management aide  ·  office assistant"
+  },
+  {
+   "role": "equality and inclusion manager",
+   "isco": 1212,
+   "aka": "access and equality manager  ·  equity and inclusion specialist  ·  equity and diversity manager  ·  manager equality and inclusion  ·  equality & inclusion worker"
+  },
+  {
+   "role": "employee volunteering programme coordinator",
+   "isco": 1212,
+   "aka": "coordinator for corporate volunteering programmes  ·  coordinator for employee volunteering programmes  ·  corporate volunteering coordinator  ·  corporate volunteering manager  ·  corporate volunteering programme coordinator"
+  },
+  {
+   "role": "contact centre supervisor",
+   "isco": 3341,
+   "aka": "customer service supervisor  ·  contact center employees supervisor  ·  contact center supervisor  ·  contact centre employees supervisor  ·  customer service employees supervisor"
+  },
+  {
+   "role": "corporate training manager",
+   "isco": 1212,
+   "aka": "training development director  ·  training manager  ·  training and development coordinator  ·  education and training manager  ·  training coordinator"
+  },
+  {
+   "role": "talent acquisition manager",
+   "isco": 1212,
+   "aka": "talent acquisition specialist  ·  talent acquisition partner  ·  talent acquisition recruiter"
+  },
+  {
+   "role": "court reporter",
+   "isco": 3343,
+   "aka": "shorthand reporter  ·  court stenographer  ·  law reporter  ·  deposition reporter  ·  court recorder"
+  },
+  {
+   "role": "data entry supervisor",
+   "isco": 3341,
+   "aka": "data processing supervisor  ·  data records supervisor  ·  data entry clerks supervisor  ·  data processing coordinator  ·  data control clerk supervisor"
+  },
+  {
+   "role": "editorial assistant",
+   "isco": 3343,
+   "aka": "travel and property editorial assistant  ·  editorial production assistant  ·  digital editorial assistant  ·  magazine editorial assistant  ·  children's editorial assistant"
+  },
+  {
+   "role": "supply chain assistant",
+   "isco": 3343,
+   "aka": "global supply chain assistant  ·  supply chain supervisor  ·  supply chain logistics assistant  ·  production assistant  ·  supply chain officer"
+  },
+  {
+   "role": "procurement support officer",
+   "isco": 3343,
+   "aka": "officer for procurement documentation  ·  procurement clerk  ·  procurement assistant  ·  procurement documentation officer  ·  junior buyer"
+  },
+  {
+   "role": "human resources officer",
+   "isco": 2423,
+   "aka": "HR director  ·  personnel rep  ·  human resources director  ·  HR officer  ·  lifelong learning coach"
+  },
+  {
+   "role": "human resources assistant",
+   "isco": 4416,
+   "aka": "human resources executive assistant  ·  human resources associate  ·  human resources administrative assistant  ·  human resources secretary"
+  },
+  {
+   "role": "business coach",
+   "isco": 2424,
+   "aka": "professional development coach  ·  corporate coach  ·  leadership coach  ·  business development coach  ·  personal development coach"
+  },
+  {
+   "role": "employment and vocational integration consultant",
+   "isco": 2423,
+   "aka": "job placement consultant  ·  corporate coach  ·  business coach  ·  career coach  ·  outplacement expert"
+  },
+  {
+   "role": "human resources manager",
+   "isco": 1212,
+   "aka": "human resources director  ·  personnel manager  ·  personnel director  ·  relocation manager  ·  human resources specialist"
+  },
+  {
+   "role": "international student exchange coordinator",
+   "isco": 3343,
+   "aka": "student exchange officer  ·  coordinator of international student exchange  ·  student exchange director  ·  international exchange officer  ·  international exchange director"
+  },
+  {
+   "role": "Organisational Development Specialists",
+   "isco": 2423,
+   "aka": NaN
+  },
+  {
+   "role": "Training and Development Specialists",
+   "isco": 2424,
+   "aka": NaN
+  },
+  {
+   "role": "Human Resources Specialists",
+   "isco": 2423,
+   "aka": NaN
+  },
+  {
+   "role": "Executive Secretaries and Executive Administrative Assistants",
+   "isco": 3343,
+   "aka": NaN
+  },
+  {
+   "role": "Labor Relations Specialists",
+   "isco": 2424,
+   "aka": NaN
+  },
+  {
+   "role": "Fundraisers",
+   "isco": 2424,
+   "aka": NaN
+  }
+ ]
+}

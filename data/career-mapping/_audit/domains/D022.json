@@ -1,0 +1,327 @@
+{
+ "domain_id": "D022",
+ "domain_name": "Mining",
+ "role_count": 64,
+ "roles": [
+  {
+   "role": "quarry engineer",
+   "isco": 2146,
+   "aka": "quarry manager  ·  mine planning engineer  ·  drilling and blasting engineer  ·  mine engineer  ·  drilling & blasting engineer"
+  },
+  {
+   "role": "oil and gas production manager",
+   "isco": 1322,
+   "aka": "oil production project manager  ·  gas production scheduler  ·  gas operations manager  ·  gas field production manager  ·  gas production manager"
+  },
+  {
+   "role": "metallurgical technician",
+   "isco": 3117,
+   "aka": "metallurgist  ·  mining technician  ·  minerals technician  ·  metallurgy test technician  ·  metallurgical research technician"
+  },
+  {
+   "role": "mine manager",
+   "isco": 1322,
+   "aka": "mine supervisor  ·  quarry manager  ·  facility manager  ·  mine engineer  ·  mining engineer"
+  },
+  {
+   "role": "mine geologist",
+   "isco": 2114,
+   "aka": "geologist  ·  geological engineer  ·  geophysicist  ·  mineralogist  ·  exploration geologist"
+  },
+  {
+   "role": "chemical metallurgist",
+   "isco": 2146,
+   "aka": "extraction metallurgist  ·  chemical metallurgy expert  ·  chemical metallurgy consultant  ·  chemical metallurgy adviser  ·  chemical metallurgy research analyst"
+  },
+  {
+   "role": "pipeline pump operator",
+   "isco": 8113,
+   "aka": "pipeline goods transfer operator  ·  oil transfer operator  ·  pump tender  ·  pipe tender  ·  pipeline tender"
+  },
+  {
+   "role": "driller",
+   "isco": 8111,
+   "aka": "earth driller  ·  assistant driller  ·  drillers assistant"
+  },
+  {
+   "role": "drilling engineer",
+   "isco": 2146,
+   "aka": "oil rig driller  ·  rig driller  ·  earth driller  ·  gas rig driller  ·  mineral driller"
+  },
+  {
+   "role": "explosives engineer",
+   "isco": 2146,
+   "aka": "blasting engineer  ·  munitions engineer  ·  ordnance engineer"
+  },
+  {
+   "role": "derrickhand",
+   "isco": 8113,
+   "aka": "derrick operator  ·  member of the drilling crew  ·  derrickwoman  ·  derrickman"
+  },
+  {
+   "role": "underground heavy equipment operator",
+   "isco": 8111,
+   "aka": "underground miner (heavy equipment)  ·  miners  ·  coalface miner  ·  mine machine operator  ·  underground miner equipment operator"
+  },
+  {
+   "role": "dewatering technician",
+   "isco": 8111,
+   "aka": "filter operator  ·  site services technician  ·  surface dewaterer  ·  filter operators  ·  dewatering equipment operator"
+  },
+  {
+   "role": "well-digger",
+   "isco": 8113,
+   "aka": "geotechnical driller  ·  water borehole digger  ·  water well-digger  ·  drillers offsider  ·  water well driller"
+  },
+  {
+   "role": "liquid fuel engineer",
+   "isco": 2146,
+   "aka": "gas liquids engineer  ·  chemical engineer  ·  fuel chemist  ·  biofuel specialist  ·  fuel system engineer"
+  },
+  {
+   "role": "surface miner",
+   "isco": 8111,
+   "aka": "mine operative  ·  surface mining operative  ·  quarry stationary plant operative  ·  collier"
+  },
+  {
+   "role": "oceanographer",
+   "isco": 2114,
+   "aka": "marine geologist  ·  marine physicist  ·  oceanography scientist  ·  oceanography science researcher  ·  oceanographers"
+  },
+  {
+   "role": "underground miner",
+   "isco": 8111,
+   "aka": "collier  ·  coal hewer  ·  underground mine operative  ·  coal excavator  ·  underground mining operative"
+  },
+  {
+   "role": "process metallurgist",
+   "isco": 2146,
+   "aka": "process metallurgy science researcher  ·  process metallurgy research analyst  ·  process metallurgy adviser  ·  process metallurgy research scientist  ·  process metallurgy analyst"
+  },
+  {
+   "role": "hydrologist",
+   "isco": 2114,
+   "aka": "hydrological engineer  ·  surface hydrologist  ·  hydrology research analyst  ·  hydrology researcher  ·  hydrology scientist"
+  },
+  {
+   "role": "tool pusher",
+   "isco": 8113,
+   "aka": "toolpushers  ·  oil and gas rigging technician  ·  rig manager  ·  pusher  ·  toolpusher"
+  },
+  {
+   "role": "mine development engineer",
+   "isco": 2146,
+   "aka": "development engineer  ·  facility manager  ·  mine development manager  ·  mine development expert"
+  },
+  {
+   "role": "drill operator",
+   "isco": 8113,
+   "aka": "oil rig driller  ·  rig driller  ·  rig drill operator"
+  },
+  {
+   "role": "mineral processing engineer",
+   "isco": 2146,
+   "aka": "mineral engineer  ·  senior metallurgist  ·  mineral processing engineers  ·  senior mineralogist  ·  surface manager"
+  },
+  {
+   "role": "hydrogeologist",
+   "isco": 2114,
+   "aka": "pore pressure engineer  ·  formation evaluation engineer  ·  consultant hydrogeologist  ·  consultant hydrologist  ·  hydrogeological consultant"
+  },
+  {
+   "role": "petroleum engineer",
+   "isco": 2146,
+   "aka": "petroleum geologist  ·  petroleum production technician  ·  reservoir engineer  ·  oil and gas engineer  ·  petroleum engineers"
+  },
+  {
+   "role": "tunnel boring machine operator",
+   "isco": 8113,
+   "aka": "tunneller  ·  tunnelling equipment operator  ·  TBM operator  ·  tunnelling machine operator  ·  tunnelling equipment operative"
+  },
+  {
+   "role": "mine planning engineer",
+   "isco": 2146,
+   "aka": "mining operations scheduler  ·  mine planning supervisor  ·  mine production scheduler  ·  mine project engineer  ·  surface mine planning engineer"
+  },
+  {
+   "role": "assayer",
+   "isco": 2146,
+   "aka": "chemical analyst  ·  gold assayer  ·  precious metal assayer  ·  metal tester  ·  geo-science technician"
+  },
+  {
+   "role": "palaeontologist",
+   "isco": 2114,
+   "aka": "palaeontology scholar  ·  palaeontology science researcher  ·  micropalaeontologist  ·  palaeontology scientist  ·  palaeontology researcher"
+  },
+  {
+   "role": "mineralogist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  offshore mineralogist  ·  mineralogy expert  ·  mineralogy consultant  ·  process mineralogy consultant"
+  },
+  {
+   "role": "roustabout",
+   "isco": 8113,
+   "aka": "oil rig leasehand"
+  },
+  {
+   "role": "roughneck",
+   "isco": 8113,
+   "aka": "chainhand"
+  },
+  {
+   "role": "environmental geologist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  environmental consultant  ·  environmentalist  ·  environmental geology analyst  ·  environmental geology researcher"
+  },
+  {
+   "role": "mine surveying technician",
+   "isco": 3117,
+   "aka": "mine technician  ·  assistant mine surveyor  ·  mine survey linesman  ·  mine survey lineswoman  ·  mine surveyors assistant"
+  },
+  {
+   "role": "geophysicist",
+   "isco": 2114,
+   "aka": "geophysical engineer  ·  project geophysicist  ·  consultant geophysicist  ·  field seismologist  ·  exploration geophysicist"
+  },
+  {
+   "role": "exploration geologist",
+   "isco": 2114,
+   "aka": "mineralogist  ·  economic geologist  ·  field exploration geologist  ·  exploration geology research scientist  ·  exploratory geologist"
+  },
+  {
+   "role": "quarry manager",
+   "isco": 1322,
+   "aka": "quarrying industry manager  ·  quarry engineer  ·  quarry operations engineer  ·  quarry operations manager  ·  quarry management expert"
+  },
+  {
+   "role": "seismologist",
+   "isco": 2114,
+   "aka": "seismologists  ·  seismology research analyst  ·  seismology analyst  ·  seismology researcher  ·  seismology scientist"
+  },
+  {
+   "role": "metallurgist",
+   "isco": 2146,
+   "aka": "steel industry experts  ·  extraction metallurgist  ·  chemical tester  ·  physical metallurgist  ·  chemical technician"
+  },
+  {
+   "role": "geologist",
+   "isco": 2114,
+   "aka": "field geologist  ·  geologist engineer  ·  geology science researcher  ·  geology research analyst  ·  site geologist"
+  },
+  {
+   "role": "geochemist",
+   "isco": 2114,
+   "aka": "geo-technician  ·  geoscience technician  ·  exploration geochemist  ·  consultant geochemist  ·  petroleum technician"
+  },
+  {
+   "role": "oil rig motorhand",
+   "isco": 8113,
+   "aka": "rig driller  ·  rig maintenance technicians  ·  oil field driller  ·  drilling equipment technician  ·  oil rig operator"
+  },
+  {
+   "role": "mine health and safety engineer",
+   "isco": 2146,
+   "aka": "mine safety engineer  ·  mine health and safety engineers  ·  mining health and safety engineer  ·  industrial health and safety engineer"
+  },
+  {
+   "role": "mud logger",
+   "isco": 2114,
+   "aka": "mudlogger  ·  surface logging technician  ·  surface logging specialist  ·  logging geologist  ·  surface logger"
+  },
+  {
+   "role": "mine production manager",
+   "isco": 1322,
+   "aka": "mine supervisor  ·  mining engineer  ·  mine operations manager  ·  mining operations manager  ·  resident manager"
+  },
+  {
+   "role": "geotechnician",
+   "isco": 3117,
+   "aka": "formation evaluation engineer  ·  geologist  ·  surface logging technician  ·  surface logging specialist  ·  logging geologist"
+  },
+  {
+   "role": "mine safety officer",
+   "isco": 3117,
+   "aka": "mine safety inspector  ·  health and safety manager  ·  mining inspector  ·  safety officer  ·  mine safety manager"
+  },
+  {
+   "role": "desalination technician",
+   "isco": 3117,
+   "aka": "desalination plant technician  ·  desalination equipment operator  ·  water treatment plant technician  ·  water treatment plants technician  ·  operator of desalination plant"
+  },
+  {
+   "role": "Mining, Petroleum and Other Extraction Workers",
+   "isco": 8113,
+   "aka": NaN
+  },
+  {
+   "role": "Calibration Technologists and Technicians",
+   "isco": 3117,
+   "aka": NaN
+  },
+  {
+   "role": "Derrick Operators, Oil and Gas",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Rotary Drill Operators, Oil and Gas",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Earth Drillers, Except Oil and Gas",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Explosives Workers, Ordnance Handling Experts, and Blasters",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Roof Bolters, Mining",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Loading and Moving Machine Operators, Underground Mining",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Underground Mining Machine Operators, All Other",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Rock Splitters, Quarry",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Roustabouts, Oil and Gas",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Helpers--Extraction Workers",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Extraction Workers, All Other",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "mine mechanical engineer",
+   "isco": 2144,
+   "aka": "mine operations manager  ·  mechanical engineer (mining)"
+  },
+  {
+   "role": "mine ventilation engineer",
+   "isco": 2144,
+   "aka": "ventilation system coordinator  ·  ventilation officer"
+  }
+ ]
+}

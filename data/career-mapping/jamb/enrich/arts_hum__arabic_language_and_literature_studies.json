@@ -1,0 +1,9 @@
+{
+  "jamb_name": "Arabic Language and Literature Studies",
+  "utme_subjects": ["Arabic and two (2) subjects from Arts and/or Social Sciences (same as in Arabic Studies)"],
+  "olevel_requirement": "Same as in Arabic Studies (Five (5) SSC credit passes in English Language, Arabic and three (3) other relevant subjects).",
+  "direct_entry": "Two (2) 'A' Level passes in the relevant subjects.",
+  "institution_waivers": [
+    {"institution": "IBADAN", "note": "IBADAN requires two (2) 'A' Level passes in Arabic and any other Arts or Social Science subject."}
+  ]
+}

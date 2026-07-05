@@ -1,0 +1,50 @@
+{
+ "programmes": [
+  {
+   "jamb_name": "Statistics Education",
+   "institutions": ["LASUED", "MAKURDI", "YABA-DEG", "MAUTY"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry", "Biology"],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics plus one (1) other Science subject.",
+   "direct_entry": "Two (2) 'A' Level passes/NCE in Mathematics and one (1) Science subject.",
+   "institution_waivers": []
+  },
+  {
+   "jamb_name": "Sport Management (Education)",
+   "institutions": ["SPORTS-UNI"],
+   "utme_subjects": ["Biology", "Mathematics", "Economics", "Geography"],
+   "olevel_requirement": "Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport.",
+   "institution_waivers": [],
+   "note": "Mapped to the sub-heading 'SPORTS ADMINISTRATION AND MANAGEMENT' within the shared SPORT SCIENCE block (line 10113). Related sibling sub-headings share the same requirement columns: SPORT SCIENCE (OOU), EXERCISE AND SPORTS SCIENCE (LAPAI), SPORTS SCIENCE AND TECHNOLOGY (SPORTS-UNI)."
+  },
+  {
+   "jamb_name": "Transport Planning and Management",
+   "institutions": ["TASUED"],
+   "utme_subjects": ["Geography", "Economics", "Government", "Mathematics", "Chemistry", "Biology", "Physics", "Agricultural Science", "Accounting", "Commerce"],
+   "olevel_requirement": "Five (5) 'O' Level credit passes at one (1) sitting or six (6) 'O' Level credit passes at two (2) sittings in English Language, Mathematics and any three (3) of Economics, Government, Commerce, Accounting, Biology, Agricultural Science, Geography, Chemistry and Physics.",
+   "direct_entry": "i. Two (2) 'A' Level passes in Geography or Economics and one other subject. ii. NCE merit in Geography and other Social Science or Science subjects. iii. ND/HND in Town Planning, Estate Management, Surveying.",
+   "institution_waivers": [{"institution": "TASUED", "note": "In addition to the waiver in Geography and Environmental Management (GEM), accepts candidates with ND Transport Studies."}],
+   "note": "Heading 'TRANSPORT PLANNING AND MANAGEMENT AND EDUCATION (TPM)' at line 10227. Sibling sub-heading 'TRANSPORTATION MANAGEMENT' (SAUED) shares the same requirement columns."
+  },
+  {
+   "jamb_name": "Theatre Arts (Education)",
+   "institutions": [],
+   "utme_subjects": [],
+   "olevel_requirement": "",
+   "direct_entry": "",
+   "institution_waivers": [],
+   "not_found": true,
+   "note": "No standalone UPPERCASE column-0 heading exists in education.txt. 'Theatre Arts' appears only (a) in the table of contents as item 29 'Theartre Arts' (line 92) and (b) as an OPTION listed within the combined 'EDUCATION ARTS:' heading block (lines 6396-6435, institutions CALABAR/MAIDUGURI/NDU/UNN/EBSU/PHC/YSU with per-institution option lists that include Theatre Arts). Skipped: cannot attribute a distinct institution set to Theatre Arts specifically."
+  },
+  {
+   "jamb_name": "Social Work and Community Development",
+   "institutions": [],
+   "utme_subjects": [],
+   "olevel_requirement": "",
+   "direct_entry": "",
+   "institution_waivers": [],
+   "not_found": true,
+   "note": "No standalone UPPERCASE column-0 heading exists in education.txt. 'Social Work and Community Development' appears only in the table of contents as item 11 of EDUCATION (SOCIAL SCIENCE) COURSES (line 128). No corresponding body/heading block or institution list is present in the source text. Skipped."
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "domain_id": "D005",
+ "domain_name": "Cloud Computing",
+ "role_count": 34,
+ "roles": [
+  {
+   "role": "software analyst",
+   "isco": 2512,
+   "aka": "software requirement analyst  ·  programming analyst  ·  software analysts  ·  programmer analyst  ·  application analyst"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "ICT disaster recovery analyst",
+   "isco": 2519,
+   "aka": "business continuity analyst  ·  ICT resilience analysts  ·  IT resilience analyst  ·  IT disaster recovery analyst  ·  business continuity strategist"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "ICT help desk manager",
+   "isco": 3512,
+   "aka": "software support manager  ·  ICT helpdesk managers  ·  IT helpdesk manager  ·  ICT service desk manager  ·  ICT help desk managers"
+  },
+  {
+   "role": "cloud architect",
+   "isco": 2512,
+   "aka": "aws cloud architect  ·  cloud solutions consultant"
+  },
+  {
+   "role": "cloud engineer",
+   "isco": 2512,
+   "aka": "hybrid cloud engineer  ·  cloud computing engineer  ·  cloud infrastructure engineer  ·  cloud software engineer  ·  cloud-native engineer"
+  },
+  {
+   "role": "ICT change and configuration manager",
+   "isco": 2519,
+   "aka": "configuration manager  ·  application lifecycle manager  ·  software change and configuration manager"
+  },
+  {
+   "role": "ICT technician",
+   "isco": 3512,
+   "aka": "computer operator  ·  IT officer  ·  IT technician  ·  IT assistant  ·  information systems technician"
+  },
+  {
+   "role": "ICT accessibility tester",
+   "isco": 2519,
+   "aka": "accessibility testers  ·  usability tester  ·  accessibility test specialist"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "aviation data communications manager",
+   "isco": 3513,
+   "aka": "aviation data communications officer  ·  aviation data communications contractor  ·  data communications manager in aviation  ·  aviation data communications consultant  ·  aviation data communications specialist"
+  },
+  {
+   "role": "ICT usability tester",
+   "isco": 2519,
+   "aka": "usability developer  ·  usability specialist  ·  usability testers  ·  user-friendliness tester"
+  },
+  {
+   "role": "ICT network technician",
+   "isco": 3513,
+   "aka": "system engineer  ·  assistant network administrator  ·  networks technician  ·  network engineer  ·  IT network technician"
+  },
+  {
+   "role": "IoT developer",
+   "isco": 2512,
+   "aka": "IoT software developer"
+  },
+  {
+   "role": "data quality specialist",
+   "isco": 2519,
+   "aka": "data integrity officer  ·  data integrity specialist  ·  data quality officer  ·  data quality expert  ·  data quality specialists"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "ICT auditor manager",
+   "isco": 2519,
+   "aka": "ICT auditor managers  ·  ICT audit manager  ·  information technology audit manager  ·  IT audit manager"
+  },
+  {
+   "role": "cloud software developer",
+   "isco": 2512,
+   "aka": "cloud and infrastructure specialist  ·  cloud solutions specialist  ·  cloud consultant  ·  cloud deployment specialist  ·  cloud technical specialist"
+  },
+  {
+   "role": "ICT network administrator",
+   "isco": 2522,
+   "aka": "network manager  ·  network specialist  ·  network administrators  ·  network support  ·  networks administrator"
+  },
+  {
+   "role": "user interface developer",
+   "isco": 2512,
+   "aka": "user interface engineer  ·  user interface developers  ·  UI programmer  ·  front end developer  ·  UI developer"
+  },
+  {
+   "role": "data centre operator",
+   "isco": 3511,
+   "aka": "data centre employee  ·  data centre administrator  ·  data center operator  ·  data centre operators  ·  data center administrator"
+  },
+  {
+   "role": "system configurator",
+   "isco": 2522,
+   "aka": "system configurators  ·  system setup professional  ·  system configuration professional  ·  ICT system configurator  ·  IT system configurator"
+  },
+  {
+   "role": "ICT system administrator",
+   "isco": 2522,
+   "aka": "sysadmin  ·  IT system administrator  ·  IT systems administrator  ·  server administrator  ·  network administrator"
+  },
+  {
+   "role": "ICT quality assurance manager",
+   "isco": 2519,
+   "aka": "IT quality assurance manager  ·  ICT quality manager  ·  ICT principal testing manager  ·  ICT quality assurance managers  ·  ICT test manager"
+  },
+  {
+   "role": "ICT security technician",
+   "isco": 3512,
+   "aka": "IT security officer  ·  ICT security technicians  ·  cybersecurity solutions expert  ·  cybersecurity developer  ·  development and operations security engineer"
+  },
+  {
+   "role": "ICT help desk agent",
+   "isco": 3512,
+   "aka": "IT support technician  ·  IT help desk agent  ·  ICT service desk agent  ·  ICT helpdesk agent  ·  ICT help desk advisor"
+  },
+  {
+   "role": "cloud DevOps engineer",
+   "isco": 2512,
+   "aka": "devops analyst  ·  devops consultant  ·  cloud devops solution specialist  ·  devops administrator  ·  devops engineer"
+  },
+  {
+   "role": "software architect",
+   "isco": 2512,
+   "aka": "software architects  ·  software designer  ·  application architect"
+  },
+  {
+   "role": "webmaster",
+   "isco": 3514,
+   "aka": "website administrator  ·  web administrator  ·  web technician  ·  e-commerce technician  ·  webmasters"
+  },
+  {
+   "role": "software developer",
+   "isco": 2512,
+   "aka": "application developer  ·  solutions developer  ·  electric vehicle software development engineer  ·  programmer  ·  application programmer"
+  },
+  {
+   "role": "DevOps Engineers",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "ICT Operations and User Support Technicians",
+   "isco": 3511,
+   "aka": NaN
+  },
+  {
+   "role": "Computer User Support Specialists",
+   "isco": 3512,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+{
+  "jamb_name": "Arabic Studies",
+  "utme_subjects": ["Arabic and two (2) subjects from Arts and/or Social Sciences"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Arabic and three (3) other relevant subjects.",
+  "direct_entry": "Two (2) 'A' Level passes in Arabic and any other Arts subject.",
+  "institution_waivers": [
+    {"institution": "ABU", "note": "ABU accepts Two 'A' level/IJMB passes including Arabic at IJMB/NCE, or a minimum of Merit at Diploma in Arabic or with other subjects."},
+    {"institution": "ABUJA", "note": "ABUJA accepts a minimum of ten (10) points in NCE or ND upper credit in addition to the 'O' Level requirements."},
+    {"institution": "ILORIN", "note": "ILORIN accepts NCE merit in Arabic or Social Sciences subjects. ILORIN accepts: a) At least two (2) 'A' Level passes to include Arabic and any other Arts/Social Science Subject. b) Unilorin Diploma and other relevant Diploma: BUK, ABU, KWASU (this satisfies both A/L and O/L admission requirements by Direct Entry) provided the candidates meet other requirements for admission. c) Candidates who did not offer Arabic at UTME but meet UTME entry requirements may be considered into 100 level. d) Candidates who do not offer Arabic at O/L but meet UTME entry requirements may be considered for admission. e) Candidates with Senior/Higher Islamic Studies Certificate as O/L for entry qualification for Arabic Studies and related programmes."},
+    {"institution": "KWASU", "note": "KWASU accepts IJMB, Cambridge, NCE and SISC."},
+    {"institution": "LASU", "note": "LASU accepts a) Two (2) 'A' Level passes in Arabic and any other Arts subject plus five (5) 'O' Level credit passes in other related Arts subjects. b) Qualifications obtained from recognized Arabic Institutions are accepted in lieu of Arabic 'O' Level subjects for the fulfillment of other entry requirements. NCE merit in Arabic is acceptable."},
+    {"institution": "IBADAN", "note": "IBADAN accept NCE merit in Arabic and other Arts or Social Science subjects."},
+    {"institution": "FED-KASHERE", "note": "FED-KASHERE accepts Two 'A' Level credit passes in Arabic and any other Arts subject."},
+    {"institution": "KASU", "note": "KASU accepts NCE in Arabic/Islamic Studies minimum of merit pass. Two 'A' level passes in Arabic."}
+  ]
+}

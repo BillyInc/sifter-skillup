@@ -1,0 +1,246 @@
+{
+ "reconciled": [
+  {
+   "programme": "Criminology and Security Studies",
+   "add": [
+    {"domain_id": "D143", "domain": "Forensic Science, Digital Forensics & Criminal Investigation", "match_type": "direct", "why": "Criminal justice, deviance and investigation are core; criminology feeds criminal investigation careers directly."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Applied Statistics in Criminology + social-science research methods supply crime-data/analytics foundations."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Deviance, social control, corrections and community reintegration overlap heavily with social work/community development."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Statistics + reporting skills transfer to analytics/intelligence roles in corporate security."},
+    {"domain_id": "D077", "domain": "Security Services & Public Safety", "match_type": "direct", "why": "Named security studies programme; already present but reaffirmed as direct core."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets not supported by any criminology course or skill."},
+    {"domain_id": "D013", "why": "Investment analysis has no basis in the curriculum."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught; only applied social statistics."},
+    {"domain_id": "D014", "why": "Actuarial science unsupported; no probability/finance mathematics."},
+    {"domain_id": "D061", "why": "Insurance underwriting not present in curriculum."},
+    {"domain_id": "D012", "why": "FinTech engineering has no basis here."},
+    {"domain_id": "D157", "why": "Tax advisory/transfer pricing unrelated to criminology."},
+    {"domain_id": "D030", "why": "Marketing/brand is a generic over-link with no course support."}
+   ]
+  },
+  {
+   "programme": "Demography and Social Statistics",
+   "add": [
+    {"domain_id": "D026", "domain": "Public Health & Epidemiology", "match_type": "functional", "why": "Population studies, reproductive-health promotion, census and vital statistics are core epidemiology inputs."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Census/social surveys for governments and population policy analysis are central transferable outcomes."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "adjacent", "why": "Research methods + systematic study of human populations transfer to research analyst roles."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "adjacent", "why": "Youth/women action research centres and community population programmes overlap social/community development."}
+   ],
+   "remove": [
+    {"domain_id": "D132", "why": "Space science/exploration has no basis in demography."},
+    {"domain_id": "D144", "why": "Climate science/meteorology unrelated to the curriculum."},
+    {"domain_id": "D056", "why": "Blockchain unsupported by any course or skill."},
+    {"domain_id": "D164", "why": "Urban mobility/smart-city systems only tenuously linked via cartography; not supported."},
+    {"domain_id": "D033", "why": "Product management generic over-link, no course support."},
+    {"domain_id": "D012", "why": "FinTech engineering unrelated to demographic statistics."},
+    {"domain_id": "D062", "why": "Trading/capital markets not taught."},
+    {"domain_id": "D061", "why": "Insurance underwriting unsupported (statistics alone is too thin)."},
+    {"domain_id": "D013", "why": "Investment analysis has no curricular basis."}
+   ]
+  },
+  {
+   "programme": "Development Studies",
+   "add": [
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "direct", "why": "Community development engagement, NGO work and municipal/development planning are core stated outcomes."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Applied Statistics for Development + socio-economic and impact-evaluation research supply analytics foundations."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Monitoring/impact-evaluation and socio-economic research transfer to analytics/BI roles."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "adjacent", "why": "Development planning in African economies routinely centres rural/agribusiness development (foothold)."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets not supported by development curriculum."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported."},
+    {"domain_id": "D014", "why": "Actuarial science has no basis."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D159", "why": "Credit analysis/structured finance too specialised; no course support."},
+    {"domain_id": "D158", "why": "Corporate finance/investment banking unsupported by development budgeting alone."},
+    {"domain_id": "D157", "why": "Tax advisory/transfer pricing not present."}
+   ]
+  },
+  {
+   "programme": "Economics",
+   "add": [
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Statistics for Economists + Mathematics for Economists + econometric modelling are direct pipelines into economic data/statistical analysis."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Economic data interpretation, modelling and policy analysis map onto BI/economic-analyst roles."},
+    {"domain_id": "D063", "domain": "Economics & Policy Analysis", "match_type": "direct", "why": "Core purpose of the programme; already present, reaffirmed as direct."}
+   ],
+   "remove": [
+    {"domain_id": "D084", "why": "Payroll/bookkeeping/finance-clerking is below the analytical altitude of an economics degree."},
+    {"domain_id": "D033", "why": "Product management generic over-link with no course support."},
+    {"domain_id": "D144", "why": "Climate science/meteorology has no basis in the economics curriculum."}
+   ]
+  },
+  {
+   "programme": "International Relations",
+   "add": [
+    {"domain_id": "D161", "domain": "Humanitarian Aid, Emergency Response & International Development", "match_type": "functional", "why": "Stated careers with UN/AU/ECOWAS, election monitoring and self-reliant development align with humanitarian/international development."},
+    {"domain_id": "D078", "domain": "Social Sciences & Behavioural Research", "match_type": "functional", "why": "Research methods in IR/political science support behavioural/policy research; already present, reaffirmed."},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "adjacent", "why": "Foreign-affairs/diplomatic postings routinely require language/interpretation competence (foothold)."}
+   ],
+   "remove": [
+    {"domain_id": "D004", "why": "Cybersecurity has no basis in an IR curriculum."},
+    {"domain_id": "D014", "why": "Actuarial science unsupported."},
+    {"domain_id": "D157", "why": "Tax advisory/transfer pricing not present."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported (only International Economic Relations, too general)."},
+    {"domain_id": "D060", "why": "Banking/retail finance has no course basis."}
+   ]
+  },
+  {
+   "programme": "Library and Information Science",
+   "add": [
+    {"domain_id": "D058", "domain": "EdTech & Learning Experience Design", "match_type": "functional", "why": "Information literacy, digital libraries and user education overlap learning-experience/EdTech design."},
+    {"domain_id": "D043", "domain": "Journalism & Digital Publishing", "match_type": "adjacent", "why": "Bibliographic sources, serials and digital publishing/repackaging of information transfer to digital publishing."},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "direct", "why": "Core purpose; already present, reaffirmed as direct."}
+   ],
+   "remove": [
+    {"domain_id": "D012", "why": "FinTech engineering has no basis in LIS."},
+    {"domain_id": "D062", "why": "Trading/capital markets unrelated."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported."},
+    {"domain_id": "D014", "why": "Actuarial science has no basis."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated to information science."},
+    {"domain_id": "D056", "why": "Blockchain unsupported by any course."},
+    {"domain_id": "D030", "why": "Marketing/brand generic over-link with no course support."}
+   ]
+  },
+  {
+   "programme": "Peace Studies and Conflict Resolution",
+   "add": [
+    {"domain_id": "D161", "domain": "Humanitarian Aid, Emergency Response & International Development", "match_type": "direct", "why": "Consulting for donor agencies, deployment to conflict zones and international/regional conflict work is a core stated outcome."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Special adviser roles to government on security/conflict and policy align with public administration."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Peace-building, mediation and community conflict resolution overlap community development/social work."},
+    {"domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match_type": "adjacent", "why": "Introduction to Psychology plus conflict/trauma context provide a foothold into counselling/mediation."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets not supported by any course."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported."},
+    {"domain_id": "D014", "why": "Actuarial science has no basis."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D060", "why": "Banking/retail finance has no curricular basis."},
+    {"domain_id": "D158", "why": "Corporate finance/investment banking unsupported."},
+    {"domain_id": "D159", "why": "Credit analysis/structured finance unsupported."},
+    {"domain_id": "D157", "why": "Tax advisory/transfer pricing not present."},
+    {"domain_id": "D127", "why": "Early childhood education has no basis in peace studies."}
+   ]
+  },
+  {
+   "programme": "Petroleum Economics and Policy Studies",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "functional", "why": "Oil & gas industry structure, energy sector and energy-markets courses give domain knowledge for oil & gas economics/consulting roles."},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Environmental Policy and Environmental Economics courses plus extractive-industry social/environmental consequences."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "adjacent", "why": "Mathematics/quantitative methods for petroleum economics transfer to energy data/analytics."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Energy market/pricing analysis maps onto BI/analyst roles."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "Actuarial science not supported by the curriculum."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated to petroleum economics."},
+    {"domain_id": "D159", "why": "Credit analysis/structured finance too specialised; no course support."},
+    {"domain_id": "D031", "why": "Sales/business development is a generic over-link."},
+    {"domain_id": "D033", "why": "Product management has no course basis."}
+   ]
+  },
+  {
+   "programme": "Political Science",
+   "add": [
+    {"domain_id": "D077", "domain": "Security Services & Public Safety", "match_type": "functional", "why": "Explicit transferable skill: analytical skills to work in the country's security services."},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Establishment/management of NGOs and civil-service/public-service roles overlap community development."},
+    {"domain_id": "D161", "domain": "Humanitarian Aid, Emergency Response & International Development", "match_type": "adjacent", "why": "Consultancy for UN/AU/ECOWAS/EU is a stated outcome, a foothold into international development."}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "Quantitative finance not taught in political science."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D157", "why": "Tax advisory/transfer pricing not present."},
+    {"domain_id": "D163", "why": "Intellectual property law too specialised; only general Nigerian legal systems taught."},
+    {"domain_id": "D060", "why": "Banking/retail finance has no course basis."}
+   ]
+  },
+  {
+   "programme": "Politics, Philosophy and Economics (PPE)",
+   "add": [
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Mathematics for Economists + economics core plus evidence/data-gathering skills feed economic/policy analysis."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Ability to gather, organise and deploy evidence and data transfers to analytics roles."},
+    {"domain_id": "D037", "domain": "Legal Practice & Corporate Law", "match_type": "adjacent", "why": "Logic, ethics and political/legal philosophy give a foothold into law (common PPE-to-law pathway)."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "Actuarial science not supported by the curriculum."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught (only introductory economics maths)."},
+    {"domain_id": "D159", "why": "Credit analysis/structured finance too specialised; no course support."},
+    {"domain_id": "D060", "why": "Banking/retail finance has no course basis."}
+   ]
+  },
+  {
+   "programme": "Psychology",
+   "add": [
+    {"domain_id": "D007", "domain": "UI/UX Design & Product Design", "match_type": "functional", "why": "Behaviour, cognition and psychological-test methods underpin UX/user research (a core psychology cross-link)."},
+    {"domain_id": "D143", "domain": "Forensic Science, Digital Forensics & Criminal Investigation", "match_type": "functional", "why": "Explicit outcome: offer forensic services to the criminal justice system (forensic psychology)."},
+    {"domain_id": "D154", "domain": "Exercise Science, Sports Therapy & Athletic Performance", "match_type": "adjacent", "why": "Stated consultancy for sports organisations/clubs (sports psychology foothold)."},
+    {"domain_id": "D058", "domain": "EdTech & Learning Experience Design", "match_type": "adjacent", "why": "Learning processes, memory and developmental psychology transfer to learning-experience design."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets has no basis in psychology."},
+    {"domain_id": "D014", "why": "Actuarial science unsupported (quantitative methods alone is too thin)."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D091", "why": "Driving instruction is a spurious over-link with no course support."},
+    {"domain_id": "D162", "why": "Immigration law has no basis in the psychology curriculum."}
+   ]
+  },
+  {
+   "programme": "Social Standards",
+   "add": [
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "National values/orientation, social policy, welfare programmes and land governance align with public administration/policy."},
+    {"domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match_type": "adjacent", "why": "Abnormal and Anti-Social Behaviours plus social-standards interventions provide a foothold into counselling/behavioural support."},
+    {"domain_id": "D124", "domain": "Community Health Extension & Primary Health Care", "match_type": "adjacent", "why": "Community development and health-delivery aspects of social development transfer to community health extension work."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets has no basis in social standards."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported."},
+    {"domain_id": "D012", "why": "FinTech engineering unrelated."},
+    {"domain_id": "D056", "why": "Blockchain has no course support."},
+    {"domain_id": "D033", "why": "Product management is a generic over-link."},
+    {"domain_id": "D162", "why": "Immigration law not present in the curriculum."}
+   ]
+  },
+  {
+   "programme": "Social Work",
+   "add": [
+    {"domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match_type": "direct", "why": "Introduction to Psychology, casework principles and counselling-oriented practice are core to social work; strong counselling pathway."},
+    {"domain_id": "D143", "domain": "Forensic Science, Digital Forensics & Criminal Investigation", "match_type": "functional", "why": "Forensic Social Work course plus deviance theory link to criminal-justice/forensic roles."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Community welfare and social-service delivery align with public administration/social policy roles."},
+    {"domain_id": "D124", "domain": "Community Health Extension & Primary Health Care", "match_type": "adjacent", "why": "Community-based welfare and casework transfer to primary/community health extension."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading/capital markets has no basis in social work."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported."},
+    {"domain_id": "D014", "why": "Actuarial science not taught."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D011", "why": "Quantitative finance not present."},
+    {"domain_id": "D060", "why": "Banking/retail finance has no course basis."}
+   ]
+  },
+  {
+   "programme": "Sociology",
+   "add": [
+    {"domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match_type": "functional", "why": "Introduction to Psychology and Social Psychology courses support behavioural/counselling-adjacent roles."},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Social structure, social problems and policy analysis feed public administration/social-policy roles."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Quantitative/qualitative data processing and social research transfer to market research/analytics (Sociology->Market Research cross-link)."},
+    {"domain_id": "D029", "domain": "Human Resources & People Management", "match_type": "adjacent", "why": "Understanding of groups, organisations and social dynamics is a foothold into HR; already present, reaffirmed."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "Actuarial science not supported by the sociology curriculum."},
+    {"domain_id": "D062", "why": "Trading/capital markets has no basis."},
+    {"domain_id": "D011", "why": "Quantitative finance not taught."},
+    {"domain_id": "D013", "why": "Investment analysis unsupported."},
+    {"domain_id": "D061", "why": "Insurance underwriting unrelated."},
+    {"domain_id": "D158", "why": "Corporate finance/investment banking has no course basis."},
+    {"domain_id": "D060", "why": "Banking/retail finance unsupported."},
+    {"domain_id": "D157", "why": "Tax advisory/transfer pricing not present."}
+   ]
+  }
+ ]
+}

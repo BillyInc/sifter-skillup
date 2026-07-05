@@ -1,0 +1,64 @@
+{
+  "jamb_name": "Yoruba",
+  "utme_subjects": ["Yoruba", "and two (2) other subjects in Arts or Social Sciences"],
+  "olevel_requirement": "Five (5) SSC credit passes to include Yoruba and English Language.",
+  "direct_entry": "Two (2) `A' Level passes to include Yoruba or Literature in English.",
+  "institution_waivers": [
+    {
+      "institution": "IBADAN",
+      "note": "DIRECT ENTRY: IBADAN accepts two (2) `A' Level passes to include Yoruba and another Arts or Social Science subject. It accepts NCE credit/merit in Yoruba and another Arts or Social Science subject."
+    },
+    {
+      "institution": "OAU",
+      "note": "DIRECT ENTRY: OAU accepts NCE merit in Yoruba."
+    },
+    {
+      "institution": "LAGOS",
+      "note": "DIRECT ENTRY: LAGOS accepts very good passes in three JUPEB/A' Level subjects in Yoruba/Igbo and any two of History, CRS/IRS, French, Government, Music, Visual Arts and Literature in English. NCE (Merit) in two subjects to include a Nigerian Language."
+    },
+    {
+      "institution": "ILORIN",
+      "note": "DIRECT ENTRY: ILORIN requires a) At least two (2) `A' Level passes to include Yoruba and any other Arts/Social Science; b) NCE/Diploma (Upper Credit) in Yoruba and Social Science subject."
+    },
+    {
+      "institution": "IBADAN",
+      "note": "UTME: IBADAN requires five (5) `O' Level credit passes at one sitting or six (6) `O' Level credit passes at two (2) sittings including English Language and two (2) Arts subjects, one of which must be Yoruba."
+    },
+    {
+      "institution": "ILORIN",
+      "note": "UTME: ILORIN accepts five (5) `O' Level credit passes to include Yoruba, English Language, Mathematics and two (2) other Arts/Social Science subjects. It also accepts candidates who do not offer Yoruba (Language/Literature) but meet other UTME entry requirements."
+    },
+    {
+      "institution": "OAU",
+      "note": "UTME: OAU requires five (5) `O' Level credit passes to include English Language and any Arts subject."
+    },
+    {
+      "institution": "AAUA",
+      "note": "UTME: AAUA requires five (5) `O' Level credit passes to include English Language, Yoruba, Mathematics and any two subjects."
+    },
+    {
+      "institution": "LAGOS",
+      "note": "UTME: LAGOS requires five O/Level credit passes in English Language, Mathematics and any three Arts, Science or Social Sciences. Social Studies and Civic Education are also accepted."
+    },
+    {
+      "institution": "IBADAN",
+      "note": "UTME SUBJECTS: IBADAN requires Yoruba and two (2) other subjects in Arts or Social Sciences."
+    },
+    {
+      "institution": "OAU",
+      "note": "UTME SUBJECTS: OAU requires three (3) subjects from Arts and/or Social Sciences."
+    },
+    {
+      "institution": "OOU",
+      "note": "UTME SUBJECTS: OOU requires Yoruba and two (2) Arts subjects."
+    },
+    {
+      "institution": "ILORIN",
+      "note": "UTME SUBJECTS: ILORIN requires Yoruba and two (2) other subjects in Arts/Social Science."
+    },
+    {
+      "institution": "LAGOS",
+      "note": "UTME SUBJECTS: LAGOS requires English Language and any three Arts, Science or Social Sciences."
+    }
+  ]
+}

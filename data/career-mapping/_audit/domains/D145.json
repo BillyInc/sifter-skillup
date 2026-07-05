@@ -1,0 +1,142 @@
+{
+ "domain_id": "D145",
+ "domain_name": "Neuroscience, Cognitive Science",
+ "role_count": 27,
+ "roles": [
+  {
+   "role": "biophysicist",
+   "isco": 2131,
+   "aka": "biophysics scientist  ·  biophysics research scientist  ·  biophysics biotechnologist  ·  biophysics scholar  ·  biophysics researcher"
+  },
+  {
+   "role": "physiologist",
+   "isco": 2131,
+   "aka": "anatomy analyst  ·  anatomy researcher  ·  anatomy research scientist  ·  physiology scientist  ·  physiology analyst"
+  },
+  {
+   "role": "toxicologist",
+   "isco": 2131,
+   "aka": "toxicology analyst  ·  toxicology science researcher  ·  toxicologists  ·  toxicology studies scholar  ·  toxicology scholar"
+  },
+  {
+   "role": "educational psychologist",
+   "isco": 2634,
+   "aka": "students psycology specialist  ·  educational psychology specialist  ·  students psychologist  ·  school psychology practitioner  ·  psychologist in education institution"
+  },
+  {
+   "role": "psychologist",
+   "isco": 2634,
+   "aka": "psychology researcher  ·  occupational psychologist  ·  practitioner of counselling psychology  ·  expert in counselling psychology  ·  expert counselling psychologist"
+  },
+  {
+   "role": "botanist",
+   "isco": 2131,
+   "aka": "garden intendant  ·  director of horticulture learning and operations  ·  horticulture manager  ·  director of horticulture  ·  garden manager"
+  },
+  {
+   "role": "clinical perfusion scientist",
+   "isco": 3211,
+   "aka": "clinical perfusionist  ·  clinical perfusion techinician  ·  medical perfusionist  ·  medical perfusion expert  ·  clinical perfusion expert"
+  },
+  {
+   "role": "geneticist",
+   "isco": 2131,
+   "aka": "genetics engineer  ·  genetic scientist  ·  genetics research scientist  ·  molecular biologist  ·  molecular geneticist"
+  },
+  {
+   "role": "bioinformatics scientist",
+   "isco": 2131,
+   "aka": "IT researcher  ·  senior bioinformatics scientist  ·  data scientist  ·  biology researcher  ·  junior bioinformatics scientist"
+  },
+  {
+   "role": "aquaculture biologist",
+   "isco": 2131,
+   "aka": "aquaculture biology research analyst  ·  expert in aquaculture biology  ·  aquaculture biology expert  ·  specialist in aquaculture biology  ·  aquaculture biology scientist"
+  },
+  {
+   "role": "food biotechnologist",
+   "isco": 2131,
+   "aka": "food biotech technician  ·  technician for food industry bioeconomy  ·  food biotech specialist"
+  },
+  {
+   "role": "biochemist",
+   "isco": 2131,
+   "aka": "biochemistry research scientist  ·  chemical biotechnologist  ·  biochemistry studies scholar  ·  biochemistry science researcher  ·  biochemistry studies research scientist"
+  },
+  {
+   "role": "polygraph examiner",
+   "isco": 2634,
+   "aka": "polygraph instructor  ·  polygraph operator  ·  signals analyst  ·  polygraphist  ·  lie detector operator"
+  },
+  {
+   "role": "animal behaviourist",
+   "isco": 2131,
+   "aka": "ethologist  ·  animal behaviour expert  ·  animal behaviour specialist  ·  animal behavior specialist  ·  animal behavior expert"
+  },
+  {
+   "role": "health psychologist",
+   "isco": 2634,
+   "aka": "health psychology researcher  ·  research health psychologist  ·  practitioner of healthcare psychology  ·  consultant health psychologist  ·  consultant in health psychology"
+  },
+  {
+   "role": "microbiologist",
+   "isco": 2131,
+   "aka": "virologist  ·  microbiology research analyst  ·  histologist  ·  bacteriologist  ·  microbiology studies research analyst"
+  },
+  {
+   "role": "psychotherapist",
+   "isco": 2634,
+   "aka": "positive psychotherapist  ·  cognitive behavioural therapist  ·  expert psychotherapist  ·  practitioner of psychotherapy  ·  transpersonal psychotherapist"
+  },
+  {
+   "role": "immunologist",
+   "isco": 2131,
+   "aka": "immunology analyst  ·  immunology researcher  ·  immunology studies research analyst  ·  immunology research analyst  ·  immunology studies researcher"
+  },
+  {
+   "role": "epidemiologist",
+   "isco": 2131,
+   "aka": "epidemiology science researcher  ·  epidemiology researcher  ·  epidemiology research analyst  ·  epidemiology analyst  ·  epidemiology research scientist"
+  },
+  {
+   "role": "clinical psychologist",
+   "isco": 2634,
+   "aka": "expert in clinical psychology  ·  specialist clinical psychologist  ·  practitioner of clinical psychology  ·  hospital psychologist  ·  psychologist in hospital"
+  },
+  {
+   "role": "botanicals specialist",
+   "isco": 2131,
+   "aka": "botanical milling operative  ·  botanical expert  ·  botanical specialist  ·  botanical science expert"
+  },
+  {
+   "role": "curator of horticulture",
+   "isco": 2131,
+   "aka": "conservation horticulturist  ·  curator & horticulturist  ·  curator and horticulturist  ·  curator of botany  ·  garden curator"
+  },
+  {
+   "role": "radiation therapist",
+   "isco": 3211,
+   "aka": "radiotherapy technologist  ·  therapeutic radiography practitioner  ·  therapeutic radiographer  ·  technologist in radiotherapy  ·  RTT"
+  },
+  {
+   "role": "animal feed nutritionist",
+   "isco": 2131,
+   "aka": "animal nutrition expert  ·  feed nutritionist  ·  animal feed expert"
+  },
+  {
+   "role": "biologist",
+   "isco": 2131,
+   "aka": "ornithologist  ·  herpetologist  ·  mycologist  ·  zoologist  ·  entomologist"
+  },
+  {
+   "role": "marine biologist",
+   "isco": 2131,
+   "aka": "marine ecologist  ·  marine biology researcher  ·  marine botanist  ·  sea biologist  ·  researcher in marine biology"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  }
+ ]
+}

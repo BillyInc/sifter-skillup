@@ -1,0 +1,317 @@
+{
+ "domain_id": "D043",
+ "domain_name": "Journalism",
+ "role_count": 62,
+ "roles": [
+  {
+   "role": "medical writer",
+   "isco": 2641,
+   "aka": "healthcare writer  ·  medical information analyst  ·  medical editor  ·  regulatory medical writer  ·  medical publications associate"
+  },
+  {
+   "role": "art restorer",
+   "isco": 2651,
+   "aka": "restoration technician  ·  art objects repairer  ·  restorers  ·  restorer  ·  artifact conservator"
+  },
+  {
+   "role": "presenter",
+   "isco": 2656,
+   "aka": "broadcast journalist  ·  master of ceremonies  ·  finance broadcast journalist  ·  hostess  ·  announcer"
+  },
+  {
+   "role": "audio describer",
+   "isco": 2656,
+   "aka": "visual describer  ·  video describer  ·  audio describers  ·  audio description expert  ·  dubber"
+  },
+  {
+   "role": "translator",
+   "isco": 2643,
+   "aka": "business translator  ·  editorial translator  ·  sworn translator  ·  translation project manager  ·  book translator"
+  },
+  {
+   "role": "interpreter",
+   "isco": 2643,
+   "aka": "court interpreter  ·  public service interpreter  ·  consecutive interpreter  ·  simultaneous interpreter  ·  remote interpreter"
+  },
+  {
+   "role": "fact checker",
+   "isco": 2642,
+   "aka": "copy editor/fact checker  ·  journalist/fact checker  ·  fact-checker  ·  editor/fact checker  ·  writer/fact checker"
+  },
+  {
+   "role": "newspaper editor",
+   "isco": 2642,
+   "aka": "news editor  ·  newspaper graphics editor  ·  sports editor  ·  graphics editor  ·  newspaper news editor"
+  },
+  {
+   "role": "artistic painter",
+   "isco": 2651,
+   "aka": "painting & drawing artist  ·  street painter  ·  sign painter  ·  drawing & painting artist  ·  painting and drawing artist"
+  },
+  {
+   "role": "drawing artist",
+   "isco": 2651,
+   "aka": "illustrator  ·  street artist  ·  artist  ·  cartoon artist  ·  visual art expert"
+  },
+  {
+   "role": "lexicographer",
+   "isco": 2643,
+   "aka": "bilingual dictionaries lexicographer  ·  bilingual dictionary editor  ·  dictionary editor  ·  computational lexicographer  ·  senior lexicographer"
+  },
+  {
+   "role": "book editor",
+   "isco": 2641,
+   "aka": "editorial director of publications  ·  acquisitions editor  ·  commissioning editor  ·  book editor and consultant  ·  manuscripts editorial director"
+  },
+  {
+   "role": "foreign correspondent",
+   "isco": 2642,
+   "aka": "foreign news correspondent  ·  on-the-scene reporter  ·  international correspondent  ·  foreign reporter  ·  foreign affairs correspondent"
+  },
+  {
+   "role": "vlogger",
+   "isco": 2642,
+   "aka": "video podcaster  ·  youtuber  ·  travel vlogger  ·  beauty vlogger  ·  video weblogger"
+  },
+  {
+   "role": "lawyer linguist",
+   "isco": 2643,
+   "aka": "legal linguistics specialist  ·  linguistic lawyer  ·  linguist lawyer  ·  legal linguistics expert  ·  linguistics lawyer"
+  },
+  {
+   "role": "dramaturge",
+   "isco": 2641,
+   "aka": "production dramaturge  ·  dramaturge & playwright  ·  playwright  ·  music theater dramaturge  ·  playwright & dramaturge"
+  },
+  {
+   "role": "speechwriter",
+   "isco": 2641,
+   "aka": "speech writer  ·  speechwriting consultant  ·  political speechwriter  ·  ministerial speechwriter  ·  speechwriting specialist"
+  },
+  {
+   "role": "sports journalist",
+   "isco": 2642,
+   "aka": "sports journalist & commentator  ·  sport journalist  ·  sports journalist and commentator  ·  digital sports journalist  ·  sports correspondent"
+  },
+  {
+   "role": "picture editor",
+   "isco": 2642,
+   "aka": "photo editor  ·  picture selector and organiser  ·  picture selector and organizer  ·  image editor  ·  photograph editor"
+  },
+  {
+   "role": "graphologist",
+   "isco": 2643,
+   "aka": "forensic document examiner  ·  handwriting expert  ·  graphologists  ·  handwriting specialist  ·  forensic handwriting expert"
+  },
+  {
+   "role": "video artist",
+   "isco": 2651,
+   "aka": "interactive video artist  ·  video effects artist  ·  visual technician  ·  graphics & video artist  ·  visual manipulator"
+  },
+  {
+   "role": "printmaker",
+   "isco": 2651,
+   "aka": "printmaking artist  ·  lithographer  ·  illustrator & printmaker  ·  illustrator and printmaker  ·  screen printer"
+  },
+  {
+   "role": "news anchor",
+   "isco": 2656,
+   "aka": "newscaster  ·  business news anchor  ·  news broadcaster  ·  news presenter  ·  TV news anchor"
+  },
+  {
+   "role": "copy editor",
+   "isco": 2642,
+   "aka": "editorial assistant  ·  language editor  ·  senior copy editor  ·  copy-editor"
+  },
+  {
+   "role": "technical communicator",
+   "isco": 2641,
+   "aka": "technical writer  ·  documentation specialist  ·  scientific communicator  ·  technical documentation author  ·  technical documentation specialist"
+  },
+  {
+   "role": "sculptor",
+   "isco": 2651,
+   "aka": "clay sculptress  ·  metal sculptor  ·  metal sculptress  ·  ice sculptor  ·  welded steel sculptor"
+  },
+  {
+   "role": "conceptual artist",
+   "isco": 2651,
+   "aka": "conceptual creator  ·  concept artist"
+  },
+  {
+   "role": "sign language interpreter",
+   "isco": 2643,
+   "aka": "business sign language interpreter  ·  remote sign language interpreter  ·  police sign language interpreter  ·  interpreter of sign language  ·  conference sign language interpreter"
+  },
+  {
+   "role": "journalist",
+   "isco": 2642,
+   "aka": "financial journalist  ·  business journalist  ·  correspondent  ·  commentator  ·  web editor"
+  },
+  {
+   "role": "linguist",
+   "isco": 2643,
+   "aka": "americanist  ·  latinist  ·  linguists  ·  linguistic research scientist  ·  slavist"
+  },
+  {
+   "role": "blogger",
+   "isco": 2642,
+   "aka": "blog content writer  ·  travel blogger  ·  blog writer  ·  vegan food blogger  ·  drinks blogger"
+  },
+  {
+   "role": "storyboard artist",
+   "isco": 2651,
+   "aka": "storyboard revisionist  ·  storyboard and animatic artist  ·  story-boarder  ·  storyboard & animatic artist  ·  storyboarder"
+  },
+  {
+   "role": "writer",
+   "isco": 2641,
+   "aka": "essay writer  ·  medical writer  ·  creative writer  ·  technical writer  ·  fictional writer"
+  },
+  {
+   "role": "glass artist",
+   "isco": 2651,
+   "aka": "stained glass creator  ·  stained glass restorer  ·  stained glass designer and maker  ·  stained glass artist & restorer  ·  stained glass artist"
+  },
+  {
+   "role": "broadcast news editor",
+   "isco": 2642,
+   "aka": "radio reporter  ·  television news director  ·  tv news director  ·  digital news editor  ·  night news editor"
+  },
+  {
+   "role": "columnist",
+   "isco": 2642,
+   "aka": "commentator  ·  political columnist  ·  gossip columnist  ·  editorial opinion columnist  ·  humor columnist"
+  },
+  {
+   "role": "editor-in-chief",
+   "isco": 2642,
+   "aka": "head editor  ·  executive editor  ·  executive director of editorial  ·  editor in chief  ·  managing editor"
+  },
+  {
+   "role": "entertainment journalist",
+   "isco": 2642,
+   "aka": "film journalist  ·  entertainment correspondent  ·  arts journalist  ·  film and entertainment journalist  ·  event reporter"
+  },
+  {
+   "role": "crime journalist",
+   "isco": 2642,
+   "aka": "investigative journalist  ·  crime writer  ·  crime & critical events journalist  ·  crime reporter  ·  crime and critical events journalist"
+  },
+  {
+   "role": "localiser",
+   "isco": 2643,
+   "aka": "localisation games tester  ·  localiser quality assurance tester  ·  localisation tester  ·  localisation translator  ·  localisation project manager"
+  },
+  {
+   "role": "business journalist",
+   "isco": 2642,
+   "aka": "financial journalist  ·  economic journalist  ·  business writer  ·  business & finance journalist  ·  business correspondent"
+  },
+  {
+   "role": "lyricist",
+   "isco": 2641,
+   "aka": "songwriter  ·  composer-lyricist  ·  lyric writer  ·  libretist  ·  copywriter & lyricist"
+  },
+  {
+   "role": "political journalist",
+   "isco": 2642,
+   "aka": "political analyst  ·  political reporter  ·  journalist specialising in global politics  ·  journalist specialising in international politics  ·  journalist specialising in US politics"
+  },
+  {
+   "role": "script writer",
+   "isco": 2641,
+   "aka": "movie script writer  ·  movie author  ·  TV series script writer  ·  television writer  ·  screen writer"
+  },
+  {
+   "role": "ceramicist",
+   "isco": 2651,
+   "aka": "artistic ceramicist  ·  ceramics artist  ·  ceramics designer & maker  ·  ceramics designer and maker  ·  ceramist"
+  },
+  {
+   "role": "subtitler",
+   "isco": 2643,
+   "aka": "subtitler/adaptor  ·  subtitles adaptor  ·  video subtitler  ·  live subtitler  ·  caption writer"
+  },
+  {
+   "role": "cartoonist",
+   "isco": 2651,
+   "aka": "satirical cartoonist  ·  caricaturist  ·  strip cartoonist  ·  political cartoonist  ·  comic artist"
+  },
+  {
+   "role": "literary scholar",
+   "isco": 2641,
+   "aka": "literary science researcher  ·  literary researcher  ·  literature scholar  ·  literary studies researcher  ·  literary studies scholar"
+  },
+  {
+   "role": "magazine editor",
+   "isco": 2642,
+   "aka": "magazine supplements editor  ·  magazine features editor  ·  features editor"
+  },
+  {
+   "role": "critic",
+   "isco": 2642,
+   "aka": "blogger  ·  reviewer  ·  theater critic  ·  film critic  ·  TV critic"
+  },
+  {
+   "role": "Media and Communication Workers",
+   "isco": 2642,
+   "aka": NaN
+  },
+  {
+   "role": "News Analysts, Reporters, and Journalists",
+   "isco": 2642,
+   "aka": NaN
+  },
+  {
+   "role": "Writers and Authors",
+   "isco": 2641,
+   "aka": NaN
+  },
+  {
+   "role": "Interpreters and Translators",
+   "isco": 2643,
+   "aka": NaN
+  },
+  {
+   "role": "Art Directors",
+   "isco": 2651,
+   "aka": NaN
+  },
+  {
+   "role": "Craft Artists",
+   "isco": 2651,
+   "aka": NaN
+  },
+  {
+   "role": "Special Effects Artists and Animators",
+   "isco": 2651,
+   "aka": NaN
+  },
+  {
+   "role": "Disc Jockeys, Except Radio",
+   "isco": 2651,
+   "aka": NaN
+  },
+  {
+   "role": "Editors",
+   "isco": 2641,
+   "aka": NaN
+  },
+  {
+   "role": "Technical Writers",
+   "isco": 2641,
+   "aka": NaN
+  },
+  {
+   "role": "Poets, Lyricists and Creative Writers",
+   "isco": 2641,
+   "aka": NaN
+  },
+  {
+   "role": "Court Reporters and Simultaneous Captioners",
+   "isco": 2641,
+   "aka": NaN
+  }
+ ]
+}

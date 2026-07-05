@@ -1,0 +1,157 @@
+{
+ "domain_id": "D151",
+ "domain_name": "Criminology, Criminal Justice",
+ "role_count": 30,
+ "roles": [
+  {
+   "role": "criminologist",
+   "isco": 2632,
+   "aka": "criminology scientist  ·  criminology research scientist  ·  criminology studies scientist  ·  criminology studies research scientist  ·  criminology researcher"
+  },
+  {
+   "role": "public administration manager",
+   "isco": 1112,
+   "aka": "chief of staff  ·  government department manager  ·  public institution director  ·  public service administrator  ·  public administration director"
+  },
+  {
+   "role": "sociologist",
+   "isco": 2632,
+   "aka": "urban sociology science researcher  ·  sociologists  ·  rural sociology science researcher  ·  urban sociology analyst  ·  sociology science researcher"
+  },
+  {
+   "role": "ambassador",
+   "isco": 1112,
+   "aka": "ordinary ambassador  ·  high commissioner  ·  resident ambassador  ·  diplomatic ambassador"
+  },
+  {
+   "role": "media scientist",
+   "isco": 2632,
+   "aka": "media science researcher  ·  media studies scholar  ·  media research analyst  ·  media research scientist  ·  media analyst"
+  },
+  {
+   "role": "diplomat",
+   "isco": 1112,
+   "aka": "envoy  ·  diplomatic agent  ·  UN diplomat  ·  diplomatic service officer  ·  foreign service officer"
+  },
+  {
+   "role": "archaeologist",
+   "isco": 2632,
+   "aka": "archaeology analyst  ·  marine archaeology research analyst  ·  excavation director  ·  archaeologist scientist  ·  archaeology science researcher"
+  },
+  {
+   "role": "police commissioner",
+   "isco": 1112,
+   "aka": "commissaire  ·  chief constable  ·  police & crime commissioner  ·  chief police constable  ·  police and crime commissioner"
+  },
+  {
+   "role": "prison officer",
+   "isco": 5413,
+   "aka": "detention officer  ·  corrections officer  ·  gaoler  ·  turnkey  ·  prison warden"
+  },
+  {
+   "role": "police detective",
+   "isco": 3355,
+   "aka": "chief detective  ·  detective inspector  ·  detective constable  ·  detective superintendent"
+  },
+  {
+   "role": "licensing officer",
+   "isco": 3354,
+   "aka": "licensing compliance officer  ·  licensing standards officer  ·  driver licensing officer  ·  technology licensing officer  ·  building permit licensing officer"
+  },
+  {
+   "role": "social work researcher",
+   "isco": 2632,
+   "aka": "social research worker  ·  social science researcher  ·  social work research manager  ·  social research interviewer  ·  social scientist"
+  },
+  {
+   "role": "criminal investigator",
+   "isco": 3355,
+   "aka": "forensic scientist  ·  forensic science officer  ·  scenes of crime officer  ·  fingerprint officer  ·  crime scene investigator"
+  },
+  {
+   "role": "behavioural scientist",
+   "isco": 2632,
+   "aka": "behavioural science scholar  ·  behavioural science research analyst  ·  behavioural science analyst  ·  behavioural science researcher"
+  },
+  {
+   "role": "police officer",
+   "isco": 5412,
+   "aka": "highway patrol officer  ·  public roads surveillance officer  ·  mounted police officer  ·  law enforcement officer  ·  constable"
+  },
+  {
+   "role": "secretary general",
+   "isco": 1112,
+   "aka": "first secretary  ·  secretary-general  ·  general secretary  ·  international organisation chief officer"
+  },
+  {
+   "role": "communication scientist",
+   "isco": 2632,
+   "aka": "communication analyst  ·  communication studies research scientist  ·  communication science researcher  ·  communication studies researcher  ·  communication studies analyst"
+  },
+  {
+   "role": "juvenile correctional officer",
+   "isco": 5413,
+   "aka": "youth correctional officer  ·  young offenders officer  ·  detention centre youth worker  ·  youth detention counselor  ·  correctional youth security officer"
+  },
+  {
+   "role": "thanatology researcher",
+   "isco": 2632,
+   "aka": "thanatologist  ·  researcher in the psychology of death and dying  ·  thanatological researcher  ·  researcher in thanatology  ·  fellow in thanatology"
+  },
+  {
+   "role": "central bank governor",
+   "isco": 1112,
+   "aka": "national bank governor  ·  national bank governors  ·  central bank managers  ·  central bank directors  ·  central banker"
+  },
+  {
+   "role": "embassy counsellor",
+   "isco": 1112,
+   "aka": "embassy counselor  ·  cultural attache  ·  defence attache  ·  embassy officer  ·  economic attache"
+  },
+  {
+   "role": "consul",
+   "isco": 1112,
+   "aka": "chargé d'affaires  ·  consul-general  ·  honorary consul  ·  attaché"
+  },
+  {
+   "role": "passport officer",
+   "isco": 3354,
+   "aka": "passport examining officer  ·  border control officer  ·  passport office worker  ·  her majesty's passport officer  ·  passport issuing administrator"
+  },
+  {
+   "role": "anthropologist",
+   "isco": 2632,
+   "aka": "arts scientist  ·  cultural scientist  ·  linguistic anthropologist  ·  ethnologist  ·  television scientist"
+  },
+  {
+   "role": "geographer",
+   "isco": 2632,
+   "aka": "economic geographer  ·  geographers  ·  biogeographer  ·  cultural geographer  ·  physical geographer"
+  },
+  {
+   "role": "police inspector",
+   "isco": 3355,
+   "aka": "police superintendent  ·  superintendent  ·  chief inspector  ·  inspector of police"
+  },
+  {
+   "role": "immigration adviser",
+   "isco": 3354,
+   "aka": "solicitor  ·  senior immigration consultant  ·  global immigration consultant  ·  immigration consultant  ·  immigration lawyer"
+  },
+  {
+   "role": "fire commissioner",
+   "isco": 1112,
+   "aka": "area manager  ·  fire brigade commissioner  ·  fire service commissioner  ·  brigade manager  ·  chief fire officer"
+  },
+  {
+   "role": "Correctional Officers and Jailers",
+   "isco": 5413,
+   "aka": NaN
+  },
+  {
+   "role": "Police and Sheriff",
+   "isco": 5412,
+   "aka": NaN
+  }
+ ]
+}

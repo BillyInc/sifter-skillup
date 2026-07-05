@@ -1,0 +1,965 @@
+{
+ "reconciled": [
+  {
+   "programme": "Adult and Continuing Education",
+   "add": [
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "direct", "why": "Core purpose is adult literacy & vocational-skills training (Literacy and Vocational Skills, Adult Education and Development)." },
+    { "domain_id": "D046", "domain": "Social Work & Community Development", "match": "functional", "why": "Community-development and marginalised-groups courses (Intro to Community Development, Working with Marginal Groups)." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Adult education, not early childhood; no childcare course basis." },
+    { "domain_id": "D063", "why": "Economics — only passing mention of economic factors, no economics course." },
+    { "domain_id": "D062", "why": "Trading — no capital-markets basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no finance course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no math-finance course." },
+    { "domain_id": "D060", "why": "Banking — no banking course." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D158", "why": "Corporate Finance/IB — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no marketing course." },
+    { "domain_id": "D029", "why": "HR — no HR course beyond generic." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious generic-ICT link." },
+    { "domain_id": "D130", "why": "Recruitment/Staffing — no course basis." },
+    { "domain_id": "D037", "why": "Legal Practice — no law course." },
+    { "domain_id": "D071", "why": "Sports Management — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no management course." }
+   ]
+  },
+  {
+   "programme": "Agricultural Education",
+   "add": [
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "direct", "why": "Trains teachers of vocational agriculture (Teaching Vocational Agriculture in Schools)." },
+    { "domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match": "functional", "why": "Horticulture Education, Techniques of Vegetable Crop Production courses." },
+    { "domain_id": "D119", "domain": "Livestock, Poultry, Dairy & Animal Production", "match": "functional", "why": "Anatomy and Physiology of Farm Animals course." },
+    { "domain_id": "D121", "domain": "Forestry, Wildlife Management & Pest Control", "match": "adjacent", "why": "Forest Management Education course." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood; no childcare basis." },
+    { "domain_id": "D096", "why": "Ag/industrial machinery mechanics — trade repair, no mechanics course (only Farm Tools intro)." },
+    { "domain_id": "D062", "why": "Trading — no capital-markets basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no finance course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no marketing course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — only Farm Biometrics intro, not data science." },
+    { "domain_id": "D161", "why": "Humanitarian Aid — no course basis." }
+   ]
+  },
+  {
+   "programme": "Arabic",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-training programme; all Education programmes map to Higher Education directly (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "Arabic grammar/morphology/literature/linguistics — the subject taught is a language discipline." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language-instruction skills transfer to vocational/adult language training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood; no childcare basis." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — no management course." },
+    { "domain_id": "D030", "why": "Marketing — no marketing course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D071", "why": "Sports Management — no basis." }
+   ]
+  },
+  {
+   "programme": "Biology",
+   "add": [
+    { "domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match": "functional", "why": "Genetics, physiology, cell biology, biological techniques — core biological-science content." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Science-teaching skills transfer to technical/lab training." }
+   ],
+   "remove": [
+    { "domain_id": "D142", "why": "Bioinformatics/Computational Biology — far too specialized; no computational-biology course (D027/D041 cover the field)." },
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D145", "why": "Neuroscience — no neuroscience course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no data-science course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D001", "why": "Software Engineering — only Intro to Computer Science literacy, not SE." }
+   ]
+  },
+  {
+   "programme": "Business Education",
+   "add": [
+    { "domain_id": "D028", "domain": "General Management & Strategy", "match": "direct", "why": "Business Education subject field is Business/Management (per rule subject-ed maps to subject domain)." },
+    { "domain_id": "D015", "domain": "Accounting & Financial Reporting", "match": "functional", "why": "Financial Accounting for Business, Cost Accounting for Business courses." },
+    { "domain_id": "D084", "domain": "Payroll, Bookkeeping & Finance Clerking", "match": "functional", "why": "Accounting/book-keeping and business-finance courses at clerical level." },
+    { "domain_id": "D081", "domain": "Office Administration, Secretarial & Registry", "match": "functional", "why": "Office Administration and Office Information Technology courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Business teaching prepares vocational commercial-skills instructors." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D062", "why": "Trading — no capital-markets course." },
+    { "domain_id": "D013", "why": "Investment Analysis — no investment course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D158", "why": "Corporate Finance/IB — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D014", "why": "Actuarial Science — Business Maths only, not actuarial." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." }
+   ]
+  },
+  {
+   "programme": "Chemistry",
+   "add": [
+    { "domain_id": "D041", "domain": "Scientific Research & Development", "match": "functional", "why": "Physical/Organic/Inorganic/Analytical Chemistry with lab practicals — core physical-science research base." },
+    { "domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match": "adjacent", "why": "Physical chemistry, kinetics, electrolytic conduction, solution chemistry underpin process chemistry." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Science/lab teaching transfers to technical training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — statistics for sciences only, not finance." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — no course." },
+    { "domain_id": "D009", "why": "Data Science — no data-science course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D145", "why": "Neuroscience — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D014", "why": "Actuarial Science — no actuarial course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." }
+   ]
+  },
+  {
+   "programme": "Christian Religious Studies",
+   "add": [
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Religious-education teaching transfers to community/vocational instruction." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "adjacent", "why": "Introduction to Greek and Hebrew Language courses for scriptural study." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." }
+   ]
+  },
+  {
+   "programme": "Computer Science",
+   "add": [
+    { "domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match": "functional", "why": "Artificial Intelligence course plus Data Structures/Algorithms base." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Computer-science teaching prepares ICT technical trainers." },
+    { "domain_id": "D058", "domain": "EdTech & Learning Experience Design", "match": "direct", "why": "Computer teacher-education — EdTech is a direct outlet (was only functional)." }
+   ],
+   "remove": [
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no marketing course." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D130", "why": "Recruitment — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no fintech course." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D004", "why": "Cybersecurity — no security course in curriculum." },
+    { "domain_id": "D007", "why": "UI/UX — no design course." },
+    { "domain_id": "D078", "why": "Social Sciences — weak; CS is computing, education foundation retained via D039/D058." }
+   ]
+  },
+  {
+   "programme": "Creative Arts Education",
+   "add": [
+    { "domain_id": "D044", "domain": "Graphic Design & Visual Communication", "match": "functional", "why": "Creative Design, 2D/3D drawing, light & shade courses." },
+    { "domain_id": "D153", "domain": "Music Production, Sound Engineering & Audio Technology", "match": "functional", "why": "Special Methods in Music, Speech Arts/Music/Acting courses." },
+    { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match": "functional", "why": "Introduction to Media Arts, Introduction to Directing, theatre design & technology." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Creative-arts teaching transfers to studio/vocational arts training." }
+   ],
+   "remove": [
+    { "domain_id": "D092", "why": "Culinary Arts — spurious keyword match on 'Arts'; no catering/food course." },
+    { "domain_id": "D127", "why": "Not early childhood (Children's Theatre is drama pedagogy, not childcare)." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D128", "why": "Social Welfare — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D046", "why": "Social Work — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." }
+   ]
+  },
+  {
+   "programme": "Early Childhood Education",
+   "add": [
+    { "domain_id": "D046", "domain": "Social Work & Community Development", "match": "functional", "why": "Young Children with Special Needs, Social Skills, Maternal-Child Health courses." }
+   ],
+   "remove": [
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — Maths in Early Childhood only, not finance." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D028", "why": "General Management — Admin of early-childhood only, not general mgmt." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D158", "why": "Corporate Finance/IB — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D014", "why": "Actuarial Science — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." }
+   ]
+  },
+  {
+   "programme": "Educational Management",
+   "add": [
+    { "domain_id": "D028", "domain": "General Management & Strategy", "match": "direct", "why": "Subject is management (Intro to Management, Admin, Leadership, Programme Organization) applied to education." },
+    { "domain_id": "D029", "domain": "Human Resources & People Management", "match": "functional", "why": "Introduction to Human Resource, Personnel/Leadership & Interpersonal courses." },
+    { "domain_id": "D032", "domain": "Project Management & Programme Delivery", "match": "functional", "why": "Programme Organization and contextual management of institutions." },
+    { "domain_id": "D045", "domain": "Public Administration & Policy", "match": "adjacent", "why": "Administration of public education institutions, education policy/legal basis." },
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Education-management leadership of institutions (was only functional)." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Manages/trains across education & vocational institutions." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood; management of institutions." },
+    { "domain_id": "D063", "why": "Educational Finance & Economics course is education-specific, not the Economics discipline." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D071", "why": "Sports Management — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." }
+   ]
+  },
+  {
+   "programme": "Efik-Ibibio Education",
+   "add": [
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "Efik/Ibibio phonology, morphology, syntax, orthography, linguistics — a language discipline." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language teaching transfers to adult/vocational language instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D071", "why": "Sports Management — no basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." }
+   ]
+  },
+  {
+   "programme": "English Language/Literature-in-English",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "English grammar, phonetics, morphology, varieties, language & society — a linguistics/language discipline." },
+    { "domain_id": "D043", "domain": "Journalism & Digital Publishing", "match": "functional", "why": "Creative Writing, Advanced English Composition, prose/drama literature." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language teaching transfers to adult/vocational literacy training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D046", "why": "Social Work — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." }
+   ]
+  },
+  {
+   "programme": "Entrepreneurship Education",
+   "add": [
+    { "domain_id": "D028", "domain": "General Management & Strategy", "match": "direct", "why": "Principles & Practice of Management, enterprise formation — business/management is the subject." },
+    { "domain_id": "D031", "domain": "Sales & Business Development", "match": "functional", "why": "Entrepreneurial Marketing/Customer, venture creation, business development." },
+    { "domain_id": "D015", "domain": "Accounting & Financial Reporting", "match": "functional", "why": "Principles of Accounting/Book Keeping course." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Trains enterprise/vocational-skills instructors." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D062", "why": "Trading — no capital-markets course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — Business Maths/Stats only, not finance." },
+    { "domain_id": "D078", "why": "Social Sciences — weak; business subject, education foundation retained via D039." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no investment course." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D014", "why": "Actuarial Science — no actuarial course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." }
+   ]
+  },
+  {
+   "programme": "Environmental Education",
+   "add": [
+    { "domain_id": "D041", "domain": "Scientific Research & Development", "match": "functional", "why": "Environmental science, chemistry, microbiology, pollution studies." },
+    { "domain_id": "D072", "domain": "Geospatial Science & GIS", "match": "functional", "why": "Remote Sensing Techniques course." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Environmental-science teaching transfers to technical training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course (environmental focus)." },
+    { "domain_id": "D011", "why": "Quantitative Finance — basic maths only, not finance." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D004", "why": "Cybersecurity — no security course." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." }
+   ]
+  },
+  {
+   "programme": "French",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "French grammar, phonetics, and dedicated Translation (Theme/Version) courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language teaching transfers to adult/vocational language training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course (Francophone-neighbours is regional-studies, not IR practice)." },
+    { "domain_id": "D128", "why": "Social Welfare — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." }
+   ]
+  },
+  {
+   "programme": "Geography",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D072", "domain": "Geospatial Science & GIS", "match": "direct", "why": "Remote Sensing, map reading, practical geography, scales & cartography — GIS/geospatial is the subject core." },
+    { "domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match": "functional", "why": "Environmental science, resource management, geomorphology, climatology." },
+    { "domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match": "functional", "why": "Introduction to Climatology course." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Geography teaching transfers to technical/field training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course (Spatial Organization is geography, not economics)." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." }
+   ]
+  },
+  {
+   "programme": "Guidance and Counselling",
+   "add": [
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Career Counselling, Job Analysis & Job placement courses feed vocational guidance." },
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood (Adolescence Psychology is counselling, not childcare)." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D150", "why": "Religious Ministry — no theology course." },
+    { "domain_id": "D033", "why": "Product Management — no basis." }
+   ]
+  },
+  {
+   "programme": "Hausa",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "Hausa applied linguistics, reading skills, language-arts discipline." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language teaching transfers to adult/vocational language instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link (Digital Humanities is arts-computing intro)." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." }
+   ]
+  },
+  {
+   "programme": "Health Education",
+   "add": [
+    { "domain_id": "D026", "domain": "Public Health & Epidemiology", "match": "direct", "why": "Community & Public Health, Environmental Health, Human Diseases, School Health — public-health is the subject." },
+    { "domain_id": "D024", "domain": "Nursing & Allied Health Professions", "match": "functional", "why": "Human Anatomy & Physiology, Reproductive Health, Food & Nutrition courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Health teaching transfers to community-health/vocational training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood (Human Growth & Development is health science)." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." }
+   ]
+  },
+  {
+   "programme": "History",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D152", "domain": "Museum Curation, Cultural Heritage, Archives & Archaeology", "match": "functional", "why": "Archaeology of Nigeria, major world civilizations, diaspora history courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "History teaching transfers to broader education/heritage instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economic History is history, not the Economics discipline." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR-practice course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D046", "why": "Social Work — no course basis." }
+   ]
+  },
+  {
+   "programme": "Home Economics",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D092", "domain": "Culinary Arts, Catering & Food Service Operations", "match": "functional", "why": "Introduction to Foods, Fundamentals of Food Preparation, Food Preparation & Management." },
+    { "domain_id": "D075", "domain": "Fashion, Textiles & Apparel", "match": "functional", "why": "Textiles & Clothing, Clothing Construction, Advanced Textile & Fashion Design." },
+    { "domain_id": "D048", "domain": "Food Science & Technology", "match": "functional", "why": "Food commodities, functions of food, food toxins/nutrition courses." },
+    { "domain_id": "D106", "domain": "Garment Making, Tailoring, Dressmaking & Fashion Production", "match": "adjacent", "why": "Pattern drafting, sewing machine, clothing construction — garment trade skills." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Home-economics teaching is vocational home-craft instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D011", "why": "Quantitative Finance — Home 'Economics' is home management, not finance." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D014", "why": "Actuarial Science — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — home management only, not general mgmt." }
+   ]
+  },
+  {
+   "programme": "Human Kinetics/Physical Education",
+   "add": [
+    { "domain_id": "D071", "domain": "Sports Management & Fitness", "match": "direct", "why": "Physical education/human kinetics — sports & fitness is the subject (was only functional)." },
+    { "domain_id": "D154", "domain": "Exercise Science, Sports Therapy & Athletic Performance", "match": "functional", "why": "Human kinetics, research methods & measurement of physical performance." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "PE teaching transfers to coaching/fitness vocational training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." }
+   ]
+  },
+  {
+   "programme": "Igbo",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "Igbo phonology, morphology, syntax, dialects, linguistics — a language discipline." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language teaching transfers to adult/vocational language instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link (Broadcasting is media-in-Igbo, not IoT)." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." }
+   ]
+  },
+  {
+   "programme": "Integrated Science",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D041", "domain": "Scientific Research & Development", "match": "functional", "why": "Integrated biology/chemistry/physics/geology teaching — general science base." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Science teaching transfers to technical/lab training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D145", "why": "Neuroscience — no neuroscience course." },
+    { "domain_id": "D090", "why": "Animal Care/Grooming — spurious; General Biology is not pet services." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." }
+   ]
+  },
+  {
+   "programme": "Islamic Studies",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match": "direct", "why": "Islamic thought, philosophy, Sharia, history of Islam — theology/religious-studies is the subject (was MISSING entirely)." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Religious-education teaching transfers to community/vocational instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." }
+   ]
+  },
+  {
+   "programme": "Language Arts and Communication",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "English grammar, morphology, syntax, phonetics, multilingual/bilingual education — language/linguistics is the subject." },
+    { "domain_id": "D043", "domain": "Journalism & Digital Publishing", "match": "functional", "why": "Composition, prose/poetry/drama literature, communication." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language/communication teaching transfers to vocational literacy training (keep — already present)." }
+   ],
+   "remove": [
+    { "domain_id": "D092", "why": "Culinary Arts — spurious 'Arts' keyword match; no catering course." },
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D071", "why": "Sports Management — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." }
+   ]
+  },
+  {
+   "programme": "Library and Information Science",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme; LIS teacher-training for school libraries." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "LIS teaching transfers to information/records vocational training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D004", "why": "Cybersecurity — no security course (library software only)." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D001", "why": "Software Engineering — LIS uses application packages, not software engineering." },
+    { "domain_id": "D010", "why": "Business Intelligence — no BI course." }
+   ]
+  },
+  {
+   "programme": "Mathematics",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D014", "domain": "Actuarial Science & Risk Management", "match": "functional", "why": "Strong pure-maths base (algebra, analysis, differential equations, statistics) underpins actuarial work." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Maths teaching transfers to technical/numeracy training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D062", "why": "Trading — no capital-markets course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D010", "why": "Business Intelligence — no BI course." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." }
+   ]
+  },
+  {
+   "programme": "Music",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D070", "domain": "Performing Arts & Entertainment", "match": "functional", "why": "University Chorus, Band/Orchestra, instrumental ensembles, performance courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Music teaching transfers to studio/vocational music instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D046", "why": "Social Work — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D064", "why": "Psychology — no counselling course (music-psychology mention only)." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D145", "why": "Neuroscience — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." }
+   ]
+  },
+  {
+   "programme": "Physics",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D141", "domain": "Quantum Computing, Quantum Information & Advanced Physics", "match": "functional", "why": "Modern Physics, quantum mechanics, Schrodinger equation, wave-particle duality courses." },
+    { "domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match": "functional", "why": "Electric Circuits, Ohm's/Kirchhoff's laws, AC/DC circuits, workshop practice." },
+    { "domain_id": "D041", "domain": "Scientific Research & Development", "match": "functional", "why": "Core physical-science research base across mechanics/thermal/optics." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Physics teaching transfers to technical training." }
+   ],
+   "remove": [
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D046", "why": "Social Work — no course basis." },
+    { "domain_id": "D162", "why": "Immigration Law — spurious; no law course." },
+    { "domain_id": "D158", "why": "Corporate Finance/IB — no course basis." }
+   ]
+  },
+  {
+   "programme": "Political Science",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D045", "domain": "Public Administration & Policy", "match": "functional", "why": "Introduction to Public Administration, Organization of Government, Nigerian Government & Politics." },
+    { "domain_id": "D149", "domain": "Diplomacy, International Relations & Foreign Affairs", "match": "functional", "why": "Introduction to International Relations course (legitimate here, keep)." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Teaching transfers to civic/vocational instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis (Political Economy is not finance)." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." }
+   ]
+  },
+  {
+   "programme": "Primary Education",
+   "add": [
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Primary teaching foundation transfers to broader instruction/training." }
+   ],
+   "remove": [
+    { "domain_id": "D063", "why": "Economics — no economics course (Entrepreneurship is generic)." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — Mathematics in Primary Education only, not finance." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D145", "why": "Neuroscience — no course basis (Child Development is pedagogy)." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D060", "why": "Banking — no course basis." }
+   ]
+  },
+  {
+   "programme": "Social Studies and Civic Education",
+   "add": [
+    { "domain_id": "D045", "domain": "Public Administration & Policy", "match": "functional", "why": "Civic education, democracy, citizenship, socio-political institutions courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Civic/social-studies teaching transfers to community/vocational instruction (keep — already present)." },
+    { "domain_id": "D046", "domain": "Social Work & Community Development", "match": "functional", "why": "Family/society, social issues & problems, community-focused content (keep — already present)." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Socio-economic environment content is social studies, not the Economics discipline." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR-practice course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D162", "why": "Immigration Law — spurious; no law course." },
+    { "domain_id": "D064", "why": "Psychology — no counselling course." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." }
+   ]
+  },
+  {
+   "programme": "Special Needs Education",
+   "add": [
+    { "domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match": "functional", "why": "Audiology & aural rehabilitation, clinical diagnostic teaching, visually-challenged methods." },
+    { "domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match": "functional", "why": "Psychology of persons with special needs, social psychology of abnormalities." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Special-needs teaching transfers to inclusive vocational training." }
+   ],
+   "remove": [
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." }
+   ]
+  },
+  {
+   "programme": "Sustainable Development Studies",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match": "direct", "why": "Global Environmental Change, ecology, biodiversity conservation, sustainability — the subject core (was MISSING)." },
+    { "domain_id": "D041", "domain": "Scientific Research & Development", "match": "functional", "why": "Human-environment theories, ecosystems, natural-resource science." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Teaching transfers to development/vocational training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D062", "why": "Trading — no course basis (capital flows is development-economics context)." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR-practice course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." }
+   ]
+  },
+  {
+   "programme": "Technology Education",
+   "add": [
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "direct", "why": "Trains teachers of industrial/technical trades — vocational-technical education is the core purpose." },
+    { "domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match": "functional", "why": "Intro to Electrical/Electronic Technology, Principles of Electricity courses." },
+    { "domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match": "functional", "why": "Industrial Technology, Automobile Engines, Metal Work Technology, Technical Drawing." },
+    { "domain_id": "D095", "domain": "Motor Vehicle Mechanics, Repairs & Automobile Technology", "match": "functional", "why": "Introduction to Automobile Technology, Automobile Engines." },
+    { "domain_id": "D097", "domain": "Welding, Fabrication, Blacksmithing & Metal Trades", "match": "functional", "why": "Metal Work Technology course." },
+    { "domain_id": "D102", "domain": "Carpentry, Joinery, Wood Technology & Furniture Making", "match": "functional", "why": "Wood Work Technology course." },
+    { "domain_id": "D099", "domain": "Masonry, Bricklaying, Tiling, Plastering & General Building Trades", "match": "functional", "why": "Building Technology, Building Construction courses." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D060", "why": "Banking — no course basis." }
+   ]
+  },
+  {
+   "programme": "Yoruba",
+   "add": [
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match": "direct", "why": "Yoruba phonology, morphology, syntax, orthography, linguistics — a language discipline." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Language teaching transfers to adult/vocational language instruction." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link (Digital Humanities is arts-computing intro)." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D056", "why": "Blockchain — spurious." },
+    { "domain_id": "D128", "why": "Social Welfare — no course basis." },
+    { "domain_id": "D010", "why": "Business Intelligence — no course basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D001", "why": "Software Engineering — Digital Humanities intro is not software engineering." },
+    { "domain_id": "D028", "why": "General Management — no course basis." }
+   ]
+  },
+  {
+   "programme": "Educational Technology",
+   "add": [
+    { "domain_id": "D058", "domain": "EdTech & Learning Experience Design", "match": "direct", "why": "This programme IS EdTech — instructional design, ICT in education, gamification/edutainment (was only functional)." },
+    { "domain_id": "D039", "domain": "Higher Education & Academic Research", "match": "direct", "why": "Teacher-education programme (was only functional)." },
+    { "domain_id": "D042", "domain": "Media Production & Broadcasting", "match": "functional", "why": "Communication & Media Technology, instructional media courses." },
+    { "domain_id": "D040", "domain": "Vocational & Technical Training", "match": "functional", "why": "Instructional-design skills transfer to corporate/vocational training." }
+   ],
+   "remove": [
+    { "domain_id": "D127", "why": "Not early childhood; EdTech programme, no childcare basis." },
+    { "domain_id": "D063", "why": "Economics — no economics course." },
+    { "domain_id": "D029", "why": "HR — no HR course." },
+    { "domain_id": "D030", "why": "Marketing — no course basis." },
+    { "domain_id": "D028", "why": "General Management — no course basis." },
+    { "domain_id": "D011", "why": "Quantitative Finance — no course basis." },
+    { "domain_id": "D062", "why": "Trading — no course basis." },
+    { "domain_id": "D008", "why": "Telecommunications — spurious ICT link." },
+    { "domain_id": "D033", "why": "Product Management — no basis." },
+    { "domain_id": "D013", "why": "Investment Analysis — no course basis." },
+    { "domain_id": "D006", "why": "IoT — spurious ICT link." },
+    { "domain_id": "D012", "why": "FinTech — no course basis." },
+    { "domain_id": "D149", "why": "Diplomacy — no IR course." },
+    { "domain_id": "D061", "why": "Insurance — no course basis." },
+    { "domain_id": "D071", "why": "Sports Management — no course basis." },
+    { "domain_id": "D009", "why": "Data Science — no course basis." }
+   ]
+  }
+ ]
+}

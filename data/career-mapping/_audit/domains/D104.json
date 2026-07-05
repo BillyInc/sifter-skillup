@@ -1,0 +1,127 @@
+{
+ "domain_id": "D104",
+ "domain_name": "Pottery, Ceramics, Glass",
+ "role_count": 24,
+ "roles": [
+  {
+   "role": "ceramic painter",
+   "isco": 7316,
+   "aka": "ceramic designer and painter  ·  ceramics painter  ·  ceramic painter and decorator  ·  ceramic designer & painter  ·  ceramic artist"
+  },
+  {
+   "role": "hand brick moulder",
+   "isco": 7314,
+   "aka": "handmade-brick moulder  ·  heat resistant product molder  ·  molder of handmade bricks  ·  brick mould maker  ·  hand pipe molder"
+  },
+  {
+   "role": "sports equipment repair technician",
+   "isco": 7319,
+   "aka": "sports equipment technician  ·  archery bows repairer  ·  sporting goods repair technician  ·  sporting goods repairer  ·  camping equipment repair technician"
+  },
+  {
+   "role": "glass engraver",
+   "isco": 7316,
+   "aka": "glass decorator  ·  glass hand etcher  ·  decorative glass engraver  ·  heritage glass engraver  ·  diamond point glass engraver"
+  },
+  {
+   "role": "decorative painter",
+   "isco": 7316,
+   "aka": "decorative glass artist  ·  ceramic painter  ·  specialist decorator  ·  glass painter  ·  traditional glass painter"
+  },
+  {
+   "role": "pottery and porcelain caster",
+   "isco": 7314,
+   "aka": "caster of pottery and porcelain  ·  pottery caster  ·  porcelain caster  ·  pottery and porcelain moulder  ·  pottery and porcelain ware caster"
+  },
+  {
+   "role": "glass-blower",
+   "isco": 7315,
+   "aka": "decorative glass artist  ·  scientific glass maker  ·  glassblower  ·  glass designer and blower  ·  glass designer & maker"
+  },
+  {
+   "role": "glass painter",
+   "isco": 7316,
+   "aka": "stained glass painter  ·  crystal painter  ·  glass object pattern designer  ·  window painter  ·  pattern designer on glass"
+  },
+  {
+   "role": "metal engraver",
+   "isco": 7316,
+   "aka": "engraving set up technician  ·  engraving drilling operative  ·  precious metal engraver  ·  engraving drill technician  ·  engraving set up operative"
+  },
+  {
+   "role": "wood painter",
+   "isco": 7316,
+   "aka": "decorator of wooden items  ·  wooden items decorator  ·  wood painter and designer  ·  wood painter & designer  ·  wood painting specialist"
+  },
+  {
+   "role": "production potter",
+   "isco": 7314,
+   "aka": "craft potter  ·  ceramics maker  ·  abrasive wheel moulder  ·  pottery and porcelain modeller  ·  potter"
+  },
+  {
+   "role": "sign maker",
+   "isco": 7316,
+   "aka": "traffic sign maker  ·  road sign maker  ·  road sign installer  ·  signboard writer  ·  advertising sign maker"
+  },
+  {
+   "role": "glass beveller",
+   "isco": 7315,
+   "aka": "glass beveling machine operator  ·  glass edger  ·  glass beveller machine operator  ·  glass hand-beveller  ·  glass cutter"
+  },
+  {
+   "role": "porcelain painter",
+   "isco": 7316,
+   "aka": "china designer and painter  ·  porcelain decorator  ·  china painter  ·  porcelain designer and painter  ·  china designer & painter"
+  },
+  {
+   "role": "candle maker",
+   "isco": 7319,
+   "aka": "candle moulder  ·  candle production inspector  ·  candlemaker  ·  candle former  ·  wax candle maker"
+  },
+  {
+   "role": "Artists and Related Workers, All Other",
+   "isco": 7316,
+   "aka": NaN
+  },
+  {
+   "role": "Grinding and Polishing Workers, Hand",
+   "isco": 7315,
+   "aka": NaN
+  },
+  {
+   "role": "Molders, Shapers, and Casters, Except Metal and Plastic",
+   "isco": 7314,
+   "aka": NaN
+  },
+  {
+   "role": "Furniture Finishers",
+   "isco": 7315,
+   "aka": NaN
+  },
+  {
+   "role": "Painting, Coating, and Decorating Workers",
+   "isco": 7316,
+   "aka": NaN
+  },
+  {
+   "role": "Coating, Painting, and Spraying Machine Setters, Operators, and Tenders",
+   "isco": 7316,
+   "aka": NaN
+  },
+  {
+   "role": "Stone Cutters and Carvers, Manufacturing",
+   "isco": 7314,
+   "aka": NaN
+  },
+  {
+   "role": "Glass Blowers, Molders, Benders, and Finishers",
+   "isco": 7314,
+   "aka": NaN
+  },
+  {
+   "role": "Potters, Manufacturing",
+   "isco": 7314,
+   "aka": NaN
+  }
+ ]
+}

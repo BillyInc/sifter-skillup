@@ -1,0 +1,532 @@
+{
+ "domain_id": "D018",
+ "domain_name": "Civil",
+ "role_count": 105,
+ "roles": [
+  {
+   "role": "dismantling engineer",
+   "isco": 2149,
+   "aka": "dismantling planner  ·  disassembly planner  ·  dismantling manager"
+  },
+  {
+   "role": "biomedical engineer",
+   "isco": 2149,
+   "aka": "biomedical technology engineering specialist  ·  biomedical technology engineering consultant  ·  BME consultant  ·  BME specialist  ·  BME expert"
+  },
+  {
+   "role": "dependability engineer",
+   "isco": 2149,
+   "aka": "reliability engineer  ·  RAM engineer  ·  maintenance and reliability engineer  ·  dependability and security engineer  ·  RAMS engineer"
+  },
+  {
+   "role": "domestic energy assessor",
+   "isco": 3112,
+   "aka": "residential energy seller  ·  residential energy sales promoter  ·  residential energy salesman  ·  domestic energy sales promoter  ·  residential energy sales representative"
+  },
+  {
+   "role": "quantity surveyor",
+   "isco": 2149,
+   "aka": "development project cost manager  ·  construction project manager  ·  development project cost consultant  ·  construction project cost consultant  ·  construction cost consultant"
+  },
+  {
+   "role": "renewable energy engineer",
+   "isco": 2149,
+   "aka": "renewable energy technology engineering specialist  ·  renewable energy technology engineering consultant  ·  renewable energy engineering specialist  ·  renewable energy engineering consultant  ·  turbine engineer"
+  },
+  {
+   "role": "civil engineering technician",
+   "isco": 3112,
+   "aka": "civil engineering design technician  ·  civils technician  ·  hydraulic engineering superintendent  ·  civil engineering technical officer  ·  civil engineering services technician"
+  },
+  {
+   "role": "water systems engineering technician",
+   "isco": 3112,
+   "aka": "water pumping systems engineering technician  ·  water treatment systems engineering technician  ·  flood defence engineering technician  ·  water resource engineering technician  ·  flood prevention engineering technician"
+  },
+  {
+   "role": "geological engineer",
+   "isco": 2142,
+   "aka": "geotechnical engineer  ·  geological technology engineering expert  ·  site geological consultant  ·  soil analyst  ·  geologic engineer"
+  },
+  {
+   "role": "aerospace engineering drafter",
+   "isco": 3118,
+   "aka": "aerospace draftsperson  ·  aerospace draughtsperson  ·  aerospace draughter  ·  aeronautical draughter  ·  aerospace engineering draughting specialist"
+  },
+  {
+   "role": "electromechanical drafter",
+   "isco": 3118,
+   "aka": "electromechanical engineering drafter  ·  electromechanic draughtsperson  ·  electromechanical drafting expert  ·  electro-mechanical draughtsman  ·  electromechanical drafting specialist"
+  },
+  {
+   "role": "component engineer",
+   "isco": 2149,
+   "aka": "components engineers  ·  component technology engineering consultant  ·  components engineer  ·  component engineering consultant  ·  component engineering expert"
+  },
+  {
+   "role": "energy systems engineer",
+   "isco": 2149,
+   "aka": "energy systems technology engineering consultant  ·  distribution system engineer  ·  energy conservation engineer  ·  distribution project engineer  ·  energy systems engineering consultant"
+  },
+  {
+   "role": "mine shift manager",
+   "isco": 3121,
+   "aka": "scheduling officer  ·  scheduling manager (mine)  ·  mine shift supervisor  ·  mine shifts manager  ·  mine shift managers"
+  },
+  {
+   "role": "energy conservation officer",
+   "isco": 3112,
+   "aka": "energy information officer  ·  energy management officer"
+  },
+  {
+   "role": "electrical drafter",
+   "isco": 3118,
+   "aka": "electrical draughter  ·  electric draughtsperson  ·  electrical draughtsperson  ·  electrical drafting adviser  ·  draughter in electrical systems"
+  },
+  {
+   "role": "innovation engineer",
+   "isco": 2149,
+   "aka": "innovation engineer expert  ·  innovation engineer consultant  ·  innovation engineer specialist"
+  },
+  {
+   "role": "construction engineer",
+   "isco": 2142,
+   "aka": "building engineer  ·  construction design engineer  ·  buildng construction engineer  ·  site engineer  ·  construction project engineer"
+  },
+  {
+   "role": "marine engineering drafter",
+   "isco": 3118,
+   "aka": "marine draughter  ·  naval engineering drafter  ·  marine draftsperson  ·  marine drafter  ·  shipbuilding drafter"
+  },
+  {
+   "role": "civil drafter",
+   "isco": 3118,
+   "aka": "civil design drafter  ·  civil engineering drafter  ·  civil draftswoman  ·  structural drafter"
+  },
+  {
+   "role": "quality engineer",
+   "isco": 2149,
+   "aka": "product quality monitor  ·  quality systems engineer  ·  senior quality engineer  ·  junior quality engineer  ·  customer quality engineer"
+  },
+  {
+   "role": "construction quality manager",
+   "isco": 3112,
+   "aka": "construction quality and safety control supervisor  ·  construction quality and safety manager  ·  construction QA manager  ·  construction quality managers  ·  construction QA QS manager"
+  },
+  {
+   "role": "automotive engineering drafter",
+   "isco": 3118,
+   "aka": "automotive drafting specialist  ·  automotive drafting expert  ·  automotive draftsperson  ·  automotive draughter  ·  automotive drafter"
+  },
+  {
+   "role": "wood technology engineer",
+   "isco": 2149,
+   "aka": "wood tech engineer  ·  wood technology operator  ·  wooden technology specialist  ·  wood technology operative  ·  wooden technology operator"
+  },
+  {
+   "role": "architectural drafter",
+   "isco": 3118,
+   "aka": "architecture draftsperson  ·  architectural draughter  ·  architectural drafting consultant  ·  architectural draughtsperson  ·  architectural draftsperson"
+  },
+  {
+   "role": "mechanical engineering drafter",
+   "isco": 3118,
+   "aka": "machinery engineering draughtsperson  ·  mechanical engineering draughting apprentice  ·  mechanical technology drafter  ·  machinery engineering draftsperson  ·  mechanical design drafting engineer"
+  },
+  {
+   "role": "research engineer",
+   "isco": 2149,
+   "aka": "engineering scientist  ·  agricultural research engineer  ·  engineering analyst  ·  engineer researcher  ·  bionic engineer"
+  },
+  {
+   "role": "rail project engineer",
+   "isco": 2142,
+   "aka": "railway project engineer  ·  rail engineering project manager  ·  engineer in railway projects  ·  project engineer in railways  ·  engineering project manager"
+  },
+  {
+   "role": "construction safety manager",
+   "isco": 3112,
+   "aka": "health and safety manager  ·  safety officer  ·  safety manager  ·  construction safety supervisor  ·  safety advisor"
+  },
+  {
+   "role": "rolling stock engineering drafter",
+   "isco": 3118,
+   "aka": "rolling stock draughtsperson  ·  rolling stock engineering draughtsperson  ·  rolling stock engineering drafting specialist  ·  rolling stock engineering drafting adviser  ·  rolling stock engineering drafting expert"
+  },
+  {
+   "role": "sewerage maintenance technician",
+   "isco": 3112,
+   "aka": "sewer pipe maintenance technician  ·  sewerage investigative cctv operative  ·  sewerage investigation technician  ·  cctv operative  ·  sewerage system maintenance technician"
+  },
+  {
+   "role": "corrosion technician",
+   "isco": 3112,
+   "aka": "offshore corrosion technician  ·  surface technician  ·  corrosion monitoring technician  ·  pipeline operations technician  ·  pipeline corrosion control technician"
+  },
+  {
+   "role": "solar energy engineer",
+   "isco": 2149,
+   "aka": "solar energies engineer  ·  solar energy engineering consultant  ·  solar engineer  ·  solar energy systems engineer  ·  solar power engineer"
+  },
+  {
+   "role": "materials engineer",
+   "isco": 2149,
+   "aka": "construction materials engineering expert  ·  materials engineering consultant  ·  building materials engineering consultant  ·  ceramic engineer  ·  building materials engineer"
+  },
+  {
+   "role": "fire prevention and protection engineer",
+   "isco": 2149,
+   "aka": "fire protection and prevention engineer  ·  fire prevention and protection engineering expert  ·  fire prevention engineer  ·  fire prevention and protection technology engineering consultant  ·  fire prevention and protection technology engineer"
+  },
+  {
+   "role": "fire protection technician",
+   "isco": 3112,
+   "aka": "fire protection service engineer  ·  senior fire engineer  ·  fire and security systems engineer  ·  fire alarm service technician  ·  fire suppression engineer"
+  },
+  {
+   "role": "3D printing technician",
+   "isco": 3118,
+   "aka": "3D printer operator  ·  printing machine technician  ·  3D printer repairman  ·  3D printing operator  ·  3D printing prototyping technician"
+  },
+  {
+   "role": "aviation ground systems engineer",
+   "isco": 2149,
+   "aka": "aviation ground systems technician  ·  engineer of aviation ground systems  ·  airport ground systems technician  ·  airport ground systems engineer"
+  },
+  {
+   "role": "railway infrastructure inspector",
+   "isco": 3112,
+   "aka": "railway infrastructure examiner  ·  railway infrastructure safety inspector  ·  railway infrastructure auditor  ·  railway infrastructure surveyor"
+  },
+  {
+   "role": "robotics engineer",
+   "isco": 2149,
+   "aka": "automation systems engineer  ·  robotics engineering adviser  ·  autonomous systems engineer  ·  robotic technology engineering specialist  ·  robotics engineering expert"
+  },
+  {
+   "role": "pipeline engineer",
+   "isco": 2142,
+   "aka": "subsea pipeline engineer  ·  pipeline field engineer  ·  main line station engineer  ·  pipeline engineering technician  ·  pipeline field technician"
+  },
+  {
+   "role": "installation engineer",
+   "isco": 2149,
+   "aka": "commissioning engineer  ·  structural engineer  ·  design engineer  ·  field installation engineer  ·  structural installation engineer"
+  },
+  {
+   "role": "mine supervisor",
+   "isco": 3121,
+   "aka": "quarrying supervisor  ·  mine foreman  ·  mine technical supervisor  ·  quarry supervisor  ·  mine production supervisor"
+  },
+  {
+   "role": "surveying technician",
+   "isco": 3112,
+   "aka": "engineering technician  ·  mapping technician  ·  land survey technician  ·  surveyor  ·  survey technician"
+  },
+  {
+   "role": "bridge inspector",
+   "isco": 3112,
+   "aka": "inspector of bridges  ·  structures inspector  ·  bridgemaster  ·  bridge engineer  ·  bridges and structures inspector"
+  },
+  {
+   "role": "computer-aided design operator",
+   "isco": 3118,
+   "aka": "CAD design specialist  ·  CAM operator  ·  computer aided design designer  ·  computer aided manufacturing operator  ·  CAM draftsman"
+  },
+  {
+   "role": "construction safety inspector",
+   "isco": 3112,
+   "aka": "safety advisor  ·  health and safety advisor  ·  health and safety inspector  ·  site safety inspector  ·  construction health and safety inspector"
+  },
+  {
+   "role": "design engineer",
+   "isco": 2149,
+   "aka": "HVAC design engineer  ·  industrial expert  ·  industrial specialist  ·  product engineer  ·  product design engineer"
+  },
+  {
+   "role": "rail maintenance technician",
+   "isco": 3112,
+   "aka": "rail inspector  ·  rail quality inspector  ·  permanent way inspector  ·  rail track inspector  ·  rail repairer"
+  },
+  {
+   "role": "commissioning engineer",
+   "isco": 2149,
+   "aka": "test and commissioning engineer  ·  commissioning and qualification engineer  ·  installation and commissioning engineer  ·  commissioning engineer machines"
+  },
+  {
+   "role": "photonics engineer",
+   "isco": 2149,
+   "aka": "engineer specialised in photonic systems  ·  photonic technology engineering consultant  ·  photonic technology engineering specialist  ·  photonics engineering expert  ·  photonics systems engineer"
+  },
+  {
+   "role": "contract engineer",
+   "isco": 2149,
+   "aka": "subcontractor engineer  ·  contract engineering expert  ·  contractor engineer  ·  contract engineering consultant  ·  contract engineering specialist"
+  },
+  {
+   "role": "clothing CAD technician",
+   "isco": 3118,
+   "aka": "clothing CAD specialist  ·  clothing computer-assisted designer technician  ·  clothing computer aided designer technician  ·  clothing CAD operator  ·  fashion CAD technician"
+  },
+  {
+   "role": "landfill supervisor",
+   "isco": 3112,
+   "aka": "waste disposal compliance supervisor  ·  solid waste processing supervisor  ·  landfill site supervisor  ·  solid waste collection supervisor  ·  solid waste treatment supervisor"
+  },
+  {
+   "role": "printed circuit board designer",
+   "isco": 3118,
+   "aka": "PCB design specialist  ·  printed circuit board (PCB) designer  ·  circuit board designer  ·  PCB design expert  ·  PCB designer"
+  },
+  {
+   "role": "nanoengineer",
+   "isco": 2149,
+   "aka": "nanoscience specialist  ·  nanotechnology specialist  ·  nanoscience expert  ·  nano-engineer  ·  nano engineer"
+  },
+  {
+   "role": "engineering assistant",
+   "isco": 3112,
+   "aka": "technical supporter  ·  technical support worker  ·  technical aide  ·  technology assistant  ·  project support worker"
+  },
+  {
+   "role": "health and safety engineer",
+   "isco": 2149,
+   "aka": "industrial health and safety engineer  ·  health and safety consultant engineer  ·  occupational health and safety engineer  ·  health engineer  ·  health and safety engineering specialist"
+  },
+  {
+   "role": "drainage engineer",
+   "isco": 2142,
+   "aka": "drainage engineering specialist  ·  water and drainage engineer  ·  water resources engineer  ·  drainage engineering adviser  ·  drainage engineering consultant"
+  },
+  {
+   "role": "drafter",
+   "isco": 3118,
+   "aka": "CAD draughter  ·  drafting specialist  ·  drafting expert  ·  drafting consultant  ·  computer aided design draughter"
+  },
+  {
+   "role": "alternative fuels engineer",
+   "isco": 2149,
+   "aka": "alternative fuels expert  ·  alternative non-fossil fuels engineer  ·  alternative non-fossil fuels expert  ·  hydrogen engineer  ·  biodiesel engineer"
+  },
+  {
+   "role": "compliance engineer",
+   "isco": 2149,
+   "aka": "compliance engineering consultant  ·  compliance engineering expert  ·  compliance engineering specialist  ·  compliance engineering adviser  ·  compliance engineers"
+  },
+  {
+   "role": "transport engineer",
+   "isco": 2142,
+   "aka": "traffic engineer  ·  transportation project engineer  ·  transport infrastructure engineer  ·  transportation engineering adviser  ·  transportation engineer"
+  },
+  {
+   "role": "optical engineer",
+   "isco": 2149,
+   "aka": "optics engineer  ·  optical technology engineer  ·  optical engineering specialist  ·  optical engineering expert  ·  optical technology engineering expert"
+  },
+  {
+   "role": "fire safety tester",
+   "isco": 3112,
+   "aka": "fire inspection testing technologist  ·  fire inspection technician  ·  fire safety testing technology expert  ·  fire inspection testing technology specialist  ·  fire safety testing technology specialist"
+  },
+  {
+   "role": "thermal engineer",
+   "isco": 2149,
+   "aka": "thermal engineering expert  ·  thermal technology engineering consultant  ·  battery thermal system engineer  ·  thermal engineering consultant  ·  thermal engineers"
+  },
+  {
+   "role": "acoustical engineer",
+   "isco": 2149,
+   "aka": "acoustical technology engineering consultant  ·  acoustical technology engineering expert  ·  acoustical technology engineering adviser  ·  acoustical engineering consultant  ·  acoustical engineering specialist"
+  },
+  {
+   "role": "energy engineer",
+   "isco": 2149,
+   "aka": "energies engineer  ·  energy technology engineering specialist  ·  energy technology engineering expert  ·  power engineer  ·  energy technology engineering consultant"
+  },
+  {
+   "role": "onshore wind energy engineer",
+   "isco": 2149,
+   "aka": "onshore wind energy systems engineer  ·  onshore wind energy specialist  ·  onshore wind energy engineering expert  ·  onshore wind power engineer  ·  onshore wind energy engineering specialist"
+  },
+  {
+   "role": "airport planning engineer",
+   "isco": 2142,
+   "aka": "aviation development planner  ·  airport planning manager  ·  airport development engineer  ·  airport development director"
+  },
+  {
+   "role": "geothermal engineer",
+   "isco": 2149,
+   "aka": "geothermal power plant manager  ·  geothermal O&M engineer  ·  geothermal technology engineering adviser  ·  geothermal engineering consultant  ·  geothermal power plant engineer"
+  },
+  {
+   "role": "fire inspector",
+   "isco": 3112,
+   "aka": "fire prevention officer  ·  fire investigator"
+  },
+  {
+   "role": "logistics engineer",
+   "isco": 2149,
+   "aka": "logistics technology engineering adviser  ·  logistics technology engineering specialist  ·  logistics technology engineer  ·  logistics engineering consultant  ·  logistics technology engineering expert"
+  },
+  {
+   "role": "offshore renewable energy engineer",
+   "isco": 2149,
+   "aka": "ocean renewable energy engineer  ·  offshore energy farms engineer  ·  hydrodynamics engineer  ·  ORE engineer  ·  marine renewable energy engineer"
+  },
+  {
+   "role": "product development engineering drafter",
+   "isco": 3118,
+   "aka": "product development engineering draftsperson  ·  product development engineering drafting expert  ·  product development engineering drafting adviser  ·  product development engineering drafting specialist  ·  product development engineering draughtsperson"
+  },
+  {
+   "role": "energy assessor",
+   "isco": 3112,
+   "aka": "energy savings advisor  ·  EPC certification assessor  ·  energy consumption advisor  ·  energy performance certificate assessor  ·  household energy use assessor"
+  },
+  {
+   "role": "test engineer",
+   "isco": 2149,
+   "aka": "solar inverter test engineer  ·  BESS test engineer  ·  battery test engineer  ·  battery validation engineer  ·  battery systems hardware test engineer"
+  },
+  {
+   "role": "road maintenance technician",
+   "isco": 3112,
+   "aka": "road maintenance worker  ·  road inspector  ·  highways maintenance technician  ·  highways inspector  ·  highways technician"
+  },
+  {
+   "role": "energy analyst",
+   "isco": 3112,
+   "aka": "energy and sustainability analyst  ·  energy advisor  ·  energy regulation specialist  ·  energy procurement analyst  ·  energy efficiency analyst"
+  },
+  {
+   "role": "civil engineer",
+   "isco": 2142,
+   "aka": "civil engineering adviser  ·  civil engineering specialist  ·  director of infrastructure projects  ·  harbour civil engineer  ·  civil engineering expert"
+  },
+  {
+   "role": "electronics drafter",
+   "isco": 3118,
+   "aka": "electronics engineering drafter  ·  electronics drafting specialist  ·  electronics draftsperson  ·  electronic drafter  ·  electronics design drafter"
+  },
+  {
+   "role": "energy consultant",
+   "isco": 3112,
+   "aka": "energy advisor  ·  sustainability consultant  ·  energy and sustainability consultant  ·  energy saving advisor  ·  energy saving equipment advisor"
+  },
+  {
+   "role": "heating, ventilation, air conditioning (and refrigeration) drafter",
+   "isco": 3118,
+   "aka": "heating, ventilation, air conditioning, and refrigeration drafter  ·  ​heating, ventilation, air conditioning, and refrigeration draughter  ·  HVACR draughtsperson  ·  HVACR drafting specialist  ·  heating, ventilation, air conditioning engineering draughter"
+  },
+  {
+   "role": "patent engineer",
+   "isco": 2149,
+   "aka": "patent agent  ·  patent scientist  ·  patent and trademark engineer  ·  intellectual property engineer  ·  technical patent specialist"
+  },
+  {
+   "role": "hydropower engineer",
+   "isco": 2142,
+   "aka": "hydropower systems engineer  ·  hydropower systems analyst"
+  },
+  {
+   "role": "autonomous driving specialist",
+   "isco": 2149,
+   "aka": "highly automated drive engineer  ·  connected car specialist  ·  self-driving car engineer  ·  AV engineer  ·  C-V2X specialist"
+  },
+  {
+   "role": "mining geotechnical engineer",
+   "isco": 2142,
+   "aka": "mine hydrologist  ·  mining hydrologist"
+  },
+  {
+   "role": "construction quality inspector",
+   "isco": 3112,
+   "aka": "construction quality control and safety supervisor  ·  construction quality control and safety inspector  ·  construction QA QS inspector  ·  construction QA QS supervisor"
+  },
+  {
+   "role": "building inspector",
+   "isco": 3112,
+   "aka": "asbestos inspector  ·  construction services inspector  ·  construction control surveyor  ·  buildings inspector  ·  building control officer"
+  },
+  {
+   "role": "nuclear engineer",
+   "isco": 2149,
+   "aka": "nuclear engineering expert  ·  nuclear engineering specialist  ·  nuclear engineers  ·  atomic decommissioning engineer  ·  nuclear technology engineering expert"
+  },
+  {
+   "role": "bioengineer",
+   "isco": 2149,
+   "aka": "bioengineering consultant  ·  bioengineering technology adviser  ·  bioengineering adviser  ·  bio-engineer  ·  bioengineering technology expert"
+  },
+  {
+   "role": "calculation engineer",
+   "isco": 2149,
+   "aka": "process engineer  ·  structural engineer  ·  simulation calculation engineer  ·  computational engineer  ·  piping calculation engineer"
+  },
+  {
+   "role": "water engineer",
+   "isco": 2142,
+   "aka": "water resource engineer  ·  hydraulic engineer  ·  water systems engineer  ·  water management specialist"
+  },
+  {
+   "role": "application engineer",
+   "isco": 2149,
+   "aka": "application technology engineering specialist  ·  application engineering consultant  ·  application technology engineer  ·  electric vehicles application engineer  ·  applied research engineer"
+  },
+  {
+   "role": "Drafters, Engineering Technicians, and Mapping Technicians",
+   "isco": 3118,
+   "aka": NaN
+  },
+  {
+   "role": "Civil Engineering Technologists and Technicians",
+   "isco": 3112,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Construction Trades and Extraction Workers",
+   "isco": 3121,
+   "aka": NaN
+  },
+  {
+   "role": "Transportation Engineers",
+   "isco": 2142,
+   "aka": NaN
+  },
+  {
+   "role": "Water/Wastewater Engineers",
+   "isco": 2142,
+   "aka": NaN
+  },
+  {
+   "role": "Architectural and Civil Drafters",
+   "isco": 3112,
+   "aka": NaN
+  },
+  {
+   "role": "Electrical and Electronics Drafters",
+   "isco": 3112,
+   "aka": NaN
+  },
+  {
+   "role": "Aerospace Engineering and Operations Technologists and Technicians",
+   "isco": 3112,
+   "aka": NaN
+  },
+  {
+   "role": "Electro-Mechanical and Mechatronics Technologists and Technicians",
+   "isco": 3112,
+   "aka": NaN
+  },
+  {
+   "role": "Robotics Technicians",
+   "isco": 3112,
+   "aka": NaN
+  },
+  {
+   "role": "Solar Energy Installation Managers",
+   "isco": 3121,
+   "aka": NaN
+  }
+ ]
+}

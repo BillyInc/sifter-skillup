@@ -1,0 +1,147 @@
+{
+ "domain_id": "D115",
+ "domain_name": "Road Transport Operations (Drivers",
+ "role_count": 28,
+ "roles": [
+  {
+   "role": "bus driver",
+   "isco": 8331,
+   "aka": "private coach driver  ·  bus operator  ·  public bus operator  ·  coach driver  ·  bus driving operator"
+  },
+  {
+   "role": "tram driver",
+   "isco": 8331,
+   "aka": "light rail vehicle driver  ·  metro train driver  ·  driver of trams  ·  driver of light rail trains  ·  light rail train driver"
+  },
+  {
+   "role": "car and van delivery driver",
+   "isco": 8322,
+   "aka": "fast food delivery driver  ·  delivery car driver  ·  dry cleaning driver  ·  telephone directory delivery driver  ·  pizza delivery person"
+  },
+  {
+   "role": "fire service vehicle operator",
+   "isco": 8332,
+   "aka": "emergency fire service vehicle operator  ·  fire and rescue service vehicle operator  ·  fire appliance driver  ·  fire engine driver  ·  fire and rescue service truck operator"
+  },
+  {
+   "role": "aircraft fuel system operator",
+   "isco": 8332,
+   "aka": "aircraft refuelling operator  ·  operator of aircraft fuel systems  ·  aeroplane refueller  ·  refuelling operator  ·  aircraft refueller"
+  },
+  {
+   "role": "refuse vehicle driver",
+   "isco": 8332,
+   "aka": "driver of refuse vehicle"
+  },
+  {
+   "role": "trolley bus driver",
+   "isco": 8331,
+   "aka": "bus operator  ·  transit bus driver  ·  trolley bus operator  ·  driver of trolley buses  ·  trolleybus driver"
+  },
+  {
+   "role": "cargo vehicle driver",
+   "isco": 8332,
+   "aka": "van driver  ·  HGV driver  ·  delivery driver  ·  trucker  ·  teamster"
+  },
+  {
+   "role": "concrete pump operator",
+   "isco": 8332,
+   "aka": "concrete pump driver-operator  ·  concrete pump operative  ·  HGV mixer driver  ·  volumetric mixer driver  ·  concrete mixer driver"
+  },
+  {
+   "role": "tow truck driver",
+   "isco": 8332,
+   "aka": "tow truck operator  ·  tow trucker"
+  },
+  {
+   "role": "taxi driver",
+   "isco": 8322,
+   "aka": "private driver  ·  chauffeur  ·  driver of taxi  ·  private hire driver  ·  minicab driver"
+  },
+  {
+   "role": "parking valet",
+   "isco": 8322,
+   "aka": "car parker"
+  },
+  {
+   "role": "armoured car driver",
+   "isco": 8322,
+   "aka": "armoured vehicle driver  ·  armoured truck driver  ·  driver of armoured cars  ·  armored car driver  ·  driver of armoured vehicles"
+  },
+  {
+   "role": "live animal transporter",
+   "isco": 8332,
+   "aka": "animal transporter  ·  animal travel provider  ·  animal conveyance  ·  animal transport service  ·  animal carriage"
+  },
+  {
+   "role": "patient transport services driver",
+   "isco": 8322,
+   "aka": "medical transport vehicle driver  ·  patient transportation services driver  ·  driver of patient transport vehicle  ·  ambulance care assistant  ·  patient transport driver"
+  },
+  {
+   "role": "moving truck driver",
+   "isco": 8332,
+   "aka": "removal van driver  ·  removal van operator  ·  removal truck driver  ·  moving lorry driver  ·  moving truck operator"
+  },
+  {
+   "role": "hearse driver",
+   "isco": 8322,
+   "aka": "chauffeur  ·  funeral car driver  ·  driver  ·  funeral driver"
+  },
+  {
+   "role": "motorcycle delivery person",
+   "isco": 8321,
+   "aka": "home delivery motorcycle driver  ·  telephone directory motorcycle deliverer  ·  motorcyle courier  ·  motorcycle driver of deliveries  ·  sameday delivery motorcycle driver"
+  },
+  {
+   "role": "dangerous goods driver",
+   "isco": 8332,
+   "aka": "dangerous goods driving specialist  ·  dangerous goods trucker  ·  dangerous goods deliverer  ·  explosives truck driver  ·  dangerous goods transport specialist"
+  },
+  {
+   "role": "private chauffeur",
+   "isco": 8322,
+   "aka": "personal valet  ·  personal chauffeur  ·  private driver  ·  private valet  ·  personal driver"
+  },
+  {
+   "role": "Light Truck or Delivery Services Drivers",
+   "isco": 8332,
+   "aka": NaN
+  },
+  {
+   "role": "Car, Van and Motorcycle Drivers",
+   "isco": 8322,
+   "aka": NaN
+  },
+  {
+   "role": "Heavy Truck and Bus Drivers",
+   "isco": 8331,
+   "aka": NaN
+  },
+  {
+   "role": "Heavy and Tractor-Trailer Truck Drivers",
+   "isco": 8332,
+   "aka": NaN
+  },
+  {
+   "role": "Bus Drivers, Transit and Intercity",
+   "isco": 8331,
+   "aka": NaN
+  },
+  {
+   "role": "Ambulance Drivers and Attendants, Except Emergency Medical Technicians",
+   "isco": 8322,
+   "aka": NaN
+  },
+  {
+   "role": "Driver/Sales Workers",
+   "isco": 8321,
+   "aka": NaN
+  },
+  {
+   "role": "Shuttle Drivers and Chauffeurs",
+   "isco": 8322,
+   "aka": NaN
+  }
+ ]
+}

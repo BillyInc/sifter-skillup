@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Library Science",
+  "utme_subjects": ["Any three (3) subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics and three (3) other relevant Arts/Sciences/Social Sciences subjects.",
+  "direct_entry": "(i) Two (2) 'A' Level passes in relevant subject plus the UTME requirements. (ii) NCE merit in relevant subjects.",
+  "institution_waivers": [
+    {"institution": "UNIZIK", "note": "UNIZIK requires one (1) of the 'A' Level or NCE subject to be combined with Library Science."},
+    {"institution": "BAYERO", "note": "BAYERO accept NCE merit provided such candidates have two (2) years working experience."},
+    {"institution": "MAIDUGURI", "note": "MAIDUGURI accepts NCE/ND/HND in related studies."},
+    {"institution": "COOU", "note": "COOU accepts NCE credit"}
+  ]
+}

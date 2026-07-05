@@ -1,0 +1,18 @@
+{
+  "jamb_name": "Gas Engineering",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "BENIN", "note": "As in Chemical Engineering."},
+    {"institution": "IBADAN", "note": "As in Agricultural and Environmental Engineering."},
+    {"institution": "NDU", "note": "Requires five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and any other subject at not more than two (2) sittings."},
+    {"institution": "NILE", "note": "Same as in Computer Engineering."},
+    {"institution": "OAUSTECH", "note": "Requires 'O' Level credit pass in Further Mathematics."},
+    {"institution": "LAGOS", "note": "Requires 'O' Level credit pass in Further Mathematics; requires Five O/Level credit passes in English, Mathematics, Further Mathematics, Physics and Chemistry; UTME subjects require English Language, Chemistry, Mathematics and Physics."},
+    {"institution": "RSU", "note": "Accepts five (5) 'O' Level credit passes to include English Language, Chemistry, Physics and Mathematics or Further Mathematics and any other subject."},
+    {"institution": "MARITIME-UNI", "note": "Requires five (5) credits at SSCE or its equivalent in English Language, Mathematics, Physics, Chemistry and Biology/Agricultural Science/Further Mathematics/Data Processing/Technical Drawing."},
+    {"institution": "FUTO", "note": "Requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and any other science subject in not more than two (2) sittings. At least a Pass is required in Biology; UTME subjects require Mathematics, Chemistry and Physics."},
+    {"institution": "PHC", "note": "Requires Five (5) SSC credit passes to include Physics, Chemistry, Mathematics and English Language and any other subject from Biology, Agricultural Science, Technical Drawing, Further Mathematics; UTME subjects require Chemistry, Mathematics and Physics."}
+  ]
+}

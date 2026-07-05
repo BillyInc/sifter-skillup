@@ -1,0 +1,394 @@
+{
+  "new_roles": [
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "XR Developer / XR Software Engineer",
+      "isco_group": "2513",
+      "essential_skills": ["Unity", "Unreal Engine", "C# / C++ programming", "3D math and spatial reasoning", "AR/VR SDKs (OpenXR, ARKit, ARCore, OpenXR)", "real-time rendering", "performance profiling and optimization", "device hardware constraints"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Core XR engineer track; publishes software in an XR coding language on Unity/Unreal. Absent from ESCO/O*NET."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "Augmented Reality (AR) Developer",
+      "isco_group": "2513",
+      "essential_skills": ["ARKit / ARCore", "computer vision basics", "Unity AR Foundation", "C#", "3D asset integration", "SLAM / spatial anchoring", "mobile performance optimization"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "AR-specialized subset of XR developer; Snap report cites majority of AR devs are early-career."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "Virtual Reality (VR) Developer",
+      "isco_group": "2513",
+      "essential_skills": ["VR SDKs (Meta/Oculus, OpenXR, SteamVR)", "Unity or Unreal", "C# / C++", "locomotion and interaction systems", "hand/controller input", "comfort and motion-sickness mitigation", "real-time optimization"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "VR-specialized subset of XR developer."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "XR / Immersive Experience Designer",
+      "isco_group": "2166",
+      "essential_skills": ["spatial UX design", "3D interaction design", "storyboarding and concept sketching", "wireframing and prototyping", "usability and accessibility principles", "user-centered design", "cross-functional collaboration"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Designer track per source; grounds decisions in real data, OKRs, product needs."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "XR UX/UI Designer",
+      "isco_group": "2166",
+      "essential_skills": ["information architecture for complex workflows", "high-fidelity prototyping", "spatial interface design", "usability testing", "accessibility", "visual/UI design for 3D", "presentation and stakeholder communication"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Cross-lists conceptually with UI/UX Design domain but core subject is immersive/spatial interfaces."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "XR Interaction Designer",
+      "isco_group": "2166",
+      "essential_skills": ["gesture and gaze interaction design", "haptics", "spatial affordances", "prototyping", "human factors", "user research", "3D environment reasoning"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Named interaction-designer sub-track in source."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "Metaverse Architect / Virtual World Builder",
+      "isco_group": "2166",
+      "essential_skills": ["3D world building", "game engine environment design (Unity/Unreal)", "digital economy and avatar systems", "multi-user/networked spaces", "level and space layout", "asset pipelines", "interoperability standards"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Metaverse role; 0 present today. Straddles design and dev; classified to design anchor 2166."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "XR Technical Artist",
+      "isco_group": "2166",
+      "essential_skills": ["shader authoring", "real-time rendering pipelines", "3D asset optimization for headsets", "Unity/Unreal materials", "rigging and tooling scripting (Python)", "LOD and polycount budgeting", "art-engineering bridge"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Immersive-specific technical artist; overlaps Game Design domain but XR device constraints are the distinguishing subject."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "3D Environment Artist (XR)",
+      "isco_group": "2166",
+      "essential_skills": ["3D modeling (Blender/Maya)", "texturing and PBR materials", "environment composition", "optimization for real-time XR", "photogrammetry", "lighting", "asset pipelines"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Builds immersive spaces; XR performance budget distinguishes from general 3D artist."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "Mixed Reality (MR) Engineer",
+      "isco_group": "2513",
+      "essential_skills": ["HoloLens / Quest passthrough SDKs", "spatial mapping and mesh understanding", "occlusion and anchoring", "C++ / C#", "sensor fusion", "real-time optimization", "hardware/software limitation awareness"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Blends physical + virtual; distinct MR toolchain."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "Spatial Computing Engineer",
+      "isco_group": "2513",
+      "essential_skills": ["spatial anchors and world tracking", "computer vision", "3D reconstruction", "OpenXR", "sensor and depth data", "low-latency rendering", "edge/on-device performance"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Apple Vision Pro-era title; emerging, absent from ESCO/O*NET."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "XR Narrative Designer",
+      "isco_group": "2166",
+      "essential_skills": ["immersive storytelling", "branching narrative design", "environmental storytelling", "player agency and pacing", "scriptwriting", "spatial dramaturgy", "collaboration with designers/artists"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Named XR narrative-designer track in source; distinct from game narrative by spatial/embodied medium."
+    },
+    {
+      "proposed_domain": "NEW: XR & Immersive Technology",
+      "role_name": "Volumetric Capture / Immersive Media Specialist",
+      "isco_group": "2166",
+      "essential_skills": ["volumetric video capture", "photogrammetry", "camera arrays and depth sensors", "point cloud / mesh processing", "3D reconstruction pipelines", "immersive media formats", "post-production for XR"],
+      "provenance": "curated_creative",
+      "source_url": "https://www.circuitstream.com/blog/picking-your-career-in-xr-designer-vs-developer",
+      "notes": "Production of volumetric/immersive assets; cross-lists with Media Production but core subject is immersive capture."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Live-Ops Designer",
+      "isco_group": "2166",
+      "essential_skills": ["live service / games-as-a-service design", "event and content cadence planning", "player retention and engagement metrics", "monetization and reward loops", "A/B testing and data analysis", "cross-team coordination (art, eng, marketing)"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Modern game-dev variant; designs ongoing content updates, seasons and events for live games. Absent from ESCO/O*NET game roles."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Game Producer",
+      "isco_group": "2166",
+      "essential_skills": ["production scheduling and milestones", "agile/scrum project management", "budget and scope management", "cross-discipline team coordination", "risk and dependency tracking", "stakeholder and publisher communication"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Owns delivery of a game project end-to-end; distinct producer track within game dev."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Gameplay Engineer / Gameplay Programmer",
+      "isco_group": "2512",
+      "essential_skills": ["C++ / C# programming", "game engine internals (Unreal/Unity)", "player mechanics and controls", "physics and animation systems", "AI behavior implementation", "performance profiling and optimization"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Implements the systems that make gameplay function; software-engineering track within game dev, anchored to 2512."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Technical Artist (Games)",
+      "isco_group": "2166",
+      "essential_skills": ["shader and material authoring", "rigging and skinning", "art pipeline and tooling scripting (Python/MEL)", "real-time rendering optimization", "engine integration (Unity/Unreal)", "bridging art and engineering teams"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Art-engineering bridge role in game production; distinct from XR technical artist by non-immersive game context."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Narrative Designer (Games)",
+      "isco_group": "2166",
+      "essential_skills": ["branching and interactive storytelling", "character and world-building", "dialogue and scriptwriting", "quest and mission structure", "narrative tooling and scripting", "collaboration with design and writing teams"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Designs story systems and player-driven narrative within games; distinct from XR narrative designer by medium."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Game Economy Designer",
+      "isco_group": "2166",
+      "essential_skills": ["virtual economy and currency design", "monetization and pricing modeling", "reward and progression loops", "economic balancing and simulation", "data analysis and player-spend metrics", "sink/source and inflation management"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Specialized designer for in-game economies (F2P, live-service); emerging modern variant absent from standard taxonomies."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "QA / Gameplay Tester",
+      "isco_group": "2166",
+      "essential_skills": ["test planning and case design", "bug reproduction and reporting", "gameplay balance and usability feedback", "regression and compatibility testing", "issue-tracking tools (Jira)", "attention to detail and systematic exploration"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Quality assurance track within game dev; classified to game-design anchor 2166 as a games-specialized role."
+    },
+    {
+      "proposed_domain": "D139 Game Design",
+      "role_name": "Build / Tools Engineer (Games)",
+      "isco_group": "2512",
+      "essential_skills": ["build automation and CI/CD pipelines", "internal tooling development", "version control and asset management", "scripting (Python/C#)", "engine build systems", "developer workflow optimization"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Builds pipelines and internal tools that support game production; software-engineering track anchored to 2512."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Professional Streamer",
+      "isco_group": "2654",
+      "essential_skills": ["live broadcasting and stream production (OBS/streaming software)", "audience engagement and community building", "on-camera presence and entertainment", "content scheduling and consistency", "platform monetization (subscriptions, donations, sponsorships)", "personal branding"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Core creator-economy role; broadcasts gameplay/content live on Twitch/YouTube. Absent from ESCO/O*NET."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Shoutcaster / Esports Caster",
+      "isco_group": "2656",
+      "essential_skills": ["live play-by-play and color commentary", "deep game knowledge and meta understanding", "broadcast voice and improvisation", "storytelling and hype-building", "quick analysis under pressure", "co-casting collaboration"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Broadcast commentator for competitive matches; anchored to announcers/broadcast 2656."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Esports Coach",
+      "isco_group": "2654",
+      "essential_skills": ["team strategy and drafting", "individual and team performance coaching", "VOD review and opponent scouting", "practice and scrim planning", "player psychology and team dynamics", "in-game meta expertise"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Trains and directs competitive teams; distinct professional track in esports. Absent from standard taxonomies."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Esports Analyst",
+      "isco_group": "2654",
+      "essential_skills": ["match and statistical analysis", "opponent scouting and data gathering", "meta and trend analysis", "VOD breakdown", "data visualization and reporting", "strategic recommendation"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Provides data-driven insight to teams/broadcasts; emerging esports role absent from ESCO/O*NET."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Professional Content Creator",
+      "isco_group": "2654",
+      "essential_skills": ["video and short-form content production", "video editing and post-production", "audience growth and analytics", "platform algorithm literacy (YouTube/TikTok/Instagram)", "brand partnerships and sponsorships", "content strategy and storytelling"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Creator-economy anchor role per WEF; produces monetized content across platforms. Absent from standard taxonomies."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Community Manager",
+      "isco_group": "2431",
+      "essential_skills": ["community engagement and moderation", "social media management", "content calendar and campaign planning", "player/fan feedback collection", "crisis and reputation management", "cross-team communication"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Manages online communities for games/creators/esports orgs; anchored to marketing/PR 2431."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Influencer Marketing Manager",
+      "isco_group": "2431",
+      "essential_skills": ["influencer sourcing and relationship management", "campaign strategy and briefing", "budget and contract negotiation", "performance tracking and ROI analysis", "brand alignment and compliance", "cross-platform campaign coordination"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Runs creator/influencer marketing campaigns; anchored to marketing 2431. Grew directly out of creator economy."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Esports Event Manager",
+      "isco_group": "1221",
+      "essential_skills": ["event planning and logistics", "venue and production coordination", "sponsor and stakeholder management", "budgeting and scheduling", "broadcast and live-production oversight", "team and vendor coordination"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Organizes competitive tournaments and events; management track anchored to sales/marketing managers 1221."
+    },
+    {
+      "proposed_domain": "NEW: Esports & Creator Economy",
+      "role_name": "Esports Team Manager",
+      "isco_group": "1431",
+      "essential_skills": ["roster and player management", "contract and salary administration", "scheduling of practice, travel and competition", "sponsorship and brand liaison", "player welfare and performance support", "team operations and logistics"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Runs the day-to-day operations of a competitive esports roster; anchored to sports/recreation centre managers 1431. Distinct from Esports Event Manager (org vs event). Absent from ESCO/O*NET."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "Prompt Engineer",
+      "isco_group": "2512",
+      "essential_skills": ["prompt design and iteration", "large language model behavior and capabilities", "prompt-injection and safety awareness", "evaluation and A/B testing of prompts", "context-window and token optimization", "domain framing and instruction tuning"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "AI-frontier role that emerged with generative LLMs; designs and optimizes prompts/instructions for LLM-based systems. Absent from ESCO/O*NET; anchored to software developers 2512."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "Generative-AI Engineer",
+      "isco_group": "2512",
+      "essential_skills": ["LLM application development", "retrieval-augmented generation (RAG)", "embeddings and vector databases", "fine-tuning and adapters (LoRA)", "orchestration frameworks (LangChain/LlamaIndex)", "API integration and inference optimization"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Builds production applications on top of foundation models; distinct from classic ML engineer by generative/LLM focus. Anchored to software developers 2512."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "MLOps Engineer",
+      "isco_group": "2512",
+      "essential_skills": ["ML model deployment and serving", "CI/CD for ML pipelines", "model monitoring and drift detection", "containerization and orchestration (Docker/Kubernetes)", "feature stores and data versioning", "experiment tracking (MLflow)"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Operationalizes and maintains ML systems in production; DevOps-for-ML specialization. Anchored to software developers 2512."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "AI Product Manager",
+      "isco_group": "1330",
+      "essential_skills": ["AI/ML product strategy and roadmapping", "understanding of model capabilities and limits", "data and evaluation requirements definition", "cross-functional coordination (research, eng, design)", "responsible-AI and risk trade-offs", "stakeholder and go-to-market management"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Owns AI-powered products; requires fluency in model behavior, data and evaluation. Anchored to ICT service managers 1330."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "AI Ethics / Safety Specialist",
+      "isco_group": "2422",
+      "essential_skills": ["responsible-AI frameworks and governance", "bias, fairness and harm assessment", "AI risk and impact evaluation", "regulatory and policy literacy (EU AI Act, NIST)", "red-teaming and safety testing", "stakeholder and cross-functional advisory"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Assesses and mitigates societal, safety and governance risks of AI systems; emerging frontier role. Anchored to policy administration professionals 2422."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "Conversational-AI Designer",
+      "isco_group": "2166",
+      "essential_skills": ["conversation and dialogue design", "user-intent modeling and flows", "persona and tone-of-voice design", "prompt and response crafting for assistants", "usability testing of conversational UX", "collaboration with NLP/engineering teams"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Designs the interaction and dialogue for chatbots/voice assistants/LLM agents; UX-adjacent AI role. Anchored to multimedia designers 2166."
+    },
+    {
+      "proposed_domain": "D003 Artificial Intelligence",
+      "role_name": "AI Research Scientist",
+      "isco_group": "2120",
+      "essential_skills": ["deep learning theory and architectures", "mathematics (linear algebra, probability, optimization)", "research design and experimentation", "PyTorch / JAX implementation", "scientific writing and publication", "novel model and algorithm development"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Advances the state of the art in ML/AI through original research; math- and research-heavy. Anchored to mathematicians/statisticians 2120."
+    },
+    {
+      "proposed_domain": "D153 Music Production",
+      "role_name": "Spatial Audio Engineer",
+      "isco_group": "3521",
+      "essential_skills": ["3D/immersive audio mixing (Dolby Atmos, Ambisonics)", "binaural and HRTF processing", "object-based audio workflows", "spatial panning and room modeling", "DAW and immersive plugin chains", "acoustics and psychoacoustics"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Frontier audio role driven by immersive/XR and Atmos music; mixes and engineers spatialized sound. Anchored to broadcasting/AV technicians 3521."
+    },
+    {
+      "proposed_domain": "D153 Music Production",
+      "role_name": "Game Audio Designer",
+      "isco_group": "2166",
+      "essential_skills": ["interactive and adaptive audio design", "sound effect creation and foley", "implementation in game engines (Unity/Unreal)", "audio middleware (Wwise/FMOD)", "music and ambience integration", "mixing for interactive systems"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Creates and implements interactive audio for games; bridges creative sound design and engine integration. Anchored to multimedia designers 2166."
+    },
+    {
+      "proposed_domain": "D153 Music Production",
+      "role_name": "Technical Sound Designer",
+      "isco_group": "2166",
+      "essential_skills": ["audio systems and DSP design", "scripting for audio (C#/Blueprint/Python)", "middleware integration (Wwise/FMOD)", "runtime performance and voice budgeting", "procedural and generative audio", "debugging audio in engine"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Audio-engineering bridge role; builds the systems and tools that drive interactive sound. Distinct from game audio designer by technical/implementation focus. Anchored to multimedia designers 2166."
+    },
+    {
+      "proposed_domain": "D153 Music Production",
+      "role_name": "Audio Middleware Programmer (Wwise/FMOD)",
+      "isco_group": "2512",
+      "essential_skills": ["C++ programming", "Wwise / FMOD SDK integration", "real-time audio engine architecture", "DSP and signal processing", "memory and CPU audio optimization", "engine API and tooling development"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Programs the audio engine layer and middleware integration; software-engineering track within audio. Anchored to software developers 2512."
+    },
+    {
+      "proposed_domain": "D153 Music Production",
+      "role_name": "Dialogue Editor",
+      "isco_group": "3521",
+      "essential_skills": ["dialogue editing and cleanup", "ADR and voice-over synchronization", "noise reduction and restoration", "DAW editing (Pro Tools)", "consistency and continuity across takes", "delivery to mix specifications"],
+      "provenance": "curated_creative",
+      "source_url": "domain knowledge",
+      "notes": "Edits and prepares recorded dialogue/voice-over for film, games and media; post-production audio specialization. Anchored to broadcasting/AV technicians 3521."
+    }
+  ],
+  "new_domains": [
+    {
+      "name": "XR & Immersive Technology",
+      "rationale": "The library currently has 0 roles covering VR/AR/MR/mixed-reality/metaverse/spatial-computing work, a confirmed gap absent from ESCO/O*NET. These roles span dev (2513) and design (2166) tracks with a distinct toolchain (Unity/Unreal + XR SDKs, headset hardware constraints) that does not fit cleanly under Game Design or UI/UX.",
+      "anchor": "ISCO 2513 (web & multimedia developers) + 2166 (graphic & multimedia designers); source: circuitstream.com XR careers."
+    },
+    {
+      "name": "Esports & Creator Economy",
+      "rationale": "The library has 0 roles covering the professional esports and creator-economy career space (streamers, casters, coaches, analysts, content creators, community/influencer marketing, team/event management). WEF identifies the creator economy as a major emerging labour market and these roles are absent from ESCO/O*NET. They cluster around broadcast/performer anchors (2654/2656), marketing (2431) and management (1221/1431).",
+      "anchor": "ISCO 2654 (film/stage/related directors & producers) + 2656 (announcers on radio/TV/other media) + 2431 (advertising & marketing professionals) + 1221/1431 (managers); source: WEF creator-economy, ISCO-08."
+    }
+  ]
+}

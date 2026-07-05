@@ -1,0 +1,195 @@
+{
+ "source": "SpecificEntry.txt",
+ "note": "Per-university specific entry policies (cross-cutting). Deterministic index; prose per-university at scope.",
+ "universities": [
+  {
+   "code": "2.2.01",
+   "university": "BENSON IDAHOSA UNIVERSITY",
+   "first_line": 6,
+   "scope": [
+    6,
+    49
+   ]
+  },
+  {
+   "code": "2.2.02",
+   "university": "UNIVERSITY OF IBADAN",
+   "first_line": 49,
+   "scope": [
+    49,
+    324
+   ]
+  },
+  {
+   "code": "2.2.06",
+   "university": "COVENANT UNIVERSITY, OTTA, OGUN STATE",
+   "first_line": 324,
+   "scope": [
+    324,
+    364
+   ]
+  },
+  {
+   "code": "2.2.08",
+   "university": "FEDERAL UNIVERSITY OF TECHNOLOGY, AKURE",
+   "first_line": 364,
+   "scope": [
+    364,
+    465
+   ]
+  },
+  {
+   "code": "2.2.12",
+   "university": "FEDERAL UNIVERSITY OF TECHNOLOGY, MINNA",
+   "first_line": 465,
+   "scope": [
+    465,
+    473
+   ]
+  },
+  {
+   "code": "2.2.13",
+   "university": "FEDERAL UNIVERSITY OF PETROLEUM RESOURCES",
+   "first_line": 473,
+   "scope": [
+    473,
+    481
+   ]
+  },
+  {
+   "code": "2.2.16",
+   "university": "UNIVERSITY OF ILORIN",
+   "first_line": 481,
+   "scope": [
+    481,
+    561
+   ]
+  },
+  {
+   "code": "2.2.18",
+   "university": "KADUNA STATE UNIVERSITY",
+   "first_line": 561,
+   "scope": [
+    561,
+    598
+   ]
+  },
+  {
+   "code": "2.2.23",
+   "university": "CARITAS UNIVERSITY, AMORJI-NIKE, ENUGU",
+   "first_line": 598,
+   "scope": [
+    598,
+    653
+   ]
+  },
+  {
+   "code": "2.2.24",
+   "university": "TAI SOLARIN UNIVERSITY OF EDUCATION, IJEBU-ODE",
+   "first_line": 653,
+   "scope": [
+    653,
+    791
+   ]
+  },
+  {
+   "code": "2.2.26",
+   "university": "NATIONAL OPEN UNIVERSITY OF NIGERIA (NOUN)",
+   "first_line": 791,
+   "scope": [
+    791,
+    863
+   ]
+  },
+  {
+   "code": "2.2.29",
+   "university": "REDEEMER'S UNIVERSITY, EDE, OSUN STATE",
+   "first_line": 863,
+   "scope": [
+    863,
+    882
+   ]
+  },
+  {
+   "code": "2.2.30",
+   "university": "WELLSPRING UNIVERSITY, BENIN CITY, EDO STATE",
+   "first_line": 882,
+   "scope": [
+    882,
+    1014
+   ]
+  },
+  {
+   "code": "2.2.41",
+   "university": "RHEMA UNIVERSITY, ABA",
+   "first_line": 1014,
+   "scope": [
+    1014,
+    1032
+   ]
+  },
+  {
+   "code": "2.2.42",
+   "university": "ONDO STATE UNIVERSITY OF SCIENCE AND TECHNOLOGY",
+   "first_line": 1032,
+   "scope": [
+    1032,
+    1048
+   ]
+  },
+  {
+   "code": "2.2.44",
+   "university": "NIGERIAN DEFENCE ACADEMY, KADUNA, KADUNA STATE",
+   "first_line": 1048,
+   "scope": [
+    1048,
+    1094
+   ]
+  },
+  {
+   "code": "2.2.46",
+   "university": "FEDERAL UNIVERSITY, LAFIA",
+   "first_line": 1094,
+   "scope": [
+    1094,
+    1103
+   ]
+  },
+  {
+   "code": "2.2.47",
+   "university": "UNIVERSITY OF JOS, JOS",
+   "first_line": 1103,
+   "scope": [
+    1103,
+    1136
+   ]
+  },
+  {
+   "code": "2.2.48",
+   "university": "St. AUGUSTINE UNIVERSITY, ILARA",
+   "first_line": 1136,
+   "scope": [
+    1136,
+    1176
+   ]
+  },
+  {
+   "code": "2.2.50",
+   "university": "GODFREY OKOYE UNIVERSITY, ENUGU",
+   "first_line": 1176,
+   "scope": [
+    1176,
+    1209
+   ]
+  },
+  {
+   "code": "2.2.51",
+   "university": "EDO UNIVERSITY IYAMHO, EDO STATE",
+   "first_line": 1209,
+   "scope": [
+    1209,
+    1243
+   ]
+  }
+ ]
+}

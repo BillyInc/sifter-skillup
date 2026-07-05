@@ -1,0 +1,167 @@
+{
+ "domain_id": "D004",
+ "domain_name": "Cybersecurity",
+ "role_count": 32,
+ "roles": [
+  {
+   "role": "ICT security administrator",
+   "isco": 2529,
+   "aka": "CISO  ·  IT security administrator  ·  information security administrator  ·  ICT security administrators  ·  network security administrator"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "digital forensics expert",
+   "isco": 2529,
+   "aka": "computer forensics consultant  ·  computer forensics investigator  ·  computer forensics expert  ·  digital forensics analyst  ·  digital forensics specialist"
+  },
+  {
+   "role": "cyber incident responder",
+   "isco": 2529,
+   "aka": "ICT security consultant  ·  cyber crisis expert  ·  information technology security consultant  ·  security operations center analyst  ·  cyber incident handler"
+  },
+  {
+   "role": "ICT disaster recovery analyst",
+   "isco": 2519,
+   "aka": "business continuity analyst  ·  ICT resilience analysts  ·  IT resilience analyst  ·  IT disaster recovery analyst  ·  business continuity strategist"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "embedded systems security engineer",
+   "isco": 2529,
+   "aka": "cybersecurity engineer  ·  cyber security engineer  ·  IoT security engineer  ·  internet of thing security engineer  ·  embedded systems security expert"
+  },
+  {
+   "role": "chief ICT security officer",
+   "isco": 2529,
+   "aka": "information security manager  ·  CISO  ·  information security administrator  ·  IT security officer  ·  ICT security officer"
+  },
+  {
+   "role": "ICT change and configuration manager",
+   "isco": 2519,
+   "aka": "configuration manager  ·  application lifecycle manager  ·  software change and configuration manager"
+  },
+  {
+   "role": "ICT capacity planner",
+   "isco": 2523,
+   "aka": "ICT capacity planners  ·  IT capacity planner  ·  ICT capability manager  ·  IT capability planner  ·  ICT performance manager"
+  },
+  {
+   "role": "ICT accessibility tester",
+   "isco": 2519,
+   "aka": "accessibility testers  ·  usability tester  ·  accessibility test specialist"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "ICT usability tester",
+   "isco": 2519,
+   "aka": "usability developer  ·  usability specialist  ·  usability testers  ·  user-friendliness tester"
+  },
+  {
+   "role": "data quality specialist",
+   "isco": 2519,
+   "aka": "data integrity officer  ·  data integrity specialist  ·  data quality officer  ·  data quality expert  ·  data quality specialists"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "ICT auditor manager",
+   "isco": 2519,
+   "aka": "ICT auditor managers  ·  ICT audit manager  ·  information technology audit manager  ·  IT audit manager"
+  },
+  {
+   "role": "ethical hacker",
+   "isco": 2529,
+   "aka": "network security tester  ·  cybersecurity specialist  ·  cybersecurity tester  ·  ICT security tester  ·  system security tester"
+  },
+  {
+   "role": "cybersecurity risk manager",
+   "isco": 2529,
+   "aka": "cybersecurity specialist  ·  cybersecurity risk assurance consultant  ·  information security manager  ·  cyber risk manager  ·  cybersecurity risk assessor"
+  },
+  {
+   "role": "knowledge engineer",
+   "isco": 2529,
+   "aka": "linked data engineer  ·  taxonomist  ·  knowledge officer  ·  information engineer  ·  knowledge engineers"
+  },
+  {
+   "role": "ICT network administrator",
+   "isco": 2522,
+   "aka": "network manager  ·  network specialist  ·  network administrators  ·  network support  ·  networks administrator"
+  },
+  {
+   "role": "system configurator",
+   "isco": 2522,
+   "aka": "system configurators  ·  system setup professional  ·  system configuration professional  ·  ICT system configurator  ·  IT system configurator"
+  },
+  {
+   "role": "ICT system administrator",
+   "isco": 2522,
+   "aka": "sysadmin  ·  IT system administrator  ·  IT systems administrator  ·  server administrator  ·  network administrator"
+  },
+  {
+   "role": "ICT quality assurance manager",
+   "isco": 2519,
+   "aka": "IT quality assurance manager  ·  ICT quality manager  ·  ICT principal testing manager  ·  ICT quality assurance managers  ·  ICT test manager"
+  },
+  {
+   "role": "ICT resilience manager",
+   "isco": 2529,
+   "aka": "IT resilience manager  ·  manager for vulnerability  ·  manager for IT resilience  ·  vulnerability manager  ·  disaster recovery manager"
+  },
+  {
+   "role": "ICT network engineer",
+   "isco": 2523,
+   "aka": "networks designer  ·  networks developer  ·  network configurator  ·  network developer  ·  network engineers"
+  },
+  {
+   "role": "ICT network architect",
+   "isco": 2523,
+   "aka": "network designer  ·  network architects"
+  },
+  {
+   "role": "Security Management Specialists",
+   "isco": 2529,
+   "aka": NaN
+  },
+  {
+   "role": "Information Security Analysts",
+   "isco": 2529,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Network Architects",
+   "isco": 2523,
+   "aka": NaN
+  },
+  {
+   "role": "Network and Computer Systems Administrators",
+   "isco": 2522,
+   "aka": NaN
+  },
+  {
+   "role": "Telecommunications Engineering Specialists",
+   "isco": 2523,
+   "aka": NaN
+  },
+  {
+   "role": "director of compliance and information security in gambling",
+   "isco": 1213,
+   "aka": "manager of compliance and information security in gambling  ·  gambing compliance and information security manager  ·  gambling compliance and information security director"
+  }
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "domain_id": "D037",
+ "domain_name": "Legal Practice",
+ "role_count": 42,
+ "roles": [
+  {
+   "role": "legal administrative assistant",
+   "isco": 3342,
+   "aka": "legal secretary  ·  certified legal assistant  ·  collection legal assistant  ·  certified legal secretary specialist  ·  litigation legal assistant"
+  },
+  {
+   "role": "judge",
+   "isco": 2612,
+   "aka": "adjudicator  ·  recorder  ·  investigating magistrate  ·  inquisitorial magistrate  ·  appeal court judge"
+  },
+  {
+   "role": "court clerk",
+   "isco": 3411,
+   "aka": "court usher  ·  bailiff  ·  judicial assistant  ·  judicial clerk  ·  senior court clerk"
+  },
+  {
+   "role": "data protection officer",
+   "isco": 2619,
+   "aka": "data compliance officer  ·  data protection and security officer  ·  DPO  ·  compliance officer data privacy  ·  privacy protection officer"
+  },
+  {
+   "role": "election observer",
+   "isco": 2619,
+   "aka": "election monitor  ·  electoral observer  ·  international election observer  ·  short term election observer  ·  election scrutineer"
+  },
+  {
+   "role": "contract manager",
+   "isco": 2619,
+   "aka": "medical contract manager  ·  commercial contract manager  ·  construction contract manager  ·  contract compliance manager  ·  contract auditor"
+  },
+  {
+   "role": "legal consultant",
+   "isco": 2619,
+   "aka": "legal advisor  ·  legal nurse consultant  ·  city legal advisor  ·  business law consultant  ·  city legal adviser"
+  },
+  {
+   "role": "supreme court judge",
+   "isco": 2612,
+   "aka": "justice  ·  high court judge  ·  justice of the supreme court  ·  justice of the high court  ·  lord advocate"
+  },
+  {
+   "role": "mediator",
+   "isco": 2619,
+   "aka": "arbitrator  ·  family mediator  ·  labour mediator  ·  advice worker  ·  alternative dispute resolution coordinator"
+  },
+  {
+   "role": "civil registrar",
+   "isco": 3342,
+   "aka": "senior registrar  ·  civil registration officer  ·  civil status officer"
+  },
+  {
+   "role": "court bailiff",
+   "isco": 3411,
+   "aka": "bailiff  ·  enforcement agent  ·  court administrator  ·  court administrative officer  ·  usher"
+  },
+  {
+   "role": "ombudsman",
+   "isco": 2619,
+   "aka": "information commissioner  ·  ombudswoman  ·  children's ombudsman"
+  },
+  {
+   "role": "store detective",
+   "isco": 3411,
+   "aka": "loss prevention agent  ·  retail loss investigator  ·  SD  ·  asset protection officer  ·  loss prevention officer"
+  },
+  {
+   "role": "court jury coordinator",
+   "isco": 2619,
+   "aka": "legal secretary  ·  court usher  ·  coordinators for court jury  ·  bailiff  ·  jury consultant"
+  },
+  {
+   "role": "private detective",
+   "isco": 3411,
+   "aka": "private dick  ·  sleuth  ·  private investigator  ·  inspector  ·  PI"
+  },
+  {
+   "role": "regulatory affairs manager",
+   "isco": 2619,
+   "aka": "compliance manager  ·  regulatory manager  ·  bank compliance officer  ·  regulatory compliance officer  ·  regulatory affairs specialist"
+  },
+  {
+   "role": "legislative drafter",
+   "isco": 2619,
+   "aka": "researcher  ·  parliamentary drafter  ·  parliamentary draughtsman  ·  parliamentary draftsman  ·  parliamentary draftsperson"
+  },
+  {
+   "role": "human rights officer",
+   "isco": 2619,
+   "aka": "human rights project officer  ·  human rights program officer  ·  human rights lawyer  ·  human rights programme officer"
+  },
+  {
+   "role": "legal assistant",
+   "isco": 3411,
+   "aka": "paralegal  ·  law clerk  ·  public administration legal assistant  ·  judicial assistant  ·  legal aide"
+  },
+  {
+   "role": "lawyer",
+   "isco": 2611,
+   "aka": "social law lawyer  ·  barrister  ·  medical lawyer  ·  industrial property lawyer  ·  procurement law lawyer"
+  },
+  {
+   "role": "court administrative officer",
+   "isco": 3411,
+   "aka": "court usher  ·  tribunal administration officer  ·  court administration officer  ·  court clerk  ·  court administrator"
+  },
+  {
+   "role": "conveyance clerk",
+   "isco": 3411,
+   "aka": "conveyance law clerk  ·  paralegal clerk  ·  property law clerk  ·  conveyancing clerk  ·  conveyancer"
+  },
+  {
+   "role": "prosecutor",
+   "isco": 2611,
+   "aka": "state attorney  ·  public prosecutor  ·  crown prosecutor  ·  prosecuting attorney"
+  },
+  {
+   "role": "court enforcement officer",
+   "isco": 3411,
+   "aka": "court usher  ·  bailiff  ·  enforcement agent  ·  court administrator  ·  court bailiff"
+  },
+  {
+   "role": "case administrator",
+   "isco": 3411,
+   "aka": "legal executive  ·  domestic abuse case administrator  ·  probation case administrator  ·  prison case administrator  ·  legal administation officer"
+  },
+  {
+   "role": "coroner",
+   "isco": 2619,
+   "aka": "pathologist  ·  medical examiner  ·  chief coroner  ·  chief medical examiner  ·  forensic medical examiner"
+  },
+  {
+   "role": "notary",
+   "isco": 2619,
+   "aka": "common law notary  ·  public notary  ·  notarial officer  ·  civil law notary  ·  law signing agent"
+  },
+  {
+   "role": "justice of the peace",
+   "isco": 3411,
+   "aka": "justice  ·  advocate  ·  peace justice  ·  magistrate  ·  court judge"
+  },
+  {
+   "role": "corporate lawyer",
+   "isco": 2611,
+   "aka": "intellectual property lawyer  ·  business lawyer  ·  patent lawyer  ·  business solicitor  ·  corporate counsel"
+  },
+  {
+   "role": "Legal Secretaries",
+   "isco": 3342,
+   "aka": NaN
+  },
+  {
+   "role": "Legal Officials",
+   "isco": 2619,
+   "aka": NaN
+  },
+  {
+   "role": "Arbitrators, Mediators, and Conciliators",
+   "isco": 2612,
+   "aka": NaN
+  },
+  {
+   "role": "Judges, Magistrate Judges, and Magistrates",
+   "isco": 2619,
+   "aka": NaN
+  },
+  {
+   "role": "Paralegals and Legal Assistants",
+   "isco": 3411,
+   "aka": NaN
+  },
+  {
+   "role": "Legal Secretaries and Administrative Assistants",
+   "isco": 3342,
+   "aka": NaN
+  },
+  {
+   "role": "Judicial Law Clerks",
+   "isco": 2612,
+   "aka": NaN
+  },
+  {
+   "role": "Administrative Law Judges, Adjudicators, and Hearing Officers",
+   "isco": 2612,
+   "aka": NaN
+  },
+  {
+   "role": "Title Examiners, Abstractors, and Searchers",
+   "isco": 3342,
+   "aka": NaN
+  },
+  {
+   "role": "Legal Support Workers, All Other",
+   "isco": 3411,
+   "aka": NaN
+  },
+  {
+   "role": "supreme court judge",
+   "isco": 2612,
+   "aka": "justice  ·  high court judge  ·  justice of the supreme court  ·  justice of the high court  ·  lord advocate"
+  },
+  {
+   "role": "court jury coordinator",
+   "isco": 2619,
+   "aka": "legal secretary  ·  court usher  ·  coordinators for court jury  ·  bailiff  ·  jury consultant"
+  },
+  {
+   "role": "coroner",
+   "isco": 2619,
+   "aka": "pathologist  ·  medical examiner  ·  chief coroner  ·  chief medical examiner  ·  forensic medical examiner"
+  }
+ ]
+}

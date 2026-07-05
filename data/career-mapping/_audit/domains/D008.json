@@ -1,0 +1,117 @@
+{
+ "domain_id": "D008",
+ "domain_name": "Telecommunications",
+ "role_count": 22,
+ "roles": [
+  {
+   "role": "telecommunications engineer",
+   "isco": 2153,
+   "aka": "radio engineer  ·  transmission engineer  ·  broadcast engineer  ·  communications designer  ·  telecoms engineer"
+  },
+  {
+   "role": "telecommunications manager",
+   "isco": 1330,
+   "aka": "communications manager  ·  telecommunications commissioning manager  ·  ICT manager  ·  telecommunications managers  ·  telecommunications services manager"
+  },
+  {
+   "role": "ICT capacity planner",
+   "isco": 2523,
+   "aka": "ICT capacity planners  ·  IT capacity planner  ·  ICT capability manager  ·  IT capability planner  ·  ICT performance manager"
+  },
+  {
+   "role": "aviation data communications manager",
+   "isco": 3513,
+   "aka": "aviation data communications officer  ·  aviation data communications contractor  ·  data communications manager in aviation  ·  aviation data communications consultant  ·  aviation data communications specialist"
+  },
+  {
+   "role": "ICT documentation manager",
+   "isco": 1330,
+   "aka": "documentation manager  ·  ICT documentation managers  ·  technical communication manager  ·  IT documentation manager"
+  },
+  {
+   "role": "ICT network technician",
+   "isco": 3513,
+   "aka": "system engineer  ·  assistant network administrator  ·  networks technician  ·  network engineer  ·  IT network technician"
+  },
+  {
+   "role": "digital transformation manager",
+   "isco": 1330,
+   "aka": "digital transformation officer  ·  digital transformation director"
+  },
+  {
+   "role": "chief technology officer",
+   "isco": 1330,
+   "aka": "chief technology officers  ·  IT director  ·  chief digital officer  ·  information technology director  ·  CTO"
+  },
+  {
+   "role": "ICT information and knowledge manager",
+   "isco": 1330,
+   "aka": "chief technology officer  ·  ICT knowledge manager  ·  ICT information manager  ·  IT information manager  ·  IT information and knowledge manager"
+  },
+  {
+   "role": "chief information officer",
+   "isco": 1330,
+   "aka": "IT director  ·  chief information officers  ·  CIO"
+  },
+  {
+   "role": "ICT project manager",
+   "isco": 1330,
+   "aka": "IT projects manager  ·  web project manager  ·  scrum master  ·  IT project manager  ·  blockchain manager"
+  },
+  {
+   "role": "ICT product manager",
+   "isco": 1330,
+   "aka": "ICT product managers  ·  IT product manager  ·  IT products manager  ·  ICT products managers  ·  ICT products manager"
+  },
+  {
+   "role": "telecommunications analyst",
+   "isco": 2153,
+   "aka": "telecoms analysts  ·  network planner  ·  communication analyst  ·  communications analyst  ·  telecom analyst"
+  },
+  {
+   "role": "ICT environmental manager",
+   "isco": 1330,
+   "aka": "IT environmental manager  ·  information and communication technologies environmental manager  ·  ICT environment manager  ·  ICT environment managers  ·  information technologies environmental manager"
+  },
+  {
+   "role": "ICT network engineer",
+   "isco": 2523,
+   "aka": "networks designer  ·  networks developer  ·  network configurator  ·  network developer  ·  network engineers"
+  },
+  {
+   "role": "telecommunications engineering technician",
+   "isco": 3522,
+   "aka": "telecommunications administrators  ·  telecoms administrator  ·  communication administrator  ·  telecom administrator  ·  communications administrator"
+  },
+  {
+   "role": "ICT network architect",
+   "isco": 2523,
+   "aka": "network designer  ·  network architects"
+  },
+  {
+   "role": "chief data officer",
+   "isco": 1330,
+   "aka": "chief data officers  ·  chief analytics officer  ·  CDO"
+  },
+  {
+   "role": "ICT vendor relationship manager",
+   "isco": 1330,
+   "aka": "ICT vendor relations manager  ·  IT vendor relations manager  ·  ICT vendor relationships manager  ·  IT vendor relationship manager  ·  ICT vendor relationship managers"
+  },
+  {
+   "role": "ICT operations manager",
+   "isco": 1330,
+   "aka": "IT process manager  ·  ICT operations managers  ·  IT operations manager  ·  data processing manager  ·  ICT data processing manager"
+  },
+  {
+   "role": "software manager",
+   "isco": 1330,
+   "aka": "software managers  ·  software applications manager  ·  applications manager  ·  ICT applications manager  ·  soft manager"
+  },
+  {
+   "role": "Computer and Information Systems Managers",
+   "isco": 1330,
+   "aka": NaN
+  }
+ ]
+}

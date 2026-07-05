@@ -1,0 +1,11 @@
+{
+  "jamb_name": "Meteorology",
+  "utme_subjects": ["Mathematics", "Physics", "Chemistry or Geography"],
+  "olevel_requirement": "Five (5) SSC credit passes including Physics, Mathematics, English Language and either Chemistry or Geography.",
+  "direct_entry": "(i) 'A' Level passes in Mathematics and Physics. (ii) ND upper credit level in Meteorology. (iii) NMO Class II Certificate in Weather Forecasting, plus 'O' Level SSC requirements.",
+  "institution_waivers": [
+    {"institution": "AUN", "note": "UTME subjects: AUN requires Mathematics, plus any other subjects from Physics; Chemistry, Further Mathematics, Computer Studies, Information Technology, Environmental Science, Biology, Literature in English, Government, History, Economics, Geography, Technical Drawing, Visual Arts, Civics, and French."},
+    {"institution": "FUTA", "note": "Direct Entry: FUTA accepts 'A' Level passes or equivalents in at least two (2) subjects from Physics, Mathematics and either Chemistry or Geography; WMO Class II certificate is also eligible for admission. UTME: requires five (5) 'O' Level credit passes or equivalents at not more than two (2) sittings in English Language, Mathematics, Physics, Chemistry or Geography and any other science subject. UTME subjects: English Language, Physics, Mathematics and either Chemistry or Geography."},
+    {"institution": "MARITIME-UNI", "note": "UTME: requires five (5) credits at SSCE or its equivalent at not more than two (2) sittings in English Language, Mathematics, Physics, Geography and any of Chemistry or Biology. UTME subjects: Geography, Physics and any of Mathematics, Chemistry or Biology."}
+  ]
+}

@@ -1,0 +1,392 @@
+{
+ "domain_id": "D055",
+ "domain_name": "Chemical Engineering",
+ "role_count": 77,
+ "roles": [
+  {
+   "role": "asphalt laboratory technician",
+   "isco": 3116,
+   "aka": "bitumen technician  ·  asphalt production technical supervisor  ·  aggregates and bitumen laboratory technician  ·  technical supervisor, asphalt production  ·  road surface laboratory technician"
+  },
+  {
+   "role": "nonwoven filament machine operator",
+   "isco": 8131,
+   "aka": "non woven filament machine operator  ·  non woven yarn worker  ·  non-woven yarn worker  ·  nonwoven filament machinist  ·  non-woven filament machine operator"
+  },
+  {
+   "role": "nitroglycerin separator operator",
+   "isco": 8131,
+   "aka": "nitroglycerin separator operative  ·  nitroglycerin- separator operative  ·  nitro-separator operator  ·  chemical equipment operative  ·  nitroglycerin separator worker"
+  },
+  {
+   "role": "lime kiln operator",
+   "isco": 8131,
+   "aka": "lime kiln operative  ·  regenerative kiln operator  ·  lime kiln worker  ·  flare kiln operator  ·  draw kiln operator"
+  },
+  {
+   "role": "granulator machine operator",
+   "isco": 8131,
+   "aka": "granulator  ·  pharmaceutical granulating machine operative  ·  pharmaceutical granulation operative  ·  granulation operator  ·  granulating machine operative"
+  },
+  {
+   "role": "pesticide mixer",
+   "isco": 8131,
+   "aka": "fungicide mixer  ·  insecticide mixing machine operator  ·  herbicide mixing machine operator  ·  fungicide mixing machine setter  ·  fungicide mixing machine operator"
+  },
+  {
+   "role": "biophysicist",
+   "isco": 2131,
+   "aka": "biophysics scientist  ·  biophysics research scientist  ·  biophysics biotechnologist  ·  biophysics scholar  ·  biophysics researcher"
+  },
+  {
+   "role": "pyrotechnics drying room attendant",
+   "isco": 8131,
+   "aka": "fireworks drying room attendant  ·  pyrotechnics production worker  ·  drying room fireworks maker  ·  firework drying room attendant  ·  drying room firework maker"
+  },
+  {
+   "role": "gauger",
+   "isco": 8131,
+   "aka": "oil refiner  ·  oil gauger  ·  oil well gauger  ·  gager  ·  well gauger"
+  },
+  {
+   "role": "air separation plant operator",
+   "isco": 3133,
+   "aka": "air separation plant production operator  ·  air separation plant operative  ·  air separation plant worker  ·  oxygen plant operator  ·  oxygen gas plant operator"
+  },
+  {
+   "role": "lacquer maker",
+   "isco": 8131,
+   "aka": "lacquer mixer  ·  synthetic paint and varnish maker  ·  lacquer maker (paint & varnish)  ·  maker of lacquer  ·  synthetic paint & varnish maker"
+  },
+  {
+   "role": "physiologist",
+   "isco": 2131,
+   "aka": "anatomy analyst  ·  anatomy researcher  ·  anatomy research scientist  ·  physiology scientist  ·  physiology analyst"
+  },
+  {
+   "role": "anaerobic digestion plant operator",
+   "isco": 8131,
+   "aka": "waste treatment plant operator  ·  effluent plant operator  ·  processing plant technician  ·  biogas plant operator  ·  plant process operator"
+  },
+  {
+   "role": "soap chipper",
+   "isco": 8131,
+   "aka": "soap chipping machine operative  ·  soap chipping machine tender  ·  soap chipping machine feeder  ·  soap chipping machine worker  ·  soap chipper feeder"
+  },
+  {
+   "role": "nitrator operator",
+   "isco": 8131,
+   "aka": "tetryl-nitrator operator  ·  explosives monitoring and storage worker  ·  biazzi nitrator operator  ·  binitrotoluene operator  ·  nitroglycerin nitrator operator"
+  },
+  {
+   "role": "distillation operator",
+   "isco": 8131,
+   "aka": "petroleum refinery operator  ·  oil refinery expert  ·  petroleum refinery technician  ·  distillation process expert  ·  refinery technician"
+  },
+  {
+   "role": "soap drier operator",
+   "isco": 8131,
+   "aka": "operator of soap flake drier machine  ·  operator of soap flake dryer machine  ·  soap dryer machine tender  ·  soap drier tender  ·  viscous soap machine worker"
+  },
+  {
+   "role": "chemical engineering technician",
+   "isco": 3116,
+   "aka": "production chemistry technician  ·  chemical operations engineering technician  ·  chemical industry engineering technician  ·  chemical engineering worker  ·  chemical process engineering technician"
+  },
+  {
+   "role": "soap maker",
+   "isco": 8131,
+   "aka": "soap factory operator  ·  soap and cosmetics maker  ·  maker of soap  ·  soap boiler  ·  artisan soap maker"
+  },
+  {
+   "role": "plodder operator",
+   "isco": 8131,
+   "aka": "soap compression machine worker  ·  plodding-machine minder  ·  plodder operative  ·  plodding-machine operator  ·  soap production operative"
+  },
+  {
+   "role": "toxicologist",
+   "isco": 2131,
+   "aka": "toxicology analyst  ·  toxicology science researcher  ·  toxicologists  ·  toxicology studies scholar  ·  toxicology scholar"
+  },
+  {
+   "role": "botanist",
+   "isco": 2131,
+   "aka": "garden intendant  ·  director of horticulture learning and operations  ·  horticulture manager  ·  director of horticulture  ·  garden manager"
+  },
+  {
+   "role": "chemical mixer",
+   "isco": 8131,
+   "aka": "chemicals blender  ·  chemical batch mixer  ·  chemical process worker  ·  chemical mixer operative  ·  chemicals batch blender"
+  },
+  {
+   "role": "geneticist",
+   "isco": 2131,
+   "aka": "genetics engineer  ·  genetic scientist  ·  genetics research scientist  ·  molecular biologist  ·  molecular geneticist"
+  },
+  {
+   "role": "synthetic materials engineer",
+   "isco": 2145,
+   "aka": "plastics production engineer  ·  synthetic materials production engineer  ·  polymers production engineer  ·  synthetic materials research engineer  ·  polymers development engineer"
+  },
+  {
+   "role": "colour sampling technician",
+   "isco": 3116,
+   "aka": "leather dyer  ·  colour kitchen technician  ·  colour kitchen worker  ·  dyer  ·  color kitchen worker"
+  },
+  {
+   "role": "bioinformatics scientist",
+   "isco": 2131,
+   "aka": "IT researcher  ·  senior bioinformatics scientist  ·  data scientist  ·  biology researcher  ·  junior bioinformatics scientist"
+  },
+  {
+   "role": "aquaculture biologist",
+   "isco": 2131,
+   "aka": "aquaculture biology research analyst  ·  expert in aquaculture biology  ·  aquaculture biology expert  ·  specialist in aquaculture biology  ·  aquaculture biology scientist"
+  },
+  {
+   "role": "food biotechnologist",
+   "isco": 2131,
+   "aka": "food biotech technician  ·  technician for food industry bioeconomy  ·  food biotech specialist"
+  },
+  {
+   "role": "biochemist",
+   "isco": 2131,
+   "aka": "biochemistry research scientist  ·  chemical biotechnologist  ·  biochemistry studies scholar  ·  biochemistry science researcher  ·  biochemistry studies research scientist"
+  },
+  {
+   "role": "biogas technician",
+   "isco": 3133,
+   "aka": "landfill gas plant technician  ·  biogas equipment technician  ·  anaerobic digester technician  ·  biogas production technician  ·  biogas generation technician"
+  },
+  {
+   "role": "capsule filling machine operator",
+   "isco": 8131,
+   "aka": "filling machine operator  ·  pharmaceutical machine operator  ·  capsule machine operative  ·  pharmaceutical machine operative  ·  capsule filler"
+  },
+  {
+   "role": "gas distribution engineer",
+   "isco": 2145,
+   "aka": "gas distribution system engineer  ·  gas distribution engineering specialist  ·  gas distribution network engineer  ·  gas distribution technology engineering specialist  ·  gas distribution technology engineering consultant"
+  },
+  {
+   "role": "mine control room operator",
+   "isco": 8131,
+   "aka": "mining supervisor  ·  panel controller  ·  mine monitor  ·  mining control room operator  ·  mine operator"
+  },
+  {
+   "role": "animal behaviourist",
+   "isco": 2131,
+   "aka": "ethologist  ·  animal behaviour expert  ·  animal behaviour specialist  ·  animal behavior specialist  ·  animal behavior expert"
+  },
+  {
+   "role": "fertiliser mixer",
+   "isco": 8131,
+   "aka": "fertilizer mixing machine operative  ·  fertilizer mixing machine operator  ·  mixer of fertilizer  ·  mixer of fertiliser  ·  fertiliser mixing machine operator"
+  },
+  {
+   "role": "gas production engineer",
+   "isco": 2145,
+   "aka": "gas production engineers  ·  gas production technology engineering expert  ·  gas production technology engineer  ·  gas production technology engineering specialist  ·  gas production engineering specialist"
+  },
+  {
+   "role": "paint mixer",
+   "isco": 8131,
+   "aka": "paint mixer operative  ·  paint mixer worker  ·  paint maker  ·  paint mixer operator  ·  paint production worker"
+  },
+  {
+   "role": "coking furnace operator",
+   "isco": 8131,
+   "aka": "industrial coke oven worker  ·  coking oven operator  ·  coke quencher operator  ·  coking furnace technician  ·  coker"
+  },
+  {
+   "role": "chemical processing plant controller",
+   "isco": 3133,
+   "aka": "process plant operator  ·  chemical plant and systems operator  ·  chemical plant and systems monitoring technician  ·  chemical operator  ·  chemical plant and systems monitor"
+  },
+  {
+   "role": "microbiologist",
+   "isco": 2131,
+   "aka": "virologist  ·  microbiology research analyst  ·  histologist  ·  bacteriologist  ·  microbiology studies research analyst"
+  },
+  {
+   "role": "chemical plant control room operator",
+   "isco": 3133,
+   "aka": "panel board operator  ·  production control room operator  ·  closed-circuit television control room operator  ·  manufacturing control room operator  ·  production monitor"
+  },
+  {
+   "role": "rubber technologist",
+   "isco": 2145,
+   "aka": "rubber technician  ·  rubber material technologist  ·  rubber technology scientist  ·  rubber technology analyst  ·  rubber technology expert"
+  },
+  {
+   "role": "immunologist",
+   "isco": 2131,
+   "aka": "immunology analyst  ·  immunology researcher  ·  immunology studies research analyst  ·  immunology research analyst  ·  immunology studies researcher"
+  },
+  {
+   "role": "epidemiologist",
+   "isco": 2131,
+   "aka": "epidemiology science researcher  ·  epidemiology researcher  ·  epidemiology research analyst  ·  epidemiology analyst  ·  epidemiology research scientist"
+  },
+  {
+   "role": "nitroglycerin neutraliser",
+   "isco": 8131,
+   "aka": "nitroglycerin neutralizer  ·  nitroglycerin production operator  ·  nitroglycerin production worker  ·  nitroglycerine neutralizer  ·  nitroglycerin production operative"
+  },
+  {
+   "role": "paper engineer",
+   "isco": 2145,
+   "aka": "process engineer  ·  materials engineer  ·  mechanical engineer  ·  pulp and paper engineer  ·  paper mill process engineer"
+  },
+  {
+   "role": "botanicals specialist",
+   "isco": 2131,
+   "aka": "botanical milling operative  ·  botanical expert  ·  botanical specialist  ·  botanical science expert"
+  },
+  {
+   "role": "varnish maker",
+   "isco": 8131,
+   "aka": "varnish cooker  ·  varnish blender  ·  maker of varnish  ·  kettle charger  ·  varnish production worker"
+  },
+  {
+   "role": "soap tower operator",
+   "isco": 8131,
+   "aka": "tower operative (soap)  ·  tower operator (soap)  ·  tower operator  ·  soap plant worker  ·  soap powder production operative"
+  },
+  {
+   "role": "pill maker operator",
+   "isco": 8131,
+   "aka": "pillmaker operator  ·  piling machine operative  ·  tablet making machine tender  ·  tablet making machine operative  ·  pill production operative"
+  },
+  {
+   "role": "hazardous waste technician",
+   "isco": 3116,
+   "aka": "waste disposal compliance technician  ·  waste disposal site compliance technician  ·  toxic waste technician  ·  hazardous waste disposal technician  ·  hazardous waste treatment technician"
+  },
+  {
+   "role": "gas processing plant supervisor",
+   "isco": 3133,
+   "aka": "gas processing safety controller  ·  gas compressor controller  ·  gas processing maintenance controller  ·  downstream gas processing controller  ·  gas processing controller"
+  },
+  {
+   "role": "curator of horticulture",
+   "isco": 2131,
+   "aka": "conservation horticulturist  ·  curator & horticulturist  ·  curator and horticulturist  ·  curator of botany  ·  garden curator"
+  },
+  {
+   "role": "fermenter operator",
+   "isco": 8131,
+   "aka": "chemicals fermentation operative  ·  chemicals fermenter operative  ·  fermentation process worker  ·  chemicals fermenter operator  ·  fermentation worker"
+  },
+  {
+   "role": "perfume production machine operator",
+   "isco": 8131,
+   "aka": "perfume production machine worker  ·  fragrance plant worker  ·  fragrance production machine tender  ·  perfume production machine tender  ·  perfume production worker"
+  },
+  {
+   "role": "wax bleacher",
+   "isco": 8131,
+   "aka": "candle production operative  ·  candlewax bleacher  ·  candle production operator  ·  wax bleacher (chemical)  ·  bees-wax bleacher"
+  },
+  {
+   "role": "chemical manufacturing quality technician",
+   "isco": 3116,
+   "aka": "chemical manufacturing quality inspector  ·  chemical manufacturing quality tester  ·  chemical production quality technician  ·  QC technician chemical manufacturing  ·  chemical manufacturing quality assurance officer"
+  },
+  {
+   "role": "pharmaceutical engineer",
+   "isco": 2145,
+   "aka": "pharmaceutical engineering developer  ·  pharmaceutical technology engineering specialist  ·  pharmaceuticals engineer  ·  pharmaceutical technology engineering consultant  ·  pharmaceutical engineering designer and developer"
+  },
+  {
+   "role": "animal feed nutritionist",
+   "isco": 2131,
+   "aka": "animal nutrition expert  ·  feed nutritionist  ·  animal feed expert"
+  },
+  {
+   "role": "chemical engineer",
+   "isco": 2145,
+   "aka": "chemical technology engineering consultant  ·  chemical technology engineer  ·  pyrotechnics chemical engineer  ·  chemical technology engineering adviser  ·  chemical engineering expert"
+  },
+  {
+   "role": "tracer powder blender",
+   "isco": 8131,
+   "aka": "tracer powder maker  ·  flammable chemical blender  ·  flammable chemical mixer  ·  igniter powder mixer  ·  igniter powder blender"
+  },
+  {
+   "role": "biologist",
+   "isco": 2131,
+   "aka": "ornithologist  ·  herpetologist  ·  mycologist  ·  zoologist  ·  entomologist"
+  },
+  {
+   "role": "marine biologist",
+   "isco": 2131,
+   "aka": "marine ecologist  ·  marine biology researcher  ·  marine botanist  ·  sea biologist  ·  researcher in marine biology"
+  },
+  {
+   "role": "gas station operator",
+   "isco": 3133,
+   "aka": "ethylene compressor operator  ·  gas pumping station operative  ·  butadiene compressor operator  ·  gas-compressor operative  ·  gas pumping station operator"
+  },
+  {
+   "role": "biochemical engineer",
+   "isco": 2145,
+   "aka": "enzyme engineer  ·  biochemical engineering adviser  ·  biochemical research engineer  ·  biochemical process engineer  ·  biochemical engineering specialist"
+  },
+  {
+   "role": "cosmetics production machine operator",
+   "isco": 8131,
+   "aka": "cosmetics production machine operative  ·  cosmetics production worker  ·  cosmetics production operator  ·  cosmetics production machine worker  ·  cosmetics production operative"
+  },
+  {
+   "role": "Chemists and Chemical Laboratory Scientists",
+   "isco": 2145,
+   "aka": NaN
+  },
+  {
+   "role": "Environmental Engineering Technologists and Technicians",
+   "isco": 3116,
+   "aka": NaN
+  },
+  {
+   "role": "Water and Wastewater Treatment Plant and System Operators",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Chemical Plant and System Operators",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Gas Plant Operators",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Plant and System Operators, All Other",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Biofuels Processing Technicians",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "Chemical Equipment Operators and Tenders",
+   "isco": 8131,
+   "aka": NaN
+  },
+  {
+   "role": "steam engineer",
+   "isco": 2144,
+   "aka": "steam engineering expert  ·  steam technology engineering specialist  ·  steam technology engineering adviser  ·  steam technology engineering expert  ·  steam engineering adviser"
+  },
+  {
+   "role": "textile chemist",
+   "isco": 2113,
+   "aka": "textile chemical coordinator  ·  textile chemist and colourist  ·  textile chemical technician  ·  textile colour formulator  ·  textile chemical supervisor"
+  }
+ ]
+}

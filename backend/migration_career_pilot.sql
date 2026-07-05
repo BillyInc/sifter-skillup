@@ -28,6 +28,12 @@ CREATE TABLE IF NOT EXISTS skillup_dev.jamb_programmes (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_jamb_programmes_name
     ON skillup_dev.jamb_programmes(jamb_name);
+-- JAMB-nuance skills profile: union of the primary + any secondary (blended) CCMAS
+-- programmes this JAMB admission name spans. Powers the eventual university-vs-market gap.
+ALTER TABLE skillup_dev.jamb_programmes ADD COLUMN IF NOT EXISTS skills_technical     JSONB;
+ALTER TABLE skillup_dev.jamb_programmes ADD COLUMN IF NOT EXISTS skills_transferable  JSONB;
+ALTER TABLE skillup_dev.jamb_programmes ADD COLUMN IF NOT EXISTS skills_components    JSONB;
+ALTER TABLE skillup_dev.jamb_programmes ADD COLUMN IF NOT EXISTS is_blend             BOOLEAN DEFAULT FALSE;
 
 -- ── JAMB → CCMAS bridge (the editorial heart; A/B/C/D) ─────────
 CREATE TABLE IF NOT EXISTS skillup_dev.programme_mapping (

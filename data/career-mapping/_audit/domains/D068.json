@@ -1,0 +1,277 @@
+{
+ "domain_id": "D068",
+ "domain_name": "Allied Health",
+ "role_count": 54,
+ "roles": [
+  {
+   "role": "physiotherapist",
+   "isco": 2264,
+   "aka": "respiratory therapist  ·  masseuse  ·  rehabilitation therapist  ·  occupational therapist  ·  osteopath"
+  },
+  {
+   "role": "medical physics expert",
+   "isco": 2269,
+   "aka": "MPE  ·  medical radiation physics expert  ·  patients radiation protection optimisation expert  ·  dosimetry expert  ·  medical radiation physics specialist"
+  },
+  {
+   "role": "kinesiologist",
+   "isco": 2269,
+   "aka": "biomechanical kinesiologist  ·  exercise researcher  ·  kinesiology science researcher  ·  exercise kinesiologist  ·  kinesiology researcher"
+  },
+  {
+   "role": "anaesthetic technician",
+   "isco": 3259,
+   "aka": "anesthetic technician  ·  surgical technician  ·  surgical interventions anaesthetic technician  ·  technician for anaesthetics in surgeries  ·  technician for anesthetics in surgeries"
+  },
+  {
+   "role": "biomedical scientist",
+   "isco": 2269,
+   "aka": "biomedical doctor  ·  practitioner in biomedical science  ·  clinical embryologist  ·  blood bank technology specialist  ·  scientist in biomedicine"
+  },
+  {
+   "role": "occupational therapist",
+   "isco": 2269,
+   "aka": "rehabilitation therapist  ·  expert practitioner of occupational therapy  ·  ergotherapist  ·  practitioner of occupational therapy  ·  expert occupational therapist"
+  },
+  {
+   "role": "music therapist",
+   "isco": 2269,
+   "aka": "music therapy practitioner  ·  music therapy counsellor"
+  },
+  {
+   "role": "chiropractor",
+   "isco": 2269,
+   "aka": "etiopath  ·  musculoskeletal therapist  ·  neuromusculoskeletal therapist  ·  Licensed chiropractor"
+  },
+  {
+   "role": "anatomical pathology technician",
+   "isco": 2269,
+   "aka": "anatomical pathology technical assistant  ·  assistant in anatomical pathology  ·  assistant pathology technician  ·  pathology laboratory services technician  ·  pathology technician"
+  },
+  {
+   "role": "podiatry assistant",
+   "isco": 2269,
+   "aka": "assistant in podiatric foot care  ·  chiropody assistant  ·  foot care assistant  ·  podiatry foot care assistant  ·  podology assistant"
+  },
+  {
+   "role": "prosthetic-orthotics technician",
+   "isco": 2269,
+   "aka": "orthopaedic appliance maker  ·  prosthetics maker  ·  prosthetic brace maker  ·  prosthetic devices maker  ·  orthopaedic technician"
+  },
+  {
+   "role": "nuclear medicine radiographer",
+   "isco": 2269,
+   "aka": "nuclear medicine technologist"
+  },
+  {
+   "role": "chiropractic assistant",
+   "isco": 3259,
+   "aka": "assistant etiopath  ·  chiropractic support worker  ·  assistant neuromusculoskeletal therapist  ·  chiropractic's assistant  ·  assistant to chiropractic"
+  },
+  {
+   "role": "dietetic technician",
+   "isco": 3259,
+   "aka": "clinical dietetic technician  ·  dietetic assistant  ·  diet technician  ·  clinical diet technician  ·  medical dietetics technician"
+  },
+  {
+   "role": "radiographer",
+   "isco": 2269,
+   "aka": "clinical radiographer  ·  practitioner of radiography  ·  medical radiation technologist  ·  expert radiographer  ·  clinical radiography practitioner"
+  },
+  {
+   "role": "orthoptist",
+   "isco": 2267,
+   "aka": "practitioner of orthoptics  ·  orthoptics specialist  ·  specialist in orthoptics  ·  qualified orthoptist  ·  orthoptics expert"
+  },
+  {
+   "role": "dance therapist",
+   "isco": 2269,
+   "aka": "movement therapist"
+  },
+  {
+   "role": "respiratory therapy technician",
+   "isco": 3259,
+   "aka": "respiratory care supervisor  ·  respiratory therapist  ·  respiratory technician  ·  breathing technician  ·  oxygen therapy technician"
+  },
+  {
+   "role": "diagnostic radiographer",
+   "isco": 2269,
+   "aka": "expert diagnostic radiographer  ·  practitioner of diagnostic radiography  ·  senior diagnostic radiographer  ·  specialist diagnostic radiographer  ·  radiologic technologist"
+  },
+  {
+   "role": "speech and language therapist",
+   "isco": 2266,
+   "aka": "psychomotor specialist  ·  logopaedist  ·  paediatric speech and language therapist  ·  language therapist  ·  logopaedics therapist"
+  },
+  {
+   "role": "occupational therapy assistant",
+   "isco": 2269,
+   "aka": "technician in occupational therapy  ·  occupational therapy rehabilitation assistant  ·  OT assistant  ·  assistant in occupational therapy  ·  OT support worker"
+  },
+  {
+   "role": "dietitian",
+   "isco": 2265,
+   "aka": "dietician  ·  specialist dietician  ·  public health nutritionist"
+  },
+  {
+   "role": "massage therapist",
+   "isco": 3255,
+   "aka": "deep tissue massage therapist  ·  clinical masseur  ·  medical masseur  ·  Swedish massage therapist  ·  professional massage therapist"
+  },
+  {
+   "role": "advanced physiotherapist",
+   "isco": 2264,
+   "aka": "physiotherapy team leader  ·  clinical lead physiotherapist  ·  physiotherapy lead  ·  lead neuromuscular physiotherapist  ·  lead remedial physiotherapist"
+  },
+  {
+   "role": "osteopath",
+   "isco": 2269,
+   "aka": "osteopathic practitioner"
+  },
+  {
+   "role": "temperature screener",
+   "isco": 3259,
+   "aka": "entrance screener  ·  covid temperature screener  ·  temperature checker  ·  health screener"
+  },
+  {
+   "role": "specialist biomedical scientist",
+   "isco": 2269,
+   "aka": "specialist in biomedical research  ·  biomedical scientist specialist  ·  expert in biomedical science  ·  specialist clinical laboratory scientist  ·  specialist in biomedical science"
+  },
+  {
+   "role": "shiatsu practitioner",
+   "isco": 3255,
+   "aka": "therapist of shiatsu massage  ·  practitioner of shiatsu  ·  shiatsu therapist  ·  shiatsu acupressurist"
+  },
+  {
+   "role": "biomedical scientist advanced",
+   "isco": 2269,
+   "aka": "advanced biomedical doctor  ·  advanced biomedical researcher  ·  advanced practitioner in biomedical science  ·  advanced medical laboratory scientist  ·  expert scientist in biomedicine"
+  },
+  {
+   "role": "specialist chiropractor",
+   "isco": 2269,
+   "aka": "licensed specialised chiropractor  ·  specialised etiopath  ·  specialised musculoskeletal therapist  ·  specialised chiropractor  ·  specialised neuromusculoskeletal therapist"
+  },
+  {
+   "role": "optometrist",
+   "isco": 2267,
+   "aka": "specialist in optometry  ·  optometry practitioner  ·  expert optometrist  ·  specialist optometrist  ·  practitioner of optometry"
+  },
+  {
+   "role": "prepared meals nutritionist",
+   "isco": 2265,
+   "aka": "account manager adult nutrition  ·  nutrition scientist"
+  },
+  {
+   "role": "audiologist",
+   "isco": 2266,
+   "aka": "audiology specialist  ·  audiological scientist  ·  technical audiologist  ·  expert in audiology  ·  hearing aid audiologist"
+  },
+  {
+   "role": "covid tester",
+   "isco": 3259,
+   "aka": "testing support assistant  ·  mobile screening nurse  ·  covid community testing facilitator  ·  coronavirus tester  ·  testing supervisor"
+  },
+  {
+   "role": "sophrologist",
+   "isco": 3255,
+   "aka": "practitioner of dynamic relaxation methods  ·  dynamic relaxation methods practitioner  ·  specialist sophrology practitioner  ·  sophrology practitioner  ·  dynamic relaxation practitioner"
+  },
+  {
+   "role": "podiatrist",
+   "isco": 2269,
+   "aka": "specialist chiropodist  ·  specialist podologist  ·  specialist in chiropody  ·  chiropodist  ·  expert in podiatry"
+  },
+  {
+   "role": "cytotechnologist",
+   "isco": 2269,
+   "aka": "expert cytology screener  ·  specialist cytology screener  ·  screener in cytology  ·  senior cytology screener  ·  cytology practitioner"
+  },
+  {
+   "role": "assistant clinical psychologist",
+   "isco": 3259,
+   "aka": "psychology assistant  ·  psychological assistant  ·  personality assessment coordinator  ·  assistant psychologist"
+  },
+  {
+   "role": "animal assisted therapist",
+   "isco": 2269,
+   "aka": "animal assisted intervention professional"
+  },
+  {
+   "role": "art therapist",
+   "isco": 2269,
+   "aka": "dramatherapist"
+  },
+  {
+   "role": "physiotherapy assistant",
+   "isco": 3255,
+   "aka": "cardiovascular physiotherapy assistant  ·  neuromusculoskeletal physiotherapy assistant  ·  physiotherapy rehabilitation assistant  ·  neurological physiotherapy assistant  ·  neuromuscular physiotherapy assistant"
+  },
+  {
+   "role": "recreational therapist",
+   "isco": 2269,
+   "aka": "recreational activity provider  ·  psychomotor therapist  ·  recreation therapist  ·  milieu therapist  ·  social therapist"
+  },
+  {
+   "role": "Speech-Language Pathologists",
+   "isco": 2266,
+   "aka": NaN
+  },
+  {
+   "role": "Physical Therapist Assistants",
+   "isco": 3255,
+   "aka": NaN
+  },
+  {
+   "role": "Physician Assistants",
+   "isco": 2269,
+   "aka": NaN
+  },
+  {
+   "role": "Anesthesiologist Assistants",
+   "isco": 2269,
+   "aka": NaN
+  },
+  {
+   "role": "Radiation Therapists",
+   "isco": 2267,
+   "aka": NaN
+  },
+  {
+   "role": "Acupuncturists",
+   "isco": 2269,
+   "aka": NaN
+  },
+  {
+   "role": "Naturopathic Physicians",
+   "isco": 2269,
+   "aka": NaN
+  },
+  {
+   "role": "Surgical Technologists",
+   "isco": 3255,
+   "aka": NaN
+  },
+  {
+   "role": "Ophthalmic Medical Technicians",
+   "isco": 3255,
+   "aka": NaN
+  },
+  {
+   "role": "Occupational Therapy Aides",
+   "isco": 3255,
+   "aka": NaN
+  },
+  {
+   "role": "Physical Therapist Aides",
+   "isco": 3255,
+   "aka": NaN
+  },
+  {
+   "role": "Recreation Workers",
+   "isco": 2269,
+   "aka": NaN
+  }
+ ]
+}

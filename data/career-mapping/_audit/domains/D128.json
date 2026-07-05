@@ -1,0 +1,52 @@
+{
+ "domain_id": "D128",
+ "domain_name": "Social Welfare, Youth Services",
+ "role_count": 9,
+ "roles": [
+  {
+   "role": "child care coordinator",
+   "isco": 1341,
+   "aka": "pre-school activities manager  ·  child day care vacation manager  ·  vacation camp coordinator  ·  vacation activities manager  ·  pre-school activities coordinator"
+  },
+  {
+   "role": "public housing manager",
+   "isco": 1344,
+   "aka": "housing officer  ·  housing policy analyst  ·  housing policy manager  ·  housing authority manager  ·  public housing officer"
+  },
+  {
+   "role": "youth programme director",
+   "isco": 1344,
+   "aka": "youth development program coordinator  ·  youth program coordinator  ·  youth programme coordinator  ·  inclusion director  ·  youth development director"
+  },
+  {
+   "role": "social services manager",
+   "isco": 1344,
+   "aka": "policy manager  ·  social services team leader  ·  social services team manager  ·  adult social services manager  ·  social services co-ordinator"
+  },
+  {
+   "role": "nursery school head teacher",
+   "isco": 1341,
+   "aka": "preschool headteacher  ·  head teacher of nursery  ·  nursery school director  ·  nursery school headmaster  ·  kindergarten headmaster"
+  },
+  {
+   "role": "elderly home manager",
+   "isco": 1343,
+   "aka": "elderly care home supervisor  ·  home for the elderly manager  ·  elderly home supervisor  ·  nursing home general manager  ·  elderly care home manager"
+  },
+  {
+   "role": "youth centre manager",
+   "isco": 1344,
+   "aka": "youth community centre manager  ·  youth recreation centre manager  ·  youth club manager  ·  community centre youth worker  ·  youth & community worker"
+  },
+  {
+   "role": "child day care centre manager",
+   "isco": 1341,
+   "aka": "child daycare centre manager  ·  child daycare centre coordinator  ·  after school day care coordinator  ·  childcare centre manager  ·  child day care centre administrator"
+  },
+  {
+   "role": "Social and Community Service Managers",
+   "isco": 1344,
+   "aka": NaN
+  }
+ ]
+}

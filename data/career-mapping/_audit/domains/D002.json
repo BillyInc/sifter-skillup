@@ -1,0 +1,192 @@
+{
+ "domain_id": "D002",
+ "domain_name": "Data Engineering",
+ "role_count": 37,
+ "roles": [
+  {
+   "role": "integration engineer",
+   "isco": 2511,
+   "aka": "IT integration engineer  ·  ICT integration engineers  ·  system integration engineer  ·  software integration engineer"
+  },
+  {
+   "role": "ICT disaster recovery analyst",
+   "isco": 2519,
+   "aka": "business continuity analyst  ·  ICT resilience analysts  ·  IT resilience analyst  ·  IT disaster recovery analyst  ·  business continuity strategist"
+  },
+  {
+   "role": "embedded system designer",
+   "isco": 2511,
+   "aka": "embedded system programmer  ·  embedded systems designers  ·  embedded software developer  ·  embedded system developer  ·  embedded systems programmer"
+  },
+  {
+   "role": "data warehouse designer",
+   "isco": 2521,
+   "aka": "data warehouse architect  ·  data warehouse developer"
+  },
+  {
+   "role": "computer vision engineer",
+   "isco": 2511,
+   "aka": "computer vision applied scientist  ·  computer vision expert  ·  computer vision specialist  ·  computer vision project engineer  ·  smart technics computer vision engineer"
+  },
+  {
+   "role": "data engineer",
+   "isco": 2511,
+   "aka": "data engineer expert  ·  research data engineer"
+  },
+  {
+   "role": "green ICT consultant",
+   "isco": 2511,
+   "aka": "IT environmental consultant  ·  green IT consultant  ·  green ICT consultants  ·  ICT environmental consultant  ·  ICT sustainability systems consultant"
+  },
+  {
+   "role": "data scientist",
+   "isco": 2511,
+   "aka": "data expert  ·  research data scientist  ·  data research scientist  ·  electromobility data scientist"
+  },
+  {
+   "role": "enterprise architect",
+   "isco": 2511,
+   "aka": "enterprise architects  ·  enterprise developer  ·  enterprise architecture manager  ·  enterprise designer"
+  },
+  {
+   "role": "artificial intelligence engineer",
+   "isco": 2511,
+   "aka": "intelligent systems designers  ·  artificial intelligence designer  ·  ICT intelligent systems designer  ·  AI system designer  ·  semantic technologies engineer"
+  },
+  {
+   "role": "ICT change and configuration manager",
+   "isco": 2519,
+   "aka": "configuration manager  ·  application lifecycle manager  ·  software change and configuration manager"
+  },
+  {
+   "role": "database integrator",
+   "isco": 2521,
+   "aka": "data integrator  ·  data base integrator  ·  data base integrators  ·  database integrators  ·  database development specialist"
+  },
+  {
+   "role": "ICT business analysis manager",
+   "isco": 2511,
+   "aka": "IT business analysis manager  ·  IT commercial analysis manager  ·  IT business analysis director  ·  ICT business analysis managers  ·  lead IT business analyst"
+  },
+  {
+   "role": "ICT research consultant",
+   "isco": 2511,
+   "aka": "IT research consultant  ·  ICT research advisor  ·  IT research specialist  ·  ICT research consultants  ·  IT research advisor"
+  },
+  {
+   "role": "data quality specialist",
+   "isco": 2519,
+   "aka": "data integrity officer  ·  data integrity specialist  ·  data quality officer  ·  data quality expert  ·  data quality specialists"
+  },
+  {
+   "role": "blockchain architect",
+   "isco": 2511,
+   "aka": "decentralized ledger technology specialist  ·  DLT specialist  ·  blockchain technology specialist  ·  DLT architect"
+  },
+  {
+   "role": "ICT network administrator",
+   "isco": 2522,
+   "aka": "network manager  ·  network specialist  ·  network administrators  ·  network support  ·  networks administrator"
+  },
+  {
+   "role": "database administrator",
+   "isco": 2521,
+   "aka": "data base administrators  ·  database administrators  ·  data administrator  ·  DBA  ·  database configurator"
+  },
+  {
+   "role": "database designer",
+   "isco": 2521,
+   "aka": "database designers  ·  data architect  ·  secure could-edge computing system architect  ·  data base designer  ·  data model designer"
+  },
+  {
+   "role": "system configurator",
+   "isco": 2522,
+   "aka": "system configurators  ·  system setup professional  ·  system configuration professional  ·  ICT system configurator  ·  IT system configurator"
+  },
+  {
+   "role": "ICT system administrator",
+   "isco": 2522,
+   "aka": "sysadmin  ·  IT system administrator  ·  IT systems administrator  ·  server administrator  ·  network administrator"
+  },
+  {
+   "role": "ICT system analyst",
+   "isco": 2511,
+   "aka": "ICT system analysts  ·  ICT systems analysts  ·  ICT systems analyst  ·  system analyst  ·  IT system analyst"
+  },
+  {
+   "role": "ICT system developer",
+   "isco": 2511,
+   "aka": "systems programmer  ·  ICT system developers  ·  systems developer  ·  IT system developer  ·  chief ICT system developer"
+  },
+  {
+   "role": "database developer",
+   "isco": 2521,
+   "aka": "data base developer  ·  database design specialist  ·  database development engineer  ·  database coder  ·  database programmer"
+  },
+  {
+   "role": "ICT consultant",
+   "isco": 2511,
+   "aka": "ICT ERP consultant  ·  ICT advisor  ·  IT advisor  ·  IT consultant  ·  IT compliance consultant"
+  },
+  {
+   "role": "ICT system integration consultant",
+   "isco": 2511,
+   "aka": "network integration consultant  ·  system integration consultants  ·  systems integration consultant  ·  application integration consultant  ·  systems integration consultants"
+  },
+  {
+   "role": "IT auditor",
+   "isco": 2511,
+   "aka": "ICT auditor  ·  information technology auditor  ·  IT Quality Appraiser"
+  },
+  {
+   "role": "data analyst",
+   "isco": 2511,
+   "aka": "battery data analyst  ·  mine electrification data analyst  ·  data warehouse analyst  ·  data warehousing analyst  ·  battery materials data analyst"
+  },
+  {
+   "role": "ICT system architect",
+   "isco": 2511,
+   "aka": "systems architect  ·  IT systems architect  ·  information systems architect  ·  ICT system architects  ·  solution architect"
+  },
+  {
+   "role": "computer scientist",
+   "isco": 2511,
+   "aka": "IT researcher  ·  IT scientist  ·  ICT science researcher  ·  ICT researcher  ·  IT research scientist"
+  },
+  {
+   "role": "user experience analyst",
+   "isco": 2511,
+   "aka": "user experience officer  ·  usability analyst  ·  user experience analysts"
+  },
+  {
+   "role": "ICT business analyst",
+   "isco": 2511,
+   "aka": "requirement engineer  ·  business process specialist  ·  IT business analyst  ·  ICT business analysts"
+  },
+  {
+   "role": "Big Data Specialists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Data Warehousing Specialists",
+   "isco": 2521,
+   "aka": NaN
+  },
+  {
+   "role": "Database and Network Professionals",
+   "isco": 2521,
+   "aka": NaN
+  },
+  {
+   "role": "Database Architects",
+   "isco": 2521,
+   "aka": NaN
+  },
+  {
+   "role": "Health Informatics Specialists",
+   "isco": 2511,
+   "aka": NaN
+  }
+ ]
+}

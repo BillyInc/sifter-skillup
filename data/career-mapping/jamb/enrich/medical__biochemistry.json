@@ -1,0 +1,10 @@
+{
+  "jamb_name": "Biochemistry",
+  "utme_subjects": ["Physics", "Chemistry", "Biology"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+  "direct_entry": "Two (2) 'A' Level passes in Chemistry and any one of Physics, Biology/Zoology/Botany and Mathematics.",
+  "institution_waivers": [
+    {"institution": "BENIN", "note": "Direct entry requires three (3) 'A' Level passes to include Biology/Zoology, Chemistry and Physics plus the UTME requirements."},
+    {"institution": "CALABAR", "note": "Does not admit through Direct Entry."}
+  ]
+}

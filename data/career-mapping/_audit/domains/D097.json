@@ -1,0 +1,472 @@
+{
+ "domain_id": "D097",
+ "domain_name": "Welding, Fabrication, Blacksmithing",
+ "role_count": 93,
+ "roles": [
+  {
+   "role": "gear machinist",
+   "isco": 7223,
+   "aka": "mechanical gear machinist  ·  gear change machinist  ·  electrical gearing machinist  ·  mechatronic gearing machinist  ·  precision gearing machinist"
+  },
+  {
+   "role": "riveter",
+   "isco": 7214,
+   "aka": "rivetting apprentice  ·  rivet thrower  ·  rivet machine operator  ·  rivet sticker  ·  rivet driver"
+  },
+  {
+   "role": "hydraulic forging press worker",
+   "isco": 7221,
+   "aka": "hydraulic foundry patternmaker technician  ·  hydraulic foundry patternmaker  ·  hydraulic sheet metal worker  ·  hydraulic patternmaking operator  ·  hydraulic foundry moulder"
+  },
+  {
+   "role": "boring machine operator",
+   "isco": 7223,
+   "aka": "boring machine setter  ·  multiple-spindle vertical boring mill set-up operator  ·  automatic boring technician  ·  automatic boring machine operator  ·  vertical boring machine operative"
+  },
+  {
+   "role": "briquetting machine operator",
+   "isco": 7223,
+   "aka": "briquette machine operator  ·  briquetting machines operator  ·  briquet machine operator  ·  briquetter operator  ·  briquetting machine operators"
+  },
+  {
+   "role": "coquille casting worker",
+   "isco": 7211,
+   "aka": "caster  ·  coquille caster  ·  coquille casting workers  ·  foundry sand moulders  ·  foundry coremakers"
+  },
+  {
+   "role": "gunsmith",
+   "isco": 7222,
+   "aka": "custom rifle designer  ·  metal worker  ·  custom gun designer  ·  pistol smith  ·  pistol-smith"
+  },
+  {
+   "role": "plasma cutting machine operator",
+   "isco": 7223,
+   "aka": "acetylene cutter  ·  arc torch cutter  ·  acetylene torch cutter  ·  plasma burning torch operator  ·  plasma torch machine operator"
+  },
+  {
+   "role": "solderer",
+   "isco": 7212,
+   "aka": "butt solderer  ·  ultrasonic metal solderer  ·  flash solderer  ·  sheet-metal solderer  ·  electric arc solderer"
+  },
+  {
+   "role": "engraving machine operator",
+   "isco": 7223,
+   "aka": "engraving drill operator  ·  computer numerical controlled etching machine operator  ·  computer numerical controlled metal engraving machine operator  ·  CNC metal engraving machine operator  ·  CNC etching machine operator"
+  },
+  {
+   "role": "spark erosion machine operator",
+   "isco": 7223,
+   "aka": "electrical sealing machine operative  ·  electrical sealing machine operator  ·  electrical discharge machine set up technician  ·  electrical discharge machine setup operator  ·  electrical discharge machine eroder"
+  },
+  {
+   "role": "high rigger",
+   "isco": 7215,
+   "aka": "climbing rigger  ·  level rigger  ·  bucket high rigger  ·  up rigger  ·  rope access rigger"
+  },
+  {
+   "role": "container equipment assembler",
+   "isco": 7213,
+   "aka": "container equipment mechanical assembler  ·  container equipment assembly worker  ·  container equipment sub assembler  ·  container equipment machine assembly worker  ·  container equipment assembly line operative"
+  },
+  {
+   "role": "grinding machine operator",
+   "isco": 7223,
+   "aka": "metal filing machine operator  ·  back grinding machine operator  ·  grinding and stapling machine apprentice  ·  grinding machine set-up worker  ·  lapping machine operator"
+  },
+  {
+   "role": "water jet cutter operator",
+   "isco": 7223,
+   "aka": "water jet cutting machine operative  ·  waterjet cutter apprentice  ·  waterjet technician  ·  waterjet cutter operator  ·  water jet cutting machine technician"
+  },
+  {
+   "role": "moulding machine operator",
+   "isco": 7223,
+   "aka": "injection moulding machine operator  ·  mold maintenance technician  ·  moulding machine operators  ·  machine moulding worker"
+  },
+  {
+   "role": "boat rigger",
+   "isco": 7215,
+   "aka": "deck rigger  ·  marine outboard rigger  ·  sail rigger  ·  yacht rigger  ·  ship rigger"
+  },
+  {
+   "role": "casting mould maker",
+   "isco": 7222,
+   "aka": "pleat pattern-maker  ·  injection molding tool maker  ·  wooden pattern-maker  ·  pattern grader cutter  ·  foundry pattern maker"
+  },
+  {
+   "role": "coppersmith",
+   "isco": 7213,
+   "aka": "non-ferrous metal worker  ·  brass worker  ·  copper fabricator  ·  coppersmith brazer  ·  decorative coppersmith"
+  },
+  {
+   "role": "screw machine operator",
+   "isco": 7223,
+   "aka": "turret lathe turner  ·  screw machine tuning operator  ·  multiple spindle lathe turner  ·  automatic lathe machine operator  ·  screw machine turner"
+  },
+  {
+   "role": "pipe welder",
+   "isco": 7212,
+   "aka": "plumber  ·  pipefitter  ·  industrial pipe fitter  ·  pipe fitter  ·  industrial pipe welder"
+  },
+  {
+   "role": "metal sawing machine operator",
+   "isco": 7223,
+   "aka": "saw shop operator  ·  saw operator  ·  metal power saw trimmer  ·  metal cutter  ·  metal cut-off saw trimmer"
+  },
+  {
+   "role": "mouldmaker",
+   "isco": 7211,
+   "aka": "foundry sand moulder  ·  moldmaker  ·  hand-moulded casting worker  ·  mould maker  ·  mold maker"
+  },
+  {
+   "role": "sheet metal worker",
+   "isco": 7213,
+   "aka": "duct fabricator  ·  sheet metal fabricator  ·  roofing fabricator  ·  sheet-metal worker  ·  construction fabricator"
+  },
+  {
+   "role": "computer numerical control machine operator",
+   "isco": 7223,
+   "aka": "CNC mill operator  ·  cnc machinist  ·  CNC machine operator  ·  CNC drill operator  ·  CNC set up operator"
+  },
+  {
+   "role": "oxy fuel burning machine operator",
+   "isco": 7223,
+   "aka": "oxy-fuel burning machine operator  ·  oxy fuel cutting machine technician  ·  oxy-fuel cutting machine technician  ·  oxy-fuel cutting machine operative  ·  cutting torch operator"
+  },
+  {
+   "role": "boilermaker",
+   "isco": 7213,
+   "aka": "steam boilermaker  ·  pressure vessel fabricator  ·  boiler constructor  ·  plater  ·  welder boilermaker"
+  },
+  {
+   "role": "stamping press operator",
+   "isco": 7223,
+   "aka": "press shop worker  ·  stamping press worker  ·  die-stamping press operator  ·  punch machine operative  ·  stamp press operative"
+  },
+  {
+   "role": "lathe and turning machine operator",
+   "isco": 7223,
+   "aka": "CNC brake drum operator  ·  computer numerical controlled lathe and turning machine operator  ·  turning machine operator  ·  automatic spinning lathe setter  ·  computer numerical controlled lathe and turning machine setter"
+  },
+  {
+   "role": "metal nibbling operator",
+   "isco": 7223,
+   "aka": "hand held nibbling drill operator  ·  hand held nibbler drill operative  ·  nibbling drill operative  ·  nibbling drill operator  ·  hand held nibbling drill technician"
+  },
+  {
+   "role": "structural ironworker",
+   "isco": 7214,
+   "aka": "structural steel fitters  ·  steel fitters  ·  structural iron and steel worker  ·  structural steel erector  ·  rebar workers"
+  },
+  {
+   "role": "event scaffolder",
+   "isco": 7215,
+   "aka": "scaffolding installer  ·  scaffolding team member  ·  scaffolding worker  ·  scaffolding crew member"
+  },
+  {
+   "role": "brazier",
+   "isco": 7212,
+   "aka": "conversion brazer  ·  brazer production operative  ·  hand brazer operative  ·  copper smith  ·  combination welder"
+  },
+  {
+   "role": "laser marking machine operator",
+   "isco": 7223,
+   "aka": "laser engraving mill technician  ·  laser engraving mill operative  ·  laser engraving drill technician  ·  laser engraver mill operator  ·  laser set up operative"
+  },
+  {
+   "role": "thread rolling machine operator",
+   "isco": 7223,
+   "aka": "thread machine roller  ·  thread rolling machinist  ·  thread-mill roller  ·  thread machine rolling machinist  ·  thread rolling machine technician"
+  },
+  {
+   "role": "welder",
+   "isco": 7212,
+   "aka": "fitter  ·  repair and maintenance technician  ·  gas welder  ·  oxyacetylene welder  ·  repair fitter"
+  },
+  {
+   "role": "metalworking lathe operator",
+   "isco": 7223,
+   "aka": "spinning lathe operator  ·  tool lathe  ·  metal working lathe operator  ·  tool lathe setter  ·  metal spinning operator"
+  },
+  {
+   "role": "tool grinder",
+   "isco": 7224,
+   "aka": "lead tool grinder  ·  precision tool grinder  ·  tool sharpener  ·  operator of tool and cutter grinder  ·  grinder"
+  },
+  {
+   "role": "fitter and turner",
+   "isco": 7223,
+   "aka": "tool and die fitter  ·  tool turner  ·  machine tool turner  ·  electrical turner  ·  machine tool fitter"
+  },
+  {
+   "role": "shipwright",
+   "isco": 7214,
+   "aka": "shipfitter  ·  ship fitter  ·  ship repair engineer  ·  ship construction worker  ·  boat builder"
+  },
+  {
+   "role": "upsetting machine operator",
+   "isco": 7223,
+   "aka": "heading machine operative  ·  upsetting machine operative  ·  upsetter  ·  heading machine operator  ·  upset forging machine operative"
+  },
+  {
+   "role": "drop forging hammer worker",
+   "isco": 7221,
+   "aka": "drop forge operator  ·  drop forge hand  ·  drop forge operative  ·  drop forger  ·  forge operative"
+  },
+  {
+   "role": "spot welder",
+   "isco": 7212,
+   "aka": "welder fabricator  ·  construction welder  ·  welder-fitter  ·  electric arc welder  ·  flash welder"
+  },
+  {
+   "role": "router operator",
+   "isco": 7223,
+   "aka": "router setter  ·  multi-spindle routing machine tender  ·  router tender  ·  cnc router operative  ·  CNC router operative"
+  },
+  {
+   "role": "milling machine operator",
+   "isco": 7223,
+   "aka": "cnc miller  ·  numerical controlled milling machine technician  ·  numerical controlled milling operator  ·  vertical machining centre operator  ·  milling machine set-up operator"
+  },
+  {
+   "role": "rigging supervisor",
+   "isco": 7215,
+   "aka": "rigging manager  ·  lifting supervisor  ·  rigging and lifting supervisor  ·  rigging superintendent  ·  lifting and rigging supervisor"
+  },
+  {
+   "role": "heat treatment furnace operator",
+   "isco": 7223,
+   "aka": "billet heating technician  ·  heat treat furnace operative  ·  heat treat furnace operator  ·  heat treating bluer  ·  heat treating technician"
+  },
+  {
+   "role": "metal planer operator",
+   "isco": 7223,
+   "aka": "metal milling machine operator  ·  lathe and turning machine tool operator  ·  planer set up operator  ·  lathe and turning machine tool setter  ·  lathe and turning machine tool tender"
+  },
+  {
+   "role": "straightening machine operator",
+   "isco": 7223,
+   "aka": "straightening machinist  ·  straightening machine tender  ·  adjusting machine operator  ·  straightening press operative  ·  straightening press operator"
+  },
+  {
+   "role": "drill press operator",
+   "isco": 7223,
+   "aka": "drill operator  ·  metal cnc-press operator  ·  drill operative  ·  drill-press operative  ·  plastic CNC press operative"
+  },
+  {
+   "role": "locksmith",
+   "isco": 7222,
+   "aka": "key and lock specialist  ·  key maker  ·  key and lock expert  ·  key and lock installer"
+  },
+  {
+   "role": "chain making machine operator",
+   "isco": 7223,
+   "aka": "lay-out operator  ·  engine turning operator  ·  fancy wire drawer  ·  novelty chain maker  ·  hand chain making operator"
+  },
+  {
+   "role": "rigger",
+   "isco": 7215,
+   "aka": "rigger/banksman  ·  crane rigger  ·  rigger/slinger  ·  tent rigger  ·  marquee rigger"
+  },
+  {
+   "role": "mechanical forging press worker",
+   "isco": 7221,
+   "aka": "drop forge operator  ·  die forger  ·  forge press operative  ·  automatic casting forging machine technician  ·  automatic casting forging machine operator"
+  },
+  {
+   "role": "laser cutting machine operator",
+   "isco": 7223,
+   "aka": "laser set up operative  ·  laser set up operator  ·  CNC laser cutting machine tender  ·  computer numerical controlled laser cutting machine setter  ·  computer numerical controlled laser cutting machine operator"
+  },
+  {
+   "role": "farrier",
+   "isco": 7221,
+   "aka": "horse hoof trimmer  ·  horse shoe fitter  ·  horse pedicure specialist  ·  farriers  ·  shoesmith"
+  },
+  {
+   "role": "ornamental metal worker",
+   "isco": 7223,
+   "aka": "precision structural steel fitter  ·  welder fabricator  ·  welder fabricator installer  ·  structural and ornamental metalwork steel fabricator  ·  structural and ornamental metalwork metal fabricator"
+  },
+  {
+   "role": "foundry moulder",
+   "isco": 7211,
+   "aka": "foundry worker  ·  foundry coremaker  ·  foundry sand moulder  ·  foundry core maker  ·  coremaker"
+  },
+  {
+   "role": "laser beam welder",
+   "isco": 7212,
+   "aka": "repair fitter  ·  maintenance technician  ·  welder  ·  laser tube welder  ·  laser repair welder"
+  },
+  {
+   "role": "ground rigger",
+   "isco": 7215,
+   "aka": "rigging crew member  ·  down rigger"
+  },
+  {
+   "role": "scrap metal operative",
+   "isco": 7223,
+   "aka": "recycler  ·  recycled metal operative  ·  metal processing operative  ·  smelter operative  ·  recyling operative"
+  },
+  {
+   "role": "welding coordinator",
+   "isco": 7212,
+   "aka": "ultrasonic metal welder supervisor  ·  welding supervisor  ·  responsible welding co-ordinator  ·  resistance welding supervisor  ·  electric spot welding supervisor"
+  },
+  {
+   "role": "metal polisher",
+   "isco": 7224,
+   "aka": "machine buffer  ·  air bag finisher  ·  automatic metal buffer  ·  circle finisher  ·  buffer"
+  },
+  {
+   "role": "precision mechanic",
+   "isco": 7222,
+   "aka": "precision process engineer  ·  precision processing engineer  ·  precision engineering operations supervisor  ·  precision operations mechanic  ·  precision mechanical engineer"
+  },
+  {
+   "role": "stagehand",
+   "isco": 7215,
+   "aka": "loader & stage hand  ·  stage hand & loader  ·  runner  ·  theater assistant  ·  stage hand"
+  },
+  {
+   "role": "swaging machine operator",
+   "isco": 7223,
+   "aka": "forging machine tender  ·  forging machine operative  ·  swaging machine tender  ·  swaging machine setter  ·  forging machine setter"
+  },
+  {
+   "role": "foundry operative",
+   "isco": 7211,
+   "aka": "caster  ·  pourer and caster  ·  mold casting worker  ·  metal moulder  ·  foundry operator"
+  },
+  {
+   "role": "electron beam welder",
+   "isco": 7212,
+   "aka": "welder fabricator  ·  arc welder  ·  construction welder  ·  combination welder  ·  welder-fitter"
+  },
+  {
+   "role": "dismantling worker",
+   "isco": 7214,
+   "aka": "disassembly worker"
+  },
+  {
+   "role": "drilling machine operator",
+   "isco": 7223,
+   "aka": "CNC drilling machine operator  ·  drill punch operative  ·  gang drill operator  ·  drilling machine inspector  ·  drilling mill operator"
+  },
+  {
+   "role": "tool and die maker",
+   "isco": 7222,
+   "aka": "tool machine set up operative  ·  jig maker  ·  die dresser  ·  tool dresser  ·  tool setting technician"
+  },
+  {
+   "role": "blacksmith",
+   "isco": 7221,
+   "aka": "foundry patternmaker technician  ·  patternmaking operator  ·  sheet metal technician  ·  artisan blacksmith  ·  forgeworker"
+  },
+  {
+   "role": "punch press operator",
+   "isco": 7223,
+   "aka": "punch machine operator  ·  CNC punch operator  ·  press brake operator  ·  press punch inspector  ·  plastic punch press operator"
+  },
+  {
+   "role": "Sheet and Structural Metal Workers, Moulders and Welders",
+   "isco": 7212,
+   "aka": NaN
+  },
+  {
+   "role": "Structural Iron and Steel Workers",
+   "isco": 7214,
+   "aka": NaN
+  },
+  {
+   "role": "Forging Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7221,
+   "aka": NaN
+  },
+  {
+   "role": "Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7213,
+   "aka": NaN
+  },
+  {
+   "role": "Machinists",
+   "isco": 7223,
+   "aka": NaN
+  },
+  {
+   "role": "Metal-Refining Furnace Operators and Tenders",
+   "isco": 7211,
+   "aka": NaN
+  },
+  {
+   "role": "Welders, Cutters, Solderers, and Brazers",
+   "isco": 7212,
+   "aka": NaN
+  },
+  {
+   "role": "Extruding and Drawing Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7211,
+   "aka": NaN
+  },
+  {
+   "role": "Rolling Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7221,
+   "aka": NaN
+  },
+  {
+   "role": "Drilling and Boring Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7224,
+   "aka": NaN
+  },
+  {
+   "role": "Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7223,
+   "aka": NaN
+  },
+  {
+   "role": "Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7223,
+   "aka": NaN
+  },
+  {
+   "role": "Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7223,
+   "aka": NaN
+  },
+  {
+   "role": "Patternmakers, Metal and Plastic",
+   "isco": 7224,
+   "aka": NaN
+  },
+  {
+   "role": "Foundry Mold and Coremakers",
+   "isco": 7221,
+   "aka": NaN
+  },
+  {
+   "role": "Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7221,
+   "aka": NaN
+  },
+  {
+   "role": "Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7212,
+   "aka": NaN
+  },
+  {
+   "role": "Welding, Soldering, and Brazing Machine Setters, Operators, and Tenders",
+   "isco": 7212,
+   "aka": NaN
+  },
+  {
+   "role": "Plating Machine Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 7224,
+   "aka": NaN
+  },
+  {
+   "role": "Tool Grinders, Filers, and Sharpeners",
+   "isco": 7224,
+   "aka": NaN
+  }
+ ]
+}

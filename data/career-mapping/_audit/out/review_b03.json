@@ -1,0 +1,11 @@
+{"reviews":[
+{"domain_id":"D016","domain_name":"Electrical","verdict":"issues","remove_roles":[
+ {"role":"language engineer","reason":"Core function is NLP/computational linguistics (language technology), not electrical/electronics engineering."},
+ {"role":"flight test engineer","reason":"Core function is aerospace flight testing; belongs to aerospace, not electrical."}
+],"add_roles":[
+ {"role":"electronics production supervisor","isco":"3122","skills":["electronics assembly line supervision","SMT/PCB production control","quality inspection","production scheduling","health & safety compliance"],"reason":"Electrical/electronics manufacturing supervision is a core electrical-domain occupation and the library only lists electrical-equipment (not electronics) production supervisor."}
+],"overfanout_roles":[
+ {"role":"System Engineers","reason":"ISCO 2141 generic systems/industrial engineer role spanning many domains, not electrical-specific."},
+ {"role":"predictive maintenance expert","reason":"Cross-domain (machinery, factories, railroads, cars) maintenance role, not intrinsically electrical."}
+],"rename_to":null,"notes":"Strong coherent electrical/electronics cluster (electronics, microelectronics, power, battery, instrumentation). medical device engineer and satellite engineer are electronics-adjacent and kept. Two clear removals (language, flight test) and two overfanout generics."}
+]}

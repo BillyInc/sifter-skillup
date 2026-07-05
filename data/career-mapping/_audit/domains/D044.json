@@ -1,0 +1,197 @@
+{
+ "domain_id": "D044",
+ "domain_name": "Graphic Design",
+ "role_count": 38,
+ "roles": [
+  {
+   "role": "performance lighting designer",
+   "isco": 2166,
+   "aka": "lighting designer and technician  ·  lighting technician and designer  ·  theatre lighting designer  ·  lighting designer & technician  ·  lighting technician & designer"
+  },
+  {
+   "role": "puppet designer",
+   "isco": 2163,
+   "aka": "puppet maker  ·  puppet designer & maker  ·  puppet builder  ·  puppet designer and maker  ·  puppet designer & builder"
+  },
+  {
+   "role": "art restorer",
+   "isco": 2651,
+   "aka": "restoration technician  ·  art objects repairer  ·  restorers  ·  restorer  ·  artifact conservator"
+  },
+  {
+   "role": "illustrator",
+   "isco": 2166,
+   "aka": "book illustrator  ·  cartoon drawer  ·  inker  ·  comic drawer  ·  drawer"
+  },
+  {
+   "role": "automotive designer",
+   "isco": 2163,
+   "aka": "automotive design specialist  ·  automotive design expert  ·  auto designer  ·  3D automobile designer  ·  automotive digital designer"
+  },
+  {
+   "role": "web designer",
+   "isco": 2166,
+   "aka": "website designer  ·  digital designer  ·  multimedia web designer  ·  marketing web designer  ·  interactive web designer"
+  },
+  {
+   "role": "jewellery designer",
+   "isco": 2163,
+   "aka": "jewelry designer  ·  jewellery artist & designer  ·  jewellery artist and designer  ·  jewelry designer and sculptural artist  ·  jewellery artist"
+  },
+  {
+   "role": "stop-motion animator",
+   "isco": 2166,
+   "aka": "stop motion animators  ·  stop-motion animation artist  ·  puppet animator  ·  stop motion animator  ·  3D stop-motion animator"
+  },
+  {
+   "role": "artistic painter",
+   "isco": 2651,
+   "aka": "painting & drawing artist  ·  street painter  ·  sign painter  ·  drawing & painting artist  ·  painting and drawing artist"
+  },
+  {
+   "role": "model maker",
+   "isco": 2163,
+   "aka": "model designer  ·  maker  ·  model builder  ·  model fabricator  ·  model expert"
+  },
+  {
+   "role": "drawing artist",
+   "isco": 2651,
+   "aka": "illustrator  ·  street artist  ·  artist  ·  cartoon artist  ·  visual art expert"
+  },
+  {
+   "role": "photojournalist",
+   "isco": 3431,
+   "aka": "photo reporter  ·  image journalist  ·  multi media image journalist  ·  news photographer  ·  photo correspondent"
+  },
+  {
+   "role": "animator",
+   "isco": 2166,
+   "aka": "3D computer-generated imagery animator  ·  3D computer animation artist  ·  2D hand-drawn animator  ·  computer animation artist  ·  animators"
+  },
+  {
+   "role": "3D animator",
+   "isco": 2166,
+   "aka": "CGI animator  ·  computer-generated imagery animator  ·  3D designer  ·  CGI designer"
+  },
+  {
+   "role": "photographer",
+   "isco": 3431,
+   "aka": "wedding photographer  ·  illustration photographer  ·  aerial photographer  ·  graphical industry photographer  ·  itinerant photographer"
+  },
+  {
+   "role": "graphic designer",
+   "isco": 2166,
+   "aka": "advertising artist  ·  graphic design expert  ·  graphic artist  ·  graphics designer  ·  graphic design specialist"
+  },
+  {
+   "role": "fashion designer",
+   "isco": 2163,
+   "aka": "accessory designer  ·  fashion design specialist  ·  swimwear designer  ·  footwear designer  ·  fashion stylist"
+  },
+  {
+   "role": "desktop publisher",
+   "isco": 2166,
+   "aka": "financial desktop publisher  ·  desktop designer  ·  electronic pre-press technician  ·  DTP operator  ·  advanced desktop publilsher"
+  },
+  {
+   "role": "video artist",
+   "isco": 2651,
+   "aka": "interactive video artist  ·  video effects artist  ·  visual technician  ·  graphics & video artist  ·  visual manipulator"
+  },
+  {
+   "role": "printmaker",
+   "isco": 2651,
+   "aka": "printmaking artist  ·  lithographer  ·  illustrator & printmaker  ·  illustrator and printmaker  ·  screen printer"
+  },
+  {
+   "role": "sculptor",
+   "isco": 2651,
+   "aka": "clay sculptress  ·  metal sculptor  ·  metal sculptress  ·  ice sculptor  ·  welded steel sculptor"
+  },
+  {
+   "role": "animation layout artist",
+   "isco": 2166,
+   "aka": "2D layout animator  ·  3D layout artist  ·  animation layout designer  ·  3D layout animator  ·  2D layout artist"
+  },
+  {
+   "role": "conceptual artist",
+   "isco": 2651,
+   "aka": "conceptual creator  ·  concept artist"
+  },
+  {
+   "role": "industrial designer",
+   "isco": 2163,
+   "aka": "product designer  ·  3D CAD designer  ·  packaging designer  ·  product design specialist  ·  glass products designer"
+  },
+  {
+   "role": "storyboard artist",
+   "isco": 2651,
+   "aka": "storyboard revisionist  ·  storyboard and animatic artist  ·  story-boarder  ·  storyboard & animatic artist  ·  storyboarder"
+  },
+  {
+   "role": "special effects artist",
+   "isco": 2166,
+   "aka": "senior special effects artist  ·  digital effects specialist  ·  special effects technician  ·  special effect image designer  ·  special effects animator"
+  },
+  {
+   "role": "glass artist",
+   "isco": 2651,
+   "aka": "stained glass creator  ·  stained glass restorer  ·  stained glass designer and maker  ·  stained glass artist & restorer  ·  stained glass artist"
+  },
+  {
+   "role": "3D modeller",
+   "isco": 2166,
+   "aka": "CGI modeller  ·  3D developer  ·  3D modellers  ·  3D artist  ·  computer-generated imagery modeller"
+  },
+  {
+   "role": "furniture designer",
+   "isco": 2163,
+   "aka": "interior and furniture designer  ·  furniture craftswoman  ·  furniture builder  ·  furniture planner and designer  ·  hand-made furniture builder"
+  },
+  {
+   "role": "performance video designer",
+   "isco": 2166,
+   "aka": "projection designer  ·  video & graphics designer  ·  video designer  ·  video & projection designer  ·  visual designer"
+  },
+  {
+   "role": "clothing fashion designer",
+   "isco": 2163,
+   "aka": "couturier  ·  clothes designer  ·  clothing product designer  ·  clothing designer"
+  },
+  {
+   "role": "costume designer",
+   "isco": 2163,
+   "aka": "costume specialist  ·  costume designer and fashion stylist  ·  fashion stylist and costume designer  ·  fashion stylist & costume designer  ·  costume designer and maker"
+  },
+  {
+   "role": "digital media designer",
+   "isco": 2166,
+   "aka": "digital media designers  ·  digital media developer  ·  multimedia developer  ·  digital multimedia designer  ·  interactive media designer"
+  },
+  {
+   "role": "digital artist",
+   "isco": 2166,
+   "aka": "digital matte painter  ·  computer-generated imagery artist  ·  digital matte artist  ·  computer artist  ·  digital games artist"
+  },
+  {
+   "role": "digital games designer",
+   "isco": 2166,
+   "aka": "digital game designer  ·  digital games designers  ·  video games designer  ·  virtual games designer  ·  computer games designer"
+  },
+  {
+   "role": "ceramicist",
+   "isco": 2651,
+   "aka": "artistic ceramicist  ·  ceramics artist  ·  ceramics designer & maker  ·  ceramics designer and maker  ·  ceramist"
+  },
+  {
+   "role": "cartoonist",
+   "isco": 2651,
+   "aka": "satirical cartoonist  ·  caricaturist  ·  strip cartoonist  ·  political cartoonist  ·  comic artist"
+  },
+  {
+   "role": "Fine Artists, Including Painters, Sculptors, and Illustrators",
+   "isco": 2651,
+   "aka": NaN
+  }
+ ]
+}

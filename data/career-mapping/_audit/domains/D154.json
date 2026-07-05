@@ -1,0 +1,237 @@
+{
+ "domain_id": "D154",
+ "domain_name": "Exercise Science, Sports Therapy",
+ "role_count": 46,
+ "roles": [
+  {
+   "role": "physiotherapist",
+   "isco": 2264,
+   "aka": "respiratory therapist  ·  masseuse  ·  rehabilitation therapist  ·  occupational therapist  ·  osteopath"
+  },
+  {
+   "role": "medical physics expert",
+   "isco": 2269,
+   "aka": "MPE  ·  medical radiation physics expert  ·  patients radiation protection optimisation expert  ·  dosimetry expert  ·  medical radiation physics specialist"
+  },
+  {
+   "role": "horse riding instructor",
+   "isco": 3423,
+   "aka": "horseback riding instructor  ·  riding teacher  ·  riding instructor  ·  riding coach  ·  therapeutic riding instructor"
+  },
+  {
+   "role": "kinesiologist",
+   "isco": 2269,
+   "aka": "biomechanical kinesiologist  ·  exercise researcher  ·  kinesiology science researcher  ·  exercise kinesiologist  ·  kinesiology researcher"
+  },
+  {
+   "role": "activity leader",
+   "isco": 3423,
+   "aka": "workshop leader  ·  leisure activities leader  ·  activities coordinator  ·  holiday resort activity leader  ·  youth coordinator"
+  },
+  {
+   "role": "biomedical scientist",
+   "isco": 2269,
+   "aka": "biomedical doctor  ·  practitioner in biomedical science  ·  clinical embryologist  ·  blood bank technology specialist  ·  scientist in biomedicine"
+  },
+  {
+   "role": "occupational therapist",
+   "isco": 2269,
+   "aka": "rehabilitation therapist  ·  expert practitioner of occupational therapy  ·  ergotherapist  ·  practitioner of occupational therapy  ·  expert occupational therapist"
+  },
+  {
+   "role": "sport therapist",
+   "isco": 3423,
+   "aka": "sport & exercise therapist  ·  exercise specialist  ·  health exercise specialist  ·  exercise consultant  ·  exercise therapist"
+  },
+  {
+   "role": "music therapist",
+   "isco": 2269,
+   "aka": "music therapy practitioner  ·  music therapy counsellor"
+  },
+  {
+   "role": "pilates teacher",
+   "isco": 3423,
+   "aka": "pilates matwork instructor  ·  matwork pilates teacher  ·  pilates coach  ·  Pilates teacher  ·  pilates instructor"
+  },
+  {
+   "role": "chiropractor",
+   "isco": 2269,
+   "aka": "etiopath  ·  musculoskeletal therapist  ·  neuromusculoskeletal therapist  ·  Licensed chiropractor"
+  },
+  {
+   "role": "anatomical pathology technician",
+   "isco": 2269,
+   "aka": "anatomical pathology technical assistant  ·  assistant in anatomical pathology  ·  assistant pathology technician  ·  pathology laboratory services technician  ·  pathology technician"
+  },
+  {
+   "role": "assistant outdoor animator",
+   "isco": 3423,
+   "aka": "outdoor activities facilitator  ·  outdoor adventures facilitator  ·  junior instructor  ·  assistant open-air activities instructor  ·  outdoor activities assistant instructor"
+  },
+  {
+   "role": "podiatry assistant",
+   "isco": 2269,
+   "aka": "assistant in podiatric foot care  ·  chiropody assistant  ·  foot care assistant  ·  podiatry foot care assistant  ·  podology assistant"
+  },
+  {
+   "role": "prosthetic-orthotics technician",
+   "isco": 2269,
+   "aka": "orthopaedic appliance maker  ·  prosthetics maker  ·  prosthetic brace maker  ·  prosthetic devices maker  ·  orthopaedic technician"
+  },
+  {
+   "role": "survival instructor",
+   "isco": 3423,
+   "aka": "wilderness survival instructor  ·  survival education instructor  ·  educator in survival techniques  ·  wilderness survival trainer  ·  survival techniques instructor"
+  },
+  {
+   "role": "outdoor activities instructor",
+   "isco": 3423,
+   "aka": "practitioner of instruction in outdoor activities  ·  outdoor activities instruction practitioner  ·  outdoor pursuits instructor  ·  outdoor pursuits group leader  ·  instructor in outdoor activities"
+  },
+  {
+   "role": "nuclear medicine radiographer",
+   "isco": 2269,
+   "aka": "nuclear medicine technologist"
+  },
+  {
+   "role": "outdoor animator",
+   "isco": 3423,
+   "aka": "ski teacher  ·  ski instructor  ·  riding teacher  ·  riding instructor  ·  kayak and canoe instructor"
+  },
+  {
+   "role": "outdoor activities coordinator",
+   "isco": 3423,
+   "aka": "activities coordinator  ·  sports inclusion coordinator  ·  senior outdoor instructor  ·  activities manager  ·  outdoor activities supervisor"
+  },
+  {
+   "role": "radiographer",
+   "isco": 2269,
+   "aka": "clinical radiographer  ·  practitioner of radiography  ·  medical radiation technologist  ·  expert radiographer  ·  clinical radiography practitioner"
+  },
+  {
+   "role": "dance therapist",
+   "isco": 2269,
+   "aka": "movement therapist"
+  },
+  {
+   "role": "diagnostic radiographer",
+   "isco": 2269,
+   "aka": "expert diagnostic radiographer  ·  practitioner of diagnostic radiography  ·  senior diagnostic radiographer  ·  specialist diagnostic radiographer  ·  radiologic technologist"
+  },
+  {
+   "role": "occupational therapy assistant",
+   "isco": 2269,
+   "aka": "technician in occupational therapy  ·  occupational therapy rehabilitation assistant  ·  OT assistant  ·  assistant in occupational therapy  ·  OT support worker"
+  },
+  {
+   "role": "mountain guide",
+   "isco": 3423,
+   "aka": "climbing guide  ·  alpine guide  ·  mountain holiday leader  ·  mountain walking guide  ·  outdoor leader"
+  },
+  {
+   "role": "leisure attendant",
+   "isco": 3423,
+   "aka": "pool attendant  ·  fitness club attendant  ·  club attendant  ·  leisure club assistant  ·  weight room attendant"
+  },
+  {
+   "role": "dietitian",
+   "isco": 2265,
+   "aka": "dietician  ·  specialist dietician  ·  public health nutritionist"
+  },
+  {
+   "role": "massage therapist",
+   "isco": 3255,
+   "aka": "deep tissue massage therapist  ·  clinical masseur  ·  medical masseur  ·  Swedish massage therapist  ·  professional massage therapist"
+  },
+  {
+   "role": "specialised doctor",
+   "isco": 2212,
+   "aka": "specialized medical doctor  ·  specialized doctor  ·  hospital specialized doctor  ·  specialised medical doctor  ·  hospital specialised doctor"
+  },
+  {
+   "role": "specialised outdoor animator",
+   "isco": 3423,
+   "aka": "special needs outdoor instructor  ·  personal instructor  ·  outdoor education specialist  ·  scuba diving instructor  ·  skydiving instructor"
+  },
+  {
+   "role": "advanced physiotherapist",
+   "isco": 2264,
+   "aka": "physiotherapy team leader  ·  clinical lead physiotherapist  ·  physiotherapy lead  ·  lead neuromuscular physiotherapist  ·  lead remedial physiotherapist"
+  },
+  {
+   "role": "osteopath",
+   "isco": 2269,
+   "aka": "osteopathic practitioner"
+  },
+  {
+   "role": "specialist biomedical scientist",
+   "isco": 2269,
+   "aka": "specialist in biomedical research  ·  biomedical scientist specialist  ·  expert in biomedical science  ·  specialist clinical laboratory scientist  ·  specialist in biomedical science"
+  },
+  {
+   "role": "shiatsu practitioner",
+   "isco": 3255,
+   "aka": "therapist of shiatsu massage  ·  practitioner of shiatsu  ·  shiatsu therapist  ·  shiatsu acupressurist"
+  },
+  {
+   "role": "biomedical scientist advanced",
+   "isco": 2269,
+   "aka": "advanced biomedical doctor  ·  advanced biomedical researcher  ·  advanced practitioner in biomedical science  ·  advanced medical laboratory scientist  ·  expert scientist in biomedicine"
+  },
+  {
+   "role": "specialist chiropractor",
+   "isco": 2269,
+   "aka": "licensed specialised chiropractor  ·  specialised etiopath  ·  specialised musculoskeletal therapist  ·  specialised chiropractor  ·  specialised neuromusculoskeletal therapist"
+  },
+  {
+   "role": "prepared meals nutritionist",
+   "isco": 2265,
+   "aka": "account manager adult nutrition  ·  nutrition scientist"
+  },
+  {
+   "role": "fitness instructor",
+   "isco": 3423,
+   "aka": "swimming instructor  ·  fitness class instructor  ·  aqua fitness instructor  ·  indoor cycling trainer  ·  fitness specialist"
+  },
+  {
+   "role": "sophrologist",
+   "isco": 3255,
+   "aka": "practitioner of dynamic relaxation methods  ·  dynamic relaxation methods practitioner  ·  specialist sophrology practitioner  ·  sophrology practitioner  ·  dynamic relaxation practitioner"
+  },
+  {
+   "role": "podiatrist",
+   "isco": 2269,
+   "aka": "specialist chiropodist  ·  specialist podologist  ·  specialist in chiropody  ·  chiropodist  ·  expert in podiatry"
+  },
+  {
+   "role": "cytotechnologist",
+   "isco": 2269,
+   "aka": "expert cytology screener  ·  specialist cytology screener  ·  screener in cytology  ·  senior cytology screener  ·  cytology practitioner"
+  },
+  {
+   "role": "animal assisted therapist",
+   "isco": 2269,
+   "aka": "animal assisted intervention professional"
+  },
+  {
+   "role": "art therapist",
+   "isco": 2269,
+   "aka": "dramatherapist"
+  },
+  {
+   "role": "personal trainer",
+   "isco": 3423,
+   "aka": "personal trainer and sport therapist  ·  personal progress manager  ·  personal trainer and nutritionist  ·  personal trainer & nutritionist  ·  personal fitness trainer"
+  },
+  {
+   "role": "physiotherapy assistant",
+   "isco": 3255,
+   "aka": "cardiovascular physiotherapy assistant  ·  neuromusculoskeletal physiotherapy assistant  ·  physiotherapy rehabilitation assistant  ·  neurological physiotherapy assistant  ·  neuromuscular physiotherapy assistant"
+  },
+  {
+   "role": "recreational therapist",
+   "isco": 2269,
+   "aka": "recreational activity provider  ·  psychomotor therapist  ·  recreation therapist  ·  milieu therapist  ·  social therapist"
+  }
+ ]
+}
