@@ -1,0 +1,622 @@
+{
+ "domain_id": "D048",
+ "domain_name": "Food Science",
+ "role_count": 123,
+ "roles": [
+  {
+   "role": "hydrogenation machine operator",
+   "isco": 8160,
+   "aka": "hydrogenation process operator  ·  hydrogenation machine operative  ·  hydrogenation operator  ·  hydrogenator"
+  },
+  {
+   "role": "pasta operator",
+   "isco": 8160,
+   "aka": "pasta manufacturer  ·  dry pasta production operator  ·  pasta maker  ·  pasta production operator  ·  pasta products operator"
+  },
+  {
+   "role": "coffee grinder",
+   "isco": 8160,
+   "aka": "grinding machine attendant  ·  grinder operator"
+  },
+  {
+   "role": "meat cutter",
+   "isco": 7511,
+   "aka": "trimmer  ·  deboner  ·  meatcutter  ·  meat boner"
+  },
+  {
+   "role": "meteorology technician",
+   "isco": 3111,
+   "aka": "atmospheric scientist  ·  weather forecaster  ·  weather service specialist  ·  meteorological instrumentation technician  ·  meteorologist"
+  },
+  {
+   "role": "candy machine operator",
+   "isco": 8160,
+   "aka": "candy production worker  ·  candy machine operative  ·  candy production operative  ·  sweets machine operator"
+  },
+  {
+   "role": "blending plant operator",
+   "isco": 8160,
+   "aka": "blending operator  ·  blending plant worker"
+  },
+  {
+   "role": "sauce production operator",
+   "isco": 8160,
+   "aka": "sauce production operative  ·  sauce maker  ·  sauce making machine operator  ·  sauce making machine worker  ·  sauce production plant operative"
+  },
+  {
+   "role": "biophysicist",
+   "isco": 2131,
+   "aka": "biophysics scientist  ·  biophysics research scientist  ·  biophysics biotechnologist  ·  biophysics scholar  ·  biophysics researcher"
+  },
+  {
+   "role": "radiation protection technician",
+   "isco": 3111,
+   "aka": "radiation protection planning technician  ·  radiological protection technician  ·  radiation protection monitoring technician  ·  radiation protection expert  ·  nuclear plant radiation monitor"
+  },
+  {
+   "role": "baker",
+   "isco": 7512,
+   "aka": "bread baker  ·  bakery specialist  ·  bakery employee"
+  },
+  {
+   "role": "brew house operator",
+   "isco": 8160,
+   "aka": "brewing operator  ·  brewery worker  ·  brewery operator  ·  brew house worker"
+  },
+  {
+   "role": "physiologist",
+   "isco": 2131,
+   "aka": "anatomy analyst  ·  anatomy researcher  ·  anatomy research scientist  ·  physiology scientist  ·  physiology analyst"
+  },
+  {
+   "role": "pasta maker",
+   "isco": 7512,
+   "aka": "pasta producer  ·  pasta products maker  ·  pasta making operative  ·  pasta goods maker"
+  },
+  {
+   "role": "centrifuge operator",
+   "isco": 8160,
+   "aka": "centrifugal process operator  ·  centrifuge operative  ·  spinning operative  ·  spinning operator"
+  },
+  {
+   "role": "chilling operator",
+   "isco": 8160,
+   "aka": "prepared meals operator"
+  },
+  {
+   "role": "sugar refinery operator",
+   "isco": 8160,
+   "aka": "sugar refinery operative  ·  sugar worker  ·  sugar plant operative  ·  sugar production operative"
+  },
+  {
+   "role": "food analyst",
+   "isco": 3111,
+   "aka": "food researcher  ·  food analysis expert  ·  food research specialist  ·  food analysis specialist"
+  },
+  {
+   "role": "cocoa press operator",
+   "isco": 8160,
+   "aka": "cocoa compression operative  ·  cocoa pressing operator  ·  cocoa pressing operative  ·  cocoa compression operator"
+  },
+  {
+   "role": "slaughterer",
+   "isco": 7511,
+   "aka": "slaughter worker  ·  animal slaughterhouse worker  ·  animal slaughterer"
+  },
+  {
+   "role": "chocolatier",
+   "isco": 7512,
+   "aka": "chocolate maker  ·  chocolate producer  ·  chocolate goods maker"
+  },
+  {
+   "role": "coffee roaster",
+   "isco": 8160,
+   "aka": "coffee bean roasting expert  ·  coffee bean roaster  ·  coffee bean roasting specialist"
+  },
+  {
+   "role": "starch converting operator",
+   "isco": 8160,
+   "aka": "starch operator  ·  starch conversion worker  ·  starch converter  ·  starch worker"
+  },
+  {
+   "role": "butcher",
+   "isco": 7511,
+   "aka": "animal butcher  ·  butchery worker  ·  butchery expert"
+  },
+  {
+   "role": "kettle tender",
+   "isco": 8160,
+   "aka": "gum sheeting machine operator  ·  chewing gum production machinist  ·  chewing gum production operative  ·  chewing gum mixer operator"
+  },
+  {
+   "role": "cellar operator",
+   "isco": 8160,
+   "aka": "vinegar production operator  ·  fermentation cellar operator  ·  fermentation operator  ·  fermentation cellar supervisor  ·  cellar worker"
+  },
+  {
+   "role": "coffee taster",
+   "isco": 7515,
+   "aka": "coffee tasting expert  ·  coffee tasting specialist  ·  coffee beverage taster  ·  coffee drinks taster"
+  },
+  {
+   "role": "toxicologist",
+   "isco": 2131,
+   "aka": "toxicology analyst  ·  toxicology science researcher  ·  toxicologists  ·  toxicology studies scholar  ·  toxicology scholar"
+  },
+  {
+   "role": "halal butcher",
+   "isco": 7511,
+   "aka": "halal meat slicer  ·  halal meat boner  ·  halal meat butcher"
+  },
+  {
+   "role": "cacao beans cleaner",
+   "isco": 8160,
+   "aka": "cocoa bean treatment system operator  ·  cocoa bean shelling machine operator  ·  cocoa bean cleaning machine operator  ·  coca bean winnower controller"
+  },
+  {
+   "role": "botanist",
+   "isco": 2131,
+   "aka": "garden intendant  ·  director of horticulture learning and operations  ·  horticulture manager  ·  director of horticulture  ·  garden manager"
+  },
+  {
+   "role": "baking operator",
+   "isco": 8160,
+   "aka": "bakery worker  ·  bread making machine operator"
+  },
+  {
+   "role": "geneticist",
+   "isco": 2131,
+   "aka": "genetics engineer  ·  genetic scientist  ·  genetics research scientist  ·  molecular biologist  ·  molecular geneticist"
+  },
+  {
+   "role": "clarifier",
+   "isco": 8160,
+   "aka": "oil extractor operative  ·  clarifier machine controller  ·  clarifier equipment operator  ·  oil extractor operator"
+  },
+  {
+   "role": "blender operator",
+   "isco": 8160,
+   "aka": "manufacturers of soft-drinks  ·  tank tender  ·  soft drinks supplier  ·  beverage manufacturer  ·  soft drinks retailer"
+  },
+  {
+   "role": "hydrographic surveying technician",
+   "isco": 3111,
+   "aka": "marine surveyor  ·  hydrographic survey technologist  ·  mapping technician  ·  oceanographer  ·  surveying technician"
+  },
+  {
+   "role": "cacao bean roaster",
+   "isco": 8160,
+   "aka": "cocoa processor  ·  cocoa roaster  ·  bean roaster  ·  cocoa bean processor"
+  },
+  {
+   "role": "honey extractor",
+   "isco": 8160,
+   "aka": "extractor  ·  honey extraction operative  ·  honey process worker  ·  honey production worker"
+  },
+  {
+   "role": "bioinformatics scientist",
+   "isco": 2131,
+   "aka": "IT researcher  ·  senior bioinformatics scientist  ·  data scientist  ·  biology researcher  ·  junior bioinformatics scientist"
+  },
+  {
+   "role": "aquaculture biologist",
+   "isco": 2131,
+   "aka": "aquaculture biology research analyst  ·  expert in aquaculture biology  ·  aquaculture biology expert  ·  specialist in aquaculture biology  ·  aquaculture biology scientist"
+  },
+  {
+   "role": "food biotechnologist",
+   "isco": 2131,
+   "aka": "food biotech technician  ·  technician for food industry bioeconomy  ·  food biotech specialist"
+  },
+  {
+   "role": "fish trimmer",
+   "isco": 7511,
+   "aka": "fish processor  ·  fish preparation worker"
+  },
+  {
+   "role": "biochemist",
+   "isco": 2131,
+   "aka": "biochemistry research scientist  ·  chemical biotechnologist  ·  biochemistry studies scholar  ·  biochemistry science researcher  ·  biochemistry studies research scientist"
+  },
+  {
+   "role": "carbonation operator",
+   "isco": 8160,
+   "aka": "beverage carbonation worker  ·  sparkling machine operator  ·  gasifier operator  ·  drinks gasification processor"
+  },
+  {
+   "role": "blanching operator",
+   "isco": 8160,
+   "aka": "blanching process worker  ·  blanching operative  ·  blanching worker  ·  blancher"
+  },
+  {
+   "role": "fish canning operator",
+   "isco": 8160,
+   "aka": "fish canner  ·  fish canning operative"
+  },
+  {
+   "role": "fruit-press operator",
+   "isco": 8160,
+   "aka": "fruit presser  ·  fruit press worker  ·  fruit squeezer  ·  fruit press operative"
+  },
+  {
+   "role": "malt kiln operator",
+   "isco": 8160,
+   "aka": "malt kiln operative  ·  malt kiln worker  ·  malt worker  ·  malt kiln specialist"
+  },
+  {
+   "role": "nuclear technician",
+   "isco": 3111,
+   "aka": "nuclear monitoring technician  ·  nuclear equipment technician  ·  nuclear equipment operation technician  ·  radioactive equipment technician  ·  nuclear safety technician"
+  },
+  {
+   "role": "extract mixer tester",
+   "isco": 8160,
+   "aka": "extract mixer  ·  spice sifter  ·  tea blender  ·  mechanical sifter operator"
+  },
+  {
+   "role": "distillery miller",
+   "isco": 8160,
+   "aka": "distillery grain mill worker  ·  distilling miller  ·  distillery grain miller  ·  distillery mill worker"
+  },
+  {
+   "role": "animal behaviourist",
+   "isco": 2131,
+   "aka": "ethologist  ·  animal behaviour expert  ·  animal behaviour specialist  ·  animal behavior specialist  ·  animal behavior expert"
+  },
+  {
+   "role": "beverage filtration technician",
+   "isco": 8160,
+   "aka": "beverage filtration worker  ·  drink filter operator  ·  beverage filtration expert  ·  drinks filtration worker"
+  },
+  {
+   "role": "meat preparations operator",
+   "isco": 7511,
+   "aka": "meatworker  ·  meat processing worker  ·  abbatoir worker  ·  meat worker"
+  },
+  {
+   "role": "dryer attendant",
+   "isco": 8160,
+   "aka": "food products dryer operator  ·  drying attendant  ·  dryer  ·  drying worker"
+  },
+  {
+   "role": "fish production operator",
+   "isco": 8160,
+   "aka": "fish products production operative  ·  fish products manufacture specialist  ·  fish production worker  ·  fish products operator"
+  },
+  {
+   "role": "soil surveying technician",
+   "isco": 3111,
+   "aka": "geologist  ·  mineral technician  ·  geological technician  ·  soil technician  ·  soil scientist"
+  },
+  {
+   "role": "prepared meat operator",
+   "isco": 8160,
+   "aka": "meat process worker  ·  meat machine operator  ·  meat processor  ·  meat manufacturer"
+  },
+  {
+   "role": "chemistry technician",
+   "isco": 3111,
+   "aka": "chemistry laboratory assistant  ·  chemistry lab technician  ·  nuclear laboratory technician  ·  nuclear chemistry technician  ·  chemistry assistant"
+  },
+  {
+   "role": "dairy products manufacturing worker",
+   "isco": 8160,
+   "aka": "dairy products worker  ·  dairy plant worker  ·  dairy production worker  ·  dairy plant employee"
+  },
+  {
+   "role": "chromatographer",
+   "isco": 3111,
+   "aka": "chromatography technician  ·  gas chromatographer  ·  chromatography machine technician  ·  gel permeation chromatographer  ·  chromatography machine operator"
+  },
+  {
+   "role": "starch extraction operator",
+   "isco": 8160,
+   "aka": "refinery starch operator  ·  refinery starch extractor"
+  },
+  {
+   "role": "distillery worker",
+   "isco": 8160,
+   "aka": "distiller  ·  spirits production worker  ·  spirit beverage worker  ·  distillery production worker"
+  },
+  {
+   "role": "fat-purification worker",
+   "isco": 8160,
+   "aka": "fat purifier  ·  fat-purification operator  ·  fats purifier  ·  fat-purification operative"
+  },
+  {
+   "role": "dairy processing operator",
+   "isco": 8160,
+   "aka": "dairy operator  ·  dairy processor"
+  },
+  {
+   "role": "master coffee roaster",
+   "isco": 7515,
+   "aka": "head coffee roaster"
+  },
+  {
+   "role": "microbiologist",
+   "isco": 2131,
+   "aka": "virologist  ·  microbiology research analyst  ·  histologist  ·  bacteriologist  ·  microbiology studies research analyst"
+  },
+  {
+   "role": "physics technician",
+   "isco": 3111,
+   "aka": "reprographics technician  ·  physics lab technician  ·  health physics technician  ·  physics assistant  ·  physicist assistant"
+  },
+  {
+   "role": "germination operator",
+   "isco": 8160,
+   "aka": "malster  ·  steep vessel operator  ·  brewer  ·  maltster  ·  brewery technician"
+  },
+  {
+   "role": "farm milk controller",
+   "isco": 7515,
+   "aka": "farm milk monitor  ·  farm milk analyst  ·  dairy milk controller  ·  dairy milk analyst"
+  },
+  {
+   "role": "remote sensing technician",
+   "isco": 3111,
+   "aka": "remote sensing technology scientist  ·  remote sensing technology researcher  ·  remote sensing technology studies research scientist  ·  remote sensing technology scholar  ·  remote sensing technology studies researcher"
+  },
+  {
+   "role": "food grader",
+   "isco": 7515,
+   "aka": "food product grader"
+  },
+  {
+   "role": "immunologist",
+   "isco": 2131,
+   "aka": "immunology analyst  ·  immunology researcher  ·  immunology studies research analyst  ·  immunology research analyst  ·  immunology studies researcher"
+  },
+  {
+   "role": "milk heat treatment process operator",
+   "isco": 8160,
+   "aka": "milk processing operative  ·  milk treatment operator  ·  milk treatment operative  ·  milk processing operator"
+  },
+  {
+   "role": "epidemiologist",
+   "isco": 2131,
+   "aka": "epidemiology science researcher  ·  epidemiology researcher  ·  epidemiology research analyst  ·  epidemiology analyst  ·  epidemiology research scientist"
+  },
+  {
+   "role": "animal feed operator",
+   "isco": 8160,
+   "aka": "feed mill worker  ·  animal feeder  ·  feeder  ·  feed worker  ·  feed mill operator"
+  },
+  {
+   "role": "wine fermenter",
+   "isco": 8160,
+   "aka": "fermenter  ·  fermentation process operator  ·  wine products fermenter"
+  },
+  {
+   "role": "yeast distiller",
+   "isco": 8160,
+   "aka": "yeast distilling operative  ·  brewing yeast distiller  ·  yeast handler  ·  brewing yeast handling operative"
+  },
+  {
+   "role": "fish preparation operator",
+   "isco": 7511,
+   "aka": "fish gutter  ·  fresh fish processing operator  ·  fish processing operator  ·  fishmonger  ·  fresh fish preparation operator"
+  },
+  {
+   "role": "botanicals specialist",
+   "isco": 2131,
+   "aka": "botanical milling operative  ·  botanical expert  ·  botanical specialist  ·  botanical science expert"
+  },
+  {
+   "role": "vermouth manufacturer",
+   "isco": 8160,
+   "aka": "vermouth operative  ·  vermouth producer  ·  vermouth production operative  ·  vermouth processor  ·  vermouth production operator"
+  },
+  {
+   "role": "curator of horticulture",
+   "isco": 2131,
+   "aka": "conservation horticulturist  ·  curator & horticulturist  ·  curator and horticulturist  ·  curator of botany  ·  garden curator"
+  },
+  {
+   "role": "chocolate moulding operator",
+   "isco": 8160,
+   "aka": "chocolate mould operator  ·  chocolate mould operative  ·  chocolate moulder  ·  chocolate molding operator  ·  chocolate mould worker"
+  },
+  {
+   "role": "kosher slaughterer",
+   "isco": 7511,
+   "aka": "kosher slaughterperson  ·  kosher slaughterman  ·  kosher method slaughterer  ·  kosher slaughterwoman  ·  slaughterer following kosher method"
+  },
+  {
+   "role": "kosher butcher",
+   "isco": 7511,
+   "aka": "kosher meat slicer  ·  kosher meat boner  ·  kosher meat butcher"
+  },
+  {
+   "role": "miller",
+   "isco": 8160,
+   "aka": "flour miller  ·  flour mill worker  ·  grain miller  ·  grain mill worker"
+  },
+  {
+   "role": "malt master",
+   "isco": 7515,
+   "aka": "malter  ·  malting master  ·  malting expert  ·  malt expert"
+  },
+  {
+   "role": "fruit and vegetable canner",
+   "isco": 8160,
+   "aka": "fruit and veg canner  ·  fruit ad veg canning operative"
+  },
+  {
+   "role": "confectioner",
+   "isco": 7512,
+   "aka": "cakes and sweets maker  ·  confectionary products worker  ·  confectionary worker  ·  cake maker"
+  },
+  {
+   "role": "cocoa mill operator",
+   "isco": 8160,
+   "aka": "cocoa milling operator  ·  cocoa miller  ·  cocoa mill worker"
+  },
+  {
+   "role": "liquor grinding mill operator",
+   "isco": 8160,
+   "aka": "cocoa mass milling operator  ·  cocoa grinding mill operator"
+  },
+  {
+   "role": "cider fermentation operator",
+   "isco": 8160,
+   "aka": "cider fermentation process operator  ·  cider products fermenter  ·  cider fermenter"
+  },
+  {
+   "role": "food production operator",
+   "isco": 8160,
+   "aka": "food manufacturing worker  ·  food production operative  ·  food production worker  ·  food industry digitalisation operator  ·  food worker"
+  },
+  {
+   "role": "metrology technician",
+   "isco": 3111,
+   "aka": "metrology technologist  ·  metrologist  ·  senior metrology technician  ·  composite technician  ·  instrument specialist"
+  },
+  {
+   "role": "animal feed nutritionist",
+   "isco": 2131,
+   "aka": "animal nutrition expert  ·  feed nutritionist  ·  animal feed expert"
+  },
+  {
+   "role": "material testing technician",
+   "isco": 3111,
+   "aka": "material testing technology analyst  ·  material testing technology studies scientist  ·  material testing technology researcher  ·  material testing technology science researcher  ·  materials testing technician"
+  },
+  {
+   "role": "cigarette making machine operator",
+   "isco": 8160,
+   "aka": "cigarette maker  ·  cigarette manufacturing attendant  ·  cigarette machine tender  ·  cigarette manufacturing worker  ·  cigarette production operative"
+  },
+  {
+   "role": "refining machine operator",
+   "isco": 8160,
+   "aka": "refining operator  ·  refining machine operative  ·  refining worker  ·  refining machine worker"
+  },
+  {
+   "role": "biologist",
+   "isco": 2131,
+   "aka": "ornithologist  ·  herpetologist  ·  mycologist  ·  zoologist  ·  entomologist"
+  },
+  {
+   "role": "marine biologist",
+   "isco": 2131,
+   "aka": "marine ecologist  ·  marine biology researcher  ·  marine botanist  ·  sea biologist  ·  researcher in marine biology"
+  },
+  {
+   "role": "halal slaughterer",
+   "isco": 7511,
+   "aka": "halal slaughterman  ·  halal slaughterwoman  ·  slaughterer following halal method  ·  halal slaughterperson  ·  halal method slaughterer"
+  },
+  {
+   "role": "liquor blender",
+   "isco": 8160,
+   "aka": "spirits blender"
+  },
+  {
+   "role": "flour purifier operator",
+   "isco": 8160,
+   "aka": "flour purification operative  ·  flour purification operator  ·  grain purifier  ·  flour purifier"
+  },
+  {
+   "role": "bulk filler",
+   "isco": 8160,
+   "aka": "bulk filling worker  ·  bulk operator  ·  bulk worker  ·  bulk filling operative"
+  },
+  {
+   "role": "geology technician",
+   "isco": 3111,
+   "aka": "geological and petroleum technician  ·  mining technician  ·  mineral technician  ·  mine production techician  ·  geo-technician"
+  },
+  {
+   "role": "forestry technician",
+   "isco": 3143,
+   "aka": "foresty supervisor  ·  forestry operations technician  ·  forestry technologist  ·  forestry operations technologist  ·  forestry technician for digitalisation and bioeconomy"
+  },
+  {
+   "role": "pastry maker",
+   "isco": 7512,
+   "aka": "pastry production operator  ·  pastry production worker  ·  pastry cook"
+  },
+  {
+   "role": "Food Scientists and Technologists",
+   "isco": 2131,
+   "aka": NaN
+  },
+  {
+   "role": "Food Processing and Related Trades Workers",
+   "isco": 7511,
+   "aka": NaN
+  },
+  {
+   "role": "Butchers and Meat Cutters",
+   "isco": 7511,
+   "aka": NaN
+  },
+  {
+   "role": "Food Processing Workers, All Other",
+   "isco": 7513,
+   "aka": NaN
+  },
+  {
+   "role": "Meat, Poultry, and Fish Cutters and Trimmers",
+   "isco": 7511,
+   "aka": NaN
+  },
+  {
+   "role": "Food and Tobacco Roasting, Baking, and Drying Machine Operators and Tenders",
+   "isco": 7515,
+   "aka": NaN
+  },
+  {
+   "role": "Food Batchmakers",
+   "isco": 8160,
+   "aka": NaN
+  },
+  {
+   "role": "Food Cooking Machine Operators and Tenders",
+   "isco": 8160,
+   "aka": NaN
+  },
+  {
+   "role": "oenologist",
+   "isco": 2145,
+   "aka": "wine advisor  ·  wine maker  ·  wine production specialist  ·  wine producer  ·  wine production expert"
+  },
+  {
+   "role": "brewmaster",
+   "isco": 2145,
+   "aka": "brewing manager  ·  master brewer  ·  beer production manager  ·  brewery manager"
+  },
+  {
+   "role": "cider master",
+   "isco": 2145,
+   "aka": "cider maker  ·  cider production manager  ·  master cider maker  ·  cider manufacture manager"
+  },
+  {
+   "role": "distillery supervisor",
+   "isco": 3122,
+   "aka": "distillery manager  ·  distilling supervisor"
+  },
+  {
+   "role": "malt house supervisor",
+   "isco": 3122,
+   "aka": "malt house coordinator  ·  malt supervisor  ·  malting supervisor  ·  malt house manager"
+  },
+  {
+   "role": "dairy processing technician",
+   "isco": 3122,
+   "aka": "dairy employee  ·  dairy process technician  ·  dairy technician"
+  },
+  {
+   "role": "food production planner",
+   "isco": 3122,
+   "aka": "food manufacturing planner  ·  food production planning expert  ·  food production planning specialist"
+  },
+  {
+   "role": "food technologist",
+   "isco": 2145,
+   "aka": "food tech specialist  ·  food technology specialist  ·  food technology expert  ·  food tech expert"
+  }
+ ]
+}

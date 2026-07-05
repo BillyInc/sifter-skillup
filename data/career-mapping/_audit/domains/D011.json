@@ -1,0 +1,187 @@
+{
+ "domain_id": "D011",
+ "domain_name": "Quantitative Finance",
+ "role_count": 36,
+ "roles": [
+  {
+   "role": "foreign exchange trader",
+   "isco": 3311,
+   "aka": "forex dealer  ·  foreign exchange handler  ·  forex handler  ·  foreign exchange dealer"
+  },
+  {
+   "role": "securities analyst",
+   "isco": 2413,
+   "aka": "securities research analyst  ·  corporate securities research analyst  ·  bonds analyst  ·  stock analyst  ·  securities research director"
+  },
+  {
+   "role": "mergers and acquisitions analyst",
+   "isco": 2413,
+   "aka": "M&A analyst  ·  mergers and acquisitions banker  ·  mergers and acquisitions associate  ·  acquisition manager  ·  M&A specialist"
+  },
+  {
+   "role": "financial auditor",
+   "isco": 2411,
+   "aka": "auditor  ·  finance auditor  ·  internal auditor  ·  audit manager  ·  chartered accountant"
+  },
+  {
+   "role": "insurance rating analyst",
+   "isco": 2413,
+   "aka": "insurance analyst  ·  insurance assessor  ·  insurance rater"
+  },
+  {
+   "role": "energy trader",
+   "isco": 3311,
+   "aka": "renewable energy share trader  ·  energy trading analyst  ·  renewable energy stock analyst  ·  energy market analyst  ·  energy market economist"
+  },
+  {
+   "role": "middle office analyst",
+   "isco": 2413,
+   "aka": "middle office associate  ·  transaction reporting specialist  ·  middle office specialist  ·  structured products middle office analyst  ·  derivatives middle office analyst"
+  },
+  {
+   "role": "stock trader",
+   "isco": 3311,
+   "aka": "equity trader  ·  stock exchange floor trader  ·  investment dealer"
+  },
+  {
+   "role": "securities trader",
+   "isco": 3311,
+   "aka": "securities sales agent  ·  securities sales director  ·  securities teller  ·  securities sales directors  ·  securities tellers"
+  },
+  {
+   "role": "budget analyst",
+   "isco": 2411,
+   "aka": "budget and policy analyst  ·  budget accountant  ·  budget officer  ·  cost and planning analyst"
+  },
+  {
+   "role": "tax advisor",
+   "isco": 2411,
+   "aka": "fiscal advisor  ·  tax specialist  ·  tax expert  ·  tax evaluator  ·  tax preparer"
+  },
+  {
+   "role": "financial controller",
+   "isco": 2411,
+   "aka": "finance manager  ·  financial administrator  ·  accounting supervisor  ·  financial accountant  ·  accountant"
+  },
+  {
+   "role": "financial trader",
+   "isco": 3311,
+   "aka": "securities trader  ·  natural gas financial trader  ·  equity trader  ·  quantitative trader  ·  financial trading expert"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "public finance accountant",
+   "isco": 2411,
+   "aka": "finance accountant  ·  public finance officer  ·  treasury accountant  ·  treasury officer  ·  public finance manager"
+  },
+  {
+   "role": "cost analyst",
+   "isco": 2411,
+   "aka": "quantity surveyor  ·  cost accountant  ·  cost accounting clerk  ·  cost recovery estimator  ·  cost and budget analyst"
+  },
+  {
+   "role": "grants management officer",
+   "isco": 2411,
+   "aka": "grants officer  ·  proposals manager"
+  },
+  {
+   "role": "securities underwriter",
+   "isco": 3311,
+   "aka": "securities administrator  ·  distribution administrator  ·  security underwriter"
+  },
+  {
+   "role": "financial analyst",
+   "isco": 2413,
+   "aka": "economic analyst  ·  credit analyst  ·  financial markets report writer  ·  financial markets analyst  ·  treasury analyst"
+  },
+  {
+   "role": "stock broker",
+   "isco": 3311,
+   "aka": "stocks and shares broker  ·  stockbroker  ·  stockbroking dealer  ·  institutional stock broker"
+  },
+  {
+   "role": "financial fraud examiner",
+   "isco": 2411,
+   "aka": "fraud analyst  ·  fraud examiner  ·  fraud prevention analyst  ·  fraud investigations manager  ·  financial fraud investigator"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "investment analyst",
+   "isco": 2413,
+   "aka": "portfolio analyst  ·  investment accounting analyst  ·  investment banking analyst  ·  investment banking business analyst  ·  investment compliance analyst"
+  },
+  {
+   "role": "financial broker",
+   "isco": 3311,
+   "aka": "financial services broker  ·  financial services adviser  ·  finance adviser  ·  finance broker  ·  financial services manager"
+  },
+  {
+   "role": "securities broker",
+   "isco": 3311,
+   "aka": "junior stock broker  ·  stock salesperson  ·  financial services sales agent  ·  investment broker"
+  },
+  {
+   "role": "mutual fund broker",
+   "isco": 3311,
+   "aka": "mutual fund manager  ·  mutual fund sales representative  ·  mutual fund salesman  ·  mutual fund dealer  ·  mutual fund sales agent"
+  },
+  {
+   "role": "accounting analyst",
+   "isco": 2411,
+   "aka": "accounting systems analyst  ·  accounts analyst  ·  accounting specialist  ·  accounting methods analyst"
+  },
+  {
+   "role": "audit supervisor",
+   "isco": 2411,
+   "aka": "audit checker  ·  auditing supervisor  ·  audit leader  ·  audit inspector  ·  audit examiner"
+  },
+  {
+   "role": "statistical assistant",
+   "isco": 3314,
+   "aka": "administrative assistant  ·  IT expert  ·  statistician  ·  computer expert  ·  statistician's assistant"
+  },
+  {
+   "role": "bankruptcy trustee",
+   "isco": 2411,
+   "aka": "insolvency practitioner  ·  insolvency trustee  ·  bankruptcy analyst  ·  trustees in bankruptcy  ·  trustee in bankruptcy"
+  },
+  {
+   "role": "dividend analyst",
+   "isco": 2411,
+   "aka": "dividends clerk  ·  dividend and coupon analyst  ·  dividend calculation clerk  ·  dividends analyst  ·  dividend clerk"
+  },
+  {
+   "role": "asset manager",
+   "isco": 3311,
+   "aka": "independent financial adviser  ·  asset portfolio manager  ·  asset management adviser  ·  wealth management advisor  ·  assets manager"
+  },
+  {
+   "role": "accountant",
+   "isco": 2411,
+   "aka": "accounting technician  ·  bookkeeper  ·  accounting supervisor  ·  accounting officer  ·  certified public accountant"
+  },
+  {
+   "role": "foreign exchange broker",
+   "isco": 3311,
+   "aka": "forex trader  ·  broker in foreign exchange  ·  forex broker  ·  fx broker"
+  },
+  {
+   "role": "futures trader",
+   "isco": 3311,
+   "aka": "spreader  ·  futures contracts manager  ·  arbitrageur"
+  },
+  {
+   "role": "Credit Analysts",
+   "isco": 2413,
+   "aka": NaN
+  }
+ ]
+}

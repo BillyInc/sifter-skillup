@@ -1,0 +1,147 @@
+{
+ "domain_id": "D164",
+ "domain_name": "Urban Mobility, Smart City Systems",
+ "role_count": 28,
+ "roles": [
+  {
+   "role": "geological engineer",
+   "isco": 2142,
+   "aka": "geotechnical engineer  ·  geological technology engineering expert  ·  site geological consultant  ·  soil analyst  ·  geologic engineer"
+  },
+  {
+   "role": "construction engineer",
+   "isco": 2142,
+   "aka": "building engineer  ·  construction design engineer  ·  buildng construction engineer  ·  site engineer  ·  construction project engineer"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "mobility services manager",
+   "isco": 2164,
+   "aka": "smart city planner  ·  mobility manager  ·  manager for shared mobility  ·  shared mobility manager  ·  mobility advocacy manager"
+  },
+  {
+   "role": "rail project engineer",
+   "isco": 2142,
+   "aka": "railway project engineer  ·  rail engineering project manager  ·  engineer in railway projects  ·  project engineer in railways  ·  engineering project manager"
+  },
+  {
+   "role": "land planner",
+   "isco": 2164,
+   "aka": "city planner  ·  town planner  ·  urban planner  ·  land use planner  ·  land developer"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "pipeline engineer",
+   "isco": 2142,
+   "aka": "subsea pipeline engineer  ·  pipeline field engineer  ·  main line station engineer  ·  pipeline engineering technician  ·  pipeline field technician"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "smart city consultant",
+   "isco": 2164,
+   "aka": "Smart Cities specialist  ·  smart city specialist  ·  Smart Cities advisor  ·  smart city advisor"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "transport planner",
+   "isco": 2164,
+   "aka": "road traffic planner  ·  transport planning development engineer  ·  development planning transport planner  ·  traffic planner  ·  highway and drainage engineer"
+  },
+  {
+   "role": "drainage engineer",
+   "isco": 2142,
+   "aka": "drainage engineering specialist  ·  water and drainage engineer  ·  water resources engineer  ·  drainage engineering adviser  ·  drainage engineering consultant"
+  },
+  {
+   "role": "transport engineer",
+   "isco": 2142,
+   "aka": "traffic engineer  ·  transportation project engineer  ·  transport infrastructure engineer  ·  transportation engineering adviser  ·  transportation engineer"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "airport planning engineer",
+   "isco": 2142,
+   "aka": "aviation development planner  ·  airport planning manager  ·  airport development engineer  ·  airport development director"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "civil engineer",
+   "isco": 2142,
+   "aka": "civil engineering adviser  ·  civil engineering specialist  ·  director of infrastructure projects  ·  harbour civil engineer  ·  civil engineering expert"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "hydropower engineer",
+   "isco": 2142,
+   "aka": "hydropower systems engineer  ·  hydropower systems analyst"
+  },
+  {
+   "role": "urban planner",
+   "isco": 2164,
+   "aka": "city planner  ·  urban planning engineer  ·  smart city planner  ·  town planner  ·  country planner"
+  },
+  {
+   "role": "special-interest groups",
+   "isco": 1114,
+   "aka": "sports association official  ·  special-interest group worker  ·  special-interest groups' worker  ·  special-interest group staff member  ·  campaign group official"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "mining geotechnical engineer",
+   "isco": 2142,
+   "aka": "mine hydrologist  ·  mining hydrologist"
+  },
+  {
+   "role": "water engineer",
+   "isco": 2142,
+   "aka": "water resource engineer  ·  hydraulic engineer  ·  water systems engineer  ·  water management specialist"
+  }
+ ]
+}

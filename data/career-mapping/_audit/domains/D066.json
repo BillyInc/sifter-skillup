@@ -1,0 +1,192 @@
+{
+ "domain_id": "D066",
+ "domain_name": "Veterinary Science",
+ "role_count": 37,
+ "roles": [
+  {
+   "role": "specialised veterinarian",
+   "isco": 2250,
+   "aka": "zoological medicine veterinarian  ·  emergency medicine veterinarian  ·  poultry veterinary scientist  ·  sports medicine and rehabilitation veterinarian  ·  diagnostic imaging veterinarian"
+  },
+  {
+   "role": "animal massage therapist",
+   "isco": 2250,
+   "aka": "animal massage therapists  ·  veterinary massage therapist  ·  veterinary masseur  ·  animal masseur"
+  },
+  {
+   "role": "animal therapist",
+   "isco": 2250,
+   "aka": "animal rehabilitation therapist  ·  animal rehab therapist  ·  animal therapists  ·  animal convalescence therapist"
+  },
+  {
+   "role": "animal artificial insemination technician",
+   "isco": 3240,
+   "aka": "AI technician  ·  AI engineer  ·  AI specialist  ·  artificial insemination engineer  ·  artificial insemination specialist"
+  },
+  {
+   "role": "biophysicist",
+   "isco": 2131,
+   "aka": "biophysics scientist  ·  biophysics research scientist  ·  biophysics biotechnologist  ·  biophysics scholar  ·  biophysics researcher"
+  },
+  {
+   "role": "veterinary nurse",
+   "isco": 3240,
+   "aka": "veterinary nursing specialist  ·  veterinary nurses  ·  animal nurse  ·  veterinary practice assistant  ·  animal nursing specialist"
+  },
+  {
+   "role": "physiologist",
+   "isco": 2131,
+   "aka": "anatomy analyst  ·  anatomy researcher  ·  anatomy research scientist  ·  physiology scientist  ·  physiology analyst"
+  },
+  {
+   "role": "alternative animal therapist",
+   "isco": 3240,
+   "aka": "animal massage therapist  ·  animal homeopath  ·  animal acupuncturist  ·  complementary animal therapist  ·  natural animal therapist"
+  },
+  {
+   "role": "animal embryo transfer technician",
+   "isco": 3240,
+   "aka": "animal embryo transfer specialist  ·  embryo transfer technician  ·  animal embryo transfer scientist  ·  animal embryo transfer engineer  ·  animal embryo transfer technicians"
+  },
+  {
+   "role": "equine dental technician",
+   "isco": 3240,
+   "aka": "horse dental care technician  ·  equine dental technicians  ·  horse dental care assistant  ·  horse dental technician  ·  horse teeth technician"
+  },
+  {
+   "role": "toxicologist",
+   "isco": 2131,
+   "aka": "toxicology analyst  ·  toxicology science researcher  ·  toxicologists  ·  toxicology studies scholar  ·  toxicology scholar"
+  },
+  {
+   "role": "official veterinarian",
+   "isco": 2250,
+   "aka": "government veterinary officer  ·  veterinary inspector  ·  state vet  ·  official vet  ·  public health veterinarian"
+  },
+  {
+   "role": "veterinary scientist",
+   "isco": 2250,
+   "aka": "animal models researcher  ·  researcher in veterinary science  ·  veterinary researcher  ·  animal models scientist  ·  scientist in veterinary research"
+  },
+  {
+   "role": "botanist",
+   "isco": 2131,
+   "aka": "garden intendant  ·  director of horticulture learning and operations  ·  horticulture manager  ·  director of horticulture  ·  garden manager"
+  },
+  {
+   "role": "animal physiotherapist",
+   "isco": 2250,
+   "aka": "veterinary physiotherapist  ·  animal physical threapist"
+  },
+  {
+   "role": "geneticist",
+   "isco": 2131,
+   "aka": "genetics engineer  ·  genetic scientist  ·  genetics research scientist  ·  molecular biologist  ·  molecular geneticist"
+  },
+  {
+   "role": "bioinformatics scientist",
+   "isco": 2131,
+   "aka": "IT researcher  ·  senior bioinformatics scientist  ·  data scientist  ·  biology researcher  ·  junior bioinformatics scientist"
+  },
+  {
+   "role": "aquaculture biologist",
+   "isco": 2131,
+   "aka": "aquaculture biology research analyst  ·  expert in aquaculture biology  ·  aquaculture biology expert  ·  specialist in aquaculture biology  ·  aquaculture biology scientist"
+  },
+  {
+   "role": "food biotechnologist",
+   "isco": 2131,
+   "aka": "food biotech technician  ·  technician for food industry bioeconomy  ·  food biotech specialist"
+  },
+  {
+   "role": "biochemist",
+   "isco": 2131,
+   "aka": "biochemistry research scientist  ·  chemical biotechnologist  ·  biochemistry studies scholar  ·  biochemistry science researcher  ·  biochemistry studies research scientist"
+  },
+  {
+   "role": "animal behaviourist",
+   "isco": 2131,
+   "aka": "ethologist  ·  animal behaviour expert  ·  animal behaviour specialist  ·  animal behavior specialist  ·  animal behavior expert"
+  },
+  {
+   "role": "aquatic animal health professional",
+   "isco": 2250,
+   "aka": "aquaculture health specialist  ·  marine animal health expert  ·  aquatic animal health adviser  ·  aquaculture health professional  ·  aquatic marine health specialist"
+  },
+  {
+   "role": "veterinary technician",
+   "isco": 3240,
+   "aka": "veterinary assistant  ·  veterinary auxiliary  ·  veterinary practice technician  ·  vet technician  ·  vet's technician"
+  },
+  {
+   "role": "microbiologist",
+   "isco": 2131,
+   "aka": "virologist  ·  microbiology research analyst  ·  histologist  ·  bacteriologist  ·  microbiology studies research analyst"
+  },
+  {
+   "role": "immunologist",
+   "isco": 2131,
+   "aka": "immunology analyst  ·  immunology researcher  ·  immunology studies research analyst  ·  immunology research analyst  ·  immunology studies researcher"
+  },
+  {
+   "role": "epidemiologist",
+   "isco": 2131,
+   "aka": "epidemiology science researcher  ·  epidemiology researcher  ·  epidemiology research analyst  ·  epidemiology analyst  ·  epidemiology research scientist"
+  },
+  {
+   "role": "animal chiropractor",
+   "isco": 2250,
+   "aka": "veterinary chiropractor  ·  animal chiropractitioner  ·  animal chiropractors"
+  },
+  {
+   "role": "botanicals specialist",
+   "isco": 2131,
+   "aka": "botanical milling operative  ·  botanical expert  ·  botanical specialist  ·  botanical science expert"
+  },
+  {
+   "role": "curator of horticulture",
+   "isco": 2131,
+   "aka": "conservation horticulturist  ·  curator & horticulturist  ·  curator and horticulturist  ·  curator of botany  ·  garden curator"
+  },
+  {
+   "role": "animal osteopath",
+   "isco": 2250,
+   "aka": "animal osteopaths  ·  veterinary osteopathic therapist  ·  veterinary osteopath  ·  animal ostepathic therapist"
+  },
+  {
+   "role": "animal feed nutritionist",
+   "isco": 2131,
+   "aka": "animal nutrition expert  ·  feed nutritionist  ·  animal feed expert"
+  },
+  {
+   "role": "general veterinarian",
+   "isco": 2250,
+   "aka": "family vet  ·  general veterinarians  ·  companion animal veterinarian  ·  comprehensive vet  ·  food production animal veterinarian"
+  },
+  {
+   "role": "biologist",
+   "isco": 2131,
+   "aka": "ornithologist  ·  herpetologist  ·  mycologist  ·  zoologist  ·  entomologist"
+  },
+  {
+   "role": "marine biologist",
+   "isco": 2131,
+   "aka": "marine ecologist  ·  marine biology researcher  ·  marine botanist  ·  sea biologist  ·  researcher in marine biology"
+  },
+  {
+   "role": "animal hydrotherapist",
+   "isco": 2250,
+   "aka": "veterinary hydrotherapist  ·  animal hydrotherapists"
+  },
+  {
+   "role": "Veterinarians",
+   "isco": 2250,
+   "aka": NaN
+  },
+  {
+   "role": "Veterinary Technologists and Technicians",
+   "isco": 3240,
+   "aka": NaN
+  }
+ ]
+}

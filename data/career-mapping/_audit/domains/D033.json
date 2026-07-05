@@ -1,0 +1,267 @@
+{
+ "domain_id": "D033",
+ "domain_name": "Product Management",
+ "role_count": 52,
+ "roles": [
+  {
+   "role": "clothing development manager",
+   "isco": 1223,
+   "aka": "clothing product manager  ·  clothes product developer  ·  apparel product developer  ·  clothing manager  ·  sample room manager"
+  },
+  {
+   "role": "integration engineer",
+   "isco": 2511,
+   "aka": "IT integration engineer  ·  ICT integration engineers  ·  system integration engineer  ·  software integration engineer"
+  },
+  {
+   "role": "branch manager",
+   "isco": 1213,
+   "aka": "regional director  ·  regional manager  ·  international business manager  ·  branch office administrator  ·  subsidiary manager"
+  },
+  {
+   "role": "embedded system designer",
+   "isco": 2511,
+   "aka": "embedded system programmer  ·  embedded systems designers  ·  embedded software developer  ·  embedded system developer  ·  embedded systems programmer"
+  },
+  {
+   "role": "product development manager",
+   "isco": 1223,
+   "aka": "research and development manager  ·  product designer  ·  product development specialist  ·  innovation department manager  ·  product development executive"
+  },
+  {
+   "role": "computer vision engineer",
+   "isco": 2511,
+   "aka": "computer vision applied scientist  ·  computer vision expert  ·  computer vision specialist  ·  computer vision project engineer  ·  smart technics computer vision engineer"
+  },
+  {
+   "role": "EU funds manager",
+   "isco": 1213,
+   "aka": "EU policy and funding expert  ·  regional policy officer  ·  EU projects supervisor  ·  policy officer for EU funds  ·  EU fund manager in Joint Secretariat"
+  },
+  {
+   "role": "data engineer",
+   "isco": 2511,
+   "aka": "data engineer expert  ·  research data engineer"
+  },
+  {
+   "role": "business intelligence manager",
+   "isco": 2421,
+   "aka": "market intelligence manager  ·  business research analyst  ·  business intelligence specialist  ·  business research consultant  ·  business intelligence analyst"
+  },
+  {
+   "role": "manufacturing cost estimator",
+   "isco": 2421,
+   "aka": "manufacturing cost analyst  ·  manufacturing estimate clerk  ·  production cost estimator  ·  estimator  ·  manufacturing cost recovery technician"
+  },
+  {
+   "role": "green ICT consultant",
+   "isco": 2511,
+   "aka": "IT environmental consultant  ·  green IT consultant  ·  green ICT consultants  ·  ICT environmental consultant  ·  ICT sustainability systems consultant"
+  },
+  {
+   "role": "data scientist",
+   "isco": 2511,
+   "aka": "data expert  ·  research data scientist  ·  data research scientist  ·  electromobility data scientist"
+  },
+  {
+   "role": "enterprise architect",
+   "isco": 2511,
+   "aka": "enterprise architects  ·  enterprise developer  ·  enterprise architecture manager  ·  enterprise designer"
+  },
+  {
+   "role": "sustainability manager",
+   "isco": 1213,
+   "aka": "sustainable business manager  ·  sustainable business process manager  ·  sustainability analyst  ·  sustainability specialist  ·  sustainability coordinator"
+  },
+  {
+   "role": "artificial intelligence engineer",
+   "isco": 2511,
+   "aka": "intelligent systems designers  ·  artificial intelligence designer  ·  ICT intelligent systems designer  ·  AI system designer  ·  semantic technologies engineer"
+  },
+  {
+   "role": "ICT business analysis manager",
+   "isco": 2511,
+   "aka": "IT business analysis manager  ·  IT commercial analysis manager  ·  IT business analysis director  ·  ICT business analysis managers  ·  lead IT business analyst"
+  },
+  {
+   "role": "strategic planning manager",
+   "isco": 1213,
+   "aka": "strategy manager  ·  corporate strategist  ·  business continuity planning director  ·  business continuity strategy director  ·  strategic development manager"
+  },
+  {
+   "role": "logistics analyst",
+   "isco": 2421,
+   "aka": "supply chain analyst  ·  distribution and logistics consultant  ·  logistics consultant  ·  logistics and distribution analyst  ·  logistics and supply chain analyst"
+  },
+  {
+   "role": "business manager",
+   "isco": 1213,
+   "aka": "general manager  ·  corporate service manager  ·  business unit manager  ·  operations manager  ·  vice-president"
+  },
+  {
+   "role": "health safety and environmental manager",
+   "isco": 1213,
+   "aka": "HSE coordinator  ·  chief HSE officer  ·  corporate HSE manager  ·  HSE and sustainability service manager"
+  },
+  {
+   "role": "business analyst",
+   "isco": 2421,
+   "aka": "management consultant  ·  standardisation manager  ·  business strategy analyst  ·  organisational developer  ·  standardisation expert"
+  },
+  {
+   "role": "games development manager",
+   "isco": 1223,
+   "aka": "gambling development director  ·  gambling project and product development manager  ·  gaming development manager  ·  gaming development director  ·  gaming project and product development director"
+  },
+  {
+   "role": "policy manager",
+   "isco": 1213,
+   "aka": "policy coordinator  ·  business ethicist  ·  policy advocacy manager  ·  sustainability manager  ·  environmental policy manager"
+  },
+  {
+   "role": "business consultant",
+   "isco": 2421,
+   "aka": "business process consultant"
+  },
+  {
+   "role": "ICT research consultant",
+   "isco": 2511,
+   "aka": "IT research consultant  ·  ICT research advisor  ·  IT research specialist  ·  ICT research consultants  ·  IT research advisor"
+  },
+  {
+   "role": "insurance product manager",
+   "isco": 1223,
+   "aka": "insurance product development manager  ·  assurance branch manager  ·  assurance lead  ·  assurance office manager  ·  insurance office manager"
+  },
+  {
+   "role": "research and development manager",
+   "isco": 1223,
+   "aka": "market research manager  ·  research and development associate  ·  product research development manager  ·  research and development director  ·  researcher"
+  },
+  {
+   "role": "blockchain architect",
+   "isco": 2511,
+   "aka": "decentralized ledger technology specialist  ·  DLT specialist  ·  blockchain technology specialist  ·  DLT architect"
+  },
+  {
+   "role": "chief product officer",
+   "isco": 1223,
+   "aka": "chief product director  ·  chief product manager  ·  CPO"
+  },
+  {
+   "role": "procurement department manager",
+   "isco": 1213,
+   "aka": "procurement officer  ·  head of procurement department  ·  procurement director  ·  procurement coordinator  ·  head of procurement unit"
+  },
+  {
+   "role": "ICT research manager",
+   "isco": 1223,
+   "aka": "technology innovation manager  ·  ICT research managers  ·  IT innovation manager  ·  IT research manager  ·  ICT innovation manager"
+  },
+  {
+   "role": "innovation officer",
+   "isco": 1223,
+   "aka": "technology innovation manager  ·  innovation specialist  ·  open innovation manager  ·  innovation process manager  ·  innovation implementation coordinator"
+  },
+  {
+   "role": "product manager",
+   "isco": 1223,
+   "aka": "product marketing manager  ·  research and development manager  ·  sports product engineer  ·  product development manager  ·  product developer"
+  },
+  {
+   "role": "process officer",
+   "isco": 2421,
+   "aka": "chief process officer  ·  process improvement officer  ·  process management coordinator  ·  business process improvement coordinator  ·  business process advisor"
+  },
+  {
+   "role": "building information modelling consultant",
+   "isco": 2421,
+   "aka": "BIM consultant  ·  building information modelling specialist  ·  BIM specialist"
+  },
+  {
+   "role": "ICT system analyst",
+   "isco": 2511,
+   "aka": "ICT system analysts  ·  ICT systems analysts  ·  ICT systems analyst  ·  system analyst  ·  IT system analyst"
+  },
+  {
+   "role": "ICT system developer",
+   "isco": 2511,
+   "aka": "systems programmer  ·  ICT system developers  ·  systems developer  ·  IT system developer  ·  chief ICT system developer"
+  },
+  {
+   "role": "ICT consultant",
+   "isco": 2511,
+   "aka": "ICT ERP consultant  ·  ICT advisor  ·  IT advisor  ·  IT consultant  ·  IT compliance consultant"
+  },
+  {
+   "role": "director of compliance and information security",
+   "isco": 1213,
+   "aka": "cybersecurity compliance director  ·  IT compliance manager  ·  manager of compliance and information security  ·  cyber legal advisor  ·  compliance and information security manager"
+  },
+  {
+   "role": "ICT system integration consultant",
+   "isco": 2511,
+   "aka": "network integration consultant  ·  system integration consultants  ·  systems integration consultant  ·  application integration consultant  ·  systems integration consultants"
+  },
+  {
+   "role": "research manager",
+   "isco": 1223,
+   "aka": "research scientist  ·  chief science officer  ·  principal research scientist  ·  head laboratory analyst  ·  scientific research director"
+  },
+  {
+   "role": "programme manager",
+   "isco": 1213,
+   "aka": "program management coordinator  ·  program director  ·  programme management coordinator  ·  programme director  ·  projects portfolio manager"
+  },
+  {
+   "role": "lean manager",
+   "isco": 2421,
+   "aka": "lean coach  ·  lean project manager  ·  lean facilitator  ·  lean director  ·  operational excellence manager"
+  },
+  {
+   "role": "IT auditor",
+   "isco": 2511,
+   "aka": "ICT auditor  ·  information technology auditor  ·  IT Quality Appraiser"
+  },
+  {
+   "role": "social security administrator",
+   "isco": 1213,
+   "aka": "benefits officer  ·  social security advisor  ·  community services administrator  ·  administrative officer  ·  community services director"
+  },
+  {
+   "role": "data analyst",
+   "isco": 2511,
+   "aka": "battery data analyst  ·  mine electrification data analyst  ·  data warehouse analyst  ·  data warehousing analyst  ·  battery materials data analyst"
+  },
+  {
+   "role": "ICT system architect",
+   "isco": 2511,
+   "aka": "systems architect  ·  IT systems architect  ·  information systems architect  ·  ICT system architects  ·  solution architect"
+  },
+  {
+   "role": "tourism policy director",
+   "isco": 1213,
+   "aka": "director of economic development  ·  tourism policy manager  ·  director of visitor attractions  ·  policy director tourism  ·  economic development director"
+  },
+  {
+   "role": "computer scientist",
+   "isco": 2511,
+   "aka": "IT researcher  ·  IT scientist  ·  ICT science researcher  ·  ICT researcher  ·  IT research scientist"
+  },
+  {
+   "role": "user experience analyst",
+   "isco": 2511,
+   "aka": "user experience officer  ·  usability analyst  ·  user experience analysts"
+  },
+  {
+   "role": "ICT business analyst",
+   "isco": 2511,
+   "aka": "requirement engineer  ·  business process specialist  ·  IT business analyst  ·  ICT business analysts"
+  },
+  {
+   "role": "Computer Systems Analysts",
+   "isco": 2511,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "jamb_name": "Radiography",
+  "utme_subjects": ["English Language", "Physics", "Chemistry", "Biology"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Biology, Physics and Chemistry.",
+  "direct_entry": "Two (2) 'A' Level passes chosen from Physics, Chemistry and Biology.",
+  "institution_waivers": [
+    {"institution": "BOWEN", "note": "Requires 'A' Level passes in Chemistry, Physics and any other Science subject."},
+    {"institution": "CALABAR", "note": "Accepts a) 'A' Level passes in any two (2) of Chemistry, Biology and Physics plus the UTME requirements; b) accepts B.SC in Physical or Biological sciences plus the UTME requirements."},
+    {"institution": "MAIDUGURI", "note": "Accepts DIR/DCR registered with Radiographers Board of Nigeria plus the UTME requirements."},
+    {"institution": "UNIZIK", "note": "Requires 'A' Level pass in Physics. Accepts London International Baccalaureate."},
+    {"institution": "LAGOS", "note": "Direct Entry: accepts passes in three (3) JUPEB/'A' level subjects: Physics, Chemistry, Biology."},
+    {"institution": "UNN", "note": "Direct Entry: No direct entry."},
+    {"institution": "ABU", "note": "Accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology. Registered X-ray/Imaging Processing Technician."},
+    {"institution": "UNN", "note": "UTME: As in Medical Laboratory Science."},
+    {"institution": "LAGOS", "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."},
+    {"institution": "ABU", "note": "UTME: requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."},
+    {"institution": "UNN", "note": "UTME subjects: As in Medical Laboratory Science."},
+    {"institution": "LAGOS", "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."},
+    {"institution": "ABU", "note": "UTME subjects: requires Use of English, Physics, Chemistry and Biology."}
+  ]
+}

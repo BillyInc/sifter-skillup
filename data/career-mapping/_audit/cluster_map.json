@@ -1,0 +1,904 @@
+{
+ "Information & Communication Technology": [
+  {
+   "domain_id": "D001",
+   "name": "Software Engineering",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D002",
+   "name": "Data Engineering & Architecture",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D003",
+   "name": "Artificial Intelligence & Machine Learning",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D004",
+   "name": "Cybersecurity & Information Security",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D005",
+   "name": "Cloud Computing & DevOps",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D006",
+   "name": "Internet of Things & Embedded Systems",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D007",
+   "name": "UI/UX Design & Product Design",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D008",
+   "name": "Telecommunications & Network Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D139",
+   "name": "Game Design, Development & Interactive Entertainment",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D140",
+   "name": "Robotics Engineering, Systems Design & Human-Robot Interaction",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Data & Analytics": [
+  {
+   "domain_id": "D009",
+   "name": "Data Science & Statistical Analysis",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D010",
+   "name": "Business Intelligence & Analytics",
+   "coverage": "FULL"
+  }
+ ],
+ "Financial Services": [
+  {
+   "domain_id": "D011",
+   "name": "Quantitative Finance & Financial Engineering",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D012",
+   "name": "FinTech Engineering",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D013",
+   "name": "Investment Analysis & Asset Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D014",
+   "name": "Actuarial Science & Risk Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D015",
+   "name": "Accounting & Financial Reporting",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D060",
+   "name": "Banking, Credit & Retail Finance",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D061",
+   "name": "Insurance & Underwriting",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D062",
+   "name": "Trading & Capital Markets",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D158",
+   "name": "Corporate Finance, Investment Banking & M&A Advisory",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D159",
+   "name": "Credit Analysis, Structured Finance & Debt Capital Markets",
+   "coverage": "FULL"
+  }
+ ],
+ "Engineering & Built Environment": [
+  {
+   "domain_id": "D016",
+   "name": "Electrical & Electronics Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D017",
+   "name": "Mechanical & Industrial Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D018",
+   "name": "Civil & Structural Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D019",
+   "name": "Renewable Energy Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D020",
+   "name": "Environmental Engineering & Sustainability",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D021",
+   "name": "Architecture & Urban Planning",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D022",
+   "name": "Mining & Geosciences Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D069",
+   "name": "Aviation & Aerospace Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D072",
+   "name": "Geospatial Science & GIS",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D074",
+   "name": "Occupational Health, Safety & Environment (OHSE)",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D146",
+   "name": "Building Services Engineering — Mechanical, Electrical & Plumbing (MEP)",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D147",
+   "name": "Process Automation, SCADA, PLC & Industrial Control Systems",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D156",
+   "name": "Land Surveying, Cadastral Mapping & Field Geomatics",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D164",
+   "name": "Urban Mobility, Smart City Systems & Transportation Planning",
+   "coverage": "FULL"
+  }
+ ],
+ "Health & Biomedical": [
+  {
+   "domain_id": "D023",
+   "name": "Medicine & Clinical Practice",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D024",
+   "name": "Nursing & Allied Health Professions",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D025",
+   "name": "Pharmacy & Pharmaceutical Sciences",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D026",
+   "name": "Public Health & Epidemiology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D027",
+   "name": "Biomedical & Biotechnology Research",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D064",
+   "name": "Psychology, Counselling & Mental Health",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D066",
+   "name": "Veterinary Science & Animal Health",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D067",
+   "name": "Dentistry & Oral Health",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D068",
+   "name": "Allied Health & Rehabilitation Therapies",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D154",
+   "name": "Exercise Science, Sports Therapy & Athletic Performance",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D165",
+   "name": "Wellness Coaching, Lifestyle Medicine & Integrative Health",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Business & Management": [
+  {
+   "domain_id": "D028",
+   "name": "General Management & Strategy",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D029",
+   "name": "Human Resources & People Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D030",
+   "name": "Marketing, Brand & Communications",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D031",
+   "name": "Sales & Business Development",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D032",
+   "name": "Project Management & Programme Delivery",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D033",
+   "name": "Product Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D130",
+   "name": "Recruitment, Employment & Staffing Agency Operations",
+   "coverage": "FULL"
+  }
+ ],
+ "Supply Chain & Logistics": [
+  {
+   "domain_id": "D034",
+   "name": "Supply Chain Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D035",
+   "name": "Logistics & Transportation Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D036",
+   "name": "Procurement & Contract Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D076",
+   "name": "Maritime & Naval Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D079",
+   "name": "Customs, Trade & Export Management",
+   "coverage": "FULL"
+  }
+ ],
+ "Legal & Compliance": [
+  {
+   "domain_id": "D037",
+   "name": "Legal Practice & Corporate Law",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D038",
+   "name": "Compliance, Regulation & Governance",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D157",
+   "name": "Tax Advisory, Transfer Pricing & Revenue Law",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D162",
+   "name": "Immigration Law, Asylum & International Protection",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D163",
+   "name": "Intellectual Property Law, Patents & Technology Licensing",
+   "coverage": "FULL"
+  }
+ ],
+ "Education & Research": [
+  {
+   "domain_id": "D039",
+   "name": "Higher Education & Academic Research",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D040",
+   "name": "Vocational & Technical Training",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D041",
+   "name": "Scientific Research & Development",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D078",
+   "name": "Social Sciences & Behavioural Research",
+   "coverage": "FULL"
+  }
+ ],
+ "Creative & Media": [
+  {
+   "domain_id": "D042",
+   "name": "Media Production & Broadcasting",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D043",
+   "name": "Journalism & Digital Publishing",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D044",
+   "name": "Graphic Design & Visual Communication",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D065",
+   "name": "Translation, Interpretation & Linguistics",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D070",
+   "name": "Performing Arts & Entertainment",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D071",
+   "name": "Sports Management & Fitness",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D080",
+   "name": "Interior Design & Spatial Design",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D152",
+   "name": "Museum Curation, Cultural Heritage, Archives & Archaeology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D153",
+   "name": "Music Production, Sound Engineering & Audio Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D160",
+   "name": "Fashion Styling, Image Consulting & Personal Shopping",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Public Sector & Social Services": [
+  {
+   "domain_id": "D045",
+   "name": "Public Administration & Policy",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D046",
+   "name": "Social Work & Community Development",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D063",
+   "name": "Economics & Policy Analysis",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D073",
+   "name": "Library, Archive & Information Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D077",
+   "name": "Security Services & Public Safety",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D128",
+   "name": "Social Welfare, Youth Services & Community Care Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D143",
+   "name": "Forensic Science, Digital Forensics & Criminal Investigation",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D149",
+   "name": "Diplomacy, International Relations & Foreign Affairs",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D150",
+   "name": "Religious Ministry, Theology & Interfaith Leadership",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D151",
+   "name": "Criminology, Criminal Justice & Corrections Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D161",
+   "name": "Humanitarian Aid, Emergency Response & International Development",
+   "coverage": "FULL"
+  }
+ ],
+ "Agriculture & Food Systems": [
+  {
+   "domain_id": "D047",
+   "name": "Agricultural Science & Agribusiness",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D048",
+   "name": "Food Science & Technology",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Advanced Manufacturing": [
+  {
+   "domain_id": "D049",
+   "name": "Automotive Engineering & Electric Vehicles",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D050",
+   "name": "Industrial Automation & Robotics",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D075",
+   "name": "Fashion, Textiles & Apparel",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Real Estate & Construction": [
+  {
+   "domain_id": "D051",
+   "name": "Real Estate & Property Management",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D052",
+   "name": "Construction Management",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Hospitality & Tourism": [
+  {
+   "domain_id": "D053",
+   "name": "Hospitality & Tourism Management",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Energy & Resources": [
+  {
+   "domain_id": "D054",
+   "name": "Oil & Gas Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D055",
+   "name": "Chemical Engineering & Process Industries",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D148",
+   "name": "Offshore, Subsea & Deepwater Engineering",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Emerging Technology": [
+  {
+   "domain_id": "D056",
+   "name": "Blockchain & Decentralised Systems",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D057",
+   "name": "Digital Health & Health Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D058",
+   "name": "EdTech & Learning Experience Design",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D059",
+   "name": "Space Technology & Satellite Systems",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Office & Administrative Services": [
+  {
+   "domain_id": "D081",
+   "name": "Office Administration, Secretarial & Registry",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D082",
+   "name": "Customer Service, Contact Centre & Front Desk Operations",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D083",
+   "name": "Travel, Tourism & Reservations Operations",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D084",
+   "name": "Payroll, Bookkeeping & Finance Clerking",
+   "coverage": "FULL"
+  }
+ ],
+ "Retail, Sales & Commerce": [
+  {
+   "domain_id": "D085",
+   "name": "Retail Sales, Shop Operations & Merchandising",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D086",
+   "name": "Gaming, Betting & Lottery Operations",
+   "coverage": "FULL"
+  }
+ ],
+ "Beauty, Personal Care & Wellness": [
+  {
+   "domain_id": "D087",
+   "name": "Hairdressing, Barbering & Hair Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D088",
+   "name": "Beauty Therapy, Aesthetics & Spa Services",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D089",
+   "name": "Funeral & Mortuary Services",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D090",
+   "name": "Animal Care, Grooming & Pet Services",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D091",
+   "name": "Driving Instruction & Transport Training",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Culinary Arts & Food Service": [
+  {
+   "domain_id": "D092",
+   "name": "Culinary Arts, Catering & Food Service Operations",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Electrical & Electronics Trades": [
+  {
+   "domain_id": "D093",
+   "name": "Electrical Installation, Wiring & Maintenance Trades",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D094",
+   "name": "Electronics Servicing, ICT Equipment & Smart Systems Installation",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Mechanical & Automotive Trades": [
+  {
+   "domain_id": "D095",
+   "name": "Motor Vehicle Mechanics, Repairs & Automobile Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D096",
+   "name": "Agricultural & Industrial Machinery Mechanics",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Metal, Welding & Fabrication Trades": [
+  {
+   "domain_id": "D097",
+   "name": "Welding, Fabrication, Blacksmithing & Metal Trades",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D098",
+   "name": "Precision Engineering, Toolmaking & Instrument Repair",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Building & Construction Trades": [
+  {
+   "domain_id": "D099",
+   "name": "Masonry, Bricklaying, Tiling, Plastering & General Building Trades",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D100",
+   "name": "Plumbing, Pipefitting & HVAC Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D101",
+   "name": "Painting, Decorating & Surface Treatment",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Wood, Furniture & Craft": [
+  {
+   "domain_id": "D102",
+   "name": "Carpentry, Joinery, Wood Technology & Furniture Making",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D103",
+   "name": "Jewellery Making, Goldsmithing & Precious Craft",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D104",
+   "name": "Pottery, Ceramics, Glass & Decorative Craft",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D105",
+   "name": "Handicraft, Basketry, Textile Craft & Artisan Production",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Textiles, Garments & Leather": [
+  {
+   "domain_id": "D106",
+   "name": "Garment Making, Tailoring, Dressmaking & Fashion Production",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D107",
+   "name": "Leather Technology, Shoemaking & Leather Goods",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Printing & Graphic Production": [
+  {
+   "domain_id": "D108",
+   "name": "Printing Technology, Pre-press & Print Finishing",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Manufacturing & Industrial Plant Operations": [
+  {
+   "domain_id": "D109",
+   "name": "Metal Processing, Foundry & Casting Plant Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D110",
+   "name": "Chemical, Rubber & Plastics Plant Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D111",
+   "name": "Textile, Garment & Laundry Machine Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D112",
+   "name": "Wood Processing, Pulp & Paper Plant Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D113",
+   "name": "Glass, Ceramics, Building Materials & Boiler Plant Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D114",
+   "name": "Assembly, Packaging & Production Line Operations",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Transport & Driving Operations": [
+  {
+   "domain_id": "D115",
+   "name": "Road Transport Operations (Drivers & Vehicle Operators)",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D116",
+   "name": "Heavy Equipment, Earthmoving & Construction Plant Operations",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D117",
+   "name": "Railway & Track Operations",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Agriculture, Fishing & Natural Resources": [
+  {
+   "domain_id": "D118",
+   "name": "Crop Production, Horticulture & Agronomy Practice",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D119",
+   "name": "Livestock, Poultry, Dairy & Animal Production",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D120",
+   "name": "Fisheries, Aquaculture & Seafood Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D121",
+   "name": "Forestry, Wildlife Management & Pest Control",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Community Health & Paramedical": [
+  {
+   "domain_id": "D122",
+   "name": "Medical Laboratory Technology & Pathology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D123",
+   "name": "Radiography, Medical Imaging & Radiation Therapy",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D124",
+   "name": "Community Health Extension & Primary Health Care",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D125",
+   "name": "Medical Secretarial & Health Administration",
+   "coverage": "FULL"
+  },
+  {
+   "domain_id": "D126",
+   "name": "Complementary, Alternative & Traditional Medicine",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Childcare & Early Learning": [
+  {
+   "domain_id": "D127",
+   "name": "Early Childhood Education, Nursery & Childcare",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Defence & Military": [
+  {
+   "domain_id": "D129",
+   "name": "Military, Defence & Armed Forces Service",
+   "coverage": ""
+  }
+ ],
+ "High-Performance Engineering": [
+  {
+   "domain_id": "D131",
+   "name": "Motorsport Engineering & Performance Technology",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D132",
+   "name": "Space Science, Exploration & Mission Systems",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D133",
+   "name": "Luxury & Bespoke Specialist Interiors — Aviation, Maritime & Automotive",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D134",
+   "name": "Naval Architecture, Marine Engineering & Ship Design",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D166",
+   "name": "Autonomous Vehicles, Self-Driving Systems & Roborace Engineering",
+   "coverage": "PARTIAL"
+  }
+ ],
+ "Advanced Science & Engineering": [
+  {
+   "domain_id": "D135",
+   "name": "Nuclear Engineering, Radiation Science & Nuclear Medicine",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D136",
+   "name": "Aeronautical & Aerospace Engineering",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D137",
+   "name": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D138",
+   "name": "Biomedical Engineering & Medical Device Design",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D141",
+   "name": "Quantum Computing, Quantum Information & Advanced Physics",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D142",
+   "name": "Bioinformatics, Computational Biology & Genomics",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D144",
+   "name": "Climate Science, Meteorology & Atmospheric Science",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D145",
+   "name": "Neuroscience, Cognitive Science & Brain-Computer Interface",
+   "coverage": "PARTIAL"
+  },
+  {
+   "domain_id": "D155",
+   "name": "Nanotechnology, Advanced Materials & Materials Science Engineering",
+   "coverage": "PARTIAL"
+  }
+ ]
+}

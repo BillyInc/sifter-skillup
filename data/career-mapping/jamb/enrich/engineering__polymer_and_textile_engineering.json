@@ -1,0 +1,13 @@
+{
+  "jamb_name": "Polymer and Textile Engineering",
+  "utme_subjects": ["Physics", "Chemistry", "Mathematics"],
+  "olevel_requirement": "Five (5) SSC credit passes to include Mathematics, Chemistry, Physics, English Language and any other Science subject.",
+  "direct_entry": "'A' Level passes in Chemistry, Mathematics and Physics.",
+  "institution_waivers": [
+    {"institution": "FUTO", "note": "FUTO requires: a) At least three (3) 'A' Level passes not below Grade C in Physics, Mathematics and Chemistry; b) OND/HND at Upper Credit level in Physics, Mathematics, Statistics, Chemistry, Computer Science, Geology or Engineering; c) First Degree in Physics, Mathematics, Statistics, Chemistry, Computer Science, Geology or Engineering; d) Very good passes in three JUPEB subjects namely Chemistry, Physics and Mathematics. It does not accept NCE. Candidates must in addition meet UTME 'O' Level requirements."},
+    {"institution": "LASU", "note": "LASU Same as in Mechanical Engineering (Direct Entry)."},
+    {"institution": "FUTO", "note": "FUTO requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and any other science subject in not more than two (2) sittings. At least a Pass is required in Biology (UTME)."},
+    {"institution": "LASU", "note": "LASU Same as in Mechanical Engineering (UTME)."},
+    {"institution": "FUTO", "note": "FUTO requires Mathematics, Chemistry and Physics (UTME subjects)."}
+  ]
+}

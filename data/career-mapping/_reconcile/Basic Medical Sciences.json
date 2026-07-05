@@ -1,0 +1,340 @@
+[
+ {
+  "programme": "Human Anatomy",
+  "code": "ANA",
+  "technical_skills": [
+   "define fundamental anatomical terminology and discuss the anatomical position",
+   "describe the anatomy of the musculoskeletal system, including the axial skeleton appendicular skeleton, appendicular and axial muscles, and arthrology",
+   "describe the general features of the bones of the upper and lower limbs",
+   "identify the major muscles of the upper and lower limbs",
+   "explain the types and structure of the joints of the upper and lower limbs",
+   "correlate between the attachment of the muscles and their functions on the different joints",
+   "identify the major nerves of the upper and lower limbs",
+   "describe the functional components of each of the major nerves and its distribution",
+   "identify and describe the course of the major superficial veins of the upper and lower limbs; and",
+   "name the major arteries of the upper and lower limbs",
+   "name common current histological techniques",
+   "enumerate the principles, techniques and functional applications of Histology",
+   "define and explain the cell in relation to its environment, surface components and content",
+   "understand the interrelationship and interdependency between cell structures and functions; and",
+   "identify the microscopic appearance of tissues such as muscle, cartilage, etc in relation to their staining",
+   "explain how the embryo forms from the zygote",
+   "discuss the role of cleavage and gastrulation in animal development",
+   "demonstrate; understanding of embryology and significance of prenatal diagnostic methods",
+   "describe structural features of primordia in tissue and organs at different developmental stages",
+   "define risk periods in histo- and organogenesis; and",
+   "analyse the most often observed developmental anomalies",
+   "identify the bones and bony markings of the thorax, abdomen, pelvis and perineum",
+   "list the nine regions and four quadrants and the principal organs and structures that lie deep to them and which can be palpated in those regions",
+   "describe the muscular components of the anterior abdominal wall, blood supply and innervation of the anterior abdominal wall",
+   "identify the arteries, veins and lymphatics of the thorax, abdomen, pelvis and perineum disposition of the main veins in the abdomen"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English I",
+   "Nigerian Peoples and Culture",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Elementary Mathematics",
+   "Introduction to Computing Sciences",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Anatomy of Upper/Lower Limbs",
+   "Histology of Basic Tissues",
+   "General and Systemic Embryology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Physiology",
+  "code": "PIO",
+  "technical_skills": [
+   "describe the composition of a cell membrane",
+   "explain how a potential difference across a membrane will influence the distribution of a cation and an anion",
+   "describe how transport rates of certain molecules and ions are accelerated by specific membrane transport proteins",
+   "distinguish between active (primary and secondary) transport, facilitated diffusion, and passive diffusion based on energy source and carrier protein involvement",
+   "identify the mechanisms and role of selective transporters for amino acids, neurotransmitters, nutrients, etc",
+   "understand the general concepts of homeostasis and the principles of positive and negative feedback in physiological systems",
+   "identify the site of erythropoietin production, the stimulus for its release, and the target tissue for erythropoietin action",
+   "discuss the normal balance of red blood cell synthesis and destruction, including how imbalances in each lead to anemia or polycythemia",
+   "list and differentiate the various types of leukocytes",
+   "describe the role of thrombocytes in haemostasis; and",
+   "list clotting factors and the discuss the mechanism of anti-coagulants",
+   "list the steps in excitation-contraction coupling in skeletal muscle",
+   "describe the structure of the neuromuscular junction",
+   "list some intracellular factors that can cause muscle fatigue",
+   "describe the distinguishing characteristics of multi-unit and unitary smooth muscles",
+   "explain the steps in the excitation-contraction coupling mechanism in cardiac muscle and compare with skeletal muscle including different mechanisms for sarcoplasmic reticulum calcium release",
+   "explain how the resting membrane potential is generated Basic Medical Sciences 63 New",
+   "state the Nernst equation, and indicate how this equation accounts for both the chemical and electrical driving forces that act on an ion",
+   "discuss the mechanisms by which an action potential is propagated along both nonmyelinated and myelinated axons",
+   "describe the principle of the voltage clamp and how it is used to identify the ionic selectivity of channels; and",
+   "discuss the disorders that can occur at the neuromuscular junction",
+   "sketch a cross section of a kidney; identify the renal cortex, renal medulla, renal calycies, medullary pyramids, renal pelvic space, renal artery, renal vein, and ureter",
+   "describe renal blood flow, renal plasma flow, glomerular filtration rate, and filtration fraction and list typical values",
+   "explain the concept of renal clearance. Use the clearance equation and an appropriate compound to estimate the glomerular filtration rate, renal plasma flow, and renal blood flow",
+   "describe the effects of reductions in GFR on plasma creatinine concentrations and plot the relationship"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple technical reports Basic Medical Sciences 54 New",
+   "analyse the historical foundation of Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Elementary Mathematics I",
+   "Introduction to Computing Sciences",
+   "Entrepreneurship and Innovation",
+   "Philosophy, Logic and Human Existence",
+   "Introductory Physiology and Blood",
+   "Physiology of Excitable Tissues"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   }
+  ]
+ }
+]

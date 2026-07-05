@@ -1,0 +1,347 @@
+{
+ "domain_id": "D020",
+ "domain_name": "Environmental Engineering",
+ "role_count": 68,
+ "roles": [
+  {
+   "role": "commissioning technician",
+   "isco": 3119,
+   "aka": "senior commissioning technician"
+  },
+  {
+   "role": "offshore renewable energy technician",
+   "isco": 3119,
+   "aka": "offshore wind turbine technician  ·  offshore renewable energy installer  ·  MRE installer  ·  ORE technician  ·  marine renewable energy installer"
+  },
+  {
+   "role": "water treatment systems operator",
+   "isco": 3132,
+   "aka": "drinking water treatment system operative  ·  drinking water treatment system worker  ·  water treatment system operative  ·  drinking water treatment system operator  ·  water treatment plant operative"
+  },
+  {
+   "role": "transport health and safety inspector",
+   "isco": 3257,
+   "aka": "road occupational health and safety manager  ·  road health and safety risk assessor  ·  transportation safety manager  ·  road transport health and safety manager  ·  road transportation health and safety director"
+  },
+  {
+   "role": "liquid waste treatment plant operator",
+   "isco": 3132,
+   "aka": "liquid waste tester  ·  liquid waste plant monitoring operator  ·  contaminated water remediation worker  ·  liquid waste treatment plant worker  ·  liquid waster remediation worker"
+  },
+  {
+   "role": "air separation plant operator",
+   "isco": 3133,
+   "aka": "air separation plant production operator  ·  air separation plant operative  ·  air separation plant worker  ·  oxygen plant operator  ·  oxygen gas plant operator"
+  },
+  {
+   "role": "photonics engineering technician",
+   "isco": 3119,
+   "aka": "photonics engineering technologist  ·  photonic systems engineering technician  ·  laser technician  ·  electro-optical technologist  ·  technician in photonic systems"
+  },
+  {
+   "role": "health and safety inspector",
+   "isco": 3257,
+   "aka": "employment lawyer  ·  health & safety advisor  ·  inspector of health and safety  ·  labor inspector  ·  health and safety advisor"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "environmental mining engineer",
+   "isco": 2143,
+   "aka": "environmental mining engineering expert  ·  environmental co-ordinator  ·  environmental mining technology engineering adviser  ·  mine environmental engineers  ·  environmental mining technology engineering specialist"
+  },
+  {
+   "role": "utilities inspector",
+   "isco": 3119,
+   "aka": "pipeline inspector  ·  turbine inspector  ·  sewer inspector  ·  utilities supervisor  ·  streetworks inspector"
+  },
+  {
+   "role": "incinerator operator",
+   "isco": 3132,
+   "aka": "incinerator worker  ·  waste incinerating machine worker  ·  incinerating machine operator  ·  incinerating machine operative  ·  waste incinerator worker"
+  },
+  {
+   "role": "metal additive manufacturing operator",
+   "isco": 3119,
+   "aka": "metal AM technician  ·  metal AM operator  ·  AM operator  ·  metal additive manufacturing technician  ·  AM technician"
+  },
+  {
+   "role": "product development engineering technician",
+   "isco": 3119,
+   "aka": "product development systems engineer  ·  product development mechanical engineer  ·  product development specialist  ·  product development engineer  ·  production test operator"
+  },
+  {
+   "role": "healthcare inspector",
+   "isco": 3257,
+   "aka": "healthcare inspectors  ·  healthcare environment inspector  ·  medical facilities inspector  ·  health care environment inspector  ·  health care inspector"
+  },
+  {
+   "role": "process engineering technician",
+   "isco": 3119,
+   "aka": "process engineering supervisor  ·  engineering operational inspector  ·  production supervisor  ·  manufacturing engineering operations supervisor  ·  manufacturing engineering supervisor"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "automation engineering technician",
+   "isco": 3119,
+   "aka": "marine sensor technician  ·  technician for food industry digitalisation  ·  technologist in automated systems  ·  technician in automated systems  ·  marine automation technician"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "occupational health and safety inspector",
+   "isco": 3257,
+   "aka": "safety officer  ·  environmental health inspector  ·  health and safety inspector  ·  environmental health officer  ·  factory inspector"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "biogas technician",
+   "isco": 3133,
+   "aka": "landfill gas plant technician  ·  biogas equipment technician  ·  anaerobic digester technician  ·  biogas production technician  ·  biogas generation technician"
+  },
+  {
+   "role": "robotics engineering technician",
+   "isco": 3119,
+   "aka": "robotics engineering technologist  ·  robot technician  ·  technician in robotic systems  ·  robot technologist  ·  automation control engineering inspector"
+  },
+  {
+   "role": "recycling specialist",
+   "isco": 2143,
+   "aka": "solid waste division supervisor  ·  trainee recycling co-ordinator  ·  recycling and waste reduction specialist  ·  recycling development co-ordinator  ·  supermarket recycling co-ordinator"
+  },
+  {
+   "role": "food safety inspector",
+   "isco": 3257,
+   "aka": "quality controller  ·  quality inspector  ·  food quality inspector  ·  food safety officer"
+  },
+  {
+   "role": "water plant technician",
+   "isco": 3132,
+   "aka": "water plant quality technician  ·  water plant maintenance technician  ·  water plant monitoring technician  ·  water plant equipment maintenance technician  ·  water plant repair technician"
+  },
+  {
+   "role": "airport maintenance technician",
+   "isco": 3119,
+   "aka": "specialist in airport maintenance  ·  airport maintenance technical officer  ·  technician in airport maintenance  ·  airport maintenance officer  ·  maintenance technician at airports"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "pipeline compliance coordinator",
+   "isco": 3119,
+   "aka": "pipeline safety inspector  ·  roadside pipeline coordinator  ·  pipeline inspector  ·  pipeline compliance inspector  ·  pipeline compliance and safety inspector"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "wastewater engineer",
+   "isco": 2143,
+   "aka": "waste water pipeline engineer  ·  waste water system designer  ·  sewer pipeline engineer  ·  wastewater engineering specialist  ·  wastewater technology engineer"
+  },
+  {
+   "role": "quality engineering technician",
+   "isco": 3119,
+   "aka": "battery quality technician  ·  quality technologist  ·  quality technology specialist  ·  quality specialist  ·  quality technician"
+  },
+  {
+   "role": "environmental health inspector",
+   "isco": 3257,
+   "aka": "public health inspector"
+  },
+  {
+   "role": "chemical processing plant controller",
+   "isco": 3133,
+   "aka": "process plant operator  ·  chemical plant and systems operator  ·  chemical plant and systems monitoring technician  ·  chemical operator  ·  chemical plant and systems monitor"
+  },
+  {
+   "role": "industrial waste inspector",
+   "isco": 3257,
+   "aka": "industrial waste tester/inspector  ·  industrial waste disposal inspector  ·  industrial waste management inspector  ·  industrial waste control inspector  ·  industrial waste compliance inspector"
+  },
+  {
+   "role": "environmental expert",
+   "isco": 2143,
+   "aka": "geologist  ·  environmental scientist  ·  soil scientist  ·  mineral technologist  ·  geological technologist"
+  },
+  {
+   "role": "waste treatment engineer",
+   "isco": 2143,
+   "aka": "waste treatment engineering adviser  ·  waste treatment engineering specialist  ·  waste treatment technology engineer  ·  waste treatment technology engineering specialist  ·  waste treatment engineers"
+  },
+  {
+   "role": "environmental engineer",
+   "isco": 2143,
+   "aka": "environmental engineering consultant  ·  agricultural conservation engineer  ·  industrial environmental engineer  ·  water pollution engineer  ·  environmental analyst"
+  },
+  {
+   "role": "food technician",
+   "isco": 3119,
+   "aka": "food tech specialist  ·  technician for sustainable food industry  ·  food technology specialist  ·  food technology expert  ·  food tech expert"
+  },
+  {
+   "role": "chemical plant control room operator",
+   "isco": 3133,
+   "aka": "panel board operator  ·  production control room operator  ·  closed-circuit television control room operator  ·  manufacturing control room operator  ·  production monitor"
+  },
+  {
+   "role": "hazardous materials inspector",
+   "isco": 3257,
+   "aka": "compliance manager  ·  industrial waste analyst  ·  hazardous waste disposal specialist  ·  solid waste compliance specialist  ·  hazardous waste inspector"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "industrial engineering technician",
+   "isco": 3119,
+   "aka": "industrial tool design quality control inspector  ·  industrial tool design technologist  ·  industrial tool development inspector  ·  industrial tool technologist  ·  industrial tool design inspector"
+  },
+  {
+   "role": "food regulatory advisor",
+   "isco": 3257,
+   "aka": "food expert  ·  legislation and controls advisor  ·  food safety expert  ·  food regulatory affairs advisor  ·  food safety regulatory advisor"
+  },
+  {
+   "role": "aviation safety officer",
+   "isco": 3119,
+   "aka": "airfield safety supervisor  ·  aviation security officer  ·  transportation security officer  ·  airport security supervisor  ·  flight safety officer"
+  },
+  {
+   "role": "gas processing plant supervisor",
+   "isco": 3133,
+   "aka": "gas processing safety controller  ·  gas compressor controller  ·  gas processing maintenance controller  ·  downstream gas processing controller  ·  gas processing controller"
+  },
+  {
+   "role": "wastewater treatment operator",
+   "isco": 3132,
+   "aka": "wastewater safety operative  ·  wastewater treatment system worker  ·  wastewater treatment plant operative  ·  drinking water treatment system operative  ·  wastewater quality tester"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "wastewater treatment technician",
+   "isco": 3132,
+   "aka": "wastewater quality tester  ·  wastewater treatment plant worker  ·  wastewater safety tester  ·  water plant quality technician  ·  sewage treatment plant technician"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "hazardous waste inspector",
+   "isco": 3257,
+   "aka": "hazardous waste management inspector  ·  hazardous waste tester/inspector  ·  hazardous waste compliance inspector  ·  hazardous waste disposal inspector  ·  hazardous waste control inspector"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "gas station operator",
+   "isco": 3133,
+   "aka": "ethylene compressor operator  ·  gas pumping station operative  ·  butadiene compressor operator  ·  gas-compressor operative  ·  gas pumping station operator"
+  },
+  {
+   "role": "solid waste operator",
+   "isco": 3132,
+   "aka": "solid waste collection technician  ·  waste treatment equipment worker  ·  landfill site operative  ·  solid waste disposal technician  ·  waste disposal compliance technician"
+  },
+  {
+   "role": "Sustainability Specialists",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Environmental Protection Professionals",
+   "isco": 2143,
+   "aka": NaN
+  },
+  {
+   "role": "Engineering Technologists and Technicians, Except Drafters, All Other",
+   "isco": 3119,
+   "aka": NaN
+  },
+  {
+   "role": "Inspectors, Testers, Sorters, Samplers, and Weighers",
+   "isco": 3133,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Hardware Engineers",
+   "isco": 2143,
+   "aka": NaN
+  },
+  {
+   "role": "Industrial Engineering Technologists and Technicians",
+   "isco": 3119,
+   "aka": NaN
+  },
+  {
+   "role": "Nanotechnology Engineering Technologists and Technicians",
+   "isco": 3119,
+   "aka": NaN
+  },
+  {
+   "role": "Non-Destructive Testing Specialists",
+   "isco": 3119,
+   "aka": NaN
+  },
+  {
+   "role": "Photonics Technicians",
+   "isco": 3119,
+   "aka": NaN
+  },
+  {
+   "role": "Chemical Technicians",
+   "isco": 3119,
+   "aka": NaN
+  },
+  {
+   "role": "Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders",
+   "isco": 3133,
+   "aka": NaN
+  },
+  {
+   "role": "Climate Change Policy Analysts",
+   "isco": 2113,
+   "aka": NaN
+  },
+  {
+   "role": "waste management supervisor",
+   "isco": 3122,
+   "aka": "waste coordinator  ·  waste and recycling supervisor"
+  }
+ ]
+}

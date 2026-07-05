@@ -1,0 +1,105 @@
+{
+  "programmes": [
+    {
+      "jamb_name": "Pasture & Range Management",
+      "source_heading": "PASTURE AND RANGE MANAGEMENT",
+      "institutions": ["FUNAAB"],
+      "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Physics/Mathematics"],
+      "olevel_requirement": "Five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language (shares requirements with Animal Production and Health umbrella block).",
+      "direct_entry": "Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics (as in Animal Production and Health).",
+      "institution_waivers": [
+        {"institution": "FUNAAB", "note": "As in Agriculture Extension and Rural Development (UTME waiver reference)."}
+      ]
+    },
+    {
+      "jamb_name": "Livestock Production Technology",
+      "source_heading": "LIVESTOCK PRODUCTION TECHNOLOGY",
+      "institutions": ["NDU"],
+      "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Physics/Mathematics"],
+      "olevel_requirement": "Five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language (shares requirements with Animal Production and Health umbrella block).",
+      "direct_entry": "Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics (as in Animal Production and Health).",
+      "institution_waivers": [
+        {"institution": "NDU", "note": "NDU requires five (5) 'O' level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."}
+      ]
+    },
+    {
+      "jamb_name": "Animal Physiology",
+      "source_heading": "ANIMAL PHYSIOLOGY",
+      "institutions": ["FUNAAB"],
+      "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Mathematics/Physics"],
+      "olevel_requirement": "Five (5) SSC credit passes in English Language, Chemistry, Mathematics, Biology/Agric Science and one of Physics, Geography or Economics (shares requirements with Animal Science umbrella block).",
+      "direct_entry": "Two (2) 'A' level passes or its equivalent in Chemistry and one of Biology/Botany/Zoology/Agriculture Science/Geography/Geology/Mathematics/Economics (as in Animal Science).",
+      "institution_waivers": []
+    },
+    {
+      "jamb_name": "Crop Protection",
+      "source_heading": "CROP PROTECTION",
+      "institutions": ["FUNAAB", "LASUSTECH"],
+      "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Mathematics or Physics"],
+      "olevel_requirement": "Five (5) SSC credit passes to include Chemistry, Biology/Agricultural Science, Mathematics and one Science/Social Science subject and at least 'O' Level pass in Physics (shares requirements with Crop Production umbrella block).",
+      "direct_entry": "Two (2) 'A' Level passes in Chemistry and Biology/Agricultural Science/Botany/Zoology or Physics/Mathematics/Economics (as in Crop Production).",
+      "institution_waivers": []
+    },
+    {
+      "jamb_name": "Plant Science",
+      "source_heading": "PLANT SCIENCE AND BIOTECHNOLOGY",
+      "institutions": ["ABSU", "RSU"],
+      "utme_subjects": ["Biology or Agricultural Science", "Chemistry", "Physics or Mathematics"],
+      "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry and Biology or Agricultural Science.",
+      "direct_entry": "Two (2) 'A' Level passes in Chemistry and any of Biology, Agricultural Science, Zoology and Botany.",
+      "institution_waivers": [
+        {"institution": "PHC", "note": "No Direct Entry."},
+        {"institution": "JABU", "note": "Accepts five (5) 'O' Level credit passes in English Language, Chemistry, Mathematics, Biology, Agricultural Science, Economics; requires 'O' Level credit passes to include Geography or Economics and at least 'O' Level pass in Physics."},
+        {"institution": "OAU", "note": "UTME requires Mathematics, Chemistry and Biology/Zoology/Botany."},
+        {"institution": "IMSU", "note": "As in Agriculture."}
+      ]
+    },
+    {
+      "jamb_name": "Farm Management & Agric. Extension",
+      "source_heading": "AGRICULTURAL ECONOMICS & FARM MANAGEMENT",
+      "note": "No standalone heading exactly named 'Farm Management & Agric. Extension'. Best match is the sub-heading 'AGRICULTURAL ECONOMICS & FARM MANAGEMENT' (the only column-0 heading containing 'Farm Management'). A separate sub-heading 'AGRICULTURAL ECONOMICS & EXTENSION' (BOUEDST, HENSARD) also exists in the same block.",
+      "institutions": ["CRAWFORD", "FUNAAB", "LASUSTECH", "OOU"],
+      "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Mathematics or Physics"],
+      "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and one of Geography, Physics and Economics (shares requirements with Agricultural Economics umbrella block).",
+      "direct_entry": "Two (2) 'A' Level passes in Chemistry and one of Zoology/Botany/Agricultural Science/Biology, Geography, Mathematics, Physics, Geology, Economics and Health Science (as in Agricultural Economics).",
+      "institution_waivers": [
+        {"institution": "DELSU", "note": "Accepts upper credit only; also accepts NCE credit in Agricultural Science, Biology, Chemistry or Physics."},
+        {"institution": "OOU", "note": "Accepts credit in ND Agriculture into 100 level; 'A' Level pass in both Chemistry and Biology; ND distinction, HND credit, NCE credit double major in Agriculture."}
+      ]
+    },
+    {
+      "jamb_name": "Eco-Tourism and Wildlife Management",
+      "source_heading": "ECOTOURISM & WILDLIFE MANAGEMENT",
+      "institutions": ["FUTA", "IBADAN", "LAUTECH"],
+      "utme_subjects": ["English Language", "Biology/Agricultural Science", "any two (2) of Chemistry, Geography, Economics, Mathematics and Physics"],
+      "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Biology or Agricultural Science, Chemistry and any other relevant subject (shares block with Agribusiness umbrella).",
+      "direct_entry": "ND with a minimum of upper credit or equivalent from recognized Polytechnics and Colleges of Wildlife Management in relevant programs (Agricultural Sciences); or candidates with 'A' Level passes in at least two (2) of Chemistry, Biology, Physics and Geography or Economics, plus UTME requirements.",
+      "institution_waivers": [
+        {"institution": "IBADAN", "note": "UTME same as in Wildlife and Ecotourism; accepts HND upper credit into 200 level and ND/NCE upper credit into 100 level in Tourism, Wildlife Management, Forestry, Agriculture, Animal Husbandry and related programs."},
+        {"institution": "FUTA", "note": "Accepts ND with upper credit from recognized Polytechnic/College of Wildlife Management; GCE passes at one sitting with at least six (6) points in two of Chemistry, Biology, Physics and Geography or Economics."}
+      ]
+    },
+    {
+      "jamb_name": "Environmental Management and Technology",
+      "source_heading": "ENVIRONMENTAL MANAGEMENT AND TOXICOLOGY",
+      "note": "No standalone heading exactly named 'Environmental Management and Technology'. The only standalone 'ENVIRONMENTAL MANAGEMENT AND ...' block with its own requirement columns is 'ENVIRONMENTAL MANAGEMENT AND TOXICOLOGY:' (heading at line 2556, continues to 2568). A separate 'ENVIRONMENTAL MANAGEMENT AND POLLUTION CONTROL:' block (MARITIME-UNI) and a forestry-family 'FORESTRY AND ENVIRONMENTAL TECHNOLOGY' block (line 3269, no distinct institution codes) also exist. Institutions below are from ENVIRONMENTAL MANAGEMENT AND TOXICOLOGY.",
+      "institutions": ["FUNAAB", "KWASU"],
+      "utme_subjects": ["Chemistry", "Biology", "Mathematics/Physics"],
+      "olevel_requirement": "Five (5) SSC credit passes in English Language, Chemistry, Biology Science, Physics and Mathematics.",
+      "direct_entry": "Two (2) 'A' Level passes in Chemistry and any one of Biology, Agricultural Science, Botany and Zoology.",
+      "institution_waivers": [
+        {"institution": "FUNAAB", "note": "Accepts upper credit in NCE, ND and HND in related programs into 200 and 300 level respectively, but candidates must possess the UTME requirements. UTME: FUNAAB requires 'O' Level credit pass in English Language, Mathematics, Chemistry, Physics and Biology."}
+      ]
+    },
+    {
+      "jamb_name": "Public & Community Health",
+      "source_heading": null,
+      "note": "SKIPPED - not found. 'Public & Community Health' appears only in the programme index (line 32, item 60) and has NO corresponding UPPERCASE heading block anywhere in the brochure body. No occurrence of 'Public', 'Community', or 'Community Health' exists outside that single index line. No institutions could be extracted.",
+      "institutions": [],
+      "utme_subjects": [],
+      "olevel_requirement": null,
+      "direct_entry": null,
+      "institution_waivers": []
+    }
+  ]
+}

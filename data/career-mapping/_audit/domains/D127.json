@@ -1,0 +1,97 @@
+{
+ "domain_id": "D127",
+ "domain_name": "Early Childhood Education, Nursery",
+ "role_count": 18,
+ "roles": [
+  {
+   "role": "primary school teaching assistant",
+   "isco": 5312,
+   "aka": "primary school TA  ·  primary school assistant  ·  primary school paraprofessional  ·  elementary school teaching assistant  ·  primary school teaching aide"
+  },
+  {
+   "role": "primary school teacher",
+   "isco": 2341,
+   "aka": "teacher in a primary school  ·  primary school music teacher  ·  teacher in primary education  ·  primary education teacher  ·  primary education professional"
+  },
+  {
+   "role": "nanny",
+   "isco": 5311,
+   "aka": "au pair  ·  dry nurse  ·  live-in baby sitter  ·  nursemaid  ·  duenna"
+  },
+  {
+   "role": "special educational needs assistant",
+   "isco": 5312,
+   "aka": "teaching assistant in special educational needs  ·  inclusive education assistant  ·  special educational needs teaching assistant  ·  SEN TA  ·  special education assistant"
+  },
+  {
+   "role": "child care worker",
+   "isco": 5311,
+   "aka": "nursery school worker  ·  nursery school assistant  ·  early childhood worker  ·  child care assistant  ·  day care assistant"
+  },
+  {
+   "role": "Steiner school teacher",
+   "isco": 2341,
+   "aka": "Steiner Waldorf school educator  ·  Waldorf school teacher  ·  teacher in Steiner school  ·  Waldorf school instructor  ·  Steiner school teaching practitioner"
+  },
+  {
+   "role": "child day care worker",
+   "isco": 5311,
+   "aka": "childcare worker  ·  child caregiver  ·  childcarer  ·  daycare worker  ·  children and families care worker"
+  },
+  {
+   "role": "early years teaching assistant",
+   "isco": 5312,
+   "aka": "reception teaching assistant  ·  assistant in early years teaching  ·  preschool teaching aide  ·  early childhood teaching aide  ·  early childhood teaching assistant"
+  },
+  {
+   "role": "child care coordinator",
+   "isco": 1341,
+   "aka": "pre-school activities manager  ·  child day care vacation manager  ·  vacation camp coordinator  ·  vacation activities manager  ·  pre-school activities coordinator"
+  },
+  {
+   "role": "school bus attendant",
+   "isco": 5311,
+   "aka": "school bus assistant  ·  school bus transportation attendant  ·  school bus chief attendant  ·  school bus transportation aide  ·  school bus aide"
+  },
+  {
+   "role": "secondary school teaching assistant",
+   "isco": 5312,
+   "aka": "teaching assistant in secondary schools  ·  assistant in secondary school teaching  ·  secondary school instructional assistant  ·  secondary school teaching aide  ·  high school teaching assistant"
+  },
+  {
+   "role": "nursery school head teacher",
+   "isco": 1341,
+   "aka": "preschool headteacher  ·  head teacher of nursery  ·  nursery school director  ·  nursery school headmaster  ·  kindergarten headmaster"
+  },
+  {
+   "role": "babysitter",
+   "isco": 5311,
+   "aka": "baby-sitter  ·  childminder"
+  },
+  {
+   "role": "au pair",
+   "isco": 5311,
+   "aka": "childminder  ·  baby sitter  ·  child caretaker"
+  },
+  {
+   "role": "child day care centre manager",
+   "isco": 1341,
+   "aka": "child daycare centre manager  ·  child daycare centre coordinator  ·  after school day care coordinator  ·  childcare centre manager  ·  child day care centre administrator"
+  },
+  {
+   "role": "Education and Childcare Administrators, Preschool and Daycare",
+   "isco": 1341,
+   "aka": NaN
+  },
+  {
+   "role": "Elementary School Teachers, Except Special Education",
+   "isco": 2341,
+   "aka": NaN
+  },
+  {
+   "role": "Childcare Workers",
+   "isco": 5311,
+   "aka": NaN
+  }
+ ]
+}

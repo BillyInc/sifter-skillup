@@ -1,0 +1,92 @@
+{
+ "domain_id": "D124",
+ "domain_name": "Community Health Extension",
+ "role_count": 17,
+ "roles": [
+  {
+   "role": "optical technician",
+   "isco": 3254,
+   "aka": "optical instrument technician  ·  artificial glass eye maker  ·  technologist in ophthalmic laboratory  ·  contact lens maker  ·  optical technical"
+  },
+  {
+   "role": "home care aide",
+   "isco": 5322,
+   "aka": "elderly people assistant  ·  personal care provider  ·  personal care attendant  ·  live in caretaker  ·  personal care worker"
+  },
+  {
+   "role": "phlebotomist",
+   "isco": 5329,
+   "aka": "phlebotomy technician  ·  clinical phlebotomist  ·  practitioner of phlebotomy  ·  specialist in phlebotomy  ·  phlebotomy practitioner"
+  },
+  {
+   "role": "optician",
+   "isco": 3254,
+   "aka": "contact lens specialist  ·  spectacle dispensing optician  ·  dispensing optician  ·  optician expert  ·  qualified optician"
+  },
+  {
+   "role": "sterile services technician",
+   "isco": 5329,
+   "aka": "disinfection assistant"
+  },
+  {
+   "role": "nurse assistant",
+   "isco": 5321,
+   "aka": "healthcare nurse  ·  state enrolled nurse  ·  assistant nurse  ·  nursing auxiliary  ·  auxiliary nurse"
+  },
+  {
+   "role": "hospital porter",
+   "isco": 5329,
+   "aka": "porter  ·  general porter  ·  hospital stretcher bearer  ·  hospital portering staff member  ·  hospital stretcher carrier"
+  },
+  {
+   "role": "first aid instructor",
+   "isco": 3253,
+   "aka": "educator in first aid  ·  trainer in first aid  ·  instructor in first aid techniques  ·  instructor in first aid  ·  first aid educator"
+  },
+  {
+   "role": "community health worker",
+   "isco": 3253,
+   "aka": "community first responder  ·  community healthcare support worker  ·  community support worker  ·  community healthcare worker  ·  community carer"
+  },
+  {
+   "role": "healthcare assistant",
+   "isco": 5321,
+   "aka": "assistant healthcarer  ·  maternity care assistant  ·  health care assistant  ·  resident care assistant  ·  primary healthcare assistant"
+  },
+  {
+   "role": "Opticians, Dispensing",
+   "isco": 3254,
+   "aka": NaN
+  },
+  {
+   "role": "Massage Therapists",
+   "isco": 5329,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Equipment Preparers",
+   "isco": 5329,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Transcriptionists",
+   "isco": 5329,
+   "aka": NaN
+  },
+  {
+   "role": "Healthcare Support Workers, All Other",
+   "isco": 5329,
+   "aka": NaN
+  },
+  {
+   "role": "Speech-Language Pathology Assistants",
+   "isco": 5329,
+   "aka": NaN
+  },
+  {
+   "role": "Endoscopy Technicians",
+   "isco": 5329,
+   "aka": NaN
+  }
+ ]
+}

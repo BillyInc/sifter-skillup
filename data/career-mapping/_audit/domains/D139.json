@@ -1,0 +1,227 @@
+{
+ "domain_id": "D139",
+ "domain_name": "Game Design, Development",
+ "role_count": 44,
+ "roles": [
+  {
+   "role": "technical director",
+   "isco": 2654,
+   "aka": "director of technical arts  ·  technical supervisor  ·  head of technical  ·  technical and operations director  ·  technical manager"
+  },
+  {
+   "role": "software analyst",
+   "isco": 2512,
+   "aka": "software requirement analyst  ·  programming analyst  ·  software analysts  ·  programmer analyst  ·  application analyst"
+  },
+  {
+   "role": "performance lighting designer",
+   "isco": 2166,
+   "aka": "lighting designer and technician  ·  lighting technician and designer  ·  theatre lighting designer  ·  lighting designer & technician  ·  lighting technician & designer"
+  },
+  {
+   "role": "search engine optimisation expert",
+   "isco": 2513,
+   "aka": "search engine optimisation experts  ·  search engine optimization expert  ·  search engine optimisation specialist  ·  search engine optimiser  ·  SEO expert"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "art administrator",
+   "isco": 2654,
+   "aka": "public arts manager  ·  art studio manager  ·  museum engagement coordinator  ·  art coordinator  ·  exhibitions coordinator"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "gambling games designer",
+   "isco": 2166,
+   "aka": "games creator  ·  lottery games creator  ·  gambling game designer  ·  games designer  ·  lottery games designer"
+  },
+  {
+   "role": "video and motion picture director",
+   "isco": 2654,
+   "aka": "film director  ·  director  ·  film maker  ·  animation supervisor  ·  film-maker"
+  },
+  {
+   "role": "illustrator",
+   "isco": 2166,
+   "aka": "book illustrator  ·  cartoon drawer  ·  inker  ·  comic drawer  ·  drawer"
+  },
+  {
+   "role": "performance lighting director",
+   "isco": 2654,
+   "aka": "TV lighting director  ·  lighting director  ·  television lighting supervisor  ·  lighting supervisor  ·  motion picture lighting director"
+  },
+  {
+   "role": "animation director",
+   "isco": 2654,
+   "aka": "director of animations  ·  animation process director  ·  technical animation supervisor  ·  animation technical director  ·  mechanical animation director"
+  },
+  {
+   "role": "web designer",
+   "isco": 2166,
+   "aka": "website designer  ·  digital designer  ·  multimedia web designer  ·  marketing web designer  ·  interactive web designer"
+  },
+  {
+   "role": "digital games tester",
+   "isco": 2519,
+   "aka": "virtual games tester  ·  computer games tester  ·  digital game tester  ·  digital games testers  ·  video games tester"
+  },
+  {
+   "role": "stop-motion animator",
+   "isco": 2166,
+   "aka": "stop motion animators  ·  stop-motion animation artist  ·  puppet animator  ·  stop motion animator  ·  3D stop-motion animator"
+  },
+  {
+   "role": "video and motion picture producer",
+   "isco": 2654,
+   "aka": "video producer  ·  film producer  ·  executive producer  ·  audiovisual producer  ·  film maker"
+  },
+  {
+   "role": "animator",
+   "isco": 2166,
+   "aka": "3D computer-generated imagery animator  ·  3D computer animation artist  ·  2D hand-drawn animator  ·  computer animation artist  ·  animators"
+  },
+  {
+   "role": "production designer",
+   "isco": 2654,
+   "aka": "production design manager  ·  film production designer  ·  art department lead  ·  art department manager  ·  TV production designer"
+  },
+  {
+   "role": "casting director",
+   "isco": 2654,
+   "aka": "casting recruiter  ·  extras casting director  ·  film casting director  ·  talent director  ·  casting coordinator"
+  },
+  {
+   "role": "producer",
+   "isco": 2654,
+   "aka": "music producer  ·  video producer  ·  film director  ·  film producer  ·  executive producer"
+  },
+  {
+   "role": "3D animator",
+   "isco": 2166,
+   "aka": "CGI animator  ·  computer-generated imagery animator  ·  3D designer  ·  CGI designer"
+  },
+  {
+   "role": "post-production supervisor",
+   "isco": 2654,
+   "aka": "post-production technical coordinator  ·  post-production team leader  ·  post-production manager  ·  post production supervisor  ·  post-production coordinator"
+  },
+  {
+   "role": "music producer",
+   "isco": 2654,
+   "aka": "vocal producer  ·  record producer  ·  chill-out & lounge music producer  ·  producer  ·  pop music producer"
+  },
+  {
+   "role": "graphic designer",
+   "isco": 2166,
+   "aka": "advertising artist  ·  graphic design expert  ·  graphic artist  ·  graphics designer  ·  graphic design specialist"
+  },
+  {
+   "role": "director of photography",
+   "isco": 2654,
+   "aka": "cinematographer  ·  photography director  ·  head of camera and lighting crew  ·  lighting cameraman  ·  camera and lighting director"
+  },
+  {
+   "role": "desktop publisher",
+   "isco": 2166,
+   "aka": "financial desktop publisher  ·  desktop designer  ·  electronic pre-press technician  ·  DTP operator  ·  advanced desktop publilsher"
+  },
+  {
+   "role": "stage director",
+   "isco": 2654,
+   "aka": "theatre director  ·  stage supervisor  ·  circus director  ·  theater director  ·  scene director"
+  },
+  {
+   "role": "animation layout artist",
+   "isco": 2166,
+   "aka": "2D layout animator  ·  3D layout artist  ·  animation layout designer  ·  3D layout animator  ·  2D layout artist"
+  },
+  {
+   "role": "user interface designer",
+   "isco": 2513,
+   "aka": "UI designer  ·  accessibility designer  ·  user interface designers"
+  },
+  {
+   "role": "digital games developer",
+   "isco": 2513,
+   "aka": "digital games developers  ·  digital game developer  ·  computer games developer  ·  games programmer  ·  video games developer"
+  },
+  {
+   "role": "web content manager",
+   "isco": 2513,
+   "aka": "content specialist  ·  web content specialist  ·  web content curatorspecialist  ·  web content administrators  ·  digital content"
+  },
+  {
+   "role": "video and motion picture editor",
+   "isco": 2654,
+   "aka": "motion picture editor  ·  editor  ·  video editor  ·  television and motion picture editor  ·  film editor"
+  },
+  {
+   "role": "special effects artist",
+   "isco": 2166,
+   "aka": "senior special effects artist  ·  digital effects specialist  ·  special effects technician  ·  special effect image designer  ·  special effects animator"
+  },
+  {
+   "role": "3D modeller",
+   "isco": 2166,
+   "aka": "CGI modeller  ·  3D developer  ·  3D modellers  ·  3D artist  ·  computer-generated imagery modeller"
+  },
+  {
+   "role": "web developer",
+   "isco": 2513,
+   "aka": "web application developer  ·  web developers  ·  web engineer  ·  web specialist  ·  web programmer"
+  },
+  {
+   "role": "performance video designer",
+   "isco": 2166,
+   "aka": "projection designer  ·  video & graphics designer  ·  video designer  ·  video & projection designer  ·  visual designer"
+  },
+  {
+   "role": "art director",
+   "isco": 2654,
+   "aka": "stage director  ·  maestro  ·  advertising art director  ·  designer  ·  visual art director"
+  },
+  {
+   "role": "radio producer",
+   "isco": 2654,
+   "aka": "producer  ·  radio broadcast producer  ·  radio content and production manager  ·  content and production manager  ·  radio programme producer"
+  },
+  {
+   "role": "digital media designer",
+   "isco": 2166,
+   "aka": "digital media designers  ·  digital media developer  ·  multimedia developer  ·  digital multimedia designer  ·  interactive media designer"
+  },
+  {
+   "role": "digital artist",
+   "isco": 2166,
+   "aka": "digital matte painter  ·  computer-generated imagery artist  ·  digital matte artist  ·  computer artist  ·  digital games artist"
+  },
+  {
+   "role": "digital games designer",
+   "isco": 2166,
+   "aka": "digital game designer  ·  digital games designers  ·  video games designer  ·  virtual games designer  ·  computer games designer"
+  },
+  {
+   "role": "podcast producer",
+   "isco": 2654,
+   "aka": "podcaster  ·  producer of podcasts"
+  },
+  {
+   "role": "software developer",
+   "isco": 2512,
+   "aka": "application developer  ·  solutions developer  ·  electric vehicle software development engineer  ·  programmer  ·  application programmer"
+  },
+  {
+   "role": "Commercial and Industrial Designers",
+   "isco": 2166,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+  "jamb_name": "History",
+  "utme_subjects": ["History", "and any other two (2) subjects from Arts and Social Sciences"],
+  "olevel_requirement": "Five (5) SSC credit passes to include History and English Language.",
+  "direct_entry": "Two (2) 'A' Level passes in History and any other related subjects.",
+  "institution_waivers": [
+    {"institution": "ABU", "note": "Accepts Two 'A' level passes including History at IJMB or NCE. General English/Use of English at NCE satisfies 'O' level English requirement."},
+    {"institution": "ABUJA", "note": "Accepts: a) ND lower credit with the UTME requirements plus two (2) years post qualification; b) a minimum of ten (10) points in NCE or ND upper credit in addition to the UTME requirements or two (2) 'A' Level passes including History or Government and one other Arts subject."},
+    {"institution": "BENIN", "note": "Accepts 'A' Level pass in Government in lieu of History, NCE credit in History; Government or Social Studies."},
+    {"institution": "FED-DUTSINMA", "note": "Accepts Two 'A' level passes in History or/and Government and any other related subject. OND/NCE with good grades in any relevant area."},
+    {"institution": "GSU", "note": "Accepts NCE merit in History as Major subject."},
+    {"institution": "IBADAN", "note": "Accepts two (2) 'A' Level/NCE passes in History and any other related subject."},
+    {"institution": "LAGOS", "note": "Requires Very good passes in three JUPEB/A' Level subjects: History and/or Government and any two or one of Igbo/Yoruba, CRS/IRS, Literature-in-English, French, Music and Fine Arts."},
+    {"institution": "SAU", "note": "Accepts two (2) 'A' Level passes in History and Government, NCE credit in relevant subjects."},
+    {"institution": "NAUB", "note": "Requires two (2) 'A' Level passes in History and any other related subject."}
+  ]
+}

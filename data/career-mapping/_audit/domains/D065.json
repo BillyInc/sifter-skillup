@@ -1,0 +1,62 @@
+{
+ "domain_id": "D065",
+ "domain_name": "Translation, Interpretation",
+ "role_count": 11,
+ "roles": [
+  {
+   "role": "translator",
+   "isco": 2643,
+   "aka": "business translator  ·  editorial translator  ·  sworn translator  ·  translation project manager  ·  book translator"
+  },
+  {
+   "role": "interpreter",
+   "isco": 2643,
+   "aka": "court interpreter  ·  public service interpreter  ·  consecutive interpreter  ·  simultaneous interpreter  ·  remote interpreter"
+  },
+  {
+   "role": "lexicographer",
+   "isco": 2643,
+   "aka": "bilingual dictionaries lexicographer  ·  bilingual dictionary editor  ·  dictionary editor  ·  computational lexicographer  ·  senior lexicographer"
+  },
+  {
+   "role": "lawyer linguist",
+   "isco": 2643,
+   "aka": "legal linguistics specialist  ·  linguistic lawyer  ·  linguist lawyer  ·  legal linguistics expert  ·  linguistics lawyer"
+  },
+  {
+   "role": "sign language teacher",
+   "isco": 2353,
+   "aka": "british sign language teacher  ·  sign language tutor  ·  sign language trainer  ·  british sign language trainer  ·  british sign language tutor"
+  },
+  {
+   "role": "graphologist",
+   "isco": 2643,
+   "aka": "forensic document examiner  ·  handwriting expert  ·  graphologists  ·  handwriting specialist  ·  forensic handwriting expert"
+  },
+  {
+   "role": "language school teacher",
+   "isco": 2353,
+   "aka": "language school instructor  ·  teacher in a language school  ·  teacher of english to speakers of other languages  ·  TESOL practitioner  ·  instructor in language school"
+  },
+  {
+   "role": "sign language interpreter",
+   "isco": 2643,
+   "aka": "business sign language interpreter  ·  remote sign language interpreter  ·  police sign language interpreter  ·  interpreter of sign language  ·  conference sign language interpreter"
+  },
+  {
+   "role": "linguist",
+   "isco": 2643,
+   "aka": "americanist  ·  latinist  ·  linguists  ·  linguistic research scientist  ·  slavist"
+  },
+  {
+   "role": "localiser",
+   "isco": 2643,
+   "aka": "localisation games tester  ·  localiser quality assurance tester  ·  localisation tester  ·  localisation translator  ·  localisation project manager"
+  },
+  {
+   "role": "subtitler",
+   "isco": 2643,
+   "aka": "subtitler/adaptor  ·  subtitles adaptor  ·  video subtitler  ·  live subtitler  ·  caption writer"
+  }
+ ]
+}

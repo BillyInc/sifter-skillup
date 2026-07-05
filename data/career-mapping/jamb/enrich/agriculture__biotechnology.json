@@ -1,0 +1,14 @@
+{
+  "jamb_name": "Biotechnology",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "FUTO", "note": "FUTO requires; a) At least two (2) A' level passes not below Grade C in Chemistry and any one of Zoology, Botany, Agricultural Science, Biology, Mathematics, Physics and Economics. b) OND/HND at Upper Credit in Life Sciences. c) First Degree in Life Sciences. d) Very good passes in three JUPEB subjects namely Chemistry and any two (2) of Biology/Agricultural Science, Mathematics and Physics. It does not accept NCE. Candidates must in addition meet the `O' Level requirements."},
+    {"institution": "BAYERO", "note": "BAYERO requires two (2) `A' Level passes in Chemistry and Biology or Agriculture, ND, NCE Agriculture (double major), NCE with Chemistry and Biology or Agriculture."},
+    {"institution": "FED-WUKARI", "note": "FED-WUKARI - Direct Entry candidates must obtain Two A/L passes at GCE, IJMB, or Advanced NABTEB which must include Chemistry Or obtain at least a Merit at NCE Or Lower credit in OND/HND from approved Institution. Such candidate must also satisfy the O/L requirement for admission."},
+    {"institution": "KASU", "note": "KASU accepts Two `A' Level passes including Chemistry and one of Biology, Botany, Zoology Agric Science, Physics, Geography Geology, Mathematics, Health Science and Economics. ND/HND Lower credit in related field. NCE merit and IJMB 7 points and above in addition to `O' Level requirements."},
+    {"institution": "FED-KASHERE", "note": "FED-KASHERE: A candidate must have ND with a minimum of lower credit, NCE or IJMB with at least 9 Points in relevant areas."},
+    {"institution": "LANDMARK", "note": "LANDMARK accepts Two (2) A level passes in Chemistry and one from Biology/Botany/Zoology/Agricultural Science, Economics, Physics, Geography and Geology/Mathematics (Pure & Applied)."}
+  ]
+}

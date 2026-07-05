@@ -1,0 +1,67 @@
+{
+ "domain_id": "D117",
+ "domain_name": "Railway",
+ "role_count": 12,
+ "roles": [
+  {
+   "role": "rail switchperson",
+   "isco": 8312,
+   "aka": "railway pointsman  ·  railway pointswoman  ·  rail pointsman  ·  rail switchwomen  ·  railway switchwoman"
+  },
+  {
+   "role": "train preparer",
+   "isco": 8312,
+   "aka": "switch tender  ·  railway track technician  ·  rail signal maintainer  ·  signalman  ·  railway track maintainer"
+  },
+  {
+   "role": "shunter",
+   "isco": 8312,
+   "aka": "shunting forewoman  ·  foreman shunter/forewoman shunter  ·  shunting foreman  ·  foreman/forewoman shunter  ·  shunting assistant"
+  },
+  {
+   "role": "train driver",
+   "isco": 8311,
+   "aka": "engine driver  ·  locomotive engineer  ·  metro driver  ·  passenger train driver  ·  train operator"
+  },
+  {
+   "role": "train dispatcher",
+   "isco": 8312,
+   "aka": "platform assistant  ·  platform dispatch assistant  ·  railway dispatcher  ·  train dispatch controller  ·  engine dispatcher"
+  },
+  {
+   "role": "level crossing signalperson",
+   "isco": 8312,
+   "aka": "level crossing signaller  ·  level crossing attendant  ·  level crossing signalman  ·  level crossing signalwoman"
+  },
+  {
+   "role": "Locomotive Engineers",
+   "isco": 8311,
+   "aka": NaN
+  },
+  {
+   "role": "Rail Yard Engineers, Dinkey Operators, and Hostlers",
+   "isco": 8312,
+   "aka": NaN
+  },
+  {
+   "role": "Railroad Conductors and Yardmasters",
+   "isco": 8311,
+   "aka": NaN
+  },
+  {
+   "role": "Subway and Streetcar Operators",
+   "isco": 8312,
+   "aka": NaN
+  },
+  {
+   "role": "Rail Transportation Workers, All Other",
+   "isco": 8311,
+   "aka": NaN
+  },
+  {
+   "role": "rolling stock assembly supervisor",
+   "isco": 3122,
+   "aka": "carriage production supervisor  ·  rolling stock assembly quality supervisor  ·  multiple unit production supervisor  ·  locomotive production supervisor  ·  railcar assembly supervisor"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "brochure": "medical",
+ "txt": "_jamb_txt/medical.txt",
+ "missing_programmes": [
+  "Nursing/Nursing Science",
+  "Optometry",
+  "Pharmacy",
+  "Physiology"
+ ]
+}

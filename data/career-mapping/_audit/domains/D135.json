@@ -1,0 +1,262 @@
+{
+ "domain_id": "D135",
+ "domain_name": "Nuclear Engineering, Radiation Science",
+ "role_count": 51,
+ "roles": [
+  {
+   "role": "commissioning technician",
+   "isco": 3119,
+   "aka": "senior commissioning technician"
+  },
+  {
+   "role": "hydroelectric plant operator",
+   "isco": 3131,
+   "aka": "hydropower plant technician  ·  hydro-power plant operator  ·  hydropower plant operative  ·  hydro-power plant technician  ·  hydroelectric power plant technician"
+  },
+  {
+   "role": "fossil-fuel power plant operator",
+   "isco": 3131,
+   "aka": "power station operator  ·  power station worker  ·  combined cycle power plant operator  ·  LNG-fired power plant operator  ·  coal-fired power plant operator"
+  },
+  {
+   "role": "offshore renewable energy technician",
+   "isco": 3119,
+   "aka": "offshore wind turbine technician  ·  offshore renewable energy installer  ·  MRE installer  ·  ORE technician  ·  marine renewable energy installer"
+  },
+  {
+   "role": "photonics engineering technician",
+   "isco": 3119,
+   "aka": "photonics engineering technologist  ·  photonic systems engineering technician  ·  laser technician  ·  electro-optical technologist  ·  technician in photonic systems"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "environmental mining engineer",
+   "isco": 2143,
+   "aka": "environmental mining engineering expert  ·  environmental co-ordinator  ·  environmental mining technology engineering adviser  ·  mine environmental engineers  ·  environmental mining technology engineering specialist"
+  },
+  {
+   "role": "utilities inspector",
+   "isco": 3119,
+   "aka": "pipeline inspector  ·  turbine inspector  ·  sewer inspector  ·  utilities supervisor  ·  streetworks inspector"
+  },
+  {
+   "role": "metal additive manufacturing operator",
+   "isco": 3119,
+   "aka": "metal AM technician  ·  metal AM operator  ·  AM operator  ·  metal additive manufacturing technician  ·  AM technician"
+  },
+  {
+   "role": "product development engineering technician",
+   "isco": 3119,
+   "aka": "product development systems engineer  ·  product development mechanical engineer  ·  product development specialist  ·  product development engineer  ·  production test operator"
+  },
+  {
+   "role": "offshore renewable energy plant operator",
+   "isco": 3131,
+   "aka": "tidal farm operator  ·  ocean energy plat operator  ·  wave farm operator  ·  marine renewable energy plant operator  ·  marine wind energy operator"
+  },
+  {
+   "role": "process engineering technician",
+   "isco": 3119,
+   "aka": "process engineering supervisor  ·  engineering operational inspector  ·  production supervisor  ·  manufacturing engineering operations supervisor  ·  manufacturing engineering supervisor"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "automation engineering technician",
+   "isco": 3119,
+   "aka": "marine sensor technician  ·  technician for food industry digitalisation  ·  technologist in automated systems  ·  technician in automated systems  ·  marine automation technician"
+  },
+  {
+   "role": "astronomer",
+   "isco": 2111,
+   "aka": "astronomers  ·  astronomy research scientist  ·  astronomy science researcher  ·  astronomy researcher  ·  astronomy scholar"
+  },
+  {
+   "role": "clinical perfusion scientist",
+   "isco": 3211,
+   "aka": "clinical perfusionist  ·  clinical perfusion techinician  ·  medical perfusionist  ·  medical perfusion expert  ·  clinical perfusion expert"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "solar power plant operator",
+   "isco": 3131,
+   "aka": "solar power plant maintenance operative  ·  solar electric power plant operator  ·  solar array operative  ·  solar farm worker  ·  solar array worker"
+  },
+  {
+   "role": "power production plant operator",
+   "isco": 3131,
+   "aka": "power plant operator  ·  power station operator  ·  electricity generating plant operative  ·  power station worker  ·  electricity generation plant operator"
+  },
+  {
+   "role": "electrical power distributor",
+   "isco": 3131,
+   "aka": "electrical power systems power dispatcher  ·  distribution control operator  ·  power line worker"
+  },
+  {
+   "role": "robotics engineering technician",
+   "isco": 3119,
+   "aka": "robotics engineering technologist  ·  robot technician  ·  technician in robotic systems  ·  robot technologist  ·  automation control engineering inspector"
+  },
+  {
+   "role": "recycling specialist",
+   "isco": 2143,
+   "aka": "solid waste division supervisor  ·  trainee recycling co-ordinator  ·  recycling and waste reduction specialist  ·  recycling development co-ordinator  ·  supermarket recycling co-ordinator"
+  },
+  {
+   "role": "electrical transmission system operator",
+   "isco": 3131,
+   "aka": "electricity transmission system worker  ·  electric powerline system worker  ·  electricity power line system worker  ·  electricity transmission system technician"
+  },
+  {
+   "role": "physicist",
+   "isco": 2111,
+   "aka": "physics scholar  ·  forensic physicist  ·  neurologist  ·  physics analyst  ·  physics scientist"
+  },
+  {
+   "role": "airport maintenance technician",
+   "isco": 3119,
+   "aka": "specialist in airport maintenance  ·  airport maintenance technical officer  ·  technician in airport maintenance  ·  airport maintenance officer  ·  maintenance technician at airports"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "pipeline compliance coordinator",
+   "isco": 3119,
+   "aka": "pipeline safety inspector  ·  roadside pipeline coordinator  ·  pipeline inspector  ·  pipeline compliance inspector  ·  pipeline compliance and safety inspector"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "wastewater engineer",
+   "isco": 2143,
+   "aka": "waste water pipeline engineer  ·  waste water system designer  ·  sewer pipeline engineer  ·  wastewater engineering specialist  ·  wastewater technology engineer"
+  },
+  {
+   "role": "quality engineering technician",
+   "isco": 3119,
+   "aka": "battery quality technician  ·  quality technologist  ·  quality technology specialist  ·  quality specialist  ·  quality technician"
+  },
+  {
+   "role": "onshore wind farm technician",
+   "isco": 3131,
+   "aka": "wind turbine service technician  ·  wind farm technician  ·  onshore wind turbine repair technician  ·  onshore wind plant operator  ·  onshore wind turbine maintenance technician"
+  },
+  {
+   "role": "environmental expert",
+   "isco": 2143,
+   "aka": "geologist  ·  environmental scientist  ·  soil scientist  ·  mineral technologist  ·  geological technologist"
+  },
+  {
+   "role": "steam turbine operator",
+   "isco": 3131,
+   "aka": "steam boiler operator  ·  steam turbine generator operator  ·  steam turbine monitoring operator  ·  steam turbine machinery operator  ·  steam-electric power operator"
+  },
+  {
+   "role": "waste treatment engineer",
+   "isco": 2143,
+   "aka": "waste treatment engineering adviser  ·  waste treatment engineering specialist  ·  waste treatment technology engineer  ·  waste treatment technology engineering specialist  ·  waste treatment engineers"
+  },
+  {
+   "role": "environmental engineer",
+   "isco": 2143,
+   "aka": "environmental engineering consultant  ·  agricultural conservation engineer  ·  industrial environmental engineer  ·  water pollution engineer  ·  environmental analyst"
+  },
+  {
+   "role": "food technician",
+   "isco": 3119,
+   "aka": "food tech specialist  ·  technician for sustainable food industry  ·  food technology specialist  ·  food technology expert  ·  food tech expert"
+  },
+  {
+   "role": "nuclear reactor operator",
+   "isco": 3131,
+   "aka": "nuclear reactor operation technician  ·  nuclear reactor safety supervisor  ·  nuclear reactor operative  ·  nuclear reactor control panel worker  ·  nuclear reactor controller"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "cosmologist",
+   "isco": 2111,
+   "aka": "evolutionary cosmologist  ·  cosmology scientist  ·  observational cosmologist  ·  theoretical cosmologist  ·  cosmology data scientist"
+  },
+  {
+   "role": "industrial engineering technician",
+   "isco": 3119,
+   "aka": "industrial tool design quality control inspector  ·  industrial tool design technologist  ·  industrial tool development inspector  ·  industrial tool technologist  ·  industrial tool design inspector"
+  },
+  {
+   "role": "geothermal power plant operator",
+   "isco": 3131,
+   "aka": "geothermal plant operative  ·  geothermal power plant operative  ·  geo-thermal power plant operative  ·  geothermal plant operator  ·  geo-thermal plant operator"
+  },
+  {
+   "role": "aviation safety officer",
+   "isco": 3119,
+   "aka": "airfield safety supervisor  ·  aviation security officer  ·  transportation security officer  ·  airport security supervisor  ·  flight safety officer"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "radiation therapist",
+   "isco": 3211,
+   "aka": "radiotherapy technologist  ·  therapeutic radiography practitioner  ·  therapeutic radiographer  ·  technologist in radiotherapy  ·  RTT"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "power plant control room operator",
+   "isco": 3131,
+   "aka": "power station operator  ·  electricity generating plant operative  ·  electricity generation plant operator  ·  electricity generating plant worker  ·  electric power station operator"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  },
+  {
+   "role": "Magnetic Resonance Imaging Technologists",
+   "isco": 3211,
+   "aka": NaN
+  }
+ ]
+}

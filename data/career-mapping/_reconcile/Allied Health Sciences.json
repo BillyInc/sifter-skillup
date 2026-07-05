@@ -1,0 +1,2963 @@
+[
+ {
+  "programme": "Pharmacology",
+  "code": "PHA",
+  "technical_skills": [
+   "explain the history of pharmacology",
+   "demonstrate understanding of drug interaction in the human body system",
+   "explain the effects of disease on drug kinetics",
+   "demonstrate understanding of relationship between drug and aging",
+   "explain the effect of drugs in pregnancy",
+   "explain common allergic reactions to different drugs; and",
+   "explain common medications used for different diseases or ill conditions",
+   "discuss prescription and/or over-the-counter medications used in the management of a variety of patient conditions encountered during rehabilitation",
+   "identify drugs used for the treatment and management of the listed systemic disorders - (gastrointestinal, renal, special senses, nervous musculo skeletal, reproductive, skin, endocrine and cancers and many others)",
+   "discuss the indications, dosages, actions, side effects, contraindications of drugs",
+   "apply knowledge and skills in administration of drugs, including calculations where needed",
+   "discuss nursing responsibilities and the need for safety monitoring of drugs, vaccines and other products for treatment of patients; and",
+   "discuss pharmacovigilance and the role of the nurse",
+   "describe the concept of genetic variation (continuous and discontinuous) among the general population",
+   "explain the significance of genetic polymorphism in the development, progression and treatment of human disease",
+   "describe the models of drug distribution and elimination",
+   "explain how dose, bioavailability, rate of absorption, apparent volume of distribution, total",
+   "clearance and elimination half-life affect the plasma concentrations of a drug after administration of a single dose",
+   "describe the factors which determine the time-course of systemic accumulation of a drug",
+   "administered by infusion or multiple doses",
+   "use the pharmacokinetic parameters to determine loading and maintenance doses of specific drug regimens; and",
+   "recognise the factors that affect hepatic and renal clearance (blood flow, protein binding, intrinsic clearance and many others)",
+   "identify the main steps involved in neurotransmission",
+   "recognise the anatomical and chemical characteristics of the parasympathetic and sympathetic nervous system",
+   "identify major pre- and post- synaptic mechanisms by which drugs act"
+  ],
+  "transferable_skills": [
+   "identify sources of drugs",
+   "describe various routes of drug administration and how they influence onset of drug action",
+   "identify the factors that affect drug absorption, distribution, metabolism and excretion",
+   "state the role of receptors as targets for drug action",
+   "explain the fundamental differences between agonists and antagonists; and",
+   "enumerate the common system parameters in pharmacokinetics and their measurements",
+   "identify the factors that influence the absorption of an orally administered drug",
+   "relate the factors that influence the rate of drug elimination",
+   "define drug distribution and factors that influence it",
+   "describe the major toxicities of the drugs prescribed",
+   "explain the role of the Medical Laboratory in the evaluation of exposure to poisons; and",
+   "define pathologic mechanisms of toxicants"
+  ],
+  "course_titles": [
+   "General Pharmacology",
+   "Introductory Pharmacology",
+   "General Pharmacology",
+   "General Principles of Pharmacology",
+   "Basic Pharmacology and Toxicology:",
+   "Pharmacodynamics and Chemotherapy I",
+   "Pharmacodynamics and Chemotherapy II",
+   "General Principles of Pharmacology",
+   "Pharmacogenetics and Pharmacokinetics",
+   "Autonomic Pharmacology I",
+   "Autonomic Pharmacology II",
+   "Neuropharmacology- CNS Depressants and Stimulants",
+   "Cardiovascular and Respiratory Pharmacology",
+   "Drug Discovery and Development",
+   "Endocrine & Reproductive System Pharmacology",
+   "Toxicology",
+   "Chemotherapy of Tropical Infections, Disinfectants and Antiseptics",
+   "Research Methods, ICT Skills and Ethics in Pharmacology",
+   "Students' Industrial Work Experience",
+   "Renal and GIT Pharmacology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D165",
+    "domain": "Wellness Coaching, Lifestyle Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Physiotherapy",
+  "code": "PST",
+  "technical_skills": [
+   "describe basic principles of physics used in electromedical equipment in all rehabilitation specialties",
+   "define laws of physics and various aspect of physical phenomena and their interaction with human body as applied to all rehabilitation specialties",
+   "describe basic concepts of electricity, its laws, magnetism, electro mechanics and related theories in all rehabilitation specialties",
+   "explain fundamentals of low, medium and high frequency currents, heat, electromagnetic radiations and sound waves as applied to all rehabilitation specialties; and",
+   "demonstrate safety skills in biomedical instruments and radiation protection Allied Health Sciences 47 New",
+   "explain the scope of his/her discipline and ethical responsibility attached to the discipline as well as history of the practice of medical rehabilitation locally and globally",
+   "describe the importance and role of family input in the process of rehabilitation or healing of the patient",
+   "list out the laws and regulations surrounding medical rehabilitation practice; and",
+   "apply the technique of using all other existing modalities for communication with the patient",
+   "explain basics of computer programming",
+   "define programming",
+   "explain the history behind computer programming",
+   "explain the use and importance of computer programming as applied to rehabilitation; and",
+   "list steps of 2D and 3D computer aided designing method Allied Health Sciences 754 New",
+   "discuss concepts of general pathology",
+   "discuss and recognise signs and symptoms that are considered red flag for serious disease",
+   "discuss and disseminate pertinent information and findings, and ascertain the appropriate steps to follow during rehabilitation",
+   "describe consequences of pathologic processes on the structure and function of the human body",
+   "discuss selected disorders/diseases common to acute care in the physical therapy/other rehabilitation sciences; and",
+   "explain normal structure and function, in relation to disease processes in the physical therapy/other rehabilitation sciences",
+   "appreciate the basic knowledge of Physiotherapy profession, responsibilities of a physiotherapist to the patients and clients",
+   "familiar with process and procedure of patient handling and management",
+   "describe the basic procedure of documentation in patient handling and assessment of vital signs, reflexes and physiotherapy related clinical parameters",
+   "explain the procedures of muscles, Pain, joint mobility assessment; and",
+   "explain the basic procedure of walking aid assessment for patients"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Rehabilitation Physics/Biophysics",
+   "Introduction to Medical Rehabilitation",
+   "Programming for Rehabilitation",
+   "Introductory Pathology",
+   "Introduction to Physiotherapy Profession",
+   "Exercise Physiology",
+   "Electrotherapy I- Direct & Low Frequency Currents II",
+   "Practical Electrotherapy I",
+   "Kinesiology and Pathokinesiology",
+   "Massage",
+   "Exercise Therapy I Introduction to Body Movements",
+   "Exercise Therapy II: Therapeutic Exercise Prescriptions",
+   "Practical Exercise Therapy, Kinesiology & Cryotherapy",
+   "Electrotherapy II- Thermal & Radiation Agents in Physiotherapy (2 Units",
+   "Electrotherapy III- High Frequency Currents",
+   "Practical Electrotherapy II",
+   "Cryotherapy and Hydrotherapy",
+   "Orthotics and Prosthetics",
+   "Physiotherapy in Women's Health",
+   "Musculoskeletal Injuries and Rehabilitation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D154",
+    "domain": "Exercise Science, Sports Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D165",
+    "domain": "Wellness Coaching, Lifestyle Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D126",
+    "domain": "Complementary, Alternative",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D071",
+    "domain": "Sports Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Audiology",
+  "code": "AUD",
+  "technical_skills": [
+   "outline the role of an audiologist and other health professionals in paediatric health care",
+   "describe the development of speech, language and auditory skills in relation to physical milestone development",
+   "identify various types of etiologies associated with hearing loss in the paediatric population",
+   "discuss the nature and statistical figure of hearing loss in children both globally and nationally",
+   "list the relevant tests battery for assessment of hearing in neonates and children",
+   "explain both peripheral and central hearing disorders in children",
+   "explain the implications of hearing loss in children on educational, social and psychological development",
+   "interpret behavioural and non-behavioural paediatric tests; and",
+   "demonstrate the protocol for rehabilitation of children with hearing loss",
+   "demonstrate professional behaviour",
+   "perform clinical assessment of different types of populations",
+   "implement interventions for different diagnoses under the supervision of a qualified audiologist",
+   "implement rehabilitation for different categories of patients Allied Health Sciences 54 New",
+   "list out plan for follow-up cases",
+   "explain referral protocol for patients who need to be referred to other professionals",
+   "document own clinical experiences on the field",
+   "accurately and appropriately diagnose a range of audiological cases presented to him/her by the clinical supervisor",
+   "explain audiological findings",
+   "counsel patients under the supervision of a qualified and clinically certified audiologist",
+   "explain report writing, booking of appointment, and other non-clinical activities associated with the job; and",
+   "explain the administrative set up of the clinic",
+   "relate the history of origin of audiology",
+   "state the scientific principles on which audiology as a health care profession is based, and its fundamental role in the general wellbeing of humans",
+   "explain his/her role in the chain of multidisciplinary management of patients with aural disorder",
+   "apply the knowledge of resonance (place) and frequency theories learnt in the course"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Paediatric Audiology",
+   "Clinical Externship Scheme",
+   "Introduction to Audiology",
+   "Basic Procedures in Audiology",
+   "Medical Conditions Amenable in Audiology",
+   "Surgical Conditions Amenable in Audiology",
+   "Professionalism, Ethics and Administration in Audiology",
+   "Phonetics and Linguistic in Audiology",
+   "Introduction to Clinical Work in Audiology",
+   "Aural Rehabilitation",
+   "Obscure Auditory Disorders/ENT Diseases",
+   "Noise and Auditory Conservation",
+   "Basic Otorhinolaryngology",
+   "Principles and Practice of Audiology",
+   "Voice Disorder and Management",
+   "Hearing Impairment & Deafness",
+   "Fluency Disorders and Management",
+   "Community Audiology",
+   "Counselling and Hearing Impairment",
+   "Aging and Communication disorder"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D067",
+    "domain": "Dentistry",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D126",
+    "domain": "Complementary, Alternative",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D040",
+    "domain": "Vocational",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Nursing Sciences",
+  "code": "NSC",
+  "technical_skills": [
+   "evaluate of patient's status in rehabilitation",
+   "identify of nursing diagnosis and patient's arrangements in rehabilitation",
+   "identify and demonstrate Basic and specific assessments in nursing procedure; and",
+   "demonstrate Basic support techniques for patient in rehabilitation",
+   "explain the nature of nursing and the trend towards the emergence of professional practice",
+   "discuss the professional context of nursing practice with relevance to education, ethics and professional behaviours, and scientific basis of nursing practice",
+   "discuss the concepts of health, healthcare delivery systems and contributions of government, non-governmental and international organisations to health care delivery",
+   "discuss the components and use of nursing process and nursing care plan; and",
+   "demonstrate moderate competence in basic nursing skills covered as part of the core knowledge areas",
+   "describe the developmental stages of man and influence on individual behaviour",
+   "explain the quantitative adjustments that are related to growth and development in individuals",
+   "associate the developmental stages of individuals with their social expectations; and",
+   "identify the methods to deal with health challenges of different ages and implications for nursing and society. Allied Health Sciences 384 New",
+   "explain the communication process and relevance of effective communication in patient care",
+   "discuss the theoretical basis for needs of patients",
+   "explain the role of the nurse in helping clients meet basic needs for health",
+   "describe measures appropriate for modification of patients' environment of care",
+   "apply safety and comfort measures to meet needs of patients",
+   "demonstrate proficiency in observation, reporting and recording; and",
+   "educate patients on the basic tenets of healthy living",
+   "describe the basic cellular events that lead to disease",
+   "explain the processes such as inflammation, infection, necrosis and many others",
+   "recognise the presenting cellular and physiological signs of diseases such in cancers and certain genetic disorders; and",
+   "discuss the progression and effects of cellular pathologies",
+   "define key concepts and principles in epidemiology (such as determinants, prevalence, incidence, surveillance, type of epidemiologic studies and many others)"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Clinical Nursing Procedure",
+   "Foundations of Nursing",
+   "Foundations of Professional Nursing Practice I",
+   "Developmental Psychology",
+   "Foundations of Nursing II",
+   "General and Cellular Pathology",
+   "Epidemiology",
+   "Community/Public Health Nursing I",
+   "Human Nutrition",
+   "Nursing Ethics and Jurisprudence",
+   "Medical & Surgical Nursing I",
+   "Community/Public Health Nursing II",
+   "Medical & Surgical Nursing II",
+   "Medical Surgical Nursing III",
+   "(SIWES 2) - Medical Surgical Nursing Practicum II",
+   "Mental Health and Psychiatric Nursing I",
+   "Medical Surgical Nursing Practicum III",
+   "Maternal and Child Health Nursing I",
+   "Curriculum Development and Teaching Methodology",
+   "Research Methodology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D082",
+    "domain": "Customer Service, Contact Centre",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D165",
+    "domain": "Wellness Coaching, Lifestyle Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Complementary and Alternative Medicine",
+  "code": "CAM",
+  "technical_skills": [
+   "explain the theory and principles of osteopathy; and",
+   "demonstrate techniques used in osteopathy",
+   "define chiropractic practice",
+   "state the history of chiropractic practice; and",
+   "discuss the philosophy of chiropractic practice",
+   "apply clinical skills in the care of patients to the standards of a primary care naturopathic physician as defined by the profession",
+   "apply the philosophy and principles of naturopathic medicine in the care of patients; and",
+   "apply evidence-informed practice efficiently and effectively in patient-care settings Allied Health Sciences 98 New",
+   "describe homeopathy pharmacy",
+   "discuss pharmacology and pharmacognosy of homeopathy",
+   "describe the mechanism of action of homeopathic remedies",
+   "explain homeopathic remedies; and",
+   "apply homeopathy in patient care",
+   "explain advances in therapeutic procedures in TCM",
+   "explain the nutritional approach to the prevention and treatment of diseases",
+   "describe how to carry out a nutritional assessment on a patient; and",
+   "describe the actions of medicinal plants (nervines, hepatic, anodynes, antispasmodic and many others) and their uses in correcting various organ dysfunctions",
+   "state laws and ethics guiding the practices that relates with medical practices",
+   "interpret and apply the laws and ethics guiding the practice of Complementary and Alternative Medicine in Nigeria",
+   "state rights of practitioner, patients and genral public consumers",
+   "identify research problems",
+   "describe what literature search and review entail",
+   "describe different research designs and sampling methods; and",
+   "describe the process of investigating a research problem",
+   "appreciate the concept of Public Health"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Osteopathy",
+   "Introduction to Chiropractic",
+   "Introduction to Naturopathy",
+   "Introduction to Homeopathy",
+   "Traditional Chinese Medicine II",
+   "Naturopathy II",
+   "Policy, Laws & Ethics in Complementary and Alternative Medicine (3 Units",
+   "Research Methodology",
+   "Public Health in Complementary and Alternative Medicine",
+   "Project"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D126",
+    "domain": "Complementary, Alternative",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D165",
+    "domain": "Wellness Coaching, Lifestyle Medicine",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Dental Technology",
+  "code": "DNT",
+  "technical_skills": [
+   "define dental materials",
+   "classify dental materials",
+   "discuss the physical, mechanical, and biological properties of dental materials",
+   "describe the uses, advantages, and disadvantages of these dental materials; and",
+   "explain the handling properties of these dental materials Allied Health Sciences 123 New",
+   "discuss the science underpinning the use of the gypsum, resins, and impression materials",
+   "recognise where these materials can be used",
+   "recognise different impression trays and know their advantages and limitations",
+   "define shrinkages, and itemise their causes and how to ameliorate them",
+   "state the uses, advantages, and disadvantages of dental wax; and",
+   "describe the physical properties of polishing materials and how to handle them",
+   "demonstrate knowledge and understanding of tooth formation and tooth emergence",
+   "explain the philosophy behind the safety and prevention of accidents in the dental laboratory",
+   "discuss the handling of various laboratory instruments in the dental laboratory",
+   "explain how to prevent cross-infection in the laboratory; and",
+   "justify the use of personal protective equipment in the dental laboratory",
+   "list the various specialties in dental technology",
+   "explain importance of dental technology to dental health care delivery and with other members of the health care delivery team",
+   "describe the various hand instruments, bench instruments in the dental laboratory; and",
+   "describe how cast gypsum products, make special trays, fabricate bite blocks and arrange teeth",
+   "describe the gross anatomy of different types of teeth including blood and nerve supply",
+   "describe the course and distribution of trigeminal nerve and mandibular nerves",
+   "explain the structure of the tongue and recognise the different papillae; and",
+   "explain the anatomy and mode of action of the intrinsic and extrinsic muscles of the tongue",
+   "discuss the causes and composition of pellicle, plaque, and calculus"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Dental Materials",
+   "Dental Material Science 1",
+   "Introduction to Dental Technology II Safety, Health and Care of",
+   "Introduction to Dental Technology I",
+   "Oral Anatomy",
+   "Oral Physiology",
+   "Dental Laboratory Techniques I",
+   "Removable Prosthodontics and Techniques I",
+   "Removable Prosthodontics and Techniques II",
+   "Dental laboratory Techniques for Removable Prosthodontics & Techniques",
+   "Dental Laboratory Techniques for Removable Prosthodontics &Techniques",
+   "Metallurgy and Casting Process",
+   "Fixed Prosthodontics and technique I",
+   "Principles of Dental Aesthetics and Occlusion",
+   "Dental Technology Techniques for Fixed Prosthodontics (2 Units: C: PH",
+   "Ceramics in Dental Technology",
+   "Fixed Prosthodontics and Technique II",
+   "Introduction to Orthodontic Techniques",
+   "Introduction to Maxillofacial Prosthodontics",
+   "Biostatistics"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D067",
+    "domain": "Dentistry",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D109",
+    "domain": "Metal Processing, Foundry",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D098",
+    "domain": "Precision Engineering, Toolmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D003",
+    "domain": "D003 Artificial Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D103",
+    "domain": "Jewellery Making, Goldsmithing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Dental Therapy",
+  "code": "DTH",
+  "technical_skills": [
+   "describe tooth development",
+   "describe anomalies of tooth formation",
+   "state the functions of saliva",
+   "describe the anatomy of oral structures; and Allied Health Sciences 154 New",
+   "identify eruption times",
+   "identify instruments used in treat patients",
+   "describe the uses of the instruments; and",
+   "demonstrate maintenance of the instruments",
+   "identify the parts of a dental chair",
+   "operate a dental chair",
+   "maintain a dental chair in good condition; and",
+   "select appropriate patient chair positions for different procedures",
+   "define microbial agents",
+   "describe types of bacteria",
+   "explain how the roles of saliva in oral health functions; and",
+   "describe transmission of infections",
+   "define the terms used in health research",
+   "describe the different types of research",
+   "formulate hypothesis; and",
+   "select appropriate study designs to march objectives",
+   "carry out simple maintenance of the ultrasonic scaler",
+   "calibrate instruments and equipment; and",
+   "effectively clean hand instruments",
+   "describe sources of data",
+   "define types of variables"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Oral Anatomy and Physiology",
+   "Dental Instrumentation, Care and Maintenance",
+   "Phantom Head Practice",
+   "Medical Microbiology",
+   "Research Methodology",
+   "Dental Instrumentation Care and Maintenance II",
+   "Applied Biostatistics",
+   "Preventive and Community Dentistry",
+   "Management Skills in Dental practice",
+   "Transmissible Diseases/Infection Control",
+   "Medical Emergency and First Aid",
+   "Introduction to Dental Radiography",
+   "Introduction to Primary Oral Health Care",
+   "Oral Health Education Methods",
+   "Introduction to Restorative Dentistry and Prosthodontics",
+   "Students Industrial Work Experience Scheme",
+   "Introduction to Paedodontics",
+   "Health Law/Ethics",
+   "Periodontics",
+   "Proposal writing and Research Methods"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D067",
+    "domain": "Dentistry",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D088",
+    "domain": "Beauty Therapy, Aesthetics",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D154",
+    "domain": "Exercise Science, Sports Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D126",
+    "domain": "Complementary, Alternative",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D147",
+    "domain": "Process Automation, SCADA, PLC",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Environmental Health Science",
+  "code": "EHS",
+  "technical_skills": [
+   "define environmental health",
+   "distinguish the components of environmental health and environmental sanitation",
+   "identify the roles of environmental health in disease prevention and control",
+   "describe the qualities, skills and competencies of an environmental health practitioner/officer in the provision of quality environmental health services",
+   "explain the roles of environmental health practitioner in health promotion, disease prevention and control",
+   "discuss environmental health functions in different settings",
+   "appraise common tools used in environmental health practice",
+   "discuss the environmental health service delivery system in Nigeria",
+   "list the ethics of environmental health profession in Nigeria",
+   "discuss the role of EHORECON in the regulation of environmental health profession in Nigeria",
+   "outline professional associations in environmental health in Nigeria; and",
+   "assess the career path/progression in environmental health",
+   "explain the basic principles of disease investigation and control",
+   "describe types of epidemiological studies",
+   "construct the etiological relationships in disease occurrence",
+   "evaluate the mode of disease transmission",
+   "explain basic epidemiological study designs-cross sectional studies, cohort or prospective studies, case-control studies and many others",
+   "organise disease epidemiological survey",
+   "examine disease causation models",
+   "analyse the epidemiological triad",
+   "discuss disease occurrence",
+   "design measures in disease prevention and control",
+   "distinguish quantitative and qualitative assessment of screening procedures",
+   "measure cause-effect relationship and",
+   "explain dose-effect and dose-response relationship"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Environmental Health",
+   "Fundamentals of Epidemiology",
+   "Ecology and Environmental Management",
+   "Health Psychology and Sociology",
+   "Biostatistics",
+   "Introduction to Engineering Drawing & Design",
+   "Basic Instrumentation and Use",
+   "Introduction to Primary Health Care",
+   "Introduction to Environmental Management",
+   "Health, Safety and Environment",
+   "Food Hygiene and Safety",
+   "Sanitary Inspection of Premises and Audit",
+   "Housing and Health",
+   "Environmental Sanitation And Hygiene",
+   "Environmental Toxicology",
+   "Environmental Health Laboratory Techniques",
+   "Pest and Vector Management",
+   "Industrial Attachment (SIWES)/Field Practicum",
+   "Seminar",
+   "Water, Sanitation and Hygiene"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Health Care Administration and Hospital Management",
+  "code": "HAM",
+  "technical_skills": [
+   "describe ecology of Health Care/Hospital Administration; and",
+   "discuss characteristics of the environment of Health Care/Hospital Administration Allied Health Sciences 246 New",
+   "explain the concepts of corporate planning",
+   "explain the relationship between corporate planning and organisational effectiveness",
+   "discuss the concept of internal and external environments of an organisation",
+   "explain how organisational environment affect performance; and",
+   "develop a Strategic plan for public/private hospitals",
+   "describe methods of human resource development",
+   "discuss approaches to retention and maintenance of health staff; and",
+   "discuss factors affecting human resource development Allied Health Sciences 247 New",
+   "distinguish between logistics and supply chain management",
+   "prepare inventory of equipment and consumables; and",
+   "practice procurement procedures",
+   "describe the concept of time, units and space management in hospital and health care",
+   "collect data required for time, units and space management in hospital and health care; and",
+   "practice time, units and space management in hospital and health care",
+   "discuss roles of public relations unit in healthcare setting",
+   "demonstrate effective and efficient Inter and Intra departmental relationship; and",
+   "promote the image of a hospital in the public",
+   "describe medical billing software",
+   "track financial transactions of patients from initial contact to final payment of a balance; and",
+   "utilise medical billing software",
+   "discuss concepts and functions of collective bargaining; and",
+   "demonstrate skills of problem solving in an organisation",
+   "describe theories of hospital finance and budgeting at the federal, state and local government levels"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Ecology and General Introduction to Health Care/Hospital Administration",
+   "Strategic Planning and Management in Public and Private Hospitals",
+   "Human Resources Management in Healthcare Organisation",
+   "Logistics Management of Health Commodity",
+   "Time, Units and Space Management in Hospital and Health Care",
+   "Public Relations in Hospital Management",
+   "Revenue Cycle Management",
+   "Labour Relations and Collective Bargaining",
+   "Hospital Economics, Finance and Budgeting",
+   "Patient Rights and Health Care Practice",
+   "Healthcare Management Practicum",
+   "Labour Economics",
+   "Industrial Psychology",
+   "Leadership Skills",
+   "Research Methodology",
+   "Health Care, Hospital Ethics and Administrative Law"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Information Technology and Health Informatics",
+  "code": "ITH",
+  "technical_skills": [
+   "define Medical Informatics and explain its component competencies as they relate to various roles in the practice of medicine, including clinical care, research, and lifelong learning",
+   "retrieve, appraise, and apply medical information for clinical decision-making and patient education using a variety of decision support tools and other information resources",
+   "discuss the impact of the electronic health record, government systems/resources, and \"big data\" on patient care, biomedical research, and practice management",
+   "define health literacy concepts and utilise them in patient education and communication; and",
+   "develop a personal information management plan that demonstrates basic knowledge of information technologies, tools, and resources",
+   "read a problem description and apply an appropriate algorithm to solve that problem",
+   "formulate a solution to a problem in algorithmic form using pseudocode",
+   "reason about the correctness of an algorithim",
+   "reason about the runtime of an algorithm",
+   "implement an algorithm as a part of an executable program; and",
+   "implement basic data structures (such as arrays, lists, trees) and use algorithmic techniques (recursion and divide & conquer) to solve well-known problems (searching and sorting), but also how to apply their principles to newly encountered problems",
+   "describe the theoretical and practical foundations of health informatics",
+   "explain how information and communication technologies are changing healthcare services and provision of health information",
+   "discuss the various applications of information and communication technology for healthcare, health promotion and patient self-management",
+   "discuss key issues related to the adoption of health information technology systems (digital divide, health literacy, policy issues, privacy and security); and",
+   "explore emerging trends in health informatics",
+   "identify, pronounce, and spell medical terms",
+   "use terms in context; utilise prefixes, suffixes, root words, and plurals to construct medical terms",
+   "analyse medical terms",
+   "translate abbreviation and interpret symbols",
+   "demonstrate ability to analyse words by dividing them into component parts",
+   "identify and employ terms pertaining to the body as a whole",
+   "demonstrate ability to apply new knowledge to understanding medical terms in their proper contexts",
+   "differentiate among the various classes of drugs and learn their actions and side effects and",
+   "differentiate among various laboratory tests, clinical procedures, and clinical healthcare professionals"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Survey of Medical Informatics",
+   "Introduction to Problem Solving in Health Informatics",
+   "Introduction to Health Informatics",
+   "Basic Medical Terminology",
+   "Introduction to Epidemiology",
+   "Introduction to Biostatistics",
+   "Fundamentals of Information Technology",
+   "Medical Billing and Coding",
+   "Electronic Health Records",
+   "Database Design and Management in Healthcare",
+   "Object-Oriented Design and Programming",
+   "System Analysis and Design",
+   "Survey of Medical Informatics",
+   "Introduction to Data Science with R Language",
+   "Mobile Application Development",
+   "Research Methodology in ITH",
+   "Digital Forensics",
+   "Individual Project I",
+   "Individual Project II",
+   "Data Mining and Data Warehousing"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D082",
+    "domain": "Customer Service, Contact Centre",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Health Information Management",
+  "code": "HIM",
+  "technical_skills": [
+   "extensively explain Health Information Science",
+   "distinguish between data, information, knowledge and wisdom",
+   "describe the attributes of health information science",
+   "explain the relationship between information science and other discipline in medical and allied health sciences",
+   "describe information commodity as an economic good",
+   "explain information constraint theories and models of information seeking behaviours",
+   "elucidate health information processing methods; and",
+   "explain data operations in automated health information management system Allied Health Sciences 271 New",
+   "explain numbering in health records; describe the types and methods of assigning numbers",
+   "identify and discuss the types of equipment used and control of numbering system conversion",
+   "define filling system and explain its objectives",
+   "discuss types and methods of filing system as well as filing control",
+   "describe master patient index in the unit system, its purpose, content and arrangement",
+   "explain record retention, factors influencing retention and disposition of health records; and",
+   "appreciate microfilming of health records, objectives of microfilming, processing, design, selection, advantages and disadvantages of microfilming",
+   "explain management and operations of different multimedia formats",
+   "describe the development and use of database systems",
+   "demonstrate practical skills on spreadsheet, graphics and PowerPoint presentation",
+   "discuss basic concepts and technologies of information security",
+   "explain personnel/organisational skills for information security managers and officers; and",
+   "evaluate information security personnel and non-security information technology personnel",
+   "describe the history and current status of knowledge management",
+   "describe the differences between information and knowledge",
+   "explain key management issues consideration and influence of knowledge management of change and organisational effectiveness; and",
+   "effectively participate in management operations and identify sources of knowledge for health workers"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Health Information Science",
+   "Health Records Management I",
+   "Introduction to Information Technology and Organisational Information",
+   "Knowledge Management in Health Information System",
+   "Statistical Methods in Health Information Management I",
+   "Disease Classification, Clinical Coding, Indexing and Abstracting (2 Units",
+   "Hospital Official Statistics",
+   "Policy, Legal and Ethics in Health Information Management",
+   "Database Construction and Management in Health Information System",
+   "Statistical Methods in Health Information Management I",
+   "Health Records Management II",
+   "Health Care Financing, Insurance Principles and Programme",
+   "Fundamental of Medical Practice",
+   "Software Applications to Health Information Management (2 Units: C: LH",
+   "Computer Applications in Health Information System",
+   "Principles of Information Retrieval System I",
+   "Principles of Management in Health Information System",
+   "Research Methods and Proposal Writing in Health Information",
+   "Industrial Practice in Medical and Health Institutions",
+   "Data Communications and Telecommunications Networking"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Medical Laboratory Science",
+  "code": "MLS",
+  "technical_skills": [
+   "define safety awareness for Medical Laboratory Personnel",
+   "describe steps used as precautionary measures",
+   "select the correct means of disposal of waste generated in the Medical Laboratories",
+   "list the types of samples used in the clinical laboratories",
+   "identify the preanalytical, pre-collection, collection and post collection variables that can adversely affect laboratory results",
+   "list the proper drawing order for collection tubes; and",
+   "describe the general steps for processing samples",
+   "convert results from one unit format to another using si unit system",
+   "describe the physiology and biochemistry of the gastric secretion",
+   "list the test in urinalysis and microscopy profile",
+   "describe how laboratory tests are used in these disorders",
+   "discuss the mode of action of hormones in carbohydrate metabolism",
+   "discuss the type of lipids",
+   "describe the measurement of plasma lipid and lipoproteins",
+   "outline the factors affecting synthesis of protein",
+   "explain the functions of kidney; and Allied Health Sciences 350 New",
+   "outline the causes of acidosis and alkalosis",
+   "discuss the basic concepts of origin, development and functions of blood cells",
+   "describe the methods of Haemoglobin estimation",
+   "describe the methods of cell counting",
+   "state simple tests used in blood coagulation; and",
+   "explain blood films-normal and abnormal",
+   "describe the classification and nomenclature of microorganisms",
+   "explain the general properties of bacteria, structure, growth and reproduction requirements",
+   "state the general properties, structure and biology of viruses"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Medical Laboratory Science",
+   "Basic Clinical Chemistry",
+   "Basic Haematology",
+   "Basic Microbiology",
+   "Basic Histopathology",
+   "Basic Immunology",
+   "Laboratory Posting I",
+   "Practical Exercise I",
+   "Fundamentals of Blood Group Serology",
+   "Basic Medical Parasitology",
+   "Biomedical Engineering",
+   "Laboratory Management and Functions and General Laboratory Practice",
+   "Medical Laboratory Haematology I",
+   "Medical Laboratory Histopathology I",
+   "Medical Laboratory Microbiology I",
+   "Laboratory Instrumentation & Techniques",
+   "Research Methodology",
+   "Laboratory Posting II",
+   "Clinical Chemistry I",
+   "Blood Group Serology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Human Nutrition and Dietetics",
+  "code": "NUT",
+  "technical_skills": [
+   "explain the objectives of Nutrition and Dietetics",
+   "define key terms in Nutrition and Dietetics",
+   "discuss basic principles of nutrition",
+   "give basic overview on the relationship between nutrition and health; and",
+   "explain nutrient requirements and intakes",
+   "discuss basic nutrition principles",
+   "describe the concept of digestion, absorption and functions of nutrients",
+   "discuss principles of energy balance",
+   "explain the determinants of food choices",
+   "explain the effects of anti-nutrients and nutrient-nutrient interaction",
+   "discuss with dietary guidelines",
+   "give an overview of food and nutrition security",
+   "explain the concept of dietary diversity",
+   "identify the non-conventional foods",
+   "discuss the concept of food enrichment, supplementation and fortification; and",
+   "give an overview of basic nutrition evaluation methods Allied Health Sciences 427 New",
+   "explain the concept of malnutrition",
+   "describe the conceptual framework for the courses of malnutrition",
+   "explain nutrition-related diseases; and",
+   "give overview of nutrition in the prevention and management of diseases",
+   "differentiate between continuous and discontinuous data",
+   "explain sampling procedures in biology",
+   "summarise and present biological data",
+   "describe measures of central tendency and probability theory; and",
+   "conduct ANOVA, Chi-square, t-tests and F-tests and state their importance"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Human Nutrition and Dietetics",
+   "Principles of Nutrition and Dietetics",
+   "Introduction to Clinical Nutrition",
+   "Food Composition, Analysis & Sensory Evaluation",
+   "Diet Therapy and Hospital Practical I",
+   "Nutritional Assessment and Food Consumption Studies",
+   "Research Methods in Nutrition and Dietetics",
+   "Nutrition Education and Communication",
+   "Students' Industrial Work Experience I",
+   "Advanced Food Preparation",
+   "Community Nutrition",
+   "International Nutrition",
+   "Seminar in Nutrition and Dietetics & Proposal Writing",
+   "Nutrition Planning, Policy and Advocacy",
+   "Public Health Nutrition",
+   "Nutrition Counselling",
+   "Students' Industrial Work Experience II",
+   "Advances in Human Nutrition",
+   "Diet Therapy Practical",
+   "Nutritional Epidemiology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Occupational Therapy",
+  "code": "OCT",
+  "technical_skills": [
+   "describe OT as a profession within the Nigerian health care system and the specific role, history and of OT, teamwork and multidisciplinary interaction",
+   "outline the philosophy, scope, fields and sectors of practice of OT",
+   "explain professional etiquette, ethics, legal responsibilities, rules of conduct of OT",
+   "explain the regulatory role of MRTBN and OT professional association, its role and responsibilities",
+   "discuss the OT process and practice framework utilised in OT",
+   "discuss the fundamentals of client handling and professional and therapeutic relationships, counselling and clinical reasoning; and",
+   "describe the central concept of occupation in OT handling and professional and therapeutic relationships. Counselling and clinical reasoning",
+   "describe the foundations of occupational therapy and explain various theories and frames of references of Occupational therapy",
+   "analyse, synthesise, and apply models of occupational performance",
+   "apply theories that underlie the practice of occupational therapy",
+   "use theories, models of practice, and frames of reference to guide and inform evaluation and intervention",
+   "analyse and discuss how occupational therapy history, occupational therapy theory, and the sociopolitical climate influence practice",
+   "compare and contrast models of practice and frames of reference that are used in occupational therapy",
+   "apply theoretical constructs to evaluation and intervention with various types of clients in a variety of practice contexts and environments to analyze and effect meaningful occupation outcomes",
+   "discuss the process of theory development and its importance to occupational therapy",
+   "utilise national and international resources in making assessment or intervention choices; and",
+   "appreciate the influence of international occupational therapy contributions to education, research, and practice",
+   "demonstrate general understanding of basic pathology and microbiology of common disease that occupational therapists will encounter in their practice",
+   "describe the limitations imposed by pathology on the functioning of the individual; and",
+   "discuss the pathology of disease and infections in human body",
+   "describe pharmacology of drugs used in major systemic disorder",
+   "develop a basic appreciation of important pharmacological terms, discuss the various systems of classification and naming of drugs, and develop an understanding of how drugs are regulated",
+   "discuss basic pharmacodynamic concepts, including familiarity with drug-receptor interactions and dose-response relationships",
+   "explain the important terms used in pharmacokinetics, describe the events that occur from the time of drug entry into the body to drug exit from the body, and understand factors that influence drug pharmacokinetics",
+   "develop a basic appreciation of the routes of drug administration and various forms of drug preparations; Allied Health Sciences 467 New"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Occupational Therapy & Basic Procedures for",
+   "Occupational Therapy Theory and Practice",
+   "Pathology for Occupational Therapy",
+   "Pharmacology for Occupational Therapy",
+   "Developmental Psychology",
+   "Therapeutic Skills and Activity Analysis",
+   "Kinesiology",
+   "Neuroscience for Occupational Therapy",
+   "Assistive Technology, Prosthetics, and Orthotics",
+   "Introduction to Clinical Work in OT I",
+   "Physical Dysfunction and Rehabilitation I",
+   "Occupational Therapy in Paediatrics I",
+   "Neuro-Rehabilitation for Occupational Therapy",
+   "Physical Dysfunction and Rehabilitation II",
+   "Occupational Therapy in Paediatrics II",
+   "Introduction to Clinical Work in OT II",
+   "Research Methods in Medical Rehabilitation",
+   "Imaging and Physical Diagnosis",
+   "Ergonomics and Universal Design",
+   "Clinical Work in OT I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D154",
+    "domain": "Exercise Science, Sports Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D088",
+    "domain": "Beauty Therapy, Aesthetics",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D165",
+    "domain": "Wellness Coaching, Lifestyle Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Public Health",
+  "code": "PHS",
+  "technical_skills": [
+   "demonstrate knowledge of interval estimation and hypothesis testing",
+   "apply the correct statistical method to analyse one or more variables",
+   "interpret statistical results effectively and correctly",
+   "appreciate the importance of data and demonstrate reasonable statistical skills; and",
+   "explain the concept of sampling from a study population in a health study Allied Health Sciences 678 New",
+   "explain the history and philosophy of public health and its core values",
+   "explain the concept of public health and its function in Nigeria and across the globe",
+   "demonstrate competence in explaining various concepts of public health",
+   "identify different branches of public health and their application in National Health Policy; and",
+   "explain the various layers of health care and the agencies responsible at each level",
+   "develop knowledge of quantitative and qualitative techniques of epidemiology",
+   "plan and conduct valid epidemiological activities",
+   "apply field method of primary and secondary data collection",
+   "describe routine methods of data analysis",
+   "compare the strength and weakness of various experimental designs",
+   "implement and interpret result of a study to address health issues",
+   "develop critical skills for evaluation of epidemiological findings in reports and studies",
+   "define objectives of outbreak investigation in a population",
+   "describe the basic principle of screening and outbreak investigation",
+   "explain immunisation and its problems",
+   "demonstrate knowledge of experimental design, data collection, analysis and interpretation of data of an outbreak; and",
+   "appreciate and identify risk factors of an outbreak and communicate same to health authorities. the monitoring and evaluation processes of selected endemic diseases at the national, state, and epidemiological problem. Identify a population. choose a method and design for sampling from the population. Choose and propose records for ascertainment and classification of diseases and risk factors. Outline a plan of action for data collection and presentation. Students are expected to participate actively in fieldwork assignments and to submit reports. Both communicable and non-communicable morbidity and mortality patterns and trends in Nigeria and elsewhere should be highlighted. Allied Health Sciences 679 New",
+   "demonstrate a clear understanding of basics of demography",
+   "discuss the importance of demography in health issues",
+   "describe social demographic variables and how they affect population composition and growth"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Biostatistics",
+   "Introduction to Public Health",
+   "Biostatistics",
+   "Principles of Epidemiology (Infectious Disease Epidemiology and",
+   "Demography and Social Statistics in Public Health",
+   "Public Health Microbiology and Parasitology/Entomology",
+   "Health Programme Planning and Evaluation",
+   "Environmental Health and Public Health Laws",
+   "Occupational Health and Disaster Management",
+   "Family and Reproductive Health",
+   "Community Health Practicum I",
+   "Public Health Nutrition",
+   "Health Policy and Finance",
+   "Health Systems, Planning, Management and Administration",
+   "Health Sociology",
+   "Community Health Care Practicum II",
+   "International and Global Health",
+   "Principles of Pharmacology, Therapeutics and Substance Abuse",
+   "Research Project"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Optometry",
+  "code": "OPT",
+  "technical_skills": [
+   "identify different types of lenses and mirrors",
+   "describe the nature of images formed by different lenses and mirrors",
+   "differentiate between real and virtual images",
+   "state the relationship between the object size and image size by a concave mirror as well as magnification",
+   "determine the power of the convex lens as well as magnification",
+   "describe how to set up the optical bench with lens holders, lenses, screen position to calculate focal length; and",
+   "explain the use of a meter rule in focal length determination",
+   "describe the composition of a cell membrane",
+   "explain how a potential difference across a membrane will influence the distribution of a cation and an anion",
+   "describe how transport rates of certain molecules and ions are accelerated by specific membrane transport proteins",
+   "distinguish between active (primary and secondary) transport, facilitated diffusion, and passive diffusion based on energy source and carrier protein involvement",
+   "identify the mechanisms and role of selective transporters for amino acids, neurotransmitters, nutrients, etc",
+   "explain the general concepts of homeostasis and the principles of positive and negative feedback in physiological systems",
+   "identify the site of erythropoietin production, the stimulus for its release, and the target tissue for erythropoietin action",
+   "discuss the normal balance of red blood cell synthesis and destruction, including how imbalances in each lead to anemia or polycythemia",
+   "list and differentiate the various types of leukocytes",
+   "describe the role of thrombocytes in haemostasis; and",
+   "list clotting factors and the discuss the mechanism of anti-coagulants",
+   "appreciate the importance of the relationship of optics to the eye's optical media, particularly the crystalline lens",
+   "have good knowledge of the different types of lenses and mirrors",
+   "describe the formation of images by both concave and convex mirrors",
+   "desribe the formation of images by both concave and convex lenses",
+   "describe the principles of reflection and refraction in the formation of images",
+   "describe how to use light source to construct images formed through rays tracing; and",
+   "have knowledge. about some optical instruments and their functions such as telescope and microscope"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Optics Laboratory",
+   "Geometrical Optics",
+   "Physical Optics",
+   "Ocular Anatomy I",
+   "Ocular Anatomy Laboratory",
+   "History of Optometry",
+   "Ophthalmic Optics Laboratory",
+   "Physiological Optics Laboratory I",
+   "Physiological Optics I",
+   "Ophthalmic Optics I",
+   "Ophthalmic Optics II",
+   "General Optometry 1",
+   "Ocular Anatomy II",
+   "Ocular Physiology",
+   "General Optometry II",
+   "General Pathology",
+   "Optometric Ethics and Jurisprudence",
+   "Physiological Optics II",
+   "Ocular Genetics and Molecular Biology",
+   "Ocular Neurophysiology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D067",
+    "domain": "Dentistry",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Prosthetics and Orthotics",
+  "code": "POT",
+  "technical_skills": [
+   "discuss different aspects of first aid",
+   "describe different items used in giving first aid to persons in a work place",
+   "identify types of injuries based on level of injuries and bleeding; and",
+   "describe how to care and transport injured patients who need further evaluations and treatment",
+   "explain the important properties of various types of materials: metals, ceramics, polymers, and composites",
+   "describe the relationships that exist between the structural elements of these materials and their characteristics",
+   "explain mechanical strength and failure behaviour of these materials, along with techniques used to improve the mechanical and failure properties in terms of alteration of structural elements",
+   "describe the basis for the selection of different materials for specific prosthetic and orthotic applications",
+   "discuss the toxicity and safety issues associated with the use of specific materials",
+   "describe the occupational health and safety policy and procedures in the workplace",
+   "demonstrate proficiency in the use of hand tools and machine tools commonly used in the fabrication of orthopaedic devices. Allied Health Sciences 648 New",
+   "compare and contrast strategies for clinical assessment of patients and describe appropriate investigative techniques including patient history taking and physical examination",
+   "recognise a n d d e s c r i b e t h e s i g n s a n d s y m p t o m s o f the most common pathologies which require prosthetic solutions including, aetiology, clinical presentation, prognosis and appropriate device management",
+   "distinguish between the physical characteristics of the limbs and discuss the relative implication for device design",
+   "describe and compare temporospatial and kinematic characteristics of normal and pathological gait and use this information to justify the selection and design of appropriate devices; construction of devices",
+   "compare and contrast the functional characteristics of prosthetic components",
+   "formulate appropriate prosthetic prescriptions for wide range clinical situations; and",
+   "appreciate and describe the roles of key members of the rehabilitation team and identify how they interrelate with the prosthetist",
+   "identify casting material and different types of casting like traction embedded in plaster cast",
+   "identify jackets such as: Modified Minerva body jacket, Full minerva body jacket, Halo-pelvic a body jacket",
+   "identify and explain the chemical components of synthetic plaster bandage",
+   "differentiate between plaster of paris and synthetic plaster bandage",
+   "demonstrate the application of synthetic bandage to make a plaster cast",
+   "identify the materials used to make the plaster casts of the lower extremities",
+   "making of the following plaster cads of the lower extremities of the human being; boot plaster cast, below knee cast, Above Knee cast, High above Knee cast cylinder cast; and"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "First Aid in Prosthetics and Orthotics",
+   "Materials Technology",
+   "Lower Limb Orthotics I",
+   "Lower Limb Orthotics II",
+   "Spinal and Upper Limb Orthotics I",
+   "Spinal and Upper Limb Orthotics II",
+   "Lower Limb Prosthetics I",
+   "Lower Limb Prosthetics II",
+   "Upper Limb Prosthetics",
+   "Plaster Casting Technique I",
+   "Plaster Casting Techniques II",
+   "Clinical Pathology",
+   "Research Methodology",
+   "Dissertation Seminar",
+   "Therapeutic Exercises and Assistive Devices",
+   "Orthopaedic Pathology I",
+   "Orthopaedic II",
+   "Biomechanics II",
+   "General Prosthesis and Orthosis Practice",
+   "Research Project"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D131",
+    "domain": "Motorsport Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D106",
+    "domain": "Garment Making, Tailoring, Dressmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Radiography",
+  "code": "RAD",
+  "technical_skills": [
+   "explain the basic physical processes underpinning Radiography",
+   "apply physical principles in understanding and practice of diagnostic medical imaging devices and procedures",
+   "identify the sources of radiation and mechanisms of their production for both ionizing and non- ionizing",
+   "describe its physical characteristics and interaction with matter especially biological systems and",
+   "explain the application of radiation in medicine, biology and industry Allied Health Sciences 713 New",
+   "describe health situations classified as medical emergency",
+   "explain immediate Care in emergency",
+   "apply necessary measures to control infection in a healthcare environment",
+   "communicate effectively with other members of the team using appropriate language",
+   "report medical emergency encountered on duty",
+   "take vital signs of patients",
+   "carry out simple nursing procedures and emergency resuscitation of patients; and",
+   "practice nursing procedures in radiology they have learnt including administration of first aid, patient monitoring skills and aseptic procedures and demonstrate relevant skills",
+   "demonstrate clarity in communicating the biological basis of radiation protection",
+   "describe international standards and practices for safety in all applications of radiation for medicine and industry. Students should carry out measurements using radiation dosimetry equipment",
+   "describe principles of operation of radiation dosemeters; and",
+   "apply principle of radiation protection in radiology and other settings",
+   "identify the similarities and differences between CT, MRI, U/S, and the underlying physical processes that achieve sectional imaging; and",
+   "describe the instrumentation and explain the operation and usage of digital processors to obtain high quality images",
+   "explain the terminologies, projections and accessories required to carry out x-ray investigations for the upper and lower limbs",
+   "describe patient preparations, radiation protection and exposure factors consistent with production of high quality radiographs",
+   "state the indications, projections, exposure factors and safety precautions for carrying out x- ray investigations of the skull",
+   "describe the procedures involving contrast media, excretory system and obstetrics and gynaecology; and",
+   "explain the radiation protection and allergic reactions/risks associated with the procedures",
+   "describe the physical and chemical processes involved in x-ray image formation, the structure of image receptor and care of accessory equipment; and"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Basic Physics in Radiology",
+   "Basic Patient care, Hospital Practice and Professional Ethics",
+   "Radiobiology, Radiation Dosimetry and Protection",
+   "Physics of Cross-sectional Imaging",
+   "Radiography Techniques I",
+   "Radiographic Imaging Process I",
+   "Artificial Intelligence in Radiography",
+   "Radiographic Anatomy and Physiology I",
+   "Psychology and Medical Sociology for Radiography Students",
+   "Radiographic Equipment I",
+   "Pharmacology for Medical Imaging",
+   "Radiology Administration and Management",
+   "Clinical Posting I",
+   "Entrepreneurship/ Education in Radiography",
+   "Research Methodology",
+   "Radiographic Technique III",
+   "Ultrasound Imaging/Computerised Tomography",
+   "Radio-Nuclide Imaging /Thermography/MRI",
+   "Radiographic Equipment II",
+   "Radiographic Imaging Process III"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D124",
+    "domain": "Community Health Extension",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D067",
+    "domain": "Dentistry",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Speech-Language Therapy",
+  "code": "SLT",
+  "technical_skills": [
+   "recall the concept of Speech-Language Therapy",
+   "express the relevance of Speech-Language Therapy Profession",
+   "describe the development of Speech-Language Therapy practice",
+   "list some qualities expected of Speech-Language Therapists; and",
+   "discuss some ethical issues in Speech-Language Therapy practice",
+   "recall specific milestones in speech-language development",
+   "state specific speech behaviour of children at specific months of growth",
+   "identify signs of normal and abnormal speech development as children grow",
+   "assess normal and abnormal speech growth in children",
+   "assess normal and abnormal language development in toddlers; and",
+   "review corresponding speech-language behaviours and cognitive, neurological and social development of growing children, youth and adults",
+   "describe intuition, critical thinking, divergent thinking, creative thinking, and many others",
+   "illustrate specific processes involved in making clinical decisions",
+   "evaluate some evidence-based clinical issues; and",
+   "demonstrate how patients' actions are useful for clinical reasoning and decision making",
+   "describe specific speech-language disorders common with children and adults",
+   "explain nature or characteristics of specific speech-language disorders across the span",
+   "list causes of speech-language disorders across the span",
+   "review the trends of speech-language disorders across the span",
+   "explain assessment procedures for speech-language disorders across the span; and",
+   "express appropriate therapies for specific speech-language disorders across the span",
+   "list some principles of intervention in Speech-Language Therapy practice",
+   "explain some unique features of Speech-Language Therapy practice",
+   "describe a Speech-Language Therapists initiates therapeutic intervention; and",
+   "discuss some key procedures in Speech-Language intervention"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Speech-Language Therapy",
+   "Speech-Language Development Across the Span",
+   "Clinical Methods in Speech-Language Therapy",
+   "Speech-Language Disorders Across the Span",
+   "Theories, Principles and Practice of Speech-Language Therapy",
+   "Medical Speech-Language Pathology",
+   "Phonetics and Linguistics in Speech-Language Therapy",
+   "Medical Conditions Amenable to Speech-Language Therapy",
+   "Student Teaching Clinical Internship",
+   "Entrepreneurship in Speech-Language Therapy",
+   "Augmentative and Alternative Communication Systems",
+   "Cleft Palate/Lip and Cerebral Palsy",
+   "Clinical Work in Speech-Language Therapy",
+   "Special Topics Seminar in Speech-Language Pathology",
+   "Project",
+   "Communication Skills and Ethics",
+   "Autism Spectrum Disorders",
+   "Voicing and Fluency Disorders",
+   "Professionalism and Speech-Language Therapy"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D088",
+    "domain": "Beauty Therapy, Aesthetics",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D126",
+    "domain": "Complementary, Alternative",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D068",
+    "domain": "Allied Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   }
+  ]
+ }
+]

@@ -1,0 +1,23 @@
+{
+  "jamb_name": "Animal Production",
+  "utme_subjects": ["Chemistry", "Biology/Agricultural Science", "Physics/Mathematics", "Use of English"],
+  "olevel_requirement": "Five SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language.",
+  "direct_entry": "Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics.",
+  "institution_waivers": [
+    {"institution": "BAUCHI", "note": "Accepts NCE, ND, HND with overall credit passes in each of the Agricultural components of the programme or a minimum of lower credit plus four (4) 'O' level credit passes in relevant subjects. Accepts 'O' level pass in Physics with 'O' level pass in Mathematics or vice-versa."},
+    {"institution": "MINNA", "note": "Accepts NCE, ND, HND with overall credit passes in each of the Agricultural components of the programme or a minimum of lower credit plus four (4) 'O' level credit passes in relevant subjects. Same as in Water Resources, Aquaculture and Fisheries Technology."},
+    {"institution": "IBADAN", "note": "Requires two (2) of Physics, Chemistry and Biology and ND/HND in Agriculture or Animal Health and Husbandry."},
+    {"institution": "EKSU", "note": "Same as in Agricultural Economics; as in Agricultural Economics and Extension and does not accept NCE. Accepts 'O' level pass in Physics."},
+    {"institution": "MAKURDI", "note": "Same as in Agricultural Economics. Accepts 'O' level pass in Physics."},
+    {"institution": "UMUDIKE", "note": "Same as in Agricultural Economics; same as in Agriculture."},
+    {"institution": "ADSU", "note": "Accepts ND distinction, HND credit, NCE credit double major in Agriculture. Accepts 'O' level pass in Physics with 'O' level pass in Mathematics or vice-versa."},
+    {"institution": "NDU", "note": "Same as in Fisheries Technology. Requires five (5) 'O' level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."},
+    {"institution": "LAUTECH", "note": "Requires ND with upper credit/HND/NCE at credit level in relevant subjects, plus the UTME requirements. Accepts Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language. UTME subjects require Chemistry, Mathematics/Physics and Biology/Agricultural Sciences."},
+    {"institution": "FUNAAB", "note": "(a) Two (2) 'A' level passes in Chemistry and one of Zoology/Botany/Agricultural Science/Biology, Mathematics or Physics; (b) ND/HND upper credit in Agriculture from a recognised institution in any one of Animal Sciences, Animal Production and Health, Husbandry, Agricultural Economics, Fisheries and Forestry and Wildlife Management plus the UTME requirements; (c) NCE credit in Agricultural Science, Biology, Chemistry or Physics plus the UTME requirements. As in Agriculture Extension and Rural Development."},
+    {"institution": "FUTA", "note": "(i) ND with a minimum of upper credit or equivalent from recognised Polytechnics and Colleges of Technology in Agricultural Sciences; (ii) GCE or equivalent passes at one sitting with at least six (6) points in Biology/Animal Husbandry and any of Mathematics, Physics and Chemistry. Requires five (5) credit passes at SSC at a maximum of two (2) sittings in English Language, Mathematics, Physics, Chemistry, Biology or Agricultural Science. UTME subjects require Chemistry, Biology/Agricultural Science/Animal Husbandry and Mathematics/Physics."},
+    {"institution": "JABU", "note": "Requires Chemistry, Biology/Agricultural Science and any others from Economics, Physics, Geography and Mathematics. ND/NCE upper credit in relevant areas. Accepts 'O' level pass in Physics."},
+    {"institution": "CRUTECH", "note": "Accepts 'O' level pass in Physics. UTME subjects require Mathematics, Physics and one of Biology or Chemistry."},
+    {"institution": "UNIZIK", "note": "Accepts 'O' level pass in Physics. Accepts 'O' level pass in English Language, 'O' level credit pass in Mathematics or 'O' level pass in Physics or vice versa."},
+    {"institution": "ABSU", "note": "Requires 'O' level credit in Physics."}
+  ]
+}

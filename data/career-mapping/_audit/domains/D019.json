@@ -1,0 +1,387 @@
+{
+ "domain_id": "D019",
+ "domain_name": "Renewable Energy Engineering",
+ "role_count": 76,
+ "roles": [
+  {
+   "role": "cable jointer",
+   "isco": 7413,
+   "aka": "cable installation electrician  ·  electricity cable jointer  ·  electrical cable maintenance worker  ·  cable maintenance electrician  ·  low voltage electricity cable jointer"
+  },
+  {
+   "role": "hydroelectric plant operator",
+   "isco": 3131,
+   "aka": "hydropower plant technician  ·  hydro-power plant operator  ·  hydropower plant operative  ·  hydro-power plant technician  ·  hydroelectric power plant technician"
+  },
+  {
+   "role": "fossil-fuel power plant operator",
+   "isco": 3131,
+   "aka": "power station operator  ·  power station worker  ·  combined cycle power plant operator  ·  LNG-fired power plant operator  ·  coal-fired power plant operator"
+  },
+  {
+   "role": "electromagnetic engineer",
+   "isco": 2151,
+   "aka": "electro magnetics engineer  ·  electromagnetic technology engineer  ·  electromagnetic engineering consultant  ·  electromagnetic compatibility engineer  ·  electromagnetic systems engineer"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "building electrician",
+   "isco": 7411,
+   "aka": "installation electrician  ·  maintenance electrician  ·  electrical maintenance technician  ·  electrical systems installer  ·  electrical installer"
+  },
+  {
+   "role": "offshore renewable energy plant operator",
+   "isco": 3131,
+   "aka": "tidal farm operator  ·  ocean energy plat operator  ·  wave farm operator  ·  marine renewable energy plant operator  ·  marine wind energy operator"
+  },
+  {
+   "role": "electrician",
+   "isco": 7411,
+   "aka": "wirewoman  ·  installation electrician  ·  maintenance electrician  ·  electrical maintenance technician  ·  electrical systems installer"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "electric power generation engineer",
+   "isco": 2151,
+   "aka": "electric power supply engineer  ·  power generation networks engineer  ·  electric power station engineer  ·  power station engineer  ·  power plant engineer"
+  },
+  {
+   "role": "domestic electrician",
+   "isco": 7411,
+   "aka": "electrician  ·  residential electrician  ·  domestic and commercial electrician"
+  },
+  {
+   "role": "industrial electrician",
+   "isco": 7411,
+   "aka": "electrical technician  ·  electrician  ·  marine electrician  ·  industrial electrical technician  ·  industrial maintenance electrician"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "solar power plant operator",
+   "isco": 3131,
+   "aka": "solar power plant maintenance operative  ·  solar electric power plant operator  ·  solar array operative  ·  solar farm worker  ·  solar array worker"
+  },
+  {
+   "role": "overhead line worker",
+   "isco": 7413,
+   "aka": "linesman  ·  overhead linesman  ·  overhead transmission and distribution linesperson  ·  high voltage lineworker  ·  low voltage lineworker"
+  },
+  {
+   "role": "smart home engineer",
+   "isco": 2151,
+   "aka": "domotics engineer  ·  smart home project engineer  ·  smart home software engineer  ·  home automation specifier  ·  home automation platform engineer"
+  },
+  {
+   "role": "power production plant operator",
+   "isco": 3131,
+   "aka": "power plant operator  ·  power station operator  ·  electricity generating plant operative  ·  power station worker  ·  electricity generation plant operator"
+  },
+  {
+   "role": "electrical power distributor",
+   "isco": 3131,
+   "aka": "electrical power systems power dispatcher  ·  distribution control operator  ·  power line worker"
+  },
+  {
+   "role": "solar energy technician",
+   "isco": 7411,
+   "aka": "photovoltaic system technician  ·  solar energy system designer  ·  solar farm technician  ·  PV field technician  ·  solar operations and maintenance technician"
+  },
+  {
+   "role": "battery system engineer",
+   "isco": 2151,
+   "aka": "battery cell module engineer  ·  power system protection engineers  ·  electronic systems engineer  ·  automotive vehicle electronics analysis specialist  ·  battery storage consultants"
+  },
+  {
+   "role": "electromechanical engineer",
+   "isco": 2151,
+   "aka": "electro-mechanical assembly engineer  ·  electro-mechanical equipment engineer  ·  engineering technician  ·  electro-mechanical designer  ·  electromechanical prototype developer"
+  },
+  {
+   "role": "electrical transmission system operator",
+   "isco": 3131,
+   "aka": "electricity transmission system worker  ·  electric powerline system worker  ·  electricity power line system worker  ·  electricity transmission system technician"
+  },
+  {
+   "role": "electrical engineer",
+   "isco": 2151,
+   "aka": "electrical technology engineering consultant  ·  electrical engineering specialist  ·  engineer in electrical systems  ·  electrical engineering consultant  ·  electrical systems engineer"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "onshore wind farm technician",
+   "isco": 3131,
+   "aka": "wind turbine service technician  ·  wind farm technician  ·  onshore wind turbine repair technician  ·  onshore wind plant operator  ·  onshore wind turbine maintenance technician"
+  },
+  {
+   "role": "steam turbine operator",
+   "isco": 3131,
+   "aka": "steam boiler operator  ·  steam turbine generator operator  ·  steam turbine monitoring operator  ·  steam turbine machinery operator  ·  steam-electric power operator"
+  },
+  {
+   "role": "power distribution engineer",
+   "isco": 2151,
+   "aka": "power distribution engineering expert  ·  power distributions engineer  ·  power distribution technology engineering specialist  ·  power distribution engineering adviser  ·  power distribution systems engineer"
+  },
+  {
+   "role": "nuclear reactor operator",
+   "isco": 3131,
+   "aka": "nuclear reactor operation technician  ·  nuclear reactor safety supervisor  ·  nuclear reactor operative  ·  nuclear reactor control panel worker  ·  nuclear reactor controller"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "battery simulation engineer",
+   "isco": 2151,
+   "aka": "device test engineer  ·  battery test development engineer  ·  battery modeling specialist  ·  battery simulation specialist  ·  battery calibration engineer"
+  },
+  {
+   "role": "geothermal power plant operator",
+   "isco": 3131,
+   "aka": "geothermal plant operative  ·  geothermal power plant operative  ·  geo-thermal power plant operative  ·  geothermal plant operator  ·  geo-thermal plant operator"
+  },
+  {
+   "role": "electricity distribution technician",
+   "isco": 7413,
+   "aka": "lineswoman  ·  electricity power line worker  ·  powerline worker  ·  linesman  ·  linewoman"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "mine electrical engineer",
+   "isco": 2151,
+   "aka": "electrical engineering expert  ·  electrical engineer  ·  electrical technologist  ·  mines electrical engineer  ·  mining electrical engineer"
+  },
+  {
+   "role": "event electrician",
+   "isco": 7411,
+   "aka": "event/generator electrician  ·  mobile power team member  ·  generator technician and event electrician  ·  mobile power crew member  ·  live event electrician"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "substation engineer",
+   "isco": 2151,
+   "aka": "substation technology engineering consultant  ·  substation engineering specialist  ·  substation technology engineering expert  ·  substation engineering consultant  ·  sub stations engineer"
+  },
+  {
+   "role": "street lighting electrician",
+   "isco": 7413,
+   "aka": "street lighting operative  ·  street light repair electrician  ·  street light electrician  ·  highway lighting operative  ·  street lighting repair electrician"
+  },
+  {
+   "role": "power plant control room operator",
+   "isco": 3131,
+   "aka": "power station operator  ·  electricity generating plant operative  ·  electricity generation plant operator  ·  electricity generating plant worker  ·  electric power station operator"
+  },
+  {
+   "role": "electric meter technician",
+   "isco": 7411,
+   "aka": "electricity meter test technician  ·  electric meter installer  ·  electricity meter installation technician  ·  electricity meter maintenance operative  ·  smart meter installer"
+  },
+  {
+   "role": "Renewable Energy Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Renewable Energy Technicians",
+   "isco": 3131,
+   "aka": NaN
+  },
+  {
+   "role": "Solar Energy Installation and System Engineers",
+   "isco": 2151,
+   "aka": NaN
+  },
+  {
+   "role": "Energy Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Electrical Power-Line Installers and Repairers",
+   "isco": 7413,
+   "aka": NaN
+  },
+  {
+   "role": "Aerospace Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Agricultural Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Bioengineers and Biomedical Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Fire-Prevention and Protection Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Human Factors Engineers and Ergonomists",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Validation Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Marine Engineers and Naval Architects",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Materials Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Nuclear Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Petroleum Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Energy Engineers, Except Wind and Solar",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Mechatronics Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Microsystems Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Photonics Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Robotics Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Nanosystems Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Wind Energy Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Solar Energy Systems Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Surveying and Mapping Technicians",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Paving, Surfacing, and Tamping Equipment Operators",
+   "isco": 7411,
+   "aka": NaN
+  },
+  {
+   "role": "Pile Driver Operators",
+   "isco": 7413,
+   "aka": NaN
+  },
+  {
+   "role": "Motorboat Mechanics and Service Technicians",
+   "isco": 7413,
+   "aka": NaN
+  },
+  {
+   "role": "Motorcycle Mechanics",
+   "isco": 7411,
+   "aka": NaN
+  },
+  {
+   "role": "Outdoor Power Equipment and Other Small Engine Mechanics",
+   "isco": 7413,
+   "aka": NaN
+  },
+  {
+   "role": "Maintenance Workers, Machinery",
+   "isco": 7411,
+   "aka": NaN
+  },
+  {
+   "role": "Telecommunications Line Installers and Repairers",
+   "isco": 7413,
+   "aka": NaN
+  }
+ ]
+}

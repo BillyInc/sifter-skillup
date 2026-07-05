@@ -1,0 +1,252 @@
+{
+ "domain_id": "D054",
+ "domain_name": "Oil",
+ "role_count": 49,
+ "roles": [
+  {
+   "role": "petroleum pump system operator",
+   "isco": 3134,
+   "aka": "petroleum refinery pump operator"
+  },
+  {
+   "role": "quarry engineer",
+   "isco": 2146,
+   "aka": "quarry manager  ·  mine planning engineer  ·  drilling and blasting engineer  ·  mine engineer  ·  drilling & blasting engineer"
+  },
+  {
+   "role": "oil and gas production manager",
+   "isco": 1322,
+   "aka": "oil production project manager  ·  gas production scheduler  ·  gas operations manager  ·  gas field production manager  ·  gas production manager"
+  },
+  {
+   "role": "metallurgical technician",
+   "isco": 3117,
+   "aka": "metallurgist  ·  mining technician  ·  minerals technician  ·  metallurgy test technician  ·  metallurgical research technician"
+  },
+  {
+   "role": "mine manager",
+   "isco": 1322,
+   "aka": "mine supervisor  ·  quarry manager  ·  facility manager  ·  mine engineer  ·  mining engineer"
+  },
+  {
+   "role": "oil refinery control room operator",
+   "isco": 3134,
+   "aka": "process operator  ·  control room technician  ·  refinery process technician  ·  refinery process operator  ·  operations supervisor"
+  },
+  {
+   "role": "chemical metallurgist",
+   "isco": 2146,
+   "aka": "extraction metallurgist  ·  chemical metallurgy expert  ·  chemical metallurgy consultant  ·  chemical metallurgy adviser  ·  chemical metallurgy research analyst"
+  },
+  {
+   "role": "pipeline pump operator",
+   "isco": 8113,
+   "aka": "pipeline goods transfer operator  ·  oil transfer operator  ·  pump tender  ·  pipe tender  ·  pipeline tender"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "drilling engineer",
+   "isco": 2146,
+   "aka": "oil rig driller  ·  rig driller  ·  earth driller  ·  gas rig driller  ·  mineral driller"
+  },
+  {
+   "role": "explosives engineer",
+   "isco": 2146,
+   "aka": "blasting engineer  ·  munitions engineer  ·  ordnance engineer"
+  },
+  {
+   "role": "derrickhand",
+   "isco": 8113,
+   "aka": "derrick operator  ·  member of the drilling crew  ·  derrickwoman  ·  derrickman"
+  },
+  {
+   "role": "well-digger",
+   "isco": 8113,
+   "aka": "geotechnical driller  ·  water borehole digger  ·  water well-digger  ·  drillers offsider  ·  water well driller"
+  },
+  {
+   "role": "gas processing plant control room operator",
+   "isco": 3134,
+   "aka": "process plant operator  ·  panel controller  ·  gas processing plant operator  ·  gas processing control room manager  ·  panel board operator"
+  },
+  {
+   "role": "liquid fuel engineer",
+   "isco": 2146,
+   "aka": "gas liquids engineer  ·  chemical engineer  ·  fuel chemist  ·  biofuel specialist  ·  fuel system engineer"
+  },
+  {
+   "role": "process metallurgist",
+   "isco": 2146,
+   "aka": "process metallurgy science researcher  ·  process metallurgy research analyst  ·  process metallurgy adviser  ·  process metallurgy research scientist  ·  process metallurgy analyst"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "tool pusher",
+   "isco": 8113,
+   "aka": "toolpushers  ·  oil and gas rigging technician  ·  rig manager  ·  pusher  ·  toolpusher"
+  },
+  {
+   "role": "mine development engineer",
+   "isco": 2146,
+   "aka": "development engineer  ·  facility manager  ·  mine development manager  ·  mine development expert"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "drill operator",
+   "isco": 8113,
+   "aka": "oil rig driller  ·  rig driller  ·  rig drill operator"
+  },
+  {
+   "role": "mineral processing engineer",
+   "isco": 2146,
+   "aka": "mineral engineer  ·  senior metallurgist  ·  mineral processing engineers  ·  senior mineralogist  ·  surface manager"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "petroleum engineer",
+   "isco": 2146,
+   "aka": "petroleum geologist  ·  petroleum production technician  ·  reservoir engineer  ·  oil and gas engineer  ·  petroleum engineers"
+  },
+  {
+   "role": "tunnel boring machine operator",
+   "isco": 8113,
+   "aka": "tunneller  ·  tunnelling equipment operator  ·  TBM operator  ·  tunnelling machine operator  ·  tunnelling equipment operative"
+  },
+  {
+   "role": "refinery shift manager",
+   "isco": 3134,
+   "aka": "refinery coordinator  ·  plant and equipment manager (refinery)  ·  refinery shift supervisor  ·  shift supervisor  ·  head of oil refinery"
+  },
+  {
+   "role": "mine planning engineer",
+   "isco": 2146,
+   "aka": "mining operations scheduler  ·  mine planning supervisor  ·  mine production scheduler  ·  mine project engineer  ·  surface mine planning engineer"
+  },
+  {
+   "role": "assayer",
+   "isco": 2146,
+   "aka": "chemical analyst  ·  gold assayer  ·  precious metal assayer  ·  metal tester  ·  geo-science technician"
+  },
+  {
+   "role": "roustabout",
+   "isco": 8113,
+   "aka": "oil rig leasehand"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "roughneck",
+   "isco": 8113,
+   "aka": "chainhand"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "mine surveying technician",
+   "isco": 3117,
+   "aka": "mine technician  ·  assistant mine surveyor  ·  mine survey linesman  ·  mine survey lineswoman  ·  mine surveyors assistant"
+  },
+  {
+   "role": "quarry manager",
+   "isco": 1322,
+   "aka": "quarrying industry manager  ·  quarry engineer  ·  quarry operations engineer  ·  quarry operations manager  ·  quarry management expert"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "metallurgist",
+   "isco": 2146,
+   "aka": "steel industry experts  ·  extraction metallurgist  ·  chemical tester  ·  physical metallurgist  ·  chemical technician"
+  },
+  {
+   "role": "gas processing plant operator",
+   "isco": 3134,
+   "aka": "gas distribution pipeline operator  ·  natural gas transmission system operative  ·  gas distribution plant maintenance operator  ·  gas distribution operator  ·  gas distribution system worker"
+  },
+  {
+   "role": "oil rig motorhand",
+   "isco": 8113,
+   "aka": "rig driller  ·  rig maintenance technicians  ·  oil field driller  ·  drilling equipment technician  ·  oil rig operator"
+  },
+  {
+   "role": "mine health and safety engineer",
+   "isco": 2146,
+   "aka": "mine safety engineer  ·  mine health and safety engineers  ·  mining health and safety engineer  ·  industrial health and safety engineer"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "mine production manager",
+   "isco": 1322,
+   "aka": "mine supervisor  ·  mining engineer  ·  mine operations manager  ·  mining operations manager  ·  resident manager"
+  },
+  {
+   "role": "geotechnician",
+   "isco": 3117,
+   "aka": "formation evaluation engineer  ·  geologist  ·  surface logging technician  ·  surface logging specialist  ·  logging geologist"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "mine safety officer",
+   "isco": 3117,
+   "aka": "mine safety inspector  ·  health and safety manager  ·  mining inspector  ·  safety officer  ·  mine safety manager"
+  },
+  {
+   "role": "desalination technician",
+   "isco": 3117,
+   "aka": "desalination plant technician  ·  desalination equipment operator  ·  water treatment plant technician  ·  water treatment plants technician  ·  operator of desalination plant"
+  },
+  {
+   "role": "Construction Managers",
+   "isco": 1322,
+   "aka": NaN
+  },
+  {
+   "role": "Service Unit Operators, Oil and Gas",
+   "isco": 8113,
+   "aka": NaN
+  }
+ ]
+}

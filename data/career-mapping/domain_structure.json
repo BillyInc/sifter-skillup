@@ -1,0 +1,4781 @@
+{
+ "D001": {
+  "role_count": 32,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D002": {
+  "role_count": 24,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D003": {
+  "role_count": 17,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D004": {
+  "role_count": 17,
+  "foundation_skills": [
+   "security engineering"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D005": {
+  "role_count": 13,
+  "foundation_skills": [
+   "ICT system programming"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D006": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D007": {
+  "role_count": 27,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 14,
+    "cluster_skills": [
+     "report test findings",
+     "levels of software testing",
+     "execute software tests",
+     "provide software testing documentation",
+     "address problems critically",
+     "replicate customer software issues"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 13,
+    "cluster_skills": [
+     "computer graphics",
+     "graphic design",
+     "follow a brief",
+     "follow work schedule",
+     "multimedia systems",
+     "ICT software specifications",
+     "digital media"
+    ]
+   }
+  ]
+ },
+ "D008": {
+  "role_count": 16,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 6,
+    "cluster_skills": [
+     "manage budgets",
+     "define technology strategy",
+     "manage staff",
+     "use ICT ticketing system",
+     "attack vectors",
+     "ICT project management",
+     "decision support systems",
+     "ICT project management methodologies"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 3,
+    "cluster_skills": [
+     "microwave principles",
+     "procurement of ICT network equipment",
+     "electronics principles",
+     "telecom regulations",
+     "ICT communications protocols"
+    ]
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 3,
+    "cluster_skills": [
+     "ICT network routing",
+     "use an application-specific interface",
+     "network standards",
+     "network engineering"
+    ]
+   },
+   {
+    "isco_submajor": "35",
+    "label": "ICT Technicians",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D139": {
+  "role_count": 38,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 22,
+    "cluster_skills": [
+     "computer graphics"
+    ]
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 12,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "manage budgets",
+     "theatre techniques",
+     "adapt designers’ work to the performance venue",
+     "manage staff"
+    ]
+   }
+  ]
+ },
+ "D140": {
+  "role_count": 8,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D009": {
+  "role_count": 32,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 28,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 3,
+    "cluster_skills": [
+     "scientific research methodology",
+     "statistics",
+     "mathematics",
+     "manage research data",
+     "draft scientific or academic papers and technical documentation",
+     "mathematical modelling",
+     "digital data processing",
+     "scientific modelling",
+     "research design"
+    ]
+   }
+  ]
+ },
+ "D010": {
+  "role_count": 33,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 24,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "management consulting",
+     "business analysis",
+     "apply change management",
+     "strategic planning",
+     "operational research",
+     "perform business analysis",
+     "management systems standards"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 2,
+    "cluster_skills": [
+     "scientific research methodology",
+     "mathematical modelling",
+     "digital data processing",
+     "statistics",
+     "mathematics"
+    ]
+   }
+  ]
+ },
+ "D011": {
+  "role_count": 26,
+  "foundation_skills": [
+   "economics",
+   "analyse market financial trends",
+   "financial markets"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 14,
+    "cluster_skills": [
+     "actuarial science",
+     "financial jurisdiction",
+     "financial products",
+     "analyse economic trends",
+     "stock market",
+     "securities",
+     "modern portfolio theory",
+     "protect client interests",
+     "commercial law"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 9,
+    "cluster_skills": [
+     "quantitative analysis",
+     "fundamental analysis",
+     "modern portfolio theory",
+     "asset management",
+     "actuarial science"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 2,
+    "cluster_skills": [
+     "scientific research methodology",
+     "mathematical modelling",
+     "digital data processing",
+     "statistics",
+     "mathematics"
+    ]
+   }
+  ]
+ },
+ "D012": {
+  "role_count": 8,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D013": {
+  "role_count": 38,
+  "foundation_skills": [
+   "financial markets",
+   "economics"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 25,
+    "cluster_skills": [
+     "securities",
+     "funding methods",
+     "stock market",
+     "financial products",
+     "modern portfolio theory",
+     "asset management"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 13,
+    "cluster_skills": [
+     "analyse market financial trends",
+     "actuarial science",
+     "financial jurisdiction",
+     "financial products",
+     "analyse economic trends",
+     "stock market",
+     "securities",
+     "modern portfolio theory",
+     "protect client interests",
+     "commercial law"
+    ]
+   }
+  ]
+ },
+ "D014": {
+  "role_count": 17,
+  "foundation_skills": [
+   "actuarial science",
+   "types of insurance",
+   "principles of insurance",
+   "insurance law"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 9,
+    "cluster_skills": [
+     "claims procedures",
+     "review insurance process",
+     "analyse claim files"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 5,
+    "cluster_skills": [
+     "statistics",
+     "quantitative analysis",
+     "scientific research methodology",
+     "mathematical modelling",
+     "digital data processing",
+     "mathematics",
+     "reserving"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D015": {
+  "role_count": 24,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 14,
+    "cluster_skills": [
+     "interpret financial statements",
+     "financial department processes",
+     "tax legislation",
+     "financial statements",
+     "accounting department processes",
+     "accounting techniques",
+     "analyse financial performance of a company"
+    ]
+   },
+   {
+    "isco_submajor": "43",
+    "label": "Numerical & Recording Clerks",
+    "role_count": 7,
+    "cluster_skills": [
+     "perform clerical duties",
+     "banking activities",
+     "office software",
+     "maintain records of financial transactions",
+     "handle paperwork",
+     "use office systems",
+     "follow written instructions",
+     "fill out forms",
+     "electronic communication",
+     "manage administrative systems"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "accounting department processes",
+     "accounting techniques",
+     "accounting entries",
+     "tax legislation",
+     "bookkeeping regulations",
+     "depreciation"
+    ]
+   }
+  ]
+ },
+ "D060": {
+  "role_count": 24,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 10,
+    "cluster_skills": [
+     "obtain financial information",
+     "analyse loans",
+     "credit control processes",
+     "banking activities",
+     "financial statements",
+     "insolvency law",
+     "maintain client debt records",
+     "interpret financial statements",
+     "apply credit risk policy",
+     "financial management"
+    ]
+   },
+   {
+    "isco_submajor": "43",
+    "label": "Numerical & Recording Clerks",
+    "role_count": 5,
+    "cluster_skills": [
+     "banking activities",
+     "maintain records of financial transactions",
+     "perform clerical duties",
+     "electronic communication",
+     "customer service",
+     "office software",
+     "handle paperwork",
+     "follow written instructions",
+     "manage administrative systems",
+     "office administration"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 4,
+    "cluster_skills": [
+     "financial statements",
+     "enforce financial policies",
+     "financial management",
+     "financial analysis",
+     "corporate social responsibility",
+     "manage budgets",
+     "securities"
+    ]
+   },
+   {
+    "isco_submajor": "42",
+    "label": "Customer Services Clerks",
+    "role_count": 3,
+    "cluster_skills": [
+     "communicate with customers",
+     "maintain records of financial transactions",
+     "debt collection techniques",
+     "maintain client debt records",
+     "debt systems"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D061": {
+  "role_count": 13,
+  "foundation_skills": [
+   "insurance law",
+   "types of insurance",
+   "principles of insurance",
+   "claims procedures",
+   "actuarial science"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 8,
+    "cluster_skills": [
+     "review insurance process",
+     "analyse claim files",
+     "fraud detection",
+     "manage claim files",
+     "property law",
+     "real estate underwriting",
+     "analyse insurance risk",
+     "obtain financial information",
+     "analyse insurance needs",
+     "compile appraisal reports"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 3,
+    "cluster_skills": [
+     "financial statements",
+     "financial management",
+     "financial analysis",
+     "corporate social responsibility"
+    ]
+   }
+  ]
+ },
+ "D062": {
+  "role_count": 30,
+  "foundation_skills": [
+   "economics",
+   "financial markets",
+   "analyse market financial trends",
+   "stock market",
+   "securities"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 16,
+    "cluster_skills": [
+     "modern portfolio theory",
+     "asset management",
+     "funding methods",
+     "financial products",
+     "banking activities",
+     "financial management",
+     "investment analysis",
+     "financial statements"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 14,
+    "cluster_skills": [
+     "actuarial science",
+     "financial jurisdiction",
+     "financial products",
+     "analyse economic trends",
+     "modern portfolio theory",
+     "protect client interests",
+     "commercial law"
+    ]
+   }
+  ]
+ },
+ "D158": {
+  "role_count": 22,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D159": {
+  "role_count": 29,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 20,
+    "cluster_skills": [
+     "interpret financial statements",
+     "financial department processes"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 9,
+    "cluster_skills": [
+     "obtain financial information",
+     "analyse loans",
+     "credit control processes",
+     "banking activities",
+     "financial statements",
+     "insolvency law",
+     "maintain client debt records",
+     "interpret financial statements",
+     "apply credit risk policy",
+     "financial management"
+    ]
+   }
+  ]
+ },
+ "D016": {
+  "role_count": 33,
+  "foundation_skills": [
+   "engineering principles",
+   "design drawings",
+   "electrical engineering"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 25,
+    "cluster_skills": [
+     "mathematics",
+     "electricity principles",
+     "physics",
+     "environmental legislation",
+     "environmental threats"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 8,
+    "cluster_skills": [
+     "troubleshoot",
+     "read assembly drawings",
+     "electrical wiring diagrams",
+     "inspect quality of products",
+     "safety engineering",
+     "production processes",
+     "battery formation",
+     "remove defective products",
+     "perform product testing",
+     "electrical equipment regulations"
+    ]
+   }
+  ]
+ },
+ "D017": {
+  "role_count": 46,
+  "foundation_skills": [
+   "technical drawings",
+   "engineering principles",
+   "mathematics"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 26,
+    "cluster_skills": [
+     "design drawings",
+     "manual draughting techniques",
+     "CAD software",
+     "create solutions to problems"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 20,
+    "cluster_skills": [
+     "engineering processes",
+     "production processes",
+     "industrial engineering",
+     "manufacturing processes",
+     "mechanical engineering",
+     "CAD software"
+    ]
+   }
+  ]
+ },
+ "D018": {
+  "role_count": 68,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 35,
+    "cluster_skills": [
+     "engineering principles",
+     "engineering processes",
+     "technical drawings",
+     "project management"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 33,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D019": {
+  "role_count": 24,
+  "foundation_skills": [
+   "electrical power safety regulations",
+   "electricity"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 11,
+    "cluster_skills": [
+     "electrical engineering",
+     "engineering principles",
+     "technical drawings",
+     "engineering processes",
+     "mechanical engineering",
+     "electricity principles"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 10,
+    "cluster_skills": [
+     "electric generators",
+     "electric current",
+     "respond to electrical power contingencies",
+     "maintain electrical equipment",
+     "wear appropriate protective gear",
+     "mechanics"
+    ]
+   },
+   {
+    "isco_submajor": "74",
+    "label": "Electrical & Electronic Trades",
+    "role_count": 3,
+    "cluster_skills": [
+     "work ergonomically",
+     "wear appropriate protective gear",
+     "repair overhead power lines",
+     "install power lines",
+     "inspect underground power cables",
+     "transmission towers",
+     "repair underground power cables",
+     "inspect overhead power lines",
+     "electrical discharge",
+     "electric current"
+    ]
+   }
+  ]
+ },
+ "D020": {
+  "role_count": 23,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 9,
+    "cluster_skills": [
+     "ensure compliance with environmental legislation",
+     "perform water treatments",
+     "ensure compliance with waste legislative regulations",
+     "maintain water treatment equipment"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 9,
+    "cluster_skills": [
+     "technical drawings",
+     "engineering principles",
+     "environmental legislation",
+     "ensure compliance with environmental legislation",
+     "engineering processes",
+     "adjust engineering designs",
+     "circular economy"
+    ]
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 5,
+    "cluster_skills": [
+     "ensure compliance with waste legislative regulations",
+     "waste management",
+     "audit techniques",
+     "ensure compliance with environmental legislation",
+     "environmental legislation",
+     "quality assurance procedures",
+     "hazardous materials transportation",
+     "hazardous waste storage",
+     "hazardous waste treatment",
+     "hazardous waste types"
+    ]
+   }
+  ]
+ },
+ "D021": {
+  "role_count": 21,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 16,
+    "cluster_skills": [
+     "urban planning",
+     "geographic information systems",
+     "surveying methods",
+     "cartography",
+     "topography",
+     "architecture regulations"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 5,
+    "cluster_skills": [
+     "civil engineering",
+     "technical drawings",
+     "construction methods",
+     "engineering principles",
+     "building codes",
+     "mathematics"
+    ]
+   }
+  ]
+ },
+ "D022": {
+  "role_count": 49,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 25,
+    "cluster_skills": [
+     "geology",
+     "troubleshoot",
+     "prepare scientific reports"
+    ]
+   },
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 16,
+    "cluster_skills": [
+     "mechanics",
+     "work ergonomically",
+     "troubleshoot"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 4,
+    "cluster_skills": [
+     "ensure compliance with safety legislation",
+     "manage emergency procedures",
+     "manage staff",
+     "mine safety legislation",
+     "mining engineering",
+     "impact of geological factors on mining operations",
+     "manage heavy equipment",
+     "deal with pressure from unexpected circumstances",
+     "optimise financial performance",
+     "electricity"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 4,
+    "cluster_skills": [
+     "collect samples",
+     "maintain records of mining operations",
+     "troubleshoot",
+     "impact of geological factors on mining operations"
+    ]
+   }
+  ]
+ },
+ "D069": {
+  "role_count": 29,
+  "foundation_skills": [
+   "common aviation safety regulations"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 19,
+    "cluster_skills": [
+     "aircraft flight control systems",
+     "air transport law",
+     "geographic areas",
+     "aviation meteorology",
+     "air traffic control operations",
+     "civil aviation regulations",
+     "airport planning",
+     "operate radio equipment",
+     "visual flight rules"
+    ]
+   },
+   {
+    "isco_submajor": "72",
+    "label": "Metal & Machinery Trades",
+    "role_count": 5,
+    "cluster_skills": [
+     "aircraft mechanics",
+     "airport safety regulations",
+     "mechanics",
+     "electromechanics",
+     "electrical wiring plans",
+     "engine components",
+     "technical drawings",
+     "engineering processes",
+     "electricity",
+     "electrical engineering"
+    ]
+   },
+   {
+    "isco_submajor": "51",
+    "label": "Personal Service Workers",
+    "role_count": 3,
+    "cluster_skills": [
+     "comply with food safety and hygiene",
+     "greet guests",
+     "handle customer complaints",
+     "airport planning",
+     "upsell products",
+     "air transport law",
+     "maintain relationship with customers",
+     "provide first aid",
+     "deal with challenging work conditions",
+     "give instructions to staff"
+    ]
+   }
+  ]
+ },
+ "D072": {
+  "role_count": 20,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D074": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D146": {
+  "role_count": 9,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D147": {
+  "role_count": 9,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 6,
+    "cluster_skills": [
+     "troubleshoot",
+     "monitor automated machines",
+     "write production reports",
+     "manage emergency procedures",
+     "monitor equipment condition",
+     "conduct inter-shift communication",
+     "coordinate remote communications",
+     "ensure compliance with safety legislation",
+     "electronics",
+     "wear appropriate protective gear"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D156": {
+  "role_count": 8,
+  "foundation_skills": [
+   "mathematics",
+   "cartography",
+   "geographic information systems",
+   "geomatics"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D164": {
+  "role_count": 14,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D023": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "medical terminology",
+     "health care legislation",
+     "hygiene in a health care setting",
+     "archive healthcare users' records",
+     "maintain laboratory equipment",
+     "techniques of blood-sampling",
+     "conduct routine blood testing",
+     "human anatomy",
+     "contribute to continuity of health care",
+     "communicate in healthcare"
+    ]
+   },
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "manage research data"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D024": {
+  "role_count": 23,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 15,
+    "cluster_skills": [
+     "human anatomy",
+     "hygiene in a health care setting",
+     "medical terminology",
+     "medical informatics",
+     "health care legislation",
+     "health records management",
+     "professional documentation in health care",
+     "infection control"
+    ]
+   },
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "specialist nursing care",
+     "use e-health and mobile health technologies",
+     "inform policy makers on health-related challenges",
+     "provide professional care in nursing",
+     "delegate emergency care",
+     "manage hospital-acquired infections",
+     "impact of social contexts on health",
+     "respond to changing situations in health care",
+     "hygiene in a health care setting",
+     "health care legislation"
+    ]
+   },
+   {
+    "isco_submajor": "53",
+    "label": "Personal Care Workers",
+    "role_count": 2,
+    "cluster_skills": [
+     "respond to changing situations in health care",
+     "empathise with the healthcare user",
+     "contribute to continuity of health care",
+     "provide basic support to patients"
+    ]
+   }
+  ]
+ },
+ "D025": {
+  "role_count": 17,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 11,
+    "cluster_skills": [
+     "pharmaceutical technology",
+     "pharmacy law",
+     "pharmaceutical chemistry",
+     "organic chemistry",
+     "microbiology-bacteriology",
+     "pharmacognosy",
+     "physics"
+    ]
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D026": {
+  "role_count": 21,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 13,
+    "cluster_skills": [
+     "health, safety and hygiene legislation"
+    ]
+   },
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "advise on risk management",
+     "perform risk analysis",
+     "ensure compliance with environmental legislation",
+     "environmental legislation"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D027": {
+  "role_count": 48,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 36,
+    "cluster_skills": [
+     "biology",
+     "scientific literature",
+     "laboratory techniques"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 11,
+    "cluster_skills": [
+     "laboratory techniques",
+     "perform laboratory tests",
+     "maintain laboratory equipment",
+     "biology",
+     "perform scientific research",
+     "stem cells",
+     "scientific research methodology",
+     "laboratory equipment",
+     "apply safety procedures in laboratory",
+     "cryopreservation"
+    ]
+   }
+  ]
+ },
+ "D064": {
+  "role_count": 16,
+  "foundation_skills": [
+   "counselling methods"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D066": {
+  "role_count": 23,
+  "foundation_skills": [
+   "animal welfare legislation",
+   "biosecurity related to animals",
+   "animal welfare",
+   "physiology of animals",
+   "anatomy of animals",
+   "signs of animal illness",
+   "animal behaviour",
+   "environmental enrichment for animals"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 13,
+    "cluster_skills": [
+     "manage animal biosecurity",
+     "assess the animal’s rehabilitation requirements",
+     "protect health and safety when handling animals",
+     "fundamental veterinary sciences",
+     "prepare animal therapy equipment"
+    ]
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "safe work practices in a veterinary setting",
+     "manage animal biosecurity",
+     "cryopreservation",
+     "control animal movement"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "food legislation"
+    ]
+   }
+  ]
+ },
+ "D067": {
+  "role_count": 6,
+  "foundation_skills": [
+   "respond to changing situations in health care",
+   "use e-health and mobile health technologies",
+   "contribute to continuity of health care"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D068": {
+  "role_count": 40,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 31,
+    "cluster_skills": [
+     "human physiology",
+     "health care occupation-specific ethics",
+     "hygiene in a health care setting",
+     "health care legislation",
+     "medical terminology"
+    ]
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 9,
+    "cluster_skills": [
+     "human anatomy",
+     "human physiology",
+     "medical informatics",
+     "empathise with the healthcare user"
+    ]
+   }
+  ]
+ },
+ "D154": {
+  "role_count": 16,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "human physiology",
+     "kinetics",
+     "neurology",
+     "medical terminology",
+     "pharmacology"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 6,
+    "cluster_skills": [
+     "promote healthy fitness environment",
+     "analyse personal fitness information",
+     "assess physical conditions of clients",
+     "provide fitness information",
+     "show professional responsibility",
+     "ensure safety of exercise environment",
+     "adapt fitness exercises",
+     "identify customer objectives",
+     "manage fitness communication",
+     "attend to fitness clients under controlled health conditions"
+    ]
+   },
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 2,
+    "cluster_skills": [
+     "empathise with the healthcare user"
+    ]
+   }
+  ]
+ },
+ "D165": {
+  "role_count": 14,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "health care legislation",
+     "maintain healthcare user data confidentiality",
+     "provide health education",
+     "listen actively",
+     "human physiology",
+     "cognitive psychology",
+     "health care occupation-specific ethics",
+     "psychological theories",
+     "assess the patient's therapeutic needs",
+     "develop a collaborative therapeutic relationship"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 6,
+    "cluster_skills": [
+     "assess physical conditions of clients",
+     "show professional responsibility",
+     "ensure safety of exercise environment",
+     "adapt fitness exercises",
+     "promote healthy fitness environment",
+     "analyse personal fitness information",
+     "identify customer objectives",
+     "provide fitness information",
+     "manage fitness communication",
+     "attend to fitness clients under controlled health conditions"
+    ]
+   }
+  ]
+ },
+ "D028": {
+  "role_count": 45,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 31,
+    "cluster_skills": [
+     "corporate social responsibility",
+     "manage budgets"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "business analysis",
+     "management consulting",
+     "apply change management",
+     "strategic planning",
+     "operational research",
+     "perform business analysis",
+     "management systems standards",
+     "business processes"
+    ]
+   },
+   {
+    "isco_submajor": "11",
+    "label": "Executive & Senior Management",
+    "role_count": 6,
+    "cluster_skills": [
+     "manage budgets",
+     "apply strategic thinking",
+     "financial statements",
+     "company policies",
+     "business process modelling",
+     "establish collaborative relations",
+     "integrate strategic foundation in daily performance",
+     "marketing management",
+     "conclude business agreements",
+     "lead managers of company departments"
+    ]
+   }
+  ]
+ },
+ "D029": {
+  "role_count": 17,
+  "foundation_skills": [
+   "employment law"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 10,
+    "cluster_skills": [
+     "job market offers",
+     "labour legislation",
+     "company policies",
+     "human resource management",
+     "interview people"
+    ]
+   },
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 6,
+    "cluster_skills": [
+     "human resources department processes",
+     "project management",
+     "human resource management",
+     "labour legislation",
+     "data protection",
+     "coordinate events",
+     "work within communities",
+     "capacity building",
+     "labour law",
+     "cooperate with colleagues"
+    ]
+   }
+  ]
+ },
+ "D030": {
+  "role_count": 48,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 32,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 16,
+    "cluster_skills": [
+     "corporate social responsibility",
+     "market research",
+     "content marketing strategy",
+     "marketing mix"
+    ]
+   }
+  ]
+ },
+ "D031": {
+  "role_count": 62,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 19,
+    "cluster_skills": [
+     "identify suppliers"
+    ]
+   },
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 16,
+    "cluster_skills": [
+     "corporate social responsibility",
+     "content marketing strategy",
+     "marketing mix"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 14,
+    "cluster_skills": [
+     "characteristics of products",
+     "characteristics of services",
+     "guarantee customer satisfaction",
+     "communicate with customers",
+     "product comprehension",
+     "ensure compliance with legal requirements",
+     "implement marketing strategies",
+     "manage schedule of tasks",
+     "sales promotion techniques",
+     "answer requests for quotation"
+    ]
+   },
+   {
+    "isco_submajor": "52",
+    "label": "Sales Workers",
+    "role_count": 12,
+    "cluster_skills": [
+     "operate cash register",
+     "guarantee customer satisfaction",
+     "characteristics of services",
+     "characteristics of products",
+     "product comprehension",
+     "ensure compliance with legal requirements",
+     "examine merchandise"
+    ]
+   }
+  ]
+ },
+ "D032": {
+  "role_count": 40,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 18,
+    "cluster_skills": [
+     "perform business research",
+     "use spreadsheets software"
+    ]
+   },
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 13,
+    "cluster_skills": [
+     "corporate social responsibility",
+     "strategic planning",
+     "integrate strategic foundation in daily performance"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 9,
+    "cluster_skills": [
+     "business analysis",
+     "management consulting",
+     "apply change management"
+    ]
+   }
+  ]
+ },
+ "D033": {
+  "role_count": 52,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 23,
+    "cluster_skills": [
+     "corporate social responsibility"
+    ]
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 21,
+    "cluster_skills": [
+     "digital systems",
+     "systems development life-cycle",
+     "provide ICT consulting advice"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "business analysis",
+     "management consulting",
+     "apply change management",
+     "strategic planning",
+     "operational research",
+     "perform business analysis",
+     "management systems standards",
+     "business processes"
+    ]
+   }
+  ]
+ },
+ "D130": {
+  "role_count": 7,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D034": {
+  "role_count": 63,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "43",
+    "label": "Numerical & Recording Clerks",
+    "role_count": 26,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 21,
+    "cluster_skills": [
+     "manage staff",
+     "supply chain management",
+     "create solutions to problems",
+     "project management",
+     "maintain relationship with customers"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "business analysis",
+     "management consulting",
+     "apply change management",
+     "strategic planning",
+     "operational research",
+     "perform business analysis",
+     "management systems standards",
+     "business processes"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 8,
+    "cluster_skills": [
+     "international import export regulations",
+     "international business",
+     "manage import export licenses",
+     "control trade commercial documentation",
+     "apply export strategies",
+     "embargo regulations",
+     "create solutions to problems",
+     "international commercial transactions rules",
+     "handle quotes from prospective shippers",
+     "apply conflict management"
+    ]
+   }
+  ]
+ },
+ "D035": {
+  "role_count": 55,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 22,
+    "cluster_skills": [
+     "manage staff",
+     "supply chain management"
+    ]
+   },
+   {
+    "isco_submajor": "83",
+    "label": "Drivers & Mobile-Plant Operators",
+    "role_count": 13,
+    "cluster_skills": [
+     "road traffic laws",
+     "health and safety measures in transportation",
+     "transport topography",
+     "mechanical components of vehicles",
+     "communicate with customers"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 11,
+    "cluster_skills": [
+     "international import export regulations",
+     "international business",
+     "manage import export licenses",
+     "control trade commercial documentation"
+    ]
+   },
+   {
+    "isco_submajor": "93",
+    "label": "Labourers",
+    "role_count": 9,
+    "cluster_skills": [
+     "stack goods",
+     "maintain physical condition of warehouse",
+     "operate warehouse record systems"
+    ]
+   }
+  ]
+ },
+ "D036": {
+  "role_count": 52,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 22,
+    "cluster_skills": [
+     "manage staff",
+     "create solutions to problems",
+     "supply chain management"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 22,
+    "cluster_skills": [
+     "identify suppliers"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "business analysis",
+     "management consulting",
+     "apply change management",
+     "strategic planning",
+     "operational research",
+     "perform business analysis",
+     "management systems standards",
+     "business processes"
+    ]
+   }
+  ]
+ },
+ "D076": {
+  "role_count": 25,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 11,
+    "cluster_skills": [
+     "Global Maritime Distress and Safety System",
+     "International Convention for the Prevention of Pollution from Ships",
+     "international regulations for preventing collisions at sea",
+     "use water navigation devices",
+     "vessel stability principles",
+     "physical parts of the vessel",
+     "principles of mechanical engineering",
+     "vessel safety equipment"
+    ]
+   },
+   {
+    "isco_submajor": "83",
+    "label": "Drivers & Mobile-Plant Operators",
+    "role_count": 7,
+    "cluster_skills": [
+     "moor vessels",
+     "vessel safety equipment",
+     "quality of fish products",
+     "International Convention for the Prevention of Pollution from Ships",
+     "risks associated with undertaking fishing operations",
+     "code of Conduct for Responsible Fisheries",
+     "pollution prevention",
+     "fishing gear",
+     "fishing vessels",
+     "fisheries legislation"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "engineering principles",
+     "marine engineering"
+    ]
+   },
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 3,
+    "cluster_skills": [
+     "perform diving interventions",
+     "maintain diving equipment",
+     "diving equipment",
+     "diving operation requirements",
+     "comply with the planned time for the depth of the dive"
+    ]
+   }
+  ]
+ },
+ "D079": {
+  "role_count": 34,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 21,
+    "cluster_skills": [
+     "manage staff",
+     "supply chain management",
+     "create solutions to problems",
+     "project management",
+     "maintain relationship with customers"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 13,
+    "cluster_skills": [
+     "international import export regulations",
+     "manage import export licenses"
+    ]
+   }
+  ]
+ },
+ "D037": {
+  "role_count": 26,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 14,
+    "cluster_skills": [
+     "private law",
+     "legal terminology",
+     "interpret law",
+     "court procedures",
+     "observe confidentiality",
+     "legal research",
+     "compile legal documents"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 10,
+    "cluster_skills": [
+     "compile legal documents",
+     "court procedures",
+     "legal research",
+     "comply with legal regulations",
+     "legal terminology",
+     "observe confidentiality",
+     "assist judge",
+     "legal case management",
+     "handle case evidence",
+     "civil law"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D038": {
+  "role_count": 66,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 22,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 20,
+    "cluster_skills": [
+     "government policy implementation"
+    ]
+   },
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 12,
+    "cluster_skills": [
+     "corporate social responsibility",
+     "strategic planning",
+     "integrate strategic foundation in daily performance"
+    ]
+   },
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 12,
+    "cluster_skills": [
+     "observe confidentiality"
+    ]
+   }
+  ]
+ },
+ "D157": {
+  "role_count": 18,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D162": {
+  "role_count": 8,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "social justice"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "court procedures",
+     "compile legal documents",
+     "legal research",
+     "legal case management"
+    ]
+   }
+  ]
+ },
+ "D149": {
+  "role_count": 12,
+  "foundation_skills": [
+   "government policy implementation",
+   "foreign affairs"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "international business",
+     "develop professional network",
+     "establish collaborative relations",
+     "analyse foreign affairs policies",
+     "foreign affairs policy development"
+    ]
+   },
+   {
+    "isco_submajor": "11",
+    "label": "Executive & Senior Management",
+    "role_count": 5,
+    "cluster_skills": [
+     "maintain relationships with government agencies",
+     "diplomatic principles",
+     "observe new developments in foreign countries",
+     "coordinate government activities in foreign institutions",
+     "show intercultural awareness",
+     "government representation",
+     "foreign languages for international careers",
+     "speak different languages",
+     "maintain relations with local representatives",
+     "foreign affairs policy development"
+    ]
+   }
+  ]
+ },
+ "D163": {
+  "role_count": 5,
+  "foundation_skills": [
+   "court procedures",
+   "present arguments persuasively",
+   "compile legal documents",
+   "analyse legal evidence",
+   "present legal arguments",
+   "legal case management",
+   "protect client interests",
+   "private law"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D039": {
+  "role_count": 122,
+  "foundation_skills": [
+   "guarantee students' safety",
+   "curriculum objectives",
+   "prepare lesson content"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "23",
+    "label": "Teaching Professionals",
+    "role_count": 111,
+    "cluster_skills": [
+     "monitor developments in field of expertise",
+     "instructional strategies",
+     "assessment processes",
+     "interact professionally in research and professional environments"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 11,
+    "cluster_skills": [
+     "curriculum standards",
+     "cooperate with education professionals",
+     "project management",
+     "assist in the organisation of school events",
+     "education law",
+     "represent the organisation",
+     "pedagogy",
+     "instructional strategies",
+     "provide education management support",
+     "education administration"
+    ]
+   }
+  ]
+ },
+ "D040": {
+  "role_count": 36,
+  "foundation_skills": [
+   "guarantee students' safety",
+   "curriculum objectives",
+   "assessment processes",
+   "prepare lesson content"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "23",
+    "label": "Teaching Professionals",
+    "role_count": 30,
+    "cluster_skills": [
+     "instructional strategies",
+     "monitor developments in field of expertise",
+     "learning difficulties",
+     "teamwork principles",
+     "assign homework",
+     "facilitate teamwork between students"
+    ]
+   },
+   {
+    "isco_submajor": "53",
+    "label": "Personal Care Workers",
+    "role_count": 4,
+    "cluster_skills": [
+     "support the positiveness of youths",
+     "handle children's problems",
+     "implement care programmes for children",
+     "maintain students' discipline",
+     "manage student relationships",
+     "assess the development of youth",
+     "assist children in developing personal skills",
+     "assist students with equipment",
+     "provide teacher support",
+     "monitor children's physical development"
+    ]
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 2,
+    "cluster_skills": [
+     "give constructive feedback",
+     "apply teaching strategies",
+     "coach employees"
+    ]
+   }
+  ]
+ },
+ "D041": {
+  "role_count": 42,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 31,
+    "cluster_skills": [
+     "scientific research methodology",
+     "draft scientific or academic papers and technical documentation",
+     "scientific literature"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 11,
+    "cluster_skills": [
+     "laboratory techniques",
+     "perform laboratory tests",
+     "maintain laboratory equipment",
+     "biology",
+     "perform scientific research",
+     "stem cells",
+     "scientific research methodology",
+     "laboratory equipment",
+     "apply safety procedures in laboratory",
+     "cryopreservation"
+    ]
+   }
+  ]
+ },
+ "D078": {
+  "role_count": 22,
+  "foundation_skills": [
+   "draft scientific or academic papers and technical documentation",
+   "scientific research methodology",
+   "manage research data",
+   "interact professionally in research and professional environments"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D042": {
+  "role_count": 91,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 45,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 32,
+    "cluster_skills": [
+     "work ergonomically",
+     "understand artistic concepts",
+     "work safely with machines",
+     "use personal protection equipment",
+     "adapt to artists' creative demands"
+    ]
+   },
+   {
+    "isco_submajor": "35",
+    "label": "ICT Technicians",
+    "role_count": 13,
+    "cluster_skills": [
+     "work ergonomically",
+     "work safely with machines",
+     "understand artistic concepts",
+     "manage sound quality",
+     "audiovisual equipment"
+    ]
+   }
+  ]
+ },
+ "D043": {
+  "role_count": 52,
+  "foundation_skills": [
+   "copyright legislation"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D044": {
+  "role_count": 40,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 27,
+    "cluster_skills": [
+     "follow a brief",
+     "computer graphics"
+    ]
+   },
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 11,
+    "cluster_skills": [
+     "intellectual property law",
+     "labour legislation",
+     "develop an artistic framework",
+     "art history",
+     "select artistic materials to create artworks",
+     "maintain an artistic portfolio",
+     "create artwork",
+     "describe artistic experience",
+     "create sketches"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 2,
+    "cluster_skills": [
+     "set up photographic equipment"
+    ]
+   }
+  ]
+ },
+ "D065": {
+  "role_count": 10,
+  "foundation_skills": [
+   "grammar",
+   "spelling"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D071": {
+  "role_count": 34,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 27,
+    "cluster_skills": [
+     "plan sports instruction programme",
+     "instruct in sport",
+     "apply risk management in sports"
+    ]
+   },
+   {
+    "isco_submajor": "14",
+    "label": "Hospitality & Retail Management",
+    "role_count": 3,
+    "cluster_skills": [
+     "organise participation in local or international events"
+    ]
+   }
+  ]
+ },
+ "D080": {
+  "role_count": 23,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 15,
+    "cluster_skills": [
+     "computer graphics",
+     "follow a brief",
+     "follow work schedule",
+     "graphic design",
+     "finish project within budget",
+     "multimedia systems",
+     "ICT software specifications",
+     "digital media"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 8,
+    "cluster_skills": [
+     "work ergonomically",
+     "use personal protection equipment",
+     "understand artistic concepts",
+     "maintain theatre equipment",
+     "finish project within budget",
+     "adapt sets",
+     "prevent fire in a performance environment",
+     "follow work schedule",
+     "prepare personal work environment",
+     "paint sets"
+    ]
+   }
+  ]
+ },
+ "D152": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 7,
+    "cluster_skills": [
+     "develop solutions to information issues",
+     "assess informational needs",
+     "manage digital libraries",
+     "collection management"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D153": {
+  "role_count": 32,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "35",
+    "label": "ICT Technicians",
+    "role_count": 16,
+    "cluster_skills": [
+     "work ergonomically"
+    ]
+   },
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 12,
+    "cluster_skills": [
+     "musical theory",
+     "musical instruments",
+     "transpose music",
+     "study music",
+     "develop musical ideas",
+     "musical genres"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D160": {
+  "role_count": 7,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "assess visual impact of displays",
+     "maintain relationship with suppliers",
+     "negotiate with suppliers for visual material",
+     "merchandising techniques",
+     "maintain relationship with customers"
+    ]
+   },
+   {
+    "isco_submajor": "51",
+    "label": "Personal Service Workers",
+    "role_count": 3,
+    "cluster_skills": [
+     "work ergonomically",
+     "safeguard artistic quality of performance",
+     "understand artistic concepts"
+    ]
+   }
+  ]
+ },
+ "D045": {
+  "role_count": 60,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 23,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "24",
+    "label": "Business & Administration Professionals",
+    "role_count": 19,
+    "cluster_skills": [
+     "government policy implementation"
+    ]
+   },
+   {
+    "isco_submajor": "11",
+    "label": "Executive & Senior Management",
+    "role_count": 17,
+    "cluster_skills": [
+     "government policy implementation",
+     "good governance",
+     "maintain relationships with government agencies",
+     "legislation procedure",
+     "government representation",
+     "manage budgets",
+     "budgetary principles",
+     "analyse legislation"
+    ]
+   }
+  ]
+ },
+ "D046": {
+  "role_count": 77,
+  "foundation_skills": [
+   "legal requirements in the social sector",
+   "social sciences",
+   "social justice",
+   "provide social counselling",
+   "company policies"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 51,
+    "cluster_skills": [
+     "social work theory",
+     "apply anti-oppressive practices",
+     "involve service users and carers in care planning",
+     "work within communities"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 20,
+    "cluster_skills": [
+     "support harmed social service users",
+     "customer service",
+     "involve service users and carers in care planning",
+     "work within communities",
+     "assist individuals with disabilities in community activities",
+     "meet standards of practice in social services"
+    ]
+   },
+   {
+    "isco_submajor": "53",
+    "label": "Personal Care Workers",
+    "role_count": 6,
+    "cluster_skills": [
+     "workplace sanitation",
+     "play with children",
+     "communicate with youth",
+     "assist children in developing personal skills",
+     "assist children with homework",
+     "handle chemical cleaning agents",
+     "maintain relations with children's parents",
+     "supervise children",
+     "attend to children's basic physical needs",
+     "promote human rights"
+    ]
+   }
+  ]
+ },
+ "D063": {
+  "role_count": 10,
+  "foundation_skills": [
+   "economics",
+   "government policy implementation"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D073": {
+  "role_count": 15,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 11,
+    "cluster_skills": [
+     "museum databases",
+     "conservation techniques",
+     "collection management",
+     "ensure safety of exhibition",
+     "art collections",
+     "use ICT resources to solve work related tasks",
+     "create collection conservation plan",
+     "supervise artefact movement",
+     "collection management software",
+     "implement risk management for works of art"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D077": {
+  "role_count": 31,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "54",
+    "label": "Protective Services",
+    "role_count": 28,
+    "cluster_skills": [
+     "identify security threats",
+     "security threats",
+     "ensure public safety and security"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "handle case evidence",
+     "examine crime scenes",
+     "law enforcement",
+     "legal use-of-force",
+     "form operational strategies for law enforcement",
+     "analyse legal evidence",
+     "criminology",
+     "investigation research methods",
+     "hear witness accounts",
+     "develop investigation strategy"
+    ]
+   }
+  ]
+ },
+ "D128": {
+  "role_count": 8,
+  "foundation_skills": [
+   "implement marketing strategies",
+   "customer service",
+   "social sciences",
+   "legal requirements in the social sector"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D143": {
+  "role_count": 26,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 10,
+    "cluster_skills": [
+     "security engineering",
+     "ICT network security risks",
+     "cyber attack counter-measures",
+     "ICT security standards",
+     "ethical hacking principles",
+     "attack vectors",
+     "ICT safety",
+     "information security strategy",
+     "security threats",
+     "risk management"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 7,
+    "cluster_skills": [
+     "perform laboratory tests",
+     "laboratory techniques",
+     "maintain laboratory equipment",
+     "biology",
+     "perform scientific research",
+     "stem cells",
+     "scientific research methodology",
+     "laboratory equipment",
+     "cryopreservation",
+     "life sciences"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "scientific literature",
+     "statistics",
+     "mathematics",
+     "physics",
+     "scientific research methodology",
+     "supercomputing",
+     "mathematical modelling",
+     "computational physics",
+     "quantum computing",
+     "quantum technology"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "handle case evidence",
+     "examine crime scenes",
+     "law enforcement",
+     "legal use-of-force",
+     "form operational strategies for law enforcement",
+     "analyse legal evidence",
+     "criminology",
+     "investigation research methods",
+     "hear witness accounts",
+     "develop investigation strategy"
+    ]
+   },
+   {
+    "isco_submajor": "22",
+    "label": "Health Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D150": {
+  "role_count": 6,
+  "foundation_skills": [
+   "interpret religious texts"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D151": {
+  "role_count": 10,
+  "foundation_skills": [
+   "law enforcement",
+   "legal use-of-force"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "54",
+    "label": "Protective Services",
+    "role_count": 3,
+    "cluster_skills": [
+     "identify security threats",
+     "correctional procedures",
+     "ensure compliance with types of weapons",
+     "undertake inspections",
+     "illegal substances",
+     "comply with the principles of self-defence",
+     "restrain individuals",
+     "escort defendants"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "handle case evidence",
+     "examine crime scenes",
+     "form operational strategies for law enforcement",
+     "analyse legal evidence",
+     "criminology",
+     "investigation research methods",
+     "hear witness accounts",
+     "develop investigation strategy"
+    ]
+   },
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D161": {
+  "role_count": 6,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D047": {
+  "role_count": 51,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "61",
+    "label": "Agricultural Workers",
+    "role_count": 21,
+    "cluster_skills": [
+     "pest control in plants",
+     "environmental legislation in agriculture and forestry",
+     "plant species",
+     "health and safety regulations",
+     "soil structure",
+     "fertilisation principles"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 21,
+    "cluster_skills": [
+     "biology",
+     "botany",
+     "scientific literature",
+     "laboratory techniques"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 5,
+    "cluster_skills": [
+     "inspect aquaculture equipment"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 4,
+    "cluster_skills": [
+     "animal welfare legislation",
+     "fish biology",
+     "fish harvesting methods",
+     "fish grading",
+     "fishing industry",
+     "fish welfare regulations",
+     "aquaculture production planning software",
+     "rates of growth assessment",
+     "environmental legislation"
+    ]
+   }
+  ]
+ },
+ "D048": {
+  "role_count": 92,
+  "foundation_skills": [
+   "apply HACCP"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 55,
+    "cluster_skills": [
+     "clean food and beverage machinery",
+     "collect samples for analysis",
+     "apply requirements concerning manufacturing of food and beverages",
+     "be at ease in unsafe environments",
+     "ensure sanitation"
+    ]
+   },
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 20,
+    "cluster_skills": [
+     "ensure sanitation",
+     "tolerate strong smells",
+     "maintain cutting equipment",
+     "mark differences in colours",
+     "animal anatomy for food production",
+     "warm blooded animal organs",
+     "legislation about animal origin products",
+     "food storage"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 12,
+    "cluster_skills": [
+     "biotechnology",
+     "biology",
+     "scientific literature",
+     "life sciences",
+     "laboratory techniques"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 5,
+    "cluster_skills": [
+     "quality assurance methodologies",
+     "give instructions to staff",
+     "food safety principles",
+     "food and beverage industry",
+     "manage staff"
+    ]
+   }
+  ]
+ },
+ "D049": {
+  "role_count": 41,
+  "foundation_skills": [
+   "engineering principles"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 18,
+    "cluster_skills": [
+     "technical drawings",
+     "engineering processes",
+     "mathematics",
+     "mechanical engineering",
+     "design drawings",
+     "production processes",
+     "manufacturing processes",
+     "industrial engineering",
+     "physics"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 13,
+    "cluster_skills": [
+     "engineering processes",
+     "CAE software",
+     "create solutions to problems",
+     "mechanical engineering",
+     "mechanics"
+    ]
+   },
+   {
+    "isco_submajor": "72",
+    "label": "Metal & Machinery Trades",
+    "role_count": 10,
+    "cluster_skills": [
+     "car controls",
+     "types of vehicles",
+     "perform technical tasks with great care",
+     "vehicle electrical systems",
+     "measure parts of manufactured products",
+     "maintain work area cleanliness",
+     "identify vehicles service requirements"
+    ]
+   }
+  ]
+ },
+ "D050": {
+  "role_count": 51,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "82",
+    "label": "Assemblers",
+    "role_count": 18,
+    "cluster_skills": [
+     "quality standards",
+     "read assembly drawings",
+     "troubleshoot",
+     "electronics",
+     "electricity",
+     "mechanics",
+     "monitor machine operations",
+     "apply soldering techniques",
+     "mechanics of motor vehicles",
+     "electromechanics"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 17,
+    "cluster_skills": [
+     "quality standards",
+     "oversee production requirements",
+     "plan shifts of employees",
+     "create solutions to problems",
+     "evaluate employees work"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 15,
+    "cluster_skills": [
+     "engineering principles",
+     "technical drawings",
+     "engineering processes",
+     "mathematics",
+     "production processes",
+     "manufacturing processes",
+     "mechanical engineering",
+     "industrial engineering",
+     "design drawings",
+     "principles of mechanical engineering"
+    ]
+   }
+  ]
+ },
+ "D075": {
+  "role_count": 47,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 19,
+    "cluster_skills": [
+     "distinguish accessories",
+     "distinguish fabrics",
+     "apparel manufacturing technology",
+     "standard sizing systems for clothing",
+     "manufacture wearing apparel products",
+     "manufacturing of wearing apparel"
+    ]
+   },
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 16,
+    "cluster_skills": [
+     "footwear equipments",
+     "footwear machinery",
+     "footwear quality",
+     "footwear materials",
+     "footwear manufacturing technology",
+     "footwear components",
+     "manufacture wearing apparel products",
+     "properties of textile materials"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "health and safety in the textile industry",
+     "properties of textile materials",
+     "research and development in textiles",
+     "distinguish accessories",
+     "use textile technique for hand-made products",
+     "dyeing technology",
+     "textile technologies",
+     "portfolio management in textile manufacturing",
+     "textile printing technology",
+     "maintain work standards"
+    ]
+   }
+  ]
+ },
+ "D051": {
+  "role_count": 16,
+  "foundation_skills": [
+   "property law",
+   "real estate market"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D052": {
+  "role_count": 85,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 52,
+    "cluster_skills": [
+     "inspect construction supplies",
+     "work in a construction team",
+     "manage health and safety standards",
+     "ensure compliance with construction project deadline",
+     "monitor stock level",
+     "check compatibility of materials",
+     "ensure equipment availability",
+     "follow health and safety procedures in construction"
+    ]
+   },
+   {
+    "isco_submajor": "71",
+    "label": "Building Trades",
+    "role_count": 17,
+    "cluster_skills": [
+     "work ergonomically",
+     "inspect construction supplies",
+     "follow health and safety procedures in construction",
+     "transport construction supplies",
+     "work in a construction team"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 11,
+    "cluster_skills": [
+     "technical drawings",
+     "engineering principles",
+     "engineering processes",
+     "civil engineering",
+     "construction methods",
+     "ensure compliance with environmental legislation",
+     "types of pipelines"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 5,
+    "cluster_skills": [
+     "real estate market",
+     "budgetary principles",
+     "contract law",
+     "audit contractors",
+     "construction product regulation",
+     "green building practices"
+    ]
+   }
+  ]
+ },
+ "D053": {
+  "role_count": 46,
+  "foundation_skills": [
+   "comply with food safety and hygiene"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "51",
+    "label": "Personal Service Workers",
+    "role_count": 23,
+    "cluster_skills": [
+     "maintain customer service",
+     "upsell products"
+    ]
+   },
+   {
+    "isco_submajor": "14",
+    "label": "Hospitality & Retail Management",
+    "role_count": 16,
+    "cluster_skills": [
+     "manage budgets",
+     "manage staff",
+     "handle customer complaints",
+     "manage supplies",
+     "corporate social responsibility",
+     "create solutions to problems"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 5,
+    "cluster_skills": [
+     "types of whisks",
+     "manage staff",
+     "food waste monitoring systems",
+     "ensure maintenance of kitchen equipment",
+     "food storage",
+     "use food preparation techniques",
+     "store raw food materials",
+     "manage budgets",
+     "set prices of menu items",
+     "handle customer complaints"
+    ]
+   },
+   {
+    "isco_submajor": "42",
+    "label": "Customer Services Clerks",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D054": {
+  "role_count": 21,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 8,
+    "cluster_skills": [
+     "mechanics",
+     "use rigging equipment",
+     "operate pumping equipment",
+     "maintain mechanical equipment",
+     "react to events in time-critical environments",
+     "rigging terminology",
+     "guide drill pipes",
+     "mechanical tools",
+     "work ergonomically",
+     "keep task records"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 6,
+    "cluster_skills": [
+     "troubleshoot",
+     "manage emergency procedures",
+     "electronics",
+     "ensure compliance with safety legislation",
+     "verify oil circulation",
+     "set equipment controls",
+     "chemistry",
+     "write production reports",
+     "monitor equipment condition",
+     "conduct inter-shift communication"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 5,
+    "cluster_skills": [
+     "troubleshoot",
+     "geology",
+     "mathematics",
+     "interpret extraction data",
+     "chemistry",
+     "well testing operations",
+     "manage well interaction"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D055": {
+  "role_count": 50,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 29,
+    "cluster_skills": [
+     "optimise production processes parameters"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 11,
+    "cluster_skills": [
+     "optimise production processes parameters",
+     "operate gas extraction equipment",
+     "test gas purity",
+     "ensure correct gas pressure"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 10,
+    "cluster_skills": [
+     "engineering processes",
+     "engineering principles",
+     "manufacturing processes",
+     "analytical chemistry"
+    ]
+   }
+  ]
+ },
+ "D148": {
+  "role_count": 21,
+  "foundation_skills": [
+   "troubleshoot"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 12,
+    "cluster_skills": [
+     "engineering processes",
+     "engineering principles",
+     "technical drawings",
+     "mathematics",
+     "production processes",
+     "manufacturing processes",
+     "industrial engineering"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 8,
+    "cluster_skills": [
+     "manage emergency procedures",
+     "electronics",
+     "ensure compliance with safety legislation",
+     "verify oil circulation",
+     "set equipment controls",
+     "chemistry",
+     "write production reports",
+     "monitor equipment condition",
+     "conduct inter-shift communication",
+     "coordinate remote communications"
+    ]
+   }
+  ]
+ },
+ "D056": {
+  "role_count": 28,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D057": {
+  "role_count": 14,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "medical terminology",
+     "health records management",
+     "document management",
+     "medical informatics",
+     "clinical coding",
+     "professional documentation in health care",
+     "use electronic health records management system",
+     "data storage",
+     "database",
+     "health care legislation"
+    ]
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 5,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D058": {
+  "role_count": 7,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D059": {
+  "role_count": 7,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D081": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "44",
+    "label": "Other",
+    "role_count": 7,
+    "cluster_skills": [
+     "maintain privacy of service users",
+     "handle mail",
+     "operate mailing information systems",
+     "ensure the integrity of mail",
+     "keep task records",
+     "establish daily priorities",
+     "use communication techniques",
+     "support managers",
+     "file documents",
+     "ensure proper document management"
+    ]
+   },
+   {
+    "isco_submajor": "41",
+    "label": "Clerical Support",
+    "role_count": 5,
+    "cluster_skills": [
+     "company policies",
+     "perform office routine activities",
+     "align content with form",
+     "handle mail",
+     "process commissioned instructions",
+     "organise business documents",
+     "use spreadsheets software",
+     "disseminate internal communications",
+     "file documents"
+    ]
+   }
+  ]
+ },
+ "D082": {
+  "role_count": 19,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "42",
+    "label": "Customer Services Clerks",
+    "role_count": 16,
+    "cluster_skills": [
+     "greet guests",
+     "handle customer complaints"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 3,
+    "cluster_skills": [
+     "maintain healthcare user data confidentiality"
+    ]
+   }
+  ]
+ },
+ "D083": {
+  "role_count": 23,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "51",
+    "label": "Personal Service Workers",
+    "role_count": 13,
+    "cluster_skills": [
+     "speak different languages",
+     "comply with food safety and hygiene",
+     "greet guests",
+     "maintain customer service",
+     "manage the customer experience"
+    ]
+   },
+   {
+    "isco_submajor": "42",
+    "label": "Customer Services Clerks",
+    "role_count": 9,
+    "cluster_skills": [
+     "geographical areas relevant to tourism",
+     "communicate with customers",
+     "process booking",
+     "upsell products",
+     "provide tourism related information",
+     "handle personal identifiable information",
+     "ecotourism",
+     "oversee all travel arrangements",
+     "handle customer complaints",
+     "self-service technologies in tourism"
+    ]
+   }
+  ]
+ },
+ "D084": {
+  "role_count": 12,
+  "foundation_skills": [
+   "perform clerical duties"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D085": {
+  "role_count": 26,
+  "foundation_skills": [
+   "guarantee customer satisfaction"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D086": {
+  "role_count": 13,
+  "foundation_skills": [
+   "follow ethical code of conduct of gambling"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D087": {
+  "role_count": 5,
+  "foundation_skills": [
+   "work ergonomically",
+   "hair",
+   "work safely with chemicals",
+   "use equipment for hair care",
+   "hair products",
+   "maintain equipment",
+   "maintain customer service",
+   "style hair",
+   "advise on hair style",
+   "wash hair",
+   "hair colouring",
+   "identify customer's needs",
+   "communicate with customers",
+   "apply hair cutting techniques",
+   "translate artistic concepts to technical designs",
+   "perform quick hair changeovers"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D088": {
+  "role_count": 12,
+  "foundation_skills": [
+   "work ergonomically",
+   "identify customer's needs",
+   "cosmetics"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D089": {
+  "role_count": 4,
+  "foundation_skills": [
+   "promote human rights",
+   "maintain personal hygiene standards",
+   "advise on funeral services",
+   "maintain customer service",
+   "provide directions to guests",
+   "administer appointments",
+   "greet guests",
+   "cooperate with funeral directors",
+   "maintain inventory of tools",
+   "show diplomacy"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D090": {
+  "role_count": 15,
+  "foundation_skills": [
+   "control animal movement",
+   "animal welfare legislation",
+   "signs of animal illness",
+   "animal welfare",
+   "animal behaviour",
+   "physiology of animals",
+   "anatomy of animals",
+   "manage animal biosecurity"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D091": {
+  "role_count": 6,
+  "foundation_skills": [
+   "health and safety measures in transportation",
+   "monitor developments in field of expertise",
+   "show consideration for student's situation",
+   "curriculum objectives",
+   "guarantee students' safety",
+   "road traffic laws",
+   "control the performance of the vehicle",
+   "diagnose problems with vehicles",
+   "mechanical components of vehicles",
+   "drive vehicles",
+   "adapt teaching to student's capabilities"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D092": {
+  "role_count": 23,
+  "foundation_skills": [
+   "comply with food safety and hygiene"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "51",
+    "label": "Personal Service Workers",
+    "role_count": 15,
+    "cluster_skills": [
+     "upsell products",
+     "order supplies",
+     "work in a hospitality team",
+     "maintain customer service",
+     "assist customers",
+     "receive kitchen supplies",
+     "use culinary finishing techniques",
+     "handover the food preparation area",
+     "use food cutting tools",
+     "use food preparation techniques"
+    ]
+   },
+   {
+    "isco_submajor": "94",
+    "label": "Other",
+    "role_count": 4,
+    "cluster_skills": [
+     "clean surfaces",
+     "work in a hospitality team",
+     "maintain customer service",
+     "receive kitchen supplies",
+     "ensure cleanliness of food preparation area",
+     "handover the food preparation area",
+     "use food preparation techniques",
+     "handle chemical cleaning agents"
+    ]
+   },
+   {
+    "isco_submajor": "52",
+    "label": "Sales Workers",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D093": {
+  "role_count": 22,
+  "foundation_skills": [
+   "electricity",
+   "work ergonomically",
+   "electrical wiring plans"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D094": {
+  "role_count": 26,
+  "foundation_skills": [
+   "electronics"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "74",
+    "label": "Electrical & Electronic Trades",
+    "role_count": 17,
+    "cluster_skills": [
+     "use repair manuals",
+     "apply company policies",
+     "create solutions to problems"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 9,
+    "cluster_skills": [
+     "design drawings",
+     "inspect quality of products",
+     "interpret circuit diagrams",
+     "electronic equipment standards",
+     "electronic test procedures",
+     "integrated circuits",
+     "microassembly",
+     "quality standards",
+     "read assembly drawings",
+     "record test data"
+    ]
+   }
+  ]
+ },
+ "D095": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D096": {
+  "role_count": 10,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "72",
+    "label": "Metal & Machinery Trades",
+    "role_count": 3,
+    "cluster_skills": [
+     "repair equipment on site",
+     "maintain agricultural machinery",
+     "manoeuvre heavy trucks"
+    ]
+   },
+   {
+    "isco_submajor": "83",
+    "label": "Drivers & Mobile-Plant Operators",
+    "role_count": 3,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "61",
+    "label": "Agricultural Workers",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D097": {
+  "role_count": 63,
+  "foundation_skills": [
+   "types of metal",
+   "quality standards",
+   "remove inadequate workpieces",
+   "troubleshoot"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D098": {
+  "role_count": 24,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 12,
+    "cluster_skills": [
+     "quality assurance procedures",
+     "quality standards",
+     "inspect quality of products",
+     "instrument performance elements",
+     "manage health and safety standards",
+     "create solutions to problems"
+    ]
+   },
+   {
+    "isco_submajor": "73",
+    "label": "Handicraft & Printing Trades",
+    "role_count": 6,
+    "cluster_skills": [
+     "quality standards",
+     "wear appropriate protective gear",
+     "components of clocks",
+     "use watchmaker's tools",
+     "inspect quality of products",
+     "attach clock cases",
+     "inspect clocks",
+     "repair clocks",
+     "remove defective products",
+     "read assembly drawings"
+    ]
+   },
+   {
+    "isco_submajor": "72",
+    "label": "Metal & Machinery Trades",
+    "role_count": 6,
+    "cluster_skills": [
+     "precision mechanics",
+     "operate precision measuring equipment",
+     "mechanics",
+     "perform test run"
+    ]
+   }
+  ]
+ },
+ "D099": {
+  "role_count": 14,
+  "foundation_skills": [
+   "work ergonomically",
+   "transport construction supplies",
+   "inspect construction supplies",
+   "follow health and safety procedures in construction"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D100": {
+  "role_count": 16,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D101": {
+  "role_count": 6,
+  "foundation_skills": [
+   "quality standards",
+   "work ergonomically",
+   "types of paint",
+   "lacquer paint applications",
+   "apply preliminary treatment to workpieces"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D102": {
+  "role_count": 32,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 14,
+    "cluster_skills": [
+     "types of wood",
+     "quality standards",
+     "wear appropriate protective gear",
+     "sand wood",
+     "work safely with machines",
+     "manipulate wood",
+     "apply a protective layer",
+     "create smooth wood surface",
+     "remove processed workpiece",
+     "remove inadequate workpieces"
+    ]
+   },
+   {
+    "isco_submajor": "71",
+    "label": "Building Trades",
+    "role_count": 12,
+    "cluster_skills": [
+     "work ergonomically",
+     "inspect construction supplies",
+     "follow health and safety procedures in construction",
+     "work in a construction team",
+     "transport construction supplies"
+    ]
+   },
+   {
+    "isco_submajor": "73",
+    "label": "Handicraft & Printing Trades",
+    "role_count": 6,
+    "cluster_skills": [
+     "woodworking processes",
+     "woodworking tools",
+     "types of brushes",
+     "wicker materials",
+     "wicker weaving techniques",
+     "prepare wicker material for weaving",
+     "apply a protective layer",
+     "apply wood finishes",
+     "sand wood",
+     "manipulate wood"
+    ]
+   }
+  ]
+ },
+ "D103": {
+  "role_count": 10,
+  "foundation_skills": [
+   "jewellery processes",
+   "use jewellery equipment",
+   "ensure conformance to jewel design specifications",
+   "create jewellery"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D104": {
+  "role_count": 15,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D105": {
+  "role_count": 13,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D106": {
+  "role_count": 22,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D107": {
+  "role_count": 68,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 19,
+    "cluster_skills": [
+     "footwear quality",
+     "footwear materials",
+     "footwear components",
+     "footwear manufacturing technology",
+     "leather goods components",
+     "leather goods materials",
+     "leather goods manufacturing processes",
+     "leather goods quality",
+     "work in textile manufacturing teams"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 12,
+    "cluster_skills": [
+     "footwear materials",
+     "footwear manufacturing technology",
+     "create solutions to problems",
+     "leather goods components",
+     "apply footwear and leather goods quality control techniques",
+     "footwear quality",
+     "footwear components",
+     "leather goods materials",
+     "leather goods manufacturing processes",
+     "leather goods quality"
+    ]
+   },
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 11,
+    "cluster_skills": [
+     "footwear equipments",
+     "footwear machinery",
+     "use communication techniques",
+     "leather goods components",
+     "leather goods materials",
+     "leather goods manufacturing processes",
+     "apply basic rules of maintenance to leather goods and footwear machinery",
+     "leather goods quality",
+     "work in textile manufacturing teams",
+     "adapt to changing situations"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 11,
+    "cluster_skills": [
+     "health and safety in the workplace",
+     "create solutions to problems",
+     "quality control systems",
+     "manage staff",
+     "use communication techniques",
+     "physico-chemical properties of crust leather",
+     "physico-chemical properties of hides and skins",
+     "innovate in footwear and leather goods industry",
+     "reduce environmental impact of footwear manufacturing",
+     "functionalities of machinery"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "leather goods components",
+     "leather goods materials",
+     "leather goods manufacturing processes",
+     "leather goods quality",
+     "footwear creation process",
+     "ergonomics in footwear and leather goods design",
+     "implement footwear marketing plan",
+     "innovate in footwear and leather goods industry",
+     "footwear and leather goods marketing planning",
+     "use communication techniques"
+    ]
+   },
+   {
+    "isco_submajor": "43",
+    "label": "Numerical & Recording Clerks",
+    "role_count": 2,
+    "cluster_skills": [
+     "use IT tools"
+    ]
+   },
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 2,
+    "cluster_skills": [
+     "hides, skins and leather products"
+    ]
+   },
+   {
+    "isco_submajor": "12",
+    "label": "Administrative & Commercial Management",
+    "role_count": 2,
+    "cluster_skills": [
+     "footwear creation process",
+     "implement footwear marketing plan",
+     "innovate in footwear and leather goods industry",
+     "health and safety in the workplace",
+     "distinguish accessories",
+     "footwear and leather goods marketing planning"
+    ]
+   }
+  ]
+ },
+ "D108": {
+  "role_count": 22,
+  "foundation_skills": [
+   "quality standards"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D109": {
+  "role_count": 21,
+  "foundation_skills": [
+   "quality standards",
+   "remove inadequate workpieces",
+   "remove processed workpiece",
+   "ensure equipment availability",
+   "troubleshoot",
+   "types of metal",
+   "monitor moving workpiece in a machine",
+   "wear appropriate protective gear"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D110": {
+  "role_count": 57,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D111": {
+  "role_count": 45,
+  "foundation_skills": [
+   "maintain work standards"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 34,
+    "cluster_skills": [
+     "control textile process",
+     "measure yarn count",
+     "properties of textile materials"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 3,
+    "cluster_skills": [
+     "use textile finishing machine technologies",
+     "textile printing technology",
+     "properties of textile materials",
+     "control textile process",
+     "conduct textile testing operations",
+     "test physical properties of textiles",
+     "textile technologies",
+     "distinguish fabrics",
+     "measure yarn count",
+     "distinguish accessories"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 2,
+    "cluster_skills": [
+     "challenging issues in the textile industry",
+     "control textile process"
+    ]
+   },
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 2,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "73",
+    "label": "Handicraft & Printing Trades",
+    "role_count": 2,
+    "cluster_skills": [
+     "decorate textile articles",
+     "textile printing technology",
+     "control textile process"
+    ]
+   }
+  ]
+ },
+ "D112": {
+  "role_count": 22,
+  "foundation_skills": [
+   "quality standards",
+   "work safely with machines",
+   "wear appropriate protective gear",
+   "troubleshoot",
+   "perform test run"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 19,
+    "cluster_skills": [
+     "types of wood",
+     "monitor automated machines",
+     "wood cuts",
+     "remove processed workpiece",
+     "remove inadequate workpieces",
+     "types of pulp",
+     "woodworking processes",
+     "supply machine"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 3,
+    "cluster_skills": [
+     "oversee production requirements",
+     "communicate problems to senior colleagues",
+     "keep records of work progress",
+     "follow production schedule",
+     "analyse the need for technical resources",
+     "manage resources",
+     "ensure finished product meet requirements",
+     "evaluate employees work",
+     "create solutions to problems"
+    ]
+   }
+  ]
+ },
+ "D113": {
+  "role_count": 21,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D114": {
+  "role_count": 39,
+  "foundation_skills": [
+   "quality standards"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "82",
+    "label": "Assemblers",
+    "role_count": 36,
+    "cluster_skills": [
+     "troubleshoot",
+     "read assembly drawings",
+     "align components",
+     "mechanics"
+    ]
+   },
+   {
+    "isco_submajor": "81",
+    "label": "Plant & Machine Operators",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D115": {
+  "role_count": 20,
+  "foundation_skills": [
+   "road traffic laws"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D116": {
+  "role_count": 16,
+  "foundation_skills": [
+   "work ergonomically",
+   "follow health and safety procedures in construction",
+   "keep heavy construction equipment in good condition",
+   "inspect construction sites",
+   "mechanical systems"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D117": {
+  "role_count": 8,
+  "foundation_skills": [
+   "shunt inbound loads"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D118": {
+  "role_count": 23,
+  "foundation_skills": [
+   "pest control in plants"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "61",
+    "label": "Agricultural Workers",
+    "role_count": 19,
+    "cluster_skills": [
+     "environmental legislation in agriculture and forestry",
+     "plant species",
+     "soil structure",
+     "fertilisation principles",
+     "crop production principles"
+    ]
+   },
+   {
+    "isco_submajor": "92",
+    "label": "Other",
+    "role_count": 4,
+    "cluster_skills": [
+     "harvest crop",
+     "execute fertilisation",
+     "work in outdoor conditions"
+    ]
+   }
+  ]
+ },
+ "D119": {
+  "role_count": 16,
+  "foundation_skills": [
+   "animal welfare legislation",
+   "livestock species",
+   "control animal movement",
+   "animal nutrition",
+   "provide nutrition to animals"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "61",
+    "label": "Agricultural Workers",
+    "role_count": 12,
+    "cluster_skills": [
+     "health and safety regulations",
+     "manage animal biosecurity",
+     "signs of animal illness",
+     "livestock reproduction",
+     "assist in transportation of animals",
+     "provide first aid to animals"
+    ]
+   },
+   {
+    "isco_submajor": "92",
+    "label": "Other",
+    "role_count": 4,
+    "cluster_skills": [
+     "biology",
+     "operate agricultural machinery",
+     "maintain the farm",
+     "young horses training",
+     "breed-specific behaviour of horses"
+    ]
+   }
+  ]
+ },
+ "D120": {
+  "role_count": 21,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "62",
+    "label": "Forestry & Fishery Workers",
+    "role_count": 15,
+    "cluster_skills": [
+     "fish biology",
+     "biosecurity",
+     "monitor fish mortality rates",
+     "animal welfare legislation",
+     "fisheries legislation",
+     "code of Conduct for Responsible Fisheries",
+     "deterioration of fish products",
+     "fishing gear",
+     "international regulations for preventing collisions at sea",
+     "assessment of risks and threats"
+    ]
+   },
+   {
+    "isco_submajor": "92",
+    "label": "Other",
+    "role_count": 4,
+    "cluster_skills": [
+     "collect dead fish",
+     "rope manipulation",
+     "monitor aquaculture stock health standards",
+     "assess cage water quality",
+     "stock fish",
+     "handle fish harvesting waste",
+     "fish welfare regulations"
+    ]
+   }
+  ]
+ },
+ "D121": {
+  "role_count": 11,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D122": {
+  "role_count": 11,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D123": {
+  "role_count": 10,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D124": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "32",
+    "label": "Health Associate Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "use ophthalmic instruments",
+     "optical glass characteristics",
+     "sell optical products",
+     "first aid"
+    ]
+   },
+   {
+    "isco_submajor": "53",
+    "label": "Personal Care Workers",
+    "role_count": 6,
+    "cluster_skills": [
+     "empathise with the healthcare user",
+     "hygiene in a health care setting",
+     "respond to changing situations in health care",
+     "disability care",
+     "infection control",
+     "human anatomy",
+     "sterilization techniques",
+     "first aid",
+     "contribute to continuity of health care",
+     "provide basic support to patients"
+    ]
+   }
+  ]
+ },
+ "D125": {
+  "role_count": 7,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "33",
+    "label": "Business & Admin Associates",
+    "role_count": 4,
+    "cluster_skills": [
+     "maintain healthcare user data confidentiality",
+     "medical terminology"
+    ]
+   },
+   {
+    "isco_submajor": "42",
+    "label": "Customer Services Clerks",
+    "role_count": 3,
+    "cluster_skills": [
+     "customer service",
+     "communicate with customers"
+    ]
+   }
+  ]
+ },
+ "D126": {
+  "role_count": 8,
+  "foundation_skills": [
+   "human physiology",
+   "human anatomy",
+   "empathise with the healthcare user"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D127": {
+  "role_count": 12,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "53",
+    "label": "Personal Care Workers",
+    "role_count": 7,
+    "cluster_skills": [
+     "workplace sanitation",
+     "assist children in developing personal skills",
+     "play with children",
+     "assist children with homework",
+     "support the positiveness of youths",
+     "assess the development of youth",
+     "handle chemical cleaning agents",
+     "handle children's problems",
+     "maintain relations with children's parents",
+     "communicate with youth"
+    ]
+   },
+   {
+    "isco_submajor": "13",
+    "label": "Production & Specialised Services Mgmt",
+    "role_count": 3,
+    "cluster_skills": [
+     "child protection"
+    ]
+   },
+   {
+    "isco_submajor": "23",
+    "label": "Teaching Professionals",
+    "role_count": 2,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D129": {
+  "role_count": 21,
+  "foundation_skills": [
+   "military weaponry",
+   "military combat techniques",
+   "military drill",
+   "lead military troops"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "11",
+    "label": "Executive & Senior Management",
+    "role_count": 12,
+    "cluster_skills": [
+     "ensure public safety and security",
+     "military code",
+     "devise military tactics",
+     "defend human rights",
+     "perform military operations",
+     "surveillance methods",
+     "manage troop deployment",
+     "maintain operational communications",
+     "ensure compliance with policies",
+     "camouflage"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 5,
+    "cluster_skills": [
+     "geographic information systems",
+     "operate radio equipment",
+     "surveillance radars",
+     "air force operations",
+     "use different communication channels",
+     "handle surveillance equipment",
+     "surveillance methods"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 4,
+    "cluster_skills": [
+     "military code",
+     "manage troop deployment",
+     "geographic information systems",
+     "perform military operations",
+     "surveillance methods",
+     "use different communication channels",
+     "use geographic information systems",
+     "ensure compliance with types of weapons",
+     "monitor military equipment use"
+    ]
+   }
+  ]
+ },
+ "D131": {
+  "role_count": 29,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 16,
+    "cluster_skills": [
+     "technical drawings",
+     "engineering principles",
+     "engineering processes",
+     "production processes",
+     "manufacturing processes",
+     "mathematics",
+     "industrial engineering"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 12,
+    "cluster_skills": [
+     "quality standards",
+     "oversee production requirements",
+     "create solutions to problems",
+     "interpret circuit diagrams",
+     "electronics",
+     "inspect quality of products",
+     "electronic equipment standards"
+    ]
+   }
+  ]
+ },
+ "D132": {
+  "role_count": 7,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D133": {
+  "role_count": 37,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "75",
+    "label": "Food/Wood/Garment Trades",
+    "role_count": 14,
+    "cluster_skills": [
+     "upholstery tools",
+     "sand wood",
+     "types of wood",
+     "properties of textile materials",
+     "create smooth wood surface"
+    ]
+   },
+   {
+    "isco_submajor": "73",
+    "label": "Handicraft & Printing Trades",
+    "role_count": 12,
+    "cluster_skills": [
+     "jewellery processes",
+     "use jewellery equipment",
+     "ensure conformance to jewel design specifications",
+     "create jewellery",
+     "select metals for jewellery",
+     "adjust jewellery",
+     "heat jewellery metals",
+     "select gems for jewellery"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "art history",
+     "portfolio management in textile manufacturing",
+     "properties of textile materials",
+     "monitor developments in technology used for design",
+     "monitor textile manufacturing developments",
+     "use specialised design software",
+     "monitor sociological trends",
+     "draw up costume sketches"
+    ]
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 4,
+    "cluster_skills": [
+     "assess visual impact of displays",
+     "maintain relationship with suppliers",
+     "negotiate with suppliers for visual material",
+     "merchandising techniques",
+     "maintain relationship with customers",
+     "conduct research on trends in design",
+     "room aesthetics",
+     "materials for interior design"
+    ]
+   }
+  ]
+ },
+ "D134": {
+  "role_count": 13,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 8,
+    "cluster_skills": [
+     "Global Maritime Distress and Safety System",
+     "collect samples",
+     "International Convention for the Prevention of Pollution from Ships",
+     "mechanics",
+     "mechanics of vessels",
+     "international regulations for preventing collisions at sea",
+     "engine components",
+     "operation of different engines",
+     "moor vessels",
+     "manage vessel engines and systems"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 5,
+    "cluster_skills": [
+     "engineering principles",
+     "engineering processes",
+     "mechanics of vessels",
+     "execute analytical mathematical calculations",
+     "mathematics",
+     "naval architecture",
+     "marine engineering"
+    ]
+   }
+  ]
+ },
+ "D166": {
+  "role_count": 9,
+  "foundation_skills": [
+   "engineering principles"
+  ],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 5,
+    "cluster_skills": [
+     "design drawings",
+     "car controls",
+     "automotive diagnostic equipment",
+     "automotive engineering"
+    ]
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 4,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D135": {
+  "role_count": 9,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D136": {
+  "role_count": 10,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "technical drawings",
+     "engineering processes",
+     "engineering principles",
+     "industrial engineering",
+     "production processes",
+     "manufacturing processes",
+     "aerodynamics",
+     "computer simulation",
+     "quality standards"
+    ]
+   },
+   {
+    "isco_submajor": "31",
+    "label": "Science & Engineering Technicians",
+    "role_count": 3,
+    "cluster_skills": [
+     "mechanics",
+     "electromechanics",
+     "aircraft mechanics",
+     "common aviation safety regulations",
+     "create solutions to problems"
+    ]
+   }
+  ]
+ },
+ "D137": {
+  "role_count": 6,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D138": {
+  "role_count": 10,
+  "foundation_skills": [
+   "engineering processes",
+   "engineering principles"
+  ],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D142": {
+  "role_count": 37,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D144": {
+  "role_count": 8,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D145": {
+  "role_count": 11,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 6,
+    "cluster_skills": [
+     "health care occupation-specific ethics",
+     "psychological diagnostics",
+     "psychological counselling methods",
+     "counselling methods",
+     "consultation",
+     "psychopharmacology",
+     "crisis intervention",
+     "psychology",
+     "body language",
+     "research design"
+    ]
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 4,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D155": {
+  "role_count": 13,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D141": {
+  "role_count": 9,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 5,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 3,
+    "cluster_skills": []
+   }
+  ]
+ },
+ "D167": {
+  "role_count": 13,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "21",
+    "label": "Science & Engineering Professionals",
+    "role_count": 8,
+    "cluster_skills": [
+     "asset pipelines",
+     "photogrammetry"
+    ]
+   },
+   {
+    "isco_submajor": "25",
+    "label": "ICT Professionals",
+    "role_count": 5,
+    "cluster_skills": [
+     "real-time optimization"
+    ]
+   }
+  ]
+ },
+ "D168": {
+  "role_count": 9,
+  "foundation_skills": [],
+  "has_subgroups": false,
+  "subgroups": []
+ },
+ "D070": {
+  "role_count": 73,
+  "foundation_skills": [],
+  "has_subgroups": true,
+  "subgroups": [
+   {
+    "isco_submajor": "26",
+    "label": "Legal, Social & Cultural Professionals",
+    "role_count": 42,
+    "cluster_skills": []
+   },
+   {
+    "isco_submajor": "34",
+    "label": "Legal, Social & Cultural Associates",
+    "role_count": 31,
+    "cluster_skills": [
+     "work ergonomically",
+     "understand artistic concepts"
+    ]
+   }
+  ]
+ }
+}

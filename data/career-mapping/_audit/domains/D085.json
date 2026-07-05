@@ -1,0 +1,422 @@
+{
+ "domain_id": "D085",
+ "domain_name": "Retail Sales, Shop Operations",
+ "role_count": 83,
+ "roles": [
+  {
+   "role": "rental service representative in other machinery, equipment and tangible goods",
+   "isco": 5249,
+   "aka": "rental sales desk supervisor in other machinery, equipment and tangible goods  ·  rental sales desk clerk in other machinery, equipment and tangible goods  ·  rental specialist in other machinery, equipment and tangible goods  ·  rental sales assistant in other machinery, equipment and tangible goods  ·  rental service worker in other machinery, equipment and tangible goods"
+  },
+  {
+   "role": "hardware and paint specialised seller",
+   "isco": 5223,
+   "aka": "home decorating specialised seller  ·  home decorating salesperson  ·  hardware and paint do it yourself salesperson  ·  hardware and paint specialized seller  ·  paint and accessories specialised seller"
+  },
+  {
+   "role": "promotions demonstrator",
+   "isco": 5242,
+   "aka": "trainee sales demonstrator  ·  supermarket promotions demonstrator  ·  outlet centre promotions demonstrator  ·  trainee promotions demonstrator  ·  department store promotions demonstrator"
+  },
+  {
+   "role": "fish and seafood specialised seller",
+   "isco": 5223,
+   "aka": "fish stall specialised seller  ·  fish stall salesperson  ·  fresh seafood salesperson  ·  fishmongers shop specialised seller  ·  fisheries shop salesperson"
+  },
+  {
+   "role": "motor vehicles parts advisor",
+   "isco": 5223,
+   "aka": "bus parts advisor  ·  bus and coach service operative  ·  fleet parts operative  ·  light vehicle service operative  ·  PCV parts advisor"
+  },
+  {
+   "role": "shop assistant",
+   "isco": 5223,
+   "aka": "garden centre shop assistant  ·  filling station shop assistant  ·  senior shop assistant  ·  hypermarket shop assistant  ·  outlet centre shop assistant"
+  },
+  {
+   "role": "ammunition specialised seller",
+   "isco": 5223,
+   "aka": "hunting equipment salesperson  ·  weapon specialised seller  ·  ammunition salesperson  ·  firearms specialised seller  ·  weapon salesperson"
+  },
+  {
+   "role": "call centre agent",
+   "isco": 5244,
+   "aka": "call center agent  ·  outbound sales agent  ·  telephone sales agent  ·  telephone operator  ·  outbound call centre agent"
+  },
+  {
+   "role": "sporting accessories specialised seller",
+   "isco": 5223,
+   "aka": "sports salesperson  ·  sporting accessories specialized seller  ·  sports goods specialised seller  ·  sporting equipment specialised seller  ·  sporting articles salesperson"
+  },
+  {
+   "role": "bookshop specialised seller",
+   "isco": 5223,
+   "aka": "stationery specialised seller  ·  stationery salesperson  ·  magazine and bookshop specialised seller  ·  antique book specialised seller  ·  magazine and book salesperson"
+  },
+  {
+   "role": "clothing specialised seller",
+   "isco": 5223,
+   "aka": "professional wear salesperson  ·  professional wear specialised seller  ·  women's fashion specialised seller  ·  clothing salesperson  ·  clothes salesperson"
+  },
+  {
+   "role": "confectionery specialised seller",
+   "isco": 5223,
+   "aka": "sweet specialised seller  ·  sugar confectionery specialised seller  ·  candy salesperson  ·  pastry and confectionery salesperson  ·  pastry and confectionery specialised seller"
+  },
+  {
+   "role": "cashier",
+   "isco": 5230,
+   "aka": "check out assistant  ·  check out operator  ·  hypermarket cashier  ·  department store cashier  ·  outlet centre cashier"
+  },
+  {
+   "role": "rental service representative in personal and household goods",
+   "isco": 5249,
+   "aka": "rental sales assistant in personal and household goods  ·  rental sales desk agent in personal and household goods  ·  rental service worker in personal and household goods  ·  rental service desk clerk in personal and household goods  ·  rental advisor in personal and household goods"
+  },
+  {
+   "role": "bakery specialised seller",
+   "isco": 5223,
+   "aka": "bread and pastries salesperson  ·  bakers shop salesperson  ·  bakery specialized seller  ·  patisserie specialised seller  ·  bakery department specialised seller"
+  },
+  {
+   "role": "car leasing agent",
+   "isco": 5223,
+   "aka": "car leasing office manager  ·  fleet leasing agent  ·  vehicle leasing sales agent  ·  fleet leasing consultant  ·  car leasing team leader"
+  },
+  {
+   "role": "rental service representative",
+   "isco": 5249,
+   "aka": "rental service team leader  ·  rental sales manager  ·  rental sales desk supervisor  ·  rental service desk supervisor  ·  rental sales assistant"
+  },
+  {
+   "role": "pet and pet food specialised seller",
+   "isco": 5223,
+   "aka": "pet salesperson  ·  pet superstore specialised seller  ·  animal salesperson  ·  pet and pet food specialized seller  ·  animal food specialised seller"
+  },
+  {
+   "role": "audiology equipment specialised seller",
+   "isco": 5223,
+   "aka": "hearing help specialised seller  ·  hearing aid salesperson  ·  audiology equipment salesperson  ·  audiology salesperson  ·  hearing help salesperson"
+  },
+  {
+   "role": "vehicle rental agent",
+   "isco": 5249,
+   "aka": "vehicle hire desk manager  ·  vehicle rental worker  ·  vehicle booking desk assistant  ·  vehicle hire desk worker  ·  vehicle rental supervisor"
+  },
+  {
+   "role": "lottery cashier",
+   "isco": 5230,
+   "aka": "lottery retailer cashier  ·  clerk  ·  lottery selling agent  ·  lottery vendor  ·  lottery clerk"
+  },
+  {
+   "role": "computer games, multimedia and software specialised seller",
+   "isco": 5223,
+   "aka": "computer software and multimedia salesperson  ·  computer games specialised seller  ·  multimedia software specialised seller  ·  software multimedia salesperson  ·  computer games and software specialised seller"
+  },
+  {
+   "role": "fuel station specialised seller",
+   "isco": 5245,
+   "aka": "petrol station specialised seller  ·  petrol station salesperson  ·  supermarket filling station salesperson  ·  retail fuel manager  ·  garage salesperson"
+  },
+  {
+   "role": "quick service restaurant team leader",
+   "isco": 5246,
+   "aka": "fast food team leader  ·  fast service team leader  ·  fast service shift team leader  ·  fast food shift team leader"
+  },
+  {
+   "role": "second-hand goods specialised seller",
+   "isco": 5223,
+   "aka": "second-hand goods specialized seller  ·  army surplus goods specialised seller  ·  second-hand goods salesperson  ·  army surplus goods salesperson  ·  second hand goods specialised seller"
+  },
+  {
+   "role": "furniture specialised seller",
+   "isco": 5223,
+   "aka": "home articles specialised seller  ·  home furnishings salesperson  ·  home furnishing salesperson  ·  home furnishing specialised seller  ·  lightning equipment and accessories salesperson"
+  },
+  {
+   "role": "computer and accessories specialised seller",
+   "isco": 5223,
+   "aka": "computer specialised seller  ·  computer hardware salesperson  ·  computer salesperson  ·  consumer electronics specialised seller  ·  computer and peripheral units specialised seller"
+  },
+  {
+   "role": "rental service representative in water transport equipment",
+   "isco": 5249,
+   "aka": "rental sales desk supervisor in water transport equipment  ·  rental advisor in water transport equipment  ·  rental specialist in water transport equipment  ·  rental sales supervisor in water transport equipment  ·  rental sales team leader in water transport equipment"
+  },
+  {
+   "role": "fruit and vegetables specialised seller",
+   "isco": 5223,
+   "aka": "greengrocers store specialised seller  ·  greengrocery counter salesperson  ·  fruiterers shop salesperson  ·  fruit and vegetables specialized seller  ·  organic fruit and vegetable specialised seller"
+  },
+  {
+   "role": "specialised seller",
+   "isco": 5223,
+   "aka": "specialised sales advisor  ·  specialized trader  ·  specialized salesperson  ·  specialised salesperson  ·  specialised trader"
+  },
+  {
+   "role": "rental service representative in office machinery and equipment",
+   "isco": 5249,
+   "aka": "rental service desk agent in office machinery and equipment  ·  rental sales desk clerk in office machinery and equipment  ·  rental sales desk supervisor in office machinery and equipment  ·  rental sales manager in office machinery and equipment  ·  rental service manager in office machinery and equipment"
+  },
+  {
+   "role": "eyewear and optical equipment specialised seller",
+   "isco": 5223,
+   "aka": "contact lens and glasses salesperson  ·  spectacle specialised seller  ·  eyewear and optical equipment specialized seller  ·  eyewear salesperson  ·  opticians specialised seller"
+  },
+  {
+   "role": "rental service representative in air transport equipment",
+   "isco": 5249,
+   "aka": "rental service desk clerk in air transport equipment  ·  rental service desk agent in air transport equipment  ·  rental sales worker in air transport equipment  ·  rental service team leader in air transport equipment  ·  rental service desk supervisor in air transport equipment"
+  },
+  {
+   "role": "ticket issuing clerk",
+   "isco": 5230,
+   "aka": "ticket selling agent  ·  concert ticket selling agent  ·  sport ticket selling agent  ·  museumshop selling agent  ·  museum ticket selling agent"
+  },
+  {
+   "role": "beverages specialised seller",
+   "isco": 5223,
+   "aka": "off-licence store specialised salesperson  ·  soft and alcoholic beverages store specialised salesperson  ·  beverages store specialised seller  ·  beverages specialized seller  ·  off-licence store specialised seller"
+  },
+  {
+   "role": "motor vehicles specialised seller",
+   "isco": 5223,
+   "aka": "used car specialised seller  ·  motor vehicles specialized seller  ·  salesperson motor trade  ·  dealership salesperson  ·  used car salesperson"
+  },
+  {
+   "role": "building materials specialised seller",
+   "isco": 5223,
+   "aka": "trade counter salesperson  ·  do it yourself shop specialised seller  ·  building materials do it yourself salesperson  ·  DIY shop specialised seller  ·  building materials DIY specialised seller"
+  },
+  {
+   "role": "sales processor",
+   "isco": 5223,
+   "aka": "order entry and transfer co-ordinator  ·  e-commerce sales order processor  ·  order entry and transfer processor  ·  graduate sales order processor  ·  order processing salesperson"
+  },
+  {
+   "role": "cosmetics and perfume specialised seller",
+   "isco": 5223,
+   "aka": "beauty and aroma salesperson  ·  make-up and cosmetics salesperson  ·  perfume salesperson  ·  cosmetics and perfume specialized seller  ·  cosmetics and toilet articles salesperson"
+  },
+  {
+   "role": "jewellery and watches specialised seller",
+   "isco": 5223,
+   "aka": "diamond specialised seller  ·  diamonds and precious metal jewellery specialised seller  ·  diamond salesperson  ·  jewelry and watches specialized seller  ·  jewellery salesperson"
+  },
+  {
+   "role": "toys and games specialised seller",
+   "isco": 5223,
+   "aka": "toy and game superstore specialised seller  ·  toy salesperson  ·  toy and game superstore salesperson  ·  kids toy shop specialised seller  ·  models and games salesperson"
+  },
+  {
+   "role": "domestic appliances specialised seller",
+   "isco": 5223,
+   "aka": "electrical home appliances salesperson  ·  electrical appliances specialised seller  ·  domestic appliances superstore salesperson  ·  home and electrical appliances shop specialised seller  ·  electrical household goods specialised seller"
+  },
+  {
+   "role": "rental service representative in construction and civil engineering machinery",
+   "isco": 5249,
+   "aka": "rental sales supervisor in construction and civil engineering machinery  ·  rental service team leader in construction and civil engineering machinery  ·  rental sales worker in construction and civil engineering machinery  ·  rental service desk agent in construction and civil engineering machinery  ·  rental sales desk supervisor in construction and civil engineering machinery"
+  },
+  {
+   "role": "orthopaedic supplies specialised seller",
+   "isco": 5223,
+   "aka": "orthopaedic articles specialized seller  ·  orthopaedic supplies specialized seller  ·  surgical supplies specialized seller  ·  Orthopedic supplies specialized seller  ·  orthohouse specialized seller"
+  },
+  {
+   "role": "meat and meat products specialised seller",
+   "isco": 5223,
+   "aka": "butchery store salesperson  ·  butchers assistant  ·  meat and meat products store specialised seller  ·  butchery department salesperson  ·  butchery store specialised seller"
+  },
+  {
+   "role": "fashion model",
+   "isco": 5241,
+   "aka": "photographic model  ·  editorial model  ·  advertising model  ·  promotional model  ·  hair model"
+  },
+  {
+   "role": "sales assistant",
+   "isco": 5223,
+   "aka": "department store sales assistant  ·  hypermarket sales assistant  ·  senior sales assistant  ·  supermarket sales assistant  ·  filling station sales assistant"
+  },
+  {
+   "role": "audio and video equipment specialised seller",
+   "isco": 5223,
+   "aka": "home entertainment shop salesperson  ·  audio and video specialised seller  ·  hi-fi specialised seller  ·  audio and video equipment specialized seller  ·  audio and video equipment salesperson"
+  },
+  {
+   "role": "rental service representative in trucks",
+   "isco": 5249,
+   "aka": "rental sales manager in trucks  ·  rental sales worker in trucks  ·  rental service worker in trucks  ·  rental service assistant in trucks  ·  rental service manager in trucks"
+  },
+  {
+   "role": "rental service representative in recreational and sports goods",
+   "isco": 5249,
+   "aka": "rental advisor in recreational and sports goods  ·  rental service team leader in recreational and sports goods  ·  rental service manager in recreational and sports goods  ·  rental service desk clerk in recreational and sports goods  ·  rental sales desk agent in recreational and sports goods"
+  },
+  {
+   "role": "medical goods specialised seller",
+   "isco": 5223,
+   "aka": "medical goods salesperson  ·  pharmacy salesperson  ·  drugstore specialised seller  ·  chemist shop specialised seller  ·  retail chemist shop salesperson"
+  },
+  {
+   "role": "door to door seller",
+   "isco": 5243,
+   "aka": "travelling salesman  ·  door to door salesman  ·  door to door salesperson  ·  doorstep seller  ·  travelling saleswoman"
+  },
+  {
+   "role": "food service worker",
+   "isco": 5246,
+   "aka": "catering worker  ·  kitchen assistant  ·  airline food kitchen worker  ·  airline catering assistant  ·  airline catering worker"
+  },
+  {
+   "role": "tobacco specialised seller",
+   "isco": 5223,
+   "aka": "purveyor of tobacco and tobacco products  ·  cigarette specialised seller  ·  cigar and cigarette salesperson  ·  cigar and cigarette specialised seller  ·  tobacco salesperson"
+  },
+  {
+   "role": "rental service representative in agricultural machinery and equipment",
+   "isco": 5249,
+   "aka": "rental advisor in agricultural machinery and equipment  ·  rental service desk agent in agricultural machinery and equipment  ·  rental sales team leader in agricultural machinery and equipment  ·  rental sales desk agent in agricultural machinery and equipment  ·  rental sales assistant in agricultural machinery and equipment"
+  },
+  {
+   "role": "shop supervisor",
+   "isco": 5222,
+   "aka": "shop general supervisor  ·  shop staff supervisor  ·  retail shop supervisor  ·  boutique supervisor  ·  retail store supervisor"
+  },
+  {
+   "role": "retail entrepreneur",
+   "isco": 5221,
+   "aka": "retail innovator  ·  retail business entrepreneur  ·  shopping entrepreneur  ·  retail product developer  ·  retail business developer"
+  },
+  {
+   "role": "flower and garden specialised seller",
+   "isco": 5223,
+   "aka": "nursery shop salesperson  ·  plants specialised seller  ·  plant nursery specialised seller  ·  garden centre salesperson  ·  garden centre specialised seller"
+  },
+  {
+   "role": "checkout supervisor",
+   "isco": 5222,
+   "aka": "customer service manager  ·  till team leader  ·  counter manager  ·  check out clerk  ·  check out manager"
+  },
+  {
+   "role": "market vendor",
+   "isco": 5211,
+   "aka": "market trader  ·  costermonger  ·  fruit market vendor  ·  street market vendor  ·  covered market vendor"
+  },
+  {
+   "role": "press and stationery specialised seller",
+   "isco": 5223,
+   "aka": "newsagents shop specialised seller  ·  newspapers and magazines salesperson  ·  press and stationery specialized seller  ·  newsagents shop salesperson  ·  stationery specialised seller"
+  },
+  {
+   "role": "art model",
+   "isco": 5241,
+   "aka": "nude art model  ·  life model  ·  artists' model  ·  artist's model  ·  life nude model"
+  },
+  {
+   "role": "rental service representative in video tapes and disks",
+   "isco": 5249,
+   "aka": "rental sales desk agent in video tapes and disks  ·  rental service assistant in video tapes and disks  ·  rental sales team leader in video tapes and disks  ·  rental service worker in video tapes and disks  ·  rental specialist in video tapes and disks"
+  },
+  {
+   "role": "floor and wall coverings specialised seller",
+   "isco": 5223,
+   "aka": "floor and wall coverings salesperson  ·  interior decoration specialised seller  ·  wallpaper and accessories salesperson  ·  wallpaper specialised seller  ·  carpet salesperson"
+  },
+  {
+   "role": "rental manager",
+   "isco": 5249,
+   "aka": "graduate rental manager  ·  rental office manager  ·  trainee rental coordinator  ·  rental station manager  ·  rental office coordinator"
+  },
+  {
+   "role": "music and video shop specialised seller",
+   "isco": 5223,
+   "aka": "music and video salesperson  ·  record specialised seller  ·  record shop specialised seller  ·  music and video shop specialized seller  ·  sheet music salesperson"
+  },
+  {
+   "role": "delicatessen specialised seller",
+   "isco": 5223,
+   "aka": "delicatessen salesperson  ·  delicatessen department specialised seller  ·  delicatessen department salesperson  ·  fine foods specialised seller  ·  fine foods salesperson"
+  },
+  {
+   "role": "street food vendor",
+   "isco": 5212,
+   "aka": "street food seller  ·  purveyor of street food  ·  street food trader  ·  food stall holder  ·  street food business operator"
+  },
+  {
+   "role": "telecommunications equipment specialised seller",
+   "isco": 5223,
+   "aka": "mobile phone specialised seller  ·  mobile phone and devices specialised seller  ·  mobile phone and accessories salesperson  ·  mobile phone and accessories specialised seller  ·  mobile phone and devices salesperson"
+  },
+  {
+   "role": "specialised antique dealer",
+   "isco": 5223,
+   "aka": "antiques dealer  ·  specialised seller of antiques  ·  antiques and collectibles shop salesperson  ·  antiques specialised dealer  ·  antiques specialised merchant"
+  },
+  {
+   "role": "rental service representative in cars and light motor vehicles",
+   "isco": 5249,
+   "aka": "rental sales manager in cars and light motor vehicles  ·  rental service desk agent in cars and light motor vehicles  ·  rental sales worker in cars and light motor vehicles  ·  rental service desk clerk in cars and light motor vehicles  ·  rental sales supervisor in cars and light motor vehicles"
+  },
+  {
+   "role": "personal shopper",
+   "isco": 5223,
+   "aka": "international personal shopper  ·  global personal shopper  ·  online personal shopper"
+  },
+  {
+   "role": "Shop Salespersons",
+   "isco": 5221,
+   "aka": NaN
+  },
+  {
+   "role": "Telemarketers",
+   "isco": 5249,
+   "aka": NaN
+  },
+  {
+   "role": "Door-To-Door Sales Workers, News and Street Vendors",
+   "isco": 5249,
+   "aka": NaN
+  },
+  {
+   "role": "Cashiers and Ticket Clerks",
+   "isco": 5223,
+   "aka": NaN
+  },
+  {
+   "role": "Retail Salespersons",
+   "isco": 5221,
+   "aka": NaN
+  },
+  {
+   "role": "Models",
+   "isco": 5230,
+   "aka": NaN
+  },
+  {
+   "role": "Door-to-Door Sales Workers, News and Street Vendors, and Related Workers",
+   "isco": 5211,
+   "aka": NaN
+  },
+  {
+   "role": "Demonstrators and Product Promoters",
+   "isco": 5230,
+   "aka": NaN
+  },
+  {
+   "role": "Sales and Related Workers, All Other",
+   "isco": 5249,
+   "aka": NaN
+  },
+  {
+   "role": "shoe and leather accessories specialised seller",
+   "isco": 5223,
+   "aka": "shoe and leather accessories salesperson  ·  sports shoes specialised seller  ·  sports shoes salesperson  ·  childrens shoes salesperson  ·  leather accessories salesperson"
+  },
+  {
+   "role": "textile specialised seller",
+   "isco": 5223,
+   "aka": "drapery salesperson  ·  house linen salesperson  ·  textile specialized seller  ·  mercers specialised seller  ·  house linen specialised seller"
+  }
+ ]
+}

@@ -1,0 +1,67 @@
+{
+ "domain_id": "D141",
+ "domain_name": "Quantum Computing, Quantum Information",
+ "role_count": 12,
+ "roles": [
+  {
+   "role": "quantum software engineer",
+   "isco": 2512,
+   "aka": "Quantum Developer, Quantum Programmer"
+  },
+  {
+   "role": "quantum hardware engineer",
+   "isco": 2149,
+   "aka": "Qubit Engineer, Quantum Device Engineer"
+  },
+  {
+   "role": "quantum algorithm developer",
+   "isco": 2519,
+   "aka": "Quantum Information Scientist"
+  },
+  {
+   "role": "quantum error correction specialist",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "quantum cryptography engineer",
+   "isco": 2529,
+   "aka": "Quantum Communications Engineer"
+  },
+  {
+   "role": "quantum systems architect",
+   "isco": 2512,
+   "aka": "Quantum Engineer"
+  },
+  {
+   "role": "quantum sensing specialist",
+   "isco": 2112,
+   "aka": "Quantum Metrology Engineer"
+  },
+  {
+   "role": "quantum machine learning specialist",
+   "isco": 2511,
+   "aka": "Quantum ML Engineer"
+  },
+  {
+   "role": "quantum simulation scientist",
+   "isco": 2111,
+   "aka": NaN
+  },
+  {
+   "role": "quantum applications engineer",
+   "isco": 2113,
+   "aka": "Quantum Chemist, Quantum Optimizer"
+  },
+  {
+   "role": "quantum technician",
+   "isco": 3114,
+   "aka": "QT Laboratory Technician"
+  },
+  {
+   "role": "quantum policy and standards specialist",
+   "isco": 2422,
+   "aka": NaN
+  }
+ ]
+}

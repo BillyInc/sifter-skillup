@@ -1,0 +1,462 @@
+{
+ "domain_id": "D161",
+ "domain_name": "Humanitarian Aid, Emergency Response",
+ "role_count": 91,
+ "roles": [
+  {
+   "role": "housing policy officer",
+   "isco": 2422,
+   "aka": "policy officer  ·  housing policy analyst  ·  affordable housing policy officer  ·  housing policy development officer  ·  senior housing policy officer"
+  },
+  {
+   "role": "procurement category specialist",
+   "isco": 2422,
+   "aka": "procurement associate category specialist  ·  market specialist  ·  supply specialist  ·  associate category specialist  ·  category specialist"
+  },
+  {
+   "role": "criminologist",
+   "isco": 2632,
+   "aka": "criminology scientist  ·  criminology research scientist  ·  criminology studies scientist  ·  criminology studies research scientist  ·  criminology researcher"
+  },
+  {
+   "role": "public administration manager",
+   "isco": 1112,
+   "aka": "chief of staff  ·  government department manager  ·  public institution director  ·  public service administrator  ·  public administration director"
+  },
+  {
+   "role": "youth information worker",
+   "isco": 2635,
+   "aka": "youth counsellor  ·  youth mentor  ·  youth advisor  ·  youth information consultant  ·  youth information provider"
+  },
+  {
+   "role": "child care social worker",
+   "isco": 2635,
+   "aka": "social worker (children and families)  ·  childcare social worker  ·  social worker family safeguarding team  ·  children's social worker  ·  child protection social worker"
+  },
+  {
+   "role": "missionary",
+   "isco": 2636,
+   "aka": "city missionary  ·  missionary preacher  ·  christian social worker  ·  missions pastor  ·  intercessory missionary"
+  },
+  {
+   "role": "sociologist",
+   "isco": 2632,
+   "aka": "urban sociology science researcher  ·  sociologists  ·  rural sociology science researcher  ·  urban sociology analyst  ·  sociology science researcher"
+  },
+  {
+   "role": "consultant social worker",
+   "isco": 2635,
+   "aka": "policy advisor  ·  social work researcher  ·  social work academic  ·  social work consultant  ·  social work educator"
+  },
+  {
+   "role": "ambassador",
+   "isco": 1112,
+   "aka": "ordinary ambassador  ·  high commissioner  ·  resident ambassador  ·  diplomatic ambassador"
+  },
+  {
+   "role": "media scientist",
+   "isco": 2632,
+   "aka": "media science researcher  ·  media studies scholar  ·  media research analyst  ·  media research scientist  ·  media analyst"
+  },
+  {
+   "role": "education welfare officer",
+   "isco": 2635,
+   "aka": "education engagement officer  ·  school social worker  ·  attendance support officer  ·  social worker in education  ·  education and family engagement officer"
+  },
+  {
+   "role": "social service consultant",
+   "isco": 2422,
+   "aka": "welfare consultant  ·  social service planning consultant  ·  social services expert  ·  social planning consultant  ·  community development consultant"
+  },
+  {
+   "role": "diplomat",
+   "isco": 1112,
+   "aka": "envoy  ·  diplomatic agent  ·  UN diplomat  ·  diplomatic service officer  ·  foreign service officer"
+  },
+  {
+   "role": "archaeologist",
+   "isco": 2632,
+   "aka": "archaeology analyst  ·  marine archaeology research analyst  ·  excavation director  ·  archaeologist scientist  ·  archaeology science researcher"
+  },
+  {
+   "role": "regional development policy officer",
+   "isco": 2422,
+   "aka": "regional policy officer  ·  policy officer for regional development  ·  regional development policy analyst  ·  regional development policy researcher  ·  legal policy officer for regional development"
+  },
+  {
+   "role": "police commissioner",
+   "isco": 1112,
+   "aka": "commissaire  ·  chief constable  ·  police & crime commissioner  ·  chief police constable  ·  police and crime commissioner"
+  },
+  {
+   "role": "competition policy officer",
+   "isco": 2422,
+   "aka": "policy manager  ·  civil servant  ·  competition policy manager  ·  entrepreneurship policy officer  ·  policy manager for competition"
+  },
+  {
+   "role": "community development officer",
+   "isco": 2422,
+   "aka": "social development officer  ·  outreach support worker  ·  local community development officer"
+  },
+  {
+   "role": "social work researcher",
+   "isco": 2632,
+   "aka": "social research worker  ·  social science researcher  ·  social work research manager  ·  social research interviewer  ·  social scientist"
+  },
+  {
+   "role": "gerontology social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  older adults community care social worker  ·  geriatric social worker  ·  seniors social worker  ·  social care gerontologist"
+  },
+  {
+   "role": "humanitarian advisor",
+   "isco": 2422,
+   "aka": "humanitarian consultant  ·  humanitarian affairs advisor  ·  humanitarian assistance advisor  ·  charity worker  ·  non governmental organisation officer"
+  },
+  {
+   "role": "behavioural scientist",
+   "isco": 2632,
+   "aka": "behavioural science scholar  ·  behavioural science research analyst  ·  behavioural science analyst  ·  behavioural science researcher"
+  },
+  {
+   "role": "social worker",
+   "isco": 2635,
+   "aka": "community worker  ·  community counsellor  ·  cultural mediator  ·  social outreach worker  ·  community services officer"
+  },
+  {
+   "role": "youth offending team worker",
+   "isco": 2635,
+   "aka": "youth offender team worker  ·  juvenile probation social worker  ·  juvenile probation officer  ·  youth offender social worker  ·  youth offending team officer"
+  },
+  {
+   "role": "benefits advice worker",
+   "isco": 2635,
+   "aka": "social security social worker  ·  welfare benefits social worker  ·  employment and benefits advice worker  ·  welfare rights adviser  ·  welfare rights counsellor"
+  },
+  {
+   "role": "intelligence officer",
+   "isco": 2422,
+   "aka": "cyber investigator  ·  intelligence research specialist  ·  cyber threat intelligence specialist  ·  research & intelligence officer  ·  counter-terrorism analyst"
+  },
+  {
+   "role": "fiscal affairs policy officer",
+   "isco": 2422,
+   "aka": "fiscal policy analyst  ·  fiscal policy consultant  ·  tax policy officer  ·  fiscal policy developer  ·  fiscal policy specialist"
+  },
+  {
+   "role": "social counsellor",
+   "isco": 2635,
+   "aka": "social therapist  ·  crisis counsellor  ·  crisis intervension counsellor  ·  social counselling worker  ·  crisis situation counselor"
+  },
+  {
+   "role": "secretary general",
+   "isco": 1112,
+   "aka": "first secretary  ·  secretary-general  ·  general secretary  ·  international organisation chief officer"
+  },
+  {
+   "role": "legal policy officer",
+   "isco": 2422,
+   "aka": "legal and compliance policy officer  ·  legal policy advisor  ·  legal policy specialist  ·  legal affairs policy officer"
+  },
+  {
+   "role": "drug and alcohol addiction counsellor",
+   "isco": 2635,
+   "aka": "drug and alcohol worker  ·  drug and alcohol addiction counselor  ·  alcohol counsellor  ·  substance abuse counsellor  ·  addictions counsellor"
+  },
+  {
+   "role": "cultural policy officer",
+   "isco": 2422,
+   "aka": "cultural policy coordinator  ·  culture policy officer  ·  arts worker  ·  arts administrator  ·  cultural policy director"
+  },
+  {
+   "role": "healthcare consultant",
+   "isco": 2422,
+   "aka": "management consultant  ·  healthcare advisor  ·  healthcare management adivsor  ·  healthcare management consultant  ·  retirement healthcare advisor"
+  },
+  {
+   "role": "government planning inspector",
+   "isco": 2422,
+   "aka": "planning officer  ·  planning and development surveyor  ·  housing and planning inspector  ·  planning inspector  ·  national infrastructure examining inspector"
+  },
+  {
+   "role": "employment programme coordinator",
+   "isco": 2422,
+   "aka": "program coordinator employment  ·  employment program manager  ·  job creation advisor  ·  employment programme manager  ·  programme coordinator employment"
+  },
+  {
+   "role": "clinical social worker",
+   "isco": 2635,
+   "aka": "clinical social support worker"
+  },
+  {
+   "role": "homelessness worker",
+   "isco": 2635,
+   "aka": "homeless care worker  ·  homelessness support worker  ·  homeless case worker  ·  homeless guidance worker  ·  homeless support worker"
+  },
+  {
+   "role": "probation officer",
+   "isco": 2635,
+   "aka": "probation services officer  ·  parole officer  ·  prison department social worker"
+  },
+  {
+   "role": "immigration policy officer",
+   "isco": 2422,
+   "aka": "government policy manager  ·  asylum policy officer  ·  refugee policy officer  ·  immigration policy analyst"
+  },
+  {
+   "role": "communication scientist",
+   "isco": 2632,
+   "aka": "communication analyst  ·  communication studies research scientist  ·  communication science researcher  ·  communication studies researcher  ·  communication studies analyst"
+  },
+  {
+   "role": "religion scientific researcher",
+   "isco": 2636,
+   "aka": "religious studies researcher  ·  theologist  ·  theologian  ·  theology scholar  ·  theology researcher"
+  },
+  {
+   "role": "hospital social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  palliative care social worker  ·  hospital discharge social worker  ·  medical social worker  ·  public health social worker"
+  },
+  {
+   "role": "crisis situation social worker",
+   "isco": 2635,
+   "aka": "crisis intervention counsellor  ·  crisis situation counsellor  ·  emergency social worker  ·  crisis situation worker  ·  crisis intervention social worker"
+  },
+  {
+   "role": "international relations officer",
+   "isco": 2422,
+   "aka": "international manager  ·  inter governmental cooperation officer  ·  international development officer  ·  international relations director"
+  },
+  {
+   "role": "sports programme coordinator",
+   "isco": 2422,
+   "aka": "sports development officer  ·  recreation officer  ·  community development officer  ·  recreation programme coordinator  ·  sports development coordinator"
+  },
+  {
+   "role": "monitoring and evaluation officer",
+   "isco": 2422,
+   "aka": "monitoring and reporting analyst  ·  MEL officer  ·  social impact assessment specialist  ·  economic impact assessment officer  ·  evaluator"
+  },
+  {
+   "role": "family planning counsellor",
+   "isco": 2635,
+   "aka": "sexual health lead  ·  family planning advisor  ·  reproductive health advisor  ·  family planning social counsellor  ·  sexual health advisor"
+  },
+  {
+   "role": "community care case worker",
+   "isco": 2635,
+   "aka": "independent living coordinator  ·  community care social worker  ·  domiciliary care manager  ·  domiciliary care supervisor"
+  },
+  {
+   "role": "political affairs officer",
+   "isco": 2422,
+   "aka": "political consultant  ·  political aide  ·  political advisor  ·  political campaign officer  ·  campaigner"
+  },
+  {
+   "role": "victim support officer",
+   "isco": 2635,
+   "aka": "victims caseworker  ·  domestic abuse support worker  ·  victim support social worker  ·  relief worker  ·  victim care officer"
+  },
+  {
+   "role": "family social worker",
+   "isco": 2635,
+   "aka": "family services social worker  ·  family support worker"
+  },
+  {
+   "role": "thanatology researcher",
+   "isco": 2632,
+   "aka": "thanatologist  ·  researcher in the psychology of death and dying  ·  thanatological researcher  ·  researcher in thanatology  ·  fellow in thanatology"
+  },
+  {
+   "role": "military welfare worker",
+   "isco": 2635,
+   "aka": "air force social worker  ·  military and veterans social worker  ·  navy social worker  ·  army welfare officer  ·  forces welfare worker"
+  },
+  {
+   "role": "agricultural policy officer",
+   "isco": 2422,
+   "aka": "agronomist  ·  agriculture policy officer  ·  agriculture policy manager  ·  policy manager agriculture  ·  farming advisor"
+  },
+  {
+   "role": "criminal justice social worker",
+   "isco": 2635,
+   "aka": "family court advisor  ·  prison social worker  ·  probation social worker  ·  family court adviser"
+  },
+  {
+   "role": "marriage counsellor",
+   "isco": 2635,
+   "aka": "marriage and family counsellor  ·  family therapist  ·  marriage guidance counsellor  ·  marriage counselling team member  ·  marital crisis counsellor"
+  },
+  {
+   "role": "central bank governor",
+   "isco": 1112,
+   "aka": "national bank governor  ·  national bank governors  ·  central bank managers  ·  central bank directors  ·  central banker"
+  },
+  {
+   "role": "labour market policy officer",
+   "isco": 2422,
+   "aka": "labour policy officer  ·  labor market policy analyst  ·  labour policy consultant  ·  labour policy analyst  ·  labour market policy analyst"
+  },
+  {
+   "role": "embassy counsellor",
+   "isco": 1112,
+   "aka": "embassy counselor  ·  cultural attache  ·  defence attache  ·  embassy officer  ·  economic attache"
+  },
+  {
+   "role": "chaplain",
+   "isco": 2636,
+   "aka": "university chaplain  ·  lay representative  ·  imam  ·  military chaplain  ·  hospital chaplain"
+  },
+  {
+   "role": "mental health social worker",
+   "isco": 2635,
+   "aka": "social worker (mental health)  ·  approved mental health professional  ·  mental health social support worker  ·  mental health community social worker  ·  care coordinator (mental health)"
+  },
+  {
+   "role": "consul",
+   "isco": 1112,
+   "aka": "chargé d'affaires  ·  consul-general  ·  honorary consul  ·  attaché"
+  },
+  {
+   "role": "migrant social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  cultural mediator social worker  ·  asylum advice worker  ·  migrant re-settlement worker  ·  immigrant advice worker"
+  },
+  {
+   "role": "anthropologist",
+   "isco": 2632,
+   "aka": "arts scientist  ·  cultural scientist  ·  linguistic anthropologist  ·  ethnologist  ·  television scientist"
+  },
+  {
+   "role": "enterprise development worker",
+   "isco": 2635,
+   "aka": "social entrepreneur  ·  enterprise development manager  ·  corporate social worker  ·  industry social worker  ·  business social worker"
+  },
+  {
+   "role": "environmental policy officer",
+   "isco": 2422,
+   "aka": "policy officer  ·  environmental officer  ·  environmental policy researcher  ·  principal environmental policy officer  ·  senior environmental policy officer"
+  },
+  {
+   "role": "social work supervisor",
+   "isco": 2635,
+   "aka": "social services team manager  ·  social work programme manager  ·  social work programme supervisor  ·  social work team manager  ·  senior social worker"
+  },
+  {
+   "role": "youth worker",
+   "isco": 2635,
+   "aka": "senior youth worker  ·  youth project team worker  ·  youth support worker  ·  youth centre worker  ·  social worker youth justice"
+  },
+  {
+   "role": "sexual violence counsellor",
+   "isco": 2635,
+   "aka": "victim support worker  ·  sexual violence counselor  ·  sexual violence advisor  ·  sexual assault social counselor  ·  domestic violence counsellor"
+  },
+  {
+   "role": "geographer",
+   "isco": 2632,
+   "aka": "economic geographer  ·  geographers  ·  biogeographer  ·  cultural geographer  ·  physical geographer"
+  },
+  {
+   "role": "palliative care social worker",
+   "isco": 2635,
+   "aka": "hospice worker  ·  palliative care assistant  ·  palliative care supervisor  ·  hospice care assistant  ·  hospice carer"
+  },
+  {
+   "role": "trade development officer",
+   "isco": 2422,
+   "aka": "trade development director  ·  import and export officer  ·  import & export director  ·  import and export director  ·  senior trade development officer"
+  },
+  {
+   "role": "employment support worker",
+   "isco": 2635,
+   "aka": "employment rights worker  ·  employment social worker  ·  supported employment worker  ·  employment support social worker  ·  employability support worker"
+  },
+  {
+   "role": "policy officer",
+   "isco": 2422,
+   "aka": "policy researcher  ·  policy advisor  ·  strategy manager  ·  strategy advisor  ·  policy coordinator"
+  },
+  {
+   "role": "public procurement specialist",
+   "isco": 2422,
+   "aka": "public sector procurement practitioner  ·  public procurement expert  ·  public procurement practitioner  ·  public sector procurement specialist  ·  public sector procurement expert"
+  },
+  {
+   "role": "community social worker",
+   "isco": 2635,
+   "aka": "community support worker  ·  community outreach worker  ·  housing social worker  ·  community welfare social worker  ·  social development worker"
+  },
+  {
+   "role": "public health policy officer",
+   "isco": 2422,
+   "aka": "general manager  ·  healthcare services planning officer  ·  healthcare planning officer  ·  healthcare planner  ·  health service manager"
+  },
+  {
+   "role": "substance misuse worker",
+   "isco": 2635,
+   "aka": "substanse abuse social worker  ·  social worker (substance misuse)  ·  drug and alcohol worker  ·  addiction social worker  ·  substance mis-use counsellor"
+  },
+  {
+   "role": "social services policy officer",
+   "isco": 2422,
+   "aka": "social policy specialist  ·  social policy analyst  ·  social services policy advisor  ·  social services policy researcher  ·  social policy officer"
+  },
+  {
+   "role": "parliamentary assistant",
+   "isco": 2422,
+   "aka": "MP's PA  ·  MP's assistant  ·  MSP's parliamentary assistant  ·  MP's parliamentary assistant  ·  constituency assistant"
+  },
+  {
+   "role": "rehabilitation support worker",
+   "isco": 2635,
+   "aka": "reablement officer  ·  occupational therapy support worker  ·  rehabilitation worker  ·  rehabilitation social worker  ·  rehabilitation outreach worker"
+  },
+  {
+   "role": "minister of religion",
+   "isco": 2636,
+   "aka": "monk  ·  nun  ·  minister of the church  ·  pastor  ·  priest"
+  },
+  {
+   "role": "fire commissioner",
+   "isco": 1112,
+   "aka": "area manager  ·  fire brigade commissioner  ·  fire service commissioner  ·  brigade manager  ·  chief fire officer"
+  },
+  {
+   "role": "foreign affairs officer",
+   "isco": 2422,
+   "aka": "international affairs analyst  ·  foreign affairs manager  ·  foreign affairs analyst  ·  international relations manager  ·  foreign affairs specialist"
+  },
+  {
+   "role": "bereavement counsellor",
+   "isco": 2635,
+   "aka": "bereavement social counsellor  ·  family bereavement counsellor  ·  bereavement advice counsellor  ·  family and bereavement support officer  ·  bereavement support worker"
+  },
+  {
+   "role": "education policy officer",
+   "isco": 2422,
+   "aka": "policy officer  ·  education policy specialist  ·  education policy analyst  ·  policy officer for education  ·  education policy advisor"
+  },
+  {
+   "role": "social pedagogue",
+   "isco": 2635,
+   "aka": "social outreach worker  ·  practitioner in social pedagogy  ·  community social pedagogue  ·  community education practitioner  ·  qualified social pedagogue"
+  },
+  {
+   "role": "recreation policy officer",
+   "isco": 2422,
+   "aka": "recreation policy advisor  ·  sports policy advisor  ·  sports and recreation policy officer  ·  sports and recreation policy specialist  ·  sports and recreation policy analyst"
+  },
+  {
+   "role": "community development social worker",
+   "isco": 2635,
+   "aka": "social development worker  ·  community advocate  ·  social worker-community development  ·  community animateur  ·  community development team leader"
+  },
+  {
+   "role": "civil service administrative officer",
+   "isco": 2422,
+   "aka": "government administrative officer  ·  local authority administrator  ·  public administrative officer"
+  }
+ ]
+}

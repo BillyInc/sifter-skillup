@@ -1,0 +1,1315 @@
+[
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Anatomy",
+  "slug": "anatomy",
+  "scope": [
+   40,
+   184
+  ],
+  "span": 144,
+  "n_inst": 82,
+  "out": "jamb/enrich/medical__anatomy.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Biochemistry",
+  "slug": "biochemistry",
+  "scope": [
+   184,
+   193
+  ],
+  "span": 9,
+  "n_inst": 7,
+  "out": "jamb/enrich/medical__biochemistry.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Medical Biochemistry",
+  "slug": "medical_biochemistry",
+  "scope": [
+   193,
+   252
+  ],
+  "span": 59,
+  "n_inst": 16,
+  "out": "jamb/enrich/medical__medical_biochemistry.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Dentistry and Dental Technology",
+  "slug": "dentistry_and_dental_technology",
+  "scope": [
+   252,
+   393
+  ],
+  "span": 141,
+  "n_inst": 33,
+  "out": "jamb/enrich/medical__dentistry_and_dental_technology.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Human Nutrition and Dietetics",
+  "slug": "human_nutrition_and_dietetics",
+  "scope": [
+   393,
+   455
+  ],
+  "span": 62,
+  "n_inst": 34,
+  "out": "jamb/enrich/medical__human_nutrition_and_dietetics.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Medical Laboratory Technology/Science",
+  "slug": "medical_laboratory_technology_science",
+  "scope": [
+   455,
+   660
+  ],
+  "span": 205,
+  "n_inst": 133,
+  "out": "jamb/enrich/medical__medical_laboratory_technology_science.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Medical Rehabilitation",
+  "slug": "medical_rehabilitation",
+  "scope": [
+   660,
+   986
+  ],
+  "span": 326,
+  "n_inst": 162,
+  "out": "jamb/enrich/medical__medical_rehabilitation.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Public Health Technology",
+  "slug": "public_health_technology",
+  "scope": [
+   986,
+   1234
+  ],
+  "span": 248,
+  "n_inst": 117,
+  "out": "jamb/enrich/medical__public_health_technology.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Medicine and Surgery (Human Medicine)",
+  "slug": "medicine_and_surgery_human_medicine",
+  "scope": [
+   1234,
+   1649
+  ],
+  "span": 415,
+  "n_inst": 103,
+  "out": "jamb/enrich/medical__medicine_and_surgery_human_medicine.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Physiotherapy",
+  "slug": "physiotherapy",
+  "scope": [
+   1649,
+   1707
+  ],
+  "span": 58,
+  "n_inst": 26,
+  "out": "jamb/enrich/medical__physiotherapy.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Pharmacology",
+  "slug": "pharmacology",
+  "scope": [
+   1707,
+   1977
+  ],
+  "span": 270,
+  "n_inst": 103,
+  "out": "jamb/enrich/medical__pharmacology.json"
+ },
+ {
+  "brochure": "medical",
+  "txt": "_jamb_txt/medical.txt",
+  "jamb_name": "Radiography",
+  "slug": "radiography",
+  "scope": [
+   1977,
+   2172
+  ],
+  "span": 195,
+  "n_inst": 59,
+  "out": "jamb/enrich/medical__radiography.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Agriculture",
+  "slug": "agriculture",
+  "scope": [
+   55,
+   286
+  ],
+  "span": 231,
+  "n_inst": 155,
+  "out": "jamb/enrich/agriculture__agriculture.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Biotechnology",
+  "slug": "biotechnology",
+  "scope": [
+   286,
+   368
+  ],
+  "span": 82,
+  "n_inst": 21,
+  "out": "jamb/enrich/agriculture__biotechnology.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Horticulture",
+  "slug": "horticulture",
+  "scope": [
+   368,
+   429
+  ],
+  "span": 61,
+  "n_inst": 8,
+  "out": "jamb/enrich/agriculture__horticulture.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Fisheries",
+  "slug": "fisheries",
+  "scope": [
+   429,
+   1676
+  ],
+  "span": 1247,
+  "n_inst": 30,
+  "out": "jamb/enrich/agriculture__fisheries.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Agronomy",
+  "slug": "agronomy",
+  "scope": [
+   1676,
+   1740
+  ],
+  "span": 64,
+  "n_inst": 7,
+  "out": "jamb/enrich/agriculture__agronomy.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Animal Production",
+  "slug": "animal_production",
+  "scope": [
+   1740,
+   1938
+  ],
+  "span": 198,
+  "n_inst": 23,
+  "out": "jamb/enrich/agriculture__animal_production.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Animal Science",
+  "slug": "animal_science",
+  "scope": [
+   1938,
+   2027
+  ],
+  "span": 89,
+  "n_inst": 15,
+  "out": "jamb/enrich/agriculture__animal_science.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Animal Breeding and Genetics",
+  "slug": "animal_breeding_and_genetics",
+  "scope": [
+   2027,
+   2148
+  ],
+  "span": 121,
+  "n_inst": 6,
+  "out": "jamb/enrich/agriculture__animal_breeding_and_genetics.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Crop Production",
+  "slug": "crop_production",
+  "scope": [
+   2148,
+   2214
+  ],
+  "span": 66,
+  "n_inst": 27,
+  "out": "jamb/enrich/agriculture__crop_production.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Crop Science",
+  "slug": "crop_science",
+  "scope": [
+   2214,
+   2395
+  ],
+  "span": 181,
+  "n_inst": 11,
+  "out": "jamb/enrich/agriculture__crop_science.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Soil Science",
+  "slug": "soil_science",
+  "scope": [
+   2395,
+   2534
+  ],
+  "span": 139,
+  "n_inst": 23,
+  "out": "jamb/enrich/agriculture__soil_science.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Family, Nutrition and Consumer Sciences",
+  "slug": "family_nutrition_and_consumer_sciences",
+  "scope": [
+   2534,
+   2816
+  ],
+  "span": 282,
+  "n_inst": 3,
+  "out": "jamb/enrich/agriculture__family_nutrition_and_consumer_sciences.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Food Science with Business",
+  "slug": "food_science_with_business",
+  "scope": [
+   2816,
+   3153
+  ],
+  "span": 337,
+  "n_inst": 5,
+  "out": "jamb/enrich/agriculture__food_science_with_business.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Forestry and Fisheries",
+  "slug": "forestry_and_fisheries",
+  "scope": [
+   3153,
+   3476
+  ],
+  "span": 323,
+  "n_inst": 21,
+  "out": "jamb/enrich/agriculture__forestry_and_fisheries.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Forestry, Wildlife & Fisheries",
+  "slug": "forestry_wildlife_fisheries",
+  "scope": [
+   3476,
+   3490
+  ],
+  "span": 14,
+  "n_inst": 3,
+  "out": "jamb/enrich/agriculture__forestry_wildlife_fisheries.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Plant Breeding and Seed Technology",
+  "slug": "plant_breeding_and_seed_technology",
+  "scope": [
+   3490,
+   3511
+  ],
+  "span": 21,
+  "n_inst": 2,
+  "out": "jamb/enrich/agriculture__plant_breeding_and_seed_technology.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Home Economics",
+  "slug": "home_economics",
+  "scope": [
+   3511,
+   3579
+  ],
+  "span": 68,
+  "n_inst": 20,
+  "out": "jamb/enrich/agriculture__home_economics.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Hotel Management & Tourism",
+  "slug": "hotel_management_tourism",
+  "scope": [
+   3579,
+   3739
+  ],
+  "span": 160,
+  "n_inst": 11,
+  "out": "jamb/enrich/agriculture__hotel_management_tourism.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Home Science, Nutrition and Dietetics",
+  "slug": "home_science_nutrition_and_dietetics",
+  "scope": [
+   3739,
+   3744
+  ],
+  "span": 5,
+  "n_inst": 3,
+  "out": "jamb/enrich/agriculture__home_science_nutrition_and_dietetics.json"
+ },
+ {
+  "brochure": "agriculture",
+  "txt": "_jamb_txt/agriculture.txt",
+  "jamb_name": "Home Science & Management",
+  "slug": "home_science_management",
+  "scope": [
+   3744,
+   4028
+  ],
+  "span": 284,
+  "n_inst": 3,
+  "out": "jamb/enrich/agriculture__home_science_management.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Arabic Studies",
+  "slug": "arabic_studies",
+  "scope": [
+   68,
+   137
+  ],
+  "span": 69,
+  "n_inst": 41,
+  "out": "jamb/enrich/arts_hum__arabic_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Arabic Language and Literature Studies",
+  "slug": "arabic_language_and_literature_studies",
+  "scope": [
+   137,
+   300
+  ],
+  "span": 163,
+  "n_inst": 19,
+  "out": "jamb/enrich/arts_hum__arabic_language_and_literature_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Archaeology",
+  "slug": "archaeology",
+  "scope": [
+   300,
+   373
+  ],
+  "span": 73,
+  "n_inst": 8,
+  "out": "jamb/enrich/arts_hum__archaeology.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Classical Studies",
+  "slug": "classical_studies",
+  "scope": [
+   373,
+   385
+  ],
+  "span": 12,
+  "n_inst": 1,
+  "out": "jamb/enrich/arts_hum__classical_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Christian Religious",
+  "slug": "christian_religious",
+  "scope": [
+   385,
+   439
+  ],
+  "span": 54,
+  "n_inst": 49,
+  "out": "jamb/enrich/arts_hum__christian_religious.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Christian Studies",
+  "slug": "christian_studies",
+  "scope": [
+   439,
+   531
+  ],
+  "span": 92,
+  "n_inst": 3,
+  "out": "jamb/enrich/arts_hum__christian_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Creative Arts",
+  "slug": "creative_arts",
+  "scope": [
+   531,
+   1224
+  ],
+  "span": 693,
+  "n_inst": 86,
+  "out": "jamb/enrich/arts_hum__creative_arts.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Linguistics/Edo",
+  "slug": "linguistics_edo",
+  "scope": [
+   1224,
+   1928
+  ],
+  "span": 704,
+  "n_inst": 111,
+  "out": "jamb/enrich/arts_hum__linguistics_edo.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "English and Literary Studies",
+  "slug": "english_and_literary_studies",
+  "scope": [
+   1928,
+   1979
+  ],
+  "span": 51,
+  "n_inst": 38,
+  "out": "jamb/enrich/arts_hum__english_and_literary_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "English Studies",
+  "slug": "english_studies",
+  "scope": [
+   1979,
+   1984
+  ],
+  "span": 5,
+  "n_inst": 3,
+  "out": "jamb/enrich/arts_hum__english_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Literature in English",
+  "slug": "literature_in_english",
+  "scope": [
+   1984,
+   2136
+  ],
+  "span": 152,
+  "n_inst": 15,
+  "out": "jamb/enrich/arts_hum__literature_in_english.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "French",
+  "slug": "french",
+  "scope": [
+   2136,
+   2222
+  ],
+  "span": 86,
+  "n_inst": 54,
+  "out": "jamb/enrich/arts_hum__french.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Portuguese/English",
+  "slug": "portuguese_english",
+  "scope": [
+   2222,
+   2232
+  ],
+  "span": 10,
+  "n_inst": 6,
+  "out": "jamb/enrich/arts_hum__portuguese_english.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "German",
+  "slug": "german",
+  "scope": [
+   2232,
+   2251
+  ],
+  "span": 19,
+  "n_inst": 6,
+  "out": "jamb/enrich/arts_hum__german.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "French and German/Russian",
+  "slug": "french_and_german_russian",
+  "scope": [
+   2251,
+   2258
+  ],
+  "span": 7,
+  "n_inst": 4,
+  "out": "jamb/enrich/arts_hum__french_and_german_russian.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "International Studies and",
+  "slug": "international_studies_and",
+  "scope": [
+   2258,
+   2757
+  ],
+  "span": 499,
+  "n_inst": 84,
+  "out": "jamb/enrich/arts_hum__international_studies_and.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "History",
+  "slug": "history",
+  "scope": [
+   2757,
+   2809
+  ],
+  "span": 52,
+  "n_inst": 75,
+  "out": "jamb/enrich/arts_hum__history.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "History and Strategic Studies",
+  "slug": "history_and_strategic_studies",
+  "scope": [
+   2809,
+   3501
+  ],
+  "span": 692,
+  "n_inst": 8,
+  "out": "jamb/enrich/arts_hum__history_and_strategic_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Economics",
+  "slug": "economics",
+  "scope": [
+   3501,
+   3631
+  ],
+  "span": 130,
+  "n_inst": 21,
+  "out": "jamb/enrich/arts_hum__economics.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "African and Asian Studies",
+  "slug": "african_and_asian_studies",
+  "scope": [
+   3631,
+   3683
+  ],
+  "span": 52,
+  "n_inst": 6,
+  "out": "jamb/enrich/arts_hum__african_and_asian_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Linguistics",
+  "slug": "linguistics",
+  "scope": [
+   3683,
+   3922
+  ],
+  "span": 239,
+  "n_inst": 93,
+  "out": "jamb/enrich/arts_hum__linguistics.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Kanuri",
+  "slug": "kanuri",
+  "scope": [
+   3922,
+   3994
+  ],
+  "span": 72,
+  "n_inst": 3,
+  "out": "jamb/enrich/arts_hum__kanuri.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Russian with French/German",
+  "slug": "russian_with_french_german",
+  "scope": [
+   3994,
+   4360
+  ],
+  "span": 366,
+  "n_inst": 3,
+  "out": "jamb/enrich/arts_hum__russian_with_french_german.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Mass Communication",
+  "slug": "mass_communication",
+  "scope": [
+   4360,
+   4412
+  ],
+  "span": 52,
+  "n_inst": 13,
+  "out": "jamb/enrich/arts_hum__mass_communication.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Music",
+  "slug": "music",
+  "scope": [
+   4412,
+   4755
+  ],
+  "span": 343,
+  "n_inst": 28,
+  "out": "jamb/enrich/arts_hum__music.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Peace Studies",
+  "slug": "peace_studies",
+  "scope": [
+   4755,
+   4761
+  ],
+  "span": 6,
+  "n_inst": 1,
+  "out": "jamb/enrich/arts_hum__peace_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Philosophy",
+  "slug": "philosophy",
+  "scope": [
+   4761,
+   4882
+  ],
+  "span": 121,
+  "n_inst": 64,
+  "out": "jamb/enrich/arts_hum__philosophy.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Religious Studies",
+  "slug": "religious_studies",
+  "scope": [
+   4882,
+   5287
+  ],
+  "span": 405,
+  "n_inst": 84,
+  "out": "jamb/enrich/arts_hum__religious_studies.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Theology",
+  "slug": "theology",
+  "scope": [
+   5287,
+   5546
+  ],
+  "span": 259,
+  "n_inst": 9,
+  "out": "jamb/enrich/arts_hum__theology.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Yoruba",
+  "slug": "yoruba",
+  "scope": [
+   5546,
+   5626
+  ],
+  "span": 80,
+  "n_inst": 17,
+  "out": "jamb/enrich/arts_hum__yoruba.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Anthropology",
+  "slug": "anthropology",
+  "scope": [
+   5626,
+   5629
+  ],
+  "span": 3,
+  "n_inst": 1,
+  "out": "jamb/enrich/arts_hum__anthropology.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Fulfulde",
+  "slug": "fulfulde",
+  "scope": [
+   5629,
+   5652
+  ],
+  "span": 23,
+  "n_inst": 3,
+  "out": "jamb/enrich/arts_hum__fulfulde.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Efik-Ibibio",
+  "slug": "efik_ibibio",
+  "scope": [
+   5652,
+   5655
+  ],
+  "span": 3,
+  "n_inst": 1,
+  "out": "jamb/enrich/arts_hum__efik_ibibio.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Communication Arts",
+  "slug": "communication_arts",
+  "scope": [
+   5655,
+   5832
+  ],
+  "span": 177,
+  "n_inst": 23,
+  "out": "jamb/enrich/arts_hum__communication_arts.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Political Science and Conflict",
+  "slug": "political_science_and_conflict",
+  "scope": [
+   5832,
+   5939
+  ],
+  "span": 107,
+  "n_inst": 12,
+  "out": "jamb/enrich/arts_hum__political_science_and_conflict.json"
+ },
+ {
+  "brochure": "arts_hum",
+  "txt": "_jamb_txt/arts_hum.txt",
+  "jamb_name": "Sociology",
+  "slug": "sociology",
+  "scope": [
+   5939,
+   6005
+  ],
+  "span": 66,
+  "n_inst": 12,
+  "out": "jamb/enrich/arts_hum__sociology.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Building",
+  "slug": "building",
+  "scope": [
+   559,
+   1085
+  ],
+  "span": 526,
+  "n_inst": 80,
+  "out": "jamb/enrich/engineering__building.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Civil Engineering",
+  "slug": "civil_engineering",
+  "scope": [
+   1085,
+   1616
+  ],
+  "span": 531,
+  "n_inst": 115,
+  "out": "jamb/enrich/engineering__civil_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Computer and Information Science",
+  "slug": "computer_and_information_science",
+  "scope": [
+   1616,
+   1748
+  ],
+  "span": 132,
+  "n_inst": 4,
+  "out": "jamb/enrich/engineering__computer_and_information_science.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Polymer and Textile Engineering",
+  "slug": "polymer_and_textile_engineering",
+  "scope": [
+   1748,
+   1826
+  ],
+  "span": 78,
+  "n_inst": 16,
+  "out": "jamb/enrich/engineering__polymer_and_textile_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Water Resources and Environmental Engr",
+  "slug": "water_resources_and_environmental_engr",
+  "scope": [
+   1826,
+   1927
+  ],
+  "span": 101,
+  "n_inst": 28,
+  "out": "jamb/enrich/engineering__water_resources_and_environmental_engr.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Petroleum and Gas Engineering",
+  "slug": "petroleum_and_gas_engineering",
+  "scope": [
+   1927,
+   1957
+  ],
+  "span": 30,
+  "n_inst": 13,
+  "out": "jamb/enrich/engineering__petroleum_and_gas_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Gas Engineering",
+  "slug": "gas_engineering",
+  "scope": [
+   1957,
+   2040
+  ],
+  "span": 83,
+  "n_inst": 6,
+  "out": "jamb/enrich/engineering__gas_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Computer Science",
+  "slug": "computer_science",
+  "scope": [
+   2040,
+   3143
+  ],
+  "span": 1103,
+  "n_inst": 126,
+  "out": "jamb/enrich/engineering__computer_science.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Systems Engineering",
+  "slug": "systems_engineering",
+  "scope": [
+   3143,
+   3371
+  ],
+  "span": 228,
+  "n_inst": 65,
+  "out": "jamb/enrich/engineering__systems_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Food Engineering",
+  "slug": "food_engineering",
+  "scope": [
+   3371,
+   3458
+  ],
+  "span": 87,
+  "n_inst": 10,
+  "out": "jamb/enrich/engineering__food_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Food Science and Engineering",
+  "slug": "food_science_and_engineering",
+  "scope": [
+   3458,
+   3514
+  ],
+  "span": 56,
+  "n_inst": 19,
+  "out": "jamb/enrich/engineering__food_science_and_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Food Technology",
+  "slug": "food_technology",
+  "scope": [
+   3514,
+   3643
+  ],
+  "span": 129,
+  "n_inst": 27,
+  "out": "jamb/enrich/engineering__food_technology.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Architecture",
+  "slug": "architecture",
+  "scope": [
+   3643,
+   4094
+  ],
+  "span": 451,
+  "n_inst": 89,
+  "out": "jamb/enrich/engineering__architecture.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Quantity Surveying",
+  "slug": "quantity_surveying",
+  "scope": [
+   4094,
+   4719
+  ],
+  "span": 625,
+  "n_inst": 73,
+  "out": "jamb/enrich/engineering__quantity_surveying.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Statistics",
+  "slug": "statistics",
+  "scope": [
+   4719,
+   4897
+  ],
+  "span": 178,
+  "n_inst": 47,
+  "out": "jamb/enrich/engineering__statistics.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Economics",
+  "slug": "economics",
+  "scope": [
+   4897,
+   4901
+  ],
+  "span": 4,
+  "n_inst": 1,
+  "out": "jamb/enrich/engineering__economics.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Geography",
+  "slug": "geography",
+  "scope": [
+   4901,
+   4983
+  ],
+  "span": 82,
+  "n_inst": 10,
+  "out": "jamb/enrich/engineering__geography.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Urban and Regional Planning",
+  "slug": "urban_and_regional_planning",
+  "scope": [
+   4983,
+   5505
+  ],
+  "span": 522,
+  "n_inst": 60,
+  "out": "jamb/enrich/engineering__urban_and_regional_planning.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Industrial Design",
+  "slug": "industrial_design",
+  "scope": [
+   5505,
+   5814
+  ],
+  "span": 309,
+  "n_inst": 36,
+  "out": "jamb/enrich/engineering__industrial_design.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Estate Management",
+  "slug": "estate_management",
+  "scope": [
+   5814,
+   6443
+  ],
+  "span": 629,
+  "n_inst": 92,
+  "out": "jamb/enrich/engineering__estate_management.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Software Engineering",
+  "slug": "software_engineering",
+  "scope": [
+   6443,
+   6489
+  ],
+  "span": 46,
+  "n_inst": 16,
+  "out": "jamb/enrich/engineering__software_engineering.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Meteorology",
+  "slug": "meteorology",
+  "scope": [
+   6489,
+   6542
+  ],
+  "span": 53,
+  "n_inst": 10,
+  "out": "jamb/enrich/engineering__meteorology.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Hotel Management and Tourism",
+  "slug": "hotel_management_and_tourism",
+  "scope": [
+   6542,
+   6551
+  ],
+  "span": 9,
+  "n_inst": 2,
+  "out": "jamb/enrich/engineering__hotel_management_and_tourism.json"
+ },
+ {
+  "brochure": "engineering",
+  "txt": "_jamb_txt/engineering.txt",
+  "jamb_name": "Home Economics and Food Management",
+  "slug": "home_economics_and_food_management",
+  "scope": [
+   6551,
+   6589
+  ],
+  "span": 38,
+  "n_inst": 8,
+  "out": "jamb/enrich/engineering__home_economics_and_food_management.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Vocational Education",
+  "slug": "vocational_education",
+  "scope": [
+   4678,
+   5102
+  ],
+  "span": 424,
+  "n_inst": 60,
+  "out": "jamb/enrich/education__vocational_education.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Technology Education",
+  "slug": "technology_education",
+  "scope": [
+   5102,
+   5122
+  ],
+  "span": 20,
+  "n_inst": 36,
+  "out": "jamb/enrich/education__technology_education.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Home Economics and Hotel Management",
+  "slug": "home_economics_and_hotel_management",
+  "scope": [
+   5122,
+   6978
+  ],
+  "span": 1856,
+  "n_inst": 201,
+  "out": "jamb/enrich/education__home_economics_and_hotel_management.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Teacher Education",
+  "slug": "teacher_education",
+  "scope": [
+   6978,
+   7024
+  ],
+  "span": 46,
+  "n_inst": 2,
+  "out": "jamb/enrich/education__teacher_education.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Library Science",
+  "slug": "library_science",
+  "scope": [
+   7024,
+   7034
+  ],
+  "span": 10,
+  "n_inst": 7,
+  "out": "jamb/enrich/education__library_science.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Library and Information Science",
+  "slug": "library_and_information_science",
+  "scope": [
+   7034,
+   9435
+  ],
+  "span": 2401,
+  "n_inst": 212,
+  "out": "jamb/enrich/education__library_and_information_science.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Education and Business Administration",
+  "slug": "education_and_business_administration",
+  "scope": [
+   9435,
+   9453
+  ],
+  "span": 18,
+  "n_inst": 3,
+  "out": "jamb/enrich/education__education_and_business_administration.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Business Education",
+  "slug": "business_education",
+  "scope": [
+   9453,
+   10113
+  ],
+  "span": 660,
+  "n_inst": 104,
+  "out": "jamb/enrich/education__business_education.json"
+ },
+ {
+  "brochure": "education",
+  "txt": "_jamb_txt/education.txt",
+  "jamb_name": "Sport Science",
+  "slug": "sport_science",
+  "scope": [
+   10113,
+   10260
+  ],
+  "span": 147,
+  "n_inst": 20,
+  "out": "jamb/enrich/education__sport_science.json"
+ }
+]

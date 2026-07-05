@@ -1,0 +1,113 @@
+{
+ "reviews": [
+  {
+   "domain_id": "D077",
+   "domain_name": "Security Services",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "First-Line Supervisors of Correctional Officers", "isco": 5412, "reason": "junk group-label row (aka=NaN), SOC supervisory group label; supervisory content already covered by 'prison officer'/'juvenile correctional officer'"},
+    {"role": "First-Line Supervisors of Police and Detectives", "isco": 5411, "reason": "junk group-label row (aka=NaN); also wrong ISCO 5411 (firefighting) for a police supervisor label"},
+    {"role": "First-Line Supervisors of Firefighting and Prevention Workers", "isco": 5412, "reason": "junk group-label row (aka=NaN); wrong ISCO 5412"},
+    {"role": "First-Line Supervisors of Security Workers", "isco": 5419, "reason": "junk group-label row (aka=NaN); duplicates 'security guard supervisor'"},
+    {"role": "First-Line Supervisors of Protective Service Workers, All Other", "isco": 5419, "reason": "junk group-label row (aka=NaN), residual 'all other' catch-all"},
+    {"role": "Fire Inspectors and Investigators", "isco": 5411, "reason": "junk group-label row (aka=NaN), SOC plural title-case group label"},
+    {"role": "Forest Fire Inspectors and Prevention Specialists", "isco": 5419, "reason": "junk group-label row (aka=NaN)"},
+    {"role": "Bailiffs", "isco": 5412, "reason": "junk group-label row (aka=NaN); bailiff/court enforcement belongs to legal/justice domain, not security services"},
+    {"role": "Fish and Game Wardens", "isco": 5412, "reason": "junk group-label row (aka=NaN); duplicates 'game keeper' (game warden)"},
+    {"role": "Parking Enforcement Workers", "isco": 5412, "reason": "junk group-label row (aka=NaN); duplicates 'civil enforcement officer' (parking attendant/traffic warden)"},
+    {"role": "Customs and Border Protection Officers", "isco": 5412, "reason": "junk group-label row (aka=NaN); cross-domain contamination -> belongs to Customs/Trade domain (D079)"},
+    {"role": "Transit and Railroad Police", "isco": 5412, "reason": "junk group-label row (aka=NaN); subset of police officer"},
+    {"role": "Animal Control Workers", "isco": 5419, "reason": "junk group-label row (aka=NaN); duplicates 'animal welfare inspector' (animal control officer aka)"},
+    {"role": "Private Detectives and Investigators", "isco": 5419, "reason": "junk group-label row (aka=NaN); wrong ISCO (private detectives = ISCO 3411/5419 boundary) and overlaps 'criminal investigator'"},
+    {"role": "Crossing Guards and Flaggers", "isco": 5419, "reason": "junk group-label row (aka=NaN); duplicates 'crossing guard'"},
+    {"role": "Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers", "isco": 5419, "reason": "junk group-label row (aka=NaN); duplicates 'life guard'"},
+    {"role": "Transportation Security Screeners", "isco": 5419, "reason": "junk group-label row (aka=NaN); duplicates 'airport security officer' (TSA agent aka)"},
+    {"role": "School Bus Monitors", "isco": 5419, "reason": "junk group-label row (aka=NaN); marginal to security, no aka/skill detail"},
+    {"role": "Retail Loss Prevention Specialists", "isco": 5419, "reason": "junk group-label row (aka=NaN); store detective subset of security guard"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "31 legit ESCO roles are coherent for Security Services. The 19 aka=NaN title-case rows are the SOC/O*NET protective-service group-label block; all are junk group labels, duplicates of existing ESCO roles, or cross-domain (Bailiffs=legal, Customs=D079). Several also carry mismatched ISCO codes. 'animal welfare inspector' retained though 'animal social worker' aka is odd. No genuinely-missing distinct occupation warrants an add here."
+  },
+  {
+   "domain_id": "D078",
+   "domain_name": "Social Sciences",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Social Scientists and Related Workers", "isco": 2632, "reason": "junk group-label row (aka=NaN); SOC broad group label, generic umbrella already covered by specific researcher roles"},
+    {"role": "Survey Researchers", "isco": 2120, "reason": "junk group-label row (aka=NaN); no aka/skills, overlaps social work researcher / statistician"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "24 legit ESCO research-track roles, coherent for Social Sciences. mathematician/statistician/biometrician/demographer (ISCO 2120) are math/stats-adjacent but demography and statistics are core social-science research methods, so borderline-acceptable rather than clear contamination; flag but not removing. Only the 2 aka=NaN title-case rows are junk group labels and removed."
+  },
+  {
+   "domain_id": "D079",
+   "domain_name": "Customs, Trade",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Detectives and Criminal Investigators", "isco": 3351, "reason": "junk group-label row (aka=NaN); cross-domain contamination -> Security Services (D077), not customs/trade"},
+    {"role": "Protective Service Workers, All Other", "isco": 3359, "reason": "junk group-label row (aka=NaN); residual 'all other' catch-all, cross-domain (protective services)"},
+    {"role": "gaming inspector", "isco": 3359, "reason": "cross-domain: gambling/gaming regulatory inspector, not customs/trade"},
+    {"role": "forestry inspector", "isco": 3359, "reason": "cross-domain: forestry/environment inspector, not customs/trade"},
+    {"role": "agricultural inspector", "isco": 3359, "reason": "cross-domain: agriculture inspector, not customs/trade"},
+    {"role": "fisheries observer", "isco": 3359, "reason": "cross-domain: fisheries/marine, not customs/trade"},
+    {"role": "consumer rights advisor", "isco": 3359, "reason": "cross-domain: consumer protection/legal advice, not customs/trade"},
+    {"role": "weights and measures inspector", "isco": 3359, "reason": "cross-domain: trading-standards/metrology inspector, not customs/trade"}
+   ],
+   "add_roles": [
+    {"role": "customs broker", "isco": 3331, "skills": ["tariff classification (HS codes)", "customs declaration filing", "trade compliance regulations", "duty and tax calculation", "incoterms", "import/export documentation"], "reason": "Core customs/trade occupation currently only present as an aka under 'customs and excise officer'; deserves standalone role as the central licensed intermediary for the domain."}
+   ],
+   "overfanout_roles": [
+    {"pattern": "import export manager in <commodity>", "isco": 1324, "example_count": 30, "reason": "ESCO commodity fan-out; collapse to generic 'import export manager'. ~30 templated variants (meat, flowers, metals, beverages, textiles, tobacco, pharmaceutical, etc.) differ only by commodity."},
+    {"pattern": "import export specialist in <commodity>", "isco": 3331, "example_count": 30, "reason": "ESCO commodity fan-out; collapse to generic 'import export specialist'. ~30 templated variants."},
+    {"pattern": "<commodity> distribution manager", "isco": 1324, "example_count": 35, "reason": "ESCO commodity fan-out AND cross-domain (logistics/distribution, not customs/trade); collapse to a single 'distribution manager' which is already present. ~35 templated variants."},
+    {"pattern": "wholesale merchant in <commodity>", "isco": 3324, "example_count": 4, "reason": "ESCO commodity fan-out (hides/skins, textile machinery, textiles, clothing); also wholesale-trade rather than customs; collapse to generic wholesale merchant."}
+   ],
+   "rename_to": null,
+   "notes": "Severe ESCO subject/commodity fan-out: of 145 rows, ~100 are commodity-templated variants across three families (import export manager, import export specialist, distribution manager) plus a few wholesale-merchant variants. Recommend collapsing each family to its generic anchor (generic 'import export manager', 'import export specialist', and 'distribution manager' all already present). Genuine customs/trade core is small: customs officer, immigration officer, customs and excise officer, hand luggage inspector, import export specialist/manager (generic), forwarding manager, shipping agent, international forwarding operations coordinator, marine cargo/freight inspector. Also heavy transport/logistics contamination (warehouse manager, road/rail/air/maritime operations managers, railway station manager, airport director, air traffic manager, pipeline superintendent, intermodal/supply chain/logistics managers, move manager, purchasing manager, forecast/resource manager, movie distributor) which belong in a Logistics/Transport domain, plus 6 non-customs regulatory inspectors removed above. Domain badly needs de-fanout + splitting logistics out."
+  },
+  {
+   "domain_id": "D080",
+   "domain_name": "Interior Design",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Floral Designers", "isco": 2166, "reason": "junk group-label row (aka=NaN); also cross-domain (floristry), not interior design"},
+    {"role": "Merchandise Displayers and Window Trimmers", "isco": 2166, "reason": "junk group-label row (aka=NaN); duplicates 'visual merchandiser'"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": "Design (Interior, Graphic & Multimedia)",
+   "notes": "Domain is mislabeled/contaminated: titled 'Interior Design' but only ~7 rows are actually spatial/interior/scenography (interior designer, interior planner, set designer, miniature set designer, set builder, scenic painter, visual merchandiser). The other ~16 are ISCO 2166 graphic & multimedia designers (illustrator, web designer, animator, stop-motion animator, 3D animator, 3D modeller, graphic designer, desktop publisher, animation layout artist, special effects artist, performance video/lighting designer, digital media designer, digital artist, digital games designer) plus retail 'merchandiser' (3432). If a separate Graphic/Digital Design domain exists these belong there (cross-domain contamination); otherwise the domain should be renamed to reflect its true broad-design scope as suggested. Only the 2 aka=NaN rows are hard-removed here; the 2166 cluster is flagged as contamination pending confirmation of a target design domain (needs_review for reassignment)."
+  },
+  {
+   "domain_id": "D081",
+   "domain_name": "Office Administration, Secretarial",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Building Caretakers, Cleaners and Housekeepers", "isco": 5153, "reason": "junk group-label row (aka=NaN); cross-domain contamination -> cleaning/facilities services, not office admin"},
+    {"role": "Administrative Assistants and Executive Secretaries", "isco": 3343, "reason": "junk group-label row (aka=NaN); duplicates 'secretary'"},
+    {"role": "Postal Service Clerks", "isco": 4412, "reason": "junk group-label row (aka=NaN); duplicates 'mail clerk'"},
+    {"role": "Human Resources Assistants, Except Payroll and Timekeeping", "isco": 4416, "reason": "junk group-label row (aka=NaN); duplicates 'human resources assistant'"},
+    {"role": "Secretaries and Administrative Assistants, Except Legal, Medical, and Executive", "isco": 4120, "reason": "junk group-label row (aka=NaN); duplicates 'secretary'"},
+    {"role": "Data Entry Keyers", "isco": 4132, "reason": "junk group-label row (aka=NaN); duplicates 'data entry clerk'"},
+    {"role": "Word Processors and Typists", "isco": 4131, "reason": "junk group-label row (aka=NaN); duplicates 'typist'"},
+    {"role": "Desktop Publishers", "isco": 4413, "reason": "junk group-label row (aka=NaN); cross-domain (graphic/design, cf. D080)"},
+    {"role": "Mail Clerks and Mail Machine Operators, Except Postal Service", "isco": 4412, "reason": "junk group-label row (aka=NaN); duplicates 'mail clerk'"},
+    {"role": "Office Clerks, General", "isco": 4110, "reason": "junk group-label row (aka=NaN); duplicates 'office clerk'"},
+    {"role": "Office and Administrative Support Workers, All Other", "isco": 4419, "reason": "junk group-label row (aka=NaN); residual 'all other' catch-all"},
+    {"role": "First-Line Supervisors of Office and Administrative Support Workers", "isco": 4110, "reason": "junk group-label row (aka=NaN); SOC supervisory group label"},
+    {"role": "Communications Equipment Operators, All Other", "isco": 4419, "reason": "junk group-label row (aka=NaN); cross-domain (telecoms operators) and 'all other' catch-all"},
+    {"role": "Office Machine Operators, Except Computer", "isco": 4415, "reason": "junk group-label row (aka=NaN); obsolete SOC group label, no ESCO equivalent kept"},
+    {"role": "Proofreaders and Copy Markers", "isco": 4419, "reason": "junk group-label row (aka=NaN); duplicates 'proofreader'"},
+    {"role": "Statistical Assistants", "isco": 4419, "reason": "junk group-label row (aka=NaN); overlaps 'data entry clerk' (statistical clerk aka)"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "12 legit ESCO clerical roles are coherent for the domain. All 16 aka=NaN title-case rows are the SOC/O*NET office-and-administrative-support group-label block: nearly every one is a duplicate of an existing ESCO role, plus one clear cross-domain contaminant (Building Caretakers/Cleaners -> facilities) and one design contaminant (Desktop Publishers -> D080). No genuine missing occupation to add."
+  }
+ ]
+}

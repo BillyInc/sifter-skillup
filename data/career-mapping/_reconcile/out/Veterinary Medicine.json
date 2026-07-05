@@ -1,0 +1,19 @@
+{
+ "reconciled": [
+  {
+   "programme": "Veterinary Medicine",
+   "add": [
+    {"domain_id": "D023", "domain": "Medicine & Clinical Practice", "match_type": "adjacent", "why": "Shared clinical/diagnostic science provides a foothold, but veterinary medicine is not human medicine — downgrade from direct"}
+   ],
+   "remove": [
+    {"domain_id": "D165", "why": "Wellness/lifestyle medicine is a human-health domain with no basis in the veterinary curriculum"},
+    {"domain_id": "D062", "why": "Capital-markets trading has no course basis"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D063", "why": "No economics course basis in this extract"},
+    {"domain_id": "D152", "why": "Museum curation unrelated"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D078", "why": "No social-science research course basis"}
+   ]
+  }
+ ]
+}

@@ -1,0 +1,216 @@
+{
+ "programmes": [
+  {
+   "jamb_name": "Electrical Engineering",
+   "institutions": ["ABU", "ABUJA", "BAYERO", "DELSUT", "FUTO", "HUSTECH", "KADPOLY-ABU", "KHAIRUN", "KSUSTAA", "KUST", "MADUKA", "MARITIME-UNI", "NDU", "OFFA-DEG", "PHC", "RSU", "UNIZIK", "UNN", "WIGWE"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes including Mathematics, Physics, Chemistry and English Language.",
+   "direct_entry": "(i) 'A' Level passes in Mathematics and Physics. (ii) ND/HND in Elect Eng. Upper/Lower credit respectively.",
+   "institution_waivers": [
+    {"institution": "ABU", "note": "Accepts: a) Two A level/IJMB passes which must include Physics and Mathematics. b) ND or equivalent in Electrical Eng. or relevant field, with minimum of Upper Credit from accredited institution. c) HND with at least lower credit in Electrical Engineering from accredited institution. d) ABU Diploma in Computer Engineering with a Minimum of Merit. Requires five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and any other Science subject. UTME: Mathematics, Physics and Chemistry."},
+    {"institution": "ABUJA", "note": "Accepts HND lower credit or ND upper credit in Electrical Engineering from accredited institutions plus UTME requirements into 200 level."},
+    {"institution": "LASU", "note": "Accepts ND/HND upper credit in relevant programmes for a four (4) year programme. Same as in Mechanical Engineering."},
+    {"institution": "MINNA", "note": "Accepts ND/HND lower credit in relevant programmes plus five (5) 'O' Level credit passes in Mathematics, English Language, Physics, Chemistry and one other science subject."},
+    {"institution": "PHC", "note": "No Direct Entry. Requires the fifth 'O' level credit pass in any Science subject preferably Further Mathematics."},
+    {"institution": "RSU", "note": "In addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in relevant discipline. (b) OND/ND (Upper Credit) in relevant disciplines. (c) At least three (3) 'A' level passes at GCE in Physics, Chemistry and Mathematics. Accepts five (5) 'O' Level credit passes to include English Language, Chemistry, Physics and Mathematics or Further Mathematics and any other subject."},
+    {"institution": "UNN", "note": "Same as in Agricultural and Bioresources Engineering."},
+    {"institution": "MARITIME-UNI", "note": "Requires five (5) credits at SSCE or its equivalent in English Language, Mathematics, Physics, Chemistry and Biology/Agricultural Science/Further Mathematics/Data Processing/Technical Drawing."}
+   ]
+  },
+  {
+   "jamb_name": "Mechanical Engineering",
+   "institutions": ["AAU", "ABSU", "ABU", "ABUAD", "ABUJA", "ACHIEVERS", "AFIT-DEG", "AJAYI", "AKSU", "AUE", "AUST", "BABCOCK", "BAUCHI", "BAYERO", "BAZE", "BELLS", "BENIN", "BIU", "CALABAR", "CARITAS", "COOU", "COVENANT", "CRUTECH", "CUST", "DELSU", "DELSUT", "EUI", "EKSU", "ELIZADE", "AEFUNA", "FED=DUTSINMA", "FED-OTUOKE", "FED-OYE EKITI", "FEDPOADO-D", "FEDPOBAU-DEG", "FED-LOKOJA", "FUNAAB", "FUPRE", "FUT-DAURA", "FUTA", "FUTIA", "FUTO", "GREGORY", "HUSTECH", "IBADAN", "IGBINEDION", "ILORIN", "IMSU", "JOS", "KADPOLY-ABU", "KSUSTA", "KUST", "KWASU", "LAGOS", "LANDMARK", "LASU", "LASUSTECH", "LAUTECH", "LCITY", "MADUKA", "MADONNA", "MAIDUGURI", "MAKURDI", "MARITIME-UNI", "MAUTY", "MINNA", "MUDIAME", "MARANATHA", "NAUB", "NDA", "NDU", "NILE", "OAU", "ODUDUWA", "OFFA-DEG", "OOU", "OAUSTECH", "PAN-ATLANTIC", "PHC", "REDEEMERS", "RSU", "SUMAS", "TAU", "TECH-IBADAN", "TSUJ", "TOPFAITH", "UAGRIC-IMO", "UDA", "UDU", "UMUDIKE", "UNIOSUN", "UNN", "UNIZIK", "UYO", "VENITE", "WIGWE"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes to include Physics, Chemistry, Mathematics, English Language and any other Science subject.",
+   "direct_entry": "(i) Two (2) 'A' Level passes from Chemistry, Physics and Mathematics. (ii) ND upper credit, NCE technical and HND in Mech. Engineering.",
+   "institution_waivers": [
+    {"institution": "ABU", "note": "Accepts: 1. two (2) 'A' level/IJMB Passes in Mathematics and Physics. 2. ND in Mechanical Engineering with minimum of Upper Credit aggregate and Distinction in Mathematics. 3. HND with at least Lower Credit in Mechanical Engineering from accredited institution."},
+    {"institution": "ABUJA", "note": "Accepts HND lower credit or ND upper credit in Mechanical Engineering from accredited institutions plus UTME requirements."},
+    {"institution": "BELLS", "note": "Accepts a) two (2) 'A' Level passes in Mathematics, Physics/Chemistry. b) ND/HND upper credit in Mechanical Engineering."},
+    {"institution": "CARITAS", "note": "No Direct Entry; also requires two 'A' Level passes in Chemistry, Physics, Mathematics plus 'O' Level credit in English, accepts ND, NCE Technical or HND in Mechanical Engineering."},
+    {"institution": "PHC", "note": "No Direct Entry. UTME requires Mathematics, Physics and Chemistry."},
+    {"institution": "NDU", "note": "No Direct Entry; as in Agricultural Engineering."},
+    {"institution": "COOU", "note": "Accepts ND/HND lower credit in Mechanical Engineering and at least 'O' Level pass in English Language."},
+    {"institution": "FUNAAB", "note": "Accepts 'A' Level passes in Mathematics, Physics and Chemistry or equivalents; ND upper credit in Mechanical Engineering or relevant programmes."},
+    {"institution": "JOS", "note": "Requires two (2) 'A' Level passes in Mathematics and Physics. Accepts ND credit in Mechanical Engineering plus 'O' Level credit in Mathematics."},
+    {"institution": "LASU", "note": "Accepts (a) ND distinction or HND upper credit into 200 level. (b) HND distinction into 300 level."},
+    {"institution": "LAUTECH", "note": "Same as in Chemical Engineering; accepts Agricultural Science in lieu of Biology; ND/HND upper credit into 200 and 300 levels."},
+    {"institution": "MINNA", "note": "Accepts ND/HND lower credits in relevant courses."},
+    {"institution": "OAU", "note": "Admits ND/HND upper credit in Mechanical Engineering to Part II and III. Does not accept NCE Technical."},
+    {"institution": "OOU", "note": "Accepts ND/HND in relevant programmes."},
+    {"institution": "UNN", "note": "Same as in Agricultural and Bioresources Engineering."},
+    {"institution": "RSU", "note": "In addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in relevant discipline. (b) OND/ND (Upper Credit) in relevant disciplines. (c) At least three (3) 'A' level passes at GCE in Physics, Chemistry and Mathematics."}
+   ]
+  },
+  {
+   "jamb_name": "Chemical Engineering",
+   "institutions": ["ABU", "ABUAD", "ABUJA", "AKSU", "AUE", "AUN", "BAUCHI", "BAYERO", "BAZE", "BENIN", "CALABAR", "CARITAS", "COOU", "COVENANT", "CUST", "DELSU", "DELSUT", "EBSU", "EUI", "ESUTECH", "AEFUNA", "FED-DUTSINMA", "FED-OTUOKE", "FED-WUKARI", "FUPRE", "FUTIA", "FUTO", "GREGORY", "HUSTECH", "IGBINEDION", "ILORIN", "KADPOLY-ABU", "LAGOS", "LASUSTECH", "LANDMARK", "LAUTECH", "MADONNA", "MAIDUGURI", "MAUTY", "MINNA", "NASARAWA", "OAU", "OAUSTECH", "PHC", "REDEEMERS", "SUMAS", "TECH-IBADAN", "TOPFAITH", "UDA", "UMUDIKE", "UNIOSUN", "UNIZIK", "UYO"],
+   "utme_subjects": ["Physics", "Chemistry", "Mathematics"],
+   "olevel_requirement": "Five (5) SSC credit passes to include Physics, Chemistry, Mathematics, English Language and any other Science subject.",
+   "direct_entry": "'A' Level passes in Physics, Chemistry and Mathematics.",
+   "institution_waivers": [
+    {"institution": "ABU", "note": "Accepts a) 'A' Level/IJMB passes in Physics, Chemistry and Mathematics. b) ND upper credit in Chemical Engineering from accredited institution. c) HND lower credit in Chemical Engineering. UTME requires Mathematics, Physics plus any one of Chemistry, Geography, Economics, Biology and Technical Drawing."},
+    {"institution": "ABUAD", "note": "Accepts HND lower credit and ND upper credit in addition to UTME requirements into 200 level."},
+    {"institution": "ABUJA", "note": "Accepts HND lower credit or ND upper credit in Chemical Engineering plus UTME requirements into 200 level."},
+    {"institution": "BAUCHI", "note": "Accepts ND/HND in Chemical Engineering."},
+    {"institution": "BENIN", "note": "In addition to UTME requires (a) first degree Second Class Lower in Science or degree in Medicine, Dentistry or Pharmacy and PTI HND lower credit/ND upper credit. (b) HND upper credit in Engineering/Technology and PTI upper credit into 300 levels. (c) ND/HND holders should have 'A' grade in Mathematics."},
+    {"institution": "CARITAS", "note": "No Direct Entry."},
+    {"institution": "COOU", "note": "Accepts ND/HND lower credit."},
+    {"institution": "ESUTECH", "note": "Requires 'A' Level passes in any two (2) of Physics, Chemistry and Mathematics; also accepts NCE/ND/HND/first degree with good grades and UTME requirements into 200 or 300 level. Accepts Economics, Geography or Biology in lieu of Chemistry at UTME."},
+    {"institution": "IGBINEDION", "note": "Accepts ND in Engineering and related programmes."},
+    {"institution": "ILORIN", "note": "Same as Agricultural and Biosystem Engineering; relevant programmes include Biomedical, Chemical, Water and Environmental, Mechanical Engineering Technology and Polymer Engineering."},
+    {"institution": "LAUTECH", "note": "Accepts a) 'A' Level passes in Mathematics, Physics and Chemistry. b) ND/HND upper credit in related programmes plus UTME requirements into 200 level."},
+    {"institution": "MAIDUGURI", "note": "Accepts ND Credit and IJMB 9 points in related programmes."},
+    {"institution": "MINNA", "note": "Accepts ND/HND lower credit in addition to UTME requirements. UTME requires Physics, Mathematics and any one from Chemistry, Geography, Biology, Economics or Arts."},
+    {"institution": "NILE", "note": "Same as in Computer Engineering."},
+    {"institution": "OAU", "note": "Accepts ND upper credit in Chemical Engineering only."},
+    {"institution": "OAUSTECH", "note": "Accepts first degree from a recognized university in relevant subjects not below Second Class Lower."},
+    {"institution": "UYO", "note": "Accepts ND/HND in relevant programmes plus the UTME requirements."},
+    {"institution": "EUI", "note": "Accepts a) Two (2) 'A' Level passes in Physics, Chemistry and Mathematics. b) OND/HND not below credit level. d) B.Sc. in relevant field not below Second Class Lower."},
+    {"institution": "PHC", "note": "Accepts Three (3) Advanced level GCE or HSC or JUPEB or IJMB passes in Mathematics, Chemistry and Physics."},
+    {"institution": "FUTO", "note": "Requires a) at least three 'A' level passes not below Grade C in Physics, Mathematics and Chemistry. b) ND/HND upper credit in relevant science/engineering. c) First Degree in relevant science/engineering. d) JUPEB passes in Chemistry, Physics and Mathematics; does not accept NCE."}
+   ]
+  },
+  {
+   "jamb_name": "Biomedical Engineering",
+   "institutions": ["ABUAD", "ACHIEVERS", "BELLS", "DANUMS", "FUTO", "ILORIN", "LAGOS", "LCITY", "SUMAS", "TECH-IBADAN", "UNIZIK", "UNN"],
+   "utme_subjects": ["Physics", "Chemistry", "Biology"],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and any one of Physics, Biology/Zoology/Botany and Mathematics.",
+   "institution_waivers": [
+    {"institution": "LAGOS", "note": "Accepts very good passes in three JUPEB/'A' Level subjects: Physics, Mathematics and Chemistry. Requires six O'Level credit passes in English, Mathematics, Further Mathematics, Biology, Physics and Chemistry. UTME requires English Language, Chemistry, Mathematics & Physics."},
+    {"institution": "ILORIN", "note": "Accepts a) five (5) 'O' Level credits including Mathematics, Physics, Chemistry, English and Biology. b) OND/ND in Biomedical Engineering or relevant disciplines with minimum Upper Credit and one-year industrial attachment into 4-year programme. c) three 'A' Level passes in Mathematics, Physics and Chemistry; HND Upper credit in Biomedical Engineering into 300 Level. UTME requires Mathematics, Physics and Chemistry."},
+    {"institution": "ABUAD", "note": "Requires at least five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology."}
+   ]
+  },
+  {
+   "jamb_name": "Agricultural Engineering",
+   "institutions": ["AAU", "ABU", "ABUJA", "ABUAD", "AKSU", "AUE", "BAUCHI", "BAYERO", "BENIN", "CALABAR", "CUST", "DELSUT", "ESUTECH", "FED-OYE EKITI", "FEDPOBAU-DEG", "FED-WUKARI", "FUNAAB", "FUTA", "FUTO", "LANDMARK", "IMSU", "KUST", "KWASU", "LASUSTECH", "LAUTECH", "MAIDUGURI", "MAKURDI", "OAU", "OOU", "RSU", "TECH-IBADAN", "UNIOSUN", "UYO"],
+   "utme_subjects": ["Mathematics", "Chemistry", "Physics"],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any from Introduction to Agricultural Science, Materials and Workshop Process and Machining, and related technical subjects.",
+   "direct_entry": "'A' Level passes or equivalent in Physics and Mathematics.",
+   "institution_waivers": [
+    {"institution": "ABU", "note": "Requires a) two (2) 'A' level/IJMB Passes in Mathematics and Physics or Chemistry. b) ND with at least Upper Credit in Agricultural Engineering. c) HND Lower Credit in Agricultural Engineering from accredited institution."},
+    {"institution": "ABUAD", "note": "Same as in Chemical Engineering."},
+    {"institution": "LAUTECH", "note": "Same as in Chemical Engineering; accepts ND/HND upper credit and three (3) 'A' Level passes in Physics, Mathematics, Chemistry and Biology."},
+    {"institution": "FED-OYE EKITI", "note": "Requires two (2) 'A' level passes from Physics, Chemistry and Mathematics."},
+    {"institution": "FUNAAB", "note": "Accepts 'A' Level passes in Mathematics, Physics and Chemistry or equivalents; ND upper credit in Agricultural Engineering or relevant programmes."},
+    {"institution": "FUTA", "note": "Accepts a) OND at upper credit level or equivalent professional qualification in Agricultural Engineering. b) 'A' Level passes at one sitting in at least two of Physics, Chemistry and Biology."},
+    {"institution": "IBADAN", "note": "Accepts two (2) 'A' Level passes in Physics and Mathematics plus UTME requirements; ND/HND upper credit to 200/300 levels."},
+    {"institution": "ILORIN", "note": "Accepts 200/300 Level entry with 'O' Level credits in five subjects plus A-Level/IJMB or ND/HND in Agricultural Engineering or relevant discipline."},
+    {"institution": "MAIDUGURI", "note": "Requires ND lower credit/merit or nine (9) points in IJMB."},
+    {"institution": "MAKURDI", "note": "Accepts a) two (2) 'A' Level/IJMB passes in Mathematics, Physics and Chemistry. b) HND upper credit and first class degree in relevant field."}
+   ]
+  },
+  {
+   "jamb_name": "Agricultural and Bio-Resources Engineering",
+   "institutions": ["MINNA", "TSUJ", "UMUDIKE", "UNIZIK", "UNN"],
+   "utme_subjects": ["Mathematics", "Chemistry", "Physics"],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology or one of Agricultural Science, Further Mathematics and Technical Drawing at credit level.",
+   "direct_entry": "A-Level/IJMB or approved equivalent pass in Mathematics (Pure/Applied), Physics and Chemistry, or a National Diploma in Agricultural Engineering or relevant Engineering discipline at Distinction or Upper Credit level plus at least one year Post ND experience.",
+   "institution_waivers": [
+    {"institution": "UNN", "note": "Direct Entry with 'O' Level credits in five subjects plus A-Level/IJMB or ND at Distinction/Upper Credit into 200 Level; HND at Distinction/Upper Credit into 300 Level."}
+   ]
+  },
+  {
+   "jamb_name": "Production Engineering",
+   "institutions": ["BENIN", "EUI"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes to include Physics, Chemistry, Mathematics, English Language and any other Science subject.",
+   "direct_entry": "In addition to UTME requirements: (a) first degree Second Class Lower in Science or degree in Medicine, Dentistry or Pharmacy and PTI HND lower credit/ND upper credit. (b) HND upper credit in Engineering/Technology and PTI upper credit into 300 levels. (c) ND/HND holders should have 'A' grade in Mathematics.",
+   "institution_waivers": [
+    {"institution": "BENIN", "note": "As in Chemical Engineering."}
+   ]
+  },
+  {
+   "jamb_name": "Mechatronics Engineering",
+   "institutions": ["ABU", "ABUAD", "ACHIEVERS", "AFIT-DEG", "AEFUNA", "BAYERO", "BAZE", "BENIN", "BELLS", "BOWEN", "CUST", "EUI", "ESUTECH", "FED-DUTSINMA", "FED-OTUOKE", "FED-OYE EKITI", "FUT-DAURA", "FUNAAB", "FUTO", "HUSTECH", "IGBINEDION", "KHAIRUN", "KUST", "LANDMARK", "LASUSTECH", "LCITY", "MADUKA", "MINNA", "NDA", "NILE", "PAN-ATLANTIC", "PHC", "SUMMIT", "TECH-IBADAN", "TOPFAITH", "UDA", "UNN", "VENITE", "WIGWE"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes including English Language, Mathematics, Physics, Chemistry and one other Science subject.",
+   "direct_entry": "Two (2) 'A' Level/IJMB passes in Mathematics and Physics; or ND/HND upper credit in Mechanical, Computer or Electrical/Electronics Engineering.",
+   "institution_waivers": [
+    {"institution": "BELLS", "note": "Accepts a) two (2) 'A' Level passes in Mathematics, Physics/Chemistry. b) ND/HND upper credit in Mechanical, Computer or Electrical/Electronics Engineering."},
+    {"institution": "ESUTECH", "note": "Accepts first degree and HND upper credit in relevant programmes into 300 level."},
+    {"institution": "FED-OYE EKITI", "note": "Requires two (2) 'A' Level passes from Physics, Chemistry and Mathematics. UTME requires five credits at SSC including English, Mathematics, Physics, Chemistry and one Science subject from Further Mathematics, Technical Drawing, Biology/Agricultural Science."},
+    {"institution": "FUTO", "note": "Accepts at least two 'A' Level passes not below Grade C in Mathematics, Physics and Chemistry; ND/HND Upper Credit or First Degree in relevant science/engineering; JUPEB passes in Chemistry, Physics and Mathematics; does not accept NCE."},
+    {"institution": "PHC", "note": "Accepts three 'A' level GCE/HSC/JUPEB/IJMB passes in Mathematics, Physics, Chemistry; OND upper credit or HND lower credit in relevant discipline from COREN accredited institution plus UTME requirements."},
+    {"institution": "ABU", "note": "Requires a. Two 'A' level/IJMB Passes in Mathematics and Physics. b. ND in Mechanical Engineering with Upper Credit aggregate and Distinction in Mathematics. c. HND with at least Lower Credit in Mechanical Engineering."}
+   ]
+  },
+  {
+   "jamb_name": "Electronics Engineering",
+   "institutions": ["AUN", "FUTO", "PHC", "UNIZIK", "UNN"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes to include Mathematics, Physics, Chemistry, English Language and any other Science subject.",
+   "direct_entry": "Two (2) 'A' Level passes in Mathematics, Physics or Chemistry (as in Electrical/Electronics Engineering).",
+   "institution_waivers": [
+    {"institution": "UNIZIK", "note": "Accepts first degree in relevant programmes."},
+    {"institution": "UNN", "note": "Same as in Agricultural and Bioresources Engineering."},
+    {"institution": "PHC", "note": "Accepts three 'A' level GCE/HSC/JUPEB/IJMB passes in Mathematics, Physics, Chemistry."}
+   ]
+  },
+  {
+   "jamb_name": "Electrical/Electronic Engineering",
+   "institutions": ["AAU", "ABSU", "ABUAD", "ACHIEVERS", "AFIT-DEG", "AJAYI", "AKSU", "ALETHEIA", "AUE", "AUN", "BABCOCK", "BAUCHI", "BAZE", "BELLS", "BENIN", "BIDA-DEG", "BIU", "BOUEDST", "BOWEN", "CALABAR", "CARITAS", "COOU", "COSMOPOLITAN", "COVENANT", "CRUTECH", "CUST", "DELSU", "EBSU", "EUI", "EKSU", "ELIZADE", "ESUTECH", "AEFUNA", "FED-DUTSINMA", "FED-OTUOKE", "FED-OYE EKITI", "FEDPOADO-D", "FEDPOBAU-DEG", "FED-LOKOJA", "FUNAAB", "FUPRE", "FUT-DAURA", "FUTA", "FUTIA", "FUTO", "GREGORY", "IBADAN", "IGBINEDION", "ILORIN", "IMSU", "JOS", "KSUSTA", "KWASU", "LAGOS", "LASUSTECH", "LAUTECH", "LCITY", "MADONNA", "MAIDUGURI", "MAKURDI", "MAUTY", "MARANATHA", "NAUB", "NASARAWA", "NDA", "NDU", "NILE", "OAU", "ODUDUWA", "OOU", "OAUSTECH", "PAN-ATLANTIC", "PHC", "REDEEMERS", "SUMAS", "TAU", "TECH-IBADAN", "TOPFAITH", "TSUJ", "UAGRIC-IMO", "UDA", "UDU", "UMUDIKE", "UNIOSUN", "UYO", "VERITAS", "VENITE"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes to include Mathematics, Physics, Chemistry, English Language and any other Science subject.",
+   "direct_entry": "Two (2) 'A' Level passes in Mathematics, Physics or Chemistry.",
+   "institution_waivers": [
+    {"institution": "ABUAD", "note": "Same as in Civil Engineering (CRUTECH also)."},
+    {"institution": "BENIN", "note": "Same as in Chemical Engineering."},
+    {"institution": "COOU", "note": "Accepts ND/HND/lower credit in Electrical/Electronics Engineering."},
+    {"institution": "EKSU", "note": "Accepts ND upper credit and HND lower credit in Electrical Engineering."},
+    {"institution": "FUNAAB", "note": "Accepts 'A' Level passes in Mathematics, Physics and Chemistry or equivalents; ND upper credit in Electrical/Electronic Engineering or relevant programmes."},
+    {"institution": "FUTA", "note": "Accepts a) ND minimum upper credit or equivalent in Electrical and Electronics Engineering. b) 'A' Level in at least two of Chemistry, Physics and Mathematics with grades not lower than B."},
+    {"institution": "JOS", "note": "Requires 'A' Level or IJMB passes in Chemistry, Physics and Mathematics; accepts ND (credit level) in Electrical/Electronics, Computer Engineering or closely related programmes; 'O' Level credit in Mathematics."},
+    {"institution": "LAUTECH", "note": "Accepts a) 'A' Level passes in Pure Mathematics, Physics, Applied Mathematics or Chemistry. b) ND/HND Upper credit in Computer Science, Electrical or Mechanical Engineering plus UTME requirements."},
+    {"institution": "MAUTY", "note": "Accepts (a) GCE 'A' level passes in Mathematics, Physics and Chemistry. (b) Lower Credit in OND/HND in Electrical/Electronic Eng. or relevant field. (c) IJMB 7 points minimum in English, Physics, Chemistry/Mathematics."},
+    {"institution": "NDA", "note": "Requires the other Science subject from Technical Drawing, Further Mathematics, Biology and Geography."},
+    {"institution": "NDU", "note": "No Direct Entry; same as in Agricultural Engineering."},
+    {"institution": "OAU", "note": "Accepts ND/HND upper credit."},
+    {"institution": "UNIOSUN", "note": "Accepts ND lower credit in Electrical/Electronics."}
+   ]
+  },
+  {
+   "jamb_name": "Communication Technology",
+   "institutions": ["BELLS", "TAU"],
+   "utme_subjects": ["Mathematics", "Economics", "Account/Commerce/Government"],
+   "olevel_requirement": "Five (5) SSC credit passes including English Language, Economics and Mathematics.",
+   "direct_entry": "'A' Level passes/ND and HND in relevant subjects into 200 and 300 levels.",
+   "institution_waivers": [
+    {"institution": "AUN", "note": "Same as Information System."},
+    {"institution": "ABU", "note": "Requires a. two (2) 'A' level/IJMB passes which must include Physics and Mathematics. b. ND or equivalent in Electrical Eng. or relevant field, with minimum of Upper Credit from accredited institution. c. HND with at least lower credit in Electrical Engineering from accredited institution. d. ABU Diploma in Computer Engineering with a Minimum of Merit."},
+    {"institution": "BELLS", "note": "For Information Technology accepts Five (5) SSC credit passes including English Language, Economics and Mathematics."}
+   ]
+  },
+  {
+   "jamb_name": "ICT Engineering",
+   "institutions": ["ELIZADE", "COVENANT", "NILE", "UNIZIK"],
+   "utme_subjects": ["Mathematics", "Physics", "Chemistry"],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and one of Biology, Economics and Geography at not more than two (2) sittings.",
+   "direct_entry": "'A' Level/IJMB/ND/HND upper credit in relevant programmes (Information Technology, Computer Science/Engineering, Electrical and Electronic Engineering) into 200/300 level.",
+   "institution_waivers": [
+    {"institution": "ABU", "note": "Requires five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and any other Science subject (including Economics, Technical Drawing, Metalwork and Woodwork). UTME requires Mathematics, Physics and Chemistry."},
+    {"institution": "FUTO", "note": "Requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and one of Biology, Economics and Geography at not more than two (2) sittings. UTME requires Mathematics, Physics and Chemistry."},
+    {"institution": "MINNA", "note": "For Telecommunication Engineering: five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and any other Science subject; for Information and Media Technology: five (5) 'O' Level credit passes in English Language, Mathematics, Physics and two (2) other relevant Science subjects."}
+   ],
+   "note": "Heading in brochure: 'INFORMATION AND COMMUNICATION TECHNOLOGY ENGINEERING' (TOC item 47 = ICT Engineering). ELIZADE under first heading block; COVENANT, NILE, UNIZIK under the second (adjacent) block. A separate non-Engineering heading 'INFORMATION AND COMMUNICATION TECHNOLOGY' (ABSU, AFIT-DEG, AKSU, FUTA, KSUSTA, UDU) sits immediately below and was not merged here."
+  },
+  {
+   "jamb_name": "Land Surveying",
+   "institutions": ["ABU", "ESUTECH", "IMSU", "RSU"],
+   "utme_subjects": ["Physics", "Mathematics", "Chemistry/Geography/Art/Biology/Economics"],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any of Fine Art, Geography, Wood Work, Biology, Economics, Technical Drawing, Further Mathematics or Introduction to Building Construction.",
+   "direct_entry": "For Land Surveying: a. Two 'A' Level/IJMB passes in Mathematics and any of Physics, Chemistry or Geography. b. ND at Upper Credit in Land Surveying/Geomatics, Geoinformatics, Civil Engineering, Physics/Mathematics, Building. c. HND at Lower Credit in Land Surveying/Geomatics, Civil Engineering.",
+   "institution_waivers": [
+    {"institution": "IMSU", "note": "No Direct Entry. Accepts ND credit in Land Surveying and 'A' Level passes in Mathematics and Physics plus the UTME requirements for admission to 200 level; 'O' Level credit pass in Geography."},
+    {"institution": "ESUTECH", "note": "Accepts first degree in relevant programmes; also HND upper credit into 400 level of the five (5) year programme; ND lower credit."}
+   ],
+   "note": "Sub-heading 'LAND SURVEYING:' under the Surveying section (TOC item 74 = Surveying); requirement columns shared with Quantity Surveying / Surveying and Geoinformatics parent block. Adjacent sub-heading 'LAND SURVEYING AND GEOINFORMATICS' lists institution UYO (kept separate)."
+  }
+ ],
+ "skipped": [
+  {"jamb_name": "Project Management Technology", "reason": "Listed in the brochure Table of Contents (item 71) but no awarding-institution heading block appears in the body text — no uppercase 'PROJECT MANAGEMENT TECHNOLOGY' heading or institution column exists in engineering.txt. Not extractable."},
+  {"jamb_name": "Biomedical Technology", "reason": "Not present in the brochure TOC and has no heading block. The only occurrence of 'Biomedical Engineering Technology' (line 864) is inside an ILORIN waiver list of relevant programmes under Chemical Engineering, not a standalone programme. Not extractable. (Distinct from 'Biomedical Engineering', line 474, which is captured above.)"}
+ ]
+}

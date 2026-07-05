@@ -1,0 +1,312 @@
+{
+ "domain_id": "D133",
+ "domain_name": "Luxury",
+ "role_count": 61,
+ "roles": [
+  {
+   "role": "performance lighting designer",
+   "isco": 2166,
+   "aka": "lighting designer and technician  ·  lighting technician and designer  ·  theatre lighting designer  ·  lighting designer & technician  ·  lighting technician & designer"
+  },
+  {
+   "role": "puppet designer",
+   "isco": 2163,
+   "aka": "puppet maker  ·  puppet designer & maker  ·  puppet builder  ·  puppet designer and maker  ·  puppet designer & builder"
+  },
+  {
+   "role": "filigree maker",
+   "isco": 7313,
+   "aka": "filigree artist  ·  jewelery metalworker  ·  filagree maker  ·  filigree jewelry worker  ·  filigree craftsman"
+  },
+  {
+   "role": "illustrator",
+   "isco": 2166,
+   "aka": "book illustrator  ·  cartoon drawer  ·  inker  ·  comic drawer  ·  drawer"
+  },
+  {
+   "role": "automotive designer",
+   "isco": 2163,
+   "aka": "automotive design specialist  ·  automotive design expert  ·  auto designer  ·  3D automobile designer  ·  automotive digital designer"
+  },
+  {
+   "role": "web designer",
+   "isco": 2166,
+   "aka": "website designer  ·  digital designer  ·  multimedia web designer  ·  marketing web designer  ·  interactive web designer"
+  },
+  {
+   "role": "jewellery designer",
+   "isco": 2163,
+   "aka": "jewelry designer  ·  jewellery artist & designer  ·  jewellery artist and designer  ·  jewelry designer and sculptural artist  ·  jewellery artist"
+  },
+  {
+   "role": "set builder",
+   "isco": 3432,
+   "aka": "chief carpenter  ·  set dresser & builder  ·  set builder & designer  ·  set constructor  ·  set builder & dresser"
+  },
+  {
+   "role": "visual merchandiser",
+   "isco": 3432,
+   "aka": "assistant visual merchandiser  ·  image controller  ·  senior visual merchandiser  ·  retail visual strategy manager  ·  display designer"
+  },
+  {
+   "role": "stop-motion animator",
+   "isco": 2166,
+   "aka": "stop motion animators  ·  stop-motion animation artist  ·  puppet animator  ·  stop motion animator  ·  3D stop-motion animator"
+  },
+  {
+   "role": "jewellery engraver",
+   "isco": 7313,
+   "aka": "jewellery hand engraver  ·  gold engraver  ·  silver etcher  ·  jewellery engraving designer  ·  machine engraver"
+  },
+  {
+   "role": "model maker",
+   "isco": 2163,
+   "aka": "model designer  ·  maker  ·  model builder  ·  model fabricator  ·  model expert"
+  },
+  {
+   "role": "marine upholsterer",
+   "isco": 7534,
+   "aka": "marine upholstery finisher  ·  marine interior furniture maker  ·  marine soft furnishing maker  ·  marine furniture maker  ·  marine upholstery maker"
+  },
+  {
+   "role": "animator",
+   "isco": 2166,
+   "aka": "3D computer-generated imagery animator  ·  3D computer animation artist  ·  2D hand-drawn animator  ·  computer animation artist  ·  animators"
+  },
+  {
+   "role": "scenic painter",
+   "isco": 3432,
+   "aka": "scenery artist  ·  scenic artist  ·  scenic painter & artist  ·  scenery painter  ·  theatre scene painter"
+  },
+  {
+   "role": "cooper",
+   "isco": 7522,
+   "aka": "barrel assembler  ·  wooden barrel constuctor  ·  wooden barrel maker  ·  wooden barrel builder  ·  barrel constuctor"
+  },
+  {
+   "role": "3D animator",
+   "isco": 2166,
+   "aka": "CGI animator  ·  computer-generated imagery animator  ·  3D designer  ·  CGI designer"
+  },
+  {
+   "role": "dressmaker",
+   "isco": 7531,
+   "aka": "seamstress  ·  seamster  ·  custom dressmaker  ·  tailor  ·  couture dressmaker"
+  },
+  {
+   "role": "antique furniture reproducer",
+   "isco": 7522,
+   "aka": "reproduction antique furniture maker  ·  period furniture copier  ·  reproduction period furniture craftsman  ·  reproduction furniture worker  ·  furniture reproducer"
+  },
+  {
+   "role": "furniture restorer",
+   "isco": 7522,
+   "aka": "furniture renovater  ·  furniture craftsperson  ·  furniture repairer  ·  antique furniture restorer  ·  craft furniture restorer"
+  },
+  {
+   "role": "jeweller",
+   "isco": 7313,
+   "aka": "bench jeweller  ·  fine metalworker  ·  brooch maker  ·  jewellery maker  ·  jewellery design consultant"
+  },
+  {
+   "role": "precious stone setter",
+   "isco": 7313,
+   "aka": "jewelery stone setter  ·  gem setter  ·  diamond setter  ·  precious stone craftworker  ·  gemsetter"
+  },
+  {
+   "role": "graphic designer",
+   "isco": 2166,
+   "aka": "advertising artist  ·  graphic design expert  ·  graphic artist  ·  graphics designer  ·  graphic design specialist"
+  },
+  {
+   "role": "railway car upholsterer",
+   "isco": 7534,
+   "aka": "multiple unit upholsterer  ·  train coach upholstery worker  ·  train carriage upholstery worker  ·  train coach upholsterer  ·  carriage upholsterer"
+  },
+  {
+   "role": "recreation model maker",
+   "isco": 7522,
+   "aka": "mock-up model maker  ·  recreation model designer"
+  },
+  {
+   "role": "precious stone cutter",
+   "isco": 7313,
+   "aka": "lapidarist  ·  gemstone cutter  ·  gemcutter  ·  lapidary  ·  faceter"
+  },
+  {
+   "role": "interior designer",
+   "isco": 3432,
+   "aka": "interior space planner  ·  space planner & interior decorator  ·  spatial designer  ·  interior & spatial designer  ·  spatial design expert"
+  },
+  {
+   "role": "jewellery mounter",
+   "isco": 7313,
+   "aka": "bench jeweller  ·  jewelry mount maker  ·  gemstone mounter  ·  jewellery mount maker  ·  jewelry mounter"
+  },
+  {
+   "role": "interior planner",
+   "isco": 3432,
+   "aka": "interior designer  ·  interior architect  ·  interior space planner  ·  spatial planner  ·  interior design consultant"
+  },
+  {
+   "role": "fashion designer",
+   "isco": 2163,
+   "aka": "accessory designer  ·  fashion design specialist  ·  swimwear designer  ·  footwear designer  ·  fashion stylist"
+  },
+  {
+   "role": "desktop publisher",
+   "isco": 2166,
+   "aka": "financial desktop publisher  ·  desktop designer  ·  electronic pre-press technician  ·  DTP operator  ·  advanced desktop publilsher"
+  },
+  {
+   "role": "set designer",
+   "isco": 3432,
+   "aka": "scene designer  ·  scenic artist and designer  ·  scenographer  ·  exibition designer  ·  scenery artist"
+  },
+  {
+   "role": "miniature set designer",
+   "isco": 3432,
+   "aka": "miniature set builder  ·  miniature model set designer  ·  miniature model set designer and builder  ·  miniature set constructor  ·  miniature maker"
+  },
+  {
+   "role": "goldsmith",
+   "isco": 7313,
+   "aka": "gold ring maker  ·  gold earrings fabricator  ·  gold earrings maker  ·  boutique goldsmith  ·  goldsmiths"
+  },
+  {
+   "role": "mattress maker",
+   "isco": 7534,
+   "aka": "mattress builder  ·  soft furnishing maker  ·  mattress-making machine operative  ·  mattress-making machine setter  ·  mattress-making machine operator"
+  },
+  {
+   "role": "animation layout artist",
+   "isco": 2166,
+   "aka": "2D layout animator  ·  3D layout artist  ·  animation layout designer  ·  3D layout animator  ·  2D layout artist"
+  },
+  {
+   "role": "upholsterer",
+   "isco": 7534,
+   "aka": "chair maker  ·  seat builder  ·  mattress builder  ·  mattress maker  ·  chair builder"
+  },
+  {
+   "role": "tailor",
+   "isco": 7531,
+   "aka": "seamstress  ·  suit maker  ·  alterations sewer  ·  seamster  ·  couturier"
+  },
+  {
+   "role": "industrial designer",
+   "isco": 2163,
+   "aka": "product designer  ·  3D CAD designer  ·  packaging designer  ·  product design specialist  ·  glass products designer"
+  },
+  {
+   "role": "special effects artist",
+   "isco": 2166,
+   "aka": "senior special effects artist  ·  digital effects specialist  ·  special effects technician  ·  special effect image designer  ·  special effects animator"
+  },
+  {
+   "role": "costume maker",
+   "isco": 7531,
+   "aka": "costume builder  ·  costume and prop maker  ·  costumer  ·  costume & prop maker  ·  set costumer"
+  },
+  {
+   "role": "3D modeller",
+   "isco": 2166,
+   "aka": "CGI modeller  ·  3D developer  ·  3D modellers  ·  3D artist  ·  computer-generated imagery modeller"
+  },
+  {
+   "role": "furniture designer",
+   "isco": 2163,
+   "aka": "interior and furniture designer  ·  furniture craftswoman  ·  furniture builder  ·  furniture planner and designer  ·  hand-made furniture builder"
+  },
+  {
+   "role": "wig and hairpiece maker",
+   "isco": 7531,
+   "aka": "hairpiece maker  ·  senior wig maker  ·  wig-hairpiece maker  ·  wig builder  ·  wig consultant"
+  },
+  {
+   "role": "aircraft interior technician",
+   "isco": 7534,
+   "aka": "aircraft seating technician  ·  aircraft interior design technician  ·  aircraft interior lighting technician  ·  aircraft instrument mecanic  ·  aircraft interior instrument operative"
+  },
+  {
+   "role": "motor vehicle upholsterer",
+   "isco": 7534,
+   "aka": "motorcycle trimmer  ·  lorry upholstery worker  ·  motorcycle upholstery worker  ·  bus trimmer  ·  coach trimmer"
+  },
+  {
+   "role": "performance video designer",
+   "isco": 2166,
+   "aka": "projection designer  ·  video & graphics designer  ·  video designer  ·  video & projection designer  ·  visual designer"
+  },
+  {
+   "role": "furniture upholsterer",
+   "isco": 7534,
+   "aka": "chair maker  ·  craftswoman upholster  ·  seat builder  ·  mattress builder  ·  mattress maker"
+  },
+  {
+   "role": "clothing fashion designer",
+   "isco": 2163,
+   "aka": "couturier  ·  clothes designer  ·  clothing product designer  ·  clothing designer"
+  },
+  {
+   "role": "costume designer",
+   "isco": 2163,
+   "aka": "costume specialist  ·  costume designer and fashion stylist  ·  fashion stylist and costume designer  ·  fashion stylist & costume designer  ·  costume designer and maker"
+  },
+  {
+   "role": "hide grader",
+   "isco": 7531,
+   "aka": "wet-blue grader  ·  crust grader  ·  crust sorter  ·  skin grader  ·  hide graders"
+  },
+  {
+   "role": "digital media designer",
+   "isco": 2166,
+   "aka": "digital media designers  ·  digital media developer  ·  multimedia developer  ·  digital multimedia designer  ·  interactive media designer"
+  },
+  {
+   "role": "digital artist",
+   "isco": 2166,
+   "aka": "digital matte painter  ·  computer-generated imagery artist  ·  digital matte artist  ·  computer artist  ·  digital games artist"
+  },
+  {
+   "role": "digital games designer",
+   "isco": 2166,
+   "aka": "digital game designer  ·  digital games designers  ·  video games designer  ·  virtual games designer  ·  computer games designer"
+  },
+  {
+   "role": "jewellery repairer",
+   "isco": 7313,
+   "aka": "jewelry repairer  ·  jewerly repair technician  ·  jewellery repair technician  ·  jewellery hammersmith  ·  adornment repairer"
+  },
+  {
+   "role": "cabinet maker",
+   "isco": 7522,
+   "aka": "furniture constructor  ·  hand crafted furniture constructor  ·  maker of chairs  ·  craftsman cabinetmaker  ·  chair maker"
+  },
+  {
+   "role": "jewellery polisher",
+   "isco": 7313,
+   "aka": "jewelery repairer  ·  barrel polishing machine operative  ·  jewelry polishing machine operator  ·  jewelry polishing machine setter  ·  jewellery polishing machine operative"
+  },
+  {
+   "role": "silversmith",
+   "isco": 7313,
+   "aka": "silver ring maker  ·  silver jewellery maker  ·  trophy silversmith  ·  silver earrings fabricator  ·  trophy maker"
+  },
+  {
+   "role": "merchandiser",
+   "isco": 3432,
+   "aka": "retail merchandising associate  ·  merchandising controller  ·  merchandising associate  ·  merchandise planner  ·  retail merchandising controller"
+  },
+  {
+   "role": "furniture finisher",
+   "isco": 7522,
+   "aka": "furniture polisher  ·  wooden furniture sander  ·  wooden furniture stainer  ·  wooden furniture varnisher  ·  furniture machine finisher"
+  },
+  {
+   "role": "milliner",
+   "isco": 7531,
+   "aka": "custom headwear manufacturer  ·  hatter  ·  headwear manufacturer  ·  headgear manufacturer  ·  hat maker"
+  }
+ ]
+}

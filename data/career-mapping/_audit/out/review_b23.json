@@ -1,0 +1,127 @@
+{
+ "reviews": [
+  {
+   "domain_id": "D117",
+   "domain_name": "Railway",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Locomotive Engineers", "isco": 8311, "reason": "junk group-label row (aka=NaN); duplicate of existing ESCO 'train driver' (8311)"},
+    {"role": "Rail Yard Engineers, Dinkey Operators, and Hostlers", "isco": 8312, "reason": "junk SOC group-label row (aka=NaN); yard-shunting duplicated by existing 'shunter'/'train preparer' (8312)"},
+    {"role": "Subway and Streetcar Operators", "isco": 8312, "reason": "junk group-label row (aka=NaN); duplicate of 'metro driver' already an aka of 'train driver' (8311)"},
+    {"role": "Rail Transportation Workers, All Other", "isco": 8311, "reason": "junk residual catch-all group-label row (aka=NaN); not a real occupation"}
+   ],
+   "add_roles": [
+    {"role": "railway conductor", "isco": 5112, "skills": ["ticket inspection", "passenger safety announcements", "train door operation", "customer assistance", "onboard revenue collection", "emergency procedures"], "reason": "genuine railway role missing from domain; the removed NaN row 'Railroad Conductors and Yardmasters' covered onboard conductor duties not represented by any ESCO role here. ISCO 5112 = transport conductors."}
+   ],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "7 legit ESCO railway roles retained. Removed 4 junk NaN group-label rows (all duplicates/residuals of existing roles). 'Railroad Conductors and Yardmasters' NaN row also removed but its conductor content re-added as clean ISCO 5112 role. Domain otherwise coherent."
+  },
+  {
+   "domain_id": "D118",
+   "domain_name": "Crop Production, Horticulture",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Farmworkers, Labourers, and Other Agricultural Workers", "isco": 9211, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'fruit and vegetable picker'/'horticulture worker'"},
+    {"role": "Farmers, Ranchers, and Other Agricultural Managers", "isco": 1311, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'crop production manager'/'farm manager'"},
+    {"role": "Farmworkers and Laborers, Crop, Nursery, and Greenhouse", "isco": 6112, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'horticulture worker'/'crop worker'"},
+    {"role": "Animal Breeders", "isco": 6130, "reason": "cross-domain contamination (aka=NaN); belongs in D119 Livestock/Poultry/Dairy, not crop production"},
+    {"role": "Landscaping and Groundskeeping Workers", "isco": 6113, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'garden labourer'/'landscape gardener'/'groundsman'"},
+    {"role": "Tree Trimmers and Pruners", "isco": 6113, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'tree surgeon'/'arboriculturist'"},
+    {"role": "Grounds Maintenance Workers, All Other", "isco": 6113, "reason": "junk residual catch-all group-label row (aka=NaN); not a real occupation"},
+    {"role": "aquaculture biologist", "isco": 2131, "reason": "cross-domain contamination; scientific aquaculture role belongs in D120 Fisheries/Aquaculture, not crop/horticulture"}
+   ],
+   "add_roles": [
+    {"role": "crop protection / pesticide applicator", "isco": 6113, "skills": ["pesticide handling and mixing", "spray equipment operation", "integrated pest management", "chemical safety and PPE", "field spraying application rates", "record-keeping for regulated chemicals"], "reason": "genuine horticulture role missing; removed NaN row 'Pesticide Handlers, Sprayers, and Applicators, Vegetation' covered real vegetation spraying work not represented by any ESCO role here. ISCO 6113 = gardeners/horticultural growers."},
+    {"role": "agricultural inspector", "isco": 6111, "skills": ["crop quality inspection", "phytosanitary standards", "field auditing", "regulatory compliance checks", "sampling and grading", "reporting"], "reason": "genuine agricultural role missing; removed NaN row 'Agricultural Inspectors' covered crop inspection not represented by existing roles. Note: inspection could also fit a regulatory/quality domain if one exists library-wide."}
+   ],
+   "overfanout_roles": [
+    {"role": "vineyard cluster", "reason": "possible ESCO subject fan-out: vineyard machinery operator, vineyard supervisor, vineyard manager, vineyard cellar master, vineyard worker, hop farmer, grape grower all present. Legit as distinct viticulture roles but review whether the granularity is intentional vs over-representation of a single sub-topic (viticulture) relative to broader field crops."}
+   ],
+   "rename_to": null,
+   "notes": "20 legit ESCO crop/horticulture roles retained (rows 1-21). Removed 7 junk NaN group-label rows plus 2 cross-domain rows (Animal Breeders->D119, aquaculture biologist->D120). Re-added pesticide applicator and agricultural inspector as clean roles. Field-crop / arable production (grains, cereals) is thin relative to viticulture and horticulture; not fabricating additions but flagging viticulture over-fanout."
+  },
+  {
+   "domain_id": "D119",
+   "domain_name": "Livestock, Poultry, Dairy",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Farmworkers, Farm, Ranch, and Aquacultural Animals", "isco": 6121, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'livestock worker' (9212)"},
+    {"role": "Agricultural Workers, All Other", "isco": 6123, "reason": "junk residual catch-all group-label row (aka=NaN); not a real occupation"},
+    {"role": "Fishing and Hunting Workers", "isco": 6129, "reason": "cross-domain contamination (aka=NaN); fishing belongs in D120 Fisheries and hunting in D121 Wildlife, not livestock"}
+   ],
+   "add_roles": [
+    {"role": "dairy farmer", "isco": 6121, "skills": ["dairy herd management", "milking machine operation", "milk hygiene and storage", "animal health monitoring", "feeding and nutrition", "milk yield record-keeping"], "reason": "domain is explicitly named 'Livestock, Poultry, Dairy' but no dairy-specific production role exists among the 14 ESCO roles (all are breeders/herders/grooms). ISCO 6121 = animal producers (livestock/dairy)."},
+    {"role": "animal breeder (livestock)", "isco": 6121, "skills": ["selective breeding", "artificial insemination", "pedigree/record management", "animal welfare", "genetics assessment", "herd health"], "reason": "general livestock animal-breeder role missing; the cross-domain 'Animal Breeders' NaN row wrongly filed under D118 crop production actually belongs here. Provides the umbrella breeding role alongside species-specific breeders."}
+   ],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "14 legit ESCO livestock/poultry roles retained (rows 1-14), including good coverage of equine (horse breeder, equine yard manager, equine worker, groom), poultry (sexer, catcher, breeder) and species breeders. Removed 3 junk NaN rows (1 residual, 1 dup, 1 cross-domain). Dairy sub-domain was named but unrepresented -> added dairy farmer + general livestock animal breeder."
+  },
+  {
+   "domain_id": "D120",
+   "domain_name": "Fisheries, Aquaculture",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "shotfirer", "isco": 7542, "reason": "cross-domain contamination; explosives/blasting occupation (ISCO 7542 blasters) belongs to mining/construction/demolition, not fisheries or aquaculture"},
+    {"role": "construction commercial diver", "isco": 7541, "reason": "cross-domain contamination; construction/underwater-welding diving (aka underwater welder, offshore diver) belongs to a construction/offshore domain, not fisheries"},
+    {"role": "rescue diver", "isco": 7541, "reason": "cross-domain contamination; emergency/lifeguard rescue diving belongs to emergency services / safety domain, not fisheries. Pulled in via shared ISCO 7541 diver code."}
+   ],
+   "add_roles": [
+    {"role": "aquaculture production manager", "isco": 1311, "skills": ["aquaculture operations planning", "stock management", "budgeting", "staff supervision", "biosecurity", "regulatory compliance"], "reason": "domain has many technician/worker roles and a hatchery manager but lacks a top-level aquaculture farm/production manager (ISCO 1311 agriculture/aquaculture production managers). Genuine hierarchy gap, not fabricated fan-out."}
+   ],
+   "overfanout_roles": [
+    {"role": "aquaculture technician/worker cluster (ISCO 6221/9216)", "reason": "classic ESCO subject fan-out: near-identical worker+technician variants across each sub-process — hatchery (worker/technician/manager), husbandry (worker/technician), rearing, recirculation, mooring (worker/technician/manager), harvesting (worker/technician), cage (worker/technician). ~15 rows differ only by process x seniority. Recommend consolidating to a smaller set (e.g. aquaculture worker, aquaculture technician, aquaculture hatchery specialist, aquaculture manager) for the learner-facing library."}
+   ],
+   "rename_to": null,
+   "notes": "No NaN junk rows in this domain. Core issue is 3 cross-domain diver/blaster roles dragged in via shared ISCO 7541/7542 codes (harvest diver kept - it is genuinely aquatic harvesting). Remaining 19 roles are legitimately fisheries/aquaculture but exhibit heavy ESCO fan-out flagged above. Added a production-manager role to fill the management-hierarchy gap."
+  },
+  {
+   "domain_id": "D121",
+   "domain_name": "Forestry, Wildlife Management",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "precision device inspector", "isco": 7543, "reason": "cross-domain contamination via ISCO 7543 (product graders/testers); manufacturing QA, unrelated to forestry/wildlife"},
+    {"role": "electrical equipment inspector", "isco": 7543, "reason": "cross-domain contamination; electrical manufacturing QA, not forestry"},
+    {"role": "electronic equipment inspector", "isco": 7543, "reason": "cross-domain contamination; electronics manufacturing QA, not forestry"},
+    {"role": "printed circuit board test technician", "isco": 7543, "reason": "cross-domain contamination; electronics testing, not forestry"},
+    {"role": "automotive test driver", "isco": 7543, "reason": "cross-domain contamination; automotive testing, not forestry"},
+    {"role": "clothing quality inspector", "isco": 7543, "reason": "cross-domain contamination; textiles/garment QA, not forestry"},
+    {"role": "automated optical inspection operator", "isco": 7543, "reason": "cross-domain contamination; PCB/electronics inspection, not forestry"},
+    {"role": "battery test technician", "isco": 7543, "reason": "cross-domain contamination; battery manufacturing QA, not forestry"},
+    {"role": "product quality inspector", "isco": 7543, "reason": "cross-domain contamination; generic manufacturing QA, not forestry"},
+    {"role": "consumer goods inspector", "isco": 7543, "reason": "cross-domain contamination; consumer-goods assembly QA, not forestry"},
+    {"role": "product assembly inspector", "isco": 7543, "reason": "cross-domain contamination; assembly-line QA (also malformed aka), not forestry"},
+    {"role": "non-destructive testing specialist", "isco": 7543, "reason": "cross-domain contamination; industrial NDT, not forestry"},
+    {"role": "motor vehicle assembly inspector", "isco": 7543, "reason": "cross-domain contamination; automotive assembly QA, not forestry"},
+    {"role": "vessel assembly inspector", "isco": 7543, "reason": "cross-domain contamination; shipbuilding QA, not forestry"},
+    {"role": "product quality controller", "isco": 7543, "reason": "cross-domain contamination; generic manufacturing QA, not forestry"},
+    {"role": "aircraft assembly inspector", "isco": 7543, "reason": "cross-domain contamination; aerospace assembly QA, not forestry"},
+    {"role": "control panel tester", "isco": 7543, "reason": "cross-domain contamination; electro-mechanical panel testing, not forestry"},
+    {"role": "metal product quality control inspector", "isco": 7543, "reason": "cross-domain contamination; metal fabrication QA, not forestry"},
+    {"role": "rolling stock assembly inspector", "isco": 7543, "reason": "cross-domain contamination; rail vehicle assembly QA, not forestry"},
+    {"role": "product grader", "isco": 7543, "reason": "cross-domain contamination; generic product grading, not forestry"},
+    {"role": "cigar inspector", "isco": 7543, "reason": "cross-domain contamination; tobacco products QA, not forestry"},
+    {"role": "Foresters", "isco": 6210, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'forest ranger', clean 'forester' re-added"},
+    {"role": "Pest Control Workers", "isco": 7544, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'pest management worker'"},
+    {"role": "Fallers", "isco": 6210, "reason": "junk SOC group-label row (aka=NaN); tree felling re-added as clean 'logger / tree feller'"},
+    {"role": "Logging Equipment Operators", "isco": 6210, "reason": "junk SOC group-label row (aka=NaN); covered by re-added logging role"},
+    {"role": "Log Graders and Scalers", "isco": 6210, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'lumber grader'"},
+    {"role": "Logging Workers, All Other", "isco": 6210, "reason": "junk residual catch-all group-label row (aka=NaN); not a real occupation"},
+    {"role": "Coin, Vending, and Amusement Machine Servicers and Repairers", "isco": 7544, "reason": "cross-domain contamination + junk (aka=NaN); machine-repair occupation wholly unrelated to forestry/wildlife"},
+    {"role": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers", "isco": 6113, "reason": "junk SOC group-label row (aka=NaN); groundskeeping supervision belongs to horticulture/landscaping (D118), not forestry"},
+    {"role": "Pesticide Handlers, Sprayers, and Applicators, Vegetation", "isco": 7544, "reason": "junk SOC group-label row (aka=NaN); duplicate of existing 'pesticides sprayer'"}
+   ],
+   "add_roles": [
+    {"role": "logger / tree feller", "isco": 6210, "skills": ["chainsaw operation", "directional tree felling", "timber harvesting", "log measurement and bucking", "forestry safety procedures", "skidder/forwarder operation"], "reason": "core forestry occupation missing after removing junk 'Fallers'/'Logging' NaN rows; ISCO 6210 = forestry and related workers"},
+    {"role": "wildlife / conservation officer", "isco": 3143, "skills": ["wildlife monitoring", "habitat management", "anti-poaching enforcement", "species surveying", "conservation planning", "protected-area patrol"], "reason": "domain name includes 'Wildlife Management' but no wildlife role existed among the 38; ISCO 3143 = forestry/wildlife technicians"},
+    {"role": "forester", "isco": 2132, "skills": ["silviculture planning", "forest inventory and mensuration", "sustainable harvest planning", "forest health assessment", "GIS mapping", "reforestation management"], "reason": "professional/managerial forestry role missing; the removed NaN 'Foresters' row covered this. ISCO 2132 = farming/forestry advisers/professionals"}
+   ],
+   "overfanout_roles": [
+    {"role": "wood-products grader cluster (ISCO 7543)", "reason": "lumber grader, veneer grader, engineered wood board grader and pulp grader are retained as genuinely timber/forestry-related, but they are the same ESCO 7543 grading pattern applied per wood product. Kept (legit forestry sub-products) but flag that granularity mirrors the manufacturing fan-out that contaminated this domain."}
+   ],
+   "rename_to": null,
+   "notes": "Severe contamination: domain was dominated by ISCO 7543 manufacturing quality-inspector fan-out (21 removed) with no connection to forestry/wildlife, plus 8 junk NaN group-label rows removed (9 removals with NaN incl. the vending-machine one). Genuine kept roles: forest worker (9215), forest ranger (6210), pest management worker & pesticides sprayer (7544), and wood-product graders lumber/veneer/engineered-board/pulp (7543, forestry sub-products). Re-added the actual missing occupations: logger/tree feller, wildlife/conservation officer, professional forester. Wildlife management was named but entirely unrepresented before this."
+  }
+ ]
+}

@@ -1,0 +1,898 @@
+{
+ "reconciled": [
+  {
+   "programme": "AEROSPACE ENGINEERING",
+   "add": [
+    {"domain_id": "D059", "domain": "Space Technology & Satellite Systems", "match_type": "adjacent", "why": "Aerospace track covers space systems; foundation for satellite/launch vehicle work"},
+    {"domain_id": "D132", "domain": "Space Science, Exploration & Mission Systems", "match_type": "adjacent", "why": "Space track within the department; mission systems foothold"},
+    {"domain_id": "D069", "domain": "Aviation & Aerospace Operations", "match_type": "functional", "why": "Aeronautic track directly supports aircraft/aviation operations"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Mechanical/thermal loads, fluid mechanics, solid modelling are core mechanical foundations"},
+    {"domain_id": "D155", "domain": "Nanotechnology, Advanced Materials & Materials Science Engineering", "match_type": "functional", "why": "Engineering Materials course covers composites, nanomaterials, fracture mechanics central to airframes"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No finance/quant-finance course basis; generic math over-link"},
+    {"domain_id": "D014", "why": "No actuarial/statistics-for-insurance course basis"},
+    {"domain_id": "D062", "why": "No trading/capital-markets course basis"},
+    {"domain_id": "D013", "why": "No investment analysis course basis"},
+    {"domain_id": "D063", "why": "No economics course in curriculum"},
+    {"domain_id": "D056", "why": "No blockchain/DLT course basis"},
+    {"domain_id": "D010", "why": "No BI/analytics course basis"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated to aerospace"},
+    {"domain_id": "D134", "why": "Naval/marine engineering not covered; different domain"},
+    {"domain_id": "D072", "why": "No GIS/geospatial course basis"},
+    {"domain_id": "D026", "why": "No public health course basis"},
+    {"domain_id": "D002", "why": "No data engineering/architecture course basis"},
+    {"domain_id": "D030", "why": "No marketing/brand course basis"}
+   ]
+  },
+  {
+   "programme": "AGRICULTURAL AND BIOSYSTEMS ENGINEERING",
+   "add": [
+    {"domain_id": "D096", "domain": "Agricultural & Industrial Machinery Mechanics", "match_type": "functional", "why": "Farm/agri machinery is core to agricultural engineering; workshop practice supports it (was mislabelled direct; correct as functional)"},
+    {"domain_id": "D019", "domain": "Renewable Energy Engineering", "match_type": "functional", "why": "Bioenergy, solar drying and rural power are standard agri-biosystems applications"},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Soil/water conservation and SDGs emphasis give environmental foothold"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Biosystems automation and process control; electrical circuits foundation"},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "direct", "why": "Programme purpose is agricultural production/biosystems"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D011", "why": "No quant finance course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D062", "why": "No trading course basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D033", "why": "No product management basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D014", "why": "No actuarial basis"}
+   ]
+  },
+  {
+   "programme": "AUTOMOTIVE ENGINEERING",
+   "add": [
+    {"domain_id": "D095", "domain": "Motor Vehicle Mechanics, Repairs & Automobile Technology", "match_type": "functional", "why": "Automotive systems and workshop practice underpin vehicle mechanics/technology"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Mechanics, thermodynamics, fluid mechanics are core mechanical foundations"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Applied electricity plus automotive control systems give automation foothold"},
+    {"domain_id": "D131", "domain": "Motorsport Engineering & Performance Technology", "match_type": "adjacent", "why": "Automotive performance/powertrain knowledge transfers to motorsport"},
+    {"domain_id": "D166", "domain": "Autonomous Vehicles, Self-Driving Systems & Roborace Engineering", "match_type": "adjacent", "why": "Vehicle platform knowledge is the foothold for autonomous-vehicle work"}
+   ],
+   "remove": [
+    {"domain_id": "D091", "why": "Driving instruction is a trade-teaching domain, not vehicle engineering"},
+    {"domain_id": "D011", "why": "No quant finance course basis"},
+    {"domain_id": "D062", "why": "No trading course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D061", "why": "No insurance course basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D001", "why": "No software engineering course basis"}
+   ]
+  },
+  {
+   "programme": "BIOMEDICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D057", "domain": "Digital Health & Health Technology", "match_type": "functional", "why": "Medical device design plus physics/biology applied to body functions underpins health tech"},
+    {"domain_id": "D137", "domain": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging", "match_type": "adjacent", "why": "Physics applied to human body and imaging modalities transfer to medical physics"},
+    {"domain_id": "D123", "domain": "Radiography, Medical Imaging & Radiation Therapy", "match_type": "adjacent", "why": "Biomedical instrumentation/imaging foundation transfers to medical imaging"},
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "functional", "why": "Applied electricity and biomedical electronics are core to the programme"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D008", "why": "No telecom/network engineering course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D062", "why": "No trading course basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D002", "why": "No data engineering course basis"},
+    {"domain_id": "D074", "why": "No OHSE-specific course basis at 100L"}
+   ]
+  },
+  {
+   "programme": "CHEMICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "functional", "why": "Process industries, thermodynamics and material balances underpin oil & gas processing"},
+    {"domain_id": "D147", "domain": "Process Automation, SCADA, PLC & Industrial Control Systems", "match_type": "functional", "why": "Process/plant operation with electrical circuits gives process-control foothold"},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Pollution control and process sustainability are standard chemical-eng applications"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D028", "why": "No management course basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D018", "why": "Civil engineering not the focus; no structural course basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D010", "why": "No BI course basis"}
+   ]
+  },
+  {
+   "programme": "CIVIL ENGINEERING",
+   "add": [
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "functional", "why": "Civil engineering directly feeds construction/site delivery"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Cost/strength analysis and project delivery are core civil competencies"},
+    {"domain_id": "D021", "domain": "Architecture & Urban Planning", "match_type": "adjacent", "why": "Structural/graphics foundation overlaps built-environment planning"},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "adjacent", "why": "Civil surveying underpins cadastral/field geomatics"},
+    {"domain_id": "D146", "domain": "Building Services Engineering — Mechanical, Electrical & Plumbing (MEP)", "match_type": "functional", "why": "Applied electricity plus building focus gives MEP foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D002", "why": "No data engineering course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D008", "why": "No telecom course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D033", "why": "No product management basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"}
+   ]
+  },
+  {
+   "programme": "COMPUTER ENGINEERING",
+   "add": [
+    {"domain_id": "D001", "domain": "Software Engineering", "match_type": "direct", "why": "Computing and Software Engineering course; software is a core purpose of the programme (scorer had no direct link)"},
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "direct", "why": "Applied electricity plus computer hardware; electronics is core to computer engineering"},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "functional", "why": "Hardware/software integration is the foundation of embedded/IoT systems"},
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Computational/software foundation supports AI/ML"},
+    {"domain_id": "D004", "domain": "Cybersecurity & Information Security", "match_type": "adjacent", "why": "Computing foundation is the entry point to security work"},
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "functional", "why": "Digital systems and electrical foundation support networks/telecom"},
+    {"domain_id": "D002", "domain": "Data Engineering & Architecture", "match_type": "functional", "why": "Software/computing foundation supports data-systems work"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D141", "why": "No quantum computing course basis at this level"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D018", "why": "Civil engineering not covered"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D131", "why": "Motorsport engineering not covered"}
+   ]
+  },
+  {
+   "programme": "ELECTRICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "functional", "why": "Circuits/signals foundation underpins telecom and networks"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Power/control electrical foundation underpins automation"},
+    {"domain_id": "D147", "domain": "Process Automation, SCADA, PLC & Industrial Control Systems", "match_type": "functional", "why": "Electrical circuits and control give industrial-control foothold"},
+    {"domain_id": "D093", "domain": "Electrical Installation, Wiring & Maintenance Trades", "match_type": "functional", "why": "Applied electricity supports installation/maintenance (was mislabelled direct)"},
+    {"domain_id": "D094", "domain": "Electronics Servicing, ICT Equipment & Smart Systems Installation", "match_type": "functional", "why": "Electrical/electronics foundation supports electronics servicing/smart systems"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D149", "why": "Diplomacy unrelated"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D010", "why": "No BI course basis"}
+   ]
+  },
+  {
+   "programme": "ELECTRONIC ENGINEERING",
+   "add": [
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "direct", "why": "Electronic design/circuits is core electrical-electronics (scorer had no direct link)"},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "direct", "why": "Electronics/circuits design is the foundation of embedded systems"},
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "functional", "why": "Signals/circuits underpin telecom and networks"},
+    {"domain_id": "D094", "domain": "Electronics Servicing, ICT Equipment & Smart Systems Installation", "match_type": "functional", "why": "Electronic components/circuits directly support electronics servicing"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Circuit/control foundation supports automation"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D033", "why": "No product management basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D029", "why": "No HR course basis"}
+   ]
+  },
+  {
+   "programme": "ELECTRICAL AND ELECTRONIC ENGINEERING",
+   "add": [
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "functional", "why": "Circuits/signals foundation underpins telecom and networks"},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "functional", "why": "Electronics/electrical foundation supports embedded/IoT"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Power/control foundation underpins automation"},
+    {"domain_id": "D094", "domain": "Electronics Servicing, ICT Equipment & Smart Systems Installation", "match_type": "functional", "why": "Electronics foundation supports servicing/smart-systems installation"},
+    {"domain_id": "D019", "domain": "Renewable Energy Engineering", "match_type": "functional", "why": "Power systems foundation supports renewable-energy integration"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D132", "why": "Space science not covered"}
+   ]
+  },
+  {
+   "programme": "ENVIRONMENTAL ENGINEERING",
+   "add": [
+    {"domain_id": "D018", "domain": "Civil & Structural Engineering", "match_type": "functional", "why": "Water/wastewater and infrastructure work overlaps civil engineering"},
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "adjacent", "why": "Air quality and environmental systems give a climate-science foothold"},
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "adjacent", "why": "Pollution control/waste management transfers to oil-and-gas environmental roles"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D149", "why": "Diplomacy unrelated"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D028", "why": "No management course basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"}
+   ]
+  },
+  {
+   "programme": "FOOD ENGINEERING",
+   "add": [
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Mass/energy balances and food processing are process-engineering applications"},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Food security/agri-food value chain link to agriculture"},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "adjacent", "why": "Food-plant unit operations transfer to process plant operation"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Machine elements, kinematics and workshop practice are mechanical foundations"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"}
+   ]
+  },
+  {
+   "programme": "FOOD SCIENCE AND TECHNOLOGY",
+   "add": [
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Food supply chain and commodity quality link to agriculture/agribusiness"},
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "adjacent", "why": "Food chemistry/microbiology foundation gives a food-biotech foothold"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "adjacent", "why": "Food processing overlaps process industries"},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "adjacent", "why": "Food-plant operations transfer to process plant operation"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D002", "why": "No data engineering course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"}
+   ]
+  },
+  {
+   "programme": "INFORMATION AND COMMUNICATION ENGINEERING",
+   "add": [
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "direct", "why": "Communication systems, transmission media and switching are the programme's purpose (scorer had no direct link)"},
+    {"domain_id": "D001", "domain": "Software Engineering", "match_type": "functional", "why": "PC/software, web services and computing foundation support software work"},
+    {"domain_id": "D004", "domain": "Cybersecurity & Information Security", "match_type": "adjacent", "why": "ICT/networks foundation is the entry point to security"},
+    {"domain_id": "D005", "domain": "Cloud Computing & DevOps", "match_type": "adjacent", "why": "Internet/web services and networks give a cloud foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D149", "why": "Diplomacy unrelated"},
+    {"domain_id": "D019", "why": "No renewable-energy course basis"},
+    {"domain_id": "D146", "why": "No building-services course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"}
+   ]
+  },
+  {
+   "programme": "INDUSTRIAL AND PRODUCTION ENGINEERING",
+   "add": [
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Production planning and process delivery are core to industrial engineering"},
+    {"domain_id": "D034", "domain": "Supply Chain Management", "match_type": "functional", "why": "Production systems and operations feed supply-chain work"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "direct", "why": "Industrial/production engineering is a core mechanical-industrial discipline"},
+    {"domain_id": "D114", "domain": "Assembly, Packaging & Production Line Operations", "match_type": "functional", "why": "Production-process focus directly supports production-line operations"},
+    {"domain_id": "D147", "domain": "Process Automation, SCADA, PLC & Industrial Control Systems", "match_type": "functional", "why": "Process/production control with electrical foundation"}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D158", "why": "No corporate-finance/M&A basis"},
+    {"domain_id": "D002", "why": "No data engineering course basis"}
+   ]
+  },
+  {
+   "programme": "MARINE AND OFFSHORE ENGINEERING",
+   "add": [
+    {"domain_id": "D076", "domain": "Maritime & Naval Operations", "match_type": "functional", "why": "Ship powerplants, engine-room and harbour operations underpin maritime operations"},
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "functional", "why": "Offshore engineering directly serves oil & gas offshore operations"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Marine powerplants, thermodynamics and fluid mechanics are mechanical foundations"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D146", "why": "No building-services course basis"},
+    {"domain_id": "D049", "why": "Automotive engineering not covered"},
+    {"domain_id": "D009", "why": "No data science course basis"}
+   ]
+  },
+  {
+   "programme": "MATERIALS AND METALLURGICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D155", "domain": "Nanotechnology, Advanced Materials & Materials Science Engineering", "match_type": "direct", "why": "Materials science/engineering is the programme's core purpose (scorer had no direct link)"},
+    {"domain_id": "D109", "domain": "Metal Processing, Foundry & Casting Plant Operations", "match_type": "functional", "why": "Metallurgical processing, casting and metal production are core"},
+    {"domain_id": "D097", "domain": "Welding, Fabrication, Blacksmithing & Metal Trades", "match_type": "functional", "why": "Metals/alloys and joining knowledge underpin fabrication/metal trades"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "adjacent", "why": "Process/extractive metallurgy overlaps process industries"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Mechanical loads, materials selection and design are mechanical foundations"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D132", "why": "Space science not covered"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"}
+   ]
+  },
+  {
+   "programme": "MINERAL PROCESSING AND CHEMICAL-METALLURGICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D022", "domain": "Mining & Geosciences Engineering", "match_type": "functional", "why": "Mineral processing follows directly from mining/mineral extraction"},
+    {"domain_id": "D097", "domain": "Welding, Fabrication, Blacksmithing & Metal Trades", "match_type": "adjacent", "why": "Metal/metallurgical foundation transfers to metal fabrication trades"},
+    {"domain_id": "D147", "domain": "Process Automation, SCADA, PLC & Industrial Control Systems", "match_type": "functional", "why": "Process plant operation with electrical foundation gives process-control foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D112", "why": "Wood processing is unrelated to mineral/chemical-metallurgy; spurious direct"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D001", "why": "No software engineering course basis"}
+   ]
+  },
+  {
+   "programme": "MECHANICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D019", "domain": "Renewable Energy Engineering", "match_type": "functional", "why": "Energy systems and thermofluids are core mechanical applications to renewables"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Mechanical design plus applied electricity underpin automation/robotics"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "direct", "why": "Programme purpose is mechanical engineering"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "adjacent", "why": "Design/cost analysis and multidisciplinary systems give a project-delivery foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D155", "why": "Materials covered but no advanced-materials specialisation; keep to core"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"}
+   ]
+  },
+  {
+   "programme": "MECHATRONICS ENGINEERING",
+   "add": [
+    {"domain_id": "D140", "domain": "Robotics Engineering, Systems Design & Human-Robot Interaction", "match_type": "direct", "why": "Kinematic/dynamic/control robot models are core mechatronics (scorer had it only functional)"},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "direct", "why": "Mechatronics systems integration is core to industrial automation"},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "functional", "why": "Mechatronic component integration and control underpin embedded/IoT"},
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "functional", "why": "Applied electricity and control electronics are core to mechatronics"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Mechanical systems and design are half of mechatronics"},
+    {"domain_id": "D166", "domain": "Autonomous Vehicles, Self-Driving Systems & Roborace Engineering", "match_type": "adjacent", "why": "Sensing/actuation/control foundation transfers to autonomous systems"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D033", "why": "No product management basis"}
+   ]
+  },
+  {
+   "programme": "METALLURGICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D155", "domain": "Nanotechnology, Advanced Materials & Materials Science Engineering", "match_type": "direct", "why": "Metallurgy/materials science is the programme's core purpose (scorer had no direct link)"},
+    {"domain_id": "D109", "domain": "Metal Processing, Foundry & Casting Plant Operations", "match_type": "direct", "why": "Extractive/process metallurgy and metal production are core"},
+    {"domain_id": "D097", "domain": "Welding, Fabrication, Blacksmithing & Metal Trades", "match_type": "functional", "why": "Ferrous/non-ferrous metals knowledge underpins metal fabrication trades"},
+    {"domain_id": "D022", "domain": "Mining & Geosciences Engineering", "match_type": "functional", "why": "Mineral resources and extractive metallurgy link to mining"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "adjacent", "why": "Process/chemical metallurgy overlaps process industries"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D018", "why": "Civil engineering not covered"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D078", "why": "No social science course basis"}
+   ]
+  },
+  {
+   "programme": "MATERIALS ENGINEERING",
+   "add": [
+    {"domain_id": "D155", "domain": "Nanotechnology, Advanced Materials & Materials Science Engineering", "match_type": "direct", "why": "Frontiers in Materials Science course; materials science is the programme purpose (scorer had no direct link)"},
+    {"domain_id": "D109", "domain": "Metal Processing, Foundry & Casting Plant Operations", "match_type": "functional", "why": "Metallic materials processing is core to materials engineering"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Materials selection, mechanical loads and design are mechanical foundations"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "adjacent", "why": "Materials roles in plastics/oil-and-gas/ceramics link to process industries"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D132", "why": "Space science not covered"}
+   ]
+  },
+  {
+   "programme": "MINING ENGINEERING",
+   "add": [
+    {"domain_id": "D116", "domain": "Heavy Equipment, Earthmoving & Construction Plant Operations", "match_type": "functional", "why": "Surface/underground mining uses earthmoving and heavy plant"},
+    {"domain_id": "D109", "domain": "Metal Processing, Foundry & Casting Plant Operations", "match_type": "adjacent", "why": "Mineral processing links to downstream metal processing"},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "functional", "why": "GIS/remote sensing and mine surveying underpin field geomatics"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D149", "why": "Diplomacy unrelated"},
+    {"domain_id": "D141", "why": "No quantum computing basis"}
+   ]
+  },
+  {
+   "programme": "NATURAL GAS ENGINEERING",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "direct", "why": "Natural gas is an oil-and-gas discipline; value chain from discovery to consumption is the programme purpose (scorer had no direct link)"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Gas processing, fluid mechanics and materials underpin process industries"},
+    {"domain_id": "D148", "domain": "Offshore, Subsea & Deepwater Engineering", "match_type": "adjacent", "why": "Gas production/transportation transfers to offshore/subsea engineering"},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "adjacent", "why": "Gas plant unit operations transfer to process plant operation"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance course basis; generic math over-link"},
+    {"domain_id": "D062", "why": "No trading/capital-markets course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D026", "why": "No public health course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D033", "why": "No product management basis"}
+   ]
+  },
+  {
+   "programme": "NUCLEAR ENGINEERING",
+   "add": [
+    {"domain_id": "D135", "domain": "Nuclear Engineering, Radiation Science & Nuclear Medicine", "match_type": "direct", "why": "Programme purpose is nuclear engineering/radiation science"},
+    {"domain_id": "D019", "domain": "Renewable Energy Engineering", "match_type": "functional", "why": "Nuclear power sits within the energy-systems/power-generation domain"},
+    {"domain_id": "D137", "domain": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging", "match_type": "adjacent", "why": "Radiation science foundation transfers to medical-physics/nuclear-medicine imaging"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Thermodynamics, fluid mechanics and thermal loads are core mechanical foundations for reactor systems"},
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "functional", "why": "Applied electricity and instrumentation underpin reactor control and power"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D093", "why": "Electrical-installation trade not the focus; no wiring-trade course"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D049", "why": "Automotive engineering not covered"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D141", "why": "No quantum computing course basis"},
+    {"domain_id": "D098", "why": "No precision-toolmaking course basis"},
+    {"domain_id": "D131", "why": "Motorsport engineering not covered"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D050", "why": "No automation/robotics course basis"},
+    {"domain_id": "D146", "why": "No building-services course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"}
+   ]
+  },
+  {
+   "programme": "PETROCHEMICAL ENGINEERING",
+   "add": [
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "direct", "why": "Petrochemical plant/process, stoichiometry and thermodynamics are core process-industry purpose (scorer had no direct link)"},
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "functional", "why": "Petrochemicals are downstream oil & gas; process flow and plant operations apply"},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "functional", "why": "Petrochemical unit operations directly support chemical/plastics plant operation"},
+    {"domain_id": "D147", "domain": "Process Automation, SCADA, PLC & Industrial Control Systems", "match_type": "functional", "why": "Plant instrumentation and electrical circuits give process-control foothold"},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "adjacent", "why": "Process safety and emissions control transfer to environmental roles"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D155", "why": "No advanced-materials specialisation course basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D018", "why": "Civil engineering not the focus"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D049", "why": "Automotive engineering not covered"},
+    {"domain_id": "D028", "why": "No management course basis"},
+    {"domain_id": "D084", "why": "Payroll/bookkeeping unrelated"},
+    {"domain_id": "D072", "why": "No GIS course basis"}
+   ]
+  },
+  {
+   "programme": "PETROLEUM AND GAS ENGINEERING",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "direct", "why": "Reservoir, drilling, production and transportation of oil & gas are the programme purpose (scorer had no direct link)"},
+    {"domain_id": "D148", "domain": "Offshore, Subsea & Deepwater Engineering", "match_type": "functional", "why": "Production/processing systems extend to offshore/subsea operations"},
+    {"domain_id": "D022", "domain": "Mining & Geosciences Engineering", "match_type": "functional", "why": "Geophysical exploration methods and reservoir geology link to geosciences"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "adjacent", "why": "Oil/gas processing overlaps process industries"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D018", "why": "Civil engineering not the focus"},
+    {"domain_id": "D001", "why": "No software engineering course basis"}
+   ]
+  },
+  {
+   "programme": "PETROLEUM ENGINEERING",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "direct", "why": "Petroleum reservoir, drilling and production are the programme purpose (scorer had no direct link)"},
+    {"domain_id": "D148", "domain": "Offshore, Subsea & Deepwater Engineering", "match_type": "functional", "why": "Production/processing/transportation systems extend to offshore/subsea"},
+    {"domain_id": "D022", "domain": "Mining & Geosciences Engineering", "match_type": "functional", "why": "Geophysical exploration and petroleum geology link to geosciences"},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "adjacent", "why": "Oil/gas processing overlaps process industries"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D018", "why": "Civil engineering not the focus"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D049", "why": "Automotive engineering not covered"}
+   ]
+  },
+  {
+   "programme": "RAILWAY ENGINEERING",
+   "add": [
+    {"domain_id": "D117", "domain": "Railway & Track Operations", "match_type": "direct", "why": "Track geometry, superstructure and railway operations are the programme purpose"},
+    {"domain_id": "D018", "domain": "Civil & Structural Engineering", "match_type": "functional", "why": "Railway substructure, infrastructure construction and track works are civil-engineering work"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Infrastructure construction, capacity planning and owner/operator cooperation are delivery competencies"},
+    {"domain_id": "D164", "domain": "Urban Mobility, Smart City Systems & Transportation Planning", "match_type": "adjacent", "why": "Railway transport's societal role gives a transport-planning foothold"},
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "functional", "why": "Railway electrotechnical installations and applied electricity underpin electrification/signalling"}
+   ],
+   "remove": [
+    {"domain_id": "D091", "why": "Driving instruction is a trade-teaching domain, unrelated to rail engineering"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D049", "why": "Automotive engineering not covered"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D062", "why": "No trading basis"}
+   ]
+  },
+  {
+   "programme": "STRUCTURAL ENGINEERING",
+   "add": [
+    {"domain_id": "D018", "domain": "Civil & Structural Engineering", "match_type": "direct", "why": "Structural engineering is the core purpose; strength/materials and working drawings are central (scorer had no direct link)"},
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "functional", "why": "Structural design feeds construction and site delivery"},
+    {"domain_id": "D021", "domain": "Architecture & Urban Planning", "match_type": "adjacent", "why": "Structural/graphics foundation overlaps built-environment design"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Cost/strength analysis and detailed drawings are core project-delivery competencies"},
+    {"domain_id": "D146", "domain": "Building Services Engineering — Mechanical, Electrical & Plumbing (MEP)", "match_type": "adjacent", "why": "Applied electricity plus building focus gives an MEP foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D155", "why": "No advanced-materials specialisation course basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D008", "why": "No telecom course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"}
+   ]
+  },
+  {
+   "programme": "SYSTEMS ENGINEERING",
+   "add": [
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Systems modelling with applied electricity underpins control/automation systems"},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Systems modelling, simulation and analysis rely on quantitative/data methods"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Systems integration and design/cost analysis map to programme delivery"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Multidisciplinary mechanical/electrical modelling and materials are core foundations"},
+    {"domain_id": "D147", "domain": "Process Automation, SCADA, PLC & Industrial Control Systems", "match_type": "adjacent", "why": "Systems/control foundation gives an industrial-control foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D029", "why": "No HR course basis"},
+    {"domain_id": "D033", "why": "No product management basis"}
+   ]
+  },
+  {
+   "programme": "TELECOMMUNICATIONS ENGINEERING",
+   "add": [
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "direct", "why": "Signals, transmission media and switching are the programme purpose"},
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "direct", "why": "Telecommunication is a branch of electrical engineering; circuits are core"},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "functional", "why": "Signals/electronics foundation supports embedded/IoT devices"},
+    {"domain_id": "D059", "domain": "Space Technology & Satellite Systems", "match_type": "adjacent", "why": "Transmission/signals foundation transfers to satellite communications"},
+    {"domain_id": "D004", "domain": "Cybersecurity & Information Security", "match_type": "adjacent", "why": "Networks/telecom foundation is an entry point to security"}
+   ],
+   "remove": [
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D030", "why": "No marketing basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D132", "why": "Space science/mission systems not covered at this level"},
+    {"domain_id": "D001", "why": "No software engineering course basis"}
+   ]
+  },
+  {
+   "programme": "WATER RESOURCES ENGINEERING",
+   "add": [
+    {"domain_id": "D018", "domain": "Civil & Structural Engineering", "match_type": "direct", "why": "Water resources engineering is a civil-engineering discipline; hydraulic structures/boreholes and strength of materials are core (scorer had no direct link)"},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Water supply, use and environmental problem-solving link to environmental engineering"},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "adjacent", "why": "Water resources supports irrigation and agricultural water use"},
+    {"domain_id": "D052", "domain": "Construction Management", "match_type": "adjacent", "why": "Water infrastructure delivery gives a construction-management foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D029", "why": "Spurious direct HR link; no HR course basis (generic 'human resources' phrase mismatch)"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D056", "why": "No blockchain basis"},
+    {"domain_id": "D002", "why": "No data engineering course basis"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D010", "why": "No BI course basis"},
+    {"domain_id": "D061", "why": "No insurance basis"},
+    {"domain_id": "D155", "why": "No advanced-materials course basis"},
+    {"domain_id": "D041", "why": "No research-methods course basis at 100L"},
+    {"domain_id": "D001", "why": "No software engineering course basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"}
+   ]
+  },
+  {
+   "programme": "WOOD PRODUCTS ENGINEERING",
+   "add": [
+    {"domain_id": "D102", "domain": "Carpentry, Joinery, Wood Technology & Furniture Making", "match_type": "direct", "why": "Wood products engineering is the programme purpose; wood technology/furniture is core"},
+    {"domain_id": "D112", "domain": "Wood Processing, Pulp & Paper Plant Operations", "match_type": "direct", "why": "Wood processing/products manufacturing is core to the programme"},
+    {"domain_id": "D121", "domain": "Forestry, Wildlife Management & Pest Control", "match_type": "adjacent", "why": "Wood raw-material/biology (General Biology) foundation links to forestry"},
+    {"domain_id": "D017", "domain": "Mechanical & Industrial Engineering", "match_type": "functional", "why": "Materials, mechanical/thermal loads and workshop practice are mechanical foundations for wood machining"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics course basis"},
+    {"domain_id": "D011", "why": "No quant finance basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "No actuarial basis"},
+    {"domain_id": "D062", "why": "No trading basis"},
+    {"domain_id": "D013", "why": "No investment analysis basis"},
+    {"domain_id": "D138", "why": "Biomedical engineering not covered"},
+    {"domain_id": "D009", "why": "No data science course basis"},
+    {"domain_id": "D012", "why": "No fintech basis"},
+    {"domain_id": "D141", "why": "No quantum computing basis"},
+    {"domain_id": "D136", "why": "Aeronautical not covered"},
+    {"domain_id": "D134", "why": "Naval/marine not covered"},
+    {"domain_id": "D072", "why": "No GIS course basis"},
+    {"domain_id": "D078", "why": "No social science course basis"},
+    {"domain_id": "D019", "why": "No renewable-energy course basis"},
+    {"domain_id": "D016", "why": "Applied electricity is foundational only; not a wood-eng career link"},
+    {"domain_id": "D041", "why": "No research-methods course basis at 100L"},
+    {"domain_id": "D056", "why": "No blockchain basis"}
+   ]
+  }
+ ]
+}

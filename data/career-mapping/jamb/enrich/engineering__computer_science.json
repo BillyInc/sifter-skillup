@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Computer Science",
+  "utme_subjects": ["Physics", "Chemistry", "Mathematics"],
+  "olevel_requirement": "Five (5) SSC credits to include English Language, Mathematics, Physics and Chemistry",
+  "direct_entry": "(i) 'A' Level passes in Mathematics, Physics and Chemistry. (ii) ND/HND in Computer Science Upper/Lower credit respectively",
+  "institution_waivers": [
+    {"institution": "BELLS", "note": "Accepts A Level passes in Mathematics, Physics and Chemistry; ND/HND in Computer Science Upper/Lower credit respectively. Requires Five (5) SSC credits to include English Language, Mathematics, Physics and Chemistry. UTME subjects require Physics, Mathematics and any of Chemistry, Biology, Geography and Economics."},
+    {"institution": "OAU", "note": "As for Computer Engineering (both Direct Entry and UTME)."},
+    {"institution": "AUN", "note": "Same as in Software Engineering."},
+    {"institution": "RENAISSANCE", "note": "Requires Economics."}
+  ]
+}

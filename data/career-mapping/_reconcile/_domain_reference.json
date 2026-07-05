@@ -1,0 +1,837 @@
+[
+ {
+  "id": "D001",
+  "name": "Software Engineering",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D002",
+  "name": "Data Engineering & Architecture",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D003",
+  "name": "Artificial Intelligence & Machine Learning",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D004",
+  "name": "Cybersecurity & Information Security",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D005",
+  "name": "Cloud Computing & DevOps",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D006",
+  "name": "Internet of Things & Embedded Systems",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D007",
+  "name": "UI/UX Design & Product Design",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D008",
+  "name": "Telecommunications & Network Engineering",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D009",
+  "name": "Data Science & Statistical Analysis",
+  "cluster": "Data & Analytics"
+ },
+ {
+  "id": "D010",
+  "name": "Business Intelligence & Analytics",
+  "cluster": "Data & Analytics"
+ },
+ {
+  "id": "D011",
+  "name": "Quantitative Finance & Financial Engineering",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D012",
+  "name": "FinTech Engineering",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D013",
+  "name": "Investment Analysis & Asset Management",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D014",
+  "name": "Actuarial Science & Risk Management",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D015",
+  "name": "Accounting & Financial Reporting",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D016",
+  "name": "Electrical & Electronics Engineering",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D017",
+  "name": "Mechanical & Industrial Engineering",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D018",
+  "name": "Civil & Structural Engineering",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D019",
+  "name": "Renewable Energy Engineering",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D020",
+  "name": "Environmental Engineering & Sustainability",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D021",
+  "name": "Architecture & Urban Planning",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D022",
+  "name": "Mining & Geosciences Engineering",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D023",
+  "name": "Medicine & Clinical Practice",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D024",
+  "name": "Nursing & Allied Health Professions",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D025",
+  "name": "Pharmacy & Pharmaceutical Sciences",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D026",
+  "name": "Public Health & Epidemiology",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D027",
+  "name": "Biomedical & Biotechnology Research",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D028",
+  "name": "General Management & Strategy",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D029",
+  "name": "Human Resources & People Management",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D030",
+  "name": "Marketing, Brand & Communications",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D031",
+  "name": "Sales & Business Development",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D032",
+  "name": "Project Management & Programme Delivery",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D033",
+  "name": "Product Management",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D034",
+  "name": "Supply Chain Management",
+  "cluster": "Supply Chain & Logistics"
+ },
+ {
+  "id": "D035",
+  "name": "Logistics & Transportation Operations",
+  "cluster": "Supply Chain & Logistics"
+ },
+ {
+  "id": "D036",
+  "name": "Procurement & Contract Management",
+  "cluster": "Supply Chain & Logistics"
+ },
+ {
+  "id": "D037",
+  "name": "Legal Practice & Corporate Law",
+  "cluster": "Legal & Compliance"
+ },
+ {
+  "id": "D038",
+  "name": "Compliance, Regulation & Governance",
+  "cluster": "Legal & Compliance"
+ },
+ {
+  "id": "D039",
+  "name": "Higher Education & Academic Research",
+  "cluster": "Education & Research"
+ },
+ {
+  "id": "D040",
+  "name": "Vocational & Technical Training",
+  "cluster": "Education & Research"
+ },
+ {
+  "id": "D041",
+  "name": "Scientific Research & Development",
+  "cluster": "Education & Research"
+ },
+ {
+  "id": "D042",
+  "name": "Media Production & Broadcasting",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D043",
+  "name": "Journalism & Digital Publishing",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D044",
+  "name": "Graphic Design & Visual Communication",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D045",
+  "name": "Public Administration & Policy",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D046",
+  "name": "Social Work & Community Development",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D047",
+  "name": "Agricultural Science & Agribusiness",
+  "cluster": "Agriculture & Food Systems"
+ },
+ {
+  "id": "D048",
+  "name": "Food Science & Technology",
+  "cluster": "Agriculture & Food Systems"
+ },
+ {
+  "id": "D049",
+  "name": "Automotive Engineering & Electric Vehicles",
+  "cluster": "Advanced Manufacturing"
+ },
+ {
+  "id": "D050",
+  "name": "Industrial Automation & Robotics",
+  "cluster": "Advanced Manufacturing"
+ },
+ {
+  "id": "D051",
+  "name": "Real Estate & Property Management",
+  "cluster": "Real Estate & Construction"
+ },
+ {
+  "id": "D052",
+  "name": "Construction Management",
+  "cluster": "Real Estate & Construction"
+ },
+ {
+  "id": "D053",
+  "name": "Hospitality & Tourism Management",
+  "cluster": "Hospitality & Tourism"
+ },
+ {
+  "id": "D054",
+  "name": "Oil & Gas Engineering",
+  "cluster": "Energy & Resources"
+ },
+ {
+  "id": "D055",
+  "name": "Chemical Engineering & Process Industries",
+  "cluster": "Energy & Resources"
+ },
+ {
+  "id": "D056",
+  "name": "Blockchain & Decentralised Systems",
+  "cluster": "Emerging Technology"
+ },
+ {
+  "id": "D057",
+  "name": "Digital Health & Health Technology",
+  "cluster": "Emerging Technology"
+ },
+ {
+  "id": "D058",
+  "name": "EdTech & Learning Experience Design",
+  "cluster": "Emerging Technology"
+ },
+ {
+  "id": "D059",
+  "name": "Space Technology & Satellite Systems",
+  "cluster": "Emerging Technology"
+ },
+ {
+  "id": "D060",
+  "name": "Banking, Credit & Retail Finance",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D061",
+  "name": "Insurance & Underwriting",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D062",
+  "name": "Trading & Capital Markets",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D063",
+  "name": "Economics & Policy Analysis",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D064",
+  "name": "Psychology, Counselling & Mental Health",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D065",
+  "name": "Translation, Interpretation & Linguistics",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D066",
+  "name": "Veterinary Science & Animal Health",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D067",
+  "name": "Dentistry & Oral Health",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D068",
+  "name": "Allied Health & Rehabilitation Therapies",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D069",
+  "name": "Aviation & Aerospace Operations",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D070",
+  "name": "Performing Arts & Entertainment",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D071",
+  "name": "Sports Management & Fitness",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D072",
+  "name": "Geospatial Science & GIS",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D073",
+  "name": "Library, Archive & Information Management",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D074",
+  "name": "Occupational Health, Safety & Environment (OHSE)",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D075",
+  "name": "Fashion, Textiles & Apparel",
+  "cluster": "Advanced Manufacturing"
+ },
+ {
+  "id": "D076",
+  "name": "Maritime & Naval Operations",
+  "cluster": "Supply Chain & Logistics"
+ },
+ {
+  "id": "D077",
+  "name": "Security Services & Public Safety",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D078",
+  "name": "Social Sciences & Behavioural Research",
+  "cluster": "Education & Research"
+ },
+ {
+  "id": "D079",
+  "name": "Customs, Trade & Export Management",
+  "cluster": "Supply Chain & Logistics"
+ },
+ {
+  "id": "D080",
+  "name": "Interior Design & Spatial Design",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D081",
+  "name": "Office Administration, Secretarial & Registry",
+  "cluster": "Office & Administrative Services"
+ },
+ {
+  "id": "D082",
+  "name": "Customer Service, Contact Centre & Front Desk Operations",
+  "cluster": "Office & Administrative Services"
+ },
+ {
+  "id": "D083",
+  "name": "Travel, Tourism & Reservations Operations",
+  "cluster": "Office & Administrative Services"
+ },
+ {
+  "id": "D084",
+  "name": "Payroll, Bookkeeping & Finance Clerking",
+  "cluster": "Office & Administrative Services"
+ },
+ {
+  "id": "D085",
+  "name": "Retail Sales, Shop Operations & Merchandising",
+  "cluster": "Retail, Sales & Commerce"
+ },
+ {
+  "id": "D087",
+  "name": "Hairdressing, Barbering & Hair Technology",
+  "cluster": "Beauty, Personal Care & Wellness"
+ },
+ {
+  "id": "D088",
+  "name": "Beauty Therapy, Aesthetics & Spa Services",
+  "cluster": "Beauty, Personal Care & Wellness"
+ },
+ {
+  "id": "D089",
+  "name": "Funeral & Mortuary Services",
+  "cluster": "Beauty, Personal Care & Wellness"
+ },
+ {
+  "id": "D090",
+  "name": "Animal Care, Grooming & Pet Services",
+  "cluster": "Beauty, Personal Care & Wellness"
+ },
+ {
+  "id": "D091",
+  "name": "Driving Instruction & Transport Training",
+  "cluster": "Beauty, Personal Care & Wellness"
+ },
+ {
+  "id": "D092",
+  "name": "Culinary Arts, Catering & Food Service Operations",
+  "cluster": "Culinary Arts & Food Service"
+ },
+ {
+  "id": "D093",
+  "name": "Electrical Installation, Wiring & Maintenance Trades",
+  "cluster": "Electrical & Electronics Trades"
+ },
+ {
+  "id": "D094",
+  "name": "Electronics Servicing, ICT Equipment & Smart Systems Installation",
+  "cluster": "Electrical & Electronics Trades"
+ },
+ {
+  "id": "D095",
+  "name": "Motor Vehicle Mechanics, Repairs & Automobile Technology",
+  "cluster": "Mechanical & Automotive Trades"
+ },
+ {
+  "id": "D096",
+  "name": "Agricultural & Industrial Machinery Mechanics",
+  "cluster": "Mechanical & Automotive Trades"
+ },
+ {
+  "id": "D097",
+  "name": "Welding, Fabrication, Blacksmithing & Metal Trades",
+  "cluster": "Metal, Welding & Fabrication Trades"
+ },
+ {
+  "id": "D098",
+  "name": "Precision Engineering, Toolmaking & Instrument Repair",
+  "cluster": "Metal, Welding & Fabrication Trades"
+ },
+ {
+  "id": "D099",
+  "name": "Masonry, Bricklaying, Tiling, Plastering & General Building Trades",
+  "cluster": "Building & Construction Trades"
+ },
+ {
+  "id": "D100",
+  "name": "Plumbing, Pipefitting & HVAC Technology",
+  "cluster": "Building & Construction Trades"
+ },
+ {
+  "id": "D101",
+  "name": "Painting, Decorating & Surface Treatment",
+  "cluster": "Building & Construction Trades"
+ },
+ {
+  "id": "D102",
+  "name": "Carpentry, Joinery, Wood Technology & Furniture Making",
+  "cluster": "Wood, Furniture & Craft"
+ },
+ {
+  "id": "D103",
+  "name": "Jewellery Making, Goldsmithing & Precious Craft",
+  "cluster": "Wood, Furniture & Craft"
+ },
+ {
+  "id": "D104",
+  "name": "Pottery, Ceramics, Glass & Decorative Craft",
+  "cluster": "Wood, Furniture & Craft"
+ },
+ {
+  "id": "D105",
+  "name": "Handicraft, Basketry, Textile Craft & Artisan Production",
+  "cluster": "Wood, Furniture & Craft"
+ },
+ {
+  "id": "D106",
+  "name": "Garment Making, Tailoring, Dressmaking & Fashion Production",
+  "cluster": "Textiles, Garments & Leather"
+ },
+ {
+  "id": "D107",
+  "name": "Leather Technology, Shoemaking & Leather Goods",
+  "cluster": "Textiles, Garments & Leather"
+ },
+ {
+  "id": "D108",
+  "name": "Printing Technology, Pre-press & Print Finishing",
+  "cluster": "Printing & Graphic Production"
+ },
+ {
+  "id": "D109",
+  "name": "Metal Processing, Foundry & Casting Plant Operations",
+  "cluster": "Manufacturing & Industrial Plant Operations"
+ },
+ {
+  "id": "D110",
+  "name": "Chemical, Rubber & Plastics Plant Operations",
+  "cluster": "Manufacturing & Industrial Plant Operations"
+ },
+ {
+  "id": "D111",
+  "name": "Textile, Garment & Laundry Machine Operations",
+  "cluster": "Manufacturing & Industrial Plant Operations"
+ },
+ {
+  "id": "D112",
+  "name": "Wood Processing, Pulp & Paper Plant Operations",
+  "cluster": "Manufacturing & Industrial Plant Operations"
+ },
+ {
+  "id": "D113",
+  "name": "Glass, Ceramics, Building Materials & Boiler Plant Operations",
+  "cluster": "Manufacturing & Industrial Plant Operations"
+ },
+ {
+  "id": "D114",
+  "name": "Assembly, Packaging & Production Line Operations",
+  "cluster": "Manufacturing & Industrial Plant Operations"
+ },
+ {
+  "id": "D115",
+  "name": "Road Transport Operations (Drivers & Vehicle Operators)",
+  "cluster": "Transport & Driving Operations"
+ },
+ {
+  "id": "D116",
+  "name": "Heavy Equipment, Earthmoving & Construction Plant Operations",
+  "cluster": "Transport & Driving Operations"
+ },
+ {
+  "id": "D117",
+  "name": "Railway & Track Operations",
+  "cluster": "Transport & Driving Operations"
+ },
+ {
+  "id": "D118",
+  "name": "Crop Production, Horticulture & Agronomy Practice",
+  "cluster": "Agriculture, Fishing & Natural Resources"
+ },
+ {
+  "id": "D119",
+  "name": "Livestock, Poultry, Dairy & Animal Production",
+  "cluster": "Agriculture, Fishing & Natural Resources"
+ },
+ {
+  "id": "D120",
+  "name": "Fisheries, Aquaculture & Seafood Technology",
+  "cluster": "Agriculture, Fishing & Natural Resources"
+ },
+ {
+  "id": "D121",
+  "name": "Forestry, Wildlife Management & Pest Control",
+  "cluster": "Agriculture, Fishing & Natural Resources"
+ },
+ {
+  "id": "D122",
+  "name": "Medical Laboratory Technology & Pathology",
+  "cluster": "Community Health & Paramedical"
+ },
+ {
+  "id": "D123",
+  "name": "Radiography, Medical Imaging & Radiation Therapy",
+  "cluster": "Community Health & Paramedical"
+ },
+ {
+  "id": "D124",
+  "name": "Community Health Extension & Primary Health Care",
+  "cluster": "Community Health & Paramedical"
+ },
+ {
+  "id": "D125",
+  "name": "Medical Secretarial & Health Administration",
+  "cluster": "Community Health & Paramedical"
+ },
+ {
+  "id": "D126",
+  "name": "Complementary, Alternative & Traditional Medicine",
+  "cluster": "Community Health & Paramedical"
+ },
+ {
+  "id": "D127",
+  "name": "Early Childhood Education, Nursery & Childcare",
+  "cluster": "Childcare & Early Learning"
+ },
+ {
+  "id": "D128",
+  "name": "Social Welfare, Youth Services & Community Care Management",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D129",
+  "name": "Military, Defence & Armed Forces Service",
+  "cluster": "Defence & Military"
+ },
+ {
+  "id": "D130",
+  "name": "Recruitment, Employment & Staffing Agency Operations",
+  "cluster": "Business & Management"
+ },
+ {
+  "id": "D131",
+  "name": "Motorsport Engineering & Performance Technology",
+  "cluster": "High-Performance Engineering"
+ },
+ {
+  "id": "D132",
+  "name": "Space Science, Exploration & Mission Systems",
+  "cluster": "High-Performance Engineering"
+ },
+ {
+  "id": "D133",
+  "name": "Luxury & Bespoke Specialist Interiors — Aviation, Maritime & Automotive",
+  "cluster": "High-Performance Engineering"
+ },
+ {
+  "id": "D134",
+  "name": "Naval Architecture, Marine Engineering & Ship Design",
+  "cluster": "High-Performance Engineering"
+ },
+ {
+  "id": "D135",
+  "name": "Nuclear Engineering, Radiation Science & Nuclear Medicine",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D136",
+  "name": "Aeronautical & Aerospace Engineering",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D137",
+  "name": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D138",
+  "name": "Biomedical Engineering & Medical Device Design",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D139",
+  "name": "Game Design, Development & Interactive Entertainment",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D140",
+  "name": "Robotics Engineering, Systems Design & Human-Robot Interaction",
+  "cluster": "Information & Communication Technology"
+ },
+ {
+  "id": "D141",
+  "name": "Quantum Computing, Quantum Information & Advanced Physics",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D142",
+  "name": "Bioinformatics, Computational Biology & Genomics",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D143",
+  "name": "Forensic Science, Digital Forensics & Criminal Investigation",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D144",
+  "name": "Climate Science, Meteorology & Atmospheric Science",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D145",
+  "name": "Neuroscience, Cognitive Science & Brain-Computer Interface",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D146",
+  "name": "Building Services Engineering — Mechanical, Electrical & Plumbing (MEP)",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D147",
+  "name": "Process Automation, SCADA, PLC & Industrial Control Systems",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D148",
+  "name": "Offshore, Subsea & Deepwater Engineering",
+  "cluster": "Energy & Resources"
+ },
+ {
+  "id": "D149",
+  "name": "Diplomacy, International Relations & Foreign Affairs",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D150",
+  "name": "Religious Ministry, Theology & Interfaith Leadership",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D151",
+  "name": "Criminology, Criminal Justice & Corrections Management",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D152",
+  "name": "Museum Curation, Cultural Heritage, Archives & Archaeology",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D153",
+  "name": "Music Production, Sound Engineering & Audio Technology",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D154",
+  "name": "Exercise Science, Sports Therapy & Athletic Performance",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D155",
+  "name": "Nanotechnology, Advanced Materials & Materials Science Engineering",
+  "cluster": "Advanced Science & Engineering"
+ },
+ {
+  "id": "D156",
+  "name": "Land Surveying, Cadastral Mapping & Field Geomatics",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D157",
+  "name": "Tax Advisory, Transfer Pricing & Revenue Law",
+  "cluster": "Legal & Compliance"
+ },
+ {
+  "id": "D158",
+  "name": "Corporate Finance, Investment Banking & M&A Advisory",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D159",
+  "name": "Credit Analysis, Structured Finance & Debt Capital Markets",
+  "cluster": "Financial Services"
+ },
+ {
+  "id": "D160",
+  "name": "Fashion Styling, Image Consulting & Personal Shopping",
+  "cluster": "Creative & Media"
+ },
+ {
+  "id": "D161",
+  "name": "Humanitarian Aid, Emergency Response & International Development",
+  "cluster": "Public Sector & Social Services"
+ },
+ {
+  "id": "D162",
+  "name": "Immigration Law, Asylum & International Protection",
+  "cluster": "Legal & Compliance"
+ },
+ {
+  "id": "D163",
+  "name": "Intellectual Property Law, Patents & Technology Licensing",
+  "cluster": "Legal & Compliance"
+ },
+ {
+  "id": "D164",
+  "name": "Urban Mobility, Smart City Systems & Transportation Planning",
+  "cluster": "Engineering & Built Environment"
+ },
+ {
+  "id": "D165",
+  "name": "Wellness Coaching, Lifestyle Medicine & Integrative Health",
+  "cluster": "Health & Biomedical"
+ },
+ {
+  "id": "D166",
+  "name": "Autonomous Vehicles, Self-Driving Systems & Roborace Engineering",
+  "cluster": "High-Performance Engineering"
+ },
+ {
+  "id": "D167",
+  "name": "XR & Immersive Technology",
+  "cluster": "Emerging Technology"
+ },
+ {
+  "id": "D168",
+  "name": "Esports & Creator Economy",
+  "cluster": "Creative & Media"
+ }
+]

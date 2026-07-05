@@ -1,0 +1,282 @@
+{
+ "domain_id": "D017",
+ "domain_name": "Mechanical",
+ "role_count": 55,
+ "roles": [
+  {
+   "role": "container equipment assembly supervisor",
+   "isco": 3122,
+   "aka": "container equipment manufacturing assembler supervisor  ·  container equipment assembly line senior operative  ·  container equipment assembly line machine supervisor  ·  container equipment machine assembler supervisor  ·  container equipment bench precision supervisor"
+  },
+  {
+   "role": "precision mechanics supervisor",
+   "isco": 3122,
+   "aka": "precision maintenance machine shop manager  ·  precision maintenance machining department supervisor  ·  precision maintenance machine charge hand  ·  precision machinery production supervisor  ·  precision maintenance machining and assembly supervisor"
+  },
+  {
+   "role": "welding engineer",
+   "isco": 2144,
+   "aka": "robotic welding inspector  ·  welding engineer supervisor  ·  welding engineering adviser  ·  engineering welding co-ordinator  ·  ultrasonic metal welder inspector"
+  },
+  {
+   "role": "equipment engineer",
+   "isco": 2144,
+   "aka": "equipment engineering expert  ·  equipment engineering consultant  ·  equipment technology engineering adviser  ·  equipment technology engineering expert  ·  equipment engineering adviser"
+  },
+  {
+   "role": "aerospace engineering drafter",
+   "isco": 3118,
+   "aka": "aerospace draftsperson  ·  aerospace draughtsperson  ·  aerospace draughter  ·  aeronautical draughter  ·  aerospace engineering draughting specialist"
+  },
+  {
+   "role": "electromechanical drafter",
+   "isco": 3118,
+   "aka": "electromechanical engineering drafter  ·  electromechanic draughtsperson  ·  electromechanical drafting expert  ·  electro-mechanical draughtsman  ·  electromechanical drafting specialist"
+  },
+  {
+   "role": "heating, ventilation, air conditioning engineer",
+   "isco": 2144,
+   "aka": "HVAC project engineer  ·  HVAC site engineer  ·  HVACR engineer  ·  HVAC engineer  ·  HVAC service engineer"
+  },
+  {
+   "role": "rotating equipment engineer",
+   "isco": 2144,
+   "aka": "rotating equipment engineering specialist  ·  rotating equipment technology engineering adviser  ·  rotating equipment technology engineering consultant  ·  rotating equipment technology engineering specialist  ·  rotating equipment technology engineering expert"
+  },
+  {
+   "role": "electrical drafter",
+   "isco": 3118,
+   "aka": "electrical draughter  ·  electric draughtsperson  ·  electrical draughtsperson  ·  electrical drafting adviser  ·  draughter in electrical systems"
+  },
+  {
+   "role": "marine engineering drafter",
+   "isco": 3118,
+   "aka": "marine draughter  ·  naval engineering drafter  ·  marine draftsperson  ·  marine drafter  ·  shipbuilding drafter"
+  },
+  {
+   "role": "machine operator supervisor",
+   "isco": 3122,
+   "aka": "machine shop supervisor  ·  machine and assembly supervisor  ·  lead machinist  ·  machine adjuster charge hand  ·  machine setter team leader"
+  },
+  {
+   "role": "civil drafter",
+   "isco": 3118,
+   "aka": "civil design drafter  ·  civil engineering drafter  ·  civil draftswoman  ·  structural drafter"
+  },
+  {
+   "role": "automotive engineering drafter",
+   "isco": 3118,
+   "aka": "automotive drafting specialist  ·  automotive drafting expert  ·  automotive draftsperson  ·  automotive draughter  ·  automotive drafter"
+  },
+  {
+   "role": "architectural drafter",
+   "isco": 3118,
+   "aka": "architecture draftsperson  ·  architectural draughter  ·  architectural drafting consultant  ·  architectural draughtsperson  ·  architectural draftsperson"
+  },
+  {
+   "role": "machinery assembly supervisor",
+   "isco": 3122,
+   "aka": "leadingmachinist  ·  machine charge hand  ·  lead machine operative  ·  machine team leader"
+  },
+  {
+   "role": "mechanical engineering drafter",
+   "isco": 3118,
+   "aka": "machinery engineering draughtsperson  ·  mechanical engineering draughting apprentice  ·  mechanical technology drafter  ·  machinery engineering draftsperson  ·  mechanical design drafting engineer"
+  },
+  {
+   "role": "rolling stock engineering drafter",
+   "isco": 3118,
+   "aka": "rolling stock draughtsperson  ·  rolling stock engineering draughtsperson  ·  rolling stock engineering drafting specialist  ·  rolling stock engineering drafting adviser  ·  rolling stock engineering drafting expert"
+  },
+  {
+   "role": "production supervisor",
+   "isco": 3122,
+   "aka": "production controller  ·  production forewoman  ·  quality control operator  ·  production quality supervisor  ·  production foreman"
+  },
+  {
+   "role": "optical instrument production supervisor",
+   "isco": 3122,
+   "aka": "optical equipment assembly manager  ·  optical instrument assembly supervisor  ·  optical equipment production manager  ·  optical instrument manufacturing supervisor  ·  manager of optical instrument production"
+  },
+  {
+   "role": "plastic and rubber products manufacturing supervisor",
+   "isco": 3122,
+   "aka": "plastics and rubber products manufacturing coordinator  ·  plastic and rubber goods production supervisor  ·  plastics and rubber goods manufacturing manager  ·  plastics and rubber products manufacturing supervisor  ·  plastic products manufacturing supervisor"
+  },
+  {
+   "role": "3D printing technician",
+   "isco": 3118,
+   "aka": "3D printer operator  ·  printing machine technician  ·  3D printer repairman  ·  3D printing operator  ·  3D printing prototyping technician"
+  },
+  {
+   "role": "packing machinery engineer",
+   "isco": 2144,
+   "aka": "mechanical packaging engineer  ·  packaging machinery engineer  ·  machine packing inspector  ·  packaging machine engineer  ·  machine-packing engineering inspector"
+  },
+  {
+   "role": "mechanical engineer",
+   "isco": 2144,
+   "aka": "mechanical technology engineering expert  ·  mechanical technology engineering specialist  ·  mechanical engineering expert  ·  mechanical technology engineering adviser  ·  mechanical technology engineering consultant"
+  },
+  {
+   "role": "powertrain engineer",
+   "isco": 2144,
+   "aka": "automotive propulsion mechanisms expert  ·  automotive propulsion mechanisms engineer  ·  powertrain expert  ·  powertrain systems engineer  ·  powertrain designer"
+  },
+  {
+   "role": "computer-aided design operator",
+   "isco": 3118,
+   "aka": "CAD design specialist  ·  CAM operator  ·  computer aided design designer  ·  computer aided manufacturing operator  ·  CAM draftsman"
+  },
+  {
+   "role": "tooling engineer",
+   "isco": 2144,
+   "aka": "tooling engineering expert  ·  toolmaker/tooling engineer  ·  manufacturing tooling engineer  ·  tooling technology engineering adviser  ·  tooling development engineer"
+  },
+  {
+   "role": "rolling stock engineer",
+   "isco": 2144,
+   "aka": "locomotive engineer  ·  rolling stock engineering consultant  ·  carriage designer  ·  multiple unit engineer  ·  rail vehicle designer"
+  },
+  {
+   "role": "metal production supervisor",
+   "isco": 3122,
+   "aka": "mechanical supervisor  ·  metal fabricating supervisor  ·  melter supervisor  ·  metal production overseer  ·  metal fabrication supervisor"
+  },
+  {
+   "role": "fluid power engineer",
+   "isco": 2144,
+   "aka": "fluid power assembler  ·  fluid power engineering operator  ·  fluid power maintenance supervisor  ·  fluid power assembly engineer  ·  fluid power engineering specialist"
+  },
+  {
+   "role": "electronics production supervisor",
+   "isco": 3122,
+   "aka": "production line supervisor  ·  electronics production line supervisor  ·  supervisor in electronics manufacturing  ·  supervisor of electronics production line  ·  production supervisor in electronics manufacturing"
+  },
+  {
+   "role": "clothing CAD technician",
+   "isco": 3118,
+   "aka": "clothing CAD specialist  ·  clothing computer-assisted designer technician  ·  clothing computer aided designer technician  ·  clothing CAD operator  ·  fashion CAD technician"
+  },
+  {
+   "role": "industrial tool design engineer",
+   "isco": 2144,
+   "aka": "industrial tool technology engineering adviser  ·  industrial tool designer  ·  industrial tool technology engineering specialist  ·  industrial tool engineer  ·  industrial tool test engineer"
+  },
+  {
+   "role": "automotive engineer",
+   "isco": 2144,
+   "aka": "coach production process engineer  ·  ACES engineer  ·  automotive design specialist  ·  vehicle production production process engineer  ·  bus production process engineer"
+  },
+  {
+   "role": "printed circuit board designer",
+   "isco": 3118,
+   "aka": "PCB design specialist  ·  printed circuit board (PCB) designer  ·  circuit board designer  ·  PCB design expert  ·  PCB designer"
+  },
+  {
+   "role": "container equipment design engineer",
+   "isco": 2144,
+   "aka": "container equipment sub engineer  ·  container equipment mechanical engineer  ·  container equipment engineering expert  ·  container equipment assembly machinist  ·  container equipment engineering specialist"
+  },
+  {
+   "role": "precision engineer",
+   "isco": 2144,
+   "aka": "precision engineering expert  ·  precision engineering specialist  ·  precision engineering adviser  ·  precision engineers  ·  precision engineering consultant"
+  },
+  {
+   "role": "aerodynamics engineer",
+   "isco": 2144,
+   "aka": "CFD engineer  ·  aerodynamics test engineer  ·  aerodynamic engineering consultant  ·  aerodynamics design engineer  ·  aerodynamics performance engineer"
+  },
+  {
+   "role": "drafter",
+   "isco": 3118,
+   "aka": "CAD draughter  ·  drafting specialist  ·  drafting expert  ·  drafting consultant  ·  computer aided design draughter"
+  },
+  {
+   "role": "mechatronics engineer",
+   "isco": 2144,
+   "aka": "electromechanical engineer  ·  robotics engineer  ·  specialist mechatronic engineer  ·  cybernetics engineer  ·  engineer in mechatronics"
+  },
+  {
+   "role": "optomechanical engineer",
+   "isco": 2144,
+   "aka": "opto-mechanics engineer  ·  opto-mechanical engineer  ·  optomechanical engineering expert  ·  optomechanical design engineer  ·  optomechanical engineering adviser"
+  },
+  {
+   "role": "industrial assembly supervisor",
+   "isco": 3122,
+   "aka": "assembly team leader  ·  goods compliance supervisor  ·  assembly line supervisor  ·  assembly foreman  ·  quality supervisor"
+  },
+  {
+   "role": "product development engineering drafter",
+   "isco": 3118,
+   "aka": "product development engineering draftsperson  ·  product development engineering drafting expert  ·  product development engineering drafting adviser  ·  product development engineering drafting specialist  ·  product development engineering draughtsperson"
+  },
+  {
+   "role": "aerospace engineer",
+   "isco": 2144,
+   "aka": "aerospace design engineer  ·  aerostructures engineer  ·  missile designer  ·  missile design specialist  ·  aerospace engineering expert"
+  },
+  {
+   "role": "electronics drafter",
+   "isco": 3118,
+   "aka": "electronics engineering drafter  ·  electronics drafting specialist  ·  electronics draftsperson  ·  electronic drafter  ·  electronics design drafter"
+  },
+  {
+   "role": "engine designer",
+   "isco": 2144,
+   "aka": "engine tool production designer  ·  engine design technician  ·  engine design engineer  ·  engine development engineer  ·  engine design technologist"
+  },
+  {
+   "role": "heating, ventilation, air conditioning (and refrigeration) drafter",
+   "isco": 3118,
+   "aka": "heating, ventilation, air conditioning, and refrigeration drafter  ·  ​heating, ventilation, air conditioning, and refrigeration draughter  ·  HVACR draughtsperson  ·  HVACR drafting specialist  ·  heating, ventilation, air conditioning engineering draughter"
+  },
+  {
+   "role": "motor vehicle assembly supervisor",
+   "isco": 3122,
+   "aka": "motor vehicle assembly team leader  ·  motor vehicle production line team leader  ·  motor vehicle assembly chargehand  ·  motor vehicle assembly forewoman  ·  motor vehicle production forewoman"
+  },
+  {
+   "role": "chemical engineer",
+   "isco": 2145,
+   "aka": "chemical technology engineering consultant  ·  chemical technology engineer  ·  pyrotechnics chemical engineer  ·  chemical technology engineering adviser  ·  chemical engineering expert"
+  },
+  {
+   "role": "chemical processing supervisor",
+   "isco": 3122,
+   "aka": "chemical processing quality supervisor  ·  chemical plant production supervisor  ·  chemical production quality tester  ·  chemical plant process supervisor  ·  chemical production process supervisor"
+  },
+  {
+   "role": "Industrial and Production Engineers",
+   "isco": 2144,
+   "aka": NaN
+  },
+  {
+   "role": "Fuel Cell Engineers",
+   "isco": 2144,
+   "aka": NaN
+  },
+  {
+   "role": "Drafters, All Other",
+   "isco": 3118,
+   "aka": NaN
+  },
+  {
+   "role": "Atmospheric and Space Scientists",
+   "isco": 2145,
+   "aka": NaN
+  },
+  {
+   "role": "Materials Scientists",
+   "isco": 2145,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Mechanics, Installers, and Repairers",
+   "isco": 3122,
+   "aka": NaN
+  }
+ ]
+}

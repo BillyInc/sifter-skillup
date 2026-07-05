@@ -1,0 +1,19 @@
+{
+  "jamb_name": "Christian Religious",
+  "utme_subjects": ["CRS", "and any two Arts subjects", "and any other subject"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, CRS and three (3) other relevant subjects.",
+  "direct_entry": "Two (2) 'A' Level passes/NCE to include CRS/Religious Studies.",
+  "institution_waivers": [
+    {"institution": "ABUJA", "note": "Accepts a minimum of ten (10) points in NCE merit or ND upper credit in addition to the UTME requirements."},
+    {"institution": "AJAYI", "note": "Accepts NCE Merit in Religious Studies."},
+    {"institution": "IBADAN", "note": "Accepts NCE Merit in Religious Studies."},
+    {"institution": "ILORIN", "note": "Accepts: a) Two (2) 'A' Level passes/NCE to include CRS/Religious Studies. b) Diploma in Religious Studies or Theology of London or an accredited Nigerian University or Affiliated institutions."},
+    {"institution": "KWASU", "note": "Accepts IJMB, Cambridge and NCE."},
+    {"institution": "LASU", "note": "Accepts a) two (2) 'A' Level passes, including CRS or Religious Studies at not more than two (2) sittings, plus five (5) 'O' Level credit passes or its equivalent, including English Language at not more than two (2) sittings. b) NCE Merit in CRS and five (5) 'O' Level credit passes in other relevant subjects including English Language. Also requires fulfillment of the UTME requirements."},
+    {"institution": "OOU", "note": "Also requires fulfillment of the UTME requirements."},
+    {"institution": "NASARAWA", "note": "Accepts NCE merit in CRS."},
+    {"institution": "LAGOS", "note": "Accepts Passes at the GCE A/level or its equivalents. One of the A/level Subjects should be CRS. NCE with credit or merit in CRS."},
+    {"institution": "FED-KASHERE", "note": "Requires Two 'A' Level credit passes in CRS/Religious Studies and any other Arts subject."},
+    {"institution": "KASU", "note": "Accepts NCE Christian Religious Knowledge/Theology with a merit pass. ND Christian Religious Knowledge/Theology Lower Credit. Two 'A' level passes in CRS/Religious Studies."}
+  ]
+}

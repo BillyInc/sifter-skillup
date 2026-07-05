@@ -1,0 +1,97 @@
+{
+ "domain_id": "D006",
+ "domain_name": "Internet of Things",
+ "role_count": 18,
+ "roles": [
+  {
+   "role": "telecommunications engineer",
+   "isco": 2153,
+   "aka": "radio engineer  ·  transmission engineer  ·  broadcast engineer  ·  communications designer  ·  telecoms engineer"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "officer of the watch",
+   "isco": 3152,
+   "aka": "officers of the engineering watch  ·  officer of the navigational watch  ·  watch operations specialist  ·  watchman  ·  maritime operations officer"
+  },
+  {
+   "role": "maritime pilot",
+   "isco": 3152,
+   "aka": "maritime ship pilot  ·  ship steerswoman  ·  marine helmswoman  ·  pilot of maritime vessels  ·  ship pilot"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "helmsman",
+   "isco": 3152,
+   "aka": "helm  ·  submarine helmsman  ·  steersman  ·  steerswoman  ·  helmswoman"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "deck officer",
+   "isco": 3152,
+   "aka": "ship chief officer  ·  chief mate  ·  first mate  ·  ship deck officer  ·  ship first officer"
+  },
+  {
+   "role": "skipper",
+   "isco": 3152,
+   "aka": "boatmaster  ·  shipmaster  ·  commander  ·  ship captain  ·  boat captain"
+  },
+  {
+   "role": "ship captain",
+   "isco": 3152,
+   "aka": "shipmaster  ·  captain of a ship  ·  sea captain  ·  maritime master  ·  ship's captain"
+  },
+  {
+   "role": "Internet of Things Specialists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "IoT solutions architect",
+   "isco": 2512,
+   "aka": "IoT Platform Architect"
+  },
+  {
+   "role": "IoT security specialist",
+   "isco": 2529,
+   "aka": "Connected Device Security Engineer"
+  },
+  {
+   "role": "edge computing engineer",
+   "isco": 2512,
+   "aka": "Edge Infrastructure Engineer"
+  },
+  {
+   "role": "IoT systems integrator",
+   "isco": 2512,
+   "aka": "IoT Implementation Engineer"
+  },
+  {
+   "role": "embedded systems engineer",
+   "isco": 2153,
+   "aka": "Firmware Engineer"
+  },
+  {
+   "role": "IoT data analyst",
+   "isco": 2511,
+   "aka": "Connected Systems Analyst"
+  }
+ ]
+}

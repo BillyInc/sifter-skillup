@@ -1,0 +1,32 @@
+{
+ "domain_id": "D089",
+ "domain_name": "Funeral",
+ "role_count": 5,
+ "roles": [
+  {
+   "role": "funeral services director",
+   "isco": 5163,
+   "aka": "crematorium supervisor  ·  funeral home worker  ·  mortician  ·  cemetery caretaker  ·  crematorium operator"
+  },
+  {
+   "role": "cemetery attendant",
+   "isco": 5163,
+   "aka": "burial site attendant  ·  burial site worker  ·  burial ground worker  ·  cemetery worker  ·  cemetery labourer"
+  },
+  {
+   "role": "funeral attendant",
+   "isco": 5163,
+   "aka": "funeral home assistant  ·  mortician's helper  ·  attendant for funeral organisation  ·  pallbearer"
+  },
+  {
+   "role": "embalmer",
+   "isco": 5163,
+   "aka": "funeral embalmer  ·  tanatopractor"
+  },
+  {
+   "role": "Morticians, Undertakers, and Funeral Arrangers",
+   "isco": 5163,
+   "aka": NaN
+  }
+ ]
+}

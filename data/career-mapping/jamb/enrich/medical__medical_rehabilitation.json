@@ -1,0 +1,11 @@
+{
+  "jamb_name": "Medical Rehabilitation",
+  "utme_subjects": ["Physics", "Chemistry", "Biology"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+  "direct_entry": "'A' Level passes in Chemistry, Physics and any of Biology/Zoology or Mathematics.",
+  "institution_waivers": [
+    {"institution": "OAU", "note": "DIRECT ENTRY: accepts passes in the final examination of the Chartered Society of Physiotherapy or the British Association of Occupational Therapy or equivalent."},
+    {"institution": "OAU", "note": "DIRECT ENTRY: 'A' Level passes in Chemistry, Physics and any of Biology/Zoology or Mathematics."},
+    {"institution": "UNN", "note": "DIRECT ENTRY: No direct entry."}
+  ]
+}

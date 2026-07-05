@@ -1,0 +1,171 @@
+[
+ {
+  "programme": "Veterinary Medicine",
+  "code": "VMD",
+  "technical_skills": [
+   "present an overview of the discipline of Veterinary Medicine and existing opportunities",
+   "describe the different phases of the programme; and",
+   "explain the importance of the different subjects to Veterinary practice",
+   "identify livestock species (cattle, sheep and goats) by breed",
+   "handle food animals; and",
+   "explain production systems and health management practices on farms",
+   "demonstrate the handling of companion animals such as dogs, cats, horses, etc and analyse their behaviour; and",
+   "demonstrate how to handle and provide care for wild animals in captivity",
+   "identify the types and breeds of poultry and fish; and",
+   "explain housing, feeding and other health management practices necessary for poultry and fish production. Veterinary Medicine 28 New",
+   "state the legal and regulatory framework for animal welfare and animal euthanasia",
+   "demonstrate social responsibility for animal well-being and reducing animal suffering",
+   "determine the effective measures to apply when adverse events occur in animals; and",
+   "select the best practices for animal use in research",
+   "explain the nomenclature of structures of the organ system",
+   "describe relative positions of organs in the body and the relationships with one another and",
+   "correlate the knowledge acquired to radiology and surgery courses at the clinical levels",
+   "describe relative positions of bones and organs in the body; and Veterinary Medicine 29 New",
+   "demonstrate competence in dissection to see, in situ, the organs of the body and their relationships with one another",
+   "identify each organ microscopically",
+   "demonstrate the practical skill to use the microscope; and",
+   "identify histological uniqueness of some organs across species",
+   "explain the chemistry and biochemistry of lipids, nutritional biochemistry, fluid and electrolyte balance; and",
+   "describe the abnormalities of carbohydrates, protein, amino acids; and",
+   "explain haemoglobin metabolism"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Cultures",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I",
+   "General Physics III",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Introduction to Veterinary Medicine",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Food Animal Production and Management",
+   "Companion and Wild Animal Management",
+   "Poultry and Fish Production and Management"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D165",
+    "domain": "Wellness Coaching, Lifestyle Medicine",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   }
+  ]
+ }
+]

@@ -1,0 +1,111 @@
+{"reviews":[
+{"domain_id":"D031","domain_name":"Sales","verdict":"issues",
+"remove_roles":[
+{"role":"Business Development Professionals","reason":"generic ISCO/SOC group-label junk row (aka=NaN), not a discrete role"},
+{"role":"Sales and Marketing Professionals","reason":"generic group-label junk (aka=NaN); umbrella category, not a role"},
+{"role":"Sales Representatives, Wholesale and Manufacturing","reason":"generic SOC group-label junk (aka=NaN); duplicates commercial sales representative / wholesale merchant scope"},
+{"role":"Sales and Purchasing Agents and Brokers","reason":"generic group-label junk (aka=NaN); umbrella for purchaser/broker roles already present"},
+{"role":"First-Line Supervisors of Retail Sales Workers","reason":"generic SOC group-label junk (aka=NaN); duplicates shop supervisor scope"},
+{"role":"First-Line Supervisors of Non-Retail Sales Workers","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Counter and Rental Clerks","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Parts Salespersons","reason":"generic SOC group-label junk (aka=NaN); duplicates motor vehicles parts advisor"},
+{"role":"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel","reason":"generic SOC group-label junk (aka=NaN), residual catch-all category"},
+{"role":"Solar Sales Representatives and Assessors","reason":"generic SOC group-label junk (aka=NaN); duplicates solar energy sales consultant"},
+{"role":"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products","reason":"generic SOC group-label junk (aka=NaN), residual catch-all category"},
+{"role":"Telemarketers","reason":"generic SOC group-label junk (aka=NaN); no ESCO aka, group title"},
+{"role":"Advertising Sales Agents","reason":"generic SOC group-label junk (aka=NaN); group title, advertising sales belongs in marketing"}
+],
+"add_roles":[
+{"role":"account manager","isco":3322,"skills":["account planning","client relationship management","upselling and cross-selling","CRM software","contract renewal","revenue retention"],"reason":"the core B2B relationship-sales role globally is absent; library has commercial sales rep and sales manager but no account manager"},
+{"role":"key account manager","isco":2433,"skills":["strategic account planning","stakeholder mapping","negotiation","forecasting","value proposition development","cross-functional coordination"],"reason":"strategic large-account sales is a distinct, high-demand global career missing from the cluster"},
+{"role":"retail manager","isco":1420,"skills":["store operations","staff scheduling","visual merchandising","P&L management","inventory control","customer experience"],"reason":"retail store/branch manager (ISCO 1420) is missing; only shop supervisor (5222) and retail entrepreneur exist"}
+],
+"overfanout_roles":["hardware and paint specialised seller","fish and seafood specialised seller","confectionery specialised seller","bakery specialised seller","tobacco specialised seller","orthopaedic supplies specialised seller","press and stationery specialised seller","music and video shop specialised seller","wholesale merchant in sugar, chocolate and sugar confectionery","wholesale merchant in china and other glassware","wholesale merchant in office furniture","wholesale merchant in watches and jewellery","wholesale merchant in live animals","wholesale merchant in tobacco products","wholesale merchant in machine tools"],
+"rename_to":null,
+"notes":"Two ESCO fan-out clusters dominate: ~40 'specialised seller of <product>' retail rows (all ISCO 5223) and ~35 'wholesale merchant in <commodity>' rows (all ISCO 3324), each differing only by product vertical. These are legitimate ESCO occupations but collapse to a handful of parent roles (specialised seller, wholesale merchant, sales assistant); listed reps are the most granular. Recommend consolidating verticals to 5-8 representative seller/merchant roles. Removed 13 SOC group-label junk rows. True sales-career spine (sales manager/director, commercial director, CMO, account/key-account additions, sales engineer, technical sales rep, business development) is otherwise sound."},
+
+{"domain_id":"D032","domain_name":"Project Management","verdict":"issues",
+"remove_roles":[
+{"role":"Project Managers","reason":"generic SOC group-label junk (aka=NaN); ironically the label is present but no real 'project manager' role is"},
+{"role":"Managers, All Other","reason":"generic SOC catch-all group-label junk (aka=NaN), not a role"},
+{"role":"Management Analysts","reason":"generic SOC group-label junk (aka=NaN); duplicates business analyst / management consultant"},
+{"role":"court reporter","reason":"legal stenography/transcription role (ISCO 3343); no relation to project management or general management"},
+{"role":"scopist","reason":"freelance transcript-editing role (ISCO 3343); wholly out of domain, belongs in legal-support/admin"}
+],
+"add_roles":[
+{"role":"project manager","isco":1213,"skills":["project planning","scope and schedule management","budget and cost control","risk management","stakeholder communication","Gantt/critical-path scheduling"],"reason":"the defining role of the domain is entirely absent — only the junk group label 'Project Managers' exists; project support officer and programme manager cover adjacent scopes"},
+{"role":"scrum master","isco":2421,"skills":["Scrum facilitation","sprint planning","agile ceremonies","impediment removal","backlog coordination","team coaching"],"reason":"agile delivery lead is a central modern project-management career globally and is missing"}
+],
+"overfanout_roles":["administrative assistant","executive assistant","management assistant","editorial assistant","education administrator","international student exchange coordinator","fundraising assistant","talent agent","auctioneer","advertising sales agent","supply chain assistant"],
+"rename_to":null,
+"notes":"Domain is heavily mislabeled: only a minority (project support officer, programme manager, strategic planning manager, lean manager, business analyst) is genuinely project/programme management. A large ISCO-3343 secretarial/clerical block and several 3339 agent roles (talent agent, auctioneer, advertising sales agent) belong in an office-administration or sales/agent domain — flagged as overfanout rather than per-row removed. Critical gap: 'project manager' and 'scrum master' (the actual PM spine). Recommend resplitting Project Management vs Office Administration."},
+
+{"domain_id":"D033","domain_name":"Product Management","verdict":"issues",
+"remove_roles":[
+{"role":"Computer Systems Analysts","reason":"generic SOC group-label junk (aka=NaN); duplicates ICT system analyst and is not product management"}
+],
+"add_roles":[
+{"role":"product owner","isco":1223,"skills":["backlog management","user story writing","prioritisation","stakeholder alignment","agile/Scrum delivery","roadmap definition"],"reason":"the agile product-ownership role is the most common modern product-management job title globally and is absent (only product manager and CPO exist)"}
+],
+"overfanout_roles":["integration engineer","embedded system designer","computer vision engineer","data engineer","data scientist","artificial intelligence engineer","enterprise architect","blockchain architect","ICT system analyst","ICT system developer","ICT consultant","ICT system integration consultant","IT auditor","data analyst","ICT system architect","computer scientist","user experience analyst","ICT business analyst","green ICT consultant","ICT research consultant"],
+"rename_to":null,
+"notes":"Severely polluted by a ~20-row ISCO-2511 software/IT engineering cluster (data/AI/systems/architecture/ICT roles) that belongs in a Software/ICT domain, not Product Management — flagged as overfanout rather than mass per-row removal. Genuine product-management core (product manager, chief product officer, product development manager, clothing/games/insurance product managers, R&D manager, innovation officer, ICT research manager) is sound. Also carries the recurring generic-1213 manager block (social security administrator, tourism policy director, EU funds manager, HSE manager) seen in D032. Key gap: product owner. Recommend removing the IT engineering cluster to its own domain."},
+
+{"domain_id":"D034","domain_name":"Supply Chain Management","verdict":"issues",
+"remove_roles":[
+{"role":"Supply Chain and Logistics Specialists","reason":"generic SOC group-label junk (aka=NaN), umbrella category"},
+{"role":"Material-Recording and Stock-Keeping Clerks","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Dispatchers, Except Police, Fire, and Ambulance","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Production, Planning, and Expediting Clerks","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Freight Forwarders","reason":"generic SOC group-label junk (aka=NaN); duplicates forwarding manager / international forwarding operations coordinator"},
+{"role":"Couriers and Messengers","reason":"generic SOC group-label junk (aka=NaN); last-mile delivery belongs in logistics/transport, not a discrete role here"},
+{"role":"Public Safety Telecommunicators","reason":"generic SOC group-label junk (aka=NaN); 911/emergency dispatch, wholly off-domain"},
+{"role":"Meter Readers, Utilities","reason":"generic SOC group-label junk (aka=NaN); utilities field work, off-domain"},
+{"role":"Postal Service Clerks","reason":"generic SOC group-label junk (aka=NaN); postal ops belongs in logistics"},
+{"role":"Postal Service Mail Carriers","reason":"generic SOC group-label junk (aka=NaN); postal delivery, belongs in logistics"},
+{"role":"Postal Service Mail Sorters, Processors, and Processing Machine Operators","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Shipping, Receiving, and Inventory Clerks","reason":"generic SOC group-label junk (aka=NaN); duplicates inventory coordinator"},
+{"role":"Weighers, Measurers, Checkers, and Samplers, Recordkeeping","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Insurance Claims and Policy Processing Clerks","reason":"generic SOC group-label junk (aka=NaN); insurance admin, wholly off-domain"},
+{"role":"Passenger Attendants","reason":"generic SOC group-label junk (aka=NaN); passenger service, off-domain"},
+{"role":"Wholesale and Retail Buyers, Except Farm Products","reason":"generic SOC group-label junk (aka=NaN); buying belongs in procurement/sales"}
+],
+"add_roles":[],
+"overfanout_roles":["import export manager in meat and meat products","import export manager in perfume and cosmetics","import export manager in coffee, tea, cocoa and spices","import export manager in watches and jewellery","import export specialist in wood and construction materials","import export specialist in fruit and vegetables","import export specialist in beverages","import export specialist in pharmaceutical goods","import export specialist in machine tools","pharmaceutical goods distribution manager","china and glassware distribution manager","metals and metal ores distribution manager","tobacco products distribution manager","watches and jewellery distribution manager","perfume and cosmetics distribution manager","coffee, tea, cocoa and spices distribution manager","textile industry machinery distribution manager","clothing and footwear distribution manager"],
+"rename_to":null,
+"notes":"Extreme ESCO per-commodity fan-out: three parallel clusters — ~40 'import export manager in <commodity>' (1324), ~30 'import export specialist in <commodity>' (3331), and ~35 '<commodity> distribution manager' (1324) — that all collapse to the generic parents already present (import export manager, import export specialist, distribution manager, supply chain manager, logistics and distribution manager). Listed reps are a sample; each cluster should reduce to 1-3 representative roles. Removed 16 SOC group-label junk rows (postal/dispatch/clerk/utility/insurance titles, several wholly off-domain). Also 3 trailing 'wholesale merchant in <textile>' rows (3324) duplicate the D031 Sales wholesale cluster and likely belong there. No high-signal gap — domain is over-populated, not under. Core SCM spine (supply chain manager, warehouse manager, purchasing manager, forecast/demand manager, inventory coordinator, logistics analyst) is intact."},
+
+{"domain_id":"D035","domain_name":"Logistics","verdict":"issues",
+"remove_roles":[
+{"role":"Meeting, Convention, and Event Planners","reason":"generic SOC group-label junk (aka=NaN); event planning, off-domain"},
+{"role":"Laborers and Freight, Stock, and Material Movers, Hand","reason":"generic SOC group-label junk (aka=NaN); duplicates materials handler/warehouse worker"},
+{"role":"Aircraft Cargo Handling Supervisors","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Recycling Coordinators","reason":"generic SOC group-label junk (aka=NaN); waste/recycling, off-domain"},
+{"role":"First-Line Supervisors of Material-Moving Machine and Vehicle Operators","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"First-Line Supervisors of Passenger Attendants","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"First-Line Supervisors of Transportation Workers, All Other","reason":"generic SOC catch-all group-label junk (aka=NaN)"},
+{"role":"Light Truck Drivers","reason":"generic SOC group-label junk (aka=NaN); duplicates cargo vehicle driver"},
+{"role":"Bus Drivers, School","reason":"generic SOC group-label junk (aka=NaN); duplicates bus driver"},
+{"role":"Railroad Brake, Signal, and Switch Operators and Locomotive Firers","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Conveyor Operators and Tenders","reason":"generic SOC group-label junk (aka=NaN); manufacturing/materials, off-domain"},
+{"role":"Hoist and Winch Operators","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Cleaners of Vehicles and Equipment","reason":"generic SOC group-label junk (aka=NaN); cleaning, off-domain"},
+{"role":"Recycling and Reclamation Workers","reason":"generic SOC group-label junk (aka=NaN); waste/recycling, off-domain"},
+{"role":"Machine Feeders and Offbearers","reason":"generic SOC group-label junk (aka=NaN); manufacturing, off-domain"},
+{"role":"Packers and Packagers, Hand","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Stockers and Order Fillers","reason":"generic SOC group-label junk (aka=NaN); duplicates warehouse order picker"},
+{"role":"Gas Compressor and Gas Pumping Station Operators","reason":"generic SOC group-label junk (aka=NaN); oil/gas plant ops, off-domain"},
+{"role":"Pump Operators, Except Wellhead Pumpers","reason":"generic SOC group-label junk (aka=NaN); oil/gas ops, off-domain"},
+{"role":"Wellhead Pumpers","reason":"generic SOC group-label junk (aka=NaN); oil/gas extraction, off-domain"},
+{"role":"Refuse and Recyclable Material Collectors","reason":"generic SOC group-label junk (aka=NaN); waste collection, off-domain"},
+{"role":"Tank Car, Truck, and Ship Loaders","reason":"generic SOC group-label junk (aka=NaN)"},
+{"role":"Material Moving Workers, All Other","reason":"generic SOC catch-all group-label junk (aka=NaN)"}
+],
+"add_roles":[
+{"role":"fleet manager","isco":1324,"skills":["fleet planning","vehicle maintenance scheduling","route optimisation","telematics","driver compliance","fuel and cost management"],"reason":"core road-logistics management role is absent despite a full complement of driver and transport-ops roles"}
+],
+"overfanout_roles":["import export manager in meat and meat products","import export manager in perfume and cosmetics","import export specialist in wood and construction materials","import export specialist in fruit and vegetables","pharmaceutical goods distribution manager","china and glassware distribution manager","metals and metal ores distribution manager","tobacco products distribution manager","watches and jewellery distribution manager","event manager","venue programmer","wedding planner","event assistant","venue director"],
+"rename_to":null,
+"notes":"Two structural problems. (1) The entire ESCO import/export (1324/3331) + '<commodity> distribution manager' (1324) fan-out — ~90 rows — is DUPLICATED verbatim from D034 Supply Chain Management; it belongs primarily in D034, not Logistics. Logistics proper is the transport/warehouse/freight core here (drivers 8331/8332, materials handling & warehouse 9333, forklift 8344, stevedore, dispatchers) which is sound. (2) A 5-role event-management cluster (3332: event manager, venue programmer, wedding planner, event assistant, venue director) plus junk 'Meeting, Convention, and Event Planners' is wholly off-domain — belongs in an Events/Hospitality domain. Flagged the duplicated commodity clusters and the event cluster as overfanout; removed 24 SOC group-label junk rows (several off-domain: oil/gas pumping, refuse collection, cleaning, manufacturing feeders). Key gap: fleet manager. Recommend de-duplicating the commodity trade/distribution clusters against D034 and moving the event cluster out."}
+]}

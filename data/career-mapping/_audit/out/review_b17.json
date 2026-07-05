@@ -1,0 +1,67 @@
+{
+ "reviews": [
+  {
+   "domain_id": "D087",
+   "domain_name": "Hairdressing, Barbering",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Hairdressers, Hairstylists, and Cosmetologists", "isco": 5141, "reason": "junk group-label row (aka=NaN); SOC/O*NET occupational-group label duplicating 'hairdresser'"},
+    {"role": "Makeup Artists, Theatrical and Performance", "isco": 5141, "reason": "junk group-label row (aka=NaN) and cross-domain contamination; makeup artistry belongs to Beauty Therapy/Aesthetics (D088), ISCO 5142 not 5141"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "Core ESCO hairdressing roles are sound (hairdresser, barber, hairdresser assistant, hair stylist, performance hairdresser all ISCO 5141). Removed 2 aka=NaN group-label rows; the makeup one is also cross-domain (belongs to D088)."
+  },
+  {
+   "domain_id": "D088",
+   "domain_name": "Beauty Therapy, Aesthetics",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Manicurists and Pedicurists", "isco": 5142, "reason": "junk group-label row (aka=NaN); SOC group label duplicating existing 'manicurist' and 'pedicurist' roles"},
+    {"role": "Shampooers", "isco": 5142, "reason": "junk group-label row (aka=NaN) and cross-domain contamination; shampooer is a hairdressing role (D087, aka of 'hairdresser assistant', ISCO 5141)"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "Genuine ESCO beauty/aesthetics roles at ISCO 5142 (aesthetician, manicurist, pedicurist, make-up artist, hair removal technician, spa attendant, tanning consultant, etc.) are sound. Removed 2 aka=NaN SOC group-label rows (one cross-domain). 'weight loss consultant' aka fans toward nutritionist/fitness but the base role is a legit ESCO 5142 entry — kept. 'personal stylist' is image-consulting adjacent but ESCO-valid; kept."
+  },
+  {
+   "domain_id": "D089",
+   "domain_name": "Funeral",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Morticians, Undertakers, and Funeral Arrangers", "isco": 5163, "reason": "junk group-label row (aka=NaN); SOC group label duplicating 'funeral services director' / 'embalmer'"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "Small, coherent domain. Four genuine ESCO roles at ISCO 5163 (funeral services director, cemetery attendant, funeral attendant, embalmer) are sound. Removed 1 aka=NaN SOC group-label row."
+  },
+  {
+   "domain_id": "D090",
+   "domain_name": "Animal Care, Grooming",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Animal Caretakers", "isco": 5164, "reason": "junk group-label row (aka=NaN); SOC group label duplicating 'animal care attendant' and other ISCO 5164 roles"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "Well-populated, coherent domain. The 15 substantive roles are distinct genuine ESCO occupations at ISCO 5164 (dog trainer, animal trainer, guide dog instructor, horse trainer are separate ESCO entries — not fan-out; kennel worker/supervisor, zookeeper/zoo section leader are distinct levels). Some aka bleed (horse trainer -> riding instructor/coach) but base roles valid. Removed 1 aka=NaN SOC group-label row."
+  },
+  {
+   "domain_id": "D091",
+   "domain_name": "Driving Instruction",
+   "verdict": "issues",
+   "remove_roles": [
+    {"role": "Motor Vehicle Operators, All Other", "isco": 5165, "reason": "junk group-label row (aka=NaN); SOC catch-all label for vehicle operators (transport, ISCO 83xx) not driving instruction"},
+    {"role": "Residential Advisors", "isco": 5165, "reason": "junk group-label row (aka=NaN) and cross-domain contamination; SOC 39-9041 residential advisors, wholly unrelated to driving instruction"}
+   ],
+   "add_roles": [],
+   "overfanout_roles": [],
+   "rename_to": null,
+   "notes": "Six genuine ESCO driving-instructor occupations at ISCO 5165 (driving instructor, car/bus/truck driving instructor, motorcycle instructor, vessel steering instructor) — distinct ESCO entries by vehicle type, not fan-out. aka rows repeat 'driving instructor' but the base roles are valid. Removed 2 aka=NaN rows, one a clear cross-domain intruder (Residential Advisors)."
+  }
+ ]
+}

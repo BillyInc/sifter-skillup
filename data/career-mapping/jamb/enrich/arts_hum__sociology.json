@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Sociology",
+  "utme_subjects": ["and any two (2) relevant subjects from Arts, Social Sciences or Sciences as specified by the institution"],
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "FED-KASHERE", "note": "Direct Entry: accepts Credit/merit pass in relevant ND/NCE or three 'A' Level in IJMB with minimum of 9 points."},
+    {"institution": "PLASU", "note": "UTME: requires 'O' Level credit passes in English Language and three (3) Social Sciences or Arts subjects plus at least 'O' Level pass in Mathematics."},
+    {"institution": "FED-KASHERE", "note": "UTME: requires Five credit passes at SSCE (or its equivalent) in English, Mathematics, Government/History and two other Arts or Social Sciences subjects."},
+    {"institution": "FED-KASHERE", "note": "UTME Subjects: requires Government or History plus two other Arts or Social Science."}
+  ]
+}

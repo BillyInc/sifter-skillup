@@ -1,0 +1,902 @@
+{
+ "domain_id": "D039",
+ "domain_name": "Higher Education",
+ "role_count": 179,
+ "roles": [
+  {
+   "role": "performing arts theatre instructor",
+   "isco": 2310,
+   "aka": "professor of theatre  ·  acting school teacher  ·  theatre instructor in performing arts school  ·  acting school instructor  ·  instructor in performing arts"
+  },
+  {
+   "role": "head of higher education institutions",
+   "isco": 1345,
+   "aka": "rector for higher education institutions  ·  university chancellor  ·  rector of higher education"
+  },
+  {
+   "role": "adult literacy teacher",
+   "isco": 2352,
+   "aka": "teacher of adult literacy and numeracy  ·  adult literacy lecturer  ·  skills for life teacher  ·  adult literacy and numeracy instructor  ·  adult literacy instructor"
+  },
+  {
+   "role": "special educational needs teacher secondary school",
+   "isco": 2352,
+   "aka": "secondary school special education teacher  ·  special educational needs teacher in high school  ·  high school special educational needs teacher  ·  secondary school SEN teacher  ·  high school special education teacher"
+  },
+  {
+   "role": "primary school teacher",
+   "isco": 2341,
+   "aka": "teacher in a primary school  ·  primary school music teacher  ·  teacher in primary education  ·  primary education teacher  ·  primary education professional"
+  },
+  {
+   "role": "maritime instructor",
+   "isco": 2320,
+   "aka": "ship pilot trainer  ·  specialist maritime training instructor  ·  instructor in maritime training  ·  maritime trainer  ·  occupational boating instructor"
+  },
+  {
+   "role": "economics lecturer",
+   "isco": 2310,
+   "aka": "economics professor  ·  university lecturer in economics  ·  lecturer in economics  ·  senior lecturer in economics  ·  lecturer of economics"
+  },
+  {
+   "role": "medicine lecturer",
+   "isco": 2310,
+   "aka": "medicine docent  ·  medicine instructor  ·  lecturer of medicine  ·  medicine professor  ·  university medicine lecturer"
+  },
+  {
+   "role": "teacher of talented and gifted students",
+   "isco": 2352,
+   "aka": "teacher for talented pupils  ·  teacher for students with high learning potential  ·  talented and gifted pupils co-ordinator  ·  teacher for gifted students  ·  teacher for pupils with high learning potential"
+  },
+  {
+   "role": "university teaching assistant",
+   "isco": 2310,
+   "aka": "higher education teaching assistant  ·  teaching assistant  ·  TA  ·  teaching assistant in universities  ·  teaching assistant in higher education"
+  },
+  {
+   "role": "learning support teacher",
+   "isco": 2352,
+   "aka": "developmental teacher  ·  teacher in learning support  ·  early intervention specialist  ·  compensatory teacher  ·  basic skills teacher"
+  },
+  {
+   "role": "sociology lecturer",
+   "isco": 2310,
+   "aka": "social science professor  ·  sociology instructor  ·  social science instructor  ·  specialist lecturer in sociology  ·  sociology docent"
+  },
+  {
+   "role": "special educational needs head teacher",
+   "isco": 1345,
+   "aka": "head teacher of special educational needs school  ·  director of special educational needs school  ·  special educational needs school director  ·  inclusive education principal  ·  special educational needs headteacher"
+  },
+  {
+   "role": "hospitality vocational teacher",
+   "isco": 2320,
+   "aka": "hospitality and catering instructor  ·  vocational instructor in hospitality and catering  ·  educator in hospitality and catering  ·  vocational teacher of catering and hospitality  ·  vocational hospitality and catering teacher"
+  },
+  {
+   "role": "nursing lecturer",
+   "isco": 2310,
+   "aka": "university nursing instructor  ·  lecturer in nursing science  ·  university nursing teacher  ·  lector in nursing science  ·  lecturer in nursing"
+  },
+  {
+   "role": "dance teacher",
+   "isco": 2355,
+   "aka": "dancing teacher  ·  instructor of dance  ·  dance coach  ·  teacher of dance  ·  specialist dance teacher"
+  },
+  {
+   "role": "assessor of prior learning",
+   "isco": 2359,
+   "aka": "prior learning assessor"
+  },
+  {
+   "role": "public speaking coach",
+   "isco": 2359,
+   "aka": "public speaking tutor  ·  public speaking mentor  ·  speech giving coach"
+  },
+  {
+   "role": "educational counsellor",
+   "isco": 2359,
+   "aka": "student advisor  ·  student guidance counsellor  ·  education counsellor  ·  counsellor in education institution  ·  childrens' counsellor"
+  },
+  {
+   "role": "deputy head teacher",
+   "isco": 1345,
+   "aka": "school deputy head  ·  deputy headmaster  ·  deputy head  ·  school deputy headmaster  ·  assistant head teacher"
+  },
+  {
+   "role": "further education principal",
+   "isco": 1345,
+   "aka": "FE principal  ·  FE director  ·  further education director  ·  director of FE college  ·  head of further education college"
+  },
+  {
+   "role": "academic support officer",
+   "isco": 2359,
+   "aka": "schools liaison and access officer  ·  university access coordinator  ·  higher education access officer  ·  student support officer  ·  access officer in university"
+  },
+  {
+   "role": "business lecturer",
+   "isco": 2310,
+   "aka": "university teacher of business  ·  commerce instructor  ·  lecturer in business  ·  professor of business administration  ·  commerce lector"
+  },
+  {
+   "role": "earth science lecturer",
+   "isco": 2310,
+   "aka": "geography lecturer  ·  geoscience professor  ·  geology lecturer  ·  lecturer of geoscience  ·  lecturer in geoscience"
+  },
+  {
+   "role": "university department head",
+   "isco": 1345,
+   "aka": "head of university department  ·  head of department in a university  ·  university head of department  ·  university department director  ·  head of academic department"
+  },
+  {
+   "role": "food service vocational teacher",
+   "isco": 2320,
+   "aka": "teacher of food and hospitality  ·  vocational teacher in food service  ·  cooking teacher  ·  food service vocational instructor  ·  food service teacher"
+  },
+  {
+   "role": "occupational driving instructor",
+   "isco": 2320,
+   "aka": "LGV driving instructor  ·  specialist driving instructor  ·  passenger carrying vehicle instructor  ·  PCV driving instructor  ·  instructor in occupational driving"
+  },
+  {
+   "role": "social work practice educator",
+   "isco": 2310,
+   "aka": "practice placement worker  ·  practice educator  ·  practice-based educator  ·  practice social work educator  ·  practice placement facilitator"
+  },
+  {
+   "role": "Steiner school teacher",
+   "isco": 2341,
+   "aka": "Steiner Waldorf school educator  ·  Waldorf school teacher  ·  teacher in Steiner school  ·  Waldorf school instructor  ·  Steiner school teaching practitioner"
+  },
+  {
+   "role": "veterinary medicine lecturer",
+   "isco": 2310,
+   "aka": "veterinary medicine instructor  ·  clinical lecturer in veterinary medicine  ·  veterinary medicine docent  ·  veterinary science instructor  ·  veterinary clinician"
+  },
+  {
+   "role": "learning mentor",
+   "isco": 2359,
+   "aka": "specialist learning mentor  ·  pastoral support mentor  ·  support mentor  ·  senior learning mentor  ·  pastoral support officer"
+  },
+  {
+   "role": "dentistry lecturer",
+   "isco": 2310,
+   "aka": "dentistry lector  ·  dentistry teacher  ·  dental sciences lecturer  ·  lecturer in dentistry  ·  clinical lecturer in dentistry"
+  },
+  {
+   "role": "business administration vocational teacher",
+   "isco": 2320,
+   "aka": "business administration teacher  ·  vocational teacher of business administration  ·  vocational instructor in business management  ·  business management teacher  ·  business administration educator"
+  },
+  {
+   "role": "air traffic instructor",
+   "isco": 2320,
+   "aka": "air traffic control trainer  ·  air traffic control instructor  ·  air traffic trainer  ·  instructor of air traffic control"
+  },
+  {
+   "role": "electricity and energy vocational teacher",
+   "isco": 2320,
+   "aka": "electricity and energy instructor  ·  teaching practitioner in electricity and energy  ·  vocational teacher in electricity and energy  ·  teacher of electricity and energy  ·  electricity and energy vocational trainer"
+  },
+  {
+   "role": "photography teacher",
+   "isco": 2355,
+   "aka": "photography educator  ·  teacher of photography  ·  tutor in photography  ·  photography tutor  ·  educator in photography"
+  },
+  {
+   "role": "industrial arts vocational teacher",
+   "isco": 2320,
+   "aka": "industrial arts educator  ·  industrial arts instructor  ·  industrial arts vocational instructor  ·  industrial arts teacher  ·  technical handicraft instructor"
+  },
+  {
+   "role": "journalism lecturer",
+   "isco": 2310,
+   "aka": "journalism professor  ·  journalism lector  ·  journalism teacher  ·  journalism and media docent  ·  media studies instructor"
+  },
+  {
+   "role": "communications lecturer",
+   "isco": 2310,
+   "aka": "university communications teacher  ·  lecturer in communication and media  ·  lecturer in communications  ·  communications professor  ·  professor of communication"
+  },
+  {
+   "role": "beauty vocational teacher",
+   "isco": 2320,
+   "aka": "hair and beauty instructor  ·  vocational cosmetology teacher  ·  hair and beauty educator  ·  hair and beauty teacher  ·  vocational beauty teacher"
+  },
+  {
+   "role": "assistive technologist",
+   "isco": 2359,
+   "aka": "educational technology advisor  ·  assistive technology technician  ·  assistive technology assessor  ·  special needs technologist  ·  educational assistive technologist"
+  },
+  {
+   "role": "architecture lecturer",
+   "isco": 2310,
+   "aka": "lecturer of architecture  ·  professor of architecture  ·  architecture professor  ·  university lecturer in architectural studies  ·  architecture instructor"
+  },
+  {
+   "role": "travel and tourism vocational teacher",
+   "isco": 2320,
+   "aka": "vocational instructor in travel and tourism  ·  travel and tourism teacher  ·  vocational travel and tourism teacher  ·  trainer in travel and tourism  ·  travel and tourism instructor"
+  },
+  {
+   "role": "secondary school head teacher",
+   "isco": 1345,
+   "aka": "high school director  ·  secondary school director  ·  secondary school head  ·  high school head teacher  ·  head teacher of secondary school"
+  },
+  {
+   "role": "fine arts instructor",
+   "isco": 2310,
+   "aka": "fine arts educator  ·  fine arts conservatory instructor  ·  fine arts conservatory teacher  ·  conservatory instructor in fine arts  ·  professor of fine arts"
+  },
+  {
+   "role": "pharmacy lecturer",
+   "isco": 2310,
+   "aka": "pharmaceutics lecturer docent  ·  pharmaceutics lecturer professor  ·  pharmaceutics lecturer  ·  pharmaceutics lecturer lector  ·  university pharmacy teacher"
+  },
+  {
+   "role": "early years teacher",
+   "isco": 2342,
+   "aka": "preschool teacher  ·  kindergarten teacher  ·  preprimary school teacher  ·  nursery teacher"
+  },
+  {
+   "role": "electronics and automation vocational teacher",
+   "isco": 2320,
+   "aka": "vocational teacher in electronics and automation  ·  electronics and automation instructor  ·  electronics and automation trainer  ·  electronics and automation vocational instructor  ·  electronics and automation teacher"
+  },
+  {
+   "role": "physics lecturer",
+   "isco": 2310,
+   "aka": "physics docent  ·  physics lector  ·  physics educator  ·  university physics lecturer  ·  university physics teacher"
+  },
+  {
+   "role": "tutor",
+   "isco": 2359,
+   "aka": "private tutor  ·  classroom tutor  ·  students assistant"
+  },
+  {
+   "role": "sign language teacher",
+   "isco": 2353,
+   "aka": "british sign language teacher  ·  sign language tutor  ·  sign language trainer  ·  british sign language trainer  ·  british sign language tutor"
+  },
+  {
+   "role": "educational researcher",
+   "isco": 2351,
+   "aka": "education studies analyst  ·  education studies scholar  ·  educational scholar  ·  educational analyst  ·  education methods specialist"
+  },
+  {
+   "role": "university research assistant",
+   "isco": 2310,
+   "aka": "university research associate  ·  higher education research assistant  ·  university research support  ·  research associate in higher education  ·  higher education assistant researcher"
+  },
+  {
+   "role": "biology lecturer",
+   "isco": 2310,
+   "aka": "lecturer in biological sciences  ·  biological sciences lector  ·  lecturer in biology  ·  biology docent  ·  university lecturer in biology"
+  },
+  {
+   "role": "education studies lecturer",
+   "isco": 2310,
+   "aka": "lecturer in education studies  ·  senior lecturer in education studies  ·  education studies docent  ·  university education studies lecturer  ·  education studies lector"
+  },
+  {
+   "role": "special educational needs itinerant teacher",
+   "isco": 2352,
+   "aka": "special needs peripatetic teacher  ·  SEN visiting teacher  ·  visiting teacher for special needs  ·  special educational needs visiting teacher  ·  SEN peripatetic teacher"
+  },
+  {
+   "role": "prison instructor",
+   "isco": 2359,
+   "aka": "instructional officer  ·  prison training officer  ·  teacher in prisons  ·  prison and correctional instructor  ·  correctional training instructor"
+  },
+  {
+   "role": "art studies lecturer",
+   "isco": 2310,
+   "aka": "art studies teacher  ·  art studies instructor  ·  higher education art studies teacher  ·  senior lecturer in art studies  ·  lecturer in art studies"
+  },
+  {
+   "role": "higher education lecturer",
+   "isco": 2310,
+   "aka": "higher education senior lecturer  ·  HE lecturer  ·  higher education instructor  ·  principal lecturer  ·  teaching fellow"
+  },
+  {
+   "role": "occupational railway instructor",
+   "isco": 2320,
+   "aka": "metro driving instructor  ·  tram driver instructor  ·  trolley driver instructor  ·  engine driver instructor  ·  railway instruction practitioner"
+  },
+  {
+   "role": "further education teacher",
+   "isco": 2359,
+   "aka": "further education practitioner  ·  further education lecturer  ·  continuing education teacher  ·  sixth form teacher  ·  teacher of further education"
+  },
+  {
+   "role": "police trainer",
+   "isco": 2320,
+   "aka": "law enforcement trainer  ·  police officer trainer  ·  trainer of police  ·  specialist police trainer  ·  police tutor"
+  },
+  {
+   "role": "admissions coordinator",
+   "isco": 2359,
+   "aka": "coordinator of student admissions  ·  admissions officer  ·  admissions coordinator in education  ·  college admissions coordinator  ·  admissions coordinator in university"
+  },
+  {
+   "role": "visual arts teacher",
+   "isco": 2355,
+   "aka": "arts and crafts teacher  ·  painting teacher  ·  educator in visual arts  ·  arts and crafts instructor  ·  instructor of arts and crafts"
+  },
+  {
+   "role": "medical laboratory technology vocational teacher",
+   "isco": 2320,
+   "aka": "instructor in medical laboratory technology  ·  medical laboratory technology teacher  ·  medical laboratory technology instructor  ·  medical laboratory technology educator  ·  vocational instructor in medical laboratory technology"
+  },
+  {
+   "role": "Montessori school teacher",
+   "isco": 2342,
+   "aka": "Montessori elementary teacher  ·  multi-age classroom teacher  ·  Montessori primary teacher  ·  Montessori school teaching practitioner  ·  teacher in a Montessori school"
+  },
+  {
+   "role": "performing arts school dance instructor",
+   "isco": 2310,
+   "aka": "dance conservatory trainer  ·  dancing instructor in performing arts school  ·  dance instructor in performing arts school  ·  professor of dance  ·  dance school teacher"
+  },
+  {
+   "role": "psychology lecturer",
+   "isco": 2310,
+   "aka": "senior lecturer in psychology  ·  university psychology lecturer  ·  lecturer of psychology  ·  instructor in psychology  ·  psychology docent"
+  },
+  {
+   "role": "vocational teacher",
+   "isco": 2320,
+   "aka": "vocational college lecturer  ·  vocational instructor  ·  vocational university tutor  ·  vocational educator  ·  vocational college teacher"
+  },
+  {
+   "role": "auxiliary nursing and midwifery vocational teacher",
+   "isco": 2320,
+   "aka": "vocational teacher in auxiliary nursing and midwifery  ·  auxiliary nursing and midwifery teacher  ·  auxiliary nursing and midwifery instructor  ·  auxiliary nursing and midwifery vocational trainer  ·  educator in auxiliary nursing and midwifery"
+  },
+  {
+   "role": "armed forces training and education officer",
+   "isco": 2320,
+   "aka": "military training and education officer  ·  armed forces instructor  ·  military trainer  ·  military academy instructor  ·  military instructor"
+  },
+  {
+   "role": "music instructor",
+   "isco": 2310,
+   "aka": "specialist music educator  ·  instructor of music in higher education  ·  music conservatory teacher  ·  music conservatory professor  ·  conservatory music teacher"
+  },
+  {
+   "role": "space science lecturer",
+   "isco": 2310,
+   "aka": "professor of astrophysics  ·  higher education space science teacher  ·  lecturer in space sciences  ·  space science docent  ·  space sciences lector"
+  },
+  {
+   "role": "Freinet school teacher",
+   "isco": 2342,
+   "aka": "Freinet teacher  ·  Freinet class school teacher  ·  Freinet primary school teacher  ·  Mouvement de l'École Moderne teacher  ·  teacher in Freinet school"
+  },
+  {
+   "role": "transport technology vocational teacher",
+   "isco": 2320,
+   "aka": "vocational teacher in transportation technology  ·  transportation technology vocational instructor  ·  transportation technician instructor  ·  vocational instructor in transportation technology  ·  teacher in transportation technology"
+  },
+  {
+   "role": "agriculture, forestry and fishery vocational teacher",
+   "isco": 2320,
+   "aka": "agriculture, forestry, and fishery vocational instructor  ·  vocational teacher in agriculture, fishery, and forestry  ·  vocational teacher of agriculture, forestry and fishery  ·  agriculture, forestry, and fishery vocational trainer  ·  trainer in agriculture, forestry and fishery"
+  },
+  {
+   "role": "social work lecturer",
+   "isco": 2310,
+   "aka": "university social work teacher  ·  university social work lecturer  ·  university lecturer in social work  ·  academic social work educator  ·  social work lector"
+  },
+  {
+   "role": "hairdressing vocational teacher",
+   "isco": 2320,
+   "aka": "vocational hairdressing teacher  ·  barbering instructor  ·  vocational hairdressing instructor  ·  hairdressing educator  ·  hairdressing teacher"
+  },
+  {
+   "role": "language school teacher",
+   "isco": 2353,
+   "aka": "language school instructor  ·  teacher in a language school  ·  teacher of english to speakers of other languages  ·  TESOL practitioner  ·  instructor in language school"
+  },
+  {
+   "role": "anthropology lecturer",
+   "isco": 2310,
+   "aka": "university anthropology teacher  ·  professor of anthropology  ·  anthropology teacher  ·  anthropology docent  ·  higher education anthropology teacher"
+  },
+  {
+   "role": "special educational needs teacher",
+   "isco": 2352,
+   "aka": "educator in special educational needs  ·  autism teacher  ·  special education resource teacher  ·  special educational needs professional  ·  special education teacher"
+  },
+  {
+   "role": "food science lecturer",
+   "isco": 2310,
+   "aka": "professor of food science and nutrition  ·  food sciences professor  ·  university lecturer in food science  ·  professor of food science  ·  university food sciences teacher"
+  },
+  {
+   "role": "special educational needs coordinator",
+   "isco": 2351,
+   "aka": "inclusive education coordinator  ·  SEN officer  ·  special education coordinator  ·  SEN director  ·  special educational needs director"
+  },
+  {
+   "role": "business and marketing vocational teacher",
+   "isco": 2320,
+   "aka": "marketing teacher  ·  vocational teacher of marketing and business  ·  sales and marketing vocational teacher  ·  business and marketing teacher  ·  instructor in sales and marketing"
+  },
+  {
+   "role": "university literature lecturer",
+   "isco": 2310,
+   "aka": "literature teacher  ·  literature instructor  ·  literature professor  ·  senior lecturer in literature  ·  university literature professor"
+  },
+  {
+   "role": "education inspector",
+   "isco": 2351,
+   "aka": "education institution inspector  ·  school inspector  ·  inspector of schools  ·  her majesty's inspector of education  ·  education authority officer"
+  },
+  {
+   "role": "design and applied arts vocational teacher",
+   "isco": 2320,
+   "aka": "art and design instructor  ·  vocational design and applied arts educator  ·  vocational teacher in art and design  ·  design and applied arts teacher  ·  teacher of applied arts and crafts"
+  },
+  {
+   "role": "history lecturer",
+   "isco": 2310,
+   "aka": "history teacher  ·  lecturer of history  ·  history instructor  ·  professor of modern history  ·  lecturer in history"
+  },
+  {
+   "role": "e-learning architect",
+   "isco": 2359,
+   "aka": "e-learning architects  ·  distance learning designer  ·  e-learning specialist  ·  eLearning architect  ·  eLearning developer"
+  },
+  {
+   "role": "instructional designer",
+   "isco": 2359,
+   "aka": "designer of training courses  ·  instructional designers  ·  instructional engineer  ·  instructional course design practitioner  ·  training designer"
+  },
+  {
+   "role": "academic advisor",
+   "isco": 2359,
+   "aka": "academic student advisor  ·  education advisor  ·  degree program coach  ·  student career guide  ·  degree program guidance practitioner"
+  },
+  {
+   "role": "philosophy lecturer",
+   "isco": 2310,
+   "aka": "senior lecturer in philosophy  ·  higher education philosophy teacher  ·  philosophy docent  ·  philosophy instructor  ·  lector of philosophy"
+  },
+  {
+   "role": "healthcare specialist lecturer",
+   "isco": 2310,
+   "aka": "nursing specialist instructor  ·  orthopaedics instructor  ·  lecturer in specialized healthcare  ·  embryology professor  ·  paediatrics docent"
+  },
+  {
+   "role": "law lecturer",
+   "isco": 2310,
+   "aka": "specialist law lecturer  ·  lecturer in law  ·  university lecturer in law  ·  law docent  ·  lecturer of law"
+  },
+  {
+   "role": "early years special educational needs teacher",
+   "isco": 2352,
+   "aka": "early years SEN teacher  ·  nursery special educational needs teacher  ·  teacher in early years SEN  ·  teacher in early years special educational needs  ·  early years teacher in special educational needs"
+  },
+  {
+   "role": "circus arts teacher",
+   "isco": 2355,
+   "aka": "teacher of circus arts  ·  circus arts instructor  ·  circus arts trainer  ·  circus arts teaching practitioner  ·  trainer in circus arts"
+  },
+  {
+   "role": "firefighter instructor",
+   "isco": 2320,
+   "aka": "firefighter trainer  ·  instructor of firefighters  ·  instructor in fire academy  ·  fire academy trainer  ·  fire instructor"
+  },
+  {
+   "role": "modern languages lecturer",
+   "isco": 2310,
+   "aka": "university modern languages lecturer  ·  instructor in modern languages  ·  modern languages teacher  ·  higher education modern languages teacher  ·  modern languages instructor"
+  },
+  {
+   "role": "archaeology lecturer",
+   "isco": 2310,
+   "aka": "lecturer in archaeology  ·  archaeology docent  ·  archaeology teacher  ·  archaeology instructor  ·  archaeologist lector"
+  },
+  {
+   "role": "assistant lecturer",
+   "isco": 2310,
+   "aka": "college assistant lecturer  ·  higher education assistant lecturer  ·  adjunct assistant professor  ·  university assistant instructor  ·  junior lecturer"
+  },
+  {
+   "role": "arts education officer",
+   "isco": 2355,
+   "aka": "museum education officer  ·  art mediator  ·  museum visitor services officer  ·  museum education coordinator  ·  visitor service officer"
+  },
+  {
+   "role": "computer science lecturer",
+   "isco": 2310,
+   "aka": "computer sciences lector  ·  senior lecturer in computer science  ·  university lecturer in computer science  ·  university computer science teacher  ·  computer science lector"
+  },
+  {
+   "role": "linguistics lecturer",
+   "isco": 2310,
+   "aka": "linguistics docent  ·  lecturer in applied linguistics  ·  linguistics teacher  ·  linguistics lector  ·  higher education linguistics teacher"
+  },
+  {
+   "role": "politics lecturer",
+   "isco": 2310,
+   "aka": "politics professor  ·  professor of politics  ·  political studies instructor  ·  political science professor  ·  politics and international relations lecturer"
+  },
+  {
+   "role": "religious studies lecturer",
+   "isco": 2310,
+   "aka": "lecturer of religious studies  ·  higher education theology teacher  ·  lecturer in religious studies  ·  theology instructor  ·  lecturer of religion"
+  },
+  {
+   "role": "primary school head teacher",
+   "isco": 1345,
+   "aka": "head teacher of primary school  ·  primary school principal  ·  headteacher of primary school  ·  headmaster of primary school  ·  primary school headteacher"
+  },
+  {
+   "role": "drama teacher",
+   "isco": 2355,
+   "aka": "teacher of dramatic arts  ·  drama educator  ·  performing and dramatic arts instructor  ·  performing and dramatic arts teacher  ·  educator in drama"
+  },
+  {
+   "role": "cabin crew instructor",
+   "isco": 2320,
+   "aka": "flight attendant instructor  ·  cabin service instructor  ·  flight attendant trainer  ·  instructor of cabin crew  ·  inflight service instructor"
+  },
+  {
+   "role": "education programme coordinator",
+   "isco": 1345,
+   "aka": "international education programme coordinator  ·  education programs manager  ·  education programme director  ·  international education program coordinator  ·  education programmes manager"
+  },
+  {
+   "role": "secondary school department head",
+   "isco": 1345,
+   "aka": "school department head  ·  high school head of department  ·  secondary school head of department  ·  head of department in secondary school  ·  head of department in high school"
+  },
+  {
+   "role": "curriculum administrator",
+   "isco": 2351,
+   "aka": "education officer  ·  education coordinator  ·  curriculum support administrator  ·  curriculum director  ·  education administrator"
+  },
+  {
+   "role": "mathematics lecturer",
+   "isco": 2310,
+   "aka": "mathematics professor  ·  university mathematics lecturer  ·  university lecturer in mathematics  ·  mathematics lector  ·  mathematics docent"
+  },
+  {
+   "role": "headteacher",
+   "isco": 1345,
+   "aka": "principal  ·  headmaster  ·  executive headteacher  ·  educational institution manager  ·  headmistress"
+  },
+  {
+   "role": "dean of faculty",
+   "isco": 1345,
+   "aka": "head of faculty  ·  university head of school  ·  university head of faculty  ·  faculty dean  ·  faculty director"
+  },
+  {
+   "role": "chemistry lecturer",
+   "isco": 2310,
+   "aka": "chemistry docent  ·  chemistry professor  ·  lecturer in chemistry  ·  chemical science docent  ·  specialist lecturer in chemistry"
+  },
+  {
+   "role": "physical education vocational teacher",
+   "isco": 2320,
+   "aka": "vocational PE teacher  ·  vocational teacher of PE  ·  instructor in physical education  ·  vocational instructor in physical education  ·  vocational teacher of physical education"
+  },
+  {
+   "role": "engineering lecturer",
+   "isco": 2310,
+   "aka": "engineering instructor  ·  engineering sciences docent  ·  lecturer in mechanical engineering  ·  engineering sciences instructor  ·  engineering sciences professor"
+  },
+  {
+   "role": "e-learning developer",
+   "isco": 2359,
+   "aka": "e-learning producer  ·  eLearning producer  ·  eLearning developers"
+  },
+  {
+   "role": "music teacher",
+   "isco": 2354,
+   "aka": "private music instructor  ·  instructor of music  ·  instrument teacher  ·  individual music teacher  ·  peripatetic music teacher"
+  },
+  {
+   "role": "special educational needs teacher primary school",
+   "isco": 2352,
+   "aka": "SEN teacher primary school  ·  primary school special needs educator  ·  primary school special education teacher  ·  special educational needs teacher elementary school  ·  primary school SEN teacher"
+  },
+  {
+   "role": "classical languages lecturer",
+   "isco": 2310,
+   "aka": "lecturer in classical languages  ·  lecturer of classical languages  ·  classical languages lector  ·  lecturer in greek and latin language  ·  classical studies lecturer"
+  },
+  {
+   "role": "University and Higher Education Teachers",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Secondary Education Teachers",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers",
+   "isco": 2352,
+   "aka": NaN
+  },
+  {
+   "role": "Primary School and Early Childhood Teachers",
+   "isco": 2341,
+   "aka": NaN
+  },
+  {
+   "role": "Education Administrators, Postsecondary",
+   "isco": 1345,
+   "aka": NaN
+  },
+  {
+   "role": "Art, Drama, and Music Teachers, Postsecondary",
+   "isco": 2354,
+   "aka": NaN
+  },
+  {
+   "role": "Preschool Teachers, Except Special Education",
+   "isco": 2342,
+   "aka": NaN
+  },
+  {
+   "role": "Educational Instruction and Library Workers, All Other",
+   "isco": 2359,
+   "aka": NaN
+  },
+  {
+   "role": "Education Administrators, Kindergarten through Secondary",
+   "isco": 1345,
+   "aka": NaN
+  },
+  {
+   "role": "Business Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Science Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Mathematical Science Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Architecture Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Engineering Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Agricultural Sciences Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Biological Science Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Forestry and Conservation Science Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Chemistry Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Environmental Science Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Physics Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Anthropology and Archeology Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Area, Ethnic, and Cultural Studies Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Economics Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Geography Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Political Science Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Psychology Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Sociology Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Social Sciences Teachers, Postsecondary, All Other",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Health Specialties Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Nursing Instructors and Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Education Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Library Science Teachers, Postsecondary",
+   "isco": 2310,
+   "aka": NaN
+  },
+  {
+   "role": "Criminal Justice and Law Enforcement Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Law Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Social Work Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Communications Teachers, Postsecondary",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "English Language and Literature Teachers, Postsecondary",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "Foreign Language and Literature Teachers, Postsecondary",
+   "isco": 2351,
+   "aka": NaN
+  },
+  {
+   "role": "History Teachers, Postsecondary",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "Philosophy and Religion Teachers, Postsecondary",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "Family and Consumer Sciences Teachers, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Recreation and Fitness Studies Teachers, Postsecondary",
+   "isco": 2355,
+   "aka": NaN
+  },
+  {
+   "role": "Career/Technical Education Teachers, Postsecondary",
+   "isco": 2355,
+   "aka": NaN
+  },
+  {
+   "role": "Kindergarten Teachers, Except Special Education",
+   "isco": 2342,
+   "aka": NaN
+  },
+  {
+   "role": "Middle School Teachers, Except Special and Career/Technical Education",
+   "isco": 2341,
+   "aka": NaN
+  },
+  {
+   "role": "Career/Technical Education Teachers, Middle School",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Career/Technical Education Teachers, Secondary School",
+   "isco": 2352,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers, Preschool",
+   "isco": 2352,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers, Kindergarten",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers, Elementary School",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers, Middle School",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers, Secondary School",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Self-Enrichment Teachers",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "Substitute Teachers, Short-Term",
+   "isco": 2353,
+   "aka": NaN
+  },
+  {
+   "role": "Teaching Assistants, Special Education",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Teaching Assistants, Postsecondary",
+   "isco": 2320,
+   "aka": NaN
+  },
+  {
+   "role": "Teaching Assistants, All Other",
+   "isco": 2320,
+   "aka": NaN
+  }
+ ]
+}

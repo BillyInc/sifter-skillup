@@ -1,0 +1,1437 @@
+{
+ "faculty": "Education",
+ "source": "education.txt",
+ "degree": "B.Ed",
+ "note": "Deterministic name-variations + institution lists; requirement columns + per-institution waivers enriched from brochure.",
+ "programmes": [
+  {
+   "jamb_name": "Vocational Education",
+   "institutions": [
+    "BAUCHI",
+    "MAUTY",
+    "UYO",
+    "EDUCATION",
+    "INDUSTRIAL TECHNICAL",
+    "BENIN",
+    "EDAKOKA",
+    "EDASAB",
+    "EDOMOK",
+    "EKSU",
+    "MAKURDI",
+    "UNN",
+    "YABA-DEG",
+    "EDUCATIONAL",
+    "TECHNOLOGY/INTRODUCTORY",
+    "TECHNOLOGY",
+    "ILORIN",
+    "EDUCATIONAL TECHNOLOGY",
+    "AL-HIKMAH",
+    "ARTHUR-JARVIS",
+    "BOUEDST",
+    "CALABAR",
+    "ESUTECH",
+    "FED-DUTSINMA",
+    "FED-OYE EKITI",
+    "ILORINCOL-DEG",
+    "LASUED",
+    "MAITAMA",
+    "MINNA",
+    "NUS",
+    "UDA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "REDEEMERS",
+    "SSUET",
+    "INDUSTRIAL EDUCATION",
+    "KADPOLY",
+    "NDU",
+    "IKERE-EKITI",
+    "WOODWORK / EDUCATION",
+    "FC-GOMBE",
+    "AUTOMOBILE TECHNOLOGY",
+    "AEFUNA",
+    "ATAPOLY-DG",
+    "FED-GUSAU",
+    "KATPOLY-DEG",
+    "KSUSTA",
+    "KUST",
+    "EDUCATION /MECHANICAL",
+    "EDANKPA",
+    "MECHANICAL TECHNOLOGY",
+    "CUST",
+    "MECHANICAL METALWORK",
+    "TECHNOLOGY EUCATION",
+    "EBSU",
+    "EDUCATION /CONSTRUCTION",
+    "METALWORK TECHNOLOGY",
+    "FTBICHI-DEG",
+    "WOODWORK TECHNOLOGY",
+    "METALWORK / WOODWORK"
+   ],
+   "utme_subjects": [
+    "Mathematics",
+    "Economics",
+    "plus one (1) of Literature in English, History, Government, Geography/Physics, Chemistry and Physics"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level credit passes to include English, Mathematics, Chemistry, Agricultural Science and Geography/Physics or TC Grade II.",
+   "direct_entry": "(i) NCE credit in Agricultural Science Education; (ii) ND upper credit in Agricultural Science; (iii) HND lower credit in relevant programme of Agricultural Science. For the Home Economics option: (i) NCE merit in Home Economics; (ii) ND lower credit in Home Economics. For Industrial Technical Education: (i) Two (2) 'A' Level passes in Physics and Mathematics; (ii) ND lower credit in Civil Engineering, Production/Electrical Engineering; (iii) Final City and Guilds or its equivalent plus National Technical Certificate; (iv) NCE credit in Technical Education plus 'O' Level credit passes in Physics or Mathematics.",
+   "institution_waivers": [
+    {
+     "institution": "ILORIN",
+     "note": "For Educational Technology/Introductory Technology requires: (a) NCE Merit in Arabic, Christian Religious Studies, English Language, Fine and Applied Arts, French, History, Islamic Studies or Nigerian Languages, or any three relevant subjects in IJMB/JUPEB; (b) NCE Merit in Biology, Chemistry, Computer Science, Health Education, Human Kinetics, Integrated Science, Mathematics, Physics, Technology Education, and ND Lower Credit in A-V Technology, Electrical/Mechanical/Civil Engineering/Woodwork/Metallurgical, Computer Science or Mass Communication; (c) NCE Merit in Accounting, Economics, Geography, Political Science or Social Studies. Minor subject from Direct Entry list; Unilorin Diploma in Instructional Radio & Television Production and Diploma in Photography acceptable. For Technology Education accepts NCE (Technical)/ND/ANTC with Lower Credit in all fields of Engineering and Technology, NCE Merit in Physics/Computer/Integrated Science/Chemistry/Biology, or IJMB/JUPEB with Physics, Chemistry or Biology."
+    },
+    {
+     "institution": "YABA-DEG",
+     "note": "Accepts Two (2) 'A' Level passes in Physics and Mathematics; ND lower credit in Civil Engineering, Production/Electrical Engineering, Drafting Technology; Final City and Guilds plus National Technical Certificate; NCE credit in Technical Education plus 'O' Level credit in Physics or Mathematics; Engineering Technicians Part II Certificate; UNN Diploma (Distinction/Credit/Merit) in Computer Education, Physics/Mathematics and Computer Science. UTME: five 'O' Level credits including English Language, Mathematics and three others from Physics, Chemistry, Further Mathematics, Biology/Agricultural Science, Geography, Economics and listed technical subjects."
+    },
+    {
+     "institution": "KADPOLY",
+     "note": "Requires NCE Technical merit in relevant programme or C grade in all major subjects and accepts two-year-programme candidates from institutions affiliated to ABU; accepts ND lower credit in relevant programme; full Technological Certificate in related technical subjects and Technical Teachers Certificate (TTC); 'O' Level credit in Mathematics with English, Technical Drawing, Fine Arts, TC II, Pre-NCE (T); and 'O' Level plus Federal Craft Certificate / NTC with Mathematics and other relevant subjects."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Accepts ND lower credit in relevant programme."
+    },
+    {
+     "institution": "MINNA",
+     "note": "Accepts City and Guilds Final with Technical Teachers Certificate (TTC), Advanced National Technical Certificate and ND in relevant programme in addition to 'O' Level certificate. UTME: five 'O' Level credit passes in English Language, Mathematics, Physics and any other two relevant science and/or technical subjects. UTME subjects: Mathematics, Physics and any of Biology, Agricultural Science, Chemistry, Economics, Geography or Arts."
+    },
+    {
+     "institution": "ESUTECH",
+     "note": "Accepts Technical Drawing and ND/NCE (merit) in specialized areas; requires 'O' Level credit pass in English Language; UTME subjects require Economics."
+    },
+    {
+     "institution": "UNN",
+     "note": "Accepts two (2) 'A' Level passes in Physics and Mathematics in addition to departmental UTME requirements; ND lower credit in Civil Engineering, Production/Electrical Engineering, Drafting Technology; Final City and Guilds plus National Technical Certificate; NCE merit pass in Technical Education; Engineering Technicians Part II Certificate. UTME: five 'O' Level credit passes including Physics or Mathematics at GCE/SSC, NTC or City and Guilds intermediate."
+    },
+    {
+     "institution": "NDU",
+     "note": "Same as Vocational and Technical Education; accepts NTC/NBC and 'O' Level pass in English but requires 'O' Level credit pass in Physics; UTME subjects require Chemistry as the third subject."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "Accepts two (2) 'A' Level passes in relevant subjects, NCE, ND, or NBC/NDC; UTME: five 'O' Level credit passes including English Language, Mathematics, Physics and Chemistry; UTME subjects require Chemistry as third subject."
+    },
+    {
+     "institution": "TASUED",
+     "note": "Requires two (2) 'A' Level passes/HSC, NCE (merit) in relevant teaching subjects or ND/HND (upper credit); UTME: five 'O' Level credits at one sitting or six at two sittings including English Language, Mathematics and others from Arts, Social Sciences or Sciences; UTME subjects: subject of specialization plus one each from Arts and Social Sciences or Sciences."
+    },
+    {
+     "institution": "BSU",
+     "note": "Requires ND/HND Upper Credit in a specialized area of Industrial or Engineering Technology; candidates must satisfy University 'O' Level requirements; NCE with 9 points and above with a pass in English; 'A' level pass in acceptable subjects; preliminary degree candidates from Benue State University only. UTME: minimum five Credits at not more than two sittings including English Language, Mathematics, Physics, Chemistry and one of Social Sciences or Technical Drawing and a technological subject. UTME subjects: Mathematics, Physics and one of Chemistry, Biology, Economics or Geography."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "UTME requires Mathematics, Chemistry and Biology."
+    },
+    {
+     "institution": "EDOMOK",
+     "note": "UTME: five (5) 'O' Level credit passes to include Mathematics and Physics."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME subjects: accepts any three (3) relevant subjects."
+    }
+   ],
+   "first_line": 4678,
+   "line_range": [
+    4678,
+    5101
+   ],
+   "scope": [
+    4678,
+    5102
+   ]
+  },
+  {
+   "jamb_name": "Technology Education",
+   "institutions": [
+    "FED-GUSAU",
+    "KSUSTA",
+    "EDUCATION",
+    "MECHANICAL/AUTOMOBILE",
+    "EDUMUNZ",
+    "AUTO AND MECHANICAL",
+    "UNIZIK",
+    "EDUCATION AND MECHANICAL",
+    "AND AUTOMECHANIC",
+    "TECHNOLOGY",
+    "EKSU",
+    "AEFUNA",
+    "CUST",
+    "EBSU",
+    "ESUTECH",
+    "FC-GOMBE",
+    "ILORIN",
+    "KATPOLY-DEG",
+    "MAITAMA",
+    "ELECTRICAL TECHNOLOGY",
+    "LASUED",
+    "BUILDING EDUCATION",
+    "EDAKOKA",
+    "BUILDING AND WOODWORK",
+    "BUILDING",
+    "ATAPOLY-DG",
+    "BAUCHI",
+    "FTBICHI-DEG",
+    "KUST",
+    "CONSTRUCTION TECHNOLOGY",
+    "MAUTY",
+    "MANAGEMENT AND EDUCATION",
+    "TASUED",
+    "TRANSPORTATION",
+    "MANAGEMENT",
+    "SAUED"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 5102,
+   "line_range": [
+    5102,
+    10260
+   ],
+   "scope": [
+    5102,
+    5122
+   ]
+  },
+  {
+   "jamb_name": "Home Economics and Hotel Management",
+   "institutions": [
+    "EDUCATION",
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ADEYEMIDEG",
+    "ADSU",
+    "AKAMKPA-DEG",
+    "BENIN",
+    "BOUEDST",
+    "BSU",
+    "CALABAR",
+    "CE-AKWANGA",
+    "DELSU",
+    "EBSU",
+    "EDAKOKA",
+    "EDKANO-2",
+    "EDALV",
+    "EDASAB",
+    "EDOMOK",
+    "EDUMUNZ",
+    "EDZAR",
+    "FC-ABEOKUTA",
+    "FC-GOMBE",
+    "FC-KONTAGORA",
+    "FC-PANKSHIN",
+    "GIDANWAYA-DEG",
+    "HONG-DEG",
+    "IAUED",
+    "IKERE-EKITI",
+    "IMSU",
+    "KAT-ALA DEG",
+    "KWCOE-DEG",
+    "LAGOS",
+    "LASUED",
+    "MAUTY",
+    "MOCPEN",
+    "NASARAWA",
+    "NSUGBE",
+    "OAU",
+    "PCE-DEG",
+    "SAUED",
+    "SSUET",
+    "SARUED",
+    "SHAGARI",
+    "TSUJ",
+    "UDA",
+    "UMUDIKE",
+    "UNN",
+    "UYO",
+    "WARRI",
+    "YABA-DEG",
+    "ZUBA-DEG",
+    "MANAGEMENT AND EDUCATION",
+    "TASUED",
+    "EDUCATION AND SCIENCE",
+    "BAUCHI",
+    "MAIDUGURI",
+    "NDU",
+    "MADONNA",
+    "EKSU",
+    "RSU",
+    "MINNA",
+    "KWASU",
+    "SCIENCE EDUCATION",
+    "YSU",
+    "PHC",
+    "RENAISSANCE",
+    "UNIZIK",
+    "EDUCATION AND ENGLISH",
+    "LANGUAGE",
+    "AAUA",
+    "ABUJA",
+    "AGBORCOE",
+    "AJAYI",
+    "AKSCOE-DEG",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "AOCOE",
+    "ARGUNGU-DEG",
+    "BABCOCK",
+    "BASU",
+    "BAYERO",
+    "BIU",
+    "BOSU",
+    "COAL-CITY",
+    "COEA",
+    "COOU",
+    "COEMARU-DEG",
+    "COERINGIM-DEG",
+    "EACOE",
+    "ESCOE",
+    "EDGUMEL",
+    "EDKANO",
+    "EDOBUDU",
+    "EDOMOK-UYO",
+    "EUI",
+    "EDYOLA",
+    "KOMU",
+    "FC-KATSINA",
+    "FCOKENEDEG",
+    "FED-DUTSINMA",
+    "FED-GASHUA",
+    "FED-GUSAU",
+    "FED-KASHERE",
+    "FED-KEBBI",
+    "FED-LOKOJA",
+    "FED-OTUOKE",
+    "FED-OYE EKITI",
+    "FOUNTAIN",
+    "FTGOMBE-DEG",
+    "GREGORY",
+    "GSU",
+    "IBADAN",
+    "IJBCOE-DEG",
+    "ILA-ORANGUN",
+    "ILORIN",
+    "JOS",
+    "KASU",
+    "KICOE-DEG",
+    "PAAU",
+    "KWASCOE",
+    "LASU",
+    "LCITY",
+    "MAID-SDWCH",
+    "MCF-DEG",
+    "MOSOGAR-DEG",
+    "MAITAMA",
+    "NASE-DEG",
+    "NOUN",
+    "NSCOE-DEG",
+    "NTI-DEG",
+    "OJU-DEG",
+    "OOU",
+    "ORO-DEG",
+    "OSCOE",
+    "OYOSPECIAL",
+    "PLASU",
+    "SALEM",
+    "SHAGARI-2",
+    "SLUK",
+    "UDU",
+    "UMAR",
+    "UMYUK",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "VERITAS",
+    "WARRICOE-DEG",
+    "ZING-DEG",
+    "ZAMFARA",
+    "EDUCATION / LANGUAGE",
+    "USCOE",
+    "LANGUAGE LITERATURE",
+    "GOUU",
+    "EDUCATION AND ENGLISH AND",
+    "LITERARY STUDIES",
+    "AEFUNA",
+    "TANSIAN",
+    "PAUL",
+    "ARTS",
+    "EDUCATION/FINE ART",
+    "CREATIVE ARTS",
+    "EDUCATION AND HAUSA",
+    "COED-DEG",
+    "FCEKANO-DEG",
+    "WAKABIU-DEG",
+    "EDUCATION AND RELIGIOUS",
+    "STUDIES",
+    "AICI",
+    "BCT-BENIN",
+    "IKWO-DEG",
+    "SPIRITAN-ENU",
+    "EDUCATION AND CHRISTIAN",
+    "RELIGIOUS STUDIES",
+    "CALEB",
+    "ILORINCOL-DEG",
+    "KWCOE",
+    "NCBC",
+    "WESLEYUNIS",
+    "EDUCATION AND ARABIC",
+    "EDUCATIONAL FOUNDATIONS",
+    "ESUTECH",
+    "EDUCATION FOUNDATIONS AND",
+    "MANAGEMENT",
+    "EDUCATIONAL / PSYCHOLOGY",
+    "GUIDANCE AND COUNSELLING",
+    "AND ADMINSTRATION",
+    "CRUTECH",
+    "EDUCATIONAL PSYCHOLOGY",
+    "BINGHAM",
+    "EDUCATION PSYCHOLOGY AND",
+    "CURRICULUM STUDIES",
+    "EDUCATIONAL MANAGEMENT",
+    "ATIBA",
+    "ARTHUR-JARVIS",
+    "DIAMOND-DEG",
+    "PEACELAND UNI",
+    "REDEEMERS",
+    "SACOED B.ED",
+    "SOSU",
+    "KWARARAFA",
+    "UNI-AFRICA"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology or Agricultural Science",
+    "and one (1) other subject"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level NTC/NBC credit passes or TC II merit including English Language, Mathematics, Home Economics, Biology and Chemistry.",
+   "direct_entry": "(i) NCE merit in Home Economics; (ii) 'A' Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science; (iii) ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or any other related programme.",
+   "institution_waivers": [
+    {
+     "institution": "UNN",
+     "note": "For a three-year degree programme accepts (in addition to UTME requirements) NCE merit in Home Economics, ND lower credit in Fashion and Clothing Management Education or Home Economics or Home and Rural Economics or Hotel and Catering; a University Degree in any discipline plus departmental UTME requirements may be considered for direct entry into a three-year programme. UTME: five 'O' Level credit passes including any two of Home Management, Clothing and Textiles, Food and Nutrition, Biology, Chemistry, Physics, Agricultural Science, Economics, Cosmetology, Garment Making and Catering Craft plus UNN UTME requirements. UTME subjects: Chemistry or Biology plus any two other Science or Social Science subjects like Agricultural Science, Home Economics, Physics, Mathematics, Economics, Commerce and Geography."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Requires two (2) or three (3) merit in NCE including Home Economics plus three (3) or two (2) 'O' Level credit passes in English Language, Biology/Agricultural Science with 'O' Level pass in Chemistry. UTME: 'O' Level pass in Chemistry and credit pass in Biology/Agricultural Science. UTME subjects: Biology/Agricultural Science and any other two Science or Social Science subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts NCE or ND in Home Economics, Catering and Hotel Management, Textile Management and any other relevant subject with minimum merit pass; very good passes in three JUPEB subjects (Chemistry, Biology and one other from Home Economics, Physics, Food & Nutrition, Home Management, Clothing & Textile); three 'A' Level passes in two relevant Science subjects; ND with Distinction in Hotel Management, Tourism, Catering and Hotel Management. UTME: five O/Level credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and one of Economics, Home Economics, Physics, Food & Nutrition/Home Management, Clothing and Textile, Garment Making/Dyeing & Bleaching/Catering Craft Practice. UTME subjects: English Language, Chemistry, Biology/Agricultural Science and one other from Mathematics, Physics, Food & Nutrition, Home Management, Clothing & Textile, Garment Making, Dyeing & Bleaching, Catering Craft Practice."
+    },
+    {
+     "institution": "EDZAR",
+     "note": "Requires three (3) 'A' Level passes/NCE in Home Economics; NCE credit in Home Economics including Education."
+    },
+    {
+     "institution": "TASUED",
+     "note": "Direct Entry: NCE in Home Economics with minimum Merit Pass; at least two (2) 'A' Level passes in two of Chemistry, Biology and Agricultural Science; minimum OND/HND upper credit in Home Economics or Food Science or Hotel and Catering Management. UTME: five 'O' Level credit passes or NTC/NBC credits at one sitting or six at two sittings including English Language, Mathematics and other subjects from Food and Nutrition, Home Management, Clothing and Textile, Agricultural Science, Biology, Economics, Health Education and Chemistry; minimum pass in Chemistry or credit in Food and Nutrition, Home Management or Agricultural Science required. UTME subjects: Mathematics and any two from Biology, Agricultural Science, Physics or Chemistry."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts 'A' Level passes/IJMB in two (2) of Chemistry and any of Biology, Botany or Agricultural Science. UTME: five 'O' Level credit passes in Mathematics/English Language/Home Economics, Biology, Geography, Physics/Chemistry; Old Grade II five passes including Arithmetic/English Language/Domestic Science; New Grade II five credit passes including English Language, Mathematics and Home Economics; one Home Economics subject (Foods and Nutrition, Home Management or Textile and Clothing) is required."
+    },
+    {
+     "institution": "EDOMOK",
+     "note": "Accepts NCE merit/HND/ND lower credit in Fashion and Clothing Management Education or Home Economics or Hotel and Catering or Home and Rural Economics plus the UNN UTME requirements. UTME: five 'O' Level credit passes including English Language and any two of Home Management, Clothing and Textile, Food and Nutrition, Biology, Chemistry, Agricultural Science and Economics. UTME subjects: Chemistry or Biology plus two other Science subjects."
+    },
+    {
+     "institution": "FC-PANKSHIN",
+     "note": "Accepts 'O' Level pass in Chemistry; does not accept application of ND/HND candidates without teaching qualifications."
+    },
+    {
+     "institution": "YABA-DEG",
+     "note": "Accepts NCE merit in Home Economics, A Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science, and ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or any other related programme. Requires Five (5) O Level NTC/NBC credit passes or TC II in English Language, Mathematics and any other three subjects from Home Economics/Management, Biology/Agricultural Science, Chemistry, Physics, Food & Nutrition, Economics, Cosmetology, Clothing & Textile/Garment Making, Catering Craft, Health Education/Health Science, Dyeing & Bleaching, Leather Work, Tourism, Jewellery and Basketry. UTME subjects: English Language, Chemistry/Biology and any other two subjects from the O'Level requirements."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Accepts NCE merit or ND/HND upper credit respectively in the relevant programme. UTME: five 'O' Level credit passes in English Language, Mathematics and any three of Biology, Chemistry, Physics, Food and Nutrition, Clothing and Textile, Home Management. UTME subjects: a Social Science subject as the third subject."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires NCE in Home Economics with minimum merit pass, OND Home Economics or Food Science in upper credit or any other related courses. UTME: five credits at SSC or equivalent including English Language, Mathematics, Biology, Chemistry and Home Economics or Food Nutrition. UTME subjects: Biology or Agricultural Science or Chemistry, Home Economics or Food and Nutrition and any one of Mathematics and Economics."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "Accepts NCE merit in Home Economics, A Level passes in two (2) of Chemistry or any Biology, Botany and Agricultural Science, and ND/HND credit in Home Economics or Food Science or Hotel and Catering Management or related programme. UTME: five O Level credit passes including English Language, Mathematics and any three of Biology/Agric Sc., Home Management, Food and Nutrition, Clothing & Textiles, Economics, Geography, Chemistry, Physics, Health Education, Catering & Craft Practice, Garment Making, Textile Trade, Marketing/Salesmanship, Cosmetology; or NTC/NBC credit passes or TCII Merit including English and Mathematics. UTME subjects: Biology/Agricultural Science and any two of Home Economics/Management, Economics, Chemistry, Physics."
+    },
+    {
+     "institution": "BSU",
+     "note": "Direct Entry: preliminary degree candidates from Benue State University only must pass at least five of six subjects at 50%; NCE use of English acceptable in lieu of 'O' Level English; 'A' Level pass in acceptable subjects; upper credit ND/HND or Diploma in Fashion and Clothing Management Education or Home Economics plus credit in two of Home Management, Clothing and Textiles, Food and Nutrition, Biology, Chemistry, Agricultural Science and Economics; NCE (Home Economics Education) merit with credit in four of the same; any other qualification considered appropriate by BSU. UTME: 'O' Level credit passes in English Language, Mathematics, Biology and any two of Home Management, Clothing and Textiles, Food and Nutrition, Chemistry, Agricultural Science and Economics at WASSCE/SSCE/GCE 'O' Level/NTC/NBC. UTME subjects: Biology, Chemistry, and any one of Mathematics, Physics, Economics, Agricultural Science."
+    },
+    {
+     "institution": "ADEYEMIDEG",
+     "note": "UTME: 'O' Level credit passes in Chemistry, Mathematics, and any two of Food and Nutrition, Home Economics/Home Management, Clothing and Textile, Agricultural Science/Biology."
+    },
+    {
+     "institution": "EDALV",
+     "note": "UTME: 'O' Level credit passes in Biology and Chemistry."
+    },
+    {
+     "institution": "IAUED",
+     "note": "UTME: one (1) Science subject. UTME subjects: one Science subject and any other subjects."
+    },
+    {
+     "institution": "UYO",
+     "note": "UTME: 'O' Level credit pass in Chemistry."
+    },
+    {
+     "institution": "ABSU",
+     "note": "UTME: five 'O' Level credit passes to include English Language, Mathematics, Biology or Chemistry and any two other subjects."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UTME subjects: Chemistry, Biology/Agricultural Science, and Mathematics/Physics."
+    },
+    {
+     "institution": "EDASAB",
+     "note": "UTME subjects: Biology or Agricultural Science and any two Science or Social Science subjects."
+    }
+   ],
+   "first_line": 5122,
+   "line_range": [
+    5122,
+    6977
+   ],
+   "scope": [
+    5122,
+    6978
+   ]
+  },
+  {
+   "jamb_name": "Teacher Education",
+   "institutions": [
+    "SACOED B. ED",
+    "EDUCATION"
+   ],
+   "utme_subjects": [
+    "As in Educational Management"
+   ],
+   "olevel_requirement": "As in Educational Management.",
+   "direct_entry": "As in Educational Management.",
+   "institution_waivers": [
+    {
+     "institution": "SACOED B. ED",
+     "note": "Direct Entry: (a) Two (2) 'A' Level passes in the subject of specialization/teaching subject and one (1) other relevant subject; (b) NCE merit in the subject of specialization/teaching subject and one (1) other relevant subject. UTME: five (5) 'O' Level credit passes to include English Language, Christian Religious Studies and three (3) relevant subjects at a sitting or four (4) at two sittings; 'O' Level credit passes in Mathematics and Economics required for teaching option in Economics; 'O' Level credit pass in Government or History and pass in Mathematics required for Science and Social Studies; 'O' Level credit passes in Literature in English and two other Arts subjects required for English Language option. UTME subjects: relevant subjects for the teaching options â€” Literature in English for English Language, Mathematics and Economics for Economics, Government and History for Political Science or Social Studies."
+    }
+   ],
+   "first_line": 6978,
+   "line_range": [
+    6978,
+    7023
+   ],
+   "scope": [
+    6978,
+    7024
+   ]
+  },
+  {
+   "jamb_name": "Library Science",
+   "institutions": [
+    "ABSU",
+    "AOCOE",
+    "AUE",
+    "KWASCOE",
+    "MAIDUGURI",
+    "MAID-SDWCH",
+    "UYO"
+   ],
+   "utme_subjects": [
+    "Any three (3) subjects"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics and three (3) other relevant Arts/Sciences/Social Sciences subjects.",
+   "direct_entry": "(i) Two (2) 'A' Level passes in relevant subject plus the UTME requirements. (ii) NCE merit in relevant subjects.",
+   "institution_waivers": [
+    {
+     "institution": "UNIZIK",
+     "note": "UNIZIK requires one (1) of the 'A' Level or NCE subject to be combined with Library Science."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "BAYERO accept NCE merit provided such candidates have two (2) years working experience."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "MAIDUGURI accepts NCE/ND/HND in related studies."
+    },
+    {
+     "institution": "COOU",
+     "note": "COOU accepts NCE credit"
+    }
+   ],
+   "first_line": 7024,
+   "line_range": [
+    7024,
+    7033
+   ],
+   "scope": [
+    7024,
+    7034
+   ]
+  },
+  {
+   "jamb_name": "Library and Information Science",
+   "institutions": [
+    "SCIENCE",
+    "AAU",
+    "AAUA",
+    "ABSU",
+    "ABU",
+    "ACHIEVERS",
+    "AL-QALAM",
+    "BAUCHI",
+    "BAYERO",
+    "BENIN",
+    "BINGHAM",
+    "BSU",
+    "BOUEDST",
+    "CALABAR",
+    "CLIFFORD",
+    "CUST",
+    "CRUTECH",
+    "DELSU",
+    "DOU",
+    "EBSU",
+    "EDANKPA",
+    "EDUMUNZ",
+    "EDZAR",
+    "EKSU",
+    "ESUTECH",
+    "FED-OYE EKITI",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-GASHUA",
+    "FED-KASHERE",
+    "FED-LAFIA",
+    "FED-OTUOKE",
+    "FED-WUKARI",
+    "GSU",
+    "IAUED",
+    "IBADAN",
+    "IMSU",
+    "JABU",
+    "JOS",
+    "PAAU",
+    "KSUSTA",
+    "KWASU",
+    "KWCOE",
+    "LAPAI",
+    "LASU",
+    "LASUED",
+    "LCITY",
+    "MADONNA",
+    "MAKURDI",
+    "MAITAMA",
+    "NASARAWA",
+    "NOUN-ELUON",
+    "NUS",
+    "OAU",
+    "OOU",
+    "PLASU",
+    "REDEEMERS",
+    "SALEM",
+    "SAUED",
+    "SSUET",
+    "TASUED",
+    "TSUJ",
+    "UDA",
+    "UDU",
+    "UMUDIKE",
+    "UMYUK",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNN",
+    "WESLEYUNI",
+    "STUDIES",
+    "BIU",
+    "MANAGEMENT",
+    "AUE",
+    "UNIZIK",
+    "INFORMATION RESOURCE",
+    "BABCOCK",
+    "EDUCATION",
+    "PRE-PRIMARY AND PRIMARY",
+    "EDOMOK-UYO",
+    "OJU-DEG",
+    "UYO",
+    "PRIMARY AND ELEMENTARY",
+    "COOU",
+    "PRIMARY EDUCATION STUDIES",
+    "ABUJA",
+    "ADSU",
+    "ARTHUR-JARVIS",
+    "ARGUNGU-DEG",
+    "COAL-CITY",
+    "COERINGIM-DEG",
+    "COEMARU-DEG",
+    "EDALV",
+    "FTGOMBE-DEG",
+    "FCEKANO-DEG",
+    "ILORIN",
+    "NSCOE-DEG",
+    "NSUGBE",
+    "OSCOE",
+    "OYOSPECIAL",
+    "PHC",
+    "SARUED",
+    "SHAGARI",
+    "SHAGARI-2",
+    "TANSIAN",
+    "NOUN",
+    "NTI-DEG",
+    "ZAMFARA",
+    "NURSERY AND PRIMARY",
+    "AGBORCOE",
+    "AOCOE",
+    "EACOE",
+    "IJEBUODE-DEG",
+    "KWASCOE",
+    "KWCOE-DEG",
+    "MOCPEN",
+    "ORO-DEG",
+    "EARLY CHILDHOOD EDUCATION",
+    "FC-PANKSHIN",
+    "ILA-ORANGUN",
+    "LAGOS",
+    "AKSCOE-DEG",
+    "GUIDANCE AND COUNSELLING",
+    "ADEYEMIDEG",
+    "AJAYI",
+    "AL-HIKMAH",
+    "BOSU",
+    "CALEB",
+    "EDOBUDU",
+    "FCOKENEDEG",
+    "FED-LOKOJA",
+    "AEFUNA",
+    "GIDANWAYA-DEG",
+    "GREGORY",
+    "IKERE-EKITI",
+    "ILORINCOL-DEG",
+    "KWARARAFA",
+    "NDU",
+    "PEACELAND UNI",
+    "PCE-DEG",
+    "SACOED B.ED",
+    "SOSU",
+    "UNI-AFRICA",
+    "VERITAS",
+    "COUNSELLOR EDUCATION",
+    "PSYCHOLOGY EDUCATION",
+    "AGRICULTURAL SCIENCE AND",
+    "AKAMKPA-DEG",
+    "COEA",
+    "COED-DEG",
+    "EDAKOKA",
+    "EDASAB",
+    "EDGUMEL",
+    "EDKANO-2",
+    "EDOMOK",
+    "EDYOLA",
+    "FC-KONTAGORA",
+    "FC-GOMBE",
+    "FTBICHI-DEG",
+    "HONG-DEG",
+    "IJBCOE-DEG",
+    "KICOE-DEG",
+    "KUST",
+    "MAIDUGURI",
+    "MAID-SDWCH",
+    "MOSOGAR-DEG",
+    "NSCOE-DG",
+    "RSU",
+    "UMAR",
+    "WARRI",
+    "AGRICULTURAL PRODUCATION",
+    "AGRICULTURAL TECHNOLOGY",
+    "AND EDUCATION",
+    "MAUTY",
+    "FOUNTAIN",
+    "FCEZARIA-DEG",
+    "ADULT AND CONTINUOUS",
+    "ADULT EDUCATION/ENGLISH",
+    "LITERATURE",
+    "ADULT EDUCATION/ECONOMICS",
+    "AND STATISTICS",
+    "SCIENCE AND PUBLIC",
+    "ADULT EDUCATION/GEOGRAPHY",
+    "AND REGIONAL PLANNING",
+    "ADULT AND NON-FORMAL",
+    "ADULT AND COMMUNITY",
+    "ADULT EDUCATION AND",
+    "COMMUNUITY DEVELOPMENT",
+    "CE-AKWANGA",
+    "GOUU",
+    "IKWO-DEG",
+    "KAT-ALA DEG",
+    "MCF-DEGSSSS",
+    "MOSOGA-DG2",
+    "UOO",
+    "ZING-DEG",
+    "ZUBA-DEG",
+    "EDUCATION AND POLITICAL",
+    "ESCOE",
+    "KOMU",
+    "FED-GUSAU",
+    "NASE-DEG",
+    "PEACELAND-UNI",
+    "EDUCATION AND GOVERNMENT",
+    "EDUCATION AND ECONOMICS",
+    "DIAMOND-DEG",
+    "EUI",
+    "FED-KEBBI",
+    "KASU",
+    "MCF-DEG",
+    "YSU",
+    "ECONOMICS"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "Direct Entry: requires a pass in 'O' Level Mathematics."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "Direct Entry: accepts a minimum of 9 points in IJMB/HSC/GCE 'A' Level/NCE. Candidates with a minimum of lower credit pass in Diploma/HND in Library and Information Science from recognized institutions may also be admitted."
+    },
+    {
+     "institution": "UNN",
+     "note": "Direct Entry: accepts candidates holding either (a) NCE merit in Library and Information Science or the subject being combined with it, or (b) HSC/'A' Level in two subjects including that to be combined with Library and Information Science."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "Direct Entry: requires (a) two 'A' Level passes in relevant subjects, or (b) NCE merit in relevant subjects."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "Direct Entry: same as in Vocational and Technical Education."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Direct Entry: accepts (a) two 'A' Level passes in relevant subjects with 'O' Level credit passes in three other subjects at not more than two sittings; (b) three 'A' Level passes with 'O' Level credit passes in two other subjects at not more than two sittings; (c) NCE merit in two major subjects with 'O' Level credit passes or equivalent in three other subjects."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "Direct Entry: accepts IJMB/'A' Level/'O' Level credit passes in any three of: any two of Biology, Chemistry, Mathematics, Physics, Economics, Commerce, Accounting, ICT and Business Management (ND) with lower credit in Library and Information Science from a recognised Polytechnic, and NCE in Science subjects with minor in Library Science at lower credit or merit; must also have five 'O' Level credits in English Language, Mathematics, Chemistry, Biology or Agricultural Science and one credit in Economics, Commerce, Accounting, ICT and Business Management."
+    },
+    {
+     "institution": "IAUED",
+     "note": "Direct Entry: requires 5 'O' Level credits including English and Mathematics plus Diploma in Library Science, or 2 credit passes at Advanced Level, or NCE in Library Science."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "Direct Entry: accepts two 'A' Level passes in relevant area or from Arts and Social Science subjects; ND/NCE not below lower credit or nine points in the relevant area from a recognized institution."
+    },
+    {
+     "institution": "ABU",
+     "note": "Direct Entry: accepts 'A' Level/IJMB passes in at least two subjects; ABU Diploma in Library & Information Science (at least Merit Grade); NCE with minimum Merit Grade in two subjects including Education."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Direct Entry: accepts (a) DELSU Diploma in Library Science with at least merit pass; (b) ND in Library and Information Science from any recognized Polytechnic in upper credit."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "UTME: accepts five TC II merit including English Language and a pass in Mathematics."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: same as in Guidance and Counselling."
+    },
+    {
+     "institution": "UMYUK",
+     "note": "UTME: requires five 'O' Level credit passes at SSC or equivalent in English Language, Mathematics and three other subjects at not more than two sittings."
+    },
+    {
+     "institution": "TASUED",
+     "note": "UTME: requires five 'O' Level credit passes at one sitting or six 'O' Level credit passes at two sittings."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "UTME: same as in Vocational and Technical Education."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: requires UTME requirements with five 'O' Level credit passes including the subject to be combined with Library and Information Science, plus additional 'O' Level credit requirements for particular combinations."
+    },
+    {
+     "institution": "ABSU",
+     "note": "UTME: requires five 'O' Level credit passes including English Language, four other subjects and 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "MINNA",
+     "note": "UTME: requires 'O' Level credit pass in Physics and any other Science or Social Science subject."
+    },
+    {
+     "institution": "PAAU",
+     "note": "UTME: accepts 'O' Level pass in Mathematics and 'O' Level credit passes in four other relevant subjects including English Language."
+    },
+    {
+     "institution": "BENIN",
+     "note": "UTME: accepts five 'O' Level credit passes at not more than two sittings."
+    },
+    {
+     "institution": "JOS",
+     "note": "UTME: requires five 'O' Level credit passes at not more than two sittings including English Language; accepts 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "UTME: accepts English Language and Mathematics as the core course with 'O' Level credit passes in two Science subjects (Biology, Chemistry, Physics, ICT) and one 'O' Level credit in Economics, Commerce, Business Method or Financial Accounting."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME: requires five credit passes including English Language and Mathematics at not more than two sittings."
+    },
+    {
+     "institution": "LCITY",
+     "note": "UTME: requires five 'O' Level credit passes at SSC or equivalent including English Language and any other four subjects."
+    },
+    {
+     "institution": "IAUED",
+     "note": "UTME: requires five 'O' Level credit passes including English Language and Mathematics."
+    }
+   ],
+   "first_line": 7034,
+   "line_range": [
+    7034,
+    9434
+   ],
+   "scope": [
+    7034,
+    9435
+   ]
+  },
+  {
+   "jamb_name": "Education and Business Administration",
+   "institutions": [
+    "EDUCATION AND SOCIOLOGY",
+    "FED-GUSAU",
+    "TASUED"
+   ],
+   "utme_subjects": [
+    "Mathematics",
+    "and any two (2) of Economics, Government, History, Literature in English"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level or NTC/NBC credit passes in English Language and Mathematics plus three (3) other subjects.",
+   "direct_entry": "NCE or 'A' Level passes in two (2) of Accounting, Business Management, Government, and Economics.",
+   "institution_waivers": [],
+   "first_line": 9435,
+   "line_range": [
+    9435,
+    9452
+   ],
+   "scope": [
+    9435,
+    9453
+   ]
+  },
+  {
+   "jamb_name": "Business Education",
+   "institutions": [
+    "AAU",
+    "ABSU",
+    "ABU",
+    "AGBORCOE",
+    "AJAYI",
+    "AKSCOE-DEG",
+    "AKAMKPA-DEG",
+    "AL-HIKMAH",
+    "AOCOE",
+    "ARTHUR-JARVIS",
+    "ASPOL-DEG",
+    "ATAPOLY-DG",
+    "AUCHIPOLY-DEG",
+    "BABCOCK",
+    "BAUCHI",
+    "BENIN",
+    "BIU",
+    "BOUEDST",
+    "BSU",
+    "COAL-CITY",
+    "COEA",
+    "COOU",
+    "CALABAR",
+    "CRUTECH",
+    "DELSU",
+    "EACOE",
+    "EBSU",
+    "EDALV",
+    "EDAKOKA",
+    "EDANKPA",
+    "EDASAB",
+    "EDOBUDU",
+    "EDOMOK",
+    "EDUMUNZ",
+    "EDZAR",
+    "EDKANO-2",
+    "EKSU",
+    "ESUTECH",
+    "ESCOE",
+    "FC-GOMBE",
+    "FC-KONTAGORA",
+    "FED-DUTSINMA",
+    "FED-LOKOJA",
+    "FED-LAFIA",
+    "AEFUNA",
+    "FED-KEBBI",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "GIDANWAYA-DEG",
+    "GOUU",
+    "GREGORY",
+    "IAUED",
+    "IBADAN",
+    "IJBCOE-DEG",
+    "IJEBUODE-DEG",
+    "ILORIN",
+    "IKERE-EKITI",
+    "IKWO-DEG",
+    "KWASCOE",
+    "KWASU",
+    "KWCOE",
+    "LASU",
+    "LASUED",
+    "LAGOS",
+    "LCITY",
+    "MADONNA",
+    "MAIDUGURI",
+    "MAID-SDWCH",
+    "MAKURDI",
+    "MAUTY",
+    "MCF-DEG",
+    "MOSOGA-DG2",
+    "NDU",
+    "NOUN",
+    "NSCOE-DEG",
+    "NSUGBE",
+    "OOU",
+    "PCE-DEG",
+    "PHC",
+    "RSU",
+    "SALEM",
+    "SAUED",
+    "SSUET",
+    "SARUED",
+    "SHAGARI",
+    "TANSIAN",
+    "TASUED",
+    "TSUJ",
+    "UDA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNIZIK",
+    "UNN",
+    "UMYUK",
+    "USCOE",
+    "UYO",
+    "VERITAS",
+    "WARRI",
+    "YABA-DEG",
+    "YSU",
+    "ZING-DEG",
+    "MARKETING EDUCATION",
+    "EDUCATION",
+    "PHYSICAL EDUCATION AND"
+   ],
+   "utme_subjects": [
+    "Mathematics",
+    "Economics",
+    "and one (1) of Literature in English, History, Government, Geography, Chemistry and Physics"
+   ],
+   "olevel_requirement": "Five (5) TC II merit, 'O' Level or NTC/NBC credit passes including English Language, Mathematics, Economics and two (2) other subjects in the Social Sciences or Arts. For NBC, the other subjects could be from any of the following: Commerce, Office Practice, Principles of Accounts, Secretarial Duties, Typewriting and Shorthand.",
+   "direct_entry": "(i) Two (2) 'A' Level passes or NCE merit in two (2) relevant subjects. (ii) NCE merit in Business Education Double Major.",
+   "institution_waivers": [
+    {
+     "institution": "EDALV, UNIZIK",
+     "note": "Accept FTC/NSEC in National Secretariat Examination; Advanced level in Business Studies to include either Shorthand/Typewriting or Accounting and Commerce or Economics."
+    },
+    {
+     "institution": "ABSU",
+     "note": "Accepts ND credit in Mathematics."
+    },
+    {
+     "institution": "EDALV, ESUTECH, UNIZIK",
+     "note": "Accept NCE merit/credit in Business Education."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Accepts HND and NCE/OND with minimum of Merit and Upper credit respectively; and a) For Secretarial Option: NCE/ND in Secretarial Education with at least Upper credit from accredited institution or Diploma in Secretarial Studies or Accounting from recognized Polytechnics; b) For Accounts option: five (5) Merit/Credit passes at Teachers grade II Certificate."
+    },
+    {
+     "institution": "UYO",
+     "note": "Accepts NCE, ND upper credit, HND lower credit in relevant programmes plus the UTME requirements."
+    },
+    {
+     "institution": "EDALV, UNN",
+     "note": "Plus UTME requirements."
+    },
+    {
+     "institution": "EDALV",
+     "note": "Requires 'O' Level credit passes in Mathematics and English Language."
+    },
+    {
+     "institution": "RSU",
+     "note": "In addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in relevant discipline; (b) OND/ND (Upper Credit) in Business Education or in related area; (c) NCE in Business Education or related areas with a minimum of two credits and a merit; (d) Two (2) GCE/HSC 'A' Level at credit or above level."
+    },
+    {
+     "institution": "IAUED",
+     "note": "Candidates seeking admission by Direct Entry must have higher level qualifications such as GCE 'A' level or equivalent, NCE, ND, HND with the appropriate classification, satisfy the general entry requirements and satisfy the department entry requirements. For Marketing Education IAUED requires 2 'A' level (GCE) subjects at credit pass in relevant subjects or NCE/OND at credit pass."
+    },
+    {
+     "institution": "UYO",
+     "note": "Accepts a) NCE in relevant subject(s) or overall merit pass or above; b) Advanced level GCE or Advanced level NABTEB or JUPEB passes in two (2) relevant subjects; c) National diploma (minimum of lower credit level) in any area related to Business Education."
+    },
+    {
+     "institution": "UNN",
+     "note": "Accepts (a) two (2) 'A' Level passes plus the UTME requirements; (b) NCE merit in Business Education plus the UTME requirements; (c) ND lower credit in Secretarial Studies/Administration from any recognized polytechnic plus the UTME requirements; (d) full Technical Certificate/National Secretarial Examination Certificate at 'A' Level in Business Studies plus the UTME requirements."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "Accepts NCE, ND/HND lower credit in Agricultural Science."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Requires (a) NCE merit/credit in Business Education/Accounting in two (2) or three (3) subjects plus two (2) or three (3) 'O' Level credit passes in Mathematics, Economics/Commerce and English Language; (b) Joint Examination Board (JEB) London Teachers Diploma in RSA Shorthand and Typing, National Secretarial Certificate, National Teachers Certificate (NTTC) in addition to Advanced Certificate in Shorthand and Typing in RSA, NSC, plus five (5) 'O' Level credit passes; (c) ND upper credit in Accounting, Banking and Finance, Business Studies, Secretarial Studies plus three (3) 'O' Level credit passes at one (1) sitting."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "Accepts a) NCE in Business Education Secretarial/Office Practice, Accounting, Management at merit and above, ND Business Management, Business Administration Account, Public Administration at lower credit and above; b) two (2) 'A' Level passes in any of the subjects listed under the UTME requirements; c) Pass in NCE, ND and Grade II with four (4) years teaching experience."
+    },
+    {
+     "institution": "BIU",
+     "note": "Requires, in addition to the UTME requirements specified in the table, two (2) 'A' Level passes in relevant subjects or NCE merit/credit in relevant subjects."
+    },
+    {
+     "institution": "TASUED",
+     "note": "Accepts i. NCE merit in teaching subjects; ii. ND/HND upper credit in Business Education, Commerce, Accounting and any other related discipline."
+    },
+    {
+     "institution": "LASU",
+     "note": "Accepts, in addition to UTME requirements, two (2) 'A' Level passes or NCE merit in Business Methods, Principles of Accounting, Book Keeping, Commerce or Economics. Does not accept ND or HND."
+    },
+    {
+     "institution": "KWASU",
+     "note": "Accepts (a) two (2) 'A' Level passes/IJMB or equivalent, one (1) of which must be in relevant subject; (b) ND upper credit in Office Technology and Management, Secretarial Studies and Accounting; (c) HND lower credit in Secretarial Studies, Accounting and Marketing; (d) NCE merit and above in relevant subjects; (e) Preference will be given to NCE holders."
+    },
+    {
+     "institution": "NDU",
+     "note": "Same as Vocational and Technical Education."
+    },
+    {
+     "institution": "BSU",
+     "note": "Requires; a) Preliminary degree candidates (from Benue State University only) must pass at least five (5) out of the six (6) subjects studied with pass level of at least 50% in each subject; b) NCE use of English is acceptable in lieu of 'O' Level in English Language; c) 'A' Level pass in any of the acceptable subjects; d) ND/HND in relevant field of studies with upper credit from accredited institution, full technological certificate (FTC) WAEC/RSA Advanced in Business Studies which must include Typewriting or Accounting and Commerce/Economics with a grade C Passes, any of the above plus 'O' Level requirements; e) At least merit passes at NCE, plus 'O' Level requirements in relevant areas; f) Any other qualification that may be considered appropriate by Benue State University, Makurdi."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts a. NCE merit in Business Education Double Major; b. very good passes in three (3) JUPEB subjects: Economics and any two (2) of Accounting, Geography, Government, Business Management; c. two (2) 'A' Level passes in two (2) relevant subjects; d. NCE merit in two (2) relevant subjects: Financial Accounting and Office Management; e. Candidates must satisfy the UTME requirement."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts a) NCE Business Education Double Major plus five Ordinary level credits in GCE/SSCE/NECO/NABTEB/Equivalent to include English Language, Mathematics and any three of the following Business (Commercial) and Social Science subjects at not more than two sittings: Financial Accounting, Business Management (Business Methods), Commerce, Word Processing (Typewriting), Shorthand, Marketing, Office Practice, Salesman, Insurance, Information and Communication Technology, Economics, Government and Geography; b) NCE business education with options (accounting, secretarial studies and marketing) plus five ordinary level credits to include English Language, Mathematics and any three of the listed subjects; c) NCE Economics Education plus five Ordinary Levels credit to include English Language, Mathematics and any three of the listed subjects; d) 'A' level passes in GCE/IJMB/NABTEB in any two of Accounting, Economics and Business Management plus five 'O' Level credits in English Language, Mathematics and any three of the listed subjects."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires at least merit pass in NCE or upper credit in DELSU Diploma Business Education."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts NCE merit level pass in Business Education (Double Major); very good passes in three JUPEB subjects: Economics and any two of Accounting, Geography, Government, Business Management; three 'A' Level passes in any relevant subjects; NCE with Merit passes in two relevant subjects Financial Accounting, Office Management."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts NCE, Minimum of Merit pass in Business Education and Education; Two credit passes at IJMB in either Economics, Business Management, Accounting etc.; ABU Diploma with Merit Pass in related discipline."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts Two (2) A/level GCE or HSC or JUPEB or IJMB passes in the relevant subjects including UTME entry requirements; NCE with Credit Passes in the relevant subjects including UTME entry requirements from recognized institutions for a 2-year degree programme; OND with (Upper Credit) or HND with Merit Pass in the relevant subjects including UTME entry requirements from recognized institutions of higher learning."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "Accepts Two (2) 'A' level passes or NCE merit in two (2) relevant subjects; NCE merit in Business Education double major."
+    },
+    {
+     "institution": "YABA-DEG",
+     "note": "Accepts Two (2) A Level passes or NCE merit in two (2) relevant subjects; NCE merit in Business Education Double Major; At least Lower Credit in ND Business Administration/Management, Marketing, Accountancy, Banking & Finance and Office Technology Management."
+    },
+    {
+     "institution": "EDALV, UNIZIK",
+     "note": "UTME: Accept credit in RSA Business Studies stage II."
+    },
+    {
+     "institution": "EBSU",
+     "note": "UTME: Accepts five (5) TCII Merit, SSC or NTC/NBC credit passes to include English Language, Mathematics, Economics and two other subjects in the Social Science or Arts. For NBC holders, the subject could be from any of Commerce, Office Practice, Principles of Accounts, Secretarial Duties, Typewriting and Shorthand."
+    },
+    {
+     "institution": "RSU",
+     "note": "UTME: Requires five (5) 'O' Level credit passes to include English Language, Mathematics, Economics and any two subjects from Business Management, Accounting, Type-Writing, Shorthand, Government, Commerce, etc."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: Requires 'O' Level credit passes in five (5) subjects which must include English Language, Mathematics and any three (3) of the following: Economics, History, Commerce, Financial Accounting, Typewriting, Government, Geography, Physics and Chemistry."
+    },
+    {
+     "institution": "BENIN",
+     "note": "UTME: Accepts Commerce in lieu of Economics."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "UTME: Requires five (5) 'O' Level credit passes in English Language, Mathematics, Economics/Social Studies and any two (2) subjects."
+    },
+    {
+     "institution": "TASUED",
+     "note": "UTME: Requires five 'O' Level credit passes at one (1) sitting or six (6) 'O' Level credit passes at two (2) sittings in English Language, Mathematics and any other three (3) subjects in the Social Sciences or Arts which must include Economics."
+    },
+    {
+     "institution": "NDU",
+     "note": "UTME: Requires five (5) 'O' Level credit passes in English Language, Mathematics and any three (3) of Principles of Accounts, Commerce/Economics, Insurance, Store Keeping/Management, Word Processing, including any one (1) of the Social Sciences at not more than two (2) sittings."
+    },
+    {
+     "institution": "IAUED",
+     "note": "UTME: For admission by UTME entry into the department of Management for first degree programme must possess the minimum qualification of SSCE or equivalent with credits in five (5) subjects to include English Language, Mathematics and three (3) other subjects like Economics, Government, History, Commerce, Business Methods, Accounting, Geography, CRK, Civic Education. For Marketing Education IAUED requires five (5) 'O' level subjects (WACE or NECO/GCE at credit level) including English, Mathematics, Economics or Commerce, Government, Christian Religious Knowledge or Marketing."
+    },
+    {
+     "institution": "LASU",
+     "note": "UTME: Accepts any one (1) of Business Methods, Principles of Account, Book Keeping or Commerce."
+    },
+    {
+     "institution": "KWASU",
+     "note": "UTME: Requires five (5) 'O' Level credit passes to include English Language, Mathematics plus any one (1) of Economics, Commerce, Financial Accounting, Typewriting plus any two (2) other Social Science subjects."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: Accepts Five O/Level credit passes in English Language, Mathematics, Economics and two subjects from Arts or Social Sciences, Data Processing/Office Practice, Financial Accounting."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME: Requires five (5) 'O' Level credit passes which must include English Language, Mathematics, Economics and any other two (2) subjects at not more than two (2) sittings."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "UTME: Requires five (5) TC II merit, SSC or NTC/NBC credit passes including English Language, Mathematics, Economics/Commerce and two (2) other subjects in the Social Science or Arts. For NBC holders, the other subjects could be from any of Commerce, Office Practice, Principles of Accounts, Secretarial Duties, Typewriting and Shorthand."
+    },
+    {
+     "institution": "BSU",
+     "note": "UTME: Requires English Language, Mathematics and any other 3 subjects from Social Sciences and Business related courses and Economics from SC/GCE/SSCE or NTC/NBC/WASSCE/RSA Business Studies (stage ii intermediate)."
+    },
+    {
+     "institution": "UYO",
+     "note": "UTME: Requires five (5) 'O' Level credits which must include English Language, Mathematics in WASC, SSCE/NECO/GCE 'O' level NABTEB and any three (3) of Business Education and Social Science subjects at not more than two (2) sittings. NOTE: Biology Education or Agric in place of Physics can be considered."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME: Requires five (5) Ordinary Levels credit in GCE/SSCE/NECO/NABTEB/Equivalent to include English Language, Mathematics and any three of the following Business (Commercial) and Social Science subjects at not more than two sittings: Financial Accounting, Business Management (Business Methods), Commerce, Word Processing (Typewriting), Shorthand, Marketing, Office Practice, Salesman, Insurance, Information and Communication Technology, Economics, Government and Geography."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME: Requires Five 'O' level credit passes including English Language and Mathematics and any two Commercial Subjects."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME: Requires Five (5) O Level Credits in English Language, Mathematics, Economics or Commerce and any other two (2) subjects from French, Literature in English, History/Government, CRK/IRK, Mathematics, Biology, Chemistry, Agricultural Science, Further Mathematics, Technical Drawing, Physics, Igbo/Hausa/Yoruba, Fine Art, Geography, Accounting."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "UTME: Requires Five (5) TC II merit, 'O' level or NTC/NBC credit passes including English Language, Mathematics, Economics or Accounting and two (2) other subjects in the Social Sciences or Arts. For NBC, the other subjects could be from any of Commerce, Office Practice, Principles of Accounts, Secretarial Duties, Typewriting and Shorthand."
+    },
+    {
+     "institution": "YABA-DEG",
+     "note": "UTME: Requires Five (5) TC II merit, O Level or NTC/NBC credit passes including English Language, Mathematics, Economics and two (2) other subjects in the Social Sciences or Arts. For NBC, the other subjects could be from any of Commerce, Office Practice, Principles/Financial Accounting, Secretarial/Clerical Office Duties, Typewriting, Shorthand, Book Keeping, Business Management, Government/History/Civic Education, Information & Communication Technology, Salesmanship/Marketing, Store Keeping/Management, Type writing and Stenography."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME subjects: Accepts Economics, Mathematics and any other Arts/Social Science/Science subject."
+    },
+    {
+     "institution": "TASUED, BENIN",
+     "note": "UTME subjects: Require Mathematics, Economics and any other subject in the Arts or the Social Sciences."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: Requires English Language, Mathematics, Economics and any one of Arts or Social Sciences subject."
+    },
+    {
+     "institution": "IAUED",
+     "note": "UTME subjects: Requires Mathematics, Economics plus one of Government, History, Geography, CRK, Commerce, Civic Education. For Marketing Education IAUED requires English, Mathematics, Government, Economics."
+    },
+    {
+     "institution": "EDASAB",
+     "note": "UTME subjects: Requires Economics or Commerce and any other two (2) subjects from the Arts or the Social Sciences."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "UTME subjects: Accepts Mathematics, Economics and any other subject."
+    },
+    {
+     "institution": "KWASU",
+     "note": "UTME subjects: Accepts English Language, Mathematics plus any other two (2) Social Science subjects."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME subjects: Requires Mathematics, Economics, plus one (1) of Commerce, History, Government, Geography, Chemistry or Physics."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME subjects: Requires Economics or Commerce and any two (2) other Arts or Social Science subjects."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "UTME subjects: Requires Economics and two (2) of Government, Geography, Commerce, Principles of Accounts and Mathematics."
+    },
+    {
+     "institution": "RSU",
+     "note": "UTME subjects: Requires Mathematics, Economics and any other Arts or Social Science subjects for Accountancy, Management and Marketing options, and accepts Economics and any other two (2) Arts or Social Sciences subject for Secretarial Education."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "UTME subjects: Requires Mathematics, any of Economics/Principles of Accounts/Commerce and any of Literature in English, History, Government, Geography, Chemistry and Physics."
+    },
+    {
+     "institution": "BSU",
+     "note": "UTME subjects: Requires Mathematics, Economics and any one of Chemistry, Physics, Biology or Social Science Subject."
+    },
+    {
+     "institution": "EBSU",
+     "note": "UTME subjects: Accepts Mathematics, Economics and Principles of Accounts/Commerce."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME subjects: Requires Mathematics and any TWO (2) of the following: Commerce, Financial Accounting, Economics and Geography."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: Requires Use of English and Mathematics plus any two commercial subjects."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME subjects: Requires Mathematics, Economics or Commerce and any other subject from French, Literature in English, History/Government, CRK/IRK, Mathematics, Biology, Chemistry, Agricultural Science, Further Mathematics, Technical Drawing, Physics, Igbo/Hausa/Yoruba, Fine Art, Geography, Accounting."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "UTME subjects: Requires Mathematics, Economics or Commerce or Accounting plus One (1) of Literature in English, History, Government, Chemistry and Physics."
+    },
+    {
+     "institution": "YABA-DEG",
+     "note": "UTME subjects: English Language, Mathematics, Economics plus one (1) other subject from Commerce, Office Practice, Principles/Financial Accounting, Secretarial/Clerical Office Duties, Typewriting, Shorthand, Book Keeping, Business Management, Government, History, Civic Education, Information & Communication Technology, Salesmanship, Marketing, Store Keeping/Management, Type writing and Stenography."
+    }
+   ],
+   "first_line": 9453,
+   "line_range": [
+    9453,
+    10112
+   ],
+   "scope": [
+    9453,
+    10113
+   ]
+  },
+  {
+   "jamb_name": "Sport Science",
+   "institutions": [
+    "OOU",
+    "LAPAI",
+    "SPORTS ADMINISTRATION AND",
+    "MANAGEMENT",
+    "SPORTS-UNI",
+    "SPORTS SCIENCE AND",
+    "TECHNOLOGY",
+    "ELECTRICAL/ELECTRONICS",
+    "EDUCATION",
+    "ATAPOLY-DG",
+    "BAUCHI",
+    "EDAKOKA",
+    "FTBICHI-DEG",
+    "EDUMUNZ",
+    "EKSU",
+    "FED-GUSAU",
+    "KSUSTA",
+    "KUST",
+    "MAUTY",
+    "UNIZIK"
+   ],
+   "utme_subjects": [
+    "Biology",
+    "Mathematics",
+    "Economics/Geography"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level Credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes in any of the followings: (i) Economics, Geography, Biology, Chemistry, Mathematics and Physics. (ii) NCE in PHE with Grade three (3) Referees Certificate in a sport.",
+   "institution_waivers": [],
+   "first_line": 10113,
+   "line_range": [
+    10113,
+    10163
+   ],
+   "scope": [
+    10113,
+    10260
+   ]
+  },
+  {
+   "jamb_name": "Statistics Education",
+   "institutions": [
+    "LASUED",
+    "MAKURDI",
+    "YABA-DEG",
+    "MAUTY"
+   ],
+   "utme_subjects": [
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics plus one (1) other Science subject.",
+   "direct_entry": "Two (2) 'A' Level passes/NCE in Mathematics and one (1) Science subject.",
+   "institution_waivers": []
+  },
+  {
+   "jamb_name": "Sport Management (Education)",
+   "institutions": [
+    "SPORTS-UNI"
+   ],
+   "utme_subjects": [
+    "Biology",
+    "Mathematics",
+    "Economics",
+    "Geography"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level credit passes to include English Language and any two (2) of Biology, Economics, Geography, Government and Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes in any of the following: Economics, Geography, Biology, Chemistry, Mathematics and Physics; or NCE in PHE with Grade three (3) Referees Certificate in a sport.",
+   "institution_waivers": [],
+   "note": "Mapped to the sub-heading 'SPORTS ADMINISTRATION AND MANAGEMENT' within the shared SPORT SCIENCE block (line 10113). Related sibling sub-headings share the same requirement columns: SPORT SCIENCE (OOU), EXERCISE AND SPORTS SCIENCE (LAPAI), SPORTS SCIENCE AND TECHNOLOGY (SPORTS-UNI)."
+  },
+  {
+   "jamb_name": "Transport Planning and Management",
+   "institutions": [
+    "TASUED"
+   ],
+   "utme_subjects": [
+    "Geography",
+    "Economics",
+    "Government",
+    "Mathematics",
+    "Chemistry",
+    "Biology",
+    "Physics",
+    "Agricultural Science",
+    "Accounting",
+    "Commerce"
+   ],
+   "olevel_requirement": "Five (5) 'O' Level credit passes at one (1) sitting or six (6) 'O' Level credit passes at two (2) sittings in English Language, Mathematics and any three (3) of Economics, Government, Commerce, Accounting, Biology, Agricultural Science, Geography, Chemistry and Physics.",
+   "direct_entry": "i. Two (2) 'A' Level passes in Geography or Economics and one other subject. ii. NCE merit in Geography and other Social Science or Science subjects. iii. ND/HND in Town Planning, Estate Management, Surveying.",
+   "institution_waivers": [
+    {
+     "institution": "TASUED",
+     "note": "In addition to the waiver in Geography and Environmental Management (GEM), accepts candidates with ND Transport Studies."
+    }
+   ],
+   "note": "Heading 'TRANSPORT PLANNING AND MANAGEMENT AND EDUCATION (TPM)' at line 10227. Sibling sub-heading 'TRANSPORTATION MANAGEMENT' (SAUED) shares the same requirement columns."
+  }
+ ]
+}

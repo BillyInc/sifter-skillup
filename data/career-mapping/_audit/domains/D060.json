@@ -1,0 +1,187 @@
+{
+ "domain_id": "D060",
+ "domain_name": "Banking, Credit",
+ "role_count": 36,
+ "roles": [
+  {
+   "role": "credit analyst",
+   "isco": 3312,
+   "aka": "credit clerk  ·  analyst of credits"
+  },
+  {
+   "role": "credit adviser",
+   "isco": 3312,
+   "aka": "credit intermediary  ·  debt counsellor  ·  certified credit counselor  ·  credit counselor"
+  },
+  {
+   "role": "auditing clerk",
+   "isco": 4312,
+   "aka": "account audit clerk  ·  audit office worker  ·  audit technician  ·  audit clerk  ·  audit control clerk"
+  },
+  {
+   "role": "insurance collector",
+   "isco": 4214,
+   "aka": "insurance claims and policy processing clerk  ·  claims clerk  ·  collector of insurance payments  ·  insurance claims clerk"
+  },
+  {
+   "role": "bank teller",
+   "isco": 4211,
+   "aka": "bank clerk  ·  bank vault attendant  ·  bank office clerk  ·  bank cashier  ·  teller"
+  },
+  {
+   "role": "credit manager",
+   "isco": 3312,
+   "aka": "consumer credit manager  ·  credit controller  ·  loan and credit manager  ·  credit administration manager  ·  credit control manager"
+  },
+  {
+   "role": "financial markets back office administrator",
+   "isco": 4312,
+   "aka": "operations manager  ·  back office administrator  ·  broker assistant  ·  back office payments assistant  ·  settlements administrator"
+  },
+  {
+   "role": "mortgage broker",
+   "isco": 3312,
+   "aka": "mortgage administrator  ·  officer for mortgage loan  ·  mortgage coordinator  ·  mortgage analyst  ·  mortgage loans officer"
+  },
+  {
+   "role": "credit union manager",
+   "isco": 1346,
+   "aka": "credit unions examiner  ·  financial cooperative manager  ·  credit union specialist  ·  credit union branch manager  ·  credit union principal examiner"
+  },
+  {
+   "role": "debt collector",
+   "isco": 4214,
+   "aka": "credit control agent  ·  debt recovery agent  ·  collections associate  ·  collection agent  ·  debt collection officer"
+  },
+  {
+   "role": "insurance agency manager",
+   "isco": 1346,
+   "aka": "insurance company manager  ·  life insurance agency manager  ·  insurance institution manager  ·  insurance agency road assistance manager  ·  car insurance agency manager"
+  },
+  {
+   "role": "bank account manager",
+   "isco": 3312,
+   "aka": "banking officer  ·  consumer banker  ·  bank operations manager  ·  bank accounts manager  ·  account manager SME"
+  },
+  {
+   "role": "pawnbroker",
+   "isco": 4213,
+   "aka": "pawnshop manager  ·  loaner  ·  pawn broker  ·  pawn agent  ·  pawnshop operator"
+  },
+  {
+   "role": "post office counter clerk",
+   "isco": 4211,
+   "aka": "post office supervisor  ·  post office customer service consultant  ·  mail service clerk  ·  post office customer service assistant  ·  mail services counter clerk"
+  },
+  {
+   "role": "bank manager",
+   "isco": 1346,
+   "aka": "financial institution branch manager  ·  bank executive officer  ·  bank branch manager  ·  financial services branch manager  ·  retail bank manager"
+  },
+  {
+   "role": "tax clerk",
+   "isco": 4312,
+   "aka": "tax compliance officer  ·  tax collection clerk  ·  fiscal clerk  ·  tax collection officer  ·  tax collection assistant"
+  },
+  {
+   "role": "loan officer",
+   "isco": 3312,
+   "aka": "loans adviser  ·  loans controller  ·  loan processor  ·  commercial lender  ·  loans consultant"
+  },
+  {
+   "role": "insurance claims manager",
+   "isco": 1346,
+   "aka": "insurance claims service manager  ·  head of insurance claims office  ·  insurance claims director  ·  claims director  ·  insurance claims administrator"
+  },
+  {
+   "role": "insurance clerk",
+   "isco": 4312,
+   "aka": "insurance agent  ·  insurance management assistant  ·  insurance reconciliation clerk  ·  insurance accounts clerk  ·  personal lines insurance clerk"
+  },
+  {
+   "role": "mortgage loan underwriter",
+   "isco": 3312,
+   "aka": "mortgage compliance underwriter  ·  loan approval officer  ·  loan underwriter  ·  mortgage guideline underwriter"
+  },
+  {
+   "role": "back office specialist",
+   "isco": 4312,
+   "aka": "back office administrator  ·  back office clerk  ·  back office officer  ·  financial office specialist"
+  },
+  {
+   "role": "credit risk analyst",
+   "isco": 3312,
+   "aka": "financial risk manager  ·  credit risk surveyor  ·  credit risk controller  ·  credit risk technician  ·  financial risk technician"
+  },
+  {
+   "role": "foreign exchange cashier",
+   "isco": 4312,
+   "aka": "foreign exchange clerk  ·  bank foreign exchange office clerk  ·  foreign exchange teller  ·  bank foreign exchange cashier  ·  money exchanger"
+  },
+  {
+   "role": "student financial support coordinator",
+   "isco": 3312,
+   "aka": "financial support coordinator  ·  coordinator of student financial support services  ·  student finance officer  ·  coordinator of student financial support  ·  financial aid coordinator"
+  },
+  {
+   "role": "property assistant",
+   "isco": 4312,
+   "aka": "viewing and sales assistant  ·  real estate assistant  ·  real estate clerk  ·  property clerk  ·  real estate agent assistant"
+  },
+  {
+   "role": "pension scheme manager",
+   "isco": 1346,
+   "aka": "pensions manager  ·  pension adviser  ·  pension services manager  ·  pensions adviser  ·  individual pension adviser"
+  },
+  {
+   "role": "brokerage firm director",
+   "isco": 1346,
+   "aka": "brokerage senior manager  ·  brokerage supervisor  ·  brokerage chief executive  ·  brokerage firm supervisor  ·  brokerage managing director"
+  },
+  {
+   "role": "investment clerk",
+   "isco": 4312,
+   "aka": "investment administrator  ·  investment secretary  ·  investment assistant"
+  },
+  {
+   "role": "Relationship Managers",
+   "isco": 3312,
+   "aka": NaN
+  },
+  {
+   "role": "Credit and Loans Officers",
+   "isco": 3312,
+   "aka": NaN
+  },
+  {
+   "role": "Bank Tellers and Related Clerks",
+   "isco": 4211,
+   "aka": NaN
+  },
+  {
+   "role": "Tellers",
+   "isco": 4211,
+   "aka": NaN
+  },
+  {
+   "role": "Financial Clerks, All Other",
+   "isco": 3341,
+   "aka": NaN
+  },
+  {
+   "role": "Natural Sciences Managers",
+   "isco": 1346,
+   "aka": NaN
+  },
+  {
+   "role": "Clinical Research Coordinators",
+   "isco": 1346,
+   "aka": NaN
+  },
+  {
+   "role": "Water Resource Specialists",
+   "isco": 1346,
+   "aka": NaN
+  }
+ ]
+}

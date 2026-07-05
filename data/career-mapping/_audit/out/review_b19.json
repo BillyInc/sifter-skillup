@@ -1,0 +1,144 @@
+{"reviews":[
+{
+"domain_id":"D097",
+"domain_name":"Welding, Fabrication, Blacksmithing",
+"verdict":"issues",
+"remove_roles":[
+{"role":"Sheet and Structural Metal Workers, Moulders and Welders","isco":7212,"reason":"junk group-label row (aka=NaN), SOC/ISCO minor-group heading not a role"},
+{"role":"Structural Iron and Steel Workers","isco":7214,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Forging Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7221,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7213,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Machinists","isco":7223,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Metal-Refining Furnace Operators and Tenders","isco":7211,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Welders, Cutters, Solderers, and Brazers","isco":7212,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Extruding and Drawing Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7211,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Rolling Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7221,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Drilling and Boring Machine Tool Setters, Operators, and Tenders, Metal and Plastic","isco":7224,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic","isco":7223,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic","isco":7223,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7223,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Patternmakers, Metal and Plastic","isco":7224,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Foundry Mold and Coremakers","isco":7221,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7221,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic","isco":7212,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Welding, Soldering, and Brazing Machine Setters, Operators, and Tenders","isco":7212,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Plating Machine Setters, Operators, and Tenders, Metal and Plastic","isco":7224,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Tool Grinders, Filers, and Sharpeners","isco":7224,"reason":"junk group-label row (aka=NaN)"},
+{"role":"gear machinist","isco":7223,"reason":"machining/precision-engineering role (7223), belongs in D098 Precision Engineering/Toolmaking, not welding/fabrication"},
+{"role":"boring machine operator","isco":7223,"reason":"machine-tool operator (7223), belongs in D098 Precision Engineering/Toolmaking"},
+{"role":"briquetting machine operator","isco":7223,"reason":"cross-domain contamination: briquetting is materials/fuel processing, not welding/fabrication/blacksmithing"},
+{"role":"boat rigger","isco":7215,"reason":"marine/sail rigging role, cross-domain (maritime), not metal fabrication rigging"},
+{"role":"high rigger","isco":7215,"reason":"construction/rope-access rigging, cross-domain (construction/lifting), not welding/fabrication"},
+{"role":"event scaffolder","isco":7215,"reason":"scaffolding/events cross-domain, not welding/fabrication"},
+{"role":"stagehand","isco":7215,"reason":"theatre/events role, cross-domain contamination via ISCO 7215 rigger fan-out; not metalwork"},
+{"role":"engraving machine operator","isco":7223,"reason":"CNC machining/engraving (7223), belongs in D098 Precision Engineering/Toolmaking"},
+{"role":"spark erosion machine operator","isco":7223,"reason":"EDM precision machining (7223), belongs in D098"},
+{"role":"router operator","isco":7223,"reason":"CNC routing machine-tool operator (7223), belongs in D098"}
+],
+"add_roles":[],
+"overfanout_roles":[
+"lathe and turning machine operator","metalworking lathe operator","milling machine operator","drilling machine operator","drill press operator","screw machine operator","metal planer operator","grinding machine operator","metal sawing machine operator","water jet cutter operator","laser cutting machine operator","laser marking machine operator","plasma cutting machine operator","oxy fuel burning machine operator","metal nibbling operator","thread rolling machine operator","chain making machine operator","swaging machine operator","straightening machine operator","upsetting machine operator","stamping press operator","punch press operator","heat treatment furnace operator","computer numerical control machine operator"
+],
+"rename_to":null,
+"notes":"Broad ISCO 72xx metalwork bucket. 21 junk SOC/ISCO group-label rows (aka=NaN) removed. Cross-domain: 7215 rigging/scaffolding/stagehand roles (boat/high rigger, event scaffolder, stagehand) leak in from construction/maritime/events. Heavy ESCO fan-out of 7223 machine-tool operators (each machine type = separate row) — flagged as overfanout; the pure precision-machining ones (gear/boring/engraving/spark-erosion/router) reassigned to D098. Core welding/fabrication/blacksmithing/foundry roles (welder, pipe welder, boilermaker, sheet metal worker, blacksmith, farrier, foundry moulder, coppersmith, brazier, various welders) are correct. pipe welder aka contains plumber/pipefitter (D100) but role is a welder — keep."
+},
+{
+"domain_id":"D098",
+"domain_name":"Precision Engineering, Toolmaking",
+"verdict":"issues",
+"remove_roles":[
+{"role":"Camera and Photographic Equipment Repairers","isco":7311,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Medical Equipment Repairers","isco":7311,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Musical Instrument Repairers and Tuners","isco":7311,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Precision Instrument and Equipment Repairers, All Other","isco":7311,"reason":"junk group-label row (aka=NaN)"},
+{"role":"engineered wood board grader","isco":7543,"reason":"commodity fan-out: wood-products grading, belongs in woodworking/quality domain not precision engineering/toolmaking"},
+{"role":"pulp grader","isco":7543,"reason":"commodity fan-out: pulp/paper grading, cross-domain"},
+{"role":"lumber grader","isco":7543,"reason":"commodity fan-out: lumber grading, cross-domain (woodworking)"},
+{"role":"veneer grader","isco":7543,"reason":"commodity fan-out: veneer/plywood grading, cross-domain (woodworking)"},
+{"role":"clothing quality inspector","isco":7543,"reason":"commodity fan-out: garment/textile QC, cross-domain (textiles)"},
+{"role":"cigar inspector","isco":7543,"reason":"commodity fan-out: tobacco-products inspection, cross-domain"},
+{"role":"automotive test driver","isco":7543,"reason":"vehicle test-driving, cross-domain (automotive), not precision engineering/toolmaking"},
+{"role":"battery test technician","isco":7543,"reason":"battery testing, cross-domain (electrical/electronics QC)"},
+{"role":"metal product quality control inspector","isco":7543,"reason":"metal-production QC supervision, cross-domain (metalwork/foundry per aka), not precision engineering"},
+{"role":"rolling stock assembly inspector","isco":7543,"reason":"rail-vehicle assembly QC, cross-domain (rail)"},
+{"role":"aircraft assembly inspector","isco":7543,"reason":"aircraft assembly QC, cross-domain (aerospace)"},
+{"role":"vessel assembly inspector","isco":7543,"reason":"boat/ship assembly QC, cross-domain (maritime)"},
+{"role":"motor vehicle assembly inspector","isco":7543,"reason":"vehicle assembly QC, cross-domain (automotive)"}
+],
+"add_roles":[
+{"role":"machinist / CNC machinist","isco":7223,"skills":["CNC programming (G-code)","machine-tool setup","precision measurement (micrometers, calipers)","blueprint reading","tolerance control","tool selection"],"reason":"core precision-engineering/toolmaking occupation absent from domain; the 7223 machining roles were fanned into D097 - a consolidated machinist role belongs here"}
+],
+"overfanout_roles":[
+"product quality inspector","product quality controller","product grader","consumer goods inspector","product assembly inspector","motor vehicle assembly inspector","vessel assembly inspector","aircraft assembly inspector","rolling stock assembly inspector","electrical equipment inspector","electronic equipment inspector","printed circuit board test technician","automated optical inspection operator","control panel tester","non-destructive testing specialist","precision device inspector"
+],
+"rename_to":null,
+"notes":"Domain is swamped by ISCO 7543 (product graders/testers/inspectors) — a huge ESCO fan-out of the generic product-inspector family plus subject/commodity fan-out (wood, pulp, lumber, veneer, textiles, tobacco, batteries, vehicles, aircraft, ships, rail). Most 7543 inspector rows do not belong in Precision Engineering/Toolmaking; the commodity/vehicle-specific ones removed, the generic product-inspector cluster flagged overfanout. True core kept: 7311 instrument makers/repairers (clock & watchmaker, optical instrument assembler/repairer, surgical instrument maker, precision instrument assembler) and 7222 toolmaking roles (tool and die maker, casting mould maker, precision mechanic, gunsmith, locksmith). Added consolidated machinist/CNC role which was fanned into D097. Some generic QC roles (product quality inspector, NDT specialist, PCB test tech) are borderline-legitimate for precision QA — flagged rather than removed."
+},
+{
+"domain_id":"D099",
+"domain_name":"Masonry, Bricklaying, Tiling, Plastering",
+"verdict":"issues",
+"remove_roles":[
+{"role":"Brickmasons and Blockmasons","isco":7111,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Floor Layers, Except Carpet, Wood, and Hard Tiles","isco":7122,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Cement Masons and Concrete Finishers","isco":7114,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Glaziers","isco":7125,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Insulation Workers, Mechanical","isco":7124,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Plasterers and Stucco Masons","isco":7123,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Segmental Pavers","isco":7113,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Carpet Installers","isco":7124,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Floor Sanders and Finishers","isco":7122,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Tile and Stone Setters","isco":7122,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Tapers","isco":7124,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Construction and Building Inspectors","isco":7113,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Energy Auditors","isco":7113,"reason":"junk group-label row (aka=NaN)"},
+{"role":"Maintenance and Repair Workers, General","isco":7133,"reason":"junk group-label row (aka=NaN)"},
+{"role":"chimney sweep","isco":7133,"reason":"building-cleaning/finisher (7133), cross-domain - not masonry/tiling/plastering"},
+{"role":"chimney sweep supervisor","isco":7133,"reason":"building-cleaning supervision (7133), cross-domain"},
+{"role":"asbestos abatement worker","isco":7133,"reason":"hazmat/remediation (7133), cross-domain (environmental/demolition)"},
+{"role":"decontamination worker","isco":7133,"reason":"environmental remediation (7133), cross-domain"},
+{"role":"building exterior cleaner","isco":7133,"reason":"building cleaning/restoration (7133), cross-domain (cleaning)"},
+{"role":"vehicle glazier","isco":7125,"reason":"auto glass (7125), cross-domain (automotive), not building masonry/glazing"}
+],
+"add_roles":[],
+"overfanout_roles":[
+"carpet fitter","resilient floor layer","hardwood floor layer"
+],
+"rename_to":null,
+"notes":"14 junk SOC/ISCO group-label rows (aka=NaN) removed. Cross-domain: cluster of ISCO 7133 building-finisher/cleaner roles (chimney sweep + supervisor, asbestos abatement, decontamination worker, building exterior cleaner) belongs in a cleaning/remediation domain, not masonry. vehicle glazier is automotive. Core kept and correct: bricklayer (7112), stonemason & stone engraver (7113), concrete finisher & terrazzo setter (7114), plasterer & ceiling installer (7123), tile fitter & floor layers & carpet fitter (7122), plate glass installer (7125), insulation worker (7124), house builder (7111). Floor-covering roles (carpet/resilient/hardwood floor layers) are mild ESCO fan-out of the flooring family but legitimately trade-adjacent — flagged, not removed."
+},
+{
+"domain_id":"D100",
+"domain_name":"Plumbing, Pipefitting",
+"verdict":"issues",
+"remove_roles":[
+{"role":"Plumbers, Pipefitters, and Steamfitters","isco":7126,"reason":"junk group-label row (aka=NaN), SOC/ISCO occupation-group heading not a role"},
+{"role":"Heating, Air Conditioning, and Refrigeration Mechanics and Installers","isco":7127,"reason":"junk group-label row (aka=NaN), SOC title"},
+{"role":"Drywall and Ceiling Tile Installers","isco":7126,"reason":"junk group-label row (aka=NaN); also cross-domain (drywall/finishing belongs in masonry/finishing D099)"},
+{"role":"Insulation Workers, Floor, Ceiling, and Wall","isco":7126,"reason":"junk group-label row (aka=NaN); also cross-domain (insulation, D099 finishing)"},
+{"role":"Pipelayers","isco":7126,"reason":"junk group-label row (aka=NaN), SOC title"},
+{"role":"Solar Thermal Installers and Technicians","isco":7126,"reason":"junk group-label row (aka=NaN); also cross-domain (renewable-energy installer)"},
+{"role":"Solar Photovoltaic Installers","isco":7127,"reason":"junk group-label row (aka=NaN); also cross-domain (electrical/renewable-energy installer, not plumbing)"}
+],
+"add_roles":[
+{"role":"pipefitter / steamfitter","isco":7126,"skills":["pipe cutting and threading","pipe bending","welding/brazing joints","blueprint and isometric reading","pressure testing","industrial pipe system installation"],"reason":"named in domain title (Pipefitting) but no discrete pipefitter role present after junk rows removed; core global occupation ISCO-08 7126"}
+],
+"overfanout_roles":[
+"water network operative","sewerage network operative","sewer construction worker","irrigation technician","irrigation system installer"
+],
+"rename_to":null,
+"notes":"7 junk SOC/ISCO group-label rows (aka=NaN) removed; several of these are also cross-domain (drywall/ceiling, insulation, solar thermal/PV). Core plumbing/pipefitting roles kept and correct under ISCO 7126: plumber, bathroom fitter, drain technician, gas service technician, heating technician, septic tank servicer, sprinkler fitter, pipeline maintenance worker; plus 7127 heating and ventilation service installer (HVAC-adjacent, legitimate). Added a discrete pipefitter/steamfitter role since the domain is named Pipefitting but only the junk group-label carried the term. Water/sewer network + irrigation roles are a mild ESCO fan-out of the water/utilities-infrastructure family (arguably a water-utilities domain) but trade-adjacent to plumbing — flagged rather than removed. water conservation technician is borderline (environmental/utilities) but kept."
+},
+{
+"domain_id":"D101",
+"domain_name":"Painting, Decorating",
+"verdict":"issues",
+"remove_roles":[
+{"role":"Painters, Construction and Maintenance","isco":7131,"reason":"junk group-label row (aka=NaN), SOC occupation-group heading not a discrete role"}
+],
+"add_roles":[],
+"overfanout_roles":[],
+"rename_to":null,
+"notes":"Small, clean domain apart from 1 junk SOC group-label row (aka=NaN) removed. All remaining roles are on-domain: construction painter and paperhanger (7131 building painters/paperhangers); lacquer spray gun operator, transport equipment painter and surface treatment operator (7132 spray-painting/coating machine operators); marine painter (7131). transport equipment painter (automotive/vehicle refinishing) is coating-trade-adjacent and legitimately shared with automotive refinishing, not treated as contamination given the domain is painting/decorating/coating. No add_roles needed — core painter and paperhanger/decorator occupations are present."
+}
+]}

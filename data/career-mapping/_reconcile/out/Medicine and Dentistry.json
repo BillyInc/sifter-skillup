@@ -1,0 +1,34 @@
+{
+ "reconciled": [
+  {
+   "programme": "Bachelor of Medicine and Bachelor of Surgery (MBBS/MBChB)",
+   "add": [
+    {"domain_id": "D057", "domain": "Digital Health & Health Technology", "match_type": "functional", "why": "Clinical practice increasingly runs on electronic records and health technology; medicine is the primary feeder into digital-health roles"}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Capital-markets trading has no course basis"},
+    {"domain_id": "D061", "why": "Insurance/underwriting unrelated to the MBBS curriculum"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated to human medicine"},
+    {"domain_id": "D151", "why": "Criminology unrelated; forensic content is minimal in this extract"}
+   ]
+  },
+  {
+   "programme": "Bachelor of Dental Surgery (BDS/BChD)",
+   "add": [
+    {"domain_id": "D057", "domain": "Digital Health & Health Technology", "match_type": "functional", "why": "Digital records, imaging and CAD/CAM are integral to modern dental practice"}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Capital-markets trading has no course basis"},
+    {"domain_id": "D152", "why": "Museum curation unrelated"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated to human dentistry"},
+    {"domain_id": "D066", "why": "No veterinary course; human-dentistry focus"},
+    {"domain_id": "D137", "why": "Dental radiography is minor; no radiation-physics course in this basic-sciences extract"}
+   ]
+  }
+ ]
+}

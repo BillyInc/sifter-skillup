@@ -1,0 +1,15 @@
+{
+  "jamb_name": "Home Economics",
+  "utme_subjects": ["Chemistry", "Biology/Agriculture", "Mathematics/Physics or one (1) Social Science subject"],
+  "olevel_requirement": "Five (5) SSC credit passes in Chemistry, Biology/Agricultural Science, Mathematics, Physics, English Language and any one of Nutrition, Fine Arts, Textile, Construction, Technical Drawing, Basic Electricity, Basic Catering and Food Services, Bakery and Confectioneries, General Metal Work, Men Garment Construction and Finishing, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing, Ladies Garment Construction and Finishing.",
+  "direct_entry": "Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting.",
+  "institution_waivers": [
+    {"institution": "FUTA", "note": "Requires Biology/Agricultural Science, Mathematics/Physics as UTME subjects."},
+    {"institution": "UYO", "note": "Accepts ND upper credit, HND lower credit and NCE merit in relevant programs/subjects plus the UTME requirements."},
+    {"institution": "UMUDIKE", "note": "As in Agriculture. Also accepts SRN/NRN or NCE with Distinction."},
+    {"institution": "OAU", "note": "Accepts NCE in Home Economics/Biology/Chemistry/Agricultural Science with five (5) merits/credits in TC II in the following subjects: Social Studies, Mathematics, Agricultural Science, General Studies, Fine Arts, Geography and Rural Science."},
+    {"institution": "ILORIN", "note": "Requires at least 'A' Level pass in Physics, accepts NCE with relevant five (5) 'O' Level credit passes. Accepts candidates with 'O' Level pass in Biology, but who have 'O' Level credit passes in Agricultural Science, Food & Nutrition/Home Management."},
+    {"institution": "FUNAAB", "note": "Accepts ND upper credit or NCE credit in Hospitality and Tourism, Catering Management, Hotel Management, Home Economics from a recognized Institution in addition to the UTME requirements."},
+    {"institution": "FED-GASHUA", "note": "Requires OND/ND (Upper Credit), HND (Lower credit) in Food Science and Technology, Hotel Management and Tourism, Home Economics Nutrition, Dietetics, Clothing and Textile from a recognized institution in addition to UTME requirements into 200 Levels. It also accepts Two (2) 'A' level passes."}
+  ]
+}

@@ -1,0 +1,402 @@
+{
+ "domain_id": "D049",
+ "domain_name": "Automotive Engineering",
+ "role_count": 79,
+ "roles": [
+  {
+   "role": "marine engineering technician",
+   "isco": 3115,
+   "aka": "marine vessel engineering technician  ·  boat engineering technician  ·  submarine engineering technologist  ·  marine engineering technologist  ·  vessel technologist"
+  },
+  {
+   "role": "aerospace engineering technician",
+   "isco": 3115,
+   "aka": "aeroplane technologist  ·  aeronautical technologist  ·  aircraft engineering technician  ·  aero spatial technologist  ·  spacecraft engineering technician"
+  },
+  {
+   "role": "aircraft engine specialist",
+   "isco": 7232,
+   "aka": "civilian aircraft engine specialist  ·  rotary maintenance specialist  ·  helicopter mechanic  ·  military aircraft engine specialist  ·  light aircraft engine specialist"
+  },
+  {
+   "role": "refurbishing technician",
+   "isco": 7231,
+   "aka": "gas engine refurbishing technician  ·  diesel engine refurbishing technician  ·  car engine refurbishing technician  ·  petrol engine technician  ·  mechanical refurbishing inspector"
+  },
+  {
+   "role": "rolling stock engineering technician",
+   "isco": 3115,
+   "aka": "railway engineering apprentice  ·  rolling stock electronic equipment installer  ·  rail rolling stock assembly operator  ·  railway stock engineer  ·  rolling stock equipment assembler"
+  },
+  {
+   "role": "production engineering technician",
+   "isco": 3115,
+   "aka": "production engineering testing coordinator  ·  production engineering inspection supervisor  ·  production engineering inspection mechanic  ·  production engineering co-ordinator  ·  data collection technician"
+  },
+  {
+   "role": "vehicle restoration technician",
+   "isco": 7231,
+   "aka": "car restoration technician  ·  restoration technician  ·  old vehicle restorer  ·  car interior restorer  ·  old car restorer"
+  },
+  {
+   "role": "welding engineer",
+   "isco": 2144,
+   "aka": "robotic welding inspector  ·  welding engineer supervisor  ·  welding engineering adviser  ·  engineering welding co-ordinator  ·  ultrasonic metal welder inspector"
+  },
+  {
+   "role": "equipment engineer",
+   "isco": 2144,
+   "aka": "equipment engineering expert  ·  equipment engineering consultant  ·  equipment technology engineering adviser  ·  equipment technology engineering expert  ·  equipment engineering adviser"
+  },
+  {
+   "role": "heating, ventilation, air conditioning engineer",
+   "isco": 2144,
+   "aka": "HVAC project engineer  ·  HVAC site engineer  ·  HVACR engineer  ·  HVAC engineer  ·  HVAC service engineer"
+  },
+  {
+   "role": "electromagnetic engineer",
+   "isco": 2151,
+   "aka": "electro magnetics engineer  ·  electromagnetic technology engineer  ·  electromagnetic engineering consultant  ·  electromagnetic compatibility engineer  ·  electromagnetic systems engineer"
+  },
+  {
+   "role": "rotating equipment engineer",
+   "isco": 2144,
+   "aka": "rotating equipment engineering specialist  ·  rotating equipment technology engineering adviser  ·  rotating equipment technology engineering consultant  ·  rotating equipment technology engineering specialist  ·  rotating equipment technology engineering expert"
+  },
+  {
+   "role": "diesel engine mechanic",
+   "isco": 7231,
+   "aka": "mechanical body fitter  ·  diesel mechanic  ·  mechanical bogie fitter  ·  railway diesel mechanic  ·  mechanic diesel engine"
+  },
+  {
+   "role": "vehicle maintenance supervisor",
+   "isco": 7231,
+   "aka": "service station manager  ·  bus and coach maintenance supervisor  ·  heavy vehicle maintenance supervisor  ·  bus maintenance supervisor  ·  bus maintenance manager"
+  },
+  {
+   "role": "drone pilot",
+   "isco": 3153,
+   "aka": "civil drone operator  ·  unmanned aircraft pilot  ·  remote piloted aircraft (RPA) pilot  ·  unmanned aircraft systems operator  ·  unmanned aerial vehicles (UAVs) pilot"
+  },
+  {
+   "role": "pneumatic engineering technician",
+   "isco": 3115,
+   "aka": "circuit assembly engineer  ·  pneumatic engineer  ·  pneumatic engineering system inspector  ·  gas system engineer  ·  air system engineer"
+  },
+  {
+   "role": "marine surveyor",
+   "isco": 3115,
+   "aka": "cargo surveyor  ·  marine surveyors  ·  marine warranty surveyor  ·  inland water ship inspector  ·  inland waterway vessel inspector"
+  },
+  {
+   "role": "vehicle maintenance attendant",
+   "isco": 7231,
+   "aka": "fast-fit service technician  ·  bus maintenance attendant  ·  PCV maintenance attendant  ·  fast-fit maintenance attendant  ·  heavy vehicle maintenance attendant"
+  },
+  {
+   "role": "heating, ventilation, air conditioning and refrigeration engineering technician",
+   "isco": 3115,
+   "aka": "air conditioning technician  ·  HVAC project technician  ·  HVAC systems technician  ·  HVACR technician"
+  },
+  {
+   "role": "rolling stock inspector",
+   "isco": 3115,
+   "aka": "rolling stock supervisor  ·  inspector of rolling stock  ·  carriage supervisor  ·  railway inspector  ·  carriage inspector"
+  },
+  {
+   "role": "automotive engineering technician",
+   "isco": 3115,
+   "aka": "truck engineering technician  ·  motorcycle design checker  ·  lorry design checker  ·  car design checker  ·  coach engineering technician"
+  },
+  {
+   "role": "helicopter pilot",
+   "isco": 3153,
+   "aka": "commercial helicopter pilot  ·  airline helicopter transport pilot  ·  helicopter operator  ·  pilot of helicopters"
+  },
+  {
+   "role": "vehicle technician",
+   "isco": 7231,
+   "aka": "car mechanic  ·  automotive technician  ·  LGV technician  ·  truck mechanic  ·  heavy vehicle technician"
+  },
+  {
+   "role": "airline transport pilot",
+   "isco": 3153,
+   "aka": "aircraft captain  ·  captain  ·  airline pilot  ·  airline aeroplane captain  ·  airline transportation pilot"
+  },
+  {
+   "role": "commercial pilot",
+   "isco": 3153,
+   "aka": "captain  ·  airline pilot  ·  pilot of commercial aircraft  ·  pilot of commercial aeroplanes"
+  },
+  {
+   "role": "mechanical engineer",
+   "isco": 2144,
+   "aka": "mechanical technology engineering expert  ·  mechanical technology engineering specialist  ·  mechanical engineering expert  ·  mechanical technology engineering adviser  ·  mechanical technology engineering consultant"
+  },
+  {
+   "role": "electric power generation engineer",
+   "isco": 2151,
+   "aka": "electric power supply engineer  ·  power generation networks engineer  ·  electric power station engineer  ·  power station engineer  ·  power plant engineer"
+  },
+  {
+   "role": "powertrain engineer",
+   "isco": 2144,
+   "aka": "automotive propulsion mechanisms expert  ·  automotive propulsion mechanisms engineer  ·  powertrain expert  ·  powertrain systems engineer  ·  powertrain designer"
+  },
+  {
+   "role": "coachbuilder",
+   "isco": 7231,
+   "aka": "caravan-body coachbuilder  ·  coach-body builder  ·  automobile panel beater  ·  coach builder  ·  vintage vehicle coachbuilder"
+  },
+  {
+   "role": "smart home engineer",
+   "isco": 2151,
+   "aka": "domotics engineer  ·  smart home project engineer  ·  smart home software engineer  ·  home automation specifier  ·  home automation platform engineer"
+  },
+  {
+   "role": "battery system engineer",
+   "isco": 2151,
+   "aka": "battery cell module engineer  ·  power system protection engineers  ·  electronic systems engineer  ·  automotive vehicle electronics analysis specialist  ·  battery storage consultants"
+  },
+  {
+   "role": "electromechanical engineer",
+   "isco": 2151,
+   "aka": "electro-mechanical assembly engineer  ·  electro-mechanical equipment engineer  ·  engineering technician  ·  electro-mechanical designer  ·  electromechanical prototype developer"
+  },
+  {
+   "role": "tooling engineer",
+   "isco": 2144,
+   "aka": "tooling engineering expert  ·  toolmaker/tooling engineer  ·  manufacturing tooling engineer  ·  tooling technology engineering adviser  ·  tooling development engineer"
+  },
+  {
+   "role": "aircraft gas turbine engine overhaul technician",
+   "isco": 7232,
+   "aka": "aircraft gas turbine engine maintenance technician  ·  aviation gas turbine engine maintenance technician  ·  aviation gas turbine engine repair technician  ·  aeroplane engine mechanic  ·  aircraft gas turbine engine repair technician"
+  },
+  {
+   "role": "co-pilot",
+   "isco": 3153,
+   "aka": "aircraft co-pilot  ·  multi-crew pilot  ·  aircraft first officer"
+  },
+  {
+   "role": "rolling stock engine tester",
+   "isco": 3115,
+   "aka": "multiple unit engine tester  ·  rail vehicle engine tester  ·  diesel engine tester  ·  electric engine tester  ·  railcar engine tester"
+  },
+  {
+   "role": "fluid power engineer",
+   "isco": 2144,
+   "aka": "fluid power assembler  ·  fluid power engineering operator  ·  fluid power maintenance supervisor  ·  fluid power assembly engineer  ·  fluid power engineering specialist"
+  },
+  {
+   "role": "aircraft maintenance engineer",
+   "isco": 3153,
+   "aka": "aviation systems technician  ·  air transportation engineer"
+  },
+  {
+   "role": "refrigeration air condition and heat pump technician",
+   "isco": 3115,
+   "aka": "refrigeration mechanic  ·  refrigeration service technician  ·  heat pump service technician  ·  heat pump technician  ·  air conditioning technician"
+  },
+  {
+   "role": "rolling stock engine inspector",
+   "isco": 3115,
+   "aka": "traction engineering technician  ·  locomotive engine inspector  ·  wagon engine inspector  ·  railway depot repair inspector  ·  railway vehicle engine inspector"
+  },
+  {
+   "role": "electrical engineer",
+   "isco": 2151,
+   "aka": "electrical technology engineering consultant  ·  electrical engineering specialist  ·  engineer in electrical systems  ·  electrical engineering consultant  ·  electrical systems engineer"
+  },
+  {
+   "role": "private pilot",
+   "isco": 3153,
+   "aka": "light aircraft pilot  ·  private airplane captain  ·  private airplane pilot  ·  private aircraft captain  ·  corporate pilot"
+  },
+  {
+   "role": "motor vehicle engine inspector",
+   "isco": 3115,
+   "aka": "electric motor inspector  ·  gas motor inspector  ·  vehicle engine compliance inspector"
+  },
+  {
+   "role": "industrial tool design engineer",
+   "isco": 2144,
+   "aka": "industrial tool technology engineering adviser  ·  industrial tool designer  ·  industrial tool technology engineering specialist  ·  industrial tool engineer  ·  industrial tool test engineer"
+  },
+  {
+   "role": "automotive engineer",
+   "isco": 2144,
+   "aka": "coach production process engineer  ·  ACES engineer  ·  automotive design specialist  ·  vehicle production production process engineer  ·  bus production process engineer"
+  },
+  {
+   "role": "aircraft maintenance technician",
+   "isco": 7232,
+   "aka": "aircraft instrument operator  ·  aviation maintenance technician  ·  aeroplane technician  ·  avionics mechanical technician  ·  avionics instrument inspector"
+  },
+  {
+   "role": "tyre fitter",
+   "isco": 7231,
+   "aka": "machinist  ·  fitter and turner  ·  tire fitter  ·  tyre inspector  ·  garage assistant"
+  },
+  {
+   "role": "precision engineer",
+   "isco": 2144,
+   "aka": "precision engineering expert  ·  precision engineering specialist  ·  precision engineering adviser  ·  precision engineers  ·  precision engineering consultant"
+  },
+  {
+   "role": "aircraft pilot",
+   "isco": 3153,
+   "aka": "aircraft first officer  ·  aeroplane pilot  ·  aircraft captain  ·  aircraft second officer  ·  helicopter pilot"
+  },
+  {
+   "role": "aerodynamics engineer",
+   "isco": 2144,
+   "aka": "CFD engineer  ·  aerodynamics test engineer  ·  aerodynamic engineering consultant  ·  aerodynamics design engineer  ·  aerodynamics performance engineer"
+  },
+  {
+   "role": "aircraft de-icer installer",
+   "isco": 7232,
+   "aka": "aircraft de-icing equipment installer  ·  aircraft de-icing equipment technician  ·  aircraft de-icing equipment installation technician  ·  aeroplane de-icer installer  ·  spacecraft de-icer installer"
+  },
+  {
+   "role": "industrial maintenance supervisor",
+   "isco": 3115,
+   "aka": "machine setter supervisor  ·  maintenance machining department supervisor  ·  maintenance machining and assembly manager  ·  maintenance machine charge hand  ·  lead maintenance operative"
+  },
+  {
+   "role": "mechatronics engineer",
+   "isco": 2144,
+   "aka": "electromechanical engineer  ·  robotics engineer  ·  specialist mechatronic engineer  ·  cybernetics engineer  ·  engineer in mechatronics"
+  },
+  {
+   "role": "power distribution engineer",
+   "isco": 2151,
+   "aka": "power distribution engineering expert  ·  power distributions engineer  ·  power distribution technology engineering specialist  ·  power distribution engineering adviser  ·  power distribution systems engineer"
+  },
+  {
+   "role": "optomechanical engineer",
+   "isco": 2144,
+   "aka": "opto-mechanics engineer  ·  opto-mechanical engineer  ·  optomechanical engineering expert  ·  optomechanical design engineer  ·  optomechanical engineering adviser"
+  },
+  {
+   "role": "aircraft maintenance coordinator",
+   "isco": 7232,
+   "aka": "civilian aircraft maintenance coordinator  ·  aviation maintenance scheduler  ·  civilian aircraft maintenance manager  ·  military aircraft maintenance manager  ·  piston aircraft maintenance manager"
+  },
+  {
+   "role": "mechanical engineering technician",
+   "isco": 3115,
+   "aka": "engineering test supervisor  ·  engineering technical manager  ·  engineering technical apprentice  ·  mechanical engineering system inspector  ·  mechanical engineering technical operator"
+  },
+  {
+   "role": "aircraft engine tester",
+   "isco": 3115,
+   "aka": "aeroplane engine inspection engineer  ·  engine inspection technician  ·  aeroplane engine tester  ·  engine tester  ·  plane engine tester"
+  },
+  {
+   "role": "flight instructor",
+   "isco": 3153,
+   "aka": "pilot trainer  ·  flying instructor  ·  occupational flight instructor  ·  flight simulation instructor  ·  practitioner of flight instruction"
+  },
+  {
+   "role": "motor vehicle engine tester",
+   "isco": 3115,
+   "aka": "diesel engine tester  ·  electric engine tester  ·  engine inspection technician  ·  engine tester  ·  engine inspection engineer"
+  },
+  {
+   "role": "automotive brake technician",
+   "isco": 7231,
+   "aka": "automotive braking systems technician  ·  truck brake technician  ·  lorry brake technician  ·  brake technician  ·  car brake technician"
+  },
+  {
+   "role": "material stress analyst",
+   "isco": 3115,
+   "aka": "structural engineer  ·  materials stress analyst material analyst  ·  stress analyst  ·  material stress-strain analyst  ·  materials analyst"
+  },
+  {
+   "role": "roadside vehicle technician",
+   "isco": 7231,
+   "aka": "PCV roadside technician  ·  bus roadside technician  ·  bus and coach roadside technician  ·  mobile vehicle mechanic  ·  truck recovery technician"
+  },
+  {
+   "role": "battery simulation engineer",
+   "isco": 2151,
+   "aka": "device test engineer  ·  battery test development engineer  ·  battery modeling specialist  ·  battery simulation specialist  ·  battery calibration engineer"
+  },
+  {
+   "role": "marine mechatronics technician",
+   "isco": 3115,
+   "aka": "maritime mechatronics technologist  ·  naval mechatronics technologist  ·  maritime mechatronics technician  ·  marine mechatronics technologist  ·  ship mechatronics technician"
+  },
+  {
+   "role": "optomechanical engineering technician",
+   "isco": 3115,
+   "aka": "technologist in optical systems  ·  technician in optomechanical systems  ·  assistant in optomechanical engineering  ·  optomechanical technician  ·  optomechanical engineering assistant"
+  },
+  {
+   "role": "second officer",
+   "isco": 3153,
+   "aka": "flight engineer  ·  inflight engineer"
+  },
+  {
+   "role": "astronaut",
+   "isco": 3153,
+   "aka": "scientific cosmonaut  ·  spacecraft pilot  ·  science officer  ·  shuttle commander  ·  spacecraft crew member"
+  },
+  {
+   "role": "aerospace engineer",
+   "isco": 2144,
+   "aka": "aerospace design engineer  ·  aerostructures engineer  ·  missile designer  ·  missile design specialist  ·  aerospace engineering expert"
+  },
+  {
+   "role": "vessel engine inspector",
+   "isco": 3115,
+   "aka": "marine engine builder  ·  boat engine builder  ·  boat engine assembler  ·  outboard motor inspector  ·  electric motor inspector"
+  },
+  {
+   "role": "engine designer",
+   "isco": 2144,
+   "aka": "engine tool production designer  ·  engine design technician  ·  engine design engineer  ·  engine development engineer  ·  engine design technologist"
+  },
+  {
+   "role": "vessel engine tester",
+   "isco": 3115,
+   "aka": "marine engine tester  ·  marine engine test engineer  ·  outboard motor tester  ·  electric motor tester  ·  gas turbine engine tester"
+  },
+  {
+   "role": "mine electrical engineer",
+   "isco": 2151,
+   "aka": "electrical engineering expert  ·  electrical engineer  ·  electrical technologist  ·  mines electrical engineer  ·  mining electrical engineer"
+  },
+  {
+   "role": "mechatronics engineering technician",
+   "isco": 3115,
+   "aka": "mechatronic device technologist  ·  mechatronic device technician  ·  technician in mechatronics  ·  mechatronics technician  ·  technologist in mechatronics"
+  },
+  {
+   "role": "aircraft engine inspector",
+   "isco": 3115,
+   "aka": "aeroplane engine inspection engineer  ·  engine inspection technician  ·  aeroplane engine inspection technician  ·  engine inspection engineer  ·  rotary aircraft engine inspector"
+  },
+  {
+   "role": "substation engineer",
+   "isco": 2151,
+   "aka": "substation technology engineering consultant  ·  substation engineering specialist  ·  substation technology engineering expert  ·  substation engineering consultant  ·  sub stations engineer"
+  },
+  {
+   "role": "welding inspector",
+   "isco": 3115,
+   "aka": "welding supervisor  ·  welding checker  ·  welding assessor  ·  electric spot welding engineer  ·  engineering welding fabricator inspector"
+  },
+  {
+   "role": "Autonomous and Electric Vehicle Specialists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Automotive Service Technicians and Mechanics",
+   "isco": 7231,
+   "aka": NaN
+  }
+ ]
+}

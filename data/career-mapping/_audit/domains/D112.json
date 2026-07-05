@@ -1,0 +1,117 @@
+{
+ "domain_id": "D112",
+ "domain_name": "Wood Processing, Pulp",
+ "role_count": 22,
+ "roles": [
+  {
+   "role": "table saw operator",
+   "isco": 8172,
+   "aka": "table saw tender  ·  table saw operative  ·  table saw specialist  ·  cut-off saw specialist  ·  panel saw specialist"
+  },
+  {
+   "role": "veneer slicer operator",
+   "isco": 8172,
+   "aka": "veneer clipper operator  ·  veneer lather specialist  ·  vaneer slicing machine operator  ·  veneer slicer technician  ·  veneer cutter specialist"
+  },
+  {
+   "role": "paper pulp moulding operator",
+   "isco": 8171,
+   "aka": "paper pulp moulding machine specialist  ·  paper pulp moulding operative  ·  paper pulp moulding specialist  ·  paper pulp molding operator  ·  paper pulp moulding worker"
+  },
+  {
+   "role": "bleacher operator",
+   "isco": 8171,
+   "aka": "paper bleacher  ·  bleach stock preparation technician  ·  bleach stock preparation specialist  ·  paper bleacher specialist  ·  pulp bleacher technician"
+  },
+  {
+   "role": "planer thicknesser operator",
+   "isco": 8172,
+   "aka": "thickness specialist  ·  thicknesser technician  ·  jointer technician  ·  planer thicknesser technician  ·  thickness technician"
+  },
+  {
+   "role": "paper machine operator",
+   "isco": 8171,
+   "aka": "paper making machine operator  ·  paper machine technician  ·  paper making machine specialist  ·  paper-making machine specialist  ·  paper machine specialist"
+  },
+  {
+   "role": "debarker operator",
+   "isco": 8172,
+   "aka": "log peeling machine operator  ·  debarking machine operator  ·  debarking specialist  ·  log peeling machine specialist  ·  debarking machine specialist"
+  },
+  {
+   "role": "wood fuel pelletiser",
+   "isco": 8172,
+   "aka": "wood pelletiser  ·  wood pelletiser worker  ·  wood pellet machine worker  ·  wood pellet machine specialist  ·  wood pellet machine technician"
+  },
+  {
+   "role": "froth flotation deinking operator",
+   "isco": 8171,
+   "aka": "froth flotation deinking worker  ·  froth flotation deinking technician  ·  froth flotation deinking specialist  ·  froth flotation deinking tank technician  ·  froth flotation deinking tank operator"
+  },
+  {
+   "role": "sawmill operator",
+   "isco": 8172,
+   "aka": "sawmill supervisor  ·  sawmill operative  ·  sawing machine operator  ·  cross cut operator  ·  sawmill machine operator"
+  },
+  {
+   "role": "wash deinking operator",
+   "isco": 8171,
+   "aka": "deinking operator  ·  wash deinking technician  ·  deinking technician  ·  deinking worker  ·  wash deinking worker"
+  },
+  {
+   "role": "laminating machine operator",
+   "isco": 8171,
+   "aka": "laminater  ·  laminator operator  ·  coating machine specialist  ·  coter  ·  papermaking laminate coating machine technician"
+  },
+  {
+   "role": "chipper operator",
+   "isco": 8172,
+   "aka": "wood chipper technician  ·  chipper machine operator  ·  chipper  ·  wood chipper  ·  chipper specialist"
+  },
+  {
+   "role": "band saw operator",
+   "isco": 8172,
+   "aka": "vertical bandsaw operator  ·  vertical band saw operator  ·  band saw worker  ·  head saw specialist  ·  horizontal band saw operator"
+  },
+  {
+   "role": "pulp technician",
+   "isco": 8171,
+   "aka": "pulp and paper technician  ·  pulp and paper production specialist  ·  pulp production technologist  ·  pulp and paper technologist  ·  pulp production engineer"
+  },
+  {
+   "role": "crosscut saw operator",
+   "isco": 8172,
+   "aka": "crosscut sawyer  ·  cross-cut saw technician  ·  cross-cut sawyer  ·  crosscut saw technician  ·  cross-cut saw specialist"
+  },
+  {
+   "role": "engineered wood board machine operator",
+   "isco": 8172,
+   "aka": "fibre board machine operator  ·  engineered wood board gluing specialist  ·  fibreboard machine specialist  ·  engineered wood machine operator  ·  fibre board machine technician"
+  },
+  {
+   "role": "digester operator",
+   "isco": 8171,
+   "aka": "digester technician  ·  digester operative  ·  pulp mill machine operator  ·  pulp mill specialist  ·  pulp mill machine technician"
+  },
+  {
+   "role": "wood router operator",
+   "isco": 8172,
+   "aka": "wood carving machine operative  ·  CNC wood routing machine operator  ·  wood carving machine technician  ·  wood routing machine operator  ·  wood router technician"
+  },
+  {
+   "role": "paper mill supervisor",
+   "isco": 3122,
+   "aka": "paper mill overseer  ·  overseer at paper mill  ·  paper mill manager  ·  controller at paper mill  ·  paper mill operations controller"
+  },
+  {
+   "role": "wood production supervisor",
+   "isco": 3122,
+   "aka": "sawmill supervisor  ·  overseer of wood production  ·  supervisor in wood production  ·  wood production controller  ·  sawmill controller"
+  },
+  {
+   "role": "wood assembly supervisor",
+   "isco": 3122,
+   "aka": "wood assembly manager  ·  wooden assembly overseer  ·  wooden assembly supervisor  ·  wood assembly controller  ·  wood assembly overseer"
+  }
+ ]
+}

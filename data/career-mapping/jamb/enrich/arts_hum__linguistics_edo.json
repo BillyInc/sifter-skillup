@@ -1,0 +1,9 @@
+{
+  "jamb_name": "Linguistics/Edo",
+  "utme_subjects": ["Two (2) relevant Arts subjects", "and any other subject"],
+  "olevel_requirement": "Five (5) SSC credit passes or TC II merits including English Language, Literature in English and a Nigerian Language preferably Edo. 'O' Level pass in Mathematics is optional.",
+  "direct_entry": "(i) Two (2) 'A' Level passes in GCE or HSC or a recognised equivalent in any two (2) Arts subjects. (ii) NCE in any two (2) Arts subjects with an overall Merit level pass.",
+  "institution_waivers": [
+    {"institution": "BENIN", "note": "Accepts 'O' Level pass in English Language for candidates with 'O' Level distinction pass in Literature in English."}
+  ]
+}

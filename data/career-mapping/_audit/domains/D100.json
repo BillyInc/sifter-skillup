@@ -1,0 +1,117 @@
+{
+ "domain_id": "D100",
+ "domain_name": "Plumbing, Pipefitting",
+ "role_count": 22,
+ "roles": [
+  {
+   "role": "sprinkler fitter",
+   "isco": 7126,
+   "aka": "fire safety system fitter  ·  fire protection system fitter  ·  sprinkler technician  ·  sprinkler installer  ·  irrigation technician"
+  },
+  {
+   "role": "water network operative",
+   "isco": 7126,
+   "aka": "water and sewerage operative  ·  water supply network worker  ·  water network worker  ·  water network maintenance technician  ·  water supply network operator"
+  },
+  {
+   "role": "water conservation technician",
+   "isco": 7126,
+   "aka": "water conservation officer  ·  environmental systems technician  ·  water conservation specialist  ·  water recycling specialist"
+  },
+  {
+   "role": "bathroom fitter",
+   "isco": 7126,
+   "aka": "bathroom carpenter and joiner  ·  replacement bathroom installer  ·  bathroom installation worker  ·  bathroom fitting specialist  ·  bathroom refurbishment team worker"
+  },
+  {
+   "role": "drain technician",
+   "isco": 7126,
+   "aka": "sewer inspector  ·  drain cleaner  ·  sewer pipe repairer  ·  sewer and drain inspector  ·  plumbing and drainage technician"
+  },
+  {
+   "role": "irrigation technician",
+   "isco": 7126,
+   "aka": "irrigation machinery technician  ·  sprinkler system operator  ·  irrigation pipework technician  ·  irrigation system maintenance technician  ·  irrigation worker"
+  },
+  {
+   "role": "sewerage network operative",
+   "isco": 7126,
+   "aka": "sewerage network inspection operative  ·  wastewater systems operative  ·  wastewater system operative  ·  sewerage network operator  ·  wastewater distribution equipment operative"
+  },
+  {
+   "role": "heating technician",
+   "isco": 7126,
+   "aka": "coal fired heating inspector  ·  electrical heating engineer  ·  solid-fuel fired heating inspector  ·  HVAC heating mechanic  ·  solid fuel heating inspector"
+  },
+  {
+   "role": "sewer construction worker",
+   "isco": 7126,
+   "aka": "waste water pipelayer  ·  waste water infrastructure construction worker  ·  sewer infrastructure construction worker  ·  sewage pipe layer  ·  sewage infrastructure construction worker"
+  },
+  {
+   "role": "pipeline maintenance worker",
+   "isco": 7126,
+   "aka": "gas pipeline operator  ·  pipeline maintenance operator  ·  gas pipeline maintenance operator  ·  gas pipeline network technician  ·  oil pipeline worker"
+  },
+  {
+   "role": "heating and ventilation service installer",
+   "isco": 7127,
+   "aka": "HVAC heating mechanic  ·  heating instrument inspector  ·  HVACR inspector  ·  air conditioning and refrigeration inspector  ·  ventilation and air-conditioning inspector"
+  },
+  {
+   "role": "septic tank servicer",
+   "isco": 7126,
+   "aka": "septic tank service worker  ·  septic tank emptier  ·  septic tank emptying machine worker  ·  septic tank emptying machine operative  ·  septic tank emptying machine operator"
+  },
+  {
+   "role": "gas service technician",
+   "isco": 7126,
+   "aka": "gas plant engineer  ·  gas inspector  ·  gas supply engineer  ·  gas treater  ·  gas plant dispatcher"
+  },
+  {
+   "role": "plumber",
+   "isco": 7126,
+   "aka": "domestic plumber  ·  pipe worker  ·  pipeworker  ·  gasfitter  ·  plummer"
+  },
+  {
+   "role": "irrigation system installer",
+   "isco": 7126,
+   "aka": "irrigation specialist  ·  irrigation sprinkler system installer  ·  irrigation project worker  ·  irrigator  ·  agricultural irrigation system installer"
+  },
+  {
+   "role": "Plumbers, Pipefitters, and Steamfitters",
+   "isco": 7126,
+   "aka": NaN
+  },
+  {
+   "role": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+   "isco": 7127,
+   "aka": NaN
+  },
+  {
+   "role": "Drywall and Ceiling Tile Installers",
+   "isco": 7126,
+   "aka": NaN
+  },
+  {
+   "role": "Insulation Workers, Floor, Ceiling, and Wall",
+   "isco": 7126,
+   "aka": NaN
+  },
+  {
+   "role": "Pipelayers",
+   "isco": 7126,
+   "aka": NaN
+  },
+  {
+   "role": "Solar Thermal Installers and Technicians",
+   "isco": 7126,
+   "aka": NaN
+  },
+  {
+   "role": "Solar Photovoltaic Installers",
+   "isco": 7127,
+   "aka": NaN
+  }
+ ]
+}

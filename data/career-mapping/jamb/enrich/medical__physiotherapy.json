@@ -1,0 +1,23 @@
+{
+  "jamb_name": "Physiotherapy",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "IBADAN", "note": "Same as in Medicine and Surgery."},
+    {"institution": "NDU", "note": "Require the five (5) 'O' Level credit passes at not more than two (2) sittings."},
+    {"institution": "UNN and UYO", "note": "Require the five (5) 'O' Level credit passes at not more than two (2) sittings."},
+    {"institution": "DELSU", "note": "Requires five (5) 'O' Level credit passes which must include English Language, Mathematics, Chemistry, Physics and Biology in SSC or its equivalents at not more than one (1) sitting."},
+    {"institution": "BAYERO", "note": "Requires five (5) SSCE credit passes in English Language, Physics, Chemistry, Biology and Mathematics."},
+    {"institution": "ILORIN", "note": "Requires Credit passes at O'Level in five (5) subjects including: English Language, Mathematics, Physics, Chemistry and Biology in WASC or NECO at not more than two (2) sittings."},
+    {"institution": "LAGOS", "note": "Accepts Five O/Level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."},
+    {"institution": "ABU", "note": "Requires Five 'O' level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."},
+    {"institution": "PHC", "note": "Accepts Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology."},
+    {"institution": "KASU", "note": "Requires Five 'O' level credit passes to include English Language, Mathematics, Biology, Chemistry and Physics."},
+    {"institution": "ILORIN", "note": "UTME subjects: requires Physics, Chemistry and Biology."},
+    {"institution": "LAGOS", "note": "UTME subjects: requires English Language, Physics, Chemistry and Biology."},
+    {"institution": "ABU", "note": "UTME subjects: requires Use of English, Biology, Chemistry and Physics."},
+    {"institution": "PHC", "note": "UTME subjects: requires Physics, Chemistry and Biology."},
+    {"institution": "KASU", "note": "UTME subjects: requires Biology, Chemistry and Physics."}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "jamb_name": "Anthropology",
+  "utme_subjects": ["Any three (3) of History, CRS/IRS, Geography, Economics, Literature in English and French"],
+  "olevel_requirement": "Five (5) SSC credit passes to include one of Government/History, Religious Studies, Geography and Economics.",
+  "direct_entry": "Any two (2) `A' Level passes in Arts subjects.",
+  "institution_waivers": [
+    {
+      "institution": "IBADAN",
+      "note": "DIRECT ENTRY: IBADAN accepts 'A' Level passes in Geography, Economics, Government and Sociology."
+    },
+    {
+      "institution": "IBADAN",
+      "note": "UTME: IBADAN requires 'O' Level credit passes in English Language and any other three (3) Arts subjects."
+    }
+  ]
+}

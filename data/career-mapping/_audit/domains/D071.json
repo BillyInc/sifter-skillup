@@ -1,0 +1,432 @@
+{
+ "domain_id": "D071",
+ "domain_name": "Sports Management",
+ "role_count": 85,
+ "roles": [
+  {
+   "role": "performance production manager",
+   "isco": 1431,
+   "aka": "theatre production manager  ·  film production manager  ·  theater production manager  ·  live event production manager"
+  },
+  {
+   "role": "spa manager",
+   "isco": 1431,
+   "aka": "manager of spa  ·  spa director  ·  wellness manager  ·  spa managers  ·  spa and wellness manager"
+  },
+  {
+   "role": "professional athlete",
+   "isco": 3421,
+   "aka": "cyclist  ·  handball player  ·  skater  ·  race car driver  ·  discus athlete"
+  },
+  {
+   "role": "golf instructor",
+   "isco": 3422,
+   "aka": "junior golf instructor  ·  senior golf instructor  ·  golf coach  ·  golf teacher"
+  },
+  {
+   "role": "boxing instructor",
+   "isco": 3422,
+   "aka": "muay thai boxing instructor  ·  boxing trainer  ·  thai-boxing instructor  ·  boxing coach  ·  thai boxing instructor"
+  },
+  {
+   "role": "corporate trainer",
+   "isco": 2424,
+   "aka": "corporate education professional  ·  professional development coach  ·  trainer of corporate employees  ·  corporate professional trainer  ·  workplace training specialist"
+  },
+  {
+   "role": "horse riding instructor",
+   "isco": 3423,
+   "aka": "horseback riding instructor  ·  riding teacher  ·  riding instructor  ·  riding coach  ·  therapeutic riding instructor"
+  },
+  {
+   "role": "sports instructor",
+   "isco": 3422,
+   "aka": "wakeboard instructor  ·  swimming instructor  ·  gymnastics teacher  ·  swimming teacher  ·  water sports instructor"
+  },
+  {
+   "role": "zoo curator",
+   "isco": 1431,
+   "aka": "collection curator  ·  curator of herpetology  ·  aquarium curator  ·  zoo collection curator  ·  zoo collection's supervisor"
+  },
+  {
+   "role": "sport administrator",
+   "isco": 1349,
+   "aka": "programme administrator  ·  sport administration officer  ·  sports club administrator  ·  administrator of sports club  ·  sports administration officer"
+  },
+  {
+   "role": "activity leader",
+   "isco": 3423,
+   "aka": "workshop leader  ·  leisure activities leader  ·  activities coordinator  ·  holiday resort activity leader  ·  youth coordinator"
+  },
+  {
+   "role": "library manager",
+   "isco": 1349,
+   "aka": "library services manager  ·  public library services manager  ·  head of library  ·  library operations manager  ·  library administrator"
+  },
+  {
+   "role": "fact checker",
+   "isco": 2642,
+   "aka": "copy editor/fact checker  ·  journalist/fact checker  ·  fact-checker  ·  editor/fact checker  ·  writer/fact checker"
+  },
+  {
+   "role": "newspaper editor",
+   "isco": 2642,
+   "aka": "news editor  ·  newspaper graphics editor  ·  sports editor  ·  graphics editor  ·  newspaper news editor"
+  },
+  {
+   "role": "ice-skating coach",
+   "isco": 3422,
+   "aka": "speed skating coach  ·  figure skating coach  ·  ice-skating teacher  ·  speed skating instructor  ·  speed skating trainer"
+  },
+  {
+   "role": "commercial art gallery manager",
+   "isco": 1349,
+   "aka": "gallery programme manager  ·  arts space manager  ·  gallery manager  ·  art gallery manager  ·  display manager"
+  },
+  {
+   "role": "aviation communications and frequency coordination manager",
+   "isco": 1349,
+   "aka": "manager of aviation frequencies and communications  ·  coordinator of aviation frequencies and communications  ·  CFC manager"
+  },
+  {
+   "role": "beauty salon manager",
+   "isco": 1431,
+   "aka": "beauty parlour director  ·  beauty spa director  ·  beauty salon director  ·  beauty spa manager  ·  salon manager"
+  },
+  {
+   "role": "sports official",
+   "isco": 3422,
+   "aka": "judge  ·  linesman  ·  arbitrator  ·  field umpire  ·  timekeeper"
+  },
+  {
+   "role": "sport therapist",
+   "isco": 3423,
+   "aka": "sport & exercise therapist  ·  exercise specialist  ·  health exercise specialist  ·  exercise consultant  ·  exercise therapist"
+  },
+  {
+   "role": "football coach",
+   "isco": 3422,
+   "aka": "football manager  ·  association football coach  ·  football team trainer  ·  soccer coach  ·  football instructor"
+  },
+  {
+   "role": "pilates teacher",
+   "isco": 3423,
+   "aka": "pilates matwork instructor  ·  matwork pilates teacher  ·  pilates coach  ·  Pilates teacher  ·  pilates instructor"
+  },
+  {
+   "role": "sports coach",
+   "isco": 3422,
+   "aka": "sports instructor  ·  coach of sport  ·  instructor in sport  ·  sport coach for participation  ·  sports trainer for the elderly"
+  },
+  {
+   "role": "court administrator",
+   "isco": 1349,
+   "aka": "court administrative officer  ·  manager of court administration  ·  legal administrator  ·  court administration manager"
+  },
+  {
+   "role": "airside safety manager",
+   "isco": 1349,
+   "aka": "aviation safety manager  ·  director of airside safety  ·  manager of airside safety  ·  aviation safety director  ·  airport safety manager"
+  },
+  {
+   "role": "lottery manager",
+   "isco": 1431,
+   "aka": "general manager  ·  lottery general manager  ·  senior lottery administrator  ·  lottery managing director  ·  lottery chief executive officer"
+  },
+  {
+   "role": "environmental protection manager",
+   "isco": 1349,
+   "aka": "environmental manager  ·  environmental field office manager  ·  environmental protection specialist  ·  environmental impact assessment manager  ·  environmental safety specialist"
+  },
+  {
+   "role": "foreign correspondent",
+   "isco": 2642,
+   "aka": "foreign news correspondent  ·  on-the-scene reporter  ·  international correspondent  ·  foreign reporter  ·  foreign affairs correspondent"
+  },
+  {
+   "role": "assistant outdoor animator",
+   "isco": 3423,
+   "aka": "outdoor activities facilitator  ·  outdoor adventures facilitator  ·  junior instructor  ·  assistant open-air activities instructor  ·  outdoor activities assistant instructor"
+  },
+  {
+   "role": "vlogger",
+   "isco": 2642,
+   "aka": "video podcaster  ·  youtuber  ·  travel vlogger  ·  beauty vlogger  ·  video weblogger"
+  },
+  {
+   "role": "survival instructor",
+   "isco": 3423,
+   "aka": "wilderness survival instructor  ·  survival education instructor  ·  educator in survival techniques  ·  wilderness survival trainer  ·  survival techniques instructor"
+  },
+  {
+   "role": "outdoor activities instructor",
+   "isco": 3423,
+   "aka": "practitioner of instruction in outdoor activities  ·  outdoor activities instruction practitioner  ·  outdoor pursuits instructor  ·  outdoor pursuits group leader  ·  instructor in outdoor activities"
+  },
+  {
+   "role": "artistic coach",
+   "isco": 3422,
+   "aka": "actor  ·  actress  ·  dancer  ·  dance coach  ·  dance teacher"
+  },
+  {
+   "role": "lifeguard instructor",
+   "isco": 3422,
+   "aka": "lifeguard trainer  ·  instructor of lifeguards  ·  pool lifeguard instructor  ·  lifeguard training practitioner  ·  instructor of professional lifeguards"
+  },
+  {
+   "role": "cultural facilities manager",
+   "isco": 1431,
+   "aka": "cultural facilities director  ·  cultural facilities executive  ·  cultural services manager  ·  cultural facilities program coordinator"
+  },
+  {
+   "role": "swimming teacher",
+   "isco": 3422,
+   "aka": "swimming instructor  ·  swimming and diving coach  ·  swimming and diving instructor  ·  shaw method swimming teacher  ·  swimming and diving teacher"
+  },
+  {
+   "role": "rescue centre manager",
+   "isco": 1349,
+   "aka": "rescue centre coordinator  ·  rescue centre supervisor  ·  rescue coordination centre manager"
+  },
+  {
+   "role": "outdoor animator",
+   "isco": 3423,
+   "aka": "ski teacher  ·  ski instructor  ·  riding teacher  ·  riding instructor  ·  kayak and canoe instructor"
+  },
+  {
+   "role": "correctional services manager",
+   "isco": 1349,
+   "aka": "chief detention officer  ·  senior superintendent jail  ·  chief prison officer  ·  superintendent of jail  ·  correctional institution director"
+  },
+  {
+   "role": "outdoor activities coordinator",
+   "isco": 3423,
+   "aka": "activities coordinator  ·  sports inclusion coordinator  ·  senior outdoor instructor  ·  activities manager  ·  outdoor activities supervisor"
+  },
+  {
+   "role": "sports journalist",
+   "isco": 2642,
+   "aka": "sports journalist & commentator  ·  sport journalist  ·  sports journalist and commentator  ·  digital sports journalist  ·  sports correspondent"
+  },
+  {
+   "role": "picture editor",
+   "isco": 2642,
+   "aka": "photo editor  ·  picture selector and organiser  ·  picture selector and organizer  ·  image editor  ·  photograph editor"
+  },
+  {
+   "role": "recreational facilities manager",
+   "isco": 1431,
+   "aka": "cinema manager  ·  recreational camp manager  ·  cultural facility manager  ·  sports facility manager  ·  recreational facilities director"
+  },
+  {
+   "role": "snowboard instructor",
+   "isco": 3422,
+   "aka": "snowboard and ski instructor  ·  snowboard & ski instructor  ·  ski and snowboard instructor  ·  ski & snowboard instructor  ·  snowboard teacher"
+  },
+  {
+   "role": "interpretation agency manager",
+   "isco": 1349,
+   "aka": "language translation agency director  ·  language translation agency supervisor  ·  translation service manager  ·  language interpretation service manager  ·  language interpreter"
+  },
+  {
+   "role": "ski instructor",
+   "isco": 3422,
+   "aka": "ski teacher  ·  ski and snowboard instructor  ·  ski & snowboard instructor  ·  ski coach  ·  skiing instructor"
+  },
+  {
+   "role": "sport facility manager",
+   "isco": 1431,
+   "aka": "swimming pool manager  ·  sport hall manager  ·  stadium manager  ·  sport venue manager  ·  fitness club manager"
+  },
+  {
+   "role": "translation agency manager",
+   "isco": 1349,
+   "aka": "language translation agency director  ·  language translation agency supervisor  ·  translation service manager  ·  language interpretation service manager  ·  language translation service manager"
+  },
+  {
+   "role": "mountain guide",
+   "isco": 3423,
+   "aka": "climbing guide  ·  alpine guide  ·  mountain holiday leader  ·  mountain walking guide  ·  outdoor leader"
+  },
+  {
+   "role": "betting manager",
+   "isco": 1431,
+   "aka": "casino manager  ·  betting shop coordinator  ·  bingo manager"
+  },
+  {
+   "role": "leisure attendant",
+   "isco": 3423,
+   "aka": "pool attendant  ·  fitness club attendant  ·  club attendant  ·  leisure club assistant  ·  weight room attendant"
+  },
+  {
+   "role": "copy editor",
+   "isco": 2642,
+   "aka": "editorial assistant  ·  language editor  ·  senior copy editor  ·  copy-editor"
+  },
+  {
+   "role": "aviation surveillance and code coordination manager",
+   "isco": 1349,
+   "aka": "aviation surveillance and code coordinator  ·  aviation surveillance and code compliance co-ordinator  ·  manager of aviation surveillance and code coordination  ·  aviation surveillance and code compliance officer  ·  aviation surveillance and code compliance supervisor"
+  },
+  {
+   "role": "energy manager",
+   "isco": 1349,
+   "aka": "green policy manager  ·  smart energy specialist  ·  environmental compliance manager  ·  energy and sustainability manager  ·  energy procurement manager"
+  },
+  {
+   "role": "chief fire officer",
+   "isco": 1349,
+   "aka": "chief fire and rescue officer  ·  fire lieutenant  ·  chief fireman  ·  fire captain  ·  fire chief"
+  },
+  {
+   "role": "specialised outdoor animator",
+   "isco": 3423,
+   "aka": "special needs outdoor instructor  ·  personal instructor  ·  outdoor education specialist  ·  scuba diving instructor  ·  skydiving instructor"
+  },
+  {
+   "role": "journalist",
+   "isco": 2642,
+   "aka": "financial journalist  ·  business journalist  ·  correspondent  ·  commentator  ·  web editor"
+  },
+  {
+   "role": "publications coordinator",
+   "isco": 1349,
+   "aka": "publications director  ·  corporate publications manager  ·  operational publications coordinator  ·  international publications coordinator  ·  head of publications"
+  },
+  {
+   "role": "blogger",
+   "isco": 2642,
+   "aka": "blog content writer  ·  travel blogger  ·  blog writer  ·  vegan food blogger  ·  drinks blogger"
+  },
+  {
+   "role": "tennis coach",
+   "isco": 3422,
+   "aka": "tennis teacher  ·  tennis instructor  ·  mini tennis coach  ·  head tennis coach  ·  tennis trainer"
+  },
+  {
+   "role": "broadcast news editor",
+   "isco": 2642,
+   "aka": "radio reporter  ·  television news director  ·  tv news director  ·  digital news editor  ·  night news editor"
+  },
+  {
+   "role": "columnist",
+   "isco": 2642,
+   "aka": "commentator  ·  political columnist  ·  gossip columnist  ·  editorial opinion columnist  ·  humor columnist"
+  },
+  {
+   "role": "service manager",
+   "isco": 1349,
+   "aka": "service operations manager  ·  customer service manager  ·  field service manager  ·  service director  ·  regional service manager"
+  },
+  {
+   "role": "fitness instructor",
+   "isco": 3423,
+   "aka": "swimming instructor  ·  fitness class instructor  ·  aqua fitness instructor  ·  indoor cycling trainer  ·  fitness specialist"
+  },
+  {
+   "role": "editor-in-chief",
+   "isco": 2642,
+   "aka": "head editor  ·  executive editor  ·  executive director of editorial  ·  editor in chief  ·  managing editor"
+  },
+  {
+   "role": "museum director",
+   "isco": 1349,
+   "aka": "museum and heritage director  ·  director of collections  ·  art collection director  ·  art gallery director  ·  museum manager"
+  },
+  {
+   "role": "cultural centre director",
+   "isco": 1431,
+   "aka": "center director  ·  director of cultural center  ·  cultural centre manager  ·  arts centre manager  ·  cultural centeredirector"
+  },
+  {
+   "role": "airspace manager",
+   "isco": 1349,
+   "aka": "manager of airspace  ·  airspace management officer  ·  air traffic and airspace manager  ·  airspace and air traffic manager"
+  },
+  {
+   "role": "legal service manager",
+   "isco": 1349,
+   "aka": "legal practice manager  ·  head of the legal services office  ·  legal firm manager  ·  legal department director  ·  legal office head"
+  },
+  {
+   "role": "entertainment journalist",
+   "isco": 2642,
+   "aka": "film journalist  ·  entertainment correspondent  ·  arts journalist  ·  film and entertainment journalist  ·  event reporter"
+  },
+  {
+   "role": "crime journalist",
+   "isco": 2642,
+   "aka": "investigative journalist  ·  crime writer  ·  crime & critical events journalist  ·  crime reporter  ·  crime and critical events journalist"
+  },
+  {
+   "role": "business coach",
+   "isco": 2424,
+   "aka": "professional development coach  ·  corporate coach  ·  leadership coach  ·  business development coach  ·  personal development coach"
+  },
+  {
+   "role": "business journalist",
+   "isco": 2642,
+   "aka": "financial journalist  ·  economic journalist  ·  business writer  ·  business & finance journalist  ·  business correspondent"
+  },
+  {
+   "role": "front of house manager",
+   "isco": 1349,
+   "aka": "theatre front of house supervisor  ·  theatrical house manager  ·  venue house manager  ·  front of house supervisor  ·  theatre front of house manager"
+  },
+  {
+   "role": "artistic director",
+   "isco": 1349,
+   "aka": "art director  ·  opera director  ·  director of programming  ·  theatre director  ·  venue programming director"
+  },
+  {
+   "role": "book publisher",
+   "isco": 1349,
+   "aka": "publishing house manager  ·  publisher"
+  },
+  {
+   "role": "political journalist",
+   "isco": 2642,
+   "aka": "political analyst  ·  political reporter  ·  journalist specialising in global politics  ·  journalist specialising in international politics  ·  journalist specialising in US politics"
+  },
+  {
+   "role": "document management officer",
+   "isco": 1349,
+   "aka": "archive manager  ·  documentation manager  ·  document management specialist  ·  document controller  ·  document control manager"
+  },
+  {
+   "role": "medical laboratory manager",
+   "isco": 1349,
+   "aka": "clinical laboratory supervisor  ·  medical laboratory supervisor  ·  medical laboratory administrator  ·  clinical laboratory director of operations  ·  clinical laboratory administrator"
+  },
+  {
+   "role": "personal trainer",
+   "isco": 3423,
+   "aka": "personal trainer and sport therapist  ·  personal progress manager  ·  personal trainer and nutritionist  ·  personal trainer & nutritionist  ·  personal fitness trainer"
+  },
+  {
+   "role": "magazine editor",
+   "isco": 2642,
+   "aka": "magazine supplements editor  ·  magazine features editor  ·  features editor"
+  },
+  {
+   "role": "critic",
+   "isco": 2642,
+   "aka": "blogger  ·  reviewer  ·  theater critic  ·  film critic  ·  TV critic"
+  },
+  {
+   "role": "Athletes and Sports Competitors",
+   "isco": 3421,
+   "aka": NaN
+  },
+  {
+   "role": "Umpires, Referees, and Other Sports Officials",
+   "isco": 3421,
+   "aka": NaN
+  },
+  {
+   "role": "Amusement and Recreation Attendants",
+   "isco": 3423,
+   "aka": NaN
+  }
+ ]
+}

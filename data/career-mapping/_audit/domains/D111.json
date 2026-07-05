@@ -1,0 +1,257 @@
+{
+ "domain_id": "D111",
+ "domain_name": "Textile, Garment",
+ "role_count": 50,
+ "roles": [
+  {
+   "role": "protective clothing apparel manufacturer",
+   "isco": 8153,
+   "aka": "manufacturer of protective equipment  ·  protective gear manufacturer  ·  manufacturer of protective clothing  ·  protective clothes manufacturer  ·  manufacturer of safety clothing"
+  },
+  {
+   "role": "spinning textile operator",
+   "isco": 8151,
+   "aka": "spinning process operator  ·  textile spinner  ·  spinning and winding supervisor  ·  spinning textile technician  ·  textile technician for spinning"
+  },
+  {
+   "role": "textile pattern making machine operator",
+   "isco": 8159,
+   "aka": "textile pattern making machine setter  ·  textile pattern making machinist  ·  textile pattern making machine tender  ·  textile pattern machine operator  ·  textile pattern making operator"
+  },
+  {
+   "role": "laundry worker",
+   "isco": 8157,
+   "aka": "laundry and dry cleaning operator  ·  laundry and dry cleaning assistant  ·  laundry and dry cleaning manager  ·  dry cleaning worker  ·  clothes washer"
+  },
+  {
+   "role": "twisting machine operator",
+   "isco": 8151,
+   "aka": "twisting operator  ·  industrial twisting machine operator  ·  twisting machine tender  ·  twister operator  ·  twister machine operator"
+  },
+  {
+   "role": "braiding machine operator",
+   "isco": 8159,
+   "aka": "textile braiding foreperson  ·  textile braider  ·  textile braiding forewoman  ·  textile braiding supervisor  ·  textile braiders"
+  },
+  {
+   "role": "knitting textile technician",
+   "isco": 8152,
+   "aka": "knitting machinist  ·  knitting machine tender  ·  seamless technician and designer  ·  knitting department manager  ·  jacquard knitting technician"
+  },
+  {
+   "role": "finishing textile technician",
+   "isco": 8154,
+   "aka": "finishing textile supervisor  ·  textile finishing operator  ·  finishing technicians  ·  textile finishing technician  ·  cloth finisher"
+  },
+  {
+   "role": "textile dyeing technician",
+   "isco": 8154,
+   "aka": "fabric dyeing technician  ·  dyeing textile technician  ·  dye textile supervisor  ·  dye textile machine operator"
+  },
+  {
+   "role": "braiding textile technician",
+   "isco": 8159,
+   "aka": "braiding textile setter  ·  cable-braiding technician  ·  braiding machine tender  ·  braiding technician  ·  braiding machine setter"
+  },
+  {
+   "role": "textile machine operator",
+   "isco": 8152,
+   "aka": "textile supervisor  ·  textile processing supervisor  ·  textile processing forewoman  ·  textile processing foreman  ·  textile supervisors"
+  },
+  {
+   "role": "tufting operator",
+   "isco": 8152,
+   "aka": "tufting machinist  ·  tufting machine operator  ·  tufting supervisor  ·  tufter  ·  tufting creeler"
+  },
+  {
+   "role": "man-made fiber spinner",
+   "isco": 8151,
+   "aka": "extruding and forming machine setter  ·  filament yarn manufacturer  ·  staple fiber manufacturer  ·  operator for synthetic and glass fiber  ·  synthetic filament spinner"
+  },
+  {
+   "role": "laundry ironer",
+   "isco": 8157,
+   "aka": "laundry assistant  ·  dry cleaning worker  ·  dry cleaner  ·  laundry worker  ·  presser"
+  },
+  {
+   "role": "yarn spinner",
+   "isco": 8151,
+   "aka": "spinning machine tender  ·  spinning-frame tender  ·  staple yarn spinner  ·  cotton spinner  ·  yarn spinners"
+  },
+  {
+   "role": "winding machine operator",
+   "isco": 8151,
+   "aka": "bobbin winder  ·  winding operator  ·  core winding operator  ·  winder operator  ·  core winder machine operator"
+  },
+  {
+   "role": "canvas goods assembler",
+   "isco": 8159,
+   "aka": "canvas product assembler  ·  canvas tent maker  ·  canvas goods producer  ·  canvas goods production operative  ·  canvas products maker"
+  },
+  {
+   "role": "spinning machine operator",
+   "isco": 8151,
+   "aka": "spinning machine tender  ·  yarn carding and spinning machine operator  ·  operator of spinning machine  ·  spinner"
+  },
+  {
+   "role": "weaving machine supervisor",
+   "isco": 8152,
+   "aka": "weaving loom operator  ·  weaving inspector  ·  weaving supervisor  ·  weaver and loom technician  ·  weavers"
+  },
+  {
+   "role": "knitting machine operator",
+   "isco": 8152,
+   "aka": "knitting machine setter  ·  knitter operator  ·  knitting machinist  ·  knitting machine tender  ·  warp knitting machine operator"
+  },
+  {
+   "role": "nonwoven staple machine operator",
+   "isco": 8159,
+   "aka": "non-woven staple processing machine operator  ·  non woven worker  ·  non woven staple processing machine operator  ·  non-woven fabric machine operator  ·  nonwoven staple machine operators"
+  },
+  {
+   "role": "sewing machine operator",
+   "isco": 8153,
+   "aka": "custom sewer  ·  garment maker  ·  serger machine operator  ·  computer stitcher  ·  flat sewing machine operator"
+  },
+  {
+   "role": "textile dyer",
+   "isco": 8154,
+   "aka": "textile dye colorist  ·  dyeing machine tender  ·  cloth dyer  ·  textile dye colourist  ·  package dyer"
+  },
+  {
+   "role": "weaving machine operator",
+   "isco": 8152,
+   "aka": "weaving tender  ·  weaving machinist  ·  weaving loom operator  ·  weaver apprentice"
+  },
+  {
+   "role": "weaving textile technician",
+   "isco": 8152,
+   "aka": "weaving loom operator  ·  textile weaver  ·  passementerie production machine operator  ·  lace weaving technician  ·  weaving textile operator"
+  },
+  {
+   "role": "knitting machine supervisor",
+   "isco": 8152,
+   "aka": "knitting inspector  ·  fabric knitting supervisor  ·  knitter of fabrics  ·  knitting foreman  ·  fabric knitter"
+  },
+  {
+   "role": "clothing sample machinist",
+   "isco": 8153,
+   "aka": "sample sewing machinist  ·  sample garment machinist  ·  sample clothing sewer  ·  garment sample machinist  ·  sample sewer"
+  },
+  {
+   "role": "mattress making machine operator",
+   "isco": 8159,
+   "aka": "mattress making machine worker  ·  mattress forming machine setter  ·  mattress factory machine worker  ·  mattress factory machine operator  ·  mattress making machine setter"
+  },
+  {
+   "role": "cotton gin operator",
+   "isco": 8151,
+   "aka": "cotton gin machine operator  ·  cotton gin machinist  ·  cotton gin machine tender"
+  },
+  {
+   "role": "clothing alteration machinist",
+   "isco": 8153,
+   "aka": "alterations sewer  ·  alterations seamstress  ·  alterations tailor  ·  clothing alteration machine operator  ·  clothing alteration hand"
+  },
+  {
+   "role": "laundry workers supervisor",
+   "isco": 8157,
+   "aka": "laundry and dry cleaning workers chief  ·  laundry and dry-cleaning manager  ·  laundry and dry cleaning workers supervisor  ·  laundry and dry cleaning operator  ·  laundry and dry cleaning workers manager"
+  },
+  {
+   "role": "embroidery machine operator",
+   "isco": 8153,
+   "aka": "computerized machine operator  ·  monogram machine operator  ·  embroidery machinist  ·  computerised embroidery machine operator"
+  },
+  {
+   "role": "nonwoven textile technician",
+   "isco": 8159,
+   "aka": "non woven technician  ·  non woven textile worker  ·  nonwoven machine operator  ·  nonwoven textile operator  ·  non-woven textile worker"
+  },
+  {
+   "role": "textile finishing machine operator",
+   "isco": 8154,
+   "aka": "drying machine operator  ·  textile dyeing and finishing machine operator  ·  textile finishing range operator  ·  laminating and coating machine operator  ·  textile machine settler and operator"
+  },
+  {
+   "role": "Laundry and Dry-Cleaning Workers",
+   "isco": 8157,
+   "aka": NaN
+  },
+  {
+   "role": "Textile Bleaching and Dyeing Machine Operators and Tenders",
+   "isco": 8151,
+   "aka": NaN
+  },
+  {
+   "role": "Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders",
+   "isco": 8152,
+   "aka": NaN
+  },
+  {
+   "role": "Textile, Apparel, and Furnishings Workers, All Other",
+   "isco": 7318,
+   "aka": NaN
+  },
+  {
+   "role": "Textile Cutting Machine Setters, Operators, and Tenders",
+   "isco": 8152,
+   "aka": NaN
+  },
+  {
+   "role": "Textile Knitting and Weaving Machine Setters, Operators, and Tenders",
+   "isco": 8151,
+   "aka": NaN
+  },
+  {
+   "role": "textile quality technician",
+   "isco": 3119,
+   "aka": "textile testing technician  ·  textile quality laboratory analyst  ·  physical testing laboratory technician  ·  textile laboratory technician"
+  },
+  {
+   "role": "textile chemical quality technician",
+   "isco": 3119,
+   "aka": "textile chemical laboratory tester  ·  textile chemical quality analyst  ·  textile chemical laboratory technician  ·  textile chemical process analyst  ·  textile chemical quality manager"
+  },
+  {
+   "role": "textile process controller",
+   "isco": 3119,
+   "aka": "textile process supervisor  ·  textile process coordinator  ·  textile process inspector  ·  quality assurance supervisor  ·  textile process controllers"
+  },
+  {
+   "role": "textile operations manager",
+   "isco": 1321,
+   "aka": "textile operations supervisor  ·  clothing operations director  ·  clothing operations manager  ·  clothing operations area manager  ·  textile production manager"
+  },
+  {
+   "role": "textile quality inspector",
+   "isco": 7543,
+   "aka": "quality textile inspector  ·  textile quality analyst  ·  textile quality assurance inspector  ·  textile products inspector"
+  },
+  {
+   "role": "textile printer",
+   "isco": 7322,
+   "aka": "silk screen printer  ·  textile screen printer  ·  roller printer  ·  rotary screen printing operator  ·  textile printers"
+  },
+  {
+   "role": "printing textile technician",
+   "isco": 7322,
+   "aka": "textile printing press operator  ·  clothing printing press machine operator  ·  printing textile supervisor  ·  screen printing technician  ·  cutting and printing machine set-up operator"
+  },
+  {
+   "role": "textile machinery technician",
+   "isco": 7233,
+   "aka": "textile value chain machine repairer  ·  textile machine repairer  ·  card fixer  ·  textile machine maintenance mechanic  ·  textile card inspector"
+  },
+  {
+   "role": "textile quality manager",
+   "isco": 1321,
+   "aka": "textile quality supervisor  ·  textile quality control manager"
+  },
+  {
+   "role": "footwear stitching machine operator",
+   "isco": 8156,
+   "aka": "shoe stitcher  ·  binding stitcher  ·  shoe sewing machine tender  ·  shoe sewing machine operator"
+  }
+ ]
+}

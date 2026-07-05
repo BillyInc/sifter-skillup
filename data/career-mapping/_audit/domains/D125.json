@@ -1,0 +1,42 @@
+{
+ "domain_id": "D125",
+ "domain_name": "Medical Secretarial",
+ "role_count": 7,
+ "roles": [
+  {
+   "role": "medical administrative assistant",
+   "isco": 3344,
+   "aka": "medical receptionist  ·  healthcare assistant  ·  medical assistant  ·  personal assistant  ·  administrative assistant in medical institution"
+  },
+  {
+   "role": "front line medical receptionist",
+   "isco": 4226,
+   "aka": "medical care front line receptionist  ·  front desk receptionist  ·  front desk assistant  ·  medical institution front line receptionist  ·  medical receptionist"
+  },
+  {
+   "role": "medical transcriptionist",
+   "isco": 3344,
+   "aka": "medical transcriber  ·  clinical transcriber  ·  clinical transcriptionist  ·  medical transcription suite typist  ·  medical secretary-audio typist"
+  },
+  {
+   "role": "medical practice manager",
+   "isco": 3344,
+   "aka": "medical practice director of operations  ·  general practice manager  ·  health centre administrator  ·  medical practice administrator  ·  medical practice supervisor"
+  },
+  {
+   "role": "veterinary receptionist",
+   "isco": 4226,
+   "aka": "vet secretary  ·  veterinary receptionists  ·  veterinary practice administration officer  ·  veterinary practice secretary  ·  animal care receptionist"
+  },
+  {
+   "role": "receptionist",
+   "isco": 4226,
+   "aka": "front desk receptionist  ·  medical receptionist  ·  corporate receptionist  ·  office receptionist  ·  receiving clerk"
+  },
+  {
+   "role": "Receptionists and Information Clerks",
+   "isco": 4226,
+   "aka": NaN
+  }
+ ]
+}

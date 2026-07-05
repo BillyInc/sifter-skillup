@@ -1,0 +1,340 @@
+[
+ {
+  "programme": "Bachelor of Pharmacy",
+  "code": "PHA",
+  "technical_skills": [
+   "define the role of Pharmacists in health services",
+   "identify opportunities in various practice areas of Pharmacy",
+   "identify various disciplines of Pharmacy",
+   "interpret prescriptions; and",
+   "identify different dosage forms 31",
+   "basic organisation of the human body",
+   "gross and microscopic structure of different organ systems; and",
+   "structure-function correlation",
+   "structural organisation of the nervous system",
+   "spinal cord and the brain",
+   "peripheral nervous system",
+   "general embryology, teratology and genetic anatomy; and",
+   "influence of drugs on foetal development",
+   "histology of lymphatic and alimentary system and reproductive systems; and",
+   "histology of the exocrine glands and organs of special senses",
+   "cell physiology and transport system; and",
+   "physiology of the cardiovascular, respiratory, renal, gastrointestinal and endocrine systems",
+   "describe the organisation of the CNS and its control systems",
+   "describe sleep, memory and learning",
+   "describe autonomic nervous system; and",
+   "explain special senses",
+   "explain an overview of computer technology",
+   "describe applications of ICT in Pharmacy and society",
+   "perform practical, hands-on exercises; and",
+   "identify available software, statistical packages, databases and management information systems"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation-building"
+  ],
+  "course_titles": [
+   "Communication in English I",
+   "Nigerian Peoples and Culture",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Introduction to Pharmacy",
+   "Philosophy, Logic, Environment and Sustainable Development",
+   "Entrepreneurship and Innovation",
+   "Basic Anatomy"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Doctor of Pharmacy",
+  "code": "PHD",
+  "technical_skills": [
+   "define the role of Pharmacists in health services",
+   "identify opportunities in various practice areas of Pharmacy",
+   "identify various disciplines of Pharmacy",
+   "interpret prescriptions; and",
+   "identify different dosage forms",
+   "describe the basic organization of the human body",
+   "describe the gross and microscopic structure of different organ systems; and",
+   "explain structure-function correlation",
+   "describe the structural organization of the nervous system",
+   "describe the spinal cord, and the brain",
+   "describe the peripheral nervous system",
+   "discuss general embryology, teratology and genetic anatomy; and",
+   "explain the influence of drugs on foetal development",
+   "explain the histology of lymphatic, alimentary and reproductive systems; and",
+   "describe the histology of the exocrine glands and organs of special senses",
+   "describe cell physiology and transport system; and",
+   "discuss physiology of the cardiovascular, respiratory, renal, gastrointestinal and endocrine systems. 94",
+   "describe the organization of the CNS and its control systems",
+   "explain the state of sleep, memory and learning",
+   "discuss autonomic nervous system; and",
+   "describe special senses",
+   "describe the scope of Pharmacognosy",
+   "define basic pharmcognostic terms",
+   "classify crude drugs",
+   "identify some natural drugs obtained from plant, animal and mineral sources"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times 83",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Introduction to Pharmacy",
+   "Philosophy, Logic, Environment and Sustainable Development",
+   "Entrepreneurship and Innovation",
+   "Basic Anatomy"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D057",
+    "domain": "Digital Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D023",
+    "domain": "Medicine",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   }
+  ]
+ }
+]

@@ -1,0 +1,50 @@
+{
+ "reconciled": [
+  {
+   "programme": "Human Anatomy",
+   "add": [
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "direct", "why": "Anatomy (gross, histology, embryology) is a foundational biomedical science and the programme's core purpose — promote from functional"},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Anatomy graduates progress into teaching, demonstrating and academic research"},
+    {"domain_id": "D023", "domain": "Medicine & Clinical Practice", "match_type": "adjacent", "why": "Shared basic-medical-sciences foundation provides a foothold toward clinical training"}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D062", "why": "Capital-markets trading unrelated"},
+    {"domain_id": "D061", "why": "Insurance unrelated"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D093", "why": "Electrical installation trade unrelated"},
+    {"domain_id": "D030", "why": "Marketing/brand unrelated"},
+    {"domain_id": "D072", "why": "Geospatial/GIS unrelated"},
+    {"domain_id": "D134", "why": "Naval architecture unrelated"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated"},
+    {"domain_id": "D066", "why": "No veterinary course; human-anatomy focus"},
+    {"domain_id": "D155", "why": "No nanomaterials course"},
+    {"domain_id": "D078", "why": "No social-science research course basis"}
+   ]
+  },
+  {
+   "programme": "Physiology",
+   "add": [
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "direct", "why": "Physiology (cell, excitable-tissue, systems) is a foundational biomedical science and the programme's core purpose — promote from functional"},
+    {"domain_id": "D039", "domain": "Higher Education & Academic Research", "match_type": "functional", "why": "Physiology graduates progress into teaching and academic research"},
+    {"domain_id": "D023", "domain": "Medicine & Clinical Practice", "match_type": "adjacent", "why": "Shared basic-medical-sciences foundation provides a foothold toward clinical training"}
+   ],
+   "remove": [
+    {"domain_id": "D090", "why": "Animal grooming unrelated"},
+    {"domain_id": "D093", "why": "Electrical installation trade unrelated"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D061", "why": "Insurance unrelated"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D016", "why": "Membrane-potential physics does not amount to an electrical-engineering career"},
+    {"domain_id": "D134", "why": "Naval architecture unrelated"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D066", "why": "No veterinary course; human-physiology focus"},
+    {"domain_id": "D062", "why": "Capital-markets trading unrelated"},
+    {"domain_id": "D140", "why": "Robotics engineering unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D078", "why": "No social-science research course basis"}
+   ]
+  }
+ ]
+}

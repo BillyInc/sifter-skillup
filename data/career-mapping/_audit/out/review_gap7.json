@@ -1,0 +1,113 @@
+{
+  "reviews": [
+    {
+      "domain_id": "D164",
+      "domain_name": "Urban Mobility, Smart City Systems",
+      "verdict": "issues",
+      "remove_roles": [
+        {"role": "geological engineer", "isco": 2142, "reason": "geoscience/geotechnical, not urban mobility"},
+        {"role": "food production engineer", "isco": 2141, "reason": "food industry contamination"},
+        {"role": "industrial engineer", "isco": 2141, "reason": "generic manufacturing, not smart city"},
+        {"role": "pipeline engineer", "isco": 2142, "reason": "oil & gas / subsea, off-domain"},
+        {"role": "maintenance and repair engineer", "isco": 2141, "reason": "manufacturing maintenance contamination"},
+        {"role": "manufacturing engineer", "isco": 2141, "reason": "battery/manufacturing, off-domain"},
+        {"role": "food and beverage packaging technologist", "isco": 2141, "reason": "food packaging contamination"},
+        {"role": "packaging production manager", "isco": 2141, "reason": "packaging operations, off-domain"},
+        {"role": "process engineer", "isco": 2141, "reason": "battery/process manufacturing contamination"},
+        {"role": "automation engineer", "isco": 2141, "reason": "manufacturing/mining automation, not mobility"},
+        {"role": "production engineer", "isco": 2141, "reason": "manufacturing production, off-domain"},
+        {"role": "surface engineer", "isco": 2141, "reason": "coatings/corrosion, off-domain"},
+        {"role": "hydropower engineer", "isco": 2142, "reason": "power generation, off-domain"},
+        {"role": "special-interest groups", "isco": 1114, "reason": "junk group-label / advocacy row, not an engineering/mobility role"},
+        {"role": "homologation engineer", "isco": 2141, "reason": "automotive type-approval; belongs to D166 Autonomous Vehicles"},
+        {"role": "mining geotechnical engineer", "isco": 2142, "reason": "mining/hydrology contamination"}
+      ],
+      "add_roles": [
+        {"role": "geographic information systems specialist", "isco": 2165, "skills": ["GIS", "spatial analysis", "ArcGIS/QGIS", "urban data modelling", "remote sensing", "digital mapping"], "reason": "smart city systems depend on geospatial data; no GIS/spatial role present"},
+        {"role": "public transport operations manager", "isco": 1324, "skills": ["transit service planning", "fleet scheduling", "dispatch operations", "route optimisation", "operations KPIs"], "reason": "urban mobility operations management is core but absent (only planners/engineers present)"}
+      ],
+      "overfanout_roles": ["land planner", "urban planner"],
+      "rename_to": null,
+      "notes": "Heavily contaminated with generic manufacturing (2141) and geoscience/energy (2142) engineering roles. Genuine core kept: mobility services manager, smart city consultant, transport planner, transport engineer, urban planner, land planner, rail project engineer, airport planning engineer, civil/construction/drainage/water engineer (urban infra). 'land planner' and 'urban planner' are near-duplicate ISCO 2164 planners (both alias city/town planner) — ESCO fan-out."
+    },
+    {
+      "domain_id": "D165",
+      "domain_name": "Wellness Coaching, Lifestyle Medicine",
+      "verdict": "issues",
+      "remove_roles": [
+        {"role": "medical physics expert", "isco": 2269, "reason": "clinical radiation/dosimetry physics, not wellness coaching"},
+        {"role": "biomedical scientist", "isco": 2269, "reason": "clinical laboratory science contamination"},
+        {"role": "anatomical pathology technician", "isco": 2269, "reason": "clinical pathology lab, off-domain"},
+        {"role": "prosthetic-orthotics technician", "isco": 2269, "reason": "clinical device fabrication, off-domain"},
+        {"role": "podiatry assistant", "isco": 2269, "reason": "clinical podiatry, off-domain"},
+        {"role": "nuclear medicine radiographer", "isco": 2269, "reason": "clinical medical imaging, off-domain"},
+        {"role": "radiographer", "isco": 2269, "reason": "clinical medical imaging, off-domain"},
+        {"role": "diagnostic radiographer", "isco": 2269, "reason": "clinical medical imaging, off-domain"},
+        {"role": "occupational therapist", "isco": 2269, "reason": "clinical rehabilitation therapy, not wellness/lifestyle coaching"},
+        {"role": "occupational therapy assistant", "isco": 2269, "reason": "clinical rehabilitation support, off-domain"},
+        {"role": "specialist biomedical scientist", "isco": 2269, "reason": "clinical lab science contamination"},
+        {"role": "biomedical scientist advanced", "isco": 2269, "reason": "clinical lab science contamination + duplicate"},
+        {"role": "cytotechnologist", "isco": 2269, "reason": "clinical cytology lab, off-domain"},
+        {"role": "podiatrist", "isco": 2269, "reason": "clinical podiatry, off-domain"},
+        {"role": "chiropractor", "isco": 2269, "reason": "regulated clinical manual medicine, not wellness coaching"},
+        {"role": "specialist chiropractor", "isco": 2269, "reason": "clinical + near-duplicate of chiropractor"},
+        {"role": "osteopath", "isco": 2269, "reason": "regulated clinical manual medicine, off-domain"},
+        {"role": "horse riding instructor", "isco": 3423, "reason": "equestrian sport instruction, not wellness/lifestyle medicine"},
+        {"role": "activity leader", "isco": 3423, "reason": "leisure/holiday activity leader contamination"},
+        {"role": "assistant outdoor animator", "isco": 3423, "reason": "outdoor adventure contamination"},
+        {"role": "survival instructor", "isco": 3423, "reason": "wilderness survival, off-domain"},
+        {"role": "outdoor activities instructor", "isco": 3423, "reason": "outdoor pursuits contamination"},
+        {"role": "outdoor animator", "isco": 3423, "reason": "ski/riding/canoe instruction, off-domain"},
+        {"role": "outdoor activities coordinator", "isco": 3423, "reason": "outdoor adventure coordination, off-domain"},
+        {"role": "specialised outdoor animator", "isco": 3423, "reason": "scuba/skydiving instruction, off-domain"},
+        {"role": "mountain guide", "isco": 3423, "reason": "alpine/climbing guiding, off-domain"},
+        {"role": "leisure attendant", "isco": 3423, "reason": "pool/club attendant, off-domain"},
+        {"role": "Dietitians and Nutritionists", "isco": 2265, "reason": "junk group-label row (aka=NaN)"},
+        {"role": "Healthcare Practitioners and Technical Workers, All Other", "isco": 2269, "reason": "junk group-label row (aka=NaN)"},
+        {"role": "Exercise Trainers and Group Fitness Instructors", "isco": 3423, "reason": "junk group-label row (aka=NaN)"}
+      ],
+      "add_roles": [
+        {"role": "health and wellness coach", "isco": 3423, "skills": ["behaviour change coaching", "motivational interviewing", "goal setting", "nutrition fundamentals", "stress management", "client accountability"], "reason": "domain namesake role is entirely absent"},
+        {"role": "yoga instructor", "isco": 3423, "skills": ["yoga asana", "breathing techniques", "meditation/mindfulness", "class instruction", "functional anatomy", "injury modification"], "reason": "core wellness/lifestyle practice missing from the set"}
+      ],
+      "overfanout_roles": ["biomedical scientist", "specialist biomedical scientist", "biomedical scientist advanced", "chiropractor", "specialist chiropractor"],
+      "rename_to": null,
+      "notes": "Two contamination clusters: (1) clinical/diagnostic health professionals (2269 — radiographers, biomedical scientists, pathology, podiatry, prosthetics) and (2) outdoor-adventure/leisure instructors (3423 — guides, animators, survival). Three junk group-label rows with aka=NaN removed. Genuine core kept: kinesiologist, sport therapist, pilates teacher, fitness instructor, personal trainer, dietitian, prepared meals nutritionist, recreational therapist; arts-based (music/dance/art/animal-assisted) therapists kept as wellness-adjacent but borderline. Biomedical/chiropractor tiers are ESCO seniority fan-out."
+    },
+    {
+      "domain_id": "D166",
+      "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+      "verdict": "issues",
+      "remove_roles": [
+        {"role": "welding engineer", "isco": 2144, "reason": "manufacturing/fabrication, not AV systems"},
+        {"role": "equipment engineer", "isco": 2144, "reason": "generic plant equipment, off-domain"},
+        {"role": "heating, ventilation, air conditioning engineer", "isco": 2144, "reason": "building HVAC contamination"},
+        {"role": "rotating equipment engineer", "isco": 2144, "reason": "industrial machinery/oil & gas, off-domain"},
+        {"role": "food production engineer", "isco": 2141, "reason": "food industry contamination"},
+        {"role": "industrial engineer", "isco": 2141, "reason": "generic manufacturing, off-domain"},
+        {"role": "maintenance and repair engineer", "isco": 2141, "reason": "manufacturing maintenance contamination"},
+        {"role": "manufacturing engineer", "isco": 2141, "reason": "battery/manufacturing, off-domain"},
+        {"role": "tooling engineer", "isco": 2144, "reason": "manufacturing tooling contamination"},
+        {"role": "fluid power engineer", "isco": 2144, "reason": "hydraulics/pneumatics, off-domain"},
+        {"role": "food and beverage packaging technologist", "isco": 2141, "reason": "food packaging contamination"},
+        {"role": "industrial tool design engineer", "isco": 2144, "reason": "manufacturing tooling, off-domain"},
+        {"role": "packaging production manager", "isco": 2141, "reason": "packaging operations contamination"},
+        {"role": "precision engineer", "isco": 2144, "reason": "generic precision machining, off-domain"},
+        {"role": "aerodynamics engineer", "isco": 2144, "reason": "aero/CFD, primarily aerospace; not AV self-driving stack"},
+        {"role": "process engineer", "isco": 2141, "reason": "battery/process manufacturing contamination"},
+        {"role": "automation engineer", "isco": 2141, "reason": "manufacturing/mining automation, not vehicle autonomy"},
+        {"role": "production engineer", "isco": 2141, "reason": "manufacturing production, off-domain"},
+        {"role": "aerospace engineer", "isco": 2144, "reason": "aerospace/missile design contamination"},
+        {"role": "engine designer", "isco": 2144, "reason": "ICE engine design, off-domain for autonomy software/EV"},
+        {"role": "surface engineer", "isco": 2141, "reason": "coatings/corrosion contamination"}
+      ],
+      "add_roles": [
+        {"role": "machine learning engineer", "isco": 2519, "skills": ["deep learning", "computer vision", "sensor fusion", "PyTorch/TensorFlow", "model training & evaluation", "data pipelines"], "reason": "perception/prediction ML is the heart of self-driving; entirely absent"},
+        {"role": "embedded systems engineer", "isco": 2512, "skills": ["C/C++", "RTOS", "firmware development", "ROS", "sensor integration (LiDAR/radar/camera)", "hardware-software integration"], "reason": "AV compute/embedded controls role missing"}
+      ],
+      "overfanout_roles": ["software analyst", "software developer"],
+      "rename_to": null,
+      "notes": "Dominated by generic mechanical (2144) and manufacturing (2141) engineering fan-out with little AV specificity. Genuine core kept: software developer, software analyst, automotive engineer (ACES), mechatronics engineer (robotics), powertrain engineer, mechanical engineer, optomechanical engineer (sensor optics), homologation engineer (type approval), telecommunications engineer (V2X, borderline). The actual autonomy stack (perception ML, embedded/controls) was missing — added. software analyst vs software developer overlap as ESCO 2512 fan-out."
+    }
+  ]
+}

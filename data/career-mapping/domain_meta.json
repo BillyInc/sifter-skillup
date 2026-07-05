@@ -1,0 +1,2578 @@
+{
+ "D001": {
+  "domain_name": "Software Engineering",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D002": {
+  "domain_name": "Data Engineering",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D003": {
+  "domain_name": "D003 Artificial Intelligence",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 16
+ },
+ "D004": {
+  "domain_name": "Cybersecurity",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D005": {
+  "domain_name": "Cloud Computing",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D006": {
+  "domain_name": "Internet of Things",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D007": {
+  "domain_name": "UI/UX Design",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D008": {
+  "domain_name": "Telecommunications",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.94,
+  "trade_ratio": 0.06,
+  "n_elite_roles": 1
+ },
+ "D139": {
+  "domain_name": "D139 Game Design",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D140": {
+  "domain_name": "Robotics Engineering, Systems Design",
+  "cluster": "Information & Communication Technology",
+  "clusters": [
+   "Information & Communication Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 7
+ },
+ "D009": {
+  "domain_name": "Data Science",
+  "cluster": "Data & Analytics",
+  "clusters": [
+   "Data & Analytics"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 31
+ },
+ "D010": {
+  "domain_name": "Business Intelligence",
+  "cluster": "Data & Analytics",
+  "clusters": [
+   "Data & Analytics"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D011": {
+  "domain_name": "Quantitative Finance",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D012": {
+  "domain_name": "FinTech Engineering",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D013": {
+  "domain_name": "Investment Analysis",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 25
+ },
+ "D014": {
+  "domain_name": "Actuarial Science",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 3
+ },
+ "D015": {
+  "domain_name": "Accounting",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.71,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D060": {
+  "domain_name": "Banking, Credit",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.67,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D061": {
+  "domain_name": "Insurance",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.92,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D062": {
+  "domain_name": "Trading",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D158": {
+  "domain_name": "Corporate Finance, Investment Banking",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 20
+ },
+ "D159": {
+  "domain_name": "Credit Analysis, Structured Finance",
+  "cluster": "Financial Services",
+  "clusters": [
+   "Financial Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 20
+ },
+ "D016": {
+  "domain_name": "Electrical",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D017": {
+  "domain_name": "Mechanical",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D018": {
+  "domain_name": "Civil",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D019": {
+  "domain_name": "Renewable Energy Engineering",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.88,
+  "trade_ratio": 0.12,
+  "n_elite_roles": 0
+ },
+ "D020": {
+  "domain_name": "Environmental Engineering",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D021": {
+  "domain_name": "Architecture",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D022": {
+  "domain_name": "Mining",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.67,
+  "trade_ratio": 0.33,
+  "n_elite_roles": 0
+ },
+ "D069": {
+  "domain_name": "Aviation",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.69,
+  "trade_ratio": 0.21,
+  "n_elite_roles": 1
+ },
+ "D072": {
+  "domain_name": "Geospatial Science",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D074": {
+  "domain_name": "Occupational Health, Safety",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D146": {
+  "domain_name": "Building Services Engineering — Mechanical, Electrical",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D147": {
+  "domain_name": "Process Automation, SCADA, PLC",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D156": {
+  "domain_name": "Land Surveying, Cadastral Mapping",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D164": {
+  "domain_name": "Urban Mobility, Smart City Systems",
+  "cluster": "Engineering & Built Environment",
+  "clusters": [
+   "Engineering & Built Environment"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D023": {
+  "domain_name": "Medicine",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D024": {
+  "domain_name": "Nursing",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.91,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D025": {
+  "domain_name": "Pharmacy",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 11
+ },
+ "D026": {
+  "domain_name": "Public Health",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D027": {
+  "domain_name": "Biomedical",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 36
+ },
+ "D064": {
+  "domain_name": "Psychology, Counselling",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D066": {
+  "domain_name": "Veterinary Science",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D067": {
+  "domain_name": "Dentistry",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 5
+ },
+ "D068": {
+  "domain_name": "Allied Health",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D154": {
+  "domain_name": "Exercise Science, Sports Therapy",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 3
+ },
+ "D165": {
+  "domain_name": "Wellness Coaching, Lifestyle Medicine",
+  "cluster": "Health & Biomedical",
+  "clusters": [
+   "Health & Biomedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D028": {
+  "domain_name": "General Management",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 3
+ },
+ "D029": {
+  "domain_name": "Human Resources",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.94,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D030": {
+  "domain_name": "Marketing, Brand",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D031": {
+  "domain_name": "Sales",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.81,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D032": {
+  "domain_name": "Project Management",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D033": {
+  "domain_name": "Product Management",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D130": {
+  "domain_name": "Recruitment, Employment",
+  "cluster": "Business & Management",
+  "clusters": [
+   "Business & Management"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D034": {
+  "domain_name": "Supply Chain Management",
+  "cluster": "Supply Chain & Logistics",
+  "clusters": [
+   "Supply Chain & Logistics"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.59,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D035": {
+  "domain_name": "Logistics",
+  "cluster": "Supply Chain & Logistics",
+  "clusters": [
+   "Supply Chain & Logistics"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.6,
+  "trade_ratio": 0.4,
+  "n_elite_roles": 0
+ },
+ "D036": {
+  "domain_name": "Procurement",
+  "cluster": "Supply Chain & Logistics",
+  "clusters": [
+   "Supply Chain & Logistics"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D076": {
+  "domain_name": "Maritime",
+  "cluster": "Supply Chain & Logistics",
+  "clusters": [
+   "Supply Chain & Logistics"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.6,
+  "trade_ratio": 0.4,
+  "n_elite_roles": 1
+ },
+ "D079": {
+  "domain_name": "Customs, Trade",
+  "cluster": "Supply Chain & Logistics",
+  "clusters": [
+   "Supply Chain & Logistics"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D037": {
+  "domain_name": "Legal Practice",
+  "cluster": "Legal & Compliance",
+  "clusters": [
+   "Legal & Compliance"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D038": {
+  "domain_name": "Compliance, Regulation",
+  "cluster": "Legal & Compliance",
+  "clusters": [
+   "Legal & Compliance"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D157": {
+  "domain_name": "Tax Advisory, Transfer Pricing",
+  "cluster": "Legal & Compliance",
+  "clusters": [
+   "Legal & Compliance"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 16
+ },
+ "D162": {
+  "domain_name": "Immigration Law, Asylum",
+  "cluster": "Legal & Compliance",
+  "clusters": [
+   "Legal & Compliance"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D149": {
+  "domain_name": "Diplomacy, International Relations",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 7
+ },
+ "D163": {
+  "domain_name": "Intellectual Property Law, Patents",
+  "cluster": "Legal & Compliance",
+  "clusters": [
+   "Legal & Compliance"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 4
+ },
+ "D039": {
+  "domain_name": "Higher Education",
+  "cluster": "Education & Research",
+  "clusters": [
+   "Education & Research"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D040": {
+  "domain_name": "Vocational",
+  "cluster": "Education & Research",
+  "clusters": [
+   "Education & Research"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.89,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D041": {
+  "domain_name": "Scientific Research",
+  "cluster": "Education & Research",
+  "clusters": [
+   "Education & Research"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 3
+ },
+ "D078": {
+  "domain_name": "Social Sciences",
+  "cluster": "Education & Research",
+  "clusters": [
+   "Education & Research"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D042": {
+  "domain_name": "Media Production",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D043": {
+  "domain_name": "Journalism",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D044": {
+  "domain_name": "Graphic Design",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D065": {
+  "domain_name": "Translation, Interpretation",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D071": {
+  "domain_name": "Sports Management",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D080": {
+  "domain_name": "Interior Design",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D152": {
+  "domain_name": "Museum Curation, Cultural Heritage, Archives",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.92,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D153": {
+  "domain_name": "D153 Music Production",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D160": {
+  "domain_name": "Fashion Styling, Image Consulting",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.43,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D045": {
+  "domain_name": "Public Administration",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D046": {
+  "domain_name": "Social Work",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.92,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D063": {
+  "domain_name": "Economics",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D073": {
+  "domain_name": "Library, Archive",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.93,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D077": {
+  "domain_name": "Security Services",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.1,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D128": {
+  "domain_name": "Social Welfare, Youth Services",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D143": {
+  "domain_name": "Forensic Science, Digital Forensics",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D150": {
+  "domain_name": "Religious Ministry, Theology",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D151": {
+  "domain_name": "Criminology, Criminal Justice",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.7,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D161": {
+  "domain_name": "Humanitarian Aid, Emergency Response",
+  "cluster": "Public Sector & Social Services",
+  "clusters": [
+   "Public Sector & Social Services"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D047": {
+  "domain_name": "Agricultural Science",
+  "cluster": "Agriculture & Food Systems",
+  "clusters": [
+   "Agriculture & Food Systems"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.59,
+  "trade_ratio": 0.41,
+  "n_elite_roles": 1
+ },
+ "D048": {
+  "domain_name": "Food Science",
+  "cluster": "Agriculture & Food Systems",
+  "clusters": [
+   "Agriculture & Food Systems"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.18,
+  "trade_ratio": 0.82,
+  "n_elite_roles": 0
+ },
+ "D049": {
+  "domain_name": "Automotive Engineering",
+  "cluster": "Advanced Manufacturing",
+  "clusters": [
+   "Advanced Manufacturing"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.76,
+  "trade_ratio": 0.24,
+  "n_elite_roles": 0
+ },
+ "D050": {
+  "domain_name": "Industrial Automation",
+  "cluster": "Advanced Manufacturing",
+  "clusters": [
+   "Advanced Manufacturing"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.65,
+  "trade_ratio": 0.35,
+  "n_elite_roles": 0
+ },
+ "D075": {
+  "domain_name": "Fashion, Textiles",
+  "cluster": "Advanced Manufacturing",
+  "clusters": [
+   "Advanced Manufacturing"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.23,
+  "trade_ratio": 0.74,
+  "n_elite_roles": 0
+ },
+ "D051": {
+  "domain_name": "Real Estate",
+  "cluster": "Real Estate & Construction",
+  "clusters": [
+   "Real Estate & Construction"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D052": {
+  "domain_name": "Construction Management",
+  "cluster": "Real Estate & Construction",
+  "clusters": [
+   "Real Estate & Construction"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.8,
+  "trade_ratio": 0.2,
+  "n_elite_roles": 0
+ },
+ "D053": {
+  "domain_name": "Hospitality",
+  "cluster": "Hospitality & Tourism",
+  "clusters": [
+   "Hospitality & Tourism"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.46,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D054": {
+  "domain_name": "Oil",
+  "cluster": "Energy & Resources",
+  "clusters": [
+   "Energy & Resources"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.62,
+  "trade_ratio": 0.38,
+  "n_elite_roles": 0
+ },
+ "D055": {
+  "domain_name": "Chemical Engineering",
+  "cluster": "Energy & Resources",
+  "clusters": [
+   "Energy & Resources"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.42,
+  "trade_ratio": 0.58,
+  "n_elite_roles": 0
+ },
+ "D148": {
+  "domain_name": "Offshore, Subsea",
+  "cluster": "Energy & Resources",
+  "clusters": [
+   "Energy & Resources"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.95,
+  "trade_ratio": 0.05,
+  "n_elite_roles": 0
+ },
+ "D056": {
+  "domain_name": "Blockchain",
+  "cluster": "Emerging Technology",
+  "clusters": [
+   "Emerging Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D057": {
+  "domain_name": "Digital Health",
+  "cluster": "Emerging Technology",
+  "clusters": [
+   "Emerging Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D058": {
+  "domain_name": "EdTech",
+  "cluster": "Emerging Technology",
+  "clusters": [
+   "Emerging Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D059": {
+  "domain_name": "Space Technology",
+  "cluster": "Emerging Technology",
+  "clusters": [
+   "Emerging Technology"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 7
+ },
+ "D081": {
+  "domain_name": "Office Administration, Secretarial",
+  "cluster": "Office & Administrative Services",
+  "clusters": [
+   "Office & Administrative Services"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D082": {
+  "domain_name": "Customer Service, Contact Centre",
+  "cluster": "Office & Administrative Services",
+  "clusters": [
+   "Office & Administrative Services"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.16,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D083": {
+  "domain_name": "Travel, Tourism",
+  "cluster": "Office & Administrative Services",
+  "clusters": [
+   "Office & Administrative Services"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.04,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D084": {
+  "domain_name": "Payroll, Bookkeeping",
+  "cluster": "Office & Administrative Services",
+  "clusters": [
+   "Office & Administrative Services"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.08,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D085": {
+  "domain_name": "Retail Sales, Shop Operations",
+  "cluster": "Retail, Sales & Commerce",
+  "clusters": [
+   "Retail, Sales & Commerce"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.04,
+  "trade_ratio": 0.04,
+  "n_elite_roles": 0
+ },
+ "D087": {
+  "domain_name": "Hairdressing, Barbering",
+  "cluster": "Beauty, Personal Care & Wellness",
+  "clusters": [
+   "Beauty, Personal Care & Wellness"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D088": {
+  "domain_name": "Beauty Therapy, Aesthetics",
+  "cluster": "Beauty, Personal Care & Wellness",
+  "clusters": [
+   "Beauty, Personal Care & Wellness"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D089": {
+  "domain_name": "Funeral",
+  "cluster": "Beauty, Personal Care & Wellness",
+  "clusters": [
+   "Beauty, Personal Care & Wellness"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D090": {
+  "domain_name": "Animal Care, Grooming",
+  "cluster": "Beauty, Personal Care & Wellness",
+  "clusters": [
+   "Beauty, Personal Care & Wellness"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D091": {
+  "domain_name": "Driving Instruction",
+  "cluster": "Beauty, Personal Care & Wellness",
+  "clusters": [
+   "Beauty, Personal Care & Wellness"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D092": {
+  "domain_name": "Culinary Arts, Catering",
+  "cluster": "Culinary Arts & Food Service",
+  "clusters": [
+   "Culinary Arts & Food Service"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.04,
+  "trade_ratio": 0.22,
+  "n_elite_roles": 0
+ },
+ "D093": {
+  "domain_name": "Electrical Installation, Wiring",
+  "cluster": "Electrical & Electronics Trades",
+  "clusters": [
+   "Electrical & Electronics Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.05,
+  "trade_ratio": 0.95,
+  "n_elite_roles": 0
+ },
+ "D094": {
+  "domain_name": "Electronics Servicing, ICT Equipment",
+  "cluster": "Electrical & Electronics Trades",
+  "clusters": [
+   "Electrical & Electronics Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.35,
+  "trade_ratio": 0.65,
+  "n_elite_roles": 0
+ },
+ "D095": {
+  "domain_name": "Motor Vehicle Mechanics, Repairs",
+  "cluster": "Mechanical & Automotive Trades",
+  "clusters": [
+   "Mechanical & Automotive Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D096": {
+  "domain_name": "Agricultural",
+  "cluster": "Mechanical & Automotive Trades",
+  "clusters": [
+   "Mechanical & Automotive Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.1,
+  "trade_ratio": 0.9,
+  "n_elite_roles": 0
+ },
+ "D097": {
+  "domain_name": "Welding, Fabrication, Blacksmithing",
+  "cluster": "Metal, Welding & Fabrication Trades",
+  "clusters": [
+   "Metal, Welding & Fabrication Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D098": {
+  "domain_name": "Precision Engineering, Toolmaking",
+  "cluster": "Metal, Welding & Fabrication Trades",
+  "clusters": [
+   "Metal, Welding & Fabrication Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D099": {
+  "domain_name": "Masonry, Bricklaying, Tiling, Plastering",
+  "cluster": "Building & Construction Trades",
+  "clusters": [
+   "Building & Construction Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D100": {
+  "domain_name": "Plumbing, Pipefitting",
+  "cluster": "Building & Construction Trades",
+  "clusters": [
+   "Building & Construction Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D101": {
+  "domain_name": "Painting, Decorating",
+  "cluster": "Building & Construction Trades",
+  "clusters": [
+   "Building & Construction Trades"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D102": {
+  "domain_name": "Carpentry, Joinery, Wood Technology",
+  "cluster": "Wood, Furniture & Craft",
+  "clusters": [
+   "Wood, Furniture & Craft"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D103": {
+  "domain_name": "Jewellery Making, Goldsmithing",
+  "cluster": "Wood, Furniture & Craft",
+  "clusters": [
+   "Wood, Furniture & Craft"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D104": {
+  "domain_name": "Pottery, Ceramics, Glass",
+  "cluster": "Wood, Furniture & Craft",
+  "clusters": [
+   "Wood, Furniture & Craft"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D105": {
+  "domain_name": "Handicraft, Basketry, Textile Craft",
+  "cluster": "Wood, Furniture & Craft",
+  "clusters": [
+   "Wood, Furniture & Craft"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D106": {
+  "domain_name": "Garment Making, Tailoring, Dressmaking",
+  "cluster": "Textiles, Garments & Leather",
+  "clusters": [
+   "Textiles, Garments & Leather"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D107": {
+  "domain_name": "Leather Technology, Shoemaking",
+  "cluster": "Textiles, Garments & Leather",
+  "clusters": [
+   "Textiles, Garments & Leather"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.5,
+  "trade_ratio": 0.46,
+  "n_elite_roles": 0
+ },
+ "D108": {
+  "domain_name": "Printing Technology, Pre-press",
+  "cluster": "Printing & Graphic Production",
+  "clusters": [
+   "Printing & Graphic Production"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.14,
+  "trade_ratio": 0.86,
+  "n_elite_roles": 0
+ },
+ "D109": {
+  "domain_name": "Metal Processing, Foundry",
+  "cluster": "Manufacturing & Industrial Plant Operations",
+  "clusters": [
+   "Manufacturing & Industrial Plant Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.05,
+  "trade_ratio": 0.95,
+  "n_elite_roles": 0
+ },
+ "D110": {
+  "domain_name": "Chemical, Rubber",
+  "cluster": "Manufacturing & Industrial Plant Operations",
+  "clusters": [
+   "Manufacturing & Industrial Plant Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.02,
+  "trade_ratio": 0.98,
+  "n_elite_roles": 0
+ },
+ "D111": {
+  "domain_name": "Textile, Garment",
+  "cluster": "Manufacturing & Industrial Plant Operations",
+  "clusters": [
+   "Manufacturing & Industrial Plant Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.13,
+  "trade_ratio": 0.87,
+  "n_elite_roles": 0
+ },
+ "D112": {
+  "domain_name": "Wood Processing, Pulp",
+  "cluster": "Manufacturing & Industrial Plant Operations",
+  "clusters": [
+   "Manufacturing & Industrial Plant Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.14,
+  "trade_ratio": 0.86,
+  "n_elite_roles": 0
+ },
+ "D113": {
+  "domain_name": "Glass, Ceramics, Building Materials",
+  "cluster": "Manufacturing & Industrial Plant Operations",
+  "clusters": [
+   "Manufacturing & Industrial Plant Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D114": {
+  "domain_name": "Assembly, Packaging",
+  "cluster": "Manufacturing & Industrial Plant Operations",
+  "clusters": [
+   "Manufacturing & Industrial Plant Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D115": {
+  "domain_name": "Road Transport Operations (Drivers",
+  "cluster": "Transport & Driving Operations",
+  "clusters": [
+   "Transport & Driving Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D116": {
+  "domain_name": "Heavy Equipment, Earthmoving",
+  "cluster": "Transport & Driving Operations",
+  "clusters": [
+   "Transport & Driving Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D117": {
+  "domain_name": "Railway",
+  "cluster": "Transport & Driving Operations",
+  "clusters": [
+   "Transport & Driving Operations"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.12,
+  "trade_ratio": 0.75,
+  "n_elite_roles": 0
+ },
+ "D118": {
+  "domain_name": "Crop Production, Horticulture",
+  "cluster": "Agriculture, Fishing & Natural Resources",
+  "clusters": [
+   "Agriculture, Fishing & Natural Resources"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 1
+ },
+ "D119": {
+  "domain_name": "Livestock, Poultry, Dairy",
+  "cluster": "Agriculture, Fishing & Natural Resources",
+  "clusters": [
+   "Agriculture, Fishing & Natural Resources"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.0,
+  "trade_ratio": 1.0,
+  "n_elite_roles": 0
+ },
+ "D120": {
+  "domain_name": "Fisheries, Aquaculture",
+  "cluster": "Agriculture, Fishing & Natural Resources",
+  "clusters": [
+   "Agriculture, Fishing & Natural Resources"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.05,
+  "trade_ratio": 0.95,
+  "n_elite_roles": 0
+ },
+ "D121": {
+  "domain_name": "Forestry, Wildlife Management",
+  "cluster": "Agriculture, Fishing & Natural Resources",
+  "clusters": [
+   "Agriculture, Fishing & Natural Resources"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.18,
+  "trade_ratio": 0.82,
+  "n_elite_roles": 0
+ },
+ "D122": {
+  "domain_name": "Medical Laboratory Technology",
+  "cluster": "Community Health & Paramedical",
+  "clusters": [
+   "Community Health & Paramedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D123": {
+  "domain_name": "Radiography, Medical Imaging",
+  "cluster": "Community Health & Paramedical",
+  "clusters": [
+   "Community Health & Paramedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D124": {
+  "domain_name": "Community Health Extension",
+  "cluster": "Community Health & Paramedical",
+  "clusters": [
+   "Community Health & Paramedical"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.5,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D125": {
+  "domain_name": "Medical Secretarial",
+  "cluster": "Community Health & Paramedical",
+  "clusters": [
+   "Community Health & Paramedical"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.57,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D126": {
+  "domain_name": "Complementary, Alternative",
+  "cluster": "Community Health & Paramedical",
+  "clusters": [
+   "Community Health & Paramedical"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D127": {
+  "domain_name": "Early Childhood Education, Nursery",
+  "cluster": "Childcare & Early Learning",
+  "clusters": [
+   "Childcare & Early Learning"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.42,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D129": {
+  "domain_name": "Military, Defence",
+  "cluster": "Defence & Military",
+  "clusters": [
+   "Defence & Military"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D131": {
+  "domain_name": "Motorsport Engineering",
+  "cluster": "High-Performance Engineering",
+  "clusters": [
+   "High-Performance Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D132": {
+  "domain_name": "Space Science, Exploration",
+  "cluster": "High-Performance Engineering",
+  "clusters": [
+   "High-Performance Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 6
+ },
+ "D133": {
+  "domain_name": "Luxury",
+  "cluster": "High-Performance Engineering",
+  "clusters": [
+   "High-Performance Engineering"
+  ],
+  "institution_type": [
+   "polytechnic",
+   "technical_college"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.27,
+  "trade_ratio": 0.7,
+  "n_elite_roles": 0
+ },
+ "D134": {
+  "domain_name": "Naval Architecture, Marine Engineering",
+  "cluster": "High-Performance Engineering",
+  "clusters": [
+   "High-Performance Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 1
+ },
+ "D166": {
+  "domain_name": "Autonomous Vehicles, Self-Driving Systems",
+  "cluster": "High-Performance Engineering",
+  "clusters": [
+   "High-Performance Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0
+ },
+ "D135": {
+  "domain_name": "Nuclear Engineering, Radiation Science",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 6
+ },
+ "D136": {
+  "domain_name": "Aeronautical",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 0.9,
+  "trade_ratio": 0.1,
+  "n_elite_roles": 0
+ },
+ "D137": {
+  "domain_name": "Medical Physics, Radiation Therapy",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D138": {
+  "domain_name": "Biomedical Engineering",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 8
+ },
+ "D142": {
+  "domain_name": "Bioinformatics, Computational Biology",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 37
+ },
+ "D144": {
+  "domain_name": "Climate Science, Meteorology",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D145": {
+  "domain_name": "Neuroscience, Cognitive Science",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 11
+ },
+ "D155": {
+  "domain_name": "Nanotechnology, Advanced Materials",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 12
+ },
+ "D141": {
+  "domain_name": "Quantum Computing, Quantum Information",
+  "cluster": "Advanced Science & Engineering",
+  "clusters": [
+   "Advanced Science & Engineering"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 8
+ },
+ "D167": {
+  "domain_name": "XR & Immersive Technology",
+  "cluster": "Emerging Technology",
+  "clusters": [
+   "Emerging Technology",
+   "Information & Communication Technology",
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": true,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 5
+ },
+ "D168": {
+  "domain_name": "Esports & Creator Economy",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media",
+   "Information & Communication Technology",
+   "Sports & Recreation"
+  ],
+  "institution_type": [
+   "university",
+   "polytechnic"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 0,
+  "note": "multi-cluster: competitive play(Sports), broadcast/streaming(Creative), tech(Computing); remote/global path"
+ },
+ "D070": {
+  "domain_name": "Performing Arts & Entertainment",
+  "cluster": "Creative & Media",
+  "clusters": [
+   "Creative & Media"
+  ],
+  "institution_type": [
+   "university"
+  ],
+  "elite_domain": false,
+  "excluded": false,
+  "professional_ratio": 1.0,
+  "trade_ratio": 0.0,
+  "n_elite_roles": 2
+ },
+ "D086": {
+  "domain_name": "Gaming, Betting & Lottery",
+  "excluded": true,
+  "reason": "gambling — not appropriate for students",
+  "institution_type": []
+ }
+}

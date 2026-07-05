@@ -1,0 +1,242 @@
+{
+ "domain_id": "D132",
+ "domain_name": "Space Science, Exploration",
+ "role_count": 47,
+ "roles": [
+  {
+   "role": "telecommunications engineer",
+   "isco": 2153,
+   "aka": "radio engineer  ·  transmission engineer  ·  broadcast engineer  ·  communications designer  ·  telecoms engineer"
+  },
+  {
+   "role": "biophysicist",
+   "isco": 2131,
+   "aka": "biophysics scientist  ·  biophysics research scientist  ·  biophysics biotechnologist  ·  biophysics scholar  ·  biophysics researcher"
+  },
+  {
+   "role": "mine geologist",
+   "isco": 2114,
+   "aka": "geologist  ·  geological engineer  ·  geophysicist  ·  mineralogist  ·  exploration geologist"
+  },
+  {
+   "role": "physiologist",
+   "isco": 2131,
+   "aka": "anatomy analyst  ·  anatomy researcher  ·  anatomy research scientist  ·  physiology scientist  ·  physiology analyst"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "toxicologist",
+   "isco": 2131,
+   "aka": "toxicology analyst  ·  toxicology science researcher  ·  toxicologists  ·  toxicology studies scholar  ·  toxicology scholar"
+  },
+  {
+   "role": "oceanographer",
+   "isco": 2114,
+   "aka": "marine geologist  ·  marine physicist  ·  oceanography scientist  ·  oceanography science researcher  ·  oceanographers"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "hydrologist",
+   "isco": 2114,
+   "aka": "hydrological engineer  ·  surface hydrologist  ·  hydrology research analyst  ·  hydrology researcher  ·  hydrology scientist"
+  },
+  {
+   "role": "botanist",
+   "isco": 2131,
+   "aka": "garden intendant  ·  director of horticulture learning and operations  ·  horticulture manager  ·  director of horticulture  ·  garden manager"
+  },
+  {
+   "role": "astronomer",
+   "isco": 2111,
+   "aka": "astronomers  ·  astronomy research scientist  ·  astronomy science researcher  ·  astronomy researcher  ·  astronomy scholar"
+  },
+  {
+   "role": "geneticist",
+   "isco": 2131,
+   "aka": "genetics engineer  ·  genetic scientist  ·  genetics research scientist  ·  molecular biologist  ·  molecular geneticist"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "hydrogeologist",
+   "isco": 2114,
+   "aka": "pore pressure engineer  ·  formation evaluation engineer  ·  consultant hydrogeologist  ·  consultant hydrologist  ·  hydrogeological consultant"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "bioinformatics scientist",
+   "isco": 2131,
+   "aka": "IT researcher  ·  senior bioinformatics scientist  ·  data scientist  ·  biology researcher  ·  junior bioinformatics scientist"
+  },
+  {
+   "role": "food biotechnologist",
+   "isco": 2131,
+   "aka": "food biotech technician  ·  technician for food industry bioeconomy  ·  food biotech specialist"
+  },
+  {
+   "role": "biochemist",
+   "isco": 2131,
+   "aka": "biochemistry research scientist  ·  chemical biotechnologist  ·  biochemistry studies scholar  ·  biochemistry science researcher  ·  biochemistry studies research scientist"
+  },
+  {
+   "role": "animal behaviourist",
+   "isco": 2131,
+   "aka": "ethologist  ·  animal behaviour expert  ·  animal behaviour specialist  ·  animal behavior specialist  ·  animal behavior expert"
+  },
+  {
+   "role": "physicist",
+   "isco": 2111,
+   "aka": "physics scholar  ·  forensic physicist  ·  neurologist  ·  physics analyst  ·  physics scientist"
+  },
+  {
+   "role": "palaeontologist",
+   "isco": 2114,
+   "aka": "palaeontology scholar  ·  palaeontology science researcher  ·  micropalaeontologist  ·  palaeontology scientist  ·  palaeontology researcher"
+  },
+  {
+   "role": "mineralogist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  offshore mineralogist  ·  mineralogy expert  ·  mineralogy consultant  ·  process mineralogy consultant"
+  },
+  {
+   "role": "environmental geologist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  environmental consultant  ·  environmentalist  ·  environmental geology analyst  ·  environmental geology researcher"
+  },
+  {
+   "role": "microbiologist",
+   "isco": 2131,
+   "aka": "virologist  ·  microbiology research analyst  ·  histologist  ·  bacteriologist  ·  microbiology studies research analyst"
+  },
+  {
+   "role": "geophysicist",
+   "isco": 2114,
+   "aka": "geophysical engineer  ·  project geophysicist  ·  consultant geophysicist  ·  field seismologist  ·  exploration geophysicist"
+  },
+  {
+   "role": "exploration geologist",
+   "isco": 2114,
+   "aka": "mineralogist  ·  economic geologist  ·  field exploration geologist  ·  exploration geology research scientist  ·  exploratory geologist"
+  },
+  {
+   "role": "immunologist",
+   "isco": 2131,
+   "aka": "immunology analyst  ·  immunology researcher  ·  immunology studies research analyst  ·  immunology research analyst  ·  immunology studies researcher"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "epidemiologist",
+   "isco": 2131,
+   "aka": "epidemiology science researcher  ·  epidemiology researcher  ·  epidemiology research analyst  ·  epidemiology analyst  ·  epidemiology research scientist"
+  },
+  {
+   "role": "seismologist",
+   "isco": 2114,
+   "aka": "seismologists  ·  seismology research analyst  ·  seismology analyst  ·  seismology researcher  ·  seismology scientist"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "cosmologist",
+   "isco": 2111,
+   "aka": "evolutionary cosmologist  ·  cosmology scientist  ·  observational cosmologist  ·  theoretical cosmologist  ·  cosmology data scientist"
+  },
+  {
+   "role": "botanicals specialist",
+   "isco": 2131,
+   "aka": "botanical milling operative  ·  botanical expert  ·  botanical specialist  ·  botanical science expert"
+  },
+  {
+   "role": "geologist",
+   "isco": 2114,
+   "aka": "field geologist  ·  geologist engineer  ·  geology science researcher  ·  geology research analyst  ·  site geologist"
+  },
+  {
+   "role": "geochemist",
+   "isco": 2114,
+   "aka": "geo-technician  ·  geoscience technician  ·  exploration geochemist  ·  consultant geochemist  ·  petroleum technician"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "mud logger",
+   "isco": 2114,
+   "aka": "mudlogger  ·  surface logging technician  ·  surface logging specialist  ·  logging geologist  ·  surface logger"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "animal feed nutritionist",
+   "isco": 2131,
+   "aka": "animal nutrition expert  ·  feed nutritionist  ·  animal feed expert"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "biologist",
+   "isco": 2131,
+   "aka": "ornithologist  ·  herpetologist  ·  mycologist  ·  zoologist  ·  entomologist"
+  },
+  {
+   "role": "marine biologist",
+   "isco": 2131,
+   "aka": "marine ecologist  ·  marine biology researcher  ·  marine botanist  ·  sea biologist  ·  researcher in marine biology"
+  },
+  {
+   "role": "metrologist",
+   "isco": 2112,
+   "aka": "metrology technician  ·  machine assembly calibration technician  ·  laboratory calibration technician  ·  calibration technician  ·  electronics calibration technician"
+  },
+  {
+   "role": "Soil and Plant Scientists",
+   "isco": 2131,
+   "aka": NaN
+  },
+  {
+   "role": "Geoscientists, Except Hydrologists and Geographers",
+   "isco": 2114,
+   "aka": NaN
+  },
+  {
+   "role": "astronomer",
+   "isco": 2111,
+   "aka": "astronomers  ·  astronomy research scientist  ·  astronomy science researcher  ·  astronomy researcher  ·  astronomy scholar"
+  },
+  {
+   "role": "cosmologist",
+   "isco": 2111,
+   "aka": "evolutionary cosmologist  ·  cosmology scientist  ·  observational cosmologist  ·  theoretical cosmologist  ·  cosmology data scientist"
+  }
+ ]
+}

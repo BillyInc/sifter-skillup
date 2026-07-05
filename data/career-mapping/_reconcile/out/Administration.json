@@ -1,0 +1,227 @@
+{
+ "reconciled": [
+  {
+   "programme": "Accounting",
+   "add": [
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Auditing, IFRS and financial-reporting standards are core curriculum → audit/governance/compliance roles"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Principles of Project Management is a required course"},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Cost/management accounting builds financial-analytics foundation"},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "adjacent", "why": "Quantitative programme → data/analytics foothold"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "Robotics Engineering has no basis in an accounting curriculum"},
+    {"domain_id": "D128", "why": "Social Welfare/Youth Services unrelated to accounting"}
+   ]
+  },
+  {
+   "programme": "Actuarial Science",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "adjacent", "why": "Heavy probability/statistical-modelling + programming is the ML foundation"},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Statistical inference and data modelling map to analytics roles"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Principles of Project Management is a required course"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "Robotics Engineering unrelated to actuarial curriculum"},
+    {"domain_id": "D006", "why": "Internet of Things has no basis here"}
+   ]
+  },
+  {
+   "programme": "Aviation Management",
+   "add": [
+    {"domain_id": "D035", "domain": "Logistics & Transportation Operations", "match_type": "functional", "why": "Airport ops, ground handling and air-cargo/airline operations are core"},
+    {"domain_id": "D083", "domain": "Travel, Tourism & Reservations Operations", "match_type": "functional", "why": "Transferable skills cite travel agents and tour operators"},
+    {"domain_id": "D053", "domain": "Hospitality & Tourism Management", "match_type": "functional", "why": "Airline passenger services / charter & pilgrimage operations"},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Aviation Law & Regulation and safety/regulatory services courses"},
+    {"domain_id": "D074", "domain": "Occupational Health, Safety & Environment (OHSE)", "match_type": "functional", "why": "Aviation Safety and Security is a core course"}
+   ],
+   "remove": [
+    {"domain_id": "D132", "why": "Space Science/Exploration is not an aviation-management function"}
+   ]
+  },
+  {
+   "programme": "Finance / Banking and Finance",
+   "add": [
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Law of Banking, deposit insurance and financial regulation in curriculum"},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "adjacent", "why": "Quantitative Analysis course gives analytics foothold"},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Financial data analysis applies to BI/analytics roles"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Business Administration",
+   "add": [
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Rules example: Business Admin → Project Management; PM course present"},
+    {"domain_id": "D031", "domain": "Sales & Business Development", "match_type": "functional", "why": "General business/management training feeds business-development roles"},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Business Statistics & Quantitative Analysis in Management"},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Leadership and Governance course"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Business Information Technology",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "adjacent", "why": "IT + data-processing/large-volume analysis foundation"},
+    {"domain_id": "D031", "domain": "Sales & Business Development", "match_type": "functional", "why": "E-Commerce/E-Business and Digital Marketing courses"}
+   ],
+   "remove": [
+    {"domain_id": "D166", "why": "Autonomous Vehicles/Self-Driving Systems has no basis in a business-IT curriculum"}
+   ]
+  },
+  {
+   "programme": "Co-operative and Rural Development",
+   "add": [
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Nigerian Agriculture and rural farm-management for food security"},
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Rural Development I/II and community-development focus"},
+    {"domain_id": "D128", "domain": "Social Welfare, Youth Services & Community Care Management", "match_type": "functional", "why": "Cooperative/community welfare and development"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Employment and Human Resource Management",
+   "add": [
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "HR Metrics and Analytics course"},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Employment relations, trade unions and labour-law content"},
+    {"domain_id": "D045", "domain": "Public Administration & Policy", "match_type": "functional", "why": "Public Sector HRM course"},
+    {"domain_id": "D074", "domain": "Occupational Health, Safety & Environment (OHSE)", "match_type": "functional", "why": "Occupational Safety and Health course"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Entrepreneurship",
+   "add": [
+    {"domain_id": "D031", "domain": "Sales & Business Development", "match_type": "functional", "why": "Business Opportunity Scouting and venture creation feed business development"},
+    {"domain_id": "D085", "domain": "Retail Sales, Shop Operations & Merchandising", "match_type": "functional", "why": "Small-scale/retail venture creation and running a shop"},
+    {"domain_id": "D032", "domain": "Project Management & Programme Delivery", "match_type": "functional", "why": "Principles of Project Management + feasibilities/business planning"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Hospitality and Tourism Management",
+   "add": [
+    {"domain_id": "D092", "domain": "Culinary Arts, Catering & Food Service Operations", "match_type": "functional", "why": "Food and Beverage Production and Hotel & Catering courses"},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Nutrition & Food Production and food-service courses"},
+    {"domain_id": "D082", "domain": "Customer Service, Contact Centre & Front Desk Operations", "match_type": "functional", "why": "Hotel front-desk/guest-service operations"}
+   ],
+   "remove": [
+    {"domain_id": "D004", "why": "Cybersecurity has no basis in a hospitality/tourism curriculum"}
+   ]
+  },
+  {
+   "programme": "Information Resource Management",
+   "add": [
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "direct", "why": "Cataloguing/Classification and Administration of Libraries & Info Centres are the programme's core function"},
+    {"domain_id": "D004", "domain": "Cybersecurity & Information Security", "match_type": "functional", "why": "Information security within records/knowledge management"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Insurance",
+   "add": [
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Insurance regulation, underwriting standards and claims governance"},
+    {"domain_id": "D037", "domain": "Legal Practice & Corporate Law", "match_type": "functional", "why": "Law of Tort and insurance-contract law content"}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "Robotics Engineering unrelated to insurance curriculum"}
+   ]
+  },
+  {
+   "programme": "Local Government and Development Studies",
+   "add": [
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Rural and Community Development and Development Studies courses"},
+    {"domain_id": "D037", "domain": "Legal Practice & Corporate Law", "match_type": "functional", "why": "Introduction to Legal Studies and governance law"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Logistics and Supply Chain Management",
+   "add": [
+    {"domain_id": "D036", "domain": "Procurement & Contract Management", "match_type": "functional", "why": "Procurement Management course within SCM curriculum"},
+    {"domain_id": "D079", "domain": "Customs, Trade & Export Management", "match_type": "functional", "why": "Fundamentals of Global Trade course"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Marketing",
+   "add": [
+    {"domain_id": "D085", "domain": "Retail Sales, Shop Operations & Merchandising", "match_type": "functional", "why": "Retailing and Wholesaling course; run a retail/wholesale organisation"},
+    {"domain_id": "D042", "domain": "Media Production & Broadcasting", "match_type": "functional", "why": "Marketing Communication and Public Relations/consultant roles"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Office and Information Management",
+   "add": [
+    {"domain_id": "D082", "domain": "Customer Service, Contact Centre & Front Desk Operations", "match_type": "functional", "why": "Office practice, front-desk and customer/public relations skills"},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "functional", "why": "Records management for hard and soft copy documents / registry"}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Trading marked direct is wrong for a secretarial/office-admin programme"},
+    {"domain_id": "D013", "why": "Investment Analysis marked direct is wrong here"},
+    {"domain_id": "D140", "why": "Robotics Engineering has no basis in an office-management curriculum"}
+   ]
+  },
+  {
+   "programme": "Petroleum Information Management",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "direct", "why": "Rules example: Petroleum Information Mgmt → Oil & Gas; petroleum value chain and E&P data are the programme's purpose"},
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "functional", "why": "GIS software, seismic and remote-sensing survey skills"},
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "functional", "why": "Records/collections management and preservation of information"}
+   ],
+   "remove": [
+    {"domain_id": "D166", "why": "Autonomous Vehicles/Self-Driving Systems unrelated to petroleum information management"}
+   ]
+  },
+  {
+   "programme": "Procurement Management",
+   "add": [
+    {"domain_id": "D034", "domain": "Supply Chain Management", "match_type": "functional", "why": "Essentials of Supply Chain Management course"},
+    {"domain_id": "D035", "domain": "Logistics & Transportation Operations", "match_type": "functional", "why": "Principles of Logistics Management and operations management"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Project Management",
+   "add": [
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Business Analysis and requirement/analytics content"},
+    {"domain_id": "D001", "domain": "Software Engineering", "match_type": "adjacent", "why": "Requirement Engineering / methodologies give IT-project delivery foothold"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Public Administration",
+   "add": [
+    {"domain_id": "D046", "domain": "Social Work & Community Development", "match_type": "functional", "why": "Rural and Community Development and Development Administration"},
+    {"domain_id": "D128", "domain": "Social Welfare, Youth Services & Community Care Management", "match_type": "functional", "why": "Public-sector social welfare/community administration"}
+   ],
+   "remove": [
+    {"domain_id": "D026", "why": "Public Health marked direct is wrong; no health content in the curriculum"}
+   ]
+  },
+  {
+   "programme": "Securities and Investments Management",
+   "add": [
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Law Relating to Securities and Investments / securities regulation"},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Investment decision-making and analytics foundation"}
+   ],
+   "remove": []
+  },
+  {
+   "programme": "Taxation",
+   "add": [
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Revenue Law, tax compliance and regulatory filing are core"}
+   ],
+   "remove": [
+    {"domain_id": "D128", "why": "Social Welfare/Youth Services unrelated to taxation"}
+   ]
+  },
+  {
+   "programme": "Transport Management",
+   "add": [
+    {"domain_id": "D035", "domain": "Logistics & Transportation Operations", "match_type": "direct", "why": "Rules example: Transport Management → Logistics; freight/passenger transport operations are the programme's purpose"},
+    {"domain_id": "D034", "domain": "Supply Chain Management", "match_type": "functional", "why": "Introduction to Supply Chain Management course"},
+    {"domain_id": "D083", "domain": "Travel, Tourism & Reservations Operations", "match_type": "functional", "why": "Fundamentals of Tourism course and passenger-transport link"}
+   ],
+   "remove": []
+  }
+ ]
+}

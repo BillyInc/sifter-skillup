@@ -1,0 +1,237 @@
+{
+ "domain_id": "D131",
+ "domain_name": "Motorsport Engineering",
+ "role_count": 46,
+ "roles": [
+  {
+   "role": "telecommunications engineer",
+   "isco": 2153,
+   "aka": "radio engineer  ·  transmission engineer  ·  broadcast engineer  ·  communications designer  ·  telecoms engineer"
+  },
+  {
+   "role": "software analyst",
+   "isco": 2512,
+   "aka": "software requirement analyst  ·  programming analyst  ·  software analysts  ·  programmer analyst  ·  application analyst"
+  },
+  {
+   "role": "microelectronics engineering technician",
+   "isco": 3114,
+   "aka": "micro-electronics engineering technician  ·  microelectronics technologist  ·  microelectronic equipment technologist  ·  technician in microelectronic engineering  ·  technologist in microelectronics"
+  },
+  {
+   "role": "precision mechanics supervisor",
+   "isco": 3122,
+   "aka": "precision maintenance machine shop manager  ·  precision maintenance machining department supervisor  ·  precision maintenance machine charge hand  ·  precision machinery production supervisor  ·  precision maintenance machining and assembly supervisor"
+  },
+  {
+   "role": "welding engineer",
+   "isco": 2144,
+   "aka": "robotic welding inspector  ·  welding engineer supervisor  ·  welding engineering adviser  ·  engineering welding co-ordinator  ·  ultrasonic metal welder inspector"
+  },
+  {
+   "role": "equipment engineer",
+   "isco": 2144,
+   "aka": "equipment engineering expert  ·  equipment engineering consultant  ·  equipment technology engineering adviser  ·  equipment technology engineering expert  ·  equipment engineering adviser"
+  },
+  {
+   "role": "heating, ventilation, air conditioning engineer",
+   "isco": 2144,
+   "aka": "HVAC project engineer  ·  HVAC site engineer  ·  HVACR engineer  ·  HVAC engineer  ·  HVAC service engineer"
+  },
+  {
+   "role": "microelectronics maintenance technician",
+   "isco": 3114,
+   "aka": "microelectronics maintenance and repair technician  ·  industrial maintenance technician  ·  microelectronic devices maintenance technician  ·  maintenance and repair technician  ·  microelectronic systems maintenance technician"
+  },
+  {
+   "role": "rotating equipment engineer",
+   "isco": 2144,
+   "aka": "rotating equipment engineering specialist  ·  rotating equipment technology engineering adviser  ·  rotating equipment technology engineering consultant  ·  rotating equipment technology engineering specialist  ·  rotating equipment technology engineering expert"
+  },
+  {
+   "role": "microsystem engineering technician",
+   "isco": 3114,
+   "aka": "technician in microsystems  ·  micro-system engineering technician  ·  microsystem technologist  ·  microelectromechanical systems technician  ·  microelectromechanical systems technologist"
+  },
+  {
+   "role": "electronics engineering technician",
+   "isco": 3114,
+   "aka": "industrial electronics engineering technician  ·  electronic equipment technician  ·  technologist in electronics engineering  ·  signal processing technician  ·  technician in electronic equipment"
+  },
+  {
+   "role": "instrumentation engineering technician",
+   "isco": 3114,
+   "aka": "C&I technologist  ·  technologist in control and instrumentation equipment  ·  control and instrumentation technologist  ·  control and instrumentation engineering technician  ·  technician in instrumentation engineering"
+  },
+  {
+   "role": "machine operator supervisor",
+   "isco": 3122,
+   "aka": "machine shop supervisor  ·  machine and assembly supervisor  ·  lead machinist  ·  machine adjuster charge hand  ·  machine setter team leader"
+  },
+  {
+   "role": "machinery assembly supervisor",
+   "isco": 3122,
+   "aka": "leadingmachinist  ·  machine charge hand  ·  lead machine operative  ·  machine team leader"
+  },
+  {
+   "role": "computer hardware engineering technician",
+   "isco": 3114,
+   "aka": "PC hardware technician  ·  computer hardware technician  ·  IT engineering technician  ·  IT hardware engineering technician  ·  PC hardware engineering technician"
+  },
+  {
+   "role": "production supervisor",
+   "isco": 3122,
+   "aka": "production controller  ·  production forewoman  ·  quality control operator  ·  production quality supervisor  ·  production foreman"
+  },
+  {
+   "role": "optical instrument production supervisor",
+   "isco": 3122,
+   "aka": "optical equipment assembly manager  ·  optical instrument assembly supervisor  ·  optical equipment production manager  ·  optical instrument manufacturing supervisor  ·  manager of optical instrument production"
+  },
+  {
+   "role": "plastic and rubber products manufacturing supervisor",
+   "isco": 3122,
+   "aka": "plastics and rubber products manufacturing coordinator  ·  plastic and rubber goods production supervisor  ·  plastics and rubber goods manufacturing manager  ·  plastics and rubber products manufacturing supervisor  ·  plastic products manufacturing supervisor"
+  },
+  {
+   "role": "mechanical engineer",
+   "isco": 2144,
+   "aka": "mechanical technology engineering expert  ·  mechanical technology engineering specialist  ·  mechanical engineering expert  ·  mechanical technology engineering adviser  ·  mechanical technology engineering consultant"
+  },
+  {
+   "role": "powertrain engineer",
+   "isco": 2144,
+   "aka": "automotive propulsion mechanisms expert  ·  automotive propulsion mechanisms engineer  ·  powertrain expert  ·  powertrain systems engineer  ·  powertrain designer"
+  },
+  {
+   "role": "sensor engineering technician",
+   "isco": 3114,
+   "aka": "technician in sensor engineering  ·  electronics sensor technician  ·  sensor and actuator technician  ·  sensor systems technician  ·  electronic sensor technician"
+  },
+  {
+   "role": "tooling engineer",
+   "isco": 2144,
+   "aka": "tooling engineering expert  ·  toolmaker/tooling engineer  ·  manufacturing tooling engineer  ·  tooling technology engineering adviser  ·  tooling development engineer"
+  },
+  {
+   "role": "metal production supervisor",
+   "isco": 3122,
+   "aka": "mechanical supervisor  ·  metal fabricating supervisor  ·  melter supervisor  ·  metal production overseer  ·  metal fabrication supervisor"
+  },
+  {
+   "role": "fluid power engineer",
+   "isco": 2144,
+   "aka": "fluid power assembler  ·  fluid power engineering operator  ·  fluid power maintenance supervisor  ·  fluid power assembly engineer  ·  fluid power engineering specialist"
+  },
+  {
+   "role": "electronics production supervisor",
+   "isco": 3122,
+   "aka": "production line supervisor  ·  electronics production line supervisor  ·  supervisor in electronics manufacturing  ·  supervisor of electronics production line  ·  production supervisor in electronics manufacturing"
+  },
+  {
+   "role": "industrial tool design engineer",
+   "isco": 2144,
+   "aka": "industrial tool technology engineering adviser  ·  industrial tool designer  ·  industrial tool technology engineering specialist  ·  industrial tool engineer  ·  industrial tool test engineer"
+  },
+  {
+   "role": "automotive engineer",
+   "isco": 2144,
+   "aka": "coach production process engineer  ·  ACES engineer  ·  automotive design specialist  ·  vehicle production production process engineer  ·  bus production process engineer"
+  },
+  {
+   "role": "precision engineer",
+   "isco": 2144,
+   "aka": "precision engineering expert  ·  precision engineering specialist  ·  precision engineering adviser  ·  precision engineers  ·  precision engineering consultant"
+  },
+  {
+   "role": "aerodynamics engineer",
+   "isco": 2144,
+   "aka": "CFD engineer  ·  aerodynamics test engineer  ·  aerodynamic engineering consultant  ·  aerodynamics design engineer  ·  aerodynamics performance engineer"
+  },
+  {
+   "role": "mechatronics engineer",
+   "isco": 2144,
+   "aka": "electromechanical engineer  ·  robotics engineer  ·  specialist mechatronic engineer  ·  cybernetics engineer  ·  engineer in mechatronics"
+  },
+  {
+   "role": "optomechanical engineer",
+   "isco": 2144,
+   "aka": "opto-mechanics engineer  ·  opto-mechanical engineer  ·  optomechanical engineering expert  ·  optomechanical design engineer  ·  optomechanical engineering adviser"
+  },
+  {
+   "role": "industrial assembly supervisor",
+   "isco": 3122,
+   "aka": "assembly team leader  ·  goods compliance supervisor  ·  assembly line supervisor  ·  assembly foreman  ·  quality supervisor"
+  },
+  {
+   "role": "computer hardware test technician",
+   "isco": 3114,
+   "aka": "computer hardware inspector  ·  inspector of computer hardware  ·  computer hardware testing technician  ·  computer hardware tester  ·  tester of computer hardware"
+  },
+  {
+   "role": "aerospace engineer",
+   "isco": 2144,
+   "aka": "aerospace design engineer  ·  aerostructures engineer  ·  missile designer  ·  missile design specialist  ·  aerospace engineering expert"
+  },
+  {
+   "role": "engine designer",
+   "isco": 2144,
+   "aka": "engine tool production designer  ·  engine design technician  ·  engine design engineer  ·  engine development engineer  ·  engine design technologist"
+  },
+  {
+   "role": "optoelectronic engineering technician",
+   "isco": 3114,
+   "aka": "opto-electronic technician  ·  opto-electronic engineering technician  ·  technician in optoelectronics  ·  technician in optoelectronic systems  ·  technologist in optoelectronic systems"
+  },
+  {
+   "role": "motor vehicle assembly supervisor",
+   "isco": 3122,
+   "aka": "motor vehicle assembly team leader  ·  motor vehicle production line team leader  ·  motor vehicle assembly chargehand  ·  motor vehicle assembly forewoman  ·  motor vehicle production forewoman"
+  },
+  {
+   "role": "chemical engineer",
+   "isco": 2145,
+   "aka": "chemical technology engineering consultant  ·  chemical technology engineer  ·  pyrotechnics chemical engineer  ·  chemical technology engineering adviser  ·  chemical engineering expert"
+  },
+  {
+   "role": "software developer",
+   "isco": 2512,
+   "aka": "application developer  ·  solutions developer  ·  electric vehicle software development engineer  ·  programmer  ·  application programmer"
+  },
+  {
+   "role": "chemical processing supervisor",
+   "isco": 3122,
+   "aka": "chemical processing quality supervisor  ·  chemical plant production supervisor  ·  chemical production quality tester  ·  chemical plant process supervisor  ·  chemical production process supervisor"
+  },
+  {
+   "role": "Computer and Information Research Scientists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Computer Occupations, All Other",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Data Scientists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Electronics Engineers, Except Computer",
+   "isco": 2152,
+   "aka": NaN
+  },
+  {
+   "role": "Electrical and Electronic Engineering Technologists and Technicians",
+   "isco": 3113,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Production and Operating Workers",
+   "isco": 3122,
+   "aka": NaN
+  }
+ ]
+}

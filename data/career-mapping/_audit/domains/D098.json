@@ -1,0 +1,207 @@
+{
+ "domain_id": "D098",
+ "domain_name": "Precision Engineering, Toolmaking",
+ "role_count": 40,
+ "roles": [
+  {
+   "role": "precision device inspector",
+   "isco": 7543,
+   "aka": "precision device quality control supervisor  ·  precision device quality assurance supervisor  ·  precision instrument quality control inspector  ·  precision instrument inspector  ·  precision instrument supervisor"
+  },
+  {
+   "role": "clock and watchmaker",
+   "isco": 7311,
+   "aka": "mechanical clockmaker  ·  watch maker  ·  clockmaker  ·  mechanical watchmaker  ·  watchmaker"
+  },
+  {
+   "role": "gunsmith",
+   "isco": 7222,
+   "aka": "custom rifle designer  ·  metal worker  ·  custom gun designer  ·  pistol smith  ·  pistol-smith"
+  },
+  {
+   "role": "optical instrument assembler",
+   "isco": 7311,
+   "aka": "optical equipment fabricator  ·  optical instrument assembly practitioner  ·  assembler of optical instruments  ·  fabricator of optical instruments  ·  fabricator of optical equipment"
+  },
+  {
+   "role": "watch and clock repairer",
+   "isco": 7311,
+   "aka": "time piece fixer  ·  watch and clock restorer  ·  watch and clock fixer  ·  watch and clock repairman  ·  chronometrist"
+  },
+  {
+   "role": "electrical equipment inspector",
+   "isco": 7543,
+   "aka": "electrical equipment tester  ·  electrical appliance inspector  ·  supervisor of electrical equipment  ·  electrical QA inspector  ·  electrical testing and inspection engineer"
+  },
+  {
+   "role": "electronic equipment inspector",
+   "isco": 7543,
+   "aka": "QA inspector for electronic equipment  ·  electronic testing and inspection engineer  ·  inspector of electronic equipment  ·  electronic testing engineer  ·  inspector of electronics"
+  },
+  {
+   "role": "printed circuit board test technician",
+   "isco": 7543,
+   "aka": "PCB test operator  ·  printed circuit board test operator  ·  test technician for printed circuit boards  ·  test technician for PCBs  ·  printed circuit board tester"
+  },
+  {
+   "role": "automotive test driver",
+   "isco": 7543,
+   "aka": "motor vehicle test driver  ·  automobile test technician  ·  test driver  ·  auto test driver  ·  car test and development driver"
+  },
+  {
+   "role": "casting mould maker",
+   "isco": 7222,
+   "aka": "pleat pattern-maker  ·  injection molding tool maker  ·  wooden pattern-maker  ·  pattern grader cutter  ·  foundry pattern maker"
+  },
+  {
+   "role": "optical instrument repairer",
+   "isco": 7311,
+   "aka": "optical instrument technician  ·  binoculars repairer  ·  ophthalmic instrument repairer  ·  telescopes repairer  ·  optical instruments repairer"
+  },
+  {
+   "role": "engineered wood board grader",
+   "isco": 7543,
+   "aka": "board grader  ·  particleboard grader  ·  engineered board grader  ·  engineered wood board tester  ·  engineered wood board qaulity tester"
+  },
+  {
+   "role": "pulp grader",
+   "isco": 7543,
+   "aka": "pulp tester  ·  pulp and paper qaulity tester  ·  pulp quality tester  ·  pulp and paper tester  ·  pulp and paper quality grader"
+  },
+  {
+   "role": "clothing quality inspector",
+   "isco": 7543,
+   "aka": "garment quality controller  ·  garment and textile quality controller  ·  clothing quality control inspector  ·  clothing quality control supervisor"
+  },
+  {
+   "role": "automated optical inspection operator",
+   "isco": 7543,
+   "aka": "automated optical inspection machines operator  ·  AOI operator  ·  PCB inspector  ·  AOI machine operator  ·  PCB assembly inspector"
+  },
+  {
+   "role": "battery test technician",
+   "isco": 7543,
+   "aka": "battery quality technician  ·  battery test engineer  ·  technician in battery inspection  ·  battery tester  ·  battery test laboratory technology specialist"
+  },
+  {
+   "role": "product quality inspector",
+   "isco": 7543,
+   "aka": "product inspector  ·  quality control inspector  ·  quality inspector  ·  product quality monitor  ·  quality assurance inspector"
+  },
+  {
+   "role": "consumer goods inspector",
+   "isco": 7543,
+   "aka": "assembly inspector  ·  consumer goods quality inspector  ·  consumer goods quality control inspector  ·  consumer goods assembly inspector  ·  consumer products assembly line inspector"
+  },
+  {
+   "role": "product assembly inspector",
+   "isco": 7543,
+   "aka": "assembly inspector  ·  consumer goods quality inspector  ·  assembled products quality control inspector  ·  products  ·  consumer goods quality control inspector"
+  },
+  {
+   "role": "non-destructive testing specialist",
+   "isco": 7543,
+   "aka": "non-destructive testing technology expert  ·  non-destructive testing technologist  ·  nondestructive test specialist  ·  nondestructive testing specialist  ·  non-destructive testing technician"
+  },
+  {
+   "role": "motor vehicle assembly inspector",
+   "isco": 7543,
+   "aka": "assembly inspector  ·  motor vehicle quality control inspector  ·  motor vehicle quality compliance inspector  ·  motor vehicle assembly line inspector  ·  motor vehicle quality inspector"
+  },
+  {
+   "role": "vessel assembly inspector",
+   "isco": 7543,
+   "aka": "boat assembly quality inspector  ·  boat assembly safety inspector  ·  ship quality compliance inspector  ·  ship engineering compliance inspector  ·  boat assembly inspector"
+  },
+  {
+   "role": "locksmith",
+   "isco": 7222,
+   "aka": "key and lock specialist  ·  key maker  ·  key and lock expert  ·  key and lock installer"
+  },
+  {
+   "role": "lumber grader",
+   "isco": 7543,
+   "aka": "head lumber tester  ·  lumber tester  ·  head lumber proofer  ·  head lumber quality tester  ·  lumber quality tester"
+  },
+  {
+   "role": "product quality controller",
+   "isco": 7543,
+   "aka": "production inspector  ·  assembly inspector  ·  product compliance inspector  ·  manufacturing product quality controller  ·  product inspector"
+  },
+  {
+   "role": "aircraft assembly inspector",
+   "isco": 7543,
+   "aka": "aircraft assembly maintenance inspector  ·  aircraft assembly repair inspector  ·  aircraft assembly test inspector  ·  aviation assembly repair inspector  ·  aircraft assembly safety inspector"
+  },
+  {
+   "role": "control panel tester",
+   "isco": 7543,
+   "aka": "electric control panel inspector and tester  ·  panels tester  ·  control panel inspector  ·  electro-mechanical test technician  ·  panel wireman"
+  },
+  {
+   "role": "veneer grader",
+   "isco": 7543,
+   "aka": "plywood tester  ·  plywood grader  ·  veneer quailty grader  ·  veneer rater  ·  veneer tester"
+  },
+  {
+   "role": "surgical instrument maker",
+   "isco": 7311,
+   "aka": "surgical device repairer  ·  medical instrument assembler  ·  surgical device designer  ·  medical instrument design technician  ·  surgical instrument technician"
+  },
+  {
+   "role": "metal product quality control inspector",
+   "isco": 7543,
+   "aka": "mechanical supervisor  ·  metal quality superintendent  ·  metal production manager  ·  metal fabricating supervisor  ·  melter supervisor"
+  },
+  {
+   "role": "rolling stock assembly inspector",
+   "isco": 7543,
+   "aka": "locomotive quality compliance supervisor  ·  locomotive assembly quality inspector  ·  rail vehicle assembly quality inspector  ·  rolling stock quality compliance inspector  ·  traction quality compliance supervisor"
+  },
+  {
+   "role": "product grader",
+   "isco": 7543,
+   "aka": "grader  ·  product inspector  ·  product quality inspector  ·  quality inspector  ·  product quality monitor"
+  },
+  {
+   "role": "precision mechanic",
+   "isco": 7222,
+   "aka": "precision process engineer  ·  precision processing engineer  ·  precision engineering operations supervisor  ·  precision operations mechanic  ·  precision mechanical engineer"
+  },
+  {
+   "role": "cigar inspector",
+   "isco": 7543,
+   "aka": "cigar checker  ·  cigar examiner  ·  tobacco products inspector  ·  cigar quality checker  ·  cigar product tester"
+  },
+  {
+   "role": "precision instrument assembler",
+   "isco": 7311,
+   "aka": "precision instrument tester  ·  gauge calibrator  ·  precision instrument maker  ·  meter calibrator  ·  thermostat assembler"
+  },
+  {
+   "role": "tool and die maker",
+   "isco": 7222,
+   "aka": "tool machine set up operative  ·  jig maker  ·  die dresser  ·  tool dresser  ·  tool setting technician"
+  },
+  {
+   "role": "Camera and Photographic Equipment Repairers",
+   "isco": 7311,
+   "aka": NaN
+  },
+  {
+   "role": "Medical Equipment Repairers",
+   "isco": 7311,
+   "aka": NaN
+  },
+  {
+   "role": "Musical Instrument Repairers and Tuners",
+   "isco": 7311,
+   "aka": NaN
+  },
+  {
+   "role": "Precision Instrument and Equipment Repairers, All Other",
+   "isco": 7311,
+   "aka": NaN
+  }
+ ]
+}

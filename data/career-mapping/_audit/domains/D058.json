@@ -1,0 +1,207 @@
+{
+ "domain_id": "D058",
+ "domain_name": "EdTech",
+ "role_count": 40,
+ "roles": [
+  {
+   "role": "administrative assistant",
+   "isco": 3343,
+   "aka": "executive administrative assistant  ·  general office clerk  ·  administrative office worker  ·  office clerk  ·  clerical assistant"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "corporate trainer",
+   "isco": 2424,
+   "aka": "corporate education professional  ·  professional development coach  ·  trainer of corporate employees  ·  corporate professional trainer  ·  workplace training specialist"
+  },
+  {
+   "role": "ICT teacher secondary school",
+   "isco": 2330,
+   "aka": "secondary school computing teacher  ·  high school ICT and computing teacher  ·  teacher of ICT in secondary schools  ·  secondary school ICT tutor  ·  computing teacher"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "science teacher secondary school",
+   "isco": 2330,
+   "aka": "science teacher  ·  teacher of science in secondary schools  ·  secondary school teacher of science  ·  secondary school science tutor  ·  teacher of science in high school"
+  },
+  {
+   "role": "fundraising assistant",
+   "isco": 3343,
+   "aka": "philanthropy assistant  ·  fundraising secretary  ·  fundraising administrative assistant  ·  fundraising officer  ·  fundraising clerk"
+  },
+  {
+   "role": "history teacher secondary school",
+   "isco": 2330,
+   "aka": "history teacher  ·  history teacher in high school  ·  teacher of history in high school  ·  history teacher high school  ·  teacher of history in secondary school"
+  },
+  {
+   "role": "executive assistant",
+   "isco": 3343,
+   "aka": "executive administrative assistant  ·  assistant manager  ·  personal assistant  ·  executive secretary  ·  foreign language correspondent executive assistant"
+  },
+  {
+   "role": "classical languages teacher secondary school",
+   "isco": 2330,
+   "aka": "classical languages teacher in high school  ·  secondary school latin teacher  ·  classical languages teacher high school  ·  teacher of classical languages in secondary school  ·  high school latin teacher"
+  },
+  {
+   "role": "religious education teacher at secondary school",
+   "isco": 2330,
+   "aka": "religious education teacher  ·  religious studies teacher  ·  religious education teacher high school  ·  high school RS teacher  ·  high school RE teacher"
+  },
+  {
+   "role": "scopist",
+   "isco": 3343,
+   "aka": "freelance scopist"
+  },
+  {
+   "role": "digital literacy teacher",
+   "isco": 2356,
+   "aka": "digital literacy trainer  ·  computer literacy instructor  ·  computer literacy teacher  ·  digital literacy teaching practitioner  ·  digital literacy instructor"
+  },
+  {
+   "role": "education administrator",
+   "isco": 3343,
+   "aka": "school secretary  ·  school administrator  ·  specialist education administrator  ·  specialist administrator in education  ·  college administrator"
+  },
+  {
+   "role": "physics teacher secondary school",
+   "isco": 2330,
+   "aka": "physics teacher  ·  physics teacher in high school  ·  physics tutor in high school  ·  secondary school physics tutor  ·  teacher of physics in high school"
+  },
+  {
+   "role": "music teacher secondary school",
+   "isco": 2330,
+   "aka": "music teacher in high school  ·  secondary school music teacher  ·  teacher of music in secondary schools  ·  secondary school music tutor  ·  music teacher high school"
+  },
+  {
+   "role": "project support officer",
+   "isco": 3343,
+   "aka": "real estate PMO  ·  project management support officer  ·  PMO  ·  project management officer  ·  real estate project support officer"
+  },
+  {
+   "role": "secondary school teacher",
+   "isco": 2330,
+   "aka": "science teacher  ·  language teacher  ·  high school teacher  ·  geography teacher  ·  physical education teacher"
+  },
+  {
+   "role": "business studies and economics teacher secondary school",
+   "isco": 2330,
+   "aka": "business studies and economics teacher  ·  teacher of economics in high school  ·  business studies and economics teacher high school  ·  high school business studies and economics teacher  ·  high school business studies teacher"
+  },
+  {
+   "role": "art teacher secondary school",
+   "isco": 2330,
+   "aka": "art teacher  ·  teacher of art in high school  ·  high school art tutor  ·  secondary school art teacher  ·  high school art teacher"
+  },
+  {
+   "role": "geography teacher secondary school",
+   "isco": 2330,
+   "aka": "geography teacher  ·  geography tutor secondary school  ·  geographical studies high school teacher  ·  high school geography teacher  ·  geographical studies teacher in secondary school"
+  },
+  {
+   "role": "management assistant",
+   "isco": 3343,
+   "aka": "office administrator  ·  assistant manager  ·  project assistant  ·  management aide  ·  office assistant"
+  },
+  {
+   "role": "biology teacher secondary school",
+   "isco": 2330,
+   "aka": "biology teacher  ·  high school tutor of biology  ·  teacher of biology in secondary school  ·  biology teacher high school  ·  high school biology tutor"
+  },
+  {
+   "role": "ICT trainer",
+   "isco": 2356,
+   "aka": "distance-learning trainer  ·  system trainer  ·  ICT trainers  ·  IT trainer  ·  blended learning trainer"
+  },
+  {
+   "role": "physical education teacher secondary school",
+   "isco": 2330,
+   "aka": "physical education teacher  ·  secondary school physical education tutor  ·  secondary school teacher of physical education  ·  high school physical education teacher  ·  PE teacher in secondary school"
+  },
+  {
+   "role": "court reporter",
+   "isco": 3343,
+   "aka": "shorthand reporter  ·  court stenographer  ·  law reporter  ·  deposition reporter  ·  court recorder"
+  },
+  {
+   "role": "editorial assistant",
+   "isco": 3343,
+   "aka": "travel and property editorial assistant  ·  editorial production assistant  ·  digital editorial assistant  ·  magazine editorial assistant  ·  children's editorial assistant"
+  },
+  {
+   "role": "literature teacher at secondary school",
+   "isco": 2330,
+   "aka": "high school literature tutor  ·  english literature teacher  ·  literature teacher  ·  secondary school literature tutor  ·  literature teacher high school"
+  },
+  {
+   "role": "supply chain assistant",
+   "isco": 3343,
+   "aka": "global supply chain assistant  ·  supply chain supervisor  ·  supply chain logistics assistant  ·  production assistant  ·  supply chain officer"
+  },
+  {
+   "role": "procurement support officer",
+   "isco": 3343,
+   "aka": "officer for procurement documentation  ·  procurement clerk  ·  procurement assistant  ·  procurement documentation officer  ·  junior buyer"
+  },
+  {
+   "role": "business coach",
+   "isco": 2424,
+   "aka": "professional development coach  ·  corporate coach  ·  leadership coach  ·  business development coach  ·  personal development coach"
+  },
+  {
+   "role": "philosophy teacher secondary school",
+   "isco": 2330,
+   "aka": "philosophy teacher  ·  high school philosophy teacher  ·  secondary school teacher of philosophy  ·  secondary school philosophy tutor  ·  teacher of philosophy in secondary schools"
+  },
+  {
+   "role": "mathematics teacher at secondary school",
+   "isco": 2330,
+   "aka": "maths teacher  ·  mathematics teacher  ·  teacher of mathematics in high school  ·  teacher of maths in high school  ·  high school maths teacher"
+  },
+  {
+   "role": "drama teacher secondary school",
+   "isco": 2330,
+   "aka": "drama teacher  ·  dramatic arts teacher secondary school  ·  teacher of drama in secondary schools  ·  high school dramatic arts teacher  ·  drama tutor secondary school"
+  },
+  {
+   "role": "modern languages teacher secondary school",
+   "isco": 2330,
+   "aka": "modern languages teacher  ·  teacher of modern languages in high school  ·  modern languages high school teacher  ·  modern languages teacher high school  ·  modern languages teacher in secondary school"
+  },
+  {
+   "role": "international student exchange coordinator",
+   "isco": 3343,
+   "aka": "student exchange officer  ·  coordinator of international student exchange  ·  student exchange director  ·  international exchange officer  ·  international exchange director"
+  },
+  {
+   "role": "chemistry teacher secondary school",
+   "isco": 2330,
+   "aka": "secondary school teacher of chemistry  ·  high school chemistry teacher  ·  chemistry studies high school teacher  ·  chemistry studies teacher in secondary school  ·  teacher of chemistry in secondary schools"
+  },
+  {
+   "role": "Online Learning Managers",
+   "isco": 1345,
+   "aka": NaN
+  },
+  {
+   "role": "Special Education Teachers, All Other",
+   "isco": 2330,
+   "aka": NaN
+  },
+  {
+   "role": "Adapted Physical Education Specialists",
+   "isco": 2330,
+   "aka": NaN
+  }
+ ]
+}

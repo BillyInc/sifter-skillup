@@ -1,0 +1,127 @@
+{
+ "domain_id": "D108",
+ "domain_name": "Printing Technology, Pre-press",
+ "role_count": 24,
+ "roles": [
+  {
+   "role": "flexographic press operator",
+   "isco": 7322,
+   "aka": "flexographic print technician  ·  flexographic printing inspection specialist  ·  flexographic pressman  ·  wide-format printer on flexographic presses  ·  flexographic printing plate mounter"
+  },
+  {
+   "role": "imagesetter",
+   "isco": 7321,
+   "aka": "phototypesetter technician  ·  phototypesetter engineer  ·  phototypesetter operator  ·  phototypesetting machine technician  ·  imagesetter engineer"
+  },
+  {
+   "role": "book restorer",
+   "isco": 7323,
+   "aka": "book conservator  ·  book repairer  ·  paper conservator  ·  book restorer and conservator  ·  master book restorer"
+  },
+  {
+   "role": "bindery operator",
+   "isco": 7323,
+   "aka": "bindery specialist  ·  paper binder  ·  binder operator  ·  bindery machine operator  ·  bindery machine technician"
+  },
+  {
+   "role": "paper embossing press operator",
+   "isco": 7322,
+   "aka": "paper embossing press specialist  ·  paper embosser technician  ·  paper embosser  ·  paper embossing & debossing press operator  ·  paper embossing & debossing machine operator"
+  },
+  {
+   "role": "prepress technician",
+   "isco": 7321,
+   "aka": "graphics technician  ·  prepress specialist  ·  prepress engineer  ·  press preparation engineer  ·  press preparation worker"
+  },
+  {
+   "role": "digital printer",
+   "isco": 7322,
+   "aka": "digital printer operator  ·  large format digital printer  ·  print operator  ·  digital print operator  ·  digital print machine specialist"
+  },
+  {
+   "role": "reprographics technician",
+   "isco": 7322,
+   "aka": "print room operator  ·  print room technician  ·  reprography technician  ·  mailroom specialist  ·  reprographics administrator"
+  },
+  {
+   "role": "book-sewing machine operator",
+   "isco": 7323,
+   "aka": "thread book sewing machine technician  ·  paper stitching machine technician  ·  thread book-sewing machine operator  ·  paper stitching machine operator  ·  thread book sewing machine operator"
+  },
+  {
+   "role": "gravure press operator",
+   "isco": 7322,
+   "aka": "rotogravure technician  ·  gravure technician  ·  engraving press operator  ·  gravure press operative  ·  gravure printing press tender"
+  },
+  {
+   "role": "screen printer",
+   "isco": 7322,
+   "aka": "screen print technician  ·  silk-screen printing machine specialist  ·  silk-screen printing machine oeprator  ·  silk-screen printing machine technician  ·  screen printing operator"
+  },
+  {
+   "role": "lithographer",
+   "isco": 7321,
+   "aka": "metal lithographer  ·  computer-to-plate technician  ·  platesetter specialist  ·  CT technician  ·  master printer/lithography"
+  },
+  {
+   "role": "hot foil operator",
+   "isco": 7322,
+   "aka": "hot stamp technician  ·  foil printing machine technician  ·  foil blocking specialist  ·  hot foil machine technician  ·  foil printing machine operator"
+  },
+  {
+   "role": "typesetter",
+   "isco": 7321,
+   "aka": "typesetting machine worker  ·  designer and typesetter  ·  typesetting operator  ·  typesetting operative  ·  typesetting machine operator"
+  },
+  {
+   "role": "print folding operator",
+   "isco": 7323,
+   "aka": "paper folding machinist  ·  print folding technician  ·  miniture folding operator  ·  complex folder/gluer operator  ·  print folding specialist"
+  },
+  {
+   "role": "scanning operator",
+   "isco": 7321,
+   "aka": "scanning specialist  ·  scanning technician  ·  scanning machine operator  ·  document scanning operator  ·  scanner specialist"
+  },
+  {
+   "role": "prepress operator",
+   "isco": 7321,
+   "aka": "pre-press artworker  ·  digital pre-press operator  ·  proof-press technician  ·  electronic pre-press operator  ·  proof-press operator"
+  },
+  {
+   "role": "offset printer",
+   "isco": 7322,
+   "aka": "offset printer specialist  ·  newspaper press operator  ·  offset lithography printer  ·  lithographic printing technician  ·  pad printing machine operator"
+  },
+  {
+   "role": "screen making technician",
+   "isco": 7321,
+   "aka": "textile screen maker  ·  textile engravers  ·  etcher and engraver  ·  silk screen etcher  ·  textile engraver"
+  },
+  {
+   "role": "Printing and Related Trades Workers",
+   "isco": 7322,
+   "aka": NaN
+  },
+  {
+   "role": "Prepress Technicians and Workers",
+   "isco": 7321,
+   "aka": NaN
+  },
+  {
+   "role": "Printing Press Operators",
+   "isco": 7322,
+   "aka": NaN
+  },
+  {
+   "role": "Print Binding and Finishing Workers",
+   "isco": 7323,
+   "aka": NaN
+  },
+  {
+   "role": "print studio supervisor",
+   "isco": 3122,
+   "aka": "print senior technician  ·  master printer  ·  print studio team leader  ·  print shop supervisor  ·  print senior specialist"
+  }
+ ]
+}

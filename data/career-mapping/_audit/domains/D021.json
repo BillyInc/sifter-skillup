@@ -1,0 +1,222 @@
+{
+ "domain_id": "D021",
+ "domain_name": "Architecture",
+ "role_count": 43,
+ "roles": [
+  {
+   "role": "mine surveyor",
+   "isco": 2165,
+   "aka": "mine planning surveyor  ·  mine plan maker  ·  planner of mining operations  ·  mining surveyor  ·  mine surveyors"
+  },
+  {
+   "role": "domestic energy assessor",
+   "isco": 3112,
+   "aka": "residential energy seller  ·  residential energy sales promoter  ·  residential energy salesman  ·  domestic energy sales promoter  ·  residential energy sales representative"
+  },
+  {
+   "role": "civil engineering technician",
+   "isco": 3112,
+   "aka": "civil engineering design technician  ·  civils technician  ·  hydraulic engineering superintendent  ·  civil engineering technical officer  ·  civil engineering services technician"
+  },
+  {
+   "role": "water systems engineering technician",
+   "isco": 3112,
+   "aka": "water pumping systems engineering technician  ·  water treatment systems engineering technician  ·  flood defence engineering technician  ·  water resource engineering technician  ·  flood prevention engineering technician"
+  },
+  {
+   "role": "energy conservation officer",
+   "isco": 3112,
+   "aka": "energy information officer  ·  energy management officer"
+  },
+  {
+   "role": "cadastral technician",
+   "isco": 2165,
+   "aka": "cadastral surveyor  ·  cadastral mapping technician  ·  cadastral land surveyor  ·  land agent"
+  },
+  {
+   "role": "construction quality manager",
+   "isco": 3112,
+   "aka": "construction quality and safety control supervisor  ·  construction quality and safety manager  ·  construction QA manager  ·  construction quality managers  ·  construction QA QS manager"
+  },
+  {
+   "role": "mobility services manager",
+   "isco": 2164,
+   "aka": "smart city planner  ·  mobility manager  ·  manager for shared mobility  ·  shared mobility manager  ·  mobility advocacy manager"
+  },
+  {
+   "role": "construction safety manager",
+   "isco": 3112,
+   "aka": "health and safety manager  ·  safety officer  ·  safety manager  ·  construction safety supervisor  ·  safety advisor"
+  },
+  {
+   "role": "sewerage maintenance technician",
+   "isco": 3112,
+   "aka": "sewer pipe maintenance technician  ·  sewerage investigative cctv operative  ·  sewerage investigation technician  ·  cctv operative  ·  sewerage system maintenance technician"
+  },
+  {
+   "role": "corrosion technician",
+   "isco": 3112,
+   "aka": "offshore corrosion technician  ·  surface technician  ·  corrosion monitoring technician  ·  pipeline operations technician  ·  pipeline corrosion control technician"
+  },
+  {
+   "role": "hydrographic surveyor",
+   "isco": 2165,
+   "aka": "hydrography surveyor  ·  hydrographic science researcher  ·  hydrographic research analyst  ·  hydrographic scientist  ·  hydrographic analyst"
+  },
+  {
+   "role": "land planner",
+   "isco": 2164,
+   "aka": "city planner  ·  town planner  ·  urban planner  ·  land use planner  ·  land developer"
+  },
+  {
+   "role": "fire protection technician",
+   "isco": 3112,
+   "aka": "fire protection service engineer  ·  senior fire engineer  ·  fire and security systems engineer  ·  fire alarm service technician  ·  fire suppression engineer"
+  },
+  {
+   "role": "railway infrastructure inspector",
+   "isco": 3112,
+   "aka": "railway infrastructure examiner  ·  railway infrastructure safety inspector  ·  railway infrastructure auditor  ·  railway infrastructure surveyor"
+  },
+  {
+   "role": "landscape architect",
+   "isco": 2162,
+   "aka": "landscape design expert  ·  landscape engineer  ·  landscape artist  ·  landscapes architect  ·  landscape design specialist"
+  },
+  {
+   "role": "surveying technician",
+   "isco": 3112,
+   "aka": "engineering technician  ·  mapping technician  ·  land survey technician  ·  surveyor  ·  survey technician"
+  },
+  {
+   "role": "bridge inspector",
+   "isco": 3112,
+   "aka": "inspector of bridges  ·  structures inspector  ·  bridgemaster  ·  bridge engineer  ·  bridges and structures inspector"
+  },
+  {
+   "role": "construction safety inspector",
+   "isco": 3112,
+   "aka": "safety advisor  ·  health and safety advisor  ·  health and safety inspector  ·  site safety inspector  ·  construction health and safety inspector"
+  },
+  {
+   "role": "rail maintenance technician",
+   "isco": 3112,
+   "aka": "rail inspector  ·  rail quality inspector  ·  permanent way inspector  ·  rail track inspector  ·  rail repairer"
+  },
+  {
+   "role": "landfill supervisor",
+   "isco": 3112,
+   "aka": "waste disposal compliance supervisor  ·  solid waste processing supervisor  ·  landfill site supervisor  ·  solid waste collection supervisor  ·  solid waste treatment supervisor"
+  },
+  {
+   "role": "architect",
+   "isco": 2161,
+   "aka": "architectural planner  ·  commercial architect  ·  building designer  ·  urban architect  ·  architects"
+  },
+  {
+   "role": "smart city consultant",
+   "isco": 2164,
+   "aka": "Smart Cities specialist  ·  smart city specialist  ·  Smart Cities advisor  ·  smart city advisor"
+  },
+  {
+   "role": "transport planner",
+   "isco": 2164,
+   "aka": "road traffic planner  ·  transport planning development engineer  ·  development planning transport planner  ·  traffic planner  ·  highway and drainage engineer"
+  },
+  {
+   "role": "engineering assistant",
+   "isco": 3112,
+   "aka": "technical supporter  ·  technical support worker  ·  technical aide  ·  technology assistant  ·  project support worker"
+  },
+  {
+   "role": "geographic information systems specialist",
+   "isco": 2165,
+   "aka": "Earth Observation expert  ·  GIS specialist  ·  geomatics technician  ·  GIS technician  ·  geographic information systems consultant"
+  },
+  {
+   "role": "landscape designer",
+   "isco": 2162,
+   "aka": "landscaper  ·  landscaping designer  ·  garden advisor  ·  garden designer  ·  landscape advisor"
+  },
+  {
+   "role": "cartographer",
+   "isco": 2165,
+   "aka": "cartographic draftsperson  ·  cartographic researcher  ·  cartographic analyst  ·  cartographic research scientist  ·  map maker"
+  },
+  {
+   "role": "fire safety tester",
+   "isco": 3112,
+   "aka": "fire inspection testing technologist  ·  fire inspection technician  ·  fire safety testing technology expert  ·  fire inspection testing technology specialist  ·  fire safety testing technology specialist"
+  },
+  {
+   "role": "fire inspector",
+   "isco": 3112,
+   "aka": "fire prevention officer  ·  fire investigator"
+  },
+  {
+   "role": "energy assessor",
+   "isco": 3112,
+   "aka": "energy savings advisor  ·  EPC certification assessor  ·  energy consumption advisor  ·  energy performance certificate assessor  ·  household energy use assessor"
+  },
+  {
+   "role": "road maintenance technician",
+   "isco": 3112,
+   "aka": "road maintenance worker  ·  road inspector  ·  highways maintenance technician  ·  highways inspector  ·  highways technician"
+  },
+  {
+   "role": "energy analyst",
+   "isco": 3112,
+   "aka": "energy and sustainability analyst  ·  energy advisor  ·  energy regulation specialist  ·  energy procurement analyst  ·  energy efficiency analyst"
+  },
+  {
+   "role": "land surveyor",
+   "isco": 2165,
+   "aka": "surveyor  ·  surveying engineer  ·  surveyors  ·  geomatics surveyor"
+  },
+  {
+   "role": "energy consultant",
+   "isco": 3112,
+   "aka": "energy advisor  ·  sustainability consultant  ·  energy and sustainability consultant  ·  energy saving advisor  ·  energy saving equipment advisor"
+  },
+  {
+   "role": "urban planner",
+   "isco": 2164,
+   "aka": "city planner  ·  urban planning engineer  ·  smart city planner  ·  town planner  ·  country planner"
+  },
+  {
+   "role": "interior architect",
+   "isco": 2161,
+   "aka": "building designer  ·  architect  ·  design architect  ·  construction manager  ·  junior interior designer"
+  },
+  {
+   "role": "construction quality inspector",
+   "isco": 3112,
+   "aka": "construction quality control and safety supervisor  ·  construction quality control and safety inspector  ·  construction QA QS inspector  ·  construction QA QS supervisor"
+  },
+  {
+   "role": "building inspector",
+   "isco": 3112,
+   "aka": "asbestos inspector  ·  construction services inspector  ·  construction control surveyor  ·  buildings inspector  ·  building control officer"
+  },
+  {
+   "role": "Architects and Surveyors",
+   "isco": 2161,
+   "aka": NaN
+  },
+  {
+   "role": "Architects, Except Landscape and Naval",
+   "isco": 2161,
+   "aka": NaN
+  },
+  {
+   "role": "Cartographers and Photogrammetrists",
+   "isco": 2162,
+   "aka": NaN
+  },
+  {
+   "role": "Geodetic Surveyors",
+   "isco": 2165,
+   "aka": NaN
+  }
+ ]
+}

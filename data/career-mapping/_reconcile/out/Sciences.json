@@ -1,0 +1,632 @@
+{
+ "reconciled": [
+  {
+   "programme": "Applied Geophysics",
+   "add": [
+    {"domain_id": "D022", "domain": "Mining & Geosciences Engineering", "match_type": "direct", "why": "Core geophysics purpose: earth structure, minerals/rocks, driving forces within the earth — directly the function of geosciences engineering."},
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "direct", "why": "Geological mapping, base maps, topographic map reading and interpretation are core geophysics deliverables."},
+    {"domain_id": "D059", "domain": "Space Technology & Satellite Systems", "match_type": "functional", "why": "Geomagnetic field observation, magnetic storms and earth-physics feed satellite/space geodesy applications (Physics->Space cross-link)."},
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "functional", "why": "Applied geophysics is the primary exploration science for hydrocarbon reservoirs (seismic/gravity/magnetic surveys)."},
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Curriculum covers geophysical fluids and environmental hazards — atmospheric/earth-system science foundation."},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "functional", "why": "Scales of maps, topographic maps and base-map preparation are direct geomatics skills."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "functional", "why": "Physics/geology research methods and lab investigation are embedded (kept from scorer, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D132", "why": "No astronomy/mission-systems content; space is at most adjacent via physics, not the mislabeled 'functional' here."},
+    {"domain_id": "D063", "why": "No economics content in curriculum."},
+    {"domain_id": "D134", "why": "No naval architecture / ship design content."},
+    {"domain_id": "D014", "why": "No actuarial/risk or advanced probability content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D140", "why": "No robotics/control content."},
+    {"domain_id": "D093", "why": "No electrical installation/wiring trade content."},
+    {"domain_id": "D062", "why": "No trading/capital-markets content."},
+    {"domain_id": "D016", "why": "General physics E&M alone does not support electrical engineering as a link for a geophysics programme."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D135", "why": "No nuclear engineering content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content in geophysics curriculum."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D019", "why": "No renewable energy engineering content."},
+    {"domain_id": "D136", "why": "No aeronautical content."},
+    {"domain_id": "D142", "why": "No biology/genomics content — bioinformatics is wrong for geophysics."},
+    {"domain_id": "D061", "why": "No insurance/underwriting content."}
+   ]
+  },
+  {
+   "programme": "Biochemistry",
+   "add": [
+    {"domain_id": "D025", "domain": "Pharmacy & Pharmaceutical Sciences", "match_type": "functional", "why": "Enzyme kinetics, metabolism and biochemistry of drug action are foundational to pharmaceutical sciences (kept, valid)."},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Carbohydrate/lipid/protein chemistry and metabolism underpin food science and nutrition."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Explicit 'statistical methods in biology and agriculture' plus biochemistry supports agri-science applications."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "adjacent", "why": "Biostatistics (distributions, regression, ANOVA, design of experiments) gives a data-analysis foothold."},
+    {"domain_id": "D026", "domain": "Public Health & Epidemiology", "match_type": "adjacent", "why": "Clinical biochemistry and biostatistics provide a foundation for public-health/epidemiology work."}
+   ],
+   "remove": [
+    {"domain_id": "D016", "why": "General physics E&M does not support electrical engineering link for biochemistry."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D019", "why": "No renewable energy engineering content."},
+    {"domain_id": "D135", "why": "No nuclear engineering content."},
+    {"domain_id": "D155", "why": "Materials/nanotech not present in biochemistry curriculum."},
+    {"domain_id": "D145", "why": "No neuroscience/cognitive-science content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."}
+   ]
+  },
+  {
+   "programme": "Biology",
+   "add": [
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "functional", "why": "Biological techniques — microscopy, spectrophotometry, chromatography, slide preparation, sample collection — are core lab-tech skills."},
+    {"domain_id": "D026", "domain": "Public Health & Epidemiology", "match_type": "functional", "why": "Population genetics, ecology, natural cycles and biostatistics support epidemiology/public-health foundations."},
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "functional", "why": "Cell/developmental biology, physiology and genetics feed biomedical/biotech research (kept, valid)."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "adjacent", "why": "Biostatistics and experimental design give a data-analysis foothold."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "direct", "why": "Biology programme's purpose is investigative natural-science research — should be direct, not merely functional."}
+   ],
+   "remove": [
+    {"domain_id": "D158", "why": "No corporate finance / investment banking content."},
+    {"domain_id": "D096", "why": "No agricultural machinery mechanics content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D143", "why": "No forensic-investigation content in general biology."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content; ecology alone is too weak to map here."},
+    {"domain_id": "D138", "why": "No engineering/medical-device design content — biomedical engineering overreaches for general biology."}
+   ]
+  },
+  {
+   "programme": "Biotechnology",
+   "add": [
+    {"domain_id": "D142", "domain": "Bioinformatics, Computational Biology & Genomics", "match_type": "direct", "why": "DNA fingerprinting, PCR, primer design, cloning, gene expression and molecular genetics ARE the core of computational/genomics biotech — should be direct."},
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "direct", "why": "Programme purpose is biotechnology research/applications in medicine and industry."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Explicit biotechnology applications in agriculture plus biostatistics for biology/agriculture."},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Industrial/food biotechnology and fermentation applications are named in the curriculum."},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Biotechnology in industrial processes / bioprocessing links to process industries."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "functional", "why": "Microbiology lab protocols, culturing, DNA extraction and gel electrophoresis are lab-tech skills."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading/capital-markets content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D006", "why": "No IoT/embedded-systems content."},
+    {"domain_id": "D030", "why": "No marketing/brand content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D152", "why": "No museum/heritage/archives content."}
+   ]
+  },
+  {
+   "programme": "Botany",
+   "add": [
+    {"domain_id": "D118", "domain": "Crop Production, Horticulture & Agronomy Practice", "match_type": "functional", "why": "Plant classification, anatomy, physiology and growth regulation directly underpin horticulture/agronomy."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Plant science, genetics and ecology are core to agricultural science."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "direct", "why": "Botany's purpose is investigative plant-science research — should be direct."},
+    {"domain_id": "D121", "domain": "Forestry, Wildlife Management & Pest Control", "match_type": "functional", "why": "Plant ecology, habitats and population dynamics support forestry/vegetation management (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D090", "why": "Botany is plants, not animal care/grooming."},
+    {"domain_id": "D066", "why": "No veterinary/animal-health content."},
+    {"domain_id": "D119", "why": "No livestock/poultry/dairy content."},
+    {"domain_id": "D096", "why": "No agricultural machinery mechanics content."},
+    {"domain_id": "D145", "why": "No neuroscience content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content."},
+    {"domain_id": "D143", "why": "No forensic-investigation content."},
+    {"domain_id": "D138", "why": "No biomedical engineering / device content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D073", "why": "Herbarium reference is too thin to map to library/archive management."}
+   ]
+  },
+  {
+   "programme": "Brewing Science and Technology",
+   "add": [
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "direct", "why": "Brewing/food-system/food-engineering content makes food science the core purpose."},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Fermentation, pot/continuous distillation and process transformation are chemical-process operations."},
+    {"domain_id": "D092", "domain": "Culinary Arts, Catering & Food Service Operations", "match_type": "functional", "why": "Beer/spirit formulation and creation link to beverage/food-service production."},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "adjacent", "why": "Brewery process-plant operation is analogous to chemical plant operation."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "adjacent", "why": "Raw ingredient (grain/hops) sourcing and the food system link to agriculture/agribusiness."}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D091", "why": "No driving instruction content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D138", "why": "No biomedical engineering content."},
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content."},
+    {"domain_id": "D025", "why": "No pharmacy content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D030", "why": "No marketing/brand content in this technical curriculum."},
+    {"domain_id": "D140", "why": "No robotics content."}
+   ]
+  },
+  {
+   "programme": "Chemistry",
+   "add": [
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Physical chemistry, reaction kinetics and electrolytic/solution chemistry underpin chemical process industries."},
+    {"domain_id": "D025", "domain": "Pharmacy & Pharmaceutical Sciences", "match_type": "functional", "why": "Organic chemistry, stereochemistry and reaction mechanisms are the chemical foundation of pharmaceutical science."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "direct", "why": "Chemistry's purpose is investigative chemical research — should be direct."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "adjacent", "why": "Analytical/wet-lab chemistry technique provides a lab-technologist foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D143", "why": "No forensic-investigation content in general chemistry."},
+    {"domain_id": "D091", "why": "No driving instruction content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D136", "why": "No aeronautical content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D138", "why": "No biomedical engineering / device design content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content in chemistry."}
+   ]
+  },
+  {
+   "programme": "Environmental Management and Toxicology",
+   "add": [
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Environmental science, pollutants and earth-systems content link to climate/atmospheric science."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "functional", "why": "Toxicology plus microbiology/biology lab techniques underpin analytical/lab testing."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "adjacent", "why": "Ecology and environmental management give a foothold into agri/land-resource science."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "direct", "why": "Environmental science research methods are core (kept, valid as direct)."}
+   ],
+   "remove": [
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content — should not be a DIRECT link."},
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D152", "why": "No museum/heritage content."},
+    {"domain_id": "D136", "why": "No aeronautical content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D138", "why": "No biomedical engineering content."},
+    {"domain_id": "D066", "why": "No veterinary content."},
+    {"domain_id": "D090", "why": "No animal care/grooming content."}
+   ]
+  },
+  {
+   "programme": "Forensic Science",
+   "add": [
+    {"domain_id": "D004", "domain": "Cybersecurity & Information Security", "match_type": "functional", "why": "Two full cybersecurity courses (Fundamentals I & II) covering threats, attacks, defence and digital forensics."},
+    {"domain_id": "D077", "domain": "Security Services & Public Safety", "match_type": "functional", "why": "Crime scene investigation, criminal justice administration and public-safety focus."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "functional", "why": "Forensic microbiology, trace evidence and analytical techniques are lab-based analysis."},
+    {"domain_id": "D064", "domain": "Psychology, Counselling & Mental Health", "match_type": "adjacent", "why": "Forensic psychology course provides a behavioural-science foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D012", "why": "No fintech content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D006", "why": "No IoT/embedded content."},
+    {"domain_id": "D149", "why": "No diplomacy/international-relations content."},
+    {"domain_id": "D056", "why": "No blockchain content."},
+    {"domain_id": "D162", "why": "No immigration/asylum law content."},
+    {"domain_id": "D043", "why": "No journalism content."},
+    {"domain_id": "D010", "why": "No business-intelligence content."},
+    {"domain_id": "D158", "why": "No corporate finance content."},
+    {"domain_id": "D009", "why": "Data-science link is too thin for this forensic curriculum."}
+   ]
+  },
+  {
+   "programme": "Geology",
+   "add": [
+    {"domain_id": "D022", "domain": "Mining & Geosciences Engineering", "match_type": "direct", "why": "Minerals, rocks, petrology, stratigraphy and structural geology ARE the core of geosciences/mining engineering."},
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "direct", "why": "Geological mapping, map interpretation and field mapping are core geology deliverables — should be direct."},
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "functional", "why": "Sedimentary basins, stratigraphy and petroleum geology are the exploration foundation for oil & gas."},
+    {"domain_id": "D156", "domain": "Land Surveying, Cadastral Mapping & Field Geomatics", "match_type": "functional", "why": "Introduction to Surveying and field mapping give direct geomatics skills (kept, valid)."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "functional", "why": "Geochronology and earth-science investigation are research-driven."}
+   ],
+   "remove": [
+    {"domain_id": "D149", "why": "No diplomacy content."},
+    {"domain_id": "D130", "why": "No recruitment/staffing content."},
+    {"domain_id": "D029", "why": "No HR/people-management content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D164", "why": "No urban-mobility/smart-city content."},
+    {"domain_id": "D043", "why": "No journalism content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D158", "why": "No corporate finance content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D157", "why": "No tax advisory content."},
+    {"domain_id": "D030", "why": "No marketing content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D059", "why": "Space-technology link is too weak for a geology programme."}
+   ]
+  },
+  {
+   "programme": "Industrial Chemistry",
+   "add": [
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "direct", "why": "Industrial chemistry's core purpose is chemical process/production industries — the strongest missed link."},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "functional", "why": "Industrial-scale chemical production maps to chemical plant operations."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "functional", "why": "Analytical and physical chemistry investigation are research-based."},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "adjacent", "why": "Applied/industrial chemistry gives a foothold into food/process chemistry."}
+   ],
+   "remove": [
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D136", "why": "No aeronautical content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D138", "why": "No biomedical engineering content."},
+    {"domain_id": "D135", "why": "No nuclear engineering content."},
+    {"domain_id": "D141", "why": "Quantum-computing link is too weak for industrial chemistry."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D143", "why": "No forensic content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D131", "why": "No motorsport engineering content."},
+    {"domain_id": "D091", "why": "No driving instruction content."}
+   ]
+  },
+  {
+   "programme": "Industrial Mathematics",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Linear algebra, real/numerical analysis and programming are the mathematical core of ML (Math->AI cross-link)."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Numerical analysis, probability foundations and programming underpin data science (kept, valid)."},
+    {"domain_id": "D011", "domain": "Quantitative Finance & Financial Engineering", "match_type": "functional", "why": "Differential equations, linear algebra and numerical methods are the toolkit of financial engineering (kept, valid)."},
+    {"domain_id": "D014", "domain": "Actuarial Science & Risk Management", "match_type": "functional", "why": "Probability/analysis foundation supports actuarial modelling (Math->Actuarial cross-link, kept)."},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "adjacent", "why": "Quantitative and programming skills give an analytics foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D149", "why": "No diplomacy content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D084", "why": "No payroll/bookkeeping clerking content."},
+    {"domain_id": "D015", "why": "No accounting/financial-reporting content."},
+    {"domain_id": "D157", "why": "No tax advisory content."},
+    {"domain_id": "D006", "why": "No IoT/embedded content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D159", "why": "No structured-finance/debt-capital-markets content."},
+    {"domain_id": "D060", "why": "No banking/credit operations content beyond generic economics."}
+   ]
+  },
+  {
+   "programme": "Industrial Physics",
+   "add": [
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "direct", "why": "Electric circuits & electronics, Ohm/Kirchhoff, series/parallel networks are core electrical/electronics engineering — should be direct."},
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "functional", "why": "Waves, AC/DC circuits and electronics foundation support telecom/network engineering."},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "functional", "why": "Electronics/circuit design provides an embedded-systems foundation."},
+    {"domain_id": "D141", "domain": "Quantum Computing, Quantum Information & Advanced Physics", "match_type": "functional", "why": "Quantum mechanics, wave functions and Schrodinger's equation feed quantum information (Physics->Quantum cross-link, kept)."},
+    {"domain_id": "D059", "domain": "Space Technology & Satellite Systems", "match_type": "adjacent", "why": "Modern physics and electronics give a foothold into satellite/space systems (Physics->Space)."}
+   ],
+   "remove": [
+    {"domain_id": "D137", "why": "No medical-imaging/anatomy content — medical physics is not a DIRECT link for industrial physics."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D144", "why": "No climate/meteorology content."},
+    {"domain_id": "D098", "why": "No precision-toolmaking trade content."},
+    {"domain_id": "D135", "why": "No nuclear engineering content."},
+    {"domain_id": "D146", "why": "No building-services (MEP) content."}
+   ]
+  },
+  {
+   "programme": "Marine Science",
+   "add": [
+    {"domain_id": "D120", "domain": "Fisheries, Aquaculture & Seafood Technology", "match_type": "functional", "why": "Marine organisms, distribution/abundance and marine ecology directly underpin fisheries/aquaculture."},
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Weather/climate of the marine environment, atmospheric chemistry and climate change are core content (kept, valid)."},
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Marine environmental science, air pollution and coastal-zone management (kept, valid)."},
+    {"domain_id": "D076", "domain": "Maritime & Naval Operations", "match_type": "adjacent", "why": "Ocean science gives a foothold into maritime operations."}
+   ],
+   "remove": [
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D093", "why": "No electrical installation trade content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D098", "why": "No precision-toolmaking content."},
+    {"domain_id": "D049", "why": "No automotive engineering content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D027", "why": "No biomedical-research content."},
+    {"domain_id": "D091", "why": "No driving instruction content."},
+    {"domain_id": "D132", "why": "No space science content."}
+   ]
+  },
+  {
+   "programme": "Maritime Science",
+   "add": [
+    {"domain_id": "D035", "domain": "Logistics & Transportation Operations", "match_type": "functional", "why": "Cargo vessels, ports/quays, ship routing and marine transport operations are logistics/transport functions."},
+    {"domain_id": "D034", "domain": "Supply Chain Management", "match_type": "adjacent", "why": "Shipping/port operations give a foothold into maritime supply chain."},
+    {"domain_id": "D144", "domain": "Climate Science, Meteorology & Atmospheric Science", "match_type": "functional", "why": "Meteorological measurement, weather-chart interpretation and forecasting for ship routing (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content."},
+    {"domain_id": "D027", "why": "No biomedical-research content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D090", "why": "No animal care content."},
+    {"domain_id": "D030", "why": "No marketing content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D008", "why": "Telecom link is too weak; navigation instruments alone do not support it."}
+   ]
+  },
+  {
+   "programme": "Mathematics",
+   "add": [
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Linear algebra, probability, analysis and programming are the mathematical core of AI/ML (Math->AI cross-link the scorer missed)."},
+    {"domain_id": "D166", "domain": "Autonomous Vehicles, Self-Driving Systems & Roborace Engineering", "match_type": "adjacent", "why": "Applied math (linear algebra, numerical methods, probability) is foundational to autonomy/control (Math->Autonomous Vehicles per Sciences rules)."},
+    {"domain_id": "D001", "domain": "Software Engineering", "match_type": "adjacent", "why": "Computer Programming plus algorithmic/numerical work give a software-engineering foothold."},
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "functional", "why": "Probability, distributions and exploratory data analysis underpin data science (kept, valid)."},
+    {"domain_id": "D014", "domain": "Actuarial Science & Risk Management", "match_type": "functional", "why": "Probability/analysis foundation supports actuarial modelling (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D061", "why": "No insurance-underwriting content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D138", "why": "No biomedical engineering content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D059", "why": "No space-technology content."},
+    {"domain_id": "D143", "why": "No forensic content."},
+    {"domain_id": "D147", "why": "No SCADA/PLC/industrial-control content."},
+    {"domain_id": "D056", "why": "No blockchain content."},
+    {"domain_id": "D060", "why": "No banking/credit operations content."},
+    {"domain_id": "D012", "why": "No fintech-specific content beyond generic quantitative skills."}
+   ]
+  },
+  {
+   "programme": "Medical Physics",
+   "add": [
+    {"domain_id": "D138", "domain": "Biomedical Engineering & Medical Device Design", "match_type": "functional", "why": "Physics + anatomy applied to medical imaging/therapy instrumentation supports biomedical device work."},
+    {"domain_id": "D057", "domain": "Digital Health & Health Technology", "match_type": "adjacent", "why": "Medical physics/imaging technology gives a foothold into health-technology."},
+    {"domain_id": "D137", "domain": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging", "match_type": "direct", "why": "Programme's named purpose — radiation therapy and medical imaging physics (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D125", "why": "Medical secretarial/administration is not a DIRECT link for a physics programme."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D009", "why": "Data-science link is too thin here."},
+    {"domain_id": "D146", "why": "No building-services (MEP) content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content."}
+   ]
+  },
+  {
+   "programme": "Medicinal Chemistry",
+   "add": [
+    {"domain_id": "D025", "domain": "Pharmacy & Pharmaceutical Sciences", "match_type": "direct", "why": "Medicinal chemistry IS the chemistry of drugs — pharmaceutical science is the core purpose; the biggest missed link."},
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "functional", "why": "Drug chemistry plus biology supports biomedical/pharmaceutical research."},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Physical/organic chemistry and reaction pathways link to pharmaceutical process manufacturing."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "adjacent", "why": "Analytical chemistry and lab technique give a lab-technologist foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D151", "why": "No criminology content."},
+    {"domain_id": "D143", "why": "No forensic content."},
+    {"domain_id": "D152", "why": "No museum/heritage content."},
+    {"domain_id": "D093", "why": "No electrical installation trade content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D144", "why": "No climate/meteorology content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D161", "why": "No humanitarian/emergency-response content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D141", "why": "Quantum-computing link is too weak for medicinal chemistry."}
+   ]
+  },
+  {
+   "programme": "Meteorology",
+   "add": [
+    {"domain_id": "D020", "domain": "Environmental Engineering & Sustainability", "match_type": "functional", "why": "Atmospheric science, hydrology and water/forest resource management link to environmental sustainability."},
+    {"domain_id": "D047", "domain": "Agricultural Science & Agribusiness", "match_type": "functional", "why": "Explicit crop-production systems, agro-ecological zones and forest-resource management content."},
+    {"domain_id": "D072", "domain": "Geospatial Science & GIS", "match_type": "functional", "why": "Weather-chart plotting/interpretation and spatial atmospheric data (kept, valid)."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "functional", "why": "Weather observation and atmospheric research methods (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D141", "why": "No quantum-computing content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D143", "why": "No forensic content."},
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content."},
+    {"domain_id": "D158", "why": "No corporate finance content."},
+    {"domain_id": "D049", "why": "No automotive engineering content."},
+    {"domain_id": "D157", "why": "No tax advisory content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D063", "why": "No economics content."}
+   ]
+  },
+  {
+   "programme": "Microbiology",
+   "add": [
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "functional", "why": "Isolation, culturing, characterization and identification of bacteria/fungi are core clinical/medical lab skills."},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Explicit food microbiology — spoilage, quality indices, microbial standards and food production processes."},
+    {"domain_id": "D025", "domain": "Pharmacy & Pharmaceutical Sciences", "match_type": "adjacent", "why": "Medical/industrial microbiology of fungi and pathogens supports pharmaceutical microbiology."},
+    {"domain_id": "D027", "domain": "Biomedical & Biotechnology Research", "match_type": "functional", "why": "Pathogenicity, immunity and microbial physiology feed biomedical/biotech research (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D138", "why": "No biomedical engineering / device content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D152", "why": "No museum/heritage content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D145", "why": "No neuroscience content."},
+    {"domain_id": "D019", "why": "No renewable energy content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D090", "why": "No animal care/grooming content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D143", "why": "No forensic-investigation content in general microbiology."}
+   ]
+  },
+  {
+   "programme": "Petroleum Chemistry",
+   "add": [
+    {"domain_id": "D054", "domain": "Oil & Gas Engineering", "match_type": "direct", "why": "Petroleum/crude/natural-gas origin, composition, treatment and LNG production ARE the oil & gas domain — the biggest missed link."},
+    {"domain_id": "D055", "domain": "Chemical Engineering & Process Industries", "match_type": "functional", "why": "Hydrocarbon characterization, fractions and gas treatment are refining/process-industry chemistry."},
+    {"domain_id": "D110", "domain": "Chemical, Rubber & Plastics Plant Operations", "match_type": "functional", "why": "Petroleum/gas processing maps to chemical plant operations."},
+    {"domain_id": "D074", "domain": "Occupational Health, Safety & Environment (OHSE)", "match_type": "adjacent", "why": "Petroleum handling gives a foothold into OHSE (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D138", "why": "No biomedical engineering content."},
+    {"domain_id": "D016", "why": "No electrical engineering content."},
+    {"domain_id": "D061", "why": "No insurance content."},
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content."},
+    {"domain_id": "D027", "why": "No biomedical-research content."},
+    {"domain_id": "D093", "why": "No electrical installation trade content."},
+    {"domain_id": "D026", "why": "No public-health content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content."},
+    {"domain_id": "D063", "why": "No economics content."}
+   ]
+  },
+  {
+   "programme": "Physics with Electronics",
+   "add": [
+    {"domain_id": "D008", "domain": "Telecommunications & Network Engineering", "match_type": "functional", "why": "Electronics, electromagnetism and waves foundation supports telecom/network engineering."},
+    {"domain_id": "D006", "domain": "Internet of Things & Embedded Systems", "match_type": "functional", "why": "Electronics and circuit design provide an embedded-systems foundation."},
+    {"domain_id": "D050", "domain": "Industrial Automation & Robotics", "match_type": "functional", "why": "Electronics plus workshop practice link to automation/control systems."},
+    {"domain_id": "D141", "domain": "Quantum Computing, Quantum Information & Advanced Physics", "match_type": "functional", "why": "Quantum physics course feeds quantum information (Physics->Quantum cross-link, kept)."}
+   ],
+   "remove": [
+    {"domain_id": "D137", "why": "No medical-imaging/anatomy content — medical physics is not a DIRECT link here."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D132", "why": "No space science content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D144", "why": "No climate/meteorology content."},
+    {"domain_id": "D136", "why": "No aeronautical content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D146", "why": "No building-services (MEP) content."}
+   ]
+  },
+  {
+   "programme": "Physics",
+   "add": [
+    {"domain_id": "D016", "domain": "Electrical & Electronics Engineering", "match_type": "direct", "why": "Electric circuits & electronics, electromagnetism and electrodynamics are core electrical/electronics engineering — should be direct."},
+    {"domain_id": "D141", "domain": "Quantum Computing, Quantum Information & Advanced Physics", "match_type": "functional", "why": "Quantum mechanics, wave-particle duality and Schrodinger's equation feed quantum information (Physics->Quantum, kept)."},
+    {"domain_id": "D155", "domain": "Nanotechnology, Advanced Materials & Materials Science Engineering", "match_type": "adjacent", "why": "Behaviour of matter and modern/condensed-matter physics give a materials/nanotech foothold (Physics->Nanotech per rules)."},
+    {"domain_id": "D059", "domain": "Space Technology & Satellite Systems", "match_type": "adjacent", "why": "Mechanics, relativity and physics foundation give a foothold into space systems (Physics->Space, kept)."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "functional", "why": "Physics is fundamentally investigative research-driven science."}
+   ],
+   "remove": [
+    {"domain_id": "D137", "why": "No medical-imaging/anatomy content — medical physics is not a DIRECT link for general physics."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D146", "why": "No building-services (MEP) content."},
+    {"domain_id": "D132", "why": "No astronomy/mission-systems content; space kept only via D059 adjacent."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D144", "why": "No climate/meteorology content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D062", "why": "No trading content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D013", "why": "No investment analysis content."},
+    {"domain_id": "D136", "why": "No aeronautical content."}
+   ]
+  },
+  {
+   "programme": "Science Laboratory Technology",
+   "add": [
+    {"domain_id": "D074", "domain": "Occupational Health, Safety & Environment (OHSE)", "match_type": "functional", "why": "Laboratory hazards, safety rules, first aid and equipment maintenance are core OHSE content (kept, valid)."},
+    {"domain_id": "D104", "domain": "Pottery, Ceramics, Glass & Decorative Craft", "match_type": "adjacent", "why": "Glass-blowing technology (chemistry of glass, cutting, tools) gives a glass-craft foothold."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "direct", "why": "Lab technique across biochemistry/biology/chemistry is the programme's core purpose (kept, valid)."}
+   ],
+   "remove": [
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D142", "why": "No genomics/bioinformatics content."},
+    {"domain_id": "D066", "why": "No veterinary content."},
+    {"domain_id": "D135", "why": "No nuclear engineering content."},
+    {"domain_id": "D134", "why": "No naval architecture content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D090", "why": "No animal care/grooming content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D144", "why": "No climate/meteorology content."},
+    {"domain_id": "D136", "why": "No aeronautical content."},
+    {"domain_id": "D025", "why": "No pharmacy content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."}
+   ]
+  },
+  {
+   "programme": "Statistics",
+   "add": [
+    {"domain_id": "D009", "domain": "Data Science & Statistical Analysis", "match_type": "direct", "why": "Statistical inference, distributions, EDA, time series and statistical computing ARE data science — should be direct, not functional."},
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Probability, inference, regression and programming are the statistical core of ML (Statistics->AI cross-link the scorer missed)."},
+    {"domain_id": "D014", "domain": "Actuarial Science & Risk Management", "match_type": "functional", "why": "Probability, distribution theory and inference underpin actuarial modelling (Statistics->Actuarial, kept)."},
+    {"domain_id": "D002", "domain": "Data Engineering & Architecture", "match_type": "functional", "why": "Statistical computing and programming support data-engineering workflows (kept, valid)."},
+    {"domain_id": "D011", "domain": "Quantitative Finance & Financial Engineering", "match_type": "adjacent", "why": "Time series, probability and economic statistics give a quant-finance foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D006", "why": "No IoT/embedded content."},
+    {"domain_id": "D056", "why": "No blockchain content."},
+    {"domain_id": "D072", "why": "No geospatial/GIS content."},
+    {"domain_id": "D063", "why": "Economics statistics is too thin to map to the economics domain."},
+    {"domain_id": "D033", "why": "No product-management content."},
+    {"domain_id": "D144", "why": "No climate/meteorology content."},
+    {"domain_id": "D059", "why": "No space-technology content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D143", "why": "No forensic content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D005", "why": "No cloud/DevOps content."},
+    {"domain_id": "D007", "why": "A single HCI course is too thin to map to UI/UX product design."}
+   ]
+  },
+  {
+   "programme": "Zoology",
+   "add": [
+    {"domain_id": "D121", "domain": "Forestry, Wildlife Management & Pest Control", "match_type": "functional", "why": "Animal diversity, classification, systematics and ecology directly support wildlife management."},
+    {"domain_id": "D066", "domain": "Veterinary Science & Animal Health", "match_type": "functional", "why": "Mammalian anatomy/physiology and animal biology underpin veterinary/animal-health foundations (kept, valid)."},
+    {"domain_id": "D041", "domain": "Scientific Research & Development", "match_type": "direct", "why": "Zoology's purpose is investigative animal-science research — should be direct."},
+    {"domain_id": "D122", "domain": "Medical Laboratory Technology & Pathology", "match_type": "adjacent", "why": "Biochemistry, cell biology and biology technique give a lab-technologist foothold."}
+   ],
+   "remove": [
+    {"domain_id": "D138", "why": "No biomedical engineering / device content."},
+    {"domain_id": "D145", "why": "No neuroscience/cognitive-science content."},
+    {"domain_id": "D063", "why": "No economics content."},
+    {"domain_id": "D072", "why": "No geospatial content."},
+    {"domain_id": "D078", "why": "No social/behavioural science content."},
+    {"domain_id": "D014", "why": "No actuarial content."},
+    {"domain_id": "D011", "why": "No quantitative finance content."},
+    {"domain_id": "D143", "why": "No forensic content."},
+    {"domain_id": "D140", "why": "No robotics content."},
+    {"domain_id": "D152", "why": "No museum/heritage content."},
+    {"domain_id": "D155", "why": "No materials/nanotech content."},
+    {"domain_id": "D132", "why": "No space science content."}
+   ]
+  }
+ ]
+}

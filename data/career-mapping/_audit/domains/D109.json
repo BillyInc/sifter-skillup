@@ -1,0 +1,217 @@
+{
+ "domain_id": "D109",
+ "domain_name": "Metal Processing, Foundry",
+ "role_count": 42,
+ "roles": [
+  {
+   "role": "metal drawing machine operator",
+   "isco": 8121,
+   "aka": "wire drawer  ·  forming machine operative  ·  draw machine operator  ·  metal drawing machine technician  ·  draw machine operative"
+  },
+  {
+   "role": "coating machine operator",
+   "isco": 8122,
+   "aka": "coating machine operative  ·  spraying machine operator  ·  coating and embossing operator  ·  coater  ·  coater associate"
+  },
+  {
+   "role": "slate mixer",
+   "isco": 8114,
+   "aka": "slate mixing machine operative  ·  slate granule mixer operator  ·  slate granule mixer tender  ·  slate mixing machine tender  ·  granule mixer"
+  },
+  {
+   "role": "enameller",
+   "isco": 8122,
+   "aka": "jewelery artist  ·  enamel machine apprentice  ·  coating and dipping operator  ·  silver enameller  ·  engineering dipper"
+  },
+  {
+   "role": "tumbling machine operator",
+   "isco": 8122,
+   "aka": "machine washing operator  ·  deflash and wash operative  ·  deflash and wash operator  ·  wash equipment operator  ·  tub washer operative"
+  },
+  {
+   "role": "casting machine operator",
+   "isco": 8121,
+   "aka": "caster  ·  pourer and caster  ·  mold casting worker  ·  metal moulder  ·  foundry operator"
+  },
+  {
+   "role": "asphalt plant operator",
+   "isco": 8114,
+   "aka": "asphalt production plant operative  ·  aggregates and asphalt worker  ·  asphalt production plant worker  ·  mobile plant operator  ·  asphalt plant worker"
+  },
+  {
+   "role": "driller",
+   "isco": 8111,
+   "aka": "earth driller  ·  assistant driller  ·  drillers assistant"
+  },
+  {
+   "role": "abrasive blasting operator",
+   "isco": 8122,
+   "aka": "sandblaster  ·  shot blaster  ·  sand blast operative  ·  abrasive blasting operative  ·  abrasive sandblaster"
+  },
+  {
+   "role": "stone planer",
+   "isco": 8112,
+   "aka": "stone planing machine operator  ·  stone slab planer  ·  stone planing machine tender  ·  stone planing machine setter  ·  stone planing machine operative"
+  },
+  {
+   "role": "underground heavy equipment operator",
+   "isco": 8111,
+   "aka": "underground miner (heavy equipment)  ·  miners  ·  coalface miner  ·  mine machine operator  ·  underground miner equipment operator"
+  },
+  {
+   "role": "dewatering technician",
+   "isco": 8111,
+   "aka": "filter operator  ·  site services technician  ·  surface dewaterer  ·  filter operators  ·  dewatering equipment operator"
+  },
+  {
+   "role": "surface grinding machine operator",
+   "isco": 8122,
+   "aka": "back grinding machine operator  ·  filling and grinding machine operator"
+  },
+  {
+   "role": "surface miner",
+   "isco": 8111,
+   "aka": "mine operative  ·  surface mining operative  ·  quarry stationary plant operative  ·  collier"
+  },
+  {
+   "role": "cylindrical grinder operator",
+   "isco": 8122,
+   "aka": "automatic grinder operative  ·  plate grinder  ·  blade grinder  ·  bit grinder  ·  rail grinder"
+  },
+  {
+   "role": "underground miner",
+   "isco": 8111,
+   "aka": "collier  ·  coal hewer  ·  underground mine operative  ·  coal excavator  ·  underground mining operative"
+  },
+  {
+   "role": "filing machine operator",
+   "isco": 8122,
+   "aka": "reciprocating filing machine setter  ·  metal finishing machine operator  ·  reciprocating file operator  ·  filing room operative  ·  wood filer"
+  },
+  {
+   "role": "metal annealer",
+   "isco": 8121,
+   "aka": "heat treatment operator  ·  metal annealing process worker  ·  annealing kiln worker  ·  annealing operator  ·  metal annealing process operative"
+  },
+  {
+   "role": "stone driller",
+   "isco": 8112,
+   "aka": "pneumatic drill operator  ·  sandstone driller  ·  stone drilling machine operator  ·  marble driller  ·  slate driller"
+  },
+  {
+   "role": "mineral processing operator",
+   "isco": 8112,
+   "aka": "ore separator tender  ·  process technician  ·  gravel processing operator  ·  sand processing operator  ·  process plant operator"
+  },
+  {
+   "role": "metal rolling mill operator",
+   "isco": 8121,
+   "aka": "powder mill operator  ·  rolling mill control operator  ·  steel mill operative  ·  metal rolling mill operative  ·  stopper grinder"
+  },
+  {
+   "role": "wire weaving machine operator",
+   "isco": 8121,
+   "aka": "wire weaving operator  ·  wire worker apprentice  ·  wire weaving operative  ·  wire mesh knitter  ·  wire bending operator"
+  },
+  {
+   "role": "deburring machine operator",
+   "isco": 8122,
+   "aka": "burring bench operator  ·  deburrer  ·  deburring and tooling machine technician  ·  burring wheel operative  ·  burr bench operator"
+  },
+  {
+   "role": "concrete products machine operator",
+   "isco": 8114,
+   "aka": "pre-cast concrete products machine operator  ·  concrete pipe machine operator  ·  concrete moulding machine operator  ·  cement plant worker  ·  cement and concrete plant worker"
+  },
+  {
+   "role": "precast moulder",
+   "isco": 8114,
+   "aka": "hand tile-moulder  ·  pre-cast moulder  ·  pre-cast molder  ·  cement-tile maker  ·  brick veneer maker"
+  },
+  {
+   "role": "electrolytic cell maker",
+   "isco": 8114,
+   "aka": "electrolytic cell builder  ·  cell maker  ·  concrete electrolytic cell maker  ·  electrolytic cell operations worker  ·  cover maker"
+  },
+  {
+   "role": "block machine operator",
+   "isco": 8114,
+   "aka": "block machine operative  ·  block-making machine operator  ·  block moulding machine operator  ·  concrete block machine operative  ·  block moulding machine operative"
+  },
+  {
+   "role": "stone splitter",
+   "isco": 8114,
+   "aka": "stone fabricator  ·  cobble stone splitter  ·  stone sawyer  ·  splitting machine operative  ·  block-maker"
+  },
+  {
+   "role": "extrusion machine operator",
+   "isco": 8121,
+   "aka": "extrusion operator  ·  extruding machine technician  ·  metal extrusion machine operator  ·  plastic extrusion operator  ·  extrusion press operator"
+  },
+  {
+   "role": "rustproofer",
+   "isco": 8122,
+   "aka": "rust proof machine operator  ·  rust stripping operative  ·  paint prepping operative  ·  rust proof machine operative  ·  rust stripper"
+  },
+  {
+   "role": "electroplating machine operator",
+   "isco": 8122,
+   "aka": "electro-plater  ·  electro plater  ·  non nickel plater  ·  gold plating machine operator  ·  silver plater"
+  },
+  {
+   "role": "mineral crushing operator",
+   "isco": 8112,
+   "aka": "mineral crushing machine operative  ·  stone crushing machine operative  ·  stone crushing process operative  ·  stone crushing plant operative  ·  stone crushing machine operator"
+  },
+  {
+   "role": "spring maker",
+   "isco": 8121,
+   "aka": "spring making machine operator  ·  wire coiler spring maker setter  ·  spring making machine tender  ·  box spring maker  ·  wire coiler spring maker tender setter"
+  },
+  {
+   "role": "stone polisher",
+   "isco": 8114,
+   "aka": "hand stone polisher  ·  worktop polisher  ·  wet stone polisher  ·  stone polishing worker  ·  granite polisher"
+  },
+  {
+   "role": "dip tank operator",
+   "isco": 8122,
+   "aka": "hot dip plater  ·  coating machine operator  ·  hot dipping plater  ·  coating machine operative  ·  coating machine worker"
+  },
+  {
+   "role": "anodising machine operator",
+   "isco": 8122,
+   "aka": "anode machine operator  ·  anodise machine operator  ·  anode treater  ·  anode machine technician  ·  anode machine operative"
+  },
+  {
+   "role": "Continuous Mining Machine Operators",
+   "isco": 8111,
+   "aka": NaN
+  },
+  {
+   "role": "Pourers and Casters, Metal",
+   "isco": 8121,
+   "aka": NaN
+  },
+  {
+   "role": "Model Makers, Metal and Plastic",
+   "isco": 8122,
+   "aka": NaN
+  },
+  {
+   "role": "Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic",
+   "isco": 8122,
+   "aka": NaN
+  },
+  {
+   "role": "Layout Workers, Metal and Plastic",
+   "isco": 8122,
+   "aka": NaN
+  },
+  {
+   "role": "Metal Workers and Plastic Workers, All Other",
+   "isco": 8121,
+   "aka": NaN
+  }
+ ]
+}

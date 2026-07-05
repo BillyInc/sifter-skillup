@@ -1,0 +1,22 @@
+{
+  "jamb_name": "Animal Science",
+  "utme_subjects": ["Chemistry", "Biology/Agriculture", "Mathematics/Physics", "Use of English"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Chemistry, Mathematics, Biology/Agric Science and one of Physics, Geography or Economics.",
+  "direct_entry": "Two (2) 'A' level passes or its equivalent in Chemistry and one of Biology/Botany/Zoology/Agriculture Science/Geography/Geology/Mathematics/Economics.",
+  "institution_waivers": [
+    {"institution": "OAU", "note": "Accepts HND upper credit. Does not accept Geography, Geology and Economics."},
+    {"institution": "ABSU", "note": "Accepts HND upper credit."},
+    {"institution": "CALABAR", "note": "Same as in Agriculture-Economics and Extension."},
+    {"institution": "COOU", "note": "Same as in Agriculture-Economics and Extension."},
+    {"institution": "BENIN", "note": "As in Agricultural Economics."},
+    {"institution": "UNN", "note": "As in Agricultural Economics."},
+    {"institution": "DELSU", "note": "As in Agricultural Economics."},
+    {"institution": "MAIDUGURI", "note": "Accepts NCE/ND/HND in relevant programs."},
+    {"institution": "IMSU", "note": "Accepts ND credit in related programs and HND credit level."},
+    {"institution": "PHC", "note": "Accepts Two (2) A/level GCE or HSC or JUPEB or IJMB passes in Agricultural Science and any one from Chemistry, Biology, Physics, and Economics including UTME entry requirements. OND (Upper Credit) in Agriculture from a recognized Institution including UTME entry requirements. HND with at least a Lower Credit from a recognised institution including UTME entry requirements for a 3-year degree programme. Diploma in Agriculture from a recognised institution with minimum of Credit Pass, including UTME entry requirements."},
+    {"institution": "FUTO", "note": "(a) At least two (2) A' level passes not below Grade C in Chemistry and any one of Zoology, Botany, Agricultural Science, Biology, Mathematics, Physics and Economics; (b) OND/HND at Upper Credit in Life Sciences; (c) First Degree in Life Sciences; (d) Very good passes in three JUPEB subjects namely Chemistry and any two (2) of Biology/Agricultural Science, Mathematics and Physics. Does not accept NCE. Candidates must in addition meet the 'O' Level requirements."},
+    {"institution": "RSU", "note": "In addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in relevant discipline; (b) OND (Upper Credit) in related discipline; (c) NCE holders with credit passes in Biology or Agric Science; (d) Two (2) HSC/GCE 'A' Level passes in Chemistry and Biology."},
+    {"institution": "FUNAAB", "note": "Same as in Animal Production and Health."},
+    {"institution": "MAKURDI", "note": "Accepts candidates who meet the UTME requirements, plus ND at lower credit in Agriculture or Animal Production and Health or NCE merit in Agricultural Science or Animal Science major may be admitted to 100 level. Candidates with a minimum of upper credit in Agriculture or Animal Production and Health may be admitted to 200 level."}
+  ]
+}

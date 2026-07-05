@@ -1,0 +1,16 @@
+{
+  "jamb_name": "Russian with French/German",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "UNN", "note": "Direct Entry: accepts a) NCE merit in relevant subjects as well as UTME requirements; b) Two (2) GCE 'A' level passes or its equivalent and three (3) other 'O' Level credit passes."},
+    {"institution": "IBADAN", "note": "UTME: accepts 'O' Level credit passes in Literature in English and other Arts and Social Science subjects."},
+    {"institution": "LAGOS", "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics and any three Arts or Social Sciences. Civic Education and Computer Studies are also accepted."},
+    {"institution": "OAU", "note": "UTME: 'O' Level credit pass in German is not compulsory."},
+    {"institution": "UNN", "note": "UTME: requires 'O' Level credit passes in English Language and four (4) other subjects. History or Literature in English will be an advantage."},
+    {"institution": "IBADAN", "note": "UTME Subjects: requires Literature in English plus one Arts subject and any other Arts or Social Science subject."},
+    {"institution": "LAGOS", "note": "UTME Subjects: requires English Language and any three Arts or Social Sciences."},
+    {"institution": "UNN", "note": "UTME Subjects: requires any three (3) subjects."}
+  ]
+}

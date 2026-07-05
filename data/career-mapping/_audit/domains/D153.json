@@ -1,0 +1,312 @@
+{
+ "domain_id": "D153",
+ "domain_name": "Music Production, Sound Engineering",
+ "role_count": 61,
+ "roles": [
+  {
+   "role": "performance video operator",
+   "isco": 3521,
+   "aka": "live video operator  ·  projection operator  ·  video and graphics operator  ·  video projection operator  ·  visuals operator"
+  },
+  {
+   "role": "automated fly bar operator",
+   "isco": 3435,
+   "aka": "theatre automated rigging operator  ·  lead automation operator  ·  automation programmer and operator  ·  automation operator and programmer  ·  automated fly bar technician"
+  },
+  {
+   "role": "presenter",
+   "isco": 2656,
+   "aka": "broadcast journalist  ·  master of ceremonies  ·  finance broadcast journalist  ·  hostess  ·  announcer"
+  },
+  {
+   "role": "sound operator",
+   "isco": 3521,
+   "aka": "sound board operator  ·  sound mixer  ·  audio board operator  ·  sound board technician  ·  audio operator"
+  },
+  {
+   "role": "audio describer",
+   "isco": 2656,
+   "aka": "visual describer  ·  video describer  ·  audio describers  ·  audio description expert  ·  dubber"
+  },
+  {
+   "role": "musical conductor",
+   "isco": 2652,
+   "aka": "musical director  ·  concert master  ·  orchestra conductor  ·  music conductor  ·  choir conductor"
+  },
+  {
+   "role": "intelligent lighting engineer",
+   "isco": 3435,
+   "aka": "automated light engineer  ·  automated lighting engineer  ·  automated light technician  ·  intelligent light technician  ·  intelligent light engineer"
+  },
+  {
+   "role": "music director",
+   "isco": 2652,
+   "aka": "musical director  ·  orchestra conductor  ·  music conductor  ·  band master  ·  orchestra director"
+  },
+  {
+   "role": "stage manager",
+   "isco": 3435,
+   "aka": "stage supervisor  ·  production stage manager  ·  production coordinator/stage manager  ·  production coordinator  ·  deputy stage manager"
+  },
+  {
+   "role": "stand-in",
+   "isco": 3435,
+   "aka": "understudy  ·  film stand-in  ·  substitute  ·  television stand-in  ·  back-up"
+  },
+  {
+   "role": "disc jockey",
+   "isco": 2652,
+   "aka": "music selector and broadcaster  ·  deejay  ·  club disc jockey  ·  radio disc jockey  ·  live mixing disc jockey"
+  },
+  {
+   "role": "media integration operator",
+   "isco": 3435,
+   "aka": "creative concepts media integration operator  ·  artistic concepts media integration operator  ·  operator for media integration  ·  operator for media content integration  ·  media content integration operator"
+  },
+  {
+   "role": "sound mastering engineer",
+   "isco": 3521,
+   "aka": "mixing & mastering sound engineer  ·  audio mastering engineer  ·  mixing and mastering engineer  ·  mastering technician  ·  audio mastering operator"
+  },
+  {
+   "role": "actor/actress",
+   "isco": 2655,
+   "aka": "musical theatre performer  ·  actor  ·  musical theatre actor  ·  actress  ·  film actor"
+  },
+  {
+   "role": "dresser",
+   "isco": 3435,
+   "aka": "wardrobe mistress  ·  wardrobe master  ·  principal dresser  ·  backstage dresser"
+  },
+  {
+   "role": "audio production technician",
+   "isco": 3435,
+   "aka": "stage manager  ·  venue technician  ·  event technician  ·  PA man  ·  stage sound technician"
+  },
+  {
+   "role": "costume attendant",
+   "isco": 3435,
+   "aka": "daily costume attendant  ·  wardrobe attendant  ·  costume continuity attendant  ·  costume assistant  ·  costume coordinator"
+  },
+  {
+   "role": "sound editor",
+   "isco": 3521,
+   "aka": "sound designer  ·  audio editor  ·  music editor  ·  music supervisor  ·  dubbing manager"
+  },
+  {
+   "role": "body artist",
+   "isco": 3435,
+   "aka": "tattoo studio attendant  ·  tattooer  ·  henna artist  ·  tattoo artist  ·  tattooist"
+  },
+  {
+   "role": "music arranger",
+   "isco": 2652,
+   "aka": "orchestrator  ·  arranger  ·  arrangement expert  ·  arranger & orchestrator  ·  arranger and orchestrator"
+  },
+  {
+   "role": "performance rental technician",
+   "isco": 3521,
+   "aka": "load cell hire technician  ·  equipment hire technician  ·  rental equipment performance technician  ·  lighting hire equipment technician  ·  venue technician (rental equipment)"
+  },
+  {
+   "role": "boom operator",
+   "isco": 3521,
+   "aka": "TV boom operator  ·  shotgun microphone operator  ·  production sound mixer assistant  ·  shotgun operator  ·  boom holder"
+  },
+  {
+   "role": "stage machinist",
+   "isco": 3435,
+   "aka": "chief stage technician  ·  theatre mechanist  ·  theater machinist  ·  flying system operator  ·  flying operator"
+  },
+  {
+   "role": "pyrotechnician",
+   "isco": 3435,
+   "aka": "fireworks operator  ·  fireworks specialist  ·  fireworks technician  ·  master pyrotechnician  ·  fireworks handler"
+  },
+  {
+   "role": "scenery technician",
+   "isco": 3435,
+   "aka": "set tehnician  ·  theater scene assembler  ·  scenic technician  ·  theater carpenter  ·  scenery assembler"
+  },
+  {
+   "role": "singer",
+   "isco": 2652,
+   "aka": "musical theatre performer  ·  musical theatre actor  ·  musical theatre actress  ·  tenor singer  ·  bass voice singer"
+  },
+  {
+   "role": "camera operator",
+   "isco": 3521,
+   "aka": "videographer  ·  towercam operator  ·  remote head operator  ·  cameraman  ·  camerawoman"
+  },
+  {
+   "role": "assistant video and motion picture director",
+   "isco": 3435,
+   "aka": "director's right hand man  ·  second assistant director  ·  assistant director  ·  director's right-hand woman  ·  third assistant director"
+  },
+  {
+   "role": "audio-visual technician",
+   "isco": 3521,
+   "aka": "video technician  ·  audio-visual assistant  ·  audio & video operator  ·  audio technician  ·  audio-visual operator"
+  },
+  {
+   "role": "sound designer",
+   "isco": 3521,
+   "aka": "music and sound artist  ·  sound designer and composer  ·  sound designer and engineer  ·  sound designer & composer  ·  composer & sound designer"
+  },
+  {
+   "role": "prop maker",
+   "isco": 3435,
+   "aka": "property maker and designer  ·  property maker and set dresser  ·  property maker & modeller  ·  prop maker and modeller  ·  prop modeller & maker"
+  },
+  {
+   "role": "head of workshop",
+   "isco": 3435,
+   "aka": "head of scenic workshop  ·  deputy workshop manager  ·  workshop coordinator  ·  scenic workshop manager  ·  stage workshop supervisor"
+  },
+  {
+   "role": "composer",
+   "isco": 2652,
+   "aka": "music producer  ·  jingle writer  ·  music composer and producer  ·  film music composer  ·  theater music composer"
+  },
+  {
+   "role": "broadcasting programme director",
+   "isco": 3435,
+   "aka": "television program director  ·  broadcasting program director  ·  content director  ·  radio program director  ·  program planner"
+  },
+  {
+   "role": "news anchor",
+   "isco": 2656,
+   "aka": "newscaster  ·  business news anchor  ·  news broadcaster  ·  news presenter  ·  TV news anchor"
+  },
+  {
+   "role": "stunt performer",
+   "isco": 3435,
+   "aka": "film and television stunt performer  ·  stunt action performer  ·  stunt fight performer  ·  film and TV stunt performer  ·  film & television stunt performer"
+  },
+  {
+   "role": "light board operator",
+   "isco": 3435,
+   "aka": "lighting board operator and programmer  ·  lighting operator  ·  lighting board programmer and operator  ·  lighting board programmer & operator  ·  sound & lighting board operator"
+  },
+  {
+   "role": "location manager",
+   "isco": 3435,
+   "aka": "film and TV location manager  ·  location coordinator  ·  film location coordinator  ·  film location manager  ·  TV location manager"
+  },
+  {
+   "role": "prompter",
+   "isco": 3435,
+   "aka": "prompt  ·  theatre prompter  ·  souffleur  ·  opera prompter  ·  theater prompter"
+  },
+  {
+   "role": "script supervisor",
+   "isco": 3435,
+   "aka": "script coordinator  ·  continuity supervisor  ·  commercials script supervisor  ·  pre-production script supervisor  ·  continuity coordinator"
+  },
+  {
+   "role": "performance lighting technician",
+   "isco": 3435,
+   "aka": "lighting and video technician  ·  lighting & video technician  ·  lighting technician coordinator  ·  audio and lighting technician  ·  lighting and audio technician"
+  },
+  {
+   "role": "pyrotechnic designer",
+   "isco": 3435,
+   "aka": "pyrotechnician & choreographer  ·  pyrotechnical designer  ·  pyro designer  ·  pyro-designer  ·  pyrotechnic operator & choreographer"
+  },
+  {
+   "role": "video technician",
+   "isco": 3521,
+   "aka": "audio-video technician  ·  audio/visual technician  ·  audio-visual specialist  ·  graphics/video technician  ·  audio video specialist"
+  },
+  {
+   "role": "recording studio technician",
+   "isco": 3521,
+   "aka": "sound mixer  ·  audio editor  ·  sounds technician  ·  recording sound engineer  ·  recording studio sound technician"
+  },
+  {
+   "role": "stage technician",
+   "isco": 3435,
+   "aka": "theater technician  ·  theatre technician  ·  event technician  ·  theatre technical operator  ·  theatre technical officer"
+  },
+  {
+   "role": "prop master/prop mistress",
+   "isco": 3435,
+   "aka": "prop master  ·  prop coordinator  ·  property coordinator  ·  prop master/mistress assistant  ·  prop technician"
+  },
+  {
+   "role": "performance flying director",
+   "isco": 3435,
+   "aka": "flying FX choreographer  ·  flying FX director  ·  flying effects choreographer  ·  fly director  ·  flying director"
+  },
+  {
+   "role": "mask maker",
+   "isco": 3435,
+   "aka": "mask designer & maker  ·  mask designer & builder  ·  mask-maker  ·  mask designer/maker  ·  mask designer and builder"
+  },
+  {
+   "role": "sound artist",
+   "isco": 2652,
+   "aka": "sound installation creator  ·  sound designer & artist  ·  live sound artist  ·  sonic manipulator  ·  sound artist and designer"
+  },
+  {
+   "role": "choirmaster/choirmistress",
+   "isco": 2652,
+   "aka": "choir leader  ·  choir director  ·  choral director  ·  choirmaster  ·  choirmistress"
+  },
+  {
+   "role": "répétiteur",
+   "isco": 2652,
+   "aka": "music répétiteur  ·  repetiteur  ·  rehearsal accompanist  ·  accompanist  ·  music repetiteur"
+  },
+  {
+   "role": "fight director",
+   "isco": 3435,
+   "aka": "fight choreographer  ·  stage fight instructor  ·  stage fight coordinator  ·  martial arts fight director  ·  fight coach"
+  },
+  {
+   "role": "followspot operator",
+   "isco": 3435,
+   "aka": "spotlight operator  ·  followspot lighting operator"
+  },
+  {
+   "role": "projectionist",
+   "isco": 3521,
+   "aka": "projection operator  ·  booth operator  ·  film projectionist  ·  movie projector operator  ·  projector booth operator"
+  },
+  {
+   "role": "assistant stage director",
+   "isco": 3435,
+   "aka": "second assistant director  ·  first assistant director  ·  orchestra assistant  ·  orchestra secretary"
+  },
+  {
+   "role": "extra",
+   "isco": 3435,
+   "aka": "extra performer  ·  motion picture extra  ·  background actor  ·  background artist  ·  film extra"
+  },
+  {
+   "role": "voice-over artist",
+   "isco": 2655,
+   "aka": "voice-over actor  ·  voice over actress  ·  voice artist  ·  female voice-over artist  ·  voice actress"
+  },
+  {
+   "role": "theatre technician",
+   "isco": 3435,
+   "aka": "lighting technician  ·  audio technician  ·  theatrical technician  ·  stage technician  ·  performance technician"
+  },
+  {
+   "role": "musician",
+   "isco": 2652,
+   "aka": "concert master  ·  charango player  ·  organist  ·  violinist  ·  french hornist"
+  },
+  {
+   "role": "broadcast technician",
+   "isco": 3521,
+   "aka": "radio and TV technician  ·  broadcast technicians  ·  broadcast engineering technician  ·  broadcasting engineer  ·  broadcasting technician"
+  },
+  {
+   "role": "Audio and Video Technicians",
+   "isco": 3521,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+  "jamb_name": "French",
+  "utme_subjects": ["French", "and any other two (2) subjects from Arts and Social Sciences"],
+  "olevel_requirement": "Five (5) SSC credit passes including French and English Language plus one other Arts subject.",
+  "direct_entry": "Two (2) `A' Level passes including French and one other Arts subject.",
+  "institution_waivers": [
+    {"institution": "AAU", "note": "Accepts a) NCE merit in French and one other Arts subject. b) NCE Double major in French."},
+    {"institution": "ABSU", "note": "Accepts a) Candidates with two (2) `A' Level passes in Arts into the 4-year programme. b) Two (2) `A' Level passes including French at IJMB/NCE. General English/Use of English at NCE satisfies UTME English Language requirement."},
+    {"institution": "BAYERO", "note": "Accepts NCE in French and any French Baccalaureate `A' Level."},
+    {"institution": "BSU", "note": "Accepts two (2) NCE passes to include French and one other Arts subject."},
+    {"institution": "CALABAR", "note": "Accepts a) Five (5) `O' Level credit passes at not more than two (2) sittings to include English Language, plus two (2) `A' Level passes one of which must be in French. b) Four (4) `O' Level credit passes at not more than two (2) sittings to include English Language, plus three (3) `A' Level passes one of which must be in French. c) Five (5) `O' Level credit passes at not more than two (2) sittings to include English Language, plus two (2) NCE merit or credit passes of which one must be in French."},
+    {"institution": "DELSU", "note": "a) Candidate must have at least a merit pass in French and one other Art subject at the NCE level. b) GCE A/L passes should include French and one other Arts subject. c) Certified Diploma in French from a recognized Institute like the Nigerian French Language Village and the likes will be accepted in place of A level French."},
+    {"institution": "IBADAN", "note": "Accepts NCE merit including French and one other subject from Arts and Social Science subject. Ibadan accepts candidates without `O' level in French."},
+    {"institution": "ILORIN", "note": "Accepts at least two A level passes including french and one other Arts or Social science subjects. This is applicable for NCE, OND, IJMB, JUPEB, and GCE A level."},
+    {"institution": "KWASU", "note": "Accepts ND, NCE with French as principal subject. Requires three (3) `A' Level passes in relevant subjects."},
+    {"institution": "LAGOS", "note": "Accepts Very good passes in JUPEB/A' Level subjects: French and any two of Igbo/Yoruba, CRS/IRS, History, Government, Literature-in-English, Music and Fine Arts. NCE in French/NFLV, Diploma/Diplôme Supérieur (MODULE III), DALF (France), CEGEP (Canada), Baccalaureate, CAP and BTS."},
+    {"institution": "OAU", "note": "Accepts NCE merit pass in French (Nigeria French Language Village) and the likes."}
+  ]
+}

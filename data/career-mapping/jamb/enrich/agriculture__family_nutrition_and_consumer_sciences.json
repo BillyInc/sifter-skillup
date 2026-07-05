@@ -1,0 +1,11 @@
+{
+  "jamb_name": "Family, Nutrition and Consumer Sciences",
+  "utme_subjects": ["Chemistry", "Biology/Agriculture Science", "Mathematics/Physics"],
+  "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology, Physics and any one of the following: Fine Arts, Textile, Construction, Technical Drawing, Home Management, Food and Nutrition.",
+  "direct_entry": "Two (2) 'A' Level passes or equivalent in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography.",
+  "institution_waivers": [
+    {"institution": "OAU", "note": "NCE with a minimum of credit in Home Economics/Biology/Chemistry/Agric Science from an accredited Institution."},
+    {"institution": "OAU", "note": "Candidates with ND in Catering and Hotel Management, Textile and Clothing, Construction/Management, Food Science and Animal Health from accredited institution with at least an upper credit pass."},
+    {"institution": "OAU", "note": "HND in Catering and Hotel Management, Textile and Clothing, Construction/Management Food Science and Technology, Nutrition, Tourism, Agriculture and Animal Health from accredited institution with a minimum of upper credit."}
+  ]
+}

@@ -1,0 +1,107 @@
+{
+ "domain_id": "D116",
+ "domain_name": "Heavy Equipment, Earthmoving",
+ "role_count": 20,
+ "roles": [
+  {
+   "role": "tower crane operator",
+   "isco": 8343,
+   "aka": "tower crane operative  ·  tower-crane operator  ·  tower crane driver"
+  },
+  {
+   "role": "snow-clearing worker",
+   "isco": 8342,
+   "aka": "snow remover  ·  snow removal worker  ·  snow plougher"
+  },
+  {
+   "role": "production plant crane operator",
+   "isco": 8343,
+   "aka": "bottom cat operator  ·  gantry crane technicians  ·  hot-metal crane technicians  ·  production plant electric crane operator  ·  mobile crane technician"
+  },
+  {
+   "role": "mobile crane operator",
+   "isco": 8343,
+   "aka": "mobile crane operators  ·  lorry-mounted crane operator  ·  operator specialised in mobile crane  ·  bottom cat operator  ·  mobile crane driver"
+  },
+  {
+   "role": "grader operator",
+   "isco": 8342,
+   "aka": "grader worker  ·  grader operative  ·  motor-grader driver  ·  grader driver"
+  },
+  {
+   "role": "road roller operator",
+   "isco": 8342,
+   "aka": "ride on roller driver  ·  walk-behind road roller operator  ·  vibrating roller driver  ·  walk-behind roller operator  ·  roller operator"
+  },
+  {
+   "role": "dredge operator",
+   "isco": 8342,
+   "aka": "dredger operator  ·  port dredger operator  ·  dredge operatr  ·  dredde operator  ·  port dredge operator"
+  },
+  {
+   "role": "road construction worker",
+   "isco": 8342,
+   "aka": "paver  ·  road costruction worker  ·  road construction project worker  ·  rad construction worker  ·  road paver"
+  },
+  {
+   "role": "automated cable vehicle controller",
+   "isco": 8343,
+   "aka": "automated cable vehicle operator  ·  cable propelled vehicle operator  ·  cable car operator  ·  cable car controller  ·  controller of automated cable vehicles"
+  },
+  {
+   "role": "pile driving hammer operator",
+   "isco": 8342,
+   "aka": "pile-driver operative  ·  piling equipment operative  ·  piling equipment operator  ·  pile driving hamer operator  ·  pile drivin' hammer operator"
+  },
+  {
+   "role": "surface mine plant operator",
+   "isco": 8342,
+   "aka": "surface miner equipment operator  ·  aggregate driver  ·  surface mining heavy equipment driver  ·  quarry plant operator  ·  surface miner (heavy equipment)"
+  },
+  {
+   "role": "bulldozer operator",
+   "isco": 8342,
+   "aka": "bull dozer operator  ·  dozer/crawler driver  ·  earthmover driver  ·  bulldozer operative  ·  dozer operative"
+  },
+  {
+   "role": "scraper operator",
+   "isco": 8342,
+   "aka": "scraper worker  ·  towed-scraper driver  ·  scraper operative  ·  motor-scraper driver  ·  towed-scraper operator"
+  },
+  {
+   "role": "container crane operator",
+   "isco": 8343,
+   "aka": "operator of container crane  ·  shipping container crane operator  ·  ship crane operator  ·  dock crane operator  ·  dockside crane operator"
+  },
+  {
+   "role": "forklift operator",
+   "isco": 8344,
+   "aka": "warehouse forklift operator  ·  order picker driver  ·  warehouse forklift driver  ·  operator of forklift trucks  ·  forklift truck operator"
+  },
+  {
+   "role": "excavator operator",
+   "isco": 8342,
+   "aka": "tracked excavator operator  ·  excavation worker  ·  excavator  ·  360 degree excavator operator  ·  backhoe excavator operator"
+  },
+  {
+   "role": "Operating Engineers and Other Construction Equipment Operators",
+   "isco": 8342,
+   "aka": NaN
+  },
+  {
+   "role": "Crane and Tower Operators",
+   "isco": 8343,
+   "aka": NaN
+  },
+  {
+   "role": "Industrial Truck and Tractor Operators",
+   "isco": 8344,
+   "aka": NaN
+  },
+  {
+   "role": "Elevator and Escalator Installers and Repairers",
+   "isco": 8342,
+   "aka": NaN
+  }
+ ]
+}

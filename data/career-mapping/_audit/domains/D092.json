@@ -1,0 +1,162 @@
+{
+ "domain_id": "D092",
+ "domain_name": "Culinary Arts, Catering",
+ "role_count": 31,
+ "roles": [
+  {
+   "role": "industrial cook",
+   "isco": 5120,
+   "aka": "catering worker  ·  institutional cook  ·  catering cook  ·  institutional food preparation worker"
+  },
+  {
+   "role": "wine sommelier",
+   "isco": 5131,
+   "aka": "sommelier  ·  wine choice consultant  ·  wine selection advisor  ·  wine steward  ·  wine advisor"
+  },
+  {
+   "role": "bartender",
+   "isco": 5132,
+   "aka": "bar keeper  ·  barman  ·  bar woman  ·  bar staff"
+  },
+  {
+   "role": "sommelier",
+   "isco": 5131,
+   "aka": "wine manager  ·  restaurant sommelier  ·  wine waiter"
+  },
+  {
+   "role": "quick service restaurant team leader",
+   "isco": 5246,
+   "aka": "fast food team leader  ·  fast service team leader  ·  fast service shift team leader  ·  fast food shift team leader"
+  },
+  {
+   "role": "head waiter/head waitress",
+   "isco": 5131,
+   "aka": "front of house manager  ·  waiter service manager  ·  head waitress  ·  head waiter  ·  chief waiter"
+  },
+  {
+   "role": "cook",
+   "isco": 5120,
+   "aka": "grill cook  ·  roast cook  ·  under chief of the kitchen  ·  sauté cook  ·  chief of the kitchen"
+  },
+  {
+   "role": "quick service restaurant crew member",
+   "isco": 9411,
+   "aka": "crepes maker  ·  fast food crew member  ·  pancakes maker  ·  quick service crew member  ·  fast-food crew member"
+  },
+  {
+   "role": "beer sommelier",
+   "isco": 5131,
+   "aka": "beer selection advisor  ·  beer advisor"
+  },
+  {
+   "role": "diet cook",
+   "isco": 5120,
+   "aka": "nursing home cook  ·  dietary cook  ·  diet chef  ·  health care cook  ·  dietary aide"
+  },
+  {
+   "role": "pizzaiolo",
+   "isco": 9411,
+   "aka": "pizza chef  ·  pizza maker  ·  pizza cook  ·  pizza-chef  ·  pizza-cook"
+  },
+  {
+   "role": "restaurant host/restaurant hostess",
+   "isco": 5131,
+   "aka": "maître d'hôtel  ·  front of house host  ·  restaurant hostess  ·  front of house hostess  ·  restaurant host"
+  },
+  {
+   "role": "head sommelier",
+   "isco": 5131,
+   "aka": "wine manager  ·  head of wines  ·  master sommelier  ·  head wine waiter"
+  },
+  {
+   "role": "food service worker",
+   "isco": 5246,
+   "aka": "catering worker  ·  kitchen assistant  ·  airline food kitchen worker  ·  airline catering assistant  ·  airline catering worker"
+  },
+  {
+   "role": "fish cook",
+   "isco": 5120,
+   "aka": "fish restaurant chef  ·  fish fryer  ·  sea food restaurant cook  ·  seafood restaurant cook  ·  fish restaurant cook"
+  },
+  {
+   "role": "grill cook",
+   "isco": 5120,
+   "aka": "barbecue cook  ·  grill section cook  ·  grill section chef  ·  rotisserie chef  ·  barbecue chef"
+  },
+  {
+   "role": "barista",
+   "isco": 5132,
+   "aka": "coffee maker  ·  coffee bartender  ·  specialised coffee bartender  ·  specialised bartender"
+  },
+  {
+   "role": "waiter/waitress",
+   "isco": 5131,
+   "aka": "chef de rang  ·  waitress  ·  waiter  ·  waiting staff  ·  table waiter"
+  },
+  {
+   "role": "kitchen assistant",
+   "isco": 9412,
+   "aka": "kitchen worker  ·  catering assistant  ·  kitchen trainee  ·  catering trainee  ·  spare hand"
+  },
+  {
+   "role": "cocktail bartender",
+   "isco": 5132,
+   "aka": "mixology waiter  ·  flair bartender  ·  mixologist  ·  mixology bartender"
+  },
+  {
+   "role": "kitchen porter",
+   "isco": 9412,
+   "aka": "dish washer  ·  kitchen hand  ·  KP  ·  pot and pan washer  ·  kitchen steward"
+  },
+  {
+   "role": "Chefs and Cooks",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Food and Beverage Serving Workers",
+   "isco": 5131,
+   "aka": NaN
+  },
+  {
+   "role": "Chefs and Head Cooks",
+   "isco": 3434,
+   "aka": NaN
+  },
+  {
+   "role": "Fast Food and Counter Workers",
+   "isco": 5241,
+   "aka": NaN
+  },
+  {
+   "role": "Waiters and Waitresses",
+   "isco": 5131,
+   "aka": NaN
+  },
+  {
+   "role": "Dishwashers",
+   "isco": 9412,
+   "aka": NaN
+  },
+  {
+   "role": "Food Preparation Workers",
+   "isco": 9411,
+   "aka": NaN
+  },
+  {
+   "role": "Dining Room and Cafeteria Attendants and Bartender Helpers",
+   "isco": 9411,
+   "aka": NaN
+  },
+  {
+   "role": "Food Preparation and Serving Related Workers, All Other",
+   "isco": 9412,
+   "aka": NaN
+  },
+  {
+   "role": "Slaughterers and Meat Packers",
+   "isco": 9411,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,329 @@
+{
+ "reconciled": [
+  {
+   "programme": "Pharmacology",
+   "add": [
+    {"domain_id": "D025", "domain": "Pharmacy & Pharmaceutical Sciences", "match_type": "direct", "why": "Pharmacology is the science of drugs; entire curriculum (pharmacodynamics, pharmacokinetics, chemotherapy, drug discovery) is core pharmaceutical science — promote from functional"},
+    {"domain_id": "D074", "domain": "Occupational Health, Safety & Environment (OHSE)", "match_type": "functional", "why": "Toxicology and pharmacovigilance/drug-safety courses cover exposure to poisons and safety monitoring"}
+   ],
+   "remove": [
+    {"domain_id": "D163", "why": "No IP/patent course; spurious tech-law link on a drug-science programme"},
+    {"domain_id": "D143", "why": "No forensic/investigation course basis"},
+    {"domain_id": "D135", "why": "No nuclear/radiation content"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D155", "why": "No nanomaterials course"},
+    {"domain_id": "D066", "why": "No veterinary/animal course; drug examples are human"}
+   ]
+  },
+  {
+   "programme": "Physiotherapy",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "Physiotherapy is a core allied-health rehabilitation therapy (exercise therapy, electrotherapy, musculoskeletal rehab) — promote from functional"}
+   ],
+   "remove": [
+    {"domain_id": "D091", "why": "Driving instruction has no course basis"},
+    {"domain_id": "D135", "why": "No nuclear content; electrotherapy uses thermal/physical agents only"},
+    {"domain_id": "D122", "why": "No medical-laboratory course"},
+    {"domain_id": "D046", "why": "No social-work course basis"},
+    {"domain_id": "D128", "why": "No social-welfare course basis"}
+   ]
+  },
+  {
+   "programme": "Audiology",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "Aural rehabilitation and hearing-disorder management make audiology a core allied-health rehab profession — promote from functional"},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Phonetics and Linguistics in Audiology course; speech/communication assessment"}
+   ],
+   "remove": [
+    {"domain_id": "D162", "why": "Immigration law has no course basis"},
+    {"domain_id": "D144", "why": "Climate science unrelated to audiology"},
+    {"domain_id": "D161", "why": "No humanitarian/emergency-response course basis"},
+    {"domain_id": "D067", "why": "No dentistry/oral-health content"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D122", "why": "No medical-laboratory course"}
+   ]
+  },
+  {
+   "programme": "Nursing Sciences",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "functional", "why": "Nursing is an allied-health profession; foundations, med-surg and community nursing overlap rehabilitation/patient-care roles"}
+   ],
+   "remove": [
+    {"domain_id": "D151", "why": "Criminology unrelated to nursing curriculum"},
+    {"domain_id": "D082", "why": "Customer-service/contact-centre has no course basis"},
+    {"domain_id": "D162", "why": "Immigration law unrelated to nursing"},
+    {"domain_id": "D029", "why": "No HR/people-management course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D161", "why": "No humanitarian/emergency-response course basis"}
+   ]
+  },
+  {
+   "programme": "Complementary and Alternative Medicine",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "functional", "why": "Osteopathy and chiropractic are allied manual/rehabilitation therapies"}
+   ],
+   "remove": [
+    {"domain_id": "D151", "why": "Criminology unrelated to CAM curriculum"},
+    {"domain_id": "D161", "why": "No humanitarian/emergency-response course basis"},
+    {"domain_id": "D135", "why": "No nuclear/radiation content"},
+    {"domain_id": "D020", "why": "Only a single public-health course; no environmental-engineering basis"},
+    {"domain_id": "D138", "why": "No biomedical-engineering/device course"},
+    {"domain_id": "D142", "why": "No bioinformatics/computational course"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D137", "why": "No radiation-physics course"}
+   ]
+  },
+  {
+   "programme": "Dental Technology",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "functional", "why": "Dental technology is an allied dental-support profession fabricating prosthetic/orthotic dental devices"},
+    {"domain_id": "D104", "domain": "Pottery, Ceramics, Glass & Decorative Craft", "match_type": "functional", "why": "Ceramics in Dental Technology and dental-aesthetics courses use ceramic/glass craft"}
+   ],
+   "remove": [
+    {"domain_id": "D136", "why": "Aeronautical engineering has no basis in dental lab work"},
+    {"domain_id": "D132", "why": "Space science unrelated to dental technology"},
+    {"domain_id": "D003", "why": "No AI/ML course basis"},
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D014", "why": "Actuarial science has no course basis"},
+    {"domain_id": "D145", "why": "No neuroscience content beyond basic oral anatomy"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D135", "why": "No nuclear content"},
+    {"domain_id": "D121", "why": "Forestry/wildlife unrelated"},
+    {"domain_id": "D123", "why": "No medical-imaging course"}
+   ]
+  },
+  {
+   "programme": "Dental Therapy",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "Dental therapy is a clinical allied dental profession (preventive/community dentistry, restorative care) — promote from functional"}
+   ],
+   "remove": [
+    {"domain_id": "D137", "why": "Spurious direct link; intro dental radiography is minor and no radiation-physics course"},
+    {"domain_id": "D088", "why": "Beauty therapy has no course basis"},
+    {"domain_id": "D154", "why": "Exercise science unrelated to dental therapy"},
+    {"domain_id": "D152", "why": "Museum curation unrelated"},
+    {"domain_id": "D144", "why": "Climate science unrelated"},
+    {"domain_id": "D147", "why": "SCADA/PLC industrial control has no basis"},
+    {"domain_id": "D073", "why": "No library/archive course basis"},
+    {"domain_id": "D058", "why": "Oral-health-education course does not amount to EdTech engineering"}
+   ]
+  },
+  {
+   "programme": "Environmental Health Science",
+   "add": [
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Food Hygiene and Safety course covers food safety/inspection"}
+   ],
+   "remove": [
+    {"domain_id": "D151", "why": "Criminology unrelated to environmental health"},
+    {"domain_id": "D164", "why": "No smart-city/urban-mobility course basis"},
+    {"domain_id": "D145", "why": "No neuroscience content"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D142", "why": "No bioinformatics/computational course"}
+   ]
+  },
+  {
+   "programme": "Health Care Administration and Hospital Management",
+   "add": [
+    {"domain_id": "D028", "domain": "General Management & Strategy", "match_type": "direct", "why": "Strategic Planning & Management, corporate planning and leadership courses — hospital management is general management applied to health"},
+    {"domain_id": "D029", "domain": "Human Resources & People Management", "match_type": "functional", "why": "HR Management in Healthcare, labour relations and collective-bargaining courses"}
+   ],
+   "remove": [
+    {"domain_id": "D157", "why": "Tax advisory has no course basis"},
+    {"domain_id": "D163", "why": "IP law unrelated to hospital administration"},
+    {"domain_id": "D062", "why": "Capital-markets trading has no basis"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D158", "why": "Investment banking/M&A has no basis"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D159", "why": "Structured finance/debt markets unrelated"},
+    {"domain_id": "D149", "why": "Diplomacy unrelated"},
+    {"domain_id": "D162", "why": "Immigration law unrelated"},
+    {"domain_id": "D051", "why": "Real estate has no course basis"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D137", "why": "No radiation-physics course"},
+    {"domain_id": "D061", "why": "Insurance/underwriting not a hospital-admin function beyond financing context"},
+    {"domain_id": "D060", "why": "Retail banking has no course basis"}
+   ]
+  },
+  {
+   "programme": "Information Technology and Health Informatics",
+   "add": [
+    {"domain_id": "D143", "domain": "Forensic Science, Digital Forensics & Criminal Investigation", "match_type": "functional", "why": "Digital Forensics is a listed course"}
+   ],
+   "remove": [
+    {"domain_id": "D012", "why": "No fintech-engineering course; health-focused informatics"},
+    {"domain_id": "D056", "why": "No blockchain course basis"},
+    {"domain_id": "D164", "why": "Smart-city/urban-mobility unrelated"},
+    {"domain_id": "D128", "why": "Social welfare unrelated"},
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D082", "why": "No customer-service/contact-centre course basis"},
+    {"domain_id": "D063", "why": "No economics course basis"}
+   ]
+  },
+  {
+   "programme": "Health Information Management",
+   "add": [
+    {"domain_id": "D073", "domain": "Library, Archive & Information Management", "match_type": "direct", "why": "Health records management, filing systems, indexing, retention and archiving are core information/records management"},
+    {"domain_id": "D010", "domain": "Business Intelligence & Analytics", "match_type": "functional", "why": "Statistical methods, hospital statistics and health-data analysis courses"},
+    {"domain_id": "D002", "domain": "Data Engineering & Architecture", "match_type": "functional", "why": "Database construction and management in health information systems"}
+   ],
+   "remove": [
+    {"domain_id": "D061", "why": "Insurance principles are a minor financing topic, not an underwriting career basis"},
+    {"domain_id": "D062", "why": "Capital-markets trading has no basis"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D012", "why": "No fintech-engineering course"},
+    {"domain_id": "D158", "why": "Investment banking unrelated"},
+    {"domain_id": "D015", "why": "No accounting course basis"},
+    {"domain_id": "D051", "why": "Real estate unrelated"},
+    {"domain_id": "D060", "why": "Retail banking unrelated"},
+    {"domain_id": "D157", "why": "Tax advisory unrelated"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D005", "why": "No cloud/DevOps course basis"},
+    {"domain_id": "D130", "why": "Recruitment/staffing unrelated"},
+    {"domain_id": "D063", "why": "Information-as-economic-good theory does not amount to an economics career"},
+    {"domain_id": "D078", "why": "No social-science research course basis"}
+   ]
+  },
+  {
+   "programme": "Medical Laboratory Science",
+   "add": [],
+   "remove": [
+    {"domain_id": "D123", "why": "Spurious direct link; medical imaging is a separate profession, MLS is lab science"},
+    {"domain_id": "D137", "why": "Spurious direct link; no radiation-physics course"},
+    {"domain_id": "D125", "why": "Spurious direct link; no medical-secretarial course"},
+    {"domain_id": "D135", "why": "No nuclear content"},
+    {"domain_id": "D155", "why": "No nanomaterials course"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated"},
+    {"domain_id": "D066", "why": "No veterinary course; samples are human clinical"}
+   ]
+  },
+  {
+   "programme": "Human Nutrition and Dietetics",
+   "add": [
+    {"domain_id": "D165", "domain": "Wellness Coaching, Lifestyle Medicine & Integrative Health", "match_type": "direct", "why": "Diet therapy, nutrition counselling and nutrition in disease prevention are core lifestyle/wellness practice"},
+    {"domain_id": "D048", "domain": "Food Science & Technology", "match_type": "functional", "why": "Food Composition, Analysis & Sensory Evaluation; food enrichment/fortification courses"},
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "functional", "why": "Dietetics is a clinical allied-health profession (diet therapy, hospital practicals)"}
+   ],
+   "remove": [
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D006", "why": "No IoT course basis"},
+    {"domain_id": "D001", "why": "No software-engineering course basis"},
+    {"domain_id": "D009", "why": "Biostatistics does not amount to a data-science career here"},
+    {"domain_id": "D144", "why": "Climate science unrelated"},
+    {"domain_id": "D121", "why": "Forestry/wildlife unrelated"},
+    {"domain_id": "D090", "why": "Animal grooming unrelated"},
+    {"domain_id": "D155", "why": "No nanomaterials course"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D145", "why": "No neuroscience content"},
+    {"domain_id": "D066", "why": "No veterinary course; human-nutrition focus"}
+   ]
+  },
+  {
+   "programme": "Occupational Therapy",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "OT is a core allied-health rehabilitation profession (activity analysis, physical dysfunction rehab, neuro-rehab) — promote from functional"}
+   ],
+   "remove": [
+    {"domain_id": "D137", "why": "Spurious direct link; imaging/physical diagnosis is minor, no radiation-physics course"},
+    {"domain_id": "D088", "why": "Beauty therapy has no course basis"},
+    {"domain_id": "D151", "why": "Criminology unrelated"},
+    {"domain_id": "D162", "why": "Immigration law unrelated"},
+    {"domain_id": "D009", "why": "No data-science course basis"},
+    {"domain_id": "D123", "why": "No dedicated medical-imaging course"}
+   ]
+  },
+  {
+   "programme": "Public Health",
+   "add": [
+    {"domain_id": "D124", "domain": "Community Health Extension & Primary Health Care", "match_type": "functional", "why": "Community Health Practicum I & II and primary-health-care content"}
+   ],
+   "remove": [
+    {"domain_id": "D061", "why": "Health-financing mention is not an insurance-underwriting career"},
+    {"domain_id": "D062", "why": "Capital-markets trading unrelated"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D130", "why": "Recruitment/staffing unrelated"},
+    {"domain_id": "D060", "why": "Retail banking unrelated"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D149", "why": "Global-health course does not amount to a diplomacy career"},
+    {"domain_id": "D151", "why": "Criminology unrelated"},
+    {"domain_id": "D051", "why": "Real estate unrelated"},
+    {"domain_id": "D157", "why": "Tax advisory unrelated"},
+    {"domain_id": "D158", "why": "Investment banking unrelated"}
+   ]
+  },
+  {
+   "programme": "Optometry",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "Optometry is a primary eye-care allied-health profession (ocular anatomy/physiology, general optometry, ophthalmic optics)"}
+   ],
+   "remove": [
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D162", "why": "Immigration law unrelated"},
+    {"domain_id": "D151", "why": "Criminology unrelated"},
+    {"domain_id": "D093", "why": "Electrical installation trade unrelated; optics ≠ wiring"},
+    {"domain_id": "D137", "why": "Geometrical/physical optics is not radiation-physics"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D122", "why": "No medical-laboratory course"},
+    {"domain_id": "D067", "why": "Dentistry unrelated"},
+    {"domain_id": "D161", "why": "No humanitarian/emergency-response course basis"}
+   ]
+  },
+  {
+   "programme": "Prosthetics and Orthotics",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "P&O is an allied-health rehabilitation profession fabricating and fitting orthopaedic devices (gait, biomechanics, clinical assessment)"},
+    {"domain_id": "D154", "domain": "Exercise Science, Sports Therapy & Athletic Performance", "match_type": "functional", "why": "Therapeutic exercises, assistive devices and gait rehabilitation courses"}
+   ],
+   "remove": [
+    {"domain_id": "D091", "why": "Driving instruction unrelated"},
+    {"domain_id": "D058", "why": "No EdTech course basis"},
+    {"domain_id": "D132", "why": "Space science unrelated"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D136", "why": "Aeronautical engineering unrelated"},
+    {"domain_id": "D131", "why": "Motorsport engineering unrelated"},
+    {"domain_id": "D009", "why": "No data-science course basis"},
+    {"domain_id": "D016", "why": "No electrical-engineering course basis"},
+    {"domain_id": "D137", "why": "No radiation-physics course"}
+   ]
+  },
+  {
+   "programme": "Radiography",
+   "add": [
+    {"domain_id": "D137", "domain": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging", "match_type": "direct", "why": "Radiobiology, radiation dosimetry & protection and cross-sectional-imaging physics are core — promote from functional"},
+    {"domain_id": "D003", "domain": "Artificial Intelligence & Machine Learning", "match_type": "functional", "why": "Artificial Intelligence in Radiography is a listed course"}
+   ],
+   "remove": [
+    {"domain_id": "D132", "why": "Space science unrelated"},
+    {"domain_id": "D166", "why": "Autonomous vehicles unrelated"},
+    {"domain_id": "D164", "why": "Smart-city/urban-mobility unrelated"},
+    {"domain_id": "D012", "why": "No fintech course basis"},
+    {"domain_id": "D136", "why": "Aeronautical engineering unrelated"},
+    {"domain_id": "D016", "why": "Radiographic equipment does not amount to an electrical-engineering career"},
+    {"domain_id": "D067", "why": "Dental radiography is minor; dentistry unrelated"},
+    {"domain_id": "D125", "why": "Radiology-admin course does not amount to a medical-secretarial career"}
+   ]
+  },
+  {
+   "programme": "Speech-Language Therapy",
+   "add": [
+    {"domain_id": "D068", "domain": "Allied Health & Rehabilitation Therapies", "match_type": "direct", "why": "SLT is an allied-health rehabilitation profession treating speech/language/communication disorders — promote from functional"},
+    {"domain_id": "D065", "domain": "Translation, Interpretation & Linguistics", "match_type": "functional", "why": "Phonetics and Linguistics in Speech-Language Therapy course"}
+   ],
+   "remove": [
+    {"domain_id": "D137", "why": "Spurious direct link; no radiation-physics course"},
+    {"domain_id": "D088", "why": "Beauty therapy has no course basis"},
+    {"domain_id": "D151", "why": "Criminology unrelated"},
+    {"domain_id": "D162", "why": "Immigration law unrelated"},
+    {"domain_id": "D163", "why": "IP law unrelated"},
+    {"domain_id": "D123", "why": "No medical-imaging course"},
+    {"domain_id": "D125", "why": "No medical-secretarial course"},
+    {"domain_id": "D122", "why": "No medical-laboratory course"},
+    {"domain_id": "D126", "why": "No complementary/alternative-medicine course basis"}
+   ]
+  }
+ ]
+}

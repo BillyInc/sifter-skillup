@@ -1,0 +1,352 @@
+{
+ "domain_id": "D138",
+ "domain_name": "Biomedical Engineering",
+ "role_count": 69,
+ "roles": [
+  {
+   "role": "medical laboratory assistant",
+   "isco": 3212,
+   "aka": "biomedical laboratory research assistant  ·  clinical research assistant  ·  assistant clinical researcher  ·  assistant in medical laboratory  ·  medical lab assistant"
+  },
+  {
+   "role": "dismantling engineer",
+   "isco": 2149,
+   "aka": "dismantling planner  ·  disassembly planner  ·  dismantling manager"
+  },
+  {
+   "role": "biomedical engineer",
+   "isco": 2149,
+   "aka": "biomedical technology engineering specialist  ·  biomedical technology engineering consultant  ·  BME consultant  ·  BME specialist  ·  BME expert"
+  },
+  {
+   "role": "dependability engineer",
+   "isco": 2149,
+   "aka": "reliability engineer  ·  RAM engineer  ·  maintenance and reliability engineer  ·  dependability and security engineer  ·  RAMS engineer"
+  },
+  {
+   "role": "quantity surveyor",
+   "isco": 2149,
+   "aka": "development project cost manager  ·  construction project manager  ·  development project cost consultant  ·  construction project cost consultant  ·  construction cost consultant"
+  },
+  {
+   "role": "renewable energy engineer",
+   "isco": 2149,
+   "aka": "renewable energy technology engineering specialist  ·  renewable energy technology engineering consultant  ·  renewable energy engineering specialist  ·  renewable energy engineering consultant  ·  turbine engineer"
+  },
+  {
+   "role": "environmental scientist",
+   "isco": 2133,
+   "aka": "geologist  ·  mineral technician  ·  geological technician  ·  soil scientist  ·  land survey technician"
+  },
+  {
+   "role": "component engineer",
+   "isco": 2149,
+   "aka": "components engineers  ·  component technology engineering consultant  ·  components engineer  ·  component engineering consultant  ·  component engineering expert"
+  },
+  {
+   "role": "energy systems engineer",
+   "isco": 2149,
+   "aka": "energy systems technology engineering consultant  ·  distribution system engineer  ·  energy conservation engineer  ·  distribution project engineer  ·  energy systems engineering consultant"
+  },
+  {
+   "role": "water quality analyst",
+   "isco": 2133,
+   "aka": "water quality specialist  ·  drinking water quality technician  ·  potable water quality laboratory analyst  ·  drinking water quality specialist  ·  potable water quality analyst"
+  },
+  {
+   "role": "innovation engineer",
+   "isco": 2149,
+   "aka": "innovation engineer expert  ·  innovation engineer consultant  ·  innovation engineer specialist"
+  },
+  {
+   "role": "food production engineer",
+   "isco": 2141,
+   "aka": "food engineer"
+  },
+  {
+   "role": "quality engineer",
+   "isco": 2149,
+   "aka": "product quality monitor  ·  quality systems engineer  ·  senior quality engineer  ·  junior quality engineer  ·  customer quality engineer"
+  },
+  {
+   "role": "pipeline environmental project manager",
+   "isco": 2133,
+   "aka": "supervisor of pipeline environmental projects  ·  pipeline environmental impact manager  ·  pipeline environmental impact analyst  ·  manager of pipeline environmental projects  ·  pipeline environmental project supervisor"
+  },
+  {
+   "role": "wood technology engineer",
+   "isco": 2149,
+   "aka": "wood tech engineer  ·  wood technology operator  ·  wooden technology specialist  ·  wood technology operative  ·  wooden technology operator"
+  },
+  {
+   "role": "research engineer",
+   "isco": 2149,
+   "aka": "engineering scientist  ·  agricultural research engineer  ·  engineering analyst  ·  engineer researcher  ·  bionic engineer"
+  },
+  {
+   "role": "solar energy engineer",
+   "isco": 2149,
+   "aka": "solar energies engineer  ·  solar energy engineering consultant  ·  solar engineer  ·  solar energy systems engineer  ·  solar power engineer"
+  },
+  {
+   "role": "materials engineer",
+   "isco": 2149,
+   "aka": "construction materials engineering expert  ·  materials engineering consultant  ·  building materials engineering consultant  ·  ceramic engineer  ·  building materials engineer"
+  },
+  {
+   "role": "fire prevention and protection engineer",
+   "isco": 2149,
+   "aka": "fire protection and prevention engineer  ·  fire prevention and protection engineering expert  ·  fire prevention engineer  ·  fire prevention and protection technology engineering consultant  ·  fire prevention and protection technology engineer"
+  },
+  {
+   "role": "aviation ground systems engineer",
+   "isco": 2149,
+   "aka": "aviation ground systems technician  ·  engineer of aviation ground systems  ·  airport ground systems technician  ·  airport ground systems engineer"
+  },
+  {
+   "role": "industrial engineer",
+   "isco": 2141,
+   "aka": "industrial engineering consultant  ·  industrial engineering expert  ·  industrial technology engineering expert  ·  industrial technology engineer  ·  industrial engineering adviser"
+  },
+  {
+   "role": "robotics engineer",
+   "isco": 2149,
+   "aka": "automation systems engineer  ·  robotics engineering adviser  ·  autonomous systems engineer  ·  robotic technology engineering specialist  ·  robotics engineering expert"
+  },
+  {
+   "role": "installation engineer",
+   "isco": 2149,
+   "aka": "commissioning engineer  ·  structural engineer  ·  design engineer  ·  field installation engineer  ·  structural installation engineer"
+  },
+  {
+   "role": "environmental programme coordinator",
+   "isco": 2133,
+   "aka": "environmental consultant  ·  environmental auditor  ·  environmental officer  ·  programme coordinator environment  ·  environmental health officer"
+  },
+  {
+   "role": "maintenance and repair engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineer  ·  production engineer  ·  manufacturing systems engineer  ·  mechanical engineer  ·  equipment engineer"
+  },
+  {
+   "role": "manufacturing engineer",
+   "isco": 2141,
+   "aka": "manufacturing engineering consultant  ·  manufacturing technology engineering adviser  ·  batterie manufacturing engineer  ·  battery manufacturing engineer  ·  manufacturing engineering adviser"
+  },
+  {
+   "role": "airport environment officer",
+   "isco": 2133,
+   "aka": "airport environmental officer  ·  airport environmental expert  ·  airport environmental planning expert"
+  },
+  {
+   "role": "soil scientist",
+   "isco": 2133,
+   "aka": "soil analyst  ·  senior soil scientist  ·  soil biology specialist  ·  soil technician  ·  soil wetland scientist"
+  },
+  {
+   "role": "design engineer",
+   "isco": 2149,
+   "aka": "HVAC design engineer  ·  industrial expert  ·  industrial specialist  ·  product engineer  ·  product design engineer"
+  },
+  {
+   "role": "commissioning engineer",
+   "isco": 2149,
+   "aka": "test and commissioning engineer  ·  commissioning and qualification engineer  ·  installation and commissioning engineer  ·  commissioning engineer machines"
+  },
+  {
+   "role": "photonics engineer",
+   "isco": 2149,
+   "aka": "engineer specialised in photonic systems  ·  photonic technology engineering consultant  ·  photonic technology engineering specialist  ·  photonics engineering expert  ·  photonics systems engineer"
+  },
+  {
+   "role": "groundwater monitoring technician",
+   "isco": 2133,
+   "aka": "environmental protection technician  ·  environmental conservation technician  ·  groundwater protection technician  ·  groundwater laboratory technician  ·  groundwater sampling technician"
+  },
+  {
+   "role": "nature conservation officer",
+   "isco": 2133,
+   "aka": "forester  ·  park ranger  ·  fish and game warden  ·  countryside ranger  ·  zoo field conservation officer"
+  },
+  {
+   "role": "contract engineer",
+   "isco": 2149,
+   "aka": "subcontractor engineer  ·  contract engineering expert  ·  contractor engineer  ·  contract engineering consultant  ·  contract engineering specialist"
+  },
+  {
+   "role": "ecologist",
+   "isco": 2133,
+   "aka": "environmental scientist  ·  conservationist scientist  ·  aquaculture ecologist  ·  ecologists  ·  wildlife ecologist"
+  },
+  {
+   "role": "food and beverage packaging technologist",
+   "isco": 2141,
+   "aka": "food and beverage packaging expert  ·  food and beverage packaging specialist  ·  food and drinks packaging technologist  ·  food and drinks packaging expert"
+  },
+  {
+   "role": "packaging production manager",
+   "isco": 2141,
+   "aka": "assistant operations manager  ·  packaging consultant  ·  trainee operations manager  ·  graduate mail and packaging manager  ·  packaging manager"
+  },
+  {
+   "role": "nanoengineer",
+   "isco": 2149,
+   "aka": "nanoscience specialist  ·  nanotechnology specialist  ·  nanoscience expert  ·  nano-engineer  ·  nano engineer"
+  },
+  {
+   "role": "health and safety engineer",
+   "isco": 2149,
+   "aka": "industrial health and safety engineer  ·  health and safety consultant engineer  ·  occupational health and safety engineer  ·  health engineer  ·  health and safety engineering specialist"
+  },
+  {
+   "role": "alternative fuels engineer",
+   "isco": 2149,
+   "aka": "alternative fuels expert  ·  alternative non-fossil fuels engineer  ·  alternative non-fossil fuels expert  ·  hydrogen engineer  ·  biodiesel engineer"
+  },
+  {
+   "role": "compliance engineer",
+   "isco": 2149,
+   "aka": "compliance engineering consultant  ·  compliance engineering expert  ·  compliance engineering specialist  ·  compliance engineering adviser  ·  compliance engineers"
+  },
+  {
+   "role": "optical engineer",
+   "isco": 2149,
+   "aka": "optics engineer  ·  optical technology engineer  ·  optical engineering specialist  ·  optical engineering expert  ·  optical technology engineering expert"
+  },
+  {
+   "role": "thermal engineer",
+   "isco": 2149,
+   "aka": "thermal engineering expert  ·  thermal technology engineering consultant  ·  battery thermal system engineer  ·  thermal engineering consultant  ·  thermal engineers"
+  },
+  {
+   "role": "acoustical engineer",
+   "isco": 2149,
+   "aka": "acoustical technology engineering consultant  ·  acoustical technology engineering expert  ·  acoustical technology engineering adviser  ·  acoustical engineering consultant  ·  acoustical engineering specialist"
+  },
+  {
+   "role": "energy engineer",
+   "isco": 2149,
+   "aka": "energies engineer  ·  energy technology engineering specialist  ·  energy technology engineering expert  ·  power engineer  ·  energy technology engineering consultant"
+  },
+  {
+   "role": "process engineer",
+   "isco": 2141,
+   "aka": "battery materials process engineer  ·  process technology engineering expert  ·  slitting process engineer  ·  industrial quality engineer  ·  manufacturing systems engineer"
+  },
+  {
+   "role": "onshore wind energy engineer",
+   "isco": 2149,
+   "aka": "onshore wind energy systems engineer  ·  onshore wind energy specialist  ·  onshore wind energy engineering expert  ·  onshore wind power engineer  ·  onshore wind energy engineering specialist"
+  },
+  {
+   "role": "automation engineer",
+   "isco": 2141,
+   "aka": "engineer in automation  ·  electric vehicles automation engineer  ·  automated systems engineer  ·  manufacturing engineer in automation  ·  mining automation engineer"
+  },
+  {
+   "role": "geothermal engineer",
+   "isco": 2149,
+   "aka": "geothermal power plant manager  ·  geothermal O&M engineer  ·  geothermal technology engineering adviser  ·  geothermal engineering consultant  ·  geothermal power plant engineer"
+  },
+  {
+   "role": "aquaculture environmental analyst",
+   "isco": 2133,
+   "aka": "fish farming environmental specialist  ·  specialist in aquaculture environmental analysis  ·  aquaculture environmental scientist  ·  aquaculture environmental specialist  ·  marine scientist"
+  },
+  {
+   "role": "logistics engineer",
+   "isco": 2149,
+   "aka": "logistics technology engineering adviser  ·  logistics technology engineering specialist  ·  logistics technology engineer  ·  logistics engineering consultant  ·  logistics technology engineering expert"
+  },
+  {
+   "role": "offshore renewable energy engineer",
+   "isco": 2149,
+   "aka": "ocean renewable energy engineer  ·  offshore energy farms engineer  ·  hydrodynamics engineer  ·  ORE engineer  ·  marine renewable energy engineer"
+  },
+  {
+   "role": "test engineer",
+   "isco": 2149,
+   "aka": "solar inverter test engineer  ·  BESS test engineer  ·  battery test engineer  ·  battery validation engineer  ·  battery systems hardware test engineer"
+  },
+  {
+   "role": "production engineer",
+   "isco": 2141,
+   "aka": "downstream production engineer  ·  production engineering adviser  ·  planning and production support manager  ·  agricultural production engineer  ·  production engineering consultant"
+  },
+  {
+   "role": "surface engineer",
+   "isco": 2141,
+   "aka": "surface engineering adviser  ·  corrosion engineer  ·  surface engineers  ·  surface technology engineering consultant  ·  surface engineering technician"
+  },
+  {
+   "role": "countryside officer",
+   "isco": 2133,
+   "aka": "park ranger  ·  natural areas maintenance team leader  ·  rural areas officer  ·  countryside officers"
+  },
+  {
+   "role": "patent engineer",
+   "isco": 2149,
+   "aka": "patent agent  ·  patent scientist  ·  patent and trademark engineer  ·  intellectual property engineer  ·  technical patent specialist"
+  },
+  {
+   "role": "conservation scientist",
+   "isco": 2133,
+   "aka": "wildlife biologist  ·  environmental scientist  ·  park naturalist  ·  park ranger  ·  conservationist"
+  },
+  {
+   "role": "environmental technician",
+   "isco": 2133,
+   "aka": "environmental protection technician  ·  environmental conservation technician  ·  pollution control technician  ·  groundwater protection technician  ·  pollution prevention technician"
+  },
+  {
+   "role": "autonomous driving specialist",
+   "isco": 2149,
+   "aka": "highly automated drive engineer  ·  connected car specialist  ·  self-driving car engineer  ·  AV engineer  ·  C-V2X specialist"
+  },
+  {
+   "role": "homologation engineer",
+   "isco": 2141,
+   "aka": "automotive homologation engineer  ·  vehicle homologation engineer  ·  automotive homologation manager  ·  automotive homologation specialist  ·  homologation manager"
+  },
+  {
+   "role": "nuclear engineer",
+   "isco": 2149,
+   "aka": "nuclear engineering expert  ·  nuclear engineering specialist  ·  nuclear engineers  ·  atomic decommissioning engineer  ·  nuclear technology engineering expert"
+  },
+  {
+   "role": "bioengineer",
+   "isco": 2149,
+   "aka": "bioengineering consultant  ·  bioengineering technology adviser  ·  bioengineering adviser  ·  bio-engineer  ·  bioengineering technology expert"
+  },
+  {
+   "role": "natural resources consultant",
+   "isco": 2133,
+   "aka": "natural resource consultant  ·  natural resources adviser  ·  natural resources specialist  ·  natural resources expert  ·  resources consultant"
+  },
+  {
+   "role": "calculation engineer",
+   "isco": 2149,
+   "aka": "process engineer  ·  structural engineer  ·  simulation calculation engineer  ·  computational engineer  ·  piping calculation engineer"
+  },
+  {
+   "role": "application engineer",
+   "isco": 2149,
+   "aka": "application technology engineering specialist  ·  application engineering consultant  ·  application technology engineer  ·  electric vehicles application engineer  ·  applied research engineer"
+  },
+  {
+   "role": "air pollution analyst",
+   "isco": 2133,
+   "aka": "environmental analyst  ·  air quality consultant  ·  air environment technician  ·  air quality monitoring technician  ·  air quality technician"
+  },
+  {
+   "role": "Medical Scientists, Except Epidemiologists",
+   "isco": 2133,
+   "aka": NaN
+  },
+  {
+   "role": "medical device engineering technician",
+   "isco": 3114,
+   "aka": "technologist in biomedical equipment  ·  medical appliance technician  ·  medical equipment technician  ·  technician of biomedical equipment  ·  medical device technician"
+  }
+ ]
+}

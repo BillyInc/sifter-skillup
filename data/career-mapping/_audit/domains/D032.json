@@ -1,0 +1,222 @@
+{
+ "domain_id": "D032",
+ "domain_name": "Project Management",
+ "role_count": 43,
+ "roles": [
+  {
+   "role": "administrative assistant",
+   "isco": 3343,
+   "aka": "executive administrative assistant  ·  general office clerk  ·  administrative office worker  ·  office clerk  ·  clerical assistant"
+  },
+  {
+   "role": "branch manager",
+   "isco": 1213,
+   "aka": "regional director  ·  regional manager  ·  international business manager  ·  branch office administrator  ·  subsidiary manager"
+  },
+  {
+   "role": "EU funds manager",
+   "isco": 1213,
+   "aka": "EU policy and funding expert  ·  regional policy officer  ·  EU projects supervisor  ·  policy officer for EU funds  ·  EU fund manager in Joint Secretariat"
+  },
+  {
+   "role": "fundraising assistant",
+   "isco": 3343,
+   "aka": "philanthropy assistant  ·  fundraising secretary  ·  fundraising administrative assistant  ·  fundraising officer  ·  fundraising clerk"
+  },
+  {
+   "role": "publishing rights manager",
+   "isco": 3339,
+   "aka": "digital rights director  ·  publishing rights coordinator  ·  publishing rights director  ·  rights and publishing manager  ·  rights & publishing manager"
+  },
+  {
+   "role": "relocation officer",
+   "isco": 3339,
+   "aka": "relocation manager  ·  relocation director  ·  relocation commissioner  ·  relocation and department officer  ·  relocation consultant"
+  },
+  {
+   "role": "business intelligence manager",
+   "isco": 2421,
+   "aka": "market intelligence manager  ·  business research analyst  ·  business intelligence specialist  ·  business research consultant  ·  business intelligence analyst"
+  },
+  {
+   "role": "manufacturing cost estimator",
+   "isco": 2421,
+   "aka": "manufacturing cost analyst  ·  manufacturing estimate clerk  ·  production cost estimator  ·  estimator  ·  manufacturing cost recovery technician"
+  },
+  {
+   "role": "promoter",
+   "isco": 3339,
+   "aka": "in-house promoter  ·  tour and event booker  ·  events promotor  ·  event organiser  ·  events organiser"
+  },
+  {
+   "role": "executive assistant",
+   "isco": 3343,
+   "aka": "executive administrative assistant  ·  assistant manager  ·  personal assistant  ·  executive secretary  ·  foreign language correspondent executive assistant"
+  },
+  {
+   "role": "sustainability manager",
+   "isco": 1213,
+   "aka": "sustainable business manager  ·  sustainable business process manager  ·  sustainability analyst  ·  sustainability specialist  ·  sustainability coordinator"
+  },
+  {
+   "role": "tourism contract negotiator",
+   "isco": 3339,
+   "aka": "contract manager  ·  contracts negotiator  ·  hotel contracts negotiator  ·  travel contract negotiator  ·  contract negotiator"
+  },
+  {
+   "role": "scopist",
+   "isco": 3343,
+   "aka": "freelance scopist"
+  },
+  {
+   "role": "strategic planning manager",
+   "isco": 1213,
+   "aka": "strategy manager  ·  corporate strategist  ·  business continuity planning director  ·  business continuity strategy director  ·  strategic development manager"
+  },
+  {
+   "role": "logistics analyst",
+   "isco": 2421,
+   "aka": "supply chain analyst  ·  distribution and logistics consultant  ·  logistics consultant  ·  logistics and distribution analyst  ·  logistics and supply chain analyst"
+  },
+  {
+   "role": "business manager",
+   "isco": 1213,
+   "aka": "general manager  ·  corporate service manager  ·  business unit manager  ·  operations manager  ·  vice-president"
+  },
+  {
+   "role": "education administrator",
+   "isco": 3343,
+   "aka": "school secretary  ·  school administrator  ·  specialist education administrator  ·  specialist administrator in education  ·  college administrator"
+  },
+  {
+   "role": "health safety and environmental manager",
+   "isco": 1213,
+   "aka": "HSE coordinator  ·  chief HSE officer  ·  corporate HSE manager  ·  HSE and sustainability service manager"
+  },
+  {
+   "role": "intellectual property consultant",
+   "isco": 3339,
+   "aka": "patent agent  ·  patent broker  ·  information broker  ·  IP adviser  ·  intellectual property adviser"
+  },
+  {
+   "role": "project support officer",
+   "isco": 3343,
+   "aka": "real estate PMO  ·  project management support officer  ·  PMO  ·  project management officer  ·  real estate project support officer"
+  },
+  {
+   "role": "business analyst",
+   "isco": 2421,
+   "aka": "management consultant  ·  standardisation manager  ·  business strategy analyst  ·  organisational developer  ·  standardisation expert"
+  },
+  {
+   "role": "policy manager",
+   "isco": 1213,
+   "aka": "policy coordinator  ·  business ethicist  ·  policy advocacy manager  ·  sustainability manager  ·  environmental policy manager"
+  },
+  {
+   "role": "business consultant",
+   "isco": 2421,
+   "aka": "business process consultant"
+  },
+  {
+   "role": "management assistant",
+   "isco": 3343,
+   "aka": "office administrator  ·  assistant manager  ·  project assistant  ·  management aide  ·  office assistant"
+  },
+  {
+   "role": "procurement department manager",
+   "isco": 1213,
+   "aka": "procurement officer  ·  head of procurement department  ·  procurement director  ·  procurement coordinator  ·  head of procurement unit"
+  },
+  {
+   "role": "process officer",
+   "isco": 2421,
+   "aka": "chief process officer  ·  process improvement officer  ·  process management coordinator  ·  business process improvement coordinator  ·  business process advisor"
+  },
+  {
+   "role": "building information modelling consultant",
+   "isco": 2421,
+   "aka": "BIM consultant  ·  building information modelling specialist  ·  BIM specialist"
+  },
+  {
+   "role": "court reporter",
+   "isco": 3343,
+   "aka": "shorthand reporter  ·  court stenographer  ·  law reporter  ·  deposition reporter  ·  court recorder"
+  },
+  {
+   "role": "director of compliance and information security",
+   "isco": 1213,
+   "aka": "cybersecurity compliance director  ·  IT compliance manager  ·  manager of compliance and information security  ·  cyber legal advisor  ·  compliance and information security manager"
+  },
+  {
+   "role": "editorial assistant",
+   "isco": 3343,
+   "aka": "travel and property editorial assistant  ·  editorial production assistant  ·  digital editorial assistant  ·  magazine editorial assistant  ·  children's editorial assistant"
+  },
+  {
+   "role": "talent agent",
+   "isco": 3339,
+   "aka": "sport agent  ·  theatrical agent  ·  modelling agent  ·  talent agency  ·  literary agent"
+  },
+  {
+   "role": "supply chain assistant",
+   "isco": 3343,
+   "aka": "global supply chain assistant  ·  supply chain supervisor  ·  supply chain logistics assistant  ·  production assistant  ·  supply chain officer"
+  },
+  {
+   "role": "programme manager",
+   "isco": 1213,
+   "aka": "program management coordinator  ·  program director  ·  programme management coordinator  ·  programme director  ·  projects portfolio manager"
+  },
+  {
+   "role": "lean manager",
+   "isco": 2421,
+   "aka": "lean coach  ·  lean project manager  ·  lean facilitator  ·  lean director  ·  operational excellence manager"
+  },
+  {
+   "role": "procurement support officer",
+   "isco": 3343,
+   "aka": "officer for procurement documentation  ·  procurement clerk  ·  procurement assistant  ·  procurement documentation officer  ·  junior buyer"
+  },
+  {
+   "role": "social security administrator",
+   "isco": 1213,
+   "aka": "benefits officer  ·  social security advisor  ·  community services administrator  ·  administrative officer  ·  community services director"
+  },
+  {
+   "role": "tourism policy director",
+   "isco": 1213,
+   "aka": "director of economic development  ·  tourism policy manager  ·  director of visitor attractions  ·  policy director tourism  ·  economic development director"
+  },
+  {
+   "role": "auctioneer",
+   "isco": 3339,
+   "aka": "trainee auctioneer  ·  auctioneer for real estate  ·  senior auctioneer  ·  auctioneer for personal goods  ·  merchant"
+  },
+  {
+   "role": "advertising sales agent",
+   "isco": 3339,
+   "aka": "ad sales representative  ·  media salesman  ·  media salesperson  ·  ad sales agent  ·  advertising sales rep"
+  },
+  {
+   "role": "international student exchange coordinator",
+   "isco": 3343,
+   "aka": "student exchange officer  ·  coordinator of international student exchange  ·  student exchange director  ·  international exchange officer  ·  international exchange director"
+  },
+  {
+   "role": "Project Managers",
+   "isco": 1213,
+   "aka": NaN
+  },
+  {
+   "role": "Managers, All Other",
+   "isco": 1213,
+   "aka": NaN
+  },
+  {
+   "role": "Management Analysts",
+   "isco": 2421,
+   "aka": NaN
+  }
+ ]
+}

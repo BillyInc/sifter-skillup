@@ -1,0 +1,332 @@
+{
+ "domain_id": "D030",
+ "domain_name": "Marketing, Brand",
+ "role_count": 65,
+ "roles": [
+  {
+   "role": "hospitality revenue manager",
+   "isco": 2431,
+   "aka": "yield manager  ·  hospitality yields manager  ·  hospitality revenues manager  ·  revenue manager"
+  },
+  {
+   "role": "auction house manager",
+   "isco": 1221,
+   "aka": "auctioneer  ·  auction house director  ·  valuer  ·  auction house administrator"
+  },
+  {
+   "role": "chief marketing officer",
+   "isco": 1221,
+   "aka": "chief commercial officer  ·  director of marketing  ·  head of marketing  ·  chief commercial strategy officer  ·  senior marketing officer"
+  },
+  {
+   "role": "employer branding manager",
+   "isco": 2431,
+   "aka": "branding manager  ·  corporate communications manager"
+  },
+  {
+   "role": "campaign canvasser",
+   "isco": 2432,
+   "aka": "campaign worker  ·  political party activist  ·  canvasser  ·  political campaign canvasser  ·  party activist"
+  },
+  {
+   "role": "online community manager",
+   "isco": 2432,
+   "aka": "online reachout manager  ·  digital community manager  ·  online community specialist  ·  interactive media specialist  ·  online content and community manager"
+  },
+  {
+   "role": "ICT presales engineer",
+   "isco": 2434,
+   "aka": "IT presales technician  ·  ICT presales technician  ·  IT presales engineer  ·  ICT presale support  ·  ICT presales engineers"
+  },
+  {
+   "role": "motor vehicle aftersales manager",
+   "isco": 1221,
+   "aka": "van aftersales specialist  ·  van aftersales co-ordinator  ·  car aftersales co-ordinator  ·  motor vehicle aftersales manger  ·  motor vehicles aftersales manager"
+  },
+  {
+   "role": "online sales channel manager",
+   "isco": 1221,
+   "aka": "e-commerce manager  ·  internet order manager  ·  digital sales manager  ·  mail-order and internet manager  ·  mail order manager"
+  },
+  {
+   "role": "promotion assistant",
+   "isco": 2431,
+   "aka": "events and promotion assistant  ·  marketing promotion assistant  ·  promotions assistant  ·  assistant promoter  ·  promotional assistant"
+  },
+  {
+   "role": "commercial director",
+   "isco": 1221,
+   "aka": "chief commercial officer  ·  marketing director  ·  commercial marketing specialist  ·  CCO  ·  international commercial director"
+  },
+  {
+   "role": "online marketer",
+   "isco": 2431,
+   "aka": "digital marketer  ·  social media marketing coordinator  ·  assistant online marketer  ·  e-commerce marketing specialist  ·  trainee online marketer"
+  },
+  {
+   "role": "political campaign officer",
+   "isco": 2432,
+   "aka": "strategy manager  ·  strategy advisor  ·  campaign strategy consultant  ·  political consultant  ·  political aide"
+  },
+  {
+   "role": "network marketer",
+   "isco": 2431,
+   "aka": "commercial network development manager  ·  marketing promotions manager  ·  multi-level marketer  ·  promotion strategy manager  ·  commercial marketing specialist"
+  },
+  {
+   "role": "destination manager",
+   "isco": 1221,
+   "aka": "destination development manager  ·  organisation manager  ·  destination marketing manager  ·  destination management organisation (DMO) manager  ·  tourism strategy manager"
+  },
+  {
+   "role": "marketing consultant",
+   "isco": 2431,
+   "aka": "air transport marketer  ·  marketing adviser  ·  marketing analyst  ·  marketing advisor  ·  marketing specialist"
+  },
+  {
+   "role": "advertising media buyer",
+   "isco": 2431,
+   "aka": "radio buyer  ·  media space buyer  ·  media buyer and planner  ·  media buyer & planner  ·  radio media buyer"
+  },
+  {
+   "role": "marketing assistant",
+   "isco": 2431,
+   "aka": "general marketing assistant  ·  marketing associate  ·  marketing officer  ·  marketing operations assistant  ·  marketing executive assistant"
+  },
+  {
+   "role": "photojournalist",
+   "isco": 3431,
+   "aka": "photo reporter  ·  image journalist  ·  multi media image journalist  ·  news photographer  ·  photo correspondent"
+  },
+  {
+   "role": "membership manager",
+   "isco": 2431,
+   "aka": "subscription manager  ·  membership management officer  ·  membership supervisor  ·  membership sales manager  ·  membership account manager"
+  },
+  {
+   "role": "advertising manager",
+   "isco": 1222,
+   "aka": "promotions manager  ·  promotions coordinator  ·  advertising director  ·  advertising agency manager  ·  campaigns coordinator"
+  },
+  {
+   "role": "bid manager",
+   "isco": 1221,
+   "aka": "tender manager  ·  proposal manager  ·  sales project manager  ·  bid and project manager  ·  commercial bid manager"
+  },
+  {
+   "role": "ICT business development manager",
+   "isco": 2434,
+   "aka": "IT business development manager  ·  ICT commercial development manager  ·  IT commercial development manager  ·  ICT business development managers"
+  },
+  {
+   "role": "eBusiness manager",
+   "isco": 2431,
+   "aka": "eCommerce manager  ·  eBusiness development officer  ·  eBusiness managers  ·  e-commerce manager  ·  eBusiness development manager"
+  },
+  {
+   "role": "photographer",
+   "isco": 3431,
+   "aka": "wedding photographer  ·  illustration photographer  ·  aerial photographer  ·  graphical industry photographer  ·  itinerant photographer"
+  },
+  {
+   "role": "market research analyst",
+   "isco": 2431,
+   "aka": "market research manager  ·  marketing research coordinator  ·  marketing researcher  ·  marketing research analyst  ·  market researcher"
+  },
+  {
+   "role": "public relations manager",
+   "isco": 1222,
+   "aka": "communications manager  ·  public relations specialist  ·  communications officer  ·  spokesperson  ·  public affairs manager"
+  },
+  {
+   "role": "tourism product manager",
+   "isco": 1221,
+   "aka": "tourism distribution manager  ·  tourism product developer"
+  },
+  {
+   "role": "technical sales representative in electronic and telecommunications equipment",
+   "isco": 2434,
+   "aka": "graduate technical sales representative in electronic and telecommunications equipment  ·  senior technical sales representative in electronic and telecommunications equipment  ·  electronic and telecommunications equipment field salesperson  ·  trainee technical sales representative in electronic and telecommunications equipment  ·  electronic and telecommunications equipment inside technical sales representative"
+  },
+  {
+   "role": "marketing manager",
+   "isco": 1221,
+   "aka": "market manager  ·  sales and marketing manager  ·  marketing director  ·  promotions manager  ·  telemarketing manager"
+  },
+  {
+   "role": "client relations manager",
+   "isco": 2431,
+   "aka": "customer service manager  ·  customer service representative  ·  customer service executive  ·  client manager  ·  CRM manager"
+  },
+  {
+   "role": "licensing manager",
+   "isco": 1221,
+   "aka": "assistant international licensing manager  ·  trainee brand licensing manager  ·  senior international licensing manager  ·  graduate brand licensing manager  ·  senior licensing manager"
+  },
+  {
+   "role": "election agent",
+   "isco": 2432,
+   "aka": "campaign manager  ·  parliamentary agent  ·  electorate officer  ·  elections officer"
+  },
+  {
+   "role": "ICT account manager",
+   "isco": 2434,
+   "aka": "IT service delivery manager  ·  ICT key account manager  ·  ICT account managers  ·  IT account manager  ·  IT key account manager"
+  },
+  {
+   "role": "intercultural communication consultant",
+   "isco": 2432,
+   "aka": "intercultural consultant  ·  intercultural mediator  ·  intercultural communication expert  ·  intercultural communication adviser  ·  intercultural communications consultant"
+  },
+  {
+   "role": "activism officer",
+   "isco": 2432,
+   "aka": "activism and events officer  ·  campaigner  ·  campaign worker  ·  charity officer  ·  activism and engagement officer"
+  },
+  {
+   "role": "customer experience manager",
+   "isco": 2431,
+   "aka": "guest relations specialist  ·  guest relations manager  ·  guest relations officer  ·  hospitality customer experience manager  ·  guest experience manager"
+  },
+  {
+   "role": "public affairs consultant",
+   "isco": 2432,
+   "aka": "public affairs agent  ·  lobbyist  ·  public affairs officer  ·  public information consultant  ·  public affairs specialist"
+  },
+  {
+   "role": "aftersales service manager",
+   "isco": 1221,
+   "aka": "after sales service manager  ·  aftersales coordinator"
+  },
+  {
+   "role": "sales manager",
+   "isco": 1221,
+   "aka": "sales commercial manager  ·  sales director  ·  sales executive  ·  group sales manager  ·  area sales manager"
+  },
+  {
+   "role": "advertising copywriter",
+   "isco": 2431,
+   "aka": "advertising strategist  ·  copywriting consultant  ·  commercial writer  ·  creative copy  ·  advertising writer"
+  },
+  {
+   "role": "advertising media planner",
+   "isco": 2431,
+   "aka": "media coordinator  ·  media manager  ·  junior media planner  ·  media planner  ·  digital media planner"
+  },
+  {
+   "role": "business developer",
+   "isco": 2431,
+   "aka": "business development strategist  ·  business development executive  ·  business continuity analyst"
+  },
+  {
+   "role": "spokesperson",
+   "isco": 2432,
+   "aka": "public relations coordinator  ·  communications officer  ·  press secretary  ·  media coordinator  ·  public relations officer"
+  },
+  {
+   "role": "public relations officer",
+   "isco": 2432,
+   "aka": "public affairs officer  ·  public relations coordinator  ·  communications officer  ·  press secretary  ·  public information officer"
+  },
+  {
+   "role": "fundraising manager",
+   "isco": 2432,
+   "aka": "fundraising coordinator  ·  charity fundraiser  ·  fundraiser  ·  philanthropic manager  ·  giving manager"
+  },
+  {
+   "role": "banking products manager",
+   "isco": 1221,
+   "aka": "financial institution products manager  ·  credit products manager  ·  internet banking executive  ·  internet banking manager  ·  e-banking products manager"
+  },
+  {
+   "role": "communication manager",
+   "isco": 1222,
+   "aka": "social media manager  ·  online communication manager  ·  public relations manager  ·  communications manager  ·  press spokesperson"
+  },
+  {
+   "role": "creative director",
+   "isco": 2431,
+   "aka": "advertising director  ·  chief design officer  ·  executive creative director  ·  creative manager  ·  creative services manager"
+  },
+  {
+   "role": "promotion manager",
+   "isco": 1221,
+   "aka": "promotions manager  ·  marketing and promotion manager  ·  promotions coordinator  ·  promotion coordinator  ·  promotion director"
+  },
+  {
+   "role": "category manager",
+   "isco": 1221,
+   "aka": "product category specialist  ·  recycling equipment category manager  ·  FMCG category manager  ·  raw materials category specialist  ·  general merchandise category manager"
+  },
+  {
+   "role": "digital marketing manager",
+   "isco": 1221,
+   "aka": "social media specialist  ·  digital marketing specialist  ·  digital marketing and communication professional  ·  web marketing specialist  ·  digital marketing technician"
+  },
+  {
+   "role": "brand manager",
+   "isco": 2431,
+   "aka": "senior brand manager  ·  trainee brand manager  ·  market development executive  ·  graduate brand manager  ·  marketing development manager"
+  },
+  {
+   "role": "advertising specialist",
+   "isco": 2431,
+   "aka": "advertising account manager  ·  brand specialist  ·  advertising consultant  ·  advertising and promotional specialist  ·  advertising strategist"
+  },
+  {
+   "role": "pricing specialist",
+   "isco": 2431,
+   "aka": "assistant pricing specialist  ·  retail pricing analyst  ·  price checker  ·  graduate supermarket pricing specialist  ·  commercial product price analyst"
+  },
+  {
+   "role": "product and services manager",
+   "isco": 2431,
+   "aka": "graduate e-catalogue manager  ·  marketing e-catalogue manager  ·  assistant product and services manager manager  ·  trainee e-catalogue manager  ·  senior e-catalogue manager"
+  },
+  {
+   "role": "political party agent",
+   "isco": 2432,
+   "aka": "party agent  ·  whip  ·  chief whip  ·  political party whip  ·  political organisation manager"
+  },
+  {
+   "role": "Digital Marketing and Strategy Specialists",
+   "isco": 2431,
+   "aka": NaN
+  },
+  {
+   "role": "E-commerce Specialists",
+   "isco": 2434,
+   "aka": NaN
+  },
+  {
+   "role": "Social Media Strategist",
+   "isco": 2431,
+   "aka": NaN
+  },
+  {
+   "role": "Advertising and Public Relations Professionals",
+   "isco": 2432,
+   "aka": NaN
+  },
+  {
+   "role": "Advertising and Promotions Managers",
+   "isco": 2431,
+   "aka": NaN
+  },
+  {
+   "role": "Public Relations Specialists",
+   "isco": 2432,
+   "aka": NaN
+  },
+  {
+   "role": "Market Research Analysts and Marketing Specialists",
+   "isco": 2431,
+   "aka": NaN
+  },
+  {
+   "role": "Search Marketing Strategists",
+   "isco": 2431,
+   "aka": NaN
+  }
+ ]
+}

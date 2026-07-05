@@ -1,0 +1,28 @@
+{
+  "jamb_name": "Philosophy",
+  "utme_subjects": ["Any three (3) subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language and four (4) other relevant subjects.",
+  "direct_entry": "Any two (2) 'A' Level passes.",
+  "institution_waivers": [
+    {"institution": "AAU", "note": "Accepts three (3) 'A' Level passes with two (2) 'O' Level credit passes or two (2) 'A' Level passes with three (3) 'O' Level credit passes."},
+    {"institution": "AAUA", "note": "Requires two (2) 'A' Level subjects or ND in Law, Religious Studies or Philosophy from approved institutions or NCE merit."},
+    {"institution": "AUGUSTINE", "note": "Accepts NCE merit/ND credit in relevant subjects/programme in addition to five (5) 'O' Level credit passes or equivalent."},
+    {"institution": "BENIN", "note": "Accepts (a) an overall NCE credit in the Liberal Arts, (b) first degree in any programme, (c) ND or HND upper credit in Mass Communication."},
+    {"institution": "BOWEN", "note": "Accepts two (2) 'A' Level passes in Philosophy and any other subject."},
+    {"institution": "BSU", "note": "Accepts NCE/'A' level passes including CRS, African Religion or its equivalent."},
+    {"institution": "CALABAR", "note": "Accepts any two (2) 'A' Level passes in relevant subjects."},
+    {"institution": "IBADAN", "note": "Requires two (2) 'A' Level passes in one Arts subject and any other Arts/Social Sciences/Sciences subject."},
+    {"institution": "IMSU", "note": "No Direct Entry."},
+    {"institution": "EKSU", "note": "No Direct Entry."},
+    {"institution": "LAGOS", "note": "Requires very good passes in three (3) JUPEB/'A' Level subjects: (a) any three of Literature in English, Igbo/Yoruba, CRS/IRS, French, History, Economics, Government, Chemistry, Physics, Biology but at least one Arts subject; (b) related programmes with a minimum of 55% average score; (c) NCE credit in two teaching subjects one of which must be an Arts subject; (d) candidates must also satisfy the UTME requirements."},
+    {"institution": "NDU", "note": "Accepts (a) a minimum of two (2) 'A' Level relevant subjects and three (3) 'O' Level subjects including 'O' Level pass in Mathematics, (b) NCE merit in any Arts or Science subjects, especially Mathematics."},
+    {"institution": "OAU", "note": "Requires one of the two (2) 'A' Levels to be an Arts subject."},
+    {"institution": "OOU", "note": "Requires 'O' Level pass in Mathematics."},
+    {"institution": "EBSU", "note": "Requires 'O' Level pass in Mathematics."},
+    {"institution": "SAU", "note": "Accepts two (2) 'A' Level subjects to include Government and any other two (2) Arts subjects or NCE in Government or History."},
+    {"institution": "UYO", "note": "Requires passes in two (2) 'A' Level subjects or ND or NCE in cognate programme/subject at credit/merit level."},
+    {"institution": "FED-WUKARI", "note": "Accepts two 'A' level passes obtained at GCE/IJMB/Advanced NABTEB or a Merit pass at NCE or at least a Credit at ND/HND in any of the Arts, Social Science or Management Science subjects and at least ND/HND in relevant field; candidates must also satisfy the O'Level requirements for admission in any Arts and Social Science subject."},
+    {"institution": "LAGOS", "note": "Accepts very good passes in three JUPEB/'A' Level subjects: any three of Literature-in-English, Igbo/Yoruba, CRS/IRS, French, History, Economics, Government, Chemistry, Physics, Biology, Geography but at least one Arts subject."},
+    {"institution": "PHC", "note": "Accepts at least two (2) A/level passes in GCE, HSC, JUPEB or IJMB in any Arts subject in addition to UTME entry requirements in any two Arts subjects."}
+  ]
+}

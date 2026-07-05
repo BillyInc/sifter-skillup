@@ -1,0 +1,12 @@
+{
+  "jamb_name": "Petroleum and Gas Engineering",
+  "utme_subjects": ["Chemistry", "Mathematics", "Physics"],
+  "olevel_requirement": "Five (5) SSC credits to include Physics, Chemistry, Mathematics, English Language and any one Science subject",
+  "direct_entry": "'A' Level passes to include Physics, Chemistry and Mathematics",
+  "institution_waivers": [
+    {"institution": "PHC", "note": "Accepts Three (3) Advanced level GCE or HSC or JUPEB or IJMB passes in Mathematics, Physics, Chemistry, including UTME entry requirements; OND (upper credit) in the relevant discipline from a recognized and COREN accredited institution including UTME entry requirements; HND (lower credit) in the relevant discipline from a recognized and COREN accredited institution with two (2) years working experience including UTME entry requirements."},
+    {"institution": "RSU", "note": "In addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in relevant discipline; (b) OND/ND (Upper Credit) in relevant disciplines; (c) At least three (3) 'A' level passes at GCE in Physics, Chemistry and Mathematics."},
+    {"institution": "UYO", "note": "Accepts ND/HND in relevant programmes plus UTME requirements."},
+    {"institution": "FUPRE", "note": "Requires 'A' Level passes in Physics, Chemistry and Mathematics."}
+  ]
+}

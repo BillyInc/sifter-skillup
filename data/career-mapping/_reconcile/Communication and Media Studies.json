@@ -1,0 +1,1523 @@
+[
+ {
+  "programme": "ADVERTISING — P12, P13, P14",
+  "code": "ADV",
+  "technical_skills": [
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "discuss the different levels and forms of marketing suitable for different advert campaigns in different media platforms",
+   "outline the benefits of using integrated approach to marketing communications; and",
+   "explain the implications of integrated marketing communication, advertising and promotion",
+   "discuss the developments of online and digital media",
+   "explain how to use digital media to develop and effectively execute advert campaigns; and",
+   "outline the techniques of digital marketing and advertising",
+   "explain the concept of copy in advertising writing",
+   "identify the key elements in the advertising copy platform",
+   "itemize the key elements of a press, radio and television commercials (TVC) and Out-of-Home advertisements; and",
+   "outline how to write advertising copies for existing media traditional and new media platforms. Course Description — In this course, students will learn how to write ads to communicate advertisers' messages to prospects. It involves developing skills on creative aspects of advertising. Topics include: Methods and procedures in writing ads as well as developing advertising plans and executions; how to research for information on the brand, the consumer, and apply this information in developing advertising campaign strategy; and methods of writing advertising messages for traditional media of print, broadcast, billboards and new media, design print ad layouts planning and preparing broadcast storyboards, including Internet advertising. ---",
+   "analyse, audit, and manage a brand in today's competitive marketplace and its challenges",
+   "explain the challenges and opportunities that organizations face when advertising their brands; and",
+   "discuss effective branding, brand positioning and brand communication in the context of digital and data-driven marketing",
+   "discuss consumer behaviour theories",
+   "explain the determinants of consumer decision making; and",
+   "outline the principles of target advertising and marketing and segmentation",
+   "analyse different audio-visual techniques sell ideas, products or brands across multi channels",
+   "outline the effective copy writing skills to sell ideas, products and services; and",
+   "discuss how to embed appeals in creative contents for advertising communication",
+   "demonstrate knowledge and skills for business writing and presentation in advertising and marketing",
+   "outline the values of business writing and presentation; and",
+   "discuss the legal and ethical requirements in business writing and exhibitions"
+  ],
+  "transferable_skills": [
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic. ---",
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "state the characteristics of an entrepreneur",
+   "analyse the importance of micro and small businesses in wealth creation, employment, and financial independence",
+   "engage in entrepreneurial thinking"
+  ],
+  "course_titles": [
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Fundamentals of Integrated Marketing Communication",
+   "Digital Marketing",
+   "Introduction to Copywriting",
+   "Brand Development",
+   "Consumer Insights",
+   "Creative Content Marketing for Advertising",
+   "Business Writing & Presentation Skills",
+   "Peace and Conflict Resolutions",
+   "Venture Creation",
+   "Theories of Communication",
+   "Foundation of Communication Research",
+   "Data Analysis in Communication Research",
+   "Advertising & Market Research",
+   "Advertising Production Techniques (Multimedia/Interactive)",
+   "Media Planning, Buying & Execution",
+   "Brands and Brand Building",
+   "Creative Content Development & Product Launch in Advertising"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "BROADCASTING — P12, P13, P14",
+  "code": "BCJ",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "1. use library sources in preparing media materials for media organisations; and",
+   "2. document their writings using standard and acceptable styles",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "explain the art and science of radio production, including a knowledge of the equipment used in radio programme production",
+   "identify the main components and principles of radio production",
+   "demonstrate basic skills in production formats such as actualities, audio montage and spot productions",
+   "understand and explain studio management and control in relation to radio production; and",
+   "demonstrate basic and standard production skills",
+   "explain a range of technical and operational skills needed in television production",
+   "demonstrate the skills required to operate a range of television production equipment; and",
+   "produce a short video programme",
+   "explain the fundamental differences between broadcast journalism and print journalism",
+   "develop skills to identify and report newsworthy stories for broadcast",
+   "write and produce stories for both radio and television broadcast; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "Study Skills in Mass Communication",
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Introduction to Radio Production",
+   "Introduction to Television Production",
+   "Broadcast Journalism",
+   "Broadcast Writing",
+   "Broadcast Audience Analysis and Research",
+   "Development Communication and Broadcasting",
+   "Sport Broadcasting",
+   "Peace and Conflict Resolutions",
+   "Venture Creation",
+   "Theories of Communication",
+   "Foundations of Communication Research",
+   "Data Analysis in Communication Research"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "DEVELOPMENT COMMUNICATION STUDIES — P12, P13, P14",
+  "code": "DCS",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "explain the concept of development communication",
+   "outline the historical background of development communication",
+   "discuss major theories and models of development communication; and",
+   "analyse the linkage between communication and development",
+   "explain the relationship between communication and political development",
+   "identify specific communication strategies used in rural development; and",
+   "apply communication tools to rural development challenges",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "explain major theories of development communication",
+   "apply relevant theories to explain development communication phenomena; and",
+   "critically evaluate the strengths and weaknesses of major development communication theories",
+   "explain the role of communication in agricultural development and food security",
+   "design a health communication campaign; and",
+   "apply behaviour change communication models to health issues"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "Introduction to Development Communication",
+   "Communication and Rural Development",
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Theories of Development Communication",
+   "Health Communication",
+   "Participatory Communication for Development",
+   "Communication for Agriculture and Food Security",
+   "Media for Development",
+   "Communication and the Environment",
+   "Peace and Conflict Resolutions",
+   "Venture Creation",
+   "Theories of Communication",
+   "Foundations of Communication Research",
+   "Data Analysis in Communication Research"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "FILM & MULTIMEDIA — P12, P13, P14",
+  "code": "FMM",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "trace the historical development of film and multimedia from their origins to the present",
+   "explain the impact of technology on the development of film and multimedia; and",
+   "analyse the cultural and social role of film and multimedia",
+   "explain how film and multimedia reflect and shape culture",
+   "analyse film and multimedia texts using basic concepts; and",
+   "discuss the social and cultural implications of film and multimedia content",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "apply key concepts and methods of film analysis",
+   "write a critical analysis of a film; and",
+   "evaluate different approaches to film criticism",
+   "explain the concept of digital literacy and its importance",
+   "use digital tools effectively for content creation and communication; and",
+   "demonstrate critical evaluation of digital content",
+   "explain the principles and techniques of scriptwriting for film"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples & Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "History of Film & Multimedia",
+   "Film, Multimedia & Culture I",
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Film Analysis & Criticism",
+   "Digital Literacy",
+   "Scriptwriting I",
+   "Introduction to Animation",
+   "Digital Photography",
+   "Introduction to Film Production",
+   "Film, Multimedia & Culture II",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Theories of Communication",
+   "Foundations of Communication Research"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "INFORMATION AND MEDIA STUDIES — P12, P13, P14",
+  "code": "ISM",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "explain the writing process and sources of information",
+   "outline the different forms of media writing - newspaper stories, blogging, ethics of mass media writing, news release, advertorial, press statement, backgrounder, speech writing, rejoinder, letter to editor, advertising copy, internet advertising; and",
+   "demonstrate different writing styles for the media",
+   "explain the concept and scope of information science",
+   "identify the historical development of information science; and",
+   "discuss the relationship between the media and other social institutions",
+   "explain the concept of media studies",
+   "identify the major media of mass communication; and",
+   "discuss the historical development of mass media",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "explain the concepts of information systems and networks",
+   "identify the components of computer networks; and",
+   "apply information systems in media and communication contexts",
+   "explain principles of media production across different platforms",
+   "produce basic media content for print, broadcast and online; and",
+   "apply media management principles in production contexts",
+   "explain the relationship between digital media and contemporary culture",
+   "analyse the impact of digital technologies on cultural production and consumption; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "Introduction to Information Science",
+   "Introduction to Media Studies",
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Information Systems and Networks",
+   "Media Production and Management",
+   "Digital Media and Culture",
+   "Introduction to Data Management",
+   "Information Literacy and Research",
+   "Media Economics",
+   "Peace and Conflict Resolutions",
+   "Venture Creation",
+   "Theories of Communication",
+   "Foundations of Communication Research",
+   "Data Analysis in Communication Research"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "JOURNALISM AND MEDIA STUDIES — P12, P13, P14",
+  "code": "JMS",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "explain the origin, development and current state of journalism",
+   "identify the major types of journalism and their characteristics; and",
+   "discuss the role of journalism in democracy and society",
+   "explain the concept of media literacy",
+   "critically evaluate media messages and sources; and",
+   "identify misinformation, disinformation and fake news",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "explain the elements of a news story",
+   "gather information for news reporting; and",
+   "write news stories for print and online media",
+   "explain the principles and process of media editing",
+   "copy-edit, proof-read and sub-edit media content; and",
+   "apply desktop publishing skills",
+   "explain the differences between broadcast and print journalism"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "Introduction to Journalism",
+   "Media Literacy",
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "News Reporting and Writing",
+   "Editing and Publishing",
+   "Broadcast Journalism",
+   "Media Law and Ethics",
+   "Digital Journalism",
+   "Photojournalism",
+   "Peace and Conflict Resolutions",
+   "Venture Creation",
+   "Theories of Communication",
+   "Foundations of Communication Research",
+   "Data Analysis in Communication Research"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "MASS COMMUNICATION — P12, P13, P14",
+  "code": "MCM",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "explain the concept of mass communication and its elements",
+   "distinguish mass communication from other forms of communication",
+   "identify the major mass media and their characteristics; and",
+   "discuss the role of mass communication in society",
+   "demonstrate proficiency in written communication for mass media",
+   "apply oral communication skills in media contexts; and",
+   "use research skills in media practice",
+   "trace the historical development of mass communication globally",
+   "explain the development of mass media in Nigeria; and",
+   "analyse how historical developments have shaped current media practices",
+   "explain the relationship between media and society",
+   "discuss the social, cultural and political functions of media; and",
+   "analyse the impact of media on individuals and society",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "Introduction to Mass Communication",
+   "Communication Skills for Mass Media",
+   "History of Mass Communication",
+   "Media and Society",
+   "Philosophy, Logic & Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "News Reporting and Writing",
+   "Copy Editing and Sub-Editing",
+   "Newspaper and Magazine Production",
+   "Photojournalism",
+   "Feature and Editorial Writing",
+   "Online Journalism",
+   "Introduction to Radio Production",
+   "Introduction to Television Production",
+   "Broadcast Writing and Reporting"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "PUBLIC RELATIONS — P12, P13, P14",
+  "code": "PRS",
+  "technical_skills": [
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "define the concept of public relations",
+   "identify the composition of the environment of public relations in Nigeria",
+   "analyse the Public Relations Environment in Nigeria; and",
+   "appreciate the public relations career/business prospects and challenges in the Nigerian environment. Course Description — Public relations as a discipline and profession operates within any particular environment, otherwise called the internal and external environments of public relations. This course therefore introduces the student to the context of Public Relations in Nigeria. It briefly defines concepts of public relations and environmental scanning. It introduces the student to the historical, political, geographical, economic, legal, socio-cultural, religious and technological contexts of public relations in Nigeria. It exposes the various tools for analysing the contexts of public relations in the Nigerian environment. Other topics include understanding the nature of Nigeria's democracy; legal systems; demography; free enterprise economy; ethnic and religious compositions of Nigeria; technological, and physical environmental contexts as they impact public relations discipline and practice in Nigeria. The career and business prospects in the fascinating field of public relations are also discussed. ---",
+   "how PR originated",
+   "the stages of the development of PR in America",
+   "the origin of PR in Nigeria",
+   "the present state of PR practices in Nigeria",
+   "the challenges facing PR practices in Nigeria; and",
+   "the key historical leaders in PR evolution both in America and Nigeria",
+   "highlight the origin and development of media in Nigeria",
+   "explain the factor that have influenced the development of the media; and",
+   "outline the roles the media have played in Nigeria's development",
+   "analyse the different definitions of PR, the Mexican statement, British and American institutes of PR and other scholarly definitions",
+   "have a smart knowledge of the evolution of PR globally and Nigeria",
+   "comprehend the relationship between PR and related disciplines"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Human Communication",
+   "Writing for the Media",
+   "Introduction to the Environment of Public Relations",
+   "History of Public Relations",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Principles of Public Relations",
+   "Media Relations",
+   "Digital and Social Media for Public Relations",
+   "Writing for Public Relations",
+   "Public Relations for not-for-Profit sector",
+   "Public Relations and the Society",
+   "Marketing and Advertising in Public Relations",
+   "Public Relations in a Multi-cultural Society",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Theories of Communication"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "STRATEGIC COMMUNICATION — P12, P13, P14",
+  "code": "STC",
+  "technical_skills": [
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building",
+   "analyse the role of the judiciary in upholding people's fundamental rights",
+   "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+   "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problems",
+   "explain the different meanings of communication",
+   "highlight the various elements of the communication process",
+   "distinguish between different types of human communication and their features",
+   "explain the roles of communication; and",
+   "outline the different forms of African traditional forms of communication",
+   "outline the constituents of modern communication forms",
+   "explain the changing delivery forms in modern communication",
+   "compare and contrast between national media systems in the modern world; and",
+   "discuss the challenges posed to national media systems by globalization",
+   "explain the theory and practice of strategic communication",
+   "outline the historical development of strategic communication as a field of practice",
+   "analyze the different publics in strategic communication; and",
+   "evaluate the various components of strategic communication",
+   "demonstrate understanding of developments and trends associated with social media",
+   "compare and contrast the different kinds of social media platforms",
+   "create social media contents for different platforms; and",
+   "discuss challenges posed to society by social media use"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Communication",
+   "Introduction to Communication II [Table: Writing for the Media]",
+   "Introduction to Strategic Communication",
+   "Critical Web Literacy",
+   "Introduction to Public Relations",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "History of Nigerian Media",
+   "Introduction to Academic Information Resources",
+   "Writing for Strategic Communication",
+   "Strategic Political Communication",
+   "Strategic Content Creation",
+   "Introduction to Digital Media Skills",
+   "Media Relations",
+   "Principles of Public Relations",
+   "Principles of Advertising",
+   "Peace and Conflict Resolutions",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   }
+  ]
+ }
+]

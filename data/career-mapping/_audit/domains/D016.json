@@ -1,0 +1,192 @@
+{
+ "domain_id": "D016",
+ "domain_name": "Electrical",
+ "role_count": 37,
+ "roles": [
+  {
+   "role": "medical device engineer",
+   "isco": 2152,
+   "aka": "medical-technical device engineer  ·  medical device developer  ·  medical technology engineer  ·  orthopaedic engineer  ·  engineer of medical instruments"
+  },
+  {
+   "role": "battery manufacturing technician",
+   "isco": 3113,
+   "aka": "production technician  ·  battery calibration technician  ·  battery pack manufacturing technician  ·  electronics production technician  ·  electromechanical product development technician"
+  },
+  {
+   "role": "electromagnetic engineer",
+   "isco": 2151,
+   "aka": "electro magnetics engineer  ·  electromagnetic technology engineer  ·  electromagnetic engineering consultant  ·  electromagnetic compatibility engineer  ·  electromagnetic systems engineer"
+  },
+  {
+   "role": "satellite engineer",
+   "isco": 2152,
+   "aka": "satellite control engineer  ·  satellite system engineer  ·  satellite communication engineer  ·  satellite engineering analyst  ·  satellite software developer"
+  },
+  {
+   "role": "optoelectronic engineer",
+   "isco": 2152,
+   "aka": "optoelectronic technology engineering adviser  ·  senior optoelectronic engineer  ·  opto-electronics engineer  ·  opto-electronical engineer  ·  optoelectronic engineering specialist"
+  },
+  {
+   "role": "battery maintenance technician",
+   "isco": 3113,
+   "aka": "electromechanical maintenance technician  ·  battery electromechanical technician  ·  engineering battery technician  ·  electro-mechanical equipment technician  ·  ups battery maintenance technician"
+  },
+  {
+   "role": "language engineer",
+   "isco": 2152,
+   "aka": "computer-aided translation engineer  ·  language technology engineering specialist  ·  language engineering adviser  ·  language technology engineering expert  ·  language technology engineering consultant"
+  },
+  {
+   "role": "electronics engineer",
+   "isco": 2152,
+   "aka": "electronic technology engineering consultant  ·  electronics engineering specialist  ·  electronic technology engineer  ·  electronic engineer  ·  electronics engineering adviser"
+  },
+  {
+   "role": "sensor engineer",
+   "isco": 2152,
+   "aka": "sensor technology engineering specialist  ·  electronic sensor engineer  ·  sensor engineering expert  ·  sensor design engineer  ·  sensors engineer"
+  },
+  {
+   "role": "electromechanical engineering technician",
+   "isco": 3113,
+   "aka": "electromechanical engineering specialist  ·  technician in electromechanical systems  ·  electrical engineering technician  ·  electromechanical maintenance technician  ·  wind energy technician"
+  },
+  {
+   "role": "electric power generation engineer",
+   "isco": 2151,
+   "aka": "electric power supply engineer  ·  power generation networks engineer  ·  electric power station engineer  ·  power station engineer  ·  power plant engineer"
+  },
+  {
+   "role": "flight test engineer",
+   "isco": 2152,
+   "aka": "flight test technology specialist  ·  flight test technician  ·  flight test performance engineer  ·  flight test engineering expert  ·  test and evaluation engineer"
+  },
+  {
+   "role": "smart home engineer",
+   "isco": 2151,
+   "aka": "domotics engineer  ·  smart home project engineer  ·  smart home software engineer  ·  home automation specifier  ·  home automation platform engineer"
+  },
+  {
+   "role": "battery system engineer",
+   "isco": 2151,
+   "aka": "battery cell module engineer  ·  power system protection engineers  ·  electronic systems engineer  ·  automotive vehicle electronics analysis specialist  ·  battery storage consultants"
+  },
+  {
+   "role": "electromechanical engineer",
+   "isco": 2151,
+   "aka": "electro-mechanical assembly engineer  ·  electro-mechanical equipment engineer  ·  engineering technician  ·  electro-mechanical designer  ·  electromechanical prototype developer"
+  },
+  {
+   "role": "microelectronics designer",
+   "isco": 2152,
+   "aka": "microelectronics hardware engineer  ·  microelectronics circuit system engineer  ·  microelectronics manufacturing design engineer  ·  microelectronics hardware designer  ·  microelectronics circuit design engineer"
+  },
+  {
+   "role": "hydropower technician",
+   "isco": 3113,
+   "aka": "wave power technician  ·  hydropower mechanical technician  ·  tidal power technician  ·  hydropower mechanical engineer  ·  hydropower plant technician"
+  },
+  {
+   "role": "microsystem engineer",
+   "isco": 2152,
+   "aka": "engineer in microsystems  ·  microsystems engineer  ·  specialist in microelectromechanical systems  ·  engineer in micro-systems  ·  advanced MEMS engineer"
+  },
+  {
+   "role": "power electronics engineer",
+   "isco": 2152,
+   "aka": "power electronics design engineer  ·  power electronics engineering consultant  ·  power electronics engineering specialist  ·  engineer of power electronics  ·  power electronics testing engineer"
+  },
+  {
+   "role": "microelectronics smart manufacturing engineer",
+   "isco": 2152,
+   "aka": "microelectronics manufacturing professional  ·  microelectronics technology expert  ·  microelectronics technology engineer  ·  engineer of microelectronics technology  ·  microelectronics production adviser"
+  },
+  {
+   "role": "electrical engineer",
+   "isco": 2151,
+   "aka": "electrical technology engineering consultant  ·  electrical engineering specialist  ·  engineer in electrical systems  ·  electrical engineering consultant  ·  electrical systems engineer"
+  },
+  {
+   "role": "microelectronics engineer",
+   "isco": 2152,
+   "aka": "microelectronics technology engineering adviser  ·  microelectronic engineering specialist  ·  microelectronic technology engineering expert  ·  engineer of microprocessors  ·  microelectronic technology engineering specialist"
+  },
+  {
+   "role": "predictive maintenance expert",
+   "isco": 2152,
+   "aka": "predictive maintenance engineer  ·  machineries predictive maintenance expert  ·  factories predictive maintenance expert  ·  railroads predictive maintenance expert  ·  cars predictive maintenance expert"
+  },
+  {
+   "role": "computer hardware engineer",
+   "isco": 2152,
+   "aka": "IT hardware specialist  ·  computer hardware technology engineering specialist  ·  engineer of PC hardware  ·  computer hardware engineering consultant  ·  computer hardware engineering expert"
+  },
+  {
+   "role": "electrical engineering technician",
+   "isco": 3113,
+   "aka": "electrical technician  ·  electrical equipment technician  ·  technician in electrical systems  ·  electrical installations inspector  ·  electrical engineering assistant"
+  },
+  {
+   "role": "power distribution engineer",
+   "isco": 2151,
+   "aka": "power distribution engineering expert  ·  power distributions engineer  ·  power distribution technology engineering specialist  ·  power distribution engineering adviser  ·  power distribution systems engineer"
+  },
+  {
+   "role": "battery simulation engineer",
+   "isco": 2151,
+   "aka": "device test engineer  ·  battery test development engineer  ·  battery modeling specialist  ·  battery simulation specialist  ·  battery calibration engineer"
+  },
+  {
+   "role": "calibration technician",
+   "isco": 3113,
+   "aka": "pyrometry instrument calibration technician  ·  electrical and electronic equipment calibrator  ·  calibrator of electrical and electronic equipment  ·  instrumentation calibration technician  ·  calibrations technician"
+  },
+  {
+   "role": "instrumentation engineer",
+   "isco": 2152,
+   "aka": "instrumentation engineering specialist  ·  supervisory control and data acquisition engineer  ·  autonomy engineer  ·  C&I engineer  ·  mine instrumentation engineer"
+  },
+  {
+   "role": "mine electrical engineer",
+   "isco": 2151,
+   "aka": "electrical engineering expert  ·  electrical engineer  ·  electrical technologist  ·  mines electrical engineer  ·  mining electrical engineer"
+  },
+  {
+   "role": "microelectronics materials engineer",
+   "isco": 2152,
+   "aka": "microelectronics materials technology engineering specialist  ·  engineer in microelectronics materials  ·  microelectronics materials engineering adviser  ·  microelectronics materials engineering specialist  ·  specialist microelectronics materials engineer"
+  },
+  {
+   "role": "substation engineer",
+   "isco": 2151,
+   "aka": "substation technology engineering consultant  ·  substation engineering specialist  ·  substation technology engineering expert  ·  substation engineering consultant  ·  sub stations engineer"
+  },
+  {
+   "role": "integrated circuit design engineer",
+   "isco": 2152,
+   "aka": "integrated circuit engineer  ·  mixed signal IC design engineer  ·  analog design engineer  ·  engineer of integrated circuits  ·  integrated circuit designer"
+  },
+  {
+   "role": "System Engineers",
+   "isco": 2141,
+   "aka": NaN
+  },
+  {
+   "role": "Electrotechnology Engineers",
+   "isco": 2151,
+   "aka": NaN
+  },
+  {
+   "role": "Radio Frequency Identification Device Specialists",
+   "isco": 2152,
+   "aka": NaN
+  },
+  {
+   "role": "electrical equipment production supervisor",
+   "isco": 3122,
+   "aka": "supervisor of electrical equipment manufacturing  ·  electrical equipment production manager  ·  manager of electrical equipment manufacturing  ·  electrical equipment production line supervisor  ·  production supervisor in electrical equipment manufacturing"
+  }
+ ]
+}

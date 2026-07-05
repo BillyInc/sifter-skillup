@@ -1,0 +1,108 @@
+{"reviews":[
+{"domain_id":"D041","domain_name":"Scientific Research","verdict":"issues",
+ "remove_roles":["physicist (duplicate — listed twice, isco 2111)","metrologist (duplicate — listed twice, isco 2112)","Physical Scientists, All Other (catch-all ISCO/SOC group-label junk row, aka=NaN)"],
+ "add_roles":[
+   {"role":"geologist","isco":2114,"skills":["mineralogy","stratigraphy","geological mapping","GIS","sample analysis","field surveying"],"reason":"Core earth-science research role absent as standalone; only appears buried in environmental-scientist aka."},
+   {"role":"meteorologist","isco":2112,"skills":["atmospheric modeling","weather forecasting","climate data analysis","remote sensing","statistics"],"reason":"Major physical-science research discipline missing entirely from a Scientific Research domain."},
+   {"role":"microbiologist","isco":2131,"skills":["microbial culturing","aseptic technique","PCR","microscopy","assay development"],"reason":"Only technician-level bio roles present; the professional life-science researcher is absent."}
+ ],
+ "overfanout_roles":["Chemist cluster over-fanned at isco 2113: chemist, cosmetic chemist, chemical application specialist, analytical chemist, chemical tester, sensory scientist, fragrance chemist — ~7 near-duplicate chemist variants","Environmental cluster at isco 2133 heavily fanned: environmental scientist/technician/programme coordinator/airport environment officer/groundwater/air pollution/aquaculture environmental analyst overlap"],
+ "rename_to":null,
+ "notes":"O*NET SOC titles injected with aka=NaN (Environmental Restoration Planners, Industrial Ecologists, Remote Sensing Scientists and Technologists) are legit occupations kept; 'Physical Scientists, All Other' is a catch-all group label removed. Two exact duplicates (physicist, metrologist) removed."},
+{"domain_id":"D042","domain_name":"Media Production","verdict":"issues",
+ "remove_roles":[
+   "General and Operations Managers (isco 1120, aka=NaN — generic manager group label, wrong domain)",
+   "Coaches and Scouts (isco 3422, aka=NaN — sports occupation, wrong domain)",
+   "Entertainers and Performers, Sports and Related Workers, All Other (isco 2659, aka=NaN — catch-all junk)",
+   "Media and Communication Workers, All Other (isco 2659, aka=NaN — catch-all junk)",
+   "Media and Communication Equipment Workers, All Other (isco 3435, aka=NaN — catch-all junk)",
+   "Actors (isco 2655, aka=NaN — group label duplicating actor/actress)",
+   "Musicians and Singers (isco 2652, aka=NaN — group label duplicating musician/singer)",
+   "Producers and Directors (isco 2654, aka=NaN — group label)",
+   "Music Directors and Composers (isco 2652, aka=NaN — group label duplicating music director/composer)",
+   "Media Programming Directors (isco 2654, aka=NaN — group label)",
+   "Talent Directors (isco 2654, aka=NaN — group label duplicating casting director)",
+   "Media Technical Directors/Managers (isco 2654, aka=NaN — group label duplicating technical director)",
+   "Sound Engineering Technicians (isco 3521, aka=NaN — group label duplicating sound operator/recording studio technician)",
+   "Lighting Technicians (isco 3521, aka=NaN — group label duplicating performance lighting technician)",
+   "Camera Operators, Television, Video, and Film (isco 3521, aka=NaN — group label duplicating camera operator)",
+   "Film and Video Editors (isco 3521, aka=NaN — group label duplicating video and motion picture editor)",
+   "Broadcast Announcers and Radio Disc Jockeys (isco 2656, aka=NaN — group label duplicating news anchor/disc jockey)",
+   "Entertainment and Recreation Managers, Except Gambling (isco 1219, aka=NaN — group label)"
+ ],
+ "add_roles":[],
+ "overfanout_roles":[
+   "Producer cluster at isco 2654 over-fanned: producer, music producer, radio producer, podcast producer, video and motion picture producer, post-production supervisor — heavy overlap",
+   "Lighting/stage technician cluster at isco 3435: performance lighting technician/director, light board operator, followspot operator, stage technician, theatre technician, stage machinist — many near-duplicate technician variants",
+   "Domain conflates live performing arts (dancer, circus artist, street performer, singer, musician, stand-up comedian) with film/broadcast media production — coherence is stretched though defensible under 'Media Production'"
+ ],
+ "rename_to":null,
+ "notes":"18 O*NET SOC group-label rows with aka=NaN removed; nearly all duplicate existing granular roles or are catch-all 'All Other' buckets. Two (General and Operations Managers, Coaches and Scouts) are outright wrong-domain. Remaining ~91 real roles are coherent for media/entertainment production; no adds — domain is already over-full."},
+{"domain_id":"D043","domain_name":"Journalism","verdict":"issues",
+ "remove_roles":[
+   "Media and Communication Workers (isco 2642, aka=NaN — group label)",
+   "News Analysts, Reporters, and Journalists (isco 2642, aka=NaN — group label duplicating journalist)",
+   "Writers and Authors (isco 2641, aka=NaN — group label duplicating writer)",
+   "Interpreters and Translators (isco 2643, aka=NaN — group label duplicating translator/interpreter)",
+   "Art Directors (isco 2651, aka=NaN — group label)",
+   "Craft Artists (isco 2651, aka=NaN — group label)",
+   "Special Effects Artists and Animators (isco 2651, aka=NaN — group label)",
+   "Disc Jockeys, Except Radio (isco 2651, aka=NaN — wrong domain + wrong isco)",
+   "Editors (isco 2641, aka=NaN — group label duplicating copy editor/book editor)",
+   "Technical Writers (isco 2641, aka=NaN — group label duplicating technical communicator)",
+   "Poets, Lyricists and Creative Writers (isco 2641, aka=NaN — group label duplicating writer/lyricist)",
+   "Court Reporters and Simultaneous Captioners (isco 2641, aka=NaN — wrong domain, legal support)",
+   "art restorer (isco 2651 — art conservation, misfiled; belongs in fine/visual arts, not Journalism)",
+   "artistic painter (isco 2651 — fine art, misfiled in Journalism)",
+   "drawing artist (isco 2651 — fine art, misfiled in Journalism)",
+   "video artist (isco 2651 — fine art, misfiled in Journalism)",
+   "printmaker (isco 2651 — fine art, misfiled in Journalism)",
+   "sculptor (isco 2651 — fine art, misfiled in Journalism)",
+   "conceptual artist (isco 2651 — fine art, misfiled in Journalism)",
+   "glass artist (isco 2651 — fine art/craft, misfiled in Journalism)",
+   "ceramicist (isco 2651 — craft art, misfiled in Journalism)"
+ ],
+ "add_roles":[
+   {"role":"photojournalist","isco":2642,"skills":["news photography","photo editing","visual storytelling","field reporting","captioning","media ethics"],"reason":"Core journalism specialism absent; the domain has picture editor but no photojournalist/news photographer."},
+   {"role":"proofreader","isco":2642,"skills":["proofreading","copy-marking","grammar and style","house-style enforcement","attention to detail"],"reason":"Standard editorial-desk role missing from an otherwise deep editor cluster."}
+ ],
+ "overfanout_roles":[
+   "Translation/linguistics cluster at isco 2643 (translator, interpreter, lexicographer, lawyer linguist, linguist, sign language interpreter, localiser, subtitler, graphologist) is a distinct language-services field, over-mixed into Journalism",
+   "Editor cluster at isco 2642 heavily fanned: newspaper editor, copy editor, editor-in-chief, magazine editor, broadcast news editor, picture editor, plus book editor at 2641"
+ ],
+ "rename_to":null,
+ "notes":"Two problems: (1) 12 aka=NaN O*NET group-label rows, several outright wrong-domain (Disc Jockeys, Court Reporters); (2) a large fine/visual-arts (isco 2651) cluster misfiled here — Journalism should be reporting/editing/writing, not painters/sculptors/ceramicists. storyboard artist and cartoonist (2651) left as arguably media/editorial-adjacent but flagged as borderline. Kept the core journalist/editor/correspondent/critic set which is coherent and well-populated."},
+{"domain_id":"D044","domain_name":"Graphic Design","verdict":"issues",
+ "remove_roles":[
+   "Fine Artists, Including Painters, Sculptors, and Illustrators (isco 2651, aka=NaN — catch-all group label)",
+   "art restorer (isco 2651 — art conservation, not graphic design; same floating fine-arts row also misfiled in D043)",
+   "performance lighting designer (isco 2166 — theatre/stage lighting, belongs in Media Production not Graphic Design)"
+ ],
+ "add_roles":[
+   {"role":"UX designer","isco":2166,"skills":["user research","wireframing","prototyping","information architecture","usability testing","Figma"],"reason":"Glaring modern gap: no user-experience designer in a graphic/digital design domain."},
+   {"role":"UI designer","isco":2166,"skills":["interface design","design systems","visual hierarchy","typography","Figma","interaction design"],"reason":"Core digital-design specialism absent alongside web/digital media designer."},
+   {"role":"motion graphics designer","isco":2166,"skills":["After Effects","motion design","typography animation","compositing","storyboarding"],"reason":"Standard graphic-design specialism missing between animator and graphic designer."}
+ ],
+ "overfanout_roles":[
+   "Product/industrial design cluster at isco 2163 (automotive, jewellery, model maker, fashion, industrial, furniture, clothing fashion, costume, puppet designer) is a distinct Product & Industrial Design field over-mixed into Graphic Design",
+   "Fine/visual-arts cluster at isco 2651 (artistic painter, drawing artist, video artist, printmaker, sculptor, conceptual artist, glass artist, ceramicist, cartoonist) is fine art, not graphic design — and is duplicated wholesale into D043 Journalism"
+ ],
+ "rename_to":"Design & Visual Arts",
+ "notes":"Only one aka=NaN junk row. Bigger issue is scope: the label 'Graphic Design' is too narrow for the contents, which span digital/graphic design (2166), product/industrial design (2163), fine arts (2651) and photography (3431). Either split into separate domains or rename to 'Design & Visual Arts'. The 2651 fine-arts rows are the same floating cluster also attached to D043 — a systemic tagging artifact worth needs_review across domains. Core 2166 graphic/digital design set is coherent."},
+{"domain_id":"D045","domain_name":"Public Administration","verdict":"issues",
+ "remove_roles":[
+   "Legislators (isco 1111, aka=NaN — group label duplicating member of parliament/senator/city councillor)",
+   "Court, Municipal, and License Clerks (isco 3354, aka=NaN — group label duplicating passport officer/licensing officer)",
+   "Eligibility Interviewers, Government Programs (isco 3353, aka=NaN — SOC occupation duplicating social security officer/social security inspector)"
+ ],
+ "add_roles":[
+   {"role":"civil registration officer","isco":3354,"skills":["records management","vital-statistics registration","document verification","public service delivery","regulatory compliance"],"reason":"Registrar of births/deaths/marriages is a core public-administration function entirely absent."},
+   {"role":"urban planner","isco":2164,"skills":["land-use planning","zoning regulation","GIS","public consultation","development control","policy analysis"],"reason":"Government planning inspector present but the professional town/urban planner (isco 2164) is missing."}
+ ],
+ "overfanout_roles":[
+   "Policy-officer cluster at isco 2422 is very heavily fanned (~18 variants: housing, regional, competition, fiscal, legal, cultural, immigration, agricultural, labour market, environmental, education, recreation, social services, public health, foreign affairs, plus generic policy officer) — each a distinct policy area but collectively a large fan under one ISCO code",
+   "Law-enforcement roles (police commissioner, police detective, police inspector, criminal investigator at 3355/1112) sit slightly apart from core public administration and overlap a dedicated Law Enforcement domain if one exists"
+ ],
+ "rename_to":null,
+ "notes":"Domain is broadly coherent as government/public administration — elected officials (1111), executives/diplomats (1112), policy officers (2422), regulatory inspectors (3359), border/customs (3351). Three aka=NaN group-label rows removed. No wrong-domain contamination beyond borderline law-enforcement. Main structural note is the large 2422 policy-officer fan, acceptable but worth awareness."}
+]}

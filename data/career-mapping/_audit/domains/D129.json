@@ -1,0 +1,202 @@
+{
+ "domain_id": "D129",
+ "domain_name": "Military, Defence",
+ "role_count": 39,
+ "roles": [
+  {
+   "role": "fleet commander",
+   "isco": 110,
+   "aka": "naval commander  ·  commander of fleet  ·  navy commander  ·  royal navy commander  ·  deputy chief of naval staff"
+  },
+  {
+   "role": "special forces officer",
+   "isco": 210,
+   "aka": "air force officer  ·  counter-terrorism officer  ·  marine  ·  airborne operations officer  ·  commando"
+  },
+  {
+   "role": "navy officer",
+   "isco": 110,
+   "aka": "sub-lieutenant  ·  ship-of-the-line ensign  ·  midshipman"
+  },
+  {
+   "role": "intelligence communications interceptor",
+   "isco": 310,
+   "aka": "electronic intelligence intercept operator  ·  communications interceptor  ·  intelligence intercept operator  ·  signal intelligence voice interceptor  ·  communications locator"
+  },
+  {
+   "role": "army corporal",
+   "isco": 210,
+   "aka": "armed forces corporal  ·  lance corporal  ·  special forces corporal  ·  royal marines corporal  ·  corporal"
+  },
+  {
+   "role": "military engineer",
+   "isco": 310,
+   "aka": "combat technician  ·  defence engineering consultant  ·  defence manager  ·  defence technology engineering specialist  ·  ballistics engineer"
+  },
+  {
+   "role": "artillery officer",
+   "isco": 110,
+   "aka": "infantry officer  ·  gunner  ·  munitions officer  ·  artillery technician"
+  },
+  {
+   "role": "warfare specialist",
+   "isco": 210,
+   "aka": "electronic warfare specialist  ·  electronic warfare operator  ·  defence analyst  ·  surveillance operator  ·  defence specialist"
+  },
+  {
+   "role": "army captain",
+   "isco": 110,
+   "aka": "captain armed services  ·  armed forces captain  ·  armed services captain  ·  captain armed forces  ·  captain royal marines"
+  },
+  {
+   "role": "lieutenant",
+   "isco": 110,
+   "aka": "police lieutenant  ·  armed forces lieutenant"
+  },
+  {
+   "role": "colonel",
+   "isco": 110,
+   "aka": "wing commander  ·  battalion commander  ·  lieutenant colonel"
+  },
+  {
+   "role": "brigadier",
+   "isco": 110,
+   "aka": "brigadier general  ·  military brigadier  ·  army brigadier  ·  field officer  ·  director of staff"
+  },
+  {
+   "role": "infantry soldier",
+   "isco": 310,
+   "aka": "rifleman  ·  army soldier  ·  sniper  ·  infantryman  ·  foot soldier"
+  },
+  {
+   "role": "armed forces officer",
+   "isco": 110,
+   "aka": "lieutenant colonel  ·  colonel  ·  navy officer  ·  air force officer  ·  lieutenant"
+  },
+  {
+   "role": "army general",
+   "isco": 110,
+   "aka": "major general  ·  general  ·  lieutenant general  ·  military general  ·  armed forces general"
+  },
+  {
+   "role": "air force pilot",
+   "isco": 310,
+   "aka": "navy pilot  ·  armed forces pilot  ·  military aircraft driver  ·  naval pilot  ·  aircrew pilot"
+  },
+  {
+   "role": "sergeant",
+   "isco": 210,
+   "aka": "lance sergeant  ·  quartermaster sergeant  ·  staff sergeant  ·  chief petty officer  ·  colour sergeant"
+  },
+  {
+   "role": "squadron leader",
+   "isco": 110,
+   "aka": "air force squadron team leader  ·  air force squadron leader  ·  squadron commander  ·  air force commandant"
+  },
+  {
+   "role": "army major",
+   "isco": 110,
+   "aka": "battalion commandant  ·  military major  ·  armed forces major  ·  lieutenant commander  ·  major"
+  },
+  {
+   "role": "air force officer",
+   "isco": 110,
+   "aka": "command and control officer  ·  military group captain  ·  pilot officer  ·  flight officer  ·  flight lieutenant"
+  },
+  {
+   "role": "bomb disposal technician",
+   "isco": 310,
+   "aka": "minesweeper  ·  bomb disposal expert  ·  armed forces soldier  ·  bomb disposal officer  ·  ordnance technician"
+  },
+  {
+   "role": "Air Crew Officers",
+   "isco": 110,
+   "aka": NaN
+  },
+  {
+   "role": "Military Officer Special and Tactical Operations Leaders, All Other",
+   "isco": 210,
+   "aka": NaN
+  },
+  {
+   "role": "Military Enlisted Tactical Operations and Air/Weapons Specialists and Crew Members, All Other",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Aircraft Launch and Recovery Officers",
+   "isco": 110,
+   "aka": NaN
+  },
+  {
+   "role": "Armored Assault Vehicle Officers",
+   "isco": 110,
+   "aka": NaN
+  },
+  {
+   "role": "Artillery and Missile Officers",
+   "isco": 110,
+   "aka": NaN
+  },
+  {
+   "role": "Command and Control Center Officers",
+   "isco": 110,
+   "aka": NaN
+  },
+  {
+   "role": "Infantry Officers",
+   "isco": 110,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Air Crew Members",
+   "isco": 210,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Weapons Specialists/Crew Members",
+   "isco": 210,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of All Other Tactical Operations Specialists",
+   "isco": 210,
+   "aka": NaN
+  },
+  {
+   "role": "Air Crew Members",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Aircraft Launch and Recovery Specialists",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Armored Assault Vehicle Crew Members",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Artillery and Missile Crew Members",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Command and Control Center Specialists",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Infantry",
+   "isco": 310,
+   "aka": NaN
+  },
+  {
+   "role": "Special Forces",
+   "isco": 310,
+   "aka": NaN
+  }
+ ]
+}

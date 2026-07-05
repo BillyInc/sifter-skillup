@@ -1,0 +1,23 @@
+{
+  "jamb_name": "Crop Production",
+  "utme_subjects": ["Chemistry", "Biology/Agriculture", "Mathematics or Physics"],
+  "olevel_requirement": "Five (5) SSC credit passes to include Chemistry, Biology/Agricultural Science, Mathematics and one Science/Social Science subject and at least 'O' Level pass in Physics.",
+  "direct_entry": "Two (2) 'A' Level passes in Chemistry and Biology/Agricultural Science/Botany/Zoology or Physics/Mathematics/Economics.",
+  "institution_waivers": [
+    {"institution": "MINNA", "note": "MINNA does not accept Social Science subjects. Other requirements are as in Agriculture."},
+    {"institution": "NDU", "note": "No direct entry admission."},
+    {"institution": "OOU", "note": "OOU requires 'A' Level passes in both Chemistry and Biology. It accepts ND distinction/credit, HND credit, and NCE Double Major at credit level in Agriculture to 100/200 level programme."},
+    {"institution": "RSU", "note": "Same as in Animal Science."},
+    {"institution": "MINNA", "note": "MINNA accepts NCE/ND/HND with a minimum of lower credit level in addition to the UTME requirements."},
+    {"institution": "ADSU", "note": "As in Animal Production & Fisheries."},
+    {"institution": "EKSU and FUTA", "note": "As in Agricultural Economics and Extension."},
+    {"institution": "BAUCHI", "note": "BAUCHI accepts NCE, ND program in addition to the UTME requirements."},
+    {"institution": "IMSU", "note": "IMSU accepts ND or NCE Double Major and HND in Agriculture with at least a credit pass."},
+    {"institution": "FUTO", "note": "Same as in Agricultural Economics."},
+    {"institution": "UNN", "note": "Same as in Agricultural Economics and Extension."},
+    {"institution": "MAUTY", "note": "MAUTY accepts; OND/HND in Agric or any other relevant field, with a minimum of Lower Credit. IJMB with at least 7 cumulative points in Chemistry, Biology/Agric. & Physics/Mathematics. NCE with a minimum of merit grade in agriculture. GCE 'A' credit passes in Chemistry, Biology/Agric. Science."},
+    {"institution": "FUNAAB", "note": "As in Agricultural Extension and Rural Development."},
+    {"institution": "FUTA", "note": "FUTA requires: (a) ND with a minimum of upper credit from recognized Polytechnics or Colleges of Technology in relevant Agriculture based disciplines. (b) University Diploma with at least lower credit, JUPEB, IJMB and Cambridge A level. (c) at least two (2) General Certificate in Education (GCE) 'A' Level passes in Biology and any of the following subjects: Chemistry, Physics and Biology or Agricultural Science with a minimum of C."},
+    {"institution": "OAU", "note": "OAU does not accept Economics but accepts HND/ND in Agriculture obtained at upper credit level from a recognized Institution."}
+  ]
+}

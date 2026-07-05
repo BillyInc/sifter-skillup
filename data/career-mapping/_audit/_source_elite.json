@@ -1,0 +1,207 @@
+{
+ "domain_tiers": {
+  "D001": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Software Engineering"
+  },
+  "D132": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Space Science, Exploration & Mission Systems"
+  },
+  "D133": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Luxury & Bespoke Specialist Interiors — Aviation, Maritime & Automotive"
+  },
+  "D134": {
+   "tier": "ELITE",
+   "wef_signal": false,
+   "name": "Naval Architecture, Marine Engineering & Ship Design"
+  },
+  "D135": {
+   "tier": "ELITE",
+   "wef_signal": false,
+   "name": "Nuclear Engineering, Radiation Science & Nuclear Medicine"
+  },
+  "D136": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Aeronautical & Aerospace Engineering"
+  },
+  "D137": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Medical Physics, Radiation Therapy & Nuclear Medicine Imaging"
+  },
+  "D142": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Bioinformatics, Computational Biology & Genomics"
+  },
+  "D143": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Forensic Science, Digital Forensics & Criminal Investigation"
+  },
+  "D146": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Building Services Engineering — Mechanical, Electrical & Plumbing (MEP)"
+  },
+  "D150": {
+   "tier": "ELITE",
+   "wef_signal": false,
+   "name": "Religious Ministry, Theology & Interfaith Leadership"
+  },
+  "D159": {
+   "tier": "ELITE",
+   "wef_signal": true,
+   "name": "Credit Analysis, Structured Finance & Debt Capital Markets"
+  },
+  "D162": {
+   "tier": "ELITE",
+   "wef_signal": false,
+   "name": "Immigration Law, Asylum & International Protection"
+  }
+ },
+ "pathway_employers": {
+  "D159": [
+   "Goldman Sachs",
+   "Morgan Stanley",
+   "JPMorgan",
+   "Citi",
+   "UBS",
+   "Lazard",
+   "Rothschild & Co",
+   "HSBC",
+   "Stanbic IBTC Investment Banking",
+   "Chapel Hill Denham"
+  ],
+  "D150": [
+   "UN System (NY/Geneva)",
+   "World Bank (Washington DC)",
+   "IMF",
+   "African Union Commission",
+   "ECOWAS Commission",
+   "AfDB (Abidjan)",
+   "Nigerian Ministry of Foreign Affairs"
+  ],
+  "D047": [
+   "UNHCR",
+   "WFP",
+   "UNICEF",
+   "ICRC",
+   "WHO",
+   "Oxfam",
+   "IRC",
+   "MSF (Médecins Sans Frontières)",
+   "Save the Children",
+   "Action Against Hunger",
+   "NEMA"
+  ],
+  "D132": [
+   "FIA Institute",
+   "Williams Racing Academy",
+   "McLaren Racing",
+   "Mercedes AMG F1",
+   "Red Bull Technology",
+   "Bosch Motorsport",
+   "Ricardo plc",
+   "Cosworth Engineering"
+  ],
+  "D133": [
+   "NASRDA (Nigeria)",
+   "NASA (USA)",
+   "ESA (Europe)",
+   "ISRO (India)",
+   "SpaceX",
+   "Blue Origin",
+   "Surrey Satellite Technology",
+   "Airbus Defence & Space",
+   "Thales Alenia Space"
+  ],
+  "D134": [
+   "Lufthansa Technik VIP & Special Mission Aircraft",
+   "Jet Aviation (Basel, Geneva, Singapore)",
+   "Comlux Aviation",
+   "Rolls-Royce Bespoke/Mulliner",
+   "Benetti Yachts",
+   "Feadship",
+   "Lürssen Yachts",
+   "ISA Yachts",
+   "Winch Design",
+   "RWD (London)"
+  ],
+  "D166": [
+   "Lloyd's Register",
+   "DNV",
+   "Bureau Veritas",
+   "RINA",
+   "ABS",
+   "BAE Systems Maritime",
+   "Babcock International",
+   "NIMASA",
+   "Nigerian Navy Engineering Branch"
+  ],
+  "D135": [
+   "Waymo",
+   "Tesla (Autopilot/FSD)",
+   "Mobileye",
+   "Cruise",
+   "Aurora Innovation",
+   "Motional",
+   "NVIDIA DRIVE",
+   "Indy Autonomous Challenge",
+   "Roborace"
+  ],
+  "D136": [
+   "IAEA (International Atomic Energy Agency)",
+   "NAEC (Nigeria)",
+   "CERT Zaria",
+   "Westinghouse Electric",
+   "EDF Energy",
+   "Framatome",
+   "Rolls-Royce SMR",
+   "CNSC (Canada)"
+  ],
+  "D137": [
+   "Airbus",
+   "Boeing",
+   "Rolls-Royce plc",
+   "GE Aviation",
+   "Safran",
+   "BAE Systems",
+   "Leonardo",
+   "Collins Aerospace",
+   "Bombardier"
+  ],
+  "D142": [
+   "IBM Quantum",
+   "Google Quantum AI",
+   "CERN",
+   "MIT",
+   "Caltech",
+   "AIMS"
+  ],
+  "D144": [
+   "Wellcome Sanger Institute",
+   "Broad Institute",
+   "H3Africa",
+   "EMBL-EBI",
+   "NIH",
+   "Illumina",
+   "BGI",
+   "Moderna"
+  ],
+  "D155": [
+   "IBRO",
+   "Neuralink",
+   "Kernel",
+   "Meta Reality Labs",
+   "Max Planck Institute for Brain Research",
+   "UCL Neuroscience"
+  ]
+ }
+}

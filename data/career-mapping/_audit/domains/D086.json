@@ -1,0 +1,92 @@
+{
+ "domain_id": "D086",
+ "domain_name": "Gaming, Betting",
+ "role_count": 17,
+ "roles": [
+  {
+   "role": "bookmaker",
+   "isco": 4212,
+   "aka": "on-course bookmaker  ·  race course bookmaker  ·  on course bookmaker  ·  off-course bookmaker  ·  bookmaker clerk"
+  },
+  {
+   "role": "bingo caller",
+   "isco": 4212,
+   "aka": "main stage caller  ·  bingo main caller  ·  bingo attendant  ·  main caller  ·  bingo agent"
+  },
+  {
+   "role": "odds compiler",
+   "isco": 4212,
+   "aka": "odds manager  ·  sports odds compiler  ·  betting expert  ·  risk trader  ·  sports trader"
+  },
+  {
+   "role": "casino cashier",
+   "isco": 4212,
+   "aka": "casino head cashier  ·  casino income auditor  ·  game cashier  ·  main banker  ·  gaming cashier"
+  },
+  {
+   "role": "casino pit boss",
+   "isco": 4212,
+   "aka": "gaming floor manager  ·  casino dealer & pit boss  ·  gaming supervisor  ·  gaming floor supervisor  ·  casino dealer and pit boss"
+  },
+  {
+   "role": "lottery operator",
+   "isco": 4212,
+   "aka": "lottery worker"
+  },
+  {
+   "role": "race track operator",
+   "isco": 4212,
+   "aka": "tote manager  ·  advanced tote operator  ·  tote board operator  ·  tote technician"
+  },
+  {
+   "role": "casino gaming manager",
+   "isco": 4212,
+   "aka": "gaming service manager  ·  head of electronic gaming  ·  head of gaming  ·  gaming operations manager  ·  senior gaming manager"
+  },
+  {
+   "role": "gaming dealer",
+   "isco": 4212,
+   "aka": "gaming operations dealer  ·  table gaming dealer  ·  casinio gaming dealer  ·  casino dealer  ·  croupier"
+  },
+  {
+   "role": "Gambling Change Persons and Booth Cashiers",
+   "isco": 4212,
+   "aka": NaN
+  },
+  {
+   "role": "gambling games developer",
+   "isco": 2120,
+   "aka": "betting games developer  ·  lottery game designer and producer  ·  game content developer  ·  HTML canvas game developer  ·  gambling designer"
+  },
+  {
+   "role": "gambling quality assurance engineer",
+   "isco": 2120,
+   "aka": "test operator in gambling  ·  lottery quality assurance engineer  ·  gaming quality assurance engineer  ·  betting quality assurance engineer  ·  betting quality controller"
+  },
+  {
+   "role": "gambling manager",
+   "isco": 1431,
+   "aka": "general manager  ·  gambling chief executive officer  ·  gambling managing director  ·  gambling facility managing director  ·  gambling general manager"
+  },
+  {
+   "role": "Gambling Cage Workers",
+   "isco": 4312,
+   "aka": NaN
+  },
+  {
+   "role": "Gambling Surveillance Officers and Gambling Investigators",
+   "isco": 5419,
+   "aka": NaN
+  },
+  {
+   "role": "director of compliance and information security in gambling",
+   "isco": 1213,
+   "aka": "manager of compliance and information security in gambling  ·  gambing compliance and information security manager  ·  gambling compliance and information security director"
+  },
+  {
+   "role": "First-Line Supervisors of Gambling Services Workers",
+   "isco": 5169,
+   "aka": NaN
+  }
+ ]
+}

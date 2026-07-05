@@ -1,0 +1,52 @@
+{
+ "reconciled": [
+  {
+   "programme": "Law",
+   "add": [
+    {"domain_id": "D037", "domain": "Legal Practice & Corporate Law", "match_type": "direct", "why": "Constitutional Law, Law of Contract, Criminal Law and Legal Methods are the programme's core purpose — promote from functional to the primary direct link"},
+    {"domain_id": "D162", "domain": "Immigration Law, Asylum & International Protection", "match_type": "functional", "why": "A specialisation reachable from the LLB foundation, not the programme's direct purpose — downgrade from direct"},
+    {"domain_id": "D163", "domain": "Intellectual Property Law, Patents & Technology Licensing", "match_type": "functional", "why": "A specialisation reachable from the LLB foundation, not the direct purpose — downgrade from direct"},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Constitutional and Nigerian Legal System courses ground regulatory/governance roles"}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Capital-markets trading has no course basis"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated to the foundational LLB"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D060", "why": "No banking-law course in this foundational extract"},
+    {"domain_id": "D061", "why": "No insurance-law course basis"},
+    {"domain_id": "D158", "why": "Investment banking/M&A unrelated"},
+    {"domain_id": "D051", "why": "No property/real-estate-law course basis"},
+    {"domain_id": "D030", "why": "Marketing/brand unrelated"},
+    {"domain_id": "D130", "why": "Recruitment/staffing unrelated"},
+    {"domain_id": "D063", "why": "No economics course basis"},
+    {"domain_id": "D128", "why": "Social welfare unrelated"}
+   ]
+  },
+  {
+   "programme": "Common and Islamic Law",
+   "add": [
+    {"domain_id": "D037", "domain": "Legal Practice & Corporate Law", "match_type": "direct", "why": "Constitutional Law, Law of Contract, Nigerian Legal System and Islamic-law courses make legal practice the direct purpose — promote from functional"},
+    {"domain_id": "D150", "domain": "Religious Ministry, Theology & Interfaith Leadership", "match_type": "functional", "why": "Ayat and Hadith Al-Ahkam, principles of Islamic law and jurisprudence courses ground theology/Sharia advisory roles"},
+    {"domain_id": "D162", "domain": "Immigration Law, Asylum & International Protection", "match_type": "functional", "why": "A specialisation reachable from the foundation, not the direct purpose — downgrade from direct"},
+    {"domain_id": "D163", "domain": "Intellectual Property Law, Patents & Technology Licensing", "match_type": "functional", "why": "A specialisation reachable from the foundation, not the direct purpose — downgrade from direct"},
+    {"domain_id": "D038", "domain": "Compliance, Regulation & Governance", "match_type": "functional", "why": "Constitutional and legal-system courses ground regulatory/governance roles"}
+   ],
+   "remove": [
+    {"domain_id": "D062", "why": "Capital-markets trading has no course basis"},
+    {"domain_id": "D013", "why": "Investment analysis unrelated"},
+    {"domain_id": "D061", "why": "No insurance-law course basis"},
+    {"domain_id": "D060", "why": "No banking-law course basis"},
+    {"domain_id": "D011", "why": "Quantitative finance unrelated"},
+    {"domain_id": "D158", "why": "Investment banking unrelated"},
+    {"domain_id": "D051", "why": "No property-law course basis"},
+    {"domain_id": "D014", "why": "Actuarial science unrelated"},
+    {"domain_id": "D157", "why": "No tax-law course in this foundational extract"},
+    {"domain_id": "D159", "why": "Structured finance unrelated"},
+    {"domain_id": "D130", "why": "Recruitment/staffing unrelated"},
+    {"domain_id": "D029", "why": "No HR course basis"},
+    {"domain_id": "D030", "why": "Marketing/brand unrelated"},
+    {"domain_id": "D063", "why": "No economics course basis"}
+   ]
+  }
+ ]
+}

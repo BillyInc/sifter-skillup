@@ -1,0 +1,16 @@
+{
+  "jamb_name": "Theology",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {
+      "institution": "PHC",
+      "note": "PHC accepts at least two (2) A/Level passes in GCE or HSC or JUPEB or IJMB in any Arts subject in addition to UTME entry requirements. NCE in any two Arts subjects with an overall merit level pass from a recognized College of Education in addition to UTME entry requirements."
+    },
+    {
+      "institution": "MOUNTAIN TOP",
+      "note": "MOUNTAIN TOP accepts: a) Five credits in General Certificate of Education, Ordinary Level and NECO at least two of which must be a GCE Advanced Level including Christian Religious Knowledge as in UTME above; and then b) A pass in two principal subjects at the NCE Level/A/L, or JUPEB and/or the equivalent plus five subjects at credit level in GCE O/L, SSCE, NECO, and TC II are acceptable in MTU."
+    }
+  ]
+}

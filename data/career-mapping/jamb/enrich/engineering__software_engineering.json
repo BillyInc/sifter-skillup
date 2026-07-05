@@ -1,0 +1,9 @@
+{
+  "jamb_name": "Software Engineering",
+  "utme_subjects": ["Mathematics", "Economics", "and any one of Chemistry, Physics, Biology or Geography"],
+  "olevel_requirement": "Five (5) SSC credit passes in Mathematics, English Language and three (3) other Science subjects.",
+  "direct_entry": "'A' Level passes, ND/NCE at Credit/merit levels and HND lower credit in relevant programmes into 200 and 300 levels.",
+  "institution_waivers": [
+    {"institution": "AUN", "note": "Direct Entry: AUN accepts a) 'A' Level passes chosen from English Language, Mathematics, Physics, Chemistry, Further Mathematics, Computer Studies, Information Technology, Environmental Science, Biology, Literature in English, Government, History, Economics, Geography, Technical Drawing, Visual Arts, Civics, and French; b) ND/HND; c) ICGS 'A' Level Cambridge. AUN does not offer admissions to 200 level programmes and may transfer credits relevant to its major at the discretion of the Dean of school. UTME: AUN requires five (5) 'O' Level credit passes including English Language, Mathematics, and any other three (3) subjects with emphasis on the ranking order: Physics; Chemistry, Further Mathematics, Computer Studies, Information Technology, Environmental Science, Biology, Literature in English, Government, History, Economics, Geography, Technical Drawing, Visual Arts, Civics, and French. It does not accept credit passes in Agriculture, Food and Nutrition, Home Economics, Home Craft, Home management, Physical Education, Physical and Health Education, Music, Commerce, Accounting, Financial Accounting, Book keeping, Islamic History, Islamic Studies, Tajweed, Library Studies, Diction, Kiswahili, Igbo, Hausa, Yoruba, Arabic, Turkish, Study skills."}
+  ]
+}

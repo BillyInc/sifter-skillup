@@ -1,0 +1,202 @@
+{
+ "domain_id": "D007",
+ "domain_name": "UI/UX Design",
+ "role_count": 39,
+ "roles": [
+  {
+   "role": "performance lighting designer",
+   "isco": 2166,
+   "aka": "lighting designer and technician  ·  lighting technician and designer  ·  theatre lighting designer  ·  lighting designer & technician  ·  lighting technician & designer"
+  },
+  {
+   "role": "search engine optimisation expert",
+   "isco": 2513,
+   "aka": "search engine optimisation experts  ·  search engine optimization expert  ·  search engine optimisation specialist  ·  search engine optimiser  ·  SEO expert"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "illustrator",
+   "isco": 2166,
+   "aka": "book illustrator  ·  cartoon drawer  ·  inker  ·  comic drawer  ·  drawer"
+  },
+  {
+   "role": "web designer",
+   "isco": 2166,
+   "aka": "website designer  ·  digital designer  ·  multimedia web designer  ·  marketing web designer  ·  interactive web designer"
+  },
+  {
+   "role": "set builder",
+   "isco": 3432,
+   "aka": "chief carpenter  ·  set dresser & builder  ·  set builder & designer  ·  set constructor  ·  set builder & dresser"
+  },
+  {
+   "role": "visual merchandiser",
+   "isco": 3432,
+   "aka": "assistant visual merchandiser  ·  image controller  ·  senior visual merchandiser  ·  retail visual strategy manager  ·  display designer"
+  },
+  {
+   "role": "stop-motion animator",
+   "isco": 2166,
+   "aka": "stop motion animators  ·  stop-motion animation artist  ·  puppet animator  ·  stop motion animator  ·  3D stop-motion animator"
+  },
+  {
+   "role": "photojournalist",
+   "isco": 3431,
+   "aka": "photo reporter  ·  image journalist  ·  multi media image journalist  ·  news photographer  ·  photo correspondent"
+  },
+  {
+   "role": "animator",
+   "isco": 2166,
+   "aka": "3D computer-generated imagery animator  ·  3D computer animation artist  ·  2D hand-drawn animator  ·  computer animation artist  ·  animators"
+  },
+  {
+   "role": "scenic painter",
+   "isco": 3432,
+   "aka": "scenery artist  ·  scenic artist  ·  scenic painter & artist  ·  scenery painter  ·  theatre scene painter"
+  },
+  {
+   "role": "ICT accessibility tester",
+   "isco": 2519,
+   "aka": "accessibility testers  ·  usability tester  ·  accessibility test specialist"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "3D animator",
+   "isco": 2166,
+   "aka": "CGI animator  ·  computer-generated imagery animator  ·  3D designer  ·  CGI designer"
+  },
+  {
+   "role": "ICT usability tester",
+   "isco": 2519,
+   "aka": "usability developer  ·  usability specialist  ·  usability testers  ·  user-friendliness tester"
+  },
+  {
+   "role": "photographer",
+   "isco": 3431,
+   "aka": "wedding photographer  ·  illustration photographer  ·  aerial photographer  ·  graphical industry photographer  ·  itinerant photographer"
+  },
+  {
+   "role": "graphic designer",
+   "isco": 2166,
+   "aka": "advertising artist  ·  graphic design expert  ·  graphic artist  ·  graphics designer  ·  graphic design specialist"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "interior designer",
+   "isco": 3432,
+   "aka": "interior space planner  ·  space planner & interior decorator  ·  spatial designer  ·  interior & spatial designer  ·  spatial design expert"
+  },
+  {
+   "role": "interior planner",
+   "isco": 3432,
+   "aka": "interior designer  ·  interior architect  ·  interior space planner  ·  spatial planner  ·  interior design consultant"
+  },
+  {
+   "role": "desktop publisher",
+   "isco": 2166,
+   "aka": "financial desktop publisher  ·  desktop designer  ·  electronic pre-press technician  ·  DTP operator  ·  advanced desktop publilsher"
+  },
+  {
+   "role": "set designer",
+   "isco": 3432,
+   "aka": "scene designer  ·  scenic artist and designer  ·  scenographer  ·  exibition designer  ·  scenery artist"
+  },
+  {
+   "role": "miniature set designer",
+   "isco": 3432,
+   "aka": "miniature set builder  ·  miniature model set designer  ·  miniature model set designer and builder  ·  miniature set constructor  ·  miniature maker"
+  },
+  {
+   "role": "animation layout artist",
+   "isco": 2166,
+   "aka": "2D layout animator  ·  3D layout artist  ·  animation layout designer  ·  3D layout animator  ·  2D layout artist"
+  },
+  {
+   "role": "user interface designer",
+   "isco": 2513,
+   "aka": "UI designer  ·  accessibility designer  ·  user interface designers"
+  },
+  {
+   "role": "digital games developer",
+   "isco": 2513,
+   "aka": "digital games developers  ·  digital game developer  ·  computer games developer  ·  games programmer  ·  video games developer"
+  },
+  {
+   "role": "web content manager",
+   "isco": 2513,
+   "aka": "content specialist  ·  web content specialist  ·  web content curatorspecialist  ·  web content administrators  ·  digital content"
+  },
+  {
+   "role": "special effects artist",
+   "isco": 2166,
+   "aka": "senior special effects artist  ·  digital effects specialist  ·  special effects technician  ·  special effect image designer  ·  special effects animator"
+  },
+  {
+   "role": "3D modeller",
+   "isco": 2166,
+   "aka": "CGI modeller  ·  3D developer  ·  3D modellers  ·  3D artist  ·  computer-generated imagery modeller"
+  },
+  {
+   "role": "web developer",
+   "isco": 2513,
+   "aka": "web application developer  ·  web developers  ·  web engineer  ·  web specialist  ·  web programmer"
+  },
+  {
+   "role": "performance video designer",
+   "isco": 2166,
+   "aka": "projection designer  ·  video & graphics designer  ·  video designer  ·  video & projection designer  ·  visual designer"
+  },
+  {
+   "role": "digital media designer",
+   "isco": 2166,
+   "aka": "digital media designers  ·  digital media developer  ·  multimedia developer  ·  digital multimedia designer  ·  interactive media designer"
+  },
+  {
+   "role": "digital artist",
+   "isco": 2166,
+   "aka": "digital matte painter  ·  computer-generated imagery artist  ·  digital matte artist  ·  computer artist  ·  digital games artist"
+  },
+  {
+   "role": "digital games designer",
+   "isco": 2166,
+   "aka": "digital game designer  ·  digital games designers  ·  video games designer  ·  virtual games designer  ·  computer games designer"
+  },
+  {
+   "role": "merchandiser",
+   "isco": 3432,
+   "aka": "retail merchandising associate  ·  merchandising controller  ·  merchandising associate  ·  merchandise planner  ·  retail merchandising controller"
+  },
+  {
+   "role": "UI and UX Designers",
+   "isco": 2166,
+   "aka": NaN
+  },
+  {
+   "role": "Set and Exhibit Designers",
+   "isco": 2166,
+   "aka": NaN
+  },
+  {
+   "role": "Designers, All Other",
+   "isco": 2166,
+   "aka": NaN
+  }
+ ]
+}

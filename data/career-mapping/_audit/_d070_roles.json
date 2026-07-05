@@ -1,0 +1,914 @@
+[
+ {
+  "role_name": "technical director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "theatre techniques",
+   "organise rehearsals",
+   "write risk assessment on performing arts production",
+   "coordinate with creative departments",
+   "adapt to artists' creative demands",
+   "negotiate health and safety issues with third parties"
+  ]
+ },
+ {
+  "role_name": "dance répétiteur",
+  "isco_group": "2653",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "link between dance and music style",
+   "subject of music coaching",
+   "represent artistic production",
+   "help set rehearsal schedule"
+  ]
+ },
+ {
+  "role_name": "dancer",
+  "isco_group": "2653",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "acting techniques",
+   "perform live",
+   "understand the physical language of a live performance",
+   "manage feedback"
+  ]
+ },
+ {
+  "role_name": "automated fly bar operator",
+  "isco_group": "3435",
+  "essential_skills": [
+   "draw up artistic production",
+   "work ergonomically",
+   "understand artistic concepts",
+   "set up technical stage equipment",
+   "safeguard artistic quality of performance",
+   "maintain moving constructions on stage"
+  ]
+ },
+ {
+  "role_name": "art restorer",
+  "isco_group": "2651",
+  "essential_skills": [
+   "museum databases",
+   "create solutions to problems",
+   "ensure safety of exhibition",
+   "assess conservation needs",
+   "apply restoration techniques",
+   "evaluate restoration procedures"
+  ]
+ },
+ {
+  "role_name": "presenter",
+  "isco_group": "2656",
+  "essential_skills": [
+   "breathing techniques",
+   "vocal techniques",
+   "pronunciation techniques",
+   "spelling",
+   "grammar",
+   "copyright legislation"
+  ]
+ },
+ {
+  "role_name": "art administrator",
+  "isco_group": "2654",
+  "essential_skills": [
+   "art collections",
+   "fine arts",
+   "corporate social responsibility",
+   "art history",
+   "philanthropy",
+   "understand artistic concepts"
+  ]
+ },
+ {
+  "role_name": "audio describer",
+  "isco_group": "2656",
+  "essential_skills": [
+   "communication related to hearing impairment",
+   "types of media",
+   "pronunciation techniques",
+   "audiovisual products",
+   "audiovisual equipment",
+   "cooperate with colleagues"
+  ]
+ },
+ {
+  "role_name": "musical conductor",
+  "isco_group": "2652",
+  "essential_skills": [
+   "musical instruments",
+   "link between dance and music style",
+   "subject of music coaching",
+   "music literature",
+   "musical theory",
+   "manage musical staff"
+  ]
+ },
+ {
+  "role_name": "intelligent lighting engineer",
+  "isco_group": "3435",
+  "essential_skills": [
+   "artificial lighting systems",
+   "work ergonomically",
+   "understand artistic concepts",
+   "draw up lighting plan",
+   "assess power needs",
+   "distribute control signals"
+  ]
+ },
+ {
+  "role_name": "music director",
+  "isco_group": "2652",
+  "essential_skills": [
+   "musical instruments",
+   "musical genres",
+   "musical theory",
+   "manage musical staff",
+   "develop musical ideas",
+   "supervise music groups"
+  ]
+ },
+ {
+  "role_name": "choreographer",
+  "isco_group": "2653",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "art-historical values",
+   "understand the architecture of a live performance",
+   "understand the physical language of a live performance",
+   "be a role model in community arts"
+  ]
+ },
+ {
+  "role_name": "video and motion picture director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "photography",
+   "film production process",
+   "lighting techniques",
+   "audiovisual equipment",
+   "cinematography",
+   "work with motion picture editing team"
+  ]
+ },
+ {
+  "role_name": "stage manager",
+  "isco_group": "3435",
+  "essential_skills": [
+   "analyse the artistic concept based on stage actions",
+   "work ergonomically",
+   "understand artistic concepts",
+   "safeguard artistic quality of performance",
+   "develop drama production process",
+   "write risk assessment on performing arts production"
+  ]
+ },
+ {
+  "role_name": "stand-in",
+  "isco_group": "3435",
+  "essential_skills": [
+   "follow time cues",
+   "follow work schedule",
+   "work with the camera crew",
+   "study roles from scripts",
+   "attend rehearsals",
+   "work with the director of photography"
+  ]
+ },
+ {
+  "role_name": "disc jockey",
+  "isco_group": "2652",
+  "essential_skills": [
+   "acoustics",
+   "musical instruments",
+   "musical genres",
+   "musical theory",
+   "select music for performance",
+   "mix multi-track recordings"
+  ]
+ },
+ {
+  "role_name": "media integration operator",
+  "isco_group": "3435",
+  "essential_skills": [
+   "digital media",
+   "draw up artistic production",
+   "manage temporary ICT networks for live performance",
+   "operate media integration systems",
+   "monitor developments in technology used for design",
+   "implement ICT security policies"
+  ]
+ },
+ {
+  "role_name": "actor/actress",
+  "isco_group": "2655",
+  "essential_skills": [
+   "acting techniques",
+   "perform live",
+   "manage feedback",
+   "follow time cues",
+   "study roles from scripts",
+   "attend rehearsals"
+  ]
+ },
+ {
+  "role_name": "dresser",
+  "isco_group": "3435",
+  "essential_skills": [
+   "standard sizing systems for clothing",
+   "work ergonomically",
+   "understand artistic concepts",
+   "safeguard artistic quality of performance",
+   "assist with dressing",
+   "work safely with machines"
+  ]
+ },
+ {
+  "role_name": "audio production technician",
+  "isco_group": "3435",
+  "essential_skills": [
+   "acoustics",
+   "musical instruments",
+   "work ergonomically",
+   "understand artistic concepts",
+   "support audio system installation",
+   "assess power needs"
+  ]
+ },
+ {
+  "role_name": "performance lighting director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "technical drawings",
+   "lighting techniques",
+   "cinematography",
+   "health and safety regulations",
+   "create solutions to problems",
+   "consult with production director"
+  ]
+ },
+ {
+  "role_name": "costume attendant",
+  "isco_group": "3435",
+  "essential_skills": [
+   "document costume stock",
+   "follow work schedule",
+   "assist with dressing",
+   "ensure continuous styling of artists",
+   "wash costumes",
+   "select costumes"
+  ]
+ },
+ {
+  "role_name": "animation director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "graphic design",
+   "motion graphics",
+   "computer equipment",
+   "ICT software specifications",
+   "multimedia systems",
+   "manage technical resources stock"
+  ]
+ },
+ {
+  "role_name": "video and motion picture producer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "project management principles",
+   "film production process",
+   "accounting techniques",
+   "audiovisual products",
+   "copyright legislation",
+   "work with motion picture editing team"
+  ]
+ },
+ {
+  "role_name": "body artist",
+  "isco_group": "3435",
+  "essential_skills": [
+   "sterilise working environment",
+   "order supplies",
+   "maintain equipment",
+   "identify customer's needs",
+   "stay alert",
+   "maintain customer service"
+  ]
+ },
+ {
+  "role_name": "drawing artist",
+  "isco_group": "2651",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "art history",
+   "perform ideation activities",
+   "create original drawings",
+   "develop an artistic framework"
+  ]
+ },
+ {
+  "role_name": "music arranger",
+  "isco_group": "2652",
+  "essential_skills": [
+   "musical instruments",
+   "musical genres",
+   "musical theory",
+   "develop musical ideas",
+   "transpose music",
+   "rewrite musical scores"
+  ]
+ },
+ {
+  "role_name": "production designer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "film production process",
+   "CAD software",
+   "manage budgets",
+   "consult with production director",
+   "manage staff",
+   "provide input to collaborators to guide their work"
+  ]
+ },
+ {
+  "role_name": "casting director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "read scripts",
+   "consult with motion picture producer",
+   "consult with production director",
+   "familiarise with personal directing styles",
+   "organise auditions",
+   "match actors to roles"
+  ]
+ },
+ {
+  "role_name": "stage machinist",
+  "isco_group": "3435",
+  "essential_skills": [
+   "draw up artistic production",
+   "work ergonomically",
+   "understand artistic concepts",
+   "draw stage layouts",
+   "set up technical stage equipment",
+   "safeguard artistic quality of performance"
+  ]
+ },
+ {
+  "role_name": "producer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "project management",
+   "marketing principles",
+   "copyright legislation",
+   "manage budgets",
+   "consult with production director",
+   "manage staff"
+  ]
+ },
+ {
+  "role_name": "post-production supervisor",
+  "isco_group": "2654",
+  "essential_skills": [
+   "film production process",
+   "accounting techniques",
+   "work with motion picture editing team",
+   "read scripts",
+   "check the production schedule",
+   "consult with motion picture producer"
+  ]
+ },
+ {
+  "role_name": "pyrotechnician",
+  "isco_group": "3435",
+  "essential_skills": [
+   "draw up artistic production",
+   "test pyrotechnical effects",
+   "manage consumables stock",
+   "manage technical resources stock",
+   "plan pyrotechnical effects",
+   "work ergonomically"
+  ]
+ },
+ {
+  "role_name": "scenery technician",
+  "isco_group": "3435",
+  "essential_skills": [
+   "work ergonomically",
+   "understand artistic concepts",
+   "draw stage layouts",
+   "organise stage",
+   "work safely with machines",
+   "use personal protection equipment"
+  ]
+ },
+ {
+  "role_name": "music producer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "musical instruments",
+   "musical genres",
+   "musical theory",
+   "copyright legislation",
+   "financial jurisdiction",
+   "manage budgets"
+  ]
+ },
+ {
+  "role_name": "singer",
+  "isco_group": "2652",
+  "essential_skills": [
+   "acting techniques",
+   "legal environment in music",
+   "perform live",
+   "manage feedback",
+   "follow time cues",
+   "study roles from scripts"
+  ]
+ },
+ {
+  "role_name": "director of photography",
+  "isco_group": "2654",
+  "essential_skills": [
+   "photography",
+   "film production process",
+   "lighting techniques",
+   "audiovisual equipment",
+   "cinematography",
+   "work with motion picture editing team"
+  ]
+ },
+ {
+  "role_name": "assistant video and motion picture director",
+  "isco_group": "3435",
+  "essential_skills": [
+   "film production process",
+   "apply company policies",
+   "manage budgets",
+   "consult with production director",
+   "handle paperwork",
+   "manage staff"
+  ]
+ },
+ {
+  "role_name": "prop maker",
+  "isco_group": "3435",
+  "essential_skills": [
+   "work ergonomically",
+   "understand artistic concepts",
+   "follow work schedule",
+   "adapt props",
+   "build devices into props",
+   "develop prop effects"
+  ]
+ },
+ {
+  "role_name": "video artist",
+  "isco_group": "2651",
+  "essential_skills": [
+   "digital content creation",
+   "labour legislation",
+   "intellectual property law",
+   "art history",
+   "adobe creative suite",
+   "digital media"
+  ]
+ },
+ {
+  "role_name": "head of workshop",
+  "isco_group": "3435",
+  "essential_skills": [
+   "manage supplies",
+   "manage schedule of tasks",
+   "work ergonomically",
+   "lead a team",
+   "manage budgets",
+   "commission set construction"
+  ]
+ },
+ {
+  "role_name": "composer",
+  "isco_group": "2652",
+  "essential_skills": [
+   "develop musical ideas",
+   "develop an artistic framework",
+   "study music",
+   "transpose music",
+   "create musical forms",
+   "rewrite musical scores"
+  ]
+ },
+ {
+  "role_name": "broadcasting programme director",
+  "isco_group": "3435",
+  "essential_skills": [
+   "brand marketing techniques",
+   "market analysis",
+   "audiovisual products",
+   "copyright legislation",
+   "manage budgets",
+   "manage staff"
+  ]
+ },
+ {
+  "role_name": "printmaker",
+  "isco_group": "2651",
+  "essential_skills": [
+   "position engraving equipment",
+   "engrave patterns",
+   "ensure accurate engravings",
+   "select engraving templates",
+   "transfer designs on workpiece",
+   "maintain engraving equipment"
+  ]
+ },
+ {
+  "role_name": "news anchor",
+  "isco_group": "2656",
+  "essential_skills": [
+   "interview techniques",
+   "editorial standards",
+   "breathing techniques",
+   "vocal techniques",
+   "pronunciation techniques",
+   "spelling"
+  ]
+ },
+ {
+  "role_name": "stunt performer",
+  "isco_group": "3435",
+  "essential_skills": [
+   "manage feedback",
+   "follow time cues",
+   "follow work schedule",
+   "perform stunts",
+   "work with the camera crew",
+   "study roles from scripts"
+  ]
+ },
+ {
+  "role_name": "light board operator",
+  "isco_group": "3435",
+  "essential_skills": [
+   "draw up artistic production",
+   "operate a lighting console",
+   "work ergonomically",
+   "understand artistic concepts",
+   "plot lighting states",
+   "safeguard artistic quality of performance"
+  ]
+ },
+ {
+  "role_name": "location manager",
+  "isco_group": "3435",
+  "essential_skills": [
+   "manage consumables stock",
+   "prepare road directions",
+   "consult with production director",
+   "supervise site maintenance",
+   "finish project within budget",
+   "negotiate price"
+  ]
+ },
+ {
+  "role_name": "stage director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "acting techniques",
+   "read scripts",
+   "develop drama production process",
+   "work with playwrights",
+   "cue a performance",
+   "assemble an artistic team"
+  ]
+ },
+ {
+  "role_name": "prompter",
+  "isco_group": "3435",
+  "essential_skills": [
+   "theatre techniques",
+   "rehearse role",
+   "read scripts",
+   "analyse theatre texts",
+   "develop drama production process",
+   "study roles from scripts"
+  ]
+ },
+ {
+  "role_name": "conceptual artist",
+  "isco_group": "2651",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "art history",
+   "iconography",
+   "create artwork",
+   "develop an artistic framework"
+  ]
+ },
+ {
+  "role_name": "script supervisor",
+  "isco_group": "3435",
+  "essential_skills": [
+   "film production process",
+   "work with motion picture editing team",
+   "consult with production director",
+   "check continuity requirements",
+   "work with the director of photography",
+   "prepare film continuity reports"
+  ]
+ },
+ {
+  "role_name": "performance lighting technician",
+  "isco_group": "3435",
+  "essential_skills": [
+   "artificial lighting systems",
+   "work ergonomically",
+   "understand artistic concepts",
+   "focus stage lights",
+   "draw up lighting plan",
+   "assess power needs"
+  ]
+ },
+ {
+  "role_name": "pyrotechnic designer",
+  "isco_group": "3435",
+  "essential_skills": [
+   "analyse the artistic concept based on stage actions",
+   "monitor developments in technology used for design",
+   "plan pyrotechnical effects",
+   "work ergonomically",
+   "understand artistic concepts",
+   "safeguard artistic quality of performance"
+  ]
+ },
+ {
+  "role_name": "video and motion picture editor",
+  "isco_group": "2654",
+  "essential_skills": [
+   "film production process",
+   "graphic design",
+   "motion graphics",
+   "ICT software specifications",
+   "multimedia systems",
+   "digital media"
+  ]
+ },
+ {
+  "role_name": "stage technician",
+  "isco_group": "3435",
+  "essential_skills": [
+   "work ergonomically",
+   "understand artistic concepts",
+   "draw stage layouts",
+   "plot lighting states",
+   "run a projection",
+   "hang chain hoists"
+  ]
+ },
+ {
+  "role_name": "storyboard artist",
+  "isco_group": "2651",
+  "essential_skills": [
+   "film production process",
+   "graphic design",
+   "copyright legislation",
+   "manage feedback",
+   "follow work schedule",
+   "consult with motion picture producer"
+  ]
+ },
+ {
+  "role_name": "glass artist",
+  "isco_group": "2651",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "art history",
+   "solder lead came joints",
+   "add colour",
+   "develop an artistic framework"
+  ]
+ },
+ {
+  "role_name": "prop master/prop mistress",
+  "isco_group": "3435",
+  "essential_skills": [
+   "work ergonomically",
+   "understand artistic concepts",
+   "safeguard artistic quality of performance",
+   "set up pyrotechnical equipment",
+   "change over props",
+   "adapt props"
+  ]
+ },
+ {
+  "role_name": "performance flying director",
+  "isco_group": "3435",
+  "essential_skills": [
+   "analyse the artistic concept based on stage actions",
+   "maintain flying harnesses",
+   "manage technical resources stock",
+   "work ergonomically",
+   "understand artistic concepts",
+   "provide first aid"
+  ]
+ },
+ {
+  "role_name": "mask maker",
+  "isco_group": "3435",
+  "essential_skills": [
+   "work ergonomically",
+   "understand artistic concepts",
+   "work safely with machines",
+   "use personal protection equipment",
+   "adapt to artists' creative demands",
+   "prepare personal work environment"
+  ]
+ },
+ {
+  "role_name": "choreologist",
+  "isco_group": "2653",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "art-historical values",
+   "understand the architecture of a live performance",
+   "be a role model in community arts",
+   "understand the emotional dimension of a performance"
+  ]
+ },
+ {
+  "role_name": "art director",
+  "isco_group": "2654",
+  "essential_skills": [
+   "design principles",
+   "business strategy concepts",
+   "health and safety regulations",
+   "theatre techniques",
+   "create solutions to problems",
+   "follow time cues"
+  ]
+ },
+ {
+  "role_name": "radio producer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "project management principles",
+   "copyright legislation",
+   "manage budgets",
+   "manage staff",
+   "obtain relevant licenses",
+   "develop creative ideas"
+  ]
+ },
+ {
+  "role_name": "sound artist",
+  "isco_group": "2652",
+  "essential_skills": [
+   "labour legislation",
+   "acoustics",
+   "intellectual property law",
+   "art history",
+   "operate the sound in the rehearsal studio",
+   "set up a multi-track recording"
+  ]
+ },
+ {
+  "role_name": "choirmaster/choirmistress",
+  "isco_group": "2652",
+  "essential_skills": [
+   "musical genres",
+   "subject of music coaching",
+   "music literature",
+   "musical theory",
+   "manage musical staff",
+   "work with soloists"
+  ]
+ },
+ {
+  "role_name": "répétiteur",
+  "isco_group": "2652",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "subject of music coaching",
+   "music literature",
+   "musical theory",
+   "manage feedback"
+  ]
+ },
+ {
+  "role_name": "fight director",
+  "isco_group": "3435",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "performing arts fights legal regulations",
+   "supervise performers' fights",
+   "work ergonomically",
+   "communicate expectations of fight actions"
+  ]
+ },
+ {
+  "role_name": "followspot operator",
+  "isco_group": "3435",
+  "essential_skills": [
+   "operate follow spots",
+   "work ergonomically",
+   "understand artistic concepts",
+   "communicate during show",
+   "work safely with machines",
+   "use personal protection equipment"
+  ]
+ },
+ {
+  "role_name": "assistant stage director",
+  "isco_group": "3435",
+  "essential_skills": [
+   "art-historical values",
+   "analyse the artistic concept based on stage actions",
+   "maintain a production book",
+   "read scripts",
+   "supervise script preparation",
+   "understand artistic concepts"
+  ]
+ },
+ {
+  "role_name": "extra",
+  "isco_group": "3435",
+  "essential_skills": [
+   "act reliably",
+   "harmonise body movements",
+   "express yourself physically",
+   "act discreetly",
+   "follow directions of the artistic director",
+   "perform scenes for filming"
+  ]
+ },
+ {
+  "role_name": "voice-over artist",
+  "isco_group": "2655",
+  "essential_skills": [
+   "acting techniques",
+   "rehearse role",
+   "follow work schedule",
+   "study roles from scripts",
+   "analyse the original actor's way of speaking",
+   "synchronise with mouth movements"
+  ]
+ },
+ {
+  "role_name": "ceramicist",
+  "isco_group": "2651",
+  "essential_skills": [
+   "labour legislation",
+   "intellectual property law",
+   "art history",
+   "types of pottery material",
+   "handle different pottery materials",
+   "create ceramic work by hand"
+  ]
+ },
+ {
+  "role_name": "podcast producer",
+  "isco_group": "2654",
+  "essential_skills": [
+   "audio post-production",
+   "social media marketing techniques",
+   "media formats",
+   "audio technology",
+   "e-commerce systems",
+   "audiovisual products"
+  ]
+ },
+ {
+  "role_name": "theatre technician",
+  "isco_group": "3435",
+  "essential_skills": [
+   "draw up artistic production",
+   "operate follow spots",
+   "follow time cues",
+   "set up technical stage equipment",
+   "draw up lighting plan",
+   "distribute control signals"
+  ]
+ },
+ {
+  "role_name": "musician",
+  "isco_group": "2652",
+  "essential_skills": [
+   "legal environment in music",
+   "perform live",
+   "manage feedback",
+   "follow time cues",
+   "study roles from scripts",
+   "organise a repertoire"
+  ]
+ }
+]

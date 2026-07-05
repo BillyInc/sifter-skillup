@@ -1,0 +1,277 @@
+{
+ "domain_id": "D009",
+ "domain_name": "Data Science",
+ "role_count": 54,
+ "roles": [
+  {
+   "role": "integration engineer",
+   "isco": 2511,
+   "aka": "IT integration engineer  ·  ICT integration engineers  ·  system integration engineer  ·  software integration engineer"
+  },
+  {
+   "role": "ICT test analyst",
+   "isco": 2519,
+   "aka": "IT test analyst  ·  test designer"
+  },
+  {
+   "role": "embedded system designer",
+   "isco": 2511,
+   "aka": "embedded system programmer  ·  embedded systems designers  ·  embedded software developer  ·  embedded system developer  ·  embedded systems programmer"
+  },
+  {
+   "role": "software tester",
+   "isco": 2519,
+   "aka": "module tester  ·  application tester  ·  soft tester  ·  application software tester  ·  software testing specialist"
+  },
+  {
+   "role": "financial auditor",
+   "isco": 2411,
+   "aka": "auditor  ·  finance auditor  ·  internal auditor  ·  audit manager  ·  chartered accountant"
+  },
+  {
+   "role": "computer vision engineer",
+   "isco": 2511,
+   "aka": "computer vision applied scientist  ·  computer vision expert  ·  computer vision specialist  ·  computer vision project engineer  ·  smart technics computer vision engineer"
+  },
+  {
+   "role": "data engineer",
+   "isco": 2511,
+   "aka": "data engineer expert  ·  research data engineer"
+  },
+  {
+   "role": "green ICT consultant",
+   "isco": 2511,
+   "aka": "IT environmental consultant  ·  green IT consultant  ·  green ICT consultants  ·  ICT environmental consultant  ·  ICT sustainability systems consultant"
+  },
+  {
+   "role": "data scientist",
+   "isco": 2511,
+   "aka": "data expert  ·  research data scientist  ·  data research scientist  ·  electromobility data scientist"
+  },
+  {
+   "role": "enterprise architect",
+   "isco": 2511,
+   "aka": "enterprise architects  ·  enterprise developer  ·  enterprise architecture manager  ·  enterprise designer"
+  },
+  {
+   "role": "artificial intelligence engineer",
+   "isco": 2511,
+   "aka": "intelligent systems designers  ·  artificial intelligence designer  ·  ICT intelligent systems designer  ·  AI system designer  ·  semantic technologies engineer"
+  },
+  {
+   "role": "ICT business analysis manager",
+   "isco": 2511,
+   "aka": "IT business analysis manager  ·  IT commercial analysis manager  ·  IT business analysis director  ·  ICT business analysis managers  ·  lead IT business analyst"
+  },
+  {
+   "role": "budget analyst",
+   "isco": 2411,
+   "aka": "budget and policy analyst  ·  budget accountant  ·  budget officer  ·  cost and planning analyst"
+  },
+  {
+   "role": "ICT system tester",
+   "isco": 2519,
+   "aka": "IT system tester  ·  ICT systems tester  ·  systems tester  ·  ICT systems test engineer  ·  ICT systems testers"
+  },
+  {
+   "role": "tax advisor",
+   "isco": 2411,
+   "aka": "fiscal advisor  ·  tax specialist  ·  tax expert  ·  tax evaluator  ·  tax preparer"
+  },
+  {
+   "role": "financial controller",
+   "isco": 2411,
+   "aka": "finance manager  ·  financial administrator  ·  accounting supervisor  ·  financial accountant  ·  accountant"
+  },
+  {
+   "role": "ICT research consultant",
+   "isco": 2511,
+   "aka": "IT research consultant  ·  ICT research advisor  ·  IT research specialist  ·  ICT research consultants  ·  IT research advisor"
+  },
+  {
+   "role": "data quality specialist",
+   "isco": 2519,
+   "aka": "data integrity officer  ·  data integrity specialist  ·  data quality officer  ·  data quality expert  ·  data quality specialists"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "ICT integration tester",
+   "isco": 2519,
+   "aka": "ICT compatibility tester  ·  compatibility tester  ·  module compatibility tester  ·  module integration tester  ·  integration testers"
+  },
+  {
+   "role": "public finance accountant",
+   "isco": 2411,
+   "aka": "finance accountant  ·  public finance officer  ·  treasury accountant  ·  treasury officer  ·  public finance manager"
+  },
+  {
+   "role": "blockchain architect",
+   "isco": 2511,
+   "aka": "decentralized ledger technology specialist  ·  DLT specialist  ·  blockchain technology specialist  ·  DLT architect"
+  },
+  {
+   "role": "cost analyst",
+   "isco": 2411,
+   "aka": "quantity surveyor  ·  cost accountant  ·  cost accounting clerk  ·  cost recovery estimator  ·  cost and budget analyst"
+  },
+  {
+   "role": "grants management officer",
+   "isco": 2411,
+   "aka": "grants officer  ·  proposals manager"
+  },
+  {
+   "role": "financial fraud examiner",
+   "isco": 2411,
+   "aka": "fraud analyst  ·  fraud examiner  ·  fraud prevention analyst  ·  fraud investigations manager  ·  financial fraud investigator"
+  },
+  {
+   "role": "ICT system analyst",
+   "isco": 2511,
+   "aka": "ICT system analysts  ·  ICT systems analysts  ·  ICT systems analyst  ·  system analyst  ·  IT system analyst"
+  },
+  {
+   "role": "ICT system developer",
+   "isco": 2511,
+   "aka": "systems programmer  ·  ICT system developers  ·  systems developer  ·  IT system developer  ·  chief ICT system developer"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "biometrician",
+   "isco": 2120,
+   "aka": "biometrics scientist  ·  biometricians  ·  biometric studies scholar  ·  biometrics analyst  ·  biometrics researcher"
+  },
+  {
+   "role": "ICT consultant",
+   "isco": 2511,
+   "aka": "ICT ERP consultant  ·  ICT advisor  ·  IT advisor  ·  IT consultant  ·  IT compliance consultant"
+  },
+  {
+   "role": "ICT system integration consultant",
+   "isco": 2511,
+   "aka": "network integration consultant  ·  system integration consultants  ·  systems integration consultant  ·  application integration consultant  ·  systems integration consultants"
+  },
+  {
+   "role": "accounting analyst",
+   "isco": 2411,
+   "aka": "accounting systems analyst  ·  accounts analyst  ·  accounting specialist  ·  accounting methods analyst"
+  },
+  {
+   "role": "audit supervisor",
+   "isco": 2411,
+   "aka": "audit checker  ·  auditing supervisor  ·  audit leader  ·  audit inspector  ·  audit examiner"
+  },
+  {
+   "role": "IT auditor",
+   "isco": 2511,
+   "aka": "ICT auditor  ·  information technology auditor  ·  IT Quality Appraiser"
+  },
+  {
+   "role": "statistical assistant",
+   "isco": 3314,
+   "aka": "administrative assistant  ·  IT expert  ·  statistician  ·  computer expert  ·  statistician's assistant"
+  },
+  {
+   "role": "data analyst",
+   "isco": 2511,
+   "aka": "battery data analyst  ·  mine electrification data analyst  ·  data warehouse analyst  ·  data warehousing analyst  ·  battery materials data analyst"
+  },
+  {
+   "role": "bankruptcy trustee",
+   "isco": 2411,
+   "aka": "insolvency practitioner  ·  insolvency trustee  ·  bankruptcy analyst  ·  trustees in bankruptcy  ·  trustee in bankruptcy"
+  },
+  {
+   "role": "dividend analyst",
+   "isco": 2411,
+   "aka": "dividends clerk  ·  dividend and coupon analyst  ·  dividend calculation clerk  ·  dividends analyst  ·  dividend clerk"
+  },
+  {
+   "role": "ICT system architect",
+   "isco": 2511,
+   "aka": "systems architect  ·  IT systems architect  ·  information systems architect  ·  ICT system architects  ·  solution architect"
+  },
+  {
+   "role": "computer scientist",
+   "isco": 2511,
+   "aka": "IT researcher  ·  IT scientist  ·  ICT science researcher  ·  ICT researcher  ·  IT research scientist"
+  },
+  {
+   "role": "accountant",
+   "isco": 2411,
+   "aka": "accounting technician  ·  bookkeeper  ·  accounting supervisor  ·  accounting officer  ·  certified public accountant"
+  },
+  {
+   "role": "user experience analyst",
+   "isco": 2511,
+   "aka": "user experience officer  ·  usability analyst  ·  user experience analysts"
+  },
+  {
+   "role": "ICT business analyst",
+   "isco": 2511,
+   "aka": "requirement engineer  ·  business process specialist  ·  IT business analyst  ·  ICT business analysts"
+  },
+  {
+   "role": "Data Analysts and Scientists",
+   "isco": 2519,
+   "aka": NaN
+  },
+  {
+   "role": "Insurance Underwriters",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Financial Risk Specialists",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Tax Preparers",
+   "isco": 2411,
+   "aka": NaN
+  },
+  {
+   "role": "Operations Research Analysts",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Biostatisticians",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Business Intelligence Analysts",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Clinical Data Managers",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Mathematical Science Occupations, All Other",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Bioinformatics Technicians",
+   "isco": 2120,
+   "aka": NaN
+  },
+  {
+   "role": "Chemists",
+   "isco": 2120,
+   "aka": NaN
+  }
+ ]
+}

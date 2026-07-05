@@ -1,0 +1,15 @@
+{
+ "brochure": "agriculture",
+ "txt": "_jamb_txt/agriculture.txt",
+ "missing_programmes": [
+  "Plant Science",
+  "Crop Protection",
+  "Animal Physiology",
+  "Farm Management & Agric. Extension",
+  "Pasture & Range Management",
+  "Livestock Production Technology",
+  "Eco-Tourism and Wildlife Management",
+  "Environmental Management and Technology",
+  "Public & Community Health"
+ ]
+}

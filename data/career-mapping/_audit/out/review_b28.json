@@ -1,0 +1,59 @@
+{"reviews":[
+{"domain_id":"D142","domain_name":"Bioinformatics, Computational Biology","verdict":"issues",
+"remove_roles":[
+"environmental scientist (ISCO 2133 — environmental science, not bioinformatics/comp bio)",
+"water quality analyst (ISCO 2133 — environmental monitoring, not comp bio)",
+"pipeline environmental project manager (ISCO 2133 — environmental project mgmt, cross-domain)",
+"environmental programme coordinator (ISCO 2133 — environmental admin, not comp bio)",
+"airport environment officer (ISCO 2133 — environmental compliance, unrelated)",
+"soil scientist (ISCO 2133 — soil/environmental science)",
+"groundwater monitoring technician (ISCO 2133 — environmental technician)",
+"nature conservation officer (ISCO 2133 — conservation/ranger, unrelated)",
+"ecologist (ISCO 2133 — field ecology, not computational biology)",
+"aquaculture environmental analyst (ISCO 2133 — environmental analysis)",
+"countryside officer (ISCO 2133 — land management)",
+"conservation scientist (ISCO 2133 — conservation, not comp bio)",
+"environmental technician (ISCO 2133 — pollution control technician)",
+"natural resources consultant (ISCO 2133 — resource management)",
+"air pollution analyst (ISCO 2133 — air quality monitoring)",
+"metrologist (ISCO 2112 — measurement/calibration, unrelated to comp bio)",
+"botanicals specialist (ISCO 2131 — botanical milling/herbal products, not comp bio)",
+"curator of horticulture (ISCO 2131 — horticulture/garden curation)",
+"botanist (ISCO 2131 — aka rows are all horticulture management, group-label contamination)",
+"animal feed nutritionist (ISCO 2131 — animal nutrition, unrelated)",
+"aquaculture biologist (ISCO 2131 — aquaculture, not comp bio)"
+],
+"add_roles":[
+{"role":"bioinformatician / computational biologist","isco":2131,"skills":["sequence alignment","genomics data analysis","Python/R programming","statistical modelling","biological databases","pipeline development"],"reason":"Core signature role of the domain; only 'bioinformatics scientist' present, the applied practitioner role is missing."},
+{"role":"biostatistician","isco":2120,"skills":["statistical genetics","survival analysis","R/SAS","clinical trial design","mixed models","genomic data statistics"],"reason":"Signature computational-biology role bridging statistics and biology; absent."},
+{"role":"computational genomics data scientist","isco":2131,"skills":["NGS data processing","variant calling","machine learning","cloud compute (Nextflow/Snakemake)","multi-omics integration","data visualization"],"reason":"Central emerging role in the domain; absent."}
+],
+"overfanout_roles":["biologist (generic zoology aka fan-out)","microbiologist (broad microbiology aka)","physiologist (anatomy aka fan-out)"],
+"rename_to":null,
+"notes":"Severe cross-domain contamination: ~15 environmental-science (ISCO 2133) roles bleed in from an environmental/ecology domain and should move out. Signature comp-bio roles (biostatistician, computational biologist/bioinformatician, genomics data scientist) missing — only 'bioinformatics scientist' present. Retained relevant life-science 2131 roles (geneticist, biochemist, molecular biology, immunologist, epidemiologist, microbiologist) plus mathematician/statistician as computational support. No aka=NaN junk rows detected."},
+{"domain_id":"D143","domain_name":"Forensic Science, Digital Forensics","verdict":"issues",
+"remove_roles":[
+"Life Scientists, All Other (aka=NaN — junk group-label row, ISCO 2111)",
+"Life, Physical, and Social Science Technicians, All Other (aka=NaN — junk group-label row, ISCO 3141)",
+"Physicians, All Other (aka=NaN — junk group-label row, ISCO 2212)",
+"astronomer (ISCO 2111 — astronomy, unrelated to forensics)",
+"cosmologist (ISCO 2111 — cosmology, unrelated)",
+"physicist (ISCO 2111 — general physics; 'forensic physicist' aka too thin to justify, cross-domain)",
+"botanical technician (ISCO 3141 — horticulture/field botany, not forensic lab)",
+"biology technician (ISCO 3141 — general biology lab, cross-domain)",
+"zoology technician (ISCO 3141 — zoology/zookeeping, unrelated)",
+"bacteriology technician (ISCO 3141 — microbiology lab, not forensic)",
+"biochemistry technician (ISCO 3141 — general biochem lab, cross-domain)",
+"biotechnical technician (ISCO 3141 — biotech lab, not forensic)",
+"specialised doctor (ISCO 2212 — clinical medicine, not forensic pathology-specific; cross-domain)",
+"knowledge engineer (ISCO 2529 — knowledge/data engineering, not forensics)"
+],
+"add_roles":[
+{"role":"forensic scientist","isco":2131,"skills":["trace evidence analysis","DNA profiling","toxicology","chain of custody","evidence documentation","laboratory instrumentation"],"reason":"Core signature role of forensic science; currently only appears buried as an aka under criminal investigator."},
+{"role":"forensic pathologist","isco":2212,"skills":["autopsy","cause-of-death determination","histopathology","medico-legal reporting","toxicological interpretation","court testimony"],"reason":"Signature forensic-medicine role; absent (generic 'specialised doctor' does not capture it)."},
+{"role":"malware / reverse-engineering analyst","isco":2529,"skills":["reverse engineering","disassembly (IDA/Ghidra)","memory forensics","malware triage","YARA rules","incident analysis"],"reason":"Signature digital-forensics role missing; complements digital forensics expert and incident responder."}
+],
+"overfanout_roles":["ICT security administrator (broad cyber-admin aka; more security-ops than forensics)","cybersecurity risk manager (governance/risk aka, tangential to forensics)","ICT resilience manager (disaster-recovery aka, tangential)"],
+"rename_to":null,
+"notes":"Three aka=NaN junk group-label rows removed. Contamination cluster of physical-science (astronomer, cosmologist, physicist — ISCO 2111) and generic life-science lab technicians (ISCO 3141) bled in and don't belong to forensic/digital forensics. Signature roles missing: forensic scientist as a first-class role, forensic pathologist, and malware/reverse-engineering analyst. Retained digital-forensics/cyber roles (digital forensics expert, cyber incident responder, ethical hacker, embedded systems security engineer) and law-enforcement investigative roles (criminal investigator, police detective, police inspector) which are legitimately in-domain."}
+]}

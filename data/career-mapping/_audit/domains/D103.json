@@ -1,0 +1,72 @@
+{
+ "domain_id": "D103",
+ "domain_name": "Jewellery Making, Goldsmithing",
+ "role_count": 13,
+ "roles": [
+  {
+   "role": "filigree maker",
+   "isco": 7313,
+   "aka": "filigree artist  ·  jewelery metalworker  ·  filagree maker  ·  filigree jewelry worker  ·  filigree craftsman"
+  },
+  {
+   "role": "jewellery engraver",
+   "isco": 7313,
+   "aka": "jewellery hand engraver  ·  gold engraver  ·  silver etcher  ·  jewellery engraving designer  ·  machine engraver"
+  },
+  {
+   "role": "jeweller",
+   "isco": 7313,
+   "aka": "bench jeweller  ·  fine metalworker  ·  brooch maker  ·  jewellery maker  ·  jewellery design consultant"
+  },
+  {
+   "role": "precious stone setter",
+   "isco": 7313,
+   "aka": "jewelery stone setter  ·  gem setter  ·  diamond setter  ·  precious stone craftworker  ·  gemsetter"
+  },
+  {
+   "role": "precious stone cutter",
+   "isco": 7313,
+   "aka": "lapidarist  ·  gemstone cutter  ·  gemcutter  ·  lapidary  ·  faceter"
+  },
+  {
+   "role": "jewellery mounter",
+   "isco": 7313,
+   "aka": "bench jeweller  ·  jewelry mount maker  ·  gemstone mounter  ·  jewellery mount maker  ·  jewelry mounter"
+  },
+  {
+   "role": "goldsmith",
+   "isco": 7313,
+   "aka": "gold ring maker  ·  gold earrings fabricator  ·  gold earrings maker  ·  boutique goldsmith  ·  goldsmiths"
+  },
+  {
+   "role": "jewellery repairer",
+   "isco": 7313,
+   "aka": "jewelry repairer  ·  jewerly repair technician  ·  jewellery repair technician  ·  jewellery hammersmith  ·  adornment repairer"
+  },
+  {
+   "role": "jewellery polisher",
+   "isco": 7313,
+   "aka": "jewelery repairer  ·  barrel polishing machine operative  ·  jewelry polishing machine operator  ·  jewelry polishing machine setter  ·  jewellery polishing machine operative"
+  },
+  {
+   "role": "silversmith",
+   "isco": 7313,
+   "aka": "silver ring maker  ·  silver jewellery maker  ·  trophy silversmith  ·  silver earrings fabricator  ·  trophy maker"
+  },
+  {
+   "role": "Jewelers and Precious Stone and Metal Workers",
+   "isco": 7313,
+   "aka": NaN
+  },
+  {
+   "role": "Team Assemblers",
+   "isco": 7313,
+   "aka": NaN
+  },
+  {
+   "role": "Gem and Diamond Workers",
+   "isco": 7313,
+   "aka": NaN
+  }
+ ]
+}

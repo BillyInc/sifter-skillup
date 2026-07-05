@@ -1,0 +1,362 @@
+{
+ "domain_id": "D047",
+ "domain_name": "Agricultural Science",
+ "role_count": 71,
+ "roles": [
+  {
+   "role": "chemist",
+   "isco": 2113,
+   "aka": "chemistry technician  ·  pharmacologist  ·  chemical engineer  ·  toxicologist  ·  environmental chemist"
+  },
+  {
+   "role": "cosmetic chemist",
+   "isco": 2113,
+   "aka": "research chemist  ·  cosmetics formulation chemist  ·  cosmetics formulation development chemist  ·  skin care formulation chemist  ·  cosmetics formulator"
+  },
+  {
+   "role": "horse breeder",
+   "isco": 6121,
+   "aka": "horse rearer  ·  stud specialist  ·  racehorse breeder"
+  },
+  {
+   "role": "biophysicist",
+   "isco": 2131,
+   "aka": "biophysics scientist  ·  biophysics research scientist  ·  biophysics biotechnologist  ·  biophysics scholar  ·  biophysics researcher"
+  },
+  {
+   "role": "chemical application specialist",
+   "isco": 2113,
+   "aka": "specialist chemist  ·  chemical application technician  ·  technical application specialist chemist  ·  application specialist chemist  ·  product formulation chemist"
+  },
+  {
+   "role": "crop production manager",
+   "isco": 6114,
+   "aka": "farm director  ·  crop producer"
+  },
+  {
+   "role": "agricultural technician",
+   "isco": 3142,
+   "aka": "agricultural research assistant  ·  bacteriological testing coordinator  ·  horticultural technician  ·  aquaculture technician  ·  biotechnician"
+  },
+  {
+   "role": "vineyard machinery operator",
+   "isco": 6112,
+   "aka": "vineyard machine operator  ·  grape grower  ·  farm machinery operator  ·  machinery operator in a vineyard  ·  winery machine operator"
+  },
+  {
+   "role": "vineyard supervisor",
+   "isco": 6112,
+   "aka": "supervisor of a winery  ·  supervisor of a vineyard"
+  },
+  {
+   "role": "physiologist",
+   "isco": 2131,
+   "aka": "anatomy analyst  ·  anatomy researcher  ·  anatomy research scientist  ·  physiology scientist  ·  physiology analyst"
+  },
+  {
+   "role": "shepherd",
+   "isco": 6121,
+   "aka": "sheep herder  ·  flock manager  ·  sheep flock specialist  ·  flock movement specialist  ·  sheep flock manager"
+  },
+  {
+   "role": "fisheries adviser",
+   "isco": 2132,
+   "aka": "marine fisheries consultant  ·  fisheries consultant  ·  marine fisheries scientist  ·  marine fisheries biologist  ·  senior fisheries specialist"
+  },
+  {
+   "role": "toxicologist",
+   "isco": 2131,
+   "aka": "toxicology analyst  ·  toxicology science researcher  ·  toxicologists  ·  toxicology studies scholar  ·  toxicology scholar"
+  },
+  {
+   "role": "aquaculture harvesting manager",
+   "isco": 1312,
+   "aka": "fish farm harvesting manager  ·  manager of aquaculture harvesting  ·  harvesting operations manager  ·  aquaculture harvesting supervisor"
+  },
+  {
+   "role": "botanist",
+   "isco": 2131,
+   "aka": "garden intendant  ·  director of horticulture learning and operations  ·  horticulture manager  ·  director of horticulture  ·  garden manager"
+  },
+  {
+   "role": "equine yard manager",
+   "isco": 6121,
+   "aka": "riding school manager  ·  horse stable manager  ·  stable manager  ·  horse yard manager  ·  equine stable manager"
+  },
+  {
+   "role": "analytical chemist",
+   "isco": 2113,
+   "aka": "chemist  ·  analytical chemistry analyst  ·  analytical chemistry scientist  ·  chemistry research analyst  ·  chrystalographer"
+  },
+  {
+   "role": "aquaculture production manager",
+   "isco": 1312,
+   "aka": "fish farm production manager  ·  fishery production manager  ·  manager of aquaculture production"
+  },
+  {
+   "role": "fruit production team leader",
+   "isco": 6112,
+   "aka": "fruit harvesting team leader  ·  fruit picking manager  ·  strawberry farmer  ·  strawberry production team supervisor  ·  apple production manager"
+  },
+  {
+   "role": "geneticist",
+   "isco": 2131,
+   "aka": "genetics engineer  ·  genetic scientist  ·  genetics research scientist  ·  molecular biologist  ·  molecular geneticist"
+  },
+  {
+   "role": "bioinformatics scientist",
+   "isco": 2131,
+   "aka": "IT researcher  ·  senior bioinformatics scientist  ·  data scientist  ·  biology researcher  ·  junior bioinformatics scientist"
+  },
+  {
+   "role": "aquaculture biologist",
+   "isco": 2131,
+   "aka": "aquaculture biology research analyst  ·  expert in aquaculture biology  ·  aquaculture biology expert  ·  specialist in aquaculture biology  ·  aquaculture biology scientist"
+  },
+  {
+   "role": "food biotechnologist",
+   "isco": 2131,
+   "aka": "food biotech technician  ·  technician for food industry bioeconomy  ·  food biotech specialist"
+  },
+  {
+   "role": "biochemist",
+   "isco": 2131,
+   "aka": "biochemistry research scientist  ·  chemical biotechnologist  ·  biochemistry studies scholar  ·  biochemistry science researcher  ·  biochemistry studies research scientist"
+  },
+  {
+   "role": "animal behaviourist",
+   "isco": 2131,
+   "aka": "ethologist  ·  animal behaviour expert  ·  animal behaviour specialist  ·  animal behavior specialist  ·  animal behavior expert"
+  },
+  {
+   "role": "sensory scientist",
+   "isco": 2113,
+   "aka": "sensory and consumer research scientist  ·  consumer and sensory scientist  ·  sensory science consultant  ·  sensory research scientist  ·  chocolate scientist"
+  },
+  {
+   "role": "vineyard manager",
+   "isco": 6112,
+   "aka": "manager of a vineyard  ·  winery manager  ·  manager of a winery"
+  },
+  {
+   "role": "horticulture production team leader",
+   "isco": 6113,
+   "aka": "horticultural team manager  ·  horticultural foreman  ·  horticultural production team leader"
+  },
+  {
+   "role": "interior landscaper",
+   "isco": 6113,
+   "aka": "interior gardener  ·  experts in interior landscaping  ·  interior landscapers  ·  indoor gardener  ·  indoor landscaper"
+  },
+  {
+   "role": "aquaculture recirculation manager",
+   "isco": 2132,
+   "aka": "aquaculture recirculation supervisor  ·  manager of aquaculture recirculation systems  ·  fish farm recirculation manager"
+  },
+  {
+   "role": "groundsman/groundswoman",
+   "isco": 6113,
+   "aka": "park keeper  ·  groundsman  ·  groundswoman  ·  landscape gardener  ·  horticulturist"
+  },
+  {
+   "role": "aquaculture husbandry manager",
+   "isco": 1312,
+   "aka": "aquatic animals husbandry manager  ·  fish farm on-growing supervisor  ·  aquaculture on-growing manager  ·  aquaculture on-growing supervisor  ·  fish farm on-growing manager"
+  },
+  {
+   "role": "hop farmer",
+   "isco": 6112,
+   "aka": "hop producer  ·  hop tender  ·  hop grower  ·  hop cultivator  ·  hops cultivator"
+  },
+  {
+   "role": "microbiologist",
+   "isco": 2131,
+   "aka": "virologist  ·  microbiology research analyst  ·  histologist  ·  bacteriologist  ·  microbiology studies research analyst"
+  },
+  {
+   "role": "chemical tester",
+   "isco": 2113,
+   "aka": "metal chemical tester  ·  chemical quality control analyst  ·  chemical element analyst"
+  },
+  {
+   "role": "aquaculture site supervisor",
+   "isco": 3142,
+   "aka": "fish farm site manager  ·  fish culture site manager  ·  fish farm site supervisor  ·  supervisor of aquaculture sites  ·  fishery site supervisor"
+  },
+  {
+   "role": "sheep breeder",
+   "isco": 6121,
+   "aka": "shearer  ·  sheep rearer  ·  sheep specialist  ·  sheep breeders  ·  goat breeder"
+  },
+  {
+   "role": "cattle breeder",
+   "isco": 6121,
+   "aka": "cattle specialist  ·  cattle rearer"
+  },
+  {
+   "role": "immunologist",
+   "isco": 2131,
+   "aka": "immunology analyst  ·  immunology researcher  ·  immunology studies research analyst  ·  immunology research analyst  ·  immunology studies researcher"
+  },
+  {
+   "role": "epidemiologist",
+   "isco": 2131,
+   "aka": "epidemiology science researcher  ·  epidemiology researcher  ·  epidemiology research analyst  ·  epidemiology analyst  ·  epidemiology research scientist"
+  },
+  {
+   "role": "arboriculturist",
+   "isco": 6112,
+   "aka": "arborist  ·  arboretum worker  ·  arboriculture specialist  ·  tree climber  ·  climber"
+  },
+  {
+   "role": "viticulture adviser",
+   "isco": 3142,
+   "aka": "viniculture adviser  ·  wine production adviser  ·  viticulturist  ·  viniculturist  ·  adviser on viticulture"
+  },
+  {
+   "role": "agricultural scientist",
+   "isco": 2132,
+   "aka": "agricultural development specialist  ·  agriculture research scientist  ·  technician for agricultural bioeconomy  ·  agriculture researcher  ·  agricultural research scientist"
+  },
+  {
+   "role": "agronomist",
+   "isco": 2132,
+   "aka": "agronomy analyst  ·  agronomy research analyst  ·  organic farming advisor  ·  agronomy science researcher  ·  crop researcher"
+  },
+  {
+   "role": "botanicals specialist",
+   "isco": 2131,
+   "aka": "botanical milling operative  ·  botanical expert  ·  botanical specialist  ·  botanical science expert"
+  },
+  {
+   "role": "vineyard cellar master",
+   "isco": 6112,
+   "aka": "vintner  ·  cellar master of a vineyard  ·  winery supervisor  ·  winemaker"
+  },
+  {
+   "role": "curator of horticulture",
+   "isco": 2131,
+   "aka": "conservation horticulturist  ·  curator & horticulturist  ·  curator and horticulturist  ·  curator of botany  ·  garden curator"
+  },
+  {
+   "role": "horticulture production manager",
+   "isco": 6113,
+   "aka": "horticulture manager  ·  horticultural crop manager  ·  horticultural producer  ·  horticultural manager  ·  horticultural production manager"
+  },
+  {
+   "role": "fragrance chemist",
+   "isco": 2113,
+   "aka": "application engineer  ·  fragrance formulator  ·  fragrance developer  ·  perfume and cosmetics formulator  ·  fragrance product developer"
+  },
+  {
+   "role": "livestock advisor",
+   "isco": 2132,
+   "aka": "livestock consultant  ·  agriculture advisor  ·  agricultural business advisor  ·  agricultural zootechnologist  ·  agricultural advisor"
+  },
+  {
+   "role": "landscape gardener",
+   "isco": 6113,
+   "aka": "landscaper  ·  landscaping gardener  ·  landscape gardeners"
+  },
+  {
+   "role": "animal feed nutritionist",
+   "isco": 2131,
+   "aka": "animal nutrition expert  ·  feed nutritionist  ·  animal feed expert"
+  },
+  {
+   "role": "pig breeder",
+   "isco": 6121,
+   "aka": "pig specialist  ·  pig rearer"
+  },
+  {
+   "role": "biologist",
+   "isco": 2131,
+   "aka": "ornithologist  ·  herpetologist  ·  mycologist  ·  zoologist  ·  entomologist"
+  },
+  {
+   "role": "marine biologist",
+   "isco": 2131,
+   "aka": "marine ecologist  ·  marine biology researcher  ·  marine botanist  ·  sea biologist  ·  researcher in marine biology"
+  },
+  {
+   "role": "forester",
+   "isco": 1311,
+   "aka": "woodland manager  ·  forest manager  ·  forestry manager"
+  },
+  {
+   "role": "agronomic crop production team leader",
+   "isco": 6111,
+   "aka": "production team leader  ·  crops production team leader  ·  crop team leader  ·  crop growing team leader  ·  crop team manager"
+  },
+  {
+   "role": "aquaculture quality supervisor",
+   "isco": 3142,
+   "aka": "supervisor of aquaculture quality  ·  fish farming supervisor  ·  aquaculture quality manager"
+  },
+  {
+   "role": "tree surgeon",
+   "isco": 6113,
+   "aka": "arboriculturist  ·  arborist  ·  tree surgeon and climber  ·  tree surgeon & climber  ·  tree surgeon/climber"
+  },
+  {
+   "role": "forestry adviser",
+   "isco": 2132,
+   "aka": "woodland manager  ·  forestry advisers  ·  forestry consultant  ·  silviculturist  ·  woodland consultant"
+  },
+  {
+   "role": "Landscaping and Groundskeeping Workers",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "Tree Trimmers and Pruners",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "Grounds Maintenance Workers, All Other",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Farming, Fishing, and Forestry Workers",
+   "isco": 6121,
+   "aka": NaN
+  },
+  {
+   "role": "Graders and Sorters, Agricultural Products",
+   "isco": 6111,
+   "aka": NaN
+  },
+  {
+   "role": "Agricultural Equipment Operators",
+   "isco": 6121,
+   "aka": NaN
+  },
+  {
+   "role": "animal feed supervisor",
+   "isco": 3122,
+   "aka": "feed manufacturer  ·  fodder production supervisor  ·  feed mill supervisor  ·  livestock feed supervisor  ·  animal feed production processor"
+  },
+  {
+   "role": "agricultural engineer",
+   "isco": 2144,
+   "aka": "agricultural technology engineer  ·  agricultural landscape engineer  ·  agricultural technology engineering expert  ·  agricultural technology engineering specialist  ·  agricultural technology engineering consultant"
+  },
+  {
+   "role": "agricultural equipment design engineer",
+   "isco": 2144,
+   "aka": "agricultural systems specialist  ·  agricultural equipment engineering consultant  ·  agricultural landscape enginer  ·  agricultural equipment engineer  ·  agricultural equipment designer"
+  },
+  {
+   "role": "Farm Labor Contractors",
+   "isco": 2421,
+   "aka": NaN
+  },
+  {
+   "role": "Buyers and Purchasing Agents, Farm Products",
+   "isco": 3323,
+   "aka": NaN
+  }
+ ]
+}

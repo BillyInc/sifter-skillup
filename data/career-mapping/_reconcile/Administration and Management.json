@@ -1,0 +1,3889 @@
+[
+ {
+  "programme": "Accounting",
+  "code": "ACC",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "understand the concepts of accounting and identify the users of accounting information",
+   "understand the various forms of business organizations"
+  ],
+  "transferable_skills": [
+   "development of technical skills at the expense of generic employability skills as revealed by various curriculum for accounting programmes in the past",
+   "the shift from the Traditional 'Desk' to 'Field' and 'Cloud' Accounting will equip graduates from this programme ready for contemporary financial reporting in the public and private sectors of the global economy",
+   "a good understanding of basic accounting and strong analytical skills at the end of this programme will prepare the graduates for the Taxation and Auditing jobs currently needing a huge number as on daily advertisements; and",
+   "besides, exposure to details on the application of IFRS from 100L is a major key to cross boarder mobility of graduates of accounting which this new curriculum provides",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Financial Accounting I",
+   "Financial Accounting II",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Intermediate Financial Acct. I",
+   "Intermediate Financial Acct. II",
+   "Management Accounting I",
+   "Management Accounting II",
+   "Business Finance",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Advanced Financial Accounting I",
+   "Advanced Financial Accounting II",
+   "Cost Accounting"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Actuarial Science",
+  "code": "ACS",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "identify descriptive statistics and methods of data presentation",
+   "understand measures of central tendency and dispersion"
+  ],
+  "transferable_skills": [
+   "The curriculum provides students with adequate competencies, skills and behavioral attitudes required for maintenance of precision, quality and standard in a work place",
+   "Ability to assess financial risks in the insurance and financial industries as well as other sectors of the economy, using mathematical and statistical tools",
+   "Unique expertise of handling problems of risks and uncertainty, which is greatly required in a variety of industries and organizations, both private and government",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Statistical Inference I",
+   "Statistical Inference II",
+   "Introduction to Actuarial Science",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Differential Calculus for Act. Sci.",
+   "Integral Calculus for Act. Sci.",
+   "Financial Mathematics I",
+   "Financial Mathematics II",
+   "Probability Theory I",
+   "Probability Theory II",
+   "Economics of Insurance",
+   "Introduction to Statistical Models",
+   "Peace and Conflict Resolution"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Aviation Management",
+  "code": "AVM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "explain the history and development of aviation",
+   "describe the global aviation industry structure"
+  ],
+  "transferable_skills": [
+   "airport Operations and Management",
+   "airport Ground Handlings",
+   "airport Planning",
+   "aviation Consultancy",
+   "aviation Charter and Pilgrimage Operations",
+   "airline Services",
+   "aviation Regulatory and Safety Services",
+   "aviation Training; and",
+   "travel Agents and Tour Operators",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Introduction to Aviation",
+   "Aviation Meteorology",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Airport Operations and Planning",
+   "Airline Operations Management",
+   "Aviation Safety and Security",
+   "Aviation Law and Regulation",
+   "Elements of Marketing",
+   "Aviation Human Factors",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Air Traffic Management",
+   "Aircraft Maintenance Management"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D069",
+    "domain": "Aviation",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Finance / Banking and Finance",
+  "code": "FIN",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "analyze principles, techniques and major functions of finance in business and organizations",
+   "work independently and with others of diverse backgrounds"
+  ],
+  "transferable_skills": [
+   "graduates under this curriculum are equipped with complex problem-solving skills, quick on-the-job learning and comfort with technology in the job market",
+   "the cross-boarder mobility will provide opportunity for graduate under this programme in this era of internalisation of financial services globally; and",
+   "the people and companies interface skills now transact in two dimensions; online and physical, our graduates will develop skill sets that enable a seamless transition into transacting in both realms making ready for the finance job market",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian People and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Introduction to Finance",
+   "[Title not shown in LO section]",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Principles of Insurance",
+   "Quantitative Analysis",
+   "Elements of Banking",
+   "Banking Methods and Process",
+   "Applications of Computers in Fin/Banking",
+   "Fundamentals of Deposit Insurance",
+   "Law of Banking",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Principles of Finance"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Business Administration",
+  "code": "BUA",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "explain the basic concepts of business",
+   "recognize the external forces that shape the business environment"
+  ],
+  "transferable_skills": [
+   "communication: Both oral, written communication and listening skills; Business Administration graduates would be clear, concise and focused in their interactions and engagement",
+   "teamwork: Graduates of Business Administration should demonstrate the ability to build positive working relationships that assist each team member to achieve business objectives",
+   "problem solving: From a variety of courses offered on business decision, graduate should demonstrate the ability to implement logical and analytical approach to solve problems and resolve organizational conflicts and issues",
+   "leadership: Graduates of this programme should demonstrate ability to influence and motivate teams and other members of staff to achieve organizational goals and objective through assigning responsibilities and delegating tasks to achieve results",
+   "entrepreneurial skills: Spotting gaps in the market, suggesting ways to improve processes, or coming up with new ideas are all signs of an entrepreneurial approach; You don't have to set up your own business to make use of your enterprise skills; Many employers will be looking out for graduate recruits with these qualities",
+   "lT skills: Students of business administration are empowered with critical IT skills with which they can demonstrate to employers their versatility in the use of different management software applications to enrich the work experience",
+   "resilience: Graduates of this programme would be imbued with resilience quality which will enable them to cope with changes, problems and stress in the work place; and",
+   "analytical skills: Managers work with different kinds of information, patterns and trends from which they must draw meaningful conclusions. Hence, relevant courses build into the students' analytical skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Introduction to Business I",
+   "Introduction to Business II",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Introduction to Financing",
+   "Principles of Business Admin. I",
+   "Principles of Business Admin. II",
+   "Business Statistics",
+   "Quantitative Analysis in Management",
+   "Leadership and Governance",
+   "Introduction to Financial Mgt.",
+   "Green Management",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Business Information Technology",
+  "code": "BIT",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "define and appreciate the basic terminologies, concepts, principles, types, processes involved in Information Technology",
+   "evaluate the implication of the technological advancements on businesses and the global economy"
+  ],
+  "transferable_skills": [
+   "leadership qualities manifested through self-assurance and confidence to effectively handle employers, supervisors, and co-workers",
+   "motivation and initiative",
+   "reliability and dependability",
+   "setting priorities to be able to handle long and short-term goals",
+   "good communication",
+   "accommodating and spirit for team work",
+   "resilience, adaptability and cooperative",
+   "decisive to be able to not only deal with tasks but also work stress",
+   "emotional control and Patience",
+   "skills in E-Commerce, Digital Analysis",
+   "ability to process large volume of information; and",
+   "be able reduce complexity into a sequence of data"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Introduction to Business Info. Technology",
+   "Fundamentals of Business Info Storage",
+   "Elements of Digital Economy & Web Systems",
+   "E-Commerce and E-Business",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Technology and Innovation Management",
+   "Application of Computer in Business",
+   "Business Multimedia Concepts",
+   "Business Info. Legal Framework & Cyber",
+   "Web Evolution and Technologies",
+   "Management Information System",
+   "Fundamentals of Mobile Computing",
+   "Digital Marketing"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Co-operative and Rural Development",
+  "code": "CRD",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "explain the concept of cooperatives, types and associated key concepts",
+   "explain the purpose of forming cooperatives, hierarchical structure and governmental laws for its formation"
+  ],
+  "transferable_skills": [
+   "Teaching skills for rural community development",
+   "Stakeholder analysis and management",
+   "Cooperative formation and administration",
+   "Consultancy services in cooperative accounting, finance, banking, auditing, and marketing",
+   "Organizational behavior and human resource management",
+   "Rural farm management practices for food security and sustainable agricultural development",
+   "Information technology software for development and management of cooperative and rural business ventures",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian People and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Introduction to Cooperatives",
+   "Organization & Mgt. of Cooperatives",
+   "Rural Development I",
+   "Rural Development II",
+   "Nigerian Agriculture",
+   "Cooperative Education",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Cooperative Management Cost Analytics",
+   "Cooperative Marketing",
+   "Sociology of Cooperatives",
+   "Cooperative Management 1",
+   "Cooperative Economics 1",
+   "Cooperative Legislation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Employment and Human Resource Management",
+  "code": "EHR",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "define the concept of human resource management",
+   "recall the five historical phases of human resource management"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Introduction to HRM",
+   "Introduction to Employment Relations",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "HR Planning and Administration",
+   "Recruitment, Selection and Placement",
+   "Trade Unions and Employers' Assoc.",
+   "Communication in HRM & Empl. Rel.",
+   "Industrial and Organisational Behaviour",
+   "Occupational Safety and Health",
+   "Public Sector HRM",
+   "HR Metrics and Analytics",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Entrepreneurship",
+  "code": "ENP",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "develop new contemporary thinking in entrepreneurship",
+   "exhibit attitude that promotes self-reliance"
+  ],
+  "transferable_skills": [
+   "competence and confidence in venture creation: Students' exposure to Entrepreneurship knowledge and environment manifest in their strong desire to create new social and economic value while being prepared for short term or occasional setbacks",
+   "organizational skill: Students demonstrate comfort with modern business processes, especially how to create a good record keeping, manage employees, material/financial resources, etc",
+   "financial literacy: Students become financially literate and have developed passion to create their own fortune and attain economic independence as they attempt to create values and job opportunities",
+   "market knowledge: Students' perspective on nature of market and its opportunities and challenges as well as how to develop marketing strategy significantly improved",
+   "lifelong learning: Students obtained experiential learning and have developed capacity to upgrade skills in logic, communication, inter personal relationships and networking; team building mentoring and leadership which are essential for building and nurturing sustainable enterprises; and",
+   "behavioral change: Students deploy their entrepreneurial competencies to foster paradigm shift needed for personal growth, social transformation and wealth creation",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Entrepreneurial Financing",
+   "Entrepreneurial Environment",
+   "Marketing for New Ventures",
+   "Theories of Entrepreneurship",
+   "Industrial Learning and Tours I",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Business Opportunity Scouting",
+   "Sociology of Entrepreneurship",
+   "Small Scale Business Management",
+   "Family Business & Succession Planning",
+   "Feasibilities and Business Planning"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Hospitality and Tourism Management",
+  "code": "HTM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "discuss fundamentals, major concepts, issues, and theories of tourism and hospitality as an economic sector",
+   "determine tourism impact on the surrounding communities"
+  ],
+  "transferable_skills": [
+   "Hotel and Tourism Management programme has been designed to offer a comprehensive education to self-reliant, entrepreneurs, consultants' graduates with the capabilities (good understanding and strong analytical skills)",
+   "Apply the learned principles, theories, processes, techniques and tools to help society and organizations in achieving comparative advantages and to consistently meet the demands of end-users in decision making",
+   "Accommodation of skills and competence, behavioural attributes and good understanding of professional ethical considerations that will make graduates of Hotel and Tourism management highly employable, marketable at the various relevant sectors of local, national and international economies",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian people and culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to computers",
+   "Fundamentals of Project Management",
+   "The Travel concept",
+   "Nigeria Culture and Tourism",
+   "Earth and Environment",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Introduction to Nutrition & Food Prod.",
+   "Public Health and Food Service Interf.",
+   "Intro. to Tourism & Hospitality Mgt.",
+   "Introductory Tour Operations Mgt.",
+   "Food and Beverage Production",
+   "Fundamentals of Hotel and Catering",
+   "Introduction to Tourism",
+   "Tourism Resources & Destinations",
+   "Peace and Conflict Resolution"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D083",
+    "domain": "Travel, Tourism",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D053",
+    "domain": "Hospitality",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D032",
+    "domain": "Project Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Information Resource Management",
+  "code": "IRM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "understand the history and philosophy of information technology",
+   "differentiate between data, information communication and knowledge"
+  ],
+  "transferable_skills": [
+   "the programme would equip graduates with the necessary skills to assess systematic acquisition, retrieval, storage and processing of all kinds of useful data for planning and investment decisions",
+   "they would be able to determine the kind of data organizations will require and how they could deploy such information to their advantage; and",
+   "they would be in a position to render consultancy services to records offices, archives, museums, publishing houses, libraries, information centers, banks, insurance companies, medical and health institutions, manufacturing companies, broadcasting organizations, non-governmental organizations (NGOs), law firms, telecommunication industry, international organizations such as WHO, UNDP, UNICEF, among others",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Introduction to Information Science",
+   "Intro. to Reference Sources and Services",
+   "Intro. to Records and Information Mgt.",
+   "Fundamentals of Info. Resources Mgt.",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Theory and Organization of Knowledge",
+   "Business Information Resources",
+   "Conservation & Preservation of Info Res.",
+   "Knowledge Management Tools & Technologies",
+   "Cataloguing and Classification",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Administration of Libraries & Info Ctrs"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Insurance",
+  "code": "INS",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "describe the general role of insurance",
+   "explain group life insurance as affect insurance operation"
+  ],
+  "transferable_skills": [
+   "The curriculum provides students with adequate competencies, skills and behavioural attitudes required for maintenance of precision, quality and standard in a work place",
+   "It provides ability to assess financial risks in the insurance, other financial institutions as well as other sectors of the economy, using modern risk management tools",
+   "The programme provides unique expertise in handling problems of risks and uncertainty, which is greatly needed in a variety of industries and organisations, both private and public",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Introduction to Insurance",
+   "Principles & Practice of Insurance",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Law of Tort",
+   "Insurance Underwriting Management",
+   "Life Assurance",
+   "Insurance Claims Management",
+   "Insurance Broking",
+   "Economics of Insurance",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Risk Management I",
+   "Risk Management II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Local Government and Development Studies",
+  "code": "LGD",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "identify and explain basic concepts in the study of government",
+   "bring out the relationship among these concepts to understand better how government operates"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Elements of Government",
+   "Introduction to Local Government",
+   "Introduction to Sociology",
+   "Introduction to Legal Studies",
+   "Principles of Economics",
+   "Elements of Administration",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "State, Society and Economy",
+   "Rural and Community Development",
+   "Theories of Local Government",
+   "Introduction to Development Studies",
+   "Nigeria Government and Politics",
+   "Planning and Development"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Logistics and Supply Chain Management",
+  "code": "LSM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "define logistics and supply chain management and know the relationship between the two concepts",
+   "identify and understand the factors that affect global, regional, and local logistics and supply chains"
+  ],
+  "transferable_skills": [
+   "Information technology skills in the adoption of artificial intelligence, Internet of Things, use of software and apps in Logistics and supply chain management",
+   "Computational abilities requiring mathematics and statistics for analysis of supply and demand issues",
+   "Negotiation and relationship building capabilities in relation to customers, suppliers and team members",
+   "Ability to use data to capture orders, demand and sales, and wastages resulting from inefficiencies and lapses",
+   "Due diligence and care with thorough and broad knowledge of the industry and business/economic environment; and",
+   "Understanding of organizational systems and business environment relevant for decision making in Logistics and supply chain management",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Introduction to Logistics & SCM",
+   "Introduction to Transport Economics",
+   "Introduction to Supply Chain Designs",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Fundamentals of Global Trade",
+   "Procurement Management",
+   "Forecasting and Demand Management",
+   "Inventory Management",
+   "Fundamentals of Operations Management",
+   "Physical Distribution Management",
+   "ICT in Logistics and SCM",
+   "Principles of Warehousing Management",
+   "Peace and Conflict Resolution"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D034",
+    "domain": "Supply Chain Management",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D035",
+    "domain": "Logistics",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D085",
+    "domain": "Retail Sales, Shop Operations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Marketing",
+  "code": "MKT",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "define and explain the concept of marketing in its broader sense",
+   "describe the historical development of marketing"
+  ],
+  "transferable_skills": [
+   "set up and run a retail or wholesale organization",
+   "float and run a marketing communication agency",
+   "operate and contribute in all sectors of the national economy",
+   "function as a marketing consultant to political, agricultural, Energy, ICT, Financial, and service organizations",
+   "set up and operate Food and Agricultural Organizations",
+   "set up and operate virtual stores or digital Marketing Organizations",
+   "serve as external and/or independent marketing auditor to firms",
+   "serve as external/independent marketing researcher to companies",
+   "serve as a sales representative to firms",
+   "function as independent marketing intermediary in the distribution chain of firms",
+   "initiate innovations and develop new products independently; and",
+   "serve as Public Relations Expert and Consultant"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigeria Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Elements of Marketing",
+   "Applied Mathematics for Marketing",
+   "Philosophy, Logic & Human Exist.",
+   "Entrepreneurship and Innovation",
+   "Principles of Marketing",
+   "Consumer Behaviour",
+   "Marketing Communication",
+   "Marketing Research & Decision Analysis",
+   "Food and Agricultural Marketing",
+   "Retailing and Wholesaling",
+   "Services Marketing",
+   "Marketing of Agricultural Products",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Office and Information Management",
+  "code": "OIM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "demonstrate keyboarding skills at a basic speed",
+   "use computer keyboarding to produce basic documents"
+  ],
+  "transferable_skills": [
+   "Functional skills, that is, computer proficiency in using computer packages such as MsWord, Ms0Excel, Corel Draw, Access, Desktop Publisher, Power Pint, etc",
+   "Familiarity with internet technology, ability to connect to the Internet, browse, download and upload materials",
+   "Ability to compose emails and communicate through e-mails",
+   "Team spirit, collaborative work",
+   "Human relation skills within the organization and with public/customers",
+   "Communication skills (oral, written)",
+   "Professional Traits, such as, adaptability, integrity, loyalty, discretion, dependability, work ethics/corporate ethics, being initiative, punctuality",
+   "Paying attention to details",
+   "Record Management Skills (for hard copy and soft copy documents)",
+   "Ability to arrange for various types of meetings (physical and online), produce and circulate minutes",
+   "identify possible sound patterns in English language",
+   "list notable language skills"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian People and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computers",
+   "Principles of Project Management",
+   "Intro. to Computer Keyboarding & Shorthand",
+   "Entrepreneurship and Innovation",
+   "Philosophy, Logic & Human Exist.",
+   "Computer Keyboarding I (25wpm)",
+   "Shorthand Writing I (40 wpm)",
+   "Business Communication I",
+   "Office Practice and Organisation",
+   "Business Communication II",
+   "Computer Keyboarding II (40wpm)",
+   "Shorthand Writing II (60wpm)",
+   "Desktop Publishing & Web-designing",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Business Communication III"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Petroleum Information Management",
+  "code": "PIM",
+  "technical_skills": [
+   "describe the history and significance of petroleum in the global economy",
+   "explain the petroleum value chain from exploration to marketing",
+   "identify the major players in the oil and gas industry",
+   "describe the regulatory framework for petroleum operations in Nigeria; and",
+   "explain the role of information management in the petroleum sector",
+   "explain the role of information technology in oil and gas operations",
+   "describe key IT systems used in E&P, refining, and distribution",
+   "identify data management challenges in the petroleum sector; and",
+   "explain how digital transformation is affecting the petroleum industry",
+   "understand the basic concepts of information and terminologies; (2 Units C: LH 30)",
+   "analyse metadata, purpose, types, standards, etc; 3. enumerate use of ICT in organisation of knowledge; and",
+   "enumerate use of ICT in organisation of knowledge; and",
+   "list and suggest other classification schemes",
+   "define major concepts, processes and systems",
+   "explain retrieval and use of information",
+   "describe the theoretical foundation to various information behaviours such as information need, utilising, gathering, seeking and evaluating, synthesis of users' studies",
+   "draw and explain the basic information flow design; and",
+   "conduct the gap analysis and apply results to improve service and system design. inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content — deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and human conduct, philosophy and religion, philosophy and human values, philosophy and character molding, etc",
+   "learn the applicability, implementation and management of information systems",
+   "analyse the technical aspects of IS – networks, web product development",
+   "list and identify E&P’s data management best practices",
+   "understand and experience design, methodologies, databases development",
+   "enumerate will learn data storage, data protection, recovery; and",
+   "list and suggest benefits of good data management",
+   "understand the definitions of basic concepts and reference sources"
+  ],
+  "transferable_skills": [
+   "geographic information systems software",
+   "data archiving/preservation skills",
+   "interpolation and extrapolation data techniques",
+   "conducting seismic and data remote sensing surveys; and",
+   "data management design skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Petroleum Studies",
+   "Introduction to Information Technology in Oil and Gas",
+   "Management and Organisation of Information I",
+   "Information Lifecycle and Behaviour",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Management and Organisation of Information I",
+   "Introduction to ICT in Information Services & Data and Information Management in Oil & Gas I",
+   "Reference and Information Services & Multimedia Application",
+   "Electronic Resources Management",
+   "Management and Organisation of Information II",
+   "Information User and Sources of Information in Science and Technology",
+   "Data and Information Management in Oil and Gas II",
+   "Personal Information and Knowledge Management and Organisational Information Security",
+   "Managing Collections and Online Access",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Principles of Preservation Management and Sources of Information in Oil and Gas Sector"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Procurement Management",
+  "code": "PRM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "assess the evolution and concept of procurement",
+   "evaluate purchasing objectives, supplier identification and selection"
+  ],
+  "transferable_skills": [
+   "Ability to recognize and analyze procurement problems and evolve strategies for their solutions",
+   "Recognize and implement good management policies relating to procurement",
+   "Negotiation and relationship building capabilities in relation to customers, suppliers and team members",
+   "Skills and competencies required in the conduct, management and audit of procurement such as planning, evaluation, market analysis and legal matters",
+   "Ability to use data to capture orders, demand and sales, and wastages resulting from inefficiencies and lapses",
+   "Due diligence and care with thorough and broad knowledge of the industry and business/economic environment",
+   "Understanding of organizational systems and business environment relevant for decision making in Logistics and supply chain management, and",
+   "Computational and data processing skills, relating to administrative, financial and manpower",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Introduction to Procurement I",
+   "Introduction to Procurement II",
+   "Introduction to Procurement and Supply Environments",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Procurement Planning and Budgeting",
+   "Global Procurement Practices",
+   "Project and Quality Management in Procurement",
+   "Sustainable Procurement",
+   "Essentials of Supply Chain Management",
+   "Principles of Logistics Management",
+   "Operations Management",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D036",
+    "domain": "Procurement",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D032",
+    "domain": "Project Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D038",
+    "domain": "Compliance, Regulation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Project Management",
+  "code": "PMG",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "demonstrate ability to put requirement gathering into practice",
+   "display ability to hold workshops to elicit requirements"
+  ],
+  "transferable_skills": [
+   "Project management leadership qualities manifested through self-assurance and confidence to effectively handle project teams and clients",
+   "Skills for motivation and promoting initiatives in projects activities",
+   "Demonstrate character of reliability and dependability",
+   "Setting priorities to be able to handle long and short-term project goals",
+   "Display qualities of good communication with project stakeholders",
+   "Be accommodating and exhibit spirit for team-work",
+   "Possess character of resilience, adaptability and cooperativeness",
+   "Display creativity skills to be able to handle project tasks and work stress",
+   "Show emotional stability and control",
+   "Possess skills for multi-task functions as well as skills for use of relevant technologies and tools for project management",
+   "Ability to coordinate large number of complex tasks and teams",
+   "Ability to manage issues related to project impact assessments"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computer",
+   "Principles of Project Management",
+   "Business Analysis",
+   "Project Brief",
+   "Introduction to Project Methodologies",
+   "Requirement Engineering",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Stakeholder Management",
+   "Effective Project Team Leadership",
+   "Project Finance and Resources Management",
+   "Project Scheduling and Cost Management",
+   "Project Quality Assurance and Performance",
+   "Project Planning, Control and Work Based Learning",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D032",
+    "domain": "Project Management",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Public Administration",
+  "code": "PAD",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "describe the nature and functions of Public Administration",
+   "identify the different approaches to the study of Public Administration; 3. explain the role of Public Administration in national development; and"
+  ],
+  "transferable_skills": [
+   "ability to recognise and analyse administrative and management problems and evolve strategies for their solution",
+   "ability to recognise and implement good administrative and management policies",
+   "computational and data processing skills, relating to administrative, financial and manpower data",
+   "ability to demonstrate knowledge and understanding of essential facts, concepts and principles, and apply theories to Administration and Management",
+   "acquire knowledge in problem solving through workshops in Public Administration, Seminars and Student excursion to public institutions; and",
+   "Equipping graduates of the programme with entrepreneurial skills to be self-employed or even as employers of labour",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Elements of Public Administration",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Introduction to Public Administration",
+   "Nigeria Government and Administration",
+   "Office Administration",
+   "Rural and Community Development.",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Administrative Theory",
+   "Administrative Behaviour",
+   "International Administration",
+   "Public Personnel Administration",
+   "Development Administration"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Securities and Investments Management",
+  "code": "SIM",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "define basic concepts and principles of financial markets",
+   "discuss processes and practices of financial markets"
+  ],
+  "transferable_skills": [
+   "setting priorities to be able to handle long and short-term goals",
+   "leadership qualities manifested through self-assurance and confidence to effectively handle employers, supervisors, and co-workers",
+   "good communication",
+   "motivation and initiative",
+   "reliability and dependability",
+   "accommodation and spirit for team work",
+   "emotional control and Patience",
+   "resilience, adaptability and cooperative",
+   "decisiveness and the ability to not only deal with tasks but also work stress",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   "Fundamentals of Securities and Investments I",
+   "Banking Technology",
+   "Fundamentals of Securities and Investments II",
+   "Entrepreneurship and Innovation",
+   "Philosophy, Logic and Human Existence",
+   "Law Relating to Securities and Investments",
+   "Introduction to Cryptocurrency",
+   "Business Information Systems",
+   "Investment Decision-Making",
+   "Investment Trading Fundamentals",
+   "Introduction to Digital Economy & Web Based Systems",
+   "Business Communication",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Taxation",
+  "code": "TAX",
+  "technical_skills": [
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "identify the basic concepts of mathematics",
+   "demonstrate preliminary understanding of mathematical applications in the field of management",
+   "perform basic computations in algebra, differential and integral calculus; 4. develop problem-solving skills from the mathematical ideas learnt; and",
+   "Distinguish basic mathematics principles and its application",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "acquire a working knowledge of key project management methods",
+   "define the concept and purpose of project management; (2 units C: LH 30)",
+   "identify the processes and actors in project management; (2 units C: LH 30)",
+   "Demonstrate a working knowledge of key project management methods; 4. Describe the tools and techniques used in project management.; and",
+   "Identify projects bottle neck and possible solutions",
+   "describe the tools and techniques used in project management; and",
+   "understand the concepts of accounting and identify the users of accounting information",
+   "understand the various forms of business organizations"
+  ],
+  "transferable_skills": [
+   "Graduates of Taxation programme shall possess soft skills that will make them employable or even become self-employed and or employer of labour",
+   "They will be globally competitive having been equipped with the use of modern technology in the area of physical auditing working papers, on- line filling of tax assessment forms, Filling of Tax returns, Hands- on application of accounting, accounting software and other computer literacy programmes",
+   "Different scenarios of varied problems relating to Tax matters will be created and they will be required to come up with creative solutions. This will equip them with soft skills that will make them adapt to the changing world, and to also think outside the box more effectively; and",
+   "The Federal Inland Revenue service and State Internal Revenue services will have ready-made Taxation graduates for use",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Management",
+   "Basic Mathematics",
+   "Introduction to Computing",
+   "Principles of Project Management",
+   null,
+   null,
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Nigerian Legal System 1",
+   "Introduction to Taxation 1",
+   "Business Taxation I",
+   "Nigeria Legal System II",
+   "Introduction to Taxation II",
+   "Business Taxation II",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Revenue Law and practice",
+   "Management Information System"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Transport Management",
+  "code": "TPM",
+  "technical_skills": [
+   "list the characteristics of the various modes of transport",
+   "identify the facilities involved in transport modes",
+   "explain different types of prime movers and motive power used in transport",
+   "identify the financial and legal aspects of transport",
+   "identify the different documents used in transport; and",
+   "identify the stages of transport development in the various modes",
+   "explain the meaning of logistics",
+   "describe the historical development of ports and their roles in national development",
+   "discuss the importance of logistics as a competitive edge",
+   "identify the different layers of logistics; and",
+   "examine the importance of customer’s services in logistics and supply chain",
+   "demonstrate understanding of basic concepts related to management knowledge",
+   "exhibit knowledge of the roles, skills and functions of management",
+   "appreciate organisational problems and how managerial decisions are arrived at; and",
+   "show understanding of the complexities associated with management of human resources in the originations and how to apply the knowledge in handling these complexities",
+   "explain basic concept of computing and different programmes in computing science",
+   "explain hardware and software, and the functional units of computer",
+   "describe information processing and its roles in society",
+   "illustrate how an operating system kernel. Supports the execution of programmes",
+   "write simple programme in a pure functional programming language and determine the correctness of simple programmes; and",
+   "practical knowledge of software application and the internet",
+   "identify the components of tourism and types of tourism",
+   "explain the economic, social and political roles of tourism in national development; 3. identify the dangers associated with tourism development; and",
+   "establish the local and global trends in tourism development",
+   "identify the basic concepts of mathematics"
+  ],
+  "transferable_skills": [
+   "The graduates of this programme will be exposed to decision making skills such as: technological skills",
+   "information and communication skills",
+   "technology skills",
+   "entrepreneurial skills; and",
+   "creativity and innovation skills",
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Principles of Transport",
+   "Introduction to Logistics Management",
+   "Principles of Management",
+   "Introduction to Computer",
+   "Fundamentals of Tourism",
+   "Basic Mathematics",
+   "Principles of Project Management",
+   "Introduction to Supply Chain Management",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Logistics Planning and Strategy",
+   "Transport Policy and Planning",
+   "Road Freight Transport Management",
+   "Road Passenger Transport Management",
+   "Management And Control Of Transport",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Logistics Management"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D115",
+    "domain": "Road Transport Operations (Drivers",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   }
+  ]
+ }
+]

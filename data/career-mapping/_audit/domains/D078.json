@@ -1,0 +1,137 @@
+{
+ "domain_id": "D078",
+ "domain_name": "Social Sciences",
+ "role_count": 26,
+ "roles": [
+  {
+   "role": "criminologist",
+   "isco": 2632,
+   "aka": "criminology scientist  ·  criminology research scientist  ·  criminology studies scientist  ·  criminology studies research scientist  ·  criminology researcher"
+  },
+  {
+   "role": "historian",
+   "isco": 2633,
+   "aka": "diplomatic historian  ·  economic historian  ·  historians  ·  political historian  ·  military historian"
+  },
+  {
+   "role": "sociologist",
+   "isco": 2632,
+   "aka": "urban sociology science researcher  ·  sociologists  ·  rural sociology science researcher  ·  urban sociology analyst  ·  sociology science researcher"
+  },
+  {
+   "role": "business economics researcher",
+   "isco": 2631,
+   "aka": "fiscal economics strategist  ·  economic analyst  ·  fiscal economics analyst  ·  business advisor  ·  financial market advisor"
+  },
+  {
+   "role": "media scientist",
+   "isco": 2632,
+   "aka": "media science researcher  ·  media studies scholar  ·  media research analyst  ·  media research scientist  ·  media analyst"
+  },
+  {
+   "role": "archaeologist",
+   "isco": 2632,
+   "aka": "archaeology analyst  ·  marine archaeology research analyst  ·  excavation director  ·  archaeologist scientist  ·  archaeology science researcher"
+  },
+  {
+   "role": "economic policy officer",
+   "isco": 2631,
+   "aka": "economic policy researcher  ·  economic policy advisor  ·  economical policy officer  ·  economic policy specialist  ·  policy officer for economy"
+  },
+  {
+   "role": "social work researcher",
+   "isco": 2632,
+   "aka": "social research worker  ·  social science researcher  ·  social work research manager  ·  social research interviewer  ·  social scientist"
+  },
+  {
+   "role": "behavioural scientist",
+   "isco": 2632,
+   "aka": "behavioural science scholar  ·  behavioural science research analyst  ·  behavioural science analyst  ·  behavioural science researcher"
+  },
+  {
+   "role": "political scientist",
+   "isco": 2633,
+   "aka": "war researcher  ·  peace researcher  ·  public administration researcher  ·  political analyst  ·  political scholar"
+  },
+  {
+   "role": "economic adviser",
+   "isco": 2631,
+   "aka": "policy analyst  ·  economic development officer  ·  economic policy researcher  ·  economic policy advisor  ·  economics consultant"
+  },
+  {
+   "role": "genealogist",
+   "isco": 2633,
+   "aka": "genealogy expert  ·  ancestry expert  ·  family tree researcher"
+  },
+  {
+   "role": "communication scientist",
+   "isco": 2632,
+   "aka": "communication analyst  ·  communication studies research scientist  ·  communication science researcher  ·  communication studies researcher  ·  communication studies analyst"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "thanatology researcher",
+   "isco": 2632,
+   "aka": "thanatologist  ·  researcher in the psychology of death and dying  ·  thanatological researcher  ·  researcher in thanatology  ·  fellow in thanatology"
+  },
+  {
+   "role": "economist",
+   "isco": 2631,
+   "aka": "econophysicist  ·  economics scholar  ·  economics scientist  ·  economics researcher  ·  econometrician"
+  },
+  {
+   "role": "economic development coordinator",
+   "isco": 2631,
+   "aka": "economist  ·  economic development consultant  ·  economic development officer  ·  socio economic development coordinator  ·  regeneration manager"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "anthropologist",
+   "isco": 2632,
+   "aka": "arts scientist  ·  cultural scientist  ·  linguistic anthropologist  ·  ethnologist  ·  television scientist"
+  },
+  {
+   "role": "biometrician",
+   "isco": 2120,
+   "aka": "biometrics scientist  ·  biometricians  ·  biometric studies scholar  ·  biometrics analyst  ·  biometrics researcher"
+  },
+  {
+   "role": "tax policy analyst",
+   "isco": 2631,
+   "aka": "tax analyst  ·  pecunary consultant  ·  tax research analyst  ·  fiscal policy analyst  ·  contributions advisor"
+  },
+  {
+   "role": "geographer",
+   "isco": 2632,
+   "aka": "economic geographer  ·  geographers  ·  biogeographer  ·  cultural geographer  ·  physical geographer"
+  },
+  {
+   "role": "philosopher",
+   "isco": 2633,
+   "aka": "philosophy expert  ·  philosophy student  ·  philosophy scholar  ·  moralist"
+  },
+  {
+   "role": "demographer",
+   "isco": 2120,
+   "aka": "demographers  ·  demography studies scientist  ·  demography scholar  ·  demography scientist  ·  demography studies research scientist"
+  },
+  {
+   "role": "Social Scientists and Related Workers",
+   "isco": 2632,
+   "aka": NaN
+  },
+  {
+   "role": "Survey Researchers",
+   "isco": 2120,
+   "aka": NaN
+  }
+ ]
+}

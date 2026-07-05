@@ -1,0 +1,15 @@
+{
+ "brochure": "arts_hum",
+ "txt": "_jamb_txt/arts_hum.txt",
+ "missing_programmes": [
+  "Drama/Dramatic Arts/Performing Arts",
+  "Fine Art/Fine and Applied Arts",
+  "Psychology",
+  "Hausa",
+  "Igbo",
+  "Kiswahili",
+  "Modern Language and Translation",
+  "Geography and Environmental Studies",
+  "Counselling and Psychology"
+ ]
+}

@@ -1,0 +1,732 @@
+{
+ "domain_id": "D079",
+ "domain_name": "Customs, Trade",
+ "role_count": 145,
+ "roles": [
+  {
+   "role": "import export manager in meat and meat products",
+   "isco": 1324,
+   "aka": "customs compliance manager in meat and meat products  ·  assistant import export manager in meat and meat products  ·  international trade compliance manager in meat and meat products  ·  international trade manager in meat and meat products  ·  senior import manager in meat and meat products"
+  },
+  {
+   "role": "electronic and telecommunications equipment and parts distribution manager",
+   "isco": 1324,
+   "aka": "graduate electronic and telecommunications equipment and parts distribution manager  ·  trainee electronic and telecommunications equipment and parts distribution manager  ·  senior electronic and telecommunications equipment and parts distribution manager  ·  electronic and telecommunications equipment and parts distribution planner  ·  assistant electronic and telecommunications equipment and parts distribution manager"
+  },
+  {
+   "role": "import export manager in agricultural machinery and equipment",
+   "isco": 1324,
+   "aka": "assistant export manager in agricultural machinery and equipment  ·  graduate import manager in agricultural machinery and equipment  ·  senior import manager in agricultural machinery and equipment  ·  senior import export manager in agricultural machinery and equipment  ·  graduate export manager in agricultural machinery and equipment"
+  },
+  {
+   "role": "air traffic manager",
+   "isco": 1324,
+   "aka": "air traffic senior manager  ·  centre director for air traffic systems and operations  ·  air traffic operations manager  ·  air traffic supervisor  ·  flight navigation manager"
+  },
+  {
+   "role": "import export manager in machinery, industrial equipment, ships and aircraft",
+   "isco": 1324,
+   "aka": "trainee import export manager in machinery, industrial equipment, ships and aircraft  ·  international trade compliance manager in machinery, industrial equipment, ships and aircraft  ·  assistant export manager in machinery, industrial equipment, ships and aircraft  ·  graduate export manager in machinery, industrial equipment, ships and aircraft  ·  senior import manager in machinery, industrial equipment, ships and aircraft"
+  },
+  {
+   "role": "import export manager in hardware, plumbing and heating equipment and supplies",
+   "isco": 1324,
+   "aka": "trainee import manager in hardware, plumbing and heating equipment and supplies  ·  senior import export manager in hardware, plumbing and heating equipment and supplies  ·  assistant export manager in hardware, plumbing and heating equipment and supplies  ·  senior export manager in hardware, plumbing and heating equipment and supplies  ·  senior import manager in hardware, plumbing and heating equipment and supplies"
+  },
+  {
+   "role": "import export manager in flowers and plants",
+   "isco": 1324,
+   "aka": "customs compliance manager in flowers and plants  ·  assistant import export manager in flowers and plants  ·  senior export manager in flowers and plants  ·  senior import manager in flowers and plants  ·  assistant import manager in flowers and plants"
+  },
+  {
+   "role": "flowers and plants distribution manager",
+   "isco": 1324,
+   "aka": "assistant flowers and plants distribution manager  ·  senior flowers and plants distribution manager  ·  flowers and plants logistics planner  ·  graduate flowers and plants distribution manager  ·  flowers and plants supply chain planner"
+  },
+  {
+   "role": "computers, computer peripheral equipment and software distribution manager",
+   "isco": 1324,
+   "aka": "senior computers, computer peripheral equipment and software distribution manager  ·  computers, computer peripheral equipment and software supply chain manager  ·  computers, computer peripheral equipment and software logistics planner  ·  assistant computers, computer peripheral equipment and software distribution manager  ·  trainee computers, computer peripheral equipment and software distribution manager"
+  },
+  {
+   "role": "pharmaceutical goods distribution manager",
+   "isco": 1324,
+   "aka": "pharmaceutical goods supply chain planner  ·  pharmaceutical goods logistics manager  ·  assistant pharmaceutical goods distribution manager  ·  pharmaceutical goods logistics planner  ·  senior pharmaceutical goods distribution manager"
+  },
+  {
+   "role": "marine cargo inspector",
+   "isco": 3359,
+   "aka": "inspector of ship freight  ·  marine freight and cargo inspector  ·  shipping freight and cargo inspector  ·  ship freight inspector  ·  inspector of ship cargo"
+  },
+  {
+   "role": "live animals distribution manager",
+   "isco": 1324,
+   "aka": "trainee live animals distribution manager  ·  live animals supply chain manager  ·  graduate live animals distribution manager  ·  live animals logistics planner  ·  live animals supply chain planner"
+  },
+  {
+   "role": "fish, crustaceans and molluscs distribution manager",
+   "isco": 1324,
+   "aka": "fish, crustaceans and mollusks distribution manager  ·  senior fish, crustaceans and molluscs distribution manager  ·  fish, crustaceans and molluscs supply chain planner  ·  trainee fish, crustaceans and molluscs distribution manager  ·  fish, crustaceans and molluscs logistics manager"
+  },
+  {
+   "role": "warehouse manager",
+   "isco": 1324,
+   "aka": "inventory manager  ·  transportation warehouse manager  ·  warehouse supervisor  ·  warehouse superintendent  ·  warehouse operations manager"
+  },
+  {
+   "role": "import export specialist in wood and construction materials",
+   "isco": 3331,
+   "aka": "customs compliance specialist in wood and construction materials  ·  assistant export specialist in wood and construction materials  ·  trainee import specialist in wood and construction materials  ·  senior import export specialist in wood and construction materials  ·  senior import specialist in wood and construction materials"
+  },
+  {
+   "role": "import export specialist in agricultural raw materials, seeds and animal feeds",
+   "isco": 3331,
+   "aka": "trainee import specialist in agricultural raw materials, seeds and animal feeds  ·  customs compliance specialist in agricultural raw materials, seeds and animal feeds  ·  assistant import specialist in agricultural raw materials, seeds and animal feeds  ·  trainee export specialist in agricultural raw materials, seeds and animal feeds  ·  graduate import export specialist in agricultural raw materials, seeds and animal feeds"
+  },
+  {
+   "role": "import export specialist in meat and meat products",
+   "isco": 3331,
+   "aka": "assistant import specialist in meat and meat products  ·  assistant import export specialist in meat and meat products  ·  assistant export specialist in meat and meat products  ·  international trade compliance specialist in meat and meat products  ·  graduate export specialist in meat and meat products"
+  },
+  {
+   "role": "movie distributor",
+   "isco": 1324,
+   "aka": "television series distributor  ·  film distributor  ·  film distribution agent  ·  motion picture distributor  ·  distribution agent"
+  },
+  {
+   "role": "purchasing manager",
+   "isco": 1324,
+   "aka": "tender manager  ·  purchasing and supply office administrator  ·  purchasing administrator  ·  purchasing coordinator  ·  supply manager"
+  },
+  {
+   "role": "gaming inspector",
+   "isco": 3359,
+   "aka": "gaming investigator  ·  gambling investigator  ·  gambling inspector  ·  gambling supervisor"
+  },
+  {
+   "role": "china and glassware distribution manager",
+   "isco": 1324,
+   "aka": "trainee china and glassware distribution manager  ·  assistant china and glassware distribution manager  ·  china and glassware distribution planner  ·  graduate china and glassware distribution manager  ·  senior china and glassware distribution manager"
+  },
+  {
+   "role": "forwarding manager",
+   "isco": 3331,
+   "aka": "export manager  ·  forwarding supervisor  ·  logistics line manager  ·  freight forwarding agent  ·  head of freight forwarding"
+  },
+  {
+   "role": "import export specialist in fruit and vegetables",
+   "isco": 3331,
+   "aka": "assistant import specialist in fruit and vegetables  ·  senior export specialist in fruit and vegetables  ·  senior import specialist in fruit and vegetables  ·  assistant import export specialist in fruit and vegetables  ·  senior import export specialist in fruit and vegetables"
+  },
+  {
+   "role": "import export specialist in hardware, plumbing and heating equipment",
+   "isco": 3331,
+   "aka": "senior export specialist in hardware, plumbing and heating equipment  ·  trainee import export specialist in hardware, plumbing and heating equipment  ·  graduate export specialist in hardware, plumbing and heating equipment  ·  assistant import export specialist in hardware, plumbing and heating equipment  ·  senior import specialist in hardware, plumbing and heating equipment"
+  },
+  {
+   "role": "import export specialist in beverages",
+   "isco": 3331,
+   "aka": "assistant import export specialist in beverages  ·  customs compliance specialist in beverages  ·  assistant export specialist in beverages  ·  senior import export specialist in beverages  ·  graduate export specialist in beverages"
+  },
+  {
+   "role": "import export specialist in flowers and plants",
+   "isco": 3331,
+   "aka": "customs compliance specialist in flowers and plants  ·  graduate export specialist in flowers and plants  ·  senior export specialist in flowers and plants  ·  senior import export specialist in flowers and plants  ·  assistant import export specialist in flowers and plants"
+  },
+  {
+   "role": "import export manager in perfume and cosmetics",
+   "isco": 1324,
+   "aka": "international trade manager in perfume and cosmetics  ·  graduate import export manager in perfume and cosmetics  ·  international trade compliance manager in perfume and cosmetics  ·  assistant import export manager in perfume and cosmetics  ·  trainee import manager in perfume and cosmetics"
+  },
+  {
+   "role": "import export manager in coffee, tea, cocoa and spices",
+   "isco": 1324,
+   "aka": "senior import export manager in coffee, tea, cocoa and spices  ·  graduate export manager in coffee, tea, cocoa and spices  ·  graduate import export manager in coffee, tea, cocoa and spices  ·  international trade manager in coffee, tea, cocoa and spices  ·  trainee import export manager in coffee, tea, cocoa and spices"
+  },
+  {
+   "role": "agricultural raw materials, seeds and animal feeds distribution manager",
+   "isco": 1324,
+   "aka": "agricultural raw materials, seeds and animal feeds logistics manager  ·  agricultural raw materials, seeds and animal feeds supply chain planner  ·  graduate agricultural raw materials, seeds and animal feeds distribution manager  ·  assistant agricultural raw materials, seeds and animal feeds distribution manager  ·  senior agricultural raw materials, seeds and animal feeds distribution manager"
+  },
+  {
+   "role": "wood and construction materials distribution manager",
+   "isco": 1324,
+   "aka": "assistant wood and construction materials distribution manager  ·  wood and construction materials supply chain planner  ·  wood and construction materials supply chain manager  ·  wood and construction materials logistics planner  ·  graduate wood and construction materials distribution manager"
+  },
+  {
+   "role": "import export manager in office furniture",
+   "isco": 1324,
+   "aka": "assistant import manager in office furniture  ·  international trade manager in office furniture  ·  senior export manager in office furniture  ·  customs compliance manager in office furniture  ·  senior import manager in office furniture"
+  },
+  {
+   "role": "road operations manager",
+   "isco": 1324,
+   "aka": "road freight operations coordinator  ·  road freight operations supervisor  ·  road freight operations manager  ·  road operations coordinator  ·  passenger transport operations manager"
+  },
+  {
+   "role": "freight inspector",
+   "isco": 3359,
+   "aka": "freight and cargo inspector  ·  cargo inspector  ·  freight surveyor  ·  principal surveyor  ·  inspector of freight"
+  },
+  {
+   "role": "metals and metal ores distribution manager",
+   "isco": 1324,
+   "aka": "metals and metal ores supply chain planner  ·  metals and metal ores logistics manager  ·  metals and metal ores supply chain manager  ·  metals and metal ores distribution planner  ·  trainee metals and metal ores distribution manager"
+  },
+  {
+   "role": "international forwarding operations coordinator",
+   "isco": 3331,
+   "aka": "international forwarding operations manager  ·  international forwarding operations director  ·  import-export coordinator  ·  import-export manager  ·  import-export officer"
+  },
+  {
+   "role": "import export manager in wood and construction materials",
+   "isco": 1324,
+   "aka": "senior import manager in wood and construction materials  ·  trainee import export manager in wood and construction materials  ·  international trade manager in wood and construction materials  ·  trainee export manager in wood and construction materials  ·  graduate import manager in wood and construction materials"
+  },
+  {
+   "role": "import export manager in metals and metal ores",
+   "isco": 1324,
+   "aka": "graduate import manager in metals and metal ores  ·  trainee import manager in metals and metal ores  ·  graduate import export manager in metals and metal ores  ·  senior import export manager in metals and metal ores  ·  senior import manager in metals and metal ores"
+  },
+  {
+   "role": "customs officer",
+   "isco": 3351,
+   "aka": "customs and excise officer  ·  border guard  ·  customs & excise officer  ·  governmental customs agent  ·  detection officer"
+  },
+  {
+   "role": "tobacco products distribution manager",
+   "isco": 1324,
+   "aka": "graduate tobacco products distribution manager  ·  senior tobacco products distribution manager  ·  tobacco products supply chain manager  ·  tobacco products supply chain planner  ·  tobacco products logistics planner"
+  },
+  {
+   "role": "import export specialist",
+   "isco": 3331,
+   "aka": "senior international trade compliance specialist  ·  senior export specialist  ·  graduate import specialist  ·  trainee international trade compliance specialist  ·  assistant export specialist"
+  },
+  {
+   "role": "import export specialist in office furniture",
+   "isco": 3331,
+   "aka": "graduate import specialist in office furniture  ·  trainee export specialist in office furniture  ·  international trade compliance specialist in office furniture  ·  graduate import export specialist in office furniture  ·  customs compliance specialist in office furniture"
+  },
+  {
+   "role": "immigration officer",
+   "isco": 3351,
+   "aka": "customs inspector  ·  border force officer  ·  passport checking officer  ·  immigration guard  ·  customs and excise official"
+  },
+  {
+   "role": "distribution manager",
+   "isco": 1324,
+   "aka": "graduate traffic office manager  ·  assistant distribution planner  ·  graduate distribution planner  ·  graduate supply chain manager  ·  assistant supply chain manager"
+  },
+  {
+   "role": "import export manager in watches and jewellery",
+   "isco": 1324,
+   "aka": "assistant import manager in watches and jewellery  ·  assistant import export manager in watches and jewellery  ·  international trade manager in watches and jewellery  ·  trainee import manager in watches and jewellery  ·  trainee import export manager in watches and jewellery"
+  },
+  {
+   "role": "import export specialist in household goods",
+   "isco": 3331,
+   "aka": "graduate import specialist in household goods  ·  assistant import export specialist in household goods  ·  senior import export specialist in household goods  ·  senior export specialist in household goods  ·  customs compliance specialist in household goods"
+  },
+  {
+   "role": "import export manager in dairy products and edible oils",
+   "isco": 1324,
+   "aka": "senior import export manager in dairy products and edible oils  ·  international trade manager in dairy products and edible oils  ·  trainee import manager in dairy products and edible oils  ·  graduate export manager in dairy products and edible oils  ·  assistant import export manager in dairy products and edible oils"
+  },
+  {
+   "role": "watches and jewellery distribution manager",
+   "isco": 1324,
+   "aka": "watches and jewellery supply chain manager  ·  watches and jewellery distribution planner  ·  graduate watches and jewellery distribution manager  ·  senior watches and jewellery distribution manager  ·  trainee watches and jewellery distribution manager"
+  },
+  {
+   "role": "forestry inspector",
+   "isco": 3359,
+   "aka": "forestry auditor  ·  forestry operations monitor  ·  urban forestry inspector  ·  forestry assessor  ·  chief forestry inspector"
+  },
+  {
+   "role": "agricultural inspector",
+   "isco": 3359,
+   "aka": "agricultural production inspector  ·  farm inspector  ·  agriculture auditor  ·  agriculture inspector  ·  farm auditor"
+  },
+  {
+   "role": "specialised goods distribution manager",
+   "isco": 1324,
+   "aka": "specialized goods distribution manager"
+  },
+  {
+   "role": "import export specialist in sugar, chocolate and sugar confectionery",
+   "isco": 3331,
+   "aka": "assistant export specialist in sugar, chocolate and sugar confectionery  ·  customs compliance specialist in sugar, chocolate and sugar confectionery  ·  graduate export specialist in sugar, chocolate and sugar confectionery  ·  assistant import specialist in sugar, chocolate and sugar confectionery  ·  trainee import specialist in sugar, chocolate and sugar confectionery"
+  },
+  {
+   "role": "fruit and vegetables distribution manager",
+   "isco": 1324,
+   "aka": "graduate fruit and vegetables distribution manager  ·  assistant fruit and vegetables distribution manager  ·  fruit and vegetables supply chain manager  ·  fruit and vegetables logistics manager  ·  fruit and vegetables distribution planner"
+  },
+  {
+   "role": "inland water transport general manager",
+   "isco": 1324,
+   "aka": "inland waterway transport manager  ·  manager of inland water transport  ·  waterway transportation general manager  ·  inland water transportation director  ·  inland water transport director"
+  },
+  {
+   "role": "pipeline superintendent",
+   "isco": 1324,
+   "aka": "distribution network planner  ·  distribution network monitoring manager  ·  distribution network manager  ·  pipeline project director  ·  supervisor of pipeline"
+  },
+  {
+   "role": "import export manager in computers, computer peripheral equipment and software",
+   "isco": 1324,
+   "aka": "senior import manager in computers, computer peripheral equipment and software  ·  international trade manager in computers, computer peripheral equipment and software  ·  senior export manager in computers, computer peripheral equipment and software  ·  customs compliance manager in computers, computer peripheral equipment and software  ·  trainee import manager in computers, computer peripheral equipment and software"
+  },
+  {
+   "role": "import export specialist in live animals",
+   "isco": 3331,
+   "aka": "senior import export specialist in live animals  ·  senior export specialist in live animals  ·  graduate import specialist in live animals  ·  senior import specialist in live animals  ·  international trade compliance specialist in live animals"
+  },
+  {
+   "role": "logistics and distribution manager",
+   "isco": 1324,
+   "aka": "logistics director  ·  logistics supply chain coordinator  ·  distribution and logistics manager  ·  logistics manager  ·  manager of logistics and distribution"
+  },
+  {
+   "role": "import export specialist in computers, peripheral equipment and software",
+   "isco": 3331,
+   "aka": "senior import export specialist in computers, peripheral equipment and software  ·  international trade compliance specialist in computers, peripheral equipment and software  ·  assistant import export specialist in computers, peripheral equipment and software  ·  senior export specialist in computers, peripheral equipment and software  ·  trainee import export specialist in computers, peripheral equipment and software"
+  },
+  {
+   "role": "import export manager in mining, construction and civil engineering machinery",
+   "isco": 1324,
+   "aka": "senior export manager in mining, construction and civil engineering machinery  ·  graduate import manager in mining, construction and civil engineering machinery  ·  assistant import manager in mining, construction and civil engineering machinery  ·  senior import manager in mining, construction and civil engineering machinery  ·  assistant import export manager in mining, construction and civil engineering machinery"
+  },
+  {
+   "role": "chemical products distribution manager",
+   "isco": 1324,
+   "aka": "chemical products supply chain planner  ·  chemical products distribution planner  ·  chemical products supply chain manager  ·  graduate chemical products distribution manager  ·  chemical products logistics manager"
+  },
+  {
+   "role": "import export manager in electronic and telecommunications equipment and parts",
+   "isco": 1324,
+   "aka": "trainee import export manager in electronic and telecommunications equipment and parts  ·  assistant export manager in electronic and telecommunications equipment and parts  ·  senior import export manager in electronic and telecommunications equipment and parts  ·  senior import manager in electronic and telecommunications equipment and parts  ·  trainee import manager in electronic and telecommunications equipment and parts"
+  },
+  {
+   "role": "import export specialist in watches and jewellery",
+   "isco": 3331,
+   "aka": "senior import specialist in watches and jewellery  ·  assistant import export specialist in watches and jewellery  ·  trainee import specialist in watches and jewellery  ·  trainee import export specialist in watches and jewellery  ·  assistant import specialist in watches and jewellery"
+  },
+  {
+   "role": "shipping agent",
+   "isco": 3331,
+   "aka": "ships agent  ·  owners charterers agent  ·  liner agent  ·  shipping representative  ·  shipping proxy"
+  },
+  {
+   "role": "import export manager in office machinery and equipment",
+   "isco": 1324,
+   "aka": "graduate export manager in office machinery and equipment  ·  senior import manager in office machinery and equipment  ·  senior import export manager in office machinery and equipment  ·  graduate import export manager in office machinery and equipment  ·  trainee export manager in office machinery and equipment"
+  },
+  {
+   "role": "move manager",
+   "isco": 1324,
+   "aka": "relocation manager  ·  industrial move manager  ·  removal coordinator  ·  company move manager  ·  corporate move manager"
+  },
+  {
+   "role": "import export specialist in agricultural machinery and equipment",
+   "isco": 3331,
+   "aka": "graduate import export specialist in agricultural machinery and equipment  ·  trainee import export specialist in agricultural machinery and equipment  ·  assistant export specialist in agricultural machinery and equipment  ·  trainee import specialist in agricultural machinery and equipment  ·  international trade compliance specialist in agricultural machinery and equipment"
+  },
+  {
+   "role": "hand luggage inspector",
+   "isco": 3351,
+   "aka": "airport security worker  ·  hand baggage inspector  ·  airport customs controller  ·  airport luggage worker  ·  hand baggage examiner"
+  },
+  {
+   "role": "import export manager in china and other glassware",
+   "isco": 1324,
+   "aka": "assistant import export manager in china and glassware  ·  graduate import manager in china and glassware  ·  trainee export manager in china and glassware  ·  international trade manager in china and glassware  ·  senior export manager in china and glassware"
+  },
+  {
+   "role": "machinery, industrial equipment, ships and aircraft distribution manager",
+   "isco": 1324,
+   "aka": "graduate machinery, industrial equipment, ships and aircraft distribution manager  ·  trainee machinery, industrial equipment, ships and aircraft distribution manager  ·  machinery, industrial equipment, ships and aircraft logistics planner  ·  assistant machinery, industrial equipment, ships and aircraft distribution manager  ·  senior machinery, industrial equipment, ships and aircraft distribution manager"
+  },
+  {
+   "role": "import export specialist in pharmaceutical goods",
+   "isco": 3331,
+   "aka": "graduate import export specialist in pharmaceutical goods  ·  trainee import specialist in pharmaceutical goods  ·  senior export specialist in pharmaceutical goods  ·  assistant import export specialist in pharmaceutical goods  ·  graduate export specialist in pharmaceutical goods"
+  },
+  {
+   "role": "rail operations manager",
+   "isco": 1324,
+   "aka": "train operations specialist  ·  railway operations specialist  ·  train operations manager  ·  railway operations manager  ·  rail control operator"
+  },
+  {
+   "role": "import export specialist in furniture, carpets and lighting equipment",
+   "isco": 3331,
+   "aka": "international trade compliance specialist in furniture, carpets and lighting equipment  ·  trainee import export specialist in furniture, carpets and lighting equipment  ·  trainee export specialist in furniture, carpets and lighting equipment  ·  graduate export specialist in furniture, carpets and lighting equipment  ·  customs compliance specialist in furniture, carpets and lighting equipment"
+  },
+  {
+   "role": "resource manager",
+   "isco": 1324,
+   "aka": "resource administrator  ·  resources manager  ·  resource specialist  ·  resource coordinator"
+  },
+  {
+   "role": "import export manager in beverages",
+   "isco": 1324,
+   "aka": "international trade compliance manager in beverages  ·  assistant import manager in beverages  ·  assistant export manager in beverages  ·  senior import manager in beverages  ·  international trade manager in beverages"
+  },
+  {
+   "role": "waste and scrap distribution manager",
+   "isco": 1324,
+   "aka": "waste and scrap supply chain planner  ·  waste and scrap distribution planner  ·  waste and scrap logistics manager  ·  senior waste and scrap distribution manager  ·  graduate waste and scrap distribution manager"
+  },
+  {
+   "role": "intermodal logistics manager",
+   "isco": 1324,
+   "aka": "multi-modal services manager  ·  transportation logistics manager  ·  multi-modal transport service manager  ·  intermodal transport logistics manager  ·  logistics and traffic manager"
+  },
+  {
+   "role": "customs and excise officer",
+   "isco": 3331,
+   "aka": "clearing agent  ·  customs clearance agent  ·  shipping agent  ·  export documentation officer  ·  customs broker"
+  },
+  {
+   "role": "household goods distribution manager",
+   "isco": 1324,
+   "aka": "household goods supply chain manager  ·  trainee household goods distribution manager  ·  household goods logistics planner  ·  household goods logistics manager  ·  graduate household goods distribution manager"
+  },
+  {
+   "role": "import export manager in furniture, carpets and lighting equipment",
+   "isco": 1324,
+   "aka": "graduate import manager in furniture, carpets and lighting equipment  ·  assistant import export manager in furniture, carpets and lighting equipment  ·  graduate export manager in furniture, carpets and lighting equipment  ·  trainee export manager in furniture, carpets and lighting equipment  ·  trainee import manager in furniture, carpets and lighting equipment"
+  },
+  {
+   "role": "supply chain manager",
+   "isco": 1324,
+   "aka": "global sourcing manager  ·  supply chain specialist  ·  supply chain coordinator  ·  supply chain project manager  ·  supply and distribution manager"
+  },
+  {
+   "role": "mining, construction and civil engineering machinery distribution manager",
+   "isco": 1324,
+   "aka": "graduate mining, construction and civil engineering machinery distribution manager  ·  mining, construction and civil engineering machinery supply chain planner  ·  senior mining, construction and civil engineering machinery distribution manager  ·  mining, construction and civil engineering machinery supply chain manager  ·  trainee mining, construction and civil engineering machinery distribution manager"
+  },
+  {
+   "role": "forecast manager",
+   "isco": 1324,
+   "aka": "analytic and forecasting manager  ·  forecast and planning analyst  ·  demand planning manager  ·  forecast planning manager  ·  forecasting and analysis director"
+  },
+  {
+   "role": "import export manager in sugar, chocolate and sugar confectionery",
+   "isco": 1324,
+   "aka": "senior export manager in sugar, chocolate and sugar confectionery  ·  senior import manager in sugar, chocolate and sugar confectionery  ·  international trade manager in sugar, chocolate and sugar confectionery  ·  trainee export manager in sugar, chocolate and sugar confectionery  ·  assistant import export manager in sugar, chocolate and sugar confectionery"
+  },
+  {
+   "role": "import export manager in household goods",
+   "isco": 1324,
+   "aka": "trainee import manager in household goods  ·  graduate import manager in household goods  ·  graduate export manager in household goods  ·  international trade compliance manager in household goods  ·  trainee import export manager in household goods"
+  },
+  {
+   "role": "import export manager in fish, crustaceans and molluscs",
+   "isco": 1324,
+   "aka": "assistant import export manager in fish, crustaceans and molluscs  ·  assistant export manager in fish, crustaceans and molluscs  ·  assistant import manager in fish, crustaceans and molluscs  ·  graduate import export manager in fish, crustaceans and molluscs  ·  customs compliance manager in fish, crustaceans and molluscs"
+  },
+  {
+   "role": "railway station manager",
+   "isco": 1324,
+   "aka": "station master  ·  station director  ·  manager of railway station  ·  head of station"
+  },
+  {
+   "role": "import export manager in live animals",
+   "isco": 1324,
+   "aka": "graduate import export manager in live animals  ·  assistant import manager in live animals  ·  senior import manager in live animals  ·  graduate import manager in live animals  ·  assistant export manager in live animals"
+  },
+  {
+   "role": "import export specialist in machinery, industrial equipment, ships and aircraft",
+   "isco": 3331,
+   "aka": "graduate export specialist in machinery, industrial equipment, ships and aircraft  ·  senior export specialist in machinery, industrial equipment, ships and aircraft  ·  international trade compliance specialist in machinery, industrial equipment, ships and aircraft  ·  assistant import specialist in machinery, industrial equipment, ships and aircraft  ·  graduate import export specialist in machinery, industrial equipment, ships and aircraft"
+  },
+  {
+   "role": "perfume and cosmetics distribution manager",
+   "isco": 1324,
+   "aka": "perfume and cosmetics supply chain planner  ·  assistant perfume and cosmetics distribution manager  ·  perfume and cosmetics logistics planner  ·  senior perfume and cosmetics distribution manager  ·  graduate perfume and cosmetics distribution manager"
+  },
+  {
+   "role": "import export specialist in fish, crustaceans and molluscs",
+   "isco": 3331,
+   "aka": "graduate export specialist in fish, crustaceans and molluscs  ·  customs compliance specialist in fish, crustaceans and molluscs  ·  international trade compliance specialist in fish, crustaceans and molluscs  ·  graduate import export specialist in fish, crustaceans and molluscs  ·  assistant export specialist in fish, crustaceans and molluscs"
+  },
+  {
+   "role": "import export manager",
+   "isco": 1324,
+   "aka": "senior customs compliance manager  ·  senior import export manager  ·  graduate export manager  ·  senior international trade compliance manager  ·  senior export manager"
+  },
+  {
+   "role": "import export specialist in mining, construction, civil engineering machinery",
+   "isco": 3331,
+   "aka": "trainee import export specialist in mining, construction, civil engineering machinery  ·  assistant export specialist in mining, construction, civil engineering machinery  ·  trainee import specialist in mining, construction, civil engineering machinery  ·  international trade compliance specialist in mining, construction, civil engineering machinery  ·  assistant import specialist in mining, construction, civil engineering machinery"
+  },
+  {
+   "role": "maritime water transport general manager",
+   "isco": 1324,
+   "aka": "maritime water transportation managing director  ·  sea transport general manager  ·  maritime transport managing director  ·  general manager of maritime water transportation  ·  general manager of maritime water transport"
+  },
+  {
+   "role": "import export manager in machine tools",
+   "isco": 1324,
+   "aka": "senior import manager in machine tools  ·  graduate import export manager in machine tools  ·  assistant export manager in machine tools  ·  trainee import manager in machine tools  ·  graduate export manager in machine tools"
+  },
+  {
+   "role": "furniture carpets and lighting equipment distribution manager",
+   "isco": 1324,
+   "aka": "furniture, carpets and lighting equipment distribution manager  ·  furniture, carpets and lighting equipment logistics planner  ·  furniture, carpets and lighting equipment supply chain manager  ·  senior furniture, carpets and lighting equipment distribution manager  ·  furniture, carpets and lighting equipment logistics manager"
+  },
+  {
+   "role": "import export specialist in office machinery and equipment",
+   "isco": 3331,
+   "aka": "senior export specialist in office machinery and equipment  ·  graduate import specialist in office machinery and equipment  ·  international trade compliance specialist in office machinery and equipment  ·  graduate export specialist in office machinery and equipment  ·  senior import specialist in office machinery and equipment"
+  },
+  {
+   "role": "dairy products and edible oils distribution manager",
+   "isco": 1324,
+   "aka": "trainee dairy products and edible oils distribution manager  ·  dairy products and edible oils supply chain manager  ·  graduate dairy products and edible oils distribution manager  ·  senior dairy products and edible oils distribution manager  ·  dairy products and edible oils logistics manager"
+  },
+  {
+   "role": "fisheries observer",
+   "isco": 3359,
+   "aka": "fishery observer  ·  fishing area observer  ·  fishing activity observer  ·  fisheries control reporter"
+  },
+  {
+   "role": "import export manager in tobacco products",
+   "isco": 1324,
+   "aka": "senior import export manager in tobacco products  ·  international trade compliance manager in tobacco products  ·  senior import manager in tobacco products  ·  graduate import export manager in tobacco products  ·  assistant import export manager in tobacco products"
+  },
+  {
+   "role": "import export manager in waste and scrap",
+   "isco": 1324,
+   "aka": "assistant import export manager in waste and scrap  ·  international trade manager in waste and scrap  ·  graduate export manager in waste and scrap  ·  assistant import manager in waste and scrap  ·  assistant export manager in waste and scrap"
+  },
+  {
+   "role": "consumer rights advisor",
+   "isco": 3359,
+   "aka": "trading standards officer  ·  legal services adviser  ·  consumer rights legal adviser  ·  consumer rights adviser  ·  legal services advisor"
+  },
+  {
+   "role": "import export specialist in waste and scrap",
+   "isco": 3331,
+   "aka": "assistant import export specialist in waste and scrap  ·  senior export specialist in waste and scrap  ·  graduate import specialist in waste and scrap  ·  trainee import export specialist in waste and scrap  ·  international trade compliance specialist in waste and scrap"
+  },
+  {
+   "role": "hardware, plumbing and heating equipment and supplies distribution manager",
+   "isco": 1324,
+   "aka": "hardware, plumbing and heating equipment and supplies supply chain planner  ·  hardware, plumbing and heating equipment and supplies supply chain manager  ·  hardware, plumbing and heating equipment and supplies logistics planner  ·  hardware, plumbing and heating equipment and supplies logistics manager  ·  trainee hardware, plumbing and heating equipment and supplies distribution manager"
+  },
+  {
+   "role": "import export specialist in electronic and telecommunications equipment",
+   "isco": 3331,
+   "aka": "assistant import specialist in electronic and telecommunications equipment  ·  trainee import export specialist in electronic and telecommunications equipment  ·  trainee import specialist in electronic and telecommunications equipment  ·  senior import export specialist in electronic and telecommunications equipment  ·  graduate import specialist in electronic and telecommunications equipment"
+  },
+  {
+   "role": "import export specialist in tobacco products",
+   "isco": 3331,
+   "aka": "graduate import specialist in tobacco products  ·  trainee export specialist in tobacco products  ·  graduate import export specialist in tobacco products  ·  trainee import specialist in tobacco products  ·  assistant export specialist in tobacco products"
+  },
+  {
+   "role": "import export manager in pharmaceutical goods",
+   "isco": 1324,
+   "aka": "graduate import export manager in pharmaceutical goods  ·  trainee import export manager in pharmaceutical goods  ·  assistant import manager in pharmaceutical goods  ·  assistant import export manager in pharmaceutical goods  ·  trainee import manager in pharmaceutical goods"
+  },
+  {
+   "role": "weights and measures inspector",
+   "isco": 3359,
+   "aka": "tester of weights and measures  ·  trading standards officer  ·  inspector of weights and measures  ·  trading standards supervisor  ·  inspector and tester of weights and measures"
+  },
+  {
+   "role": "import export manager in fruit and vegetables",
+   "isco": 1324,
+   "aka": "senior import manager in fruit and vegetables  ·  senior import export manager in fruit and vegetables  ·  trainee import manager in fruit and vegetables  ·  assistant import export manager in fruit and vegetables  ·  graduate export manager in fruit and vegetables"
+  },
+  {
+   "role": "import export manager in agricultural raw materials, seeds and animal feeds",
+   "isco": 1324,
+   "aka": "international trade manager in agricultural raw materials, seeds and animal feeds  ·  senior export manager in agricultural raw materials, seeds and animal feeds  ·  graduate import manager in agricultural raw materials, seeds and animal feeds  ·  graduate export manager in agricultural raw materials, seeds and animal feeds  ·  international trade compliance manager in agricultural raw materials, seeds and animal feeds"
+  },
+  {
+   "role": "import export specialist in china and other glassware",
+   "isco": 3331,
+   "aka": "senior export specialist in china and glassware  ·  senior import specialist in china and glassware  ·  senior import export specialist in china and glassware  ·  trainee import specialist in china and glassware  ·  graduate import export specialist in china and glassware"
+  },
+  {
+   "role": "import export specialist in perfume and cosmetics",
+   "isco": 3331,
+   "aka": "trainee import export specialist in perfume and cosmetics  ·  senior import export specialist in perfume and cosmetics  ·  assistant import specialist in perfume and cosmetics  ·  customs compliance specialist in perfume and cosmetics  ·  trainee export specialist in perfume and cosmetics"
+  },
+  {
+   "role": "electrical household appliances distribution manager",
+   "isco": 1324,
+   "aka": "senior electrical household appliances distribution manager  ·  trainee electrical household appliances distribution manager  ·  electrical household appliances supply chain planner  ·  assistant electrical household appliances distribution manager  ·  electrical household appliances logistics manager"
+  },
+  {
+   "role": "beverages distribution manager",
+   "isco": 1324,
+   "aka": "assistant beverages distribution manager  ·  beverages distribution planner  ·  graduate beverages distribution manager  ·  trainee beverages distribution manager  ·  beverages supply chain manager"
+  },
+  {
+   "role": "agricultural machinery and equipment distribution manager",
+   "isco": 1324,
+   "aka": "senior agricultural machinery and equipment distribution manager  ·  agricultural machinery and equipment distribution planner  ·  trainee agricultural machinery and equipment distribution manager  ·  agricultural machinery and equipment supply chain planner  ·  graduate agricultural machinery and equipment distribution manager"
+  },
+  {
+   "role": "import export specialist in metals and metal ores",
+   "isco": 3331,
+   "aka": "assistant export specialist in metals and metal ores  ·  senior import specialist in metals and metal ores  ·  graduate import export specialist in metals and metal ores  ·  international trade compliance specialist in metals and metal ores  ·  assistant import export specialist in metals and metal ores"
+  },
+  {
+   "role": "import export specialist in electrical household appliances",
+   "isco": 3331,
+   "aka": "graduate export specialist in electrical household appliances  ·  senior import specialist in electrical household appliances  ·  graduate import specialist in electrical household appliances  ·  assistant export specialist in electrical household appliances  ·  customs compliance specialist in electrical household appliances"
+  },
+  {
+   "role": "sugar, chocolate and sugar confectionery distribution manager",
+   "isco": 1324,
+   "aka": "sugar, chocolate and sugar confectionery supply chain planner  ·  trainee sugar, chocolate and sugar confectionery distribution manager  ·  assistant sugar, chocolate and sugar confectionery distribution manager  ·  sugar, chocolate and sugar confectionery distribution planner  ·  sugar, chocolate and sugar confectionery supply chain manager"
+  },
+  {
+   "role": "import export specialist in chemical products",
+   "isco": 3331,
+   "aka": "graduate export specialist in chemical products  ·  graduate import export specialist in chemical products  ·  international trade compliance specialist in chemical products  ·  trainee export specialist in chemical products  ·  assistant import specialist in chemical products"
+  },
+  {
+   "role": "import export manager in electrical household appliances",
+   "isco": 1324,
+   "aka": "customs compliance manager in electrical household appliances  ·  assistant import manager in electrical household appliances  ·  assistant import export manager in electrical household appliances  ·  senior import manager in electrical household appliances  ·  senior import export manager in electrical household appliances"
+  },
+  {
+   "role": "meat and meat products distribution manager",
+   "isco": 1324,
+   "aka": "senior meat and meat products distribution manager  ·  meat and meat products supply chain manager  ·  graduate meat and meat products distribution manager  ·  assistant meat and meat products distribution manager  ·  trainee meat and meat products distribution manager"
+  },
+  {
+   "role": "import export specialist in machine tools",
+   "isco": 3331,
+   "aka": "assistant import export specialist in machine tools  ·  trainee import specialist in machine tools  ·  senior import export specialist in machine tools  ·  trainee import export specialist in machine tools  ·  graduate import export specialist in machine tools"
+  },
+  {
+   "role": "import export specialist in coffee, tea, cocoa and spices",
+   "isco": 3331,
+   "aka": "assistant import export specialist in coffee, tea, cocoa and spices  ·  graduate import specialist in coffee, tea, cocoa and spices  ·  graduate export specialist in coffee, tea, cocoa and spices  ·  graduate import export specialist in coffee, tea, cocoa and spices  ·  senior import specialist in coffee, tea, cocoa and spices"
+  },
+  {
+   "role": "road transport division manager",
+   "isco": 1324,
+   "aka": "head of road transport  ·  road operations director  ·  motor transport manager  ·  road transport operations manager  ·  manager of road transport division"
+  },
+  {
+   "role": "import export specialist in dairy products and edible oils",
+   "isco": 3331,
+   "aka": "assistant export specialist in dairy products and edible oils  ·  senior export specialist in dairy products and edible oils  ·  trainee import export specialist in dairy products and edible oils  ·  graduate import export specialist in dairy products and edible oils  ·  customs compliance specialist in dairy products and edible oils"
+  },
+  {
+   "role": "coffee, tea, cocoa and spices distribution manager",
+   "isco": 1324,
+   "aka": "graduate coffee, tea, cocoa and spices distribution manager  ·  assistant coffee, tea, cocoa and spices distribution manager  ·  senior coffee, tea, cocoa and spices distribution manager  ·  coffee, tea, cocoa and spices supply chain planner  ·  coffee, tea, cocoa and spices distribution planner"
+  },
+  {
+   "role": "airport director",
+   "isco": 1324,
+   "aka": "finance director  ·  airside and expansions operations director  ·  terminal operations manager  ·  airport security compliance manager  ·  airport manager"
+  },
+  {
+   "role": "import export manager in chemical products",
+   "isco": 1324,
+   "aka": "senior export manager in chemical products  ·  assistant import manager in chemical products  ·  assistant import export manager in chemical products  ·  international trade compliance manager in chemical products  ·  trainee import manager in chemical products"
+  },
+  {
+   "role": "Detectives and Criminal Investigators",
+   "isco": 3351,
+   "aka": NaN
+  },
+  {
+   "role": "Protective Service Workers, All Other",
+   "isco": 3359,
+   "aka": NaN
+  },
+  {
+   "role": "hides, skins and leather products distribution manager",
+   "isco": 1324,
+   "aka": "graduate hides, skins and leather products distribution manager  ·  trainee hides, skins and leather products distribution manager  ·  hides, skins and leather products supply chain manager  ·  hides, skins and leather products distribution planner  ·  assistant hides, skins and leather products distribution manager"
+  },
+  {
+   "role": "import export manager in hides, skins and leather products",
+   "isco": 1324,
+   "aka": "graduate import manager in hides, skins and leather products  ·  customs compliance manager in hides, skins and leather products  ·  international trade manager in hides, skins and leather products  ·  trainee import manager in hides, skins and leather products  ·  senior import export manager in hides, skins and leather products"
+  },
+  {
+   "role": "import export specialist in hides, skins and leather products",
+   "isco": 3331,
+   "aka": "senior import specialist in hides, skins and leather products  ·  assistant import export specialist in hides, skins and leather products  ·  assistant export specialist in hides, skins and leather products  ·  trainee import specialist in hides, skins and leather products  ·  graduate export specialist in hides, skins and leather products"
+  },
+  {
+   "role": "wholesale merchant in hides, skins and leather products",
+   "isco": 3324,
+   "aka": "business to business seller in hides, skins and leather products  ·  assistant wholesale merchant in hides, skins and leather products  ·  wholesale buyer in hides, skins and leather products  ·  wholesaler in hides, skins and leather products  ·  senior wholesale merchant in hides, skins and leather products"
+  },
+  {
+   "role": "textile industry machinery distribution manager",
+   "isco": 1324,
+   "aka": "graduate textile industry machinery distribution manager  ·  textile industry machinery supply chain manager  ·  textile industry machinery logistics planner  ·  textile industry machinery distribution planner  ·  textile industry machinery supply chain planner"
+  },
+  {
+   "role": "textiles, textile semi-finished and raw materials distribution manager",
+   "isco": 1324,
+   "aka": "textiles, textile semi-finished and raw materials logistics manager  ·  trainee textiles, textile semi-finished and raw materials distribution manager  ·  textiles, textile semi-finished and raw materials distribution planner  ·  textiles, textile semi-finished and raw materials logistics planner  ·  senior textiles, textile semi-finished and raw materials distribution manager"
+  },
+  {
+   "role": "clothing and footwear distribution manager",
+   "isco": 1324,
+   "aka": "clothing and footwear logistics planner  ·  assistant clothing and footwear distribution manager  ·  graduate clothing and footwear distribution manager  ·  clothing and footwear supply chain manager  ·  clothing and footwear logistics manager"
+  },
+  {
+   "role": "import export manager in textile industry machinery",
+   "isco": 1324,
+   "aka": "graduate export manager in textile industry machinery  ·  trainee import export manager in textile industry machinery  ·  senior export manager in textile industry machinery  ·  assistant import export manager in textile industry machinery  ·  graduate import export manager in textile industry machinery"
+  },
+  {
+   "role": "import export manager in textiles and textile semi-finished and raw materials",
+   "isco": 1324,
+   "aka": "graduate export manager in textiles and textile semi-finished and raw materials  ·  trainee export manager in textiles and textile semi-finished and raw materials  ·  graduate import export manager in textiles and textile semi-finished and raw materials  ·  assistant import manager in textiles and textile semi-finished and raw materials  ·  international trade manager in textiles and textile semi-finished and raw materials"
+  },
+  {
+   "role": "import export manager in clothing and footwear",
+   "isco": 1324,
+   "aka": "trainee import export manager in clothing and footwear  ·  assistant import manager in clothing and footwear  ·  trainee export manager in clothing and footwear  ·  trainee import manager in clothing and footwear  ·  senior export manager in clothing and footwear"
+  },
+  {
+   "role": "import export specialist in textile industry machinery",
+   "isco": 3331,
+   "aka": "graduate import export specialist in textile industry machinery  ·  trainee export specialist in textile industry machinery  ·  senior import export specialist in textile industry machinery  ·  trainee import specialist in textile industry machinery  ·  customs compliance specialist in textile industry machinery"
+  },
+  {
+   "role": "import export specialist in textiles and textile semi-finished and raw materials",
+   "isco": 3331,
+   "aka": "international trade compliance specialist in textiles and textile semi-finished and raw materials  ·  trainee export specialist in textiles and textile semi-finished and raw materials  ·  customs compliance specialist in textiles and textile semi-finished and raw materials  ·  graduate import specialist in textiles and textile semi-finished and raw materials  ·  trainee import specialist in textiles and textile semi-finished and raw materials"
+  },
+  {
+   "role": "import export specialist in clothing and footwear",
+   "isco": 3331,
+   "aka": "senior import export specialist in clothing and footwear  ·  assistant import specialist in clothing and footwear  ·  trainee import specialist in clothing and footwear  ·  senior import specialist in clothing and footwear  ·  trainee import export specialist in clothing and footwear"
+  },
+  {
+   "role": "wholesale merchant in textile industry machinery",
+   "isco": 3324,
+   "aka": "wholesale buyer in textile industry machinery  ·  graduate wholesale merchant in textile industry machinery  ·  business to business sales consultant in textile industry machinery  ·  senior wholesale merchant in textile industry machinery  ·  assistant wholesale merchant in textile industry machinery"
+  },
+  {
+   "role": "wholesale merchant in textiles and textile semi-finished and raw materials",
+   "isco": 3324,
+   "aka": "wholesaler in textiles and textile semi-finished and raw materials  ·  assistant wholesale merchant in textiles and textile semi-finished and raw materials  ·  trainee wholesale merchant in textiles and textile semi-finished and raw materials  ·  B2B sales consultant in textiles and textile semi-finished and raw materials  ·  business to business seller in textiles and textile semi-finished and raw materials"
+  },
+  {
+   "role": "wholesale merchant in clothing and footwear",
+   "isco": 3324,
+   "aka": "graduate wholesale merchant in clothing and footwear  ·  trainee wholesale merchant in clothing and footwear  ·  wholesale buyer in clothing and footwear  ·  senior wholesale merchant in clothing and footwear  ·  business to business seller in clothing and footwear"
+  }
+ ]
+}

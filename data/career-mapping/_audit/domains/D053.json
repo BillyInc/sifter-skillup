@@ -1,0 +1,627 @@
+{
+ "domain_id": "D053",
+ "domain_name": "Hospitality",
+ "role_count": 124,
+ "roles": [
+  {
+   "role": "tobacco shop manager",
+   "isco": 1420,
+   "aka": "tobacco store manager  ·  cigar store manager  ·  cigarette shop manager  ·  cigar shop manager  ·  tobacconists shop manager"
+  },
+  {
+   "role": "head chef",
+   "isco": 3434,
+   "aka": "chef de cuisine  ·  industrial head chef  ·  sous chef  ·  kitchen manager  ·  patron cuisinier"
+  },
+  {
+   "role": "tour operator manager",
+   "isco": 1439,
+   "aka": "tour operators manager  ·  package tour operators manager  ·  package tour operator manager  ·  package tour services manager  ·  package tour manager"
+  },
+  {
+   "role": "rooms division manager",
+   "isco": 1411,
+   "aka": "head receptionist  ·  rooms and reservations manager  ·  front office manager  ·  rooms manager  ·  reception manager"
+  },
+  {
+   "role": "performance production manager",
+   "isco": 1431,
+   "aka": "theatre production manager  ·  film production manager  ·  theater production manager  ·  live event production manager"
+  },
+  {
+   "role": "audiology equipment shop manager",
+   "isco": 1420,
+   "aka": "audiology centre manager  ·  hearing aid shop manager  ·  retail audiologist  ·  audiology shop manager  ·  audiology equipment retail manager"
+  },
+  {
+   "role": "spa manager",
+   "isco": 1431,
+   "aka": "manager of spa  ·  spa director  ·  wellness manager  ·  spa managers  ·  spa and wellness manager"
+  },
+  {
+   "role": "telecommunication equipment shop manager",
+   "isco": 1420,
+   "aka": "mobile phone and accessories shop manager  ·  mobile devices and accessories shop manager  ·  mobile phone shop manager  ·  mobile phone store manager  ·  mobile phone and devices shop manager"
+  },
+  {
+   "role": "chef",
+   "isco": 3434,
+   "aka": "banqueting chef  ·  chef de partie  ·  chef de cuisine  ·  commis chef  ·  sous-chef"
+  },
+  {
+   "role": "environmental education officer",
+   "isco": 5113,
+   "aka": "ecotourism guide  ·  environmental educator  ·  environmental trainer  ·  environmental communications officer  ·  environmental public relations specialist"
+  },
+  {
+   "role": "industrial cook",
+   "isco": 5120,
+   "aka": "catering worker  ·  institutional cook  ·  catering cook  ·  institutional food preparation worker"
+  },
+  {
+   "role": "domestic appliances shop manager",
+   "isco": 1420,
+   "aka": "electrical appliances store manager  ·  electrical appliances shop manager  ·  shop manager (electrical household appliances)  ·  electrical household goods shop manager  ·  home appliances shop manager"
+  },
+  {
+   "role": "medical goods shop manager",
+   "isco": 1420,
+   "aka": "chemist shop manager  ·  medical supply store manager  ·  medical equipment suppliers manager  ·  drugstore manager  ·  pharmacy manager"
+  },
+  {
+   "role": "zoo curator",
+   "isco": 1431,
+   "aka": "collection curator  ·  curator of herpetology  ·  aquarium curator  ·  zoo collection curator  ·  zoo collection's supervisor"
+  },
+  {
+   "role": "park guide",
+   "isco": 5113,
+   "aka": "park ranger  ·  countryside ranger  ·  countryside manager  ·  heritage centre worker  ·  area ranger"
+  },
+  {
+   "role": "bakery shop manager",
+   "isco": 1420,
+   "aka": "bread and cakes shop manager  ·  bread and cakes store manager  ·  bakery department manager  ·  patisserie shop manager  ·  cake shop manager"
+  },
+  {
+   "role": "toys and games shop manager",
+   "isco": 1420,
+   "aka": "toy shop manager  ·  toy superstore manager  ·  games store manager  ·  toy and game superstore manager  ·  kids toys and games shop manager"
+  },
+  {
+   "role": "wine sommelier",
+   "isco": 5131,
+   "aka": "sommelier  ·  wine choice consultant  ·  wine selection advisor  ·  wine steward  ·  wine advisor"
+  },
+  {
+   "role": "sales account manager",
+   "isco": 1420,
+   "aka": "sales coordinator  ·  sales representative  ·  sales development manager  ·  advertising account manager  ·  client administrator"
+  },
+  {
+   "role": "bartender",
+   "isco": 5132,
+   "aka": "bar keeper  ·  barman  ·  bar woman  ·  bar staff"
+  },
+  {
+   "role": "beauty salon manager",
+   "isco": 1431,
+   "aka": "beauty parlour director  ·  beauty spa director  ·  beauty salon director  ·  beauty spa manager  ·  salon manager"
+  },
+  {
+   "role": "trade regional manager",
+   "isco": 1420,
+   "aka": "area sales manager  ·  store trade regional manager  ·  assistant trade regional manager  ·  regional sales and marketing manager  ·  regional product sales manager"
+  },
+  {
+   "role": "building materials shop manager",
+   "isco": 1420,
+   "aka": "builders merchants shop manager  ·  building equipment shop manager  ·  building materials do it yourself shop manager  ·  construction materials shop manager  ·  builders merchants trade counter manager"
+  },
+  {
+   "role": "fish and seafood shop manager",
+   "isco": 1420,
+   "aka": "fish shop manager  ·  seafood shop manager  ·  fish stall manager  ·  fishmongers shop manager  ·  fish market sales manager"
+  },
+  {
+   "role": "laundry and dry cleaning manager",
+   "isco": 1439,
+   "aka": "laundry and dry cleaning service manager  ·  laundry and dry cleaning coordinator  ·  laundry and dry-cleaning service manager  ·  dry cleaning service manager  ·  dry-cleaning and laundry supervisor"
+  },
+  {
+   "role": "audio and video equipment shop manager",
+   "isco": 1420,
+   "aka": "hi-fi shop manager  ·  audio and video shop manager  ·  home entertainment store manager  ·  audio and video equipment store manager  ·  audio-visual store manager"
+  },
+  {
+   "role": "jewellery and watches shop manager",
+   "isco": 1420,
+   "aka": "diamond shop manager  ·  diamonds and precious metals store manager  ·  luxury watches and diamond jewellery store manager  ·  jewellery shop manager  ·  jewellery store manager"
+  },
+  {
+   "role": "hospitality entertainment manager",
+   "isco": 1411,
+   "aka": "entertainment manager  ·  holiday camp entertainment manager  ·  resort entertainment manager  ·  cruise entertainment manager  ·  amusement manager"
+  },
+  {
+   "role": "sommelier",
+   "isco": 5131,
+   "aka": "wine manager  ·  restaurant sommelier  ·  wine waiter"
+  },
+  {
+   "role": "lottery manager",
+   "isco": 1431,
+   "aka": "general manager  ·  lottery general manager  ·  senior lottery administrator  ·  lottery managing director  ·  lottery chief executive officer"
+  },
+  {
+   "role": "accommodation manager",
+   "isco": 1411,
+   "aka": "restaurant manager  ·  resident manager  ·  hotel manager  ·  youth hostel manager  ·  resort manager"
+  },
+  {
+   "role": "head waiter/head waitress",
+   "isco": 5131,
+   "aka": "front of house manager  ·  waiter service manager  ·  head waitress  ·  head waiter  ·  chief waiter"
+  },
+  {
+   "role": "hardware and paint shop manager",
+   "isco": 1420,
+   "aka": "glass and mirror store manager  ·  hardware and paint DIY superstore manager  ·  hardware superstore manager  ·  paint and accessories store manager  ·  home decorating shop manager"
+  },
+  {
+   "role": "meat and meat products shop manager",
+   "isco": 1420,
+   "aka": "meat trader  ·  meat shop manager  ·  senior retail butcher  ·  butchery department manager  ·  meat and meat products purveyor"
+  },
+  {
+   "role": "steward/stewardess",
+   "isco": 5111,
+   "aka": "steward  ·  stewardess  ·  flight attendant  ·  cabin crew"
+  },
+  {
+   "role": "garage manager",
+   "isco": 1439,
+   "aka": "car repair shop director  ·  auto shop service manager  ·  automotive repair shop manager  ·  car workshop manager  ·  motor vehicle repair shop director"
+  },
+  {
+   "role": "pet and pet food shop manager",
+   "isco": 1420,
+   "aka": "animal food store manager  ·  pet food store manager  ·  animal care products shop manager  ·  pet and pet food superstore manager  ·  animal shop manager"
+  },
+  {
+   "role": "antique shop manager",
+   "isco": 1420,
+   "aka": "antiques shop manager  ·  antiquities shop manager  ·  antique furniture shop manager  ·  antiques dealer  ·  antique furniture store manager"
+  },
+  {
+   "role": "cultural facilities manager",
+   "isco": 1431,
+   "aka": "cultural facilities director  ·  cultural facilities executive  ·  cultural services manager  ·  cultural facilities program coordinator"
+  },
+  {
+   "role": "floor and wall coverings shop manager",
+   "isco": 1420,
+   "aka": "carpet and rug store manager  ·  carpet store manager  ·  carpet and rug shop manager  ·  wallpaper and accessories shop manager  ·  wallpaper shop manager"
+  },
+  {
+   "role": "computer software and multimedia shop manager",
+   "isco": 1420,
+   "aka": "multimedia equipment store manager  ·  computer software and multimedia store manager  ·  computer software and multimedia storekeeper  ·  computer software shop manager  ·  computer software store manager"
+  },
+  {
+   "role": "ship steward/ship stewardess",
+   "isco": 5111,
+   "aka": "ferry stewardess  ·  cruise ship guest services associate  ·  ferry steward  ·  ship guest services associate  ·  ship steward"
+  },
+  {
+   "role": "camping ground manager",
+   "isco": 1439,
+   "aka": "camp-site manager  ·  campground manager  ·  campgrounds manager  ·  camping manager  ·  countryside manager"
+  },
+  {
+   "role": "photography shop manager",
+   "isco": 1420,
+   "aka": "photographic shop manager  ·  photography goods store manager  ·  photographic equipment store manager  ·  photographic articles shop manager  ·  photographic articles store manager"
+  },
+  {
+   "role": "furniture shop manager",
+   "isco": 1420,
+   "aka": "lighting equipment and accessories shop manager  ·  home furnishings shop manager  ·  furniture store manager  ·  home furnishings store manager  ·  garden furniture shop manager"
+  },
+  {
+   "role": "recreational facilities manager",
+   "isco": 1431,
+   "aka": "cinema manager  ·  recreational camp manager  ·  cultural facility manager  ·  sports facility manager  ·  recreational facilities director"
+  },
+  {
+   "role": "passenger fare controller",
+   "isco": 5112,
+   "aka": "fare controller  ·  cable vehicle attendant  ·  ticket controller  ·  ticket conductor  ·  ticket inspector"
+  },
+  {
+   "role": "fruit and vegetables shop manager",
+   "isco": 1420,
+   "aka": "greengrocers store manager  ·  organic fruit shop manager  ·  organic fruit and vegetable shop manager  ·  greengrocery store manager  ·  fruit shop manager"
+  },
+  {
+   "role": "zoo educator",
+   "isco": 5113,
+   "aka": "learning officer  ·  visitor educator  ·  education instructor  ·  schools engagement officer  ·  educator"
+  },
+  {
+   "role": "department store manager",
+   "isco": 1420,
+   "aka": "department store general merchandise manager  ·  retail sales manager  ·  outlet store manager  ·  senior department store manager  ·  general retail manager"
+  },
+  {
+   "role": "music and video shop manager",
+   "isco": 1420,
+   "aka": "music and video store manager  ·  musical instrument shop manager  ·  cd shop manager  ·  musical instrument store manager  ·  music shop manager"
+  },
+  {
+   "role": "kitchen and bathroom shop manager",
+   "isco": 1420,
+   "aka": "kitchen superstore manager  ·  home improvements shop manager  ·  DIY superstore manager  ·  kitchen and bathroom store manager  ·  bathroom store manager"
+  },
+  {
+   "role": "sport facility manager",
+   "isco": 1431,
+   "aka": "swimming pool manager  ·  sport hall manager  ·  stadium manager  ·  sport venue manager  ·  fitness club manager"
+  },
+  {
+   "role": "betting manager",
+   "isco": 1431,
+   "aka": "casino manager  ·  betting shop coordinator  ·  bingo manager"
+  },
+  {
+   "role": "ammunition shop manager",
+   "isco": 1420,
+   "aka": "hunting equipment shop manager  ·  firearm shop manager  ·  ammunition storekeeper  ·  hunting equipment store manager  ·  weapon store manager"
+  },
+  {
+   "role": "orthopaedic supply shop manager",
+   "isco": 1420,
+   "aka": "surgical suppliers shop manager  ·  orthopaedic supplies store manager  ·  orthopaedic articles shop manager  ·  Orthopedic supply shop manager  ·  surgical supplies store manager"
+  },
+  {
+   "role": "pastry chef",
+   "isco": 3434,
+   "aka": "pastry cook  ·  baker  ·  confectioner  ·  glacier  ·  confectionary chef"
+  },
+  {
+   "role": "cook",
+   "isco": 5120,
+   "aka": "grill cook  ·  roast cook  ·  under chief of the kitchen  ·  sauté cook  ·  chief of the kitchen"
+  },
+  {
+   "role": "travel agency manager",
+   "isco": 1439,
+   "aka": "travel call centre manager  ·  tourism agency manager  ·  tourism sales manager  ·  travel sales manager"
+  },
+  {
+   "role": "cabin crew manager",
+   "isco": 5111,
+   "aka": "manager of cabin crew  ·  inflight service manager  ·  customer service director  ·  flight service manager  ·  cabin service director"
+  },
+  {
+   "role": "railway passenger service agent",
+   "isco": 5112,
+   "aka": "railway station customer service representative  ·  railway customer service agent  ·  railway transportation service representative  ·  railway passenger agent  ·  railway customer transit agent"
+  },
+  {
+   "role": "sporting and outdoor accessories shop manager",
+   "isco": 1420,
+   "aka": "sports goods store manager  ·  sporting accessories shop manager  ·  sports shop manager  ·  sports store manager  ·  sports equipment shop manager"
+  },
+  {
+   "role": "bookshop manager",
+   "isco": 1420,
+   "aka": "antiquarian book shop manager  ·  book and stationery shop manager  ·  comic book store manager  ·  press and bookstore manager  ·  magazine and bookshop manager"
+  },
+  {
+   "role": "clothing shop manager",
+   "isco": 1420,
+   "aka": "bridal store manager  ·  children's fashion store manager  ·  kids fashion store manager  ·  maternity fashion shop manager  ·  children's fashion shop manager"
+  },
+  {
+   "role": "beer sommelier",
+   "isco": 5131,
+   "aka": "beer selection advisor  ·  beer advisor"
+  },
+  {
+   "role": "press and stationery shop manager",
+   "isco": 1420,
+   "aka": "newspapers and magazines store manager  ·  newsagents shop manager  ·  newsagent retail manager  ·  newspaper kiosk manager  ·  kiosk manager"
+  },
+  {
+   "role": "diet cook",
+   "isco": 5120,
+   "aka": "nursing home cook  ·  dietary cook  ·  diet chef  ·  health care cook  ·  dietary aide"
+  },
+  {
+   "role": "chief conductor",
+   "isco": 5112,
+   "aka": "train conductors supervisor  ·  chief guard  ·  train chief conductor  ·  conductor crew supervisor  ·  chief train conductor"
+  },
+  {
+   "role": "shop manager",
+   "isco": 1420,
+   "aka": "retail shop manager  ·  retail store manager  ·  boutique manager  ·  shop general manager  ·  store manager"
+  },
+  {
+   "role": "restaurant host/restaurant hostess",
+   "isco": 5131,
+   "aka": "maître d'hôtel  ·  front of house host  ·  restaurant hostess  ·  front of house hostess  ·  restaurant host"
+  },
+  {
+   "role": "head sommelier",
+   "isco": 5131,
+   "aka": "wine manager  ·  head of wines  ·  master sommelier  ·  head wine waiter"
+  },
+  {
+   "role": "private chef",
+   "isco": 3434,
+   "aka": "private culinary expert  ·  culinary expert  ·  private cook"
+  },
+  {
+   "role": "retail department manager",
+   "isco": 1420,
+   "aka": "department sales manager  ·  retail department head  ·  head of department (retail)  ·  departmental manager  ·  general merchandise department manager"
+  },
+  {
+   "role": "delicatessen shop manager",
+   "isco": 1420,
+   "aka": "farm foods shop manager  ·  craft foods shop manager  ·  fine foods shop manager  ·  delicatessen counter manager  ·  deli shop manager"
+  },
+  {
+   "role": "head pastry chef",
+   "isco": 3434,
+   "aka": "executive pastry chef  ·  executive dessert chef  ·  master dessert chef  ·  master pastry chef  ·  master patissier"
+  },
+  {
+   "role": "motor vehicle shop manager",
+   "isco": 1420,
+   "aka": "dealership manager  ·  automobile store manager  ·  sales manager motor trade  ·  automotive store manager  ·  light and heavy motor vehicles store manager"
+  },
+  {
+   "role": "tourist guide",
+   "isco": 5113,
+   "aka": "museum guide  ·  palace guide  ·  city guide  ·  castle guide  ·  guide"
+  },
+  {
+   "role": "craft shop manager",
+   "isco": 1420,
+   "aka": "craft counter manager  ·  craft department manager  ·  sewing shop manager  ·  weaving shop manager  ·  pottery shop manager"
+  },
+  {
+   "role": "supermarket manager",
+   "isco": 1420,
+   "aka": "outlet centre manager  ·  graduate trainee supermarket manager  ·  assistant supermarket manager  ·  food supermarket manager  ·  hypermarket manager"
+  },
+  {
+   "role": "fish cook",
+   "isco": 5120,
+   "aka": "fish restaurant chef  ·  fish fryer  ·  sea food restaurant cook  ·  seafood restaurant cook  ·  fish restaurant cook"
+  },
+  {
+   "role": "grill cook",
+   "isco": 5120,
+   "aka": "barbecue cook  ·  grill section cook  ·  grill section chef  ·  rotisserie chef  ·  barbecue chef"
+  },
+  {
+   "role": "barista",
+   "isco": 5132,
+   "aka": "coffee maker  ·  coffee bartender  ·  specialised coffee bartender  ·  specialised bartender"
+  },
+  {
+   "role": "cultural centre director",
+   "isco": 1431,
+   "aka": "center director  ·  director of cultural center  ·  cultural centre manager  ·  arts centre manager  ·  cultural centeredirector"
+  },
+  {
+   "role": "cosmetics and perfume shop manager",
+   "isco": 1420,
+   "aka": "beauty and aroma shop manager  ·  perfume shop manager  ·  make-up and cosmetics store manager  ·  beauty store manager  ·  cosmetics store manager"
+  },
+  {
+   "role": "waiter/waitress",
+   "isco": 5131,
+   "aka": "chef de rang  ·  waitress  ·  waiter  ·  waiting staff  ·  table waiter"
+  },
+  {
+   "role": "restaurant manager",
+   "isco": 1412,
+   "aka": "beverage supervisor  ·  restaurant food and beverage manager  ·  food and drinks manager  ·  cafe manager  ·  food and beverages manager"
+  },
+  {
+   "role": "drugstore manager",
+   "isco": 1420,
+   "aka": "drugstore counter manager  ·  chemist's shop manager  ·  drugstore department manager  ·  healthcare shop manager"
+  },
+  {
+   "role": "computer shop manager",
+   "isco": 1420,
+   "aka": "computer hardware shop manager  ·  computer and accessories shop manager  ·  IT store manager  ·  consumer electronics store manager  ·  ICT superstore manager"
+  },
+  {
+   "role": "call centre manager",
+   "isco": 1439,
+   "aka": "contact centre manager  ·  contact centre coordinator  ·  call centre coordinator  ·  client centre manager  ·  call center manager"
+  },
+  {
+   "role": "confectionery shop manager",
+   "isco": 1420,
+   "aka": "chocolate store manager  ·  pastry and confectionery shop manager  ·  pastry and confectionery store manager  ·  confectionery store manager  ·  sweet shop manager"
+  },
+  {
+   "role": "cocktail bartender",
+   "isco": 5132,
+   "aka": "mixology waiter  ·  flair bartender  ·  mixologist  ·  mixology bartender"
+  },
+  {
+   "role": "flower and garden shop manager",
+   "isco": 1420,
+   "aka": "garden supplies store manager  ·  lawn and garden shop manager  ·  floristry shop manager  ·  floristry store manager  ·  plant centre manager"
+  },
+  {
+   "role": "train conductor",
+   "isco": 5112,
+   "aka": "train attendant  ·  train guard  ·  rail conductor  ·  railway conductor  ·  conductor on trains"
+  },
+  {
+   "role": "bicycle shop manager",
+   "isco": 1420,
+   "aka": "cycling store manager  ·  bike store manager  ·  bike shop manager  ·  bike superstore manager  ·  cycles and cycle accessories store manager"
+  },
+  {
+   "role": "fuel station manager",
+   "isco": 1420,
+   "aka": "retail fuel manager  ·  fuel retail manager  ·  petrol station manager  ·  retail forecourt manager  ·  fuel site manager"
+  },
+  {
+   "role": "flight attendant",
+   "isco": 5111,
+   "aka": "air crew member  ·  steward  ·  cabin attendant  ·  inflight service attendant  ·  stewardess"
+  },
+  {
+   "role": "beverages shop manager",
+   "isco": 1420,
+   "aka": "off-licence store manager  ·  off-sales shop manager  ·  off-licence shop manager  ·  beverages and alcoholic drinks store manager  ·  alcoholic drinks shop manager"
+  },
+  {
+   "role": "tourist information centre manager",
+   "isco": 1439,
+   "aka": "tourist information centre (TIC) manager  ·  tourist information supervisor  ·  tourist information center manager  ·  tourist information centre supervisor  ·  tourist information point manager"
+  },
+  {
+   "role": "contact centre manager",
+   "isco": 1439,
+   "aka": "customer service manager  ·  contact center manager"
+  },
+  {
+   "role": "second-hand shop manager",
+   "isco": 1420,
+   "aka": "second-hand store manager  ·  army surplus shop manager  ·  vintage clothes store manager  ·  charity store manager  ·  thrift shop manager"
+  },
+  {
+   "role": "eyewear and optical equipment shop manager",
+   "isco": 1420,
+   "aka": "optometrists shop manager  ·  opticians store manager  ·  optometrists store manager  ·  spectacle store manager  ·  optical equipment store manager"
+  },
+  {
+   "role": "train attendant",
+   "isco": 5111,
+   "aka": "train on-board staff member  ·  train steward  ·  train on-board stewardess  ·  train on-board steward  ·  train on-board customer service representative"
+  },
+  {
+   "role": "Hotel and Restaurant Managers",
+   "isco": 1411,
+   "aka": NaN
+  },
+  {
+   "role": "Concierges and Hotel Desk Clerks",
+   "isco": 4224,
+   "aka": NaN
+  },
+  {
+   "role": "Food Service Managers",
+   "isco": 1411,
+   "aka": NaN
+  },
+  {
+   "role": "Lodging Managers",
+   "isco": 1431,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Food Preparation and Serving Workers",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Cooks, Fast Food",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Cooks, Institution and Cafeteria",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Cooks, Private Household",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Cooks, Restaurant",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Cooks, Short Order",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Cooks, All Other",
+   "isco": 5120,
+   "aka": NaN
+  },
+  {
+   "role": "Food Servers, Nonrestaurant",
+   "isco": 5131,
+   "aka": NaN
+  },
+  {
+   "role": "Baggage Porters and Bellhops",
+   "isco": 5113,
+   "aka": NaN
+  },
+  {
+   "role": "Concierges",
+   "isco": 5113,
+   "aka": NaN
+  },
+  {
+   "role": "Parking Attendants",
+   "isco": 5112,
+   "aka": NaN
+  },
+  {
+   "role": "Automotive and Watercraft Service Attendants",
+   "isco": 5112,
+   "aka": NaN
+  },
+  {
+   "role": "Transportation Workers, All Other",
+   "isco": 5112,
+   "aka": NaN
+  },
+  {
+   "role": "First-Line Supervisors of Housekeeping and Janitorial Workers",
+   "isco": 5153,
+   "aka": NaN
+  },
+  {
+   "role": "Janitors and Cleaners, Except Maids and Housekeeping Cleaners",
+   "isco": 9112,
+   "aka": NaN
+  },
+  {
+   "role": "Maids and Housekeeping Cleaners",
+   "isco": 5153,
+   "aka": NaN
+  },
+  {
+   "role": "Building Cleaning Workers, All Other",
+   "isco": 9112,
+   "aka": NaN
+  },
+  {
+   "role": "Travel Agents",
+   "isco": 3321,
+   "aka": NaN
+  }
+ ]
+}

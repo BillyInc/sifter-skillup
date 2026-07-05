@@ -1,0 +1,247 @@
+{
+ "domain_id": "D075",
+ "domain_name": "Fashion, Textiles",
+ "role_count": 48,
+ "roles": [
+  {
+   "role": "protective clothing apparel manufacturer",
+   "isco": 8153,
+   "aka": "manufacturer of protective equipment  ·  protective gear manufacturer  ·  manufacturer of protective clothing  ·  protective clothes manufacturer  ·  manufacturer of safety clothing"
+  },
+  {
+   "role": "clothing product grader",
+   "isco": 7532,
+   "aka": "pattern developer/grader  ·  apparel grader  ·  fabric pattern grader  ·  clothing patternmaker  ·  clothing product tester"
+  },
+  {
+   "role": "hand lasting operator",
+   "isco": 7536,
+   "aka": "hand laster  ·  hand lasting craftsman  ·  manual lasting operator  ·  hand lasting technician"
+  },
+  {
+   "role": "cutting machine operator",
+   "isco": 8156,
+   "aka": "leather goods machine operator  ·  leather goods cutting technologist for linings and other materials  ·  linings and other materials cutting operator  ·  leather goods cutting attendant for linings and other materials  ·  cutting machine tender"
+  },
+  {
+   "role": "lasting machine operator",
+   "isco": 8156,
+   "aka": "laster  ·  lasting room machine operator  ·  lasting machine tender  ·  lasting-machine operator  ·  machine puller and laster"
+  },
+  {
+   "role": "wearing apparel patternmaker",
+   "isco": 7532,
+   "aka": "sewing layout pattern technician  ·  bespoke wearing apparel patternmaker  ·  pattern grader  ·  apparel patternmaker  ·  wearing apparel pattern worker"
+  },
+  {
+   "role": "digital prototyper",
+   "isco": 7532,
+   "aka": "digital patternmaker  ·  pattern making machine operator  ·  digital prototype operator  ·  digital prototype technician  ·  digital pattern maker"
+  },
+  {
+   "role": "finishing textile technician",
+   "isco": 8154,
+   "aka": "finishing textile supervisor  ·  textile finishing operator  ·  finishing technicians  ·  textile finishing technician  ·  cloth finisher"
+  },
+  {
+   "role": "automated cutting machine operator",
+   "isco": 8156,
+   "aka": "automated cutting machine tender  ·  leather goods automatic cutting system operator  ·  leather goods automated cutting system operator  ·  leather goods automated cutting machine operator  ·  automatic cutting machine tender"
+  },
+  {
+   "role": "colour sampling operator",
+   "isco": 8155,
+   "aka": "colour sampling operators  ·  colouring machine operator  ·  dyers  ·  color sampling operators  ·  color blender"
+  },
+  {
+   "role": "textile dyeing technician",
+   "isco": 8154,
+   "aka": "fabric dyeing technician  ·  dyeing textile technician  ·  dye textile supervisor  ·  dye textile machine operator"
+  },
+  {
+   "role": "made-up textile articles manufacturer",
+   "isco": 7533,
+   "aka": "sunshade maker  ·  manufacturer of soft furnishings  ·  carpet sewer  ·  sail maker  ·  soft furnishers"
+  },
+  {
+   "role": "sole and heel operator",
+   "isco": 8156,
+   "aka": "heel nailing machine operator  ·  shoe cementer  ·  heel nailing machine tender  ·  sole cementer  ·  sole blacker"
+  },
+  {
+   "role": "sewing machinist",
+   "isco": 7533,
+   "aka": "seamstress  ·  sewing operator  ·  sewer  ·  sew on machinist  ·  sewing worker"
+  },
+  {
+   "role": "pre-stitching machine operator",
+   "isco": 8156,
+   "aka": "skiving machine operator  ·  skiver  ·  edge-painting machine operator  ·  skiving operator  ·  burnisher"
+  },
+  {
+   "role": "dressmaker",
+   "isco": 7531,
+   "aka": "seamstress  ·  seamster  ·  custom dressmaker  ·  tailor  ·  couture dressmaker"
+  },
+  {
+   "role": "embroiderer",
+   "isco": 7533,
+   "aka": "hand decorator  ·  embroidery digitiser  ·  embroidery puncher  ·  embroidery finisher  ·  embroidery operator"
+  },
+  {
+   "role": "clothing CAD patternmaker",
+   "isco": 7532,
+   "aka": "computer patternmaker  ·  fabric CAD pattern maker  ·  clothing CAD pattern maker  ·  fabric CAD patternmaker"
+  },
+  {
+   "role": "glove maker",
+   "isco": 7533,
+   "aka": "glove manufacturers  ·  industrial leather gloves manufacturer  ·  sports glove manufacturer  ·  glove manufacturer"
+  },
+  {
+   "role": "sewing machine operator",
+   "isco": 8153,
+   "aka": "custom sewer  ·  garment maker  ·  serger machine operator  ·  computer stitcher  ·  flat sewing machine operator"
+  },
+  {
+   "role": "textile dyer",
+   "isco": 8154,
+   "aka": "textile dye colorist  ·  dyeing machine tender  ·  cloth dyer  ·  textile dye colourist  ·  package dyer"
+  },
+  {
+   "role": "doll maker",
+   "isco": 7533,
+   "aka": "porcelain doll maker  ·  dollmaker  ·  doll repairer  ·  porcelain dollmaker  ·  dolls accessories maker"
+  },
+  {
+   "role": "clothing cutter",
+   "isco": 7532,
+   "aka": "cloth cutting machine operator  ·  bespoke clothing cutter  ·  garment cutter  ·  clothing marker  ·  clothing cutter operator"
+  },
+  {
+   "role": "tailor",
+   "isco": 7531,
+   "aka": "seamstress  ·  suit maker  ·  alterations sewer  ·  seamster  ·  couturier"
+  },
+  {
+   "role": "costume maker",
+   "isco": 7531,
+   "aka": "costume builder  ·  costume and prop maker  ·  costumer  ·  costume & prop maker  ·  set costumer"
+  },
+  {
+   "role": "wig and hairpiece maker",
+   "isco": 7531,
+   "aka": "hairpiece maker  ·  senior wig maker  ·  wig-hairpiece maker  ·  wig builder  ·  wig consultant"
+  },
+  {
+   "role": "clothing sample machinist",
+   "isco": 8153,
+   "aka": "sample sewing machinist  ·  sample garment machinist  ·  sample clothing sewer  ·  garment sample machinist  ·  sample sewer"
+  },
+  {
+   "role": "hide grader",
+   "isco": 7531,
+   "aka": "wet-blue grader  ·  crust grader  ·  crust sorter  ·  skin grader  ·  hide graders"
+  },
+  {
+   "role": "clothing alteration machinist",
+   "isco": 8153,
+   "aka": "alterations sewer  ·  alterations seamstress  ·  alterations tailor  ·  clothing alteration machine operator  ·  clothing alteration hand"
+  },
+  {
+   "role": "shoe repairer",
+   "isco": 7536,
+   "aka": "cobbler  ·  boot maker  ·  shoe polisher  ·  shoe maker  ·  boot repairer"
+  },
+  {
+   "role": "embroidery machine operator",
+   "isco": 8153,
+   "aka": "computerized machine operator  ·  monogram machine operator  ·  embroidery machinist  ·  computerised embroidery machine operator"
+  },
+  {
+   "role": "textile finishing machine operator",
+   "isco": 8154,
+   "aka": "drying machine operator  ·  textile dyeing and finishing machine operator  ·  textile finishing range operator  ·  laminating and coating machine operator  ·  textile machine settler and operator"
+  },
+  {
+   "role": "shoemaker",
+   "isco": 7536,
+   "aka": "custom shoemaker  ·  cobbler  ·  hand craft shoe maker  ·  shoe repairer  ·  traditional shoe manufacturer"
+  },
+  {
+   "role": "pre-lasting operator",
+   "isco": 8156,
+   "aka": "toe puf moulder  ·  arch cushion press operator  ·  stiffener moulder  ·  insole and heel stiffener  ·  bevel cutting machine tender"
+  },
+  {
+   "role": "milliner",
+   "isco": 7531,
+   "aka": "custom headwear manufacturer  ·  hatter  ·  headwear manufacturer  ·  headgear manufacturer  ·  hat maker"
+  },
+  {
+   "role": "Upholsterers",
+   "isco": 8153,
+   "aka": NaN
+  },
+  {
+   "role": "textile technologist",
+   "isco": 2141,
+   "aka": "textile manufacturing department manager  ·  analytical textile technologist  ·  textile engineer  ·  fabric technologist  ·  textile technology officer"
+  },
+  {
+   "role": "clothing technologist",
+   "isco": 2141,
+   "aka": "textile technologist  ·  clothing technician  ·  clothing production engineer  ·  garment technologist  ·  clothing engineer"
+  },
+  {
+   "role": "textile designer",
+   "isco": 2163,
+   "aka": "textile artist  ·  print designer  ·  textiles designer  ·  fabric designer  ·  design technology technician"
+  },
+  {
+   "role": "textile product developer",
+   "isco": 2163,
+   "aka": "print design development assistant  ·  fabric product development specialist  ·  textile business developer  ·  textile product development engineer  ·  textile product specialist"
+  },
+  {
+   "role": "textile colourist",
+   "isco": 2163,
+   "aka": "colorist  ·  colourist  ·  textile colour maker  ·  textile colorist  ·  dyeing range operator"
+  },
+  {
+   "role": "textile shop manager",
+   "isco": 1420,
+   "aka": "mercers shop manager  ·  mercers store manager  ·  fabric store manager  ·  drapers shop manager  ·  house linen shop manager"
+  },
+  {
+   "role": "textile chemist",
+   "isco": 2113,
+   "aka": "textile chemical coordinator  ·  textile chemist and colourist  ·  textile chemical technician  ·  textile colour formulator  ·  textile chemical supervisor"
+  },
+  {
+   "role": "textile specialised seller",
+   "isco": 5223,
+   "aka": "drapery salesperson  ·  house linen salesperson  ·  textile specialized seller  ·  mercers specialised seller  ·  house linen specialised seller"
+  },
+  {
+   "role": "technical sales representative in the textile machinery industry",
+   "isco": 2433,
+   "aka": "textile industry machinery field salesman  ·  textile industry machinery outside technical sales representative  ·  textile industry machinery inside technical sales representative  ·  senior technical sales representative in the textile industry machinery  ·  graduate technical sales representative in the textile industry machinery"
+  },
+  {
+   "role": "textile sourcing merchandiser",
+   "isco": 3323,
+   "aka": "textile merchandiser  ·  textile sourcing specialist  ·  textile merchandise manager  ·  fabric purchasing manager  ·  textile purchasing manager"
+  },
+  {
+   "role": "textile, leather and footwear researcher",
+   "isco": 2149,
+   "aka": "textile and leather researcher  ·  textile, leather and footwear research worker  ·  textile, leather and footwear research analyst  ·  clothing and apparel researcher  ·  textile and clothing researcher"
+  },
+  {
+   "role": "Fashion Designers",
+   "isco": 2166,
+   "aka": NaN
+  }
+ ]
+}

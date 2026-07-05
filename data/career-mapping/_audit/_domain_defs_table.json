@@ -1,0 +1,998 @@
+[
+ [
+  "D001",
+  "Software Engineering",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D002",
+  "Data Engineering &amp; Architecture",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D003",
+  "Artificial Intelligence &amp; Machine Learning",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D004",
+  "Cybersecurity &amp; Information Security",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D005",
+  "Cloud Computing &amp; DevOps",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D006",
+  "Internet of Things &amp; Embedded Systems",
+  "Information &amp; Communication Technology",
+  "PARTIAL"
+ ],
+ [
+  "D007",
+  "UI/UX Design &amp; Product Design",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D008",
+  "Telecommunications &amp; Network Engineering",
+  "Information &amp; Communication Technology",
+  "PARTIAL"
+ ],
+ [
+  "D009",
+  "Data Science &amp; Statistical Analysis",
+  "Data &amp; Analytics",
+  "FULL"
+ ],
+ [
+  "D010",
+  "Business Intelligence &amp; Analytics",
+  "Data &amp; Analytics",
+  "FULL"
+ ],
+ [
+  "D011",
+  "Quantitative Finance &amp; Financial Engineering",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D012",
+  "FinTech Engineering",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D013",
+  "Investment Analysis &amp; Asset Management",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D014",
+  "Actuarial Science &amp; Risk Management",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D015",
+  "Accounting &amp; Financial Reporting",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D016",
+  "Electrical &amp; Electronics Engineering",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D017",
+  "Mechanical &amp; Industrial Engineering",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D018",
+  "Civil &amp; Structural Engineering",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D019",
+  "Renewable Energy Engineering",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D020",
+  "Environmental Engineering &amp; Sustainability",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D021",
+  "Architecture &amp; Urban Planning",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D022",
+  "Mining &amp; Geosciences Engineering",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D023",
+  "Medicine &amp; Clinical Practice",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D024",
+  "Nursing &amp; Allied Health Professions",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D025",
+  "Pharmacy &amp; Pharmaceutical Sciences",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D026",
+  "Public Health &amp; Epidemiology",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D027",
+  "Biomedical &amp; Biotechnology Research",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D028",
+  "General Management &amp; Strategy",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D029",
+  "Human Resources &amp; People Management",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D030",
+  "Marketing, Brand &amp; Communications",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D031",
+  "Sales &amp; Business Development",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D032",
+  "Project Management &amp; Programme Delivery",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D033",
+  "Product Management",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D034",
+  "Supply Chain Management",
+  "Supply Chain &amp; Logistics",
+  "FULL"
+ ],
+ [
+  "D035",
+  "Logistics &amp; Transportation Operations",
+  "Supply Chain &amp; Logistics",
+  "PARTIAL"
+ ],
+ [
+  "D036",
+  "Procurement &amp; Contract Management",
+  "Supply Chain &amp; Logistics",
+  "FULL"
+ ],
+ [
+  "D037",
+  "Legal Practice &amp; Corporate Law",
+  "Legal &amp; Compliance",
+  "FULL"
+ ],
+ [
+  "D038",
+  "Compliance, Regulation &amp; Governance",
+  "Legal &amp; Compliance",
+  "FULL"
+ ],
+ [
+  "D039",
+  "Higher Education &amp; Academic Research",
+  "Education &amp; Research",
+  "PARTIAL"
+ ],
+ [
+  "D040",
+  "Vocational &amp; Technical Training",
+  "Education &amp; Research",
+  "PARTIAL"
+ ],
+ [
+  "D041",
+  "Scientific Research &amp; Development",
+  "Education &amp; Research",
+  "PARTIAL"
+ ],
+ [
+  "D042",
+  "Media Production &amp; Broadcasting",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D043",
+  "Journalism &amp; Digital Publishing",
+  "Creative &amp; Media",
+  "FULL"
+ ],
+ [
+  "D044",
+  "Graphic Design &amp; Visual Communication",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D045",
+  "Public Administration &amp; Policy",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D046",
+  "Social Work &amp; Community Development",
+  "Public Sector &amp; Social Services",
+  "PARTIAL"
+ ],
+ [
+  "D047",
+  "Agricultural Science &amp; Agribusiness",
+  "Agriculture &amp; Food Systems",
+  "PARTIAL"
+ ],
+ [
+  "D048",
+  "Food Science &amp; Technology",
+  "Agriculture &amp; Food Systems",
+  "PARTIAL"
+ ],
+ [
+  "D049",
+  "Automotive Engineering &amp; Electric Vehicles",
+  "Advanced Manufacturing",
+  "PARTIAL"
+ ],
+ [
+  "D050",
+  "Industrial Automation &amp; Robotics",
+  "Advanced Manufacturing",
+  "PARTIAL"
+ ],
+ [
+  "D051",
+  "Real Estate &amp; Property Management",
+  "Real Estate &amp; Construction",
+  "FULL"
+ ],
+ [
+  "D052",
+  "Construction Management",
+  "Real Estate &amp; Construction",
+  "PARTIAL"
+ ],
+ [
+  "D053",
+  "Hospitality &amp; Tourism Management",
+  "Hospitality &amp; Tourism",
+  "PARTIAL"
+ ],
+ [
+  "D054",
+  "Oil &amp; Gas Engineering",
+  "Energy &amp; Resources",
+  "PARTIAL"
+ ],
+ [
+  "D055",
+  "Chemical Engineering &amp; Process Industries",
+  "Energy &amp; Resources",
+  "PARTIAL"
+ ],
+ [
+  "D056",
+  "Blockchain &amp; Decentralised Systems",
+  "Emerging Technology",
+  "FULL"
+ ],
+ [
+  "D057",
+  "Digital Health &amp; Health Technology",
+  "Emerging Technology",
+  "PARTIAL"
+ ],
+ [
+  "D058",
+  "EdTech &amp; Learning Experience Design",
+  "Emerging Technology",
+  "FULL"
+ ],
+ [
+  "D059",
+  "Space Technology &amp; Satellite Systems",
+  "Emerging Technology",
+  "PARTIAL"
+ ],
+ [
+  "D060",
+  "Banking, Credit &amp; Retail Finance",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D061",
+  "Insurance &amp; Underwriting",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D062",
+  "Trading &amp; Capital Markets",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D063",
+  "Economics &amp; Policy Analysis",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D064",
+  "Psychology, Counselling &amp; Mental Health",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D065",
+  "Translation, Interpretation &amp; Linguistics",
+  "Creative &amp; Media",
+  "FULL"
+ ],
+ [
+  "D066",
+  "Veterinary Science &amp; Animal Health",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D067",
+  "Dentistry &amp; Oral Health",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D068",
+  "Allied Health &amp; Rehabilitation Therapies",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D069",
+  "Aviation &amp; Aerospace Operations",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D070",
+  "Performing Arts &amp; Entertainment",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D071",
+  "Sports Management &amp; Fitness",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D072",
+  "Geospatial Science &amp; GIS",
+  "Engineering &amp; Built Environment",
+  "FULL"
+ ],
+ [
+  "D073",
+  "Library, Archive &amp; Information Management",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D074",
+  "Occupational Health, Safety &amp; Environment (OHSE)",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D075",
+  "Fashion, Textiles &amp; Apparel",
+  "Advanced Manufacturing",
+  "PARTIAL"
+ ],
+ [
+  "D076",
+  "Maritime &amp; Naval Operations",
+  "Supply Chain &amp; Logistics",
+  "PARTIAL"
+ ],
+ [
+  "D077",
+  "Security Services &amp; Public Safety",
+  "Public Sector &amp; Social Services",
+  "PARTIAL"
+ ],
+ [
+  "D078",
+  "Social Sciences &amp; Behavioural Research",
+  "Education &amp; Research",
+  "FULL"
+ ],
+ [
+  "D079",
+  "Customs, Trade &amp; Export Management",
+  "Supply Chain &amp; Logistics",
+  "FULL"
+ ],
+ [
+  "D080",
+  "Interior Design &amp; Spatial Design",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D081",
+  "Office Administration, Secretarial &amp; Registry",
+  "Office &amp; Administrative Services",
+  "FULL"
+ ],
+ [
+  "D082",
+  "Customer Service, Contact Centre &amp; Front Desk Operations",
+  "Office &amp; Administrative Services",
+  "FULL"
+ ],
+ [
+  "D083",
+  "Travel, Tourism &amp; Reservations Operations",
+  "Office &amp; Administrative Services",
+  "FULL"
+ ],
+ [
+  "D084",
+  "Payroll, Bookkeeping &amp; Finance Clerking",
+  "Office &amp; Administrative Services",
+  "FULL"
+ ],
+ [
+  "D085",
+  "Retail Sales, Shop Operations &amp; Merchandising",
+  "Retail, Sales &amp; Commerce",
+  "PARTIAL"
+ ],
+ [
+  "D086",
+  "Gaming, Betting &amp; Lottery Operations",
+  "Retail, Sales &amp; Commerce",
+  "FULL"
+ ],
+ [
+  "D087",
+  "Hairdressing, Barbering &amp; Hair Technology",
+  "Beauty, Personal Care &amp; Wellness",
+  "PARTIAL"
+ ],
+ [
+  "D088",
+  "Beauty Therapy, Aesthetics &amp; Spa Services",
+  "Beauty, Personal Care &amp; Wellness",
+  "PARTIAL"
+ ],
+ [
+  "D089",
+  "Funeral &amp; Mortuary Services",
+  "Beauty, Personal Care &amp; Wellness",
+  "PARTIAL"
+ ],
+ [
+  "D090",
+  "Animal Care, Grooming &amp; Pet Services",
+  "Beauty, Personal Care &amp; Wellness",
+  "PARTIAL"
+ ],
+ [
+  "D091",
+  "Driving Instruction &amp; Transport Training",
+  "Beauty, Personal Care &amp; Wellness",
+  "PARTIAL"
+ ],
+ [
+  "D092",
+  "Culinary Arts, Catering &amp; Food Service Operations",
+  "Culinary Arts &amp; Food Service",
+  "PARTIAL"
+ ],
+ [
+  "D093",
+  "Electrical Installation, Wiring &amp; Maintenance Trades",
+  "Electrical &amp; Electronics Trades",
+  "PARTIAL"
+ ],
+ [
+  "D094",
+  "Electronics Servicing, ICT Equipment &amp; Smart Systems Installation",
+  "Electrical &amp; Electronics Trades",
+  "PARTIAL"
+ ],
+ [
+  "D095",
+  "Motor Vehicle Mechanics, Repairs &amp; Automobile Technology",
+  "Mechanical &amp; Automotive Trades",
+  "PARTIAL"
+ ],
+ [
+  "D096",
+  "Agricultural &amp; Industrial Machinery Mechanics",
+  "Mechanical &amp; Automotive Trades",
+  "PARTIAL"
+ ],
+ [
+  "D097",
+  "Welding, Fabrication, Blacksmithing &amp; Metal Trades",
+  "Metal, Welding &amp; Fabrication Trades",
+  "PARTIAL"
+ ],
+ [
+  "D098",
+  "Precision Engineering, Toolmaking &amp; Instrument Repair",
+  "Metal, Welding &amp; Fabrication Trades",
+  "PARTIAL"
+ ],
+ [
+  "D099",
+  "Masonry, Bricklaying, Tiling, Plastering &amp; General Building Trades",
+  "Building &amp; Construction Trades",
+  "PARTIAL"
+ ],
+ [
+  "D100",
+  "Plumbing, Pipefitting &amp; HVAC Technology",
+  "Building &amp; Construction Trades",
+  "PARTIAL"
+ ],
+ [
+  "D101",
+  "Painting, Decorating &amp; Surface Treatment",
+  "Building &amp; Construction Trades",
+  "PARTIAL"
+ ],
+ [
+  "D102",
+  "Carpentry, Joinery, Wood Technology &amp; Furniture Making",
+  "Wood, Furniture &amp; Craft",
+  "PARTIAL"
+ ],
+ [
+  "D103",
+  "Jewellery Making, Goldsmithing &amp; Precious Craft",
+  "Wood, Furniture &amp; Craft",
+  "PARTIAL"
+ ],
+ [
+  "D104",
+  "Pottery, Ceramics, Glass &amp; Decorative Craft",
+  "Wood, Furniture &amp; Craft",
+  "PARTIAL"
+ ],
+ [
+  "D105",
+  "Handicraft, Basketry, Textile Craft &amp; Artisan Production",
+  "Wood, Furniture &amp; Craft",
+  "PARTIAL"
+ ],
+ [
+  "D106",
+  "Garment Making, Tailoring, Dressmaking &amp; Fashion Production",
+  "Textiles, Garments &amp; Leather",
+  "PARTIAL"
+ ],
+ [
+  "D107",
+  "Leather Technology, Shoemaking &amp; Leather Goods",
+  "Textiles, Garments &amp; Leather",
+  "PARTIAL"
+ ],
+ [
+  "D108",
+  "Printing Technology, Pre-press &amp; Print Finishing",
+  "Printing &amp; Graphic Production",
+  "PARTIAL"
+ ],
+ [
+  "D109",
+  "Metal Processing, Foundry &amp; Casting Plant Operations",
+  "Manufacturing &amp; Industrial Plant Operations",
+  "PARTIAL"
+ ],
+ [
+  "D110",
+  "Chemical, Rubber &amp; Plastics Plant Operations",
+  "Manufacturing &amp; Industrial Plant Operations",
+  "PARTIAL"
+ ],
+ [
+  "D111",
+  "Textile, Garment &amp; Laundry Machine Operations",
+  "Manufacturing &amp; Industrial Plant Operations",
+  "PARTIAL"
+ ],
+ [
+  "D112",
+  "Wood Processing, Pulp &amp; Paper Plant Operations",
+  "Manufacturing &amp; Industrial Plant Operations",
+  "PARTIAL"
+ ],
+ [
+  "D113",
+  "Glass, Ceramics, Building Materials &amp; Boiler Plant Operations",
+  "Manufacturing &amp; Industrial Plant Operations",
+  "PARTIAL"
+ ],
+ [
+  "D114",
+  "Assembly, Packaging &amp; Production Line Operations",
+  "Manufacturing &amp; Industrial Plant Operations",
+  "PARTIAL"
+ ],
+ [
+  "D115",
+  "Road Transport Operations (Drivers &amp; Vehicle Operators)",
+  "Transport &amp; Driving Operations",
+  "PARTIAL"
+ ],
+ [
+  "D116",
+  "Heavy Equipment, Earthmoving &amp; Construction Plant Operations",
+  "Transport &amp; Driving Operations",
+  "PARTIAL"
+ ],
+ [
+  "D117",
+  "Railway &amp; Track Operations",
+  "Transport &amp; Driving Operations",
+  "PARTIAL"
+ ],
+ [
+  "D118",
+  "Crop Production, Horticulture &amp; Agronomy Practice",
+  "Agriculture, Fishing &amp; Natural Resources",
+  "PARTIAL"
+ ],
+ [
+  "D119",
+  "Livestock, Poultry, Dairy &amp; Animal Production",
+  "Agriculture, Fishing &amp; Natural Resources",
+  "PARTIAL"
+ ],
+ [
+  "D120",
+  "Fisheries, Aquaculture &amp; Seafood Technology",
+  "Agriculture, Fishing &amp; Natural Resources",
+  "PARTIAL"
+ ],
+ [
+  "D121",
+  "Forestry, Wildlife Management &amp; Pest Control",
+  "Agriculture, Fishing &amp; Natural Resources",
+  "PARTIAL"
+ ],
+ [
+  "D122",
+  "Medical Laboratory Technology &amp; Pathology",
+  "Community Health &amp; Paramedical",
+  "PARTIAL"
+ ],
+ [
+  "D123",
+  "Radiography, Medical Imaging &amp; Radiation Therapy",
+  "Community Health &amp; Paramedical",
+  "PARTIAL"
+ ],
+ [
+  "D124",
+  "Community Health Extension &amp; Primary Health Care",
+  "Community Health &amp; Paramedical",
+  "PARTIAL"
+ ],
+ [
+  "D125",
+  "Medical Secretarial &amp; Health Administration",
+  "Community Health &amp; Paramedical",
+  "FULL"
+ ],
+ [
+  "D126",
+  "Complementary, Alternative &amp; Traditional Medicine",
+  "Community Health &amp; Paramedical",
+  "PARTIAL"
+ ],
+ [
+  "D127",
+  "Early Childhood Education, Nursery &amp; Childcare",
+  "Childcare &amp; Early Learning",
+  "PARTIAL"
+ ],
+ [
+  "D128",
+  "Social Welfare, Youth Services &amp; Community Care Management",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D129",
+  "Military, Defence &amp; Armed Forces Service",
+  "Defence &amp; Military",
+  ""
+ ],
+ [
+  "D130",
+  "Recruitment, Employment &amp; Staffing Agency Operations",
+  "Business &amp; Management",
+  "FULL"
+ ],
+ [
+  "D131",
+  "Motorsport Engineering &amp; Performance Technology",
+  "High-Performance Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D132",
+  "Space Science, Exploration &amp; Mission Systems",
+  "High-Performance Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D133",
+  "Luxury &amp; Bespoke Specialist Interiors — Aviation, Maritime &amp; Automotive",
+  "High-Performance Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D134",
+  "Naval Architecture, Marine Engineering &amp; Ship Design",
+  "High-Performance Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D135",
+  "Nuclear Engineering, Radiation Science &amp; Nuclear Medicine",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D136",
+  "Aeronautical &amp; Aerospace Engineering",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D137",
+  "Medical Physics, Radiation Therapy &amp; Nuclear Medicine Imaging",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D138",
+  "Biomedical Engineering &amp; Medical Device Design",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D139",
+  "Game Design, Development &amp; Interactive Entertainment",
+  "Information &amp; Communication Technology",
+  "FULL"
+ ],
+ [
+  "D140",
+  "Robotics Engineering, Systems Design &amp; Human-Robot Interaction",
+  "Information &amp; Communication Technology",
+  "PARTIAL"
+ ],
+ [
+  "D141",
+  "Quantum Computing, Quantum Information &amp; Advanced Physics",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D142",
+  "Bioinformatics, Computational Biology &amp; Genomics",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D143",
+  "Forensic Science, Digital Forensics &amp; Criminal Investigation",
+  "Public Sector &amp; Social Services",
+  "PARTIAL"
+ ],
+ [
+  "D144",
+  "Climate Science, Meteorology &amp; Atmospheric Science",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D145",
+  "Neuroscience, Cognitive Science &amp; Brain-Computer Interface",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D146",
+  "Building Services Engineering — Mechanical, Electrical &amp; Plumbing (MEP)",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D147",
+  "Process Automation, SCADA, PLC &amp; Industrial Control Systems",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D148",
+  "Offshore, Subsea &amp; Deepwater Engineering",
+  "Energy &amp; Resources",
+  "PARTIAL"
+ ],
+ [
+  "D149",
+  "Diplomacy, International Relations &amp; Foreign Affairs",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D150",
+  "Religious Ministry, Theology &amp; Interfaith Leadership",
+  "Public Sector &amp; Social Services",
+  "PARTIAL"
+ ],
+ [
+  "D151",
+  "Criminology, Criminal Justice &amp; Corrections Management",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D152",
+  "Museum Curation, Cultural Heritage, Archives &amp; Archaeology",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D153",
+  "Music Production, Sound Engineering &amp; Audio Technology",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D154",
+  "Exercise Science, Sports Therapy &amp; Athletic Performance",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D155",
+  "Nanotechnology, Advanced Materials &amp; Materials Science Engineering",
+  "Advanced Science &amp; Engineering",
+  "PARTIAL"
+ ],
+ [
+  "D156",
+  "Land Surveying, Cadastral Mapping &amp; Field Geomatics",
+  "Engineering &amp; Built Environment",
+  "PARTIAL"
+ ],
+ [
+  "D157",
+  "Tax Advisory, Transfer Pricing &amp; Revenue Law",
+  "Legal &amp; Compliance",
+  "FULL"
+ ],
+ [
+  "D158",
+  "Corporate Finance, Investment Banking &amp; M&amp;A Advisory",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D159",
+  "Credit Analysis, Structured Finance &amp; Debt Capital Markets",
+  "Financial Services",
+  "FULL"
+ ],
+ [
+  "D160",
+  "Fashion Styling, Image Consulting &amp; Personal Shopping",
+  "Creative &amp; Media",
+  "PARTIAL"
+ ],
+ [
+  "D161",
+  "Humanitarian Aid, Emergency Response &amp; International Development",
+  "Public Sector &amp; Social Services",
+  "FULL"
+ ],
+ [
+  "D162",
+  "Immigration Law, Asylum &amp; International Protection",
+  "Legal &amp; Compliance",
+  "FULL"
+ ],
+ [
+  "D163",
+  "Intellectual Property Law, Patents &amp; Technology Licensing",
+  "Legal &amp; Compliance",
+  "FULL"
+ ],
+ [
+  "D164",
+  "Urban Mobility, Smart City Systems &amp; Transportation Planning",
+  "Engineering &amp; Built Environment",
+  "FULL"
+ ],
+ [
+  "D165",
+  "Wellness Coaching, Lifestyle Medicine &amp; Integrative Health",
+  "Health &amp; Biomedical",
+  "PARTIAL"
+ ],
+ [
+  "D166",
+  "Autonomous Vehicles, Self-Driving Systems &amp; Roborace Engineering",
+  "High-Performance Engineering",
+  "PARTIAL"
+ ]
+]

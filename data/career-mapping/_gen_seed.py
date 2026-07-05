@@ -52,19 +52,46 @@ for f in ["enrichment/anthropology.json", "enrichment/intelligence_security.json
                                None, None, "custom"))
 
 # ── 2. JAMB offerings -> jamb_programmes, schools, school_programmes, subject reqs ──
+def as_text(v):
+    """utme_subjects is a string (pilot files) or an array (new brochures) -> TEXT."""
+    if v is None: return None
+    if isinstance(v, list): return ", ".join(str(t) for t in v) or None
+    return v
+
+# JAMB-nuance skills profile (Step 3): jamb_name -> unioned skills across component programmes
+try:
+    nuance = load("jamb/jamb_skills_nuance.json")
+except FileNotFoundError:
+    nuance = {}
+
+def jsonb(v):
+    if v is None: return "NULL"
+    return "'" + json.dumps(v, ensure_ascii=False).replace("'", "''") + "'::jsonb"
+
+_seen_jids = set()
 def ingest_offerings(path, faculty, degree):
     d = load(path)
     for pr in d["programmes"]:
         jname = pr["jamb_name"]
         jid = uid("jamb", jname)
-        rows["jamb_programmes"].append((jid, jname, faculty, degree))
+        if jid in _seen_jids:   # same JAMB name can appear in two brochures; keep first
+            continue
+        _seen_jids.add(jid)
+        nz = nuance.get(jname)
+        skt = nz["skills_profile_technical"] if nz else None
+        skx = nz["skills_profile_transferable"] if nz else None
+        skc = nz["components"] if nz else None
+        blend = bool(nz["is_blend"]) if nz else False
+        rows["jamb_programmes"].append((jid, jname, faculty, degree, skt, skx, skc, blend))
         rows["programme_subject_requirements"].append(
-            (uid("psr", jname), jid, pr.get("utme_subjects"),
+            (uid("psr", jname), jid, as_text(pr.get("utme_subjects")),
              pr.get("olevel_requirement"), pr.get("direct_entry")))
-        # per-institution waiver notes
+        # per-institution waiver notes — handle both shapes:
+        #   old: {"institutions":[codes...], "note":...}   new: {"institution":code, "note":...}
         waiver_by_code = {}
         for w in pr.get("institution_waivers", []):
-            for c in w.get("institutions", []):
+            codes = w.get("institutions") or ([w["institution"]] if w.get("institution") else [])
+            for c in codes:
                 nc = norm_code(c)
                 if nc: waiver_by_code.setdefault(nc, []).append(w.get("note", ""))
         for inst in pr.get("institutions", []):
@@ -72,13 +99,18 @@ def ingest_offerings(path, faculty, degree):
             if not nc: continue
             sid = uid("school", nc)
             rows["schools"].setdefault(nc, sid)
-            remarks = " | ".join(waiver_by_code.get(nc, [])) or None
+            remarks = " | ".join(x for x in waiver_by_code.get(nc, []) if x) or None
             rows["school_programmes"].append((uid("sp", nc, jname), sid, jid, remarks))
 
 ingest_offerings("jamb/law_offerings.json", "Law", "LLB")
 ingest_offerings("jamb/social_management_offerings.json", "Social/Management Sciences", "B.Sc")
 ingest_offerings("jamb/administration_offerings.json", "Administration", "B.Sc/B.A")
 ingest_offerings("jamb/sciences_offerings.json", "Sciences", "B.Sc/B.Tech")
+ingest_offerings("jamb/medical_offerings.json", "Medical/Pharmaceutical/Health", "Various")
+ingest_offerings("jamb/agriculture_offerings.json", "Agriculture", "B.Agric")
+ingest_offerings("jamb/arts_hum_offerings.json", "Arts and Humanities", "B.A")
+ingest_offerings("jamb/engineering_offerings.json", "Engineering/Environmental/Technology", "B.Eng/B.Tech")
+ingest_offerings("jamb/education_offerings.json", "Education", "B.Ed")
 
 # ── 3. programme_mapping (bridge) ───────────────────────────────
 pm = load("programme_mapping.json")
@@ -92,8 +124,14 @@ for x in pm["mappings"]:
     seen_jids.add(jid)
     pid = None
     disc = x.get("ccmas_discipline")
-    if x.get("ccmas_code") and disc:
+    # 1) most precise: (discipline, name) — REQUIRED where a code is non-unique
+    #    within a discipline (Engineering 'GET' spans 30 programmes).
+    if x.get("ccmas_name") and disc:
+        pid = prog_id_by_disc_name.get((disc, x["ccmas_name"]))
+    # 2) (discipline, code) — fine where code is unique in the discipline
+    if pid is None and x.get("ccmas_code") and disc:
         pid = prog_id_by_disc_code.get((disc, x["ccmas_code"]))
+    # 3) code-only (legacy pilot rows; their codes are globally unique)
     if pid is None and x.get("ccmas_code"):
         pid = prog_id_by_code.get(x["ccmas_code"])
     if pid is None and jname in custom_link:
@@ -131,8 +169,9 @@ emit("schools",
      [[q(sid),q(code),q("university"),"true",q(code)] for code,sid in sorted(rows["schools"].items())])
 
 emit("jamb_programmes",
-     ["id","jamb_name","jamb_faculty","degree_type"],
-     [[q(a),q(b),q(c),q(d)] for (a,b,c,d) in rows["jamb_programmes"]])
+     ["id","jamb_name","jamb_faculty","degree_type","skills_technical","skills_transferable","skills_components","is_blend"],
+     [[q(a),q(b),q(c),q(d),jsonb(e),jsonb(f),jsonb(g),("true" if h else "false")]
+      for (a,b,c,d,e,f,g,h) in rows["jamb_programmes"]])
 
 emit("programme_mapping",
      ["id","jamb_programme_id","programme_id","mapping_type","mapping_note"],

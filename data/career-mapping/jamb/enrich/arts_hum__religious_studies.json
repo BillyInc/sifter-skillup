@@ -1,0 +1,30 @@
+{
+  "jamb_name": "Religious Studies",
+  "utme_subjects": ["CRS/IRS", "any other two (2) subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language and CRS/IRS.",
+  "direct_entry": "Two (2) 'A' Level subjects to include Religious Studies (CRS/IRS).",
+  "institution_waivers": [
+    {"institution": "AAU", "note": "Accepts two (2) 'A' Level passes, to include CRS and one other Arts subject."},
+    {"institution": "AAUA", "note": "Accepts ND, NCE or two (2) 'A' Level passes from the Arts or Social Sciences programme."},
+    {"institution": "ABSU and DELSU", "note": "Accept NCE/ND/HND in Religious or Social Studies or 'A' Level in three (3) subjects including Religious Studies."},
+    {"institution": "AUE", "note": "Requires two (2) 'A' Level passes to include Literature in English and other Arts subjects or NCE credit in English Language/Political Science."},
+    {"institution": "AUGUSTINE", "note": "Accepts two (2) 'A' Level passes in any relevant subjects, NCE credit and ND credit in relevant subjects/programme in addition to UTME requirements."},
+    {"institution": "BENIN", "note": "Accepts: a) two (2) 'A' Level passes in Arts and Social Sciences at one sitting; b) NCE credit in CRS or IS/Arabic studies or Religious Studies or Social Studies with an overall credit level pass; c) ND credit in Mass Communication; d) any other three (3) subjects."},
+    {"institution": "BSU", "note": "Accepts NCE/'A' Level passes in CRS, African Religion or its equivalent."},
+    {"institution": "CALABAR", "note": "Also accepts NCE in Religious Studies."},
+    {"institution": "IBADAN", "note": "Accepts NCE merit in Religious Studies."},
+    {"institution": "IMSU and PHC", "note": "No Direct Entry."},
+    {"institution": "JABU", "note": "Accepts five (5) 'O' Level credit passes in relevant subjects plus ND or HND."},
+    {"institution": "JOS", "note": "Accepts two (2) or three (3) year ND/NCE merit."},
+    {"institution": "MCPHERSON", "note": "Accepts NCE credit/merit and good passes in JUPEB/IJMB in relevant subjects."},
+    {"institution": "MOUNTAIN TOP", "note": "Requires: a) at least two (2) GCE 'A' Level passes to include Christian Religious Knowledge or Foundation/JUPEB from Mountain Top University or other recognized Universities; b) a pass in two principal subjects at the NCE Level/A-Level plus five subjects at credit level in GCE, SSCE and NECO including English Language and Mathematics; c) a Three-Year Diploma in Theology recognized by the University plus five credits at GCE 'O' Level including English Language and Mathematics; d) a Diploma in Religious Studies or in the relevant Arts programmes."},
+    {"institution": "NDU", "note": "Accepts: a) a minimum of two (2) 'A' Level passes, one of which must be in English Language, CRS, Government, any Nigeria Language or any Arts subject; b) NCE merit in CRS or IS."},
+    {"institution": "OAU", "note": "Accepts two (2) 'A' Level passes including CRS/IRS."},
+    {"institution": "SAU and OAU", "note": "Accept NCE in Religious Studies (CRS or IS)."},
+    {"institution": "UNIKINGS", "note": "Requires two (2) 'A' Level passes to include Christian Religious Studies and one other Arts subject."},
+    {"institution": "UNIZIK", "note": "Accepts NCE merit in Religious Studies with four (4) 'O' Level credit passes in other subjects."},
+    {"institution": "UYO", "note": "Requires two (2) 'A' Level passes including CRS or NCE Merit in three (3) subjects, including CRS."},
+    {"institution": "DELSU", "note": "Requires: a) two (2) A/L passes in CRS and one other Arts subject; b) merit pass in NCE, one of the subjects must be Religious Studies; c) merit pass in DELSU Diploma in Law, Social Studies Education, Religious Studies Education and Guidance and Counselling."},
+    {"institution": "IAUED", "note": "Accepts five (5) 'O' Level credit passes including English Language, Christian Religious Studies or Islamic Religious Studies and any other three (3) relevant subjects in not more than two sittings."}
+  ]
+}

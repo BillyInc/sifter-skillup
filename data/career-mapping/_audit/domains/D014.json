@@ -1,0 +1,177 @@
+{
+ "domain_id": "D014",
+ "domain_name": "Actuarial Science",
+ "role_count": 34,
+ "roles": [
+  {
+   "role": "insurance claims handler",
+   "isco": 3315,
+   "aka": "claims adjuster  ·  travelling insurance assessor  ·  claims examiner  ·  insurance claims analyst  ·  civil damages inspector"
+  },
+  {
+   "role": "actuarial consultant",
+   "isco": 2120,
+   "aka": "insurance actuaries  ·  health actuaries  ·  actuarial mathematician  ·  actuarial adviser  ·  actuarial clerks"
+  },
+  {
+   "role": "securities analyst",
+   "isco": 2413,
+   "aka": "securities research analyst  ·  corporate securities research analyst  ·  bonds analyst  ·  stock analyst  ·  securities research director"
+  },
+  {
+   "role": "actuarial assistant",
+   "isco": 3314,
+   "aka": "actuarial aide  ·  actuarial analyst assistant  ·  actuarial assistant-life product development"
+  },
+  {
+   "role": "mergers and acquisitions analyst",
+   "isco": 2413,
+   "aka": "M&A analyst  ·  mergers and acquisitions banker  ·  mergers and acquisitions associate  ·  acquisition manager  ·  M&A specialist"
+  },
+  {
+   "role": "insurance rating analyst",
+   "isco": 2413,
+   "aka": "insurance analyst  ·  insurance assessor  ·  insurance rater"
+  },
+  {
+   "role": "business intelligence manager",
+   "isco": 2421,
+   "aka": "market intelligence manager  ·  business research analyst  ·  business intelligence specialist  ·  business research consultant  ·  business intelligence analyst"
+  },
+  {
+   "role": "manufacturing cost estimator",
+   "isco": 2421,
+   "aka": "manufacturing cost analyst  ·  manufacturing estimate clerk  ·  production cost estimator  ·  estimator  ·  manufacturing cost recovery technician"
+  },
+  {
+   "role": "foreclosure specialist",
+   "isco": 3315,
+   "aka": "bankruptcy coordinator  ·  foreclosure manager  ·  bankruptcy manager  ·  foreclosure coordinator  ·  foreclosure consultant"
+  },
+  {
+   "role": "middle office analyst",
+   "isco": 2413,
+   "aka": "middle office associate  ·  transaction reporting specialist  ·  middle office specialist  ·  structured products middle office analyst  ·  derivatives middle office analyst"
+  },
+  {
+   "role": "property insurance underwriter",
+   "isco": 3321,
+   "aka": "home office insurance underwriter  ·  property underwriter  ·  property insurance assessor  ·  property and automobile underwriter"
+  },
+  {
+   "role": "logistics analyst",
+   "isco": 2421,
+   "aka": "supply chain analyst  ·  distribution and logistics consultant  ·  logistics consultant  ·  logistics and distribution analyst  ·  logistics and supply chain analyst"
+  },
+  {
+   "role": "business analyst",
+   "isco": 2421,
+   "aka": "management consultant  ·  standardisation manager  ·  business strategy analyst  ·  organisational developer  ·  standardisation expert"
+  },
+  {
+   "role": "business consultant",
+   "isco": 2421,
+   "aka": "business process consultant"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "insurance risk consultant",
+   "isco": 3321,
+   "aka": "risk and insurance consultant  ·  insurance analyst  ·  insurance adviser  ·  insurance consultant  ·  insurance risk associate"
+  },
+  {
+   "role": "financial analyst",
+   "isco": 2413,
+   "aka": "economic analyst  ·  credit analyst  ·  financial markets report writer  ·  financial markets analyst  ·  treasury analyst"
+  },
+  {
+   "role": "insurance broker",
+   "isco": 3321,
+   "aka": "insurance agent  ·  property and casualty insurance agent and broker  ·  life insurance broker  ·  insurance sales person  ·  commercial insurance broker"
+  },
+  {
+   "role": "insurance fraud investigator",
+   "isco": 3315,
+   "aka": "insurance fraud auditor  ·  insurance policy processing worker  ·  insurance auditors  ·  insurance fraud examiner  ·  insurance fraud inspector"
+  },
+  {
+   "role": "process officer",
+   "isco": 2421,
+   "aka": "chief process officer  ·  process improvement officer  ·  process management coordinator  ·  business process improvement coordinator  ·  business process advisor"
+  },
+  {
+   "role": "building information modelling consultant",
+   "isco": 2421,
+   "aka": "BIM consultant  ·  building information modelling specialist  ·  BIM specialist"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "property appraiser",
+   "isco": 3315,
+   "aka": "valuation surveyors  ·  building appraiser  ·  appraiser of properties  ·  property assessors  ·  residential appraiser"
+  },
+  {
+   "role": "investment analyst",
+   "isco": 2413,
+   "aka": "portfolio analyst  ·  investment accounting analyst  ·  investment banking analyst  ·  investment banking business analyst  ·  investment compliance analyst"
+  },
+  {
+   "role": "real estate surveyor",
+   "isco": 3315,
+   "aka": "real estate surveyors  ·  municipal assessor  ·  real estate analyst"
+  },
+  {
+   "role": "lean manager",
+   "isco": 2421,
+   "aka": "lean coach  ·  lean project manager  ·  lean facilitator  ·  lean director  ·  operational excellence manager"
+  },
+  {
+   "role": "statistical assistant",
+   "isco": 3314,
+   "aka": "administrative assistant  ·  IT expert  ·  statistician  ·  computer expert  ·  statistician's assistant"
+  },
+  {
+   "role": "loss adjuster",
+   "isco": 3315,
+   "aka": "field claims adjuster  ·  insurance loss adjuster  ·  civil claims adjuster  ·  insurance claims adjudicator  ·  damage appraiser"
+  },
+  {
+   "role": "insurance underwriter",
+   "isco": 3321,
+   "aka": "commercial underwriter  ·  group insurance underwriter  ·  liability risk assessor  ·  casualty insurance underwriter  ·  commercial insurance underwriter"
+  },
+  {
+   "role": "personal property appraiser",
+   "isco": 3315,
+   "aka": "personal items claims adjuster  ·  personal property claims assessor  ·  personal property valuer  ·  personal items valuer  ·  personal property assessor"
+  },
+  {
+   "role": "gemmologist",
+   "isco": 3315,
+   "aka": "jewellery gemologist  ·  gemmology researcher  ·  consultant gemologist  ·  consultant gemmologist  ·  gem stone appraiser"
+  },
+  {
+   "role": "Risk Management Specialists",
+   "isco": 2422,
+   "aka": NaN
+  },
+  {
+   "role": "Actuaries",
+   "isco": 3314,
+   "aka": NaN
+  },
+  {
+   "role": "Insurance Sales Agents",
+   "isco": 3321,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,112 @@
+{
+ "domain_id": "D025",
+ "domain_name": "Pharmacy",
+ "role_count": 21,
+ "roles": [
+  {
+   "role": "pharmaceutical quality specialist",
+   "isco": 2262,
+   "aka": "specialist of pharmaceutical quality  ·  pharmaceutical quality compliance specialist  ·  pharmaceutical quality control technician  ·  pharmaceutical quality verifier  ·  pharmaceutical quality technician"
+  },
+  {
+   "role": "optical technician",
+   "isco": 3254,
+   "aka": "optical instrument technician  ·  artificial glass eye maker  ·  technologist in ophthalmic laboratory  ·  contact lens maker  ·  optical technical"
+  },
+  {
+   "role": "industrial pharmacist",
+   "isco": 2262,
+   "aka": "pharmaceutical industry pharmacist  ·  industrial pharmacy specialist  ·  industrial pharmacy consultant"
+  },
+  {
+   "role": "hospital pharmacist",
+   "isco": 2262,
+   "aka": "hospital pharmacy specialist  ·  clinical pharmacist  ·  site lead pharmacist  ·  hospital locum pharmacist  ·  head of hospital pharmacy"
+  },
+  {
+   "role": "optician",
+   "isco": 3254,
+   "aka": "contact lens specialist  ·  spectacle dispensing optician  ·  dispensing optician  ·  optician expert  ·  qualified optician"
+  },
+  {
+   "role": "pharmacy technician",
+   "isco": 2262,
+   "aka": "technologist in pharmaceuticals  ·  technologist in pharmacy  ·  pharmacy technologist  ·  pharmaceutical technician  ·  pharmaceutical technologist"
+  },
+  {
+   "role": "pharmacist",
+   "isco": 2262,
+   "aka": "practitioner of pharmacy  ·  pharmacologist  ·  pharmacology practitioner  ·  dispensing chemist  ·  retail pharmacist"
+  },
+  {
+   "role": "clinical trial assistant",
+   "isco": 3213,
+   "aka": "clinical research assistant  ·  clinical research associate"
+  },
+  {
+   "role": "specialist pharmacist",
+   "isco": 2262,
+   "aka": "clinical pharmacist  ·  expert pharmacist  ·  clinical pharmacologist  ·  advanced pharmacist  ·  pharmacy expert"
+  },
+  {
+   "role": "pharmacy assistant",
+   "isco": 3213,
+   "aka": "assistant in pharmacy  ·  dispensing assistant  ·  pharmacy service assistant  ·  pharmacy dispensing assistant"
+  },
+  {
+   "role": "Paramedics",
+   "isco": 3254,
+   "aka": NaN
+  },
+  {
+   "role": "Dietetic Technicians",
+   "isco": 3254,
+   "aka": NaN
+  },
+  {
+   "role": "Psychiatric Technicians",
+   "isco": 3213,
+   "aka": NaN
+  },
+  {
+   "role": "hospital pharmacist",
+   "isco": 2215,
+   "aka": "Clinical Pharmacist"
+  },
+  {
+   "role": "community pharmacist",
+   "isco": 2215,
+   "aka": "Retail Pharmacist"
+  },
+  {
+   "role": "industrial pharmacist",
+   "isco": 2215,
+   "aka": "Manufacturing Pharmacist"
+  },
+  {
+   "role": "regulatory affairs pharmacist",
+   "isco": 2215,
+   "aka": "Drug Regulatory Specialist"
+  },
+  {
+   "role": "clinical pharmacologist",
+   "isco": 2211,
+   "aka": NaN
+  },
+  {
+   "role": "pharmacovigilance specialist",
+   "isco": 2215,
+   "aka": "Drug Safety Specialist"
+  },
+  {
+   "role": "pharmacy manager",
+   "isco": 1342,
+   "aka": "Head Pharmacist"
+  },
+  {
+   "role": "pharmaceutical sales representative",
+   "isco": 3322,
+   "aka": "Medical Sales Representative"
+  }
+ ]
+}

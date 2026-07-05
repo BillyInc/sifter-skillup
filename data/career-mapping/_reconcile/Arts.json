@@ -1,0 +1,4295 @@
+[
+ {
+  "programme": "Arabic",
+  "code": "ARA",
+  "technical_skills": [
+   "explain types of Arabic sentences and word order therein",
+   "distinguish various types of Arabic tenses",
+   "analyse types of Mansbt and Marfct; and",
+   "to discover aspects of word case ending in Arabic sentences",
+   "read and comprehend Arabic texts",
+   "write short paragraphs",
+   "communicate and express himself in Arabic; and 4. demonstrate knowledge of Basic Arabic Grammar",
+   "analyse Arabic texts",
+   "read and summaries Arabic texts",
+   "demonstrate knowledge of note-taking",
+   "making notes from resources and use the library; 5. use Arabic dictionaries and correct his notes; and",
+   "writing word without spelling mistakes",
+   "analyse meanings, types and characteristics of literature",
+   "appreciate relevant Arabic literary works",
+   "identify types of Arabic literature",
+   "differentiate characteristics of Arabic literature in various eras; and",
+   "identify the various schools of thought in Arabic Literature",
+   "explain the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "explain the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions; New Arts 34",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic. inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content -- deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and human conduct, philosophy and religion, philosophy and human values, philosophy and character molding, etc"
+  ],
+  "transferable_skills": [
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "state the characteristics of an entrepreneur",
+   "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+   "engage in entrepreneurial thinking",
+   "identify key elements in innovation",
+   "stages in enterprise formation, partnership and networking including business planning, and",
+   "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world",
+   "state the basic principles of e-commerce"
+  ],
+  "course_titles": [
+   "Grammar I",
+   "Language Drills I",
+   "Study Skills",
+   "Introduction to Arabic Literature",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Grammar II",
+   "Language Drills II",
+   "Texts from Pre-Islamic and Early Islamic Literature",
+   "Introduction to General Linguistics:",
+   "Morphology of Verbs",
+   "Arabic Literature in the Pre-Islamic & Early Islamic Periods",
+   "Contemporary Arabic Prose",
+   "Research Methods in the Arts",
+   "Grammar IV",
+   "Semantics:",
+   "Introduction to Classical Arabic Criticism",
+   "The Novel I",
+   "A Play I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Archaeology",
+  "code": "ARC",
+  "technical_skills": [
+   "have knowledge of what archaeology is and its aims",
+   "explain the origins of archaeology as a discipline and its eurocentric roots. understand how archaeologists discover sites, recover and handle archaeological evidence; and",
+   "identify the different dating methods used in archaeology, the principles behind each of the methods and their limitations in archaeological interpretation",
+   "expain the different perspectives in the study of human origins",
+   "identify the difference between the creation theory and the theory of evolution",
+   "appreciate the fossil record and how it supports the study of human origins; and",
+   "analyse the gaps in our current knowledge on human origins",
+   "explain the major themes in the archaeology of the old world",
+   "explain the history of human dispersal across the old world",
+   "clearly explain the different food systems up to the neolithic revolution; and",
+   "articulate the significance of the neolithic revolution in the old world",
+   "clearly define aik and articulate its scope as a knowledge system",
+   "analyse the different ways aik is created and preserved",
+   "explain aik as an endangered knowledge system; and",
+   "articulate the different strategies that will preserve and protect aik as a knowledge system",
+   "explain the meaning of public archaeology and profile the different publics that have a stake in the ownership and stewardship of archaeological resources",
+   "identify how to engage the different publics as archaeologists",
+   "have the ability to create public awareness about archaeology and get the public committed to the stewardship of heritage resources; and",
+   "articulate the significance of public archaeology in the areas of archaeo-tourism and the resolution of contemporary challenges in nation building",
+   "analyse the meaning and scope of anthropology",
+   "explain basic theories and methods in anthropology",
+   "articulate the interface between archaeology and anthropology; and",
+   "explain the challenges of doing anthropology in Africa",
+   "identify the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Archaeology",
+   "Introduction to Human Origins",
+   "A survey of Old World Archaeology",
+   "Introduction to Anthropology",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "A survey of New World Archaeology",
+   "Archaeology of Africa",
+   "Theory of Archaeology l",
+   "Quaternary Studies and Archaeology",
+   "Field Archaeology",
+   "Science in Archaeology",
+   "Entrepreneurship: Contract Archaeology",
+   "Research Methods in the Arts",
+   "Theories in the Arts and Humanities",
+   "Field School I",
+   "Museum Archaeology",
+   "Archaeology and Development",
+   "Gender Archaeology",
+   "Archaeology of Nigeria"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "African Tradition Religion",
+  "code": "ATR",
+  "technical_skills": [
+   "define African Traditional Religion",
+   "deal with conceptual ambiguities ; and",
+   "recognise the contributions of scholars to the development of the discipline",
+   "debate the bias against the religion",
+   "appreciate the resilience of ATR; and",
+   "learn the structure of belief across the African continent",
+   "appreciate that there is life after death",
+   "explain that not all those who died can become ancestors",
+   "learn the conditions for ancestor status",
+   "appreciate the roles of ancestors in African community; and New Arts 80",
+   "determine the influence of Christianity and Islam on belief in ancestorship",
+   "appreciate the relationship between the Arts and other disciplines",
+   "demonstrate how African culture influenced political system; and",
+   "realise the dynamics of culture in Africa's development",
+   "explain the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "analyse the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic. of inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content -- deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and human conduct, philosophy and religion, philosophy and human values, philosophy and character molding, etc",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis New Arts 82",
+   "appreciate the importance of computers in the Humanities"
+  ],
+  "transferable_skills": [
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "state the characteristics of an entrepreneur",
+   "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+   "engage in entrepreneurial thinking",
+   "identify key elements in innovation",
+   "describe stages in enterprise formation, partnership and networking including business planning",
+   "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world, and",
+   "state the basic principles of e-commerce"
+  ],
+  "course_titles": [
+   "Introducing African Traditional Religion",
+   "Survey of African Traditional Religion",
+   "Ancestorship in African Traditional Religion",
+   "African Traditional Religion and Culture",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts  (2",
+   "The Arts and Other Disciplines",
+   "General Introduction to t he Study of Religion",
+   "Intersection of ATR with Christianity and Islam",
+   "Contemporary Worship in ATR",
+   "African Concept of the Family",
+   "Entrepreneurship in ATR",
+   "Research Methods in the Arts",
+   "Theory in the Humanities",
+   "The Spirit World of the African",
+   "African Traditional Religion and the Environment",
+   "ATR and Globalisation",
+   "Introducing African Indigenous Knowledge System",
+   "Introducing African Herbal Medicine",
+   "Long Essay"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D150",
+    "domain": "Religious Ministry, Theology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D024",
+    "domain": "Nursing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Chinese Studies",
+  "code": "CHS",
+  "technical_skills": [
+   "acquire a basic understanding of Chinese character recognition and writing",
+   "cultivate the skills of elementary chinese listening and speaking; and",
+   "accurately ask and respond in chinese to questions dealing with one or more of the following: food preferences and tastes, a doctor's consultation, finding appropriate housing accommodations, or travel",
+   "produce correct sentences in chinese using relatively complex phrases including one or more of the following: passive voice, comparisons, attributives, directional complements, or time expressions",
+   "accurately identify and translate chinese characters; and 4. identify basic facts and cultural traditions associated with China",
+   "improve their chinese pronunciation to a new level; 2. identify the rules of chinese phonetics and phonology; and",
+   "pronounce chinese characters and pinyin with much ease",
+   "acquire some new words and expressions at the same time; 2 acquire an improved listening and speaking abilities; and",
+   "to communicate fluently in common situational chinese similar ones. It also embraces listening to audio materials drawn from short passages",
+   "identify the compositions of chinese characters",
+   "make the right directional strokes of chinese characters",
+   "write or copy chinese characters with much ease; and",
+   "write the chinese pinyin with much ease",
+   "acquire improved reading and comprehension skills",
+   "read and understand everyday chinese in newspapers, academic materials and literature and",
+   "read and understand Chinese characters with more ease and speed",
+   "acquire an overall understanding of chinese people and culture",
+   "analyse and appreciate chinese literatures and history; and",
+   "observe the importance of the promotion of cultural exchange between china and nigeria",
+   "the students through the compositions, the sequence, patterns and strokes of Chinese characters. It also focuses on the rules and techniques of writting pinyin",
+   "possess a good knowledge of the history of ancient and contemporary china",
+   "describe the economic and political structures of the ancient dynasties of china; and",
+   "point out the key events and key figures of ancient and contemporary china",
+   "identify the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse"
+  ],
+  "transferable_skills": [
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organisations, media and traditional institutions in peace building"
+  ],
+  "course_titles": [
+   "Elementary Chinese I                           2 Units C: LH 30",
+   "Elementary Chinese II                          2 Units C: LH 30",
+   "Introduction to Chinese Phonetics and Phonology 2 Units C: LH 30",
+   "Listening and Speaking (Conversational Chinese) 2 Units C: LH 30",
+   "Introduction to Pinyin and Character Writing         2 Units C: LH 15",
+   "Chinese Reading and Comprehension                    2 Units C: LH 30",
+   "Introduction to Chinese People and Culture           2 Units C: LH 15",
+   "Introduction to Chinese History       2 Units C: LH 30",
+   "Digital Humanities: Application of Computer to the Arts  (2",
+   "The Arts and Other Disciplines",
+   "Intermediate Chinese I          2 Units C: LH 30",
+   "Intermediate Chinese II         2 Units C: LH 30",
+   "Translation: Theory and Practice  2 Units C: LH 15 : PH 45",
+   "Research Methodology                                       2 Units C: LH",
+   "Introduction to Chinese Grammar   2 Units C: LH 30",
+   "Introduction to Chinese Literature  2 Units C: LH 30",
+   "Entrepreneurial skills in Chinese Studies 2 Units C: LH 30",
+   "Chinese Civilisation           2 Units C: LH 30",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D150",
+    "domain": "Religious Ministry, Theology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D032",
+    "domain": "Project Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Christian Religious Studies",
+  "code": "CRS",
+  "technical_skills": [
+   "relevance of the Torah in Jewish scripture - Old Testament",
+   "underscore the arguments about the authorship of the first five books of the Old; and",
+   "J.E.D.P. sources",
+   "the peculiarities in the materials/sources of the synoptic gospels; and Arts 126 New",
+   "the documentary hypothesis will also be studied",
+   "analyse the concept of humanity, its origin, philosophy and cosmic environment",
+   "improve their logical and critical thinking skills",
+   "identify the basic roles of science and technology in human society",
+   "describe renewable and non-renewable environmental resources available in the Nigerian society",
+   "identify resource conservation tools and techniques for sustainable environment",
+   "analyse environmental effects of plastics, and other wastes",
+   "suggest possible management techniques and solutions to identifiable environmental challenges faced in different areas of Nigerian society; and",
+   "list and describe unethical behaviour patterns that are capable of hindering human societal growth and development",
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "state the characteristics of an entrepreneur",
+   "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence; 4. engage in entrepreneurial thinking",
+   "identify key elements in innovation Arts 127 New",
+   "describe stages in enterprise formation, partnership and networking including",
+   "appreciate the relationship between the Arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "assess the interconnectivity between disciplines; and",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "explain the scientific method of teaching the Bible which guides exegesis; and",
+   "analyse the pericipaea or scopes selected and studied in consideration of both Old and New Testaments",
+   "explain the chapters 1-11 of Genesis; and"
+  ],
+  "transferable_skills": [
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organisations, media and traditional institutions in Peace building"
+  ],
+  "course_titles": [
+   "Sources of Christianity",
+   "Introduction to the Pentateuch",
+   "Pauline Epistles",
+   "Hebrew Grammar and Syntax",
+   "Greek Grammar and Syntax",
+   "The Synoptic Gospels",
+   "The Arts and other Disciplines",
+   "Hermeneutics and Exegesis",
+   "The Book of Genesis",
+   "Early Church History Up to 451 AD",
+   "History of Israel",
+   "The Pastoral Epistles",
+   "Introduction to the Gospels",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Research Methods in the Arts",
+   "Theory in the Humanities",
+   "History of the Reformation",
+   "Prophets in Ancient Israel",
+   "Soteriology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D150",
+    "domain": "Religious Ministry, Theology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Christian Theology",
+  "code": "CTH",
+  "technical_skills": [
+   "demonstrate introductory knowledge of New Testament Greek morphology, grammar, and syntax working in a fully online environment",
+   "translate simple original Greek texts into English",
+   "translate simple English constructions into Greek",
+   "identify methods relevant to biblical studies and engage in more detailed study; and interpretation of Biblical scriptures and traditions from a linguistic perspective",
+   "acquire and demonstrate detailed knowledge of Greek grammar, syntax, vocabulary, and Greek text",
+   "situate knowledge of the language within the cultural contexts in which it was used to understand the crucial role of language in social dynamics and cross-cultural communication",
+   "acquire facility with contemporary methods of literary and historical analysis sufficient to carry out original, self-directed research into cultures that made use of the ancient Greek language",
+   "have a growing, personal relationship with Jesus Christ as Lord and Savior",
+   "know, understand and apply God's Word effectively",
+   "engage in spiritual disciplines of prayer, Bible study, Scripture memory, worship, and service",
+   "personally carry out the Great Commission locally and around the world in a culturally sensitive manner; are empowered by the Holy Spirit and pursue a life of faith, goodness, knowledge, self-control, perseverance, godliness, brotherly kindness, and love",
+   "demonstrate an understanding of the theological emphases, genre, socio-historical context and structure of the Synoptic Gospels",
+   "undertake a critical analysis of the passages of the Synoptic Gospels",
+   "interpret the critical theories underlying the processes that led to the writing of the Synoptic Gospels; learn about the social and cultural circumstances in the Mediterranean world during the times of the New Testament. Arts 144 New",
+   "demonstrate general knowledge of the content of the New Testament, including the arrangement of material, formation of synoptic gospels, and format of Pauline letters",
+   "demonstrate knowledge of the historical and cultural settings of the New Testament, including the geography of Israel, groups of Jews, and the concerns of early Jewish groups",
+   "demonstrate knowledge of the literary and theological characteristics of each gospel, especially the emphases of each evangelist (including identification and analysis); 4. demonstrate knowledge of and rudimentary ability to use historical, redaction",
+   "and form criticisms (these methods include analysis of specific passages)",
+   "interpret the chronology, structures, and themes of the Old Testament. This includes seeing how Old Testament narratives reveal God's hand in Israel's history",
+   "recognize various literary genres of the Old Testament. This includes an awareness of the vast differences between ancient cultural forms and the modern world",
+   "appreciate the relationship of the Old Testament with the New Testament",
+   "provide general knowledge of the growth and changes in the early Christian Church (Knowledge)",
+   "cite examples of early Church beliefs, practices, and controversies in comparison to various modern-day issues. (Application); Arts 145 New",
+   "explain the similarities and differences of notable people and movements (Comprehension and Evaluation)",
+   "contrast factual history with revisionist fables. (Analysis and Synthesis)"
+  ],
+  "transferable_skills": [
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "state the characteristics of an entrepreneur",
+   "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+   "engage in entrepreneurial thinking",
+   "identify key elements in innovation",
+   "describe stages in enterprise formation, partnership and networking including business planning",
+   "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world",
+   "state the basic principles of e-commerce",
+   "describe the key steps in venture creation",
+   "spot opportunities in problems and in high potential sectors regardless of geographical location",
+   "state how original products, ideas, and concepts are developed",
+   "business concept for further incubation or pitching for funding"
+  ],
+  "course_titles": [
+   "Introduction to Greek I",
+   "Introduction to Greek II",
+   "Personal Faith Formation and Spirituality",
+   "Study of Synoptic Gospels",
+   "Intro to the Old Testament",
+   "Early Church History",
+   "Introduction to Christian Theology",
+   "Intoduction to Sociology of Religion",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and other Disciplines",
+   "Hebrew Grammar and Syntax",
+   "Christian Music",
+   "Ecumenism",
+   "Introducing African Traditional Religion",
+   "Theology of Islam",
+   "Venture Creation",
+   "Research Methods in the Arts",
+   "Theory in the Humanities",
+   "Hermeneutics and Exegesis"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D150",
+    "domain": "Religious Ministry, Theology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D032",
+    "domain": "Project Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D082",
+    "domain": "Customer Service, Contact Centre",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Classics",
+  "code": "CLG",
+  "technical_skills": [
+   "the world of early greek civilisation",
+   "the organisation of greek city states",
+   "greek culture, values, and their influence on contemporary society",
+   "to interpret Athenian Red-figure vases Arts 167 New",
+   "the beginnings of roman civilisation",
+   "the organisation of the roman city",
+   "roman cultural values and the role of the arts and education in modern societies, and",
+   "knowledge of Roman coins",
+   "understand early greek thought, and 2. learn the art of critical thinking. Arts 168 New",
+   "explain formation of greek alphabet",
+   "master adequate amount of greek vocabulary; and",
+   "gain a stronger understanding of language structure",
+   "identify the declension of nouns and conjugation of verbs; 2 master the number and gender of adjectives; and",
+   "identify enhanced Greek vocabulary",
+   "analyse the structural requirements for a transpositional language; and",
+   "explain the Latin roots of many English words",
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic. of inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content -- deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and human conduct, philosophy and religion, philosophy and human values, philosophy and character molding, etc. Ent 211 � Entrpreneurship and Innovation (2 Units C: LH 15; PH 45) Learning Outcomes",
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking New Arts 170"
+  ],
+  "transferable_skills": [
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organisations, media and traditional institutions in peace building",
+   "describe the key steps in venture creation",
+   "spot opportunities in problems and in high potential sectors regardless of geographical location",
+   "state how original products, ideas, and concepts are developed",
+   "develop business concept for further incubation or pitching for funding",
+   "identify key sources of entrepreneurial finance",
+   "implement the requirements for establishing and managing micro and small enterprises; 7. conduct entrepreneurial marketing and e-commerce",
+   "apply a wide variety of emerging technological solutions to entrepreneurship; and 9 appreciate why ventures fail due to lack of planning and poor implementation"
+  ],
+  "course_titles": [
+   "Introduction to Ancient Greek Civilisation",
+   "Introduction to Roman Civilisation",
+   "Introduction to Early Greek Thought",
+   "Introduction to Greek I",
+   "Introduction to Greek II",
+   "Introduction to Latin I",
+   "Introduction to Latin II",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and other Disciplines",
+   "Greek and Roman Epic Poetry, Homer, Vergil and Apollonius (2 Units",
+   "Greek History, Society and Institutions",
+   "Roman History, Society and Institutions",
+   "Entrepreneurial Skills and Strategies in the Classics",
+   "Greek Language I",
+   "Greek Language II",
+   "Latin Language I:",
+   "Latin Language II:",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Research Methods in the Arts"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Efik",
+  "code": "EFK",
+  "technical_skills": [
+   "explain who the Efik are",
+   "explain the origin and migration history of the Efik people",
+   "state the relationship between the Efik language and the people's culture",
+   "classify the sub-divisions or groups among the Efik New Arts 188",
+   "relate the colonial history and how it affected the people",
+   "recognise how the geography of the Efik people defines their occupations; 7. receognise the history of the development of Efik orthography",
+   "discuss the classification: genetic, typological of the Efik language; 9 differentiate between traditional and modern Efik society, and",
+   "appraise the outcome of Western impact on the Efik people",
+   "identify as well as classify components of Efik orthography",
+   "focus on topic for proper understanding",
+   "discuss different types of comprehension passages",
+   "develop good public speaking skills",
+   "build logical reasoning and competence skills in writing",
+   "compose a well-defined incident or series of related incidents",
+   "state or relate elements such as plot, character and settings, appropriately",
+   "use precise language and specific details, appropriately",
+   "justify the correct use of figurative language to promote writing",
+   "describe with different documentation styles, and",
+   "demonstrate high-quality of creative writing skills",
+   "differentiate between the different branches of linguistics",
+   "demonstrate the demarcation between natural language and forms of languages",
+   "relate the evolution of human language to real life situation",
+   "analyse language families effectively, and",
+   "appreciate the importance of linguistics to people in EFK spheres of life",
+   "identify phonemes and allophones in a language"
+  ],
+  "transferable_skills": [
+   "analyse the historical foundation of the Nigerian arts and culture in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political entity",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building",
+   "analyse the role of the Judiciary in upholding people's fundamental rights",
+   "identify acceptable norms and values of the major ethnic groups in Nigeria, and",
+   "list and suggest possible solutions to identifiable Nigerian environmental, cultural, social and moral problems",
+   "define the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments"
+  ],
+  "course_titles": [
+   "Nigerian Peoples and Culture",
+   "Introduction to the History of the Efik People, Language, and Culture (2",
+   "Advanced Efik Composition and Comprehension",
+   "Introduction to Linguistics I",
+   "Introduction to Linguistics II",
+   "Introduction to General Phonetics I",
+   "Introduction to General Phonetics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Phonology of Efik I",
+   "Morphology of Efik Language",
+   "Syntax of Efik",
+   "Introduction to Efik Oral Literature",
+   "Writing System and Orthography Design",
+   "Venture Creation",
+   "Research Methods in the Arts",
+   "Theory in the Humanities",
+   "Phonology of Efik II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "English Language and Literature",
+  "code": "LIT",
+  "technical_skills": [
+   "apply the basic conventions of English grammar to writing",
+   "employ the rudiments of grammar in sentence construction",
+   "identify tone marks and apply them",
+   "display grasp of communication skills in written and spoken forms of the English language New Arts 219",
+   "display familiarity with the structure of the English language",
+   "familiar with the structure of English language",
+   "display competence of the basic conventions and rules of the language",
+   "construct good and flawless sentences in the language",
+   "compose short and correct paragraphs in the language",
+   "list the tools of spoken English",
+   "hold intelligible conversations in the English language",
+   "deploy the tools of the language such as videos, tapes, records, films, video",
+   "carry out persuasive exercises in spoken English; 5. identify and correct infelicities in spoken English",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship",
+   "apply DH to new research, publishing, media, networking",
+   "appreciate the relationship between the arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "assess the interconnectivity between disciplines",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "display knowledge of the principles and concepts of morphology",
+   "list the structures and systems of the English Language"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and 7 write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State in Nation building",
+   "analyse the role of the judiciary in upholding people's fundamental rights"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "A Survey of the English Language",
+   "Introduction to English Grammar and Composition",
+   "Spoken English",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "An Introduction to Morphology and Syntax",
+   "Entrepreneurial English",
+   "Introduction to General Phonetics and Phonology I          (2",
+   "Introduction to General Phonetics and Phonology II         (2",
+   "Advance English Composition I",
+   "Varieties of English (Including English based Pidgins and Creoles) (2",
+   "Language and Society",
+   "English Morphology",
+   "Peace and Conflict Resolution",
+   "Research Methods in the Arts",
+   "Theory in the Humanities"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Film Production",
+  "code": "FIP",
+  "technical_skills": [
+   "list the landmarks in the evolution of the narrativity of film, the business of film and the technology of film",
+   "explain and illustrate the basic theories of film",
+   "critically read a film",
+   "explain what culture and ideology mean",
+   "evaluate film as a cultural product 3 interpret film as a purveyor of culture",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; 6. apply DH to new research, publishing, media, networking",
+   "appreciate the relationship between the Arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "assess the interconnectivity between disciplines; and",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "explain the trajectory of the nigerian cinema",
+   "analyse film theories",
+   "carry out systematic interpretation and analysis of film There are three components to this course: Film history Exploration of the journey of the cinema in Nigeria, beginning from the celluloid-era through the transformation into video and into cinema exhibition and internet streaming. The emergent characteristics of the Nollywood film. Notable creative pioneers and their contributions, as well as the relationship of film to other media. Film theory Film as a complex cultural medium. Realist theory. Genre theory. Auteur theory. Structuralism. Feminist theory. How artistic modes and theories situate the filmmaker; the film; the audience. Film criticism Exploration of critical approaches to narrative, non-narrative films, as well as critical lenses such as genre, authorship, and ideology with which motion pictures can be analyzed. Analyses of mise-en-sc�ne, cinematography, editing, and sound in motion pictures. Examination of the social, cultural, and political contexts of motion pictures as a medium. Systematic interpretation and analysis of film/motion pictures. Main topic areas: motion picture formal systems: [narrative/narration; rhetorical and categorical; associational abstract] motion picture stylistic systems: [aspects of mise-en-sc�ne; properties of cinematography; dimensions of editing; properties of sound]; analysis of style; basic approaches to motion picture analysis [cultural analysis; race; gender]; genre analysis and authorship analysis. Screenings",
+   "analyse the relationship between film and ideology; and",
+   "evaluate the cultural and ideological practice of the cinema",
+   "illustrate the distinction between film as art and film as business",
+   "explain the process, technique and elements of film-tv marketing, distribution and exhibition",
+   "explain how to set up and manage the film enterprise; and",
+   "illustrate how the screenwriter, the director and the production designer fit into the film value chain",
+   "illustrate how the scripter, the director and the production designer work with the elements of film and the techniques of film; and",
+   "execute basic scripting, directing and the production design of a simple film project"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in the English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations New Arts 246",
+   "demonstrate an appreciable level of the art of public speaking and listening, and 7 write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples",
+   "towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Film History, Theory & Criticism",
+   "Introduction to Film, Culture & Ideology",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application Of Computer To The Arts",
+   "The Arts & Other Disciplines",
+   "Film History, Theory & Criticism",
+   "Film, Culture & Ideology",
+   "Film Entrepreneurship",
+   "Principles & Pracice Of Screenwriting, Direction & Production Design I (2",
+   "Principles & Practice Of Screenwriting, Direction & Production Design II",
+   "Principles & Practice Of Cinematography, Sound Design For Film & Film",
+   "Principles & Practice of Cinematography, Sound Design For Film & Film",
+   "The Nigerian/African Novel",
+   "The Nigerian/African Drama",
+   "Film Capstone Project I",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D153",
+    "domain": "D153 Music Production",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Folklore Studies",
+  "code": "FLS",
+  "technical_skills": [
+   "define oral poetry/chants",
+   "differentiate poetry from narratives",
+   "explain the characteristics features of poetic forms, and 4. identify composers and compositional styles",
+   "define the two broad forms of folklore",
+   "identify and comment on the forms and functions of folklore; and",
+   "explain the prevalence of some forms more than others",
+   "describe folklore in nigerias",
+   "trace the history of folklore studies in Nigeria",
+   "Identification of the personalities in folklore in nigeria; and",
+   "analyse of institutions, organisations and agencies in folklore in nigeria",
+   "appreciate the complexity of a folkloric performance New Arts 278",
+   "identify the performers, the performance and the audience in a folklore performance and 3. analyse the challenges facing the performance of folklore",
+   "list the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "analyse the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; and"
+  ],
+  "transferable_skills": [
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organisations, media and traditional institutions in peace building Concepts of peace, conflict and security in a multi-ethnic nation. Types and theories of conflicts: ethnic, religious, economic, geo-political conflicts. Structural conflict theory, realist theory of conflict, frustration-aggression conflict theory. Root causes of conflict and violence in Africa: indigene and settlers phenomena; boundary/boarder disputes; political disputes; ethnic disputes and rivalries. Economic inequalities; social dispute. Nationalist movements and agitations. Selected conflict case studies � Tiv-Junkun; Zango Kartaf. Chieftaincy and land disputes, etc. Peace building, management of conflicts and security. Peace and human development. Approaches to eace & conflict management --- (religious, government, community leaders etc.). elements of peace studies and conflict resolution. Conflict dynamics assessment scales. Constructive and destructive, justice and legal framework. Concepts of social justice; the Nigerian legal system. Insurgency and terrorism. Peace mediation and peace keeping. Peace and Security Council (international, national and local levels). Agents of conflict resolution � conventions, treaties, community policing. evolution and imperatives. Alternative New Arts 283 Dispute Resolution (ADR). Dialogue, arbitration, negotiation, collaboration, etc. Roles of international organizations in conflict resolution - (a). the United Nations (UN) and its conflict resolution organs; the African Union and Peace Security Council. ECOWAS in peace keeping. The media and traditional institutions in peace building. Managing post-conflict situations; refugees. Internally Displaced Persons (IDPS). The role of NGOs in post-conflict situations"
+  ],
+  "course_titles": [
+   "Poetic Recitations and Occupational Chants",
+   "Folklore Forms and Functions",
+   "Folklore in Nigeria",
+   "Digital Humanities: Application of Computer to the Arts",
+   "Verbal Folklore 1",
+   "Verbal Folklore II",
+   "Non-Verbal on Material Folklore I",
+   "Non-Verbal or Material Folklore II",
+   "Folklore and Identity",
+   "Educational Lore and Games",
+   "Narratives and Story Telling in Afrcia",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Research Methods in the Arts",
+   "Theory in the Humanities",
+   "Folklore and Tangible Heritage",
+   "Special Subject",
+   "World Folklore",
+   "Folklore Entrepreneurship",
+   "Transcription and Translation in Folklore"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Hausa",
+  "code": "HAU",
+  "technical_skills": [
+   "explain the origin and oral history of Hausa people and the attendant relationship with other Chadic language family members; and",
+   "explain the history of Hausa orthography and the general development of Hausa language on the basis of its genetic typology and aerial scholarship",
+   "demonstrate good understanding of the principles of generative phonology, the theory of distinctive features (the treatment of phonological processes), phonological representation and formulation of rules within the generative framework",
+   "analyse the Hausa syllabic structure",
+   "explain various parts of speech; and",
+   "decipher the syntactical functions of such aspects",
+   "exhibit good grasp of the evolution and development of Hausa orthography; 2 explain the justification for, and functions of orthography; and",
+   "appreciate the desirability of orthography for any language",
+   "evince good knowledge of the evolution and development of Hausa poetry; 2 distinguish between the oral and the literate traditions of Hausa poetry; and",
+   "explain and apply contemporary theories in critiquing Hausa poetry",
+   "exhibit background understanding of Linguistics and related concepts; and 2 demonstrate clear understanding of the basic structure of language",
+   "identify the basic classification and types of Hausa narratives; 2 explain the rudiments and skills of appreciating narratives; 3. demonstrate the ability to create narratives",
+   "explain the rudiments and skills of appreciating Hausa Drama",
+   "distinguish between the Hausa traditional and Modern Drama; and",
+   "explain the relationship between dramatic performances, and with other genres New Arts 303",
+   "explain the relevance of literary history",
+   "identify and examine the factors responsible for dearth of written literary materials in hausa prior to the debut of danfodio; and",
+   "appreciate the efforts of literary historians in unearthing some literary resources that were hitherto unavailable",
+   "explain what digital humanities entails",
+   "appraise the dh techniques tools for data analysis",
+   "appreciate the importance of computers in the humanities",
+   "apply dh to interdisciplinary research",
+   "appreciate the adoption of dh tools for entrepreneurship; and New Arts 305",
+   "apply dh to new research, publishing, media, networking",
+   "appreciate the relationship between the arts and other disciplines"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in english language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in english",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in nigeria",
+   "explain the gradual evolution of nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the nigerian peoples towards national development",
+   "enumerate the challenges of the nigerian state towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Hausa people and the Language",
+   "Introduction to Hausa Verbal System",
+   "Introductory Grammar",
+   "Orthography of Hausa",
+   "Survey of Hausa Poetry",
+   "Introduction to Linguistics",
+   "Introduction to Narratology",
+   "Introduction to Drama",
+   "Pre-Danfodio Literature",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Orthography and Use of Hausa Core",
+   "Hausa Phonology",
+   "Morphology of Hausa",
+   "Hausa Sentence Structure",
+   "Introductory Ajami"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "History/History and Diplomatic Studies",
+  "code": "HIS",
+  "technical_skills": [
+   "relate history as a scholarly discipline or profession and its open-ended process of interpretation",
+   "identify the different past sources (primary, secondary, literature, visual media, etc.); and",
+   "explain basic communication skills in the discipline, including proper citations and academic code of conduct. New Arts 323",
+   "articulate the major historical developments that occasioned the empires of Ghana, Mali, Songhai and Kanem borno",
+   "discuss the evolution of the forest kingdoms of the Akan, Aja, Yoruba and Benin",
+   "comprehend the role of trade in the development of the major kingdoms; and",
+   "interpret the role of arabs and europeans in the historical development of some West African States",
+   "comprehend the evolution of human species and the process of their spread across the globe",
+   "identify how archaeology, anthropology and genetics are used to reconstruct human evolutions; and",
+   "explain the dynamics of various racial types",
+   "interpret the role of economic factors in human history New Arts 324",
+   "analyse various economic concepts that shape the discourse on economic determinism and",
+   "explain how various historical epochs are defined by economic activity",
+   "explain the concept of civilization and the embibe a cyclical view of it",
+   "analyse the importance of civilizations in human history",
+   "discuss the major global civilizations and state their contributions to human development",
+   "explain the craft of the archaeologist",
+   "analyse the importance of archaeology in reconstructing history; and",
+   "discuss the major archaeological sites in nigeria and state their importance in the study of early nigerian history",
+   "articulate the concept of the \"out of african movement\"",
+   "demonstrate the connections between pre-historic population movement of peoples of african origin and their contemporary locations",
+   "discuss the various myths, misconceptions and outright falsehood regarding the peopling of parts of the world by Africans",
+   "relate the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "explain the elementary rules of reasoning"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports Cours Contents Sound patterns in English Language (vowels and consonants, phonetics and phonology). English word classes (lexical and grammatical words, definitions, forms, functions, usages, collocations). Sentence in English (types: structural and functional, simple and complex). Grammar and Usage (tense, mood, modality and concord, aspects of language use in everyday life). Logical and Critical Thinking and Reasoning Methods (Logic and Syllogism, Inductive and Deductive Argument and Reasoning Methods, Analogy, Generalisation and Explanations). Ethical considerations, Copyright Rules and Infringements. Writing Activities: (Pre-writing , Writing, Post writing, Editing and Proofreading; Brainstorming, outlining, Paragraphing, Types of writing, Summary, Essays, Letter, Curriculum Vitae, Report writing, Note making etc. Mechanics of writing). Comprehension Strategies: (Reading and types of Reading, Comprehension Skills, 3RsQ). Information and Communication Technology in modern New Arts 322 Language Learning. Language skills for effective communication. Major word formation processes. Writing and reading comprehension strategies. Logical and critical reasoning for meaningful presentations. Art of public speaking and listening. Report writing",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to History",
+   "History of West Africa From 1000 to 1500 AD",
+   "Introduction to Human Evolution",
+   "Introduction to Economic History",
+   "Major World Civilisations",
+   "Archaeology of Nigeria:",
+   "Africans in the Diaspora Since Antiquity",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Nigeria from 1000 � 1900",
+   "Economic History of Nigeria in the 19th Century",
+   "Global History of Slavery and the Slave Trade",
+   "History of Islam and Christianity in West Africa from 1500 to 1900 (3",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Research Methods in the Arts",
+   "Theory in the Humanities"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Ibibio",
+  "code": "IBI",
+  "technical_skills": [
+   "explain who the Ibibio are",
+   "explain the origin and migration history of the Ibibio people",
+   "state the relationship between the Ibibio language and the people's culture",
+   "classify the sub-divisions or groups among the Ibibio",
+   "relate the colonial history and how it affected the people",
+   "recognise how the geography of the Ibibio people defines their occupations",
+   "recall the history of the development of Ibibio orthography",
+   "discuss the classification: genetic, typological of the Ibibio language; 9. differentiate between traditional and modern Ibibio society, and",
+   "appraise the outcome of Western impact on the Ibibio people",
+   "identify as well as classify components of Ibibio orthography",
+   "focus on topic for proper understanding",
+   "discuss different types of comprehension passages",
+   "develop good public speaking skills",
+   "build logical reasoning and competence skills in writing",
+   "compose a well-defined incident or series of related incidents",
+   "state or relate elements such as plot, character and settings, appropriately",
+   "use precise language and specific details, appropriately",
+   "justify the correct use of figurative language to promote writing",
+   "describe with different documentation styles, and 11. demonstrate high-quality of creative writing skills",
+   "differentiate between the different branches of linguistics",
+   "demonstrate the demarcation between natural language and forms of languages",
+   "relate the evolution of human language to real life situation",
+   "analyse language families effectively, and",
+   "appreciate the importance of linguistics to people in all spheres of life",
+   "identify phonemes and allophones in a language"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening, and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political entity",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to the History of the Ibibio People, Language, and Culture",
+   "Advanced Composition and Comprehension",
+   "Introduction to Linguistics I",
+   "Introduction to General Phonetics I",
+   "Introduction to General Phonetics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts (2 Units: LH",
+   "The Arts and Other Disciplines",
+   "Phonology of Ibibio I",
+   "Morphology of Ibibio Language",
+   "Syntax of Ibibio",
+   "Introduction to Ibibio Oral Literature",
+   "Writing System and Orthography Design",
+   "Phonemic Analysis",
+   "Varieties of Prose Writings in Ibibio",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Igbo",
+  "code": "IGB",
+  "technical_skills": [
+   "describe the people of the target language (their culture and language); 2 read and write in the standard orthography of the language, and",
+   "explain the thoughts and beliefs of the people",
+   "have adequate information about the origin of the people, migration issues, kingship related issues among others",
+   "explain in details the rise and fall of the major kingdoms; and",
+   "analyse the historical data from both oral and written sources",
+   "read and demonstrate good comprehension of text in the Language; and",
+   "read and write composition in splendid African language (Igbo) with standard orthography. New Arts 374",
+   "evaluate various controversies on orthography of the target language",
+   "discuss the efforts of missionaries, linguists and regional governments in developing orthography of the language, and",
+   "write in current orthography",
+   "explain the meaning and usefulness of Linguistics",
+   "classify the scope and types of Linguistics, and",
+   "apply the knowledge of Linguistic science to the study of the Language",
+   "explain the concept of acoustic phonetics in Igbo",
+   "analyse the features of speech in Igbo language",
+   "apply their knowledge of the features of speech in a practical way; and",
+   "transcribe speech sound to the language under study New Arts 375 knowledge in a practical way through the study, analysis, and transcription of the speech sounds of the Language under study",
+   "describe the meaning of oral literature and its characteristics",
+   "identify various classifications of oral literature; and",
+   "explain what Digital Humanities (DH) entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; and",
+   "apply DH to new research, publishing, media, networking New Arts 377"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in the English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English New Arts 372",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening, and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples",
+   "towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to the People, Language and Culture",
+   "Introduction to the History of the People",
+   "Advanced Comprehension and Composition I",
+   "Orthography of Nigerian Languages",
+   "Introduction to Linguistics I",
+   "Introduction to Linguistics II",
+   "Introduction to the Oral Literature of the Language",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Survey of the Literature in Igbo Language",
+   "Phonology of Igbo Language I",
+   "Morphology of Igbo Language",
+   "Syntax of Igbo Language I",
+   "Use of the Igbo Language",
+   "Varieties of Poetry in Igbo Language",
+   "Introduction to Phonology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D153",
+    "domain": "D153 Music Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Islamic Studies",
+  "code": "ISS",
+  "technical_skills": [
+   "identify different types of Arabic sentences and word order therein",
+   "discover aspects of word case ending in Arabic sentences",
+   "read and comprehend Arabic texts; and",
+   "demonstrate knowledge of Basic Arabic Grammar",
+   "appreciate the history of Islam and the contributions of different categories of people towards its development and civilization",
+   "explain the exemplary qualities of the Prophet (saw)",
+   "adopt the best and exemplary qualities of the Prophet (saw) and other pious Muslims; and",
+   "discuss Islamic history, authoritatively",
+   "explain the position of Faith and Worship in Islam",
+   "describe the Islamic rulings with regards to Faith and Worship",
+   "put into practice the Islamic rulings with regards to Faith and Worship; and",
+   "exhibit competence in Islamic jurisprudence",
+   "explain the sacred status of the Qur'n New Arts 396",
+   "describe the contributions of early Muslims towards the preservation of the Qur'n; 3 appreciate the contributions of early Muslims towards the preservation of the Qur'n, and",
+   "analyze texts from the Qur'n and pass sound judgments",
+   "appreciate the contributions of the Sufi Orders to Islamic heritage in Nigeria; 3 distinguish between their ideologies, and",
+   "explain one's responsibilities as a Muslim towards the development of Islam",
+   "discuss how Muslims interact with non-Muslims in the pre-modern period; and",
+   "name institutions, monuments and landmarks established and built by Islam with emphasis on those that have survived till today",
+   "recognize the significance of the Prophet's traditions as a source of Islam",
+   "have a clarity about adth as the second source Islam",
+   "discuss the measures Muslim scholars adopted to determine the authenticity and reliability of adth",
+   "develop and sustain discussions on Islamic thought",
+   "appreciate the history of Islam",
+   "Identify the contributions of different categories of people towards the development of Islam and its civilization; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening, and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian arts and culture in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political entity",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Arabic Language Drills",
+   "Early History of Islam, from Jhiliyyah Period to the Death of the",
+   "Tawd and cIbdt",
+   "Studies on the Qur'n",
+   "Islam in Africa",
+   "Introduction to the adth",
+   "Basis of Islamic Thought and Civilisation",
+   "Introduction to Islamic Philosophy",
+   "Islamic Education",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Early Muslim Philosophers",
+   "Islamic Family Law",
+   "Sources and Development of the Sharicah",
+   "History of Islam from the Four Rightly-guided Caliphs to the cAbbsid",
+   "Textual Studies of the Qur'n I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Linguistics",
+  "code": "LIN",
+  "technical_skills": [
+   "interpret language as a living, breathing entity, and that the knowledge of linguistics can be applied in various domains to achieve various results",
+   "explain relevant concepts and vocabulary; and, 3 extend their knowledge through further studies",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; 6. apply DH to new research, publishing, media, networking",
+   "appreciate the relationship between the arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "assess the interconnectivity between disciplines",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "have sufficient competence to extend their knowledge through further studies",
+   "develop grammatical sketches of an undocumented language",
+   "understand the influence of culture and linguistic background on human communication, speech, language; in working with people with speech, language, swallowing, and hearing disorders",
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organisations, media and traditional institutions in peace building",
+   "understand types of tone systems",
+   "identify and describe types of tones and their representations",
+   "give a brief introductory remark or discussion on the course and its main topics",
+   "use technology to experiment tonal patterns in any language, especially african languages",
+   "analyze tone data in any language, especially african languages",
+   "engage in meaningful arguments/dialogues concerning tones in language"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in the English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of Nigerian cultures and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Cultures",
+   "Introduction to Linguistics",
+   "Sociolinguistics",
+   "General Phonetics",
+   "Survey of Applied Linguistics",
+   "Languages of the World",
+   "Morphology",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and other Disciplines",
+   "Basic Phonology",
+   "Language Documentation and Modernization",
+   "Grammar",
+   "Language Pathologies, Dysfunction and Disabilities",
+   "Nigerian Languages and National Development/ the SDGs (2",
+   "Language Business",
+   "Venture Creation",
+   "Research Methods in the Arts"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Modern European Languages B.A",
+  "code": "FRE",
+  "technical_skills": [
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; 6. apply DH to new research, publishing, media, networking",
+   "appreciate the relationship between the Arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "assess the interconnectivity between disciplines; and",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organisations, media and traditional institutions in peace building"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to a Second Foreign Language",
+   "Laboratory Exercise:",
+   "Introduction to French Grammar:",
+   "Introduction to Composition Writing in French",
+   "Initiation into Translation",
+   "Introduction to Literary Appreciation",
+   "Introduction to French Literary Genres: Prose",
+   "Introduction to Negro-African Literature in French",
+   "Nigeria and her Francophone Neighbours",
+   "History of the French Language",
+   "Philosophy, Logic And Human Existence",
+   "Entreprenurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Entrepreneurial French",
+   "Translation: `Th�me' and `Version'",
+   "Introduction to French Phonetics and Phonology",
+   "Essentials of French Grammar"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Modern European Languages B.A",
+  "code": "GER",
+  "technical_skills": [
+   "explain the grammatical structures of the German Language",
+   "pronounce the German alphabet",
+   "analyse the features of writing system",
+   "interpret the application and use of the German language",
+   "identify the grammar, phonology, phonetics of the German people, their environment, economy, culture etc",
+   "comprehend and facilitate reading, discussing and understanding nation, international and global, social and economic issues. into English or any other language. New Arts 473",
+   "work as German facilitators in tourist centers, hotels, airports, teachers in language outfits and in embassies. alphabets and their phonetical representation; Know how the alphabets are written and how to pronounce them; German numerals and their pronunciation; the articles; der (masc)die(fem) das neuter gender; and the indefinite articles(mas) Eine (fem) ein (neuter) gender; how to make simple sentences in German",
+   "identify sound system of the language",
+   "operate audio visual aid in learning",
+   "solve problem and research method",
+   "recognize and address local epistemologies, common misconceptions and alternative conceptions and other ways of life; New Arts 471",
+   "appreciate values, beliefs, customs and other cultural issues of other people New Arts 472",
+   "read works, texts and journals in German with its attendant opportunity to open up new horizons of knowledge that are rife in the German language literature; and",
+   "Ability to teach, research and introduce others to the use of laboratory Equipment and other forms of gadgets for effective learning of the German or other languages",
+   "identify the peculiarities of the German grammar",
+   "explain German Lexis and sound system",
+   "apply and use the German language",
+   "interpret grammar, phonology, phonetics of the German people, their environment, economy, culture etc",
+   "practice in groups",
+   "participate interpersonal discussions",
+   "apply the correct use of rules of grammar and vocabulary",
+   "teach, research and introduce others to the use of laboratory Equipment and other forms of gadgets for effective learning of the German or other languages. Expansion of the German Grammar, its peculiar structure and sound system. Ger 204: German Grammar IV (2 Units C: PH 90) Learning Outcomes",
+   "explain customs, beliefs, practices of German speaking people",
+   "Knows how the Germanic tribes are",
+   "Learns about the geographical features, institutions, peculiarities of the german \\speaking societies"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening, and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian arts and culture in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political entity",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Cultures",
+   "Basic German Grammar I",
+   "Oral and Aural Comprehension",
+   "Basic German Grammar II",
+   "Oral and Aural composition I",
+   "Speech and Conversation I",
+   "Introduction to German Speaking Societies",
+   "Introduction to reading and text analysis",
+   "German as a second foreign language",
+   "Philosophy, Logic And Human Existence",
+   "Peace and Conflict Resolution",
+   "Digital Humanities: Application of computer to the Arts",
+   "The Arts and other Disciplines",
+   "German Grammar III",
+   "Listening Comprehension I",
+   "Speech and Conversation II",
+   "German Grammar IV",
+   "Listening Comprehension II",
+   "Speech and Conversation III"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Modern European Languages (Russian)",
+  "code": "RUS",
+  "technical_skills": [
+   "explain various parts of speech; and",
+   "decipher the syntactical functions of such aspects",
+   "identify the most import aspects of the grammatical rules; and",
+   "identifysentence structure and patterns",
+   "focus on topic for proper understanding",
+   "discuss different types of comprehension passages",
+   "build logical reasoning and competence skills in writing",
+   "compose a well-defined incident or series of related incidents",
+   "use precise language and specific details, appropriately",
+   "justify the correct use of figurative language to promote writing",
+   "describe with different documentation styles; and 8. demonstrate high-quality of creative writing skills. Content Contents The course is designed to introduce students to the basic techniques of composition in Russian. Emphasis is on free composition on selected topic",
+   "integrate language skills",
+   "expose to composition writing in Russian Arts 498 New",
+   "translate from english into Russian; and",
+   "analyse simple sentence structures in russian",
+   "read and understand everyday russian in newspapers, academic materials and literature",
+   "read and understand russian characters with more ease and speed",
+   "understand written texts and passages in russian",
+   "fluent in reading texts selected from different media, including internet, social and cultural ethics, newspapers magazines etc",
+   "be good in debates and conversational interactions designed to encourage oral participation",
+   "master laboratory exercise and practical phonetics",
+   "be fluent in spoken Russian; and",
+   "engage in conversational interaction with other russian speakers",
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse"
+  ],
+  "transferable_skills": [
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "state the characteristics of an entrepreneur",
+   "analyze the importance of micro and small businesses in wealth creation, employment, and financial independence",
+   "engage in entrepreneurial thinking",
+   "identify key elements in innovation",
+   "describe stages in enterprise formation, partnership and networking including business planning",
+   "describe contemporary entrepreneurial issues in Nigeria, Africa and the rest of the world: and Arts 500 New",
+   "state the basic principles of e-commerce",
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and"
+  ],
+  "course_titles": [
+   "Russian Grammar I",
+   "Russian Grammar II",
+   "Introduction to Russian Composition I",
+   "Introduction to Russian Composition II",
+   "Readings in Russian I",
+   "Readings in Russian II",
+   "Oral Russian II",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Russian Grammatical Structure I",
+   "Russian Grammatical Structures II",
+   "Comprehension and Stylistics I",
+   "Comprehension and Stylistics II",
+   "Russian Literature in Perspective I",
+   "World Literature in Russian I",
+   "Russian Literature in Perspective II",
+   "Peace and Conflict Resolution",
+   "Research Methods in the Arts",
+   "Theory in the Humanities"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Music",
+  "code": "MUS",
+  "technical_skills": [
+   "identify the non-specialised scientific properties of musical sound",
+   "identify the psychological aspects of music in its elemental tools; and 3 identify the inter-relationship of the elements of music in sound production",
+   "identify musical terms, signs and symbols",
+   "identify the component units of rhythm (time signature, meter, tied notes and dotted notes)",
+   "coordinate three elements of music (rhythm, melody and harmony) on the staff",
+   "read and write simple tunes in staff notation; and",
+   "identify the technical name of each of the degrees in an octave",
+   "coordinate sight and sound in music notation",
+   "sight read simple rhythmic, melodic and harmonic lines; and",
+   "develop the ability to employ the knowledge of rudiments of music into the sound realm",
+   "identify the rules of melodic writing",
+   "identify the rules of harmonic writing",
+   "construction of triads on each degree of a scale � major or minor; 4. compose simple beautiful melodies to given lyrics; and",
+   "harmonise such melodies for a 4-part SATB voices New Arts 526",
+   "identify the periods of Western music history",
+   "identify the music types peculiar to each period",
+   "identify the important musical centres of each period; and",
+   "identify the notable composers associated with each musical type or genre",
+   "identify the nature and forms of musical performances in traditional African communities",
+   "classify African traditional musical instruments",
+   "identify the functionality of traditional music in Africa (South of the Sahara)",
+   "examine the influences of external cultures on African media of performances (vocal and instrumental); and",
+   "identify the classification and usages of African traditional musical instruments",
+   "develop appropriate fingering techniques on the piano",
+   "develop the ability to play each hand independently"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Music as an Art and Science:",
+   "Rudiments of Music:",
+   "Foundations of Musicianship I",
+   "Tonal Harmony I",
+   "Survey of History of Western Music",
+   "African Music I",
+   "Basic Piano Studies I",
+   "Elementary Instrument or Voice",
+   "University Chorus I",
+   "University Band/Orchestra I",
+   "African Instrumental Ensemble I",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Foundation of Musicianship II",
+   "Tonal Harmony II",
+   "Modal Counterpoint",
+   "Western Music before 1750"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D153",
+    "domain": "D153 Music Production",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Philosophy",
+  "code": "PHL",
+  "technical_skills": [
+   "the explain nature of arguments",
+   "identify flaws in arguments",
+   "develop the capacity to differentiate between valid and invalid arguments, and",
+   "acquire the habit of critical thinking Course Ccontents Nature of arguments. Validity and invalidity. Definitions, formal and informal fallacies. Deductive and inductive arguments, etc. Structured arguments and differentiation between logical and illogical reasoning. New Arts 552",
+   "explain the basic ethical concepts of good, bad, right and wrong",
+   "have a grasp of the grounds upon which certain actions are judged to be right and others as wrong, and",
+   "imbibe the positive effect of such knowledge/capacity in his/her conduct",
+   "explain what Digital Humanities (DH) entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; and",
+   "apply DH to new research, publishing, media, networking",
+   "appreciate the relationship between the Arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research New Arts 556",
+   "assess the interconnectivity between disciplines; and",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "develop a better understanding of the structure of arguments and reasoning",
+   "distinguish between valid and invalid inferences",
+   "improve on his/her understanding of himself, other individuals and society in general, and",
+   "reason logically and, therefore, enhance his/her performance in other disciplines as well as day-to-day living",
+   "make a distinction between the physical and the non-physical (or spiritual)",
+   "understand the traditional mind-body problem",
+   "know the nature of scientific knowledge as distinct from mere metaphysical claims; and",
+   "develop the capacity to cope with the realities and vicissitudes of life"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Philosophy",
+   "Arguments and Critical Thinking",
+   "Elementary Ethics",
+   "History of Philosophy",
+   "Introduction to Social and Political Philosophy",
+   "Introduction to African Philosophy",
+   "Oriental Philosophies",
+   "Ancient Philosophy",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "Medieval Philosophy",
+   "Introduction to Logic",
+   "Theories of Ethics",
+   "Social and Political Philosophy",
+   "Introduction to Epistemology",
+   "Introduction to Metaphysics"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Religious Studies",
+  "code": "REL",
+  "technical_skills": [
+   "explain the concept of the Supreme Being, divinities, spirits, ancestors and origin and nature of humanity; and",
+   "discuss the rites of passage and the concepts of salvation in African traditional Religion New Arts 573",
+   "mention the prophecies about the messiah in the old testament; and",
+   "connect the prophecies to the fulfillment with birth of jesus christ",
+   "analyze the origin, literature and theology of Ephesians and 1John or the Pastoral letters or Hebrews",
+   "relate this to the life of the church in Africa",
+   "translate some texts and bring out their theological significance",
+   "explain the life and teachings of the prophet and the significance of Sunnah over Bidah and",
+   "discuss the importance of the Sunnah and the Hadith in the formation of Islamic theology",
+   "explain the economic, social and political situation in Arabia before revelation came to prophet Muhammed",
+   "explain the life history of Prophet Muhammed and how he gathered his fires companions",
+   "explain the theological beliefs and practices in Islam",
+   "identify the different Islamic groups in modern Nigeria",
+   "explain the elementary aspects of Hebrew language; and",
+   "write the alphabets, a good number of vocabularies and translations",
+   "discuss the institutions in a society",
+   "distinguish Religious methods from Social Anthropology New Arts 575",
+   "describe human dignity, population of Religious traditions, ethic, chauvinism and human rights issues",
+   "explain probe Religion and human values like honesty, care for the needy, integrity, mutual respect, good name, hard work among others; and 3. analyse the effect of these on the society",
+   "describe Asian Religions; and",
+   "explain the Philosophical nature of the Religions",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Survey of African Traditional Religion",
+   "Source of Christianity",
+   "Pauline Epistles",
+   "The Sunnah and the Hadith of the Prophet",
+   "Source, Vocabulary and Pillars of Islam",
+   "Hebrew Grammar",
+   "Introduction to Social Anthropology of Religion",
+   "Religion and Human Values",
+   "Introducing Asian Religions",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts (2 Units",
+   "The Arts and Other Disciplines",
+   "General Introduction to the Study of Religion",
+   "Introduction to Greek",
+   "Introduction to the Gospels",
+   "Comparative Religion",
+   "Introduction to Sociology of Religion:"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D150",
+    "domain": "Religious Ministry, Theology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D128",
+    "domain": "Social Welfare, Youth Services",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D046",
+    "domain": "Social Work",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D064",
+    "domain": "Psychology, Counselling",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D163",
+    "domain": "Intellectual Property Law, Patents",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Sharcah",
+  "code": "SHA",
+  "technical_skills": [
+   "enumerate types of Arabic sentences and word order therein",
+   "distinguish various types of Arabic tenses",
+   "Explain the types of Mansubaat and Marfuaat; and",
+   "to discover aspects of word case ending in Arabic sentences",
+   "recognise and describe the technical terms used in the field of adth studies New Arts 593",
+   "explain the principles behind acceptance or rejection of adth reports; and",
+   "be equipped with the tools necessary for understanding adth, which is the second source of the Sharcah",
+   "recognise the practical development of the Sharcah",
+   "demonstrate the divergence of opinions among the schools of Islamic jurisprudence; and",
+   "demonstrate the richness and dynamism of the Sharcah",
+   "to identify and describe the validity and invalidity of acts of worship; and",
+   "recognise the methodology and approach of studying the Sharcah",
+   "recognise what constitutes a source of the Sharcah and have the ability to use those sources",
+   "Identify the prerequisites of doing `ijtid (providing judgements over which the primary sources are silent about); and",
+   "Recognise how to choose, based on principles, between the different opinions of the learned jurists",
+   "Provide students with the tools of doing exegesis of the Qur'n; and",
+   "Demonstrate how to apply their knowledge of the field in understanding the various approaches of Islamic jurists in using a proper understanding of the Qur'n to arrive at independent judgements on new occurrences",
+   "Expose the student to the rich Islamic legal tradition of the West African sub-region New Arts 595",
+   "Demonstrate how the scholars of the region dealt in a juristic way with the peculiarities of the cultures and traditions of the region; and",
+   "honour the intellectual contribution of the region and address any inferiority complex that might be associated with the scholars and scholarship of the region",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development; New Arts 592",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Grammar I",
+   "Introduction to the Study of adth",
+   "History of Islamic Law",
+   "Islamic Rituals",
+   "Sources of Sharcah",
+   "Textual Studies of Selected Verses of the Qur'n",
+   "Introduction to the Exegesis of the Qur'n",
+   "Contributions of West African Scholars to the Study of Shari'ah                                                                                                                                                                                         (2",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts  (2",
+   "The Arts and Other Disciplines",
+   "Grammar II",
+   "Islamic Law of Transaction (Mucmalt) I",
+   "Textual Studies of Selected Aadth",
+   "Islamic Family Law I",
+   "Shari' ah in Contemporary World",
+   "Legislative Verses of the Qur'n"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D032",
+    "domain": "Project Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Theatre Arts",
+  "code": "YOU",
+  "technical_skills": [
+   "explain the meaning of and differences between communication and information",
+   "identify and provide graphic illustrations of the basic models of communication",
+   "demonstrate an understanding of traditional modes of communication",
+   "recognise the various theorists and theories of communication, and",
+   "describe the communication process within an individual, between two or more individuals and other social context for example, group or mass communication",
+   "explain what Digital Humanities entails",
+   "appraise the DH techniques tools for data analysis",
+   "appreciate the importance of computers in the Humanities",
+   "apply DH to interdisciplinary research",
+   "appreciate the adoption of DH tools for entrepreneurship; and",
+   "apply DH to new research, publishing, media, networking",
+   "appreciate the relationship between the Arts and other disciplines",
+   "distinguish between interdisciplinary, multidisciplinary and trans-disciplinary research",
+   "assess the interconnectivity between disciplines, and New Arts 650",
+   "engage in interdisciplinary, multidisciplinary and trans-disciplinary research New Arts 621",
+   "identify the forms of literature",
+   "outline what dramatic literature is as distinct from performance",
+   "list the elements and themes of drama and theatre",
+   "appreciate the roles of Aristotle and theorists of dramatic literature",
+   "appreciate critics of ancient and modern dramatic literature; 5. appreciate African and non-African playwrights; and",
+   "identify theorists and critics of drama and theatre across the ages with elements of theatre practice",
+   "identify a play director",
+   "highlight the practice of blocking, have capacity to understand stage geography and identify the different parts of the stage",
+   "outline play production processes from choice of play to its staging and production",
+   "appreciate and analyse plays for production"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Traditional African/Festival Theatre:",
+   "Introduction to Drama and Theatre:",
+   "Beginning Theatre Design and Technology:",
+   "History of Drama and Theatre from the Beginnings to Medieval Period",
+   "Basic Communication Theory",
+   "Practical Participation Orientation",
+   "Philosophy, Logic And Human Existence",
+   "Entrepreneurship and Innovation",
+   "Digital Humanities: Application of Computer to the Arts",
+   "The Arts and Other Disciplines",
+   "African Drama and Theatre in the Colonial Era",
+   "Introduction to Media Arts:",
+   "Introduction to Dramatic Literature and Criticism",
+   "Introduction to Directing:",
+   "Basic Speech Arts, Music and Acting Techniques:",
+   "History of Drama and Theatre: The Modern Period",
+   "Fundamentals of Playwriting",
+   "Children's Theatre in Education"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D127",
+    "domain": "Early Childhood Education, Nursery",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D031",
+    "domain": "Sales",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "African Languages and Literature Yoruba",
+  "code": "YOU",
+  "technical_skills": [
+   "describe the people of the target language (their culture and language)",
+   "read and write in the standard orthography of the language",
+   "explain the thoughts and beliefs of the people",
+   "narrate the history of the Yor�b� people",
+   "classify the language family of the people, and",
+   "differentiate between the linguistic theory, migration theory and Yor�b� oral history",
+   "access adequate information on the origin of the Yor�b� people, migration issues, kingship related issues, among others",
+   "explain, in details, the rise and fall of the major Yor�b� kingdoms",
+   "analyse the historical data, from both oral and written sources; and",
+   "discuss the trends of scholarship in the language, literature and culture",
+   "read and demonstrate a good comprehension of text in the Yor�b� language",
+   "read and write composition with standard Yor�b� orthography",
+   "identify types of composition in the language New Arts 646",
+   "explain the features of a good essay in the language",
+   "answer questions on comprehension passages, and",
+   "write essays in splendid Yor�b� language, fully using the language",
+   "evaluate various controversies on the orthography of the target language",
+   "discuss the efforts of missionaries, linguists and regional governments in developing the orthography of the Yor�b� language",
+   "identify Yor�b� word division in the orthography",
+   "explain why the cluster of consonants is not acceptable in Yor�b� orthography current orthography, and",
+   "use the Yor�b� Meta language, correctly",
+   "explain the meaning and usefulness of linguistics",
+   "classify the scope and types of linguistics",
+   "apply the knowledge of linguistic science to the study of the Yor�b� language",
+   "trace the origin of language"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "Introduction to Yor�b� People, Language and Culture",
+   "Introduction to the History of the Yor�b� People",
+   "Advanced Comprehension and Composition I",
+   "Orthography of Yor�b� Language",
+   "Introduction to Linguistics I",
+   "Introduction to Linguistics II",
+   "Introduction to Yor�b� Oral Literature",
+   "Survey of the Yor�b� Literature",
+   "Phonology of Yor�b� Language I",
+   "Morphology of Yor�b� Language",
+   "Syntax of Yor�b� Language I",
+   "Phonology of Yor�b� Language II",
+   "Varieties of Yor�b� Poetry",
+   "Syntax of Yor�b� Language II",
+   "Introduction to Yor�b� Drama, Cinema and films",
+   "Entrepreneurship in Yor�b� Language, Literature and Culture (2 Units",
+   "Yor�b� in Broadcasting and Advertising",
+   "Yor�b� Literary History, Theory and Criticism",
+   "Issues in Yor�b� Phonology",
+   "The Culture of Yor�b� People"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D081",
+    "domain": "Office Administration, Secretarial",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D153",
+    "domain": "D153 Music Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D085",
+    "domain": "Retail Sales, Shop Operations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D042",
+    "domain": "Media Production",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D106",
+    "domain": "Garment Making, Tailoring, Dressmaking",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "adjacent"
+   }
+  ]
+ }
+]

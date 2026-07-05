@@ -1,0 +1,174 @@
+{"reviews":[
+{
+ "domain_id":"D036",
+ "domain_name":"Procurement",
+ "verdict":"issues",
+ "remove_roles":[
+  {"role":"Transportation, Storage, and Distribution Managers","reason":"Generic ISCO/SOC group-label row (aka=NaN), not a real job title."},
+  {"role":"Purchasing Agents, Except Wholesale, Retail, and Farm Products","reason":"Generic SOC group-label row (aka=NaN), not a real job title."},
+  {"role":"Cargo and Freight Agents","reason":"Generic SOC group-label row (aka=NaN), not a real job title."},
+  {"role":"Wholesale and Retail Buyers, Except Farm Products","reason":"Generic SOC group-label row (aka=NaN); also mis-coded to ISCO 2421 (analysts)."}
+ ],
+ "add_roles":[
+  {"role":"category manager","isco":"3323","skills":["category strategy","spend analysis","supplier negotiation","sourcing","contract management"],"reason":"Core modern strategic-procurement role; library has purchaser/purchasing manager but no category ownership role."}
+ ],
+ "overfanout_roles":[
+  "import export manager in <commodity>",
+  "import export specialist in <commodity>",
+  "wholesale merchant in <commodity>",
+  "<commodity> distribution manager"
+ ],
+ "rename_to":null,
+ "notes":"~90% of the 174 roles are ESCO commodity-fanout across 4 families (import/export manager, import/export specialist, wholesale merchant, distribution manager) x ~25 commodities — collapse each family to one canonical role with commodity as a facet. Also several transport-operations roles are misplaced in Procurement (air traffic manager, airport director, railway station manager, rail/road operations manager, inland/maritime water transport general manager, movie distributor) as are generic business-analyst roles (business analyst, business consultant, business intelligence manager, lean manager, process officer, BIM consultant)."
+},
+{
+ "domain_id":"D037",
+ "domain_name":"Legal Practice",
+ "verdict":"issues",
+ "remove_roles":[
+  {"role":"Legal Secretaries","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Legal Officials","reason":"Generic group-label row (aka=NaN)."},
+  {"role":"Arbitrators, Mediators, and Conciliators","reason":"Generic SOC group-label row (aka=NaN); duplicates 'mediator'."},
+  {"role":"Judges, Magistrate Judges, and Magistrates","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Paralegals and Legal Assistants","reason":"Generic SOC group-label row (aka=NaN); duplicates 'legal assistant'."},
+  {"role":"Legal Secretaries and Administrative Assistants","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Judicial Law Clerks","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Administrative Law Judges, Adjudicators, and Hearing Officers","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Title Examiners, Abstractors, and Searchers","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Legal Support Workers, All Other","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"supreme court judge","reason":"Exact duplicate row (appears twice)."},
+  {"role":"court jury coordinator","reason":"Exact duplicate row (appears twice)."},
+  {"role":"coroner","reason":"Exact duplicate row (appears twice)."}
+ ],
+ "add_roles":[],
+ "overfanout_roles":[],
+ "rename_to":null,
+ "notes":"10 SOC group-label junk rows and 3 exact duplicate rows (supreme court judge, court jury coordinator, coroner). Two roles are misplaced: 'store detective' and 'private detective' are security/investigation (ISCO 3411 loss-prevention/PI), not legal practice. Real-role core (lawyer, prosecutor, judge, notary, mediator, paralegal etc.) is otherwise sound."
+},
+{
+ "domain_id":"D038",
+ "domain_name":"Compliance, Regulation",
+ "verdict":"issues",
+ "remove_roles":[
+  {"role":"Regulatory and Government Associate Professionals","reason":"Generic ISCO group-label row (aka=NaN)."},
+  {"role":"Compliance Officers","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Agents and Business Managers of Artists, Performers, and Athletes","reason":"Generic SOC group-label row (aka=NaN); also out-of-domain."},
+  {"role":"Claims Adjusters, Examiners, and Investigators","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Environmental Compliance Inspectors","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Equal Opportunity Representatives and Officers","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Government Property Inspectors and Investigators","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Regulatory Affairs Specialists","reason":"Generic SOC group-label row (aka=NaN); duplicates 'regulatory affairs manager'."},
+  {"role":"Customs Brokers","reason":"Generic SOC group-label row (aka=NaN); duplicates 'customs officer'."},
+  {"role":"Financial Examiners","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Police Identification and Records Officers","reason":"Generic SOC group-label row (aka=NaN)."},
+  {"role":"Intelligence Analysts","reason":"Generic SOC group-label row (aka=NaN); also mis-coded to ISCO 3351."}
+ ],
+ "add_roles":[
+  {"role":"anti-money laundering officer","isco":"2422","skills":["AML/CFT regulation","KYC/customer due diligence","transaction monitoring","suspicious activity reporting","sanctions screening","regulatory reporting"],"reason":"Core modern financial-compliance role entirely absent despite domain being Compliance/Regulation.","needs_review":true}
+ ],
+ "overfanout_roles":[
+  "<subject> policy officer"
+ ],
+ "rename_to":null,
+ "notes":"12 SOC/ISCO group-label junk rows. Large overfanout of the '<subject> policy officer' family (~20+: housing, regional, competition, fiscal, cultural, environmental, agricultural, labour, education, recreation, immigration, social-services, public-health, etc.) — these are public-policy/government roles that arguably belong in a Public Policy domain, not Compliance/Regulation. Several roles are misplaced: law-enforcement (police detective, criminal investigator, police inspector) and legal (coroner, notary, mediator, court jury coordinator, ombudsman, legislative drafter) belong in policing/legal domains. AML add flagged needs_review as ISCO code is approximate."
+},
+{
+ "domain_id":"D039",
+ "domain_name":"Higher Education",
+ "verdict":"issues",
+ "remove_roles":[
+  {"role":"University and Higher Education Teachers","reason":"SOC/ISCO group-label row (aka=NaN)."},
+  {"role":"Secondary Education Teachers","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Special Education Teachers","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Primary School and Early Childhood Teachers","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Education Administrators, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Art, Drama, and Music Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Preschool Teachers, Except Special Education","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Educational Instruction and Library Workers, All Other","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Education Administrators, Kindergarten through Secondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Business Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Computer Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Mathematical Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Architecture Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Engineering Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Agricultural Sciences Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Biological Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Forestry and Conservation Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Chemistry Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Environmental Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Physics Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Anthropology and Archeology Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Area, Ethnic, and Cultural Studies Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Economics Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Geography Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Political Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Psychology Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Sociology Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Social Sciences Teachers, Postsecondary, All Other","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Health Specialties Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Nursing Instructors and Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Education Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Library Science Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Criminal Justice and Law Enforcement Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Law Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Social Work Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Communications Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"English Language and Literature Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Foreign Language and Literature Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"History Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Philosophy and Religion Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Family and Consumer Sciences Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Recreation and Fitness Studies Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Career/Technical Education Teachers, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Kindergarten Teachers, Except Special Education","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Middle School Teachers, Except Special and Career/Technical Education","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Career/Technical Education Teachers, Middle School","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Career/Technical Education Teachers, Secondary School","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Special Education Teachers, Preschool","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Special Education Teachers, Kindergarten","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Special Education Teachers, Elementary School","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Special Education Teachers, Middle School","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Special Education Teachers, Secondary School","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Self-Enrichment Teachers","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Substitute Teachers, Short-Term","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Teaching Assistants, Special Education","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Teaching Assistants, Postsecondary","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Teaching Assistants, All Other","reason":"SOC group-label row (aka=NaN)."}
+ ],
+ "add_roles":[
+  {"role":"postdoctoral researcher","isco":"2310","skills":["academic research","grant/proposal writing","peer-reviewed publishing","research methodology","data analysis","teaching support"],"reason":"Core HE academic-career-ladder role absent (library has research assistant, assistant lecturer, lecturer, but no postdoc)."}
+ ],
+ "overfanout_roles":[
+  "<subject> lecturer",
+  "<subject> vocational teacher"
+ ],
+ "rename_to":null,
+ "notes":"58 aka=NaN SOC/ISCO group-label junk rows (the entire block after the real roles). Domain is labelled 'Higher Education' but is polluted with non-HE levels: primary/secondary/preschool/kindergarten teachers (primary school teacher, early years teacher, Montessori/Steiner/Freinet, secondary school head teacher, special-ed primary/secondary) and the whole vocational-teacher family belong in schools/D040 Vocational, not HE. Genuine HE core is the '<subject> lecturer' family (~40, legitimate but a large fanout) plus deans/heads/research staff. Vocational-teacher fanout should move to D040."
+},
+{
+ "domain_id":"D040",
+ "domain_name":"Vocational",
+ "verdict":"issues",
+ "remove_roles":[
+  {"role":"Vocational Education Teachers","reason":"SOC/ISCO group-label row (aka=NaN); duplicates 'vocational teacher'."},
+  {"role":"Training and Development Specialists","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Postsecondary Teachers, All Other","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Secondary School Teachers, Except Special and Career/Technical Education","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Instructional Coordinators","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Tutors","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Teachers and Instructors, All Other","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Farm and Home Management Educators","reason":"SOC group-label row (aka=NaN)."},
+  {"role":"Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education","reason":"SOC group-label row (aka=NaN)."}
+ ],
+ "add_roles":[
+  {"role":"vocational education assessor","isco":"2320","skills":["competency-based assessment","NVQ/qualification standards","portfolio assessment","workplace observation","internal verification","feedback"],"reason":"Core competency-based vocational-qualification role absent; library has trainers/teachers but no assessor/verifier of vocational competence."}
+ ],
+ "overfanout_roles":[
+  "<subject> vocational teacher"
+ ],
+ "rename_to":null,
+ "notes":"10 aka=NaN SOC group-label junk rows. Four classroom teaching-assistant roles (primary/secondary/early-years TA, ISCO 5312, and SEN assistant) are K-12 school-support, not vocational — misplaced here. The '<subject> vocational teacher' family (~20) is legitimate for this domain but is fully duplicated in D039 Higher Education; it should live here only. Core vocational/workplace-training roles (corporate trainer, business coach, ICT trainer, digital literacy teacher) are well placed."
+}
+]}

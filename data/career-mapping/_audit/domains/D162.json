@@ -1,0 +1,317 @@
+{
+ "domain_id": "D162",
+ "domain_name": "Immigration Law, Asylum",
+ "role_count": 62,
+ "roles": [
+  {
+   "role": "youth information worker",
+   "isco": 2635,
+   "aka": "youth counsellor  ·  youth mentor  ·  youth advisor  ·  youth information consultant  ·  youth information provider"
+  },
+  {
+   "role": "child care social worker",
+   "isco": 2635,
+   "aka": "social worker (children and families)  ·  childcare social worker  ·  social worker family safeguarding team  ·  children's social worker  ·  child protection social worker"
+  },
+  {
+   "role": "court clerk",
+   "isco": 3411,
+   "aka": "court usher  ·  bailiff  ·  judicial assistant  ·  judicial clerk  ·  senior court clerk"
+  },
+  {
+   "role": "data protection officer",
+   "isco": 2619,
+   "aka": "data compliance officer  ·  data protection and security officer  ·  DPO  ·  compliance officer data privacy  ·  privacy protection officer"
+  },
+  {
+   "role": "consultant social worker",
+   "isco": 2635,
+   "aka": "policy advisor  ·  social work researcher  ·  social work academic  ·  social work consultant  ·  social work educator"
+  },
+  {
+   "role": "education welfare officer",
+   "isco": 2635,
+   "aka": "education engagement officer  ·  school social worker  ·  attendance support officer  ·  social worker in education  ·  education and family engagement officer"
+  },
+  {
+   "role": "election observer",
+   "isco": 2619,
+   "aka": "election monitor  ·  electoral observer  ·  international election observer  ·  short term election observer  ·  election scrutineer"
+  },
+  {
+   "role": "contract manager",
+   "isco": 2619,
+   "aka": "medical contract manager  ·  commercial contract manager  ·  construction contract manager  ·  contract compliance manager  ·  contract auditor"
+  },
+  {
+   "role": "legal consultant",
+   "isco": 2619,
+   "aka": "legal advisor  ·  legal nurse consultant  ·  city legal advisor  ·  business law consultant  ·  city legal adviser"
+  },
+  {
+   "role": "gerontology social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  older adults community care social worker  ·  geriatric social worker  ·  seniors social worker  ·  social care gerontologist"
+  },
+  {
+   "role": "mediator",
+   "isco": 2619,
+   "aka": "arbitrator  ·  family mediator  ·  labour mediator  ·  advice worker  ·  alternative dispute resolution coordinator"
+  },
+  {
+   "role": "social worker",
+   "isco": 2635,
+   "aka": "community worker  ·  community counsellor  ·  cultural mediator  ·  social outreach worker  ·  community services officer"
+  },
+  {
+   "role": "youth offending team worker",
+   "isco": 2635,
+   "aka": "youth offender team worker  ·  juvenile probation social worker  ·  juvenile probation officer  ·  youth offender social worker  ·  youth offending team officer"
+  },
+  {
+   "role": "benefits advice worker",
+   "isco": 2635,
+   "aka": "social security social worker  ·  welfare benefits social worker  ·  employment and benefits advice worker  ·  welfare rights adviser  ·  welfare rights counsellor"
+  },
+  {
+   "role": "social counsellor",
+   "isco": 2635,
+   "aka": "social therapist  ·  crisis counsellor  ·  crisis intervension counsellor  ·  social counselling worker  ·  crisis situation counselor"
+  },
+  {
+   "role": "drug and alcohol addiction counsellor",
+   "isco": 2635,
+   "aka": "drug and alcohol worker  ·  drug and alcohol addiction counselor  ·  alcohol counsellor  ·  substance abuse counsellor  ·  addictions counsellor"
+  },
+  {
+   "role": "court bailiff",
+   "isco": 3411,
+   "aka": "bailiff  ·  enforcement agent  ·  court administrator  ·  court administrative officer  ·  usher"
+  },
+  {
+   "role": "ombudsman",
+   "isco": 2619,
+   "aka": "information commissioner  ·  ombudswoman  ·  children's ombudsman"
+  },
+  {
+   "role": "clinical social worker",
+   "isco": 2635,
+   "aka": "clinical social support worker"
+  },
+  {
+   "role": "homelessness worker",
+   "isco": 2635,
+   "aka": "homeless care worker  ·  homelessness support worker  ·  homeless case worker  ·  homeless guidance worker  ·  homeless support worker"
+  },
+  {
+   "role": "probation officer",
+   "isco": 2635,
+   "aka": "probation services officer  ·  parole officer  ·  prison department social worker"
+  },
+  {
+   "role": "store detective",
+   "isco": 3411,
+   "aka": "loss prevention agent  ·  retail loss investigator  ·  SD  ·  asset protection officer  ·  loss prevention officer"
+  },
+  {
+   "role": "hospital social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  palliative care social worker  ·  hospital discharge social worker  ·  medical social worker  ·  public health social worker"
+  },
+  {
+   "role": "crisis situation social worker",
+   "isco": 2635,
+   "aka": "crisis intervention counsellor  ·  crisis situation counsellor  ·  emergency social worker  ·  crisis situation worker  ·  crisis intervention social worker"
+  },
+  {
+   "role": "court jury coordinator",
+   "isco": 2619,
+   "aka": "legal secretary  ·  court usher  ·  coordinators for court jury  ·  bailiff  ·  jury consultant"
+  },
+  {
+   "role": "private detective",
+   "isco": 3411,
+   "aka": "private dick  ·  sleuth  ·  private investigator  ·  inspector  ·  PI"
+  },
+  {
+   "role": "regulatory affairs manager",
+   "isco": 2619,
+   "aka": "compliance manager  ·  regulatory manager  ·  bank compliance officer  ·  regulatory compliance officer  ·  regulatory affairs specialist"
+  },
+  {
+   "role": "legislative drafter",
+   "isco": 2619,
+   "aka": "researcher  ·  parliamentary drafter  ·  parliamentary draughtsman  ·  parliamentary draftsman  ·  parliamentary draftsperson"
+  },
+  {
+   "role": "family planning counsellor",
+   "isco": 2635,
+   "aka": "sexual health lead  ·  family planning advisor  ·  reproductive health advisor  ·  family planning social counsellor  ·  sexual health advisor"
+  },
+  {
+   "role": "community care case worker",
+   "isco": 2635,
+   "aka": "independent living coordinator  ·  community care social worker  ·  domiciliary care manager  ·  domiciliary care supervisor"
+  },
+  {
+   "role": "human rights officer",
+   "isco": 2619,
+   "aka": "human rights project officer  ·  human rights program officer  ·  human rights lawyer  ·  human rights programme officer"
+  },
+  {
+   "role": "victim support officer",
+   "isco": 2635,
+   "aka": "victims caseworker  ·  domestic abuse support worker  ·  victim support social worker  ·  relief worker  ·  victim care officer"
+  },
+  {
+   "role": "legal assistant",
+   "isco": 3411,
+   "aka": "paralegal  ·  law clerk  ·  public administration legal assistant  ·  judicial assistant  ·  legal aide"
+  },
+  {
+   "role": "family social worker",
+   "isco": 2635,
+   "aka": "family services social worker  ·  family support worker"
+  },
+  {
+   "role": "lawyer",
+   "isco": 2611,
+   "aka": "social law lawyer  ·  barrister  ·  medical lawyer  ·  industrial property lawyer  ·  procurement law lawyer"
+  },
+  {
+   "role": "military welfare worker",
+   "isco": 2635,
+   "aka": "air force social worker  ·  military and veterans social worker  ·  navy social worker  ·  army welfare officer  ·  forces welfare worker"
+  },
+  {
+   "role": "criminal justice social worker",
+   "isco": 2635,
+   "aka": "family court advisor  ·  prison social worker  ·  probation social worker  ·  family court adviser"
+  },
+  {
+   "role": "marriage counsellor",
+   "isco": 2635,
+   "aka": "marriage and family counsellor  ·  family therapist  ·  marriage guidance counsellor  ·  marriage counselling team member  ·  marital crisis counsellor"
+  },
+  {
+   "role": "mental health social worker",
+   "isco": 2635,
+   "aka": "social worker (mental health)  ·  approved mental health professional  ·  mental health social support worker  ·  mental health community social worker  ·  care coordinator (mental health)"
+  },
+  {
+   "role": "court administrative officer",
+   "isco": 3411,
+   "aka": "court usher  ·  tribunal administration officer  ·  court administration officer  ·  court clerk  ·  court administrator"
+  },
+  {
+   "role": "conveyance clerk",
+   "isco": 3411,
+   "aka": "conveyance law clerk  ·  paralegal clerk  ·  property law clerk  ·  conveyancing clerk  ·  conveyancer"
+  },
+  {
+   "role": "migrant social worker",
+   "isco": 2635,
+   "aka": "social worker  ·  cultural mediator social worker  ·  asylum advice worker  ·  migrant re-settlement worker  ·  immigrant advice worker"
+  },
+  {
+   "role": "prosecutor",
+   "isco": 2611,
+   "aka": "state attorney  ·  public prosecutor  ·  crown prosecutor  ·  prosecuting attorney"
+  },
+  {
+   "role": "enterprise development worker",
+   "isco": 2635,
+   "aka": "social entrepreneur  ·  enterprise development manager  ·  corporate social worker  ·  industry social worker  ·  business social worker"
+  },
+  {
+   "role": "court enforcement officer",
+   "isco": 3411,
+   "aka": "court usher  ·  bailiff  ·  enforcement agent  ·  court administrator  ·  court bailiff"
+  },
+  {
+   "role": "social work supervisor",
+   "isco": 2635,
+   "aka": "social services team manager  ·  social work programme manager  ·  social work programme supervisor  ·  social work team manager  ·  senior social worker"
+  },
+  {
+   "role": "youth worker",
+   "isco": 2635,
+   "aka": "senior youth worker  ·  youth project team worker  ·  youth support worker  ·  youth centre worker  ·  social worker youth justice"
+  },
+  {
+   "role": "sexual violence counsellor",
+   "isco": 2635,
+   "aka": "victim support worker  ·  sexual violence counselor  ·  sexual violence advisor  ·  sexual assault social counselor  ·  domestic violence counsellor"
+  },
+  {
+   "role": "case administrator",
+   "isco": 3411,
+   "aka": "legal executive  ·  domestic abuse case administrator  ·  probation case administrator  ·  prison case administrator  ·  legal administation officer"
+  },
+  {
+   "role": "palliative care social worker",
+   "isco": 2635,
+   "aka": "hospice worker  ·  palliative care assistant  ·  palliative care supervisor  ·  hospice care assistant  ·  hospice carer"
+  },
+  {
+   "role": "employment support worker",
+   "isco": 2635,
+   "aka": "employment rights worker  ·  employment social worker  ·  supported employment worker  ·  employment support social worker  ·  employability support worker"
+  },
+  {
+   "role": "coroner",
+   "isco": 2619,
+   "aka": "pathologist  ·  medical examiner  ·  chief coroner  ·  chief medical examiner  ·  forensic medical examiner"
+  },
+  {
+   "role": "community social worker",
+   "isco": 2635,
+   "aka": "community support worker  ·  community outreach worker  ·  housing social worker  ·  community welfare social worker  ·  social development worker"
+  },
+  {
+   "role": "notary",
+   "isco": 2619,
+   "aka": "common law notary  ·  public notary  ·  notarial officer  ·  civil law notary  ·  law signing agent"
+  },
+  {
+   "role": "substance misuse worker",
+   "isco": 2635,
+   "aka": "substanse abuse social worker  ·  social worker (substance misuse)  ·  drug and alcohol worker  ·  addiction social worker  ·  substance mis-use counsellor"
+  },
+  {
+   "role": "rehabilitation support worker",
+   "isco": 2635,
+   "aka": "reablement officer  ·  occupational therapy support worker  ·  rehabilitation worker  ·  rehabilitation social worker  ·  rehabilitation outreach worker"
+  },
+  {
+   "role": "justice of the peace",
+   "isco": 3411,
+   "aka": "justice  ·  advocate  ·  peace justice  ·  magistrate  ·  court judge"
+  },
+  {
+   "role": "bereavement counsellor",
+   "isco": 2635,
+   "aka": "bereavement social counsellor  ·  family bereavement counsellor  ·  bereavement advice counsellor  ·  family and bereavement support officer  ·  bereavement support worker"
+  },
+  {
+   "role": "social pedagogue",
+   "isco": 2635,
+   "aka": "social outreach worker  ·  practitioner in social pedagogy  ·  community social pedagogue  ·  community education practitioner  ·  qualified social pedagogue"
+  },
+  {
+   "role": "corporate lawyer",
+   "isco": 2611,
+   "aka": "intellectual property lawyer  ·  business lawyer  ·  patent lawyer  ·  business solicitor  ·  corporate counsel"
+  },
+  {
+   "role": "community development social worker",
+   "isco": 2635,
+   "aka": "social development worker  ·  community advocate  ·  social worker-community development  ·  community animateur  ·  community development team leader"
+  },
+  {
+   "role": "Child, Family, and School Social Workers",
+   "isco": 2635,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "domain_id": "D026",
+ "domain_name": "Public Health",
+ "role_count": 29,
+ "roles": [
+  {
+   "role": "food safety specialist",
+   "isco": 2263,
+   "aka": "trainee food safety specialist  ·  food quality controller  ·  food production quality controller  ·  assistant food safety specialist  ·  food compliance manager (food safety)"
+  },
+  {
+   "role": "transport health and safety inspector",
+   "isco": 3257,
+   "aka": "road occupational health and safety manager  ·  road health and safety risk assessor  ·  transportation safety manager  ·  road transport health and safety manager  ·  road transportation health and safety director"
+  },
+  {
+   "role": "ergonomist",
+   "isco": 2263,
+   "aka": "ergonomic science researcher  ·  ergonomic research analyst  ·  ergonomic scientist  ·  ergonomic research scientist  ·  ergonomists"
+  },
+  {
+   "role": "health and safety inspector",
+   "isco": 3257,
+   "aka": "employment lawyer  ·  health & safety advisor  ·  inspector of health and safety  ·  labor inspector  ·  health and safety advisor"
+  },
+  {
+   "role": "healthcare inspector",
+   "isco": 3257,
+   "aka": "healthcare inspectors  ·  healthcare environment inspector  ·  medical facilities inspector  ·  health care environment inspector  ·  health care inspector"
+  },
+  {
+   "role": "occupational health and safety inspector",
+   "isco": 3257,
+   "aka": "safety officer  ·  environmental health inspector  ·  health and safety inspector  ·  environmental health officer  ·  factory inspector"
+  },
+  {
+   "role": "mathematician",
+   "isco": 2120,
+   "aka": "logic research scientist  ·  mathematicians  ·  mathematics science researcher  ·  logic researcher  ·  logic science researcher"
+  },
+  {
+   "role": "emergency response coordinator",
+   "isco": 2263,
+   "aka": "aid worker  ·  humanitarian aid worker  ·  charity coordinator  ·  disaster coordinator  ·  emergency coordinator"
+  },
+  {
+   "role": "health and safety officer",
+   "isco": 2263,
+   "aka": "public health inspector  ·  health and safety advisor  ·  occupational health nurse  ·  occupational health and safety officer  ·  occupational health officer"
+  },
+  {
+   "role": "food safety inspector",
+   "isco": 3257,
+   "aka": "quality controller  ·  quality inspector  ·  food quality inspector  ·  food safety officer"
+  },
+  {
+   "role": "specialised doctor",
+   "isco": 2212,
+   "aka": "specialized medical doctor  ·  specialized doctor  ·  hospital specialized doctor  ·  specialised medical doctor  ·  hospital specialised doctor"
+  },
+  {
+   "role": "environmental health inspector",
+   "isco": 3257,
+   "aka": "public health inspector"
+  },
+  {
+   "role": "industrial waste inspector",
+   "isco": 3257,
+   "aka": "industrial waste tester/inspector  ·  industrial waste disposal inspector  ·  industrial waste management inspector  ·  industrial waste control inspector  ·  industrial waste compliance inspector"
+  },
+  {
+   "role": "statistician",
+   "isco": 2120,
+   "aka": "statistic research scientist  ·  statistics research scientist  ·  statistics specialist  ·  statistical scientist  ·  statistics scientist"
+  },
+  {
+   "role": "hazardous materials inspector",
+   "isco": 3257,
+   "aka": "compliance manager  ·  industrial waste analyst  ·  hazardous waste disposal specialist  ·  solid waste compliance specialist  ·  hazardous waste inspector"
+  },
+  {
+   "role": "first aid instructor",
+   "isco": 3253,
+   "aka": "educator in first aid  ·  trainer in first aid  ·  instructor in first aid techniques  ·  instructor in first aid  ·  first aid educator"
+  },
+  {
+   "role": "radiation protection officer",
+   "isco": 2263,
+   "aka": "radiation protection advisor  ·  radiation protection team leader  ·  radiation protection manager  ·  radiation protection supervisor"
+  },
+  {
+   "role": "community health worker",
+   "isco": 3253,
+   "aka": "community first responder  ·  community healthcare support worker  ·  community support worker  ·  community healthcare worker  ·  community carer"
+  },
+  {
+   "role": "food regulatory advisor",
+   "isco": 3257,
+   "aka": "food expert  ·  legislation and controls advisor  ·  food safety expert  ·  food regulatory affairs advisor  ·  food safety regulatory advisor"
+  },
+  {
+   "role": "hazardous waste inspector",
+   "isco": 3257,
+   "aka": "hazardous waste management inspector  ·  hazardous waste tester/inspector  ·  hazardous waste compliance inspector  ·  hazardous waste disposal inspector  ·  hazardous waste control inspector"
+  },
+  {
+   "role": "Health Information Technologists and Medical Registrars",
+   "isco": 2263,
+   "aka": NaN
+  },
+  {
+   "role": "public health physician",
+   "isco": 2212,
+   "aka": "Community Medicine Specialist"
+  },
+  {
+   "role": "disease surveillance officer",
+   "isco": 2267,
+   "aka": NaN
+  },
+  {
+   "role": "health programme officer",
+   "isco": 2422,
+   "aka": NaN
+  },
+  {
+   "role": "biostatistician",
+   "isco": 2120,
+   "aka": "Public Health Statistician"
+  },
+  {
+   "role": "health economist",
+   "isco": 2631,
+   "aka": NaN
+  },
+  {
+   "role": "environmental health officer",
+   "isco": 3257,
+   "aka": "Environmental Health Inspector"
+  },
+  {
+   "role": "vector control officer",
+   "isco": 2267,
+   "aka": NaN
+  },
+  {
+   "role": "health communication specialist",
+   "isco": 2166,
+   "aka": NaN
+  }
+ ]
+}

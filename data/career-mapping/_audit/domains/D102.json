@@ -1,0 +1,187 @@
+{
+ "domain_id": "D102",
+ "domain_name": "Carpentry, Joinery, Wood Technology",
+ "role_count": 36,
+ "roles": [
+  {
+   "role": "door installer",
+   "isco": 7115,
+   "aka": "door fitter  ·  door joiner and fitter  ·  door installation specialist  ·  door installation worker  ·  door furniture fitter"
+  },
+  {
+   "role": "construction scaffolder",
+   "isco": 7119,
+   "aka": "scaffolding labourer  ·  platform erector  ·  scaffold erector  ·  access platform erector  ·  scaffolder in construction"
+  },
+  {
+   "role": "staircase installer",
+   "isco": 7115,
+   "aka": "stair installer  ·  staircase carpenter  ·  stairway carpenter  ·  staircase craftsman  ·  staircase fitter"
+  },
+  {
+   "role": "carpenter",
+   "isco": 7115,
+   "aka": "joiner  ·  woodworker  ·  heritage carpentry  ·  carpentry framer  ·  joiner supervisor"
+  },
+  {
+   "role": "frame maker",
+   "isco": 7115,
+   "aka": "picture framemaker  ·  mirror frame maker  ·  frame repairer  ·  mirror framer  ·  frame-making machine setter"
+  },
+  {
+   "role": "window installer",
+   "isco": 7115,
+   "aka": "window technician  ·  window fitter  ·  window installation team worker  ·  window installation team member"
+  },
+  {
+   "role": "wood sander",
+   "isco": 7523,
+   "aka": "floor sanding machine technician  ·  production woodworker  ·  sanding machine specialist  ·  sanding machine setter  ·  wood sanding machine worker"
+  },
+  {
+   "role": "wood drying kiln operator",
+   "isco": 7521,
+   "aka": "wood-drying kiln specialist  ·  wood drying kiln specialist  ·  dry kiln technician  ·  wood-drying kiln operator  ·  drying kiln technician"
+  },
+  {
+   "role": "cooper",
+   "isco": 7522,
+   "aka": "barrel assembler  ·  wooden barrel constuctor  ·  wooden barrel maker  ·  wooden barrel builder  ·  barrel constuctor"
+  },
+  {
+   "role": "antique furniture reproducer",
+   "isco": 7522,
+   "aka": "reproduction antique furniture maker  ·  period furniture copier  ·  reproduction period furniture craftsman  ·  reproduction furniture worker  ·  furniture reproducer"
+  },
+  {
+   "role": "furniture restorer",
+   "isco": 7522,
+   "aka": "furniture renovater  ·  furniture craftsperson  ·  furniture repairer  ·  antique furniture restorer  ·  craft furniture restorer"
+  },
+  {
+   "role": "toymaker",
+   "isco": 7317,
+   "aka": "toy designer  ·  gismo repairer  ·  hand toymaker  ·  soft toymaker  ·  plastic toy maker"
+  },
+  {
+   "role": "recreation model maker",
+   "isco": 7522,
+   "aka": "mock-up model maker  ·  recreation model designer"
+  },
+  {
+   "role": "wooden furniture machine operator",
+   "isco": 7523,
+   "aka": "timber furniture machine operative  ·  timber furniture machine worker  ·  timber furniture machinist  ·  wood furniture machine worker  ·  wooden furniture machine specialist"
+  },
+  {
+   "role": "wood boring machine operator",
+   "isco": 7523,
+   "aka": "wood drilling machine technician  ·  wood boring worker  ·  wood boring machine worker  ·  wood boring machine setter  ·  wood boring machine tender"
+  },
+  {
+   "role": "tent installer",
+   "isco": 7119,
+   "aka": "tent installer/warehouse worker  ·  tent installation crew member  ·  tent installer & warehouse worker  ·  tent crew installer  ·  tent installation worker"
+  },
+  {
+   "role": "wicker furniture maker",
+   "isco": 7317,
+   "aka": "rattan furniture manufacturer  ·  wicker furniture assembler  ·  wicker furniture weaver  ·  wicker furniture creator  ·  wicker furniture manufacturer"
+  },
+  {
+   "role": "manufactured wooden building assembler",
+   "isco": 7119,
+   "aka": "prefab house joiner  ·  prefab house builder  ·  manufactured wooden building joiner  ·  prefabricated building assembler  ·  prefab house assembler"
+  },
+  {
+   "role": "brush maker",
+   "isco": 7317,
+   "aka": "mop factory operative  ·  broom production plant worker  ·  broom production plant operative  ·  brush production plant worker  ·  brush assembler"
+  },
+  {
+   "role": "artisan papermaker",
+   "isco": 7317,
+   "aka": "artisan paper creator  ·  artisan paper producer  ·  paper creator  ·  artisan paper manufacturer  ·  artisan paper fabricator"
+  },
+  {
+   "role": "wood pallet maker",
+   "isco": 7523,
+   "aka": "pallet nailing machine operator  ·  pallet nailing machine technician  ·  pallet nailing machine worker  ·  pallet machine technician  ·  pallet machine specialist"
+  },
+  {
+   "role": "woodturner",
+   "isco": 7523,
+   "aka": "wood turning lathe operator  ·  wood lathe specialist  ·  wood lathe operator  ·  wood lathe turner  ·  wood lather"
+  },
+  {
+   "role": "steeplejack",
+   "isco": 7119,
+   "aka": "MWEP operator  ·  rope access steeplejack  ·  suspended platform driver  ·  heightworker  ·  rope access technician"
+  },
+  {
+   "role": "basketmaker",
+   "isco": 7317,
+   "aka": "reed weaving handicraft worker  ·  basket reed weaver  ·  basket weaver  ·  basket weaving handicraft worker  ·  artisan basket weaver"
+  },
+  {
+   "role": "wood treater",
+   "isco": 7521,
+   "aka": "wood treatment operative  ·  wood treatment operator  ·  wood treatment specialist  ·  wood treating machine technician  ·  wood treating machine specialist"
+  },
+  {
+   "role": "woodcarver",
+   "isco": 7317,
+   "aka": "traditional woodcarver  ·  craft woodcarver  ·  artisan woodworker  ·  artisanal woodcarver  ·  artisan"
+  },
+  {
+   "role": "kitchen unit installer",
+   "isco": 7115,
+   "aka": "kitchen refurbishment team worker  ·  replacement kitchen installer  ·  kitchen joiner and fitter  ·  kitchen fitter  ·  kitchen installation specialist"
+  },
+  {
+   "role": "fireplace installer",
+   "isco": 7115,
+   "aka": "chimney technician  ·  fireplace installation technician  ·  fireplace builder  ·  gas fireplace servicer  ·  fireplace technician"
+  },
+  {
+   "role": "nailing machine operator",
+   "isco": 7523,
+   "aka": "nailing-machinist  ·  nailing machine specialist  ·  nailing-machine operative  ·  nailing-machine technician  ·  nailing machinist"
+  },
+  {
+   "role": "demolition worker",
+   "isco": 7119,
+   "aka": "demolition project worker  ·  topwoman  ·  topman  ·  mattockman  ·  demolition reclamation operative"
+  },
+  {
+   "role": "cabinet maker",
+   "isco": 7522,
+   "aka": "furniture constructor  ·  hand crafted furniture constructor  ·  maker of chairs  ·  craftsman cabinetmaker  ·  chair maker"
+  },
+  {
+   "role": "furniture finisher",
+   "isco": 7522,
+   "aka": "furniture polisher  ·  wooden furniture sander  ·  wooden furniture stainer  ·  wooden furniture varnisher  ·  furniture machine finisher"
+  },
+  {
+   "role": "Cabinetmakers and Bench Carpenters",
+   "isco": 7522,
+   "aka": NaN
+  },
+  {
+   "role": "Sawing Machine Setters, Operators, and Tenders, Wood",
+   "isco": 7521,
+   "aka": NaN
+  },
+  {
+   "role": "Woodworking Machine Setters, Operators, and Tenders, Except Sawing",
+   "isco": 7523,
+   "aka": NaN
+  },
+  {
+   "role": "Woodworkers, All Other",
+   "isco": 7521,
+   "aka": NaN
+  }
+ ]
+}

@@ -1,0 +1,192 @@
+{
+ "domain_id": "D062",
+ "domain_name": "Trading",
+ "role_count": 37,
+ "roles": [
+  {
+   "role": "foreign exchange trader",
+   "isco": 3311,
+   "aka": "forex dealer  ·  foreign exchange handler  ·  forex handler  ·  foreign exchange dealer"
+  },
+  {
+   "role": "securities analyst",
+   "isco": 2413,
+   "aka": "securities research analyst  ·  corporate securities research analyst  ·  bonds analyst  ·  stock analyst  ·  securities research director"
+  },
+  {
+   "role": "investment manager",
+   "isco": 2412,
+   "aka": "investments manager  ·  investment executive  ·  investment consultant  ·  portfolio analyst  ·  investments portfolio manager"
+  },
+  {
+   "role": "mergers and acquisitions analyst",
+   "isco": 2413,
+   "aka": "M&A analyst  ·  mergers and acquisitions banker  ·  mergers and acquisitions associate  ·  acquisition manager  ·  M&A specialist"
+  },
+  {
+   "role": "insurance rating analyst",
+   "isco": 2413,
+   "aka": "insurance analyst  ·  insurance assessor  ·  insurance rater"
+  },
+  {
+   "role": "energy trader",
+   "isco": 3311,
+   "aka": "renewable energy share trader  ·  energy trading analyst  ·  renewable energy stock analyst  ·  energy market analyst  ·  energy market economist"
+  },
+  {
+   "role": "financial planner",
+   "isco": 2412,
+   "aka": "financial adviser  ·  personal banker  ·  independent financial adviser  ·  financial planning practitioner  ·  personal financial adviser"
+  },
+  {
+   "role": "corporate investment banker",
+   "isco": 2412,
+   "aka": "corporate banker  ·  corporate investment adviser  ·  operational investment banker  ·  corporate investment strategist  ·  investment banker"
+  },
+  {
+   "role": "middle office analyst",
+   "isco": 2413,
+   "aka": "middle office associate  ·  transaction reporting specialist  ·  middle office specialist  ·  structured products middle office analyst  ·  derivatives middle office analyst"
+  },
+  {
+   "role": "investment adviser",
+   "isco": 2412,
+   "aka": "financial and investment adviser  ·  investment executive  ·  corporate investment adviser  ·  investment consultant  ·  investment manager"
+  },
+  {
+   "role": "stock trader",
+   "isco": 3311,
+   "aka": "equity trader  ·  stock exchange floor trader  ·  investment dealer"
+  },
+  {
+   "role": "securities trader",
+   "isco": 3311,
+   "aka": "securities sales agent  ·  securities sales director  ·  securities teller  ·  securities sales directors  ·  securities tellers"
+  },
+  {
+   "role": "investor relations manager",
+   "isco": 2412,
+   "aka": "investors relation manager  ·  investor relations director  ·  investment strategy manager  ·  investor relations supervisor"
+  },
+  {
+   "role": "public funding advisor",
+   "isco": 2412,
+   "aka": "business advisor  ·  business coach  ·  enterprise mentor  ·  public funding specialist  ·  enterprise advisor"
+  },
+  {
+   "role": "business valuer",
+   "isco": 2412,
+   "aka": "business valuation analyst  ·  business valuation officer  ·  chartered business valuator  ·  valuator of business  ·  chartered appraiser"
+  },
+  {
+   "role": "financial trader",
+   "isco": 3311,
+   "aka": "securities trader  ·  natural gas financial trader  ·  equity trader  ·  quantitative trader  ·  financial trading expert"
+  },
+  {
+   "role": "venture capitalist",
+   "isco": 2412,
+   "aka": "seed capital investor  ·  angel investor  ·  investor  ·  financier"
+  },
+  {
+   "role": "personal trust officer",
+   "isco": 2412,
+   "aka": "personal trust manager  ·  trustee officer  ·  personal trust supervisor"
+  },
+  {
+   "role": "financial risk manager",
+   "isco": 2412,
+   "aka": "budget and debt advisor  ·  financial risk department manager  ·  bank risk manager"
+  },
+  {
+   "role": "securities underwriter",
+   "isco": 3311,
+   "aka": "securities administrator  ·  distribution administrator  ·  security underwriter"
+  },
+  {
+   "role": "financial analyst",
+   "isco": 2413,
+   "aka": "economic analyst  ·  credit analyst  ·  financial markets report writer  ·  financial markets analyst  ·  treasury analyst"
+  },
+  {
+   "role": "stock broker",
+   "isco": 3311,
+   "aka": "stocks and shares broker  ·  stockbroker  ·  stockbroking dealer  ·  institutional stock broker"
+  },
+  {
+   "role": "investment fund management assistant",
+   "isco": 2412,
+   "aka": "investment fund clerk  ·  investment fund office clerk  ·  investment fund specialist  ·  investment fund assistant"
+  },
+  {
+   "role": "corporate risk manager",
+   "isco": 2412,
+   "aka": "risk and insurance consultant  ·  corporate risk department manager  ·  operational risk manager  ·  chief risk executive  ·  chief risk officer"
+  },
+  {
+   "role": "investment analyst",
+   "isco": 2413,
+   "aka": "portfolio analyst  ·  investment accounting analyst  ·  investment banking analyst  ·  investment banking business analyst  ·  investment compliance analyst"
+  },
+  {
+   "role": "investment fund manager",
+   "isco": 2412,
+   "aka": "fund director  ·  investment fund adviser  ·  fixed income portfolio manager  ·  fund directors  ·  fund manager"
+  },
+  {
+   "role": "financial broker",
+   "isco": 3311,
+   "aka": "financial services broker  ·  financial services adviser  ·  finance adviser  ·  finance broker  ·  financial services manager"
+  },
+  {
+   "role": "securities broker",
+   "isco": 3311,
+   "aka": "junior stock broker  ·  stock salesperson  ·  financial services sales agent  ·  investment broker"
+  },
+  {
+   "role": "mutual fund broker",
+   "isco": 3311,
+   "aka": "mutual fund manager  ·  mutual fund sales representative  ·  mutual fund salesman  ·  mutual fund dealer  ·  mutual fund sales agent"
+  },
+  {
+   "role": "corporate banking adviser",
+   "isco": 2412,
+   "aka": "corporate banker  ·  business banking officer  ·  commercial banking accounts officer  ·  cash management adviser  ·  cash management officer"
+  },
+  {
+   "role": "relationship banking manager",
+   "isco": 2412,
+   "aka": "client manager  ·  relations banker  ·  financial products relationship manager  ·  personal financial advisor  ·  commercial banking relationship manager"
+  },
+  {
+   "role": "programme funding manager",
+   "isco": 2412,
+   "aka": "program funding manager  ·  programme funding administrator  ·  programme funding officer  ·  grants manager  ·  programme funding coordinator"
+  },
+  {
+   "role": "asset manager",
+   "isco": 3311,
+   "aka": "independent financial adviser  ·  asset portfolio manager  ·  asset management adviser  ·  wealth management advisor  ·  assets manager"
+  },
+  {
+   "role": "foreign exchange broker",
+   "isco": 3311,
+   "aka": "forex trader  ·  broker in foreign exchange  ·  forex broker  ·  fx broker"
+  },
+  {
+   "role": "futures trader",
+   "isco": 3311,
+   "aka": "spreader  ·  futures contracts manager  ·  arbitrageur"
+  },
+  {
+   "role": "Financial and Investment Analysts",
+   "isco": 2413,
+   "aka": NaN
+  },
+  {
+   "role": "Personal Financial Advisors",
+   "isco": 2412,
+   "aka": NaN
+  }
+ ]
+}

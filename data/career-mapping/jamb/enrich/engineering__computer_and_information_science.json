@@ -1,0 +1,31 @@
+{
+  "jamb_name": "Computer and Information Science",
+  "utme_subjects": null,
+  "olevel_requirement": null,
+  "direct_entry": null,
+  "institution_waivers": [
+    {"institution": "LAGOS", "note": "LAGOS accepts Very good passes in three JUPEB/A' Level subjects: Physics, Mathematics and Chemistry. 'A' level Cambridge HND/ND (Upper Credit) in related Engineering courses."},
+    {"institution": "ABU", "note": "ABU requires: a) i. Two A level/IJMB passes which must include Physics and Mathematics; ii. ND or equivalent in Electrical Eng. or relevant field, with minimum of Upper Credit from accredited institution; iii. HND with at least lower credit in Electrical Engineering from accredited institution; iv. ABU Diploma in Computer Engineering with a Minimum of Merit."},
+    {"institution": "FUTA", "note": "FUTA requires ND or HND with a minimum of upper credit level or equivalent in Computer Engineering from accredited and recognised Polytechnics institutions; or b) 'A' Level or equivalent in at least two (2) of the following: Mathematics, Physics and Chemistry."},
+    {"institution": "ABUAD and OOU", "note": "ABUAD and OOU accept any Science Subject in lieu of Further Mathematics (UTME)."},
+    {"institution": "ESUTECH", "note": "ESUTECH requires 'O' Level credit passes in English Language and all other relevant subjects (UTME)."},
+    {"institution": "FED-OYE EKITI", "note": "FED-OYEEKITI requires five (5) credits at SSC (or its equivalent) including English Language, Mathematics, Physics, Chemistry and one other Science subject from Further Mathematics, Technical Drawing, Biology/Agricultural Science (UTME)."},
+    {"institution": "LAGOS", "note": "LAGOS requires Five O/Level credit passes in English, Mathematics, Further Mathematics, Physics and Chemistry (UTME)."},
+    {"institution": "MINNA and BELLS", "note": "MINNA and BELLS require five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry, and any other Science subject (UTME)."},
+    {"institution": "NILE", "note": "NILE accepts English Language, Mathematics and either Physics or Chemistry and any other two (2) Science subjects (UTME)."},
+    {"institution": "RSU and UMUDIKE", "note": "RSU and UMUDIKE - Same as in Civil Engineering (UTME)."},
+    {"institution": "EUI", "note": "EUI requires five (5) credit passes at SSC or its equivalent to include Physics, Chemistry, Mathematics, English Language and any other Science subject (UTME)."},
+    {"institution": "FUTA", "note": "FUTA requires five (5) SSC credit passes or its equivalent at a maximum of two (2) sittings in the following subjects: English Language, Mathematics, Physics, Chemistry and any other Science subject. Candidates with credit pass in Further Mathematics and Technical Drawing shall have added advantage (UTME)."},
+    {"institution": "ILORIN", "note": "ILORIN - UTME candidates are required to obtain O'Level credits in Five (5) subjects including English Language, Mathematics, Physics, Chemistry and any other relevant science subject in a single sitting (UTME)."},
+    {"institution": "CARITAS", "note": "CARITAS requires Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and any other science subject (UTME)."},
+    {"institution": "ABU", "note": "ABU accepts five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and any other Science subject (Including Economics, Technical Drawing, Metalwork and Woodwork) (UTME)."},
+    {"institution": "NILE", "note": "NILE accepts any three (3) Science subjects (UTME subjects)."},
+    {"institution": "OOU", "note": "OOU requires any three (3) of Chemistry, Physics, Mathematics, Biology/Agricultural Science (UTME subjects)."},
+    {"institution": "FUTA", "note": "FUTA requires Physics, Chemistry and Mathematics (UTME subjects)."},
+    {"institution": "MAIDUGURI", "note": "MAIDUGURI requires Mathematics, Physics and any of Chemistry or Biology or Agricultural Science (UTME subjects)."},
+    {"institution": "ILORIN", "note": "ILORIN requires Mathematics, Physics and Chemistry (UTME subjects)."},
+    {"institution": "CARITAS", "note": "CARITAS requires Mathematics, Physics, Chemistry (UTME subjects)."},
+    {"institution": "LAGOS", "note": "LAGOS requires English Language, Chemistry, Mathematics & Physics (UTME subjects)."},
+    {"institution": "ABU", "note": "ABU accepts Mathematics, Physics and Chemistry (UTME subjects)."}
+  ]
+}

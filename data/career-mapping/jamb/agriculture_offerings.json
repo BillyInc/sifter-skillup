@@ -1,0 +1,2353 @@
+{
+ "faculty": "Agriculture",
+ "source": "agriculture.txt",
+ "degree": "B.Agric",
+ "note": "Deterministic name-variations + institution lists; requirement columns + per-institution waivers enriched from brochure.",
+ "programmes": [
+  {
+   "jamb_name": "Agriculture",
+   "institutions": [
+    "AAU",
+    "AAUA",
+    "ABU",
+    "ABUAD",
+    "ABUJA",
+    "AJAYI",
+    "AL-HIKMAH",
+    "AKSU",
+    "BABCOCK",
+    "BASU",
+    "BAUCHI",
+    "BENIN",
+    "BOSU",
+    "CALABAR",
+    "COOU",
+    "CUN",
+    "CUST",
+    "EDWIN CLARK",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-GASHUA",
+    "AEFUNA",
+    "FED-LOKOJA",
+    "FED OYE-EKITI",
+    "FED-WUKARI",
+    "FED-KASHERE",
+    "FUTIA",
+    "GREGORY",
+    "IBADAN",
+    "IAUED",
+    "ILORIN",
+    "IMSU",
+    "UMYUK",
+    "OOU",
+    "OAUSTECH",
+    "PLASU",
+    "RSU",
+    "SLUK",
+    "TSUJ",
+    "UNIZIK",
+    "UNN",
+    "EKSU",
+    "ESUTECH",
+    "KUST",
+    "BOWEN",
+    "KSUSTA",
+    "LAPAI",
+    "LASU",
+    "LAUTECH",
+    "CRUTECH",
+    "BIU",
+    "PAAU",
+    "ADSU",
+    "IGBINEDION",
+    "UYO",
+    "CRAWFORD",
+    "EBSU",
+    "DELSU",
+    "FUTO",
+    "JOS",
+    "FED-LAFIA",
+    "KASU",
+    "KWASU",
+    "NDU",
+    "PHOENIX",
+    "UNI-AFRICA",
+    "VOM-DEG",
+    "WESLEYUNI",
+    "YSU",
+    "MAIDUGURI",
+    "MAUTY",
+    "NASARAWA",
+    "PHC",
+    "UDU",
+    "AQUACULTURE AND",
+    "FISHERIES AND",
+    "AQUATIC RESOURCES",
+    "UMUDIKE",
+    "FED-OYE EKITI",
+    "HENSARD",
+    "MAKURDI",
+    "MARITIME-UNI",
+    "MINNA",
+    "SALEM",
+    "UAGRIC-IMO",
+    "UNIOSUN",
+    "AQUATIC",
+    "ENVRIONMENT",
+    "DELSUT",
+    "DOU",
+    "JABU",
+    "LANDMARK",
+    "OAU",
+    "AGRICULTURAL",
+    "ECONOMICS &",
+    "EXTENSION",
+    "BOUEDST",
+    "ECONOMICS & FARM",
+    "MANAGEMENT",
+    "FUNAAB",
+    "LASUSTECH",
+    "MARKETING AND",
+    "COOPERATIVE",
+    "AGRIC-ECONOMICS",
+    "ABSU",
+    "BAYERO",
+    "FUA-ZURU",
+    "AGRIC-EXTENSION",
+    "AND RURAL",
+    "SOCIOLOGY",
+    "EXTENSION AND",
+    "NOUN",
+    "AGRIC EXTENSION",
+    "SERVICE",
+    "RURAL",
+    "DEVELOPMENT",
+    "ATIBA",
+    "COMMUNICATION",
+    "TECHNOLOGY",
+    "FUTA",
+    "SOCIAL ENGINEERING",
+    "ANIMAL NUTRITION",
+    "AND",
+    "UDA",
+    "ANIMAL SCIENCE AND",
+    "ANIMAL",
+    "PHYSIOLOGY",
+    "ENVIRONMENTAL",
+    "SCIENCE",
+    "PLANT SCIENCE AND",
+    "MANAGEMENT AND",
+    "POLLUTION",
+    "WILDLIFE",
+    "FOOD SCIENCE AND",
+    "ALETHEIA",
+    "BELLS",
+    "FED-OYEEKITI",
+    "VENITE",
+    "NUTRITION",
+    "AUE",
+    "OSUMS",
+    "FORESTRY",
+    "FORESTRY / FOREST",
+    "RESOURCES",
+    "HOME AND HOTEL",
+    "HOSPITALITY AND",
+    "TOURISM",
+    "HOME SCIENCE AND",
+    "NUTRITION AND",
+    "HUMAN NUTRITION",
+    "WATER RESOURCES",
+    "AGROMETEOROLOGY",
+    "AGRIC.BUSINESS",
+    "AGRIBUSINESS",
+    "ECOTOURISM &"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agriculture",
+    "and one of Physics or Mathematics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Biology/Agricultural Science, Chemistry and any one of Mathematics, Physics, Geography and Economics.",
+   "direct_entry": "Two (2) `A' Level passes in Chemistry and one from Biology/Botany/Zoology/Agricultural Science, Economics, Physics, Geography and Geology/Mathematics (Pure & Applied).",
+   "institution_waivers": [
+    {
+     "institution": "ABSU",
+     "note": "ABSU and MAIDUGURI accept ND Agriculture into 100 level programme. (200 Level for EUI)."
+    },
+    {
+     "institution": "LAPAI",
+     "note": "LAPAI and ILORIN require `A' Level passes in both Chemistry and Biology."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "MAIDUGURI, IBADAN and AAU accept NCE merit in Agriculture double major."
+    },
+    {
+     "institution": "IMSU",
+     "note": "IMSU - accepts ND/NCE Double Major or HND in Agriculture or related disciplines with at least a merit pass into 200 level and HND (Upper Credit) into 300 level."
+    },
+    {
+     "institution": "UDU",
+     "note": "UDU and ABU accept ND distinction, HND credit, NCE double major at credit level in Agriculture. UDU accepts ND Upper credit and HND lower credit."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "IBADAN and UMUDIKE accept ND or HND in the related fields. IBADAN Agricultural candidates must apply to read Agriculture until 500 level when options will be available."
+    },
+    {
+     "institution": "AAU",
+     "note": "AAU accepts Chemistry, Biology or Agriculture at `A' Level and ND upper credit in Agricultural Science and HND Agriculture not below credit pass. Also accepts ND/NCE credit in Agricultural Science with at least a pass in Physics at the 'O' Level."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU and UMUDIKE accept ND distinction/credit, HND credit into 200 level while those with ND lower credit NCE Double Major at credit/merit level in Agriculture are admitted into 100 level."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UMUDIKE requires `A' Level passes in Chemistry and Biology/Botany/Zoology/Agricultural Science."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN accepts ND/NCE credit pass in Agriculture into 200 level while those with HND may be admitted into 300 level. Also accepts NCE merit in Biology, Chemistry or Agriculture, and ND merit in Banking/Finance, Business Management plus UTME requirements."
+    },
+    {
+     "institution": "LAPAI",
+     "note": "LAPAI accept ND upper credit in Agriculture plus five (5) relevant credit passes at SSC."
+    },
+    {
+     "institution": "BIU",
+     "note": "BIU accepts ND/NCE distinction or credit into 200 level."
+    },
+    {
+     "institution": "EKSU",
+     "note": "EKSU requires a minimum of credit pass in Physics and accepts ND upper credit in Agriculture related programs, Forestry Assistant Certificate from IITA, Ibadan or any other relevant Higher Institution."
+    },
+    {
+     "institution": "KUST",
+     "note": "KUST accepts NCE merit and ND in Chemistry/Biology upper credit/any relevant qualification."
+    },
+    {
+     "institution": "KSUSTA",
+     "note": "KSUSTA accepts Two (2) A level passes in Chemistry and one from Biology/Botany/Zoology/Agricultural Science, Economics, Physics, Geography and Geology/Mathematics (Pure & Applied)."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "BOWEN accepts NCE/ND or approved equivalent in relevant programs, IJMB at acceptable passes. For Food Science and Technology, at least 'O' Level pass in Physics is required."
+    },
+    {
+     "institution": "BIU",
+     "note": "BIU requires in addition to the 'O' Level requirements specified in the table, a minimum of two (2) relevant subjects passed at GCE `A' Level or NCE merits or ND in relevant programs not below credit level."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU accepts (i) two (2) `A' level / IJMB Passes in Chemistry and any of Biology, Botany, Zoology and Agricultural Science. (ii) HND in Agriculture or related field of study with a minimum of Lower credit pass. (iii) ND in Agriculture or related field of study with a minimum of Lower Credit."
+    },
+    {
+     "institution": "FED OYE-EKITI",
+     "note": "FED OYE-EKITI accepts two (2) `A' Level passes in Chemistry and one from Biology/Botany/Zoology/Agricultural Science, Economics, Physics, Geography. For Animal Production and Health, the options include Geology."
+    },
+    {
+     "institution": "ABUAD",
+     "note": "ABUAD requires 'A' Level passes or its equivalent qualifications as approved by the Senate in at least two (2) subjects to include Biology and any of Physics, Chemistry and Mathematics."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires two (2) `A' Level passes in Chemistry and Biology/Botany/Agricultural Science/Zoology/Physics."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DELSU requires a) `A' Level passes in relevant subjects or b) ND with a minimum of upper credit plus five (5) credit passes in WAEC/GCE/NECO O' Level to be admitted into 200 level. c) `A' Level passes in Chemistry and any of Biology, Agricultural Science, Physics and Economics. d) NCE with merit pass in Agricultural Science."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA requires two (2) 'A' Level passes in Chemistry and one from Biology/Botany/Zoology/Agric. It also accepts OND/ND (Upper Credit), HND (Lower credit) and NCE Merit and above into 200 Level. Gashua gives consideration to candidates with pass in physics with credit pass in Geography/Economics at 'O' Level."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC accepts Two (2) A/level GCE or HSC or JUPEB or IJMB passes in Agricultural Science and any one from Chemistry, Biology, Physics, and Economics including UTME entry requirements. OND (Upper Credit) in Agriculture from a recognized Institution including UTME entry requirements. HND with at least a (Lower Credit) from a recognised institution, including UTME entry requirements for a 3-year degree programme. Diploma in Agriculture from a recognised institution with minimum of Credit Pass, including UTME entry requirements."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU in addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in related discipline. (b) OND (ND) (Upper Credit) in related disciplines. (c) NCE holders with credit passes in Biology or Agric Science may be admitted into Second Year. (d) Two (2) HSC/GCE 'A' level passes in Chemistry and Biology."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "FED-DUTSE requires any of the following: (a) two `A' Level passes in Chemistry and one from Biology/Botany/Zoology/Agric Science, Economics, Physics, Geography and (continued)."
+    }
+   ],
+   "first_line": 55,
+   "line_range": [
+    55,
+    4028
+   ],
+   "scope": [
+    55,
+    286
+   ]
+  },
+  {
+   "jamb_name": "Biotechnology",
+   "institutions": [
+    "LANDMARK",
+    "MAIDUGURI",
+    "PHC",
+    "MAKURDI",
+    "MC-IBRU",
+    "MINNA",
+    "NOUN-ELUON",
+    "UAGRIC-IMO",
+    "UDA",
+    "UDU",
+    "UMUDIKE",
+    "LAUTECH",
+    "ANIMAL SCIENCE AND",
+    "RANGE MANAGEMENT",
+    "MAUTY",
+    "ABSU",
+    "RSU",
+    "IMSU",
+    "CROP SCIENCE AND",
+    "PRODUCTION",
+    "JABU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "FUTO",
+     "note": "FUTO requires; a) At least two (2) A' level passes not below Grade C in Chemistry and any one of Zoology, Botany, Agricultural Science, Biology, Mathematics, Physics and Economics. b) OND/HND at Upper Credit in Life Sciences. c) First Degree in Life Sciences. d) Very good passes in three JUPEB subjects namely Chemistry and any two (2) of Biology/Agricultural Science, Mathematics and Physics. It does not accept NCE. Candidates must in addition meet the `O' Level requirements."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "BAYERO requires two (2) `A' Level passes in Chemistry and Biology or Agriculture, ND, NCE Agriculture (double major), NCE with Chemistry and Biology or Agriculture."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI - Direct Entry candidates must obtain Two A/L passes at GCE, IJMB, or Advanced NABTEB which must include Chemistry Or obtain at least a Merit at NCE Or Lower credit in OND/HND from approved Institution. Such candidate must also satisfy the O/L requirement for admission."
+    },
+    {
+     "institution": "KASU",
+     "note": "KASU accepts Two `A' Level passes including Chemistry and one of Biology, Botany, Zoology Agric Science, Physics, Geography Geology, Mathematics, Health Science and Economics. ND/HND Lower credit in related field. NCE merit and IJMB 7 points and above in addition to `O' Level requirements."
+    },
+    {
+     "institution": "FED-KASHERE",
+     "note": "FED-KASHERE: A candidate must have ND with a minimum of lower credit, NCE or IJMB with at least 9 Points in relevant areas."
+    },
+    {
+     "institution": "LANDMARK",
+     "note": "LANDMARK accepts Two (2) A level passes in Chemistry and one from Biology/Botany/Zoology/Agricultural Science, Economics, Physics, Geography and Geology/Mathematics (Pure & Applied)."
+    }
+   ],
+   "first_line": 286,
+   "line_range": [
+    286,
+    2394
+   ],
+   "scope": [
+    286,
+    368
+   ]
+  },
+  {
+   "jamb_name": "Horticulture",
+   "institutions": [
+    "COOU",
+    "FED-OYEEKITI",
+    "CROP AND",
+    "ENVIRONMENTAL",
+    "PROTECTION",
+    "LAUTECH",
+    "MAKURDI",
+    "PLANT BREEDING &"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "IBADAN requires five (5) credit passes including English Language, Biology/Agricultural Science, Chemistry, Mathematics and any one of Geography, Physics or Economics."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UMUDIKE accepts Five (5) 'O' Level credit passes at not more than two (2) sittings to include: English Language, Mathematics, Chemistry, Biology, or Agricultural Science and any other science subjects; requires at least 'O' Level pass in Physics. 'O' Level credit in Agricultural Science must be backed up with at least 'O' Level pass in Biology."
+    },
+    {
+     "institution": "OOU",
+     "note": "OOU, EKSU and ILORIN accept 'O' Level pass in Physics."
+    },
+    {
+     "institution": "IMSU",
+     "note": "IMSU accepts 'O' Level pass in Mathematics, along with 'O' Level credit pass in Physics and vice versa."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU requires five (5) `O' level credit passes including English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "IBADAN, EKSU, ILORIN and TASUED require 'O' Level credit pass in Agricultural Science and a pass in Biology."
+    },
+    {
+     "institution": "UDU",
+     "note": "UDU and AAU accept 'O' Level pass in English Language."
+    },
+    {
+     "institution": "BIU",
+     "note": "BIU requires at least 'O' Level pass in Physics."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "BAYERO requires five (5) `O' Level passes to include English Language, Mathematics, Chemistry any two (2) of Biology/Agric Science, Physics, Geography and Economics."
+    }
+   ],
+   "first_line": 368,
+   "line_range": [
+    368,
+    2258
+   ],
+   "scope": [
+    368,
+    429
+   ]
+  },
+  {
+   "jamb_name": "Fisheries",
+   "institutions": [
+    "BAYERO",
+    "MANAGEMENT",
+    "RSU",
+    "TECHNOLOGY",
+    "MINNA",
+    "AGRIC. COOPERATIVE",
+    "FISHERIES AND",
+    "AAUA",
+    "ABU",
+    "ADSU",
+    "AKSU",
+    "AUGUSTINE",
+    "BOUEDST",
+    "CALABAR",
+    "COOU",
+    "DOU",
+    "EBSU",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "ESUTECH",
+    "ANIMAL SCIENCE AND",
+    "FUTO",
+    "FUNAAB",
+    "IBADAN",
+    "KWASU",
+    "LASUSTECH",
+    "AQUACULTURE",
+    "FUTA",
+    "FISHERIES/FORESTRY",
+    "FUA-ZURU"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "and any other Science subject"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Biology/Agricultural Science, Chemistry, Mathematics and English Language plus any other Science subject.",
+   "direct_entry": "(i) Two (2) 'A' Level passes in any of Chemistry, Biology, Botany, Zoology, Agricultural Science, Geography, Mathematics (pure & applied), Physics, Geology and Economics. (ii) NCE Agriculture.",
+   "institution_waivers": [
+    {
+     "institution": "MINNA",
+     "note": "MINNA accepts ND/NCE with a minimum of lower credit plus the UTME requirements."
+    },
+    {
+     "institution": "MINNA",
+     "note": "MINNA accepts ND/NCE credit into 200 level while those with HND may be admitted into 300 level."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "MAIDUGURI accepts ND/NCE/HND and any other equivalent qualification."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UMUDIKE and DELSU same as in Agriculture."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY accepts GCE `A' Level credit passes in Chemistry, Physics and Biology/Agric. Science. HND with overall credit plus Credit passes in Chemistry & Biology/Agric. Science. OND/NCE with credit pass in Biology/Agric. Science with merit plus Chemistry. IJMB with at least 7 cumulative points in Biology/Agric. Sci., Chemistry, Physics/Mathematics."
+    },
+    {
+     "institution": "NDU",
+     "note": "NDU accepts a. Passes at the GCE `A' Level or HSC in three (3) of the following subjects: Biology, Zoology, Botany, Chemistry, Physics, Geography, Economics or Mathematics; b. ND in Agriculture or Fisheries; c. upper or lower credit HND/ND. In some cases, depending on the candidates CGPA, he/she may be recommended for admission into 300 level."
+    },
+    {
+     "institution": "BENIN",
+     "note": "BENIN accepts ND upper credit/HND lower credit in any one of Agricultural Economics, Agricultural Extension, and Cooperatives, Fisheries, Forestry & Wildlife Mgt., Geology, Advanced Microbiology, Food and Brewing Science, Science Laboratory Technology plus the UTME requirements. NCE merit in Agricultural Science, Biology, Chemistry or Physics plus the UTME requirements. Does not accept `A' Level pass in Health Science."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU - As in Landscape Management."
+    },
+    {
+     "institution": "LAPAI",
+     "note": "LAPAI - As in Agriculture."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU in addition to 'O' Level requirements accepts: (a) OND (Upper Credit) in related. (b) NCE holders with credit passes in Biology or Agric Science may be admitted into Second Year. (c) Two (2) HSC/GCE 'A' Level passes in Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC accepts Two (2) A/level GCE or HSC or JUPEB or IJMB passes in Agricultural Science and any one from Chemistry, Biology, Physics, and Economics including UTME entry requirements. OND (Upper Credit) in Agriculture from a recognized Institution including UTME entry requirements. HND with at least a (Lower Credit) from a recognised institution, including UTME entry requirements for a 3-year degree programme. Diploma in Agriculture from a recognised institution with minimum of Credit Pass, including UTME entry requirements."
+    },
+    {
+     "institution": "OOU",
+     "note": "OOU accepts relevant 'A' Level passes, NCE merit passes in two (2) relevant subjects, ND/Certificate of any of the Professional Examination Bodies in Agriculture, Cooperative Business Management, Finance or other related subjects."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "UNIOSUN accepts two (2) 'A' Level passes in Chemistry and one (1) from Biology, Agriculture, Physics, Geography and Mathematics."
+    },
+    {
+     "institution": "KSUSTA",
+     "note": "KSUSTA accepts GCE 'A' Level/NCE/IJMB or its equivalent in Chemistry and any one of Physics, Mathematics, Biology/Agricultural Science with minimum of score prescribed annually by the University Senate; and 'O' Level credit passes in Chemistry, Mathematics and English Language as core and any two (2) of Physics, Biology/Agricultural Science, Geography, Electrical and Electronics, Technical Drawing. It also accepts ND/HND (at least 2.75 CGPA) in relevant area and 'O' Level credit passes in Chemistry, Mathematics, and English Language as core and any two (2) of Physics, Biology/Agricultural Science and Geography."
+    },
+    {
+     "institution": "UYO",
+     "note": "UYO accepts: (a) ND upper credit, HND lower credit or NCE credit in relevant disciplines into 200 level. (b) Two (2) `A' Level passes in Biology, Chemistry, Physics, Botany, Agricultural Science, Mathematics / Statistics, Geography."
+    },
+    {
+     "institution": "FED OYE-EKITI",
+     "note": "FED OYE-EKITI requires two (2) `A' Level passes in Chemistry and one from Biology/Botany/Agric Science/Zoology/Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU accepts: i) two (2) `A' level / IJMB Passes in Chemistry and any of Biology, Botany, Zoology and Agricultural Science. ii) HND in Agriculture or related field of study with a minimum of Lower credit pass. iii) ND in Agriculture or related field of study with a minimum of Lower Credit/Merit pass."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN accepts HND with lower credit pass in Fisheries, Agriculture or related programs from NBTE accredited Institutions."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "BOWEN requires two (2) 'A' Level passes to include Chemistry and one of Physics, Biology, Human Nutrition."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA requires two (2) 'A' Level Passes in chemistry and one from Biology/Zoology/Agric Science, Economics, Physics, Geography and Geology/Mathematics (Pure & Applied). It also accepts OND/ND (Upper Credit), HND (Lower credit) and NCE Merit and above into 200 Level. Gashua gives consideration to candidates with pass in Physics with credits pass in any one of Geography/Economics."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI - Candidates must obtain at least Two `A' level passes at GCE/IJMB/Advanced NABTEB Or at least a Merit pass at NCE or a Lower credit at OND/HND in addition to obtaining FIVE (5) Credits at O/L including English Language and Mathematics."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA accepts Two `A' level passes to include Chemistry and any one of Botany, Zoology and Biology/ Agricultural Science. IJMB in relevant subjects. OND/NCE in relevant fields."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DELSU accepts 'O' Level pass in English Language."
+    },
+    {
+     "institution": "LAPAI",
+     "note": "LAPAI and UMUDIKE - Same as in Agriculture."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Five (5) O'Level credit passes in English Language, Mathematics, Biology/Agricultural Science, Chemistry, and any one from Physics/Geography/Economics/Fisheries."
+    },
+    {
+     "institution": "UYO",
+     "note": "UYO and NDU require five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DELSU accepts 'O' Level pass in English Language with 'O' Level credit pass in Mathematics."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU as in Landscape Technology."
+    },
+    {
+     "institution": "BENIN",
+     "note": "BENIN accepts Statistics and Further Mathematics. Also requires at least 'O' Level pass in Physics and 'O' Level pass in Biology for candidates with 'O' Level credit pass in Agricultural Science."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC requires Five (5) SSC credit passes to include English Language, Mathematics, Chemistry, Biology/Agricultural Science and any one of Physics, Geography and Economics."
+    },
+    {
+     "institution": "OOU",
+     "note": "OOU requires five (5) 'O' Level credit passes to include English Language, Mathematics, Biology or Agricultural Science and any other two (2) subjects."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU - Same as in Animal Science."
+    },
+    {
+     "institution": "KWASU",
+     "note": "KWASU requires five (5) SSC credit passes in English Language, Chemistry, Biology, Agricultural Science, Mathematics and Physics/Geography/Economics."
+    },
+    {
+     "institution": "MINNA",
+     "note": "MINNA accepts any one (1) of Physics, Geography, Economics, as the fifth subject. At least 'O' Level pass in Physics is required."
+    },
+    {
+     "institution": "PAAU",
+     "note": "PAAU requires five (5) SSC credit passes in English Language, Chemistry, Biology or Agricultural Science, Mathematics, Economics or any Social Science subject and 'O' Level pass in Physics. 'O' Level credit pass in Agricultural Science must be backed up with at least 'O' Level pass in Biology."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "BOWEN requires 'O' Level credit passes in Mathematics, English Language, Fisheries/Animal Husbandry, Chemistry, Biology/Agricultural Science and one of Physics, Geography, Economics and Food and Nutrition."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA requires five (5) SSC Credit passes to include: English Language, Mathematics, Chemistry, Biology/Agric Science and Physics."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "FED-OYE EKITI requires five (5) SSC credit passes in English Language, Chemistry, Biology/Agric Science, Mathematics and Physics/Geography/Economics. Consideration can be given to candidates with pass in Physics."
+    },
+    {
+     "institution": "MARITIME-UNI",
+     "note": "MARITIME-UNI requires five (5) credits at SSCE or its equivalent at not more than two (2) sittings in English Language, Mathematics, Chemistry, Physics/Geography, Biology/Agricultural Science."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI accepts Five (5) Credits at not more than two sittings including English Language and Mathematics and any three from the following subjects: Chemistry, Biology/Agric. Science, Physics/Geography/, Animal Husbandry/Fisheries or Forestry and obtained at SSCE, GCE O' Level, NECO, NABTEB, or its equivalent."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU requires five (5) `O' level credit passes including English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires Five `O' level Credits to include; English Language, Mathematics, Chemistry, Biology/Agriculture/Animal Husbandry/Forestry/Fisheries and any other one relevant subject."
+    },
+    {
+     "institution": "BENIN",
+     "note": "BENIN accepts Chemistry, Biology/Agricultural Science and Mathematics or Physics."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UMUDIKE and LAPAI and UDU - As in Agriculture."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU - As in Landscape Management."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC requires Chemistry, Biology/Agricultural Science and any one of Physics or Mathematics or Geography or Economics."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Biology/Agric. Sc. and any other two of Chemistry, Physics, Geography, Economics and Mathematics."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "UNIOSUN requires Chemistry, Biology/Agriculture and any other science subject."
+    },
+    {
+     "institution": "KWASU",
+     "note": "KWASU requires Chemistry, Biology/Agricultural Science and Mathematics/Physics."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU - Same as in Animal Science."
+    },
+    {
+     "institution": "MAKRUDI",
+     "note": "MAKRUDI requires Chemistry, Biology and Mathematics or Physics."
+    },
+    {
+     "institution": "OOU",
+     "note": "OOU - Biology or Agricultural Science and any other two (2) relevant subjects."
+    },
+    {
+     "institution": "LASU",
+     "note": "LASU requires Biology, Chemistry and Mathematics."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU requires Chemistry, Biology and any other Science Subject."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "BOWEN requires Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA accepts Chemistry, Biology/Agriculture and any one of Physics and Mathematics."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "MAIDUGURI requires Chemistry, Biology/Agriculture and either of Physics or Mathematics."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "FED-OYE EKITI requires Chemistry, Biology/Agric. and Mathematics/Physics."
+    },
+    {
+     "institution": "MARITIME-UNI",
+     "note": "MARITIME-UNI requires Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI requires Chemistry, Biology/Agriculture and any one of Mathematics/Physics."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires Five `O' level Credits to include; English Language, Mathematics, Chemistry, Biology/Agriculture/Animal Husbandry/Forestry/Fisheries and any other one relevant subject."
+    }
+   ],
+   "first_line": 429,
+   "line_range": [
+    429,
+    2650
+   ],
+   "scope": [
+    429,
+    1676
+   ]
+  },
+  {
+   "jamb_name": "Agronomy",
+   "institutions": [
+    "ADSU",
+    "ESUTECH",
+    "HENSARD",
+    "IBADAN",
+    "NASARAWA",
+    "TSUJ",
+    "UNIOSUN"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology or Agriculture",
+    "Physics or Mathematics",
+    "Use of English"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Chemistry, English Language, Mathematics, Biology and Geography or Economics.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry/Biology/Botany/Zoology/Agricultural Science plus one of Mathematics/Physics and Geology/Economics.",
+   "institution_waivers": [
+    {
+     "institution": "LAUTECH",
+     "note": "Accepts ND with upper credit, HND/NCE at credit level in relevant subjects, plus the UTME requirements. Requires five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Agricultural Science or Biology."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "Same as in Fisheries. Requires five (5) 'O' Level credit passes in the SSC or its equivalent at not more than two (2) sittings in addition to an acceptable score in the UTME."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "Accepts: (a) Two (2) 'A' Level passes in any of Chemistry and Biology/Agricultural Science/Botany/Zoology or Mathematics, (Pure & Applied) Physics, Geology and Economics; (b) NCE/ND/HND merit/credit in Agriculture. Requires five (5) 'O' Level credit passes in Biology or Agriculture Science, Chemistry, Mathematics, English Language, Physics or any other Science subjects. Accepts 'O' Level pass in Physics."
+    },
+    {
+     "institution": "TSUJ",
+     "note": "Accepts ND credit in Crop Production Technology plus the UTME requirements. Requires five (5) 'O' Level credit passes in Biology or Agricultural Science, Chemistry, Mathematics, English Language and one of Physics, Geography or Economics. UTME requirements with 'O' Level pass in Physics is acceptable."
+    },
+    {
+     "institution": "ESUTECH",
+     "note": "Accepts 'O' Level pass in Physics."
+    },
+    {
+     "institution": "CRUTECH",
+     "note": "Same as Agricultural Economics and Extension. UTME subjects require Mathematics, Physics and any of Biology or Chemistry."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "Same as in Agricultural Economics."
+    }
+   ],
+   "first_line": 1676,
+   "line_range": [
+    1676,
+    1703
+   ],
+   "scope": [
+    1676,
+    1740
+   ]
+  },
+  {
+   "jamb_name": "Animal Production",
+   "institutions": [
+    "AND HEALTH",
+    "SERVICES",
+    "EKSU",
+    "FUNAAB",
+    "FUTA",
+    "LAUTECH",
+    "ADSU",
+    "BAUCHI",
+    "DELSUT",
+    "DOU",
+    "LASUSTECH",
+    "MINNA",
+    "UM UDIKE",
+    "AND HUSBANDRY",
+    "HENSARD",
+    "AND FISHERIES",
+    "CRAWFORD",
+    "LIVESTOCK",
+    "PRODUCTION",
+    "TECHNOLOGY",
+    "NDU",
+    "PASTURE AND RANGE",
+    "MANAGEMENT"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Physics/Mathematics",
+    "Use of English"
+   ],
+   "olevel_requirement": "Five SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language.",
+   "direct_entry": "Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics.",
+   "institution_waivers": [
+    {
+     "institution": "BAUCHI",
+     "note": "Accepts NCE, ND, HND with overall credit passes in each of the Agricultural components of the programme or a minimum of lower credit plus four (4) 'O' level credit passes in relevant subjects. Accepts 'O' level pass in Physics with 'O' level pass in Mathematics or vice-versa."
+    },
+    {
+     "institution": "MINNA",
+     "note": "Accepts NCE, ND, HND with overall credit passes in each of the Agricultural components of the programme or a minimum of lower credit plus four (4) 'O' level credit passes in relevant subjects. Same as in Water Resources, Aquaculture and Fisheries Technology."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Requires two (2) of Physics, Chemistry and Biology and ND/HND in Agriculture or Animal Health and Husbandry."
+    },
+    {
+     "institution": "EKSU",
+     "note": "Same as in Agricultural Economics; as in Agricultural Economics and Extension and does not accept NCE. Accepts 'O' level pass in Physics."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "Same as in Agricultural Economics. Accepts 'O' level pass in Physics."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "Same as in Agricultural Economics; same as in Agriculture."
+    },
+    {
+     "institution": "ADSU",
+     "note": "Accepts ND distinction, HND credit, NCE credit double major in Agriculture. Accepts 'O' level pass in Physics with 'O' level pass in Mathematics or vice-versa."
+    },
+    {
+     "institution": "NDU",
+     "note": "Same as in Fisheries Technology. Requires five (5) 'O' level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "Requires ND with upper credit/HND/NCE at credit level in relevant subjects, plus the UTME requirements. Accepts Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language. UTME subjects require Chemistry, Mathematics/Physics and Biology/Agricultural Sciences."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "(a) Two (2) 'A' level passes in Chemistry and one of Zoology/Botany/Agricultural Science/Biology, Mathematics or Physics; (b) ND/HND upper credit in Agriculture from a recognised institution in any one of Animal Sciences, Animal Production and Health, Husbandry, Agricultural Economics, Fisheries and Forestry and Wildlife Management plus the UTME requirements; (c) NCE credit in Agricultural Science, Biology, Chemistry or Physics plus the UTME requirements. As in Agriculture Extension and Rural Development."
+    },
+    {
+     "institution": "FUTA",
+     "note": "(i) ND with a minimum of upper credit or equivalent from recognised Polytechnics and Colleges of Technology in Agricultural Sciences; (ii) GCE or equivalent passes at one sitting with at least six (6) points in Biology/Animal Husbandry and any of Mathematics, Physics and Chemistry. Requires five (5) credit passes at SSC at a maximum of two (2) sittings in English Language, Mathematics, Physics, Chemistry, Biology or Agricultural Science. UTME subjects require Chemistry, Biology/Agricultural Science/Animal Husbandry and Mathematics/Physics."
+    },
+    {
+     "institution": "JABU",
+     "note": "Requires Chemistry, Biology/Agricultural Science and any others from Economics, Physics, Geography and Mathematics. ND/NCE upper credit in relevant areas. Accepts 'O' level pass in Physics."
+    },
+    {
+     "institution": "CRUTECH",
+     "note": "Accepts 'O' level pass in Physics. UTME subjects require Mathematics, Physics and one of Biology or Chemistry."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Accepts 'O' level pass in Physics. Accepts 'O' level pass in English Language, 'O' level credit pass in Mathematics or 'O' level pass in Physics or vice versa."
+    },
+    {
+     "institution": "ABSU",
+     "note": "Requires 'O' level credit in Physics."
+    }
+   ],
+   "first_line": 1740,
+   "line_range": [
+    1740,
+    1860
+   ],
+   "scope": [
+    1740,
+    1938
+   ]
+  },
+  {
+   "jamb_name": "Animal Science",
+   "institutions": [
+    "AAU",
+    "BENIN",
+    "BOUEDST",
+    "CALABAR",
+    "COOU",
+    "DELSU",
+    "FUA-ZURU",
+    "IBADAN",
+    "JABU",
+    "MAIDUGURI",
+    "MAKURDI",
+    "NASARAWA",
+    "OAU",
+    "PHC",
+    "RSU"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agriculture",
+    "Mathematics/Physics",
+    "Use of English"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Chemistry, Mathematics, Biology/Agric Science and one of Physics, Geography or Economics.",
+   "direct_entry": "Two (2) 'A' level passes or its equivalent in Chemistry and one of Biology/Botany/Zoology/Agriculture Science/Geography/Geology/Mathematics/Economics.",
+   "institution_waivers": [
+    {
+     "institution": "OAU",
+     "note": "Accepts HND upper credit. Does not accept Geography, Geology and Economics."
+    },
+    {
+     "institution": "ABSU",
+     "note": "Accepts HND upper credit."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Same as in Agriculture-Economics and Extension."
+    },
+    {
+     "institution": "COOU",
+     "note": "Same as in Agriculture-Economics and Extension."
+    },
+    {
+     "institution": "BENIN",
+     "note": "As in Agricultural Economics."
+    },
+    {
+     "institution": "UNN",
+     "note": "As in Agricultural Economics."
+    },
+    {
+     "institution": "DELSU",
+     "note": "As in Agricultural Economics."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "Accepts NCE/ND/HND in relevant programs."
+    },
+    {
+     "institution": "IMSU",
+     "note": "Accepts ND credit in related programs and HND credit level."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts Two (2) A/level GCE or HSC or JUPEB or IJMB passes in Agricultural Science and any one from Chemistry, Biology, Physics, and Economics including UTME entry requirements. OND (Upper Credit) in Agriculture from a recognized Institution including UTME entry requirements. HND with at least a Lower Credit from a recognised institution including UTME entry requirements for a 3-year degree programme. Diploma in Agriculture from a recognised institution with minimum of Credit Pass, including UTME entry requirements."
+    },
+    {
+     "institution": "FUTO",
+     "note": "(a) At least two (2) A' level passes not below Grade C in Chemistry and any one of Zoology, Botany, Agricultural Science, Biology, Mathematics, Physics and Economics; (b) OND/HND at Upper Credit in Life Sciences; (c) First Degree in Life Sciences; (d) Very good passes in three JUPEB subjects namely Chemistry and any two (2) of Biology/Agricultural Science, Mathematics and Physics. Does not accept NCE. Candidates must in addition meet the 'O' Level requirements."
+    },
+    {
+     "institution": "RSU",
+     "note": "In addition to 'O' Level requirements accepts: (a) HND (Lower Credit) in relevant discipline; (b) OND (Upper Credit) in related discipline; (c) NCE holders with credit passes in Biology or Agric Science; (d) Two (2) HSC/GCE 'A' Level passes in Chemistry and Biology."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "Same as in Animal Production and Health."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "Accepts candidates who meet the UTME requirements, plus ND at lower credit in Agriculture or Animal Production and Health or NCE merit in Agricultural Science or Animal Science major may be admitted to 100 level. Candidates with a minimum of upper credit in Agriculture or Animal Production and Health may be admitted to 200 level."
+    }
+   ],
+   "first_line": 1938,
+   "line_range": [
+    1938,
+    1962
+   ],
+   "scope": [
+    1938,
+    2027
+   ]
+  },
+  {
+   "jamb_name": "Animal Breeding and Genetics",
+   "institutions": [
+    "AND GENETICS",
+    "FUNAAB",
+    "ANIMAL",
+    "AND FISHERIES",
+    "ABSU",
+    "IMSU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "CALABAR",
+     "note": "Accepts HND credit, ND/NCE merit in Agricultural Science or related programs. Accepts Geography and Economics and requires 'O' Level credit pass in Physics. UTME subjects require Mathematics or Physics."
+    },
+    {
+     "institution": "TSUJ",
+     "note": "Accepts ND in Animal Production and Health or any other program with animal science related options with a minimum of lower credit pass in addition to the UTME requirements. With ABSU require five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language. TSUJ accepts 'O' Level pass in Physics."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Accepts: (a) NCE with minimum merit passes in relevant subjects; (b) HND and ND with minimum of upper credit in relevant programs. Requires at least 'O' Level pass in Physics."
+    },
+    {
+     "institution": "BENIN",
+     "note": "As in Agricultural Economics."
+    },
+    {
+     "institution": "UNN",
+     "note": "As in Agricultural Economics. UTME subjects as in Agricultural Economics."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "As in Agriculture. UTME subjects as in Agriculture."
+    },
+    {
+     "institution": "RSU",
+     "note": "Requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry, Biology or Agric Science and any other subject. UTME subjects require Agricultural Science or Biology."
+    },
+    {
+     "institution": "IMSU",
+     "note": "Accepts 'O' Level pass in English Language."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Accepts 'O' Level pass in English Language."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "Requires five (5) credit passes in SSC or equivalent at not more than two (2) sittings in Chemistry, Biology or Agricultural Science, Mathematics, English Language and any other subject. At least 'O' Level pass in Physics is required. 'O' Level credit pass in Agricultural Science must be backed with at least 'O' Level pass in Biology. 'O' Level pass in English Language is acceptable if high grades are scored in the Science subjects."
+    },
+    {
+     "institution": "ESUTECH",
+     "note": "Accepts 'O' Level passes in Physics and English Language and 'O' Level credit pass in Mathematics."
+    },
+    {
+     "institution": "PHC",
+     "note": "Requires Five (5) SSC credit passes to include English Language, Mathematics, Chemistry, Biology/Agricultural Science and any one of Physics, Geography and Economics. UTME subjects require CC."
+    },
+    {
+     "institution": "FUTO",
+     "note": "Requires at least five (5) 'O' Level Credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and any other subject, in not more than two (2) sittings. At least a Pass is required in Physics. UTME subjects require Chemistry, and any two (2) of Biology/Agricultural Science, Mathematics and Physics."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "As in Agriculture Extension and Rural Development."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "Requires five (5) 'O' Level credit passes in the SSC or its equivalent at not more than two (2) sittings in addition to an acceptable score in the UTME. UTME subjects same as in Fisheries."
+    },
+    {
+     "institution": "ABSU",
+     "note": "With TSUJ require five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language."
+    }
+   ],
+   "first_line": 2027,
+   "line_range": [
+    2027,
+    2063
+   ],
+   "scope": [
+    2027,
+    2148
+   ]
+  },
+  {
+   "jamb_name": "Crop Production",
+   "institutions": [
+    "ADSU",
+    "BAUCHI",
+    "CRAWFORD",
+    "MAKURDI",
+    "MINNA",
+    "OOU",
+    "SALEM",
+    "AND LANDSCAPE",
+    "MANAGEMENT",
+    "EBSU",
+    "HORTICULTURE AND",
+    "LANDSCAPE",
+    "LASUSTECH",
+    "AND HORTICULTURE",
+    "MAUTY",
+    "AND PROTECTION",
+    "ABSU",
+    "OAU",
+    "PLANT PHYSIOLOGY &",
+    "FUNAAB",
+    "AND SOIL SCIENCE",
+    "LAUTECH",
+    "TECHNOLOGY",
+    "NDU",
+    "CROP SCIENCE AND",
+    "FUTO",
+    "JABU"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agriculture",
+    "Mathematics or Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include Chemistry, Biology/Agricultural Science, Mathematics and one Science/Social Science subject and at least 'O' Level pass in Physics.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and Biology/Agricultural Science/Botany/Zoology or Physics/Mathematics/Economics.",
+   "institution_waivers": [
+    {
+     "institution": "MINNA",
+     "note": "MINNA does not accept Social Science subjects. Other requirements are as in Agriculture."
+    },
+    {
+     "institution": "NDU",
+     "note": "No direct entry admission."
+    },
+    {
+     "institution": "OOU",
+     "note": "OOU requires 'A' Level passes in both Chemistry and Biology. It accepts ND distinction/credit, HND credit, and NCE Double Major at credit level in Agriculture to 100/200 level programme."
+    },
+    {
+     "institution": "RSU",
+     "note": "Same as in Animal Science."
+    },
+    {
+     "institution": "MINNA",
+     "note": "MINNA accepts NCE/ND/HND with a minimum of lower credit level in addition to the UTME requirements."
+    },
+    {
+     "institution": "ADSU",
+     "note": "As in Animal Production & Fisheries."
+    },
+    {
+     "institution": "EKSU and FUTA",
+     "note": "As in Agricultural Economics and Extension."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "BAUCHI accepts NCE, ND program in addition to the UTME requirements."
+    },
+    {
+     "institution": "IMSU",
+     "note": "IMSU accepts ND or NCE Double Major and HND in Agriculture with at least a credit pass."
+    },
+    {
+     "institution": "FUTO",
+     "note": "Same as in Agricultural Economics."
+    },
+    {
+     "institution": "UNN",
+     "note": "Same as in Agricultural Economics and Extension."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY accepts; OND/HND in Agric or any other relevant field, with a minimum of Lower Credit. IJMB with at least 7 cumulative points in Chemistry, Biology/Agric. & Physics/Mathematics. NCE with a minimum of merit grade in agriculture. GCE 'A' credit passes in Chemistry, Biology/Agric. Science."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "As in Agricultural Extension and Rural Development."
+    },
+    {
+     "institution": "FUTA",
+     "note": "FUTA requires: (a) ND with a minimum of upper credit from recognized Polytechnics or Colleges of Technology in relevant Agriculture based disciplines. (b) University Diploma with at least lower credit, JUPEB, IJMB and Cambridge A level. (c) at least two (2) General Certificate in Education (GCE) 'A' Level passes in Biology and any of the following subjects: Chemistry, Physics and Biology or Agricultural Science with a minimum of C."
+    },
+    {
+     "institution": "OAU",
+     "note": "OAU does not accept Economics but accepts HND/ND in Agriculture obtained at upper credit level from a recognized Institution."
+    }
+   ],
+   "first_line": 2148,
+   "line_range": [
+    2148,
+    2379
+   ],
+   "scope": [
+    2148,
+    2214
+   ]
+  },
+  {
+   "jamb_name": "Crop Science",
+   "institutions": [
+    "DELSUT",
+    "FUA-ZURU",
+    "JABU",
+    "RSU",
+    "UDA",
+    "UNN",
+    "CROP SCIENCE/SOIL",
+    "SCIENCE",
+    "DOU",
+    "CROP SCIENCE AND",
+    "AND"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "KWASU",
+     "note": "KWASU accepts ND/HND, NCE in relevant subjects in addition to the UTME requirements."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI accepts; (a) Two (2) 'A' Level passes in any of Chemistry and Biology/Agricultural Science/Botany/Zoology or Mathematics (Pure & Applied), Physics, Geology and Economics. (b) NCE/ND/HND credit/merit in Agriculture."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "LAUTECH accepts; (a) Two (2) 'A' Level passes in any of Chemistry, Biology/Agricultural Science or Physics. (b) NCE/ND/HND credit/merit in Agriculture."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU accepts a) two (2) 'A' level passes in Chemistry and Biology/Agricultural Science/Zoology or Physics/Mathematics/Economics. b) NCE with minimum merit passes in relevant subjects. c) HND and ND with minimum of upper credit in relevant programs."
+    },
+    {
+     "institution": "DELSU, MAKURDI, UMUDIKE, UNN",
+     "note": "UTME: Same as in Agricultural Economics."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME: OOU requires 'O' Level credit passes in English Language, Mathematics and Physics."
+    },
+    {
+     "institution": "NDU",
+     "note": "UTME: NDU requires five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DELSU accepts D7 in English Language."
+    },
+    {
+     "institution": "NAUB",
+     "note": "As in Animal Production."
+    },
+    {
+     "institution": "MINNA and FUTO",
+     "note": "MINNA and FUTO require 'O' Level credit passes in English Language and Mathematics."
+    },
+    {
+     "institution": "BAUCHI",
+     "note": "BAUCHI requires 'O' Level credit pass in English Language but accept 'O' Level pass in Physics."
+    },
+    {
+     "institution": "PHC",
+     "note": "Same as in Fisheries."
+    },
+    {
+     "institution": "COOU and ABSU",
+     "note": "COOU and ABSU require five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology or Agricultural Science."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Five (5) O' Level credit passes in English Language, Mathematics, Biology/Agricultural Science, Chemistry, and any one from Physics/Geography/Economics/Horticulture."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "As in Agriculture Extension and Rural Development."
+    },
+    {
+     "institution": "FUTA",
+     "note": "FUTA requires five (5) 'O' Level credits at SSC, or equivalent at a maximum of two (2) sittings in the following subjects: English Language, Mathematics, Chemistry, Biology or Agricultural Science, Economics or Geography. At least 'O' Level pass in Physics is required."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI requires five (5) 'O' Level credit passes in Biology or Agricultural Science, Chemistry, Mathematics, English Language, Physics or any other Science subjects. Accepts 'O' Level pass in Physics."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "LAUTECH requires five (5) 'O' Level credit passes in Biology or Agriculture Science, Chemistry, Mathematics, English Language and Physics."
+    },
+    {
+     "institution": "RSU",
+     "note": "Same as in Animal Science."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU accepts five (5) SSCE credit passes to include English Language, Chemistry, Biology/Agricultural Science, Mathematics and one Science/Social Science subject and at least a pass in Physics."
+    },
+    {
+     "institution": "FUTA",
+     "note": "UTME SUBJECTS: FUTA requires Mathematics/Physics, Chemistry, Biology/Agricultural Science."
+    },
+    {
+     "institution": "SALEM",
+     "note": "UTME SUBJECTS: Same as in Soil Science."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "UTME SUBJECTS: LAUTECH requires English Language, Chemistry, Biology/Agriculture Science, and Physics/Mathematics."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME SUBJECTS: OOU requires Chemistry and any two (2) of Physics, Mathematics, Biology, Agricultural Science and Geography."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "UTME SUBJECTS: MAUTY requires Biology/Agric. Sc. and any other two of Chemistry, Physics, Geography, Economics and Mathematics."
+    }
+   ],
+   "first_line": 2214,
+   "line_range": [
+    2214,
+    2381
+   ],
+   "scope": [
+    2214,
+    2395
+   ]
+  },
+  {
+   "jamb_name": "Soil Science",
+   "institutions": [
+    "AAU",
+    "ABSU",
+    "AKSU",
+    "BENIN",
+    "CALABAR",
+    "COOU",
+    "DELSU",
+    "DELSUT",
+    "IMSU",
+    "MAKURDI",
+    "MAUTY",
+    "OAU",
+    "MANAGEMENT",
+    "JABU",
+    "SOIL AND",
+    "ENVIRONMENTAL",
+    "CRAWFORD",
+    "EBSU",
+    "SOIL SCIENCE AND",
+    "LAND MANAGEMENT",
+    "FUNAAB",
+    "LAND",
+    "CLIMATOLOGY"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology or Agricultural Science",
+    "Mathematics or Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and any other Science subject.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and one of Zoology/Botany/Agric Science/Biology, Geography, Mathematics, Physics, Geology, Economics and Health Science.",
+   "institution_waivers": [
+    {
+     "institution": "MINNA",
+     "note": "MINNA accepts ND/NCE with a minimum of credit in Agriculture or ND/NCE with TC II credit in Agriculture/Mathematics, General Science/Integrated Science or Agricultural Science/Biology."
+    },
+    {
+     "institution": "MINNA",
+     "note": "MINNA accepts credit in ND/NCE Agriculture into 200 levels while those with HND are accepted into 300 levels."
+    },
+    {
+     "institution": "DELSU, IMSU and UMUDIKE",
+     "note": "As in Agriculture."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY accepts Two 'A' Level credit passes in Chemistry and Biology. OND/HND with lower credit passes in Agric. Science or any other relevant field. IJMB 7 points in Biology/Agric. Sci., Chemistry, Physics/Geography at credit level."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Same as in Agricultural Economics."
+    },
+    {
+     "institution": "RSU",
+     "note": "As in Animal Science."
+    },
+    {
+     "institution": "BENIN",
+     "note": "As in Agricultural Economics."
+    },
+    {
+     "institution": "UNN",
+     "note": "Same as in Agricultural Economics and Extension."
+    },
+    {
+     "institution": "OAU",
+     "note": "OAU does not accept Geography, Geology and Health Science and accepts HND/ND in Agriculture obtained at upper credit level from recognized Institution."
+    },
+    {
+     "institution": "JABU",
+     "note": "JABU accepts two (2) 'A' Level passes in Chemistry, Biology/Agricultural Science and any other from Physics, Economics and Mathematics. ND/NCE upper credit in relevant areas."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "CALABAR accepts HND, ND/NCE credit level passes in Agriculture and related sciences."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "Same as in Crop Production."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "As in Agricultural Extension and Rural Development."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU accepts a) two (2) 'A' level passes in Chemistry and one of Zoology/Botany/Agric science/Biology, Agricultural science and other science subjects. b) NCE with minimum merit passes in relevant subjects. c) HND and ND with minimum of upper credit in relevant program."
+    },
+    {
+     "institution": "FUTO",
+     "note": "FUTO accepts; a) At least two (2) A' level passes not below Grade C in Chemistry and any one of Zoology, Botany, Agricultural Science, Biology, Mathematics, Physics and Economics. b) OND/HND at Upper Credit in Life Sciences. c) First Degree in Life Sciences. d) Very good passes in three JUPEB subjects namely Chemistry and any two (2) of Biology/Agricultural Science, Mathematics and Physics. It does not accept NCE. Candidates must in addition meet the 'O' Level requirements."
+    },
+    {
+     "institution": "RSU",
+     "note": "UTME: RSU requires at least 'O' Level pass in Physics."
+    },
+    {
+     "institution": "RSU and CALABAR",
+     "note": "UTME: As in Animal Science."
+    },
+    {
+     "institution": "IMSU",
+     "note": "UTME: IMSU accepts 'O' Level pass in English Language."
+    },
+    {
+     "institution": "ABSU",
+     "note": "UTME: Same as Crop Production and Protection."
+    },
+    {
+     "institution": "EBSU",
+     "note": "UTME: Same as in Soil Science."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UTME: Same as in Agricultural Economics."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME: CALABAR requires 'O' Level credit pass in Physics."
+    },
+    {
+     "institution": "MINNA",
+     "note": "UTME: Same as in Water Resources, Aquaculture and Fisheries Technology."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "UTME: Same as in Crop Production."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "UTME: As in Agricultural Extension and Rural Development."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "UTME: MAUTY requires Five (5) O'Level credit passes in English Language, Mathematics, Biology/Agricultural Science, Chemistry, and any one from Physics/Geography/Economics."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME: FUTO requires At least five (5) 'O' Level Credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and any other subject, in not more than two (2) sittings. At least a Pass is required in Physics."
+    },
+    {
+     "institution": "SALEM",
+     "note": "UTME SUBJECTS: SALEM requires Chemistry, Biology/Agricultural Science and Physics."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "UTME SUBJECTS: MAUTY requires Biology/Agricultural Science and any other two (2) of Chemistry, Physics, Geography, Economics or Mathematics."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME SUBJECTS: FUTO requires Chemistry, and any two (2) of Biology/Agricultural Science, Mathematics and Physics."
+    }
+   ],
+   "first_line": 2395,
+   "line_range": [
+    2395,
+    2455
+   ],
+   "scope": [
+    2395,
+    2534
+   ]
+  },
+  {
+   "jamb_name": "Family, Nutrition and Consumer Sciences",
+   "institutions": [
+    "AND CONSUMER",
+    "OAU",
+    "ENVIRONMENTAL"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agriculture Science",
+    "Mathematics/Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology, Physics and any one of the following: Fine Arts, Textile, Construction, Technical Drawing, Home Management, Food and Nutrition.",
+   "direct_entry": "Two (2) 'A' Level passes or equivalent in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography.",
+   "institution_waivers": [
+    {
+     "institution": "OAU",
+     "note": "NCE with a minimum of credit in Home Economics/Biology/Chemistry/Agric Science from an accredited Institution."
+    },
+    {
+     "institution": "OAU",
+     "note": "Candidates with ND in Catering and Hotel Management, Textile and Clothing, Construction/Management, Food Science and Animal Health from accredited institution with at least an upper credit pass."
+    },
+    {
+     "institution": "OAU",
+     "note": "HND in Catering and Hotel Management, Textile and Clothing, Construction/Management Food Science and Technology, Nutrition, Tourism, Agriculture and Animal Health from accredited institution with a minimum of upper credit."
+    }
+   ],
+   "first_line": 2534,
+   "line_range": [
+    2534,
+    2559
+   ],
+   "scope": [
+    2534,
+    2816
+   ]
+  },
+  {
+   "jamb_name": "Food Science with Business",
+   "institutions": [
+    "BUSINESS",
+    "BELLS",
+    "FOOD SCIENCE",
+    "FED-DUTSINMA",
+    "ILORIN"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": "(c) Two (2) HSC/GCE 'A' level passes in two (2) subjects.",
+   "institution_waivers": [
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN requires candidates with 'O' Level pass in Biology, but who have 'O' Level credit pass in Agricultural Science may be considered. 'O' Level pass in Physics is acceptable in lieu of 'O' Level credit pass."
+    },
+    {
+     "institution": "BELLS",
+     "note": "BELLS accepts ND upper credit in Food Science and Technology/Science Laboratory Technology with Biology/Virology/Chemistry/Biochemistry options."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY accepts A Level credit passes in two of Chemistry, Biology/Agric. Science, Physics/Maths. OND/HND in Food Science and Technology or any other relevant field with a minimum of lower credit. IJMB with at least 7 points in Biology/Agric. Sci. Chemistry, Physics/Mathematics."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "FUNAAB accepts upper credit in ND and HND in Food Science and Technology, Agricultural Programmes from recognised institutions in addition to the UTME requirements."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI accepts the UTME requirements plus 'A' Level passes in Physics and any one (1) of Chemistry, Mathematics, Botany, Zoology or Biology; Upper/lower credit HND in relevant programs plus the UTME requirements; ND upper credit in relevant programs plus the UTME requirements; NCE credit pass in relevant programs plus the UTME requirements."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU requires 'A' Level passes in at least two (2) relevant subjects Physics, Chemistry and Biology obtained at one (1) sitting and/or ND or its equivalent."
+    },
+    {
+     "institution": "FED OYE-EKITI",
+     "note": "FED OYE-EKITI requires GCE ('A' Level) or equivalent in at least two (2) Science subjects in any of Chemistry, Physics, Mathematics or Biology or a ND in Food Science and Technology, Science Laboratory Technology (Food Science Option) with Minimum of Upper Credit."
+    },
+    {
+     "institution": "KUST",
+     "note": "KUST accepts; (a) ND in Microbiology and Biochemistry with a minimum of upper credit. (b) NCE Double Major in related subjects with aggregates of eight (8) points."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "CALABAR - In addition to the basic Departmental requirements, candidates must have a minimum of upper credit in ND in Food Science and Technology or 'A' Level passes or its equivalent in at least two (2) of Chemistry, Biology, Physics or Mathematics."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI - Direct Entry Candidates must obtain two A/L passes in GCE/IJMB/Advanced NABTEB or a merit pass at NCE or at least Lower in ND/HND in Food Science and Technology, Nutrition and Dietetics, Science Laboratory Technology, Agricultural/Chemical Engineering. Candidates must also satisfy the O/L requirement for admission."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires (a) Two (2) 'A' Level passes in Chemistry and Biology/Agricultural Science. (b) IJMB in relevant subjects. (c) NCE/ND with at least merit in Mathematics/Physics/Chemistry and one (1) of Biology/Agric. Science."
+    },
+    {
+     "institution": "BELLS, ESUTECH and FUTO",
+     "note": "BELLS, ESUTECH and FUTO accept 'O' Level pass in Physics."
+    },
+    {
+     "institution": "FUTO and MAIDUGURI",
+     "note": "FUTO and MAIDUGURI accept 'O' Level pass in English Language."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "MAIDUGURI accepts 'O' Level pass in Mathematics."
+    },
+    {
+     "institution": "UNN",
+     "note": "UNN requires 'O' Level credit passes in five (5) subjects at not more than two (2) sittings. The subjects must include: English Language, Chemistry, Mathematics, Physics, Biology or Agricultural Science and any other science subject."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI accepts Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "IMSU",
+     "note": "IMSU accepts 'O' Level credit pass in either Mathematics or Physics."
+    },
+    {
+     "institution": "MINNA",
+     "note": "MINNA requires English Language, Mathematics, Biology/Agricultural Science, Chemistry and any one of Physics, Geography or Economics."
+    },
+    {
+     "institution": "PAAU and EBSU",
+     "note": "PAAU and EBSU require five (5) 'O' Level credit passes to include Chemistry, Mathematics, Biology or Agricultural Science, Physics and English Language."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN requires 'O' Level pass in Physics, and also 'O' Level pass in Biology for 'O' Level credit pass in Agricultural Science or Food and Nutrition."
+    },
+    {
+     "institution": "CALABAR, FED-OYE EKITI and ABSU",
+     "note": "CALABAR, FED-OYE EKITI and ABSU require five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology or Agricultural Science and Physics."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "UMUDIKE requires five (5) 'O' Level credit passes at not more than two (2) sittings to include English Language, Mathematics, Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "FUNAAB and FUTA",
+     "note": "FUNAAB and FUTA require five (5) SSC credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science. FUNAAB does not accept Agricultural Science in lieu of Biology."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI requires five (5) 'O' Level credit passes or equivalents at not more than two (2) sittings as follows:- Physics, Chemistry, Mathematics, Biology or Agricultural Science and English Language."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI - Five (5) Credit passes at not more than two sittings in GCE O' level obtained from Senior School Certificate (SSCE), National Examination Council (NECO), National Business and Technical Examination Board (NABTEB) (or its equivalent) to include: English Language, Mathematics, Chemistry, Physics, Biology/Agricultural Science/Food and Nutrition."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Five (5) O'Level credit passes in English Language, Mathematics, Chemistry, Physics/Further Mathematics, and any one from Biology/Agricultural Science/Food and Nutrition."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and Biology/Agricultural Science/Animal Husbandry/Forestry/Fisheries."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry, Biology or Agric Science and any other subject. A Pass in Physics is needed."
+    },
+    {
+     "institution": "FUTO",
+     "note": "FUTO requires five (5) SSC credit passes or its equivalent at a maximum of two (2) sittings in the following subjects: English Language, Mathematics, Chemistry, Physics and Biology/Agricultural Science."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "FED-OYE EKITI requires five (5) SSC credit passes to include English Language, Biology/Agric Science, Chemistry, Mathematics, Physics."
+    },
+    {
+     "institution": "ESUTECH",
+     "note": "ESUTECH requires Chemistry, Mathematics and Biology or Physics."
+    },
+    {
+     "institution": "FUTO",
+     "note": "FUTO does not accept Agricultural Science. It requires Chemistry, Mathematics and Biology or Physics."
+    },
+    {
+     "institution": "FUTA",
+     "note": "FUTA requires Chemistry, Physics, Mathematics/Biology."
+    },
+    {
+     "institution": "UNN",
+     "note": "UNN accept Biology in lieu of Agricultural Science."
+    },
+    {
+     "institution": "EBSU, BELLS",
+     "note": "EBSU, BELLS accept Chemistry, Biology and Physics or Mathematics."
+    },
+    {
+     "institution": "PAAU and UNIZIK",
+     "note": "PAAU and UNIZIK require Chemistry, Mathematics/Physics, Biology/Agricultural Science."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "FUNAAB requires Chemistry, Biology and Physics or Mathematics."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "CALABAR requires Chemistry, Physics and Biology/Agricultural Science."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Biology/Agric. Sc. and any other two of Chemistry, Physics, and Mathematics."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires Chemistry, Biology/Agricultural Science and Physics or Mathematics."
+    },
+    {
+     "institution": "MINNA",
+     "note": "MINNA requires Chemistry, Biology/Agricultural Science and any one of Mathematics or Physics."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI requires Chemistry, Mathematics/Physics and any one of Biology/Agricultural Science or any Social Science Subject."
+    }
+   ],
+   "first_line": 2816,
+   "line_range": [
+    2816,
+    2840
+   ],
+   "scope": [
+    2816,
+    3153
+   ]
+  },
+  {
+   "jamb_name": "Forestry and Fisheries",
+   "institutions": [
+    "BENIN",
+    "CRUTECH",
+    "DELSU",
+    "IMSU",
+    "MAIDUGURI",
+    "NASARAWA",
+    "OOU",
+    "PHC",
+    "RSU",
+    "UNIZIK",
+    "UYO",
+    "WILDLIFE",
+    "FUTO",
+    "ENVIRONMENTAL",
+    "MGT.",
+    "UMUDIKE",
+    "TECHNOLOGY",
+    "AGRICULTURE AND",
+    "RESOURCE",
+    "ECONOMICS",
+    "FUTA"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "IMSU",
+     "note": "IMSU accepts ND/NCE Double Major and HND in Agriculture."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "CALABAR requires two (2) 'A' Level passes in Chemistry and Biology or Agriculture."
+    },
+    {
+     "institution": "BENIN",
+     "note": "BENIN as in Agricultural Economics."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "FUNAAB as in Agricultural Extension and Rural Development."
+    },
+    {
+     "institution": "KSUSTA",
+     "note": "KSUSTA - Same as in Fisheries."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU accepts: i) two (2) 'A' level / IJMB Passes in Chemistry and any of Biology, Botany, Zoology and Agricultural Science. ii) HND in Agriculture or related field of study with a minimum of Lower credit pass. iii) ND in Agriculture or related field of study with a minimum of Lower Credit/Merit pass."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN accepts: a) ND (Forestry/Wildlife) or related programs with minimum of lower credit from recognized institutions into 100 level. b) HND (Forestry/Wildlife) or related programs with minimum of lower credit. c) NCE Agriculture double major at credit level."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires two (2) 'A' Level passes in Chemistry and Biology/Botany/Agricultural Science/Zoology/Physics."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA accept OND/ND (Upper Credit), HND (Lower credit), NCE Merit pass in Agriculture, Forestry and Wildlife and other related field into 200 Level. It also accepts two (2) 'A' Level Passes in Chemistry and one from Biology/Zoology/Agric Science, Economics, Physics, Geography and Geology/Mathematics (Pure & Applied)."
+    },
+    {
+     "institution": "FUTO",
+     "note": "FUTO requires a) At least two (2) A' level passes not below Grade C in Chemistry and any one of Zoology, Botany, Agricultural Science, Biology, Mathematics, Physics and Economics. b) OND/HND at Upper Credit in Life Sciences. c) First Degree in Life Sciences. d) Very good passes in three JUPEB subjects namely Chemistry and any two of Biology/Agricultural Science, Mathematics and Physics. It does not accept NCE. Candidates must in addition meet the 'O' Level requirements."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI - Direct Entry Candidates must obtain two A/L passes in GCE/IJMB/Advanced NABTEB or a merit pass at NCE or at least Lower Credit in ND/HND in Food Science and Technology, Nutrition and Dietetics, Science Laboratory Technology, Agricultural/Chemical Engineering. Candidates must also obtain Five (5) Credits at O/L in GCE/GCE/NECO/NABTEB which must include English Language, Mathematics and Chemistry."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC accepts Two (2) A/level GCE or HSC or JUPEB or IJMB passes in Agricultural Science and any one from Chemistry, Biology, Physics, and Economics including UTME entry requirements. OND (Upper Credit) in Agriculture from a recognized Institution including UTME entry requirements. HND with at least a (Lower Credit) from a recognised institution, including UTME entry requirements for a 3-year degree programme. Diploma in Agriculture from a recognised institution with minimum of Credit Pass, including UTME entry requirements."
+    },
+    {
+     "institution": "FUTA",
+     "note": "FUTA requires; a) OND with a minimum of upper credit or HND or equivalent in Agriculture or any relevant area of specialisation from recognised institutions and have passed relevant subjects in the ND examinations at the upper credit level. b) GCE or equivalent passes at one sitting with a minimum of 'C' in any of the following: Biology, Chemistry, Economics and Mathematics."
+    },
+    {
+     "institution": "CALABAR and IBADAN",
+     "note": "CALABAR and IBADAN require five (5) 'O' Level credit passes at one (1) sitting or six (6) 'O' Level credit passes at two (2) sittings to include English Language, Biology/Agricultural Science, Chemistry, Mathematics and any one (1) of Geography, Physics and Economics."
+    },
+    {
+     "institution": "UMUDIKE and LAPAI",
+     "note": "UMUDIKE and LAPAI - as in Agriculture."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU - accepts 'O' Level pass in English Language for candidates with five (5) 'O' Level credit passes which include Mathematics and Physics."
+    },
+    {
+     "institution": "RSU",
+     "note": "RSU requires at least 'O' level pass in Physics."
+    },
+    {
+     "institution": "BENIN and DELSU",
+     "note": "BENIN and DELSU - As in Agricultural Economics."
+    },
+    {
+     "institution": "EBSU",
+     "note": "EBSU - As in Landscape Management."
+    },
+    {
+     "institution": "CRUTECH",
+     "note": "CRUTECH - Same as Animal Science and Fisheries."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "FUNAAB as in Agricultural Extension and Rural Development."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI requires a minimum of five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and any of Physics, Geography, Economics and Statistics. 'O' Level credit pass in Physics can be substituted for Mathematics and vice versa. However, the candidate is expected to have a minimum of 'O' Level pass in the other subject to benefit from the waiver."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN accepts Agricultural Science in lieu of Biology."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU requires five (5) 'O' level credit passes including English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Five (5) O'Level credit passes in English Language, Mathematics, Biology/Agricultural Science, Chemistry, and any one from Physics/Geography/Economics/Woodwork/Tourism."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires five (5) SSC credit passes in English Language, Chemistry, Biology/Agric Science, Mathematics and Physics/Geography/Economics."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA requires five (5) SSC Credit passes to include: English Language, Mathematics, Chemistry, Biology/Agric Science and Physics."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC requires Five (5) SSC credit passes to include English Language, Mathematics, Chemistry, Biology/Agricultural Science and any one of Physics, Geography and Economics."
+    },
+    {
+     "institution": "FUTA",
+     "note": "FUTA requires five (5) SSC credit passes or its equivalent at maximum of two (2) sittings in the following subjects: English Language, Mathematics, Chemistry, Biology/Agricultural Science/Animal Husbandry, Economics/Geography/any relevant Science subject. At least a pass in Physics is required."
+    },
+    {
+     "institution": "FUTO",
+     "note": "FUTO requires at least five (5) 'O' Level Credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and any other subject, in not more than two (2) sittings. At least a Pass is required in Physics."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI Five (5) Credits at not more than two sittings including English Language and Mathematics from the following subjects: Chemistry, Biology/Agric. Science, Physics/Geography/, Animal Husbandry/Fisheries or Forestry and obtained at SSCE, GCE O' Level, NECO, NABTEB, or its equivalent."
+    },
+    {
+     "institution": "UMUDIKE, LAPAI, IBADAN and UDU",
+     "note": "UMUDIKE, LAPAI, IBADAN and UDU as in Agriculture."
+    },
+    {
+     "institution": "EKSU",
+     "note": "EKSU as in Agricultural Economics and Extension."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "ILORIN requires Chemistry, Physics/Mathematics and Biology/Agricultural Science. ILORIN accepts Geography in lieu of Physics or Mathematics."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "MAKURDI requires Chemistry, Biology and any other subject from Physics, Geography, Economics etc."
+    },
+    {
+     "institution": "OOU",
+     "note": "OOU requires Chemistry and any two (2) of Physics, Mathematics, Biology, Agricultural Science and Geography."
+    },
+    {
+     "institution": "MAUTY",
+     "note": "MAUTY requires Biology/Agric. Sc. and any other two of Chemistry, Physics, Geography, Economics and Mathematics."
+    },
+    {
+     "institution": "FED-DUTSINMA",
+     "note": "FED-DUTSINMA requires Chemistry, Biology/Agricultural Science and Mathematics/Physics."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "FED-GASHUA accepts Chemistry, Biology/Agric Science and any one of Physics or Mathematics."
+    },
+    {
+     "institution": "FUTA",
+     "note": "FUTA requires Chemistry, Biology/Agricultural Science and Mathematics/Economics."
+    },
+    {
+     "institution": "FUTO",
+     "note": "FUTO requires Chemistry, and any two (2) of Biology/Agricultural Science, Mathematics and Physics."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "FED-WUKARI requires Chemistry, Mathematics/Physics/Geography, Biology/Agricultural Science."
+    },
+    {
+     "institution": "ABU",
+     "note": "ABU accepts Chemistry, Biology and any other Science Subject."
+    },
+    {
+     "institution": "PHC",
+     "note": "PHC requires Chemistry, Biology/Agricultural Science and any one of Physics or Mathematics or Geography or Economics."
+    }
+   ],
+   "first_line": 3153,
+   "line_range": [
+    3153,
+    3489
+   ],
+   "scope": [
+    3153,
+    3476
+   ]
+  },
+  {
+   "jamb_name": "Forestry, Wildlife & Fisheries",
+   "institutions": [
+    "AND FISHERIES",
+    "EKSU",
+    "OOU"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": "As in Agricultural Economics and Extension. Accepts Forestry Assistant Certificate from IITA, Ibadan or any other recognised Institution.",
+   "institution_waivers": [],
+   "first_line": 3476,
+   "line_range": [
+    3476,
+    3485
+   ],
+   "scope": [
+    3476,
+    3490
+   ]
+  },
+  {
+   "jamb_name": "Plant Breeding and Seed Technology",
+   "institutions": [
+    "AND SEED SCIENCE",
+    "MAKURDI"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 3490,
+   "line_range": [
+    3490,
+    3503
+   ],
+   "scope": [
+    3490,
+    3511
+   ]
+  },
+  {
+   "jamb_name": "Home Economics",
+   "institutions": [
+    "BELLS",
+    "FUNAAB",
+    "ILORIN",
+    "LASUED",
+    "MAKURDI",
+    "MAUTY",
+    "OAU",
+    "OOU",
+    "UMUDIKE",
+    "UNIOSUN",
+    "UYO",
+    "NUTRITION AND",
+    "CONSUMERS",
+    "SERVICES",
+    "AND FOOD",
+    "MANAGEMENT",
+    "WESLEYUNI",
+    "AND MANAGEMENT/",
+    "ECONOMICS",
+    "FED-GASHUA"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agriculture",
+    "Mathematics/Physics or one (1) Social Science subject"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Chemistry, Biology/Agricultural Science, Mathematics, Physics, English Language and any one of Nutrition, Fine Arts, Textile, Construction, Technical Drawing, Basic Electricity, Basic Catering and Food Services, Bakery and Confectioneries, General Metal Work, Men Garment Construction and Finishing, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing, Ladies Garment Construction and Finishing.",
+   "direct_entry": "Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting.",
+   "institution_waivers": [
+    {
+     "institution": "FUTA",
+     "note": "Requires Biology/Agricultural Science, Mathematics/Physics as UTME subjects."
+    },
+    {
+     "institution": "UYO",
+     "note": "Accepts ND upper credit, HND lower credit and NCE merit in relevant programs/subjects plus the UTME requirements."
+    },
+    {
+     "institution": "UMUDIKE",
+     "note": "As in Agriculture. Also accepts SRN/NRN or NCE with Distinction."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts NCE in Home Economics/Biology/Chemistry/Agricultural Science with five (5) merits/credits in TC II in the following subjects: Social Studies, Mathematics, Agricultural Science, General Studies, Fine Arts, Geography and Rural Science."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Requires at least 'A' Level pass in Physics, accepts NCE with relevant five (5) 'O' Level credit passes. Accepts candidates with 'O' Level pass in Biology, but who have 'O' Level credit passes in Agricultural Science, Food & Nutrition/Home Management."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "Accepts ND upper credit or NCE credit in Hospitality and Tourism, Catering Management, Hotel Management, Home Economics from a recognized Institution in addition to the UTME requirements."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "Requires OND/ND (Upper Credit), HND (Lower credit) in Food Science and Technology, Hotel Management and Tourism, Home Economics Nutrition, Dietetics, Clothing and Textile from a recognized institution in addition to UTME requirements into 200 Levels. It also accepts Two (2) 'A' level passes."
+    }
+   ],
+   "first_line": 3511,
+   "line_range": [
+    3511,
+    3578
+   ],
+   "scope": [
+    3511,
+    3579
+   ]
+  },
+  {
+   "jamb_name": "Hotel Management & Tourism",
+   "institutions": [
+    "AND TOURISM",
+    "BIU",
+    "FED-WUKARI",
+    "GREGORY",
+    "UMUDIKE",
+    "UNI-AFRICA",
+    "WESLEYUNI",
+    "HOTEL AND",
+    "CATERING",
+    "MANAGEMENT",
+    "NOUN"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": "Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agric Science/Economics/Physics/Mathematics/Geography.",
+   "institution_waivers": [
+    {
+     "institution": "UMUDIKE",
+     "note": "(a) For Home Economics - Same as in Agriculture. (b) For Hotel Management and Tourism, it requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry and any of Physics, Economics and Government."
+    },
+    {
+     "institution": "MAKURDI",
+     "note": "Accepts D7 in English Language."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Requires at least 'O' Level passes in Physics and Biology."
+    },
+    {
+     "institution": "BELLS",
+     "note": "As in Food Science and Technology."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "Requires five (5) 'O' Level credit passes in the SSC or its equivalent at not more than two (2) sittings in addition to an acceptable score in the UTME."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "Requires five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology and Physics. UTME: requires Chemistry, Biology and Physics or Mathematics."
+    },
+    {
+     "institution": "CRUTECH",
+     "note": "Accepts one (1) Social Science subject - Economics or Accounting/Commerce in place of Food and Nutrition/Home Economics. UTME: accepts one of Economics, Accounting or Commerce."
+    },
+    {
+     "institution": "FED-GASHUA",
+     "note": "Requires five (5) SSC Credit passes to include: English Language, Mathematics, Chemistry, Biology/Agric Science and Physics. UTME: accepts Chemistry, Biology, Mathematics or Physics."
+    },
+    {
+     "institution": "FED-OYE EKITI",
+     "note": "Requires five (5) SSC credit passes in Chemistry, Biology/Agric Science, Mathematics, Physics, English Language and any one of Nutrition, Fine Arts, Textile, Construction, Technical Drawing, Basic Electricity, Basic Catering and Food Services, Bakery and Confectioneries, General Metal Work, Men Garment Construction and Finishing, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing, Ladies Garment Construction and Finishing. UTME: requires Chemistry, Biology/Agriculture and Mathematics/Physics or one Social Science subject."
+    },
+    {
+     "institution": "FED-WUKARI",
+     "note": "Requires Five (5) Credits passes at not more than two sittings in SSCE/GCE/NECO/NABTEB or (its equivalent) which must include: English Language, Mathematics, Chemistry and any of the following; Biology/Agriculture, Geography/Economics/Tourism/Home Economics. UTME: requires Chemistry, Biology/Agricultural Science and any one of Geography/Home Economics/Economics. Direct Entry candidates must obtain two A/L passes in GCE/IJBM/Advanced NABTEB or at least a Merit pass at NCE or a Lower Credit at OND, HND which must include one of the following Tourism Studies, Nutrition and Catering Management, Home Economics, and Geography."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME: accepts Physics, Geography, Home Management, Statistics, Economics, Business Studies, Zoology, Commerce or any of the following pairs Chemistry and Biology, Chemistry and Agriculture and Chemistry and Economics."
+    },
+    {
+     "institution": "UYO",
+     "note": "Accepts five (5) merit passes in TC II in relevant subjects."
+    }
+   ],
+   "first_line": 3579,
+   "line_range": [
+    3579,
+    3614
+   ],
+   "scope": [
+    3579,
+    3739
+   ]
+  },
+  {
+   "jamb_name": "Home Science, Nutrition and Dietetics",
+   "institutions": [
+    "NUTRITION AND",
+    "DIETETICS",
+    "MKAR"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [],
+   "first_line": 3739,
+   "line_range": [
+    3739,
+    3743
+   ],
+   "scope": [
+    3739,
+    3744
+   ]
+  },
+  {
+   "jamb_name": "Home Science & Management",
+   "institutions": [
+    "DOU",
+    "PAAU",
+    "UNN"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Physics/Mathematics or one (1) social science subject (Economics or Geography)"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes including Chemistry, Biology/Agricultural Science, Mathematics and at least 'O' Level pass in English Language and Physics, and any one of General Metal Work, General Wood Work, Building/Engineering Drawing, Furniture Design and Construction, Upholstery Design and Construction, Spray Painting and Period Furniture, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing and Basic Electricity.",
+   "direct_entry": "Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agricultural Science/Economics/Physics/Mathematics/Geography/Accounting.",
+   "institution_waivers": [
+    {
+     "institution": "MAKURDI",
+     "note": "Accepts: (a) 'A' Level passes in Chemistry, Physics, Biology and Mathematics; (b) HND upper credit in relevant programs plus the UTME requirements to 300 level; (c) ND upper credit in relevant programs plus the UTME requirements to 200 level; (d) NCE lower credit in relevant subjects plus the UTME requirements to 100/200 level; (e) NCE merit in relevant subjects plus UTME requirements to 100 level (Food Science or Hotel Management or any relevant course). Requires five (5) SSC credit passes at not more than two (2) sittings: two (2) 'O' Level credit passes in Chemistry and Biology or Agricultural Science or Health Science, and three (3) 'O' Level credit passes in Geography, Physics, Mathematics, Food & Nutrition, Home Management, Clothing and Textiles and English Language. UTME requires Chemistry, Biology or Agricultural Science, Mathematics or Physics."
+    },
+    {
+     "institution": "UNN",
+     "note": "As in Agricultural Economics. In addition to the UTME requirements, requires 'O' Level credit passes in Chemistry, Biology or Food and Nutrition or Agricultural Science. UTME requires Chemistry, Biology/Agricultural Science, and one (1) of Physics/Mathematics, Economics or Geography."
+    },
+    {
+     "institution": "RSU",
+     "note": "Same as in Food Science and Technology. Requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry, Biology or Agric Science and any other subject."
+    },
+    {
+     "institution": "FUNAAB",
+     "note": "Requires five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology and Physics. UTME requires Chemistry, Biology and Physics/Mathematics."
+    },
+    {
+     "institution": "PAAU",
+     "note": "Requires credit passes at SSC in English Language, Chemistry, Biology or Agricultural Science, Mathematics, Nutrition/Home Economics and at least 'O' Level pass in Physics."
+    }
+   ],
+   "first_line": 3744,
+   "line_range": [
+    3744,
+    3768
+   ],
+   "scope": [
+    3744,
+    4028
+   ]
+  },
+  {
+   "jamb_name": "Pasture & Range Management",
+   "source_heading": "PASTURE AND RANGE MANAGEMENT",
+   "institutions": [
+    "FUNAAB"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Physics/Mathematics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language (shares requirements with Animal Production and Health umbrella block).",
+   "direct_entry": "Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics (as in Animal Production and Health).",
+   "institution_waivers": [
+    {
+     "institution": "FUNAAB",
+     "note": "As in Agriculture Extension and Rural Development (UTME waiver reference)."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Livestock Production Technology",
+   "source_heading": "LIVESTOCK PRODUCTION TECHNOLOGY",
+   "institutions": [
+    "NDU"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Physics/Mathematics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language (shares requirements with Animal Production and Health umbrella block).",
+   "direct_entry": "Two 'A' Level passes or equivalent in Chemistry and one of Biology/Botany/Zoology/Agricultural Science/Geography/Geology/Mathematics/Economics (as in Animal Production and Health).",
+   "institution_waivers": [
+    {
+     "institution": "NDU",
+     "note": "NDU requires five (5) 'O' level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Animal Physiology",
+   "source_heading": "ANIMAL PHYSIOLOGY",
+   "institutions": [
+    "FUNAAB"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Mathematics/Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Chemistry, Mathematics, Biology/Agric Science and one of Physics, Geography or Economics (shares requirements with Animal Science umbrella block).",
+   "direct_entry": "Two (2) 'A' level passes or its equivalent in Chemistry and one of Biology/Botany/Zoology/Agriculture Science/Geography/Geology/Mathematics/Economics (as in Animal Science).",
+   "institution_waivers": []
+  },
+  {
+   "jamb_name": "Crop Protection",
+   "source_heading": "CROP PROTECTION",
+   "institutions": [
+    "FUNAAB",
+    "LASUSTECH"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Mathematics or Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include Chemistry, Biology/Agricultural Science, Mathematics and one Science/Social Science subject and at least 'O' Level pass in Physics (shares requirements with Crop Production umbrella block).",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and Biology/Agricultural Science/Botany/Zoology or Physics/Mathematics/Economics (as in Crop Production).",
+   "institution_waivers": []
+  },
+  {
+   "jamb_name": "Plant Science",
+   "source_heading": "PLANT SCIENCE AND BIOTECHNOLOGY",
+   "institutions": [
+    "ABSU",
+    "RSU"
+   ],
+   "utme_subjects": [
+    "Biology or Agricultural Science",
+    "Chemistry",
+    "Physics or Mathematics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry and Biology or Agricultural Science.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and any of Biology, Agricultural Science, Zoology and Botany.",
+   "institution_waivers": [
+    {
+     "institution": "PHC",
+     "note": "No Direct Entry."
+    },
+    {
+     "institution": "JABU",
+     "note": "Accepts five (5) 'O' Level credit passes in English Language, Chemistry, Mathematics, Biology, Agricultural Science, Economics; requires 'O' Level credit passes to include Geography or Economics and at least 'O' Level pass in Physics."
+    },
+    {
+     "institution": "OAU",
+     "note": "UTME requires Mathematics, Chemistry and Biology/Zoology/Botany."
+    },
+    {
+     "institution": "IMSU",
+     "note": "As in Agriculture."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Farm Management & Agric. Extension",
+   "source_heading": "AGRICULTURAL ECONOMICS & FARM MANAGEMENT",
+   "note": "No standalone heading exactly named 'Farm Management & Agric. Extension'. Best match is the sub-heading 'AGRICULTURAL ECONOMICS & FARM MANAGEMENT' (the only column-0 heading containing 'Farm Management'). A separate sub-heading 'AGRICULTURAL ECONOMICS & EXTENSION' (BOUEDST, HENSARD) also exists in the same block.",
+   "institutions": [
+    "CRAWFORD",
+    "FUNAAB",
+    "LASUSTECH",
+    "OOU"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology/Agricultural Science",
+    "Mathematics or Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and one of Geography, Physics and Economics (shares requirements with Agricultural Economics umbrella block).",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and one of Zoology/Botany/Agricultural Science/Biology, Geography, Mathematics, Physics, Geology, Economics and Health Science (as in Agricultural Economics).",
+   "institution_waivers": [
+    {
+     "institution": "DELSU",
+     "note": "Accepts upper credit only; also accepts NCE credit in Agricultural Science, Biology, Chemistry or Physics."
+    },
+    {
+     "institution": "OOU",
+     "note": "Accepts credit in ND Agriculture into 100 level; 'A' Level pass in both Chemistry and Biology; ND distinction, HND credit, NCE credit double major in Agriculture."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Eco-Tourism and Wildlife Management",
+   "source_heading": "ECOTOURISM & WILDLIFE MANAGEMENT",
+   "institutions": [
+    "FUTA",
+    "IBADAN",
+    "LAUTECH"
+   ],
+   "utme_subjects": [
+    "English Language",
+    "Biology/Agricultural Science",
+    "any two (2) of Chemistry, Geography, Economics, Mathematics and Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes to include English Language, Mathematics, Biology or Agricultural Science, Chemistry and any other relevant subject (shares block with Agribusiness umbrella).",
+   "direct_entry": "ND with a minimum of upper credit or equivalent from recognized Polytechnics and Colleges of Wildlife Management in relevant programs (Agricultural Sciences); or candidates with 'A' Level passes in at least two (2) of Chemistry, Biology, Physics and Geography or Economics, plus UTME requirements.",
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "UTME same as in Wildlife and Ecotourism; accepts HND upper credit into 200 level and ND/NCE upper credit into 100 level in Tourism, Wildlife Management, Forestry, Agriculture, Animal Husbandry and related programs."
+    },
+    {
+     "institution": "FUTA",
+     "note": "Accepts ND with upper credit from recognized Polytechnic/College of Wildlife Management; GCE passes at one sitting with at least six (6) points in two of Chemistry, Biology, Physics and Geography or Economics."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Environmental Management and Technology",
+   "source_heading": "ENVIRONMENTAL MANAGEMENT AND TOXICOLOGY",
+   "note": "No standalone heading exactly named 'Environmental Management and Technology'. The only standalone 'ENVIRONMENTAL MANAGEMENT AND ...' block with its own requirement columns is 'ENVIRONMENTAL MANAGEMENT AND TOXICOLOGY:' (heading at line 2556, continues to 2568). A separate 'ENVIRONMENTAL MANAGEMENT AND POLLUTION CONTROL:' block (MARITIME-UNI) and a forestry-family 'FORESTRY AND ENVIRONMENTAL TECHNOLOGY' block (line 3269, no distinct institution codes) also exist. Institutions below are from ENVIRONMENTAL MANAGEMENT AND TOXICOLOGY.",
+   "institutions": [
+    "FUNAAB",
+    "KWASU"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology",
+    "Mathematics/Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Chemistry, Biology Science, Physics and Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and any one of Biology, Agricultural Science, Botany and Zoology.",
+   "institution_waivers": [
+    {
+     "institution": "FUNAAB",
+     "note": "Accepts upper credit in NCE, ND and HND in related programs into 200 and 300 level respectively, but candidates must possess the UTME requirements. UTME: FUNAAB requires 'O' Level credit pass in English Language, Mathematics, Chemistry, Physics and Biology."
+    }
+   ]
+  }
+ ]
+}

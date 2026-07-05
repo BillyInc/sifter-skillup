@@ -1,0 +1,2003 @@
+[
+ {
+  "programme": "Building",
+  "code": "BUD",
+  "technical_skills": [
+   "define building as a structure, process and discipline",
+   "discuss the history of building",
+   "explain building profession; and",
+   "discuss the interrelationships among built environment professionals",
+   "explain thermal comfort in buildings",
+   "explain transmission and vibration in buildings",
+   "identify and apply acoustic materials in buildings",
+   "calculate reverberation time; and",
+   "carry out simple lighting design in buildings",
+   "identify and produce Architectural, Civil, Structural and electrical drawings",
+   "apply freehand drawing in communication in building processes",
+   "develop surfaces; and",
+   "differentiate between presentation and working drawings",
+   "state statutory and local authority requirements in building construction process",
+   "prepare site for construction 38",
+   "identify different types of engineering soils",
+   "set out simple buildings",
+   "classify and explain properties of building materials; and",
+   "explain types and production of cement, aggregates, water and concrete production",
+   "explain general principles of economics",
+   "state basic problems of resource allocation and modes of building components production",
+   "explain methods of production; and",
+   "relate demand and supply in pricing and tendering processes",
+   "explain different types of drawing",
+   "draw different elevations and perspectives; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)   (2",
+   "Elementary Mathematics II",
+   "Introduction to Computing Sciences",
+   "General Physics I",
+   "General Physics II",
+   "General Chemistry I",
+   "Introduction to Building I",
+   "Building and Architectural Science",
+   "Building Graphics, Lettering and Modelling I",
+   "Building Construction and Materials I",
+   "Principles of Economics for Builders",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Building Graphics, Lettering and Modelling II",
+   "Mechanics/Strength of Materials I",
+   "Building Construction & Materials II",
+   "Land Surveying I",
+   "Land Surveying II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D113",
+    "domain": "Glass, Ceramics, Building Materials",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D018",
+    "domain": "Civil",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D131",
+    "domain": "Motorsport Engineering",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Clothing and Textile Design",
+  "code": "CLT",
+  "technical_skills": [
+   "identify clothing theories, clothing terms and basic clothing tools and equipment",
+   "make samples of basic stitches, seams, seams finish, arrangement of fullness; and",
+   "attachment of various fastenings and take accurate body measurement",
+   "differentiate different costume",
+   "explain the historical development of costumes",
+   "describe the evolution of costumes among different ethnic groups; and",
+   "discuss the impact of acculturation on contemporary Nigerian fashion 81",
+   "identify pattern drafting equipment and symbols",
+   "draft basic blocks",
+   "differentiate between commercial and drafted patterns; and",
+   "adapt basic blocks to simple styles",
+   "explain the meaning and need of laundering clothes",
+   "remove stains using appropriate reagents and techniques",
+   "identify care labels, symbols and meaning",
+   "use appropriate washing methods and finishing agents for different fabrics",
+   "store laundered clothes appropriately; and",
+   "know the types/ techniques in clothing repair; darning of tears in fabrics/apparel and methods of renovation/ remodelling of clothes",
+   "understand basic textile terms",
+   "identify the types and parts of a loom; and",
+   "perform weaving operation and produce samples of woven fabrics",
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian state towards nation building 77"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Chemistry I",
+   "General Chemistry Practical I",
+   "General Chemistry Practical I",
+   "Introduction to Clothing Techniques",
+   "History of Costumes",
+   "Introduction to Pattern Drafting and Design",
+   "Fabric care and Clothing Maintenance",
+   "Introduction to weaving Techniques",
+   "Statistical Computing II",
+   "Basic Design in Textile Production",
+   "Clothing Construction",
+   "Textile Materials",
+   "Creative Fabrics and Fashion Accessories",
+   "Principles and Techniques of Textile Design",
+   "Computer Aided Design in Clothing and Textile"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D105",
+    "domain": "Handicraft, Basketry, Textile Craft",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D111",
+    "domain": "Textile, Garment",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D106",
+    "domain": "Garment Making, Tailoring, Dressmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D075",
+    "domain": "Fashion, Textiles",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D160",
+    "domain": "Fashion Styling, Image Consulting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D133",
+    "domain": "Luxury",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Environmental Management",
+  "code": "EVM",
+  "technical_skills": [
+   "identify and deduce the physical quantities and their units",
+   "differentiate between vectors and scalars",
+   "describe and evaluate motion of systems on the basis of the fundamental laws of mechanics",
+   "apply Newton's laws to describe and solve simple problems of motion",
+   "evaluate work, energy, velocity, momentum, acceleration, and torque of moving or rotating objects",
+   "explain and apply the principles of conservation of energy, linear and angular momentum",
+   "describe the laws governing motion under gravity; and",
+   "explain motion under gravity and quantitatively determine behaviour of objects moving under gravity",
+   "explain the concepts of heat and temperature and relate the temperature scales",
+   "define, derive, and apply the fundamental thermodynamic relations to thermal systems",
+   "describe and explain the first and second laws of thermodynamics, and the concept of entropy",
+   "state the assumptions of the kinetic theory and apply techniques of describing macroscopic behavior",
+   "deduce the formalism of thermodynamics and apply it to simple systems in thermal equilibrium; and",
+   "describe and determine the effect of forces and deformation of materials and surfaces",
+   "explain the nature of built environment",
+   "know economic production systems and the factors influencing them; and",
+   "learn how to measure urban environmental quality",
+   "know the concept and components of natural environment",
+   "examine factors affecting natural environment; and",
+   "know the issues and challenges of natural environment",
+   "analyse the concept of humanity, its origin, philosophy and cosmic environment",
+   "improve their logical and critical thinking skills",
+   "identify the basic roles of science and technology in human society 109",
+   "describe renewable and non-renewable environmental resources available in the Nigerian society",
+   "identify resource conservation tools and techniques for sustainable environment"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "explain basic definition of Set, Subset, Union, Intersection, Complements and use of Venn diagrams",
+   "solve quadratic equations",
+   "solve trigonometric functions",
+   "identify various types of numbers; and",
+   "solve some problems using Binomial theorem"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematic I",
+   "Elementary Mathematics II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I",
+   "General Physics II",
+   "Built Environment",
+   "Introduction to Natural Environment",
+   "Elements of Environmental Management",
+   "Economics of Environmental Management",
+   "Introduction to Valuation",
+   "Environmental Psychology and Perception",
+   "Environmental Protection",
+   "Quantitative Techniques in Environmental Management",
+   "Population and Environmental Change",
+   "Computer Application in Environmental Management"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D018",
+    "domain": "Civil",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "ENVIRONMENTAL STANDARDS",
+  "code": "ENS",
+  "technical_skills": [
+   "explain basic concepts related to management",
+   "explain the roles, skills and functions of management 133",
+   "analyze organizational problems and how managerial decisions are arrived at; and",
+   "demonstrate the complexities associated with management of human resources in the organizations and how to apply the knowledge in handling these complexities",
+   "articulate the series of steps/processes & strategies to achieve end results",
+   "determine, procure, optimize resources (human, material, & financial) needed",
+   "apply the project management processes to initiate, plan, execute, monitor and control projects; and",
+   "have a working knowledge of key project management methods",
+   "distinguish between egocentrism and anthropocentrism",
+   "discuss how these two competing ideologies influenced the development of environmental standards",
+   "state the Key issues in the Rio declaration",
+   "discuss the impact of human � caused environmental damage in the society; and",
+   "explain how two worldviews has led to problems and delay in establishing standards",
+   "explain the concepts of ecosystems and biogeochemical cycles",
+   "narrate the functions of the earths major systems",
+   "give examples of human activity on the earth systems",
+   "explain how these systems are affected by human activity; and",
+   "state the essential differences between biosphere, hydrosphere and lithosphere",
+   "explain the concept of global warming",
+   "explain Causes and effects of global warming",
+   "suggest possible societal responses to global warming",
+   "explain the relationship between the law and environmental standards; and",
+   "explain the concepts of Climate variability and external forcing mechanisms; and",
+   "discuss solutions to negative impacts of climate change",
+   "know the basic features of philosophy as an academic discipline"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "Introduction to Computing Sciences",
+   "General Physics I",
+   "General Physics II",
+   "General Chemistry I",
+   "Principles of Management",
+   "History of Environmental Standards",
+   "Introduction to Environmental Sciences",
+   "Global Warming and Climate Change",
+   "Natural Ecosystems",
+   "Introduction to Valuation",
+   "Economics of Environmental Standards",
+   "Environmental Ethics",
+   "Environmental Pollution and Degradation",
+   "Natural Resources Conservation and Environmental Management",
+   "Wildlife Conservation and Land Use",
+   "Population and Environmental Change"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Estate management",
+  "code": "ESM",
+  "technical_skills": [
+   "Gain familiarity with e-libraries",
+   "Understand basics of desk research; and",
+   "Successfully browse the web and access electronic databases",
+   "Understand the fundamental concepts and principles of demand and supply",
+   "Understand consumer behaviour",
+   "Apply this understanding to urban land economics and the behaviour of the property market and",
+   "Apply this understanding to the relationship between land economics and property value trends in later years of study",
+   "demonstrate familiarity with producing sketches",
+   "explain architectural design processes",
+   "define, recognize and interpret architectural symbols; and",
+   "explain and interpret architectural drawings",
+   "define and explain basic computer concepts, fundamental functions and operations of the computer",
+   "identify the basic elements required in a computer system 165",
+   "explain an operating system software in any Operating System environment",
+   "produce electronic documents using basic software applications such as Microsoft Office applications",
+   "design basic algorithms for computer programs using basic programming languages",
+   "demonstrate the use of Web browsers, search engines and e-mail; and",
+   "demonstrate the use of Internet for learning",
+   "demonstrate understanding of basic concepts related to management knowledge. Understand the roles, skills and functions of management",
+   "define organizational problems and how managerial decisions are arrived at; and",
+   "explain the complexities associated with management of human resources in the organizations and how to apply the knowledge in handling these complexities",
+   "understand the role and functions of the Estate Surveying and Valuation professional in the public, corporate and the organized private sector",
+   "understand the basic industrial processes where the Estate Surveyors and Valuers' skills may be required",
+   "develop mastery of the fundamental principles of Estate Management",
+   "develop clear understanding of the history of the Estate Surveying and Valuation profession in Nigeria; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "explain and analyze the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "List and identify the major linguistic groups in Nigeria",
+   "State in sequential order the gradual evolution of Nigeria as a political unit",
+   "define and analyze the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Use of Library, Study Skills and ICT",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "Economic Principles",
+   "Architectural Graphics and Lettering",
+   "Introduction to Computer",
+   "Principles of Management",
+   "Introduction to Estate Management I",
+   "Introduction to Property Management I",
+   "Introduction to Land Use Planning",
+   "Building Construction and Materials II",
+   "Law of Contract and Tort I",
+   "Law of Contract and Tort II",
+   "Basic Surveying I",
+   "Basic Surveying II",
+   "Land Economics I",
+   "Land Economics II",
+   "Property Law I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D051",
+    "domain": "Real Estate",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Fashion design",
+  "code": "FAD",
+  "technical_skills": [
+   "analyse the basic concept of design with reference to the elements and principles of design",
+   "explain the main design objectives such as, functional and non-functional qualities of a design and",
+   "form motifs and make designs on paper suitable for fabric design and production",
+   "select and use suitable equipment for fashion design",
+   "produce a working sketch with the basic body proportion and flesh added to the figure, Know three-dimensional figure",
+   "produce a finished garment as determined by the shape of the fashion figure",
+   "explain the colour system and how the colour key relates to one's personal colouring",
+   "describe the symmetrical and asymmetrical balance in design satisfy the relationship of all design aspects",
+   "analyse how the lines on body shape create the silhouette of a garment; and",
+   "enumerate effects of fabric properties as related to colour and texture on fabric design, and Know how to sketch a clothed fashion figure from life models",
+   "list out all the equipment for pattern-drafting and cutting room practice 194",
+   "describe the safety regulations in pattern drafting and cutting room practice",
+   "explain some technical terms, sign and notation used in pattern drafting",
+   "discuss the human figure in relation to its motion, height, girth and build",
+   "explain body measurements and how to take them for pattern drafting",
+   "analyse the concepts of peace, conflict and security",
+   "list major forms, types and root causes of conflict and violence",
+   "differentiate between conflict and terrorism",
+   "enumerate security and peace building strategies; and",
+   "describe roles of international organizations, media and traditional institutions in peace building",
+   "describe basic raw materials for textiles manufacture materials",
+   "list the general principles of processes involved in staple yarn manufacture- objectives of blow room operations, principles of blow room machinery and its operation",
+   "analyze the methods of manufacture and numbering of sewing threads; and",
+   "enumerate the basic processes of fabric manufacture",
+   "describe the equipment and accessories used for garment construction"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports 192",
+   "analyze the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyze the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Basic Design I",
+   "Fashion Design /Illustration I",
+   "Pattern Drafting and Cutting Room Practice I",
+   "Textile Materials I",
+   "Introduction to Fashion Design and Sewing Techniques",
+   "History of Costumes I",
+   "Basic Design II",
+   "Fashion and Creative Surface Design",
+   "Fashion Design /Illustration II",
+   "Textile Materials II",
+   "Pattern Drafting and Cutting Room Practice II",
+   "History of Costumes II",
+   "Introduction to Freehand Drawing",
+   "Fashion Design Illustration III",
+   "Advanced Fashion Design",
+   "Pattern Drafting and Draping",
+   "Clothing Construction and Tailoring",
+   "Fashion Accessories    2 Units C: LH 15; PH 45)",
+   "Fashion Merchandising"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D075",
+    "domain": "Fashion, Textiles",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D160",
+    "domain": "Fashion Styling, Image Consulting",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D111",
+    "domain": "Textile, Garment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D106",
+    "domain": "Garment Making, Tailoring, Dressmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D107",
+    "domain": "Leather Technology, Shoemaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D105",
+    "domain": "Handicraft, Basketry, Textile Craft",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D133",
+    "domain": "Luxury",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D108",
+    "domain": "Printing Technology, Pre-press",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Fine and Applied Arts",
+  "code": "FCD",
+  "technical_skills": [
+   "draw figures and objects with precision",
+   "comprehensively visualize objects in relation to space",
+   "master coordination between the hand and drawing tools",
+   "engage the drawing ground with confidence",
+   "understand how to compose the pictorial space",
+   "appreciate the value of margins in composing the pictorial space",
+   "stretch paper on the drawing board; and",
+   "manage and value individual sketch pads",
+   "define the dynamics of visualizing objects in relation to space",
+   "explain the coordination between the hand and drawing tools",
+   "demonstrate how to compose the pictorial space; and",
+   "display and keep individual sketch pads",
+   "understand the language of vision or the elements of design in the right sequence, with line in a direction encases shape, space, size, value colour and texture",
+   "appreciate the language of vision and the laws of formal organization and their derivation from nature",
+   "understand the vocabulary, characteristics, physical properties and role of colour in art and design",
+   "relate the above to the laws of formal organization or principles of design such as forms of balance, harmony, repetition, variation, unity, economy, proportion",
+   "engage design and art practice from the knowledge foundation above; and",
+   "evaluate and appreciate works of art",
+   "to faithfully evaluate and appreciate works of art",
+   "define form in the language of vision and the laws of formal organisation 234",
+   "explain how words relate to the art and design forms",
+   "draw verbal analogies on the art and design forms; and",
+   "demonstrate the art and design forms",
+   "understand the history of art as the foundation of other art histories",
+   "sketch a relationship among global art histories"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "explain logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit 235",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Basic Drawing I",
+   "Basic Drawing1I",
+   "Fundamentals of Art and Design I",
+   "Fundamentals of Art and Design II",
+   "Introduction to Art Appreciation",
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to History of Art I",
+   "Introduction to History of Art II",
+   "Introduction to Two-Dimensional Art and Design",
+   "Introduction to Three-Dimensional Art and Design",
+   "Introduction to Digital Art and Design",
+   "Research Methods",
+   "African Art History",
+   "Contemporary African Art",
+   "Draughtsmanship I",
+   "and FAA 442: Draughtsmanship",
+   "Glaze Chemistry"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D070",
+    "domain": "Performing Arts & Entertainment",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D167",
+    "domain": "XR & Immersive Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D058",
+    "domain": "EdTech",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D104",
+    "domain": "Pottery, Ceramics, Glass",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D089",
+    "domain": "Funeral",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D039",
+    "domain": "Higher Education",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D098",
+    "domain": "Precision Engineering, Toolmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D003",
+    "domain": "D003 Artificial Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Geography",
+  "code": "GEO",
+  "technical_skills": [
+   "describe the composition of the earth's crust, atmosphere and hydrosphere",
+   "describe the origins of landforms; and",
+   "identify and explain the cycling of matter and energy 276",
+   "compare world population",
+   "identify effects of world populations on physical/environmental resources; and",
+   "analyze ways to sustainably manage the population and resources",
+   "interpret features, symbols and signs in maps; and",
+   "classify and interpret physical features in maps",
+   "illustrate the multidisciplinary nature of environmental science",
+   "define environmental science",
+   "interpret how the environment works; and",
+   "demonstrate how to manage the environment sustainably",
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic. inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content -- deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and 278 human conduct, philosophy and religion, philosophy and human values, philosophy and character moulding. ENT 211 � Entrepreneurship and Innovation (2 Units C: LH 15; PH 45) Learning Outcomes",
+   "explain the concepts and theories of entrepreneurship, intrapreneurship, opportunity seeking, new value creation, and risk taking",
+   "define the meaning, scope, and why different landforms exist",
+   "identify and characterize various landforms in his community; and",
+   "explain their importance",
+   "define basic concepts of spatial organization"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyze the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyze the concepts of trade, economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Practical Physics I",
+   "Introduction to Physical Geography",
+   "Introduction to Human Geography",
+   "Introduction to Practical Geography",
+   "Local Field Studies",
+   "Introduction to Environmental Sciences",
+   "Introductory Geomorphology and Soil Geography",
+   "Introductory Climatology and Biogeography",
+   "Spatial Organisation of Society",
+   "Introduction to Remote Sensing and GIS",
+   "Field Course",
+   "Statistics for Geographers",
+   "History of Geographical Thoughts",
+   "Geomorphology",
+   "Science of Climate change"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D103",
+    "domain": "Jewellery Making, Goldsmithing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D111",
+    "domain": "Textile, Garment",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Quantity Surveying",
+  "code": "QTS",
+  "technical_skills": [
+   "express an awareness and understanding of various professionals and professional bodies in the construction industry and the interrelationships of various professionals",
+   "evaluate an awareness and understanding of the relationships between the Nigerian Institute of Quantity Surveyors (NIQS) and the Quantity Surveyors Registration Board of Nigeria (QSRBN)",
+   "demonstrate the knowledge and skill for measuring girths, areas and volumes of regular and irregular shapes as well as setting up dimensions on taking off sheets",
+   "illustrate an awareness and understanding of the principles underpinning the measurement and description of construction works using the Building and Engineering Standard Method of Measurement (BESMM)",
+   "display the knowledge and skills for measuring substructure up to and including ground floor bed for ordinary strip foundation; and",
+   "Demonstrate an understanding and skill for bill of quantities production from the measured substructure using manual method and MS Excel. 370",
+   "gain an awareness and understanding of the principles underpinning the measurement and description of construction works using the Building and Engineering Standard Method of Measurement (BESMM)",
+   "Develop the knowledge and skill for using of BIM tools to perform QS functions such as bill of quantities production, costing, valuation and scheduling. in computer hardware and software selection. Performing quantity surveying calculations using 389 MS Excel, for computation of unit rates, preparation of BOQs, preparation of valuations, financial reports. Preparation of final accounts, report writing using MS word, PowerPoint presentations using charts and graphs, Use of MS Project and other project management software. Advanced usage of CAD Measure and QS CAD for measurement of AutoCAD drawings. Use of dedicated QS software for measurement and production of bill of quantities such as master bill elite, build soft. Use of dedicated QS software for estimating; Use of Building Information Modelling (BIM) tools for QS functions � quantification, costing, valuation and scheduling. Group assignments and learning tasks to promote peer support in developing the requisite knowledge and skills in software usage",
+   "develop an understanding and skill for bill of quantities production from the measured substructure using manual method and MS Excel",
+   "Understand the evolution of SMM of Construction works",
+   "Understand the developments from different editions of SMM up to BESMM4R",
+   "Know the philosophy underlying the use of tabulated format",
+   "Apply BESMM4R to taking off using standard stationery for manual bill of quantities preparation; and",
+   "Understand the purpose of bill of quantities",
+   "Gain understanding of the types of estimating in construction works and where applicable",
+   "Develop skill in the use of MS Excel to estimate from first principles",
+   "Explain concepts related to problem solving and identify problem types",
+   "Identify and explain problem solving methods",
+   "Exemplify solvable and unsolvable problems",
+   "Interpret given problems and formulate solutions to them using flowchart, pseudo code and/or other formalisms",
+   "Apply appropriate strategies and procedures to arrive at workable solutions to problems; and",
+   "Develop critical thinking and problem-solving skills required throughout the computing career",
+   "explain the basic concepts of descriptive statistics",
+   "present data in graphs and charts",
+   "differentiate between measures of location, dispersion and partition"
+  ],
+  "transferable_skills": [
+   "Identify possible sound patterns in English Language",
+   "List notable language skills",
+   "Classify word formation processes",
+   "Construct simple and fairly complex sentences in English",
+   "Apply logical and critical reasoning skills for meaningful presentations",
+   "Demonstrate an appreciable level of the art of public speaking and listening; and",
+   "Write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Introduction to Quantity Surveying",
+   "Principles of Measurement of Building Works",
+   "Introduction to Measurement of Building Works",
+   "Introduction to Tendering and Estimating",
+   "Introduction to Problem Solving",
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I",
+   "Elementary Mathematics II",
+   "General Physics I",
+   "General Physics II",
+   "Descriptive Statistics",
+   "Measurement and Description of Building Works I",
+   "Measurement and Description of Building Works II",
+   "Principles of Tendering and Estimating I",
+   "Principles of Tendering and Estimating II",
+   "Introduction to Auto CAD and BIM Quantity Surveyors",
+   "Computer Programming I",
+   "Entrepreneurship and Innovation",
+   "Statistical Inference I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D156",
+    "domain": "Land Surveying, Cadastral Mapping",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Surveying and Geoinformatics",
+  "code": "SVG",
+  "technical_skills": [
+   "enumerate historical development, classes and uses of Surveying and Geoinformatics",
+   "highlight the basic principles of Surveying and qualities of Surveyors",
+   "justify relationship between Surveying and Geoinformatics and other disciplines; and",
+   "identify employment opportunities in Surveying and Geoinformatics",
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "know the elementary rules of reasoning",
+   "distinguish between valid and invalid arguments",
+   "think critically and assess arguments in texts, conversations and day-to-day discussions",
+   "critically asses the rationality or otherwise of human conduct under different existential conditions",
+   "develop the capacity to extrapolate and deploy expertise in logic to other areas of knowledge, and",
+   "guide his or her actions, using the knowledge and expertise acquired in philosophy and logic inference. Informal fallacies, laws of thought, nature of arguments. Valid and invalid arguments, logic of form and logic of content -- deduction, induction and inferences. Creative and critical thinking. Impact of philosophy on human existence. Philosophy and politics, philosophy and human conduct, philosophy and religion, philosophy and human values, philosophy and character moulding",
+   "carryout measurements, apply necessary corrections to attain required accuracy",
+   "use simple methods of Surveying and Geoinformatics to collect geospatial data; and",
+   "process acquired data and produce surveying plans at suitable scales",
+   "explain historical development and methods of land acquisition in Nigeria",
+   "carry out comparative analysis of regional land administration systems in Nigeria",
+   "discuss the provision of laws governing land administration in Nigeria; and",
+   "identify the limitation of maritime boundaries in Nigeria",
+   "discuss the nature and motion of planets, solar, stellar and satellite systems",
+   "use the applications of celestial coordinate system, time system and star almanac; and",
+   "develop the procedure for the determination of solar and stellar azimuths",
+   "identify general rules, regulations and specifications governing cadastral Surveying",
+   "carry out cadastral Surveying and proper keeping of cadastral records; and 416",
+   "determine appropriate compensations, claims and proper handling of survey in dispute 417"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyze the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "Elementary Mathematic I",
+   "Elementary Mathematics II",
+   "Introduction to Surveying and Geoinformatics",
+   "Entrepreneurship and Innovation",
+   "Basic Surveying I",
+   "Cadastral Surveying I",
+   "Field Astronomy",
+   "Photogrammetry I",
+   "Cadastral Surveying II",
+   "Computer Applications to Surveying",
+   "Surveying Computation",
+   "Basic Surveying II",
+   "Surveying Instrumentation",
+   "Geodetic Astronomy",
+   "Photogrammetry II"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D156",
+    "domain": "Land Surveying, Cadastral Mapping",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Urban and Regional Planning",
+  "code": "URP",
+  "technical_skills": [
+   "know the basic features of philosophy as an academic discipline",
+   "identify the main branches of philosophy & the centrality of logic in philosophical discourse",
+   "Define statistical methods",
+   "Demonstrate skills in measurement of the central tendencies is the analysis of basic data",
+   "Illustrate skills in basic probability sampling",
+   "Carry out basic hypothesis sampling tests",
+   "Demonstrate skills in quantitative and qualitative statistical analysis",
+   "identify the various urban land use forms and their peculiarities",
+   "conduct a basic traffic count",
+   "identify various land use conflicts",
+   "carry out design as a solution to and identified land use problem",
+   "write a technical report for the design",
+   "Identify the residential community/neighbourhood units and its physical structure",
+   "conduct surveys on household characteristics of a residential neighbourhood",
+   "design a functional residential neighbourhood",
+   "Describe the functional relationship of a neighbourhood",
+   "Prepare a detailed housing layout and plot subdivision; and",
+   "Design a detailed layout of a residential neighbourhood in two and three dimensions",
+   "identify the components of rural and urban land use",
+   "illustrate the relationship between standards and the various land uses and the specialised areas",
+   "demonstrate the primordial role of the concept of zoning in planning practice; and",
+   "illustrate the role of urban renewal techniques in slum upgrade",
+   "describe the concepts, principles and importance of land use planning",
+   "identify the determinants, principles of land use dynamics and as integrated spatial solutions for land use problems",
+   "outline the various land use types; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English Language",
+   "list notable Language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of Trade, Economic and Self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematic I",
+   "Elementary Mathematics II",
+   "Introduction to Computing Sciences",
+   "Theories and Principles of Economics",
+   "Introduction to Sociology",
+   "Statistical Methods and Sources",
+   "Planning Studio I",
+   "Planning Principle and Practice",
+   "Introduction to Land Use Planning",
+   "Introduction to Remote Sensing",
+   "Site Selection and Planning",
+   "Urbanisation and Population Studies",
+   "Planning Studio IV",
+   "Housing Studies",
+   "Planning Theory",
+   "Regional Planning",
+   "Planning Model making Workshop",
+   "Transportation Planning I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D021",
+    "domain": "Architecture",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D156",
+    "domain": "Land Surveying, Cadastral Mapping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D028",
+    "domain": "General Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D038",
+    "domain": "Compliance, Regulation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D045",
+    "domain": "Public Administration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Industrial Design",
+  "code": "IDD",
+  "technical_skills": [
+   "develop accuracy in visual perception, judgment of distance, direction and proportion",
+   "develop technical and manipulative skill; and",
+   "solve basic problems in the observation and interpretation of forms with concern for space, time, shapes",
+   "prepare quick sketches of the shapes and forms of different objects",
+   "make detailed drawing of objects through still life drawing",
+   "capture in drawing and shading textural qualities of different objects; and",
+   "apply tonal value in shading",
+   "demonstrate the understanding of three-dimensional practice in many facets through conceptual and technical approaches",
+   "express expansive experience grounded in material tradition that promote creative study challenges in various disciplines of Industrial Design",
+   "identify basic tools, materials and techniques used in ceramics, fashion design, graphics, textiles, glass design and technology and metal design",
+   "explore the language and grammar of design at both two- and three-dimensional level",
+   "analyse principles of form and spatial organization; and",
+   "make relief design",
+   "translate 3-dimensional digital models into real objects using appropriate CAM software and application systems such as 3D printing",
+   "discuss the fundamentals of design history and theory, beginning with Historic Times: Pre- historic design in Africa (North, West, East and South Africa); and",
+   "discuss important innovations and breakthrough technologies that have shaped the evolution of visual communication",
+   "analyse the parameters that influence the ancient and contemporary designs",
+   "discuss the history of Design in Nigeria citing examples from the different specialisations of Industrial Design; and",
+   "discuss the role of art and design in technology and in nation building",
+   "describe the purpose of clothing, protection of clothing, modesty, attraction and communication, clothing culture and communication; and",
+   "identify careers and opportunities in textiles and fashion design fields",
+   "explain the fundamentals of ceramics and glass subjects; and",
+   "define metals and the technology of fine metal works; and"
+  ],
+  "transferable_skills": [],
+  "course_titles": [
+   "General Drawing I",
+   "General Drawing II",
+   "Computer Aided Design and Development",
+   "History of Design I",
+   "History of Design II",
+   "Introduction to Graphics and Communication Design",
+   "Introduction to Textiles and Fashion Design",
+   "Introduction to Ceramics and Glass",
+   "Introduction to Metal Design",
+   "Research Methods and Techniques in Industrial Design"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D044",
+    "domain": "Graphic Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D104",
+    "domain": "Pottery, Ceramics, Glass",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D080",
+    "domain": "Interior Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D139",
+    "domain": "D139 Game Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D167",
+    "domain": "XR & Immersive Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D160",
+    "domain": "Fashion Styling, Image Consulting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D065",
+    "domain": "Translation, Interpretation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "adjacent"
+   }
+  ]
+ }
+]

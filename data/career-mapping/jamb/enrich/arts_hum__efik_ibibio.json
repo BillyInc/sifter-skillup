@@ -1,0 +1,9 @@
+{
+  "jamb_name": "Efik-Ibibio",
+  "utme_subjects": ["Literature in English", "and two (2) other Arts or Social Science subjects"],
+  "olevel_requirement": "Five (5) SSC credit passes or equivalent including English",
+  "direct_entry": "Two (2) 'A' Level passes or equivalent in Arts or Social Science subjects.",
+  "institution_waivers": [
+    {"institution": "UYO", "note": "UYO accepts NCE merit in Efik/Ibibio."}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "jamb_name": "Agronomy",
+  "utme_subjects": ["Chemistry", "Biology or Agriculture", "Physics or Mathematics", "Use of English"],
+  "olevel_requirement": "Five (5) SSC credit passes in Chemistry, English Language, Mathematics, Biology and Geography or Economics.",
+  "direct_entry": "Two (2) 'A' Level passes in Chemistry/Biology/Botany/Zoology/Agricultural Science plus one of Mathematics/Physics and Geology/Economics.",
+  "institution_waivers": [
+    {"institution": "LAUTECH", "note": "Accepts ND with upper credit, HND/NCE at credit level in relevant subjects, plus the UTME requirements. Requires five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Agricultural Science or Biology."},
+    {"institution": "UNIOSUN", "note": "Same as in Fisheries. Requires five (5) 'O' Level credit passes in the SSC or its equivalent at not more than two (2) sittings in addition to an acceptable score in the UTME."},
+    {"institution": "MAKURDI", "note": "Accepts: (a) Two (2) 'A' Level passes in any of Chemistry and Biology/Agricultural Science/Botany/Zoology or Mathematics, (Pure & Applied) Physics, Geology and Economics; (b) NCE/ND/HND merit/credit in Agriculture. Requires five (5) 'O' Level credit passes in Biology or Agriculture Science, Chemistry, Mathematics, English Language, Physics or any other Science subjects. Accepts 'O' Level pass in Physics."},
+    {"institution": "TSUJ", "note": "Accepts ND credit in Crop Production Technology plus the UTME requirements. Requires five (5) 'O' Level credit passes in Biology or Agricultural Science, Chemistry, Mathematics, English Language and one of Physics, Geography or Economics. UTME requirements with 'O' Level pass in Physics is acceptable."},
+    {"institution": "ESUTECH", "note": "Accepts 'O' Level pass in Physics."},
+    {"institution": "CRUTECH", "note": "Same as Agricultural Economics and Extension. UTME subjects require Mathematics, Physics and any of Biology or Chemistry."},
+    {"institution": "UMUDIKE", "note": "Same as in Agricultural Economics."}
+  ]
+}

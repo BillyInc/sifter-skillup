@@ -1,0 +1,2436 @@
+{
+ "faculty": "Medical/Pharmaceutical/Health",
+ "source": "medical.txt",
+ "degree": "Various",
+ "note": "Deterministic name-variations + institution lists; requirement columns + per-institution waivers enriched from brochure.",
+ "programmes": [
+  {
+   "jamb_name": "Anatomy",
+   "institutions": [
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ABUAD",
+    "ACHIEVERS",
+    "ANCHOR-UNI",
+    "BABCOCK",
+    "BAYERO",
+    "BENIN",
+    "BINGHAM",
+    "BOWEN",
+    "BSU",
+    "CHRISLAND",
+    "COOU",
+    "CUST",
+    "DELSU",
+    "PROGRAMME/DEGREE",
+    "EBSU",
+    "EKO-UNI",
+    "EKSU",
+    "ESUT",
+    "EUI",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "AEFUNA",
+    "GREGORY",
+    "GSU",
+    "HUSTECH",
+    "IGBINEDION",
+    "ILORIN",
+    "JOS",
+    "LAGOS",
+    "LAUTECH",
+    "LCITY",
+    "MADONNA",
+    "MAIDUGURI",
+    "MAITAMA",
+    "NOK",
+    "NOVENA",
+    "OOU",
+    "OSUMS",
+    "PHC",
+    "PAMO",
+    "RSU",
+    "SALEM",
+    "TAU",
+    "UDA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNIZIK",
+    "VERITAS",
+    "WESLEYUNI",
+    "YSU",
+    "HUMAN ANATOMY",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "ARTHUR-JARVIS",
+    "AUE",
+    "BASU",
+    "BAZE",
+    "BMU",
+    "CALEB",
+    "CALABAR",
+    "CRUTECH",
+    "DELSUT",
+    "ELIZADE",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-WUKARI",
+    "FUTA",
+    "KOLA-DAISI",
+    "PAAU",
+    "NDU",
+    "NILE",
+    "REDEEMERS",
+    "RHEMA",
+    "SUMAS",
+    "UNN",
+    "UYO",
+    "VENITE"
+   ],
+   "utme_subjects": [
+    "Biology",
+    "Chemistry",
+    "Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Biology, Chemistry and Physics.",
+   "direct_entry": "Two (2) 'A' Level passes chosen from Biology, Chemistry and Physics in addition to the UTME requirements.",
+   "institution_waivers": [
+    {
+     "institution": "ABUAD",
+     "note": "Direct entry requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "CALABAR and PHC",
+     "note": "No direct entry."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Accepts B.Sc 2nd class upper division in any Biological Science programme plus 'O' Level credit passes in English language, Mathematics, Biology, Chemistry and Physics at one (1) sitting."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "Accepts 'A' Level or its equivalent with good passes in Physics, Chemistry and Mathematics. ND with upper credit in related programme plus the UTME requirements may be considered for admission into 200 level."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Direct entry requires: a) HSC or GCE 'A' Level or its equivalent passes in Physics, Chemistry and Biology or Zoology (Botany may be accepted in lieu of Biology or Zoology); b) First degree in relevant Biological Sciences not below Second Class Lower Division."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "Requires three (3) 'A' Level subjects in Biology, Chemistry and Physics obtained from IJMB."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts two (2) 'A' Level passes chosen from Biology, Chemistry and Physics in addition to the UTME requirements."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC Passes in Physics, Chemistry and Biology including UTME entry requirements."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "In addition to UTME requirements, DE candidate must have any of the following: A minimum of at least 9 points in IJMB; Two 'A' level credit passes in Biology, Chemistry and Physics; 1st degree in relevant Biological or Physical Sciences with at least 2nd class lower degree."
+    },
+    {
+     "institution": "EUI",
+     "note": "Accepts Two 'A' level passes chosen from Physics, Chemistry and Biology or Zoology in addition to UTME requirements. BSc etc in a relevant field. OND/HND in related courses with Credit pass plus O' level entry requirement. IJMB/JUPEB."
+    },
+    {
+     "institution": "FUTA",
+     "note": "Requires: a) A minimum of Upper Credit at ND Level from recognised Polytechnics and Colleges of Technology in relevant disciplines; b) 'A' Level passes or its equivalent (such as GCE Cambridge, JUPEB etc.) at one sitting in at least two (2) Science subjects including Biology."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "EBSU",
+     "note": "UTME accepts only one (1) sitting."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "UTME accepts Mathematics in lieu of Physics."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires SSC or its equivalent with credit pass in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology at not more than two (2) sittings."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "Requires five (5) 'O' Level credit passes which must include English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "RSU",
+     "note": "Requires five (5) 'O' Level credit passes at not more than two (2) sittings to include English Language, Mathematics, Chemistry, Biology, Physics."
+    },
+    {
+     "institution": "FUTA",
+     "note": "Requires five (5) SSC credit passes or its equivalent at a maximum of two (2) sittings in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Requires five (5) SSC credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "Requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "Requires Five (5) SSC credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "FED-LAFIA",
+     "note": "Requires Five (5) Credit passes at SSCE, GCE, NECO and NABTEB O' Level examination in Mathematics, English Language, Biology, Chemistry and Physics in not more than two sittings."
+    },
+    {
+     "institution": "EUI",
+     "note": "Requires Five Credit passes at SSCE (or its equivalent) in English Language, Mathematics, Physics, Chemistry and Biology at not more than two sittings."
+    },
+    {
+     "institution": "ABUAD",
+     "note": "UTME subjects: accepts Physics, Chemistry and Biology OR Chemistry, Biology and Mathematics."
+    },
+    {
+     "institution": "BABCOCK",
+     "note": "UTME subjects: accepts any three (3) of Physics, Chemistry, Biology and Mathematics."
+    },
+    {
+     "institution": "BSU, UNIZIK, EBSU, CALABAR and PHC",
+     "note": "UTME subjects: require Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME subjects: accepts any three (3) of Physics/Mathematics, Chemistry and Biology."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME subjects: requires Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: requires Use of English, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME subjects: requires Biology, Chemistry and Physics."
+    }
+   ],
+   "first_line": 40,
+   "line_range": [
+    40,
+    183
+   ],
+   "scope": [
+    40,
+    184
+   ]
+  },
+  {
+   "jamb_name": "Biochemistry",
+   "institutions": [
+    "CALABAR",
+    "IBADAN",
+    "IGBINEDION",
+    "JOS",
+    "LAUTECH",
+    "PAMO",
+    "UYO"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry and any one of Physics, Biology/Zoology/Botany and Mathematics.",
+   "institution_waivers": [
+    {
+     "institution": "BENIN",
+     "note": "Direct entry requires three (3) 'A' Level passes to include Biology/Zoology, Chemistry and Physics plus the UTME requirements."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Does not admit through Direct Entry."
+    }
+   ],
+   "first_line": 184,
+   "line_range": [
+    184,
+    192
+   ],
+   "scope": [
+    184,
+    193
+   ]
+  },
+  {
+   "jamb_name": "Medical Biochemistry",
+   "institutions": [
+    "BENIN",
+    "CRUTECH",
+    "DELSU",
+    "EKSU",
+    "PROGRAMME/DEGREE",
+    "GREGORY",
+    "LAUTECH",
+    "UDA",
+    "MEDICAL CHEMISTRY",
+    "OSUMS",
+    "MEDICAL PHYSICS",
+    "UMYUK",
+    "BIOMEDICAL TECHNOLOGY",
+    "FCDTT-FUTO",
+    "FUTA",
+    "MOUNTAIN TOP"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "FUTO",
+     "note": "Requires: a) At least three 'A' level passes not below Grade C in Physics and any two of Chemistry, Biology and Mathematics; b) ND/HND at Upper Credit level in Biomedical Technology, Biomedical Engineering, Chemical Engineering, Electrical and Electronics Engineering and Mechanical Engineering; c) First Degree in Engineering or health sciences; d) Very good passes in three JUPEB subjects namely Chemistry, Biology and Physics. It does not accept NCE. Candidates must in addition meet the 'O' Level requirements."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Requires two (2) 'A' level passes from Mathematics, Physics, Chemistry, Biology or Botany plus the UTME requirements."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "Accepts 'A' Level passes in Biology, Chemistry and Physics or Mathematics. ND upper credit in related programme plus the UTME requirements may be considered for 200 level."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires: a) HSC or GCE 'A' Level or its equivalent passes in Physics, Chemistry and Biology or Zoology (Botany may be accepted in lieu of Biology or Zoology); b) First degree in relevant Biological Sciences not below Second Class Lower Division."
+    },
+    {
+     "institution": "FUTA",
+     "note": "Requires: a) ND with a minimum of Upper Credit Level or its equivalent in Biomedical Technology or related discipline; b) Good passes at the 'A' Level of General Certificate of Education or its equivalent in Mathematics, Biology and Chemistry or Physics."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME same as in Medicine and Surgery."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME same as in Medicine and Surgery."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME requires SSC 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in not more than two sittings."
+    }
+   ],
+   "first_line": 193,
+   "line_range": [
+    193,
+    251
+   ],
+   "scope": [
+    193,
+    252
+   ]
+  },
+  {
+   "jamb_name": "Dentistry and Dental Technology",
+   "institutions": [
+    "SURGERY",
+    "ABU",
+    "ABUAD",
+    "BAYERO",
+    "BENIN",
+    "CALABAR",
+    "DANUMS",
+    "FUHSA",
+    "IBADAN",
+    "JOS",
+    "PROGRAMME/DEGREE",
+    "LAGOS",
+    "LASU",
+    "MAIDUGURI",
+    "NOVENA",
+    "OAU",
+    "OSUMS",
+    "PHC",
+    "UDU",
+    "UNN",
+    "UYO",
+    "VENITE",
+    "UNINIGER",
+    "HUSTECH",
+    "DENTAL TECHNOLOGY",
+    "BMU",
+    "FCDTT-FUTO",
+    "FUTO",
+    "LCITY",
+    "UNI-ILESA",
+    "SPEECH LANGUAGE",
+    "THERAPY",
+    "OCCUPATIONAL THERAPY"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Physics",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+   "direct_entry": "Three (3) 'A' Level passes to include Chemistry, Biology/Zoology and Physics.",
+   "institution_waivers": [
+    {
+     "institution": "FUTA",
+     "note": "UTME subjects: requires Mathematics, Biology and Chemistry/Physics."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Direct entry accepts B.Sc. Second Class Lower in Biochemistry, Microbiology, Zoology, Botany, Anatomy, Physiology, Nursing, B.Sc. or ND Optometry, B.Pharmacy or Doctor of Pharmacy."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "Direct entry as in Medicine and Surgery."
+    },
+    {
+     "institution": "JOS",
+     "note": "Accepts passes in IJMB/'A' Level in Physics, Chemistry and Zoology or Biology. Such candidates must also have obtained five (5) 'O' level credit passes in Physics, Chemistry, Biology or Zoology, English Language and Mathematics."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology. B.Sc. Degree (first class/second class upper) in Medical related fields."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts B.Sc. with a minimum of second class Honours in relevant programme (Sciences)."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC Passes in Physics, Chemistry and Biology including UTME entry requirements. First Degree (Second Class Honours - Upper division) in either Anatomy, Physiology, Biochemistry or any other related course including UTME entry requirements."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology."
+    },
+    {
+     "institution": "FUTO",
+     "note": "Requires: a) At least three 'A' level passes not below Grade C in Biology and any two of Chemistry, Physics and Mathematics; b) ND/HND at Upper Credit level in Dental Technology, Dental Therapy and Dental Surgery Techniques; c) First Degree in health sciences; d) Very good passes in three JUPEB subjects namely Chemistry, Biology and Physics. It does not accept NCE. Candidates must in addition meet the 'O' Level requirements."
+    },
+    {
+     "institution": "UNN",
+     "note": "Requires: a) Direct entry candidates in addition to satisfying the UTME requirements should also have three (3) 'A' Level passes in Biology or Zoology, Chemistry and Physics at one (1) sitting; b) Accepts B.Sc in related programme for admission into the five (5) year standard programme; c) MBBS may be admitted into the three (3) year clinical programme in Dentistry."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME requires candidates in addition to minimum entry requirements to have 'O' level credit passes in English Language, Biology, Chemistry, Mathematics and Physics at not more than one (1) sitting."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and Biology in not more than two (2) sittings."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME requires Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics."
+    },
+    {
+     "institution": "JOS, CALABAR, UNN, BENIN, LAGOS and OAU",
+     "note": "UTME subjects: require Physics as the other science subject."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME subjects: Same as in Medicine and Surgery."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: requires Use of English, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME subjects: requires Chemistry, Biology and Physics or Mathematics."
+    }
+   ],
+   "first_line": 252,
+   "line_range": [
+    252,
+    392
+   ],
+   "scope": [
+    252,
+    393
+   ]
+  },
+  {
+   "jamb_name": "Human Nutrition and Dietetics",
+   "institutions": [
+    "DIETETICS",
+    "AAU",
+    "ABUAD",
+    "AL-QALAM",
+    "CALABAR",
+    "DANUMS",
+    "AEFUNA",
+    "GSU",
+    "IBADAN",
+    "PROGRAMME/DEGREE",
+    "OAU",
+    "PAMO",
+    "UNI-ILESA",
+    "UYO",
+    "VENITE",
+    "ZAMFARA",
+    "NUTRITION AND DIETETICS",
+    "BABCOCK",
+    "BAYERO",
+    "BOWEN",
+    "FUHSA",
+    "FUHS-ILA",
+    "FUTA",
+    "HUSTECH",
+    "LCITY",
+    "MAIDUGURI",
+    "MAKURDI",
+    "MOUNTAIN TOP",
+    "NASARAWA",
+    "OSUMS",
+    "SUMAS",
+    "UDU",
+    "UNIOSUN",
+    "MUDIAME"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Biology",
+    "Physics"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Physics, Chemistry, Biology and Mathematics.",
+   "direct_entry": "Two (2) 'A' Level passes in Chemistry, Biology and Physics plus the UTME requirement.",
+   "institution_waivers": [
+    {
+     "institution": "ABUAD",
+     "note": "DIRECT ENTRY: requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "DIRECT ENTRY: requires at least two (2) 'A' Level passes to include Chemistry and any of Biology, Botany, Zoology, Agricultural Science, Physics or Geography."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "DIRECT ENTRY: preference will be given to the Professional Certificates of a) Nigeria Registered Nurse or equivalent b) Own Certificate of Food Science and Applied Nutrition c) ND in Agriculture; d) Public Health Inspectorate Certificate."
+    },
+    {
+     "institution": "BOWEN",
+     "note": "UTME: requires five (5) 'O' level credit passes in English Language, Physics, Chemistry, Mathematics, Biology/Agricultural Science, Geography/Economics."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: same as in Medicine and Surgery."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."
+    }
+   ],
+   "first_line": 393,
+   "line_range": [
+    393,
+    454
+   ],
+   "scope": [
+    393,
+    455
+   ]
+  },
+  {
+   "jamb_name": "Medical Laboratory Technology/Science",
+   "institutions": [
+    "AUE",
+    "AAU",
+    "AAUA",
+    "ABUJA",
+    "ABSU",
+    "ABU",
+    "ABUAD",
+    "ACHIEVERS",
+    "AEFUNA",
+    "AJAYI",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "APU",
+    "BCU",
+    "ANCHOR-UNI",
+    "PROGRAMME/DEGREE",
+    "ARTHUR-JARVIS",
+    "ATIBA",
+    "AVE-MARIA",
+    "BABCOCK",
+    "BAYERO",
+    "BAZE",
+    "BENIN",
+    "BINGHAM",
+    "BIU",
+    "BOWEN",
+    "BOSU",
+    "BSU",
+    "CARITAS",
+    "CANADIAN-UNI",
+    "CALABAR",
+    "CCU",
+    "CHRISLAND",
+    "CHRISTOPHER",
+    "CLIFFORD",
+    "COAL-CITY",
+    "COOU",
+    "CUST",
+    "DANUMS",
+    "DELSU",
+    "DELSUT",
+    "EBSU",
+    "EDUSOKO",
+    "EKSU",
+    "ELIZADE",
+    "EMIRATES-D",
+    "EUI",
+    "EUN",
+    "ESUTECH",
+    "EVANGEL",
+    "FED-DUTSINMA",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "FED-OYE EKITI",
+    "FED-WUKARI",
+    "FOUNTAIN",
+    "FUHS-ILA",
+    "FUTA",
+    "FED-OTUOKE",
+    "GREGORY",
+    "GREENFIELD",
+    "HAVILLA",
+    "HUSTECH",
+    "IBADAN",
+    "IGBINEDION",
+    "ILORIN",
+    "IMSU",
+    "ISTIQAMA",
+    "JABU",
+    "JOS",
+    "KASU",
+    "KHAIRUN",
+    "KOLA-DAISI",
+    "KOMU",
+    "KUMO",
+    "KWASU",
+    "LAGOS",
+    "LASU",
+    "LAUTECH",
+    "LCITY",
+    "MADUKA",
+    "MADONNA",
+    "MAIDUGURI",
+    "MC-IBRU",
+    "MAAUN",
+    "MERCY-MED-UNI",
+    "MLU",
+    "MUDIAME",
+    "MOUNTAIN TOP",
+    "NEWGATE",
+    "NOK",
+    "NOVENA",
+    "NDU",
+    "NUS",
+    "OAUSTECH",
+    "OOU",
+    "OSUMS",
+    "PAAU",
+    "PAMO",
+    "PEACELAND UNI",
+    "PLASU",
+    "PHC",
+    "PRU",
+    "REDEEMERS",
+    "RENAISSANCE",
+    "RHEMA",
+    "RSU",
+    "SAISA",
+    "SALEM",
+    "SAM-MARIS",
+    "SKYLINE",
+    "SUMAS",
+    "TANSIAN",
+    "TAU",
+    "TRINITY",
+    "TSUJ",
+    "TOPFAITH",
+    "UDA",
+    "UDU",
+    "UMYUK",
+    "UNI-ILESA",
+    "UNIKINGS",
+    "UNINIGER",
+    "UNIZIK",
+    "UNIOSUN",
+    "UNN",
+    "UYO",
+    "VERITAS",
+    "VENITE",
+    "VISION-UNI",
+    "WELLSPRING",
+    "WESTERN-DEL",
+    "WESLEYUNI"
+   ],
+   "utme_subjects": [
+    "Chemistry",
+    "Physics",
+    "Biology/Zoology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "'A' Level passes to include Physics, Chemistry and Biology or Zoology.",
+   "institution_waivers": [
+    {
+     "institution": "ABUAD",
+     "note": "DIRECT ENTRY: requires three (3) 'A' Level passes in Chemistry, Physics, Biology/Zoology."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "DIRECT ENTRY: accepts Diploma in Medical Laboratory Science from a recognized institution."
+    },
+    {
+     "institution": "BENIN",
+     "note": "DIRECT ENTRY: Same as in Medical Biochemistry. Accepts degrees in related Science programmes."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "DIRECT ENTRY: accepts 'A' Level passes in any two (2) of Chemistry, Biology and Physics, B.SC Biological Science; AIMLT or FIMLT plus UTME requirements."
+    },
+    {
+     "institution": "EBSU",
+     "note": "DIRECT ENTRY: accepts AIMLS or its equivalent plus relevant UTME requirements."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "DIRECT ENTRY: accepts 'A' Level passes to include Physics, Chemistry and Biology B.Sc. or HND in relevant programme; AIMLT or FIMLT plus UTME requirements."
+    },
+    {
+     "institution": "JOS",
+     "note": "DIRECT ENTRY: accepts first degree in relevant Biological Science programme with at least a Second class lower division."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "DIRECT ENTRY: requires a) JUPEB/'A'-level passes in Physics, Chemistry and Biology. b) B.Sc. Degree (first class/second class upper) in Medical related fields."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "DIRECT ENTRY: accepts 'A' Level passes in Chemistry and Biology with the UTME requirements OR ND/HND upper credit or first degree in relevant programme plus the UTME requirements."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "DIRECT ENTRY: MAIDUGURI and IMSU accept certificate of Institute of Medical Laboratory Technology, Science/Technology (IMLS/T) of Nigeria plus the UTME requirements."
+    },
+    {
+     "institution": "IMSU",
+     "note": "DIRECT ENTRY: MAIDUGURI and IMSU accept certificate of Institute of Medical Laboratory Technology, Science/Technology (IMLS/T) of Nigeria plus the UTME requirements."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "DIRECT ENTRY: accepts Zoology in lieu of Biology."
+    },
+    {
+     "institution": "NDU",
+     "note": "DIRECT ENTRY: requires five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology and Physics."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "DIRECT ENTRY: accepts HND/B.SC in Biological Sciences or related programme."
+    },
+    {
+     "institution": "ABU",
+     "note": "DIRECT ENTRY: accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology. Registered Medical Laboratory Certificate."
+    },
+    {
+     "institution": "RSU",
+     "note": "DIRECT ENTRY: accepts Admission to Year III; HND (Upper Credit) in relevant discipline. Admission to Year II; HND (Lower Credit) in relevant discipline. OND/ND (Upper Credit) in S above must also satisfy the UME entry requirements."
+    },
+    {
+     "institution": "UNN",
+     "note": "DIRECT ENTRY: accepts a) B.Sc. in relevant programmes with at least 2nd class Lower Division plus 'O' Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics at not more than two (2) sittings. b) ND upper credit in related programmes plus the UTME requirements. c) 'A' Level passes in Chemistry, Physics, Biology or credit passes in two (2) relevant 'O' Level subjects. d) Candidates with AIMLS professional plus the UTME requirements."
+    },
+    {
+     "institution": "EUI",
+     "note": "DIRECT ENTRY: accepts a) 'A' Level passes in Physics, Chemistry and Biology or Zoology in addition to UTME requirements. b) B.Sc. in relevant fields not below Second Class Lower Division. c) OND/HND in related courses with an upper credit plus 'O' Level entry requirement."
+    },
+    {
+     "institution": "AAU",
+     "note": "UTME: accepts B.Sc in relevant programme with good grade. Remedial results not acceptable."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "UTME: same as in Medicine and Surgery."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "UTME: accepts five (5) 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology at one (1) sitting."
+    },
+    {
+     "institution": "EUI",
+     "note": "UTME: requires five (5) credit passes at SSC or its equivalent in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME: requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "RSU",
+     "note": "UTME: accepts Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "JABU",
+     "note": "UTME: Candidates must obtain credit in English Language, Chemistry, Biology, Physics and Mathematics in Senior Secondary School Certificate or its equivalent at not more than two (2) sittings with an appropriate or acceptable pass in the UTME."
+    },
+    {
+     "institution": "BABCOCK",
+     "note": "UTME SUBJECTS: accepts any three (3) of Physics, Chemistry, Biology and Mathematics."
+    },
+    {
+     "institution": "RSU",
+     "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME SUBJECTS: requires English Language, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME SUBJECTS: requires Use of English, Physics, Chemistry and Biology."
+    }
+   ],
+   "first_line": 455,
+   "line_range": [
+    455,
+    659
+   ],
+   "scope": [
+    455,
+    660
+   ]
+  },
+  {
+   "jamb_name": "Medical Rehabilitation",
+   "institutions": [
+    "UNIZIK",
+    "UNN",
+    "PROGRAMME/DEGREE",
+    "PROSTHESIS AND",
+    "ORTHOPAEDIC",
+    "TECHNOLOGY",
+    "FUTO",
+    "PROSTHETICS AND",
+    "ORTHOTICS",
+    "FCDTT-FUTO",
+    "FUHS-ILA",
+    "OSUMS",
+    "NURSING/NURSING",
+    "SCIENCE",
+    "AAU",
+    "AAUA",
+    "ABSU",
+    "ABUJA",
+    "ABU",
+    "ABU-ODL",
+    "ABUAD",
+    "ACHIEVERS",
+    "AEFUNA",
+    "AJAYI",
+    "AUGUSTINE",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "AMOU",
+    "ANCHOR-UNI",
+    "ARTHUR-JARVIS",
+    "ATIBA",
+    "AUE",
+    "AUN",
+    "AVE-MARIA",
+    "BABCOCK",
+    "BASU",
+    "BCU",
+    "BOSU",
+    "BAYERO",
+    "BAZE",
+    "BENIN",
+    "BINGHAM",
+    "BIU",
+    "BOWEN",
+    "BSU",
+    "CALEB",
+    "CARITAS",
+    "CANADIAN-UNI",
+    "CALABAR",
+    "CCU",
+    "CHRISLAND",
+    "CHRISTOPHER",
+    "CLIFFORD",
+    "COOU",
+    "COSMOPOLITAN",
+    "CUN",
+    "CUST",
+    "DANUMS",
+    "DELSU",
+    "DELSUT",
+    "DOMINION",
+    "DOU",
+    "EBSU",
+    "EDUSOKO",
+    "EKSU",
+    "ELIZADE",
+    "ESUTECH",
+    "EUI",
+    "EUN",
+    "EVANGEL",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "FOUNTAIN",
+    "FUHSA",
+    "GOUU",
+    "GREGORY",
+    "GREENFIELD",
+    "GSU",
+    "HAVILLA",
+    "HUDA",
+    "HUSTECH",
+    "IBADAN",
+    "ICONIC-OU",
+    "IGBINEDION",
+    "ILORIN",
+    "IMSU",
+    "ISTIQAMA",
+    "JABU",
+    "JOS",
+    "KASU",
+    "KHAIRUN",
+    "KOLA-DAISI",
+    "KOMU",
+    "KSUSTA",
+    "KUM",
+    "LAGOS",
+    "LASU",
+    "LAUTECH",
+    "LCITY",
+    "LUX-MUNDI",
+    "MADUKA",
+    "MADONNA",
+    "MAIDUGURI",
+    "MAAUN",
+    "MUDIAME",
+    "MCPHERSON",
+    "MC-IBRU",
+    "MERCY-MED-UNI",
+    "MIVA",
+    "MLU",
+    "MOUNTAIN TOP",
+    "NEWGATE",
+    "NDU",
+    "NOK",
+    "NOVENA",
+    "NUS",
+    "OAU",
+    "OAUSTECH",
+    "ODUDUWA",
+    "OOU",
+    "PAAU",
+    "PAMO",
+    "PEACELAND UNI",
+    "PETER-UNI",
+    "PHC",
+    "PLASU",
+    "PRU",
+    "REDEEMERS",
+    "RENAISSANCE",
+    "RHEMA",
+    "RSU",
+    "SAISA",
+    "SALEM",
+    "SAM-MARIS",
+    "SPORTS-UNI",
+    "SUMAS",
+    "TANSIAN",
+    "TAU",
+    "TRINITY",
+    "TSUJ",
+    "TOPFAITH",
+    "UDA",
+    "UDU",
+    "UMYUK",
+    "UNI-ILESA",
+    "UNIKINGS",
+    "UNIOSUN",
+    "UNINIGER",
+    "UYO",
+    "VERITAS",
+    "VENITE",
+    "VISION-UNI",
+    "WELLSPRING",
+    "WESTERN-DEL",
+    "WESLEYUNI",
+    "ZAMFARA"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "'A' Level passes in Chemistry, Physics and any of Biology/Zoology or Mathematics.",
+   "institution_waivers": [
+    {
+     "institution": "OAU",
+     "note": "DIRECT ENTRY: accepts passes in the final examination of the Chartered Society of Physiotherapy or the British Association of Occupational Therapy or equivalent."
+    },
+    {
+     "institution": "OAU",
+     "note": "DIRECT ENTRY: 'A' Level passes in Chemistry, Physics and any of Biology/Zoology or Mathematics."
+    },
+    {
+     "institution": "UNN",
+     "note": "DIRECT ENTRY: No direct entry."
+    }
+   ],
+   "first_line": 660,
+   "line_range": [
+    660,
+    985
+   ],
+   "scope": [
+    660,
+    986
+   ]
+  },
+  {
+   "jamb_name": "Public Health Technology",
+   "institutions": [
+    "TECHNOLOGY",
+    "BABCOCK",
+    "BASU",
+    "CALABAR",
+    "FCDTT-FUTO",
+    "FUTO",
+    "MADONNA",
+    "UNIOSUN",
+    "PUBLIC AND COMMUNITY",
+    "HEALTH",
+    "PROGRAMME/DEGREE",
+    "NOVENA",
+    "COMMUNITY HEALTH",
+    "EMIRATES-D",
+    "ISTIQAMA",
+    "LCITY",
+    "OSUMS",
+    "PEACELAND-UNI",
+    "MERCY-MED-UNI",
+    "NASARAWA",
+    "WESLEYUNI",
+    "AAUA",
+    "ABSU",
+    "ABUAD",
+    "ACHIEVERS",
+    "AL-ANSAR",
+    "AMOU",
+    "ANCHOR-UNI",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "ARTHUR-JARVIS",
+    "ATIBA",
+    "AUE",
+    "AUN",
+    "AVE-MARIA",
+    "AZMAN",
+    "BAZE",
+    "BINGHAM",
+    "BOWEN",
+    "BOUEDST",
+    "BCU",
+    "CANADIAN-UNI",
+    "CHRISLAND",
+    "CHRISTOPHER",
+    "CLIFFORD",
+    "COSMOPOLITAN",
+    "CUN",
+    "DANUMS",
+    "DELSUT",
+    "DOMINION",
+    "EDUSOKO",
+    "EVANGEL",
+    "FED-DUTSE",
+    "FOUNTAIN",
+    "FRANCO",
+    "GREGORY",
+    "GSU",
+    "HAVILLA",
+    "HUDA",
+    "ICONIC-OU",
+    "IMSU",
+    "KOLA-DAISI",
+    "KOMU",
+    "LUX-MUNDI",
+    "OAUSTECH",
+    "MAAUN",
+    "MCPHERSON",
+    "MIVA",
+    "MUDIAME",
+    "MOUNTAIN TOP",
+    "NEWGATE",
+    "NUS",
+    "PEACELAND UNI",
+    "PETER-UNI",
+    "PLASU",
+    "PRU",
+    "REDEEMERS",
+    "RHEMA",
+    "RSU",
+    "SAISA",
+    "SALEM",
+    "SAM-MARIS",
+    "SPORTS-UNI",
+    "TANSIAN",
+    "TAU",
+    "TSUJ",
+    "TOPFAITH",
+    "UDA",
+    "UNI-ILESA",
+    "UNIKINGS",
+    "UNINIGER",
+    "VENITE",
+    "VISION-UNI",
+    "WELLSPRING",
+    "WESTERN-DEL",
+    "ZAMFARA",
+    "PUBLIC HEALTH SCIENCE",
+    "KWASU",
+    "NOUN",
+    "ENVIRONMENTAL HEALTH",
+    "SCIENCE",
+    "FUHS-ILA",
+    "NOUN-ELUON",
+    "FUHSA",
+    "HEALTH INFORMATION",
+    "NOK",
+    "MANAGEMENT SYSTEM",
+    "BOSU",
+    "BMU",
+    "PAUL",
+    "SYSTEM",
+    "MANAGEMENT",
+    "TRINITY",
+    "HEALTHCARE AND HOSPITAL",
+    "HEALTHCARE",
+    "ADMINISTRATION &",
+    "HOSPITAL MANAGEMENT"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "DELSU",
+     "note": "requires SSC 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in one sitting."
+    },
+    {
+     "institution": "FUTO",
+     "note": "requires at least five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics and Biology in not more than two (2) sittings."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "accepts five (5) 'O' Level Credits, Pass in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "ABU",
+     "note": "requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "requires Five (5) SSC credit passes in Mathematics, Chemistry, Biology, Physics and English Language."
+    },
+    {
+     "institution": "JABU",
+     "note": "Candidate must normally possess the Senior Secondary School WAEC or NECO certificate or General Certificate of Education (GCE) Ordinary Level or their equivalent with credit passes in English Language, Biology, Chemistry, Mathematics and Physics at not more than two (2) sittings, together with an acceptable pass in the UTME and in the Joseph Ayo Babalola University Screening Examination/Interview."
+    },
+    {
+     "institution": "FUTO",
+     "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME SUBJECTS: requires Use of English, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME SUBJECTS: requires Physics, Chemistry and Biology."
+    }
+   ],
+   "first_line": 986,
+   "line_range": [
+    986,
+    1233
+   ],
+   "scope": [
+    986,
+    1234
+   ]
+  },
+  {
+   "jamb_name": "Medicine and Surgery (Human Medicine)",
+   "institutions": [
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ABUAD",
+    "ABUJA",
+    "ACHIEVERS",
+    "AL-ANSAR",
+    "BABCOCK",
+    "BAYERO",
+    "BAUCHI",
+    "BAZE",
+    "BENIN",
+    "BINGHAM",
+    "BOWEN",
+    "PROGRAMME/DEGREE",
+    "BOSU",
+    "BSU",
+    "CALABAR",
+    "COOU",
+    "CUST",
+    "DANUMS",
+    "DELSU",
+    "EBSU",
+    "EUI",
+    "EKO-UNI",
+    "EKSU",
+    "ESUTECH",
+    "FED-DUTSE",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-WUKARI",
+    "FUHSA",
+    "FUHSO",
+    "FUHS-ILA",
+    "FUTA",
+    "FUTO",
+    "FED-OYE EKITI",
+    "AEFUNA",
+    "GOUU",
+    "GREGORY",
+    "GSU",
+    "HUSTECH",
+    "IBADAN",
+    "IGBINEDION",
+    "ILORIN",
+    "IMSU",
+    "JOS",
+    "KASU",
+    "KOMU",
+    "KSUSTA",
+    "KWASU",
+    "LAGOS",
+    "LASU",
+    "LAUTECH",
+    "LAPAI",
+    "MAAUN",
+    "MADONNA",
+    "MADUKA",
+    "MAIDUGURI",
+    "MAITAMA",
+    "MAUTY",
+    "MERCY-MED-UNI",
+    "MLU",
+    "NDU",
+    "NILE",
+    "NOVENA",
+    "NUS",
+    "OAU",
+    "OOU",
+    "OSUMS",
+    "PAMO",
+    "PHC",
+    "RHEMA",
+    "RSU",
+    "SUMAS",
+    "UDA",
+    "UDU",
+    "UNIOSUN",
+    "UNIZIK",
+    "UNN",
+    "UNINIGER",
+    "UMYUK",
+    "UYO",
+    "VENITE",
+    "VERITAS",
+    "WESLEYUNI",
+    "YSU",
+    "ALTERNATIVE MEDICINE",
+    "COMPLEMENTARY AND",
+    "MEDICINAL CHEMISTRY",
+    "FED-DUTSINMA",
+    "APPLIED GEOLOGY",
+    "OAUSTECH",
+    "ARTHUR-JARVIS",
+    "DOU",
+    "UNI-ILESA",
+    "BASU",
+    "BMU",
+    "CCU",
+    "EUN",
+    "DOCTOR OF PHARMACY",
+    "FED-LOKOJA",
+    "DOCTOR OF"
+   ],
+   "utme_subjects": [
+    "English Language",
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "'A' Level passes in Physics, Chemistry and Biology or Zoology in addition to the UTME requirements; or B.Sc, B.OS, etc in relevant programme.",
+   "institution_waivers": [
+    {
+     "institution": "ABSU",
+     "note": "All candidates no matter their mode of admission are required to have 'O' Level or its equivalent with credit passes in English Language, Mathematics, Physics, Chemistry and Biology at one (1) sitting."
+    },
+    {
+     "institution": "ABSU, AAU and OOU",
+     "note": "Accept Degree in related programme."
+    },
+    {
+     "institution": "ABUJA",
+     "note": "Requires DE candidates to fulfil the UTME requirements."
+    },
+    {
+     "institution": "BENIN",
+     "note": "Accepts a) at least three (3) 'A' Level passes not more than C or a minimum of 12 points in Biology or Zoology, Physics and Chemistry at not more than one (1) sitting; b) at least a Second Class Upper Division from a recognised University in either B.Sc Biological Sciences or B.Sc. Medical Sciences."
+    },
+    {
+     "institution": "BINGHAM and PHC",
+     "note": "No Direct Entry."
+    },
+    {
+     "institution": "BSU and LASU",
+     "note": "Accept a good Honours degree minimum of Second Class Upper in relevant programme."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Accepts Degree not below a good Second Class Lower Division in Anatomy, Biochemistry, Physiology, Nursing Science, Medical Laboratory, Biology, Zoology or Chemistry. Does not accept IJMB for Direct Entry."
+    },
+    {
+     "institution": "EBSU",
+     "note": "Accepts B.Sc Second Class Upper Division in any Biological Science plus 'O' level credit passes in English Language, Mathematics, Biology, Chemistry and Physics at one (1) sitting."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts B.Sc Second Class Honours in Anatomy, Biochemistry, Microbiology, Physiology, Zoology and other Basic Science programme. Also accepts a minimum aggregate of 13 points."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts; a) 'A' Level passes in Physics, Chemistry and Biology or Zoology in addition to the UTME requirements; b) minimum aggregate of 13 points in Biology, Chemistry and Physics at not more than one sitting at 'A' Level; c) a minimum of B.Sc Second Class Upper Division in Anatomy, Biochemistry, Microbiology, Physiology and zoology only; d) The required UTME five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and Biology must be at one sitting."
+    },
+    {
+     "institution": "JOS",
+     "note": "Requires DE candidates to fulfil the UTME requirements."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts a) JUPEB/'A'-level passes in Physics, Chemistry and Biology; b) B.Sc. Degree (first class/second class upper) in Medical related fields."
+    },
+    {
+     "institution": "LASU",
+     "note": "Requires a minimum of C in each of the subjects and will consider a Bachelor of Science with a minimum of second class upper division."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "Accepts 'A' Level passes in Physics, Chemistry and Biology or Zoology plus the UTME requirements to be considered for admission into 200 level."
+    },
+    {
+     "institution": "NDU",
+     "note": "Accepts a) 'A' Level passes in Chemistry, Biology and Physics with a minimum of 10 points at not more than two (2) sittings; b) a B.Sc. with a minimum of second class upper division in Anatomy, Physiology, Biochemistry, Microbiology, Zoology, Chemistry, Physics and Botany."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts B.Sc. with a minimum of second class upper division in relevant programme (Sciences)."
+    },
+    {
+     "institution": "OOU and CALABAR",
+     "note": "Accept degree in Science not below Second Class Lower Division."
+    },
+    {
+     "institution": "UDU, MAIDUGURI and EBSU",
+     "note": "Accept 'A' Level pass in Mathematics in lieu of Physics."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "Accepts: (a) three (3) 'A' Level subjects in Biology, Chemistry, and Physics obtained from IJMB; (b) at least Second Class (Lower) degree in one of the Health Sciences programmes (e.g. Human Anatomy, Human Physiology, Nursing etc), Biology, Biochemistry or Microbiology."
+    },
+    {
+     "institution": "UNIOSUN",
+     "note": "Accepts a) a minimum of 10 points in Physics, Chemistry and Biology or Zoology at 'A' Level or equivalents; b) first degree in relevant Biomedical Sciences, Medical, paramedical, Biological, Chemical or Physical Sciences with not less than second class upper division."
+    },
+    {
+     "institution": "EUI",
+     "note": "Accepts; a) 'A' Level passes in Physics, Chemistry and Biology or Zoology in addition to UTME requirements; b) B.Sc. in relevant fields not below Second Class Lower Division."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC Passes in Physics, Chemistry and Biology including UTME entry requirements. First Degree (Second Class Honours - Upper division) in either Anatomy, Physiology, Biochemistry or any other related course including UTME entry requirements."
+    },
+    {
+     "institution": "KASU",
+     "note": "Accepts Ordinary level requirement plus; Passes in Chemistry, Physics, Biology or Zoology at Higher School Certificates or Advance level of GCE, IJMB or equivalents. An acceptable First Degree in relevant Biological or Physical Sciences discipline."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires a) First Degree in relevant Biological or Physical Sciences discipline not less than Second Class Upper Division may be considered in addition to the UTME requirement; b) Degree from Science Laboratory Technology is not accepted."
+    },
+    {
+     "institution": "BENIN, IBADAN, ABSU, EBSU, UNIOSUN, COOU and BOWEN",
+     "note": "Require the 'O' Level credit passes at one (1) sitting."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Requires five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology at one sitting."
+    },
+    {
+     "institution": "NDU",
+     "note": "Requires the 'O' level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "NILE",
+     "note": "Accepts credit pass in any Science subject in lieu of Physics."
+    },
+    {
+     "institution": "UNN",
+     "note": "Accepts Physics with Chemistry (as a single subject) for Physics and Chemistry. UNN requirements should be at one (1) sitting."
+    },
+    {
+     "institution": "EUI",
+     "note": "Requires five (5) credit passes at SSC or its equivalent in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires SSCE 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in one sitting."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "Requires five (5) credit passes at SSC to include English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "Requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "Requires Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "KASU",
+     "note": "Requires Five 'O' level credit passes to include English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "NILE",
+     "note": "UTME subjects: accepts Chemistry, Biology and any other Science subject."
+    },
+    {
+     "institution": "UDU and MAIDUGURI",
+     "note": "UTME subjects: accept Mathematics in lieu of Physics."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: requires Use of English, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "KASU",
+     "note": "UTME subjects: requires Biology, Chemistry and Physics."
+    }
+   ],
+   "first_line": 1234,
+   "line_range": [
+    1234,
+    1648
+   ],
+   "scope": [
+    1234,
+    1649
+   ]
+  },
+  {
+   "jamb_name": "Physiotherapy",
+   "institutions": [
+    "ACHIEVERS",
+    "AL-QALAM",
+    "APU",
+    "BOSU",
+    "CANADIAN-UNI",
+    "CUST",
+    "EVANGEL",
+    "FRANCO",
+    "FUHS-ILA",
+    "GREENFIELD",
+    "LASU",
+    "LAGOS",
+    "NEWGATE",
+    "OSUMS",
+    "KUM",
+    "PEACELAND-UNI",
+    "TAU",
+    "UNINIGER",
+    "UNIZIK",
+    "UMYUK",
+    "PROGRAMME/DEGREE",
+    "VENITE",
+    "WESLEYUNI",
+    "WESTERN-DEL",
+    "DOCTOR OF OPTOMETRY",
+    "HUSTECH"
+   ],
+   "utme_subjects": null,
+   "olevel_requirement": null,
+   "direct_entry": null,
+   "institution_waivers": [
+    {
+     "institution": "IBADAN",
+     "note": "Same as in Medicine and Surgery."
+    },
+    {
+     "institution": "NDU",
+     "note": "Require the five (5) 'O' Level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "UNN and UYO",
+     "note": "Require the five (5) 'O' Level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires five (5) 'O' Level credit passes which must include English Language, Mathematics, Chemistry, Physics and Biology in SSC or its equivalents at not more than one (1) sitting."
+    },
+    {
+     "institution": "BAYERO",
+     "note": "Requires five (5) SSCE credit passes in English Language, Physics, Chemistry, Biology and Mathematics."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Requires Credit passes at O'Level in five (5) subjects including: English Language, Mathematics, Physics, Chemistry and Biology in WASC or NECO at not more than two (2) sittings."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts Five O/Level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "ABU",
+     "note": "Requires Five 'O' level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "PHC",
+     "note": "Accepts Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "KASU",
+     "note": "Requires Five 'O' level credit passes to include English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: requires Use of English, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "PHC",
+     "note": "UTME subjects: requires Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "KASU",
+     "note": "UTME subjects: requires Biology, Chemistry and Physics."
+    }
+   ],
+   "first_line": 1649,
+   "line_range": [
+    1649,
+    1706
+   ],
+   "scope": [
+    1649,
+    1707
+   ]
+  },
+  {
+   "jamb_name": "Pharmacology",
+   "institutions": [
+    "ABUAD",
+    "BASU",
+    "CALABAR",
+    "DELSUT",
+    "PROGRAMME/DEGREE",
+    "EKO-UNI",
+    "FUHS-ILA",
+    "GSU",
+    "IGBINEDION",
+    "LAGOS",
+    "LASU",
+    "MAIDUGURI",
+    "NOVENA",
+    "NUS",
+    "OSUMS",
+    "OOU",
+    "PAAU",
+    "PAMO",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "PHARMACOLOGY AND",
+    "THERAPEUTICS",
+    "DELSU",
+    "PHARMACEUTICAL",
+    "HUSTECH",
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ACHIEVERS",
+    "APU",
+    "ATIBA",
+    "AUE",
+    "BABCOCK",
+    "BAYERO",
+    "BENIN",
+    "BINGHAM",
+    "BOWEN",
+    "CHRISLAND",
+    "COOU",
+    "CRUTECH",
+    "CUST",
+    "EBSU",
+    "EKSU",
+    "EUI",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "AEFUNA",
+    "FUTA",
+    "GREGORY",
+    "IBADAN",
+    "ILORIN",
+    "LAUTECH",
+    "LCITY",
+    "MADONNA",
+    "MAITAMA",
+    "NOK",
+    "PHC",
+    "RSU",
+    "SALEM",
+    "TAU",
+    "UDA",
+    "UNIZIK",
+    "UNN",
+    "UYO",
+    "VENITE",
+    "VERITAS",
+    "WESLEYUNI",
+    "YSU",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "ARTHUR-JARVIS",
+    "BAZE",
+    "BMU",
+    "BSU",
+    "CALEB",
+    "ELIZADE",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-WUKARI",
+    "KOLA-DAISI",
+    "NDU",
+    "NILE",
+    "REDEEMERS",
+    "RHEMA",
+    "SUMAS",
+    "BCU",
+    "CCU",
+    "COAL-CITY",
+    "CUN",
+    "DANUMS",
+    "EUN",
+    "EVANGEL",
+    "FUHSA",
+    "KASU",
+    "KUM",
+    "MADUKA",
+    "MAAUN",
+    "MLU",
+    "SPORTS-UNI",
+    "UDU",
+    "ZAMFARA"
+   ],
+   "utme_subjects": [
+    "English Language",
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "Two (2) 'A' Level passes in any of Physics, Chemistry and Biology plus UTME entry requirements.",
+   "institution_waivers": [
+    {
+     "institution": "ABUAD",
+     "note": "Requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology. B.Sc. Degree (first class/second class upper) in Medical related fields."
+    },
+    {
+     "institution": "DELSU",
+     "note": "Requires a) HSC or GCE 'A' Level or its equivalent passes in Physics, Chemistry and Biology or Zoology (Botany may be accepted in lieu of Biology or Zoology); b) First degree in relevant Biological Sciences not below Second Class Lower Division."
+    },
+    {
+     "institution": "DELSU",
+     "note": "UTME: requires SSCE 'O' Level or its equivalent with credit passes in at least five (5) subjects which must include English Language, Mathematics, Physics, Chemistry and Biology in not more than two sittings."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "OOU",
+     "note": "UTME subjects: accepts any three (3) of Physics, Mathematics, Chemistry, Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."
+    }
+   ],
+   "first_line": 1707,
+   "line_range": [
+    1707,
+    1976
+   ],
+   "scope": [
+    1707,
+    1977
+   ]
+  },
+  {
+   "jamb_name": "Radiography",
+   "institutions": [
+    "ABU",
+    "AL-QALAM",
+    "BAYERO",
+    "BENIN",
+    "BOSU",
+    "BSU",
+    "CALABAR",
+    "CCU",
+    "CUST",
+    "FED-DUTSINMA",
+    "FED-LAFIA",
+    "FED-OYE EKITI",
+    "FUHSA",
+    "FUTO",
+    "KASU",
+    "KHAIRUN",
+    "LAGOS",
+    "PROGRAMME/DEGREE",
+    "LCITY",
+    "MAIDUGURI",
+    "MLU",
+    "NOK",
+    "PAMO",
+    "RHEMA",
+    "SUMAS",
+    "UDU",
+    "UNI-ILESA",
+    "UNIZIK",
+    "UNIOSUN",
+    "UNN",
+    "RADIOGRAPHY AND",
+    "RADIATION SCIENCE",
+    "AJAYI",
+    "BAZE",
+    "BINGHAM",
+    "BMU",
+    "CARITAS",
+    "DANUMS",
+    "EVANGEL",
+    "GREGORY",
+    "LASU",
+    "OSUMS",
+    "UDA",
+    "UNINIGER",
+    "UYO",
+    "MEDICAL IMAGING",
+    "TANSIAN",
+    "MEDICAL RADIOGRAPHY",
+    "VENITE",
+    "AUDIOLOGY",
+    "FED-DUTSINMAAL",
+    "FUHS-ILA",
+    "HUSTECH",
+    "ABUJA",
+    "FUNAAB",
+    "IBADAN",
+    "ILORIN",
+    "JOS",
+    "UMUDIKE"
+   ],
+   "utme_subjects": [
+    "English Language",
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Biology, Physics and Chemistry.",
+   "direct_entry": "Two (2) 'A' Level passes chosen from Physics, Chemistry and Biology.",
+   "institution_waivers": [
+    {
+     "institution": "BOWEN",
+     "note": "Requires 'A' Level passes in Chemistry, Physics and any other Science subject."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "Accepts a) 'A' Level passes in any two (2) of Chemistry, Biology and Physics plus the UTME requirements; b) accepts B.SC in Physical or Biological sciences plus the UTME requirements."
+    },
+    {
+     "institution": "MAIDUGURI",
+     "note": "Accepts DIR/DCR registered with Radiographers Board of Nigeria plus the UTME requirements."
+    },
+    {
+     "institution": "UNIZIK",
+     "note": "Requires 'A' Level pass in Physics. Accepts London International Baccalaureate."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Direct Entry: accepts passes in three (3) JUPEB/'A' level subjects: Physics, Chemistry, Biology."
+    },
+    {
+     "institution": "UNN",
+     "note": "Direct Entry: No direct entry."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts 'A' Level/IJMB Passes in three subjects in Physics, Chemistry and Biology or Zoology. Registered X-ray/Imaging Processing Technician."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME: As in Medical Laboratory Science."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME: requires Five O/Level credit passes in English Language, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME: requires Five 'O' level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "UNN",
+     "note": "UTME subjects: As in Medical Laboratory Science."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "UTME subjects: requires English Language, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "UTME subjects: requires Use of English, Physics, Chemistry and Biology."
+    }
+   ],
+   "first_line": 1977,
+   "line_range": [
+    1977,
+    2172
+   ],
+   "scope": [
+    1977,
+    2172
+   ]
+  },
+  {
+   "jamb_name": "Nursing/Nursing Science",
+   "institutions": [
+    "AAU",
+    "AAUA",
+    "ABSU",
+    "ABUJA",
+    "ABU",
+    "ABU-ODL",
+    "ABUAD",
+    "ACHIEVERS",
+    "AEFUNA",
+    "AJAYI",
+    "AUGUSTINE",
+    "AL-ANSAR",
+    "AL-HIKMAH",
+    "AL-QALAM",
+    "AMOU",
+    "ANCHOR-UNI",
+    "ARTHUR-JARVIS",
+    "ATIBA",
+    "AUE",
+    "AUN",
+    "AVE-MARIA",
+    "BABCOCK",
+    "BASU",
+    "BCU",
+    "BOSU",
+    "BAYERO",
+    "BAZE",
+    "BENIN",
+    "BINGHAM",
+    "BIU",
+    "BOWEN",
+    "BSU",
+    "CALEB",
+    "CARITAS",
+    "CANADIAN-UNI",
+    "CALABAR",
+    "CCU",
+    "CHRISLAND",
+    "CHRISTOPHER",
+    "CLIFFORD",
+    "COOU",
+    "COSMOPOLITAN",
+    "CUN",
+    "CUST",
+    "DANUMS",
+    "DELSU",
+    "DELSUT",
+    "DOMINION",
+    "DOU",
+    "EBSU",
+    "EDUSOKO",
+    "EKSU",
+    "ELIZADE",
+    "ESUTECH",
+    "EUI",
+    "EUN",
+    "EVANGEL",
+    "FED-DUTSE",
+    "FED-DUTSINMA",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-LOKOJA",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "FOUNTAIN",
+    "FUHSA",
+    "FUHS-ILA",
+    "GOUU",
+    "GREGORY",
+    "GREENFIELD",
+    "GSU",
+    "HAVILLA",
+    "HUDA",
+    "HUSTECH",
+    "IBADAN",
+    "ICONIC-OU",
+    "IGBINEDION",
+    "ILORIN",
+    "IMSU",
+    "ISTIQAMA",
+    "JABU",
+    "JOS",
+    "KASU",
+    "KHAIRUN",
+    "KOLA-DAISI",
+    "KOMU",
+    "KSUSTA",
+    "KUM",
+    "LAGOS",
+    "LASU",
+    "LAUTECH",
+    "LCITY",
+    "LUX-MUNDI",
+    "MADUKA",
+    "MADONNA",
+    "MAIDUGURI",
+    "MAAUN",
+    "MUDIAME",
+    "MCPHERSON",
+    "MC-IBRU",
+    "MERCY-MED-UNI",
+    "MIVA",
+    "MLU",
+    "MOUNTAIN TOP",
+    "NEWGATE",
+    "NDU",
+    "NOK",
+    "NOUN",
+    "NOVENA",
+    "NUS",
+    "OAU",
+    "OAUSTECH",
+    "ODUDUWA",
+    "OOU",
+    "OSUMS",
+    "PAAU",
+    "PAMO",
+    "PEACELAND UNI",
+    "PETER-UNI",
+    "PHC",
+    "PLASU",
+    "PRU",
+    "REDEEMERS",
+    "RENAISSANCE",
+    "RHEMA",
+    "RSU",
+    "SAISA",
+    "SALEM",
+    "SAM-MARIS",
+    "SPORTS-UNI",
+    "SUMAS",
+    "TANSIAN",
+    "TAU",
+    "TRINITY",
+    "TSUJ",
+    "TOPFAITH",
+    "UDA",
+    "UDU",
+    "UMYUK",
+    "UNI-ILESA",
+    "UNIKINGS",
+    "UNIOSUN",
+    "UNINIGER",
+    "UNIZIK",
+    "UNN",
+    "UYO",
+    "VERITAS",
+    "VENITE",
+    "VISION-UNI",
+    "WELLSPRING",
+    "WESTERN-DEL",
+    "WESLEYUNI",
+    "ZAMFARA"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in Mathematics, Chemistry, Biology, Physics and English Language.",
+   "direct_entry": "(i) Two (2) 'A' Level passes in Biology/Zoology, Chemistry and Physics plus three (3) other 'O' Level credit passes in Mathematics, Physics and English Language. (ii) NRN or its approved equivalent plus five (5) 'O' Level credit passes in English Language and four (4) Science subjects chosen from Mathematics, Physics, Chemistry, Biology, Human Anatomy, Physiology and Hygiene, Health Science, Further Mathematics and General Science.",
+   "institution_waivers": [
+    {
+     "institution": "AAU",
+     "note": "DE: accepts Registered Nurse/Midwife RN, RM with one (1) year post registration experience; RN,RPN or RN,RNA or RN,RNT plus UTME requirements; or good first degree e.g. Biochemistry, Anatomy, Human Physiology, Health Education, Psychology, Guidance and Counselling; does not accept a degree in Zoology and Botany. UTME: five (5) 'O' Level credit passes in English Language, Mathematics, Physics, Biology and Chemistry at a sitting."
+    },
+    {
+     "institution": "ABU",
+     "note": "DE: 'A' Level/IJMB passes in three subjects in Physics, Chemistry and Biology or Zoology. Registered Nurse (RN) certificate with at least 5 credits in English Language, Mathematics, Biology, Physics and Chemistry. Registered Midwifery Certificate."
+    },
+    {
+     "institution": "ABUAD",
+     "note": "DE: requires three (3) 'A' Level passes in Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "AUE",
+     "note": "DE: ND credit plus the UTME minimum requirements."
+    },
+    {
+     "institution": "BENIN",
+     "note": "DE: three (3) 'A' Level passes in Biology/Zoology, Chemistry and Physics plus 'O' Level credit passes in five (5) subjects including Mathematics, Physics, Chemistry, Biology and English."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "DE: NRN or its approved equivalent plus five (5) 'O' Level credit passes to include English Language and one (1) Science subject plus two (2) years registration nursing experience; also accepts HND in Public Health, ND in Environmental Health, Public Health Nursing from West African Health Examination Board plus UTME requirements."
+    },
+    {
+     "institution": "EBSU",
+     "note": "DE: accepts HND, NCE and ND with a minimum of Merit and Upper credit respectively in the relevant programme."
+    },
+    {
+     "institution": "FUTO",
+     "note": "DE: three 'A' level passes not below Grade C in Physics and any two of Chemistry, Biology and Mathematics; or ND/HND Upper Credit in Biomedical Technology/Engineering, Chemical/Mechanical Engineering or Health sciences; or First Degree in Engineering or Health sciences; or three JUPEB subjects (Chemistry, Biology, Physics). Does not accept NCE."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "DE: professional qualification (General Nursing, Psychiatric Nursing, Mid-Wifery, Nursing, Nursing Admin), two 'A' Level passes in Chemistry, Biology and Physics plus UTME, and two years post registration experience. UTME: No admission through UTME; requires five/six 'O' Level credit passes including English, Biology/Health Science, Chemistry, Mathematics and one of Economics/Government/Literature/History/Geography/Physics."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "DE: two 'A' Level passes/equivalents in Biology, Botany, Zoology, Chemistry, Physics/Mathematics; Registered Nurse (RCN) and Registered Midwife (RM) Certificate only in addition to UTME; does not accept 'A' Level passes or any Degree for DIRECT ENTRY."
+    },
+    {
+     "institution": "JOS",
+     "note": "DE: three (3) 'A' Level passes in Chemistry, Physics and Biology/Zoology plus 'O' Level credit passes in Mathematics and English Language."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "DE: satisfy minimum UTME requirements; registration with Nursing and Midwifery Council of Nigeria as RN or RN/RM with at least two years post-registration experience; three JUPEB subjects (Biology, Chemistry, Physics); or 'A' Level passes in at least two of Biology, Chemistry, Physics, Zoology; or a degree in health related subject."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "DE: 'A' Level with passes in Chemistry, Biology and Physics (or Zoology); Registered Nurse (RN) Certificates plus UTME requirements plus 'O' Level credit passes in English, Mathematics, Biology, Physics and Chemistry; or First Degree approved by Senate in related programme plus UTME requirements."
+    },
+    {
+     "institution": "NDU",
+     "note": "DE: NURSES: NRN, RM, RPN plus five (5) 'O' Level credit passes in English, Physics, Mathematics, Chemistry and Biology at not more than two sittings. NON-NURSES: B.Sc. not lower than Second Class in relevant programme. UTME: '0' level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "OAU",
+     "note": "DE: Certificate of Registered Nurse (RN) or SRN or equivalent plus 'O' Level credit passes in English, Mathematics, Biology, Physics and Chemistry."
+    },
+    {
+     "institution": "PHC",
+     "note": "DE: Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC in Physics, Chemistry and Biology plus UTME; or First Degree (Second Class Honours - Upper division) in Anatomy, Physiology, Biochemistry or related course; Registered Nurse (RN), Registered Midwife (RM) with at least 2 years post qualification experience plus UTME."
+    },
+    {
+     "institution": "UNN",
+     "note": "DE: Nurses registered with N&MCN plus UTME; or three (3) 'A' Level passes in Mathematics, Biology and Chemistry at not more than two sittings plus UTME; or first degree in related programme. UTME: '0' level credit passes at not more than two (2) sittings."
+    },
+    {
+     "institution": "EUI",
+     "note": "DE: two 'A' Level passes in Biology/Zoology, Chemistry and Physics plus UTME; B.Sc. in relevant fields not below Second Class Lower; NRN plus five 'O' Level credit passes; or IJMB passes in Physics, Chemistry and Biology or Zoology. UTME: five credit passes at SSC in English, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DE: RN/RM or basic RM Diploma, registered and licensed with the Nursing and Midwifery Council of Nigeria. UTME: SSC 'O' Level with credit passes in at least five subjects including English, Mathematics, Physics, Chemistry and Biology in one sitting."
+    },
+    {
+     "institution": "LCITY",
+     "note": "UTME: 'O' Level credit passes in English Language, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "NOUN",
+     "note": "Listed for registered Nurses only."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Optometry",
+   "institutions": [
+    "ABSU",
+    "ABUAD",
+    "ARTHUR-JARVIS",
+    "BAYERO",
+    "BINGHAM",
+    "DANUMS",
+    "DOU",
+    "FUTO",
+    "FUHSA",
+    "GREGORY",
+    "ILORIN",
+    "IMSU",
+    "MADONNA",
+    "MLU",
+    "NOVENA",
+    "UDU",
+    "UNI-ILESA"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Maths, Physics, Chemistry and Biology.",
+   "direct_entry": "'A' Level passes in Physics, Chemistry and Biology or Zoology.",
+   "institution_waivers": [
+    {
+     "institution": "ABSU",
+     "note": "Awards Doctor of Optometry (O.D) and accepts B.Sc in relevant programme, HND/ND of Ophthalmic and Dispensing."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts UTME qualifications plus 'A' Level passes in Biology, Chemistry and Physics. At least 13 Points."
+    },
+    {
+     "institution": "FUTO",
+     "note": "DE: three 'A' level passes not below Grade C in Physics, Chemistry and Biology; HND Upper Credit in health sciences; First Degree with at least second Class lower in health sciences; or three JUPEB subjects (Chemistry, Biology, Physics); does not accept NCE. UTME: at least five 'O' Level credit passes in English, Mathematics, Chemistry, Physics and Biology in not more than two sittings."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Pharmacy",
+   "institutions": [
+    "ABU",
+    "ABUAD",
+    "ABSU",
+    "BASU",
+    "BAYERO",
+    "BENIN",
+    "BINGHAM",
+    "BMU",
+    "CCU",
+    "COOU",
+    "DANUMS",
+    "DELSU",
+    "ESUTECH",
+    "EUN",
+    "GREGORY",
+    "GSU",
+    "IBADAN",
+    "IGBINEDION",
+    "ILORIN",
+    "JOS",
+    "KASU",
+    "LAGOS",
+    "MADONNA",
+    "MADUKA",
+    "MAIDUGURI",
+    "MERCY-MED-UNI",
+    "NDU",
+    "NOVENA",
+    "OAU",
+    "OOU",
+    "PHC",
+    "SUMAS",
+    "UDU",
+    "UNIZIK",
+    "UNN",
+    "VERITAS"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Mathematics, Physics, Chemistry and Biology.",
+   "direct_entry": "Three (3) 'A' Level passes in Chemistry, Biology/Zoology and Physics or Mathematics plus UTME requirements.",
+   "institution_waivers": [
+    {
+     "institution": "BENIN",
+     "note": "Accepts 'A' Level pass in Botany in lieu of Biology; B.Sc. second class in related programmes; does not accept 'A' Level pass in Mathematics."
+    },
+    {
+     "institution": "UYO",
+     "note": "Does not accept 'A' Level pass in Mathematics."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Accepts 'A' Level pass in three science subjects: Chemistry, Physics and Biology."
+    },
+    {
+     "institution": "JOS",
+     "note": "Does not accept Mathematics for Physics. Accepts B.Sc. second class and above in related programmes. Accepts DE candidates with 'A' Level requirements plus five 'O' Level credit passes in English, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts very good passes in three JUPEB/'A'-level subjects: Physics, Chemistry and Biology; does not accept B.Sc. degrees."
+    },
+    {
+     "institution": "NDU",
+     "note": "Accepts a first degree in Chemistry or any of the Biological Sciences; 'A' Level passes in Physics, Mathematics or Statistics, Chemistry and Biology or Zoology or Botany at not more than two sittings; general requirements including credit passes in five relevant subjects including Mathematics and English at 'O' Level."
+    },
+    {
+     "institution": "OAU",
+     "note": "Accepts B.Sc. with a minimum of 2nd Class Honours in relevant programme (Sciences)."
+    },
+    {
+     "institution": "OOU",
+     "note": "Accepts Botany in lieu of Zoology."
+    },
+    {
+     "institution": "UNN",
+     "note": "DE: three 'A' Level passes including Chemistry, Biology/Zoology/Botany and Physics plus UTME at not more than two sittings; Bachelor's degree in Biological Sciences, Health Science and Technology or Medical Sciences with minimum second class lower plus UTME; HND upper credit in same fields plus UTME."
+    },
+    {
+     "institution": "DELSU",
+     "note": "First degree in relevant Biological Sciences with not less than second class Upper Division may be considered in addition to UTME requirement."
+    }
+   ]
+  },
+  {
+   "jamb_name": "Physiology",
+   "institutions": [
+    "AAU",
+    "ABSU",
+    "ABU",
+    "ABUAD",
+    "ACHIEVERS",
+    "APU",
+    "ATIBA",
+    "AUE",
+    "BABCOCK",
+    "BASU",
+    "BAYERO",
+    "BENIN",
+    "BINGHAM",
+    "BOWEN",
+    "CHRISLAND",
+    "COOU",
+    "CRUTECH",
+    "CUST",
+    "DELSU",
+    "EBSU",
+    "EKO-UNI",
+    "EKSU",
+    "EUI",
+    "FED-KEBBI",
+    "FED-LAFIA",
+    "FED-OYE EKITI",
+    "FED-OTUOKE",
+    "AEFUNA",
+    "FUTA",
+    "GSU",
+    "GREGORY",
+    "HUSTECH",
+    "IBADAN",
+    "IGBINEDION",
+    "ILORIN",
+    "LAGOS",
+    "LASU",
+    "LAUTECH",
+    "LCITY",
+    "MADONNA",
+    "MAITAMA",
+    "NOK",
+    "NOVENA",
+    "OOU",
+    "OSUMS",
+    "PAMO",
+    "PHC",
+    "RSU",
+    "SALEM",
+    "TAU",
+    "UDA",
+    "UNI-ILESA",
+    "UNIOSUN",
+    "UNIZIK",
+    "UNN",
+    "UYO",
+    "VENITE",
+    "VERITAS",
+    "WESLEYUNI",
+    "YSU"
+   ],
+   "utme_subjects": [
+    "Physics",
+    "Chemistry",
+    "Biology"
+   ],
+   "olevel_requirement": "Five (5) SSC credit passes in English Language, Maths, Physics, Chemistry and Biology.",
+   "direct_entry": "Two (2) 'A' Level passes chosen from Chemistry, Physics and Biology/Zoology.",
+   "institution_waivers": [
+    {
+     "institution": "AAU",
+     "note": "Same as for Medical Laboratory Science."
+    },
+    {
+     "institution": "ABUAD",
+     "note": "Requires three (3) 'A' Level passes in Chemistry, Physics and Biology/Zoology."
+    },
+    {
+     "institution": "BENIN",
+     "note": "DE: three 'A' Level passes/equivalents at not more than two sittings in Physics, Chemistry, and Biology or Zoology plus 'O' Level requirements; or at least a second class lower in Biochemistry, Microbiology, Zoology or Botany. UTME: at least five 'O' Level credit passes at not more than two sittings including English, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "CALABAR",
+     "note": "No direct entry."
+    },
+    {
+     "institution": "PHC",
+     "note": "No direct entry via 'A' Level; accepts Three (3) A/Level passes in JUPEB or IJMB or GCE or HSC in Physics, Chemistry and Biology plus UTME entry requirements."
+    },
+    {
+     "institution": "IBADAN",
+     "note": "As for Biochemistry (DE); as in Medicine and Surgery (UTME)."
+    },
+    {
+     "institution": "ILORIN",
+     "note": "Two 'A' Level passes chosen from Chemistry, Physics and Biology/Zoology; also 'A' Level passes from Mathematics, Physics, Chemistry and Biology. UTME: five SSC credit passes in English, Maths, Physics, Chemistry and Biology/Zoology."
+    },
+    {
+     "institution": "LAGOS",
+     "note": "Accepts JUPEB/'A'-level passes in Physics, Chemistry and Biology; B.Sc. Degree (first class/second class upper) in Medical related fields. UTME: five 'O' Level credit passes in English, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "LAUTECH",
+     "note": "Accepts 'A' Level passes in Biology and Chemistry or Physics; or ND/HND upper credit in relevant programme."
+    },
+    {
+     "institution": "FED-DUTSE",
+     "note": "DE: three 'A' Level subjects in Biology, Chemistry and Physics obtained from IJMB. UTME: five 'O' Level credit passes including English, Mathematics, Biology, Chemistry and Physics."
+    },
+    {
+     "institution": "ABU",
+     "note": "Accepts 'A' Level/IJMB passes in three subjects in Physics, Chemistry and Biology or Zoology."
+    },
+    {
+     "institution": "DELSU",
+     "note": "DE: HSC/GCE 'A' Level in Physics, Chemistry and Biology or Zoology (Botany accepted in lieu); or first degree in relevant Biological Sciences not below Second Class Lower. UTME: SSC 'O' Level with credit passes in at least five subjects including English, Mathematics, Physics, Chemistry and Biology at not more than two sittings."
+    },
+    {
+     "institution": "EUI",
+     "note": "Accepts two 'A' Level passes chosen from Physics, Chemistry and Biology or Zoology plus UTME; BSc etc. in relevant field; OND/HND in related courses with Credit pass plus 'O' level entry; IJMB/JUPEB."
+    },
+    {
+     "institution": "FUTA",
+     "note": "DE: minimum Upper Credit at ND from recognised Polytechnics/Colleges of Technology in relevant disciplines; or 'A' Level/equivalent at one sitting in at least two Science subjects including Biology. UTME: five SSC credit passes at maximum of two sittings in English, Mathematics, Physics, Chemistry and Biology."
+    },
+    {
+     "institution": "RSU",
+     "note": "UTME: five 'O' Level credit passes at not more than two sittings including English, Mathematics, Chemistry, Biology, Physics."
+    }
+   ]
+  }
+ ]
+}

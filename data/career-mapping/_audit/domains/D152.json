@@ -1,0 +1,157 @@
+{
+ "domain_id": "D152",
+ "domain_name": "Museum Curation, Cultural Heritage, Archives",
+ "role_count": 30,
+ "roles": [
+  {
+   "role": "art restorer",
+   "isco": 2651,
+   "aka": "restoration technician  ·  art objects repairer  ·  restorers  ·  restorer  ·  artifact conservator"
+  },
+  {
+   "role": "mine geologist",
+   "isco": 2114,
+   "aka": "geologist  ·  geological engineer  ·  geophysicist  ·  mineralogist  ·  exploration geologist"
+  },
+  {
+   "role": "artistic painter",
+   "isco": 2651,
+   "aka": "painting & drawing artist  ·  street painter  ·  sign painter  ·  drawing & painting artist  ·  painting and drawing artist"
+  },
+  {
+   "role": "information manager",
+   "isco": 2622,
+   "aka": "academic information coordinator  ·  information scientist  ·  information officer  ·  documentalist  ·  knowledge manager"
+  },
+  {
+   "role": "library assistant",
+   "isco": 4411,
+   "aka": "library services assistant  ·  library clerk  ·  assistant librarian  ·  library technician  ·  senior library assistant"
+  },
+  {
+   "role": "drawing artist",
+   "isco": 2651,
+   "aka": "illustrator  ·  street artist  ·  artist  ·  cartoon artist  ·  visual art expert"
+  },
+  {
+   "role": "oceanographer",
+   "isco": 2114,
+   "aka": "marine geologist  ·  marine physicist  ·  oceanography scientist  ·  oceanography science researcher  ·  oceanographers"
+  },
+  {
+   "role": "big data archive librarian",
+   "isco": 3433,
+   "aka": "digital documentation archivist  ·  archive librarian  ·  documentation archivist  ·  computer tape librarian  ·  digital archivists"
+  },
+  {
+   "role": "hydrologist",
+   "isco": 2114,
+   "aka": "hydrological engineer  ·  surface hydrologist  ·  hydrology research analyst  ·  hydrology researcher  ·  hydrology scientist"
+  },
+  {
+   "role": "art handler",
+   "isco": 3433,
+   "aka": "museum technician  ·  museology technician  ·  fine arts packer  ·  art conservator  ·  gallery technician"
+  },
+  {
+   "role": "librarian",
+   "isco": 2622,
+   "aka": "library assistant  ·  library technical assistant  ·  literature researcher  ·  catalogue librarian  ·  special collections librarian"
+  },
+  {
+   "role": "hydrogeologist",
+   "isco": 2114,
+   "aka": "pore pressure engineer  ·  formation evaluation engineer  ·  consultant hydrogeologist  ·  consultant hydrologist  ·  hydrogeological consultant"
+  },
+  {
+   "role": "video artist",
+   "isco": 2651,
+   "aka": "interactive video artist  ·  video effects artist  ·  visual technician  ·  graphics & video artist  ·  visual manipulator"
+  },
+  {
+   "role": "printmaker",
+   "isco": 2651,
+   "aka": "printmaking artist  ·  lithographer  ·  illustrator & printmaker  ·  illustrator and printmaker  ·  screen printer"
+  },
+  {
+   "role": "palaeontologist",
+   "isco": 2114,
+   "aka": "palaeontology scholar  ·  palaeontology science researcher  ·  micropalaeontologist  ·  palaeontology scientist  ·  palaeontology researcher"
+  },
+  {
+   "role": "mineralogist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  offshore mineralogist  ·  mineralogy expert  ·  mineralogy consultant  ·  process mineralogy consultant"
+  },
+  {
+   "role": "environmental geologist",
+   "isco": 2114,
+   "aka": "environmental mineralogist  ·  environmental consultant  ·  environmentalist  ·  environmental geology analyst  ·  environmental geology researcher"
+  },
+  {
+   "role": "sculptor",
+   "isco": 2651,
+   "aka": "clay sculptress  ·  metal sculptor  ·  metal sculptress  ·  ice sculptor  ·  welded steel sculptor"
+  },
+  {
+   "role": "conceptual artist",
+   "isco": 2651,
+   "aka": "conceptual creator  ·  concept artist"
+  },
+  {
+   "role": "taxidermist",
+   "isco": 3433,
+   "aka": "bird taxidermist  ·  animal taxidermist  ·  taxidermy technician"
+  },
+  {
+   "role": "geophysicist",
+   "isco": 2114,
+   "aka": "geophysical engineer  ·  project geophysicist  ·  consultant geophysicist  ·  field seismologist  ·  exploration geophysicist"
+  },
+  {
+   "role": "exploration geologist",
+   "isco": 2114,
+   "aka": "mineralogist  ·  economic geologist  ·  field exploration geologist  ·  exploration geology research scientist  ·  exploratory geologist"
+  },
+  {
+   "role": "storyboard artist",
+   "isco": 2651,
+   "aka": "storyboard revisionist  ·  storyboard and animatic artist  ·  story-boarder  ·  storyboard & animatic artist  ·  storyboarder"
+  },
+  {
+   "role": "glass artist",
+   "isco": 2651,
+   "aka": "stained glass creator  ·  stained glass restorer  ·  stained glass designer and maker  ·  stained glass artist & restorer  ·  stained glass artist"
+  },
+  {
+   "role": "seismologist",
+   "isco": 2114,
+   "aka": "seismologists  ·  seismology research analyst  ·  seismology analyst  ·  seismology researcher  ·  seismology scientist"
+  },
+  {
+   "role": "geologist",
+   "isco": 2114,
+   "aka": "field geologist  ·  geologist engineer  ·  geology science researcher  ·  geology research analyst  ·  site geologist"
+  },
+  {
+   "role": "geochemist",
+   "isco": 2114,
+   "aka": "geo-technician  ·  geoscience technician  ·  exploration geochemist  ·  consultant geochemist  ·  petroleum technician"
+  },
+  {
+   "role": "mud logger",
+   "isco": 2114,
+   "aka": "mudlogger  ·  surface logging technician  ·  surface logging specialist  ·  logging geologist  ·  surface logger"
+  },
+  {
+   "role": "ceramicist",
+   "isco": 2651,
+   "aka": "artistic ceramicist  ·  ceramics artist  ·  ceramics designer & maker  ·  ceramics designer and maker  ·  ceramist"
+  },
+  {
+   "role": "cartoonist",
+   "isco": 2651,
+   "aka": "satirical cartoonist  ·  caricaturist  ·  strip cartoonist  ·  political cartoonist  ·  comic artist"
+  }
+ ]
+}

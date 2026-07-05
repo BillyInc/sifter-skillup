@@ -1,0 +1,162 @@
+{
+ "domain_id": "D118",
+ "domain_name": "Crop Production, Horticulture",
+ "role_count": 31,
+ "roles": [
+  {
+   "role": "horticulture worker",
+   "isco": 9214,
+   "aka": "flower picker  ·  crop worker  ·  berry picker  ·  fruit picker  ·  horticultural farm worker"
+  },
+  {
+   "role": "crop production manager",
+   "isco": 6114,
+   "aka": "farm director  ·  crop producer"
+  },
+  {
+   "role": "mixed farmer",
+   "isco": 6130,
+   "aka": "smallholder  ·  crofter  ·  working farm manager"
+  },
+  {
+   "role": "vineyard machinery operator",
+   "isco": 6112,
+   "aka": "vineyard machine operator  ·  grape grower  ·  farm machinery operator  ·  machinery operator in a vineyard  ·  winery machine operator"
+  },
+  {
+   "role": "vineyard supervisor",
+   "isco": 6112,
+   "aka": "supervisor of a winery  ·  supervisor of a vineyard"
+  },
+  {
+   "role": "fruit and vegetable picker",
+   "isco": 9211,
+   "aka": "berry picker  ·  fruit picker  ·  fruit & vegetable picker  ·  crop harvester  ·  farm hands"
+  },
+  {
+   "role": "farm manager",
+   "isco": 6130,
+   "aka": "agricultural manager  ·  agricultural operations manager  ·  farming operations manager  ·  farmer"
+  },
+  {
+   "role": "fruit production team leader",
+   "isco": 6112,
+   "aka": "fruit harvesting team leader  ·  fruit picking manager  ·  strawberry farmer  ·  strawberry production team supervisor  ·  apple production manager"
+  },
+  {
+   "role": "vineyard manager",
+   "isco": 6112,
+   "aka": "manager of a vineyard  ·  winery manager  ·  manager of a winery"
+  },
+  {
+   "role": "horticulture production team leader",
+   "isco": 6113,
+   "aka": "horticultural team manager  ·  horticultural foreman  ·  horticultural production team leader"
+  },
+  {
+   "role": "interior landscaper",
+   "isco": 6113,
+   "aka": "interior gardener  ·  experts in interior landscaping  ·  interior landscapers  ·  indoor gardener  ·  indoor landscaper"
+  },
+  {
+   "role": "garden labourer",
+   "isco": 9214,
+   "aka": "gardening assistant  ·  garden worker  ·  landscaping labourer  ·  landscaping operative  ·  gardener"
+  },
+  {
+   "role": "groundsman/groundswoman",
+   "isco": 6113,
+   "aka": "park keeper  ·  groundsman  ·  groundswoman  ·  landscape gardener  ·  horticulturist"
+  },
+  {
+   "role": "hop farmer",
+   "isco": 6112,
+   "aka": "hop producer  ·  hop tender  ·  hop grower  ·  hop cultivator  ·  hops cultivator"
+  },
+  {
+   "role": "arboriculturist",
+   "isco": 6112,
+   "aka": "arborist  ·  arboretum worker  ·  arboriculture specialist  ·  tree climber  ·  climber"
+  },
+  {
+   "role": "vineyard cellar master",
+   "isco": 6112,
+   "aka": "vintner  ·  cellar master of a vineyard  ·  winery supervisor  ·  winemaker"
+  },
+  {
+   "role": "horticulture production manager",
+   "isco": 6113,
+   "aka": "horticulture manager  ·  horticultural crop manager  ·  horticultural producer  ·  horticultural manager  ·  horticultural production manager"
+  },
+  {
+   "role": "vineyard worker",
+   "isco": 9211,
+   "aka": "grape picker  ·  grape harvester  ·  worker in a vineyard  ·  winery worker  ·  vineyard labourer"
+  },
+  {
+   "role": "landscape gardener",
+   "isco": 6113,
+   "aka": "landscaper  ·  landscaping gardener  ·  landscape gardeners"
+  },
+  {
+   "role": "agronomic crop production team leader",
+   "isco": 6111,
+   "aka": "production team leader  ·  crops production team leader  ·  crop team leader  ·  crop growing team leader  ·  crop team manager"
+  },
+  {
+   "role": "tree surgeon",
+   "isco": 6113,
+   "aka": "arboriculturist  ·  arborist  ·  tree surgeon and climber  ·  tree surgeon & climber  ·  tree surgeon/climber"
+  },
+  {
+   "role": "Farmworkers, Labourers, and Other Agricultural Workers",
+   "isco": 9211,
+   "aka": NaN
+  },
+  {
+   "role": "Farmers, Ranchers, and Other Agricultural Managers",
+   "isco": 1311,
+   "aka": NaN
+  },
+  {
+   "role": "Pesticide Handlers, Sprayers, and Applicators, Vegetation",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "Agricultural Inspectors",
+   "isco": 6111,
+   "aka": NaN
+  },
+  {
+   "role": "Farmworkers and Laborers, Crop, Nursery, and Greenhouse",
+   "isco": 6112,
+   "aka": NaN
+  },
+  {
+   "role": "Animal Breeders",
+   "isco": 6130,
+   "aka": NaN
+  },
+  {
+   "role": "Landscaping and Groundskeeping Workers",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "Tree Trimmers and Pruners",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "Grounds Maintenance Workers, All Other",
+   "isco": 6113,
+   "aka": NaN
+  },
+  {
+   "role": "aquaculture biologist",
+   "isco": 2131,
+   "aka": "aquaculture biology research analyst  ·  expert in aquaculture biology  ·  aquaculture biology expert  ·  specialist in aquaculture biology  ·  aquaculture biology scientist"
+  }
+ ]
+}

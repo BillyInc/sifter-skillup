@@ -1,0 +1,4396 @@
+[
+ {
+  "programme": "Applied Geophysics",
+  "code": "GPH",
+  "technical_skills": [
+   "describe the structure and composition of the earth",
+   "identify the major minerals and rocks; and",
+   "recognise and explain driving forces within the earth and the manifestations",
+   "describe how fossils are formed",
+   "state the uses of fossils in geological studies",
+   "define and explain key ancient geological events; and",
+   "discuss the evolution of organism",
+   "discuss the concept of heat and temperature",
+   "explain and determine thermodynamic processes",
+   "explain and evaluate properties of real and ideal gases",
+   "evaluate the consequences of the thermodynamic laws",
+   "describe the basis of the kinetic theory; and",
+   "describe the statistical behaviour of gases with applications",
+   "explain and understand the basic foundation of classical thermodynamics",
+   "explain the basic application of thermodynamics laws and potentials",
+   "apply some real life applications; and",
+   "further apply the course to their respective field of learning",
+   "describe the earth’s interior structure and the internal forces that take place within the earth interior, geophysical fluids and environmental hazards",
+   "explain the ancient key geological event; and",
+   "compare geomagnetic field observations and discuss the effects of magnetic storms",
+   "define geological structures",
+   "represent scales of maps",
+   "read topographic maps and prepare a base map",
+   "prepare and interpret; and",
+   "geological maps"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Introduction to Geology I",
+   "Introduction to Geology II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Thermal Physics",
+   "Introduction to Earth Physics",
+   "Introduction to Geological Mapping"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Biochemistry",
+  "code": "BCH",
+  "technical_skills": [
+   "explain classification and chemistry of carbohydrate",
+   "discuss chemistry and biochemistry of the polysaccharide including the amino sugars; mucopolysaccharides, blood group substances",
+   "illustrate structure of chemistry and function of normal living cell",
+   "define metabolism of proteins",
+   "describe carbohydrates, nucleic acids and lipids",
+   "demonstrate basic biochemical importance; and",
+   "apply biochemical knowledge in the clinics",
+   "explain the scope for statistical methods in biology and agriculture",
+   "define the measures of location, partition, and dispersion",
+   "explain the elements of probability; probability distributions: binomial, poisson, geometric, hypergeometric, negative binomial and normal, Student’s t and chi-square distributions; concerning population means, proportions and variances",
+   "compute for regression and correlation as well as conduct some Non–parametric tests with reference to Contingency table analysis; and",
+   "explain the elements of design of experiments and Analysis of variance",
+   "discuss why enzymes are grouped into different classes",
+   "explain the basis of classification of enzyme",
+   "identify the role vitamins in the cellular system",
+   "illustrate the basis and mechanism of enzyme- catalysed reactions",
+   "derive equations governing enzyme reactions in cellular systems; and",
+   "explain the effect of various factors on enzyme reactions",
+   "explain the structure and functions of various polysaccharides",
+   "describe the various pathways polysaccharides could be broken down in cellular systems",
+   "discuss how the end product of carbohydrate metabolism is attained",
+   "explain the central importance of TCA cycle in cellular metabolism; and",
+   "predict consequences of disorders of carbohydrate metabolism",
+   "describe how various types of lipids (fats and oil) are synthesized",
+   "discuss the implication of unsaturation in lipids and oils"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity &Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "General Biochemistry I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D055",
+    "domain": "Chemical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Biology",
+  "code": "BIO",
+  "technical_skills": [
+   "distinguish between heritable and non-heritable characteristics",
+   "explain the likelihood of genetic events (Probability) and how well those events (results) fit into a set of observation",
+   "(results) fit into a set of observation",
+   "discuss polygenic variations; and",
+   "describe concepts in population genetics",
+   "explain various concepts and terminologies associated with the ecosystem",
+   "list and explain features of various habitat types",
+   "explain natural destruction/disaster, community and natural cycles; and",
+   "explain and describe factors responsible for changes in population",
+   "3.explain natural destruction/disaster, community and natural cycles; and",
+   "explain the chemistry of organic compounds and their biological importance",
+   "state the general characteristics of enzymes",
+   "describe nutrition, digestion and absorption in plants and animals",
+   "discuss the cell membrane structure and list its functions",
+   "summarize osmoregulation, excretion, and transport in animals",
+   "enumerate growth hormones in plants and their functions",
+   "explain the homeostasis, their coordination, and functions in animals; and",
+   "explain the plant water relation, growth, and growth regulation",
+   "list the different parts of a light microscope and state their functions",
+   "state and explain the stages involved in preparation of slides",
+   "describe the basic principles of spectrophotometry, colorimetry, photometry",
+   "describe polarimetry, chromatography, refractometry, melting points and colligative properties",
+   "describe the basic collection and preservation processes of plant and animal materials and their preservation in herbarium and museum respectively; and",
+   "explain the need for experimental design, basis of report writing and presentations",
+   "illustrate the detail structure of plant and animal cells and state the functions of the"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "explain basic definition of set, subsets, union, intersection, complements and use of Venn diagrams",
+   "solve quadratic equations",
+   "solve trigonometric functions",
+   "identify the various types of numbers; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "Philosophy, Logic and Human Existence",
+   "Genetics I",
+   "Introductory Ecology",
+   "General Physiology",
+   "Biological Techniques",
+   "Introductory Developmental/Cell Biology",
+   "Hydrobiology",
+   "Biostatistics",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D118",
+    "domain": "Crop Production, Horticulture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Biotechnology",
+  "code": "BTG",
+  "technical_skills": [
+   "explain the basic concepts and scope of microbiology",
+   "describe layout of a microbiology laboratory, equipment and reagents in a microbiology laboratory; and",
+   "discuss the theory behind basic protocols in a microbiology laboratory",
+   "describe the layout of a microbiology laboratory, equipment and reagents in a microbiology laboratory; and",
+   "explain the scope for statistical methods in biology and agriculture",
+   "define the measures of location, partition, and dispersion",
+   "explain the elements of probability; probability distributions: binomial, poisson, geometric, hypergeometric, negative binomial and normal, Student’s t and chi-square distributions; concerning population means, proportions and variances",
+   "compute for regression and correlation as well as conduct some Non–parametric tests with reference to Contingency table analysis; and",
+   "explain the elements of design of experiments and Analysis of variance",
+   "explain the historical development of biotechnology and its relevance in the modern world",
+   "describe the applications of biotechnology in agriculture, medicine, pharmaceuticals and the environment",
+   "explain the role of biotechnology in industrial processes; and",
+   "demonstrate skills and knowledge of the steps in DNA fingerprinting and its applications",
+   "estimate the population density of cells in a medium",
+   "demonstrate thin sectioning of cells, stain and view",
+   "illustrate aseptic protocol, extract DNA from a cell and view after gel electrophoresis; and",
+   "explain PCR principles, primer design and the concept of cloning",
+   "explain molecules conferring genetic properties and hereditary to organisms",
+   "describe the genetic codes, translation, transcription and regulatory mechanisms",
+   "explain different types of mutations in cells, causes, mechanisms, recombination and cellular repair process",
+   "describe DNA and RNA replications, transformation, conjugation and transduction; and",
+   "demonstrate some experimental skills in molecular genetics",
+   "describe functions and activities of genes, their structure, variation and translation and transcription",
+   "explain the molecular anatomy and physiology of plants and animal cells",
+   "describe the structure of DNA and RNA, the nucleotide bases, amino acid codons and expression of genes as proteins"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "General Biochemistry I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Botany",
+  "code": "BOT",
+  "technical_skills": [
+   "identify different classes of plants",
+   "describe the vascular plants",
+   "locate nonvascular plants",
+   "list growth forms of plants",
+   "differentiate the cell structure of monocotyledonous and dicotyledonous plants",
+   "explain distinguishing features of monocot and dicot",
+   "identify types of fruits and seeds",
+   "illustrate botanical drawings; and",
+   "sketch parenchyma, collenchyma, sclerenchyma, xylem and phloem",
+   "distinguish between heritable and non-heritable characteristics",
+   "explain the likelihood of genetic events (Probability) and how well those events (results) fit into a set of observation",
+   "(results) fit into a set of observation",
+   "discuss polygenic variations; and",
+   "describe concepts in population genetics",
+   "explain various concepts and terminologies associated with the ecosystem",
+   "list and explain features of various habitat types",
+   "explain natural destruction/disaster, community and natural cycles; and",
+   "explain and describe factors responsible for changes in population",
+   "3.explain natural destruction/disaster, community and natural cycles; and",
+   "explain the chemistry of organic compounds and their biological importance",
+   "state the general characteristics of enzymes",
+   "describe nutrition, digestion and absorption in plants and animals",
+   "discuss the cell membrane structure and list its functions",
+   "summarize osmoregulation, excretion, and transport in animals",
+   "enumerate growth hormones in plants and their functions"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "explain basic definition of set, subsets, union, intersection, complements and use of Venn diagrams",
+   "solve quadratic equations",
+   "solve trigonometric functions",
+   "identify the various types of numbers; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "Introductory Botany",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Genetics I",
+   "Introductory Ecology",
+   "General Physiology",
+   "Biological Techniques"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D073",
+    "domain": "Library, Archive",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D096",
+    "domain": "Agricultural",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Brewing Science and Technology",
+  "code": "BST",
+  "technical_skills": [
+   "differentiate between Science, Engineering and Technology, and relate them to",
+   "innovation",
+   "explain the different cadres of Engineering – Engineers, Technologists, Technicians and Craftsmen and their respective roles and competencies",
+   "describe and differentiate between the relevant professional bodies in engineering",
+   "identify goals of global development or SDGs",
+   "recognise and evaluate safety and risk; and",
+   "invite guest lecturers from different engineering bodies",
+   "explain the processes by which the raw ingredients are transformed during the brewing process",
+   "describe the processes that are used in beer formulation and creation",
+   "demonstrate in-depth knowledge in the production of spirits by pot distillation and continuous distillation; and",
+   "describe the concept, framework of the food system and identify its main stakeholders (the public sector, food industry, and civil society), current issues and regulatory framework",
+   "explain the role of innovation in the food system",
+   "define the duties and responsibilities of a food engineer; awareness of professional and academic ethics",
+   "discuss the role of food engineering education in the current national and global context",
+   "utilize principles of units and dimensions to solve basic engineering calculations",
+   "recognise the significance of information technologies in food engineering",
+   "identify sources of information and utilize resources to access information effectively and assess the impacts of food engineering applications on health, environment and safety",
+   "distinguish between heritable and non-heritable characteristics",
+   "explain the likelihood of genetic events (Probability) and how well those events (results) fit into a set of observation",
+   "(results) fit into a set of observation",
+   "discuss polygenic variations; and",
+   "describe concepts in population genetics",
+   "explain various concepts and terminologies associated with the ecosystem",
+   "list and explain features of various habitat types",
+   "explain natural destruction/disaster, community and natural cycles; and"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "identify the types of rules in differentiation and integration",
+   "describe the meaning and function of a real variable, graphs, limits and continuity; and",
+   "solve some applications of definite integrals in areas and volumes",
+   "describe the meaning of function of a real variable, graphs, limits and continuity and their applications; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Engineer in Society",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity &Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Introduction to Brewing Science",
+   "Introductory Food Engineering"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Chemistry",
+  "code": "CHM",
+  "technical_skills": [
+   "state the kinetic theory of gases and solve problems related to ideal and real gases",
+   "derive the formula for molecular velocity of gases and use the derived formula to solve problems",
+   "describe and explain the fundamental concepts of physical chemistry including those of statistical mechanics, chemical Kinetics, quantum mechanics and spectroscopy",
+   "apply simple models to predict properties of chemical systems",
+   "define and state type of solutions; define different concentration terms which include molarity, normality etc. explain vapour pressure lowering of the solvent, boiling point elevation of solutions, freezing point depression of solution and measurement of osmotic pressure",
+   "apply numerical or computational methods to calculate physical properties of Chemical systems and assess the appropriateness of different computational techniques and numerical approximations for solving chemistry problems",
+   "design and plan an investigation by selecting and applying appropriate practical, theoretical, and/or computational techniques or tools; and",
+   "states Ohm’s law and describe the electrolytic conduction, states the Faraday’s Law and Conductance Law of solution and calculation on electrical conductance on different electrolyte solution",
+   "define and state types of solutions; define different concentration terms which include molarity, normality etc. explain vapour pressure lowering of the solvent, boiling point elevation of solutions, freezing point depression of solution and measurement of osmotic pressure",
+   "describe and solve problems in chemistry of bifunctional compounds",
+   "describe the structures of simple sugars, starch and cellulose, peptides and proteins and show the difference in their conformational structure",
+   "explain he mechanisms of substitution, elimination, addition and rearrangement reactions",
+   "describe stereochemistry and its application",
+   "describe condition and pathways of the following organic reactions - Grignard reaction, Aldol and related reactions; and",
+   "describe simple alicyclic carbon compounds and their synthesis",
+   "explain the mechanisms of substitution, elimination, addition and rearrangement reactions",
+   "describe conditions and pathways of the following organic reactions - Grignard reaction, Aldol and related reactions; and",
+   "list the first-row transition elements and explain their characteristics and properties",
+   "explain crystal field theory (CFT) and draw the diagram to illustrate with examples of coordination compounds",
+   "state the advantages of CFT over other bonding theories",
+   "discuss the comparative Chemistry of the following elements. ( I) Ga, In, Tl (II). Ge, Sn, Pb (III). As, Sb, Bi (IV). Se, Te, Po",
+   "define organometallic chemistry",
+   "give relevant examples with illustrations",
+   "classify organometallic compounds with examples",
+   "list the roles of metals in biochemical systems"
+  ],
+  "transferable_skills": [
+   "explain basic definition of set, subsets, union, intersection, complements and use of Venn diagrams",
+   "solve quadratic equations",
+   "solve trigonometric functions",
+   "identify the various types of numbers; and",
+   "solve some problems using binomial theorem",
+   "identify various types of numbers; and",
+   "explain the basic concept of sets, subsets, union, intersection, complements, venn diagrams",
+   "explain the various types of numbers; and",
+   "discuss various types of numbers; and",
+   "sole some problems using Binomial theorem",
+   "explain basic definitions of set, subset, union, intersection, complements and use of Venn diagrams",
+   "explain the basic definition of set, subset, union, intersection, complements and use of Venn diagrams"
+  ],
+  "course_titles": [
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Physical Chemistry I",
+   "Organic Chemistry I",
+   "Inorganic Chemistry I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Environmental Management and Toxicology",
+  "code": "EMT",
+  "technical_skills": [
+   "conduct measurements of some physical quantities",
+   "make observations of events, collect and tabulate data",
+   "identify and evaluate some common experimental errors",
+   "plot and analyse graphs; and",
+   "draw conclusions from numerical and graphical analysis of data",
+   "outline common laboratory hazards",
+   "provide precautions on laboratory hazards",
+   "state the functions of the different parts of microscope",
+   "use the microscope and describe its maintenance",
+   "draw biological diagrams and illustrations; and",
+   "apply scaling and proportion to biological diagrams",
+   "describe the anatomy of flowering plants",
+   "differentiate types of fruit and seeds",
+   "state ways of handling and caring for biological wares",
+   "describe the basic histology of animal tissues; and",
+   "identify various groups in the animal kingdom",
+   "explain the basic concepts and scope of microbiology",
+   "describe layout of a microbiology laboratory, equipment and reagents in a microbiology laboratory; and",
+   "discuss the theory behind basic protocols in a microbiology laboratory",
+   "describe the layout of a microbiology laboratory, equipment and reagents in a microbiology laboratory; and",
+   "explain the scope for statistical methods in Biology and Agriculture",
+   "define the measures of location, partition and dispersion",
+   "explain the elements of probability, probability distributions: binomial, poison, geometric, hypergeometric, negative binomial and normal, student’s t and chi-square distributions; concerning population means, proportions and variances; tests with reference to contingency table analysis; and",
+   "explain the principles of science and recognize their role in evaluating and a viable human society within earth’s systems",
+   "describe the basic ecological concepts and knowledge of the natural world"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "General Physics I",
+   "General Physics II",
+   "General Practical Physics I",
+   "General Practical Physics I",
+   "General Chemistry I",
+   "General Chemistry",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Computer Programming I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D121",
+    "domain": "Forestry, Wildlife Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Forensic Science",
+  "code": "FRS",
+  "technical_skills": [
+   "demonstrate knowledge and understanding of elements of forensic photography such as types of cameras and films, digital photo imaging, Exposure Index, ISO number, photo imaging evidence, surveillance photography, aerial photography and methods for developing photographs; and",
+   "describe the scope and branches of forensic science",
+   "explain legal and medical aspects of forensic science, including documentation and court presentations",
+   "describe basic analytical techniques used in forensic science; and",
+   "describe the procedures used for detection, preservation, classification and analysis of fingerprints",
+   "explain cybersecurity concepts, its methods, elements, and terminologies of cybersecurity -cyber, security, threat, attack, defence, and operations",
+   "describe common cyber-attacks and threats, cybersecurity issues, challenges and proffered solutions, and build an enhanced view of main actors of cyberspace and cyber operations",
+   "apply the techniques for identifying, detecting, and defending against cybersecurity threats, attacks and protecting information assets",
+   "explain the impact of cybersecurity on civil and military institutions, privacy, business and government applications",
+   "identify the methods and motives of cybersecurity incident perpetrators, and the countermeasures employed by organisations and agencies to prevent and detect those incidences and software application vulnerabilities; and",
+   "state the ethical obligations of security professionals, evaluate cybersecurity and national security strategies to the typologies of cyber-attacks that require policy tools and domestic response, and define the cybersecurity requirements and strategies evolving in the face of big risk",
+   "explain the procedures used in collection of footwear and tire track evidence",
+   "compare footwear and tire track evidence to known impressions, impressions connected to other crimes and evidence stored in databases; and",
+   "recognize and interpret different types of imprint and impression characteristics, including but not limited to, class, individual and wear characteristics",
+   "explain the meaning of forensic audio and video analysis",
+   "describe the different types of audio and video evidence relevant to forensic investigation",
+   "collect, repair and recover audio and video evidence for forensic investigation",
+   "enhance audio and video evidence to assist investigators, jurors and attorneys",
+   "analyse, interpret and identify audio and video recordings",
+   "identify people and objects on recordings; and",
+   "use audio and video recordings in legal matters",
+   "describe the meaning and historical development of forensic entomology",
+   "recognize and identify major arthropods involved with post-mortem changes in a carrion",
+   "estimate post-mortem index (PMI) of a corpse; and",
+   "demonstrate an understanding of the techniques of forensic entomology, including DNA analysis, scanning electron microscopy and potassium permanganate staining"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "explain basic components of computers and other computing devices",
+   "describe the various applications of computers; 3. 4. 5. 6. explain information processing and its roles in the society; describe the Internet, its various applications and its impact; explain the different areas of the computing discipline and its specializations; and demonstrate practical skills on using computers and the internet",
+   "explain information processing and its roles in the society",
+   "describe the Internet, its various applications and its impact"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introductory Forensic Science",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Fundamentals of Cyber Security I",
+   "Footwear and Tire Track Examination",
+   "Forensic Audio and Video Analysis",
+   "Forensic Entomology",
+   "Criminal Law for Forensic Scientists",
+   "Forensic Psychology",
+   "Fundamental of Cyber Security II",
+   "Crime Scene Investigation",
+   "Trace Evidence",
+   "Forensic Microbiology",
+   "Introduction to Criminal Justice Administration",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D004",
+    "domain": "Cybersecurity",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D129",
+    "domain": "Military, Defence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D162",
+    "domain": "Immigration Law, Asylum",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D037",
+    "domain": "Legal Practice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Geology",
+  "code": "GEY",
+  "technical_skills": [
+   "describe the structure and composition of the earth",
+   "identify the major minerals and rocks; and",
+   "recognise and explain driving forces within the earth and the manifestations",
+   "describe how fossils are formed",
+   "state the uses of fossils in geological studies",
+   "define and explain key ancient geological events; and",
+   "discuss the evolution of organism",
+   "determine physical properties of minerals",
+   "describe and identify some minerals",
+   "describe the crystal system; and",
+   "list and identify various crystal system",
+   "describe igneous, metamorphic, and sedimentary rocks",
+   "identify igneous, metamorphic, and sedimentary rocks",
+   "describe the texture of igneous, metamorphic, and sedimentary rocks; and",
+   "classify igneous, metamorphic, and sedimentary rocks",
+   "describe the morphology of the fossil groups",
+   "classify major invertebrate fossil groups",
+   "define and describe the stratigraphic range and ecology of the fossils",
+   "explain paleobiologic models",
+   "draw and label the morphological elements of the fossils; and",
+   "identify the fossils",
+   "explain and describe the morphology of the fossil groups",
+   "define stratigraphy and classify stratigraphy",
+   "list and discuss techniques and parameters of stratigraphic analysis",
+   "discuss the geologic time scale and its applications"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "Introduction to Geology",
+   "Introduction to Geology II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Crystallography and Systematic Mineralogy",
+   "Introduction to Petrology",
+   "Invertebrate Palaeontology",
+   "Principles of Stratigraphy",
+   "Introduction to Surveying",
+   "Introduction to Structural Geology and Geological Map Interpretation",
+   "Introduction to Geological Field Mapping",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Geochronology & Precambrian Geology of Africa",
+   "Sedimentary Depositional Environments & Basins of Africa"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D156",
+    "domain": "Land Surveying, Cadastral Mapping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D130",
+    "domain": "Recruitment, Employment",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D029",
+    "domain": "Human Resources",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D164",
+    "domain": "Urban Mobility, Smart City Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D043",
+    "domain": "Journalism",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "adjacent"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "adjacent"
+   }
+  ]
+ },
+ {
+  "programme": "Industrial Chemistry",
+  "code": "ICH",
+  "technical_skills": [
+   "recognise design thinking and be obsessed with the determination to apply such to solving simple every day and also complex problems",
+   "explain the fundamental concepts of engineering drawing and graphics",
+   "exhibit skills to represent the world of engineering objects in actionable solid models, and put such models in a form where they can be inputs for simulation and analyses",
+   "analyse such models for strength, cost and improved upon",
+   "prepare the objects for modern production and manufacturing techniques of additive and subtractive manufacturing",
+   "demonstrate the idea that engineering is multidisciplinary in the sense that mechanical, electrical and other parts of physical structures are modelled in context as opposed to the analytical nature of the courses they take",
+   "master the basics of mechanical and thermal loads in engineering systems",
+   "state the kinetic theory of gases and solve problems related to ideal and real gases",
+   "derive the formula for molecular velocity of gases and use the derived formula to solve problems",
+   "describe and explain the fundamental concepts of physical chemistry including those of statistical mechanics, chemical Kinetics, quantum mechanics and spectroscopy",
+   "apply simple models to predict properties of chemical systems",
+   "define and state type of solutions; define different concentration terms which include molarity, normality etc. explain vapour pressure lowering of the solvent, boiling point elevation of solutions, freezing point depression of solution and measurement of osmotic pressure",
+   "apply numerical or computational methods to calculate physical properties of Chemical systems and assess the appropriateness of different computational techniques and numerical approximations for solving chemistry problems",
+   "design and plan an investigation by selecting and applying appropriate practical, theoretical, and/or computational techniques or tools; and",
+   "states Ohm’s law and describe the electrolytic conduction, states the Faraday’s Law and Conductance Law of solution and calculation on electrical conductance on different electrolyte solution",
+   "define and state types of solutions; define different concentration terms which include molarity, normality etc. explain vapour pressure lowering of the solvent, boiling point elevation of solutions, freezing point depression of solution and measurement of osmotic pressure",
+   "describe and solve problems in chemistry of bifunctional compounds",
+   "describe the structures of simple sugars, starch and cellulose, peptides and proteins and show the difference in their conformational structure",
+   "explain he mechanisms of substitution, elimination, addition and rearrangement reactions",
+   "describe stereochemistry and its application",
+   "describe condition and pathways of the following organic reactions - Grignard reaction, Aldol and related reactions; and",
+   "describe simple alicyclic carbon compounds and their synthesis",
+   "explain the mechanisms of substitution, elimination, addition and rearrangement reactions",
+   "describe conditions and pathways of the following organic reactions - Grignard reaction, Aldol and related reactions; and",
+   "list the first-row transition elements and explain their characteristics and properties"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "explain basic definition of set, subsets, union, intersection, complements and use of Venn diagrams",
+   "solve quadratic equations",
+   "solve trigonometric functions",
+   "identify the various types of numbers; and"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Engineering Graphics and Solid Modelling I",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Physical Chemistry I",
+   "Organic Chemistry I",
+   "Inorganic Chemistry I",
+   "Analytical Chemistry I",
+   "General Chemistry Practical III"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D050",
+    "domain": "Industrial Automation",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D131",
+    "domain": "Motorsport Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Industrial Mathematics",
+  "code": "IMT",
+  "technical_skills": [
+   "solve some vectors in addition and multiplication",
+   "calculate force and momentum; and",
+   "solve differentiation and integration of vectors",
+   "identify the basic concepts in economics including scarcity, choice and scale of preference; basic laws of demand and supply",
+   "explain the nature of elasticity and its applications, as well as short and long run production functions; and",
+   "explain pricing of factors of production and market structure consisting of perfect competitive market and imperfect competitive markets",
+   "discuss the basic concept of functions, index numbers and dependent and independent variables in functions, as well as national income accounting; and",
+   "discuss circular flow of income with simple two-sector model, as well as elementary issues on consumption, savings, investment, and, government’s revenue, expenditure and roles of domestic money and foreign exchange",
+   "explain real-valued functions of a real variable",
+   "solve some problems using mean value theorem and Taylor series expansion; and",
+   "evaluate line integral, surface integral and volume integrals",
+   "define the following: order and degree of a differential equation",
+   "describe some techniques for solving first and second order linear and non-linear equations; and",
+   "solve some problems related to geometry and physics",
+   "solve various problems using the concept of set theory",
+   "recognise Algebraic structures; and",
+   "describe the meaning of logic in Mathematics",
+   "explain vector space",
+   "describe linear transformations and their representation by matrices; and",
+   "calculate algebra of various matrices",
+   "recognise systems of linear equations",
+   "calculate the Eigen values and Eigen vectors",
+   "describe the Cayley-Hamilton theorem and its uses",
+   "describe convergence of sequence of numbers",
+   "discuss the monotone, cauchy sequences"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigeria Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics III (Vectors, Geometry and Dynamics)",
+   "Principles of Economics I",
+   "Principles of Economics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and innovation",
+   "Computer Programming I",
+   "Mathematical Methods 1",
+   "Elementary Differential Equations",
+   "Sets, Logic and Algebra I",
+   "Linear Algebra I",
+   "Linear Algebra II",
+   "Real Analysis I",
+   "Introduction to Numerical Analysis",
+   "Vector Analysis",
+   "Abstract Algebra"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D050",
+    "domain": "Industrial Automation",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D159",
+    "domain": "Credit Analysis, Structured Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D084",
+    "domain": "Payroll, Bookkeeping",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D015",
+    "domain": "Accounting",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D149",
+    "domain": "Diplomacy, International Relations",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Industrial Physics",
+  "code": "IPH",
+  "technical_skills": [
+   "describe and quantitatively analyse the behaviour of vibrating systems and wave energy",
+   "explain the propagation and properties of waves in sound and light",
+   "identify and apply the wave equations; and",
+   "explain geometrical optics and principles of optical instruments",
+   "identify the circumstances, discoveries and people that launched modern physics",
+   "enumerate and understand the postulate of relativity",
+   "explain the problem of simultaneity and calculate time changes from one frame of reference to another",
+   "describe relativistic length contraction",
+   "describe the relativistic mass-energy relation",
+   "explain the work of Planck, Bohr and Heisenberg; and",
+   "explain the uncertainty principle and the other features of Quantum mechanics",
+   "explain the notion of an inertial frame and the concept of an observer",
+   "relate the limitations imposed by and consequences of motion of bodies at the speed of light",
+   "state the principles of Special Relativity and use them to derive relations for time dilation and length contraction",
+   "perform calculations using the Lorentz transformation formulae",
+   "derive relativistic energy and momentum and use these to solve problems in mechanics",
+   "apply the mathematical treatment of the wave function and Schrodinger’s equation",
+   "relate the atomic structure and energy associated with the particles of the atom",
+   "apply the ideas of wave-particle duality and the uncertainty principle to solve problems in quantum mechanics",
+   "apply the Bohr formula to calculate energies and wavelengths in the context of atomic hydrogen; and",
+   "explain the interaction of photons and electrons with matter",
+   "identify circuit diagrams and symbols",
+   "determine current flows, potential drops, power, and energy dissipation in circuits using Ohm’s law",
+   "simplify series and parallel combinations of resistors",
+   "state Kirchhoff’s laws and apply same in solving for currents and voltages in D.C. and A.C. circuits"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Physics I",
+   "General Physics II",
+   "General Physics III",
+   "General Physics IV",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "General Physics V (Elementary Modern Physics)",
+   "Introduction to Electric Circuits and Electronics",
+   "General Physics IV (Waves and Optics)"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D050",
+    "domain": "Industrial Automation",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D098",
+    "domain": "Precision Engineering, Toolmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Marine Science",
+  "code": "MSE",
+  "technical_skills": [
+   "explain physical and geological oceanography",
+   "acquire basic knowledge on the physical properties of oceans",
+   "differentiate types of water motions – ocean currents, waves and tides and explain their effects and the forces that influence them",
+   "describe the formation of different water motions; circulation and mixing of oceanic waters",
+   "demonstrate a sound knowledge on energy fluxes and budgets in the ocean",
+   "demonstrate a basic knowledge on geological oceanography - the history and formation of ocean floors/basins and coastal zones - and how they develop and change with time; and",
+   "state properties of rocks and sediments on the seafloor and coastal margins",
+   "Explain the basic knowledge on chemical and biological oceanography",
+   "discuss the chemical components of oceans: salinity – dissolved salts; dissolved gases; dissolved organic substances; their reactions and transformation; how they are related to ocean circulation, atmosphere, biosphere and geosphere",
+   "state the diversity and characteristic features of marine organisms and identify various marine organisms",
+   "describe the processes that govern the distribution and abundance of marine organisms; and",
+   "explain marine ecological principles – maintaining or restoring native species, habitat diversity and heterogeneity, adaptation and interdependence",
+   "describe aspects of weather and climate that affect the totality of the marine environment",
+   "characterise the natural and artificial factors influencing weather",
+   "explain the transformation of water to vapour (evaporation) and its condensation",
+   "describe how thermodynamics of the atmosphere is used in weather forecasting",
+   "explain the climatic/weather factors and phenomena that affect the physical, chemical, biological and geological components of the marine environment; and",
+   "explain climate change and list the causes and effects, particularly the adverse effects",
+   "describe the formation, nature, activities and eruptions of marine volcanoes",
+   "differentiate varieties of oceanic ridge systems, identify their characteristic features and describe their distribution",
+   "explain magma and lava flows on the sea floor",
+   "state the different rock types associated with marine volcanoes; and",
+   "describe the economic mineral and biological resources associated with marine volcanoes",
+   "explain the chemistry of the atmosphere, its basic composition, chemical zonation and mixing in the atmosphere",
+   "describe air pollution at the local and regional level"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "General Physics I (Mechanics)",
+   "General Physics II (Behaviour of Matter)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Introductory Oceanography I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D098",
+    "domain": "Precision Engineering, Toolmaking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D049",
+    "domain": "Automotive Engineering",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Maritime Science",
+  "code": "MTS",
+  "technical_skills": [
+   "recognize the different marine crafts like ship, tugboats, cargo vessel, etc",
+   "describe marine structures including quay, port",
+   "identify the different properties of the ocean",
+   "Explain marine systems",
+   "list marine renewable sources and their benefits; and",
+   "possess the skills to classify the ecology of the tropical and temperate and marine waters",
+   "label ocean structures",
+   "list the functions of marine system",
+   "explain the properties of sea water",
+   "discuss the influence of the environment on the characteristics of the ocean",
+   "measure the oceanic parameters using oceanographic instruments; and",
+   "link up human activities to climate change and interpret how they affect the ocean",
+   "determine the position of the ship in the sea using the stars at night and the sun in the day",
+   "manipulate astronomical instruments like Sextant",
+   "identify the benefits of celestial navigation",
+   "detect defects of indication instruments",
+   "rectify any defects in course indication instruments and",
+   "measure the altitude of stars and sun over the visible sea horizon",
+   "measure meteorological parameters with appropriate instruments",
+   "read, assess, and interpret weather charts",
+   "forecast future weather events",
+   "categorize the weather conditions",
+   "perform optimum ship routing under specific weather condition; and",
+   "report and record weather conditions",
+   "captain a ship"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General biology I",
+   "General biology II",
+   "General biology practical I",
+   "General biology practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General physics II (Electricity & Magnetism)",
+   "General Physics Practical I",
+   "General Physics Practical II",
+   "Introduction to Maritime Science",
+   "Introduction to Oceanography",
+   "Philosophy, Logic and Human Existence"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D076",
+    "domain": "Maritime",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D091",
+    "domain": "Driving Instruction",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D069",
+    "domain": "Aviation",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D008",
+    "domain": "Telecommunications",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D030",
+    "domain": "Marketing, Brand",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D120",
+    "domain": "Fisheries, Aquaculture",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Mathematics",
+  "code": "MTH",
+  "technical_skills": [
+   "solve some vectors in addition and multiplication",
+   "calculate force and momentum; and",
+   "solve differentiation and integration of vectors",
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain the concept exploratory data analysis",
+   "explain real-valued functions of a real variable",
+   "solve some problems using mean value theorem and Taylor series expansion; and",
+   "evaluate line integral, surface integral and volume integrals",
+   "define the following: order and degree of a differential equation",
+   "describe some techniques for solving first and second order linear and non-linear equations; and",
+   "solve some problems related to geometry and physics",
+   "solve various problems using the concept of set theory",
+   "recognise Algebraic structures; and",
+   "describe the meaning of logic in Mathematics",
+   "explain vector space",
+   "describe linear transformations and their representation by matrices; and",
+   "calculate algebra of various matrices",
+   "recognise systems of linear equations",
+   "calculate the Eigen values and Eigen vectors",
+   "describe the Cayley-Hamilton theorem and its uses",
+   "describe convergence of sequence of numbers",
+   "discuss the monotone, cauchy sequences"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Elementary Mathematics III (Vectors, Geometry and Dynamics)",
+   "Probability I",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Computer Programming I",
+   "Mathematical Methods 1",
+   "Elementary Differential Equations",
+   "Sets, Logic and Algebra I",
+   "Linear Algebra I",
+   "Linear Algebra II",
+   "Real Analysis I",
+   "Introduction to Numerical Analysis",
+   "Vector Analysis",
+   "Peace and Conflict Resolution",
+   "Venture Creation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D060",
+    "domain": "Banking, Credit",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D147",
+    "domain": "Process Automation, SCADA, PLC",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Medical Physics",
+  "code": "MPH",
+  "technical_skills": [
+   "describe and quantitatively analyse the behaviour of vibrating systems and wave energy",
+   "explain the propagation and properties of waves in sound and light",
+   "identify and apply the wave equations; and",
+   "explain geometrical optics and principles of optical instruments",
+   "demonstrate morphological knowledge needed to construct spatial perception of anatomical systems; and",
+   "describe precisely the organ localisation, its tri-dimensional configuration as well as its formfunction relationship",
+   "explain the origin and sources of energy and power",
+   "describe the inter relation and transformation of energy sources and types",
+   "illustrate and explain the principles of generation of power",
+   "outline the concept of energy demand and supply",
+   "explain the economics, politics and problems associated with energy demand and supply",
+   "identify and assess categories of environmental pollutants",
+   "describe the effects of carbon emission on global warming",
+   "describe the environmental effect of energy generation, supply, and consumption; and",
+   "Identify and evaluate the merits and demerits of power generation from different sources",
+   "describe effect of carbon emission on global warming",
+   "relate the concepts of space coordinates, time, and linear motion",
+   "describe particle dynamics, equilibrium, and conservative forces",
+   "solve problems on central forces, energy, and angular momentum",
+   "explain the dynamics of rotational motion",
+   "discuss and apply the potential theory",
+   "explain the dynamics of rigid bodies",
+   "apply Newton's theory of gravitation to problems of planetary motion and space travel",
+   "use inertial forces to explain motion from the viewpoint of rotating frames of reference; and",
+   "derive the general relation between the angular velocity and angular momentum of a rigid body, and use this to solve problems in rotational dynamics"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "General Biology I",
+   "General Biology II",
+   "General Physics I (Mechanics)",
+   "General Physics II",
+   "General Physics III",
+   "General Physics IV",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Computer Programming I",
+   "Systemic and Functional Anatomy",
+   "General Physics VI",
+   "Classical Physics I",
+   "Peace and Conflict Resolution"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D123",
+    "domain": "Radiography, Medical Imaging",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D125",
+    "domain": "Medical Secretarial",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Medicinal Chemistry",
+  "code": "MCM",
+  "technical_skills": [
+   "describe the measurement of pH",
+   "determine the relative molar mass from the colligative properties",
+   "demonstrate the partition coefficient of two immiscible solvents",
+   "demonstrate temperature measurements and heat of dissolution, heat of neutralization and many others",
+   "determine the critical solution temperature of water-phenol system; and",
+   "measure the molar volume of a gas and universal gas constant",
+   "state the kinetic theory of gases and solve problems related to ideal and real gases",
+   "derive the formula for molecular velocity of gases and use the derived formula to solve problems",
+   "describe and explain the fundamental concepts of physical chemistry including those of statistical mechanics, chemical Kinetics, quantum mechanics and spectroscopy",
+   "apply simple models to predict properties of chemical systems",
+   "define and state type of solutions; define different concentration terms which include molarity, normality etc. explain vapour pressure lowering of the solvent, boiling point elevation of solutions, freezing point depression of solution and measurement of osmotic pressure",
+   "apply numerical or computational methods to calculate physical properties of Chemical systems and assess the appropriateness of different computational techniques and numerical approximations for solving chemistry problems",
+   "design and plan an investigation by selecting and applying appropriate practical, theoretical, and/or computational techniques or tools; and",
+   "states Ohm’s law and describe the electrolytic conduction, states the Faraday’s Law and Conductance Law of solution and calculation on electrical conductance on different electrolyte solution",
+   "define and state types of solutions; define different concentration terms which include molarity, normality etc. explain vapour pressure lowering of the solvent, boiling point elevation of solutions, freezing point depression of solution and measurement of osmotic pressure",
+   "describe and solve problems in chemistry of bifunctional compounds",
+   "describe the structures of simple sugars, starch and cellulose, peptides and proteins and show the difference in their conformational structure",
+   "explain he mechanisms of substitution, elimination, addition and rearrangement reactions",
+   "describe stereochemistry and its application",
+   "describe condition and pathways of the following organic reactions - Grignard reaction, Aldol and related reactions; and",
+   "describe simple alicyclic carbon compounds and their synthesis",
+   "explain the mechanisms of substitution, elimination, addition and rearrangement reactions",
+   "describe conditions and pathways of the following organic reactions - Grignard reaction, Aldol and related reactions; and",
+   "list the first-row transition elements and explain their characteristics and properties",
+   "explain crystal field theory (CFT) and draw the diagram to illustrate with examples of coordination compounds"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II",
+   "Introduction to Computing Sciences",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "Philosophy, Logic and Human Existence",
+   "General Chemistry Practical III",
+   "Physical Chemistry I",
+   "Organic Chemistry I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D151",
+    "domain": "Criminology, Criminal Justice",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D161",
+    "domain": "Humanitarian Aid, Emergency Response",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Meteorology",
+  "code": "MET",
+  "technical_skills": [
+   "discuss the structure and compositions of the earth’s atmosphere",
+   "explain the principles and practice of weather observation and measurements",
+   "explain the problems of measurements of rainfall. Evaporation and evapotranspiration",
+   "discuss how both surface and groundwater could be effectively managed",
+   "state the meteorological significance of evaporation",
+   "explain real-valued functions of a real variable",
+   "solve some problems using mean value theorem and Taylor series expansion; and",
+   "evaluate line integral, surface integral and volume integrals",
+   "define the following: order and degree of a differential equation",
+   "describe some techniques for solving first and second order linear and non-linear equations; and",
+   "solve some problems related to geometry and physics",
+   "solve some numerical solution of algebraic and transcendental equations",
+   "describe curve fitting; 3. 4. 5. 6. discuss error analysis; calculate interpolation and approximation; solve some numerical differentiation and numerical integration problems; and solve some numerical problems in ordinary Differential equations with initial value problems",
+   "describe curve fitting",
+   "discuss error analysis",
+   "calculate interpolation and approximation",
+   "solve some numerical differentiation and numerical integration problems; and",
+   "solve some numerical problems in ordinary Differential equations with initial value problems",
+   "discuss the various systems of crop production in Nigeria",
+   "identify various agro-ecological zones in Nigeria; and",
+   "explain the best way of managing forest resources for sustainable development",
+   "master the principles and practice of weather observations and measurements; and",
+   "explain the techniques of plotting",
+   "identify various instruments used in weather observations and measurements; and",
+   "read and interpret weather charts"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Introduction to Meteorology",
+   "Introduction to Hydrology",
+   "General Physics I",
+   "General physics II (Electricity & magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D158",
+    "domain": "Corporate Finance, Investment Banking",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D049",
+    "domain": "Automotive Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D157",
+    "domain": "Tax Advisory, Transfer Pricing",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Microbiology",
+  "code": "MCB",
+  "technical_skills": [
+   "explain the basic concepts and scope of microbiology",
+   "describe layout of a microbiology laboratory, equipment and reagents in a microbiology laboratory; and",
+   "discuss the theory behind basic protocols in a microbiology laboratory",
+   "describe the layout of a microbiology laboratory, equipment and reagents in a microbiology laboratory; and",
+   "the following techniques for the isolation of bacteria from soil, water, food and air",
+   "process for obtaining pure cultures of bacteria and fungi",
+   "techniques for the characterization and identification of bacterial isolates",
+   "methods of bacteria enumeration; and",
+   "methods for the preservation of isolates and methods for culturing anaerobic bacteria",
+   "explain structure, physiology and classification of fungi",
+   "elucidate pathogenicity, immunity, epidemiology, treatment and incidence of fungi of medical importance; and",
+   "illustrate physiology and metabolites of fungi used in food and industrial microbiology",
+   "discuss the structure, physiology and classification of fungi",
+   "explain pathogenicity, immunity, epidemiology, treatment and incidence of fungi of medical importance; and",
+   "describe physiology and metabolites of fungi used in food and industrial microbiology",
+   "identify the factors responsible for food spoilage and food quality enhancement",
+   "state the microorganisms involved in food spoilage",
+   "explain the microbial indices of food quality; methods for food quality assessment",
+   "describe the international microbiological standards for food quality assessment",
+   "discuss the traditional and rapid methods for estimating microbial populations in foods quality; and",
+   "identify novel food production processes",
+   "explain the morphology, life cycle and biochemical characteristics of bacteria",
+   "discuss bacterial systematics and other prokaryotes; and",
+   "describe the identification and isolation of bacteria",
+   "describe microbial interactions between microbial populations"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigeria Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General biology Practical I",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics",
+   "General Practical Physics",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "General Microbiology"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Petroleum Chemistry",
+  "code": "PCM",
+  "technical_skills": [
+   "describe definitions of petroleum, crude oil, bitumen, tar sand, natural gas, and coal",
+   "discuss the origin of petroleum",
+   "explain chronological histography of petroleum",
+   "describe occurrence of petroleum",
+   "elucidate evolution of sedimentary organic matter; and",
+   "explain future outlook of petroleum",
+   "describe physic-chemical properties of petroleum",
+   "explain methods of characterizing petroleum",
+   "discuss the nature and molecular composition of petroleum; and",
+   "enumerate various ways of classifying petroleum",
+   "explain the nature of natural gas",
+   "describe formation of natural gas",
+   "explain composition of natural gas and the differences",
+   "enumerate global distribution of natural gas",
+   "demonstrate how to compare and contrast between wet and dry gas, biogenic and thermogenic gas, associated and non-associated gas, sour and sweet gas",
+   "describe natural gas treatment methods; and",
+   "demonstrate production of liquefied natural gas",
+   "determine density and specific gravity of petroleum",
+   "determine hydrocarbon groups in petroleum fractions by sulphuric acid treatment",
+   "estimate percent aromatic hydrocarbons by Aniline Point method",
+   "determine of correlation index of hydrocarbon; and",
+   "determine wax content of crude oil; and",
+   "determine the viscosity of petroleum products",
+   "determinate hydrocarbon groups in petroleum fractions by sulphuric acid treatment",
+   "estimate sulphur content"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II",
+   "Introduction to Computing Sciences",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Origin and Formation of Petroleum",
+   "Properties and Classification of Petroleum",
+   "Natural Gas I: Formation and treatment",
+   "Petroleum Chemistry Lab I",
+   "Petroleum Chemistry Lab II",
+   "Organic Chemistry I",
+   "Analytical Chemistry I",
+   "Venture Creation",
+   "Peace and Conflict Resolution"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D061",
+    "domain": "Insurance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D022",
+    "domain": "Mining",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Physics with Electronics",
+  "code": "PHE",
+  "technical_skills": [
+   "describe and quantitatively analyse the behaviour of vibrating systems and wave energy",
+   "explain the propagation and properties of waves in sound and light",
+   "identify and apply the wave equations; and",
+   "explain geometrical optics and principles of optical instruments",
+   "discuss the concept of heat and temperature",
+   "explain and determine thermodynamic processes",
+   "explain and evaluate properties of real and ideal gases",
+   "evaluate the consequences of the thermodynamic laws",
+   "describe the basis of the kinetic theory; and",
+   "describe the statistical behaviour of gases with applications",
+   "explain and understand the basic foundation of classical thermodynamics",
+   "explain the basic application of thermodynamics laws and potentials",
+   "apply some real life applications; and",
+   "further apply the course to their respective field of learning",
+   "explain the origin and sources of energy and power",
+   "describe the inter relation and transformation of energy sources and types",
+   "illustrate and explain the principles of generation of power",
+   "outline the concept of energy demand and supply",
+   "explain the economics, politics and problems associated with energy demand and supply",
+   "identify and assess categories of environmental pollutants",
+   "describe the effects of carbon emission on global warming",
+   "describe the environmental effect of energy generation, supply, and consumption; and",
+   "Identify and evaluate the merits and demerits of power generation from different sources",
+   "describe effect of carbon emission on global warming",
+   "identify safety signs for various workshop types and abide by the underlining regulations while working in the workshop"
+  ],
+  "transferable_skills": [
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development",
+   "enumerate the challenges of the Nigerian State towards Nation building analyse the role of the Judiciary in upholding people’s fundamental rights identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+   "analyse the role of the judiciary in upholding people’s fundamental rights",
+   "identify acceptable norms and values of the major ethnic groups in Nigeria; and",
+   "list and suggest possible solutions to identifiable Nigerian environmental, moral and value problems",
+   "explain basic components of computers and other computing devices",
+   "describe the various applications of computers; 3. 4. 5. 6. explain information processing and its roles in the society; describe the Internet, its various applications and its impact; explain the different areas of the computing discipline and its specializations; and demonstrate practical skills on using computers and the internet",
+   "explain information processing and its roles in the society",
+   "describe the Internet, its various applications and its impact"
+  ],
+  "course_titles": [
+   "Nigerian Peoples and Culture",
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Physics III (Behaviour of Matter)",
+   "General Physics IV (Vibration Waves and Optics)",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "Thermal Physics",
+   "General Physics VI (Energy and Environment)",
+   "Workshop Practice",
+   "Classical Physics I",
+   "Peace and Conflict Resolution",
+   "Venture Creation",
+   "Analytical Mechanics I",
+   "Electromagnetism",
+   "Quantum Physics",
+   "Statistical and Thermal Physics I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D094",
+    "domain": "Electronics Servicing, ICT Equipment",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Physics",
+  "code": "PHY",
+  "technical_skills": [
+   "describe and quantitatively analyse the behaviour of vibrating systems and wave energy",
+   "explain the propagation and properties of waves in sound and light",
+   "identify and apply the wave equations; and",
+   "explain geometrical optics and principles of optical instruments",
+   "identify the circumstances, discoveries and people that launched modern physics",
+   "enumerate and understand the postulate of relativity",
+   "explain the problem of simultaneity and calculate time changes from one frame of reference to another",
+   "describe relativistic length contraction",
+   "describe the relativistic mass-energy relation",
+   "explain the work of Planck, Bohr and Heisenberg; and",
+   "explain the uncertainty principle and the other features of Quantum mechanics",
+   "explain the notion of an inertial frame and the concept of an observer",
+   "relate the limitations imposed by and consequences of motion of bodies at the speed of light",
+   "state the principles of Special Relativity and use them to derive relations for time dilation and length contraction",
+   "perform calculations using the Lorentz transformation formulae",
+   "derive relativistic energy and momentum and use these to solve problems in mechanics",
+   "apply the mathematical treatment of the wave function and Schrodinger’s equation",
+   "relate the atomic structure and energy associated with the particles of the atom",
+   "apply the ideas of wave-particle duality and the uncertainty principle to solve problems in quantum mechanics",
+   "apply the Bohr formula to calculate energies and wavelengths in the context of atomic hydrogen; and",
+   "explain the interaction of photons and electrons with matter",
+   "identify circuit diagrams and symbols",
+   "determine current flows, potential drops, power, and energy dissipation in circuits using Ohm’s law",
+   "simplify series and parallel combinations of resistors",
+   "state Kirchhoff’s laws and apply same in solving for currents and voltages in D.C. and A.C. circuits"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian peoples and culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Physics III (Behaviour of Matter)",
+   "General Physics IV (Vibration Waves and Optics)",
+   "General Practical Physics I",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "General physics V (Elementary Modern Physics)",
+   "Introduction to Electric Circuits and Electronics",
+   "General Physics VI (Waves and optics)",
+   "Thermal Physics",
+   "General Physics VII (Energy and Environment)",
+   "Classical Physics I",
+   "Classical Physics II (Electrodynamics)",
+   "Workshop Practice"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D137",
+    "domain": "Medical Physics, Radiation Therapy",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D016",
+    "domain": "Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D019",
+    "domain": "Renewable Energy Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D146",
+    "domain": "Building Services Engineering — Mechanical, Electrical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D141",
+    "domain": "Quantum Computing, Quantum Information",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D062",
+    "domain": "Trading",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D017",
+    "domain": "Mechanical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D013",
+    "domain": "Investment Analysis",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Science Laboratory Technology",
+  "code": "SLT",
+  "technical_skills": [
+   "have the enabling knowledge to bring laboratory accidents to the barest minimum",
+   "be able to install, care, and maintain common laboratory equipment and fittings",
+   "be able to administer first aid treatment for common laboratory accidents",
+   "identify the safety rules associated with workshop practice",
+   "use common types of equipment used in workshop and technology practice; and",
+   "carry out simple wood and metal works",
+   "explain the chemistry of glass, its various types, composition and applications",
+   "identify equipment and tools used in the technology of glass-blowing and their associated hazards; and",
+   "operate simple glass blowing tools and machines, and carry glass cutting",
+   "explain classification and chemistry of carbohydrate",
+   "discuss chemistry and biochemistry of the polysaccharide including the amino sugars; mucopolysaccharides, blood group substances",
+   "illustrate structure of chemistry and function of normal living cell",
+   "define metabolism of proteins",
+   "describe carbohydrates, nucleic acids and lipids",
+   "demonstrate basic biochemical importance; and",
+   "apply biochemical knowledge in the clinics",
+   "distinguish between heritable and non-heritable characteristics",
+   "explain the likelihood of genetic events (Probability) and how well those events (results) fit into a set of observation",
+   "(results) fit into a set of observation",
+   "discuss polygenic variations; and",
+   "describe concepts in population genetics",
+   "explain various concepts and terminologies associated with the ecosystem",
+   "list and explain features of various habitat types",
+   "explain natural destruction/disaster, community and natural cycles; and",
+   "explain and describe factors responsible for changes in population"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical II",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "Hazards & Safety in the Laboratory/Laboratory Maintenance & Fittings",
+   "Workshop Technology and Practice",
+   "Glass –Blowing Technology",
+   "General Physics I (Mechanics)",
+   "General physics II (Electricity & Magnetism)",
+   "Philosophy, Logic and Human Existence",
+   "Entrepreneurship and Innovation",
+   "General Biochemistry I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D122",
+    "domain": "Medical Laboratory Technology",
+    "match": "direct"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D093",
+    "domain": "Electrical Installation, Wiring",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D135",
+    "domain": "Nuclear Engineering, Radiation Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D134",
+    "domain": "Naval Architecture, Marine Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D020",
+    "domain": "Environmental Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D074",
+    "domain": "Occupational Health, Safety",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D136",
+    "domain": "Aeronautical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D025",
+    "domain": "Pharmacy",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Statistics",
+  "code": "STA",
+  "technical_skills": [
+   "explain the basic concepts of descriptive statistics",
+   "present data in graphs and charts",
+   "differentiate between measures of location, dispersion and partition",
+   "describe the basic concepts of Skewness and Kurtosis as well as their utility function in a given data set",
+   "differentiate rates from ratio and how they are use; and",
+   "compute the different types of index number from a given data set and interpret the output",
+   "explain the differences between permutation and combination",
+   "explain the concept of random variables and relate it to probability and distribution functions",
+   "describe the basic distribution functions; and",
+   "explain the concept of exploratory data analysis",
+   "explain the concept exploratory data analysis",
+   "be familiar with the fundamentals of time series analysis",
+   "explain the principles of good programming and structured programming concepts",
+   "explain the programming constructs, syntax and semantics of a higher-level language",
+   "describe the chosen programming language variables, types, expressions, statements and assignment; simple input and output",
+   "describe the programme control structures, functions and parameter passing, and structured decomposition; and",
+   "develop simple programmes in the taught programming language as well as debug and test them",
+   "demonstrate the principles of good programming and structured programming concepts",
+   "demonstrate string processing, internal searching, sorting, and recursion",
+   "demonstrate the basic use of OOP concepts: classes, objects, inheritance, polymorphism, data abstraction",
+   "apply the tools for developing, compiling, interpreting and debugging programmes; and",
+   "demonstrate the use of syntax and data objects, operators. Central flow constructs, objects and classes programming, Arrays, methods, Exceptions, Applets and the Abstract, OLE, Persistence, Window Toolkit",
+   "discuss the foundations and concept of human-computer interface",
+   "explain the principles of human-computer interface",
+   "explain the design and development of the human-computer interface; and"
+  ],
+  "transferable_skills": [
+   "explain basic components of computers and other computing devices",
+   "describe the various applications of computers; 3. 4. 5. 6. explain information processing and its roles in the society; describe the Internet, its various applications and its impact; explain the different areas of the computing discipline and its specializations; and demonstrate practical skills on using computers and the internet",
+   "explain information processing and its roles in the society",
+   "describe the Internet, its various applications and its impact",
+   "explain the different areas of the computing discipline and its specializations; and",
+   "demonstrate practical skills on using computers and the internet",
+   "explain basic definition of set, subsets, union, intersection, complements and use of Venn diagrams",
+   "solve quadratic equations",
+   "solve trigonometric functions",
+   "identify the various types of numbers; and",
+   "solve some problems using binomial theorem",
+   "identify various types of numbers; and"
+  ],
+  "course_titles": [
+   "Introduction to Computing Sciences",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Descriptive Statistics",
+   "Probability 1",
+   "Statistical Inference I",
+   "Statistical Computing I",
+   "Philosophy, Logic and Human Existence",
+   "Statistics for Agriculture and Biological Sciences",
+   "Statistics for Physical Sciences and Engineering",
+   "Probability II",
+   "Introduction to Social and Economic Statistics",
+   "Statistical Inference II",
+   "Statistical Computing II",
+   "Industrial Attachment I (12 Weeks)",
+   "Peace and Conflict Resolution",
+   "Probability III",
+   "Distribution Theory I",
+   "Statistical Inference III",
+   "Regression and Analysis of Variance I"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D006",
+    "domain": "Internet of Things",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D012",
+    "domain": "FinTech Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D009",
+    "domain": "Data Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D001",
+    "domain": "Software Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D002",
+    "domain": "Data Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D010",
+    "domain": "Business Intelligence",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D056",
+    "domain": "Blockchain",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D007",
+    "domain": "UI/UX Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D033",
+    "domain": "Product Management",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D144",
+    "domain": "Climate Science, Meteorology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D059",
+    "domain": "Space Technology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D166",
+    "domain": "Autonomous Vehicles, Self-Driving Systems",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D005",
+    "domain": "Cloud Computing",
+    "match": "functional"
+   }
+  ]
+ },
+ {
+  "programme": "Zoology",
+  "code": "ZOO",
+  "technical_skills": [
+   "describe the basic anatomy and physiology of the mammalian body",
+   "describe the external features, muscular, digestive, circulatory and other organ systems of a mammalian body",
+   "develop introductory knowledge about the role of zoology in human development by understanding relationships between organisms through systematics and cell biology",
+   "describe eugenics and evolution; and",
+   "elaborate ecology",
+   "identify the animal diversity around us",
+   "describe the underlying principles of the classification of animals and the terminology needed in classification",
+   "compare the differences and similarities in the various aspects of classification; and",
+   "classify animals up to order using the six levels of classification",
+   "distinguish between heritable and non-heritable characteristics",
+   "explain the likelihood of genetic events (Probability) and how well those events (results) fit into a set of observation",
+   "(results) fit into a set of observation",
+   "discuss polygenic variations; and",
+   "describe concepts in population genetics",
+   "explain the chemistry of organic compounds and their biological importance",
+   "state the general characteristics of enzymes",
+   "describe nutrition, digestion and absorption in plants and animals",
+   "discuss the cell membrane structure and list its functions",
+   "summarize osmoregulation, excretion, and transport in animals",
+   "enumerate growth hormones in plants and their functions",
+   "explain the homeostasis, their coordination, and functions in animals; and",
+   "explain the plant water relation, growth, and growth regulation",
+   "explain the scope for statistical methods in biology and agriculture",
+   "define the measures of location, partition, and dispersion",
+   "explain the elements of probability; probability distributions: binomial, poisson, geometric, hypergeometric, negative binomial and normal, Student’s t and chi-square distributions; concerning population means, proportions and variances"
+  ],
+  "transferable_skills": [
+   "identify possible sound patterns in English language",
+   "list notable language skills",
+   "classify word formation processes",
+   "construct simple and fairly complex sentences in English",
+   "apply logical and critical reasoning skills for meaningful presentations",
+   "demonstrate an appreciable level of the art of public speaking and listening; and",
+   "write simple and technical reports",
+   "list notable Language skills; classify word formation processes; construct simple and fairly complex sentences in English",
+   "analyse the historical foundation of the Nigerian culture and arts in pre-colonial times",
+   "list and identify the major linguistic groups in Nigeria",
+   "explain the gradual evolution of Nigeria as a political unit",
+   "analyse the concepts of trade, economic and self-reliance status of the Nigerian peoples towards national development"
+  ],
+  "course_titles": [
+   "Communication in English",
+   "Nigerian Peoples and Culture",
+   "Elementary Mathematics I (Algebra and Trigonometry)",
+   "Elementary Mathematics II (Calculus)",
+   "Introduction to Computing Sciences",
+   "General Chemistry I",
+   "General Chemistry II",
+   "General Chemistry Practical I",
+   "General Chemistry Practical II",
+   "General Physics I (Mechanics)",
+   "General Physics II (Electricity & Magnetism)",
+   "General Practical Physics I",
+   "General Practical Physics II",
+   "General Biology I",
+   "General Biology II",
+   "General Biology Practical I",
+   "General Biology Practical II",
+   "The Mammalian Body",
+   "Animal Diversity",
+   "Philosophy, Logic and Human Existence"
+  ],
+  "current_scorer_links": [
+   {
+    "domain_id": "D090",
+    "domain": "Animal Care, Grooming",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D066",
+    "domain": "Veterinary Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D142",
+    "domain": "Bioinformatics, Computational Biology",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D138",
+    "domain": "Biomedical Engineering",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D041",
+    "domain": "Scientific Research",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D027",
+    "domain": "Biomedical",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D145",
+    "domain": "Neuroscience, Cognitive Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D063",
+    "domain": "Economics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D072",
+    "domain": "Geospatial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D078",
+    "domain": "Social Sciences",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D014",
+    "domain": "Actuarial Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D011",
+    "domain": "Quantitative Finance",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D143",
+    "domain": "Forensic Science, Digital Forensics",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D047",
+    "domain": "Agricultural Science",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D140",
+    "domain": "Robotics Engineering, Systems Design",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D152",
+    "domain": "Museum Curation, Cultural Heritage, Archives",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D155",
+    "domain": "Nanotechnology, Advanced Materials",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D119",
+    "domain": "Livestock, Poultry, Dairy",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D026",
+    "domain": "Public Health",
+    "match": "functional"
+   },
+   {
+    "domain_id": "D132",
+    "domain": "Space Science, Exploration",
+    "match": "functional"
+   }
+  ]
+ }
+]
