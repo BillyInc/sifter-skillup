@@ -34,3 +34,18 @@ Thumbs.db
 # Local Netlify folder
 .netlify
 build-*.apk
+
+# Career-mapping: raw source dumps (build-time inputs, re-downloadable; not served by the app)
+data/career-mapping/_tax_src/
+data/career-mapping/_pdftxt/
+data/career-mapping/_ccmas_txt/
+# Career-mapping: agent/scratch working dirs + run logs (intermediate I/O)
+data/career-mapping/_sweep/
+data/career-mapping/_role_sweep/
+data/career-mapping/_cert_split/
+data/career-mapping/_certs/
+data/career-mapping/_subgroup_names/
+data/career-mapping/_direct_sweep/
+data/career-mapping/_jamb_supplement/
+data/career-mapping/_legit_subgroups.json
+data/career-mapping/*.out

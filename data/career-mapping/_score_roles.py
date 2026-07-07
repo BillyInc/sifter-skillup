@@ -36,19 +36,20 @@ N = len(allsk)
 GENERIC = {t for t, c in df.items() if c > 0.012 * N}
 def spec(s): return toks(s) - GENERIC
 
+import math
 def skill_covered(role_spec, tech_sets, trans_sets):
-    """A role skill is covered if a SINGLE programme skill shares >=half its specific tokens (min 1).
-    PER-PAIR (not union) — union leaks. Scored primarily against TECHNICAL (distinctive) skills so the
-    shared ICT/GST-foundation courses in TRANSFERABLE don't falsely cover technical roles
-    (that inflated Arabic->software). Transferable can only cover a role skill that has >=2 specific
-    tokens AND shares >=2 with a transferable skill (soft/cross-cutting coverage, harder to fake)."""
+    """Covered if a SINGLE programme skill shares ENOUGH of the role skill's specific tokens.
+    Threshold scales with role-skill length: 1-token skills need that 1 rare token present;
+    MULTI-token role skills need >=2 shared. That >=2 rule is the key fix — Arabic's incidental
+    "computer hardware software" shares only 1 token ("software") with "software testing" -> NOT
+    covered; but "prepare financial statements" shares 2 with "financial statements" -> covered.
+    No programme-side fraction (CCMAS skills are verbose sentences; that would false-negative)."""
     if not role_spec: return False
-    need = max(1, len(role_spec) // 2)
+    need = 1 if len(role_spec) == 1 else max(2, math.ceil(0.6 * len(role_spec)))
     for ps in tech_sets:
         if len(role_spec & ps) >= need: return True
-    if len(role_spec) >= 2:                       # transferable: stricter (>=2 shared) to avoid foundation leak
-        for ps in trans_sets:
-            if len(role_spec & ps) >= max(2, need): return True
+    for ps in trans_sets:                 # transferable: same bar (>=2 for multi-token), avoids foundation leak
+        if len(role_spec) >= 2 and len(role_spec & ps) >= need: return True
     return False
 
 roles_by_dom = defaultdict(list)
@@ -59,10 +60,16 @@ for did, d in struct.items():
     for sg in d.get("subgroups", []):
         sub_label[(did, sg["isco_submajor"])] = sg["label"]
 
-def label(cov):
-    if cov >= 0.50: return "ready"
-    if cov >= 0.20: return "bridge"
-    return "stretch"
+# READINESS from the STRONG signal: domain match_type (agent-verified) x role tier.
+# Token-coverage can't bridge CCMAS<->ESCO vocabulary ("computer programming" vs "solve problems
+# using programming language C/PYTHON"), so it drives only the illustrative skills-GAP, not the label.
+READINESS = {
+    ("direct","entry"):"ready", ("direct","mid"):"ready", ("direct","senior"):"bridge",
+    ("functional","entry"):"bridge", ("functional","mid"):"bridge", ("functional","senior"):"stretch",
+    ("adjacent","entry"):"bridge", ("adjacent","mid"):"stretch", ("adjacent","senior"):"stretch",
+}
+def label(match_type, tier):
+    return READINESS.get((match_type, tier or "mid"), "stretch")
 
 out = {}
 for key, v in final.items():
@@ -83,11 +90,14 @@ for key, v in final.items():
                 else: gap.append(e)
             cov = len(covered) / len(ess)
             sm = str(r.get("isco_group", ""))[:2]
-            scored.append({"role": r["role_name"], "coverage": round(cov, 2), "label": label(cov),
-                           "tier": r.get("tier"), "isco_group": r.get("isco_group"),
+            # SLIM output: role metadata (isco_group, also_known_as, elite_status) + covered_skills
+            # are all derivable from role_library_v3.json at serve time -> not duplicated here per
+            # (programme,domain,role). Keeps this generated file small enough for git (<50MB blocker).
+            scored.append({"role": r["role_name"], "coverage": round(cov, 2),
+                           "label": label(link["match_type"], r.get("tier")),
+                           "tier": r.get("tier"),
                            "sub_group": sub_label.get((did, sm), None),
-                           "bridge_skills": gap[:10], "covered_skills": covered[:10],
-                           "also_known_as": r.get("also_known_as", ""), "elite_status": r.get("elite_status")})
+                           "bridge_skills": gap[:8]})
         # rank: ready > bridge > stretch, then coverage desc
         order = {"ready": 0, "bridge": 1, "stretch": 2}
         scored.sort(key=lambda x: (order[x["label"]], -x["coverage"]))
