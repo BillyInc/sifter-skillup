@@ -208,12 +208,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D009",
     "domain_name": "Data Science",
     "match_type": "functional",
@@ -259,12 +253,6 @@
     "domain_id": "D032",
     "domain_name": "Project Management",
     "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D003",
-    "domain_name": "D003 Artificial Intelligence",
-    "match_type": "adjacent",
     "src": "reconcile"
    }
   ]
@@ -538,12 +526,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D038",
     "domain_name": "Compliance, Regulation",
     "match_type": "functional",
@@ -772,12 +754,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D005",
     "domain_name": "Cloud Computing",
     "match_type": "functional",
@@ -786,8 +762,9 @@
    {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D060",
@@ -954,12 +931,6 @@
    {
     "domain_id": "D051",
     "domain_name": "Real Estate",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -1492,38 +1463,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D084",
     "domain_name": "Payroll, Bookkeeping",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D002",
-    "domain_name": "Data Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -1544,18 +1485,6 @@
     "domain_name": "Product Management",
     "match_type": "functional",
     "src": "scorer"
-   },
-   {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "reconcile"
    }
   ]
  },
@@ -1648,12 +1577,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D159",
     "domain_name": "Credit Analysis, Structured Finance",
     "match_type": "functional",
@@ -1662,12 +1585,6 @@
    {
     "domain_id": "D015",
     "domain_name": "Accounting",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -1794,8 +1711,9 @@
    {
     "domain_id": "D045",
     "domain_name": "Public Administration",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D084",
@@ -1924,12 +1842,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D158",
     "domain_name": "Corporate Finance, Investment Banking",
     "match_type": "functional",
@@ -1938,12 +1850,6 @@
    {
     "domain_id": "D085",
     "domain_name": "Retail Sales, Shop Operations",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -2038,18 +1944,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
     "match_type": "functional",
@@ -2082,12 +1976,6 @@
    {
     "domain_id": "D158",
     "domain_name": "Corporate Finance, Investment Banking",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D002",
-    "domain_name": "Data Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -2152,20 +2040,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D149",
     "domain_name": "Diplomacy, International Relations",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -2188,12 +2064,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D005",
-    "domain_name": "Cloud Computing",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D014",
     "domain_name": "Actuarial Science",
     "match_type": "functional",
@@ -2202,12 +2072,6 @@
    {
     "domain_id": "D015",
     "domain_name": "Accounting",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -2248,24 +2112,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D009",
     "domain_name": "Data Science",
     "match_type": "functional",
@@ -2290,18 +2136,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D005",
-    "domain_name": "Cloud Computing",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D004",
     "domain_name": "Cybersecurity",
     "match_type": "functional",
@@ -2316,12 +2150,6 @@
    {
     "domain_id": "D062",
     "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -2620,12 +2448,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
     "match_type": "functional",
@@ -2736,12 +2558,6 @@
    {
     "domain_id": "D159",
     "domain_name": "Credit Analysis, Structured Finance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -2928,8 +2744,9 @@
    {
     "domain_id": "D157",
     "domain_name": "Tax Advisory, Transfer Pricing",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D062",
@@ -3124,12 +2941,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D158",
     "domain_name": "Corporate Finance, Investment Banking",
     "match_type": "functional",
@@ -3144,12 +2955,6 @@
    {
     "domain_id": "D164",
     "domain_name": "Urban Mobility, Smart City Systems",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -3570,20 +3375,23 @@
    {
     "domain_id": "D048",
     "domain_name": "Food Science",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D092",
     "domain_name": "Culinary Arts, Catering",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D075",
     "domain_name": "Fashion, Textiles",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D046",
@@ -4152,12 +3960,6 @@
    {
     "domain_id": "D057",
     "domain_name": "Digital Health",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D016",
-    "domain_name": "Electrical",
     "match_type": "functional",
     "src": "scorer"
    }
@@ -4848,18 +4650,6 @@
    {
     "domain_id": "D057",
     "domain_name": "Digital Health",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -5668,12 +5458,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D106",
-    "domain_name": "Garment Making, Tailoring, Dressmaking",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D044",
     "domain_name": "Graphic Design",
     "match_type": "functional",
@@ -5737,12 +5521,6 @@
     "domain_id": "D080",
     "domain_name": "Interior Design",
     "match_type": "direct",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
-    "match_type": "functional",
     "src": "scorer"
    },
    {
@@ -5886,32 +5664,9 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D078",
@@ -5922,24 +5677,6 @@
    {
     "domain_id": "D043",
     "domain_name": "Journalism",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D005",
-    "domain_name": "Cloud Computing",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -5956,22 +5693,11 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D002",
-    "domain_name": "Data Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D143",
-    "domain_name": "Forensic Science, Digital Forensics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D040",
@@ -6144,14 +5870,16 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D053",
@@ -6172,12 +5900,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D014",
-    "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D149",
     "domain_name": "Diplomacy, International Relations",
     "match_type": "functional",
@@ -6190,50 +5912,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D151",
-    "domain_name": "Criminology, Criminal Justice",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D060",
-    "domain_name": "Banking, Credit",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D157",
-    "domain_name": "Tax Advisory, Transfer Pricing",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D130",
     "domain_name": "Recruitment, Employment",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D158",
-    "domain_name": "Corporate Finance, Investment Banking",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D159",
-    "domain_name": "Credit Analysis, Structured Finance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D015",
-    "domain_name": "Accounting",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D037",
-    "domain_name": "Legal Practice",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -6390,8 +6070,9 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D063",
@@ -6432,8 +6113,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D070",
@@ -6490,12 +6172,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D081",
     "domain_name": "Office Administration, Secretarial",
     "match_type": "functional",
@@ -6504,24 +6180,20 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D073",
     "domain_name": "Library, Archive",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D139",
-    "domain_name": "D139 Game Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -6606,8 +6278,9 @@
    {
     "domain_id": "D042",
     "domain_name": "Media Production",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D139",
@@ -6724,38 +6397,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D130",
     "domain_name": "Recruitment, Employment",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D014",
-    "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D140",
-    "domain_name": "Robotics Engineering, Systems Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D072",
-    "domain_name": "Geospatial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D044",
-    "domain_name": "Graphic Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -6768,30 +6411,13 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D031",
     "domain_name": "Sales",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D151",
-    "domain_name": "Criminology, Criminal Justice",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D080",
-    "domain_name": "Interior Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -6804,8 +6430,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D040",
@@ -6876,8 +6503,9 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D043",
@@ -6894,8 +6522,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D070",
@@ -6934,20 +6563,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D070",
     "domain_name": "Performing Arts & Entertainment",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D139",
-    "domain_name": "D139 Game Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -6966,26 +6583,16 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D080",
-    "domain_name": "Interior Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D044",
-    "domain_name": "Graphic Design",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D040",
@@ -6996,12 +6603,6 @@
    {
     "domain_id": "D130",
     "domain_name": "Recruitment, Employment",
-    "match_type": "adjacent",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D158",
-    "domain_name": "Corporate Finance, Investment Banking",
     "match_type": "adjacent",
     "src": "scorer"
    }
@@ -7018,56 +6619,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D060",
-    "domain_name": "Banking, Credit",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D162",
-    "domain_name": "Immigration Law, Asylum",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D158",
-    "domain_name": "Corporate Finance, Investment Banking",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D157",
-    "domain_name": "Tax Advisory, Transfer Pricing",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D014",
-    "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D159",
-    "domain_name": "Credit Analysis, Structured Finance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D037",
     "domain_name": "Legal Practice",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D151",
-    "domain_name": "Criminology, Criminal Justice",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D163",
-    "domain_name": "Intellectual Property Law, Patents",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -7078,22 +6631,18 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D015",
-    "domain_name": "Accounting",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D150",
     "domain_name": "Religious Ministry, Theology",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D040",
@@ -7134,14 +6683,16 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D064",
@@ -7222,46 +6773,18 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D151",
-    "domain_name": "Criminology, Criminal Justice",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D140",
-    "domain_name": "Robotics Engineering, Systems Design",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D058",
@@ -7270,26 +6793,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D130",
     "domain_name": "Recruitment, Employment",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D143",
-    "domain_name": "Forensic Science, Digital Forensics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D144",
-    "domain_name": "Climate Science, Meteorology",
     "match_type": "functional",
     "src": "scorer"
    }
@@ -7314,8 +6819,9 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D149",
@@ -7326,8 +6832,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D073",
@@ -7354,18 +6861,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D130",
     "domain_name": "Recruitment, Employment",
     "match_type": "functional",
@@ -7378,28 +6873,10 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D021",
-    "domain_name": "Architecture",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D070",
     "domain_name": "Performing Arts & Entertainment",
     "match_type": "functional",
     "src": "reconcile"
-   },
-   {
-    "domain_id": "D144",
-    "domain_name": "Climate Science, Meteorology",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D014",
-    "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "scorer"
    },
    {
     "domain_id": "D042",
@@ -7410,24 +6887,6 @@
    {
     "domain_id": "D031",
     "domain_name": "Sales",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D161",
-    "domain_name": "Humanitarian Aid, Emergency Response",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D072",
-    "domain_name": "Geospatial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D140",
-    "domain_name": "Robotics Engineering, Systems Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -7594,12 +7053,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D151",
-    "domain_name": "Criminology, Criminal Justice",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
     "match_type": "functional",
@@ -7692,20 +7145,15 @@
    {
     "domain_id": "D065",
     "domain_name": "Translation, Interpretation",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D030",
     "domain_name": "Marketing, Brand",
     "match_type": "functional",
     "src": "reconcile"
-   },
-   {
-    "domain_id": "D044",
-    "domain_name": "Graphic Design",
-    "match_type": "functional",
-    "src": "scorer"
    },
    {
     "domain_id": "D070",
@@ -7722,18 +7170,13 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D042",
     "domain_name": "Media Production",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D139",
-    "domain_name": "D139 Game Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -8262,8 +7705,9 @@
    {
     "domain_id": "D001",
     "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D056",
@@ -8272,22 +7716,11 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D009",
     "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D011",
-    "domain_name": "Quantitative Finance",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D005",
@@ -8298,24 +7731,6 @@
    {
     "domain_id": "D002",
     "domain_name": "Data Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D014",
-    "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D061",
-    "domain_name": "Insurance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D146",
-    "domain_name": "Building Services Engineering — Mechanical, Electrical",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -8334,8 +7749,9 @@
    {
     "domain_id": "D003",
     "domain_name": "D003 Artificial Intelligence",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D040",
@@ -8496,8 +7912,9 @@
    {
     "domain_id": "D001",
     "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D056",
@@ -8526,8 +7943,9 @@
    {
     "domain_id": "D008",
     "domain_name": "Telecommunications",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D002",
@@ -8574,8 +7992,9 @@
    {
     "domain_id": "D009",
     "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D001",
@@ -8598,8 +8017,9 @@
    {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D032",
@@ -8622,8 +8042,9 @@
    {
     "domain_id": "D001",
     "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D006",
@@ -8652,8 +8073,9 @@
    {
     "domain_id": "D004",
     "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D002",
@@ -8916,8 +8338,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
@@ -8986,20 +8409,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D011",
-    "domain_name": "Quantitative Finance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D029",
     "domain_name": "Human Resources",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -9010,44 +8421,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D033",
-    "domain_name": "Product Management",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D008",
-    "domain_name": "Telecommunications",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D028",
     "domain_name": "General Management",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -9190,12 +8565,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D028",
     "domain_name": "General Management",
     "match_type": "functional",
@@ -9214,12 +8583,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D039",
     "domain_name": "Higher Education",
     "match_type": "functional",
@@ -9228,42 +8591,6 @@
    {
     "domain_id": "D145",
     "domain_name": "Neuroscience, Cognitive Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D061",
-    "domain_name": "Insurance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D033",
-    "domain_name": "Product Management",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D030",
-    "domain_name": "Marketing, Brand",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -9402,8 +8729,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D010",
@@ -9582,8 +8910,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D032",
@@ -9672,8 +9001,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
@@ -9738,12 +9068,6 @@
    {
     "domain_id": "D058",
     "domain_name": "EdTech",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -9852,8 +9176,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
@@ -9928,12 +9253,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D028",
     "domain_name": "General Management",
     "match_type": "functional",
@@ -9946,12 +9265,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D033",
     "domain_name": "Product Management",
     "match_type": "functional",
@@ -9960,24 +9273,6 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D056",
-    "domain_name": "Blockchain",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D061",
-    "domain_name": "Insurance",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -10080,8 +9375,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
@@ -10176,8 +9472,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D152",
@@ -10368,8 +9665,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
@@ -10410,8 +9708,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D041",
@@ -10452,8 +9751,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D046",
@@ -10558,12 +9858,6 @@
     "src": "reconcile"
    },
    {
-    "domain_id": "D008",
-    "domain_name": "Telecommunications",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D078",
     "domain_name": "Social Sciences",
     "match_type": "functional",
@@ -10576,18 +9870,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D029",
     "domain_name": "Human Resources",
     "match_type": "functional",
@@ -10596,30 +9878,6 @@
    {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D002",
-    "domain_name": "Data Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D033",
-    "domain_name": "Product Management",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -10638,18 +9896,13 @@
    {
     "domain_id": "D127",
     "domain_name": "Early Childhood Education, Nursery",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D058",
     "domain_name": "EdTech",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -10660,38 +9913,14 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D009",
     "domain_name": "Data Science",
     "match_type": "functional",
     "src": "reconcile"
    },
    {
-    "domain_id": "D030",
-    "domain_name": "Marketing, Brand",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D008",
-    "domain_name": "Telecommunications",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -10704,12 +9933,6 @@
    {
     "domain_id": "D029",
     "domain_name": "Human Resources",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D033",
-    "domain_name": "Product Management",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -10729,18 +9952,6 @@
     "domain_id": "D014",
     "domain_name": "Actuarial Science",
     "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "adjacent",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D166",
-    "domain_name": "Autonomous Vehicles, Self-Driving Systems",
-    "match_type": "adjacent",
     "src": "reconcile"
    }
   ]
@@ -10840,12 +10051,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D061",
-    "domain_name": "Insurance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D028",
     "domain_name": "General Management",
     "match_type": "functional",
@@ -10858,32 +10063,8 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D060",
-    "domain_name": "Banking, Credit",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D046",
     "domain_name": "Social Work",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D162",
-    "domain_name": "Immigration Law, Asylum",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D158",
-    "domain_name": "Corporate Finance, Investment Banking",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -10966,62 +10147,14 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D012",
-    "domain_name": "FinTech Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D006",
-    "domain_name": "Internet of Things",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D028",
     "domain_name": "General Management",
     "match_type": "functional",
     "src": "scorer"
    },
    {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D008",
-    "domain_name": "Telecommunications",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D033",
-    "domain_name": "Product Management",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -11232,8 +10365,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D020",
@@ -11352,8 +10486,9 @@
    {
     "domain_id": "D039",
     "domain_name": "Higher Education",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D065",
@@ -11376,8 +10511,9 @@
    {
     "domain_id": "D058",
     "domain_name": "EdTech",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D128",
@@ -11830,12 +10966,6 @@
     "src": "reconcile"
    },
    {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D017",
     "domain_name": "Mechanical",
     "match_type": "functional",
@@ -12094,12 +11224,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D078",
-    "domain_name": "Social Sciences",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D041",
     "domain_name": "Scientific Research",
     "match_type": "functional",
@@ -12354,12 +11478,6 @@
    {
     "domain_id": "D001",
     "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -13206,8 +12324,9 @@
    {
     "domain_id": "D140",
     "domain_name": "Robotics Engineering, Systems Design",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D009",
@@ -13218,8 +12337,9 @@
    {
     "domain_id": "D050",
     "domain_name": "Industrial Automation",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D032",
@@ -14506,12 +13626,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D014",
-    "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D142",
     "domain_name": "Bioinformatics, Computational Biology",
     "match_type": "functional",
@@ -14520,8 +13634,9 @@
    {
     "domain_id": "D027",
     "domain_name": "Biomedical",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D143",
@@ -14538,8 +13653,9 @@
    {
     "domain_id": "D122",
     "domain_name": "Medical Laboratory Technology",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D055",
@@ -14938,12 +14054,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D063",
-    "domain_name": "Economics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D027",
     "domain_name": "Biomedical",
     "match_type": "functional",
@@ -15184,46 +14294,16 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D011",
     "domain_name": "Quantitative Finance",
     "match_type": "functional",
     "src": "reconcile"
    },
    {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D061",
-    "domain_name": "Insurance",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D063",
-    "domain_name": "Economics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D014",
     "domain_name": "Actuarial Science",
     "match_type": "functional",
     "src": "reconcile"
-   },
-   {
-    "domain_id": "D158",
-    "domain_name": "Corporate Finance, Investment Banking",
-    "match_type": "functional",
-    "src": "scorer"
    },
    {
     "domain_id": "D009",
@@ -15346,12 +14426,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D063",
-    "domain_name": "Economics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D072",
     "domain_name": "Geospatial Science",
     "match_type": "functional",
@@ -15424,24 +14498,6 @@
     "src": "reconcile"
    },
    {
-    "domain_id": "D091",
-    "domain_name": "Driving Instruction",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D063",
-    "domain_name": "Economics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D069",
-    "domain_name": "Aviation",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D072",
     "domain_name": "Geospatial Science",
     "match_type": "functional",
@@ -15478,28 +14534,17 @@
   "programme": "Mathematics",
   "links": [
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D011",
     "domain_name": "Quantitative Finance",
     "match_type": "functional",
     "src": "scorer"
    },
    {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D014",
     "domain_name": "Actuarial Science",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D002",
@@ -15510,8 +14555,9 @@
    {
     "domain_id": "D009",
     "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D010",
@@ -15529,18 +14575,6 @@
     "domain_id": "D003",
     "domain_name": "D003 Artificial Intelligence",
     "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D166",
-    "domain_name": "Autonomous Vehicles, Self-Driving Systems",
-    "match_type": "adjacent",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "adjacent",
     "src": "reconcile"
    }
   ]
@@ -15726,8 +14760,9 @@
    {
     "domain_id": "D027",
     "domain_name": "Biomedical",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D074",
@@ -15756,8 +14791,9 @@
    {
     "domain_id": "D122",
     "domain_name": "Medical Laboratory Technology",
-    "match_type": "functional",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D048",
@@ -16234,21 +15270,9 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
     "domain_id": "D046",
     "domain_name": "Social Work",
     "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
-    "match_type": "adjacent",
     "src": "reconcile"
    }
   ]
@@ -16308,8 +15332,9 @@
    {
     "domain_id": "D009",
     "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D010",
@@ -16338,8 +15363,9 @@
    {
     "domain_id": "D041",
     "domain_name": "Scientific Research",
-    "match_type": "adjacent",
-    "src": "reconcile"
+    "match_type": "direct",
+    "src": "reconcile",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D046",
@@ -16430,12 +15456,6 @@
     "domain_name": "Project Management",
     "match_type": "functional",
     "src": "scorer"
-   },
-   {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "reconcile"
    },
    {
     "domain_id": "D010",
@@ -16600,12 +15620,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D151",
     "domain_name": "Criminology, Criminal Justice",
     "match_type": "functional",
@@ -16678,18 +15692,6 @@
     "src": "reconcile"
    },
    {
-    "domain_id": "D002",
-    "domain_name": "Data Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D078",
     "domain_name": "Social Sciences",
     "match_type": "functional",
@@ -16702,44 +15704,14 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D001",
-    "domain_name": "Software Engineering",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
     "match_type": "functional",
     "src": "scorer"
    },
    {
-    "domain_id": "D004",
-    "domain_name": "Cybersecurity",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D008",
-    "domain_name": "Telecommunications",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D063",
     "domain_name": "Economics",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D033",
-    "domain_name": "Product Management",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D007",
-    "domain_name": "UI/UX Design",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -16996,18 +15968,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D062",
-    "domain_name": "Trading",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D013",
-    "domain_name": "Investment Analysis",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D128",
     "domain_name": "Social Welfare, Youth Services",
     "match_type": "functional",
@@ -17170,12 +16130,6 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "reconcile"
-   },
-   {
     "domain_id": "D010",
     "domain_name": "Business Intelligence",
     "match_type": "adjacent",
@@ -17334,8 +16288,9 @@
    {
     "domain_id": "D128",
     "domain_name": "Social Welfare, Youth Services",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D029",
@@ -17368,26 +16323,15 @@
     "src": "scorer"
    },
    {
-    "domain_id": "D009",
-    "domain_name": "Data Science",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
     "domain_id": "D046",
     "domain_name": "Social Work",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D030",
     "domain_name": "Marketing, Brand",
-    "match_type": "functional",
-    "src": "scorer"
-   },
-   {
-    "domain_id": "D010",
-    "domain_name": "Business Intelligence",
     "match_type": "functional",
     "src": "scorer"
    },
@@ -17532,8 +16476,9 @@
    {
     "domain_id": "D078",
     "domain_name": "Social Sciences",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D063",
@@ -17556,8 +16501,9 @@
    {
     "domain_id": "D046",
     "domain_name": "Social Work",
-    "match_type": "functional",
-    "src": "scorer"
+    "match_type": "direct",
+    "src": "scorer",
+    "direct_source": "direct_sweep"
    },
    {
     "domain_id": "D073",

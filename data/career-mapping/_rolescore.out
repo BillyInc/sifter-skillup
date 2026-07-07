@@ -1,0 +1,13 @@
+scored 236 programmes; 74711 (programme,domain,role) scores
+role labels: {'ready': 8949, 'bridge': 53284, 'stretch': 12478}
+matched (programme,domain) pairs with 0 ready/bridge roles: 59
+
+sample — Administration and Management::Accounting:
+  [direct] Tax Advisory, Transfer Pricing: 18 ready, 0 bridge / 18 roles
+      ready   42% financial auditor                    (tier=mid, gap 7)
+      ready   33% tax advisor                          (tier=mid, gap 8)
+      ready   33% financial controller                 (tier=mid, gap 8)
+  [direct] Corporate Finance, Investment Banking: 20 ready, 2 bridge / 22 roles
+      ready   42% financial auditor                    (tier=mid, gap 7)
+      ready   33% tax advisor                          (tier=mid, gap 8)
+      ready   33% financial controller                 (tier=mid, gap 8)
