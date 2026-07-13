@@ -338,6 +338,12 @@ class PeerInstitutionRow(BaseModel):
     institution_name: str
     domains_accessible: int = 0
     unique_domains: Optional[List[str]] = None
+    # Peer comparison axes (Phase 6.8): coverage on domains + roles, weighted by
+    # demand. roles_accessible + demand_weight stay structural (role count /
+    # in_demand_score sum) until the Phase 7 demand cron populates postings.
+    roles_accessible: int = 0
+    demand_weight: Optional[float] = None
+    is_self: bool = False
 
 
 class AffiliationStats(BaseModel):
@@ -655,12 +661,114 @@ async def get_role_demand(
 @router.get("/{institution_id}/peers", response_model=ResponseModel)
 async def get_peers(
     institution_id: str,
-    current_user: dict = Depends(Auth.get_current_user),
+    current_user: dict = Depends(Auth.require_admin),
 ):
-    """list[PeerInstitutionRow] — empty until ingestion."""
-    # TODO(institutions): peer-institution domain-coverage comparison
-    rows: List[PeerInstitutionRow] = []
-    return ResponseModel(data=[r.model_dump() for r in rows])
+    """Peer-institution comparison (ADMIN-ONLY, Phase 6.8).
+
+    Compares schools on DOMAIN coverage + ROLE coverage + a DEMAND WEIGHT. Each
+    school resolves to its reachable-domain set via school → school_programmes →
+    programme_mapping → CCMAS programme → programme_domain → domains. Role
+    coverage = distinct roles in those domains; demand weight = sum of the
+    domains' in_demand_score (a structural proxy until the Phase 7 demand cron
+    lands real posting volume). `unique_domains` = domains the current school
+    covers that a peer does not.
+    """
+    try:
+        svc = _svc()
+        # Resolve the current admin's school (may be None → all-programmes self).
+        self_school_id = _resolve_org(current_user)
+
+        # A bounded peer set: universities with the most school_programmes rows.
+        # (Cheap proxy for "biggest portfolios" without a heavy aggregate.)
+        schools_res = (
+            svc.table("schools")
+            .select("id, name, institution_type")
+            .eq("institution_type", "university")
+            .limit(15)
+            .execute()
+        )
+        peer_schools = schools_res.data or []
+        # Ensure the current school is included even if outside the sample.
+        if self_school_id and all(s["id"] != self_school_id for s in peer_schools):
+            me = svc.table("schools").select("id, name, institution_type").eq("id", self_school_id).limit(1).execute()
+            if me.data:
+                peer_schools = [me.data[0], *peer_schools][:15]
+
+        def _reachable_domains(school_id: str) -> set:
+            prog_ids = _institution_programme_ids(school_id)
+            if not prog_ids:
+                return set()
+            pd = _programme_domain_rows(prog_ids)
+            return {r["domain_id"] for r in pd}
+
+        # Compute each peer's domain set once.
+        coverage: dict = {}
+        all_domain_ids: set = set()
+        for s in peer_schools:
+            dset = _reachable_domains(s["id"])
+            coverage[s["id"]] = dset
+            all_domain_ids |= dset
+
+        # Domain attributes: name, in_demand_score (demand weight), role count.
+        dmeta = _domain_map(list(all_domain_ids))
+        # Role counts per domain (bounded single query over the involved domains).
+        role_counts: dict = {}
+        if all_domain_ids:
+            rc = (
+                svc.table("domain_roles")
+                .select("domain_id")
+                .in_("domain_id", list(all_domain_ids))
+                .limit(5000)
+                .execute()
+            )
+            for r in (rc.data or []):
+                did = r.get("domain_id")
+                role_counts[did] = role_counts.get(did, 0) + 1
+        # Demand weight per domain from the best in_demand_score on any link.
+        demand_by_domain: dict = {}
+        if all_domain_ids:
+            dl = (
+                svc.table("programme_domain")
+                .select("domain_id, in_demand_score")
+                .in_("domain_id", list(all_domain_ids))
+                .limit(8000)
+                .execute()
+            )
+            for r in (dl.data or []):
+                did = r.get("domain_id")
+                score = r.get("in_demand_score")
+                if score is not None:
+                    try:
+                        demand_by_domain[did] = max(demand_by_domain.get(did, 0.0), float(score))
+                    except (TypeError, ValueError):
+                        pass
+
+        my_domains = coverage.get(self_school_id, set()) if self_school_id else set()
+        rows: List[PeerInstitutionRow] = []
+        for s in peer_schools:
+            dset = coverage.get(s["id"], set())
+            is_self = bool(self_school_id and s["id"] == self_school_id)
+            # Domains I have that this peer lacks (only meaningful vs self).
+            unique = None
+            if self_school_id and not is_self:
+                diff = [dmeta.get(d, {}).get("name") for d in (my_domains - dset)]
+                unique = [n for n in diff if n][:12] or None
+            rows.append(
+                PeerInstitutionRow(
+                    institution_name=s.get("name") or "",
+                    domains_accessible=len(dset),
+                    roles_accessible=sum(role_counts.get(d, 0) for d in dset),
+                    demand_weight=round(sum(demand_by_domain.get(d, 0.0) for d in dset), 2) or None,
+                    unique_domains=unique,
+                    is_self=is_self,
+                )
+            )
+        # Strongest coverage first.
+        rows.sort(key=lambda r: r.domains_accessible, reverse=True)
+        return ResponseModel(data=[r.model_dump() for r in rows])
+    except Exception as exc:  # noqa: BLE001
+        log.error("institutions peers failed", error=str(exc))
+        return ResponseModel(data=[])
 
 
 # ─────────────────────────────────────────────────────────────

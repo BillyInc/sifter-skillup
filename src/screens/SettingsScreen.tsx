@@ -128,6 +128,21 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </SettingsCard>
 
+        <SettingsCard title="MY SCHOOL">
+          <Text style={[styles.cardHeadline, { color: colors.text }]}>Claim or link your school</Text>
+          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+            Redeem a claim code from your school, or link your school by its code.
+            Your individual progress stays private unless you choose to share it.
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            onPress={() => router.push('/(tabs)/settings/my-school' as any)}
+            style={[styles.linkBtn, { borderColor: colors.border }]}
+          >
+            <Text style={[styles.linkBtnText, { color: colors.text }]}>Open My School</Text>
+          </TouchableOpacity>
+        </SettingsCard>
+
         <SettingsCard title="NOTIFICATIONS">
           <Text style={[styles.cardHeadline, { color: colors.text }]}>Reminder delivery</Text>
           <Text style={[styles.cardBody, { color: colors.textSoft }]}>
