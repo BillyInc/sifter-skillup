@@ -74,6 +74,9 @@ export interface StartingPointProfile {
 
   /** Bookkeeping. */
   completedAt?: string;
+
+  /** Prior field domain key from career search (for professionals/changers/graduates). */
+  priorFieldDomainKey?: string;
 }
 
 /** A single field that a branch setup form edits, with a partial update. */

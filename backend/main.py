@@ -405,6 +405,12 @@ app.include_router(career_router)
 from routes.institutions_routes import router as institutions_router
 app.include_router(institutions_router)
 
+from routes.admission_routes import router as admission_router
+app.include_router(admission_router)
+
+from routes.feedback_routes import router as feedback_router
+app.include_router(feedback_router)
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=settings.DEBUG)

@@ -1,16 +1,22 @@
 /**
  * PeersScreen — peer-institution domain-coverage benchmark. Reads
- * adminData.getPeerComparison (a `coming_soon` envelope this phase); the body
- * branches through ComingSoonPanel, so no peer is ever fabricated.
+ * adminData.getPeerComparison and renders PeerComparisonChart.
  */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useTheme, Spacing, FontSize, FontWeight, webContainer } from "../../theme";
+import {
+  useTheme,
+  Spacing,
+  FontSize,
+  FontWeight,
+  webContainer,
+} from "../../theme";
 import { adminData } from "../../lib/adminData";
 import type { DataState } from "../../types/career";
 import type { PeerInstitutionRow } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { PeerComparisonChart } from "../../components/admin/PeerComparisonChart";
 
 export function PeersScreen() {
   const { colors } = useTheme();
@@ -18,12 +24,21 @@ export function PeersScreen() {
     status: "pending",
     data: null,
   });
+  const [myDomains, setMyDomains] = useState<number>(0);
 
   useEffect(() => {
     let active = true;
-    adminData.getPeerComparison().then((d) => {
-      if (active) setPeers(d);
-    });
+    (async () => {
+      const [p, s] = await Promise.all([
+        adminData.getPeerComparison(),
+        adminData.getInstitutionSummary(),
+      ]);
+      if (!active) return;
+      setPeers(p);
+      if (s.status === "real" && s.data) {
+        setMyDomains(s.data.domainsAccessible);
+      }
+    })();
     return () => {
       active = false;
     };
@@ -50,7 +65,15 @@ export function PeersScreen() {
             emptyTitle="No peers yet"
             emptyBody="Peer benchmarks appear here once populated."
           >
-            {() => null}
+            {(rows) => (
+              <PeerComparisonChart
+                myCount={myDomains}
+                peers={rows.map((p) => ({
+                  name: p.institutionName,
+                  count: p.domainsAccessible,
+                }))}
+              />
+            )}
           </ComingSoonPanel>
         </View>
       </ScrollView>
@@ -72,6 +95,5 @@ const styles = StyleSheet.create({
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
-    marginTop: -Spacing.xs,
   },
 });

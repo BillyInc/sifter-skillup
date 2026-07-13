@@ -1,0 +1,47 @@
+domain_key,isco_submajor,tool_name,tool_group,role_freq,score,hot,in_demand,source,demand_score,demand_source,demand_as_of,tool_url
+D010,,TypeScript,distinctive,120,0.95,true,true,onet_hot,0.87,stackoverflow,2025-01-15,https://www.typescriptlang.org/
+D010,,React,distinctive,110,0.93,true,true,onet_hot,0.85,stackoverflow,2025-01-15,https://react.dev/
+D010,,Node.js,distinctive,95,0.91,true,true,onet_hot,0.82,stackoverflow,2025-01-15,https://nodejs.org/
+D010,,PostgreSQL,common,80,0.85,true,true,onet_hot,0.78,stackoverflow,2025-01-15,https://www.postgresql.org/
+D010,,Docker,common,75,0.83,true,true,onet_hot,0.75,stackoverflow,2025-01-15,https://www.docker.com/
+D010,,Git,common,150,0.99,true,true,onet_hot,0.95,stackoverflow,2025-01-15,https://git-scm.com/
+D010,,AWS,common,70,0.82,true,true,onet_hot,0.72,stackoverflow,2025-01-15,https://aws.amazon.com/
+D010,,Python,common,90,0.88,true,true,onet_hot,0.80,stackoverflow,2025-01-15,https://www.python.org/
+D010,,SQL,common,85,0.87,true,true,onet_hot,0.79,stackoverflow,2025-01-15,https://www.iso.org/standard/63555.html
+D010,,REST APIs,common,65,0.80,true,true,onet_hot,0.70,stackoverflow,2025-01-15,https://restfulapi.net/
+D011,,Python,distinctive,85,0.92,true,true,onet_hot,0.85,github_innovation,2025-01-15,https://www.python.org/
+D011,,pandas,distinctive,70,0.88,true,true,onet_hot,0.82,github_innovation,2025-01-15,https://pandas.pydata.org/
+D011,,NumPy,distinctive,65,0.86,true,true,onet_hot,0.80,github_innovation,2025-01-15,https://numpy.org/
+D011,,scikit-learn,distinctive,60,0.84,true,true,onet_hot,0.78,github_innovation,2025-01-15,https://scikit-learn.org/
+D011,,TensorFlow,distinctive,45,0.81,true,true,onet_hot,0.75,github_innovation,2025-01-15,https://www.tensorflow.org/
+D011,,PyTorch,distinctive,40,0.80,true,true,onet_hot,0.73,github_innovation,2025-01-15,https://pytorch.org/
+D011,,SQL,common,75,0.85,true,true,onet_hot,0.77,github_innovation,2025-01-15,https://www.iso.org/standard/63555.html
+D011,,Tableau,common,55,0.82,true,true,onet_hot,0.72,github_innovation,2025-01-15,https://www.tableau.com/
+D011,,Git,common,90,0.97,true,true,onet_hot,0.90,github_innovation,2025-01-15,https://git-scm.com/
+D011,,Jupyter,common,65,0.83,true,true,onet_hot,0.75,github_innovation,2025-01-15,https://jupyter.org/
+D012,,C++,distinctive,50,0.90,true,true,onet_hot,0.82,adzuna,2025-01-15,https://isocpp.org/
+D012,,Python,distinctive,45,0.88,true,true,onet_hot,0.80,adzuna,2025-01-15,https://www.python.org/
+D012,,MATLAB,distinctive,35,0.85,true,true,onet_hot,0.78,adzuna,2025-01-15,https://www.mathworks.com/products/matlab.html
+D012,,Bloomberg Terminal,distinctive,25,0.95,true,true,onet_hot,0.88,adzuna,2025-01-15,https://www.bloomberg.com/professional/solution/bloomberg-terminal/
+D012,,Refinitiv Eikon,distinctive,20,0.93,true,true,onet_hot,0.85,adzuna,2025-01-15,https://www.refinitiv.com/en/products/refinitiv-eikon
+D012,,Excel,common,60,0.80,true,true,onet_hot,0.72,adzuna,2025-01-15,https://www.microsoft.com/en-us/microsoft-365/excel
+D012,,VBA,common,30,0.75,true,true,onet_hot,0.68,adzuna,2025-01-15,https://learn.microsoft.com/en-us/office/vba/api/overview/excel
+D012,,Git,common,55,0.95,true,true,onet_hot,0.88,adzuna,2025-01-15,https://git-scm.com/
+D012,,SQL,common,50,0.85,true,true,onet_hot,0.78,adzuna,2025-01-15,https://www.iso.org/standard/63555.html
+D012,,Tableau,common,25,0.78,true,true,onet_hot,0.70,adzuna,2025-01-15,https://www.tableau.com/
+D013,,Unity,distinctive,40,0.88,true,true,onet_hot,0.82,adzuna,2025-01-15,https://unity.com/
+D013,,Unreal Engine,distinctive,35,0.90,true,true,onet_hot,0.85,adzuna,2025-01-15,https://www.unrealengine.com/
+D013,,C#,distinctive,60,0.92,true,true,onet_hot,0.87,adzuna,2025-01-15,https://dotnet.microsoft.com/en-us/languages/csharp
+D013,,C++,distinctive,30,0.89,true,true,onet_hot,0.83,adzuna,2025-01-15,https://isocpp.org/
+D013,,Blender,distinctive,25,0.85,true,true,onet_hot,0.78,adzuna,2025-01-15,https://www.blender.org/
+D013,,Git,common,70,0.98,true,true,onet_hot,0.90,adzuna,2025-01-15,https://git-scm.com/
+D013,,Jira,common,45,0.82,true,true,onet_hot,0.75,adzuna,2025-01-15,https://www.atlassian.com/software/jira
+D013,,Visual Studio,common,50,0.85,true,true,onet_hot,0.78,adzuna,2025-01-15,https://visualstudio.microsoft.com/
+D013,,Perforce,common,20,0.75,true,true,onet_hot,0.68,adzuna,2025-01-15,https://www.perforce.com/
+D014,,AutoCAD,distinctive,45,0.88,true,true,onet_hot,0.80,adzuna,2025-01-15,https://www.autodesk.com/products/autocad
+D014,,Revit,distinctive,35,0.86,true,true,onet_hot,0.78,adzuna,2025-01-15,https://www.autodesk.com/products/revit
+D014,,SolidWorks,distinctive,30,0.84,true,true,onet_hot,0.76,adzuna,2025-01-15,https://www.solidworks.com/
+D014,,SketchUp,distinctive,25,0.80,true,true,onet_hot,0.72,adzuna,2025-01-15,https://www.sketchup.com/
+D014,,Excel,common,50,0.82,true,true,onet_hot,0.74,adzuna,2025-01-15,https://www.microsoft.com/en-us/microsoft-365/excel
+D014,,Git,common,40,0.95,true,true,onet_hot,0.88,adzuna,2025-01-15,https://git-scm.com/
+D014,,Jira,common,35,0.80,true,true,onet_hot,0.72,adzuna,2025-01-15,https://www.atlassian.com/software/jira

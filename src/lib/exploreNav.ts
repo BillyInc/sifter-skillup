@@ -45,4 +45,12 @@ export const exploreNav = {
   charterships(router: Nav) {
     router.push("/(tabs)/explore/pathways/credentials" as never);
   },
+
+  // ─── Phase 8: admission intelligence ─────────────────────────
+  /** Full admission-insight screen for a JAMB name or programme. */
+  admission(router: Nav, jambNameOrProgrammeId: string) {
+    router.push(
+      `/(tabs)/explore/admission/${encodeURIComponent(jambNameOrProgrammeId)}` as never,
+    );
+  },
 };

@@ -30,6 +30,7 @@ import {
   type Programme,
   type DomainLink,
   type DomainMatchType,
+  type AdmissionInsight,
 } from "@/types/career";
 import {
   useTheme,
@@ -45,7 +46,7 @@ export interface ProgrammeOverviewScreenProps {
   programmeId: string;
 }
 
-type TrackTab = "employment" | "business";
+type TrackTab = "employment" | "business" | "admission";
 
 // Section order is fixed by the model: Direct → Functional → Adjacent.
 const DOMAIN_TIERS: { type: DomainMatchType; title: string }[] = [
@@ -89,12 +90,26 @@ export function ProgrammeOverviewScreen({
   const [state, setState] = useState<DataState<Programme>>(() =>
     comingSoon<Programme>("Programme intelligence is being populated."),
   );
+  const [admissionState, setAdmissionState] = useState<DataState<AdmissionInsight>>(
+    () => comingSoon<AdmissionInsight>("Admission data is being compiled."),
+  );
 
   useEffect(() => {
     let active = true;
     (async () => {
       const result = await careerData.getProgramme(programmeId);
       if (active) setState(result);
+    })();
+    return () => {
+      active = false;
+    };
+  }, [programmeId]);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      const result = await careerData.getAdmissionInsight(programmeId);
+      if (active) setAdmissionState(result);
     })();
     return () => {
       active = false;
@@ -113,6 +128,11 @@ export function ProgrammeOverviewScreen({
         active={tab === "business"}
         onPress={() => setTab("business")}
       />
+      <TrackTabButton
+        label="🎓 Admission"
+        active={tab === "admission"}
+        onPress={() => setTab("admission")}
+      />
     </View>
   );
 
@@ -120,6 +140,7 @@ export function ProgrammeOverviewScreen({
   // regardless of the programme's data state — force a `real` envelope for it.
   // Track A (Employment) honours the real getProgramme state and so shows the
   // graceful Coming Soon panel until intelligence is populated.
+  // Track C (Admission) uses admissionState which has its own data envelope.
   const scaffoldState: DataState<Programme> =
     tab === "business"
       ? { status: "real", data: state.data ?? PLACEHOLDER }
@@ -144,8 +165,15 @@ export function ProgrammeOverviewScreen({
             status={state.status}
             meta={state.meta}
           />
-        ) : (
+        ) : tab === "business" ? (
           <TrackBBusiness colors={colors} />
+        ) : (
+          <TrackCAdmission
+            programmeId={programmeId}
+            colors={colors}
+            admissionState={admissionState}
+            router={router}
+          />
         )
       }
     </DetailScaffold>
@@ -288,6 +316,85 @@ function TrackBBusiness({ colors }: { colors: ColorPalette }) {
   );
 }
 
+/** Track C — Admission Intelligence (standalone card, no nested DetailScaffold). */
+function TrackCAdmission({
+  programmeId,
+  colors,
+  admissionState,
+  router,
+}: {
+  programmeId: string;
+  colors: ColorPalette;
+  admissionState: DataState<AdmissionInsight>;
+  router: Router;
+}) {
+  return (
+    <View
+      style={[
+        styles.business,
+        { backgroundColor: colors.card, borderColor: colors.border },
+      ]}
+    >
+      <Text style={styles.businessIcon}>🎓</Text>
+      <Text style={[styles.businessEyebrow, { color: Brand.primaryDeep }]}>
+        ADMISSION · TRACK C
+      </Text>
+      <View style={styles.admissionContent}>
+        {admissionState.status === "real" && admissionState.data ? (
+          <>
+            <Text style={[styles.businessTitle, { color: colors.text }]}>
+              Cut-offs & Formula ({admissionState.data.year})
+            </Text>
+            <Text style={[styles.admissionLabel, { color: colors.textSoft }]}>
+              {admissionState.data.label}
+            </Text>
+            <Text style={[styles.admissionLabel, { color: colors.textMuted }]}>
+              {admissionState.data.programmeCount} programme(s) with cut-off data
+            </Text>
+            <Text style={[styles.admissionNote, { color: colors.textMuted }]}>
+              Data is indicative — based on the {admissionState.data.year} admission cycle.
+            </Text>
+          </>
+        ) : admissionState.status === "fallback" ? (
+          <>
+            <Text style={[styles.businessTitle, { color: colors.text }]}>
+              Admission data (fallback)
+            </Text>
+            <Text style={[styles.admissionNote, { color: colors.textSoft }]}>
+              {admissionState.meta?.notice}
+            </Text>
+          </>
+        ) : (
+          <>
+            <Text style={[styles.businessTitle, { color: colors.text }]}>
+              University Admission Intelligence
+            </Text>
+            <Text style={[styles.admissionBody, { color: colors.textSoft }]}>
+              Annual Dec/Jan compile of JAMB cut-offs, aggregate formulas, and
+              national competitiveness. Data will appear here once compiled.
+            </Text>
+            <Text style={[styles.admissionNote, { color: colors.textMuted }]}>
+              {admissionState.meta?.notice}
+            </Text>
+          </>
+        )}
+
+        {/* Full admission intelligence: cut-offs, formula, floor, competitiveness. */}
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={() => exploreNav.admission(router, programmeId)}
+          accessibilityRole="button"
+          style={[styles.admissionCTA, { backgroundColor: Brand.primary }]}
+        >
+          <Text style={styles.admissionCTAText}>
+            View full admission insight →
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
 function TrackTabButton({
   label,
   active,
@@ -408,6 +515,45 @@ const styles = StyleSheet.create({
   businessBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
+    textAlign: "center",
+    maxWidth: 420,
+  },
+  admissionContent: {
+    gap: Spacing.md,
+    paddingHorizontal: Spacing.md,
+  },
+  admissionLabel: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.medium,
+    lineHeight: FontSize.md * 1.5,
+  },
+  admissionYear: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+  },
+  admissionCTA: {
+    marginTop: Spacing.md,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.lg,
+    borderRadius: Radius.full,
+    alignItems: "center",
+  },
+  admissionCTAText: {
+    color: "#fff",
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  admissionLink: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  admissionNote: {
+    fontSize: FontSize.xs,
+    lineHeight: FontSize.xs * 1.5,
+  },
+  admissionBody: {
+    fontSize: FontSize.md,
+    lineHeight: FontSize.md * 1.5,
     textAlign: "center",
     maxWidth: 420,
   },

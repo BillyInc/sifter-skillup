@@ -1,0 +1,20 @@
+DataState<null>>(
+        `/api/career/subscriptions/${encodeURIComponent(subscriptionId)}`,
+        { method: "DELETE" },
+      );
+    } catch {
+      return comingSoon<null>();
+    }
+  },
+
+  // ─── Phase 7: elite pathways · bridge · special flows ────────
+  /** The 17 elite domains, for the Elite Pathways hub. */
+  async getElitePathways(): Promise<DataState<ElitePathwaySummary[]>> {
+    // TODO(career-data): GET /api/career/elite-pathways
+    return comingSoon<ElitePathwaySummary[]>(
+      "Elite pathways are being populated.",
+    );
+  },
+
+  /** A single elite pathway (Formation / Pinnacle / bridge plan). */
+  async getElitePathway(_pathwayId: string): Promise<DataState<ElitePathway>> {

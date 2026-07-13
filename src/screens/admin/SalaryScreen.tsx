@@ -1,18 +1,70 @@
 /**
- * SalaryScreen — salary benchmarks by domain. No data ships this phase: a local
- * `coming_soon` envelope drives ComingSoonPanel, so the surface reads as an
- * intentional placeholder rather than a fabricated benchmark.
+ * SalaryScreen — salary benchmarks by domain. Pulls adminData.getRoleDemand()
+ * filtered to show salary data, rendering in an AdminDataTable with salary columns.
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useTheme, Spacing, FontSize, FontWeight, webContainer } from "../../theme";
-import { comingSoon } from "../../types/career";
+import {
+  useTheme,
+  Spacing,
+  FontSize,
+  FontWeight,
+  webContainer,
+} from "../../theme";
+import { adminData } from "../../lib/adminData";
+import type { DataState } from "../../types/career";
+import type { RoleDemandRow } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { AdminDataTable } from "../../components/admin/AdminDataTable";
+import type { ColumnDef } from "../../components/admin/AdminDataTable";
+
+function formatSalary(row: RoleDemandRow): string {
+  if (row.salaryMin != null && row.salaryMax != null) {
+    return `₦${(row.salaryMin / 1000).toFixed(0)}k-₦${(row.salaryMax / 1000).toFixed(0)}k`;
+  }
+  if (row.salaryMin != null) {
+    return `From ₦${(row.salaryMin / 1000).toFixed(0)}k`;
+  }
+  if (row.salaryMax != null) {
+    return `Up to ₦${(row.salaryMax / 1000).toFixed(0)}k`;
+  }
+  return "—";
+}
+
+const COLUMNS: ColumnDef[] = [
+  { key: "roleName", label: "Role", width: undefined },
+  { key: "domainName", label: "Domain", width: 130 },
+  {
+    key: "salary",
+    label: "Salary (NGN)",
+    width: 130,
+    render: (_: any, row: RoleDemandRow) => formatSalary(row),
+  },
+  {
+    key: "ngPostings",
+    label: "NG postings",
+    width: 90,
+    render: (val: number) => (val != null ? val.toLocaleString() : "—"),
+  },
+];
 
 export function SalaryScreen() {
   const { colors } = useTheme();
-  const state = comingSoon<never[]>("Salary benchmarks by domain are being populated.");
+  const [roles, setRoles] = useState<DataState<RoleDemandRow[]>>({
+    status: "pending",
+    data: null,
+  });
+
+  useEffect(() => {
+    let active = true;
+    adminData.getRoleDemand().then((d) => {
+      if (active) setRoles(d);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <AdminShell title="Salary Benchmarks" eyebrow="Aggregate intelligence">
@@ -29,7 +81,16 @@ export function SalaryScreen() {
             Entry and mid-level pay ranges for the domains your programmes reach
             — sourced from aggregate market data.
           </Text>
-          <ComingSoonPanel state={state}>{() => null}</ComingSoonPanel>
+          <ComingSoonPanel
+            state={roles}
+            empty={(rows) => rows.length === 0}
+            emptyTitle="No salary data yet"
+            emptyBody="Salary benchmarks by domain are being populated."
+          >
+            {(rows) => (
+              <AdminDataTable columns={COLUMNS} data={rows} />
+            )}
+          </ComingSoonPanel>
         </View>
       </ScrollView>
     </AdminShell>
@@ -50,6 +111,5 @@ const styles = StyleSheet.create({
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
-    marginTop: -Spacing.xs,
   },
 });

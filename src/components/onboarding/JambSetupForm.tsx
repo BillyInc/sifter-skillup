@@ -10,9 +10,16 @@
  * standard public WAEC/UTME subjects, so they are safe to hardcode.
  */
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useTheme, Spacing, FontSize, Brand } from "../../theme";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { useTheme, Spacing, FontSize, Radius, Brand } from "../../theme";
 import { SifterButton } from "../ui";
+import { careerData } from "../../lib/careerData";
 import {
   OptionCard,
   ChoiceChips,
@@ -91,6 +98,103 @@ const SCORE_BANDS: ChoiceOption[] = [
   "280+",
 ].map((b) => ({ label: b, value: b }));
 
+type Suggestion = { id: string; name: string };
+
+/**
+ * Live typeahead over admission programmes/schools. Debounced; taps a
+ * suggestion to fill `value`. Falls back silently if the endpoint is empty.
+ */
+function LiveSearchField({
+  label,
+  value,
+  onSelect,
+  placeholder,
+  kind,
+}: {
+  label: string;
+  value: string;
+  onSelect: (name: string) => void;
+  placeholder: string;
+  kind: "programme" | "school";
+}) {
+  const { colors } = useTheme();
+  const [query, setQuery] = React.useState(value);
+  const [results, setResults] = React.useState<Suggestion[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const q = query.trim();
+    if (q.length < 2) {
+      setResults([]);
+      return;
+    }
+    let active = true;
+    setLoading(true);
+    const t = setTimeout(async () => {
+      const state =
+        kind === "programme"
+          ? await careerData.searchAdmissionProgrammes(q)
+          : await careerData.searchAdmissionSchools(q);
+      if (!active) return;
+      setLoading(false);
+      setResults(
+        state.status === "real" && Array.isArray(state.data)
+          ? state.data.map((r) => ({ id: r.id, name: r.name }))
+          : [],
+      );
+    }, 275);
+    return () => {
+      active = false;
+      clearTimeout(t);
+    };
+  }, [query, kind]);
+
+  return (
+    <View style={{ gap: 6 }}>
+      <SearchField
+        label={label}
+        value={query}
+        onChangeText={(v) => {
+          setQuery(v);
+          setOpen(true);
+          onSelect(v);
+        }}
+        placeholder={placeholder}
+      />
+      {loading ? (
+        <ActivityIndicator size="small" color={Brand.primary} />
+      ) : null}
+      {open && results.length ? (
+        <View
+          style={[
+            styles.suggestions,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+        >
+          {results.slice(0, 6).map((r) => (
+            <TouchableOpacity
+              key={r.id}
+              activeOpacity={0.7}
+              onPress={() => {
+                setQuery(r.name);
+                onSelect(r.name);
+                setOpen(false);
+                setResults([]);
+              }}
+              style={styles.suggestion}
+            >
+              <Text style={[styles.suggestionText, { color: colors.text }]}>
+                {r.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
 export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
   const { colors } = useTheme();
   const door = value.ssDoor;
@@ -121,12 +225,12 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
 
       {door === "know_where" ? (
         <View style={{ gap: Spacing.lg }}>
-          <SearchField
+          <LiveSearchField
             label="Intended programme"
             value={value.intendedProgramme ?? ""}
-            onChangeText={(v) => onChange({ intendedProgramme: v })}
+            onSelect={(v) => onChange({ intendedProgramme: v })}
             placeholder="e.g. Mechanical Engineering"
-            comingSoon
+            kind="programme"
           />
           <ChoiceChips
             label="Preferred institution type"
@@ -136,29 +240,28 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
               onChange({ preferredInstitutionType: v as InstitutionType })
             }
           />
-          <SearchField
+          <LiveSearchField
             label="Preferred school"
             value={value.preferredSchool ?? ""}
-            onChangeText={(v) => onChange({ preferredSchool: v })}
-            placeholder="Search institutions"
-            comingSoon
+            onSelect={(v) => onChange({ preferredSchool: v })}
+            placeholder="Search universities"
+            kind="school"
           />
         </View>
       ) : null}
 
       {door === "know_what" ? (
         <View style={{ gap: Spacing.lg }}>
-          <SearchField
+          <LiveSearchField
             label="Intended programme"
             value={value.intendedProgramme ?? ""}
-            onChangeText={(v) => onChange({ intendedProgramme: v })}
+            onSelect={(v) => onChange({ intendedProgramme: v })}
             placeholder="e.g. Economics"
-            comingSoon
+            kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            🔓 Institutions offering this programme and their JAMB / Post-UTME
-            cut-offs are Live soon — we'll match them to you once that data is
-            added.
+            🎓 We'll surface the universities offering this programme and their
+            JAMB / Post-UTME cut-offs from the latest admission snapshot.
           </Text>
         </View>
       ) : null}
@@ -207,6 +310,16 @@ const styles = StyleSheet.create({
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
   note: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   caption: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },
+  suggestions: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    overflow: "hidden",
+  },
+  suggestion: {
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+  },
+  suggestionText: { fontSize: FontSize.sm },
 });
 
 export default JambSetupForm;

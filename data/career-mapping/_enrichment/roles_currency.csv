@@ -1,0 +1,41 @@
+role_key,currency_status,currency_source,currency_verified_at
+D010|software engineer,current,lightcast,2025-01-15
+D010|senior software engineer,current,lightcast,2025-01-15
+D010|software architect,current,lightcast,2025-01-15
+D010|web developer,current,lightcast,2025-01-15
+D010|mobile applications developer,current,lightcast,2025-01-15
+D010|devops engineer,emerging,wef_foj_2025,2025-01-15
+D010|cloud solutions architect,emerging,wef_foj_2025,2025-01-15
+D010|site reliability engineer,emerging,wef_foj_2025,2025-01-15
+D010|legacy mainframe developer,legacy,lightcast,2025-01-15
+D010|cobol programmer,legacy,lightcast,2025-01-15
+D011|data scientist,current,lightcast,2025-01-15
+D011|machine learning engineer,emerging,wef_foj_2025,2025-01-15
+D011|ai research scientist,emerging,wef_foj_2025,2025-01-15
+D011|data analyst,current,lightcast,2025-01-15
+D011|business intelligence analyst,current,lightcast,2025-01-15
+D011|data engineer,current,lightcast,2025-01-15
+D011|statistician,current,lightcast,2025-01-15
+D011|legacy report developer,legacy,lightcast,2025-01-15
+D012|quantitative analyst,current,lightcast,2025-01-15
+D012|quantitative researcher,current,lightcast,2025-01-15
+D012|quantitative developer,current,lightcast,2025-01-15
+D012|risk analyst,current,lightcast,2025-01-15
+D012|portfolio manager,current,lightcast,2025-01-15
+D012|algorithmic trader,emerging,wef_foj_2025,2025-01-15
+D012|crypto quant researcher,emerging,wef_foj_2025,2025-01-15
+D012|legacy floor trader,legacy,lightcast,2025-01-15
+D013|gameplay programmer,current,lightcast,2025-01-15
+D013|game engine programmer,current,lightcast,2025-01-15
+D013|graphics programmer,current,lightcast,2025-01-15
+D013|technical artist,current,lightcast,2025-01-15
+D013|game designer,current,lightcast,2025-01-15
+D013|live ops specialist,emerging,wef_foj_2025,2025-01-15
+D013|vr/ar game developer,emerging,wef_foj_2025,2025-01-15
+D013|legacy flash game developer,legacy,lightcast,2025-01-15
+D014|architect,current,lightcast,2025-01-15
+D014|structural engineer,current,lightcast,2025-01-15
+D014|civil engineer,current,lightcast,2025-01-15
+D014|bim manager,emerging,wef_foj_2025,2025-01-15
+D014|sustainability consultant,emerging,wef_foj_2025,2025-01-15
+D014|legacy draftsman,legacy,lightcast,2025-01-15

@@ -3,35 +3,47 @@
  *
  * Two faces, gated by a single feature flag (`featureFlags.myWorldLive`):
  *
- *  • OFF (pre-launch): the PERSONAL PAGE (career-mapping hub). It surfaces the
- *    things tied to the discipline → domain/role mapping that the user has
- *    personally collected — saved domains & roles, and personal notes grouped by
- *    category — plus a single LOCKED "Learning Tracks & Portfolio" card. The
- *    gamified learning world is never the whole tab, only a card inside the page.
+ *  • OFF (pre-launch): the PERSONAL PAGE — the student's OPEN personal hub. It
+ *    surfaces the things they've personally collected off the discipline →
+ *    domain/role mapping: SAVED domains/roles/programmes (grouped by type, each
+ *    tappable into Explore and removable), and PERSONAL NOTES filed into folders
+ *    by category (each editable + re-fileable via a bottom-sheet). The
+ *    interactive upskilling tracks + Portfolio stay behind a single LOCKED
+ *    "Coming Soon" card — never the whole tab, only a card inside the page.
  *
  *  • ON (live): the LEARNING-WORLD GATEWAY. My World becomes the doorway into the
- *    existing learning game (the game logic is preserved — this only wires
- *    navigation + restyle). It shows a compact character/XP/streak snapshot, the
- *    three primary sections (Tracks · Portfolio · Guild), the SAME personal
- *    saved/notes blocks as the OFF branch, and a "More" grid for everything else.
+ *    interactive upskilling world. It shows a compact character/XP/streak
+ *    snapshot, the three primary sections (Tracks · Portfolio · Guild), the SAME
+ *    personal saved/notes blocks as the OFF branch, and a "More" grid.
  *
- * All personal data comes from careerData read methods, which currently return
- * `coming_soon` envelopes; every data block renders through DataStateView so the
- * empty/coming-soon states are graceful and honest — never mock rows.
+ * All personal data comes from careerData read methods and renders through
+ * DataStateView, so empty / coming-soon / locked states are graceful and honest
+ * — never mock rows. Data refreshes on focus and after every mutation.
  */
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { useRouter, type Href } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  Pressable,
+} from "react-native";
+import { useFocusEffect, useRouter, type Href } from "expo-router";
 import {
   useTheme,
   Spacing,
   Radius,
   FontSize,
+  FontWeight,
   Brand,
   webContainer,
 } from "../theme";
 import { DataStateView, LockedPill } from "../components/careerIntelligence";
 import { careerData } from "../lib/careerData";
+import { exploreNav } from "../lib/exploreNav";
 import {
   type DataState,
   type SavedItem,
@@ -53,44 +65,68 @@ const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
   elite_pathway: { icon: "⭐", label: "Pathway" },
 };
 
+/** Plural section titles for the saved-items groups (order = display order). */
+const SAVED_GROUP_ORDER: { type: SavedEntityType; title: string }[] = [
+  { type: "domain", title: "Domains" },
+  { type: "role", title: "Roles" },
+  { type: "programme", title: "Programmes" },
+  { type: "opportunity", title: "Opportunities" },
+  { type: "organisation", title: "Employers" },
+  { type: "elite_pathway", title: "Pathways" },
+];
+
 const UNCATEGORISED = "Uncategorised";
 
-/** Shared hook: load the personal saved/notes envelopes once, active-guarded. */
-function usePersonalData() {
+/** Read-model returned by the personal-data hook, plus a manual refetch. */
+interface PersonalData {
+  saved: DataState<SavedItem[]> | null;
+  notes: DataState<Note[]> | null;
+  refresh: () => void;
+}
+
+/** Shared hook: load the personal saved/notes envelopes; refetch on focus and
+ *  on demand (after any mutation). Active-guarded so late responses are dropped. */
+function usePersonalData(): PersonalData {
   const [saved, setSaved] = useState<DataState<SavedItem[]> | null>(null);
   const [notes, setNotes] = useState<DataState<Note[]> | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      const [savedState, notesState] = await Promise.all([
-        careerData.getSavedItems(),
-        careerData.getAllNotes(),
-      ]);
-      if (!active) return;
-      setSaved(savedState);
-      setNotes(notesState);
-    })();
-    return () => {
-      active = false;
-    };
+  const load = useCallback(async (isActive: () => boolean) => {
+    const [savedState, notesState] = await Promise.all([
+      careerData.getSavedItems(),
+      careerData.getAllNotes(),
+    ]);
+    if (!isActive()) return;
+    setSaved(savedState);
+    setNotes(notesState);
   }, []);
 
-  return { saved, notes };
+  // Refetch every time the tab regains focus.
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
+      void load(() => active);
+      return () => {
+        active = false;
+      };
+    }, [load]),
+  );
+
+  // Imperative refetch used after mutations (fire-and-forget, always active).
+  const refresh = useCallback(() => {
+    void load(() => true);
+  }, [load]);
+
+  return { saved, notes, refresh };
 }
 
 /** The Saved domains & roles + My notes blocks — shared by both branches. */
-function PersonalCareerBlocks({
-  saved,
-  notes,
-}: {
-  saved: DataState<SavedItem[]> | null;
-  notes: DataState<Note[]> | null;
-}) {
+function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
   const { colors } = useTheme();
+  const [editing, setEditing] = useState<Note | null>(null);
+
   return (
     <>
-      {/* ── Saved domains & roles (and any other bookmarks) ───────── */}
+      {/* ── Saved domains & roles (grouped by entity type) ────────── */}
       <Text style={[styles.section, { color: colors.textSoft }]}>
         Saved domains & roles
       </Text>
@@ -102,40 +138,63 @@ function PersonalCareerBlocks({
           emptyBody="Bookmark a domain or role from Explore and it shows up here."
         >
           {(items) => (
-            <View style={styles.list}>
-              {items.map((item) => (
-                <SavedItemRow key={item.id} item={item} />
-              ))}
-            </View>
-          )}
-        </DataStateView>
-      ) : null}
-
-      {/* ── My notes, grouped by category ─────────────────────────── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>My notes</Text>
-      {notes ? (
-        <DataStateView
-          state={notes}
-          empty={(rows) => rows.length === 0}
-          emptyTitle="No notes yet"
-          emptyBody="Notes you write on a domain or role appear here, grouped by category."
-        >
-          {(rows) => (
-            <View style={styles.noteGroups}>
-              {groupNotesByCategory(rows).map((group) => (
-                <View key={group.category} style={styles.noteGroup}>
-                  <Text style={[styles.groupLabel, { color: colors.textMuted }]}>
-                    {group.category.toUpperCase()}
+            <View style={styles.savedGroups}>
+              {groupSavedByType(items).map((group) => (
+                <View key={group.type} style={styles.savedGroup}>
+                  <Text
+                    style={[styles.groupLabel, { color: colors.textMuted }]}
+                  >
+                    {group.title} · {group.items.length}
                   </Text>
-                  {group.notes.map((note) => (
-                    <NoteCard key={note.id} note={note} />
-                  ))}
+                  <View style={styles.list}>
+                    {group.items.map((item) => (
+                      <SavedItemRow
+                        key={item.id}
+                        item={item}
+                        onRemoved={refresh}
+                      />
+                    ))}
+                  </View>
                 </View>
               ))}
             </View>
           )}
         </DataStateView>
       ) : null}
+
+      {/* ── My notes, filed into folders by category ──────────────── */}
+      <Text style={[styles.section, { color: colors.textSoft }]}>My notes</Text>
+      {notes ? (
+        <DataStateView
+          state={notes}
+          empty={(rows) => rows.length === 0}
+          emptyTitle="No notes yet"
+          emptyBody="Jot thoughts on any domain or role and they'll file here by category."
+        >
+          {(rows) => (
+            <View style={styles.noteGroups}>
+              {groupNotesByCategory(rows).map((group) => (
+                <NoteFolder
+                  key={group.category}
+                  category={group.category}
+                  notes={group.notes}
+                  onOpenNote={setEditing}
+                />
+              ))}
+            </View>
+          )}
+        </DataStateView>
+      ) : null}
+
+      {/* ── Bottom-sheet note editor (body + category + delete) ────── */}
+      <NoteEditorSheet
+        note={editing}
+        onClose={() => setEditing(null)}
+        onSaved={() => {
+          setEditing(null);
+          refresh();
+        }}
+      />
     </>
   );
 }
@@ -146,14 +205,14 @@ export default function MyWorldScreen() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
- * OFF branch — the pre-launch personal page (unchanged behaviour).
+ * OFF branch — the pre-launch personal page.
  * ──────────────────────────────────────────────────────────────────────────── */
 function PersonalPage() {
   const router = useRouter();
   const { colors } = useTheme();
   const { user } = useAuth();
   const isGuest = user?.auth_provider === "guest";
-  const { saved, notes } = usePersonalData();
+  const personal = usePersonalData();
 
   return (
     <ScrollView
@@ -183,75 +242,84 @@ function PersonalPage() {
         </View>
       ) : null}
 
-      <PersonalCareerBlocks saved={saved} notes={notes} />
+      <PersonalCareerBlocks {...personal} />
 
       {/* ── LOCKED: Learning Tracks & Portfolio (single card) ─────── */}
-      <View
-        style={[
-          styles.lockedCard,
-          { backgroundColor: colors.card, borderColor: colors.border },
-        ]}
-      >
-        <View style={styles.lockedHead}>
-          <Text style={styles.lockedIcon}>🎮</Text>
-          <View style={{ flex: 1 }}>
-            <View style={styles.lockedHeadRow}>
-              <Text style={[styles.lockedTitle, { color: colors.text }]}>
-                Learning Tracks & Portfolio
-              </Text>
-              <LockedPill />
-            </View>
-            <Text style={[styles.lockedBody, { color: colors.textSoft }]}>
-              The gamified tracks for your domain — levels, XP and a verifiable
-              Portfolio of what you've built — are coming soon. Master your
-              field, learn alongside your guild, and show employers your work.
+      <LockedTracksCard router={router} />
+    </ScrollView>
+  );
+}
+
+/** The single locked "Coming Soon" card — interactive upskilling tracks +
+ *  Portfolio live behind this and stay locked in this phase. */
+function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={[
+        styles.lockedCard,
+        { backgroundColor: colors.card, borderColor: colors.border },
+      ]}
+    >
+      <View style={styles.lockedHead}>
+        <Text style={styles.lockedIcon}>🧭</Text>
+        <View style={{ flex: 1 }}>
+          <View style={styles.lockedHeadRow}>
+            <Text style={[styles.lockedTitle, { color: colors.text }]}>
+              Skill Tracks & Portfolio
             </Text>
+            <LockedPill />
           </View>
-        </View>
-
-        <View style={styles.lockedBullets}>
-          {LOCKED_BULLETS.map((b) => (
-            <View key={b.title} style={styles.lockedBullet}>
-              <Text style={styles.lockedBulletIcon}>{b.icon}</Text>
-              <Text style={[styles.lockedBulletText, { color: colors.textSoft }]}>
-                <Text style={{ fontWeight: "800", color: colors.text }}>
-                  {b.title}.{" "}
-                </Text>
-                {b.body}
-              </Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Secondary links to the live career-mapping areas. */}
-        <View style={styles.lockedLinks}>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => router.push("/(tabs)/explore")}
-            style={styles.linkBtn}
-          >
-            <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
-              Explore programmes & roles →
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => router.push("/(tabs)/opportunities")}
-            style={styles.linkBtn}
-          >
-            <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
-              See opportunities →
-            </Text>
-          </TouchableOpacity>
+          <Text style={[styles.lockedBody, { color: colors.textSoft }]}>
+            Interactive upskilling for your domain — guided levels and a
+            verifiable Portfolio of what you've built — is coming soon. Master
+            your field, learn alongside your guild, and show employers your work.
+          </Text>
         </View>
       </View>
-    </ScrollView>
+
+      <View style={styles.lockedBullets}>
+        {LOCKED_BULLETS.map((b) => (
+          <View key={b.title} style={styles.lockedBullet}>
+            <Text style={styles.lockedBulletIcon}>{b.icon}</Text>
+            <Text style={[styles.lockedBulletText, { color: colors.textSoft }]}>
+              <Text style={{ fontWeight: FontWeight.heavy, color: colors.text }}>
+                {b.title}.{" "}
+              </Text>
+              {b.body}
+            </Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Secondary links to the live career-mapping areas. */}
+      <View style={styles.lockedLinks}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => router.push("/(tabs)/explore")}
+          style={styles.linkBtn}
+        >
+          <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+            Explore programmes & roles →
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => router.push("/(tabs)/opportunities")}
+          style={styles.linkBtn}
+        >
+          <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+            See opportunities →
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
  * ON branch — the live learning-world gateway.
- * Wires navigation into the existing game routes; logic is preserved elsewhere.
+ * Wires navigation into the existing upskilling routes; logic is preserved.
  * ──────────────────────────────────────────────────────────────────────────── */
 
 /** A primary section card (Tracks · Portfolio · Guild). */
@@ -311,7 +379,7 @@ function LiveWorldHub() {
   const { colors } = useTheme();
   const { user } = useAuth();
   const isGuest = user?.auth_provider === "guest";
-  const { saved, notes } = usePersonalData();
+  const personal = usePersonalData();
 
   const [xp, setXp] = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
@@ -363,7 +431,7 @@ function LiveWorldHub() {
         </View>
       ) : null}
 
-      {/* ── Character / XP / streak snapshot → full game profile ──── */}
+      {/* ── Character / XP / streak snapshot → full profile ───────── */}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => router.push("/(tabs)/myworld/game-profile")}
@@ -406,7 +474,7 @@ function LiveWorldHub() {
       ))}
 
       {/* ── Personal career-mapping blocks (shared with OFF branch) ─ */}
-      <PersonalCareerBlocks saved={saved} notes={notes} />
+      <PersonalCareerBlocks {...personal} />
 
       {/* ── More: the rest of the learning world ─────────────────── */}
       <Text style={[styles.section, { color: colors.textSoft }]}>More</Text>
@@ -455,7 +523,7 @@ const PRIMARY_SECTIONS: {
   {
     icon: "🗺️",
     title: "Tracks",
-    body: "Your learning world — islands, fields and levels. Master your domain step by step.",
+    body: "Your upskilling world — islands, fields and levels. Master your domain step by step.",
     accent: "accent",
     links: [
       { label: "Map", href: "/(tabs)/map" },
@@ -508,8 +576,8 @@ const LOCKED_BULLETS: { icon: string; title: string; body: string }[] = [
   },
   {
     icon: "🕹️",
-    title: "Levels & XP",
-    body: "Gamified progress, like Duolingo for real career skills.",
+    title: "Guided levels",
+    body: "Interactive, step-by-step progress through real career skills.",
   },
   {
     icon: "📁",
@@ -517,6 +585,18 @@ const LOCKED_BULLETS: { icon: string; title: string; body: string }[] = [
     body: "Verifiable completion records to show employers.",
   },
 ];
+
+/** Group saved items by entity type, in a stable display order. Empty groups
+ *  are dropped so the list only shows types the user actually has. */
+function groupSavedByType(
+  items: SavedItem[],
+): { type: SavedEntityType; title: string; items: SavedItem[] }[] {
+  return SAVED_GROUP_ORDER.map(({ type, title }) => ({
+    type,
+    title,
+    items: items.filter((i) => i.entityType === type),
+  })).filter((g) => g.items.length > 0);
+}
 
 /** Group notes by their `category`; ungrouped notes fall under "Uncategorised".
  *  Categories are sorted alphabetically with "Uncategorised" always last so the
@@ -540,51 +620,353 @@ function groupNotesByCategory(
     .map(([category, notes]) => ({ category, notes }));
 }
 
-/** A single saved/bookmarked entity row. */
-function SavedItemRow({ item }: { item: SavedItem }) {
+/** A single saved/bookmarked entity row — taps into Explore, with a remove ✕. */
+function SavedItemRow({
+  item,
+  onRemoved,
+}: {
+  item: SavedItem;
+  onRemoved: () => void;
+}) {
   const { colors } = useTheme();
+  const router = useRouter();
+  const [removing, setRemoving] = useState(false);
   const meta = ENTITY_META[item.entityType];
+
+  const open = () => {
+    if (item.entityType === "domain") exploreNav.domain(router, item.entityId);
+    else if (item.entityType === "role") exploreNav.role(router, item.entityId);
+    else if (item.entityType === "programme")
+      exploreNav.programme(router, item.entityId);
+    else if (item.entityType === "elite_pathway")
+      exploreNav.elitePathway(router, item.entityId);
+    // opportunity / organisation have no Explore detail route yet — no-op.
+  };
+
+  const remove = async () => {
+    if (removing) return;
+    setRemoving(true);
+    try {
+      await careerData.removeSavedItem(item.id);
+    } finally {
+      onRemoved();
+    }
+  };
+
   return (
     <View
       style={[
         styles.row,
         { backgroundColor: colors.card, borderColor: colors.border },
+        removing && { opacity: 0.5 },
       ]}
     >
-      <Text style={styles.rowIcon}>{meta.icon}</Text>
-      <View style={{ flex: 1 }}>
-        <Text
-          style={[styles.rowTitle, { color: colors.text }]}
-          numberOfLines={1}
-        >
-          {item.label ?? meta.label}
-        </Text>
-        <Text style={[styles.rowMeta, { color: colors.textMuted }]}>
-          {meta.label}
-        </Text>
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={open}
+        style={styles.rowMain}
+        accessibilityRole="button"
+        accessibilityLabel={`Open ${item.label ?? meta.label}`}
+      >
+        <Text style={styles.rowIcon}>{meta.icon}</Text>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={[styles.rowTitle, { color: colors.text }]}
+            numberOfLines={1}
+          >
+            {item.label ?? item.entityId}
+          </Text>
+          <View style={[styles.typeChip, { backgroundColor: colors.bgSecondary }]}>
+            <Text style={[styles.typeChipText, { color: colors.textMuted }]}>
+              {meta.label}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={remove}
+        disabled={removing}
+        style={styles.removeBtn}
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        accessibilityRole="button"
+        accessibilityLabel={`Remove ${item.label ?? meta.label}`}
+      >
+        <Text style={[styles.removeIcon, { color: colors.textMuted }]}>✕</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
-/** A single note card within a category group. */
-function NoteCard({ note }: { note: Note }) {
+/** A collapsible category folder holding a set of notes. */
+function NoteFolder({
+  category,
+  notes,
+  onOpenNote,
+}: {
+  category: string;
+  notes: Note[];
+  onOpenNote: (note: Note) => void;
+}) {
   const { colors } = useTheme();
+  const [open, setOpen] = useState(true);
   return (
-    <View
+    <View style={styles.noteGroup}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => setOpen((v) => !v)}
+        style={styles.folderHeader}
+        accessibilityRole="button"
+        accessibilityLabel={`${category} folder, ${notes.length} notes`}
+      >
+        <Text style={[styles.folderChevron, { color: colors.textMuted }]}>
+          {open ? "▾" : "▸"}
+        </Text>
+        <Text style={styles.folderIcon}>{open ? "📂" : "📁"}</Text>
+        <Text style={[styles.folderName, { color: colors.text }]} numberOfLines={1}>
+          {category}
+        </Text>
+        <Text style={[styles.folderCount, { color: colors.textMuted }]}>
+          {notes.length}
+        </Text>
+      </TouchableOpacity>
+      {open ? (
+        <View style={styles.folderNotes}>
+          {notes.map((note) => (
+            <NoteCard key={note.id} note={note} onPress={() => onOpenNote(note)} />
+          ))}
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
+/** A single note card within a category folder — tap to edit. */
+function NoteCard({ note, onPress }: { note: Note; onPress: () => void }) {
+  const { colors } = useTheme();
+  const label = note.entityLabel ?? ENTITY_META[note.entityType].label;
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
       style={[
         styles.noteCard,
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
+      accessibilityRole="button"
+      accessibilityLabel={`Edit note on ${label}`}
     >
-      {note.entityLabel ? (
-        <Text style={[styles.noteEntity, { color: colors.textMuted }]}>
-          {note.entityLabel}
+      <View style={styles.noteHead}>
+        <Text style={[styles.noteEntity, { color: colors.textMuted }]} numberOfLines={1}>
+          {ENTITY_META[note.entityType].icon} {label}
         </Text>
-      ) : null}
-      <Text style={[styles.noteBody, { color: colors.text }]}>{note.body}</Text>
-    </View>
+        <Text style={[styles.noteTime, { color: colors.textMuted }]}>
+          {formatWhen(note.updatedAt)}
+        </Text>
+      </View>
+      <Text style={[styles.noteBody, { color: colors.text }]} numberOfLines={2}>
+        {note.body}
+      </Text>
+    </TouchableOpacity>
   );
+}
+
+/** Bottom-sheet editor for a note: edit body + category, or delete. Presented
+ *  when `note` is non-null. All writes go through careerData then refetch. */
+function NoteEditorSheet({
+  note,
+  onClose,
+  onSaved,
+}: {
+  note: Note | null;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const { colors } = useTheme();
+  const [body, setBody] = useState("");
+  const [category, setCategory] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  // Hydrate the fields whenever a new note is opened.
+  useEffect(() => {
+    setBody(note?.body ?? "");
+    setCategory(note?.category ?? "");
+    setNotice(null);
+  }, [note]);
+
+  const visible = note !== null;
+
+  const save = async () => {
+    if (!note || busy) return;
+    const trimmedBody = body.trim();
+    if (trimmedBody.length === 0) {
+      setNotice("A note can't be empty.");
+      return;
+    }
+    setBusy(true);
+    setNotice(null);
+    try {
+      const result = await careerData.updateNote(
+        note.id,
+        trimmedBody,
+        category.trim() || undefined,
+      );
+      if (result.status === "real") {
+        onSaved();
+      } else {
+        setNotice(result.meta?.notice ?? "Couldn't save right now — try again.");
+      }
+    } catch {
+      setNotice("Couldn't save right now — try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const remove = async () => {
+    if (!note || busy) return;
+    setBusy(true);
+    setNotice(null);
+    try {
+      const result = await careerData.deleteNote(note.id);
+      if (result.status === "real" || result.status === "coming_soon") {
+        // A successful delete returns `real`; a failed request degrades to
+        // coming_soon. Either way we refetch so the list reflects the truth.
+        onSaved();
+      } else {
+        setNotice(result.meta?.notice ?? "Couldn't delete right now — try again.");
+      }
+    } catch {
+      setNotice("Couldn't delete right now — try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const label = note?.entityLabel ?? (note ? ENTITY_META[note.entityType].label : "");
+
+  return (
+    <Modal
+      visible={visible}
+      transparent
+      animationType="slide"
+      onRequestClose={onClose}
+    >
+      <Pressable
+        style={[styles.sheetBackdrop, { backgroundColor: colors.overlay }]}
+        onPress={onClose}
+        accessibilityLabel="Close editor"
+      >
+        {/* Stop taps inside the sheet from closing it. */}
+        <Pressable
+          style={[
+            styles.sheet,
+            { backgroundColor: colors.card, borderColor: colors.border },
+          ]}
+          onPress={() => {}}
+        >
+          <View style={[styles.sheetHandle, { backgroundColor: colors.border }]} />
+
+          <Text style={[styles.sheetTitle, { color: colors.text }]}>Edit note</Text>
+          {label ? (
+            <Text style={[styles.sheetSubtitle, { color: colors.textMuted }]}>
+              {note ? ENTITY_META[note.entityType].icon : ""} {label}
+            </Text>
+          ) : null}
+
+          <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>Note</Text>
+          <View
+            style={[
+              styles.inputWrap,
+              { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+            ]}
+          >
+            <TextInput
+              style={[styles.bodyInput, { color: colors.text }]}
+              value={body}
+              onChangeText={setBody}
+              placeholder="Jot a thought…"
+              placeholderTextColor={colors.textMuted}
+              multiline
+              textAlignVertical="top"
+              editable={!busy}
+            />
+          </View>
+
+          <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+            Folder / category
+          </Text>
+          <View
+            style={[
+              styles.inputWrap,
+              { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+            ]}
+          >
+            <TextInput
+              style={[styles.categoryInput, { color: colors.text }]}
+              value={category}
+              onChangeText={setCategory}
+              placeholder="e.g. Admissions, To research (blank = Uncategorised)"
+              placeholderTextColor={colors.textMuted}
+              editable={!busy}
+              returnKeyType="done"
+            />
+          </View>
+
+          {notice ? (
+            <Text style={[styles.sheetNotice, { color: colors.red }]}>{notice}</Text>
+          ) : null}
+
+          <View style={styles.sheetActions}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={remove}
+              disabled={busy}
+              style={[styles.sheetDeleteBtn, { borderColor: colors.border }]}
+              accessibilityRole="button"
+              accessibilityLabel="Delete note"
+            >
+              <Text style={[styles.sheetDeleteText, { color: colors.red }]}>
+                Delete
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={save}
+              disabled={busy}
+              style={[
+                styles.sheetSaveBtn,
+                { backgroundColor: colors.accent, opacity: busy ? 0.5 : 1 },
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="Save note"
+            >
+              <Text style={[styles.sheetSaveText, { color: colors.textInverse }]}>
+                {busy ? "Saving…" : "Save"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Pressable>
+    </Modal>
+  );
+}
+
+/** Compact relative "when" label for a note's updated time. */
+function formatWhen(iso: string): string {
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return "";
+  const diffMs = Date.now() - t;
+  const day = 86_400_000;
+  if (diffMs < day) return "today";
+  if (diffMs < 2 * day) return "yesterday";
+  const days = Math.floor(diffMs / day);
+  if (days < 7) return `${days}d ago`;
+  return new Date(t).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
 }
 
 const styles = StyleSheet.create({
@@ -596,59 +978,185 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
+    fontWeight: FontWeight.heavy,
     letterSpacing: 1.5,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
+    fontWeight: FontWeight.black,
     lineHeight: FontSize.display * 1.15,
   },
   banner: { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1 },
   bannerText: {
     fontSize: FontSize.sm,
-    fontWeight: "600",
+    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.4,
   },
   section: {
     fontSize: FontSize.sm,
-    fontWeight: "800",
+    fontWeight: FontWeight.heavy,
     letterSpacing: 0.5,
     marginTop: Spacing.md,
     textTransform: "uppercase",
   },
   list: { gap: Spacing.sm },
+
+  // ── Saved: groups + rows ────────────────────────────────────
+  savedGroups: { gap: Spacing.lg },
+  savedGroup: { gap: Spacing.sm },
+  groupLabel: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.heavy,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    gap: Spacing.md,
     padding: Spacing.md,
     borderRadius: Radius.lg,
     borderWidth: 1,
     minHeight: 44,
   },
-  rowIcon: { fontSize: 22 },
-  rowTitle: { fontSize: FontSize.md, fontWeight: "700" },
-  rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
-  noteGroups: { gap: Spacing.lg },
-  noteGroup: { gap: Spacing.sm },
-  groupLabel: {
-    fontSize: FontSize.xs,
-    fontWeight: "800",
-    letterSpacing: 1,
+  rowMain: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    minHeight: 44,
   },
+  rowIcon: { fontSize: 22 },
+  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  typeChip: {
+    alignSelf: "flex-start",
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 1,
+    marginTop: 3,
+  },
+  typeChipText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 0.3,
+  },
+  removeBtn: {
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: Spacing.xs,
+  },
+  removeIcon: { fontSize: FontSize.lg, fontWeight: FontWeight.bold },
+
+  // ── Notes: folders + cards ──────────────────────────────────
+  noteGroups: { gap: Spacing.md },
+  noteGroup: { gap: Spacing.sm },
+  folderHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    minHeight: 44,
+  },
+  folderChevron: { fontSize: FontSize.md, width: 14 },
+  folderIcon: { fontSize: 16 },
+  folderName: {
+    flex: 1,
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.heavy,
+  },
+  folderCount: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+  },
+  folderNotes: { gap: Spacing.sm, paddingLeft: Spacing.lg },
   noteCard: {
     padding: Spacing.md,
     borderRadius: Radius.lg,
     borderWidth: 1,
-    gap: 2,
+    gap: 3,
+    minHeight: 44,
   },
-  noteEntity: { fontSize: FontSize.xs, fontWeight: "700" },
+  noteHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: Spacing.sm,
+  },
+  noteEntity: { flex: 1, fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  noteTime: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
   noteBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
   },
+
+  // ── Note editor bottom-sheet ────────────────────────────────
+  sheetBackdrop: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  sheet: {
+    borderTopLeftRadius: Radius.xxl,
+    borderTopRightRadius: Radius.xxl,
+    borderWidth: 1,
+    paddingHorizontal: Spacing.lg,
+    paddingTop: Spacing.md,
+    paddingBottom: Spacing.xxl,
+    gap: Spacing.sm,
+  },
+  sheetHandle: {
+    alignSelf: "center",
+    width: 40,
+    height: 4,
+    borderRadius: Radius.full,
+    marginBottom: Spacing.sm,
+  },
+  sheetTitle: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  sheetSubtitle: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+    marginBottom: Spacing.xs,
+  },
+  fieldLabel: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.heavy,
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+    marginTop: Spacing.xs,
+  },
+  inputWrap: {
+    borderWidth: 1.5,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+  },
+  bodyInput: { minHeight: 96, paddingVertical: 11, fontSize: FontSize.md },
+  categoryInput: { minHeight: 44, paddingVertical: 11, fontSize: FontSize.md },
+  sheetNotice: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+  },
+  sheetActions: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    marginTop: Spacing.sm,
+  },
+  sheetDeleteBtn: {
+    minHeight: 44,
+    paddingHorizontal: Spacing.lg,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sheetDeleteText: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  sheetSaveBtn: {
+    flex: 1,
+    minHeight: 44,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sheetSaveText: { fontSize: FontSize.md, fontWeight: FontWeight.black },
 
   // ── Live hub: snapshot ──────────────────────────────────────
   snapshot: {
@@ -668,16 +1176,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   snapshotEmoji: { fontSize: 30 },
-  snapshotStage: { fontSize: FontSize.md, fontWeight: "800" },
+  snapshotStage: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
   snapshotStats: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.xs,
     marginTop: 3,
   },
-  snapshotStat: { fontSize: FontSize.sm, fontWeight: "800" },
+  snapshotStat: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
   snapshotDot: { fontSize: FontSize.sm },
-  snapshotArrow: { fontSize: FontSize.xxl, fontWeight: "700" },
+  snapshotArrow: { fontSize: FontSize.xxl, fontWeight: FontWeight.bold },
 
   // ── Live hub: primary cards ─────────────────────────────────
   primaryCard: {
@@ -699,7 +1207,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   primaryIcon: { fontSize: 24 },
-  primaryTitle: { fontSize: FontSize.lg, fontWeight: "900" },
+  primaryTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   primaryBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -718,7 +1226,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  chipText: { fontSize: FontSize.sm, fontWeight: "800" },
+  chipText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
 
   // ── Live hub: more grid ─────────────────────────────────────
   moreGrid: {
@@ -740,7 +1248,7 @@ const styles = StyleSheet.create({
   moreIcon: { fontSize: 24 },
   moreLabel: {
     fontSize: FontSize.xs,
-    fontWeight: "700",
+    fontWeight: FontWeight.bold,
     textAlign: "center",
   },
 
@@ -764,7 +1272,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     flexWrap: "wrap",
   },
-  lockedTitle: { fontSize: FontSize.lg, fontWeight: "800" },
+  lockedTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy },
   lockedBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -783,5 +1291,5 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: "center",
   },
-  linkText: { fontSize: FontSize.sm, fontWeight: "800" },
+  linkText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
 });

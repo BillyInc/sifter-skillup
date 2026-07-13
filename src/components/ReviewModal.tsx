@@ -43,6 +43,14 @@ export default function ReviewModal({ visible, userId, context, onClose }: Props
 
   const handleSubmitFeedback = async () => {
     await offlineWrite('/api/reviews', 'POST', { userId, rating, review, context, redirectedToStore: false }, 'normal');
+    // Also route low-star written feedback to the admin feedback inbox so the
+    // product team triages it alongside bug/idea/content reports (Phase 12).
+    await offlineWrite(
+      '/api/feedback',
+      'POST',
+      { type: 'review', rating, message: review, entityType: 'app', entityId: context },
+      'normal',
+    );
     setPhase('done');
   };
 

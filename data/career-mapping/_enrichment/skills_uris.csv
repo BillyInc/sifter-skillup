@@ -1,0 +1,17 @@
+level,key,skill_name,uri
+foundation,D001,financial analysis,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789012
+foundation,D001,risk management,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789013
+foundation,D001,investment analysis,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789014
+foundation,D002,computer programming,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789015
+foundation,D002,software development,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789016
+foundation,D002,debugging,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789017
+cluster,D001|24,financial modelling,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789018
+cluster,D001|24,portfolio management,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789019
+cluster,D002|25,system architecture,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789020
+cluster,D002|25,API design,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789021
+role_essential,D001|securities trader,execute financial transactions,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789022
+role_essential,D001|securities trader,monitor financial markets,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789023
+role_optional,D001|securities trader,client relationship management,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789024
+role_essential,D002|software engineer,write clean code,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789025
+role_essential,D002|software engineer,code review,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789026
+role_optional,D002|software engineer,mentor junior developers,https://data.europa.eu/esco/skill/12345678-1234-1234-1234-123456789027

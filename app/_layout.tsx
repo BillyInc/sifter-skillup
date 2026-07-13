@@ -13,11 +13,16 @@ import { ErrorBoundary } from '../src/components/ErrorBoundary';
 import { OfflineBanner } from '../src/components/OfflineBanner';
 import { DatabaseProvider } from '../src/components/DatabaseProvider';
 import { ThemeProvider } from '../src/theme';
+import { useCompassFonts } from '../src/theme/fonts';
 import { queryClient } from '../src/lib/queryClient';
 import { PRIVY_ENABLED } from '../src/lib/config';
 import { AppPrivyProvider } from '../src/lib/privy';
 
 export default function RootLayout() {
+  // COMPASS font gate — resolves immediately when the google-font packages are
+  // absent (system fallback), so this never blocks first paint today.
+  useCompassFonts();
+
   const tree = (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>

@@ -87,6 +87,21 @@ export interface ColorPalette {
   stitch: string; stitchSoft: string;
   levelBadge: string; levelBadgeText: string;
   streakFire: string; xpGreen: string;
+  // ── COMPASS design system ──────────────────────────────────
+  // Brand chrome: the cobalt accent is reserved for wayfinding + current-state
+  // only (route line, active chip, you-are-here). apricot is the one warm note.
+  cobalt: string; cobaltDeep: string; cobaltWash: string;
+  apricot: string; apricotWash: string;
+  bgSunken: string;
+  // Semantic depth (frame every metric with meaning).
+  success: string; successSoft: string;
+  warning: string; warningSoft: string;
+  danger: string;  dangerSoft: string;
+  info: string;    infoSoft: string;
+  demand: string;  demandSoft: string;
+  elite: string;   eliteSoft: string;
+  // Route-line station + edge colours.
+  routeLine: string; routeNode: string; routeNodeMuted: string;
 }
 
 // ─── Light palette ────────────────────────────────────────────
@@ -111,6 +126,17 @@ export const LightColors: ColorPalette = {
   stitch: '#111111', stitchSoft: '#F5F5F5',
   levelBadge: '#FFF7ED', levelBadgeText: '#B45309',
   streakFire: '#F97316', xpGreen: '#10B981',
+  // ── COMPASS ──
+  cobalt: '#3B3AC4', cobaltDeep: '#2E2A8F', cobaltWash: '#EEEEFB',
+  apricot: '#F5A65B', apricotWash: '#FDF0E2',
+  bgSunken: '#EDEFEA',
+  success: '#0E9F6E', successSoft: '#E6F6EF',
+  warning: '#B45309', warningSoft: '#FBF0E2',
+  danger: '#DC2626', dangerSoft: '#FDECEC',
+  info: '#2563EB', infoSoft: '#E9F0FE',
+  demand: '#0D9488', demandSoft: '#E2F5F2',
+  elite: '#B8860B', eliteSoft: '#FBF3DD',
+  routeLine: '#C9CCE9', routeNode: '#3B3AC4', routeNodeMuted: '#C4C8D4',
 };
 
 // ─── Dark palette ─────────────────────────────────────────────
@@ -135,6 +161,17 @@ export const DarkColors: ColorPalette = {
   stitch: '#F4F7FB', stitchSoft: '#262D38',
   levelBadge: '#342815', levelBadgeText: '#F4B74A',
   streakFire: '#FB923C', xpGreen: '#34D399',
+  // ── COMPASS (Analyst) ──
+  cobalt: '#6E6CF0', cobaltDeep: '#3B3AC4', cobaltWash: '#1B2145',
+  apricot: '#F7B679', apricotWash: '#2A2114',
+  bgSunken: '#0B1120',
+  success: '#34D399', successSoft: '#0E2A22',
+  warning: '#F4B74A', warningSoft: '#2A2110',
+  danger: '#F87171', dangerSoft: '#341A1C',
+  info: '#7C96FF', infoSoft: '#141F3C',
+  demand: '#2DD4BF', demandSoft: '#0C2A28',
+  elite: '#E9C46A', eliteSoft: '#2A230F',
+  routeLine: '#2C3654', routeNode: '#6E6CF0', routeNodeMuted: '#3A4560',
 };
 
 // Backward-compatible static export — existing code `import { Colors }` still works
@@ -322,6 +359,19 @@ export const NOTIFICATION_CONFIG = {
 } as const;
 
 // ─── Font stacks ──────────────────────────────────────────────
+// COMPASS typography — re-exported from ./fonts so screens import font roles
+// (display / body / data …) from '@/theme'. `mono` aliases `data` for any legacy
+// caller. See theme/fonts.ts for the loader + graceful system fallback.
+
+export {
+  Fonts as CompassFonts,
+  useCompassFonts,
+  COMPASS_FONTS_AVAILABLE,
+} from './fonts';
+export * as Motion from './motion';
+export {
+  Timing, Spring, STAGGER, FADE_ONLY, useReducedMotion, motion,
+} from './motion';
 
 const _EMOJI_FONTS = [
   'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -333,6 +383,8 @@ const _SYSTEM_UI = Platform.select({
   default: undefined,
 });
 
+// Legacy Fonts shape (emoji/body/mono) kept for backward compatibility. New code
+// should prefer CompassFonts (display / body / data / …).
 export const Fonts = {
   emoji: _SYSTEM_UI ? { fontFamily: _SYSTEM_UI } : {},
   body:  _SYSTEM_UI ? { fontFamily: _SYSTEM_UI } : {},
@@ -377,13 +429,17 @@ export const webContainer = Platform.OS === 'web'
 export const Brand = {
   name: 'Sifter LevelUp',
   short: 'LevelUp',
-  tagline: 'See you at the top, fam.',
+  tagline: 'Be the best you can be.',
   promise: 'See the domains, roles and jobs your programme unlocks — local, global, remote.',
   // Accent used across brand surfaces (logo, splash, intro). Aligned to the
   // existing gold/amber accent so it never clashes with the neutral UI.
   primary: '#F59E0B',
   primaryDeep: '#B45309',
   onPrimary: '#FFFFFF',
+  primaryLight: '#FDE68A',
+  primarySoft: '#FFFBEB',
+  warning: '#F97316',
+  danger: '#EF4444',
 } as const;
 
 // ─── Career Intelligence tokens ───────────────────────────────
@@ -433,6 +489,54 @@ export function getDomainBadge(type: DomainMatchType, isDark = false): CareerBad
 
 export function getRoleBadge(type: RoleMatchType, isDark = false): CareerBadgeStyle {
   return (isDark ? RoleBadgeDark : RoleBadge)[type];
+}
+
+// ─── Readiness badges (v2 taxonomy) ───────────────────────────
+// Readiness = agent-verified domain match_type × role tier (NOT token coverage).
+//   ready  → green  ("Ready" — you can step in with little to bridge)
+//   bridge → amber  ("Bridge" — a moderate skills bridge to cross)
+//   stretch→ blue   ("Stretch" — reachable, but a larger reach)
+// Kept in the same {bg,border,text,label} shape as DomainBadge so screens can
+// theme readiness pills identically.
+
+export type ReadinessType = 'ready' | 'bridge' | 'stretch';
+
+export const ReadinessBadge: Record<ReadinessType, CareerBadgeStyle> = {
+  ready:   { bg: '#ECFDF5', border: '#A7F3D0', text: '#047857', label: 'Ready' },
+  bridge:  { bg: '#FFFBEB', border: '#FDE68A', text: '#B45309', label: 'Bridge' },
+  stretch: { bg: '#EFF6FF', border: '#BFDBFE', text: '#1D4ED8', label: 'Stretch' },
+};
+
+export const ReadinessBadgeDark: Record<ReadinessType, CareerBadgeStyle> = {
+  ready:   { bg: '#0C2A22', border: '#1E5345', text: '#34D399', label: 'Ready' },
+  bridge:  { bg: '#2A2008', border: '#5C4715', text: '#F4B74A', label: 'Bridge' },
+  stretch: { bg: '#0E1E3A', border: '#244B85', text: '#7C96FF', label: 'Stretch' },
+};
+
+export function getReadinessBadge(type: ReadinessType, isDark = false): CareerBadgeStyle {
+  return (isDark ? ReadinessBadgeDark : ReadinessBadge)[type];
+}
+
+// ─── Tier badges (role seniority) ─────────────────────────────
+// entry / mid / senior. Subtle, neutral styling — tier is context, not a
+// primary signal, so it stays quieter than the readiness/domain badges.
+
+export type TierType = 'entry' | 'mid' | 'senior';
+
+export const TierBadge: Record<TierType, CareerBadgeStyle> = {
+  entry:  { bg: '#F5F5F5', border: '#E5E7EB', text: '#6B7280', label: 'Entry' },
+  mid:    { bg: '#EFF6FF', border: '#DBEAFE', text: '#2563EB', label: 'Mid' },
+  senior: { bg: '#F5F3FF', border: '#DDD6FE', text: '#7C3AED', label: 'Senior' },
+};
+
+export const TierBadgeDark: Record<TierType, CareerBadgeStyle> = {
+  entry:  { bg: '#20252E', border: '#2B3442', text: '#94A3B8', label: 'Entry' },
+  mid:    { bg: '#0E1E3A', border: '#244B85', text: '#7C96FF', label: 'Mid' },
+  senior: { bg: '#1C1633', border: '#3A2F5C', text: '#A78BFA', label: 'Senior' },
+};
+
+export function getTierBadge(type: TierType, isDark = false): CareerBadgeStyle {
+  return (isDark ? TierBadgeDark : TierBadge)[type];
 }
 
 // Data freshness / provenance, shown next to any data point.

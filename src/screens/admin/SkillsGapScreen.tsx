@@ -1,16 +1,49 @@
 /**
  * SkillsGapScreen — cross-programme skills-gap report (curriculum vs employer
- * demand). Reads adminData.getSkillsGapReport (a `coming_soon` envelope this
- * phase); ComingSoonPanel renders the graceful state, never a mock gap.
+ * demand). Reads adminData.getSkillsGapReport and renders an AdminDataTable
+ * with columns: programme, domain, skill, demand %, in curriculum.
  */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useTheme, Spacing, FontSize, FontWeight, webContainer } from "../../theme";
+import {
+  useTheme,
+  Spacing,
+  FontSize,
+  FontWeight,
+  webContainer,
+} from "../../theme";
 import { adminData } from "../../lib/adminData";
+import { Badge } from "../../components/ui";
 import type { DataState } from "../../types/career";
 import type { SkillGapRow } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { AdminDataTable } from "../../components/admin/AdminDataTable";
+import type { ColumnDef } from "../../components/admin/AdminDataTable";
+
+const COLUMNS: ColumnDef[] = [
+  { key: "programmeName", label: "Programme", width: undefined },
+  { key: "domainName", label: "Domain", width: 130 },
+  { key: "skill", label: "Skill", width: undefined },
+  {
+    key: "demandPct",
+    label: "Demand %",
+    width: 80,
+    render: (val: number) => (val != null ? `${Math.round(val)}%` : "—"),
+  },
+  {
+    key: "inCurriculum",
+    label: "In curriculum?",
+    width: 110,
+    render: (val: boolean, _row: SkillGapRow) => (
+      <Badge
+        label={val ? "Covered" : "Gap"}
+        variant={val ? "success" : "warning"}
+        size="sm"
+      />
+    ),
+  },
+];
 
 export function SkillsGapScreen() {
   const { colors } = useTheme();
@@ -50,7 +83,9 @@ export function SkillsGapScreen() {
             emptyTitle="No gaps yet"
             emptyBody="The skills-gap report appears here once populated."
           >
-            {() => null}
+            {(rows) => (
+              <AdminDataTable columns={COLUMNS} data={rows} />
+            )}
           </ComingSoonPanel>
         </View>
       </ScrollView>
@@ -72,6 +107,5 @@ const styles = StyleSheet.create({
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
-    marginTop: -Spacing.xs,
   },
 });
