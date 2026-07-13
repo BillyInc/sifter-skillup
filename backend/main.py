@@ -405,6 +405,9 @@ app.include_router(career_router)
 from routes.institutions_routes import router as institutions_router
 app.include_router(institutions_router)
 
+from routes.provisioning_routes import router as provisioning_router
+app.include_router(provisioning_router)
+
 from routes.admission_routes import router as admission_router
 app.include_router(admission_router)
 

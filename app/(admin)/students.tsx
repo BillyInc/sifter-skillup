@@ -1,7 +1,8 @@
-import { StudentManagementScreen } from "../../src/screens/admin/StudentManagementScreen";
+import { StudentProvisioningScreen } from "../../src/screens/admin/StudentProvisioningScreen";
 
-// The consent gate. getStudentRoster() returns `locked` by design — the screen
-// renders a deliberate privacy state, never a roster.
+// The consent-aware student area. Individual visibility is still governed by the
+// server-side rule (provisioned-unclaimed OR active consent) — this screen only
+// renders what the roster endpoint returns, and hosts the provisioning funnel.
 export default function StudentsRoute() {
-  return <StudentManagementScreen />;
+  return <StudentProvisioningScreen />;
 }

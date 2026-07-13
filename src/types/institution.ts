@@ -118,6 +118,56 @@ export interface StudentConsent {
   revokedAt?: string;
 }
 
+// ─── Provisioning: drafts → review grid → generate → roster ───
+/** A staged student row in the assisted-import review grid, before any account
+ *  is minted. Extracted (vision) or manually entered; the educator corrects it. */
+export interface ProvisionDraft {
+  id: string;
+  fullName?: string | null;
+  studentClass?: string | null;
+  needsReview: boolean;
+  guardianConsent: boolean;
+  guardianName?: string | null;
+  status: "draft" | "generated" | "discarded";
+}
+
+/** The career direction picked from the (in-memory) mapping — the only derived
+ *  data that persists. Subjects/grades that produced it are never stored. */
+export interface ChosenDirection {
+  domainKey?: string;
+  roleKey?: string;
+  programmeId?: string;
+}
+
+/** A minted provisioned account + its printable claim code. */
+export interface GeneratedStudent {
+  userId: string;
+  fullName: string;
+  studentClass?: string | null;
+  claimCode: string;
+  claimExpiresAt?: string | null;
+}
+
+/** One individually-visible row in the consent-aware roster. */
+export interface RosterStudent {
+  userId: string;
+  fullName?: string | null;
+  studentClass?: string | null;
+  provenance: "self" | "provisioned";
+  claimState?: "unclaimed" | "claimed" | null;
+  visible: boolean;
+  hasConsent: boolean;
+}
+
+/** The roster payload: visible rows + the counts that make the aggregate-only
+ *  cohort legible ("142 affiliated · 118 aggregate-only · 24 shared"). */
+export interface RosterSummary {
+  students: RosterStudent[];
+  totalAffiliated: number;
+  aggregateOnly: number;
+  sharedWithYou: number;
+}
+
 // ─── Aggregate dashboard (the 5 stat cards) ───────────────────
 export interface InstitutionSummary {
   institutionName: string;

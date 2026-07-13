@@ -133,10 +133,9 @@ const NAV_GROUPS: { title: string; items: AdminNavItem[] }[] = [
       },
       {
         key: "students",
-        label: "Student management",
+        label: "Students",
         icon: "👥",
         match: "students",
-        locked: true,
         go: (n) => adminNav.students(n),
       },
     ],
