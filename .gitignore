@@ -49,3 +49,5 @@ data/career-mapping/_direct_sweep/
 data/career-mapping/_jamb_supplement/
 data/career-mapping/_legit_subgroups.json
 data/career-mapping/*.out
+backend/seed_career_v2.sql
+backend/seed_career_pilot.sql

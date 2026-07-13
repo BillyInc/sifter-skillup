@@ -35,14 +35,31 @@ import {
   type CareerChangerPath,
   type QualificationUpgrade,
   type Chartership,
+  type AdmissionInsight,
+  type DomainV2,
+  type DomainRoleV2,
+  type CareerSearchResult,
+  type JambDomainResult,
+  type PivotResult,
+  type NationalJambFloor,
+  type ProgrammeSchoolCutoff,
+  type SchoolAggregateFormula,
+  type CourseCompetitiveness,
+  type AdmissionSnapshotVersion,
   comingSoon,
+  type MappingFeedback,
+  type FeedbackType,
 } from "../types/career";
 import { request } from "./api";
+import { getCached, setCached } from "./careerCache";
+
+/** TTL for cached domain/role detail payloads (15 min). */
+const DETAIL_TTL_MS = 15 * 60 * 1000;
 
 /** A cluster of domains for the context-free Domain Explorer (no programme). */
 export interface DomainClusterGroup {
   cluster: string;
-  domains: { id: string; name: string }[];
+  domains: { id: string; name: string; inDemandScore?: number; eliteFlag?: boolean }[];
 }
 
 // Flip to true per-area as real data is wired (kept here so screens can branch
@@ -96,16 +113,76 @@ export const careerData = {
     );
   },
 
+  /** Disambiguation search: domains, roles (+aliases), programmes. */
+  async searchCareer(query: string): Promise<DataState<CareerSearchResult>> {
+    try {
+      return await request<DataState<CareerSearchResult>>(
+        `/api/career/search?q=${encodeURIComponent(query)}`,
+      );
+    } catch {
+      return comingSoon<CareerSearchResult>(
+        "Search is temporarily unavailable.",
+      );
+    }
+  },
+
+  /** JAMB name → domains (the SS/UTME student entry point). */
+  async getJambDomains(jambName: string): Promise<DataState<JambDomainResult>> {
+    try {
+      return await request<DataState<JambDomainResult>>(
+        `/api/career/jamb/${encodeURIComponent(jambName)}/domains`,
+      );
+    } catch {
+      return comingSoon<JambDomainResult>(
+        "Domains for this JAMB programme are being populated.",
+      );
+    }
+  },
+
   /** A domain incl. its domain-level bridge skills and role list. */
   async getDomain(_domainId: string): Promise<DataState<Domain>> {
     // TODO(career-data): GET /api/career/domains/{id}
     return comingSoon<Domain>("Domain detail is being populated.");
   },
 
+  /** v2 domain detail: foundation skills, subgroups, tools, certs, demand metrics. */
+  async getDomainV2(domainKey: string): Promise<DataState<DomainV2>> {
+    const cacheKey = `domain_${domainKey}`;
+    try {
+      const res = await request<DataState<DomainV2>>(
+        `/api/career/domains/${encodeURIComponent(domainKey)}`,
+      );
+      // Cache successful `real` payloads for instant re-hydration / offline.
+      if (res.status === "real") setCached(cacheKey, res, DETAIL_TTL_MS);
+      return res;
+    } catch {
+      // Offline / transient: serve a cached copy if we have a fresh one.
+      const cached = await getCached<DataState<DomainV2>>(cacheKey);
+      if (cached) return cached;
+      return comingSoon<DomainV2>("Domain detail is being populated.");
+    }
+  },
+
   /** A role incl. its role-level bridge skills and coverage. */
   async getRole(_roleId: string): Promise<DataState<Role>> {
     // TODO(career-data): GET /api/career/roles/{id}
     return comingSoon<Role>("Role detail is being populated.");
+  },
+
+  /** v2 role detail: essential/optional skills, tier, appearsIn, demand metrics. */
+  async getRoleV2(roleKey: string): Promise<DataState<DomainRoleV2>> {
+    const cacheKey = `role_${roleKey}`;
+    try {
+      const res = await request<DataState<DomainRoleV2>>(
+        `/api/career/roles/${encodeURIComponent(roleKey)}`,
+      );
+      if (res.status === "real") setCached(cacheKey, res, DETAIL_TTL_MS);
+      return res;
+    } catch {
+      const cached = await getCached<DataState<DomainRoleV2>>(cacheKey);
+      if (cached) return cached;
+      return comingSoon<DomainRoleV2>("Role detail is being populated.");
+    }
   },
 
   /** Opportunities matched to a programme/domain, eligibility-filtered. */
@@ -162,71 +239,330 @@ export const careerData = {
 
   // ─── User-owned (require an account; guests get `locked`) ────
   async getSavedItems(): Promise<DataState<SavedItem[]>> {
-    // TODO(career-data): GET /api/career/saved
-    return comingSoon<SavedItem[]>("Saving comes online with the live search.");
+    try {
+      return await request<DataState<SavedItem[]>>(`/api/career/saved`);
+    } catch {
+      return comingSoon<SavedItem[]>("Saved items are temporarily unavailable.");
+    }
   },
 
   async saveItem(
-    _entityType: SavedEntityType,
-    _entityId: string,
-    _label?: string,
+    entityType: SavedEntityType,
+    entityId: string,
+    label?: string,
   ): Promise<DataState<SavedItem>> {
-    // TODO(career-data): POST /api/career/saved
-    return comingSoon<SavedItem>();
+    try {
+      return await request<DataState<SavedItem>>(`/api/career/saved`, {
+        method: "POST",
+        body: JSON.stringify({ entityType, entityId, label }),
+      });
+    } catch {
+      return comingSoon<SavedItem>("Couldn't save that right now.");
+    }
   },
 
-  async removeSavedItem(_savedItemId: string): Promise<DataState<null>> {
-    // TODO(career-data): DELETE /api/career/saved/{id}
-    return comingSoon<null>();
+  async removeSavedItem(savedItemId: string): Promise<DataState<null>> {
+    try {
+      return await request<DataState<null>>(
+        `/api/career/saved/${encodeURIComponent(savedItemId)}`,
+        { method: "DELETE" },
+      );
+    } catch {
+      return comingSoon<null>();
+    }
   },
 
   async getNotes(
-    _entityType: SavedEntityType,
-    _entityId: string,
+    entityType: SavedEntityType,
+    entityId: string,
   ): Promise<DataState<Note[]>> {
-    // TODO(career-data): GET /api/career/notes?entityType=&entityId=
-    return comingSoon<Note[]>(
-      "Personal notes come online with the live search.",
-    );
+    try {
+      const qs = new URLSearchParams({
+        entity_type: entityType,
+        entity_id: entityId,
+      });
+      return await request<DataState<Note[]>>(
+        `/api/career/notes?${qs.toString()}`,
+      );
+    } catch {
+      return comingSoon<Note[]>("Notes are temporarily unavailable.");
+    }
   },
 
   /** Every note the user has written, for the My World notes hub (grouped by
    *  `category` in the UI). Distinct from {@link getNotes}, which is scoped to a
    *  single entity's detail screen. */
   async getAllNotes(): Promise<DataState<Note[]>> {
-    // TODO(career-data): GET /api/career/notes (all, current user)
-    return comingSoon<Note[]>(
-      "Your saved notes appear here once the live search is online.",
-    );
+    try {
+      return await request<DataState<Note[]>>(`/api/career/notes`);
+    } catch {
+      return comingSoon<Note[]>("Notes are temporarily unavailable.");
+    }
   },
 
+  // ─── Phase 7: pivot / bridge / career-changer ────────────────
+  /** Career-changer pivot (Scenario A): ranked domains by transferable-skill overlap. */
+  async getPivot(fromDomainKey: string): Promise<DataState<PivotResult>> {
+    try {
+      return await request<DataState<PivotResult>>(
+        `/api/career/pivot?from_domain_key=${encodeURIComponent(fromDomainKey)}`,
+      );
+    } catch {
+      return comingSoon<PivotResult>("Pivot suggestions are temporarily unavailable.");
+    }
+  },
+
+  /** Career-changer gap analysis (Scenario B1/B2): overlap with a target domain or role. */
+  async getPivotGap(
+    fromDomainKey: string,
+    toDomainKey?: string,
+    toRoleKey?: string,
+  ): Promise<DataState<any>> {
+    try {
+      const params = new URLSearchParams({ from_domain_key: fromDomainKey });
+      if (toDomainKey) params.set("to_domain_key", toDomainKey);
+      if (toRoleKey) params.set("to_role_key", toRoleKey);
+      return await request<DataState<any>>(
+        `/api/career/pivot/gap?${params.toString()}`,
+      );
+    } catch {
+      return comingSoon<any>("Gap analysis is temporarily unavailable.");
+    }
+  },
+
+  /** Save the user's prior field (domain) selection during onboarding. */
+  async savePriorField(domainKey: string): Promise<DataState<{ priorFieldDomainKey: string }>> {
+    try {
+      return await request<DataState<{ priorFieldDomainKey: string }>>(
+        `/api/career/saved/prior-field`,
+        { method: "POST", body: JSON.stringify({ domainKey }) },
+      );
+    } catch {
+      return comingSoon<{ priorFieldDomainKey: string }>(
+        "Could not save prior field.",
+      );
+    }
+  },
+
+  // ─── Phase 8: admission intelligence ─────────────────────────
+  /** Admission insight for a specific programme. */
+  async getAdmissionInsight(programmeId: string): Promise<DataState<AdmissionInsight>> {
+    try {
+      return await request<DataState<AdmissionInsight>>(
+        `/api/admission/jamb/${encodeURIComponent(programmeId)}/insight`,
+      );
+    } catch {
+      return comingSoon<AdmissionInsight>(
+        "Admission data is being compiled.",
+      );
+    }
+  },
+
+  /** Active admission snapshot version. */
+  async getAdmissionSnapshot(): Promise<DataState<AdmissionSnapshotVersion>> {
+    try {
+      return await request<DataState<AdmissionSnapshotVersion>>(
+        `/api/admission/snapshot`,
+      );
+    } catch {
+      return comingSoon<AdmissionSnapshotVersion>(
+        "Admission snapshot is being compiled.",
+      );
+    }
+  },
+
+  /** National JAMB minimum floor score. */
+  async getJambFloor(year?: number): Promise<DataState<NationalJambFloor>> {
+    try {
+      const qs = year ? `?year=${year}` : "";
+      return await request<DataState<NationalJambFloor>>(
+        `/api/admission/floor${qs}`,
+      );
+    } catch {
+      return comingSoon<NationalJambFloor>(
+        "JAMB floor is temporarily unavailable.",
+      );
+    }
+  },
+
+  /** Programme × school cut-offs. */
+  async getCutoffs(
+    params: { schoolId?: string; programmeId?: string; year?: number; form?: "UTME" | "DE" } = {},
+  ): Promise<DataState<ProgrammeSchoolCutoff[]>> {
+    try {
+      const qs = new URLSearchParams();
+      if (params.schoolId) qs.set("school_id", params.schoolId);
+      if (params.programmeId) qs.set("programme_id", params.programmeId);
+      if (params.year) qs.set("year", String(params.year));
+      if (params.form) qs.set("form", params.form);
+      return await request<DataState<ProgrammeSchoolCutoff[]>>(
+        `/api/admission/cutoffs${qs.toString() ? `?${qs.toString()}` : ""}`,
+      );
+    } catch {
+      return comingSoon<ProgrammeSchoolCutoff[]>(
+        "Cut-offs are temporarily unavailable.",
+      );
+    }
+  },
+
+  /** School aggregate formula (JAMB% + Post-UTME% + O'level%). */
+  async getSchoolFormula(
+    schoolId: string,
+    year?: number,
+  ): Promise<DataState<SchoolAggregateFormula | null>> {
+    try {
+      const qs = new URLSearchParams({ school_id: schoolId });
+      if (year) qs.set("year", String(year));
+      return await request<DataState<SchoolAggregateFormula | null>>(
+        `/api/admission/formula?${qs.toString()}`,
+      );
+    } catch {
+      return comingSoon<SchoolAggregateFormula | null>(
+        "Formula data is temporarily unavailable.",
+      );
+    }
+  },
+
+  /** National broad-course competitiveness. */
+  async getCompetitiveness(
+    year?: number,
+    broadCourse?: string,
+  ): Promise<DataState<CourseCompetitiveness[]>> {
+    try {
+      const qs = new URLSearchParams();
+      if (year) qs.set("year", String(year));
+      if (broadCourse) qs.set("broad_course", broadCourse);
+      const q = qs.toString();
+      return await request<DataState<CourseCompetitiveness[]>>(
+        `/api/admission/competitiveness${q ? `?${q}` : ""}`,
+      );
+    } catch {
+      return comingSoon<CourseCompetitiveness[]>(
+        "Competitiveness data is temporarily unavailable.",
+      );
+    }
+  },
+
+  /** Typeahead over universities with admission data (onboarding picker). */
+  async searchAdmissionSchools(
+    q: string,
+  ): Promise<DataState<{ id: string; name: string; institutionType: string }[]>> {
+    try {
+      return await request<
+        DataState<{ id: string; name: string; institutionType: string }[]>
+      >(`/api/admission/schools?q=${encodeURIComponent(q)}`);
+    } catch {
+      return comingSoon("School search is temporarily unavailable.");
+    }
+  },
+
+  /** Typeahead over programmes with published cut-offs (onboarding picker). */
+  async searchAdmissionProgrammes(
+    q: string,
+  ): Promise<
+    DataState<
+      { id: string; name: string; discipline?: string; institutionType: string }[]
+    >
+  > {
+    try {
+      return await request<
+        DataState<
+          {
+            id: string;
+            name: string;
+            discipline?: string;
+            institutionType: string;
+          }[]
+        >
+      >(`/api/admission/programmes?q=${encodeURIComponent(q)}`);
+    } catch {
+      return comingSoon("Programme search is temporarily unavailable.");
+    }
+  },
+
+  // ─── Note management (used by My World) ───────────────────────
   async upsertNote(
-    _entityType: SavedEntityType,
-    _entityId: string,
-    _body: string,
+    entityType: SavedEntityType,
+    entityId: string,
+    body: string,
   ): Promise<DataState<Note>> {
-    // TODO(career-data): POST /api/career/notes
-    return comingSoon<Note>();
+    try {
+      return await request<DataState<Note>>(`/api/career/notes`, {
+        method: "POST",
+        body: JSON.stringify({ entityType, entityId, body }),
+      });
+    } catch {
+      return comingSoon<Note>("Couldn't save that note right now.");
+    }
+  },
+
+  async updateNote(
+    noteId: string,
+    body?: string,
+    category?: string,
+    entityLabel?: string,
+  ): Promise<DataState<Note>> {
+    try {
+      const payload: Record<string, string> = { id: noteId };
+      if (body !== undefined) payload.body = body;
+      if (category !== undefined) payload.category = category;
+      if (entityLabel !== undefined) payload.entityLabel = entityLabel;
+      // Backend upserts on POST /notes when an `id` is present.
+      return await request<DataState<Note>>(`/api/career/notes`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      return comingSoon<Note>("Updating notes is temporarily unavailable.");
+    }
+  },
+
+  async deleteNote(noteId: string): Promise<DataState<null>> {
+    try {
+      return await request<DataState<null>>(
+        `/api/career/notes/${encodeURIComponent(noteId)}`,
+        { method: "DELETE" },
+      );
+    } catch {
+      return comingSoon<null>("Deleting notes is temporarily unavailable.");
+    }
   },
 
   async getSubscriptions(): Promise<DataState<Subscription[]>> {
-    // TODO(career-data): GET /api/career/subscriptions
-    return comingSoon<Subscription[]>(
-      "Opportunity alerts come online with jobs.",
-    );
+    try {
+      return await request<DataState<Subscription[]>>(
+        `/api/career/subscriptions`,
+      );
+    } catch {
+      return comingSoon<Subscription[]>(
+        "Subscriptions are temporarily unavailable.",
+      );
+    }
   },
 
   async subscribe(
-    _target: SubscriptionTarget,
-    _targetId: string,
+    target: SubscriptionTarget,
+    targetId: string,
   ): Promise<DataState<Subscription>> {
-    // TODO(career-data): POST /api/career/subscriptions
-    return comingSoon<Subscription>();
+    try {
+      return await request<DataState<Subscription>>(
+        `/api/career/subscriptions`,
+        { method: "POST", body: JSON.stringify({ target, targetId }) },
+      );
+    } catch {
+      return comingSoon<Subscription>("Couldn't subscribe right now.");
+    }
   },
 
-  async unsubscribe(_subscriptionId: string): Promise<DataState<null>> {
-    // TODO(career-data): DELETE /api/career/subscriptions/{id}
-    return comingSoon<null>();
+  async unsubscribe(subscriptionId: string): Promise<DataState<null>> {
+    try {
+      return await request<DataState<null>>(
+        `/api/career/subscriptions/${encodeURIComponent(subscriptionId)}`,
+        { method: "DELETE" },
+      );
+    } catch {
+      return comingSoon<null>();
+    }
   },
 
   // ─── Phase 7: elite pathways · bridge · special flows ────────
@@ -288,6 +624,34 @@ export const careerData = {
     return comingSoon<Chartership[]>(
       "The chartership & credentials engine is being populated.",
     );
+  },
+
+  // ── Expert mapping feedback ────────────────────────────────
+  /** Get all mapping feedback items (expert review dashboard). */
+  async getFeedback(): Promise<DataState<MappingFeedback[]>> {
+    try {
+      return await request<DataState<MappingFeedback[]>>(`/api/career/feedback`);
+    } catch {
+      return comingSoon<MappingFeedback[]>("Mapping feedback is being populated.");
+    }
+  },
+
+  /** Submit a single mapping feedback item. */
+  async submitFeedback(
+    edgeType: string,
+    sourceId: string,
+    targetId: string,
+    feedbackType: FeedbackType,
+    notes?: string,
+  ): Promise<DataState<MappingFeedback>> {
+    try {
+      return await request<DataState<MappingFeedback>>(`/api/career/feedback`, {
+        method: "POST",
+        body: JSON.stringify({ edgeType, sourceId, targetId, feedbackType, notes }),
+      });
+    } catch {
+      return comingSoon<MappingFeedback>("Feedback submission is temporarily unavailable.");
+    }
   },
 };
 

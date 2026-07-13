@@ -103,3 +103,18 @@ class Auth:
             return user
         except PyJWTError:
             raise HTTPException(status_code=401, detail="Invalid token")
+
+    @staticmethod
+    async def require_admin(
+        current_user: dict = Depends(get_current_user),
+    ) -> dict:
+        """Guard for admin-only endpoints.
+
+        Admin surfaces (feedback inbox, cross-school coverage/peer benchmark)
+        are restricted to institution admins and educators. Students must not
+        see other institutions' comparative data. `account_type` is set on the
+        user row ('student' | 'educator' | 'institution_admin').
+        """
+        if current_user.get("account_type") not in ("institution_admin", "educator"):
+            raise HTTPException(status_code=403, detail="Admin access required")
+        return current_user

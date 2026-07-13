@@ -118,6 +118,20 @@ const NAV_GROUPS: { title: string; items: AdminNavItem[] }[] = [
         go: (n) => adminNav.verify(n),
       },
       {
+        key: "expert-dossier",
+        label: "Expert dossier",
+        icon: "📋",
+        match: "expert-dossier",
+        go: (n) => adminNav.expertDossier(n),
+      },
+      {
+        key: "feedback",
+        label: "Feedback inbox",
+        icon: "📨",
+        match: "feedback",
+        go: (n) => adminNav.feedback(n),
+      },
+      {
         key: "students",
         label: "Student management",
         icon: "👥",

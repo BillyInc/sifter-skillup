@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.domains (
     name        TEXT NOT NULL,
     cluster     TEXT,
     description TEXT,
+    elite_flag      BOOLEAN NOT NULL DEFAULT false,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS idx_domains_cluster ON skillup_dev.domains(cluster);
@@ -170,3 +171,59 @@ CREATE TABLE IF NOT EXISTS skillup_dev.opportunity_subscriptions (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS idx_opp_subscriptions_user ON skillup_dev.opportunity_subscriptions(user_id);
+
+-- ── 15. DOMAIN DEMAND METRICS (Phase 7) ────────────────────────────
+CREATE TABLE IF NOT EXISTS skillup_dev.domain_demand_metrics (
+    id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    domain_id          UUID NOT NULL REFERENCES skillup_dev.domains(id) ON DELETE CASCADE,
+    rank_lens          TEXT NOT NULL CHECK (rank_lens IN ('global', 'ng_local', 'ng_remote')),
+    month              DATE NOT NULL,  -- First day of the month
+    postings_count     INTEGER,
+    postings_yoy       NUMERIC(5, 2),  -- Year-over-year percentage change
+    remote_pct         NUMERIC(5, 2),  -- Percentage of remote postings
+    entry_salary_local_ngn  NUMERIC(10, 2),  -- Entry-level salary in Nigerian Naira
+    entry_salary_remote_usd NUMERIC(10, 2),  -- Entry-level salary in USD (remote)
+    top_employers      TEXT[] DEFAULT '{}',
+    top_certs          TEXT[] DEFAULT '{}',
+    value_score        NUMERIC(5, 2),  -- Value score (0-100)
+    volume_score       NUMERIC(5, 2),  -- Volume score (0-100)
+    plain_label        TEXT,           -- Plain English label (e.g., "High growth, moderate competition")
+    redistributable    BOOLEAN NOT NULL DEFAULT true,  -- License-safe for redistribution
+    created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(domain_id, rank_lens, month)
+);
+CREATE INDEX IF NOT EXISTS idx_domain_demand_metrics_domain ON skillup_dev.domain_demand_metrics(domain_id);
+CREATE INDEX IF NOT EXISTS idx_domain_demand_metrics_month ON skillup_dev.domain_demand_metrics(month);
+CREATE INDEX IF NOT EXISTS idx_domain_demand_metrics_lens ON skillup_dev.domain_demand_metrics(rank_lens);
+
+-- Index for fast lookup of latest month per domain/lens
+CREATE INDEX IF NOT EXISTS idx_domain_demand_metrics_latest ON skillup_dev.domain_demand_metrics 
+(domain_id, rank_lens, month DESC);
+
+-- ── 16. ROLE DEMAND METRICS (Phase 7) ────────────────────────────
+CREATE TABLE IF NOT EXISTS skillup_dev.role_demand_metrics (
+    id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    role_id            TEXT NOT NULL,
+    role_name          TEXT NOT NULL,
+    domain_id          UUID REFERENCES skillup_dev.domains(id) ON DELETE SET NULL,
+    rank_lens          TEXT NOT NULL CHECK (rank_lens IN ('global', 'ng_local', 'ng_remote')),
+    month              DATE NOT NULL,  -- First day of the month
+    postings_count     INTEGER,
+    postings_yoy       NUMERIC(5, 2),  -- Year-over-year percentage change
+    remote_pct         NUMERIC(5, 2),  -- Percentage of remote postings
+    salary_min         NUMERIC(10, 2),  -- Minimum salary (local NGN or remote USD based on lens)
+    salary_max         NUMERIC(10, 2),  -- Maximum salary (local NGN or remote USD based on lens)
+    top_employers      TEXT[] DEFAULT '{}',
+    top_certs          TEXT[] DEFAULT '{}',
+    trend_pct          NUMERIC(5, 2),  -- Trend percentage (could be MoM or YoY based on configuration)
+    redistributable    BOOLEAN NOT NULL DEFAULT true,  -- License-safe for redistribution
+    created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(role_id, rank_lens, month)
+);
+CREATE INDEX IF NOT EXISTS idx_role_demand_metrics_role ON skillup_dev.role_demand_metrics(role_id);
+CREATE INDEX IF NOT EXISTS idx_role_demand_metrics_month ON skillup_dev.role_demand_metrics(month);
+CREATE INDEX IF NOT EXISTS idx_role_demand_metrics_lens ON skillup_dev.role_demand_metrics(rank_lens);
+CREATE INDEX IF NOT EXISTS idx_role_demand_metrics_latest ON skillup_dev.role_demand_metrics 
+(role_id, rank_lens, month DESC);

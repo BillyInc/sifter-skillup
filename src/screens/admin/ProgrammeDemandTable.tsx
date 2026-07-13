@@ -21,6 +21,7 @@ import {
   FontWeight,
 } from "../../theme";
 import { Badge } from "../../components/ui";
+import { SparklineBar } from "../../components/admin/SparklineBar";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import type { DataState } from "../../types/career";
 import type {
@@ -87,6 +88,9 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
         </View>
 
         <View style={styles.rowMetrics}>
+          {row.sparkline && row.sparkline.length > 0 ? (
+            <SparklineBar data={row.sparkline} height={24} />
+          ) : null}
           <Text style={[styles.postings, { color: colors.text }]}>
             {row.ngPostingsPerMonth.toLocaleString()}
           </Text>

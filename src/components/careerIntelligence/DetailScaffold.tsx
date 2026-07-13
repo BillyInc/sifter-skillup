@@ -13,11 +13,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, webContainer } from "../../theme";
+import {
+  useTheme,
+  Spacing,
+  FontSize,
+  webContainer,
+  CompassFonts,
+} from "../../theme";
 import type { DataState, SavedEntityType } from "../../types/career";
 import { DataStateView } from "./DataStateView";
 import { SaveButton } from "./SaveButton";
 import { PdfExportButton } from "./PdfExportButton";
+import { CareerDisclaimer } from "./CareerDisclaimer";
+import { RouteLine } from "./RouteLine";
 
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
@@ -34,6 +42,8 @@ export interface DetailScaffoldProps<T> {
   /** Optional content rendered above the DataStateView (e.g. tabs). */
   header?: ReactNode;
   empty?: (data: T) => boolean;
+  /** Show the career-guidance disclaimer at the foot of the body. Default true. */
+  disclaimer?: boolean;
 }
 
 export function DetailScaffold<T>({
@@ -46,6 +56,7 @@ export function DetailScaffold<T>({
   children,
   header,
   empty,
+  disclaimer = true,
 }: DetailScaffoldProps<T>) {
   const router = useRouter();
   const { colors } = useTheme();
@@ -80,11 +91,16 @@ export function DetailScaffold<T>({
       </View>
 
       {eyebrow ? (
-        <Text style={[styles.eyebrow, { color: colors.textMuted }]}>
+        <Text style={[styles.eyebrow, CompassFonts.data, { color: colors.cobalt }]}>
           {eyebrow}
         </Text>
       ) : null}
-      <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+      <Text style={[styles.title, CompassFonts.display, { color: colors.text }]}>
+        {title}
+      </Text>
+
+      {/* Signature: the route-line rule draws in beneath the title. */}
+      <RouteLine variant="rule" style={styles.rule} />
 
       {header}
 
@@ -93,6 +109,8 @@ export function DetailScaffold<T>({
           {children}
         </DataStateView>
       </View>
+
+      {disclaimer ? <CareerDisclaimer variant="footer" /> : null}
     </ScrollView>
   );
 }
@@ -117,12 +135,18 @@ const styles = StyleSheet.create({
   eyebrow: {
     fontSize: FontSize.xs,
     fontWeight: "800",
-    letterSpacing: 1,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
     fontWeight: "900",
     lineHeight: FontSize.display * 1.15,
+  },
+  rule: {
+    marginTop: Spacing.sm,
+    marginBottom: Spacing.xs,
+    maxWidth: 96,
   },
 });

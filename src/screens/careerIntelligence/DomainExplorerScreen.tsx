@@ -3,12 +3,13 @@
  * clusters. Unlike the programme view, there is no user programme here, so
  * domains render as neutral chips (no Direct/Functional/Adjacent label).
  *
+ * Supports filter chips: "All", "In-Demand", "Elite", plus one per cluster.
  * getDomainClusters currently returns a `coming_soon` envelope, so DataStateView
  * renders the graceful state; the populated branch below is what ships once the
  * domain map lands. Each chip taps through to its domain detail via exploreNav.
  */
 import React, { useEffect, useMemo, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TextInput } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { DataStateView, DomainChip } from "@/components/careerIntelligence";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
@@ -23,10 +24,13 @@ import {
   webContainer,
 } from "@/theme";
 
+type FilterKey = "all" | "in_demand" | "elite" | string; // cluster name for cluster chips
+
 export function DomainExplorerScreen() {
   const { colors } = useTheme();
   const router = useRouter();
   const [filter, setFilter] = useState("");
+  const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
   const [state, setState] = useState<DataState<DomainClusterGroup[]>>(() =>
     comingSoon<DomainClusterGroup[]>(),
   );
@@ -42,23 +46,58 @@ export function DomainExplorerScreen() {
     };
   }, []);
 
+  // Derive unique cluster names from the data for cluster chips.
+  const clusterKeys = useMemo(() => {
+    if (!state.data) return [];
+    const seen = new Set<string>();
+    for (const g of state.data) {
+      if (g.cluster && !seen.has(g.cluster)) seen.add(g.cluster);
+    }
+    return Array.from(seen);
+  }, [state]);
+
   // Local filter across cluster + domain names; drops empty clusters.
   const filtered = useMemo(() => {
     if (!state.data) return state;
+    let data = state.data;
+
+    // Apply chip filter first
+    if (activeFilter === "in_demand") {
+      data = data
+        .map((g) => ({
+          ...g,
+          domains: g.domains.filter((d) => (d.inDemandScore ?? 0) > 0),
+        }))
+        .filter((g) => g.domains.length > 0);
+    } else if (activeFilter === "elite") {
+      data = data
+        .map((g) => ({
+          ...g,
+          domains: g.domains.filter((d) => d.eliteFlag),
+        }))
+        .filter((g) => g.domains.length > 0);
+    } else if (activeFilter !== "all") {
+      // Cluster filter: show only the cluster matching the selected name
+      data = data.filter((g) => g.cluster === activeFilter);
+    }
+
+    // Apply text search on top of chip filter
     const q = filter.trim().toLowerCase();
-    if (!q) return state;
-    const data = state.data
-      .map((g) => ({
-        ...g,
-        domains: g.domains.filter(
-          (d) =>
-            d.name.toLowerCase().includes(q) ||
-            g.cluster.toLowerCase().includes(q),
-        ),
-      }))
-      .filter((g) => g.domains.length > 0);
+    if (q) {
+      data = data
+        .map((g) => ({
+          ...g,
+          domains: g.domains.filter(
+            (d) =>
+              d.name.toLowerCase().includes(q) ||
+              g.cluster.toLowerCase().includes(q),
+          ),
+        }))
+        .filter((g) => g.domains.length > 0);
+    }
+
     return { ...state, data };
-  }, [state, filter]);
+  }, [state, filter, activeFilter]);
 
   return (
     <ScrollView
@@ -96,6 +135,38 @@ export function DomainExplorerScreen() {
         />
       </View>
 
+      {/* Filter chips */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.chipRow}
+        keyboardShouldPersistTaps="handled"
+      >
+        <FilterChip
+          label="All"
+          active={activeFilter === "all"}
+          onPress={() => setActiveFilter("all")}
+        />
+        <FilterChip
+          label="In-Demand"
+          active={activeFilter === "in_demand"}
+          onPress={() => setActiveFilter("in_demand")}
+        />
+        <FilterChip
+          label="Elite"
+          active={activeFilter === "elite"}
+          onPress={() => setActiveFilter("elite")}
+        />
+        {clusterKeys.map((key) => (
+          <FilterChip
+            key={key}
+            label={key}
+            active={activeFilter === key}
+            onPress={() => setActiveFilter(key)}
+          />
+        ))}
+      </ScrollView>
+
       <Text style={[styles.note, { color: colors.textMuted }]}>
         🧭 The full domain map comes online with University & College of
         Education first.
@@ -116,6 +187,7 @@ export function DomainExplorerScreen() {
                       label={d.name}
                       matchType="direct"
                       showType={false}
+                      elite={d.eliteFlag}
                       onPress={() => exploreNav.domain(router, d.id)}
                     />
                   ))}
@@ -126,6 +198,41 @@ export function DomainExplorerScreen() {
         )}
       </DataStateView>
     </ScrollView>
+  );
+}
+
+/** Inline filter chip — a small pill-shaped toggle. */
+function FilterChip({
+  label,
+  active,
+  onPress,
+}: {
+  label: string;
+  active: boolean;
+  onPress: () => void;
+}) {
+  const { colors } = useTheme();
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.8}
+      style={[
+        styles.filterChip,
+        {
+          backgroundColor: active ? Brand.primary : colors.card,
+          borderColor: active ? Brand.primary : colors.border,
+        },
+      ]}
+    >
+      <Text
+        style={[
+          styles.filterChipLabel,
+          { color: active ? "#fff" : colors.textSoft },
+        ]}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
   );
 }
 
@@ -166,6 +273,21 @@ const styles = StyleSheet.create({
   },
   searchIcon: { fontSize: 16 },
   searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: 0 },
+  chipRow: {
+    flexDirection: "row",
+    gap: Spacing.sm,
+    paddingVertical: Spacing.xs,
+  },
+  filterChip: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 8,
+    borderRadius: Radius.full,
+    borderWidth: 1.5,
+  },
+  filterChipLabel: {
+    fontSize: FontSize.sm,
+    fontWeight: "700",
+  },
   note: {
     fontSize: FontSize.xs,
     lineHeight: FontSize.xs * 1.6,

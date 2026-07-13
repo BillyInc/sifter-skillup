@@ -1,0 +1,6 @@
+﻿model_list:
+  - model_name: nvidia-model
+    litellm_params:
+      model: nvidia_nim/z-ai/glm-5.2
+      api_key: "os.environ/NVIDIA_API_KEY"
+      api_base: "https://integrate.api.nvidia.com/v1"

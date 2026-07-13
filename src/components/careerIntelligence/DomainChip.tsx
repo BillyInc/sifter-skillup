@@ -22,6 +22,12 @@ import {
 } from "../../theme";
 import type { DomainMatchType } from "../../types/career";
 
+export interface DemandIndicator {
+  postingsPerMonth: number;
+  growthRate?: number | null;
+  label: string;
+}
+
 export interface DomainChipProps {
   label: string;
   matchType: DomainMatchType;
@@ -30,6 +36,8 @@ export interface DomainChipProps {
   /** Show the match-type word (Direct/Functional/Adjacent) after the label. */
   showType?: boolean;
   elite?: boolean;
+  /** Demand indicator from domain_demand_metrics */
+  demandIndicator?: DemandIndicator;
   onPress?: () => void;
   style?: ViewStyle;
 }
@@ -40,10 +48,11 @@ export function DomainChip({
   glyph,
   showType = true,
   elite,
+  demandIndicator,
   onPress,
   style,
 }: DomainChipProps) {
-  const { isDark } = useTheme();
+  const { colors, isDark } = useTheme();
   const badge = getDomainBadge(matchType, isDark);
 
   const Container: any = onPress ? TouchableOpacity : View;
@@ -67,6 +76,11 @@ export function DomainChip({
             {badge.label}
           </Text>
         </View>
+      ) : null}
+      {demandIndicator ? (
+        <Text style={[styles.demandChip, { color: colors.green }]}>
+          📈 {demandIndicator.label}
+        </Text>
       ) : null}
     </Container>
   );
@@ -98,5 +112,11 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     letterSpacing: 0.4,
     textTransform: "uppercase",
+  },
+  demandChip: {
+    fontSize: 9,
+    fontWeight: "900",
+    letterSpacing: 0.3,
+    marginLeft: 2,
   },
 });

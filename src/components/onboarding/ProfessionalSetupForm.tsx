@@ -7,13 +7,19 @@
  * a fresh entrant. All option lists here are fixed conceptual sets (not
  * institution data), so they're hardcoded; current field is free text. Fully
  * controlled from `value`; patches via `onChange`.
+ *
+ * Prior-field search is live: users search their field of study/work and select a
+ * domain, which is persisted to the backend on Continue via savePriorField().
  */
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useTheme, Spacing, FontSize, Brand } from "../../theme";
+import React, { useState, useCallback } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { useTheme, Spacing, Radius, FontSize, FontWeight, Brand } from "../../theme";
 import { SifterButton } from "../ui";
 import { ChoiceChips, SearchField, type ChoiceOption } from "./primitives";
+import { careerData } from "../../lib/careerData";
+import { comingSoon, type DataState, type CareerSearchResult } from "../../types/career";
 import type { SetupFormProps } from "../../types/onboarding";
+import { DataStateView } from "../careerIntelligence";
 
 const BACKGROUND: ChoiceOption[] = [
   { label: "Professional (degree-level)", value: "professional" },
@@ -58,6 +64,54 @@ export function ProfessionalSetupForm({
   onContinue,
 }: SetupFormProps) {
   const { colors } = useTheme();
+  const [priorFieldQuery, setPriorFieldQuery] = useState("");
+  const [priorFieldResults, setPriorFieldResults] = useState<
+    DataState<CareerSearchResult>
+  >({ status: "real", data: { domains: [], roles: [], programmes: [] } });
+  const [priorFieldSearchActive, setPriorFieldSearchActive] = useState(false);
+
+  const handlePriorFieldSearch = useCallback(
+    async (query: string) => {
+      if (query.trim().length < 2) {
+        setPriorFieldResults({
+          status: "real",
+          data: { domains: [], roles: [], programmes: [] },
+        });
+        setPriorFieldSearchActive(false);
+        return;
+      }
+
+      setPriorFieldSearchActive(true);
+      try {
+        const result = await careerData.searchCareer(query);
+        setPriorFieldResults(result);
+      } catch (_error) {
+        setPriorFieldResults(
+          comingSoon<CareerSearchResult>("Search is temporarily unavailable."),
+        );
+      } finally {
+        setPriorFieldSearchActive(false);
+      }
+    },
+    [],
+  );
+
+  const handlePriorFieldSelect = (domain: any) => {
+    onChange({ priorFieldDomainKey: domain.id });
+    setPriorFieldQuery("");
+    setPriorFieldResults({
+      status: "real",
+      data: { domains: [], roles: [], programmes: [] },
+    });
+  };
+
+  const handleContinue = () => {
+    if (value.priorFieldDomainKey) {
+      // Fire-and-forget persistence -- the user sees no error if it fails
+      careerData.savePriorField(value.priorFieldDomainKey);
+    }
+    onContinue();
+  };
 
   return (
     <View style={styles.form}>
@@ -66,7 +120,7 @@ export function ProfessionalSetupForm({
           Your background
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Tell us where you’re coming from so we can show the right next steps.
+          Tell us where you're coming from so we can show the right next steps.
         </Text>
       </View>
 
@@ -81,7 +135,7 @@ export function ProfessionalSetupForm({
         label="Current / most recent field of work"
         value={value.currentField ?? ""}
         onChangeText={(v) => onChange({ currentField: v })}
-        placeholder="e.g. Banking, Accounting, Logistics…"
+        placeholder="e.g. Banking, Accounting, Logistics..."
       />
 
       <ChoiceChips
@@ -107,9 +161,100 @@ export function ProfessionalSetupForm({
         multi
       />
 
+      {/* Prior field search for career changers */}
+      <View style={{ gap: Spacing.md }}>
+        <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+          What did you study or do before? (optional)
+        </Text>
+        <View
+          style={[
+            styles.searchBox,
+            {
+              backgroundColor: colors.inputBg,
+              borderColor: priorFieldSearchActive
+                ? colors.accent
+                : colors.inputBorder,
+            },
+          ]}
+        >
+          <Text style={styles.searchIcon}>&#x1F50D;</Text>
+          <TextInput
+            value={priorFieldQuery}
+            onChangeText={(text) => {
+              setPriorFieldQuery(text);
+              handlePriorFieldSearch(text);
+            }}
+            placeholder="e.g. Economics, Nursing, Software Engineering"
+            placeholderTextColor={colors.textMuted}
+            style={[styles.searchInput, { color: colors.text }]}
+          />
+          {priorFieldQuery.length > 0 ? (
+            <TouchableOpacity
+              onPress={() => {
+                setPriorFieldQuery("");
+                setPriorFieldResults({
+                  status: "real",
+                  data: { domains: [], roles: [], programmes: [] },
+                });
+              }}
+              hitSlop={8}
+            >
+              <Text style={[styles.clear, { color: colors.textMuted }]}>X</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
+        {priorFieldSearchActive ? (
+          <View style={styles.searchSpinner}>
+            <Text style={[styles.searchSpinnerText, { color: colors.textSoft }]}>
+              Searching...
+            </Text>
+          </View>
+        ) : priorFieldQuery.length >= 2 ? (
+          <DataStateView
+            state={priorFieldResults}
+            empty={() =>
+              priorFieldResults.status !== "real" ||
+              !priorFieldResults.data ||
+              priorFieldResults.data.domains.length === 0
+            }
+            emptyTitle="No matches found"
+            emptyBody="Try a different field of study or work"
+          >
+            {(data: any) => (
+              <View style={styles.resultsContainer}>
+                {data.domains.map((domain: any) => (
+                  <TouchableOpacity
+                    key={domain.id}
+                    onPress={() => handlePriorFieldSelect(domain)}
+                    activeOpacity={0.7}
+                    style={[
+                      styles.resultItem,
+                      { backgroundColor: colors.card, borderColor: colors.border },
+                    ]}
+                  >
+                    <View style={styles.resultInfo}>
+                      <Text style={[styles.resultTitle, { color: colors.text }]}>
+                        {domain.name}
+                      </Text>
+                      {domain.cluster && (
+                        <Text style={[styles.resultSubtitle, { color: colors.textMuted }]}>
+                          {domain.cluster}
+                        </Text>
+                      )}
+                    </View>
+                    <Text style={[styles.resultArrow, { color: colors.text }]}>&rarr;</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </DataStateView>
+        ) : null}
+      </View>
+
       <SifterButton
         label="Continue"
-        onPress={onContinue}
+        onPress={handleContinue}
         variant="track"
         color={Brand.primary}
         size="lg"
@@ -128,6 +273,44 @@ const styles = StyleSheet.create({
     lineHeight: FontSize.xxl * 1.2,
   },
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
+  fieldLabel: { fontSize: FontSize.sm, fontWeight: "700" },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    borderWidth: 1.5,
+    borderRadius: Radius.lg,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 13,
+  },
+  searchIcon: { fontSize: 16 },
+  searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: 0 },
+  clear: { fontSize: FontSize.md, fontWeight: "700" },
+  searchSpinner: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: Spacing.md,
+  },
+  searchSpinnerText: { fontSize: FontSize.sm },
+  resultsContainer: { marginTop: Spacing.sm },
+  resultItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: Spacing.md,
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    marginBottom: Spacing.xs,
+  },
+  resultInfo: { flex: 1 },
+  resultTitle: {
+    fontSize: FontSize.md,
+    fontWeight: "700",
+  },
+  resultSubtitle: {
+    fontSize: FontSize.sm,
+    marginTop: 2,
+  },
+  resultArrow: { fontSize: FontSize.lg, fontWeight: "900" },
 });
 
 export default ProfessionalSetupForm;

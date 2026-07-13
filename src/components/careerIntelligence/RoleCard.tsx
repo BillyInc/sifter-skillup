@@ -8,10 +8,12 @@
  */
 import React from "react";
 import { View, Text, StyleSheet, type ViewStyle } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
-import type { RoleMatchType } from "../../types/career";
+import { useTheme, Spacing, Radius, FontSize, FontWeight, type TierType } from "../../theme";
+import type { RoleMatchType, Readiness } from "../../types/career";
 import { PressableCard, SifterCard } from "../ui";
 import { RoleMatchBadge } from "./RoleMatchBadge";
+import { ReadinessBadgeView } from "./ReadinessBadgeView";
+import { TierBadgeView } from "./TierBadgeView";
 
 export interface RoleCardProps {
   /** Role id (from RoleSummary). */
@@ -21,6 +23,10 @@ export interface RoleCardProps {
   match: RoleMatchType;
   /** 0..1 ESCO essential-skill coverage. */
   coverageRatio: number;
+  /** Readiness label (ready/bridge/stretch) from programme context. */
+  readiness?: Readiness;
+  /** Career stage (entry/mid/senior). */
+  tier?: TierType;
   inDemandScore?: number;
   eliteFlag?: boolean;
   /** Optional monthly salary band (NGN). */
@@ -59,6 +65,9 @@ export function RoleCard({
   alsoKnownAs,
   match,
   coverageRatio,
+  readiness,
+  tier,
+  inDemandScore,
   eliteFlag,
   salaryNgnMin,
   salaryNgnMax,
@@ -98,6 +107,32 @@ export function RoleCard({
           elite={eliteFlag}
         />
       </View>
+
+      {/* Readiness + career-stage badges (from programme context). */}
+      {(readiness || tier) ? (
+        <View style={styles.badgeRow}>
+          {readiness ? <ReadinessBadgeView readiness={readiness} size="sm" /> : null}
+          {tier ? <TierBadgeView tier={tier} /> : null}
+        </View>
+      ) : null}
+
+      {/* Compact demand/elite chips */}
+      {(inDemandScore != null || eliteFlag) ? (
+        <View style={styles.chipRow}>
+          {eliteFlag ? (
+            <View style={[styles.chip, { backgroundColor: colors.goldSoft }]}>
+              <Text style={[styles.chipText, { color: colors.gold }]}>⭐ Elite</Text>
+            </View>
+          ) : null}
+          {inDemandScore != null && inDemandScore > 0 ? (
+            <View style={[styles.chip, { backgroundColor: colors.greenSoft }]}>
+              <Text style={[styles.chipText, { color: colors.green }]}>
+                📈 {inDemandScore >= 80 ? "High demand" : inDemandScore >= 50 ? "In demand" : "Growing"}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+      ) : null}
 
       {salary ? (
         <View style={styles.metaRow}>
@@ -168,6 +203,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
+  },
+  chipRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  badgeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  chip: {
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 2,
+  },
+  chipText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
   },
   metaGlyph: {
     fontSize: FontSize.md,

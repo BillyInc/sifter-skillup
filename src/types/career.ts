@@ -22,6 +22,7 @@
 import type { DomainMatchType, RoleMatchType } from "../theme";
 
 export type { DomainMatchType, RoleMatchType };
+import type { DemandMetrics } from "./demandMetrics";
 
 // ─── Data state envelope ──────────────────────────────────────
 // Every data-driven surface handles these uniformly so unbuilt areas render a
@@ -110,6 +111,12 @@ export interface DomainLink {
   /** In-demand signal (O*NET outlook + WEF). Higher sorts first within a tier. */
   inDemandScore?: number;
   eliteFlag?: boolean;
+  /** Demand indicator from domain_demand_metrics (backend-computed badge data). */
+  demandIndicator?: {
+    postingsPerMonth: number;
+    growthRate?: number | null;
+    label: string;
+  };
 }
 
 export interface Domain {
@@ -435,4 +442,352 @@ export interface Chartership {
   body?: string;
   exemptions?: string[];
   meta?: DataMeta;
+}
+
+// ══════════════════════════════════════════════════════════════
+// v2 CONTRACT (post-sweep taxonomy — matches migration_career_v2.sql
+// + backend/routes/career_routes.py). The API returns these shapes wrapped
+// in DataState. Wired into screens in Phase 6; additive so existing types
+// keep compiling. Domain/role ids here are the STABLE keys (D001 / "D001|role").
+// ══════════════════════════════════════════════════════════════
+
+/** Readiness = agent-verified domain match_type × role tier (NOT token coverage). */
+export type Readiness = "ready" | "bridge" | "stretch";
+
+export interface CertificationV2 {
+  name: string;
+  body?: string;
+  region?: "global" | "nigeria";
+  level?: "foundation" | "professional" | "advanced";
+  /** Why it gates at its placement level (gateway/subgroup/role_hint). */
+  gateReason?: string;
+}
+
+export interface ToolV2 {
+  tool: string;
+  /** distinctive = characterises the field; common = widely-used, also expected. */
+  group: "distinctive" | "common";
+  hot?: boolean;
+  inDemand?: boolean;
+  roleFreq?: number | null;
+  source?: string; // onet | curated_creative
+}
+
+export interface ToolGroups {
+  distinctive: ToolV2[];
+  common: ToolV2[];
+}
+
+export interface SubgroupV2 {
+  id: string;
+  iscoSubmajor?: string;
+  /** Student-friendly cluster name (e.g. "Traders & Brokers"). */
+  name: string;
+  description?: string;
+  roleCount?: number;
+  clusterSkills: string[];
+  tools: ToolGroups;
+  certifications: CertificationV2[]; // specialization certs
+}
+
+export interface DomainRoleSummary {
+  key: string; // "D011|securities trader"
+  name: string;
+  tier?: "entry" | "mid" | "senior";
+  alsoKnownAs?: string[];
+  subgroupId?: string | null;
+  eliteStatus?: string;
+}
+
+/** A domain's common ("foundation") skill, shown with how prevalent it is across the
+ *  field's roles. Threshold ≥30% (adaptive floor for diverse domains) — a 34% skill
+ *  appears AND is labelled 34%, so common-but-not-universal skills aren't hidden. */
+export interface FoundationSkill {
+  skill: string;
+  /** Fraction of the domain's roles whose essential skills include this (0..1). */
+  prevalence: number;
+  /** Absolute role count (numerator behind prevalence). */
+  n: number;
+}
+
+export interface DomainV2 {
+  id: string; // domain_key e.g. "D001"
+  name: string;
+  cluster?: string;
+  clusters: string[];
+  description?: string;
+  institutionType: string[];
+  eliteDomain: boolean;
+  /** L1 common skills, prevalence-ranked (≥30% + adaptive floor). */
+  foundationSkills: FoundationSkill[];
+  roleCount?: number;
+  /** Domain-wide tools (distinctive + also-expected common). */
+  tools: ToolGroups;
+  /** Field-wide licence-to-practise certs only (may be empty for unlicensed fields). */
+  gatewayCertifications: CertificationV2[];
+  roleHintCertifications: CertificationV2[];
+  /** Domain-level bridge skills (cover/bridge split). */
+  domainBridgeSkills?: { name: string; covered?: boolean }[];
+  subgroups: SubgroupV2[];
+  roles: DomainRoleSummary[];
+  demandMetrics?: DemandMetrics;
+}
+
+export interface DomainRoleV2 {
+  key: string;
+  name: string;
+  tier?: "entry" | "mid" | "senior";
+  alsoKnownAs?: string[];
+  iscoGroup?: string;
+  escoCode?: string;
+  eliteStatus?: string;
+  essentialSkills: string[];
+  optionalSkills: string[];
+  /** Every domain this role is reachable from (multi-domain by design). */
+  appearsIn: { domainId: string; domainName: string; roleKey: string }[];
+  /** Role-level bridge skills (covered/missing split). */
+  coveredSkills?: string[];
+  roleBridgeSkills?: { name: string; covered?: boolean }[];
+  careerLadder?: string[];
+  demandMetrics?: DemandMetrics;
+}
+
+/** A programme→domain→role readiness row (from programme_role_score). */
+export interface RoleReadiness {
+  roleKey: string;
+  roleName: string;
+  label: Readiness;
+  coverage?: number;
+  tier?: string;
+  subgroupLabel?: string;
+  bridgeSkills: string[]; // the gap = LevelUp target
+}
+
+// ─── Disambiguation search (grouped) ──────────────────────────
+export interface CareerSearchResult {
+  domains: { id: string; name: string; cluster?: string }[];
+  roles: {
+    name: string;
+    tier?: string;
+    /** The role resolves to these domains — user picks which context. */
+    domains: { domainId: string; domainName: string; roleKey: string }[];
+  }[];
+  programmes: ProgrammeSearchResult[];
+}
+
+// ─── JAMB name → domains (student entry) ──────────────────────
+export interface JambDomainResult {
+  jambName: string;
+  domains: {
+    domainId: string;
+    domainName: string;
+    cluster?: string;
+    matchType: DomainMatchType;
+    eliteFlag?: boolean;
+    demandInsight?: {
+      postingsPerMonth: number;
+      growthRate?: number | null;
+      label: string;
+    };
+  }[];
+}
+
+// ─── Career-changer pivot (Scenario A: "fields you can move into") ──
+export interface PivotResult {
+  fromDomain: { id: string; name: string };
+  moves: {
+    domainId: string;
+    domainName: string;
+    cluster?: string;
+    eliteFlag?: boolean;
+    /** Transferable-skill overlap 0..1 (how much of the target you already have). */
+    overlapScore: number;
+    sharedSkills: string[];
+  }[];
+}
+
+// ══════════════════════════════════════════════════════════════
+// PHASE 8 — Admission Intelligence (SS → University)
+// ══════════════════════════════════════════════════════════════
+
+/** National JAMB minimum floor score (university). */
+export interface NationalJambFloor {
+  year: number;
+  floorScore: number;
+  contextNote?: string;
+  sourceUrl?: string;
+  dataDate: string;
+}
+
+/** Per-school × programme cut-off row. */
+export interface ProgrammeSchoolCutoff {
+  id: string;
+  schoolId: string;
+  schoolName: string;
+  programmeId: string;
+  programmeName: string;
+  year: number;
+  aggregateCutoff?: number;
+  jambCutoff?: number;
+  postUtmeCutoff?: number;
+  form: "UTME" | "DE";
+  sourceUrl: string;
+  verifiedAt?: string;
+  dataDate: string;
+}
+
+/** How a university calculates aggregate (JAMB% + Post-UTME% + O'level%). */
+export interface SchoolAggregateFormula {
+  id: string;
+  schoolId: string;
+  schoolName: string;
+  year: number;
+  jambWeight: number;       // 0.50 = 50%
+  postUtmeWeight: number;
+  olevelWeight: number;
+  description?: string;
+  sourceUrl?: string;
+  dataDate: string;
+}
+
+/** National broad-course competitiveness (faculty-level, not programme-level). */
+export interface CourseCompetitiveness {
+  id: string;
+  broadCourse: string;
+  year: number;
+  applied?: number;
+  admitted?: number;
+  ratio?: number;           // admitted/applied
+  source?: string;
+  note?: string;            // "approximate, faculty-level only"
+  dataDate: string;
+}
+
+/** Admission snapshot version (what cycle the user is seeing). */
+export interface AdmissionSnapshotVersion {
+  id: string;
+  label: string;            // "2025/26 Cycle — compiled Jan 2025"
+  year: number;
+  compiledAt: string;
+  compiler?: string;
+  notes?: string;
+  isActive: boolean;
+  meta?: DataMeta;
+}
+
+/** Admission insight badge for JAMB-name → domains flow. */
+export interface AdmissionInsight {
+  hasCutoffData: boolean;
+  year: number;
+  label: string;
+  programmeCount: number;
+}
+
+// ══════════════════════════════════════════════════════════════
+// PHASE 9 — Enrichment & Refresh (ongoing)
+// ══════════════════════════════════════════════════════════════
+
+/** Certification enrichment fields (Phase 4b). */
+export interface CertificationEnrichment {
+  officialUrl?: string;          // deep link to register/verify
+  seniorityTier?: number;        // 1=entry, 2=mid, 3=senior (scoped to family)
+  tierType?: "ladder" | "stages"; // Cisco/AWS/PMI = ladder; CFA/ICAN = stages
+  price?: number;
+  currency?: "USD" | "NGN" | "GBP" | "EUR";
+  priceAsOf?: string;            // ISO date
+  priceSource?: string;
+}
+
+/** Skill URI map (parallel to skill arrays, keyed by skill name). */
+export interface SkillUriMap {
+  uris: Record<string, string>;  // "skill name" -> "https://data.europa.eu/esco/skill/..."
+}
+
+/** Tool demand re-rank fields (Phase 7c/9). */
+export interface ToolDemandEnrichment {
+  demandScore?: number;          // 0..1 from posting frequency
+  demandSource?: "adzuna" | "stackoverflow" | "github_innovation" | "onet_hot";
+  demandAsOf?: string;           // ISO date
+  toolUrl?: string;              // canonical docs/download URL
+}
+
+/** Role currency status (Phase 9 L4). */
+export interface RoleCurrencyStatus {
+  currencyStatus: "current" | "legacy" | "emerging";
+  currencyVerifiedAt?: string;
+  currencySource?: "wef_foj_2025" | "onet_emerging" | "lightcast" | "curated";
+}
+
+/** Enrichment version stamp (tracks seed runs). */
+export interface EnrichmentVersion {
+  id: string;
+  appliedAt: string;
+  sourceCommitHash?: string;
+  seedName: string;
+  rowsUpserted: number;
+}
+
+// ─── Extended v2 types with enrichment fields ────────────────
+
+export interface CertificationV2Enriched extends CertificationV2 {
+  officialUrl?: string;
+  seniorityTier?: number;
+  tierType?: "ladder" | "stages";
+  price?: number;
+  currency?: "USD" | "NGN" | "GBP" | "EUR";
+  priceAsOf?: string;
+  priceSource?: string;
+}
+
+export interface FoundationSkillEnriched extends FoundationSkill {
+  uri?: string;
+}
+
+export interface ToolV2Enriched extends ToolV2 {
+  demandScore?: number;
+  demandSource?: "adzuna" | "stackoverflow" | "github_innovation" | "onet_hot";
+  demandAsOf?: string;
+  toolUrl?: string;
+}
+
+export interface DomainRoleV2Enriched extends DomainRoleV2 {
+  currencyStatus?: "current" | "legacy" | "emerging";
+  currencyVerifiedAt?: string;
+  currencySource?: "wef_foj_2025" | "onet_emerging" | "lightcast" | "curated";
+  essentialSkillUris?: string[];
+  optionalSkillUris?: string[];
+}
+
+export interface DomainV2Enriched extends DomainV2 {
+  foundationSkillUris?: Record<string, string>;
+  gatewayCertifications: CertificationV2Enriched[];
+  roleHintCertifications: CertificationV2Enriched[];
+  subgroups: SubgroupV2Enriched[];
+}
+
+export interface SubgroupV2Enriched extends SubgroupV2 {
+  clusterSkillUris?: Record<string, string>;
+  certifications: CertificationV2Enriched[];
+  tools: ToolGroupsEnriched;
+}
+
+export interface ToolGroupsEnriched {
+  distinctive: ToolV2Enriched[];
+  common: ToolV2Enriched[];
+}
+
+// ── Mapping feedback (expert review) ──────────────────────────
+export type FeedbackType = "correct" | "incorrect" | "unsure" | "suggestion";
+
+export interface MappingFeedback {
+  id: string;
+  edgeType: string; // "programme_domain" | "domain_role" | "role_skill"
+  sourceId: string;
+  targetId: string;
+  feedbackType: FeedbackType;
+  notes?: string;
+  trustWeight: number; // 0..1
+  userId: string;
+  createdAt: string;
+  updatedAt?: string;
 }

@@ -1,18 +1,43 @@
 /**
- * TrendsScreen — demand trends over time for the institution's domains. No
- * data ships this phase: a local `coming_soon` envelope drives ComingSoonPanel
- * so the page reads as an intentional, populated-later surface, not a blank.
+ * TrendsScreen — demand trends over time for the institution's domains.
+ * Calls adminData.getDomainRanking(scope) to show domain demand data, with
+ * ScopeToggle for Nigerian/Global/Remote scopes.
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useTheme, Spacing, FontSize, FontWeight, webContainer } from "../../theme";
-import { comingSoon } from "../../types/career";
+import {
+  useTheme,
+  Spacing,
+  FontSize,
+  FontWeight,
+  webContainer,
+} from "../../theme";
+import { adminData } from "../../lib/adminData";
+import type { DataState } from "../../types/career";
+import type { DomainRankItem, RankScope } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { ScopeToggle } from "../../components/admin/ScopeToggle";
+import type { ScopeOption } from "../../components/admin/ScopeToggle";
 
 export function TrendsScreen() {
   const { colors } = useTheme();
-  const state = comingSoon<never[]>("Demand trends over time are being populated.");
+  const [domains, setDomains] = useState<DataState<DomainRankItem[]>>({
+    status: "pending",
+    data: null,
+  });
+  const [scope, setScope] = useState<RankScope>("nigerian");
+
+  useEffect(() => {
+    let active = true;
+    setDomains({ status: "pending", data: null });
+    adminData.getDomainRanking(scope).then((d) => {
+      if (active) setDomains(d);
+    });
+    return () => {
+      active = false;
+    };
+  }, [scope]);
 
   return (
     <AdminShell title="Trends" eyebrow="Aggregate intelligence">
@@ -29,7 +54,68 @@ export function TrendsScreen() {
             How demand for your domains is moving month over month — direction
             and momentum, aggregate only.
           </Text>
-          <ComingSoonPanel state={state}>{() => null}</ComingSoonPanel>
+
+          <ScopeToggle
+            value={scope as ScopeOption}
+            onChange={(s) => setScope(s as RankScope)}
+          />
+
+          <ComingSoonPanel
+            state={domains}
+            empty={(items) => items.length === 0}
+            emptyTitle="No trends yet"
+            emptyBody="Demand trends over time are being populated."
+          >
+            {(items) => (
+              <View style={{ gap: Spacing.md }}>
+                {items.map((item) => (
+                  <View
+                    key={item.domainId}
+                    style={[
+                      styles.card,
+                      {
+                        backgroundColor: colors.card,
+                        borderColor: colors.border,
+                      },
+                    ]}
+                  >
+                    <View style={styles.cardHead}>
+                      <Text
+                        style={[styles.domainName, { color: colors.text }]}
+                      >
+                        {item.domainName}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.trendValue,
+                          {
+                            color:
+                              item.trendDirection === "down"
+                                ? colors.red
+                                : colors.green,
+                          },
+                        ]}
+                      >
+                        {item.trendDirection === "up"
+                          ? "▲"
+                          : item.trendDirection === "down"
+                          ? "▼"
+                          : "→"}{" "}
+                        {item.trendPct != null
+                          ? `${Math.abs(item.trendPct)}%`
+                          : "—"}
+                      </Text>
+                    </View>
+                    <Text
+                      style={[styles.postings, { color: colors.textMuted }]}
+                    >
+                      {item.postingsPerMonth.toLocaleString()} postings / month
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </ComingSoonPanel>
         </View>
       </ScrollView>
     </AdminShell>
@@ -50,6 +136,27 @@ const styles = StyleSheet.create({
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
-    marginTop: -Spacing.xs,
+  },
+  card: {
+    borderWidth: 1,
+    borderRadius: 11,
+    padding: 14,
+    gap: 6,
+  },
+  cardHead: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  domainName: {
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.heavy,
+  },
+  trendValue: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
+  },
+  postings: {
+    fontSize: FontSize.sm,
   },
 });

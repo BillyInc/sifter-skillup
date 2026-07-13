@@ -49,4 +49,10 @@ export const adminNav = {
   verify(router: Nav) {
     router.push("/(admin)/verify" as never);
   },
+  feedback(router: Nav) {
+    router.push("/(admin)/feedback" as never);
+  },
+  expertDossier(router: Nav) {
+    router.push("/(admin)/expert-dossier" as never);
+  },
 };
