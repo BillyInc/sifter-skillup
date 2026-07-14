@@ -163,6 +163,40 @@ CREATE INDEX IF NOT EXISTS idx_domain_overlap_a ON skillup_dev.domain_overlap(do
 ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS prior_field_domain_key TEXT;
 
+-- ── 11b. USER-OWNED CAREER TABLES ───────────────────────────
+-- Older installs created these in migration_career_intelligence.sql. Fresh
+-- installs now skip that obsolete taxonomy migration, so create the stable
+-- user-owned tables here before extending them below.
+CREATE TABLE IF NOT EXISTS skillup_dev.saved_items (
+    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id     UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
+    entity_type TEXT CHECK (entity_type IN ('programme', 'domain', 'role', 'opportunity', 'organisation', 'elite_pathway')),
+    entity_id   TEXT NOT NULL,
+    label       TEXT,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_saved_items_user ON skillup_dev.saved_items(user_id);
+
+CREATE TABLE IF NOT EXISTS skillup_dev.user_notes (
+    id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id     UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
+    entity_type TEXT,
+    entity_id   TEXT,
+    body        TEXT NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_user_notes_user ON skillup_dev.user_notes(user_id);
+
+CREATE TABLE IF NOT EXISTS skillup_dev.opportunity_subscriptions (
+    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id    UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
+    target     TEXT CHECK (target IN ('opportunity', 'organisation', 'application_window')),
+    target_id  TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_opp_subscriptions_user ON skillup_dev.opportunity_subscriptions(user_id);
+
 -- ── 12. USER_NOTES: My World category-sort + denormalised entity label ─
 ALTER TABLE skillup_dev.user_notes ADD COLUMN IF NOT EXISTS category TEXT;
 ALTER TABLE skillup_dev.user_notes ADD COLUMN IF NOT EXISTS entity_label TEXT;

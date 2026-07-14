@@ -46,12 +46,17 @@ export interface StartingPointProfile {
   jambSubjects?: string[]; // strongest WAEC/UTME subjects
   jambScoreBand?: string; // "180–219" etc.
   preferredInstitutionType?: InstitutionType;
+  preferredSchoolId?: string;
   preferredSchool?: string;
+  intendedProgrammeId?: string;
+  intendedJambProgrammeId?: string;
   intendedProgramme?: string;
 
   // ── Senior secondary (SS1 / SS2 — exploring) ──
   /** Which senior-secondary class the explorer is currently in. */
-  ssClass?: "ss1" | "ss2";
+  ssClass?: "ss1" | "ss2" | "ss3";
+  /** School stream is a guidance hint, never an eligibility gate. */
+  stream?: "science" | "art" | "commercial";
   /** Broad interest areas to explore (e.g. "Sciences", "Business"). */
   interestAreas?: string[];
   /** What the explorer wants to do (explore careers / choose subjects / …). */

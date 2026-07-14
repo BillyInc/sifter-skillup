@@ -8,10 +8,20 @@
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { StartingPointProfile } from "../types/onboarding";
+import { careerData } from "./careerData";
 
 const KEY = "@levelup_starting_point_v1";
 
 export async function getStartingPoint(): Promise<StartingPointProfile | null> {
+  try {
+    const server = await careerData.getStartingPoint();
+    if (server.status === "real" && server.data) {
+      await AsyncStorage.setItem(KEY, JSON.stringify(server.data));
+      return server.data;
+    }
+  } catch {
+    // Fall through to local cache.
+  }
   try {
     const raw = await AsyncStorage.getItem(KEY);
     return raw ? (JSON.parse(raw) as StartingPointProfile) : null;
@@ -23,6 +33,11 @@ export async function getStartingPoint(): Promise<StartingPointProfile | null> {
 export async function saveStartingPoint(
   profile: StartingPointProfile,
 ): Promise<void> {
+  try {
+    await careerData.saveStartingPoint(profile);
+  } catch {
+    // Local persistence below is the offline fallback.
+  }
   try {
     await AsyncStorage.setItem(KEY, JSON.stringify(profile));
   } catch {

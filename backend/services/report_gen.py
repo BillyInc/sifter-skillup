@@ -29,6 +29,7 @@ class ReportContext(BaseModel):
     beyond name/class and no academic record."""
     student_name: str
     student_class: Optional[str] = None
+    stream: Optional[str] = None
     school_name: Optional[str] = None
     domain_name: Optional[str] = None
     domain_description: Optional[str] = None
@@ -58,7 +59,8 @@ def build_report_html(ctx: ReportContext) -> str:
         if ctx.admission_note else ""
     )
     school = f"<div class='school'>{e(ctx.school_name)}</div>" if ctx.school_name else ""
-    cls = f" · {e(ctx.student_class)}" if ctx.student_class else ""
+    meta = " · ".join(part for part in [ctx.student_class, ctx.stream] if part)
+    cls = f" · {e(meta)}" if meta else ""
 
     return f"""<!doctype html>
 <html><head><meta charset="utf-8"><title>Career Report — {e(ctx.student_name)}</title>
@@ -117,10 +119,12 @@ def build_login_card_html(
     claim_code: str,
     school_name: Optional[str] = None,
     student_class: Optional[str] = None,
+    stream: Optional[str] = None,
 ) -> str:
     e = html.escape
     school = f"<div class='school'>{e(school_name)}</div>" if school_name else ""
-    cls = f" · {e(student_class)}" if student_class else ""
+    meta = " · ".join(part for part in [student_class, stream] if part)
+    cls = f" · {e(meta)}" if meta else ""
     return f"""<!doctype html>
 <html><head><meta charset="utf-8"><title>Login card — {e(student_name)}</title>
 <style>
@@ -190,7 +194,8 @@ def build_report_docx(ctx: ReportContext) -> bytes:
     if ctx.school_name:
         body_parts.append(_p(ctx.school_name, size=18))
     body_parts.append(_p(ctx.student_name, bold=True, size=36))
-    sub = "Career pathway report" + (f" · {ctx.student_class}" if ctx.student_class else "")
+    meta = " · ".join(part for part in [ctx.student_class, ctx.stream] if part)
+    sub = "Career pathway report" + (f" · {meta}" if meta else "")
     body_parts.append(_p(sub, size=22))
 
     body_parts.append(_p("Your direction", bold=True, size=26, heading=True))

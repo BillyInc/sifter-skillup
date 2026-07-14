@@ -103,6 +103,37 @@ const NOTIFS: { key: string; label: string; default: boolean }[] = [
   { key: "weekly_tips", label: "Weekly career tips", default: false },
 ];
 
+function nextHrefForStartingPoint(profile: StartingPointProfile): string {
+  const subjects = (profile.jambSubjects ?? []).filter(Boolean).join(",");
+  const programme = profile.intendedJambProgrammeId
+    || profile.intendedProgrammeId
+    || profile.intendedProgramme;
+
+  if (profile.userType === "senior_secondary") {
+    if (profile.exploreIntent?.includes("have_programme") && programme) {
+      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}`;
+    }
+    if (subjects) {
+      return `/(tabs)/explore/admission?mode=subjects&subjects=${encodeURIComponent(subjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`;
+    }
+    return "/(tabs)/explore/admission?mode=subjects";
+  }
+
+  if (profile.userType === "jamb") {
+    if (profile.ssDoor === "unsure") {
+      return subjects
+        ? `/(tabs)/explore/admission?mode=subjects&subjects=${encodeURIComponent(subjects)}&stream=${encodeURIComponent(profile.stream ?? "")}`
+        : "/(tabs)/explore/admission?mode=subjects";
+    }
+    if (programme) {
+      return `/(tabs)/explore/admission?mode=programme&q=${encodeURIComponent(programme)}`;
+    }
+    return "/(tabs)/explore/admission?mode=programme";
+  }
+
+  return "/(tabs)/home";
+}
+
 export default function OnboardingFlow() {
   const router = useRouter();
   const { colors } = useTheme();
@@ -137,7 +168,7 @@ export default function OnboardingFlow() {
     } catch {
       // Even if the network call fails, the local profile is saved; proceed.
     } finally {
-      router.replace("/(tabs)/home");
+      router.replace(nextHrefForStartingPoint(full) as never);
     }
   };
 

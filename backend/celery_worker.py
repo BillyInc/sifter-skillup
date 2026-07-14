@@ -36,6 +36,8 @@ celery.conf.update(
         "compile-admission-snapshot": {"task": "celery_worker.compile_admission_snapshot", "schedule": crontab(month=1, day=15, hour=10, minute=0)},
         # Phase 9 — Enrichment freshness check (weekly)
         "check-enrichment-freshness": {"task": "celery_worker.check_enrichment_freshness", "schedule": crontab(day_of_week="monday", hour=6, minute=0)},
+        # Provisioning Phase 6 — duplicate shell reconciliation candidates
+        "reconcile-student-merge-candidates": {"task": "celery_worker.reconcile_student_merge_candidates", "schedule": crontab(hour="*/6", minute=10)},
     }
 )
 
@@ -391,6 +393,20 @@ def expire_old_sync_log():
         return {"status": "success", "deleted": deleted}
     except Exception as e:
         log.error("Sync log cleanup failed", error=str(e))
+        raise
+
+
+@celery.task
+def reconcile_student_merge_candidates():
+    """Create admin-confirmable duplicate-account candidates for provisioned students."""
+    try:
+        from services.provisioning_reconcile import reconcile_all_schools
+
+        result = reconcile_all_schools()
+        log.info("Student merge candidate reconciliation complete", **result)
+        return {"status": "success", **result}
+    except Exception as e:
+        log.error("Student merge candidate reconciliation failed", error=str(e))
         raise
 
 

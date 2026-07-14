@@ -64,7 +64,7 @@ const DOORS = [
     icon: "🧭",
     title: "I don't know yet",
     body: "Enter your strongest subjects and see the programmes you qualify for.",
-    live: false,
+    live: true,
   },
 ];
 
@@ -372,9 +372,12 @@ export default function ExploreScreen() {
                   : d.key === "what"
                     ? () =>
                         router.push(
-                          "/(tabs)/explore/admission" as never,
+                          "/(tabs)/explore/admission?mode=programme" as never,
                         )
-                    : undefined
+                    : () =>
+                        router.push(
+                          "/(tabs)/explore/admission?mode=subjects" as never,
+                        )
               }
               style={[
                 styles.card,

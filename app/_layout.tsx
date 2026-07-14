@@ -33,6 +33,9 @@ export default function RootLayout() {
                 <AuthProvider>
                   <OfflineBanner />
                   <Stack screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="index" />
+                    <Stack.Screen name="(auth)" />
+                    <Stack.Screen name="(admin)" />
                     <Stack.Screen name="(tabs)" />
                     <Stack.Screen name="world/index" />
                     <Stack.Screen name="starknet-track/index" />

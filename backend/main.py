@@ -411,6 +411,9 @@ app.include_router(provisioning_router)
 from routes.admission_routes import router as admission_router
 app.include_router(admission_router)
 
+from routes.student_pipeline_routes import router as student_pipeline_router
+app.include_router(student_pipeline_router)
+
 from routes.feedback_routes import router as feedback_router
 app.include_router(feedback_router)
 

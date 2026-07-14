@@ -22,6 +22,7 @@ import { API } from "../../lib/api";
 import { saveEducatorProfile } from "../../lib/educatorProfile";
 import { setLocalAccountType } from "../../lib/accountType";
 import { adminData } from "../../lib/adminData";
+import { adminHomeForProfile } from "../../lib/adminAudience";
 import type {
   AccountType,
   OrganizationType,
@@ -59,16 +60,9 @@ const ORGS: {
   {
     type: "tutorial_centre",
     icon: "📚",
-    title: "Tutorial centre",
+    title: "Tutorial centre / JAMB lesson provider",
     subtitle:
-      "Provider/session — career guidance with students, no student roster",
-  },
-  {
-    type: "jamb_cafe",
-    icon: "🖥️",
-    title: "JAMB registration café",
-    subtitle:
-      "Provider/session — career guidance with students, no student roster",
+      "Provider/session guidance for students preparing applications",
   },
 ];
 
@@ -85,7 +79,10 @@ const ROLES_FOR: Record<OrganizationType, { label: string; value: OrgRole }[]> =
       { label: "Dean", value: "dean" },
       { label: "Owner / Administrator", value: "owner" },
     ],
-    tutorial_centre: [{ label: "Owner / Operator", value: "owner" }],
+    tutorial_centre: [
+      { label: "Owner / Operator", value: "owner" },
+      { label: "Tutor / Counsellor", value: "counsellor" },
+    ],
     jamb_cafe: [{ label: "Owner / Operator", value: "owner" }],
   };
 
@@ -107,14 +104,14 @@ function registryLabel(t: OrganizationType): string {
 }
 
 /**
- * University owners/deans run institution-wide management → institution_admin.
- * Everyone else (counsellors, advisors, HODs, centre operators) → educator.
+ * Owners/deans run institution-wide management → institution_admin.
+ * Everyone else (counsellors, advisors, HODs, tutors) → educator.
  */
 function accountTypeFor(
   t: OrganizationType,
   role: OrgRole | undefined,
 ): Exclude<AccountType, "student"> {
-  if (t === "university" && (role === "owner" || role === "dean")) {
+  if (role === "owner" || (t === "university" && role === "dean")) {
     return "institution_admin";
   }
   return "educator";
@@ -165,6 +162,7 @@ export default function EducatorOnboarding() {
       organizationName: orgName.trim(),
       role,
       workEmail: hasEmail ? workEmail.trim() : undefined,
+      registryCode: registryCode.trim() || undefined,
       verificationStatus,
       verificationMethod,
       completedAt: new Date().toISOString(),
@@ -184,7 +182,7 @@ export default function EducatorOnboarding() {
       // Even if the network calls fail, the local profile + account type are
       // saved, so routing into the admin side still works. Proceed.
     } finally {
-      router.replace("/(admin)");
+      router.replace(adminHomeForProfile(profile) as any);
     }
   };
 
@@ -206,9 +204,9 @@ export default function EducatorOnboarding() {
             Your organisation
           </Text>
           <Text style={[styles.sub, { color: colors.textSoft }]}>
-            Tell us where you guide students from. Tutorial centres and JAMB
-            cafés operate as a provider/session — career guidance with students,
-            no student roster.
+            Tell us where you guide students from. Universities look inward at
+            their programmes; secondary schools and tutorial centres look
+            outward across universities, domains and roles.
           </Text>
 
           {ORGS.map((o) => (

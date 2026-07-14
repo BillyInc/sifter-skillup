@@ -4,14 +4,22 @@
 -- Run this in your Supabase SQL editor
 -- ============================================================
 
+CREATE SCHEMA IF NOT EXISTS skillup_dev;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- USERS
 CREATE TABLE IF NOT EXISTS skillup_dev.users (
     id                        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     telegram_id               BIGINT UNIQUE,
     wallet_address            TEXT UNIQUE,
+    email                     TEXT UNIQUE,
+    password_hash             TEXT,
     username                  TEXT,
     avatar_url                TEXT,
     auth_provider             TEXT NOT NULL DEFAULT 'guest',
+    account_type              TEXT NOT NULL DEFAULT 'student'
+                              CHECK (account_type IN ('student', 'educator', 'institution_admin')),
+    onboarding_completed      BOOLEAN NOT NULL DEFAULT false,
     points                    INTEGER NOT NULL DEFAULT 1000,
     streak                    INTEGER NOT NULL DEFAULT 1,
     last_played               DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -32,6 +40,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.users (
 CREATE INDEX IF NOT EXISTS idx_users_points      ON skillup_dev.users(points DESC);
 CREATE INDEX IF NOT EXISTS idx_users_telegram_id ON skillup_dev.users(telegram_id);
 CREATE INDEX IF NOT EXISTS idx_users_wallet      ON skillup_dev.users(wallet_address);
+CREATE INDEX IF NOT EXISTS idx_users_email       ON skillup_dev.users(email);
 
 -- GAME STATES
 CREATE TABLE IF NOT EXISTS skillup_dev.game_states (
@@ -124,13 +133,22 @@ CREATE TABLE IF NOT EXISTS skillup_dev.analytics_events (
 
 -- NOTIFICATIONS
 CREATE TABLE IF NOT EXISTS skillup_dev.notifications (
-    id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id    UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
-    type       TEXT NOT NULL,
-    title      TEXT NOT NULL,
-    body       TEXT,
-    read       BOOLEAN NOT NULL DEFAULT false,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id      UUID REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
+    recipient_id UUID REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
+    actor_id     UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL,
+    type         TEXT NOT NULL,
+    title        TEXT,
+    body         TEXT,
+    post_id      UUID,
+    post_snippet TEXT,
+    extra_data   JSONB NOT NULL DEFAULT '{}',
+    channels     TEXT[] NOT NULL DEFAULT '{}',
+    read         BOOLEAN NOT NULL DEFAULT false,
+    is_read      BOOLEAN NOT NULL DEFAULT false,
+    sent_at      TIMESTAMPTZ,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CHECK (user_id IS NOT NULL OR recipient_id IS NOT NULL)
 );
 
 -- VIEWS
@@ -153,6 +171,27 @@ $$ LANGUAGE SQL STABLE;
 ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS github_token     TEXT;
 ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS github_username  TEXT;
 ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS github_avatar    TEXT;
+ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS email            TEXT UNIQUE;
+ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS password_hash    TEXT;
+ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE skillup_dev.users ADD COLUMN IF NOT EXISTS account_type     TEXT NOT NULL DEFAULT 'student';
+ALTER TABLE skillup_dev.users DROP CONSTRAINT IF EXISTS users_account_type_check;
+ALTER TABLE skillup_dev.users ADD CONSTRAINT users_account_type_check
+    CHECK (account_type IN ('student', 'educator', 'institution_admin'));
+
+-- Keep legacy app notifications and newer community notifications compatible.
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS recipient_id UUID REFERENCES skillup_dev.users(id) ON DELETE CASCADE;
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS actor_id UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL;
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS post_id UUID;
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS post_snippet TEXT;
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS extra_data JSONB NOT NULL DEFAULT '{}';
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS channels TEXT[] NOT NULL DEFAULT '{}';
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS is_read BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE skillup_dev.notifications ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ;
+ALTER TABLE skillup_dev.notifications ALTER COLUMN user_id DROP NOT NULL;
+ALTER TABLE skillup_dev.notifications ALTER COLUMN title DROP NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_notifications_user ON skillup_dev.notifications(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_notifications_recipient ON skillup_dev.notifications(recipient_id, created_at DESC);
 
 -- ROW LEVEL SECURITY
 ALTER TABLE skillup_dev.users           ENABLE ROW LEVEL SECURITY;
@@ -162,12 +201,20 @@ ALTER TABLE skillup_dev.transactions    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.withdrawals     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.notifications   ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "users_own" ON skillup_dev.users;
+DROP POLICY IF EXISTS "game_states_own" ON skillup_dev.game_states;
+DROP POLICY IF EXISTS "scores_own" ON skillup_dev.level_scores;
+DROP POLICY IF EXISTS "tx_own" ON skillup_dev.transactions;
+DROP POLICY IF EXISTS "withdrawals_own" ON skillup_dev.withdrawals;
+DROP POLICY IF EXISTS "notif_own" ON skillup_dev.notifications;
+DROP POLICY IF EXISTS "feedback_insert" ON skillup_dev.feedback;
+
 CREATE POLICY "users_own"       ON skillup_dev.users       FOR ALL USING (auth.uid() = id);
 CREATE POLICY "game_states_own" ON skillup_dev.game_states FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "scores_own"      ON skillup_dev.level_scores FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "tx_own"          ON skillup_dev.transactions FOR ALL USING (auth.uid() = user_id);
 CREATE POLICY "withdrawals_own" ON skillup_dev.withdrawals  FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY "notif_own"       ON skillup_dev.notifications FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "notif_own"       ON skillup_dev.notifications FOR ALL USING (auth.uid() = user_id OR auth.uid() = recipient_id);
 CREATE POLICY "feedback_insert" ON skillup_dev.feedback FOR INSERT WITH CHECK (true);
 
 -- ============================================================
@@ -306,6 +353,13 @@ ALTER TABLE skillup_dev.notification_prefs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.posts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.post_likes ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "users_own_position" ON skillup_dev.user_last_position;
+DROP POLICY IF EXISTS "users_own_tokens" ON skillup_dev.push_tokens;
+DROP POLICY IF EXISTS "users_own_notif_prefs" ON skillup_dev.notification_prefs;
+DROP POLICY IF EXISTS "posts_readable_by_all" ON skillup_dev.posts;
+DROP POLICY IF EXISTS "posts_writable_by_owner" ON skillup_dev.posts;
+DROP POLICY IF EXISTS "likes_by_owner" ON skillup_dev.post_likes;
+
 CREATE POLICY "users_own_position" ON skillup_dev.user_last_position
     FOR ALL USING (auth.uid()::text = user_id::text);
 CREATE POLICY "users_own_tokens" ON skillup_dev.push_tokens
@@ -384,6 +438,11 @@ RETURNS VOID AS $$ UPDATE skillup_dev.posts SET quote_count = quote_count + 1 WH
 ALTER TABLE skillup_dev.post_comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.bookmarks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.friends ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "comments_readable_all" ON skillup_dev.post_comments;
+DROP POLICY IF EXISTS "comments_writable_owner" ON skillup_dev.post_comments;
+DROP POLICY IF EXISTS "bookmarks_owner" ON skillup_dev.bookmarks;
+DROP POLICY IF EXISTS "friends_owner" ON skillup_dev.friends;
 
 CREATE POLICY "comments_readable_all" ON skillup_dev.post_comments FOR SELECT USING (true);
 CREATE POLICY "comments_writable_owner" ON skillup_dev.post_comments FOR INSERT WITH CHECK (auth.uid()::text = user_id::text);
@@ -591,6 +650,11 @@ ALTER TABLE skillup_dev.dm_messages          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.user_seen_scenarios  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.portfolio_artifacts  ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS dm_participant_read ON skillup_dev.dm_messages;
+DROP POLICY IF EXISTS dm_participant_insert ON skillup_dev.dm_messages;
+DROP POLICY IF EXISTS seen_scenarios_own ON skillup_dev.user_seen_scenarios;
+DROP POLICY IF EXISTS artifacts_own ON skillup_dev.portfolio_artifacts;
+
 -- Users can only read/write their own DMs
 CREATE POLICY dm_participant_read  ON skillup_dev.dm_messages FOR SELECT USING (
     EXISTS (SELECT 1 FROM skillup_dev.thread_participants WHERE thread_id = dm_messages.thread_id AND user_id = auth.uid())
@@ -669,7 +733,33 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Supabase Realtime — enable for community tables
-ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.posts;
-ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.post_reactions;
-ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.notifications;
-ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.dm_messages;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_tables
+        WHERE pubname = 'supabase_realtime' AND schemaname = 'skillup_dev' AND tablename = 'posts'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.posts;
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_tables
+        WHERE pubname = 'supabase_realtime' AND schemaname = 'skillup_dev' AND tablename = 'post_reactions'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.post_reactions;
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_tables
+        WHERE pubname = 'supabase_realtime' AND schemaname = 'skillup_dev' AND tablename = 'notifications'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.notifications;
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_tables
+        WHERE pubname = 'supabase_realtime' AND schemaname = 'skillup_dev' AND tablename = 'dm_messages'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE skillup_dev.dm_messages;
+    END IF;
+END $$;
