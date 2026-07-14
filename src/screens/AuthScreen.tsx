@@ -68,7 +68,6 @@ export default function AuthScreen() {
     setBusy(true);
     try {
       await signInEmail(email, password);
-      router.replace("/(tabs)/home");
     } catch (e: any) {
       setError(e?.message || "Could not sign you in.");
     } finally {
@@ -81,7 +80,6 @@ export default function AuthScreen() {
     setGuestBusy(true);
     try {
       await signInGuest();
-      router.replace("/(tabs)/explore");
     } catch (e: any) {
       setError(e?.message || "Could not continue as guest.");
     } finally {

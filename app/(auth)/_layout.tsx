@@ -5,13 +5,31 @@ import { Colors } from '../../src/theme';
 import { Redirect } from 'expo-router';
 import { consumePendingPostAuthRedirect } from '../../src/lib/postAuthRedirect';
 import { useEffectiveAccountType, isAdminAccount } from '../../src/lib/accountType';
+import { useEffect, useState } from 'react';
+import { getEducatorProfile } from '../../src/lib/educatorProfile';
+import { adminHomeForProfile } from '../../src/lib/adminAudience';
+import { resolvePostAuthHref } from '../../src/lib/resumeNavigation';
+import type { EducatorProfile } from '../../src/types/institution';
 
 export default function AuthLayout() {
   const { user, loading } = useAuth();
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type);
-  const pendingRedirect = user?.onboarding_completed ? consumePendingPostAuthRedirect() : null;
+  const [educatorProfile, setEducatorProfile] = useState<EducatorProfile | null>(null);
+  const [profileHydrated, setProfileHydrated] = useState(false);
 
-  if (loading || (user && !hydrated)) {
+  useEffect(() => {
+    let active = true;
+    getEducatorProfile().then((profile) => {
+      if (!active) return;
+      setEducatorProfile(profile);
+      setProfileHydrated(true);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  if (loading || (user && (!hydrated || !profileHydrated))) {
     return (
       <View style={styles.loading}>
         <Text style={styles.loadingEmoji}>⚡</Text>
@@ -37,11 +55,12 @@ export default function AuthLayout() {
   // land on the learning app. account_type is resolved from the backend value
   // when present, else the local override set during educator onboarding.
   if (user && user.onboarding_completed && isAdminAccount(accountType)) {
-    return <Redirect href={"/(admin)" as any} />;
+    return <Redirect href={adminHomeForProfile(educatorProfile) as any} />;
   }
 
   if (user && user.onboarding_completed) {
-    return <Redirect href="/(tabs)/home" />;
+    const pendingRedirect = consumePendingPostAuthRedirect();
+    return <Redirect href={(pendingRedirect ?? resolvePostAuthHref(user)) as any} />;
   }
 
   return (

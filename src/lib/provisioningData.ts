@@ -17,8 +17,10 @@ import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 import type {
   ProvisionDraft,
+  ProvisioningStream,
   ChosenDirection,
   GeneratedStudent,
+  ProvisioningMergeCandidate,
   RosterStudent,
   RosterSummary,
 } from "../types/institution";
@@ -73,6 +75,7 @@ interface WireDraft {
   id: string;
   full_name?: string | null;
   student_class?: string | null;
+  stream?: ProvisioningStream | null;
   needs_review: boolean;
   guardian_consent: boolean;
   guardian_name?: string | null;
@@ -82,6 +85,7 @@ interface WireGenerated {
   user_id: string;
   full_name: string;
   student_class?: string | null;
+  stream?: ProvisioningStream | null;
   claim_code: string;
   claim_expires_at?: string | null;
 }
@@ -89,6 +93,7 @@ interface WireRosterStudent {
   user_id: string;
   full_name?: string | null;
   student_class?: string | null;
+  stream?: ProvisioningStream | null;
   provenance: "self" | "provisioned";
   claim_state?: "unclaimed" | "claimed" | null;
   visible: boolean;
@@ -100,11 +105,26 @@ interface WireRoster {
   aggregate_only: number;
   shared_with_you: number;
 }
+interface WireMergeCandidate {
+  id: string;
+  provisioned_user_id?: string | null;
+  student_user_id?: string | null;
+  provisioned_name?: string | null;
+  student_name?: string | null;
+  student_class?: string | null;
+  stream?: ProvisioningStream | null;
+  match_type?: string | null;
+  confidence?: number | null;
+  evidence?: Record<string, unknown> | null;
+  status?: "pending" | "confirmed" | "dismissed" | string;
+  created_at?: string | null;
+}
 
 const toDraft = (w: WireDraft): ProvisionDraft => ({
   id: w.id,
   fullName: w.full_name,
   studentClass: w.student_class,
+  stream: w.stream,
   needsReview: w.needs_review,
   guardianConsent: w.guardian_consent,
   guardianName: w.guardian_name,
@@ -114,6 +134,7 @@ const toGenerated = (w: WireGenerated): GeneratedStudent => ({
   userId: w.user_id,
   fullName: w.full_name,
   studentClass: w.student_class,
+  stream: w.stream,
   claimCode: w.claim_code,
   claimExpiresAt: w.claim_expires_at,
 });
@@ -121,10 +142,25 @@ const toRosterStudent = (w: WireRosterStudent): RosterStudent => ({
   userId: w.user_id,
   fullName: w.full_name,
   studentClass: w.student_class,
+  stream: w.stream,
   provenance: w.provenance,
   claimState: w.claim_state,
   visible: w.visible,
   hasConsent: w.has_consent,
+});
+const toMergeCandidate = (w: WireMergeCandidate): ProvisioningMergeCandidate => ({
+  id: w.id,
+  provisionedUserId: w.provisioned_user_id,
+  provisionedFullName: w.provisioned_name,
+  provisionedStudentClass: w.student_class,
+  provisionedStream: w.stream,
+  claimedUserId: w.student_user_id,
+  claimedFullName: w.student_name,
+  claimedContact: null,
+  matchScore: w.confidence,
+  reason: w.match_type,
+  status: w.status,
+  createdAt: w.created_at,
 });
 
 /** One image page for the vision pre-fill (base64, no newlines). */
@@ -136,12 +172,14 @@ export interface DraftImage {
 export interface ManualDraft {
   fullName?: string;
   studentClass?: string;
+  stream?: ProvisioningStream;
   guardianConsent?: boolean;
   guardianName?: string;
 }
 /** One selected draft to mint. subjects seed the mapping in-memory; not stored. */
 export interface GenerateItem {
   draftId: string;
+  stream?: ProvisioningStream;
   subjects?: string[];
   chosenDirection?: ChosenDirection;
 }
@@ -151,14 +189,17 @@ export const provisioningData = {
   async createDrafts(input: {
     images?: DraftImage[];
     manualRows?: ManualDraft[];
+    stream?: ProvisioningStream;
   }): Promise<ProvisionDraft[]> {
     const rows = await request<WireDraft[]>(`/api/provisioning/drafts`, {
       method: "POST",
       body: JSON.stringify({
+        stream: input.stream ?? null,
         images: (input.images ?? []).map((i) => ({ media_type: i.mediaType, data: i.data })),
         manual_rows: (input.manualRows ?? []).map((m) => ({
           full_name: m.fullName ?? null,
           student_class: m.studentClass ?? null,
+          stream: m.stream ?? input.stream ?? null,
           guardian_consent: m.guardianConsent ?? false,
           guardian_name: m.guardianName ?? null,
         })),
@@ -183,6 +224,7 @@ export const provisioningData = {
       body: JSON.stringify({
         full_name: patch.fullName ?? null,
         student_class: patch.studentClass ?? null,
+        stream: patch.stream ?? null,
         guardian_consent: patch.guardianConsent ?? false,
         guardian_name: patch.guardianName ?? null,
       }),
@@ -197,6 +239,7 @@ export const provisioningData = {
       body: JSON.stringify({
         items: items.map((i) => ({
           draft_id: i.draftId,
+          stream: i.stream ?? null,
           subjects: i.subjects ?? [],
           chosen_direction: i.chosenDirection
             ? {
@@ -220,6 +263,7 @@ export const provisioningData = {
     return {
       userId: w.user_id,
       fullName: "",
+      stream: undefined,
       claimCode: w.claim_code,
       claimExpiresAt: w.claim_expires_at,
     };
@@ -234,6 +278,26 @@ export const provisioningData = {
       aggregateOnly: w?.aggregate_only ?? 0,
       sharedWithYou: w?.shared_with_you ?? 0,
     };
+  },
+
+  /** Possible duplicate accounts awaiting an admin merge decision. */
+  async listMergeCandidates(): Promise<ProvisioningMergeCandidate[]> {
+    const rows = await request<WireMergeCandidate[]>(`/api/provisioning/merge-candidates`);
+    return (rows ?? []).map(toMergeCandidate);
+  },
+
+  /** Confirm that a provisioned account and claimed/self account are the same student. */
+  async confirmMergeCandidate(candidateId: string): Promise<void> {
+    await request(`/api/provisioning/merge-candidates/${candidateId}/confirm`, {
+      method: "POST",
+    });
+  },
+
+  /** Dismiss a suggested account merge. */
+  async dismissMergeCandidate(candidateId: string): Promise<void> {
+    await request(`/api/provisioning/merge-candidates/${candidateId}/dismiss`, {
+      method: "POST",
+    });
   },
 
   /** Download the editable .docx career report. */

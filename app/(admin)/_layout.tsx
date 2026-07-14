@@ -10,7 +10,7 @@ export default function AdminStack() {
   return (
     <ScreenErrorBoundary
       screenName="Admin"
-      onGoHome={() => router.replace("/(admin)")}
+      onGoHome={() => router.replace("/(admin)/dashboard")}
     >
       <Stack screenOptions={{ headerShown: false }} />
     </ScreenErrorBoundary>

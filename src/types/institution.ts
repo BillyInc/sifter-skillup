@@ -26,7 +26,7 @@ export type AccountType = "student" | "educator" | "institution_admin";
 export type OrganizationType =
   | "secondary_school"
   | "university"
-  | "tutorial_centre" // tutorial centre / JAMB-registration café (provider/session only)
+  | "tutorial_centre" // tutorial centre / JAMB lesson provider (provider/session only)
   | "jamb_cafe";
 
 /** Role of a member within an organisation (drives scope, not built out yet). */
@@ -119,12 +119,15 @@ export interface StudentConsent {
 }
 
 // ─── Provisioning: drafts → review grid → generate → roster ───
+export type ProvisioningStream = "science" | "art" | "commercial";
+
 /** A staged student row in the assisted-import review grid, before any account
  *  is minted. Extracted (vision) or manually entered; the educator corrects it. */
 export interface ProvisionDraft {
   id: string;
   fullName?: string | null;
   studentClass?: string | null;
+  stream?: ProvisioningStream | null;
   needsReview: boolean;
   guardianConsent: boolean;
   guardianName?: string | null;
@@ -144,6 +147,7 @@ export interface GeneratedStudent {
   userId: string;
   fullName: string;
   studentClass?: string | null;
+  stream?: ProvisioningStream | null;
   claimCode: string;
   claimExpiresAt?: string | null;
 }
@@ -153,6 +157,7 @@ export interface RosterStudent {
   userId: string;
   fullName?: string | null;
   studentClass?: string | null;
+  stream?: ProvisioningStream | null;
   provenance: "self" | "provisioned";
   claimState?: "unclaimed" | "claimed" | null;
   visible: boolean;
@@ -166,6 +171,23 @@ export interface RosterSummary {
   totalAffiliated: number;
   aggregateOnly: number;
   sharedWithYou: number;
+}
+
+/** A possible duplicate between a provisioned account and a claimed/self account
+ *  that the admin can confirm or dismiss. */
+export interface ProvisioningMergeCandidate {
+  id: string;
+  provisionedUserId?: string | null;
+  provisionedFullName?: string | null;
+  provisionedStudentClass?: string | null;
+  provisionedStream?: ProvisioningStream | null;
+  claimedUserId?: string | null;
+  claimedFullName?: string | null;
+  claimedContact?: string | null;
+  matchScore?: number | null;
+  reason?: string | null;
+  status?: "pending" | "confirmed" | "dismissed" | string;
+  createdAt?: string | null;
 }
 
 // ─── Aggregate dashboard (the 5 stat cards) ───────────────────

@@ -163,7 +163,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function _handleAuthResponse(data: { token: string; user: any }) {
     await API.saveToken(data.token);
     const profile = _normalise(data.user);
-    setPendingPostAuthRedirect('/(tabs)/home');
+    setPendingPostAuthRedirect(resolvePostAuthHref(profile));
     setUser(profile);
     API.checkStreak().catch(() => {});
 

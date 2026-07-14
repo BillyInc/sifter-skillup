@@ -44,11 +44,24 @@ import {
 import type {
   ProvisionDraft,
   GeneratedStudent,
+  ProvisioningMergeCandidate,
+  ProvisioningStream,
   RosterSummary,
 } from "../../types/institution";
 
 type Tab = "roster" | "add";
 type AddStage = "import" | "review" | "done";
+type MergeAction = "confirm" | "dismiss";
+
+const STREAMS: { value: ProvisioningStream; label: string }[] = [
+  { value: "science", label: "Science" },
+  { value: "art", label: "Art" },
+  { value: "commercial", label: "Commercial" },
+];
+
+function streamLabel(stream?: ProvisioningStream | null) {
+  return STREAMS.find((s) => s.value === stream)?.label ?? "";
+}
 
 export function StudentProvisioningScreen() {
   const { colors } = useTheme();
@@ -96,18 +109,49 @@ function RosterTab() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<RosterSummary | null>(null);
+  const [mergeCandidates, setMergeCandidates] = useState<ProvisioningMergeCandidate[]>([]);
+  const [actioningCandidate, setActioningCandidate] = useState<string | null>(null);
 
   const load = useCallback(() => {
     setLoading(true);
     setError(null);
-    provisioningData
-      .getRoster()
-      .then((r) => setData(r))
+    Promise.all([
+      provisioningData.getRoster(),
+      provisioningData.listMergeCandidates().catch(() => [] as ProvisioningMergeCandidate[]),
+    ])
+      .then(([r, candidates]) => {
+        setData(r);
+        setMergeCandidates(candidates.filter((c) => c.status !== "confirmed" && c.status !== "dismissed"));
+      })
       .catch((e) => setError(e?.message ?? "Could not load the roster."))
       .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => load(), [load]);
+
+  const resolveMergeCandidate = useCallback(
+    async (candidateId: string, action: MergeAction) => {
+      setActioningCandidate(`${action}:${candidateId}`);
+      try {
+        if (action === "confirm") {
+          await provisioningData.confirmMergeCandidate(candidateId);
+        } else {
+          await provisioningData.dismissMergeCandidate(candidateId);
+        }
+        const [r, candidates] = await Promise.all([
+          provisioningData.getRoster(),
+          provisioningData.listMergeCandidates().catch(() => [] as ProvisioningMergeCandidate[]),
+        ]);
+        setData(r);
+        setMergeCandidates(candidates.filter((c) => c.status !== "confirmed" && c.status !== "dismissed"));
+      } catch (e) {
+        setError((e as Error)?.message ?? "Could not update that merge candidate.");
+      } finally {
+        setActioningCandidate(null);
+      }
+    },
+    [],
+  );
 
   if (loading) {
     return (
@@ -164,6 +208,13 @@ function RosterTab() {
         is counted in aggregate but stays private.
       </Text>
 
+      <MergeCandidatesPanel
+        candidates={mergeCandidates}
+        actioningCandidate={actioningCandidate}
+        onConfirm={(id) => resolveMergeCandidate(id, "confirm")}
+        onDismiss={(id) => resolveMergeCandidate(id, "dismiss")}
+      />
+
       {/* Visible students */}
       {summary.students.length === 0 ? (
         <View
@@ -195,9 +246,9 @@ function RosterTab() {
                 <Text style={[styles.rosterName, { color: colors.text }]}>
                   {s.fullName || "Unnamed student"}
                 </Text>
-                {!!s.studentClass && (
+                {!![s.studentClass, s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).length && (
                   <Text style={[styles.rosterMeta, { color: colors.textMuted }]}>
-                    {s.studentClass}
+                    {[s.studentClass, s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).join(" · ")}
                   </Text>
                 )}
               </View>
@@ -217,11 +268,135 @@ function RosterTab() {
                     ? "Shared by student"
                     : "Claimed"}
               </Text>
+              <TouchableOpacity
+                onPress={() => provisioningData.openReportHtml(s.userId)}
+                style={[styles.miniBtn, { borderColor: colors.border }]}
+              >
+                <Text style={[styles.miniBtnText, { color: colors.text }]}>Report</Text>
+              </TouchableOpacity>
             </View>
           ))}
         </View>
       )}
     </ScrollView>
+  );
+}
+
+function MergeCandidatesPanel({
+  candidates,
+  actioningCandidate,
+  onConfirm,
+  onDismiss,
+}: {
+  candidates: ProvisioningMergeCandidate[];
+  actioningCandidate: string | null;
+  onConfirm: (id: string) => void;
+  onDismiss: (id: string) => void;
+}) {
+  const { colors } = useTheme();
+  if (!candidates.length) return null;
+
+  return (
+    <View
+      style={[
+        styles.mergePanel,
+        { backgroundColor: colors.card, borderColor: colors.border },
+      ]}
+    >
+      <Text style={[styles.sectionTitle, { color: colors.text }]}>
+        Merge candidates
+      </Text>
+      <Text style={[styles.lede, { color: colors.textMuted }]}>
+        These look like students who claimed or created another account. Confirm
+        only when the two records are the same student.
+      </Text>
+
+      {candidates.map((candidate) => {
+        const score =
+          typeof candidate.matchScore === "number"
+            ? candidate.matchScore <= 1
+              ? `${Math.round(candidate.matchScore * 100)}%`
+              : `${Math.round(candidate.matchScore)}%`
+            : null;
+        const provisionedMeta = [
+          candidate.provisionedStudentClass,
+          candidate.provisionedStream ? `${streamLabel(candidate.provisionedStream)} stream` : null,
+        ].filter(Boolean);
+
+        return (
+          <View
+            key={candidate.id}
+            style={[
+              styles.mergeCard,
+              { backgroundColor: colors.bg, borderColor: colors.border },
+            ]}
+          >
+            <View style={styles.mergeNames}>
+              <View style={styles.mergeNameBlock}>
+                <Text style={[styles.mergeLabel, { color: colors.textMuted }]}>
+                  Provisioned
+                </Text>
+                <Text style={[styles.rosterName, { color: colors.text }]}>
+                  {candidate.provisionedFullName || "Unnamed student"}
+                </Text>
+                {!!provisionedMeta.length && (
+                  <Text style={[styles.rosterMeta, { color: colors.textMuted }]}>
+                    {provisionedMeta.join(" · ")}
+                  </Text>
+                )}
+              </View>
+              <Text style={[styles.mergeArrow, { color: colors.textMuted }]}>→</Text>
+              <View style={styles.mergeNameBlock}>
+                <Text style={[styles.mergeLabel, { color: colors.textMuted }]}>
+                  Claimed
+                </Text>
+                <Text style={[styles.rosterName, { color: colors.text }]}>
+                  {candidate.claimedFullName || "Unnamed account"}
+                </Text>
+                {!!candidate.claimedContact && (
+                  <Text style={[styles.rosterMeta, { color: colors.textMuted }]}>
+                    {candidate.claimedContact}
+                  </Text>
+                )}
+              </View>
+            </View>
+
+            {!!(candidate.reason || score) && (
+              <Text style={[styles.mergeReason, { color: colors.textMuted }]}>
+                {[score ? `${score} match` : null, candidate.reason].filter(Boolean).join(" · ")}
+              </Text>
+            )}
+
+            <View style={styles.cardActions}>
+              <TouchableOpacity
+                onPress={() => onConfirm(candidate.id)}
+                disabled={!!actioningCandidate}
+                style={[
+                  styles.miniBtn,
+                  { borderColor: colors.border, opacity: actioningCandidate ? 0.6 : 1 },
+                ]}
+              >
+                <Text style={[styles.miniBtnText, { color: colors.text }]}>
+                  {actioningCandidate === `confirm:${candidate.id}` ? "Confirming..." : "Confirm merge"}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => onDismiss(candidate.id)}
+                disabled={!!actioningCandidate}
+                style={[
+                  styles.miniBtn,
+                  { borderColor: colors.border, opacity: actioningCandidate ? 0.6 : 1 },
+                ]}
+              >
+                <Text style={[styles.miniBtnText, { color: colors.text }]}>
+                  {actioningCandidate === `dismiss:${candidate.id}` ? "Dismissing..." : "Dismiss"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        );
+      })}
+    </View>
   );
 }
 
@@ -232,6 +407,7 @@ function RosterTab() {
 function AddStudentsTab() {
   const { colors } = useTheme();
   const [stage, setStage] = useState<AddStage>("import");
+  const [batchStream, setBatchStream] = useState<ProvisioningStream>("science");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<ProvisionDraft[]>([]);
@@ -244,6 +420,7 @@ function AddStudentsTab() {
       .listDrafts()
       .then((d) => {
         if (d.length) {
+          setBatchStream(d.find((draft) => draft.stream)?.stream ?? "science");
           setDrafts(d);
           setStage("review");
         }
@@ -277,7 +454,7 @@ function AddStudentsTab() {
     }
     setBusy(true);
     try {
-      const staged = await provisioningData.createDrafts({ images });
+      const staged = await provisioningData.createDrafts({ images, stream: batchStream });
       setDrafts((prev) => [...prev, ...staged]);
       setStage("review");
     } catch (e) {
@@ -285,14 +462,15 @@ function AddStudentsTab() {
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [batchStream]);
 
   const addManualRow = useCallback(async () => {
     setBusy(true);
     setError(null);
     try {
       const staged = await provisioningData.createDrafts({
-        manualRows: [{ fullName: "" }],
+        manualRows: [{ fullName: "", stream: batchStream }],
+        stream: batchStream,
       });
       setDrafts((prev) => [...prev, ...staged]);
       setStage("review");
@@ -301,7 +479,7 @@ function AddStudentsTab() {
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [batchStream]);
 
   const patchDraft = useCallback(
     (id: string, patch: Partial<ProvisionDraft>) => {
@@ -318,6 +496,7 @@ function AddStudentsTab() {
         const updated = await provisioningData.updateDraft(d.id, {
           fullName: d.fullName ?? "",
           studentClass: d.studentClass ?? undefined,
+          stream: d.stream ?? batchStream,
           guardianConsent: d.guardianConsent,
           guardianName: d.guardianName ?? undefined,
         });
@@ -326,13 +505,18 @@ function AddStudentsTab() {
         /* keep local edit; will retry on generate */
       }
     },
-    [patchDraft],
+    [batchStream, patchDraft],
   );
+
+  const applyBatchStream = useCallback((stream: ProvisioningStream) => {
+    setBatchStream(stream);
+    setDrafts((prev) => prev.map((d) => ({ ...d, stream })));
+  }, []);
 
   const generate = useCallback(async () => {
     const items = drafts
       .filter((d) => selected[d.id] && (d.fullName ?? "").trim())
-      .map((d) => ({ draftId: d.id }));
+      .map((d) => ({ draftId: d.id, stream: d.stream ?? batchStream }));
     if (!items.length) {
       setError("Select at least one named student to create accounts.");
       return;
@@ -356,7 +540,7 @@ function AddStudentsTab() {
     } finally {
       setBusy(false);
     }
-  }, [drafts, selected, commitDraft]);
+  }, [batchStream, drafts, selected, commitDraft]);
 
   const selectedCount = Object.values(selected).filter(Boolean).length;
 
@@ -379,6 +563,7 @@ function AddStudentsTab() {
             We read the names into a grid you can correct — nothing is created
             until you review and confirm. The document itself is never stored.
           </Text>
+          <StreamPicker label="Batch stream" value={batchStream} onChange={setBatchStream} />
           <PrimaryButton label="Upload class list / results" onPress={pickAndExtract} busy={busy} />
           <SecondaryButton label="Add students manually instead" onPress={addManualRow} />
         </View>
@@ -393,6 +578,7 @@ function AddStudentsTab() {
             Correct any unclear names, tick the students you want to create
             accounts for, then create. Ticked rows with a name become accounts.
           </Text>
+          <StreamPicker label="Batch stream" value={batchStream} onChange={applyBatchStream} />
 
           {drafts.map((d) => (
             <View
@@ -439,6 +625,15 @@ function AddStudentsTab() {
                     styles.inputSmall,
                     { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg },
                   ]}
+                />
+                <StreamPicker
+                  compact
+                  value={d.stream ?? batchStream}
+                  onChange={(stream) => {
+                    const updated = { ...d, stream };
+                    patchDraft(d.id, { stream });
+                    commitDraft(updated);
+                  }}
                 />
               </View>
               {d.needsReview && (
@@ -587,6 +782,56 @@ function GeneratedCards({
 // Small button primitives (match admin chrome tokens)
 // ─────────────────────────────────────────────────────────────
 
+function StreamPicker({
+  label,
+  value,
+  onChange,
+  compact,
+}: {
+  label?: string;
+  value: ProvisioningStream;
+  onChange: (stream: ProvisioningStream) => void;
+  compact?: boolean;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.streamPicker, compact && styles.streamPickerCompact]}>
+      {!!label && (
+        <Text style={[styles.streamPickerLabel, { color: colors.textMuted }]}>
+          {label}
+        </Text>
+      )}
+      <View style={styles.streamPills}>
+        {STREAMS.map((stream) => {
+          const active = stream.value === value;
+          return (
+            <TouchableOpacity
+              key={stream.value}
+              onPress={() => onChange(stream.value)}
+              style={[
+                styles.streamPill,
+                {
+                  borderColor: active ? colors.text : colors.border,
+                  backgroundColor: active ? colors.text : colors.bg,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.streamPillText,
+                  { color: active ? colors.bg : colors.text },
+                ]}
+              >
+                {stream.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
 function PrimaryButton({
   label,
   onPress,
@@ -680,6 +925,53 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     overflow: "hidden",
   },
+  mergePanel: {
+    borderWidth: 1,
+    borderRadius: Radius.lg,
+    padding: Spacing.lg,
+    gap: Spacing.md,
+  },
+  mergeCard: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+  },
+  mergeNames: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.md,
+    flexWrap: "wrap",
+  },
+  mergeNameBlock: { flex: 1, minWidth: 180, gap: 2 },
+  mergeLabel: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+    textTransform: "uppercase",
+  },
+  mergeArrow: { fontSize: FontSize.lg, fontWeight: FontWeight.bold },
+  mergeReason: { fontSize: FontSize.xs },
+  cardActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: Spacing.sm,
+    marginTop: Spacing.sm,
+  },
+  miniBtn: {
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingVertical: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 34,
+  },
+  miniBtnText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+    textAlign: "center",
+  },
 
   lede: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
@@ -730,6 +1022,31 @@ const styles = StyleSheet.create({
   cardCodeLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1.2, marginTop: Spacing.sm },
   cardCode: { fontSize: FontSize.hero, fontWeight: FontWeight.black, letterSpacing: 4 },
   cardHint: { fontSize: FontSize.xs },
+  streamPicker: { gap: Spacing.xs },
+  streamPickerCompact: { flex: 1, minWidth: 180 },
+  streamPickerLabel: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+    textTransform: "uppercase",
+  },
+  streamPills: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.xs,
+  },
+  streamPill: {
+    borderWidth: 1,
+    borderRadius: Radius.full,
+    paddingVertical: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+    minHeight: 34,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  streamPillText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+  },
 
   btnPrimary: {
     borderRadius: Radius.full,

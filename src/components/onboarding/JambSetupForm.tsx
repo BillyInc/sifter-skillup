@@ -90,6 +90,12 @@ const SUBJECTS: ChoiceOption[] = [
   "Yoruba/Hausa/Igbo",
 ].map((s) => ({ label: s, value: s }));
 
+const STREAMS: ChoiceOption[] = [
+  { label: "Science", value: "science" },
+  { label: "Commercial", value: "commercial" },
+  { label: "Art", value: "art" },
+];
+
 const SCORE_BANDS: ChoiceOption[] = [
   "Below 180",
   "180–219",
@@ -113,7 +119,7 @@ function LiveSearchField({
 }: {
   label: string;
   value: string;
-  onSelect: (name: string) => void;
+  onSelect: (item: Suggestion) => void;
   placeholder: string;
   kind: "programme" | "school";
 }) {
@@ -134,13 +140,16 @@ function LiveSearchField({
     const t = setTimeout(async () => {
       const state =
         kind === "programme"
-          ? await careerData.searchAdmissionProgrammes(q)
+          ? await careerData.searchJambProgrammes(q)
           : await careerData.searchAdmissionSchools(q);
       if (!active) return;
       setLoading(false);
       setResults(
         state.status === "real" && Array.isArray(state.data)
-          ? state.data.map((r) => ({ id: r.id, name: r.name }))
+          ? state.data.map((r) => ({
+              id: r.id,
+              name: "jambName" in r ? r.jambName : r.name,
+            }))
           : [],
       );
     }, 275);
@@ -158,7 +167,7 @@ function LiveSearchField({
         onChangeText={(v) => {
           setQuery(v);
           setOpen(true);
-          onSelect(v);
+          onSelect({ id: "", name: v });
         }}
         placeholder={placeholder}
       />
@@ -178,7 +187,7 @@ function LiveSearchField({
               activeOpacity={0.7}
               onPress={() => {
                 setQuery(r.name);
-                onSelect(r.name);
+                onSelect(r);
                 setOpen(false);
                 setResults([]);
               }}
@@ -223,12 +232,25 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
         ))}
       </View>
 
+      <ChoiceChips
+        label="Your school stream (guidance hint)"
+        options={STREAMS}
+        value={value.stream}
+        onChange={(v) => onChange({ stream: v as "science" | "commercial" | "art" })}
+      />
+      <Text style={[styles.caption, { color: colors.textMuted }]}>
+        Stream helps sort suggestions, but selected subjects decide eligibility.
+      </Text>
+
       {door === "know_where" ? (
         <View style={{ gap: Spacing.lg }}>
           <LiveSearchField
             label="Intended programme"
             value={value.intendedProgramme ?? ""}
-            onSelect={(v) => onChange({ intendedProgramme: v })}
+            onSelect={(item) => onChange({
+              intendedProgramme: item.name,
+              intendedJambProgrammeId: item.id || undefined,
+            })}
             placeholder="e.g. Mechanical Engineering"
             kind="programme"
           />
@@ -243,7 +265,10 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           <LiveSearchField
             label="Preferred school"
             value={value.preferredSchool ?? ""}
-            onSelect={(v) => onChange({ preferredSchool: v })}
+            onSelect={(item) => onChange({
+              preferredSchool: item.name,
+              preferredSchoolId: item.id || undefined,
+            })}
             placeholder="Search universities"
             kind="school"
           />
@@ -255,7 +280,10 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
           <LiveSearchField
             label="Intended programme"
             value={value.intendedProgramme ?? ""}
-            onSelect={(v) => onChange({ intendedProgramme: v })}
+            onSelect={(item) => onChange({
+              intendedProgramme: item.name,
+              intendedJambProgrammeId: item.id || undefined,
+            })}
             placeholder="e.g. Economics"
             kind="programme"
           />

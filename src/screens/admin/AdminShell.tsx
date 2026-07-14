@@ -34,6 +34,13 @@ import {
   Shadow,
 } from "../../theme";
 import { adminNav } from "../../lib/adminNav";
+import { getEducatorProfile } from "../../lib/educatorProfile";
+import {
+  adminAudienceForProfile,
+  adminAudienceLabel,
+  type AdminAudience,
+} from "../../lib/adminAudience";
+import type { EducatorProfile } from "../../types/institution";
 
 const SIDEBAR_WIDTH = 232;
 const WIDE_BREAKPOINT = 900;
@@ -51,96 +58,137 @@ interface AdminNavItem {
   locked?: boolean;
 }
 
-// Grouped so the lock sits visually apart from the aggregate-intelligence items.
-const NAV_GROUPS: { title: string; items: AdminNavItem[] }[] = [
-  {
-    title: "Intelligence",
-    items: [
+function navGroupsFor(
+  audience: AdminAudience,
+  profile: EducatorProfile | null,
+): { title: string; items: AdminNavItem[] }[] {
+  if (audience === "university") {
+    return [
       {
-        key: "dashboard",
-        label: "Programme dashboard",
-        icon: "📊",
-        match: "(admin)",
-        go: (n) => adminNav.dashboard(n),
+        title: "Programme intelligence",
+        items: [
+          {
+            key: "dashboard",
+            label: "Dashboard",
+            icon: "📊",
+            match: "dashboard",
+            go: (n) => adminNav.dashboard(n),
+          },
+          {
+            key: "peers",
+            label: "Peer benchmarks",
+            icon: "🏛️",
+            match: "peers",
+            go: (n) => adminNav.peers(n),
+          },
+        ],
       },
       {
-        key: "domain-intelligence",
-        label: "Domain intelligence",
-        icon: "🧭",
-        match: "domain-intelligence",
-        go: (n) => adminNav.domainIntelligence(n),
+        title: "Drill-downs",
+        items: [
+          {
+            key: "domain-intelligence",
+            label: "Domains",
+            icon: "🧭",
+            match: "domain-intelligence",
+            go: (n) => adminNav.domainIntelligence(n),
+          },
+          {
+            key: "role-demand",
+            label: "Roles",
+            icon: "💼",
+            match: "role-demand",
+            go: (n) => adminNav.roleDemand(n),
+          },
+          {
+            key: "skills-gap",
+            label: "Skills gaps",
+            icon: "🧩",
+            match: "skills-gap",
+            go: (n) => adminNav.skillsGap(n),
+          },
+          {
+            key: "trends",
+            label: "Trends",
+            icon: "📈",
+            match: "trends",
+            go: (n) => adminNav.trends(n),
+          },
+        ],
       },
       {
-        key: "role-demand",
-        label: "Role demand",
-        icon: "💼",
-        match: "role-demand",
-        go: (n) => adminNav.roleDemand(n),
+        title: "Setup",
+        items: [
+          {
+            key: "verify",
+            label: "Verification",
+            icon: "✅",
+            match: "verify",
+            go: (n) => adminNav.verify(n),
+          },
+          {
+            key: "affiliation",
+            label: "Affiliation",
+            icon: "🔗",
+            match: "affiliation",
+            go: (n) => adminNav.affiliation(n),
+          },
+        ],
       },
-      {
-        key: "skills-gap",
-        label: "Skills gap",
-        icon: "🧩",
-        match: "skills-gap",
-        go: (n) => adminNav.skillsGap(n),
-      },
-      {
-        key: "trends",
-        label: "Trends",
-        icon: "📈",
-        match: "trends",
-        go: (n) => adminNav.trends(n),
-      },
-      {
-        key: "peers",
-        label: "Peer comparison",
-        icon: "🏛️",
-        match: "peers",
-        go: (n) => adminNav.peers(n),
-      },
-    ],
-  },
-  {
-    title: "Institution",
-    items: [
-      {
-        key: "affiliation",
-        label: "Affiliation",
-        icon: "🔗",
-        match: "affiliation",
-        go: (n) => adminNav.affiliation(n),
-      },
-      {
-        key: "verify",
-        label: "Verification",
-        icon: "✅",
-        match: "verify",
-        go: (n) => adminNav.verify(n),
-      },
-      {
-        key: "expert-dossier",
-        label: "Expert dossier",
-        icon: "📋",
-        match: "expert-dossier",
-        go: (n) => adminNav.expertDossier(n),
-      },
-      {
-        key: "feedback",
-        label: "Feedback inbox",
-        icon: "📨",
-        match: "feedback",
-        go: (n) => adminNav.feedback(n),
-      },
-      {
-        key: "students",
-        label: "Students",
-        icon: "👥",
-        match: "students",
-        go: (n) => adminNav.students(n),
-      },
-    ],
-  },
-];
+    ];
+  }
+
+  const providerOnly = Boolean(profile?.providerSessionOnly);
+  return [
+    {
+      title: "Guidance",
+      items: [
+        {
+          key: "guidance",
+          label: "Guidance dashboard",
+          icon: "🧭",
+          match: "guidance",
+          go: (n) => adminNav.guidanceDashboard(n),
+        },
+        providerOnly
+          ? {
+              key: "session",
+              label: "Session workspace",
+              icon: "📚",
+              match: "session",
+              go: (n) => adminNav.session(n),
+            }
+          : {
+              key: "students",
+              label: "Students",
+              icon: "👥",
+              match: "students",
+              go: (n) => adminNav.students(n),
+              locked: true,
+            },
+      ],
+    },
+    {
+      title: "Setup",
+      items: [
+        {
+          key: "verify",
+          label: "Verification",
+          icon: "✅",
+          match: "verify",
+          go: (n) => adminNav.verify(n),
+        },
+        {
+          key: "affiliation",
+          label: "Affiliation",
+          icon: "🔗",
+          match: "affiliation",
+          go: (n) => adminNav.affiliation(n),
+        },
+      ],
+    },
+  ];
+}
 
 export interface AdminShellProps {
   /** Page title shown in the top bar / sidebar header. */
@@ -162,19 +210,31 @@ export function AdminShell({
   const { width } = useWindowDimensions();
   const router = useRouter();
   const pathname = usePathname();
+  const [profile, setProfile] = useState<EducatorProfile | null>(null);
 
   const wide = Platform.OS === "web" && width >= WIDE_BREAKPOINT;
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const audience = adminAudienceForProfile(profile);
+  const navGroups = navGroupsFor(audience, profile);
+
+  useEffect(() => {
+    let active = true;
+    getEducatorProfile().then((p) => {
+      if (active) setProfile(p);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const activeKey = (() => {
     const segment = (pathname ?? "").split("/").filter(Boolean).pop() ?? "";
-    for (const group of NAV_GROUPS) {
+    for (const group of navGroups) {
       for (const item of group.items) {
-        if (item.match !== "(admin)" && segment === item.match) return item.key;
+        if (segment === item.match) return item.key;
       }
     }
-    // Default to the dashboard at the group root.
-    return "dashboard";
+    return audience === "university" ? "dashboard" : "guidance";
   })();
 
   const navigate = (item: AdminNavItem) => {
@@ -185,6 +245,8 @@ export function AdminShell({
   const Nav = (
     <NavList
       activeKey={activeKey}
+      audience={audience}
+      groups={navGroups}
       onNavigate={navigate}
       onClose={() => setDrawerOpen(false)}
       showClose={!wide}
@@ -259,11 +321,15 @@ export function AdminShell({
 // ─── Nav list ──────────────────────────────────────────────────
 function NavList({
   activeKey,
+  audience,
+  groups,
   onNavigate,
   onClose,
   showClose,
 }: {
   activeKey: string;
+  audience: AdminAudience;
+  groups: { title: string; items: AdminNavItem[] }[];
   onNavigate: (item: AdminNavItem) => void;
   onClose: () => void;
   showClose: boolean;
@@ -281,7 +347,7 @@ function NavList({
             {Brand.short}
           </Text>
           <Text style={[styles.brandSub, { color: Brand.primaryDeep }]}>
-            INSTITUTIONS
+            {adminAudienceLabel(audience).toUpperCase()}
           </Text>
         </View>
         {showClose ? (
@@ -295,7 +361,7 @@ function NavList({
         contentContainerStyle={styles.navScroll}
         showsVerticalScrollIndicator={false}
       >
-        {NAV_GROUPS.map((group) => (
+        {groups.map((group) => (
           <View key={group.title} style={styles.navGroup}>
             <Text style={[styles.groupTitle, { color: colors.textMuted }]}>
               {group.title.toUpperCase()}
@@ -336,10 +402,12 @@ function NavList({
           </View>
         ))}
 
-        <Text style={[styles.privacyNote, { color: colors.textMuted }]}>
-          🔒 Student data stays private. Aggregate insights only — individual
-          access requires verified consent.
-        </Text>
+        {audience === "school" ? (
+          <Text style={[styles.privacyNote, { color: colors.textMuted }]}>
+            🔒 Student data stays private. Individual access requires verified
+            consent.
+          </Text>
+        ) : null}
       </ScrollView>
     </View>
   );

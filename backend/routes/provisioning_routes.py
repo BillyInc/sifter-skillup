@@ -24,7 +24,7 @@
 import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
-from typing import List, Optional
+from typing import Any, List, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Response
 
@@ -41,6 +41,11 @@ from services.report_gen import (
     build_report_html,
     build_login_card_html,
 )
+from services.provisioning_reconcile import (
+    merge_provisioned_into_student,
+    normalize_stream,
+    reconcile_school_merge_candidates,
+)
 
 router = APIRouter(prefix="/api/provisioning", tags=["provisioning"])
 
@@ -50,8 +55,6 @@ _CLAIM_CODE_TTL_DAYS = 365
 # Unambiguous alphabet for printed cards (no 0/O, 1/I/L).
 _CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 _CODE_LEN = 8
-
-
 def _svc():
     return db.get_service_client().schema(_SCHEMA)
 
@@ -92,6 +95,10 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _clean_stream(value: Optional[str]) -> Optional[str]:
+    return normalize_stream(value)
+
+
 # ─────────────────────────────────────────────────────────────
 # Pydantic request/response models (snake_case, mirror the TS contract)
 # ─────────────────────────────────────────────────────────────
@@ -99,6 +106,7 @@ def _now() -> str:
 class DraftInput(BaseModel):
     full_name: Optional[str] = None
     student_class: Optional[str] = None
+    stream: Optional[str] = None
     guardian_consent: bool = False
     guardian_name: Optional[str] = None
 
@@ -108,12 +116,14 @@ class DraftImportRequest(BaseModel):
     set of manually-entered draft rows. Both feed the same review grid."""
     images: List[ImageInput] = Field(default_factory=list)
     manual_rows: List[DraftInput] = Field(default_factory=list)
+    stream: Optional[str] = None
 
 
 class DraftRow(BaseModel):
     id: str
     full_name: Optional[str] = None
     student_class: Optional[str] = None
+    stream: Optional[str] = None
     needs_review: bool = True
     guardian_consent: bool = False
     guardian_name: Optional[str] = None
@@ -143,6 +153,7 @@ class GeneratedStudent(BaseModel):
     user_id: str
     full_name: str
     student_class: Optional[str] = None
+    stream: Optional[str] = None
     claim_code: str
     claim_expires_at: Optional[str] = None
 
@@ -151,6 +162,7 @@ class RosterStudent(BaseModel):
     user_id: str
     full_name: Optional[str] = None
     student_class: Optional[str] = None
+    stream: Optional[str] = None
     provenance: str            # 'self' | 'provisioned'
     claim_state: Optional[str] = None  # 'unclaimed' | 'claimed' | None (self)
     visible: bool = True       # individually visible under the rule
@@ -162,6 +174,44 @@ class RosterResponse(BaseModel):
     total_affiliated: int      # everyone linked to the school
     aggregate_only: int        # counted but not individually visible
     shared_with_you: int       # individually visible
+
+
+class MergeCandidate(BaseModel):
+    id: str
+    provisioned_user_id: Optional[str] = None
+    student_user_id: Optional[str] = None
+    provisioned_name: Optional[str] = None
+    student_name: Optional[str] = None
+    student_class: Optional[str] = None
+    stream: Optional[str] = None
+    match_type: str
+    confidence: float = 0.0
+    evidence: dict[str, Any] = Field(default_factory=dict)
+    status: str = "pending"
+    created_at: Optional[str] = None
+
+
+def _merge_candidate_out(row: dict) -> dict:
+    provisioned = row.get("provisioned_snapshot") or {}
+    student = row.get("real_snapshot") or {}
+    if not isinstance(provisioned, dict):
+        provisioned = {}
+    if not isinstance(student, dict):
+        student = {}
+    return MergeCandidate(
+        id=row["id"],
+        provisioned_user_id=row.get("provisioned_student_id") or provisioned.get("id"),
+        student_user_id=row.get("real_student_id") or student.get("id"),
+        provisioned_name=provisioned.get("username"),
+        student_name=student.get("username"),
+        student_class=provisioned.get("student_class") or student.get("student_class"),
+        stream=_clean_stream(provisioned.get("stream") or student.get("stream")),
+        match_type=row.get("match_reason") or row.get("match_key") or "deterministic",
+        confidence=float(row.get("confidence") or 0.0),
+        evidence=row.get("evidence") if isinstance(row.get("evidence"), dict) else {},
+        status=row.get("status") or "pending",
+        created_at=row.get("created_at"),
+    ).model_dump()
 
 
 # ─────────────────────────────────────────────────────────────
@@ -179,12 +229,14 @@ async def create_drafts(
     school_id = _require_school(current_user)
 
     rows: List[dict] = []
+    batch_stream = _clean_stream(payload.stream)
     # Vision pre-fill (best-effort; empty on failure → manual entry).
     extracted = await extract_rows(payload.images)
     for r in extracted:
         rows.append({
             "full_name": r.full_name,
             "student_class": r.student_class,
+            "stream": batch_stream,
             "needs_review": True,
         })
     # Manual rows are confirmed-by-typing → needs_review reflects completeness.
@@ -192,6 +244,7 @@ async def create_drafts(
         rows.append({
             "full_name": m.full_name,
             "student_class": m.student_class,
+            "stream": _clean_stream(m.stream) or batch_stream,
             "needs_review": not bool(m.full_name),
             "guardian_consent": m.guardian_consent,
             "guardian_name": m.guardian_name,
@@ -209,6 +262,7 @@ async def create_drafts(
         "created_by": current_user["id"],
         "full_name": r.get("full_name"),
         "student_class": r.get("student_class"),
+        "stream": r.get("stream"),
         "needs_review": r.get("needs_review", True),
         "guardian_consent": r.get("guardian_consent", False),
         "guardian_name": r.get("guardian_name"),
@@ -233,7 +287,7 @@ async def list_drafts(current_user: dict = Depends(Auth.require_admin)):
     school_id = _require_school(current_user)
     try:
         res = _svc().table("student_provision_drafts").select(
-            "id, full_name, student_class, needs_review, guardian_consent, guardian_name, status"
+            "id, full_name, student_class, stream, needs_review, guardian_consent, guardian_name, status"
         ).eq("school_id", school_id).eq("status", "draft").order(
             "created_at", desc=False
         ).limit(2000).execute()
@@ -254,6 +308,7 @@ async def update_draft(
     updates = {
         "full_name": payload.full_name,
         "student_class": payload.student_class,
+        "stream": _clean_stream(payload.stream),
         "guardian_consent": payload.guardian_consent,
         "guardian_name": payload.guardian_name,
         "needs_review": not bool(payload.full_name),
@@ -295,7 +350,7 @@ async def generate_accounts(
     draft_ids = [i.draft_id for i in payload.items]
     try:
         dres = _svc().table("student_provision_drafts").select(
-            "id, full_name, student_class, guardian_consent, guardian_name, status"
+            "id, full_name, student_class, stream, guardian_consent, guardian_name, status"
         ).in_("id", draft_ids).eq("school_id", school_id).execute()
     except Exception as exc:  # noqa: BLE001
         log.error("provisioning: draft fetch for generate failed", error=str(exc))
@@ -328,6 +383,7 @@ async def generate_accounts(
             "provisioning_school_id": school_id,
             "claim_state": "unclaimed",
             "student_class": draft.get("student_class"),
+            "stream": _clean_stream(draft.get("stream")),
             "chosen_direction": direction,
             "guardian_consent_at": guardian_at,
             "points": 0,
@@ -367,6 +423,7 @@ async def generate_accounts(
             generated.append(GeneratedStudent(
                 user_id=user_id, full_name=name,
                 student_class=draft.get("student_class"),
+                stream=_clean_stream(draft.get("stream")),
                 claim_code=code, claim_expires_at=expires,
             ))
         except Exception as exc:  # noqa: BLE001
@@ -452,7 +509,7 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
         for i in range(0, len(student_ids), 500):
             chunk = student_ids[i:i + 500]
             ures = _users().select(
-                "id, username, student_class, provenance, claim_state"
+                "id, username, student_class, stream, provenance, claim_state"
             ).in_("id", chunk).execute().data or []
             for u in ures:
                 users_by_id[u["id"]] = u
@@ -473,6 +530,7 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
                 user_id=sid,
                 full_name=u.get("username"),
                 student_class=u.get("student_class"),
+                stream=u.get("stream"),
                 provenance=u.get("provenance") or "self",
                 claim_state=u.get("claim_state"),
                 visible=True,
@@ -493,12 +551,117 @@ async def get_roster(current_user: dict = Depends(Auth.require_admin)):
 
 
 # ─────────────────────────────────────────────────────────────
+# 3b. Admin-reviewed merge candidates
+# ─────────────────────────────────────────────────────────────
+
+@router.get("/merge-candidates", response_model=ResponseModel)
+async def list_merge_candidates(
+    status: str = "pending",
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """List deterministic duplicate candidates for the admin's school.
+
+    Pending lists run the exact-match reconciler first so newly affiliated
+    students surface without waiting for the periodic worker.
+    """
+    status = (status or "pending").strip().lower()
+    if status not in {"pending", "confirmed", "dismissed", "all"}:
+        raise HTTPException(status_code=400, detail="Unsupported merge candidate status.")
+
+    school_id = _require_school(current_user)
+    try:
+        if status in {"pending", "all"}:
+            reconcile_school_merge_candidates(school_id, created_by=current_user["id"])
+
+        query = _svc().table("student_merge_candidates").select("*").eq(
+            "school_id", school_id
+        )
+        if status != "all":
+            query = query.eq("status", status)
+        rows = query.order("created_at", desc=True).limit(500).execute().data or []
+        return ResponseModel(data=[_merge_candidate_out(r) for r in rows])
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: list merge candidates failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not load merge candidates.")
+
+
+@router.post("/merge-candidates/{candidate_id}/confirm", response_model=ResponseModel)
+async def confirm_merge_candidate(
+    candidate_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Confirm a pending candidate and merge the provisioned shell into the real account."""
+    school_id = _require_school(current_user)
+    try:
+        res = _svc().table("student_merge_candidates").select("*").eq(
+            "id", candidate_id
+        ).eq("school_id", school_id).limit(1).execute()
+        candidate = (res.data or [None])[0]
+        if not candidate:
+            raise HTTPException(status_code=404, detail="Merge candidate not found.")
+        if candidate.get("status") != "pending":
+            raise HTTPException(status_code=409, detail="Merge candidate is no longer pending.")
+
+        provisioned_id = candidate.get("provisioned_student_id")
+        real_id = candidate.get("real_student_id")
+        if not provisioned_id or not real_id:
+            raise HTTPException(status_code=409, detail="Merge candidate is missing a student account.")
+
+        result = merge_provisioned_into_student(
+            provisioned_student_id=provisioned_id,
+            real_student_id=real_id,
+            school_id=school_id,
+        )
+        _svc().table("student_merge_candidates").update({
+            "status": "confirmed",
+            "confirmed_by": current_user["id"],
+            "confirmed_at": _now(),
+            "updated_at": _now(),
+        }).eq("id", candidate_id).execute()
+        return ResponseModel(data=result, message="Student accounts merged.")
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: confirm merge candidate failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not confirm merge candidate.")
+
+
+@router.post("/merge-candidates/{candidate_id}/dismiss", response_model=ResponseModel)
+async def dismiss_merge_candidate(
+    candidate_id: str,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Dismiss a pending candidate so deterministic sweeps do not recreate it."""
+    school_id = _require_school(current_user)
+    try:
+        res = _svc().table("student_merge_candidates").update({
+            "status": "dismissed",
+            "dismissed_by": current_user["id"],
+            "dismissed_at": _now(),
+            "updated_at": _now(),
+        }).eq("id", candidate_id).eq("school_id", school_id).eq(
+            "status", "pending"
+        ).execute()
+        if not res.data:
+            raise HTTPException(status_code=404, detail="Pending merge candidate not found.")
+        return ResponseModel(data={"dismissed": True}, message="Merge candidate dismissed.")
+    except HTTPException:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.error("provisioning: dismiss merge candidate failed", error=str(exc))
+        raise HTTPException(status_code=500, detail="Could not dismiss merge candidate.")
+
+
+# ─────────────────────────────────────────────────────────────
 # 4. Student-side: claim (with automatic merge), affiliate, consent
 # ─────────────────────────────────────────────────────────────
 
 class ClaimRequest(BaseModel):
     code: str
-    phone: Optional[str] = None   # phone-first identity (Nigeria/WhatsApp)
+    # Login identity to attach so the student can sign in again from any device.
+    # Either phone or email works (equal weight); at least one is required when
+    # the account has no other durable credential yet.
+    phone: Optional[str] = None
     email: Optional[str] = None
 
 
@@ -535,7 +698,17 @@ async def claim_account(
         caller_id = current_user["id"]
 
         if caller_id == provisioned_id:
-            # Normal claim: the caller IS the provisioned account (first login via code).
+            # Normal claim: the caller IS the provisioned account (first login via
+            # code). The shell has no durable credential yet, so require one
+            # (phone or email, equal weight) — otherwise the student could never
+            # sign back in.
+            has_identity = bool((payload.phone or "").strip() or (payload.email or "").strip())
+            already_has = bool(current_user.get("phone") or current_user.get("email"))
+            if not has_identity and not already_has:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Add a phone number or email so you can sign in again later.",
+                )
             updates = {"claim_state": "claimed", "last_login": _now()}
             if payload.phone:
                 updates["phone"] = payload.phone.strip()
@@ -545,29 +718,13 @@ async def claim_account(
         else:
             # MERGE: an existing self-account redeems the provisioned code. Move the
             # provisioned row's school context onto the caller, retire the provisioned row.
-            pres = _users().select(
-                "student_class, chosen_direction, guardian_consent_at"
-            ).eq("id", provisioned_id).limit(1).execute()
-            prov = (pres.data or [{}])[0]
-            merge_updates = {"last_login": _now()}
-            if prov.get("student_class"):
-                merge_updates["student_class"] = prov["student_class"]
-            if prov.get("chosen_direction"):
-                merge_updates["chosen_direction"] = prov["chosen_direction"]
-            if prov.get("guardian_consent_at"):
-                merge_updates["guardian_consent_at"] = prov["guardian_consent_at"]
-            if payload.phone:
-                merge_updates["phone"] = payload.phone.strip()
-            if payload.email:
-                merge_updates["email"] = payload.email.strip().lower()
-            _users().update(merge_updates).eq("id", caller_id).execute()
-
-            # Re-point affiliation to the caller (avoid duplicate rows for one human).
-            _svc().table("student_affiliations").update(
-                {"student_id": caller_id, "source": "provisioned"}
-            ).eq("student_id", provisioned_id).eq("school_id", school_id).execute()
-            # Retire the provisioned shell.
-            _users().delete().eq("id", provisioned_id).execute()
+            merge_provisioned_into_student(
+                provisioned_student_id=provisioned_id,
+                real_student_id=caller_id,
+                school_id=school_id,
+                phone=payload.phone,
+                email=payload.email,
+            )
 
         _svc().table("claim_codes").update(
             {"redeemed_at": _now()}
@@ -731,6 +888,7 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
     return ReportContext(
         student_name=user.get("username") or "Student",
         student_class=user.get("student_class"),
+        stream=user.get("stream"),
         school_name=school_name,
         domain_name=domain_name,
         domain_description=domain_description,
@@ -744,7 +902,7 @@ def _resolve_report_context(user: dict, school_name: Optional[str], generated_on
 def _load_school_student(user_id: str, school_id: str) -> dict:
     """Fetch a student that belongs to the admin's school; 404 otherwise."""
     ures = _users().select(
-        "id, username, student_class, chosen_direction, provisioning_school_id"
+        "id, username, student_class, stream, chosen_direction, provisioning_school_id"
     ).eq("id", user_id).limit(1).execute()
     u = (ures.data or [None])[0]
     if not u:
@@ -818,5 +976,6 @@ async def get_login_card(
         claim_code=cc["code"],
         school_name=_school_name(school_id),
         student_class=u.get("student_class"),
+        stream=u.get("stream"),
     )
     return Response(content=card, media_type="text/html")

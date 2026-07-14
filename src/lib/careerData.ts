@@ -52,6 +52,7 @@ import {
 } from "../types/career";
 import { request } from "./api";
 import { getCached, setCached } from "./careerCache";
+import type { StartingPointProfile } from "../types/onboarding";
 
 /** TTL for cached domain/role detail payloads (15 min). */
 const DETAIL_TTL_MS = 15 * 60 * 1000;
@@ -60,6 +61,67 @@ const DETAIL_TTL_MS = 15 * 60 * 1000;
 export interface DomainClusterGroup {
   cluster: string;
   domains: { id: string; name: string; inDemandScore?: number; eliteFlag?: boolean }[];
+}
+
+export interface SubjectCatalogItem {
+  id: string;
+  code?: string | null;
+  name: string;
+  aliases: string[];
+  category?: string | null;
+  streamTags: string[];
+}
+
+export interface JambProgrammeSuggestion {
+  id: string;
+  jambProgrammeId: string;
+  jambName: string;
+  jambFaculty?: string | null;
+  degreeType?: string | null;
+  isBlend?: boolean;
+  programmeId?: string | null;
+  canonicalProgrammeName?: string | null;
+  displayName?: string | null;
+  institutionType?: string | null;
+  discipline?: string | null;
+  mappingType?: string | null;
+  mappingNote?: string | null;
+  confidence?: string | null;
+}
+
+export interface SubjectProgrammeMatch extends JambProgrammeSuggestion {
+  matchedSubjectCount: number;
+  matchedSubjects: string[];
+  requirementText?: string | null;
+  matchBasis: "structured" | "text";
+}
+
+export interface JambProgrammeSchool {
+  id?: string | null;
+  schoolId: string;
+  schoolName: string;
+  institutionType?: string | null;
+  jambProgrammeId?: string | null;
+  jambName?: string | null;
+  programmeId?: string | null;
+  programmeName?: string | null;
+  year?: number | null;
+  aggregateCutoff?: number | null;
+  jambCutoff?: number | null;
+  postUtmeCutoff?: number | null;
+  form?: "UTME" | "DE" | null;
+  sourceUrl?: string | null;
+}
+
+export interface StudentAffiliation {
+  id: string;
+  schoolId: string;
+  schoolName: string;
+  institutionType?: string | null;
+  providerSessionOnly?: boolean;
+  source?: string;
+  verificationLevel: "self_reported" | "code_verified" | "provisioned";
+  createdAt?: string;
 }
 
 // Flip to true per-area as real data is wired (kept here so screens can branch
@@ -74,6 +136,137 @@ export const CAREER_DATA_LIVE = {
 
 // ─── Read API ─────────────────────────────────────────────────
 export const careerData = {
+  // ─── Student live pipeline ─────────────────────────────────
+  async getStartingPoint(): Promise<DataState<StartingPointProfile | null>> {
+    try {
+      return await request<DataState<StartingPointProfile | null>>(
+        `/api/student/starting-point`,
+      );
+    } catch {
+      return comingSoon<StartingPointProfile | null>(
+        "Starting point is temporarily unavailable.",
+      );
+    }
+  },
+
+  async saveStartingPoint(
+    profile: StartingPointProfile,
+  ): Promise<DataState<StartingPointProfile>> {
+    try {
+      return await request<DataState<StartingPointProfile>>(
+        `/api/student/starting-point`,
+        { method: "POST", body: JSON.stringify(profile) },
+      );
+    } catch {
+      return comingSoon<StartingPointProfile>(
+        "Could not save starting point to the server.",
+      );
+    }
+  },
+
+  async getSubjects(
+    q?: string,
+    stream?: string,
+  ): Promise<DataState<SubjectCatalogItem[]>> {
+    try {
+      const qs = new URLSearchParams();
+      if (q) qs.set("q", q);
+      if (stream) qs.set("stream", stream);
+      return await request<DataState<SubjectCatalogItem[]>>(
+        `/api/student/subjects${qs.toString() ? `?${qs.toString()}` : ""}`,
+      );
+    } catch {
+      return comingSoon<SubjectCatalogItem[]>("Subject catalog is unavailable.");
+    }
+  },
+
+  async searchJambProgrammes(
+    q: string,
+  ): Promise<DataState<JambProgrammeSuggestion[]>> {
+    try {
+      return await request<DataState<JambProgrammeSuggestion[]>>(
+        `/api/student/jamb-programmes?q=${encodeURIComponent(q)}`,
+      );
+    } catch {
+      return comingSoon<JambProgrammeSuggestion[]>(
+        "JAMB programme search is unavailable.",
+      );
+    }
+  },
+
+  async getProgrammesBySubjects(
+    subjects: string[],
+    stream?: string,
+  ): Promise<DataState<SubjectProgrammeMatch[]>> {
+    try {
+      const qs = new URLSearchParams();
+      qs.set("subjects", subjects.join(","));
+      if (stream) qs.set("stream", stream);
+      return await request<DataState<SubjectProgrammeMatch[]>>(
+        `/api/student/programmes/by-subjects?${qs.toString()}`,
+      );
+    } catch {
+      return comingSoon<SubjectProgrammeMatch[]>(
+        "Subject-to-programme matching is unavailable.",
+      );
+    }
+  },
+
+  async getJambProgrammeSchools(
+    jambProgrammeId: string,
+  ): Promise<DataState<JambProgrammeSchool[]>> {
+    try {
+      return await request<DataState<JambProgrammeSchool[]>>(
+        `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/schools`,
+      );
+    } catch {
+      return comingSoon<JambProgrammeSchool[]>(
+        "Schools and cut-offs are unavailable.",
+      );
+    }
+  },
+
+  async getJambProgrammeDomains(
+    jambProgrammeId: string,
+  ): Promise<DataState<JambDomainResult>> {
+    try {
+      return await request<DataState<JambDomainResult>>(
+        `/api/student/jamb-programmes/${encodeURIComponent(jambProgrammeId)}/domains`,
+      );
+    } catch {
+      return comingSoon<JambDomainResult>(
+        "Domain paths are unavailable.",
+      );
+    }
+  },
+
+  async affiliateWithSchoolCode(
+    code: string,
+  ): Promise<DataState<StudentAffiliation>> {
+    try {
+      return await request<DataState<StudentAffiliation>>(
+        `/api/student/affiliations/school-code`,
+        { method: "POST", body: JSON.stringify({ code }) },
+      );
+    } catch {
+      return comingSoon<StudentAffiliation>(
+        "Could not verify that school code.",
+      );
+    }
+  },
+
+  async getMyAffiliations(): Promise<DataState<StudentAffiliation[]>> {
+    try {
+      return await request<DataState<StudentAffiliation[]>>(
+        `/api/student/affiliations/me`,
+      );
+    } catch {
+      return comingSoon<StudentAffiliation[]>(
+        "Affiliations are temporarily unavailable.",
+      );
+    }
+  },
+
   /** Search programmes by free text, optionally filtered by institution type. */
   async searchProgrammes(
     query: string,

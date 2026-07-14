@@ -60,6 +60,12 @@ const SUBJECTS: ChoiceOption[] = [
   "Yoruba/Hausa/Igbo",
 ].map((s) => ({ label: s, value: s }));
 
+const STREAMS: ChoiceOption[] = [
+  { label: "Science", value: "science" },
+  { label: "Commercial", value: "commercial" },
+  { label: "Art", value: "art" },
+];
+
 const INTENTS: ChoiceOption[] = [
   { label: "Explore careers", value: "explore_careers" },
   { label: "Help me choose subjects", value: "choose_subjects" },
@@ -99,6 +105,17 @@ export function SeniorSecondaryExploreSetupForm({
       </View>
 
       <ChoiceChips
+        label="Your school stream (guidance hint)"
+        options={STREAMS}
+        value={value.stream}
+        onChange={(v) => onChange({ stream: v as "science" | "commercial" | "art" })}
+      />
+      <Text style={[styles.caption, { color: colors.textMuted }]}>
+        Stream helps us pre-sort suggestions, but your actual subjects decide
+        eligibility.
+      </Text>
+
+      <ChoiceChips
         label="Subjects you're strongest in / enjoy"
         options={SUBJECTS}
         value={value.jambSubjects}
@@ -106,8 +123,8 @@ export function SeniorSecondaryExploreSetupForm({
         multi
       />
       <Text style={[styles.caption, { color: colors.textMuted }]}>
-        We'll map these to the programmes they open — and the domains and roles
-        beyond — once programme data is live.
+        We'll map these to programmes they open, then to the schools, domains
+        and roles beyond.
       </Text>
 
       <ChoiceChips
@@ -124,12 +141,10 @@ export function SeniorSecondaryExploreSetupForm({
           value={value.intendedProgramme ?? ""}
           onChangeText={(v) => onChange({ intendedProgramme: v })}
           placeholder="Search programmes"
-          comingSoon
         />
         <Text style={[styles.note, { color: colors.textMuted }]}>
-          🔓 Subject → programme → domain → role matching is Live soon — we'll
-          show you which subjects open which programmes once that data is added.
-          No UTME cut-offs here; that's for when you reach SS3.
+          We will use your subjects and interests to start with realistic
+          programme paths. Cut-offs become more important when you reach SS3.
         </Text>
       </View>
 

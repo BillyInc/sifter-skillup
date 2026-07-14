@@ -78,11 +78,19 @@ ALTER TABLE skillup_dev.users
 ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS student_class          TEXT;  -- e.g. 'SS2' — identity, NOT academic record
 ALTER TABLE skillup_dev.users
+    ADD COLUMN IF NOT EXISTS stream                 TEXT;  -- 'science'|'art'|'commercial' (SS enrollment stream) — identity, not a grade
+ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS chosen_direction        JSONB; -- the picked career direction {domain_key, role_key, programme_id}
 ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS phone                  TEXT;  -- claim identity (phone-first for Nigeria/WhatsApp)
 ALTER TABLE skillup_dev.users
     ADD COLUMN IF NOT EXISTS guardian_consent_at    TIMESTAMPTZ;
+-- account_type gates admin surfaces (Auth.require_admin reads it) and is already
+-- assumed by institutions_routes.py; it was never added by an earlier migration.
+-- Add it here so provisioning's admin routes resolve. 'student' | 'educator' |
+-- 'institution_admin'; legacy rows default to 'student'.
+ALTER TABLE skillup_dev.users
+    ADD COLUMN IF NOT EXISTS account_type           TEXT NOT NULL DEFAULT 'student';
 CREATE INDEX IF NOT EXISTS idx_users_provisioning_school
     ON skillup_dev.users(provisioning_school_id) WHERE provisioning_school_id IS NOT NULL;
 CREATE UNIQUE INDEX IF NOT EXISTS uq_users_phone
@@ -138,6 +146,7 @@ CREATE TABLE IF NOT EXISTS skillup_dev.student_provision_drafts (
     created_by        UUID NOT NULL REFERENCES skillup_dev.users(id)   ON DELETE CASCADE,  -- the educator
     full_name         TEXT,          -- may be NULL/uncertain until the educator confirms
     student_class     TEXT,          -- e.g. 'SS2' — identity, not academic record
+    stream            TEXT,          -- 'science'|'art'|'commercial' (SS stream) — set per-batch, editable per-row
     needs_review      BOOLEAN NOT NULL DEFAULT true,   -- true while any field is unconfirmed
     guardian_consent  BOOLEAN NOT NULL DEFAULT false,  -- the enrolment-form tick for minors
     guardian_name     TEXT,
@@ -146,9 +155,43 @@ CREATE TABLE IF NOT EXISTS skillup_dev.student_provision_drafts (
     created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+ALTER TABLE skillup_dev.student_provision_drafts
+    ADD COLUMN IF NOT EXISTS stream TEXT;
 CREATE INDEX IF NOT EXISTS idx_drafts_school ON skillup_dev.student_provision_drafts(school_id, status);
 
--- ── 6. claim_codes — single-use, regenerable ─────────────────
+-- ── 6. student_merge_candidates — admin-confirm recovery ─────
+-- Background reconciliation proposes likely duplicates between an unclaimed
+-- school-provisioned shell and a self/claimed student account. Admins confirm
+-- or dismiss; dismissed rows persist so the same pair does not reappear.
+CREATE TABLE IF NOT EXISTS skillup_dev.student_merge_candidates (
+    id                     UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    school_id              UUID NOT NULL REFERENCES skillup_dev.schools(id) ON DELETE CASCADE,
+    provisioned_student_id UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL,
+    real_student_id        UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL,
+    status                 TEXT NOT NULL DEFAULT 'pending', -- pending|confirmed|dismissed
+    match_key              TEXT NOT NULL,
+    match_reason           TEXT NOT NULL,
+    confidence             NUMERIC NOT NULL DEFAULT 0,
+    evidence               JSONB NOT NULL DEFAULT '{}'::jsonb,
+    provisioned_snapshot   JSONB NOT NULL DEFAULT '{}'::jsonb,
+    real_snapshot          JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_by             UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL,
+    confirmed_by           UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL,
+    dismissed_by           UUID REFERENCES skillup_dev.users(id) ON DELETE SET NULL,
+    confirmed_at           TIMESTAMPTZ,
+    dismissed_at           TIMESTAMPTZ,
+    created_at             TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at             TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(school_id, provisioned_student_id, real_student_id)
+);
+CREATE INDEX IF NOT EXISTS idx_merge_candidates_school_status
+    ON skillup_dev.student_merge_candidates(school_id, status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_merge_candidates_provisioned
+    ON skillup_dev.student_merge_candidates(provisioned_student_id);
+CREATE INDEX IF NOT EXISTS idx_merge_candidates_real
+    ON skillup_dev.student_merge_candidates(real_student_id);
+
+-- ── 7. claim_codes — single-use, regenerable ─────────────────
 -- Printed on the detachable login card. Redeeming converts the
 -- provisioned account to student-owned. Regenerating a code invalidates
 -- the prior one (revoked_at) — satisfies "editable/regenerable until
@@ -170,11 +213,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS uq_claim_codes_live
     WHERE redeemed_at IS NULL AND revoked_at IS NULL;
 CREATE INDEX IF NOT EXISTS idx_claim_codes_student ON skillup_dev.claim_codes(student_id);
 
--- ── 7. Row Level Security ────────────────────────────────────
+-- ── 8. Row Level Security ────────────────────────────────────
 -- Server uses the service-role client (bypasses RLS). Enable RLS so
 -- anon/auth direct access is denied by default; policies land with the
 -- broader institutional RLS pass.
 ALTER TABLE skillup_dev.student_affiliations      ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.student_consents          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.student_provision_drafts  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE skillup_dev.student_merge_candidates  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skillup_dev.claim_codes               ENABLE ROW LEVEL SECURITY;

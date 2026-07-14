@@ -18,22 +18,29 @@ psql "postgresql://postgres:[PASSWORD]@db.[REF].supabase.co:5432/postgres" -f <f
 
 | # | File | Creates / alters | Depends on |
 |---|------|------------------|------------|
-| 1 | `migration_career_v2.sql` | Drops the empty pre-sweep taxonomy tables and recreates the post-sweep shape: `domains`, `domain_subgroups`, `domain_roles`, `domain_tools`, `domain_certifications`, `programme_domain` (incl. `in_demand_score`, `elite_flag`), `programme_role_score`, `jamb_programme_domain`, `domain_overlap`; user tables `saved_items`, `user_notes` (+`category`,`entity_label`), `opportunity_subscriptions`; `mapping_feedback`, `enrichment_version`; **`institution_members`** (admin/educator → school link, powers the school-scoped admin dashboard + admin-only peer rule); **and the demand tables `domain_demand_metrics`, `role_demand_metrics`** (moved here from the superseded `migration_career_intelligence.sql` so one runbook builds the whole schema). Preserves all non-career user tables. | the base app schema (`users`, `programmes`, `schools`, `jamb_programmes` from the pilot migration) |
-| 2 | `migration_admission_intelligence.sql` | Phase 8 admission tables: `national_jamb_floor`, `programme_school_cutoff`, `school_aggregate_formula`, `course_competitiveness`, `admission_snapshot_version`. | #1 (FK `schools`, `programmes`) |
-| 3 | `migration_enrichment_v1.sql` | Phase 9 enrichment **columns** (additive) on `domain_certifications` (official_url, seniority_tier, tier_type, price, currency, price_as_of, price_source), `domains`/`domain_subgroups`/`domain_roles` (skill-URI JSONB), `domain_tools` (demand_score, demand_source, demand_as_of, tool_url), `domain_roles` (currency_status, currency_verified_at, currency_source). | #1 and #2 |
-| 4 | `migration_user_feedback.sql` | Phase 12 `user_feedback` table (admin inbox + ReviewModal). | the base `users` table |
+| 0 | `supabase-schema.sql` | Base app tables, especially `skillup_dev.users`. | none |
+| 1 | `backend/migration_v2.sql` | Adds auth/session/game/feed/profile columns and tables used by backend v2. | #0 |
+| 2 | `backend/migration_v2_atomic.sql` | Helper functions and RLS cleanup for backend-only tables. | #1 |
+| 3 | `backend/migration_career_base_registry.sql` | Stable base career registry: `schools`, `programmes`. | #0 |
+| 4 | `backend/migration_career_pilot.sql` | JAMB programme registry, JAMB↔programme mapping, school programme offerings, textual subject requirements. | #3 |
+| 5 | `backend/migration_career_v2.sql` | Drops the empty pre-sweep taxonomy tables and recreates the post-sweep shape: `domains`, `domain_subgroups`, `domain_roles`, `domain_tools`, `domain_certifications`, `programme_domain` (incl. `in_demand_score`, `elite_flag`), `programme_role_score`, `jamb_programme_domain`, `domain_overlap`; user tables `saved_items`, `user_notes` (+`category`,`entity_label`), `opportunity_subscriptions`; `mapping_feedback`, `enrichment_version`; **`institution_members`**; demand tables `domain_demand_metrics`, `role_demand_metrics`. | #3 and #4 |
+| 6 | `backend/migration_admission_intelligence.sql` | Phase 8 admission tables: `national_jamb_floor`, `programme_school_cutoff`, `school_aggregate_formula`, `course_competitiveness`, `admission_snapshot_version`. | #5 |
+| 7 | `backend/migration_enrichment_v1.sql` | Phase 9 enrichment **columns** (additive) on `domain_certifications`, `domains`/`domain_subgroups`/`domain_roles`, and `domain_tools`. | #5 and #6 |
+| 8 | `backend/migration_provisioning.sql` | Institution provisioning, school codes, claim codes, student affiliations/consents, merge candidates. | #5 |
+| 9 | `backend/migration_student_pipeline_live.sql` | Student starting points, selected subjects, structured subject options, pathway choices, JAMB/cutoff views. | #4, #6, #8 |
+| 10 | `backend/migration_user_feedback.sql` | Phase 12 `user_feedback` table (admin inbox + ReviewModal). | #0 |
 
-> **Do NOT run `migration_career_intelligence.sql`.** It is superseded — its
-> demand tables now live in `migration_career_v2.sql` (#1). Running it after #1
-> is harmless (`IF NOT EXISTS`) but unnecessary. It is kept only for history.
+> **Do NOT run `migration_career_intelligence.sql`.** It is superseded and mixed
+> obsolete taxonomy tables with the base `schools`/`programmes` registry. Use
+> `migration_career_base_registry.sql` instead.
 
 ### B. Seeds (data — DML, run AFTER all migrations)
 
 | # | File | Rows | Depends on |
 |---|------|------|------------|
-| 5 | `seed_career_pilot.sql` | programmes, schools, `jamb_programmes`, `programme_mapping`, `school_programmes`, `programme_subject_requirements` | migrations A |
-| 6 | `seed_career_v2.sql` | 168 domains · 278 sub-groups · 4,092 roles · 7,393 tools · 508 certs · 2,528 programme→domain · 70,560 readiness · 5,573 JAMB→domain · 4,112 overlap. **Gitignored (~39 MB)** — regenerate with `python data/career-mapping/_gen_career_seed.py`. | #5 (FK programmes/jamb) |
-| 7 | `seed_phase8_9_enrichment.sql` | Admission pilot rows (cut-offs, formulas, competitiveness, floor, snapshot) + Phase 9 enrichment `UPDATE`s (cert URLs/prices, tool demand, skill URIs, role currency) + `enrichment_version` stamps. Regenerate with `python data/career-mapping/_gen_enrichment_seed.py`. | migrations A + #6 (updates taxonomy rows) |
+| 11 | `backend/seed_career_pilot.sql` | programmes, schools, `jamb_programmes`, `programme_mapping`, `school_programmes`, `programme_subject_requirements` | migrations #4 |
+| 12 | `backend/seed_career_v2.sql` | 168 domains · 278 sub-groups · 4,092 roles · 7,393 tools · 508 certs · 2,528 programme→domain · 70,560 readiness · 5,573 JAMB→domain · 4,112 overlap. **Gitignored (~39 MB)** — regenerate with `python data/career-mapping/_gen_career_seed.py`. | #11 |
+| 13 | `backend/seed_phase8_9_enrichment.sql` | Admission pilot rows (cut-offs, formulas, competitiveness, floor, snapshot) + Phase 9 enrichment `UPDATE`s. Regenerate with `python data/career-mapping/_gen_enrichment_seed.py`. | #11 and #12 |
 
 ## Smoke test (after A + B)
 
