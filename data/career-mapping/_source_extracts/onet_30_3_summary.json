@@ -1,0 +1,72 @@
+{
+  "Occupation Data.txt": {
+    "rows_including_header": 1017,
+    "header": [
+      "O*NET-SOC Code",
+      "Title",
+      "Description"
+    ]
+  },
+  "Job Zone Reference.txt": {
+    "rows_including_header": 5,
+    "header": [
+      "Job Zone",
+      "Name",
+      "Experience",
+      "Education",
+      "Job Training",
+      "Examples",
+      "SVP Range"
+    ]
+  },
+  "Emerging Tasks.txt": {
+    "rows_including_header": 329,
+    "header": [
+      "O*NET-SOC Code",
+      "Task",
+      "Category",
+      "Original Task ID",
+      "Original Task",
+      "Date",
+      "Domain Source"
+    ]
+  },
+  "Job Zones.txt": {
+    "rows_including_header": 924,
+    "header": [
+      "O*NET-SOC Code",
+      "Job Zone",
+      "Date",
+      "Domain Source"
+    ]
+  },
+  "Software Skills.txt": {
+    "rows_including_header": 31822,
+    "header": [
+      "O*NET-SOC Code",
+      "Workplace Example",
+      "Element ID",
+      "Element Name",
+      "Hot Technology",
+      "In Demand"
+    ]
+  },
+  "Essential Skills.txt": {
+    "rows_including_header": 17881,
+    "header": [
+      "O*NET-SOC Code",
+      "Element ID",
+      "Element Name",
+      "Scale ID",
+      "Data Value",
+      "N",
+      "Standard Error",
+      "Lower CI Bound",
+      "Upper CI Bound",
+      "Recommend Suppress",
+      "Not Relevant",
+      "Date",
+      "Domain Source"
+    ]
+  }
+}

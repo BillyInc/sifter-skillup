@@ -1,0 +1,152 @@
+FAIL	403	https://arcon.gov.ng/	
+OK	200	275873	https://cipmnigeria.org/
+OK	200	179872	https://ciltnigeria.org/
+OK	200	299162	https://aws.amazon.com/certification/
+FAIL	403	https://amia.org/careers-certifications	curl: (28) Connection timeout after 6011 ms 
+OK	200	98932	https://actuaries.org.uk/
+OK	200	121633	https://esco.ec.europa.eu/en/classification/occupation_main
+FAIL	000	https://actuaries.org.uk/qualify/	curl: (28) Resolving timed out after 6023 milliseconds curl: (28) SSL connection timeout 
+OK	200	591	https://icanig.org/
+FAIL	000	https://customs.gov.ng/	curl: (28) Resolving timed out after 6019 milliseconds curl: (28) Resolving timed out after 6017 milliseconds 
+OK	200	410243	https://iapp.org/certify/
+OK	200	107669	https://ciltinternational.org/
+FAIL	000	https://icenigeria.org/	curl: (6) Could not resolve host: icenigeria.org curl: (6) Could not resolve host: icenigeria.org 
+FAIL	000	https://ehorecon.gov.ng/	curl: (28) Resolving timed out after 6018 milliseconds curl: (28) Connection time-out 
+OK	200	69094	https://hitmarker.net/
+OK	200	62191	https://immf.com/
+OK	200	47748	https://igda.org/resources/
+FAIL	301	https://fmard.gov.ng/	curl: (28) Connection timeout after 6008 ms curl: (28) Resolving timed out after 6022 milliseconds 
+FAIL	200	https://coren.gov.ng/	curl: (28) Failed to connect to coren.gov.ng port 443 after 6011 ms: Timeout was reached curl: (28) Operation timed out after 18020 milliseconds with 310813 bytes received 
+OK	200	83268	https://ifr.org/
+FAIL	000	https://mrtbnigeria.org.ng/	curl: (6) Could not resolve host: mrtbnigeria.org.ng curl: (28) Resolving timed out after 6016 milliseconds 
+OK	200	206985	https://iosh.com/
+FAIL	000	https://immigration.gov.ng/	curl: (28) Resolving timed out after 6018 milliseconds curl: (28) Resolving timed out after 6016 milliseconds 
+OK	200	37081	https://learn.microsoft.com/en-us/credentials/
+OK	200	123153	https://anan.org.ng/
+OK	200	189131	https://icom.museum/
+OK	200	2406	https://nigerianbar.org.ng/
+FAIL	000	https://lppconline.com/	curl: (28) Resolving timed out after 6016 milliseconds curl: (28) Resolving timed out after 6018 milliseconds 
+OK	200	99680	https://ncaa.gov.ng/
+OK	200	128804	https://nema.gov.ng/
+FAIL	000	https://niae.net.ng/	curl: (6) Could not resolve host: niae.net.ng curl: (6) Could not resolve host: niae.net.ng 
+FAIL	200	https://chprbn.gov.ng/	curl: (28) Operation timed out after 18018 milliseconds with 163166 bytes received curl: (28) Operation timed out after 18006 milliseconds with 124342 bytes received 
+FAIL	200	https://arconigeria.gov.ng/	curl: (28) Operation timed out after 18009 milliseconds with 147382 bytes received curl: (28) Operation timed out after 18038 milliseconds with 98304 bytes received 
+FAIL	406	https://notap.gov.ng/	
+OK	200	190	https://nnra.gov.ng/
+FAIL	403	https://quantum.ieee.org/	
+FAIL	301	https://nasrda.gov.ng/	curl: (28) Failed to connect to nasrda.gov.ng port 443 after 6008 ms: Timeout was reached curl: (28) Resolving timed out after 6017 milliseconds 
+OK	200	103685	https://prmia.org/
+OK	307	1359	https://nimet.gov.ng/
+FAIL	000	https://nisw.org.ng/	curl: (6) Could not resolve host: nisw.org.ng curl: (6) Could not resolve host: nisw.org.ng 
+FAIL	000	https://shipperscouncil.gov.ng/	curl: (60) SSL: no alternative certificate subject name matches target host name 'shipperscouncil.gov.ng' More details here: https://curl.se/docs/sslcerts.html  curl failed to verify the legitimacy of the server and therefore could not establish a secure connection to it. To learn more about this situation and how to fix it, please visit the web page mentioned above. 
+OK	200	789	https://nimn.com.ng/
+OK	200	79031	https://sfia-online.org/en/sfia-9
+OK	200	55209	https://sec.gov.ng/
+FAIL	403	https://nla.org.ng/	curl: (28) Connection timeout after 6001 ms 
+FAIL	000	https://toprec.org.ng/	curl: (6) Could not resolve host: toprec.org.ng curl: (6) Could not resolve host: toprec.org.ng 
+FAIL	000	https://nipr.org.ng/	curl: (28) Resolving timed out after 6021 milliseconds curl: (6) Could not resolve host: nipr.org.ng 
+OK	200	13497	https://vcn.gov.ng/
+FAIL	000	https://rrbn.gov.ng/	curl: (28) Failed to connect to rrbn.gov.ng port 443 after 6004 ms: Timeout was reached curl: (35) OpenSSL/3.0.13: error:0A000458:SSL routines::tlsv1 unrecognized name 
+FAIL	000	https://surcon.org.ng/	curl: (6) Could not resolve host: surcon.org.ng curl: (28) Resolving timed out after 6017 milliseconds 
+FAIL	000	https://nsc.gov.ng/	curl: (28) Resolving timed out after 6017 milliseconds curl: (28) Resolving timed out after 6019 milliseconds 
+FAIL	403	https://spherestandards.org/	curl: (28) Resolving timed out after 6018 milliseconds 
+OK	200	44191	https://world.physio/
+FAIL	000	https://qsrbn.gov.ng/	curl: (28) Failed to connect to qsrbn.gov.ng port 443 after 6009 ms: Timeout was reached curl: (28) Failed to connect to qsrbn.gov.ng port 443 after 6030 ms: Timeout was reached 
+FAIL	403	https://www.acm.org/education/curricula-recommendations	
+FAIL	403	https://uxpa.org/	curl: (28) Resolving timed out after 6018 milliseconds 
+OK	200	18067	https://www.aapm.org/
+OK	200	99165	https://www.acfe.com/
+OK	200	133723	https://tdwi.org/
+FAIL	000	https://web.mlscn.gov.ng/	curl: (28) Resolving timed out after 6019 milliseconds curl: (60) SSL: no alternative certificate subject name matches target host name 'web.mlscn.gov.ng' More details here: https://curl.se/docs/sslcerts.html  curl failed to verify the legitimacy of the server and therefore could not establish a secure connection to it. To learn more about this situation and how to fix it, please visit the web page mentioned above. 
+FAIL	403	https://www.aiaa.org/	
+FAIL	404	https://www.asce.org/career-growth/educators/civil-engineering-body-of-knowledge	
+FAIL	000	https://worldvet.org/	curl: (28) Resolving timed out after 6018 milliseconds curl: (60) SSL certificate problem: unable to get local issuer certificate More details here: https://curl.se/docs/sslcerts.html  curl failed to verify the legitimacy of the server and therefore could not establish a secure connection to it. To learn more about this situation and how to fix it, please visit the web page mentioned above. 
+OK	200	212	https://www.ascm.org/
+OK	200	654663	https://productschool.com/
+OK	200	172899	https://www.cgiar.org/
+OK	200	32939	https://www.cbn.gov.ng/
+FAIL	404	https://www.cfainstitute.org/en/membership/professional-development/career-skills-framework	
+OK	200	269403	https://survey.stackoverflow.co/2025/
+FAIL	404	https://www.accaglobal.com/gb/en/careers.html	
+FAIL	404	https://www.cipd.org/uk/profession-map/	
+FAIL	404	https://www.cips.org/intelligence-hub/global-standard-for-procurement-and-supply	
+FAIL	200	https://ndpc.gov.ng/	curl: (28) Operation timed out after 18013 milliseconds with 435266 bytes received curl: (28) Operation timed out after 18005 milliseconds with 506868 bytes received 
+OK	200	33586	https://www.cpn.gov.ng/
+OK	200	142884	https://www.aiga.org/
+OK	200	167064	https://www.ciol.org.uk/
+FAIL	301	https://www.acsm.org/certification	curl: (28) Resolving timed out after 6019 milliseconds curl: (28) Connection timeout after 6000 ms 
+OK	200	242654	https://www.aicpa-cima.com/resources/landing/cgma-career-hub
+OK	200	168000	https://www.asme.org/
+OK	200	403572	https://www.computer.org/education/bodies-of-knowledge/software-engineering
+OK	200	4782	https://www.ebi.ac.uk/training/
+OK	200	155148	https://www.cisco.com/site/us/en/learn/training-certifications/certifications/index.html
+OK	200	93781	https://www.datasciencenigeria.org/
+FAIL	000	https://www.cibng.org/	curl: (28) Resolving timed out after 6020 milliseconds curl: (28) Failed to connect to www.cibng.org port 443 after 6004 ms: Timeout was reached 
+OK	200	58007	https://www.fao.org/fao-who-codexalimentarius/
+OK	200	68753	https://www.fip.org/
+FAIL	404	https://www.enisa.europa.eu/topics/education/european-cybersecurity-skills-framework	
+OK	200	77777	https://www.iaea.org/
+OK	200	77655	https://www.icao.int/
+FAIL	000	https://www.ieagreements.org/	curl: (6) Could not resolve host: www.ieagreements.org curl: (6) Could not resolve host: www.ieagreements.org 
+OK	200	203602	https://www.ica.org/
+OK	200	134969	https://www.iata.org/
+FAIL	000	https://www.cncf.io/certification/	curl: (28) SSL connection timeout curl: (28) Failed to connect to www.cncf.io port 443 after 6060 ms: Timeout was reached 
+FAIL	302	https://www.cisnigeria.com/	curl: (28) Resolving timed out after 6019 milliseconds curl: (28) Connection timeout after 6013 ms 
+OK	200	1176911	https://www.fao.org/
+FAIL	403	https://www.ifla.org/	
+FAIL	403	https://www.ifrc.org/	
+OK	200	98544	https://www.ifa.nl/
+OK	200	30686	https://www.inasp.info/
+FAIL	301	https://www.dama.org/cpages/body-of-knowledge	curl: (28) Failed to connect to www.dama.org port 443 after 6009 ms: Timeout was reached curl: (28) Resolving timed out after 6019 milliseconds 
+OK	200	187279	https://www.iiba.org/
+FAIL	404	https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/business-analysis-competency-model/	
+OK	200	57402	https://www.imarest.org/
+FAIL	418	https://www.ieee.org/	curl: (28) Connection timeout after 6018 ms 
+FAIL	000	https://www.firs.gov.ng/	curl: (28) Resolving timed out after 6019 milliseconds curl: (28) Failed to connect to www.firs.gov.ng port 443 after 6027 ms: Timeout was reached 
+FAIL	403	https://www.mdcn.gov.ng/	
+FAIL	000	https://www.garp.org/	curl: (28) Failed to connect to www.garp.org port 443 after 6047 ms: Timeout was reached curl: (28) Failed to connect to www.garp.org port 443 after 6065 ms: Timeout was reached 
+FAIL	000	https://www.garp.org/frm	curl: (28) Failed to connect to www.garp.org port 443 after 6041 ms: Timeout was reached curl: (28) Failed to connect to www.garp.org port 443 after 6065 ms: Timeout was reached 
+FAIL	000	https://www.naicom.gov.ng/	curl: (7) Failed to connect to www.naicom.gov.ng port 443 after 865 ms: Couldn't connect to server 
+OK	200	87486	https://www.imo.org/
+OK	200	42555	https://www.iscb.org/
+OK	200	84522	https://www.isa.org/certification
+OK	200	83564	https://www.int-comp.org/
+FAIL	403	https://www.mrs.org/	
+FAIL	406	https://www.ncs.org.ng/	
+FAIL	000	https://www.ifj.org/	curl: (28) Resolving timed out after 6023 milliseconds curl: (28) SSL connection timeout 
+OK	200	142922	https://www.ncc.gov.ng/
+OK	200	40683	https://www.nmcn.gov.ng/
+FAIL	000	https://www.npf.gov.ng/	curl: (60) SSL certificate problem: unable to get local issuer certificate More details here: https://curl.se/docs/sslcerts.html  curl failed to verify the legitimacy of the server and therefore could not establish a secure connection to it. To learn more about this situation and how to fix it, please visit the web page mentioned above. 
+OK	200	145239	https://www.nasef.org/
+OK	200	344662	https://www.nasa.gov/learning-resources/
+OK	200	23363	https://www.nmdpra.gov.ng/
+OK	200	100769	https://www.nuc.edu.ng/
+FAIL	000	https://www.interpol.int/en/Crimes/Cybercrime	curl: (28) Resolving timed out after 6016 milliseconds curl: (28) Resolving timed out after 6019 milliseconds 
+FAIL	403	https://www.oecd.org/skills/	
+OK	200	52052	https://www.khronos.org/
+OK	200	36821	https://www.nebosh.org.uk/
+FAIL	403	https://www.poynter.org/	
+OK	200	212	https://www.rics.org/join-rics/chartered-member-mrics
+OK	200	87726	https://www.managementnigeria.org/
+FAIL	403	https://www.pmi.org/certifications	
+FAIL	000	https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center	curl: (28) Resolving timed out after 6016 milliseconds curl: (28) Resolving timed out after 6000 milliseconds 
+OK	200	41846	https://www.rina.org.uk/
+FAIL	403	https://www.pmi.org/certifications/certification-resources/maintain/talent-triangle	
+OK	200	17239	https://www.nuj.org.ng/
+FAIL	404	https://www.soa.org/education/	
+FAIL	403	https://www.screenskills.com/	curl: (28) SSL connection timeout 
+OK	200	334093	https://www.soa.org/
+OK	200	75440	https://www.nuprc.gov.ng/
+OK	200	212	https://www.theiet.org/career/
+OK	200	47806	https://www.unesco.org/
+OK	200	357938	https://www.pcn.gov.ng/
+OK	200	67081	https://www.spe.org/en/training/competency/
+OK	200	145588	https://www.wipo.int/academy/en/
+OK	200	64583	https://www.wcoomd.org/
+FAIL	200	https://www.onetcenter.org/database.html	curl: (28) SSL connection timeout curl: (28) Operation timed out after 18001 milliseconds with 174173 bytes received 
+FAIL	200	https://www.nse.org.ng/	curl: (28) Resolving timed out after 6000 milliseconds curl: (28) Operation timed out after 13040 milliseconds with 16384 out of 796768 bytes received 
+OK	200	333103	https://www.woah.org/
+FAIL	200	https://www.sfn.org/	curl: (28) Resolving timed out after 6001 milliseconds curl: (28) Operation timed out after 18035 milliseconds with 81920 out of 130296 bytes received 
+OK	200	187818	https://www.who.int/teams/health-workforce
+FAIL	200	https://www.spe.org/	curl: (28) Resolving timed out after 6000 milliseconds curl: (28) Operation timed out after 14081 milliseconds with 134281 out of 149467 bytes received 
+FAIL	200	https://www.shrm.org/credentials/certification	curl: (28) Operation timed out after 18000 milliseconds with 321460 bytes received curl: (28) Operation timed out after 18000 milliseconds with 151235 bytes received 

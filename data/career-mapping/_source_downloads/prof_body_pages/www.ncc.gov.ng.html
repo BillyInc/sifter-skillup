@@ -1,0 +1,2410 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#" class="h-100">
+  <head>
+    <meta charset="utf-8" />
+<script>(function () {
+
+  class AccessibilityMenu {
+
+    settings = {
+      fontSizeLimit: 30,
+    };
+
+    defaults = {
+      fontSize: [1.15, 1.35, 1.55, 1.7],
+      lineHeight: [1.25, 1.5, 1.75],
+      letterSpacing: [1.25, 1.75, 2.25],
+      fontFamily: ['serif', 'sans-serif'],
+    };
+
+    map = {
+      fontSize: 'font_size',
+      lineHeight: 'line_height',
+      letterSpacing: 'letter_spacing',
+      fontFamily: 'font_style',
+    };
+
+    constructor(element) {
+      this.wrapper = element;
+      this.buttons = {};
+      this.buttons.close = this.wrapper.querySelector('.js-accessibility-close');
+      this.buttons.open = document.querySelector('.js-accessibility-btn');
+      this.buttons.reset = this.wrapper.querySelector('.js-accessibility-reset');
+      this.container = this.wrapper.querySelector('.b-accessibility-menu');
+      this.init();
+    }
+
+    init = function () {
+      const self = this;
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.js-accessibility-menu') && !e.target.closest('.js-accessibility-btn')) {
+          self.close();
+        }
+      });
+      self.buttons.open.addEventListener('click', self.open.bind(self));
+      self.buttons.close.addEventListener('click', self.close.bind(self));
+      self.buttons.reset.addEventListener('click', () => {
+        self.reset();
+      });
+      self.container.addEventListener('click', (e) => {
+        const target = e.target.closest('.b-accessibility-menu__item');
+        if (target) {
+          self.itemClick(target);
+          self.refresh();
+        }
+      });
+      self.refresh();
+    };
+    refresh = function () {
+      const self = this;
+      self.container.querySelectorAll('.b-accessibility-menu__item').forEach((element) => {
+        self.itemClick(element, false);
+      });
+      let storage = localStorage.getItem('accessibility_menu');
+      storage = JSON.parse(storage) ?? {};
+
+      let elements = document.querySelectorAll('body *');
+      elements.forEach((element) => {
+        let styles = getComputedStyle(element);
+        if (!element.prepare) {
+          element.prepare = {};
+        }
+        for (let type in self.defaults) {
+          if (styles[type] !== undefined) {
+            if (!element.initialStyles) {
+              element.initialStyles = {};
+            }
+            if (!element?.initialStyles[type]) {
+              let propertyValue = styles[type];
+              switch (type) {
+                case 'letterSpacing':
+                  if (propertyValue === 'normal') {
+                    propertyValue = 1;
+                  }
+                  element.initialStyles[type] = parseFloat(propertyValue);
+                  break;
+
+                default:
+                  element.initialStyles[type] = parseFloat(propertyValue);
+                  break;
+              }
+            }
+
+            let value = element.initialStyles[type];
+            let coef = self.defaults[type][storage[self.map[type]]];
+            if (coef === undefined) {
+              element.prepare[type] = '';
+            } else {
+              switch (type) {
+                case 'fontFamily':
+                  element.prepare[type] = coef;
+                  break;
+
+                case 'fontSize':
+                  let max = value > self.settings.fontSizeLimit ? value : self.settings.fontSizeLimit;
+                  element.prepare[type] = ((value * coef) > max ? max : value * coef) + 'px';
+                  break;
+
+                default:
+                  element.prepare[type] = (coef * value) + 'px';
+                  break;
+              }
+            }
+          }
+        }
+      });
+      document.body.classList.remove('images-grayscale');
+      document.body.classList.remove('images-none');
+      switch (storage['images']) {
+        case 0:
+          document.body.classList.add('images-grayscale');
+          break;
+        case 1:
+          document.body.classList.add('images-none');
+          break;
+      }
+
+      delete document.body.dataset.am_theme;
+      if (storage?.contrast !== undefined) {
+        document.body.dataset.am_theme = 'theme_' + storage['contrast'];
+      }
+
+      elements.forEach((element) => {
+        if (element.prepare) {
+          if (element.closest('.js-accessibility-menu')) {
+            return;
+          }
+          for (let style in element.prepare) {
+            element.style[style] = element.prepare[style];
+          }
+        }
+      });
+    };
+
+    _getElementIndex = function (node) {
+      let index = 0;
+      while ((node = node.previousElementSibling)) {
+        index++;
+      }
+      return index;
+    };
+
+    getValue = function (item) {
+      const type = item.dataset.type;
+      let storage = localStorage.getItem('accessibility_menu');
+      storage = JSON.parse(storage) ?? {};
+      if (storage[type] !== undefined) {
+        return storage[type];
+      }
+      return undefined;
+    };
+    setValue = function (item, value) {
+      const type = item.dataset.type;
+      let storage = localStorage.getItem('accessibility_menu');
+      storage = JSON.parse(storage) ?? {};
+      storage[type] = value;
+      if (value === undefined) {
+        delete (storage[type]);
+      }
+      storage = JSON.stringify(storage);
+      if (storage === '{}') {
+        localStorage.removeItem('accessibility_menu');
+      } else {
+        localStorage.setItem('accessibility_menu', storage);
+      }
+
+    };
+    reset = function () {
+      const self = this;
+      localStorage.removeItem('accessibility_menu');
+      self.refresh();
+    };
+
+    itemClick = function (item, increase = true) {
+      const self = this;
+      let value = self.getValue(item);
+      if (increase) {
+        if (value !== undefined) {
+          value++;
+        } else {
+          value = 0;
+        }
+      }
+      let title = item.dataset?.title ?? '';
+      let setValue = undefined;
+      let links = item.querySelectorAll('.js-accessibility-link');
+      links.forEach((element) => {
+        element.classList.remove('is-active');
+        const index = self._getElementIndex(element);
+        if (index === value) {
+          title = element.dataset.title ?? title;
+          setValue = index;
+        }
+        if (index <= value) {
+          element.classList.add('is-active');
+        }
+      });
+      self.setValue(item, setValue);
+      item.querySelector('.b-accessibility-menu__title span').innerText = title;
+      if (setValue !== undefined) {
+        item.classList.add('is-active');
+      } else {
+        item.classList.remove('is-active');
+      }
+    };
+
+    open = function () {
+      const self = this;
+      if (!self.wrapper.classList.contains('is-open')) {
+        self.wrapper.classList.add('is-open');
+        setTimeout(() => {
+          self.container.classList.add('is-open');
+        }, 16);
+      }
+    };
+    close = function () {
+      const self = this;
+      if (self.wrapper.classList.contains('is-open')) {
+        self.container.classList.remove('is-open');
+        setTimeout(() => {
+          self.wrapper.classList.remove('is-open');
+        }, 500);
+      }
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', function (event) {
+    const menuContainer = document.querySelector('.js-accessibility-menu');
+    if (menuContainer) {
+      const menu = new AccessibilityMenu(menuContainer);
+    }
+  });
+
+})();
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H8YXLRY0W7"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag("js", new Date());gtag("set", "developer_id.dMDhkMT", true);gtag("config", "G-H8YXLRY0W7", {"groups":"default","page_placeholder":"PLACEHOLDER_page_location","allow_ad_personalization_signals":false});</script>
+<link rel="canonical" href="https://www.ncc.gov.ng/" />
+<link rel="shortlink" href="https://www.ncc.gov.ng/" />
+<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>div#sliding-popup, div#sliding-popup .eu-cookie-withdraw-banner, .eu-cookie-withdraw-tab {background: #004479} div#sliding-popup.eu-cookie-withdraw-wrapper { background: transparent; } #sliding-popup h1, #sliding-popup h2, #sliding-popup h3, #sliding-popup p, #sliding-popup label, #sliding-popup div, .eu-cookie-compliance-more-button, .eu-cookie-compliance-secondary-button, .eu-cookie-withdraw-tab { color: #ffffff;} .eu-cookie-withdraw-tab { border-color: #ffffff;}</style>
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
+
+    <title>Home | NCC</title>
+	<link rel="icon" href="/themes/custom/nccsubtheme/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="/themes/custom/nccsubtheme/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" media="all" href="/modules/accessibility_menu/misc/accessibility_menu.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/core.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/controlgroup.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/checkboxradio.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/resizable.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/button.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/dialog.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/align.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/fieldgroup.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/container-inline.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/clearfix.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/details.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/hidden.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/item-list.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/js.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/nowrap.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/position-container.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/reset-appearance.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/resize.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/system-status-counter.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/system-status-report-counters.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/system-status-report-general-info.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/system/components/tablesort.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/core/components/progress.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/core/components/ajax-progress.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/modules/ckeditor5/css/ckeditor5.dialog.fix.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/views/views.module.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/contrib/views_slideshow/modules/views_slideshow_cycle/css/views_slideshow_cycle.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/eu_cookie_compliance/css/eu_cookie_compliance.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/assets/vendor/jquery.ui/themes/base/theme.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/addtoany/css/addtoany.css?ti82v6" />
+<link rel="stylesheet" media="all" href="//fonts.googleapis.com/icon?family=Material+Icons" />
+<link rel="stylesheet" media="all" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" media="all" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />
+<link rel="stylesheet" media="all" href="/modules/custom/ncc_analytics/css/ncc-analytics.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/layouts/layout_discovery/onecol/onecol.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/background-color-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/text-color-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/text-alignment-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/padding-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/margin-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/border-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/bootstrap_styles/css/bs_example_classes/box-shadow-classes.css?ti82v6" />
+<link rel="stylesheet" media="all" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+<link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+<link rel="stylesheet" media="all" href="/modules/tb_megamenu/css/tb_megamenu.bootstrap.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/tb_megamenu/css/tb_megamenu.base.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/tb_megamenu/css/tb_megamenu.default.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/tb_megamenu/css/tb_megamenu.compatibility.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/custom/organigrams_hover/css/organigrams_hover.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/modules/pace/css/silver/pace-theme-flat-top.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/core/themes/stable9/css/core/assets/vendor/normalize-css/normalize.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/action-links.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/breadcrumb.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/container-inline.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/details.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/exposed-filters.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/field.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/form.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/icons.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/inline-form.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/item-list.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/links.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/menu.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/more-link.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/pager.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/tabledrag.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/tableselect.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/tablesort.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/textarea.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/ui-dialog.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/messages.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/progress.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/dialog.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/bootstrap5/css/components/node.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/custom/nccsubtheme/css/style.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/custom/nccsubtheme/css/custom.css?ti82v6" />
+<link rel="stylesheet" media="all" href="/themes/custom/nccsubtheme/css/custom-layout.css?ti82v6" />
+
+    <script src="https://use.fontawesome.com/releases/v6.4.0/js/all.js" defer crossorigin="anonymous" data-search-pseudo-elements></script>
+<script src="https://use.fontawesome.com/releases/v6.4.0/js/v4-shims.js" defer crossorigin="anonymous" data-search-pseudo-elements></script>
+<script src="/modules/pace/js/pace.min.js?ti82v6"></script>
+
+  </head>
+  <body class="path-frontpage page-node-type-home  text-dark   d-flex flex-column h-100">
+        <div class="visually-hidden-focusable skip-link p-3 container">
+      <a href="#main-content" class="p-2">
+        Skip to main content
+      </a>
+    </div>
+    
+      <div class="dialog-off-canvas-main-canvas d-flex flex-column h-100" data-off-canvas-main-canvas>
+    
+<header role="banner">
+    <div class="region region-header">
+    <div class="views-element-container block block-views block-views-blocksearch-block-1" id="block-nccsubtheme-views-block-search-block-1">
+  
+    
+      <div data-block="header"><div class="view view-search view-id-search view-display-id-block_1 js-view-dom-id-9c87a000215aa8896cd924982c3bd7988f571917b5a828e76f4d69f512611788">
+  
+    
+      <div class="view-header">
+      <a href="#" id="close-icon"><i class="fa-solid fa-x"></i></a>
+    </div>
+        <div class="view-filters">
+      <form class="views-exposed-form" data-drupal-selector="views-exposed-form-search-block-1" action="/search" method="get" id="views-exposed-form-search-block-1" accept-charset="UTF-8">
+  <div class="form--inline clearfix">
+  <div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-search-api-fulltext form-item-search-api-fulltext form-no-label">
+        
+  <input data-drupal-selector="edit-search-api-fulltext" type="text" id="edit-search-api-fulltext" name="search_api_fulltext" value="" size="30" maxlength="128" class="form-text form-control" />
+
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions">
+    <input data-drupal-selector="edit-submit-search" type="submit" id="edit-submit-search" value="Search" class="button js-form-submit form-submit btn btn-primary" />
+
+</div>
+
+</div>
+
+</form>
+
+    </div>
+    
+      <div class="view-empty">
+      
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+<nav role="navigation" aria-labelledby="block-nccsubtheme-secondarymenu-menu" id="block-nccsubtheme-secondarymenu" class="block block-menu navigation container menu--secondary-menu">
+            
+  <h5 class="visually-hidden" id="block-nccsubtheme-secondarymenu-menu">Secondary menu</h5>
+  
+
+        
+              <ul data-block="header" class="nav navbar-nav">
+                    <li class="nav-item">
+        <a href="https://eservices.ncc.gov.ng/" class="nav-link"><i class="fa-solid fa-globe" aria-hidden="true"></i> <span class="link-text">E-Services</span></a>
+              </li>
+                <li class="nav-item">
+        <a href="https://consumer.ncc.gov.ng/" class="nav-link"><i class="fa-regular fa-regular fa-user" aria-hidden="true"></i> <span class="link-text">Consumer Portal</span></a>
+              </li>
+                <li class="nav-item">
+        <a href="https://eodb.ncc.gov.ng" class="nav-link"><i class="fa fa-suitcase" aria-hidden="true"></i> <span class="link-text">Ease of Doing Business</span></a>
+              </li>
+                <li class="nav-item">
+        <a href="/careers-ncc" class="nav-link" data-drupal-link-system-path="node/2061"><i class="fa-solid fa-solid fa-briefcase" aria-hidden="true"></i> <span class="link-text">Careers</span></a>
+              </li>
+                <li class="nav-item">
+        <a href="/frequently-asked-questions" class="nav-link" data-drupal-link-system-path="node/737"><i class="fa-regular fa-regular fa-circle-question" aria-hidden="true"></i> <span class="link-text">FAQ</span></a>
+              </li>
+                <li class="nav-item">
+        <a href="/webform/contact-us" class="nav-link"><i class="fa-solid fa-solid fa-phone" aria-hidden="true"></i> <span class="link-text">Contact Us</span></a>
+              </li>
+                <li class="nav-item">
+        <a href="https://www.pebec.gov.ng/reportgov-ng" class="nav-link">Reportgov.ng</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<div id="block-nccsubtheme-gtranslate-2" class="block block-gtranslate block-gtranslate-block">
+  
+    
+      
+<div class="gtranslate_wrapper"></div><script>window.gtranslateSettings = {"switcher_horizontal_position":"left","switcher_vertical_position":"top","horizontal_position":"inline","vertical_position":"inline","float_switcher_open_direction":"top","switcher_open_direction":"bottom","default_language":"en","native_language_names":1,"detect_browser_language":0,"add_new_line":1,"select_language_label":"Select Language","flag_size":24,"flag_style":"2d","globe_size":60,"alt_flags":[],"wrapper_selector":".gtranslate_wrapper","url_structure":"sub_domain","custom_domains":null,"languages":["en","fr","es"],"custom_css":"#gt_float_wrapper {\r\n    top: 0px !important;\r\n    left: 0px !important;\r\n}\r\n\r\n.gt_switcher_wrapper{\r\n   left: 0% !important; \r\n}\r\n\r\n.gt_switcher .gt_selected {\r\n    \/*width: 150px !important;*\/\r\n}\r\n\r\n.gt_container--hich1m .gt_switcher a{\r\n    text-decoration: none;\r\n    display: block;\r\n    color:black;\r\n    font-size: 12pt !important;\r\n    font-family: system-ui;\r\n    box-sizing: content-box;\r\n    width: 120px;\r\n}\r\n\r\n.gt_container--hich1m .gt_switcher {\r\n    font-family: system-ui;\r\n    font-size: 12pt;\r\n    text-align: left;\r\n    color:black;\r\n    cursor: pointer;\r\n    overflow: hidden;\r\n    width: 120px !important;\r\n    line-height: 0;\r\n}\r\n\r\n.gt_container--hich1m .gt_switcher .gt_selected a {\r\ncolor:black !important;\r\n}\r\n"};</script><script>(function(){var js = document.createElement('script');js.setAttribute('src', 'https://cdn.gtranslate.net/widgets/latest/dwf.js');js.setAttribute('data-gt-orig-url', '/');js.setAttribute('data-gt-orig-domain', 'www.ncc.gov.ng');document.body.appendChild(js);})();</script>
+  </div>
+
+  </div>
+
+
+    <div class="header-bg">
+      <nav class="navbar navbar-expand-xl navbar-light text-dark bg-light">
+        <div class="container d-flex">
+            <div class="region region-nav-branding">
+    <div id="block-nccsubtheme-branding" class="block block-system block-system-branding-block">
+  
+    
+  <div class="navbar-brand d-flex align-items-center">
+
+    <a href="/" title="Home" rel="home" class="site-logo d-block">
+    <img src="/sites/default/files/Frame%20288.png" alt="Home" fetchpriority="high" />
+  </a>
+  
+  <div>
+    
+      </div>
+</div>
+</div>
+
+  </div>
+
+    
+                      <!-- Mobile navigation controls container -->
+            <div class="d-flex d-xl-none align-items-center ms-auto">
+              <!-- Search icon for mobile -->
+              <a href="/search" class="me-3" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+              </a>
+              <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                      aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+    
+            <div class="collapse navbar-collapse justify-content-md-end" id="navbarSupportedContent">
+                <div class="region region-nav-main">
+    <div id="block-nccsubtheme-mainnavigation" class="block block-tb-megamenu block-tb-megamenu-menu-blockmain">
+  
+    
+      <style type="text/css">
+  .tb-megamenu.animate .mega > .mega-dropdown-menu, .tb-megamenu.animate.slide .mega > .mega-dropdown-menu > div {
+    transition-delay: 200ms;  -webkit-transition-delay: 200ms;  -ms-transition-delay: 200ms;  -o-transition-delay: 200ms;  transition-duration: 400ms;  -webkit-transition-duration: 400ms;  -ms-transition-duration: 400ms;  -o-transition-duration: 400ms;
+  }
+</style>
+<div  class="tb-megamenu tb-megamenu-main animate fading" data-duration="400" data-delay="200" id="tb-megamenu-main" role="navigation" aria-label="Main navigation">
+      <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar tb-megamenu-button" type="button">
+      <i class="fa fa-reorder"></i>
+    </button>
+    <div class="nav-collapse  always-show">
+    <ul  class="tb-megamenu-nav nav level-0 items-13" role="list" >
+            <li  class="tb-megamenu-item level-1 mega double-column dropdown" data-id="menu_link_content:3608f683-df0b-46fe-94e2-ed460fcea6f8" data-level="1" data-type="menu_item" data-class="double-column" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <span class="dropdown-toggle tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          About NCC
+          </span>
+  <div  class="tb-megamenu-submenu ncc-submenu-1 dropdown-menu mega-dropdown-menu nav-child" data-class="ncc-submenu-1" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span6 mega-col-nav" data-class="" data-width="6" data-hidewcol="0" id="tb-megamenu-column-1">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-5" role="list">
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:5f4d8d89-d445-4cb5-ad7e-f3d5e747245a" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-NCC/who-we-are" >
+          Who We Are
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:dff4cf4c-e8d1-44af-9ced-e17bc46e158f" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-ncc/leadership" >
+          Leadership
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:c3c1e0ce-53a0-4941-9358-fbc1b77b2af1" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-ncc/our-mandate" >
+          Our Mandate
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:48bbd810-dac9-446c-a1f2-621d0c9612a6" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-ncc/strategic-vision" >
+          Strategic Vision
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:bd50c80b-cd65-4062-86c5-b6c206bc59f9" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/strategic-plans" >
+          Strategic Plans
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+      <div  class="tb-megamenu-column span6 mega-col-nav" data-class="" data-width="6" data-hidewcol="" id="tb-megamenu-column-2">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-4" role="list">
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:b35ff315-cd54-4d02-a4b1-bbdfe8a52bf1" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-ncc/telecommunications-history" >
+          History
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:58b8b589-7a68-4311-89ee-d4cb91d85429" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-ncc/servicom-charter" >
+          SERVICOM Charter
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:013f71ff-4450-4f3e-903d-d244d3e71af9" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/about-ncc/commission-projects" >
+          Commission Projects
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:947a16c0-84f5-4085-8c0b-6629e41ace31" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/policy-education-visit-excursion-and-benchmarking-visits-ncc-0"  title="Policy For Education Visits &amp; Excursions">
+          Peering &amp; Educational Visits
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+            <li  class="tb-megamenu-item level-1 mega dropdown" data-id="menu_link_content:b77bee08-13c0-466f-8b3a-38687d9dcc7b" data-level="1" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <span class="dropdown-toggle tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Industry
+          </span>
+  <div  class="tb-megamenu-submenu dropdown-menu mega-dropdown-menu nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span3 mega-col-nav" data-class="" data-width="3" data-hidewcol="" id="tb-megamenu-column-3">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-2" role="list">
+            <li  class="tb-megamenu-item level-2 mega mega-group" data-id="menu_link_content:d3b3d823-976a-4053-afad-6c8ab7c92b67" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <span class="mega-group-title tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Licensing
+          </span>
+  <div  class="tb-megamenu-submenu mega-group-ct nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span12 mega-col-nav" data-class="" data-width="12" data-hidewcol="0" id="tb-megamenu-column-4">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-2 items-5" role="list">
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:1d97e2c8-3b3a-499b-bcde-ea3c81007574" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/licensing/apply-licence" >
+          Apply for a Licence
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:e46d9aa8-b369-42ec-9072-42e22d1d8b3c" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/licensing/licensing-application-process" >
+          Licensing Process
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:c8aa0200-85f7-4737-8b24-4700eee52242" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/licensing/list-licensees" >
+          List of Licensees
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:2a039812-b4ea-425d-b837-29299ce9ae65" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/licensing/licensing-documents-frameworks" >
+          Licences and Frameworks
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:74c5aa0d-f241-4edc-8023-8a1f126b5025" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/licensing/faqs" >
+          Licensing FAQs
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+            <li  class="tb-megamenu-item level-2 mega mega-group" data-id="menu_link_content:5e611960-96f8-49b7-a79c-7fc602ca864d" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <span class="mega-group-title tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Numbering &amp; Type Approval
+          </span>
+  <div  class="tb-megamenu-submenu mega-group-ct nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span12 mega-col-nav" data-class="" data-width="12" data-hidewcol="0" id="tb-megamenu-column-5">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-2 items-2" role="list">
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:cd365b83-db14-4c3d-957d-625b2f164c1e" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/numbering-type-approval/national-numbering" >
+          National Numbering
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:dabf3424-1b05-4375-9ef0-027bd26524a4" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/numbering-type-approval/type-approval" >
+          Type Approval
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+      <div  class="tb-megamenu-column span3 mega-col-nav" data-class="" data-width="3" data-hidewcol="0" id="tb-megamenu-column-6">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-1" role="list">
+            <li  class="tb-megamenu-item level-2 mega mega-group" data-id="menu_link_content:905a8569-7717-43a9-b794-8c2c1e1c9803" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <span class="mega-group-title tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Spectrum Administration
+          </span>
+  <div  class="tb-megamenu-submenu mega-group-ct nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span12 mega-col-nav" data-class="" data-width="12" data-hidewcol="0" id="tb-megamenu-column-7">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-2 items-5" role="list">
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:ce94c40d-1452-46f7-bb9c-5e870efe2bfd" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/spectrum-administration/frequency-management-assignment" >
+          Frequency Management &amp; Assignment
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:326ff09a-ac3c-4c89-b53f-dbd9106e0d00" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/spectrum-administration/frequency-allocation-tables" >
+          Frequency Allocation Tables
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:bfe484cf-7a47-4fa9-ba46-dd548ce0d6c3" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/spectrum-administration/spectrum-auctions" >
+          Spectrum Auctions
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:713b6c97-0204-4925-9b7d-25a48e658d3e" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/spectrum-administration/spectrum-utilisation-reporting" >
+          Spectrum Utilisation Reporting
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:faf184ca-34d6-40bd-b41e-b2dfd3ef856d" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/spectrum-administration/space-services" >
+          Space Services
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+      <div  class="tb-megamenu-column span3 mega-col-nav" data-class="" data-width="3" data-hidewcol="" id="tb-megamenu-column-8">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-1" role="list">
+            <li  class="tb-megamenu-item level-2 mega mega-group" data-id="menu_link_content:23583d20-3486-412b-9b1a-4ee385346214" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <span class="mega-group-title tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Regulations &amp; Guidelines
+          </span>
+  <div  class="tb-megamenu-submenu mega-group-ct nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span6 mega-col-nav" data-class="" data-width="6" data-hidewcol="0" id="tb-megamenu-column-9">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-2 items-8" role="list">
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:30b3210a-3a07-4d8e-a280-a0dee049b468" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/page/regulations" >
+          Regulations
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:f9f5853c-c023-4579-ae29-0ab57a868e81" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/guidelines" >
+          Guidelines
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:aa6ee8b8-cd55-4958-93f5-c616f6de4a8c" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/regulations-guidelines/determinations" >
+          Determinations
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:423368e3-6517-4e9e-a2b7-5704c9a5b105" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/regulations-guidelines/compliance-monitoring-enforcement" >
+          Compliance
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:d4c1f8cc-b2e7-44a7-8fef-69184e79eec5" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/regulations-guidelines/quality-service-qos" >
+          Quality of Service (QoS) Metrics
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:5e32294c-a7c4-4461-b1bb-70315c3c1cb5" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/regulations-guidelines/service-delivery-timelines" >
+          Service Delivery Timelines
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:3a045679-2d6d-4e2b-aac7-fa24147edf28" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/industry/regulations-guidelines/freedom-information" >
+          Freedom of Information
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-3 mega" data-id="menu_link_content:7d74f9f7-5568-4616-970b-feee0dcb335b" data-level="3" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="3" >
+      <a href="/public-inquiries" >
+          Public Inquiries
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+      <div  class="tb-megamenu-column span3 mega-col-nav" data-class="" data-width="3" data-hidewcol="" id="tb-megamenu-column-9">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-5" role="list">
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:3d5bcf6d-9bd2-47eb-9dda-518eedd26948" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/industry/operator-questionnaires" >
+          Questionnaires &amp; Surveys
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:926c12b2-61ba-4aa2-9028-f5b35e4388a4" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/industry/application-forms" >
+          Application Forms
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:88b78424-a135-4a09-b362-e66fff65a3fd" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/industry/fees-pricing" >
+          Fees &amp; Pricing
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:d712e0a7-09f1-4dcd-8a0d-b26c45b1de1c" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/industry/nca-2003" >
+          The NCA 2003
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:c19f8730-72f1-4bc9-997a-eb3929182d9b" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/internet-governance" >
+          Internet Governance
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+            <li  class="tb-megamenu-item level-1 mega single-column dropdown" data-id="menu_link_content:dc13725e-948d-4b4f-b6c2-978186185c17" data-level="1" data-type="menu_item" data-class="single-column" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <span class="dropdown-toggle tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Consumers
+          </span>
+  <div  class="tb-megamenu-submenu dropdown-menu mega-dropdown-menu nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span12 mega-col-nav" data-class="" data-width="12" data-hidewcol="0" id="tb-megamenu-column-9">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-7" role="list">
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:cfc32138-55b8-4e3a-877a-1e1d7d191332" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/consumers/child-online-protection" >
+          Child Online Protection
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:262eaa30-36e2-48df-a96e-3608b466d302" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/consumers/public-consultations-0" >
+          Public Consultations
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:468870fe-d257-4fe9-8813-76de1c82bbdf" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/consumers/cybersecurity" >
+          Cyber Security
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:0dcc8b2f-52fc-43f6-82ff-43f7f7042072" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="http://consumer.ncc.gov.ng/consumer-complaints/procedure-to-file-a-complaint" >
+          Consumer Complaints
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:98763916-d332-4229-9a8d-67d24d8a27f1" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/local-government-areas-eligibile-compensation" >
+          Consumer Compensation
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:947d102b-0cd3-4ce3-a94b-1a4d2242578b" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="https://ncc.gov.ng/coverage-map" >
+          Network Coverage Map
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+            <li  class="tb-megamenu-item level-1 mega single-column dropdown" data-id="menu_link_content:08ed34b7-1327-45da-889c-262e4c327ab0" data-level="1" data-type="menu_item" data-class="single-column" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <span class="dropdown-toggle tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Market Data &amp; Reports
+          </span>
+  <div  class="tb-megamenu-submenu dropdown-menu mega-dropdown-menu nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span12 mega-col-nav" data-class="" data-width="12" data-hidewcol="0" id="tb-megamenu-column-9">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-13" role="list">
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:a63cb1b4-9eb8-4605-9df9-914b6e1b5431" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/documents"  title="All NCC Documents">
+          All Documents
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:b3233eb9-91c5-4909-b6a7-fac8e5a8f529" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/industry-statistics" >
+          Industry Statistics
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:823b7a83-50cd-48ca-826e-9aaaaec6a0fb" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/network-performance-report" >
+          Network Performance Report
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:53bc6498-ff44-45d2-ac30-a6ffcf475a8c" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/research-reports" >
+          Research Reports
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:c1482c74-9bf1-4fbe-8189-6a043c797746" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/annual-reports" >
+          Annual Report
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:19c8848b-c4d6-4ab2-b9af-38199696b626" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/publications" >
+          Publications
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:ad1207c0-0643-4b8a-bfea-783ad00b3498" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="https://uptime.com/statuspage/ncc" >
+          Incident Reports
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:b0972d40-7b9d-4108-8c0b-e4c071424d49" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="https://ncc.gov.ng/market-data-reports/quality-experience#infographic" >
+          Quality of Experience
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:177a3de0-39ce-41c7-951e-c01a519740b8" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/quality-service-data" >
+          Quality of Service Data
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:f0b2b395-3058-4a9e-9b66-57bd619cf67a" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/tarrif-information-overview" >
+          Tariff information
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:0054312b-6bf4-400a-9d79-1c98f4072302" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/subscriber-statistics" >
+          Subscriber Statistics
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:9500e4ce-4c03-474e-98fe-1d3bc86747fb" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/market-data-reports/consumer-complaint-statistics" >
+          Consumer Complaint Statistics
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+            <li  class="tb-megamenu-item level-1 mega single-column dropdown" data-id="menu_link_content:20915642-71cc-4209-906a-6a5860609bc0" data-level="1" data-type="menu_item" data-class="single-column" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <span class="dropdown-toggle tb-megamenu-no-link" aria-expanded="false" tabindex="0">
+          Media Centre
+          </span>
+  <div  class="tb-megamenu-submenu dropdown-menu mega-dropdown-menu nav-child" data-class="" data-width="" role="list">
+  <div class="mega-dropdown-inner">
+          <div  class="tb-megamenu-row row-fluid">
+      <div  class="tb-megamenu-column span12 mega-col-nav" data-class="" data-width="12" data-hidewcol="0" id="tb-megamenu-column-9">
+  <div class="tb-megamenu-column-inner mega-inner clearfix">
+               <ul  class="tb-megamenu-subnav mega-nav level-1 items-5" role="list">
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:2212648d-9cc3-4746-b4bf-912dbcd20712" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/videos" >
+          Gallery
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:150cc746-0416-4f18-bbd3-bdc83d65c69b" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/media-centre/press-releases" >
+          Press Releases
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:0e897ad2-e1c3-41c5-9138-9a9aec3ea696" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/media-center/public-notices" >
+          Public Notices
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:b3718b67-f67b-4f76-b4d9-7bfa60b3c5b2" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="1" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/media-centre/tenders-procurement" >
+          Tender &amp; Procurements
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-2 mega" data-id="menu_link_content:74f581a6-9f91-4f69-8f5b-ed265ea27d88" data-level="2" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="2" >
+      <a href="/2025-speeches-presentations" >
+          Speeches &amp; Presentations
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+</div>
+
+  </div>
+
+      </div>
+</div>
+
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega" data-id="menu_link_content:01815858-bbfe-4eae-9807-bf5da484c714" data-level="1" data-type="menu_item" data-class="" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="/events" >
+          Events
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega sec-menu" data-id="menu_link_content:f5b12897-e95b-4eca-aa10-c293b48bc5fa" data-level="1" data-type="menu_item" data-class="sec-menu" data-xicon="fa-solid fa-globe" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="https://eservices.ncc.gov.ng/" >
+            <i class="fa-solid fa-globe"></i>
+        E-Services
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega sec-menu" data-id="menu_link_content:3bb92269-af14-49a9-9fdc-5e3bcbf5ab20" data-level="1" data-type="menu_item" data-class="sec-menu" data-xicon="fa-regular fa-user" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="https://consumer.ncc.gov.ng/" >
+            <i class="fa-regular fa-user"></i>
+        Consumer Portal
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega sec-menu" data-id="menu_link_content:933cbd9d-aabf-49f3-b77c-d8d0e1acd97a" data-level="1" data-type="menu_item" data-class="sec-menu" data-xicon="fa-solid fa-briefcase" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="/careers-ncc" >
+            <i class="fa-solid fa-briefcase"></i>
+        Careers
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega sec-menu" data-id="menu_link_content:0ed2b861-0268-4e76-a8af-76e6fdbd94ed" data-level="1" data-type="menu_item" data-class="sec-menu" data-xicon="fa-regular fa-circle-question" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="/frequently-asked-questions" >
+            <i class="fa-regular fa-circle-question"></i>
+        FAQ
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega sec-menu" data-id="menu_link_content:71a67743-de7b-4c7f-8735-c52d7ba90d05" data-level="1" data-type="menu_item" data-class="sec-menu" data-xicon="fa-solid fa-phone" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="/webform/contact-us" >
+            <i class="fa-solid fa-phone"></i>
+        Contact Us
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega no-mobile" data-id="menu_link_content:6cc85f13-3bbb-47a8-9249-6430f0fd90ac" data-level="1" data-type="menu_item" data-class="no-mobile" data-xicon="fa-solid fa-magnifying-glass" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="/search" >
+            <i class="fa-solid fa-magnifying-glass"></i>
+        Search
+          </a>
+  
+</li>
+
+        <li  class="tb-megamenu-item level-1 mega sec-menu" data-id="menu_link_content:63089fcf-cff6-4168-9106-a72709397fea" data-level="1" data-type="menu_item" data-class="sec-menu" data-xicon="" data-caption="" data-alignsub="" data-group="0" data-hidewcol="0" data-hidesub="0" data-label="" aria-level="1" >
+      <a href="https://eodb.ncc.gov.ng" >
+          Ease of Doing Business
+          </a>
+  
+</li>
+
+  </ul>
+
+      </div>
+  </div>
+
+  </div>
+
+  </div>
+
+              
+            </div>
+                  </div>
+      </nav>
+  </div>
+  
+</header>
+
+<main role="main">
+  <a id="main-content" tabindex="-1"></a>        <div class="region region-content">
+    <div data-drupal-messages-fallback class="hidden"></div>
+<div id="block-nccsubtheme-content" class="block block-system block-system-main-block">
+  
+    
+      
+<article data-history-node-id="324" class="node node--type-home node--promoted node--view-mode-full">
+
+  
+    
+
+  
+  <!-- Display field_page_menu as rendered content of the referenced page -->
+      <div class="node__content">
+      <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <div class="views-element-container block block-views block-views-blockhero-block-block-1">
+  
+    
+      <div><div class="view view-hero-block view-id-hero_block view-display-id-block_1 js-view-dom-id-c7b2a2270ead812bfd81100485483d861afdb1de3a99b47942ab29268ad1952a">
+  
+    
+      
+      <div class="view-content">
+      
+<div id="views-bootstrap-hero-block-block-1" class="carousel slide carousel-fade"  data-bs-ride="carousel"
+     data-bs-interval="5000" data-bs-pause="hover"
+     data-wrap="1">
+
+    
+    <div class="carousel-inner">
+                                <div  class="carousel-item active">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div><span><div class="hero-block">
+      <div class="home-bg-img hero-dynamic-bg" data-bg-url="/sites/default/files/styles/wide/public/2025-06/hero-section-%281%29_0.png?itok=7tQqNB0S">
+      <div class="hero-banner-overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-9">
+              <h2>Requirement For Prior Regulatory Approval On Changes In Shareholding/Ownership Structure Of Communications Companies</h2>
+              <h5>The Nigerian Communications Commission (NCC) and the Corporate Affairs Commission (CAC) hereby inform the general public, investors, and all stakeholders in the communications sector on compliance requirements regarding changes in the ownership...</h5>
+              <div class="cta-button text-dark-blue">
+                <a href="https://ncc.gov.ng/media-centre/press-releases/requirement-prior-regulatory-approval-changes-shareholdingownership">Read More</a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-9">
+              &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></span></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div><span><div class="hero-block">
+      <div class="home-bg-img hero-dynamic-bg" data-bg-url="/sites/default/files/styles/wide/public/2025-06/hero-section-%281%29_0.png?itok=7tQqNB0S">
+      <div class="hero-banner-overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-9">
+              <h2>Release of Consultation Paper and Notice of Public Consultation on Zero-Rated Access to Educational Platforms and Content</h2>
+              <h5>The Nigerian Communications Commission (NCC) hereby notifies industry stakeholders and the general public on the development of a Consultation Paper for a Framework/Criteria for Zero-Rated Access to Educational Platforms and Content in Nigeria...</h5>
+              <div class="cta-button text-dark-blue">
+                <a href="https://ncc.gov.ng/media-center/public-notices/release-consultation-paper-and-notice-public-consultation-zero-rated">Read More</a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-9">
+              &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></span></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div><span><div class="hero-block">
+      <div class="home-bg-img hero-dynamic-bg" data-bg-url="/sites/default/files/styles/wide/public/2025-06/hero-section-%281%29_0.png?itok=7tQqNB0S">
+      <div class="hero-banner-overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-9">
+              <h2>NCC Appoints Princess Oforitsenere Emiko as Interim Chairman of the Digital Bridge Institute Governing Board</h2>
+              <h5>The Board of the Nigerian Communications Commission (NCC) has appointed Princess Oforitsenere Emiko as Interim Chairman of the governing board of the Digital Bridge Institute (DBI), a move that anchors the Commission&#039;s...</h5>
+              <div class="cta-button text-dark-blue">
+                <a href="https://ncc.gov.ng/media-centre/press-releases/ncc-appoints-princess-oforitsenere-emiko-interim-chairman-digital">Read More</a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-9">
+              &nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></span></div>
+              </div>
+                      </div>
+        </div>
+            </div>
+        <a class="carousel-control-prev" href="#views-bootstrap-hero-block-block-1" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#views-bootstrap-hero-block-block-1" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+<div class="views-element-container block block-views block-views-blockincident-reports-slider-block-1">
+  
+    
+      <div><div class="view view-incident-reports-slider view-id-incident_reports_slider view-display-id-block_1 js-view-dom-id-92e2e50acae26496c64d6f6bb65767cf25d031def6aae25852402aeb184bcaca">
+  
+    
+      <div class="view-header">
+      <div class="container"><div class="slider-header badge bg-danger"><a href="https://uptime.com/statuspage/ncc">Live Incident Reports</a></div></div>
+    </div>
+      
+      <div class="view-content">
+      
+<div id="views-bootstrap-incident-reports-slider-block-1" class="carousel slide"  data-bs-ride="carousel"
+     data-bs-interval="6000" data-bs-pause="hover"
+     data-wrap="1">
+
+    
+    <div class="carousel-inner">
+                                <div  class="carousel-item active">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>MTN - Fibre Cut in Delta (Aniocha South, Ethiope West, Ika North East, Ika South, Ndokwa West, Sa...</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-15T15:15:00Z" class="datetime">Wed, 15/07/2026 - 4:15 PM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Identified bubble ">Identified </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"><div class="operator bubble"><a href="/taxonomy/term/13" hreflang="en">MTN</a></div></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>Layer3 - Other in FCT (Abuja Municipal Area Council) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-15T06:35:00Z" class="datetime">Wed, 15/07/2026 - 7:35 AM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Investigating bubble ">Investigating </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>Tizeti - Equipment failure in Lagos (Ikeja, Kosofe, Oshodi-Isolo) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-14T20:00:00Z" class="datetime">Tue, 14/07/2026 - 9:00 PM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Identified bubble ">Identified </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>BCN - Fibre Cut in FCT (Abuja Municipal Area Council) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-13T01:00:00Z" class="datetime">Mon, 13/07/2026 - 2:00 AM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Investigating bubble ">Investigating </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>BCN - Fibre Cut in FCT (Abuja Municipal Area Council) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-12T17:56:00Z" class="datetime">Sun, 12/07/2026 - 6:56 PM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Investigating bubble ">Investigating </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>BCN - Fibre Cut in FCT (Abuja Municipal Area Council) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-12T14:48:00Z" class="datetime">Sun, 12/07/2026 - 3:48 PM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Investigating bubble ">Investigating </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>IPNX - Vandalism in Lagos (Ibeju-Lekki) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-12T09:58:10Z" class="datetime">Sun, 12/07/2026 - 10:58 AM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Identified bubble ">Identified </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>Tizeti - Fibre Cut in Lagos (Amuwo-Odofin, Mushin, Oshodi-Isolo) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-12T02:50:00Z" class="datetime">Sun, 12/07/2026 - 3:50 AM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Investigating bubble ">Investigating </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>IPNX - Vandalism in Lagos (Eti-Osa) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-11T19:24:03Z" class="datetime">Sat, 11/07/2026 - 8:24 PM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Identified bubble ">Identified </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+                                      <div  class="carousel-item">
+          <div class="row">
+                  <div class="col-md-12 position-relative">
+                  <div class="views-field views-field-field-incident-summary"><div class="field-content"><h3> <a href="https://uptime.com/statuspage/ncc"><p>Suburban - Vandalism in FCT (Abuja Municipal Area Council) affecting Data services</p>
+.</a></h3></div></div><div class="views-field views-field-field-incident-date"><div class="field-content"><time datetime="2026-07-11T11:08:50Z" class="datetime">Sat, 11/07/2026 - 12:08 PM</time>
+</div></div><div class="views-field views-field-field-incident-status"><div class="field-content"><div class="Notification bubble ">Notification </div></div></div><div class="views-field views-field-field-incident-severity"><div class="field-content"><div class="Major Outage bubble">Major Outage</div></div></div><div class="views-field views-field-field-operator"><div class="field-content"></div></div>
+              </div>
+                      </div>
+        </div>
+            </div>
+    </div>
+
+    </div>
+  
+        <nav class="pager" role="navigation" aria-labelledby="pagination-heading">
+    <h4 id="pagination-heading" class="pager__heading visually-hidden">Pagination</h4>
+    <ul class="pager__items js-pager__items">
+                    <li class="pager__item is-active">
+          Page 1        </li>
+                    <li class="pager__item pager__item--next">
+          <a href="/node/324?page=1" title="Go to next page" rel="next">
+            <span class="visually-hidden">Next page</span>
+            <span aria-hidden="true">››</span>
+          </a>
+        </li>
+          </ul>
+  </nav>
+
+          </div>
+</div>
+
+  </div>
+
+    </div>
+  </div>
+<div  class="_none bs-mt-4" data-aos="fade-up"><div  class="container">  
+  <div  class="layout row layout-builder__layout">
+    
+                        <div  class="col-12">
+          <div class="views-element-container block block-views block-views-blockhome-card-block-block-1">
+  
+      <h2>Latest News &amp; Updates</h2>
+    
+      <div><div class="home-block-cards view view-home-card-block view-id-home_card_block view-display-id-block_1 js-view-dom-id-e1eedaf577bae88058f0ef1435067cb35a72dcf7e06d11ac9c741624d0170085">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/media-centre/press-releases">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2025-04/Untitled-design-%2817%29.jpg?itok=F-rXiSee" width="800" height="400" alt="Press release" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Press Releases
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                                 <div class="views-element-container"><div class="view view-press-releases-home-block view-id-press_releases_home_block view-display-id-embed_1 js-view-dom-id-c8cf3f337e1d510c7010181748a64426ef67616f37ab3d9cfb1f0138e5d4744b">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul>
+
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/media-centre/press-releases/ncc-advances-dig-once-policy-engages-stakeholders-cost-based-framework" hreflang="en">NCC Advances Dig Once Policy, Engages Stakeholders on Cost-Based Framework for Duct Sharing</a></span></div></li>
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/media-centre/press-releases/requirement-prior-regulatory-approval-changes-shareholdingownership" hreflang="en">Requirement For Prior Regulatory Approval On Changes In Shareholding/Ownership Structure Of Communications Companies</a></span></div></li>
+          <li><div class="views-field views-field-title"><span class="field-content"><a href="/media-centre/press-releases/ncc-appoints-princess-oforitsenere-emiko-interim-chairman-digital" hreflang="en">NCC Appoints Princess Oforitsenere Emiko as Interim Chairman of the Digital Bridge Institute Governing Board</a></span></div></li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+              
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/documents">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2024-11/documents-default.png?itok=_xVYLKjk" width="800" height="400" alt="NCC Documents" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Documents
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                                 <div class="views-element-container"><div class="view view-documents-home-block view-id-documents_home_block view-display-id-embed_1 js-view-dom-id-f97e40d3d1cd63932f39d19972e57f4cb5a62a9567a44c356149be33d079b874">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul>
+
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/6731/view">Consultation Paper on Zero Rated Access to Educational Platforms</a></span></div></li>
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/6593/view">Communique Issued at The End of the 109th Board Meeting of the Nigerian Communications Commission Held on May 25, 2026</a></span></div></li>
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/6352/view">Draft Business Rules for Mobile Virtual Network Operations in Nigeria</a></span></div></li>
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/6351/view">Report of the Stakeholders&#039; Forum on the Telecommunications Identity Risk Management System (TIRMS)</a></span></div></li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+              
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/videos">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2025-04/image-%2830%29.png?itok=B5UBc9qO" width="800" height="400" alt="Videos" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Videos
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                                 <div class="views-element-container"><div class="view view-duplicate-of-documents-home-block view-id-duplicate_of_documents_home_block view-display-id-embed_1 js-view-dom-id-20d24196b81ce794cde69b778617f9965a441c141c420f4d2216fd1a154df184">
+  
+    
+      
+      <div class="view-content">
+      <div class="item-list">
+  
+  <ul>
+
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/5046" hreflang="en">Interview with Dr. Aminu Maida, EVC/CEO, NCC, on the State of Nigeria’s Telecommunications Industry</a></span></div></li>
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/5050" hreflang="en">NCC hosted a two-day workshop for Attorneys-General on emerging issues in the communications sector</a></span></div></li>
+          <li><div class="views-field views-field-name"><span class="field-content"><a href="/media/5051" hreflang="en">Protect Our Connectivity. Stop Vandalism.</a></span></div></li>
+    
+  </ul>
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+              
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+        </div>
+                                                                                                                                                                                              
+  </div>
+
+</div></div><div  class="_none bs-mt-4" data-aos="fade-up"><div  class="container">  
+  <div  class="curved-image image-100 layout row layout-builder__layout">
+    
+                        <div  class="col-12">
+          <div class="block block-block-content block-block-content2df51aa7-dad7-4251-bb21-5bbd9684ef69">
+  
+      <h2>About the NCC</h2>
+    
+        <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <div class="block block-layout-builder block-field-blockblock-contentbasicbody">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div class="home-about-image"><img src="/sites/default/files/inline-images/about-home-replicate-prediction-3davjeh1q5rg80ckk9c8cq998c.jpg" data-entity-uuid="64edc145-0242-4099-93b1-52b16bf6aea3" data-entity-type="file" width="1400" height="784" loading="lazy"></div><p><br><span>The Commission is responsible for creating an enabling environment for competition among operators in the industry as well as ensuring the provision of qualitative and efficient telecommunications services throughout the country. Over the years NCC has earned a reputation as a foremost Telecom regulatory agency in Africa. The Commission is hoping to catalyze the use of ICTs for different aspects of national development.</span></p><p><a href="/node/327"><span><u>Read more</u></span></a></p></div>
+      
+  </div>
+
+    </div>
+  </div>
+
+  </div>
+
+        </div>
+                                                                                                                                                                                              
+  </div>
+
+</div></div><div  class="_none bs-mt-4" data-aos="fade-up"><div  class="container">  
+  <div  class="layout row layout-builder__layout">
+    
+                        <div  class="col-12">
+          <div class="views-element-container block block-views block-views-blockhome-card-block-block-2">
+  
+      <h2>Market Data</h2>
+    
+      <div><div class="home-block-cards view view-home-card-block view-id-home_card_block view-display-id-block_2 js-view-dom-id-b3fc97ac9d952df19f19a9a243f69b418a78beef87c99e57e8ade6524c991dcc">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/market-data-reports/industry-statistics">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2025-05/Industry-Statistics.jpg?itok=uD4C0AhV" width="800" height="400" alt="Data charts and writing materials on a surface" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Industry Statistics
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                               <p>
+                    <p>Consistent with Section 89 Subsection 3(d) of the Nigerian Communications Act 2003 (NCA 2003), the Commission is mandated to monitor and report on the state of the Nigerian telecommunications industry, provide statistical analyses and identify</p> 
+                </p>
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/market-data-reports/subscriber-statistics">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2024-11/subscriberdata.png?itok=FaEMf376" width="800" height="400" alt="Subscriber Data NCC" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Subscriber Data
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                               <p>
+                    <p>View the number of subscribers and teledensity for mobile and fixed telephony and data services on a monthly, quarterly and annual basis respectively</p> 
+                </p>
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/market-data-reports/tariff-information">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2024-11/tariffhome.png?itok=t2ezhDmQ" width="800" height="400" alt="NCC Tariff Information" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Tariff Information
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                               <p>
+                    <p>Consistent with Section 108 of the Nigerian Communications Act 2003 (NCA 2003), the Commission is responsible for the approval of tariffs and other charges for the provision of service by licensed telecommunications service providers.</p> 
+                </p>
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+        </div>
+                                                                                                                                                                                              
+  </div>
+
+</div></div><div  class="_none bs-mt-3" data-aos="fade-up"><div  class="container">  
+  <div  class="layout row layout-builder__layout">
+    
+                        <div  class="col-12">
+          <div class="views-element-container block block-views block-views-blockhome-card-block-block-3">
+  
+      <h2>Operators</h2>
+    
+      <div><div class="home-block-cards view view-home-card-block view-id-home_card_block view-display-id-block_3 js-view-dom-id-488f4eef18f661a254d87be9510eacc4b4616bf263fe9a73930ab3a848f600b0">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/operators/apply-license">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2025-05/Licences.png?itok=iVsZ2Nd4" width="800" height="400" alt="Blue optic fiber with ethernet cables and laptop" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Licences
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                               <p>
+                    <p>Consistent with Section 70 of the Nigerian Communications Act 2003 (NCA 2003), the Commission is empowered to make and publish regulations on matters such as, but not limited to; written authorisations</p> 
+                </p>
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/guidelines">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2025-05/Guidelines.png?itok=1C6kdtmj" width="800" height="400" alt="Man showing papers" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Guidelines
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                               <p>
+                    <p>Consistent with Section 70 Subsection 2 of the Nigerian Communications Act 2003 (NCA 2003), the Commission is empowered to make and publish guidelines on all matters as are deemed necessary to give full effect to the provisions and administration of the NCA 2003</p> 
+                </p>
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="/operators/numbering-type-approval/type-approval">
+<div class="card">
+          <img loading="lazy" src="/sites/default/files/styles/card_image/public/2025-05/Type-Approval.png?itok=o1kWMFzU" width="800" height="400" alt="Telecommunication equipment" class="img-fluid image-style-card-image" />
+
+
+
+        <div class="card-body">
+            <div class="card-text">
+                <h4>
+                    Type Approval
+                </h4>
+                <div class="click-arrow">
+                    <i class="fa-solid fa-arrow-right fa-2x"></i>
+                </div>
+                               <p>
+                    <p>The Nigerian Communications Commission is empowered by the Nigerian Communications Act 2003 to establish and enforce standards for all telecommunications equipment in operation in the Federal Republic of Nigeria to ensure that they operate seamlessly and safely within the Nigerian telecommunications environment.</p> 
+                </p>
+                               
+            </div>
+        </div>
+    </div>
+</a></span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+        </div>
+                                                                                                                                                                                              
+  </div>
+
+</div></div><div  class="_none bs-mt-4 bs-mb-3" data-aos="fade-up"><div  class="container">  
+  <div  class="layout row layout-builder__layout">
+    
+                        <div  class="col-12">
+          <div class="block block-block-content block-block-content2873dacf-d341-469f-bb92-79016377b506">
+  
+      <h2>Consumers</h2>
+    
+        <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <div class="block block-layout-builder block-field-blockblock-contentbasicbody">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div class="bs_grid ck-widget" contenteditable="false"><div class="row ck-widget" data-row-none="none" data-row-sm="none" data-row-md="equal_equal" data-row-lg="equal_equal" data-row-xl="equal_equal" data-row-xxl="equal_equal" contenteditable="false"><div class="col-md col-lg col-xl col-xxl curved-image image-100 home-consumer-section"><p><img src="/sites/default/files/inline-images/consumer-home_0.png" data-entity-uuid="4d5ead94-88cf-48f9-856d-02910b03a426" data-entity-type="file" alt="NCC Consumers" width="623" height="408" loading="lazy"></p></div><div class="col-md col-lg col-xl col-xxl"><h4>Network Coverage Map</h4><p>Learn about the coverage in your area by clicking this <a href="https://ncc.gov.ng/coverage-map" target="_blank"><u>link</u></a>, simple enter your address and view providers in your vicinity</p><h4>Consumer Portal</h4><p>The Consumer Affairs Bureau is one of the key departments of the Nigerian Communications Commission. It was created in September 2001 by the Commission through the provision of Chapter VII of Nigerian Communications Act</p><p><a href="https://consumer.ncc.gov.ng/" target="_blank"><u>Read more</u></a></p></div></div></div></div>
+      
+  </div>
+
+    </div>
+  </div>
+
+  </div>
+
+        </div>
+                                                                                                                                                                                              
+  </div>
+
+</div></div>  <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <div class="block block-layout-builder block-extra-field-blocknodehomelinks">
+  
+    
+      
+  </div>
+
+    </div>
+  </div>
+
+  </div>
+  
+</article>
+
+  </div>
+<div class="views-element-container block block-views block-views-blockduplicate-of-footer-logos-2-block-1" id="block-nccsubtheme-views-block-duplicate-of-footer-logos-2-block-1">
+  
+    
+      <div data-block="content"><div class="container view view-duplicate-of-footer-logos-2 view-id-duplicate_of_footer_logos_2 view-display-id-block_1 js-view-dom-id-10c0c322823e74a9079e4f5d1c2fa2d1c2bbeb8a0d6760ac4e8cab37deb5267f">
+  
+    
+      <div class="view-header">
+      <h2>Important Links</h2>
+    </div>
+      
+      <div class="view-content">
+        <div class="skin-default">
+    
+    <div id="views_slideshow_cycle_main_duplicate_of_footer_logos_2-block_1" class="views_slideshow_cycle_main views_slideshow_main">
+    <div id="views_slideshow_cycle_teaser_section_duplicate_of_footer_logos_2-block_1"  class="views_slideshow_cycle_teaser_section">
+     <div id="views_slideshow_cycle_div_duplicate_of_footer_logos_2-block_1_0"  class="views_slideshow_cycle_slide views_slideshow_slide views-row-1 views-row-odd">
+      <div  class="views-row views-row-0 views-row-odd views-row-first">
+  <div class="views-field views-field-field-logo-file-1"><div class="field-content"><a href="https://fmcide.gov.ng/" target="_blank"><img src="/sites/default/files/2024-12/fmct-logo.svg" /></a></div></div><div><div><a href="https://fmcide.gov.ng/" target="_blank">The Federal Ministry of Communications, Innovation &amp; Digital Economy</a></div></div>
+</div>
+
+      <div  class="views-row views-row-0 views-row-odd views-row-first">
+  <div class="views-field views-field-field-logo-file-1"><div class="field-content"><a href="https://www.uspf.gov.ng/" target="_blank"><img src="/sites/default/files/2024-12/uspf-logo.svg" /></a></div></div><div><div><a href="https://www.uspf.gov.ng/" target="_blank">Universal Service Provision Fund (USPF)</a></div></div>
+</div>
+
+      <div  class="views-row views-row-0 views-row-odd views-row-first">
+  <div class="views-field views-field-field-logo-file-1"><div class="field-content"><a href="https://dbi.edu.ng/" target="_blank"><img src="/sites/default/files/2024-12/dbi-logo.svg" /></a></div></div><div><div><a href="https://dbi.edu.ng/" target="_blank">Digital Bridge Institute</a></div></div>
+</div>
+
+      <div  class="views-row views-row-0 views-row-odd views-row-first">
+  <div class="views-field views-field-field-logo-file-1"><div class="field-content"><a href="https://login.remita.net/remita/onepage/NCC/biller.spa" target="_blank"><img src="/sites/default/files/2024-12/paycard.svg" /></a></div></div><div><div><a href="https://login.remita.net/remita/onepage/NCC/biller.spa" target="_blank">Remita Payment Channel</a></div></div>
+</div>
+
+      <div  class="views-row views-row-0 views-row-odd views-row-first">
+  <div class="views-field views-field-field-logo-file-1"><div class="field-content"><a href="https://nban.gov.ng/" target="_blank"><img src="/sites/default/files/2025-03/NBAN-Logo.png" /></a></div></div><div><div><a href="https://nban.gov.ng/" target="_blank">National Broadband Alliance for Nigeria (NBAN)</a></div></div>
+</div>
+
+  </div>
+
+  </div>
+
+</div>
+
+
+        </div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+
+  </div>
+
+  </main>
+
+<footer role="contentinfo" class="mt-auto   footer-light text-dark bg-light">
+  <div class="container">
+      <div class="region region-footer">
+    <div id="block-nccsubtheme-footerblock1" class="block block-block-content block-block-contentcc402a04-cf0b-4804-8d17-a1892c194b8c">
+  
+    
+        <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      <div class="block block-layout-builder block-field-blockblock-contentbasicbody">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div><img src="/sites/default/files/inline-images/logo%20svg.png" width="186" height="130" loading="lazy"><p>&nbsp;</p><p><br><span style="white-space:pre-wrap;">Plot 423 Aguiyi Ironsi Street,&nbsp;</span><br><span style="white-space:pre-wrap;">Maitama, Abuja, FCT 900271,</span><br><span style="white-space:pre-wrap;">Federal Republic of Nigeria.</span></p><div><a href="tel:+2342094617514"><span style="white-space:pre-wrap;">+234-209-461-7000</span></a></div><div><a href="tel:+2342094617514"><span style="white-space:pre-wrap;">+234-209-461-7514</span></a></div><div><a href="/cdn-cgi/l/email-protection#325c5151725c51511c555d441c5c55"><span style="white-space:pre-wrap;"><span class="__cf_email__" data-cfemail="2d434e4e6d434e4e034a425b03434a">[email&#160;protected]</span></span></a></div></div></div>
+      
+  </div>
+
+    </div>
+  </div>
+
+  </div>
+<div class="views-element-container block block-views block-views-blockfooter-logos-block-1" id="block-nccsubtheme-views-block-footer-logos-block-1">
+  
+    
+      <div data-block="footer"><div class="view view-footer-logos view-id-footer_logos view-display-id-block_1 js-view-dom-id-c6eccbd8cd0fc7a824af901e55fabee41799aa9363c7aa8277fa645dfe8c2ddf">
+  
+    
+      <div class="view-header">
+      <nav role="navigation" aria-labelledby="block-nccsubtheme-mainnavigation-2-menu" id="block-nccsubtheme-mainnavigation-2" class="block block-menu navigation container menu--main">
+            
+  <h5 class="visually-hidden" id="block-nccsubtheme-mainnavigation-2-menu">Main navigation</h5>
+  
+
+        
+            <ul data-block="nav_main" class="navbar-nav justify-content-end flex-wrap nav-level-0">
+                    <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Expand menu About NCC">About NCC</a>
+                  <ul data-block="nav_main" class="dropdown-menu nav-level-1">
+                    <li class="nav-item">
+          <a href="/about-NCC/who-we-are" class="dropdown-item" data-drupal-link-system-path="node/327">Who We Are</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/about-ncc/leadership" class="dropdown-item" data-drupal-link-system-path="node/3456">Leadership</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/about-ncc/our-mandate" class="dropdown-item" data-drupal-link-system-path="node/332">Our Mandate</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/about-ncc/strategic-vision" class="dropdown-item" data-drupal-link-system-path="node/333">Strategic Vision</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/strategic-plans" class="dropdown-item" data-drupal-link-system-path="node/34">Strategic Plans</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/about-ncc/telecommunications-history" class="dropdown-item" data-drupal-link-system-path="node/3047">History</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/about-ncc/servicom-charter" class="dropdown-item" data-drupal-link-system-path="node/326">SERVICOM Charter</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/about-ncc/commission-projects" class="dropdown-item" data-drupal-link-system-path="node/3123">Commission Projects</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/policy-education-visit-excursion-and-benchmarking-visits-ncc-0" title="Policy For Education Visits &amp; Excursions" class="dropdown-item">Peering &amp; Educational Visits</a>
+      </li>
+
+        </ul>
+  
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Expand menu Industry">Industry</a>
+                  <ul data-block="nav_main" class="dropdown-menu nav-level-1">
+                    <li class="nav-item dropdown">
+          <a href="" class="dropdown-item">Licensing</a>
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="dropdown-item">Numbering &amp; Type Approval</a>
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="dropdown-item">Spectrum Administration</a>
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="dropdown-item">Regulations &amp; Guidelines</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/industry/operator-questionnaires" class="dropdown-item" data-drupal-link-system-path="node/2780">Questionnaires &amp; Surveys</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/industry/application-forms" class="dropdown-item" data-drupal-link-system-path="node/2840">Application Forms</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/industry/fees-pricing" class="dropdown-item" data-drupal-link-system-path="node/2847">Fees &amp; Pricing</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/industry/nca-2003" class="dropdown-item" data-drupal-link-system-path="node/3046">The NCA 2003</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/internet-governance" class="dropdown-item" data-drupal-link-system-path="node/335">Internet Governance</a>
+      </li>
+
+        </ul>
+  
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Expand menu Consumers">Consumers</a>
+                  <ul data-block="nav_main" class="dropdown-menu nav-level-1">
+                    <li class="nav-item">
+          <a href="/consumers/child-online-protection" class="dropdown-item" data-drupal-link-system-path="node/314">Child Online Protection</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/consumers/public-consultations-0" class="dropdown-item" data-drupal-link-system-path="node/738">Public Consultations</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/consumers/cybersecurity" class="dropdown-item" data-drupal-link-system-path="node/685">Cyber Security</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="http://consumer.ncc.gov.ng/consumer-complaints/procedure-to-file-a-complaint" class="dropdown-item">Consumer Complaints</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/local-government-areas-eligibile-compensation" class="dropdown-item" data-drupal-link-system-path="node/6295">Consumer Compensation</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="https://ncc.gov.ng/coverage-map" class="dropdown-item">Network Coverage Map</a>
+      </li>
+
+        </ul>
+  
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Expand menu Market Data &amp; Reports">Market Data &amp; Reports</a>
+                  <ul data-block="nav_main" class="dropdown-menu nav-level-1">
+                    <li class="nav-item">
+          <a href="/documents" title="All NCC Documents" class="dropdown-item" data-drupal-link-system-path="documents">All Documents</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/industry-statistics" class="dropdown-item" data-drupal-link-system-path="node/2977">Industry Statistics</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/network-performance-report" class="dropdown-item" data-drupal-link-system-path="node/6306">Network Performance Report</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/research-reports" class="dropdown-item" data-drupal-link-system-path="node/613">Research Reports</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/annual-reports" class="dropdown-item" data-drupal-link-system-path="node/2836">Annual Report</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/publications" class="dropdown-item" data-drupal-link-system-path="node/2834">Publications</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="https://uptime.com/statuspage/ncc" class="dropdown-item">Incident Reports</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="https://ncc.gov.ng/market-data-reports/quality-experience#infographic" class="dropdown-item">Quality of Experience</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/quality-service-data" class="dropdown-item" data-drupal-link-system-path="node/2853">Quality of Service Data</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/tarrif-information-overview" class="dropdown-item" data-drupal-link-system-path="node/3572">Tariff information</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/subscriber-statistics" class="dropdown-item" data-drupal-link-system-path="node/2930">Subscriber Statistics</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/market-data-reports/consumer-complaint-statistics" class="dropdown-item" data-drupal-link-system-path="node/6742">Consumer Complaint Statistics</a>
+      </li>
+
+        </ul>
+  
+      </li>
+
+                    <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Expand menu Media Centre">Media Centre</a>
+                  <ul data-block="nav_main" class="dropdown-menu nav-level-1">
+                    <li class="nav-item">
+          <a href="/videos" class="dropdown-item" data-drupal-link-system-path="videos">Gallery</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/media-centre/press-releases" class="dropdown-item" data-drupal-link-system-path="node/647">Press Releases</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/media-center/public-notices" class="dropdown-item" data-drupal-link-system-path="node/603">Public Notices</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/media-centre/tenders-procurement" class="dropdown-item" data-drupal-link-system-path="node/605">Tender &amp; Procurements</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/2025-speeches-presentations" class="dropdown-item" data-drupal-link-system-path="node/3400">Speeches &amp; Presentations</a>
+      </li>
+
+        </ul>
+  
+      </li>
+
+                    <li class="nav-item">
+          <a href="/events" class="nav-link" data-drupal-link-system-path="node/3432">Events</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="https://eservices.ncc.gov.ng/" class="nav-link">E-Services</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="https://consumer.ncc.gov.ng/" class="nav-link">Consumer Portal</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/careers-ncc" class="nav-link" data-drupal-link-system-path="node/2061">Careers</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/frequently-asked-questions" class="nav-link" data-drupal-link-system-path="node/737">FAQ</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/webform/contact-us" class="nav-link">Contact Us</a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="/search" class="nav-link" data-drupal-link-system-path="search"><i class="fa-solid fa-solid fa-magnifying-glass" aria-hidden="true"></i> <span class="link-text">Search</span></a>
+      </li>
+
+                    <li class="nav-item">
+          <a href="https://eodb.ncc.gov.ng" class="nav-link">Ease of Doing Business</a>
+      </li>
+
+        </ul>
+  
+
+
+
+  </nav>
+<h5>International Partners</h5>
+    </div>
+      
+      <div class="view-content">
+          <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://itu.int/" target="_blank">
+   <div class="f-logo"><img src="/sites/default/files/2024-12/ITU-logo.svg" /></div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://atuuat.africa/" target="_blank">
+   <div class="f-logo"><img src="/sites/default/files/2024-12/ATU-logo.svg" /></div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="https://cto.int/" target="_blank">
+   <div class="f-logo"><img src="/sites/default/files/2024-12/CTO-logo.svg" /></div>
+</a></span></div></div>
+    <div class="views-row"><div class="views-field views-field-nothing"><span class="field-content"><a href="http://watra.org/" target="_blank">
+   <div class="f-logo"><img src="/sites/default/files/2024-12/WATRA-logo.svg" /></div>
+</a></span></div></div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </div>
+<div id="block-nccsubtheme-spacer" class="block block-block-content block-block-contentd7da1a67-9a40-40b3-9378-2cfc75c26147">
+  
+    
+        <div class="layout layout--onecol">
+    <div  class="layout__region layout__region--content">
+      
+    </div>
+  </div>
+
+  </div>
+
+  </div>
+
+  </div>
+</footer>
+<div class="social-media-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="social-media-icon twitter">
+                    <a href="https://twitter.com/ngcomcommission" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
+                </div>
+                <div class="social-media-icon facebook">
+                    <a href="http://www.facebook.com/nigerian.communications.commission" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"/></svg></a>
+                </div>
+                <div class="social-media-icon youtube">
+                    <a href="https://www.youtube.com/user/NgComCommission" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></a>
+                </div>
+                <div class="social-media-icon instagram">
+                    <a href="https://www.instagram.com/ngcomcommission/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+                </div>
+                <div class="social-media-icon linkedin">
+                    <a href="https://ng.linkedin.com/company/nigerian-communications-commission" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg></a>
+                </div>
+            </div>
+            <div class="col-sm-6 copyright-text" style="color:#666;font-size:10pt;padding:15px;text-align:right;">&copy; 2025 Nigerian Communications Commission. All Rights Reserved.</div>
+        </div>
+    </div>
+</div>
+
+  </div>
+
+    <div class="b-accessibility-menu__button js-accessibility-btn am-skip" id="b-accessibility-menu"></div>
+
+<div class="b-accessibility-menu__wrapper js-accessibility-menu am-skip">
+  <div class="b-accessibility-menu am-skip">
+    <div class="b-accessibility-menu__header am-skip">
+      <div class="b-accessibility-menu__title am-skip">Accessibility menu</div>
+      <div class="b-accessibility-menu__close js-accessibility-close am-skip"></div>
+    </div>
+    <div class="b-accessibility-menu__content am-skip">
+      <div class="b-accessibility-menu__items am-skip">
+                  <div class="b-accessibility-menu__item-wrapper am-skip">
+            <div class="b-accessibility-menu__item am-skip type-contrast" data-type="contrast" data-title="Contrast settings">
+              <div class="b-accessibility-menu__title am-skip"><span class="am-skip">Contrast settings</span></div>
+              <div class="b-accessibility-menu__links am-skip">
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="High contrast"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Inversion"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="White"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Comfort"></div>
+                              </div>
+            </div>
+          </div>
+                  <div class="b-accessibility-menu__item-wrapper am-skip">
+            <div class="b-accessibility-menu__item am-skip type-font_size" data-type="font_size" data-title="Font size">
+              <div class="b-accessibility-menu__title am-skip"><span class="am-skip">Font size</span></div>
+              <div class="b-accessibility-menu__links am-skip">
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Font size"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Font size"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Font size"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Font size"></div>
+                              </div>
+            </div>
+          </div>
+                  <div class="b-accessibility-menu__item-wrapper am-skip">
+            <div class="b-accessibility-menu__item am-skip type-letter_spacing" data-type="letter_spacing" data-title="Letter spacing">
+              <div class="b-accessibility-menu__title am-skip"><span class="am-skip">Letter spacing</span></div>
+              <div class="b-accessibility-menu__links am-skip">
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Increased interval"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Moderate interval"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Wide interval"></div>
+                              </div>
+            </div>
+          </div>
+                  <div class="b-accessibility-menu__item-wrapper am-skip">
+            <div class="b-accessibility-menu__item am-skip type-line_height" data-type="line_height" data-title="Line height">
+              <div class="b-accessibility-menu__title am-skip"><span class="am-skip">Line height</span></div>
+              <div class="b-accessibility-menu__links am-skip">
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Line height (1.5x)"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Line height (1.75x)"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Line height (2x)"></div>
+                              </div>
+            </div>
+          </div>
+                  <div class="b-accessibility-menu__item-wrapper am-skip">
+            <div class="b-accessibility-menu__item am-skip type-images" data-type="images" data-title="Images">
+              <div class="b-accessibility-menu__title am-skip"><span class="am-skip">Images</span></div>
+              <div class="b-accessibility-menu__links am-skip">
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Grayscale"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Disabled"></div>
+                              </div>
+            </div>
+          </div>
+                  <div class="b-accessibility-menu__item-wrapper am-skip">
+            <div class="b-accessibility-menu__item am-skip type-font_style" data-type="font_style" data-title="Font">
+              <div class="b-accessibility-menu__title am-skip"><span class="am-skip">Font</span></div>
+              <div class="b-accessibility-menu__links am-skip">
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Serif"></div>
+                                  <div class="b-accessibility-menu__link js-accessibility-link am-skip" data-title="Sans serif"></div>
+                              </div>
+            </div>
+          </div>
+              </div>
+      <div class="b-accessibility-menu__reset js-accessibility-reset am-skip">Reset the settings</div>
+    </div>
+  </div>
+</div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/324","currentPathIsAdmin":false,"isFront":true,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"eJyNU22y2yAMvBA2M532ED0FI4NMlAByEU7id_oqTl7q5H2kfwDtrmUhVuA9itBAidriMpbZehEDITSGstj3Qz9WLs0MzE1ahemnyxwg2UFupz4QJI497OH8T_bLDiD4EN-P3V66BA2lbfmYeIDUSVsSlbhlshYKEWWLFQ6b7O7yFYqd0hyp9AP4Q6w8l-A8J679MFMKX8u5BnwtOjvZQeDTC2GGuuq_FU3aXr3lC5X4yik5HEf0TV6IG56bg0Sx6GO2_xFve-O5oja1Zs3whgZnZflAqFueEkHxaD8DXcAR5tTMSO1IQextv8dUSEm1EJxQOKPdnHs5xu-4XnaUTWSOCR0USEsjL_YZMAkWnpsLJJ6PWBfLBfVyJqvJqrrTkeciqyPVW2iK95t0D9GFk3loO9Ry_CyNs9s_ok9G3VI8YXHaWqyazyl9EMM1QqFYIYvbXcqzHxAzgbb3snSZyjUSSsp0ow5K13gyskjDfJ2qNujARliHdv1xv0HMkfAkdl17ndA54RVydzPYy_tpj0qTGyWJAsqOT3b_Z9YOXuv6XZpqPkhOFCI2R2XkZ875xSd8T7IGX0mEy48vuE_Rv3nL2_4","theme":"nccsubtheme","theme_token":null},"ajaxTrustedUrl":{"\/search":true},"fitvids":{"selectors":".node\r,.field--name-field-media-oembed-video\r,.field-content","custom_vendors":"iframe[src^=\u0022https:\/\/youtu.be\u0022],iframe[src^=\u0022https:\/\/youtu.be\u0022]","ignore_selectors":""},"google_analytics":{"account":"G-H8YXLRY0W7","trackOutbound":true,"trackMailto":true,"trackTel":true,"trackDownload":true,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip","trackColorbox":true},"eu_cookie_compliance":{"cookie_policy_version":"1.0.0","popup_enabled":true,"popup_agreed_enabled":false,"popup_hide_agreed":false,"popup_clicking_confirmation":false,"popup_scrolling_confirmation":false,"popup_html_info":"\u003Cdiv aria-labelledby=\u0022popup-text\u0022  class=\u0022eu-cookie-compliance-banner eu-cookie-compliance-banner-info eu-cookie-compliance-banner--opt-in\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n        \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022 role=\u0022document\u0022\u003E\n      \u003Ch2\u003EWe use cookies on this site to enhance your user experience\u003C\/h2\u003E\u003Cp\u003EBy clicking the Accept button, you agree to us doing so.\u003C\/p\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003ERead the privacy and cookie policies\u003C\/button\u003E\n          \u003C\/div\u003E\n\n    \n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n            \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-secondary-button button button--small\u0022\u003EAccept\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022decline-button eu-cookie-compliance-default-button button button--small button--primary\u0022\u003ENo, thanks\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","use_mobile_message":false,"mobile_popup_html_info":"\u003Cdiv aria-labelledby=\u0022popup-text\u0022  class=\u0022eu-cookie-compliance-banner eu-cookie-compliance-banner-info eu-cookie-compliance-banner--opt-in\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n        \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022 role=\u0022document\u0022\u003E\n      \n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003ERead the privacy and cookie policies\u003C\/button\u003E\n          \u003C\/div\u003E\n\n    \n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n            \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-secondary-button button button--small\u0022\u003EAccept\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022decline-button eu-cookie-compliance-default-button button button--small button--primary\u0022\u003ENo, thanks\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","mobile_breakpoint":768,"popup_html_agreed":false,"popup_use_bare_css":false,"popup_height":"auto","popup_width":"100%","popup_delay":1000,"popup_link":"https:\/\/ncc.gov.ng\/legal","popup_link_new_window":true,"popup_position":false,"fixed_top_position":true,"popup_language":"en","store_consent":false,"better_support_for_screen_readers":false,"cookie_name":"","reload_page":false,"domain":"","domain_all_sites":false,"popup_eu_only":false,"popup_eu_only_js":false,"cookie_lifetime":100,"cookie_session":0,"set_cookie_session_zero_on_disagree":0,"disagree_do_not_show_popup":false,"method":"opt_in","automatic_cookies_removal":true,"allowed_cookies":"","withdraw_markup":"\u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-tab\u0022\u003EPrivacy settings\u003C\/button\u003E\n\u003Cdiv aria-labelledby=\u0022popup-text\u0022 class=\u0022eu-cookie-withdraw-banner\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022 role=\u0022document\u0022\u003E\n      \u003Ch2\u003EWe use cookies on this site to enhance your user experience\u003C\/h2\u003E\u003Cp\u003EYou have given your consent for us to set cookies.\u003C\/p\u003E\n    \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-button  button button--small button--primary\u0022\u003EWithdraw consent\u003C\/button\u003E\n    \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","withdraw_enabled":false,"reload_options":0,"reload_routes_list":"","withdraw_button_on_info_popup":false,"cookie_categories":[],"cookie_categories_details":[],"enable_save_preferences_button":true,"cookie_value_disagreed":"0","cookie_value_agreed_show_thank_you":"1","cookie_value_agreed":"2","containing_element":"body","settings_tab_enabled":false,"olivero_primary_button_classes":" button button--small button--primary","olivero_secondary_button_classes":" button button--small","close_button_action":"close_banner","open_by_default":true,"modules_allow_popup":true,"hide_the_banner":false,"geoip_match":true,"unverified_scripts":[]},"viewsSlideshowCycle":{"#views_slideshow_cycle_main_duplicate_of_footer_logos_2-block_1":{"num_divs":1,"id_prefix":"#views_slideshow_cycle_main_","div_prefix":"#views_slideshow_cycle_div_","vss_id":"duplicate_of_footer_logos_2-block_1","effect":"slideX","transition_advanced":1,"timeout":5000,"speed":700,"delay":0,"sync":1,"random":0,"pause":1,"pause_on_click":0,"action_advanced":1,"start_paused":0,"remember_slide":0,"remember_slide_days":1,"pause_in_middle":0,"pause_when_hidden":0,"pause_when_hidden_type":"full","amount_allowed_visible":"","nowrap":0,"fixed_height":1,"items_per_slide":5,"items_per_slide_first":0,"items_per_slide_first_number":1,"wait_for_image_load":1,"wait_for_image_load_timeout":3000,"cleartype":0,"cleartypenobg":0,"advanced_options":"{}","advanced_options_choices":0,"advanced_options_entry":""}},"viewsSlideshow":{"duplicate_of_footer_logos_2-block_1":{"methods":{"goToSlide":["viewsSlideshowSlideCounter","viewsSlideshowPager","viewsSlideshowCycle"],"nextSlide":["viewsSlideshowSlideCounter","viewsSlideshowPager","viewsSlideshowCycle"],"pause":["viewsSlideshowControls","viewsSlideshowCycle"],"play":["viewsSlideshowControls","viewsSlideshowCycle"],"previousSlide":["viewsSlideshowSlideCounter","viewsSlideshowPager","viewsSlideshowCycle"],"transitionBegin":["viewsSlideshowSlideCounter","viewsSlideshowPager"],"transitionEnd":[]},"paused":0}},"TBMegaMenu":{"TBElementsCounter":{"column":9},"theme":"nccsubtheme"},"user":{"uid":0,"permissionsHash":"c16fbcd983ec69c59613226bb176ec7003d47711a45a040d3f540483d0a2fbea"}}</script>
+<script src="/core/assets/vendor/jquery/jquery.min.js?v=3.7.1"></script>
+<script src="/core/assets/vendor/once/once.min.js?v=1.0.1"></script>
+<script src="/core/misc/drupalSettingsLoader.js?v=10.3.10"></script>
+<script src="/core/misc/drupal.js?v=10.3.10"></script>
+<script src="/core/misc/drupal.init.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/version-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/data-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/disable-selection-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/form-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/jquery-patch-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/scroll-parent-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/unique-id-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/focusable-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/ie-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/keycode-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/plugin-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/safe-active-element-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/safe-blur-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widget-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/labels-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/controlgroup-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/form-reset-mixin-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/mouse-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/checkboxradio-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/draggable-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/resizable-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/button-min.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/jquery.ui/ui/widgets/dialog-min.js?v=10.3.10"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="/core/assets/vendor/tabbable/index.umd.min.js?v=6.2.0"></script>
+<script src="/core/assets/vendor/tua-body-scroll-lock/tua-bsl.umd.min.js?v=10.3.10"></script>
+<script src="https://static.addtoany.com/menu/page.js" defer></script>
+<script src="/modules/addtoany/js/addtoany.js?v=10.3.10"></script>
+<script src="/libraries/fitvids/jquery.fitvids.js?v=10.3.10"></script>
+<script src="/modules/fitvids/js/init-fitvids.js?v=10.3.10"></script>
+<script src="/modules/google_analytics/js/google_analytics.js?v=10.3.10"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://d3js.org/topojson.v3.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="/modules/custom/ncc_analytics/js/ncc-map.js?v=1.2"></script>
+<script src="/themes/bootstrap5/dist/bootstrap/5.3.3/dist/js/bootstrap.bundle.js?v=5.3.3"></script>
+<script src="/core/misc/progress.js?v=10.3.10"></script>
+<script src="/core/assets/vendor/loadjs/loadjs.min.js?v=4.3.0"></script>
+<script src="/core/misc/debounce.js?v=10.3.10"></script>
+<script src="/core/misc/announce.js?v=10.3.10"></script>
+<script src="/core/misc/message.js?v=10.3.10"></script>
+<script src="/core/misc/ajax.js?v=10.3.10"></script>
+<script src="/core/misc/displace.js?v=10.3.10"></script>
+<script src="/core/misc/jquery.tabbable.shim.js?v=10.3.10"></script>
+<script src="/core/misc/position.js?v=10.3.10"></script>
+<script src="/core/misc/dialog/dialog-deprecation.js?v=10.3.10"></script>
+<script src="/core/misc/dialog/dialog.js?v=10.3.10"></script>
+<script src="/core/misc/dialog/dialog.position.js?v=10.3.10"></script>
+<script src="/core/misc/dialog/dialog.jquery-ui.js?v=10.3.10"></script>
+<script src="/core/modules/ckeditor5/js/ckeditor5.dialog.fix.js?v=10.3.10"></script>
+<script src="/core/misc/dialog/dialog.ajax.js?v=10.3.10"></script>
+<script src="/themes/custom/nccsubtheme/js/custom.js?ti82v6"></script>
+<script src="/themes/custom/nccsubtheme/js/open-external-links.js?ti82v6"></script>
+<script src="/modules/eu_cookie_compliance/js/eu_cookie_compliance.min.js?v=10.3.10"></script>
+<script src="/libraries/json2/json2.js?v=2"></script>
+<script src="/libraries/jquery.cycle/jquery.cycle.all.js?v=3.0.3"></script>
+<script src="/modules/contrib/views_slideshow/modules/views_slideshow_cycle/js/views_slideshow_cycle.js?ti82v6"></script>
+<script src="/libraries/jquery.hover-intent/jquery.hoverIntent.js?v=1.10.2"></script>
+<script src="/modules/contrib/views_slideshow/js/views_slideshow.js?v=10.3.10"></script>
+<script src="/modules/bootstrap_styles/js/plugins/scroll_effects/build.js?v=1.x"></script>
+<script src="/modules/views_bootstrap/js/views-bootstrap.js?v=1.x"></script>
+<script src="/modules/tb_megamenu/js/tb-megamenu-frontend.js?v=1.x"></script>
+<script src="/modules/contrib/bootstrap4_modal/js/bs4_modal.dialog.js?v=10.3.10"></script>
+<script src="/modules/contrib/bootstrap4_modal/js/bs4_modal.dialog.ajax.js?v=10.3.10"></script>
+<script src="/modules/custom/organigrams_hover/js/organigrams_hover.js?v=1.x"></script>
+
+  </body>
+</html>

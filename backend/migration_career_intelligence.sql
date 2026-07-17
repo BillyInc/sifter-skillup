@@ -143,7 +143,7 @@ CREATE INDEX IF NOT EXISTS idx_opp_eligibility_opportunity ON skillup_dev.opport
 CREATE TABLE IF NOT EXISTS skillup_dev.saved_items (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
-    entity_type TEXT CHECK (entity_type IN ('programme', 'domain', 'role', 'opportunity', 'organisation', 'elite_pathway')),
+    entity_type TEXT CHECK (entity_type IN ('programme', 'school', 'domain', 'subgroup', 'role', 'comparison', 'opportunity', 'organisation', 'elite_pathway')),
     entity_id   TEXT NOT NULL,
     label       TEXT,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()

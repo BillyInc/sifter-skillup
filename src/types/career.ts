@@ -23,6 +23,10 @@ import type { DomainMatchType, RoleMatchType } from "../theme";
 
 export type { DomainMatchType, RoleMatchType };
 import type { DemandMetrics } from "./demandMetrics";
+import type {
+  EliteVerificationCheckKey,
+  NigerianUserTypeKey,
+} from "../lib/elitePathwayPolicy";
 
 // ─── Data state envelope ──────────────────────────────────────
 // Every data-driven surface handles these uniformly so unbuilt areas render a
@@ -42,6 +46,8 @@ export interface DataMeta {
   dataDate?: string;
   /** Cited source(s) for the data point. */
   sources?: string[];
+  /** Editorial release gates passed for source-backed elite pathway content. */
+  verificationChecks?: EliteVerificationCheckKey[];
   /** Human-readable note for fallback/pending/coming_soon states. */
   notice?: string;
 }
@@ -255,8 +261,11 @@ export interface ApplicationWindow {
 // ─── User-owned entities (saved / notes / subscriptions) ──────
 export type SavedEntityType =
   | "programme"
+  | "school"
   | "domain"
+  | "subgroup"
   | "role"
+  | "comparison"
   | "opportunity"
   | "organisation"
   | "elite_pathway";
@@ -390,6 +399,7 @@ export interface BridgePlan {
   from: string; // starting point
   to: string; // destination
   layers: BridgeLayer[];
+  coveredUserTypes?: NigerianUserTypeKey[];
   meta?: DataMeta;
 }
 
@@ -777,7 +787,8 @@ export interface ToolGroupsEnriched {
 }
 
 // ── Mapping feedback (expert review) ──────────────────────────
-export type FeedbackType = "correct" | "incorrect" | "unsure" | "suggestion";
+// Values must match the backend/DB check constraint (confirm|flag|suggest).
+export type FeedbackType = "confirm" | "flag" | "suggest";
 
 export interface MappingFeedback {
   id: string;
@@ -786,8 +797,8 @@ export interface MappingFeedback {
   targetId: string;
   feedbackType: FeedbackType;
   notes?: string;
-  trustWeight: number; // 0..1
-  userId: string;
+  trustWeight: number; // 1.0 standard, 3.0 educator/institution_admin
+  expertVerified?: boolean;
   createdAt: string;
-  updatedAt?: string;
+  resolvedAt?: string | null;
 }

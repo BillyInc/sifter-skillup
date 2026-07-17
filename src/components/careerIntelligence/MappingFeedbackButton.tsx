@@ -36,10 +36,9 @@ export interface MappingFeedbackButtonProps {
 }
 
 const FEEDBACK_OPTIONS: { value: FeedbackType; label: string; icon: string }[] = [
-  { value: "correct", label: "Correct mapping", icon: "✅" },
-  { value: "incorrect", label: "Incorrect mapping", icon: "❌" },
-  { value: "unsure", label: "Not sure", icon: "🤔" },
-  { value: "suggestion", label: "Suggestion", icon: "💡" },
+  { value: "confirm", label: "Correct mapping", icon: "✅" },
+  { value: "flag", label: "Incorrect mapping", icon: "❌" },
+  { value: "suggest", label: "Suggestion", icon: "💡" },
 ];
 
 export function MappingFeedbackButton({
@@ -68,12 +67,16 @@ export function MappingFeedbackButton({
         selectedType,
         notes.trim() || undefined,
       );
-      if (result.status === "real" || result.status === "coming_soon") {
-        // Optimistically treat as success even with coming_soon (stub phase)
+      if (result.status === "real") {
         setModalVisible(false);
         setSelectedType(null);
         setNotes("");
         if (onSubmitted) onSubmitted();
+      } else {
+        Alert.alert(
+          "Feedback not recorded",
+          result.meta?.notice ?? "Mapping feedback is not available yet.",
+        );
       }
     } catch {
       Alert.alert("Error", "Failed to submit feedback. Please try again.");

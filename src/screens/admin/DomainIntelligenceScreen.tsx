@@ -55,7 +55,8 @@ export function DomainIntelligenceScreen() {
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
             Which labour-market domains your programme mix routes into, ranked by
-            aggregate demand — no individual student data.
+            the selected market lens. Global, Nigerian local and Nigerian remote
+            demand stay separate — no averaged score, no individual student data.
           </Text>
 
           <ScopeToggle
@@ -125,6 +126,14 @@ export function DomainIntelligenceScreen() {
                             numberOfLines={1}
                           >
                             {item.routeNote}
+                          </Text>
+                        ) : null}
+                        {item.interpretation ? (
+                          <Text
+                            style={[styles.route, { color: Brand.primaryDeep }]}
+                            numberOfLines={1}
+                          >
+                            {item.interpretation}
                           </Text>
                         ) : null}
                       </View>

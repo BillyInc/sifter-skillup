@@ -1,0 +1,1096 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta property="og:title"
+              content="Welcome to SEC Nigeria">
+        <meta property="og:description"
+              content="Official Website of The Securities and Exchange Commission (SEC) of Nigeria. SEC Nigeria is the apex regulatory body for the Nigerian capital market. It was established in 1979 and operates under the purview of the Investments and Securities Act (ISA) of 2007. The SEC&#x27;s primary mission is to protect investors, maintain fair and efficient markets, and ensure the integrity of the Nigerian capital market">
+        
+        <meta property="og:url" content="http://localhost/">
+        <title>
+            
+                
+                    Welcome to SEC Nigeria
+                
+            
+            
+                
+                - Securities and Exchange Commission, Nigeria
+            
+        </title>
+        <meta name="keywords" content="" />
+        <meta name="description"
+              content="Official Website of The Securities and Exchange Commission (SEC) of Nigeria. SEC Nigeria is the apex regulatory body for the Nigerian capital market. It was established in 1979 and operates under the purview of the Investments and Securities Act (ISA) of 2007. The SEC&#x27;s primary mission is to protect investors, maintain fair and efficient markets, and ensure the integrity of the Nigerian capital market" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        
+        
+        
+        
+            
+            <link rel="alternate" type="application/rss+xml" 
+                  title="SEC Nigeria News Feed" 
+                  href="/feeds/news.rss">
+            
+            <link rel="alternate" type="application/rss+xml" 
+                  title="SEC Nigeria Events Feed" 
+                  href="/feeds/events.rss">
+            
+            
+            
+        
+        
+        
+        <link rel="stylesheet"
+              type="text/css"
+              href="/static/fonts/Montserrat.css"
+              preload>
+        <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/custom_styles.css">
+        <link rel="shortcut icon"
+              href="/static/images/favicon.png"
+              type="image/x-icon" />
+        <style>
+            
+            [x-cloak] {
+                display: none;
+            }
+    
+            .animate-pause {
+               animation-play-state: paused;
+            }
+            
+        </style>        
+        <script src="/static/js/htmx.min.js" defer></script>
+        <script src="/static/js/htmx-alpine-morph.js" defer></script>
+        <script src="/static/js/alpine-collapse.min.js" defer></script>
+        <script src="/static/js/alpine-morph.min.js" defer></script>
+        <script src="/static/js/alpine.min.js" defer></script>
+        
+    <link rel="stylesheet" type="text/css" href="/static/css/swiper-bundle.min.css" />
+
+    </head>
+    <body hx-ext="multi-swap"
+          hx-headers='{"X-CSRFToken": "Y9HhrAmnh2rcyFJMtjr8XNLM0PrasWSok78t24OajfjUrwfbTsYfPHMC8uwP23o6"}'
+          x-data="{showNav: false}"
+          :class="showNav ? 'overflow-hidden' : ''"
+          class="">
+        
+        
+<nav x-data="{toggleHeight: false}"
+     :class="{ 'h-full bg-blue-500 text-white': showNav, 'h-auto bg-white text-gray-500': !showNav }"
+     class="w-full h-auto fixed top-0 z-[999] transition-all duration-300 overflow-y-auto"
+     @scroll.window="toggleHeight = (window.pageYOffset > 40) ? true : false">
+    <div :class="toggleHeight ? 'py-2 sm:py-4' : 'py-4 sm:py-8'"
+         class="px-6 sm:px-20 z-[200] relative">
+        <div class="grid grid-cols-3 justify-between items-center">
+            <div class="sm:w-full flex">
+                <a href="/search/"
+                   class="text-current inline-flex items-center">
+                    <svg class="icon w-10 h-10 sm:w-12 sm:h-12 mr-2 fill-current">
+                        <use href="/static/icons/symbol-defs.svg#search"></use>
+                    </svg>
+                    <span class="hidden sm:block">SEARCH</span>
+                </a>
+            </div>
+            <div class="text-center flex justify-center items-center">
+                <a href="/" class="mx-auto w-auto text-center">
+                    <img :src="!showNav ? '/static/icons/logo.svg' : '/static/icons/logo-white.svg'"
+                         width="auto"
+                         height="auto"
+                         :class="toggleHeight ? ' w-24 md:w-28' : 'w-36 md:w-44' "
+                         class=" transition-all duration-300 mx-auto logo-img"
+                         alt="SEC" 
+                         />
+                </a>    
+            </div>
+            <div class="sm:w-full flex flex-row">
+                <a href="https://www.pebec.gov.ng/reportgov-ng"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:opacity-80 transition-opacity flex flex-col mt-3">
+                    <img src="/static/images/ReportGovLogo.png"
+                        class="rep-img h-auto"
+                        width="100"
+                        height="auto"
+                        alt="report gov" />
+                    <!-- <span class="mt-2 text-blue-500"></span> -->
+                </a>
+                <button @click="showNav = !showNav"
+                        aria-controls="navbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                        class="text-current inline-flex items-center ml-auto">
+                    <svg class="icon w-10 h-10 sm:w-12 sm:h-12 mr-2 fill-current">
+                        <use :href="!showNav ? '/static/icons/symbol-defs.svg#menu' : '/static/icons/symbol-defs.svg#close'"></use>
+                    </svg>
+                    <span class="hidden sm:block" x-html="showNav ? 'CLOSE' : 'MENU'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="px-6 sm:px-20 w-full h-auto z-[100] pb-16 text-white"
+         x-show="showNav"
+         x-transition
+         x-collapse
+         id="navbar">
+        <div>
+            <ol class="flex flex-col">
+                
+                
+
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 1 ? selected = 1 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 1 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/for-investors/"
+                   class="hover:text-blue-200  mx-auto text-center">For Investors</a>
+                <button @click="selected !== 1 ? selected = 1 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 1 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 1, 'max-h-auto': selected === 1 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-investors/find-a-registered-operator/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Find a Registered Operator</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-investors/keep-track-of-circulars/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Keep Track of Circulars</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-investors/whistleblowing/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Whistleblowing</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-investors/known-investment-scams/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Known Investment Scams</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 2 ? selected = 2 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 2 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/for-operators/"
+                   class="hover:text-blue-200  mx-auto text-center">For Operators</a>
+                <button @click="selected !== 2 ? selected = 2 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 2 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 2, 'max-h-auto': selected === 2 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-operators/operator-registration/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Operator Registration</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 2 ? selectedChild = 2 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 2 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/for-operators/keep-track-of-capital-market-data/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Keep Track of Capital Market Data</a>
+                <button @click="selectedChild !== 2 ? selectedChild = 2 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 2 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 2, 'max-h-auto': selectedChild === 2 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/for-operators/keep-track-of-capital-market-data/statistical-bulletin/" class="hover:text-blue-200">Statistical Bulletin</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/for-operators/keep-track-of-capital-market-data/net-asset-value-data/" class="hover:text-blue-200">Net Asset Value Data</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/for-operators/keep-track-of-capital-market-data/quarterly-update-on-private-equity-and-infrastructure-funds/" class="hover:text-blue-200">Quarterly PE &amp; Infra. Funds</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/for-operators/keep-track-of-capital-market-data/executed-transactions/" class="hover:text-blue-200">Executed Transactions</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/for-operators/keep-track-of-capital-market-data/market-review-and-outlook/" class="hover:text-blue-200">Market Review and Outlook</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-operators/mergers-acquisitions-and-takeovers/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Mergers, Acquisitions &amp; Takeovers</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 3 ? selected = 3 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 3 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/for-businesses/"
+                   class="hover:text-blue-200  mx-auto text-center">For Businesses</a>
+                <button @click="selected !== 3 ? selected = 3 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 3 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 3, 'max-h-auto': selected === 3 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-businesses/register-a-company/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Register a Company</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-businesses/become-an-operator/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Become an Operator</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-businesses/raising-capital/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Raising Capital</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/for-businesses/procurements-and-tenders/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Procurements and Tenders</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 4 ? selected = 4 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 4 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/our-mandate/"
+                   class="hover:text-blue-200  mx-auto text-center">Our Mandate</a>
+                <button @click="selected !== 4 ? selected = 4 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 4 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 4, 'max-h-auto': selected === 4 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 1 ? selectedChild = 1 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 1 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/our-mandate/regulation/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Regulation</a>
+                <button @click="selectedChild !== 1 ? selectedChild = 1 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 1 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 1, 'max-h-auto': selectedChild === 1 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/regulation/acts/" class="hover:text-blue-200">Acts</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/regulation/rules-and-regulations/" class="hover:text-blue-200">Rules and Regulations</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/regulation/codes-of-conduct/" class="hover:text-blue-200">Codes of Conduct</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/regulation/guidelines/" class="hover:text-blue-200">Guidelines</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/regulation/policies/" class="hover:text-blue-200">Policies</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 2 ? selectedChild = 2 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 2 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/our-mandate/development/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Development</a>
+                <button @click="selectedChild !== 2 ? selectedChild = 2 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 2 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 2, 'max-h-auto': selectedChild === 2 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/development/investor-education/" class="hover:text-blue-200">Investor Education</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/development/operators-insights/" class="hover:text-blue-200">Insights for Operators</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/our-mandate/development/business-insights/" class="hover:text-blue-200">Insights for Businesses</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/our-mandate/the-nigerian-capital-market-master-plan/"
+                   class="text-base sm:text-lg  hover:text-blue-200">The Capital Market Master Plan</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 5 ? selected = 5 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 5 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/enforcements/"
+                   class="hover:text-blue-200  mx-auto text-center">Enforcements</a>
+                <button @click="selected !== 5 ? selected = 5 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 5 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 5, 'max-h-auto': selected === 5 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/enforcements/companies-facing-enforcement-action/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Cos. Facing Enforcement Action</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/enforcements/referred-cases/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Referred Cases</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/enforcements/apc-matters/"
+                   class="text-base sm:text-lg  hover:text-blue-200">A.P.C. Matters</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/enforcements/litigation/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Litigation</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/enforcements/keep-track-of-enforcement-updates/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Keep Track of Enforcement Updates</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/enforcements/information-for-harmed-investors/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Information for Harmed Investors</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 6 ? selected = 6 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 6 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/about/"
+                   class="hover:text-blue-200  mx-auto text-center">About</a>
+                <button @click="selected !== 6 ? selected = 6 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 6 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 6, 'max-h-auto': selected === 6 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 1 ? selectedChild = 1 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 1 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/about/our-role/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Our Role</a>
+                <button @click="selectedChild !== 1 ? selectedChild = 1 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 1 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 1, 'max-h-auto': selectedChild === 1 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/our-role/who-we-are/" class="hover:text-blue-200">Who We Are</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/our-role/how-we-function/" class="hover:text-blue-200">How We Function</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/our-role/who-we-regulate/" class="hover:text-blue-200">Who We Regulate</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 2 ? selectedChild = 2 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 2 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/about/organizational-chart/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Organizational Chart</a>
+                <button @click="selectedChild !== 2 ? selectedChild = 2 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 2 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 2, 'max-h-auto': selectedChild === 2 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/organizational-chart/board-of-directors/" class="hover:text-blue-200">Board of Directors</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/organizational-chart/divisional-structure/" class="hover:text-blue-200">Divisional Structure</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/organizational-chart/organogram/" class="hover:text-blue-200">Organogram</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 3 ? selectedChild = 3 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 3 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/about/corporate-governance/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Corporate Governance</a>
+                <button @click="selectedChild !== 3 ? selectedChild = 3 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 3 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 3, 'max-h-auto': selectedChild === 3 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/corporate-governance/our-principles/" class="hover:text-blue-200">Our Principles</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/corporate-governance/performance-pledges/" class="hover:text-blue-200">Performance Pledges</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/corporate-governance/independent-panels-and-tribunals/" class="hover:text-blue-200">Independent Panels and Tribunals</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 4 ? selectedChild = 4 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 4 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/about/international-relations/"
+                   class="text-base sm:text-lg  hover:text-blue-200">International Relations</a>
+                <button @click="selectedChild !== 4 ? selectedChild = 4 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 4 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 4, 'max-h-auto': selectedChild === 4 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/mou-with-other-countries/" class="hover:text-blue-200">MOU with Other Countries</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/sec-and-iosco/" class="hover:text-blue-200">SEC and IOSCO</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/sec-and-nigsac/" class="hover:text-blue-200">SEC and NIGSAC</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/sec-and-wasra/" class="hover:text-blue-200">SEC and WASRA</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/sec-and-fatf/" class="hover:text-blue-200">SEC and FATF</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/sec-and-giaba/" class="hover:text-blue-200">SEC and GIABA</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/international-relations/sec-and-ifsb/" class="hover:text-blue-200">SEC and IFSB</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 5 ? selectedChild = 5 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 5 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/about/resources/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Resources</a>
+                <button @click="selectedChild !== 5 ? selectedChild = 5 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 5 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 5, 'max-h-auto': selectedChild === 5 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/resources/checklists/" class="hover:text-blue-200">Checklists</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/resources/forms/" class="hover:text-blue-200">Forms</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/resources/templates/" class="hover:text-blue-200">Templates</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/resources/frequently-asked-questions/" class="hover:text-blue-200">Frequently Asked Questions</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/resources/papers-and-publications/" class="hover:text-blue-200">Papers and Publications</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/resources/annual-reports/" class="hover:text-blue-200">Annual Reports</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/about/news/"
+                   class="text-base sm:text-lg  hover:text-blue-200">News</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/about/media-gallery/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Media Gallery</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-blue-200">
+                <button @click="selectedChild !== 8 ? selectedChild = 8 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 8 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+                <a href="/about/careers/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Careers At SEC</a>
+                <button @click="selectedChild !== 8 ? selectedChild = 8 : selectedChild = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selectedChild == 8 ? '/static/icons/symbol-defs.svg#chevron-up' : '/static/icons/symbol-defs.svg#chevron-down'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selectedChild !== 8, 'max-h-auto': selectedChild === 8 }">
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/careers/openings/" class="hover:text-blue-200">Openings</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/careers/working-with-us/" class="hover:text-blue-200">Working With Us</a>
+                    </li>
+                
+                    <li class="border-b-2 border-blue-400 py-4 text-center">
+                        <a href="/about/careers/talk-to-us/" class="hover:text-blue-200">Talk to Us</a>
+                    </li>
+                
+            </ul>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/about/contact-us/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Contact Us</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+    <li x-data="{selected:null}"
+        class="uppercase has-submenu">
+        
+            <div class="grid grid-cols-[0.5fr_1fr_0.5fr] items-center py-4 text-lg sm:text-xl border-b-2 border-white">
+                <button @click="selected !== 7 ? selected = 7 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl mr-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 7 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+                <a href="/fintech-and-innovation-hub-finport/"
+                   class="hover:text-blue-200  mx-auto text-center">Fintech and Innovation Hub (FinPort)</a>
+                <button @click="selected !== 7 ? selected = 7 : selected = null"
+                        class="text-current hover:text-blue-200 font-bold text-3xl ml-auto cursor-pointer">
+                    <svg class="icon w-6 h-6 sm:w-8 sm:h-8 stroke-none">
+                        <use :href="selected == 7 ? '/static/icons/symbol-defs.svg#minus' : '/static/icons/symbol-defs.svg#plus'"></use>
+                    </svg>
+                </button>
+            </div>
+            <ul class="relative overflow-hidden transition-all max-h-0 duration-700"
+                :class="{ 'max-h-0': selected !== 7, 'max-h-auto': selected === 7 }">
+                
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/fintech-and-innovation-hub-finport/about-finport/"
+                   class="text-base sm:text-lg  hover:text-blue-200">About FinPort</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/fintech-and-innovation-hub-finport/finport-programs-ri-and-arip/"
+                   class="text-base sm:text-lg  hover:text-blue-200">FinPort Programs (RI and ARIP)</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/fintech-and-innovation-hub-finport/registered-fintech-operators/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Registered FinTech Operators</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/fintech-and-innovation-hub-finport/checklists-for-fintechs/"
+                   class="text-base sm:text-lg  hover:text-blue-200">Checklists for Fintechs</a>
+            </div>
+        
+    </li>
+
+    <li x-data="{selectedChild:null}" class="text-center">
+        
+            <div class="block py-4 border-b-2 border-blue-200">
+                <a href="/fintech-and-innovation-hub-finport/faqs-on-fintech-and-innovation-programs/"
+                   class="text-base sm:text-lg  hover:text-blue-200">FAQs on FinTech and Innovation Programs</a>
+            </div>
+        
+    </li>
+
+
+            </ul>
+            
+        
+    </li>
+
+
+            </ol>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+<div class="pt-[160px] md:pt-72 -mb-40 md:-mb-64 md:pb-5 px-6 md:px-20 overflow-auto" >
+    <div class="news-bar group relative w-full  text-gray-700 py-1 border-0 border-b-[3px] border-blue-500 z-50 overflow-hidden rounded-sm text-sm" aria-label="Latest News">
+
+        <div class="news-bar__content flex  whitespace-nowrap animate-scroll-left group-hover:animate-pause transform-gpu w-[200%]">
+    
+             
+                
+                
+                    <span class="news-bar__item inline-block px-2 md:text-sm last:mr-2">
+                        
+                            <a href="https://sec.gov.ng/about/news/new-sec-nigeria-website/"
+                                class="text-gray-200 hover:text-blue-500 hover:underline transition-colors duration-200 ease-in-out"
+                                target="_blank"  rel="noopener noreferrer">
+                                Launch of the SEC&#x27;s redesigned website
+                            </a>
+                        
+                    </span>
+                    
+                    <span class="news-bar__separator inline-block px-2 text-gray-500 md:text-sm">|</span>
+                
+                
+                    <span class="news-bar__item inline-block px-2 md:text-sm last:mr-2">
+                        
+                            <a href="https://x.com/SECNigeria/status/1907820499385655459"
+                                class="text-gray-200 hover:text-blue-500 hover:underline transition-colors duration-200 ease-in-out"
+                                target="_blank"  rel="noopener noreferrer">
+                                Enroll Now: Training Opportunities at The Nigerian Capital Market Institute (NCMI)!
+                            </a>
+                        
+                    </span>
+                    
+                    <span class="news-bar__separator inline-block px-2 text-gray-500 md:text-sm">|</span>
+                
+                
+                    <span class="news-bar__item inline-block px-2 md:text-sm last:mr-2">
+                        
+                            In a major boost to capital market regulation in Nigeria, President Ahmed Bola Tinubu GCFR, has assented to the Investments and Securities Bill (ISB) 2025, which repeals the Investments and Securities Act No. 29 of 2007 
+                        
+                    </span>
+                    
+                    <span class="news-bar__separator inline-block px-2 text-gray-500 md:text-sm">|</span>
+                
+             
+                
+                
+                    <span class="news-bar__item inline-block px-2 md:text-sm last:mr-2">
+                        
+                            <a href="https://sec.gov.ng/about/news/new-sec-nigeria-website/"
+                                class="text-gray-200 hover:text-blue-500 hover:underline transition-colors duration-200 ease-in-out"
+                                target="_blank"  rel="noopener noreferrer">
+                                Launch of the SEC&#x27;s redesigned website
+                            </a>
+                        
+                    </span>
+                    
+                    <span class="news-bar__separator inline-block px-2 text-gray-500 md:text-sm">|</span>
+                
+                
+                    <span class="news-bar__item inline-block px-2 md:text-sm last:mr-2">
+                        
+                            <a href="https://x.com/SECNigeria/status/1907820499385655459"
+                                class="text-gray-200 hover:text-blue-500 hover:underline transition-colors duration-200 ease-in-out"
+                                target="_blank"  rel="noopener noreferrer">
+                                Enroll Now: Training Opportunities at The Nigerian Capital Market Institute (NCMI)!
+                            </a>
+                        
+                    </span>
+                    
+                    <span class="news-bar__separator inline-block px-2 text-gray-500 md:text-sm">|</span>
+                
+                
+                    <span class="news-bar__item inline-block px-2 md:text-sm last:mr-2">
+                        
+                            In a major boost to capital market regulation in Nigeria, President Ahmed Bola Tinubu GCFR, has assented to the Investments and Securities Bill (ISB) 2025, which repeals the Investments and Securities Act No. 29 of 2007 
+                        
+                    </span>
+                    
+                    <span class="news-bar__separator inline-block px-2 text-gray-500 md:text-sm">|</span>
+                
+            
+
+            <!-- <span class="pr-8"></span> -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+        
+    
+        
+
+<div class="px-6 sm:px-20 py-16 pt-44 sm:pt-64 min-h-[100vh]">
+    <h3 class="text-center text-xl md:text-3xl tracking-normal leading-relaxed md:leading-relaxed text-gray-500 max-w-[26ch] md:max-w-[56ch] mx-auto font-medium">
+        Since our inception in 1979, our overarching statutory purpose has been to promote and facilitate the growth of equitable, effective,
+        and open financial markets for Nigeria.
+    </h3>
+    <div class="my-10 flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
+    <a href="/for-investors"
+       class="text-blue-500 border-[3px] border-blue-500 px-8 py-2 hover:bg-blue-500 hover:text-white">FOR INVESTORS</a>
+    <a href="/for-operators"
+       class="text-blue-500 border-[3px] border-blue-500 px-20 sm:px-8 py-2 hover:bg-blue-500 hover:text-white">FOR OPERATORS</a>
+    <a href="/for-businesses"
+       class="text-blue-500 border-[3px] border-blue-500 px-8 py-2 hover:bg-blue-500 hover:text-white">FOR BUSINESSES</a>
+</div>
+
+    <div class="flex justify-center">
+        <a href="/"
+           class="text-gray-500 px-8 py-2 hover:text-gray-900 flex gap-1 group">
+            <span class="h-1 w-14 my-auto bg-current"></span>
+            <span class="group-hover:bg-blue-50 uppercase">ENTER</span>
+        </a>
+    </div>
+</div>
+
+    
+
+        
+        <script type="text/javascript" src="/static/js/main.js"></script>
+        
+        
+        <script>
+            document.body.addEventListener('htmx:afterSwap', function(event) {
+                if (window.Alpine) {
+                    Alpine.initTree(event.detail.target);
+                }
+            });
+        </script>
+        
+        
+    </body>
+</html>

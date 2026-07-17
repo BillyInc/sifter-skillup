@@ -29,10 +29,12 @@ import { LevelUpLogo } from "../src/components/brand/LevelUpLogo";
 export default function LandingPage() {
   const router = useRouter();
   const { colors } = useTheme();
-  const { user, loading } = useAuth();
+  const { user, loading, signInGuest } = useAuth();
   const { accountType, hydrated } = useEffectiveAccountType(user?.account_type);
   const [educatorProfile, setEducatorProfile] = useState<EducatorProfile | null>(null);
   const [profileHydrated, setProfileHydrated] = useState(false);
+  const [guestBusy, setGuestBusy] = useState(false);
+  const [guestError, setGuestError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -67,6 +69,19 @@ export default function LandingPage() {
     return <Redirect href={signedInHref as any} />;
   }
 
+  const handleGuest = async () => {
+    if (guestBusy) return;
+    setGuestError(null);
+    setGuestBusy(true);
+    try {
+      await signInGuest();
+    } catch (e: any) {
+      setGuestError(e?.message || "Could not open guest mode.");
+    } finally {
+      setGuestBusy(false);
+    }
+  };
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.bg }}
@@ -100,7 +115,7 @@ export default function LandingPage() {
 
       <View style={styles.grid}>
         {[
-          ["Students", "Resume lessons, explore domains, and find opportunities."],
+          ["Students", "Resume lessons, explore domains, and compare role signals."],
           ["Universities", "See programme-to-domain demand and skills gaps."],
           ["Schools & tutorials", "Guide SS students outward across universities and roles."],
         ].map(([title, body]) => (
@@ -119,13 +134,19 @@ export default function LandingPage() {
       </View>
 
       <TouchableOpacity
-        onPress={() => router.push("/(tabs)/explore" as any)}
+        onPress={handleGuest}
+        disabled={guestBusy}
         style={styles.browse}
       >
         <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
-          Browse as guest
+          {guestBusy ? "Opening guest mode..." : "Browse as guest"}
         </Text>
       </TouchableOpacity>
+      {guestError ? (
+        <Text style={[styles.errorText, { color: colors.red }]}>
+          {guestError}
+        </Text>
+      ) : null}
     </ScrollView>
   );
 }
@@ -187,4 +208,11 @@ const styles = StyleSheet.create({
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   browse: { alignSelf: "center", padding: Spacing.sm },
   browseText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  errorText: {
+    alignSelf: "center",
+    maxWidth: 420,
+    textAlign: "center",
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.bold,
+  },
 });

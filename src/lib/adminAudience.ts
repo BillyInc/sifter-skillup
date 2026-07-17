@@ -21,7 +21,7 @@ export function adminAudienceForProfile(
 export function adminHomeForProfile(profile?: EducatorProfile | null): string {
   return adminAudienceForProfile(profile) === "university"
     ? "/(admin)/dashboard"
-    : "/(admin)/students";
+    : "/(admin)/guidance";
 }
 
 export function adminAudienceLabel(audience: AdminAudience): string {

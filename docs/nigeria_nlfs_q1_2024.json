@@ -1,0 +1,91 @@
+{
+  "source_title": "Nigeria Labour Force Survey Q1 2024 Report",
+  "pages_processed": 29,
+  "employment_stats": {
+    "labour_force_participation_rate": 77.3,
+    "labour_force_participation_male": 77.5,
+    "labour_force_participation_female": 77.1,
+    "labour_force_participation_urban": 74.0,
+    "labour_force_participation_rural": 82.5,
+    "employment_to_population_ratio": 73.2,
+    "employment_to_population_male": 74.2,
+    "employment_to_population_female": 72.3,
+    "employment_to_population_urban": 69.5,
+    "employment_to_population_rural": 78.9,
+    "unemployment_rate": 5.3,
+    "unemployment_male": 4.3,
+    "unemployment_female": 6.2,
+    "unemployment_urban": 6.0,
+    "unemployment_rural": 4.3,
+    "youth_unemployment_15_24": 8.4,
+    "time_related_underemployment": 10.6,
+    "underemployment_male": 8.5,
+    "underemployment_female": 12.5,
+    "underemployment_urban": 9.7,
+    "underemployment_rural": 11.8,
+    "self_employment_rate": 84.0,
+    "wage_employment_rate": 16.0,
+    "informal_employment_rate": 92.7,
+    "informal_excluding_agriculture": 90.2,
+    "neet_rate_youth": 14.4,
+    "discouraged_jobseekers": 3.6,
+    "subsistence_farmers": 4.5,
+    "labour_underutilisation_lu2": 15.3,
+    "labour_underutilisation_lu3": 7.8,
+    "labour_underutilisation_lu4": 17.6
+  },
+  "sector_breakdown": {
+    "employed_in_agriculture": 26.1,
+    "employed_in_agriculture_male": 33.4,
+    "employed_in_agriculture_female": 19.0,
+    "employed_in_agriculture_urban": 15.4,
+    "employed_in_agriculture_rural": 40.7
+  },
+  "unemployment_by_education": {
+    "no_education": 2.7,
+    "primary": 4.0,
+    "secondary": 6.9,
+    "post_secondary": 9.0,
+    "post_graduate": 2.0
+  },
+  "unemployment_by_age": {
+    "15_24": 8.4,
+    "25_34": 7.5,
+    "35_44": 3.7,
+    "45_54": 2.2,
+    "55_64": 1.5,
+    "65_plus": 4.4
+  },
+  "informal_by_education": {
+    "no_education": 99.2,
+    "primary": 97.8,
+    "secondary": 93.7,
+    "post_secondary": 70.7,
+    "post_graduate": 27.7
+  },
+  "trend_comparison": {
+    "lfpr_q4_2022": 77.8,
+    "lfpr_q1_2023": 79.9,
+    "lfpr_q2_2023": 80.4,
+    "lfpr_q3_2023": 79.5,
+    "lfpr_q1_2024": 77.3,
+    "unemployment_q4_2022": 5.3,
+    "unemployment_q1_2023": 4.1,
+    "unemployment_q2_2023": 4.2,
+    "unemployment_q3_2023": 5.0,
+    "unemployment_q1_2024": 5.3
+  },
+  "key_findings": [
+    "Labour force participation rate declined to 77.3% in Q1 2024 from 79.5% in Q3 2023",
+    "Unemployment rate increased to 5.3% in Q1 2024 from 5.0% in Q3 2023",
+    "Youth unemployment (15-24) was 8.4%, a slight decrease from 8.6% in Q3 2023",
+    "Time-related underemployment decreased to 10.6% from 12.3% in Q3 2023",
+    "Wage employment proportion increased to 16.0% from 12.7% in Q3 2023",
+    "Informal employment remains very high at 92.7%",
+    "NEET rate among youth was 14.4%, up 0.7 percentage points from Q3 2023",
+    "Post-secondary educated individuals had highest unemployment rate at 9.0%",
+    "Urban unemployment (6.0%) higher than rural (4.3%)",
+    "92.7 million Nigerians in informal employment in Q1 2024",
+    "Informal employment inversely correlated with education level (99.2% for no education vs 27.7% for postgraduate)"
+  ]
+}

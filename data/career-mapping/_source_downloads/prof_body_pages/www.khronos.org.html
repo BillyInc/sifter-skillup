@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Article">
+  <head>
+	<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  
+  const savedConsent = localStorage.getItem('cookie_consent');
+  var gtmstate = savedConsent === 'granted' ? 'granted' : 'denied';
+  
+  gtag('consent','default',{
+    ad_storage: gtmstate,
+    analytics_storage: gtmstate,
+    ad_user_data: gtmstate,
+    ad_personalization: gtmstate,
+    wait_for_update:500
+  });
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5Z9B3K9V');</script>
+    <meta charset="utf-8">
+    <meta content="width=device-width, height=device-height, minimum-scale=1.0, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>The Khronos Group</title>
+  
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#cc3333">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="Deploying and developing royalty-free open standards for 3D graphics, Virtual and Augmented Reality, Parallel Computing, Neural Networks, and Vision Processing">
+    <meta itemprop="name" content="The Khronos Group">
+    <meta itemprop="description" content="Deploying and developing royalty-free open standards for 3D graphics, Virtual and Augmented Reality, Parallel Computing, Neural Networks, and Vision Processing">
+    <meta property="og:title" content="The Khronos Group">
+    <meta property="og:description" content="Deploying and developing royalty-free open standards for 3D graphics, Virtual and Augmented Reality, Parallel Computing, Neural Networks, and Vision Processing">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-07-15T11:00:47-07:00">
+    <meta property="article:section" content="General">
+    <meta property="article:tag" content="Khronosgroup">
+    <meta property="og:url" content="https://www.khronos.org">
+    <meta property="og:site_name" content="The Khronos Group">
+    <meta itemprop="image" content="https://www.khronos.org/assets/images/Khronos-250px-with-tagline-New.png">
+    <meta property="og:image" content="https://www.khronos.org/assets/images/Khronos-250px-with-tagline-New.png">
+    <link rel="alternate" type="application/rss+xml" title="Khronos News RSS Feed" href="https://www.khronos.org/feeds/news_feed">
+    <link rel="alternate" type="application/atom+xml" title="Khronos News RSS Feed" href="https://www.khronos.org/feeds/news_feed">
+    <link rel="preload" href="/assets/fonts/subset-OpenSans.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/assets/fonts/subset-OpenSans-Bold.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/assets/fonts/subset-OpenSans-Semibold.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/assets/css/app.css?v171" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/assets/css/app.css?v171"></noscript>
+
+    
+    
+  </head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5Z9B3K9V"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+
+
+
+<form id="cookieConsentForm" method="post" action="https://www.khronos.org"  >
+<div class='hiddenFields'>
+<input type="hidden" name="ACT" value="178" />
+<input type="hidden" name="RET" value="rXVhtZTdosW+LyHfkRyL7IVnCnnxZNyOTkwSt/lrefTm6Bu7b0WjC4yvTd2bjP8A" />
+<input type="hidden" name="consent_names" value="1zx+SGrRgM78UIHz2dSv9eK/UZLuYGdklSuCK/JLtG4JYccezDWmcic7T69qGQ3CcMoBbw6xI0OjZYqZYVCsxVBB2KsYr2gCnUqPn6Y19pg=" />
+<input type="hidden" name="site_id" value="1" />
+<input type="hidden" name="csrf_token" value="08df644148a8fc9381233b01c777c78dcafcaaf0" />
+</div>
+
+
+    <input type="hidden" name="ee:cookies_functionality" value="n"><input type="hidden" name="ee:cookies_performance" value="n">
+    <h4 style="margin-top:0"><strong>Cookie Policy</strong></h4>
+    <p>Clicking 'Accept All Cookies' means you agree to our cookie use and data sharing as described in our <a style="color: #ddd;" href="/legal/privacy">privacy policy</a> under 'Cookies and Tracking Technologies'.</p>
+    <input class="btn btn-sm btn-primary" type="submit" name="submit" value="Accept All Cookies">
+    <input class="btn btn-sm btn-primary" type="submit" name="submit" value="Necessary Cookies Only">
+    <small><a class="" style="color:#ddd" href="https://www.khronos.org/legal/manage-cookies">Manage cookie options</a></small>
+</form>
+
+
+
+
+
+<a href="#khronosMainContent" class="sr-only">Skip to main content</a>
+<div id="backtop"></div>
+<div class="wrapper">
+
+<nav class="navbar khr-nav navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#khronos_nav"
+                aria-expanded="false" aria-controls="khronos_nav">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar top-bar"></span>
+                <span class="icon-bar middle-bar"></span>
+                <span class="icon-bar bottom-bar"></span>
+            </button>
+            <a href="https://www.khronos.org/" class="navbar-brand" aria-label="Khronos Group homepage"><img
+                    src="/assets/css/images/khronos-logo-25.svg"
+                    alt="The Khronos Group: Connecting Software to Silicon"></a>
+        </div>
+
+        <div id="khronos_nav" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right nav-light">
+                <li class="dropdown"><a href="#" data-submenu data-toggle="dropdown">Developers <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu"><a href="#">Active Standards</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/gltf/3dcommerce/">3D Commerce</a></li>
+                                <li><a href="/anari/">ANARI</a></li>
+                                <li><a href="/collada/">COLLADA</a></li>
+                                <li><a href="/dataformat/">Data Format</a></li>
+                                <li><a href="/egl/">EGL</a></li>
+                                <li><a href="/gltf/">glTF</a></li>
+                                <li><a href="/gltf/pbr/">glTF | PBR</a></li>
+                                <li><a href="/kamaros/">Kamaros</a></li>
+                                <li><a href="/ktx/">KTX</a></li>
+                                <li><a href="/nnef/">NNEF</a></li>
+                                <li><a href="/opencl/">OpenCL</a></li>
+                                <li><a href="/opengl/">OpenGL</a></li>
+                                <li><a href="/opengles/">OpenGL ES</a></li>
+                                <li><a href="/openglsc/">OpenGL SC</a></li>
+                                <li><a href="/openvg/">OpenVG</a></li>
+                                <li><a href="/openvx/">OpenVX</a></li>
+                                <li><a href="/openxr/">OpenXR</a></li>
+                                <li><a href="https://shader-slang.org">Slang</a></li>
+                                <li><a href="/spirv/">SPIR-V</a></li>
+                                <li><a href="/sycl/">SYCL</a></li>
+                                <li><a href="/syclsc/">SYCL SC</a></li>
+                                <li><a href="https://www.vulkan.org/">Vulkan</a></li>
+                                <li><a href="/vulkansc/">Vulkan SC</a></li>
+                                <li><a href="/webgl/">WebGL</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu"><a href="#">Groups &amp; Forums</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/exploratory/heterogeneous-communication/">Heterogeneous Communication</a>
+                                </li>
+                                <li><a href="/machine-learning/">Machine Learning Forum</a></li>
+                                <li><a href="/exploratory/new-initiative-process/">New Initiative Process</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu"><a href="#">Inactive Standards</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/openkcam/">OpenKCAM</a></li>
+                                <li><a href="/openkode/">OpenKODE</a></li>
+                                <li><a href="/openmax/">OpenMAX</a></li>
+                                <li><a href="/openml/">OpenML</a></li>
+                                <li><a href="/opensles/">OpenSL ES</a></li>
+                                <li><a href="/openwf/">OpenWF</a></li>
+                                <li><a href="/streaminput/">StreamInput</a></li>
+                                <li><a href="/webcl/">WebCL</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="https://registry.khronos.org/">Registry</a></li>
+                        <li><a href="/advisors/" rel="external">Advisors</a></li>
+                        <li><a href="https://github.khronos.org/" rel="external">Github</a></li>
+                        <li><a href="https://community.khronos.org/" rel="external">Khronos Support Forums</a></li>
+                        <li><a href="https://discord.gg/vulkan" rel="external">Vulkan Discord</a></li>
+                        <li><a href="https://khr.io/khrdiscord" rel="external">Khronos Discord</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/developers/library/">Videos &amp; Presentations</a></li>
+                        <li><a href="/developers/reference-cards/">Reference Guides</a></li>
+                        <li><a href="/developers/books/">Books</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/rfp/">Request for Proposals</a></li>
+                        <li><a href="https://store.khronos.org/">Merchandise</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/conformance/" title="Conformance, Adopter and Implementer Information"
+                        data-toggle="dropdown">Conformance <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/conformance/adopters/">Become an Adopter</a></li>
+                        <li><a href="/conformance/adopters/conformant-companies/">API Adopters List</a></li>
+                        <li><a href="/conformance/adopters/conformant-products/">Conformant Products</a></li>
+                        <li><a href="/conformance/adopters/file-format-adopter-program/">File Format Adopter Program</a>
+                        </li>
+                        <li><a href="/conformance/adopters/file-format-adopters/">File Format Adopters</a></li>
+                        <li><a href="/legal/khronos-trademark-guidelines/">Trademark Guidelines</a></li>
+                        <li><a href="/members/ip-framework/" title="">IP Framework Briefing</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/conformance/adopters/login/"><b>Adopter Login</b></a></li>
+                        <li class="divider"></li>
+                        <li><a href="/3dcommerce/certification/">3D Commerce Certification</a></li>
+                        <li><a href="/3dcommerce/certification/certified-viewers/">Certified Viewers</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/3dcommerce/certification/login/"><b>Certificant Login</b></a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/members/" title="Membership information" data-toggle="dropdown">Membership <b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/members/">Join the Khronos Group</a></li>
+                        <li><a href="/members/list/">Khronos Members</a></li>
+                        <li><a href="/members/liaisons/">Khronos Liaisons</a></li>
+                        <li><a href="/members/ip-framework/">IP Framework</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/members/signup/"><b>Create an account</b></a></li>
+                        <li><a href="https://members.khronos.org/"><b>Member Login</b></a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/news/" title="Technology related news and events" data-toggle="dropdown">News &amp; Events<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/news/">Newsroom</a></li>
+                        <li><a href="/news/press/">Press Releases</a></li>
+                        <li><a href="/blog/">Khronos Blog</a></li>
+                        <li><a href="/news/subscribe/">Newsletter</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/events/">Events</a></li>
+                        <li><a href="/marketing/">Marketing with Khronos</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="/about/" title="Learn about the Khronos Group" data-toggle="dropdown">About<b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/about/">Overview</a></li>
+                        <li><a href="/about/contact/">Contact Us</a></li>
+                        <li><a href="/logos/">Logo Packs</a></li>
+                        <li><a href="/about/directors-officers/">Directors &amp; Officers</a></li>
+                        <li><a href="/about/working-group-officers/">Working Group Officers</a></li>
+                        <li><a href="/about/deib/">Diversity at Khronos</a></li>
+                        <li><a href="/about/code-of-conduct/">Code of Conduct</a></li>
+                        <li><a href="/about/technical-support/">Technical Support</a></li>
+                        <li><a href="/about/khronie-awards/">Khronie Awards</a></li>
+                        <li><a href="/about/timeline/">Khronos Timeline</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://members.khronos.org/" 
+                       title="Account Login" 
+                       aria-label="Account Login">
+                       <i class="fa-regular fa-user hidden-xs"></i> <span class="visible-xs">Member Login</span>
+                    </a>
+                </li>
+                <li class="dropdown navbar_megamenu"><a href="#" id="search_dropdown" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" aria-label="Access search field"> <i
+                            class="fa fa-search hidden-xs" aria-hidden="true"></i> <span
+                            class="visible-xs">Search</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="text-center">
+                            <form id="searchbox_017055583490642512057:_ak1bpok_no" action="/search/">
+                                <div class="input-group">
+                                    <input type="hidden" name="cx" value="017055583490642512057:_ak1bpok_no">
+                                    <input type="hidden" name="cof" value="FORID:9">
+                                    <input name="q" type="text" class="form-control" placeholder="Search"
+                                        aria-label="Search Query">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit"
+                                            aria-label="Start website search"><i class="fa fa-search"
+                                                aria-hidden="true"></i><span class="sr-only">Search</span></button>
+                                    </span>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="khronosMainContent" role="main">
+
+
+
+
+
+
+<div class="banner_section">
+                <p class="sr-only">Quick links to each of the Khronos Standards homepage. <a class="sr-only" href="#khronosNews">Skip to the News section.</a></p>
+
+
+
+    <div class="heading-btn">
+        <a id="banner_controls" role="button" data-toggle="collapse" href="#banner" aria-expanded="false" aria-controls="banner" aria-label="Toggle open and closed API landing page links">
+            <i id="btnup" class="fa-solid fa-chevron-up"></i><i id="btndn" class="fa-solid fa-chevron-down"></i>
+        </a>
+    </div>
+    <div role="banner" id="banner" class="collapse collapse" aria-expanded="false">
+        <div class="banner_section--header">
+            <div class="container">
+                <h1>Khronos royalty-free open standards for 3D graphics, Virtual and Augmented Reality, Parallel Computing, Machine Learning, and Vision Processing</h1>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                <ul class="list-unstyled eventList grow banner-group">
+                    <li><a href="/anari/" class="banner-group-anari" aria-label="Go to ANARI homepage">ANARI</a></li>
+                    <li><a href="/collada/" class="banner-group-collada" aria-label="Go to COLLADA homepage">COLLADA</a></li>
+                    <li><a href="/egl/" class="banner-group-egl" aria-label="Go to EGL homepage">EGL</a></li>
+                    <li><a href="/gltf/" class="banner-group-gltf" aria-label="Go to glTF homepage">glTF</a></li>
+                    <li><a href="/kamaros/" class="banner-group-kamaros" aria-label="Go to Kamaros homepage">Kamaros</a></li>
+                    <li><a href="/ktx/" class="banner-group-ktx" aria-label="Go to KTX homepage">KTX</a></li>
+                    <li><a href="/nnef/" class="banner-group-nnef" aria-label="Go to NNEF homepage">NNEF</a></li>
+                    <li><a href="/opencl/" class="banner-group-opencl" aria-label="Go to OpenCL homepage">OpenCL</a></li>
+                    <li><a href="/opengl/" class="banner-group-opengl" aria-label="Go to OpenGL homepage">OpenGL</a></li>
+                    <li><a href="/opengles/" class="banner-group-opengles" aria-label="Go to OpenGL ES homepage">OpenGL ES</a></li>
+                    <li><a href="/openglsc/" class="banner-group-openglsc" aria-label="Go to OpenGL SC homepage">OpenGL SC</a></li>
+                    <li><a href="/openvg/" class="banner-group-openvg" aria-label="Go to OpenVG homepage">OpenVG</a></li>
+                    <li><a href="/openvx/" class="banner-group-openvx" aria-label="Go to OpenVX homepage">OpenVX</a></li>
+                    <li><a href="/openxr/" class="banner-group-openxr" aria-label="Go to OpenXR homepage">OpenXR</a></li>
+                    <li><a href="https://shader-slang.org/" class="banner-group-slang" aria-label="Go to Slang Website">Slang</a></li>
+                    <li><a href="/spirv/" class="banner-group-spirv" aria-label="Go to SPIR-V homepage">SPIR-V</a></li>
+                    <li><a href="/sycl/" class="banner-group-sycl" aria-label="Go to SYCL homepage">SYCL</a></li>
+                    <li><a href="/syclsc/" class="banner-group-syclsc" aria-label="Go to SYCL SC homepage">SYCL SC</a></li>
+                    <li><a href="https://www.vulkan.org/" class="banner-group-vulkan" aria-label="Go to Vulkan Website">Vulkan</a></li>
+                    <li><a href="/vulkansc/" class="banner-group-vulkansc" aria-label="Go to Vulkan SC homepage">Vulkan SC</a></li>
+                    <li><a href="/webgl/" class="banner-group-webgl" aria-label="Go to WebGL homepage">WebGL</a></li>
+                    <li><a href="/machine-learning/" class="banner-group-machinelearning" aria-label="Go to Machine Learning homepage">Machine Learning</a></li>
+                    <li><a href="/advisors/kscaf/" class="banner-group-kscaf" aria-label="Go to KSCAF homepage">KSCAF</a></li>
+                </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-heading">
+    <div class="container">
+    <h2 id="khronosNews" class="h1">Khronos News</h2>
+    </div>
+    <div class="social_links" style="background: #eee;padding-top: 10px;padding-bottom: 10px;display:flex;flex: max-content;">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 social_wrapper_center" style="display:flex;align-content: center;margin-top: 8px;">
+            <a href="http://eepurl.com/Xh4Q" class="btn btn-blue-dark text-uppercase">sign up for our newsletter</a>
+        </div>
+        <div class="col-xs-12 col-sm-6 social_wrapper_center">
+            <ul class="list-unstyled social_icons">
+                <li><a rel="me" href="https://bsky.app/profile/khronos.org" aria-label="Khronos Bluesky Account"><i
+                            class="fa-brands fa-2x fa-bluesky" aria-hidden="true"></i></a></li>
+                <li><a rel="me" href="https://fosstodon.org/@thekhronosgroup" aria-label="Khronos Mastodon Account"><i
+                            class="fa-brands fa-2x fa-mastodon" aria-hidden="true"></i></a></li>
+                <li><a href="https://khr.io/khrdiscord" aria-label="Khronos Discord Server"><i
+                            class="fa-brands fa-2x fa-discord" aria-hidden="true"></i></a></li>
+                <li><a href="https://www.khronos.org/marketing/social-media/wechat" aria-label="Khronos WeChat"><i 
+                            class="fa-brands fa-2x fa-weixin" aria-hidden="true"></i></a>
+                <li><a href="https://www.youtube.com/user/khronosgroup" aria-label="Khronos YouTube Channel"><i
+                            class="fa-brands fa-2x fa-youtube" aria-hidden="true"></i></a></li>
+                <li><a href="https://www.flickr.com/photos/khronos/" aria-label="Khronos Flickr page"><i
+                            class="fa-brands fa-2x fa-flickr" aria-hidden="true"></i></a></li>
+                <li><a href="https://www.linkedin.com/company/the-khronos-group" aria-label="Khronos LinkedIn Profile"><i
+                            class="fa-brands fa-2x fa-linkedin" aria-hidden="true"></i></a></li>
+                <li class="hidden-xs"><a href="/feeds/" aria-label="Khronos News Feed page"><i class="fa-solid fa-2x fa-rss"
+                            aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<section class="news_section">
+<h3 class="sr-only">Recent news items related to Khronos Group Standards. <a href="#khronosMembers">Skip to the Khronos Members section</a></h3>
+
+    <div class="container">
+
+
+		<div class="row">
+            <div class="col-xs-12 col-sm-12 newsList">
+ 
+
+<article itemscope itemtype="http://schema.org/Article" class="article">
+    <h3 itemprop="name">Khronos Sponsors Open-Source glTF Importer/Exporter for Autodesk 3ds Max</h3>
+    <div class="articleMetadata">
+        <span><a href="/news/permalink/khronos-sponsors-open-source-gltf-importer-exporter-for-autodesk-3ds-max" itemprop="url" aria-label="Permalink for the Khronos Sponsors Open-Source glTF Importer/Exporter for Autodesk 3ds Max news article"><i class="fa fa-link"></i></a>&nbsp;&nbsp;&nbsp;</span>
+        <time itemprop="dateCreated" datetime="2026-07-14T05:55:00-07:00"><i class="fa fa-calendar"></i> July 14, 2026</time>
+        <span class="articleTags" itemprop="keywords"><i class="fa fa-tags"></i>
+        
+            <a href="/news/tags/tag/gltf" title="Read more articles with tag gltf">gltf</a>, 
+            <a href="/news/tags/tag/khronos_ecosystem" title="Read more articles with tag khronos_ecosystem">khronos_ecosystem</a>
+        </span>
+        <span> &nbsp;&nbsp;<i class="fa fa-building"></i>&nbsp;<a href="/news/members/autodesk" itemprop="url" aria-label="Go to the full news article about Autodesk">Autodesk</a></span>
+    </div>
+    <div itemprop="articleBody">
+    <img src="/images/jcogs_img/cache/gltf_500px_june16_-_28de80_-_9fc778098442e5b5a190cec319db7751a3da154e.jpg" alt="Member Logo"  aria-hidden="true"><p>For years, 3D artists and technical directors working in Autodesk 3ds Max have juggled third-party tools and custom scripts to bring glTF assets into their pipelines. Today, that friction disappears.<br><br>The Khronos Group has sponsored the glTF 2.0 Importer/Exporter for Autodesk 3ds Max open-source project under the Apache 2.0 license, and today has released the resulting glTF importer and exporter plugins, built to professional standards in collaboration with the community, and free for all to use.</p>
+    </div>
+
+    <footer class="articleMetadata">
+    <p><strong><a href="https://www.khronos.org/blog/khronos-sponsors-open-source-gltf-importer-exporter-for-autodesk-3ds-max" itemprop="url" aria-label="Visit source webpage for this artle: Khronos Sponsors Open-Source glTF Importer/Exporter for Autodesk 3ds Max">Read More...</a></strong></p>
+    </footer>
+</article>
+
+
+ 
+
+<article itemscope itemtype="http://schema.org/Article" class="article">
+    <h3 itemprop="name">Khronos Group Welcomes Bolt Graphics as Contributor Member</h3>
+    <div class="articleMetadata">
+        <span><a href="/news/permalink/khronos-group-welcomes-bolt-graphics-as-contributor-member" itemprop="url" aria-label="Permalink for the Khronos Group Welcomes Bolt Graphics as Contributor Member news article"><i class="fa fa-link"></i></a>&nbsp;&nbsp;&nbsp;</span>
+        <time itemprop="dateCreated" datetime="2026-07-09T09:33:00-07:00"><i class="fa fa-calendar"></i> July 9, 2026</time>
+        <span class="articleTags" itemprop="keywords"><i class="fa fa-tags"></i>
+        
+            <a href="/news/tags/tag/khronos_ecosystem" title="Read more articles with tag khronos_ecosystem">khronos_ecosystem</a>, 
+            <a href="/news/tags/tag/members" title="Read more articles with tag members">members</a>
+        </span>
+        <span> &nbsp;&nbsp;<i class="fa fa-building"></i>&nbsp;<a href="/news/members/bolt-graphics" itemprop="url" aria-label="Go to the full news article about Bolt Graphics">Bolt Graphics</a></span>
+    </div>
+    <div itemprop="articleBody">
+    <img src="/images/jcogs_img/cache/bolt-graphics-logo-sml_-_28de80_-_9fc778098442e5b5a190cec319db7751a3da154e.jpg" alt="Member Logo"  aria-hidden="true"><p>Bolt Graphics is a semiconductor startup based in Sunnyvale, CA building fast and efficient graphics processors. Bolt is energized by their mission to reduce the barrier of entry for content creation and consumption, with a goal to enable everyone to easily create, simulate and consume immersive experiences as vividly as they can imagine them.</p>
+    </div>
+
+    <footer class="articleMetadata">
+    <p><strong><a href="https://www.bolt.graphics/" itemprop="url" aria-label="Visit source webpage for this artle: Khronos Group Welcomes Bolt Graphics as Contributor Member">Read More...</a></strong></p>
+    </footer>
+</article>
+
+
+ 
+
+<article itemscope itemtype="http://schema.org/Article" class="article">
+    <h3 itemprop="name">Vulkan Video H.264/H.265 Encode Now Working For Intel Alchemist GPUs On Linux</h3>
+    <div class="articleMetadata">
+        <span><a href="/news/permalink/vulkan-video-h.264-h.265-encode-now-working-for-intel-alchemist-gpus-on-linux" itemprop="url" aria-label="Permalink for the Vulkan Video H.264/H.265 Encode Now Working For Intel Alchemist GPUs On Linux news article"><i class="fa fa-link"></i></a>&nbsp;&nbsp;&nbsp;</span>
+        <time itemprop="dateCreated" datetime="2026-07-08T11:59:00-07:00"><i class="fa fa-calendar"></i> July 8, 2026</time>
+        <span class="articleTags" itemprop="keywords"><i class="fa fa-tags"></i>
+        
+            <a href="/news/tags/tag/vulkan+video" title="Read more articles with tag vulkan video">vulkan video</a>
+        </span>
+        <span> &nbsp;&nbsp;<i class="fa fa-building"></i>&nbsp;<a href="/news/members/intel" itemprop="url" aria-label="Go to the full news article about Intel">Intel</a></span>
+    </div>
+    <div itemprop="articleBody">
+    <img src="/images/jcogs_img/cache/vulkan-video_dec22_-_28de80_-_9fc778098442e5b5a190cec319db7751a3da154e.png" alt="Member Logo"  aria-hidden="true"><p>Earlier this year Vulkan Video encode was disabled on newer generations of Intel graphics hardware due to insufficient testing with the Intel ANV open-source driver. That impacted Gen12.5 graphics and newer - basically Alchemist and anything newer. Now at least Gen12.5 graphics with the likes of the Arc A-Series is seeing H.264 and H.265 encoding re-enabled.</p>
+    </div>
+
+    <footer class="articleMetadata">
+    <p><strong><a href="https://www.phoronix.com/news/Intel-ANV-Gen125-H265-Encode" itemprop="url" aria-label="Visit source webpage for this artle: Vulkan Video H.264/H.265 Encode Now Working For Intel Alchemist GPUs On Linux">Read More...</a></strong></p>
+    </footer>
+</article>
+
+
+ 
+
+<article itemscope itemtype="http://schema.org/Article" class="article">
+    <h3 itemprop="name">Vulkan Ray Tracing: Deprecating Host-Side Acceleration Structure Builds</h3>
+    <div class="articleMetadata">
+        <span><a href="/news/permalink/vulkan-ray-tracing-deprecating-host-side-acceleration-structure-builds" itemprop="url" aria-label="Permalink for the Vulkan Ray Tracing: Deprecating Host-Side Acceleration Structure Builds news article"><i class="fa fa-link"></i></a>&nbsp;&nbsp;&nbsp;</span>
+        <time itemprop="dateCreated" datetime="2026-07-08T07:35:00-07:00"><i class="fa fa-calendar"></i> July 8, 2026</time>
+        <span class="articleTags" itemprop="keywords"><i class="fa fa-tags"></i>
+        
+            <a href="/news/tags/tag/vulkan" title="Read more articles with tag vulkan">vulkan</a>, 
+            <a href="/news/tags/tag/raytracing" title="Read more articles with tag raytracing">raytracing</a>
+        </span>
+        
+    </div>
+    <div itemprop="articleBody">
+    <img src="/images/jcogs_img/cache/vulkan_500px_dec16_-_28de80_-_9fc778098442e5b5a190cec319db7751a3da154e.png" alt="Member Logo"  aria-hidden="true"><p>Vulkan is deprecating host-side ray tracing acceleration structure build commands in favor of a single, device-address-based path. This aligns Vulkan Ray Tracing with the direction of DirectX Raytracing, modern engine architecture, and hardware trends.<br><br>In the six years since Vulkan Ray Tracing launched, the host-side path has seen limited adoption. Developers generally found it more cumbersome than helpful, while implementers had to maintain parallel host/GPU command models that increased complexity and created friction for future ray tracing API evolution.</p>
+    </div>
+
+    <footer class="articleMetadata">
+    <p><strong><a href="https://www.khronos.org/blog/vulkan-ray-tracing-deprecating-host-side-acceleration-structure-builds" itemprop="url" aria-label="Visit source webpage for this artle: Vulkan Ray Tracing: Deprecating Host-Side Acceleration Structure Builds">Read More...</a></strong></p>
+    </footer>
+</article>
+
+
+ 
+
+<article itemscope itemtype="http://schema.org/Article" class="article">
+    <h3 itemprop="name">Firefox is Adding Vulkan Video Decoding for NVIDIA GPUs</h3>
+    <div class="articleMetadata">
+        <span><a href="/news/permalink/firefox-is-adding-vulkan-video-decoding-for-nvidia-gpus" itemprop="url" aria-label="Permalink for the Firefox is Adding Vulkan Video Decoding for NVIDIA GPUs news article"><i class="fa fa-link"></i></a>&nbsp;&nbsp;&nbsp;</span>
+        <time itemprop="dateCreated" datetime="2026-07-06T08:52:00-07:00"><i class="fa fa-calendar"></i> July 6, 2026</time>
+        <span class="articleTags" itemprop="keywords"><i class="fa fa-tags"></i>
+        
+            <a href="/news/tags/tag/vulkan" title="Read more articles with tag vulkan">vulkan</a>
+        </span>
+        <span> &nbsp;&nbsp;<i class="fa fa-building"></i>&nbsp;<a href="/news/members/nvidia_corporation" itemprop="url" aria-label="Go to the full news article about NVIDIA Corporation">NVIDIA Corporation</a></span>
+    </div>
+    <div itemprop="articleBody">
+    <img src="/images/jcogs_img/cache/vulkan_500px_dec16_-_28de80_-_9fc778098442e5b5a190cec319db7751a3da154e.png" alt="Member Logo"  aria-hidden="true"><p>Firefox is adding hardware-accelerated Vulkan Video decoding, saving Nvidia users on Linux the hassle of manually configuring the nvidia-vaapi-driver package.&nbsp;The change will be included in Firefox 153, out July 21, but it will not be enabled by default – not to start with.&nbsp;Instead, users will be able to flip a pair of preferences in about:config to try it out, with the awareness that there may be hiccups and edge cases (especially on devices with hybrid graphics, mentioned further down).<br><br>Adding native Vulkan Video decoding path to its codebase means workarounds will no longer be required.</p>
+    </div>
+
+    <footer class="articleMetadata">
+    <p><strong><a href="https://www.omgubuntu.co.uk/2026/07/firefox-vulkan-video-decoding-nvidia" itemprop="url" aria-label="Visit source webpage for this artle: Firefox is Adding Vulkan Video Decoding for NVIDIA GPUs">Read More...</a></strong></p>
+    </footer>
+</article>
+
+
+ 
+
+<article itemscope itemtype="http://schema.org/Article" class="article">
+    <h3 itemprop="name">FFmpeg Introduces Vulkan APV Encoder</h3>
+    <div class="articleMetadata">
+        <span><a href="/news/permalink/ffmpeg-introduces-vulkan-apv-encoder" itemprop="url" aria-label="Permalink for the FFmpeg Introduces Vulkan APV Encoder news article"><i class="fa fa-link"></i></a>&nbsp;&nbsp;&nbsp;</span>
+        <time itemprop="dateCreated" datetime="2026-07-02T15:36:00-07:00"><i class="fa fa-calendar"></i> July 2, 2026</time>
+        <span class="articleTags" itemprop="keywords"><i class="fa fa-tags"></i>
+        
+            <a href="/news/tags/tag/vulkan" title="Read more articles with tag vulkan">vulkan</a>
+        </span>
+        
+    </div>
+    <div itemprop="articleBody">
+    <img src="/images/jcogs_img/cache/vulkan_500px_dec16_-_28de80_-_9fc778098442e5b5a190cec319db7751a3da154e.png" alt="Member Logo"  aria-hidden="true"><p>FFmpeg has introduces Vulkan-accelerated APV&nbsp;encoding to go alongside the earlier development of their Vulkan-accelerated decoding for the APV&nbsp;video format.</p>
+    </div>
+
+    <footer class="articleMetadata">
+    <p><strong><a href="https://www.phoronix.com/news/FFmpeg-Vulkan-Encoder-APV" itemprop="url" aria-label="Visit source webpage for this artle: FFmpeg Introduces Vulkan APV Encoder">Read More...</a></strong></p>
+    </footer>
+</article>
+
+
+
+                    <div class="news_buttons">
+                        <a class="btn btn-primary text-uppercase news_btn" href="/news/archives">all news</a>
+                        <div class="pull-right"> <a class="text-uppercase btn btn-blue-light" href="http://eepurl.com/Xh4Q">subscribe </a></div>
+                    </div>
+            </div>
+
+           
+        </div>
+    </div>
+</section>
+
+<section class="pageband pageband-blue">
+    <h2 class="sr-only">Khronos Members and Adopters</h2>
+    <div class="container">
+    	<p class="sr-only">Membership, Conformance and Khronos Blogs. <a class="sr-only" href="#khronosEvents">Skip to the Khronos events section</a></p>
+        
+        <div class="row">
+            <article class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-4">
+                <h2 id="khronosMembers">Members</h2>
+                <p>Khronos members are individuals, companies and academic institutes from around the world shaping the standards that are driving the world.</p>
+                <div class="text-center">
+                    <a href="/members/" class="btn btn-blue-light text-uppercase">Membership</a>
+                    <a href="/about/" class="btn btn-blue-light text-uppercase">About Khronos</a>
+                </div>
+            </article>
+
+            <article class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-4">
+                <h2>Conformance</h2>
+                <p>See which companies and products have implemented Khronos standards and have passed the conformance tests.</p>
+                <div class="text-center">
+                    <a href="/conformance/adopters/conformant-products" class="btn btn-blue-light text-uppercase">Conformant Products</a>
+                    <a href="/conformance/adopters/conformant-companies" class="btn btn-blue-light text-uppercase">API Adopters</a>
+                </div>
+            </article>
+
+            <article class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-4">
+                <h2>Khronos Blog</h2>
+                <ul class="list-unstyled clearfix">
+                     
+                    <li><a href="https://www.khronos.org/blog/khronos-sponsors-open-source-gltf-importer-exporter-for-autodesk-3ds-max">Khronos Sponsors Open-Source glTF Importer/Exporter for Autodesk 3ds Max</a></li>
+                     
+                    <li><a href="https://www.khronos.org/blog/vulkan-ray-tracing-deprecating-host-side-acceleration-structure-builds">Vulkan Ray Tracing: Deprecating Host-Side Acceleration Structure Builds</a></li>
+                     
+                    <li><a href="https://www.khronos.org/blog/khronos-launches-initiative-to-extend-gltf-for-volumetric-media">Khronos Launches Initiative to Extend glTF for Volumetric Media</a></li>
+                     
+                </ul>
+                <div class="text-center">
+                    <a href="/blog/" class="btn btn-blue-light text-uppercase">Visit Khronos Blog</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="pageband pageband-dark">
+<h3 class="sr-only">Khronos videos, presentations, and upcoming events. <a href="#khronosQuickLinks">Skip to the Khronos Quick Links section</a></h3>
+    <div class="container">
+        <div class="row">
+            <article class="col-xs-12 col-sm-4 border-right">
+                <h2 id="khronosEvents">Presentations and Videos</h2>
+                <ul class="list-unstyled clearfix">
+
+
+<li><a href="/events/xr-expo-2026">XR Expo 2026</a></li>
+
+
+
+<li><a href="/events/gaussian-splats-use-cases-next-steps-for-gltf-standardization">Gaussian Splats: Use Cases & Next Steps for glTF Standardization</a></li>
+
+
+
+<li><a href="/events/3d-on-the-web-2026">3D on the Web</a></li>
+
+
+
+<li><a href="/events/shading-languages-symposium-2026">Shading Languages Symposium 2026</a></li>
+
+
+
+<li><a href="/events/fosdem-26">FOSDEM '26</a></li>
+
+
+
+<li><a href="/events/ces-2025">CES 2026</a></li>
+
+
+
+<li><a href="/events/siggraph-asia-2025">SIGGRAPH Asia 2025</a></li>
+
+
+
+<li><a href="/events/unitedxr-europe-2025">UnitedXR Europe 2025</a></li>
+
+
+
+<li><a href="/events/gisc-2025">GISC 2025</a></li>
+
+
+
+<li><a href="/events/xdc-2025">XDC 2025</a></li>
+
+
+                </ul>
+                <div class="text-center">
+                    <a href="/developers/library" class="btn btn-blue-dark text-uppercase">All presentations</a>
+                </div>
+            </article>
+
+            <article class="col-xs-12 col-sm-8 text-center">
+                <h2>Upcoming Events</h2>
+                <ul class="list-unstyled clearfix eventList">
+    <li>
+        <a href="https://www.khronos.org/events/high-performance-graphics-2026">
+            <img src="/images/jcogs_img/cache/hgp26_home_-_28de80_-_99773442c0bc164babfa5f72a3ef2005b587b71e.webp" alt="Learn more about High-Performance Graphics">
+            <p class="event_date">July 17th</p>
+        </a>
+    </li>    <li>
+        <a href="https://www.khronos.org/events/siggraph-2026">
+            <img src="/images/jcogs_img/cache/khronos-homepage-sigg_26-thumbnail_-_28de80_-_99773442c0bc164babfa5f72a3ef2005b587b71e.jpg" alt="Learn more about SIGGRAPH 2026">
+            <p class="event_date">July 19th</p>
+        </a>
+    </li>    <li>
+        <a href="https://www.khronos.org/events/xdc-2026">
+            <img src="/images/jcogs_img/cache/xdc_home_-_28de80_-_99773442c0bc164babfa5f72a3ef2005b587b71e.webp" alt="Learn more about XDC 2026">
+            <p class="event_date">September 28th</p>
+        </a>
+    </li>    <li>
+        <a href="https://vulkan.org/events/vulkanised-2027">
+            <img src="/images/jcogs_img/cache/vulkanised_2027_home_-_28de80_-_99773442c0bc164babfa5f72a3ef2005b587b71e.jpg" alt="Learn more about Vulkanised 2027">
+            <p class="event_date">February 8th</p>
+        </a>
+    </li>    <li>
+        <a href="https://www.khronos.org/events/real-time-shading-symposium-2027">
+            <img src="/images/jcogs_img/cache/rtss_2027_home_-_28de80_-_99773442c0bc164babfa5f72a3ef2005b587b71e.jpg" alt="Learn more about Real-Time Shading Symposium 2027">
+            <p class="event_date">February 11th</p>
+        </a>
+    </li>  
+               </ul>
+                <a class="btn btn-blue-dark text-uppercase" href="/events">All events</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="pageband">
+    <h3 class="sr-only">Khronos quick links. <a href="#khronosFooter">Skip to the Khronos footer of the website</a></h3>
+    <div class="container">
+        <div class="row autocenter">
+            <article class="col-xs-12">
+            	<h2 class="sr-only" id="khronosQuickLinks">List of Khronos Quick Links</h2>
+                <ul class="list-unstyled eventList grow last">
+                    <li><a href="https://github.com/KhronosGroup/"><img src="/assets/images/2017-Badge-Github.png" alt="Visit Khronos on GitHub"></a></li>
+                    <li><a href="/blog"><img src="/assets/images/2017-Badge-Blog.png" alt="Visit the Khronos Blogs"></a></li>
+                    <li><a href="/developers/reference-cards/"><img src="/assets/images/2017-Badge-ReferenceGuides.png" alt="Go to the Reference Card page"></a></li>
+                    <li><a href="/developers/books/"><img src="/assets/images/2017-Badge-Bookstore.png" alt="Visit the Khronos online bookstore"></a></li>
+                    <li><a href="https://store.khronos.org/"><img src="/assets/images/2017-Badge-Store.png" alt="Visit the Khronos online store"></a></li>
+                </ul>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+
+
+</div>
+
+    <footer id="khronosFooter" class="footer">
+    <div class="container">
+		<p class="sr-only">Page footer starts here. <a href="#backtop">Return to main content</a></p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 footer_branding">
+                <figure><a href="https://www.khronos.org/"><img src="/assets/css/images/khronos-logo-inverted-25.svg" alt="Khronos Logo"></a></figure>
+                <p> 9450 SW Gemini Drive #45043<br>
+                Beaverton, OR 97008<br>United States<br>
+                Phone: <a href="tel:+14158698627">+1 (415) 869-8627</a></p>
+            </div>
+
+<div class="col-xs-12 col-sm-8 footer_details">
+    <div class="row">
+        <div class="col-xs-12 col-md-5">
+            <a href="http://eepurl.com/Xh4Q" class="btn btn-blue-dark text-uppercase">sign up for our newsletter</a>
+        </div>
+        <div class="col-xs-12 col-md-7" style="margin-top: 0;">
+            <ul class="social_links list-unstyled social_icons">
+                            <li><a rel="me" href="https://bsky.app/profile/khronos.org" aria-label="Khronos Bluesky Account"><i
+                            class="fa-brands fa-2x fa-bluesky" aria-hidden="true"></i></a></li>
+                <li>
+                    <a rel="me" href="https://fosstodon.org/@thekhronosgroup" aria-label="Khronos Mastodon Account">
+                        <i class="fa-brands fa-2x fa-mastodon" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://khr.io/khrdiscord" aria-label="Khronos Discord Server">
+                        <i class="fa-brands fa-2x fa-discord" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.khronos.org/marketing/social-media/wechat" aria-label="Khronos WeChat">
+                        <i class="fa-brands fa-2x fa-weixin" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/user/khronosgroup" aria-label="Khronos YouTube Channel">
+                        <i class="fa-brands fa-2x fa-youtube" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.flickr.com/photos/khronos/" aria-label="Khronos Flickr page">
+                        <i class="fa-brands fa-2x fa-flickr" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/groups?gid=121429" aria-label="Khronos LinkedIn Profile">
+                        <i class="fa-brands fa-2x fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="hidden-xs">
+                    <a href="https://www.khronos.org/feeds/" aria-label="Khronos News Feed page">
+                        <i class="fa-solid fa-2x fa-rss" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <ul class="list-unstyled footer-policy">
+                <li>
+                    <a href="https://www.khronos.org/about/deib/" rel="nofollow">Diversity &amp; Inclusion</a>
+                </li>
+                <li>
+                    <a href="https://www.khronos.org/legal/" rel="nofollow">Legal Notices</a>
+                </li>
+                <li>
+                    <a href="https://www.khronos.org/legal/privacy/" rel="nofollow">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="https://www.khronos.org/about/code-of-conduct/" rel="nofollow">Code of Conduct</a>
+                </li>
+                <li>
+                    <a href="https://www.khronos.org/legal/trademarks/">Trademark Usage</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-md-6 language">
+            <div style="display: inline-block;">Language</div>
+            :
+
+            <a class="btn btn-sm btn-blue-dark" href="https://www.khronos.org/"
+                aria-label="Visit Khronos English Website">EN</a>
+            <a class="btn btn-sm btn-blue-dark" href="https://www.khronos.org/news/cn/"
+                aria-label="View Khronos Chinese Press Releases">CN</a>
+            <a class="btn btn-sm btn-blue-dark" href="https://www.khronos.org/news/jp/"
+                aria-label="View Khronos Japanese Press Releases">JP</a>
+            <a class="btn btn-sm btn-blue-dark" href="https://www.khronos.org/news/kr/"
+                aria-label="View Khronos Korean Press Releases">KR</a>
+        </div>
+    </div>
+</div>
+            
+        </div>
+         <div class="copyright">&copy; The Khronos<sup>®</sup> Group Inc. 2026. All rights reserved.</div>
+                <div class="trademark">Khronos® and Vulkan® are registered trademarks, and ANARI™, WebGL™, glTF™, KTX™, NNEF™, OpenVX™, SPIR™, SPIR-V™, SYCL™, OpenVG™, Karamos™ and 3D Commerce™ are trademarks of The Khronos Group Inc. OpenXR™ is a trademark owned by The Khronos Group Inc. and is registered as a trademark in China, the European Union, Japan and the United Kingdom. OpenCL™ is a trademark of Apple Inc. and OpenGL® is a registered trademark and the OpenGL ES™ and OpenGL SC™ logos are trademarks of Hewlett Packard Enterprise used under license by Khronos. All other product names, trademarks, and/or company names are used solely for identification and belong to their respective owners.</div>
+    </div>
+    </footer>
+
+</div>
+
+<a class="scroll_to top_button" href="#backtop" aria-label="Scroll to top of current page"><i class="khricon fa-solid fa-2x fa-arrow-up"></i></a>    
+<script src="/assets/js/app.js?v14"></script>
+
+
+
+<!-- FOOTER - Complete consent button handler -->
+<script>
+function consentError(message) {
+  console.error('Error:', message);
+  const errorDiv = document.createElement('div');
+  errorDiv.textContent = message;
+  errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#f44336;color:white;padding:10px;text-align:center;z-index:9999';
+  document.body.insertBefore(errorDiv, document.body.firstChild);
+  setTimeout(() => errorDiv.remove(), 5000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const cookieForm = document.getElementById('cookieConsentForm');
+  if (cookieForm) {
+    cookieForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const actionUrl = new URL(this.action, window.location.origin);
+      if (actionUrl.origin !== window.location.origin) {
+        consentError('Invalid form action');
+        return;
+      }
+      const clickedButton = e.submitter.value;
+      const formData = new FormData(this);
+      
+      if (clickedButton === 'Accept All Cookies') {
+        formData.set('ee:cookies_functionality', 'y');
+        formData.set('ee:cookies_performance', 'y');
+      } else if (clickedButton === 'Necessary Cookies Only') {
+        formData.set('ee:cookies_functionality', 'n');
+        formData.set('ee:cookies_performance', 'n');
+      }
+      
+      fetch(actionUrl.href, {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (typeof data !== 'object' || data === null) {
+          throw new Error('Invalid response');
+        }
+        
+        const state = clickedButton === 'Accept All Cookies' ? 'granted' : 'denied';
+        localStorage.setItem('cookie_consent', state);
+        
+        window.gtag && gtag('consent','update',{
+          ad_storage: state,
+          analytics_storage: state,
+          ad_user_data: state,
+          ad_personalization: state
+        });
+        
+        if (!data.success) {
+          const errors = Array.isArray(data.errors) ? data.errors : ['Unknown error'];
+          consentError('Failed with the following errors: ' + errors.join(', '));
+        } else {
+          this.style.transition = 'opacity 0.4s';
+          this.style.opacity = '0';
+        }
+      })
+      .catch(error => {
+        consentError('An error occurred');
+      });
+    });
+  }
+});
+</script>
+
+<div style="display: none;"  aria-hidden="true"><a style="color:white" href="https://www.khronos.org/assets/utilities/holder.php">devilish</a></div>
+</body>
+</html>

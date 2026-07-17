@@ -44,7 +44,6 @@ interface ShellSearchItem {
 const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'home',          label: 'Home',          icon: '🏠', href: '/(tabs)/home',          sub: 'Your snapshot' },
   { id: 'explore',       label: 'Explore',       icon: '🔍', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
-  { id: 'opportunities', label: 'Opportunities', icon: '🌍', href: '/(tabs)/opportunities', sub: 'Internships & jobs' },
   { id: 'myworld',       label: 'My World',      icon: '🔒', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
   { id: 'profile',       label: 'Profile',       icon: '👤', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
@@ -52,7 +51,6 @@ const PRIMARY_NAV: ShellNavItem[] = [
 const MOBILE_NAV: { id: NavId; label: string; icon: string; href: string }[] = [
   { id: 'home',          label: 'Home',    icon: '🏠', href: '/(tabs)/home' },
   { id: 'explore',       label: 'Explore', icon: '🔍', href: '/(tabs)/explore' },
-  { id: 'opportunities', label: 'Jobs',    icon: '🌍', href: '/(tabs)/opportunities' },
   { id: 'myworld',       label: 'My World', icon: '🔒', href: '/(tabs)/myworld' },
   { id: 'profile',       label: 'Profile', icon: '👤', href: '/(tabs)/profile' },
 ];
@@ -75,7 +73,7 @@ function getActiveNavId(pathname: string | null): NavId {
   if (pathname.includes('/explore') || pathname.includes('/programme')
     || pathname.includes('/domain') || pathname.includes('/role')) return 'explore';
   if (pathname.includes('/opportunities') || pathname.includes('/opportunity')
-    || pathname.includes('/company')) return 'opportunities';
+    || pathname.includes('/company')) return 'explore';
   // Everything from the legacy learning app now lives under My World.
   if (
     pathname.includes('/myworld')
@@ -176,10 +174,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
 
   const searchItems = useMemo<ShellSearchItem[]>(() => {
     return [
-      { id: 'home', label: 'Home', hint: 'Your snapshot and alerts', href: '/(tabs)/home', keywords: ['home', 'dashboard', 'overview'] },
+      { id: 'home', label: 'Home', hint: 'Your snapshot and saved paths', href: '/(tabs)/home', keywords: ['home', 'dashboard', 'overview'] },
       { id: 'explore', label: 'Explore', hint: 'Programmes, domains and roles', href: '/(tabs)/explore', keywords: ['explore', 'programme', 'course', 'domain', 'role', 'search', 'jamb'] },
-      { id: 'opportunities', label: 'Opportunities', hint: 'Internships and jobs — local, global, remote', href: '/(tabs)/opportunities', keywords: ['opportunities', 'jobs', 'internships', 'graduate', 'remote', 'companies'] },
-      { id: 'myworld', label: 'My World', hint: 'Tracks, portfolio and guild (coming soon)', href: '/(tabs)/myworld', keywords: ['my world', 'tracks', 'learn', 'portfolio', 'guild', 'levels'] },
+      { id: 'myworld', label: 'My World', hint: 'Locked tracks, portfolio and guild progress', href: '/(tabs)/myworld', keywords: ['my world', 'tracks', 'learn', 'portfolio', 'guild', 'levels'] },
       { id: 'profile', label: 'Profile', hint: 'Account, saved items and settings', href: '/(tabs)/profile', keywords: ['profile', 'account', 'saved', 'bookmarks', 'settings', 'notes'] },
     ];
   }, []);
@@ -298,7 +295,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                     onFocus={() => setSearchFocused(true)}
                     onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
                     onSubmitEditing={handleSearchSubmit}
-                    placeholder="Search programmes, domains, roles and jobs"
+                    placeholder="Search programmes, domains and roles"
                     placeholderTextColor={colors.textMuted}
                     style={[styles.searchInput, { color: colors.text }]}
                     returnKeyType="search"
@@ -321,14 +318,6 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                 )}
               </View>
             )}
-
-            <TouchableOpacity
-              activeOpacity={0.85}
-              onPress={() => router.push('/(tabs)/opportunities' as any)}
-              style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
-            >
-              <Text style={[styles.topbarActionLabel, { color: colors.text }]}>🌍</Text>
-            </TouchableOpacity>
 
             <TouchableOpacity
               activeOpacity={0.85}
@@ -730,4 +719,3 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.bold,
   },
 });
-

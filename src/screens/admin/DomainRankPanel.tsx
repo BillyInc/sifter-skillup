@@ -1,6 +1,6 @@
 /**
  * DomainRankPanel — domains the institution's programmes route into, ranked by
- * posting volume, with a Nigerian / Global / Remote scope toggle.
+ * posting volume, with an NG local / Global / NG remote scope toggle.
  *
  * The scope is lifted to the caller (the dashboard owns the active scope and
  * re-fetches adminData.getDomainRanking(scope)); this component only renders.
@@ -22,9 +22,9 @@ import type { DataState } from "../../types/career";
 import type { DomainRankItem, RankScope } from "../../types/institution";
 
 const SCOPES: { value: RankScope; label: string }[] = [
-  { value: "nigerian", label: "Nigerian" },
+  { value: "nigerian", label: "NG local" },
   { value: "global", label: "Global" },
-  { value: "remote", label: "Remote" },
+  { value: "remote", label: "NG remote" },
 ];
 
 export interface DomainRankPanelProps {

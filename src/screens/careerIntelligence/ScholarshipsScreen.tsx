@@ -54,7 +54,10 @@ export function ScholarshipsScreen() {
     >
       <View style={styles.topRow}>
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) router.back();
+            else router.replace("/(tabs)/explore/pathways" as any);
+          }}
           hitSlop={10}
           style={styles.back}
         >

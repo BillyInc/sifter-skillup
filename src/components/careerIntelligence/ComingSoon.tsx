@@ -1,7 +1,7 @@
 /**
  * ComingSoon / Locked — reusable shells for areas that ship with the new design
  * but aren't populated yet. Per the build strategy, unbuilt areas read
- * "Coming Soon" (never mock data) and are filled in incrementally.
+ * as locked previews (never mock data) and are filled in incrementally.
  */
 import React, { type ReactNode } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
@@ -28,8 +28,8 @@ export interface ComingSoonProps {
 }
 
 export function ComingSoon({
-  icon = "🚧",
-  eyebrow = "COMING SOON",
+  icon = "🔒",
+  eyebrow = "LOCKED",
   title,
   body,
   bullets,
@@ -88,7 +88,7 @@ export function ComingSoon({
 }
 
 /** Small inline "Locked" pill for gating sub-features inside a populated screen. */
-export function LockedPill({ label = "Coming soon" }: { label?: string }) {
+export function LockedPill({ label = "Locked" }: { label?: string }) {
   const { colors } = useTheme();
   return (
     <View

@@ -1,0 +1,43 @@
+{
+  "source_title": "Nigeria Labour Force Survey (NLFS) 2024 - Survey Methodology",
+  "pages_processed": 27,
+  "methodology_notes": [
+    "NLFS follows ILO guidelines with revised methodology adopted in 2022/2023",
+    "Data collection uses Computer Assisted Personal Interviewing (CAPI) devices",
+    "Continuous data collection approach - quarterly national-level estimates and yearly state-level results",
+    "Two-stage cluster sampling design: first stage selects Enumeration Areas, second stage selects households",
+    "Face-to-face interview approach; each team spends one week in each EA (Wednesday to Sunday) to reduce proxy response",
+    "Three teams per state in Q1 (January-March), reverting to two teams from Q2 onwards",
+    "Each team covers 8 EAs in Q1 and 4 EAs per month from Q2",
+    "Training conducted at two levels: Training of Trainers (ToT) and Training of Enumerators (ToE)",
+    "ToE training held at six zonal centers across Nigeria",
+    "Real-time data transmission and quality checks by data editors",
+    "Results hosted on NBS website (www.nigerianstat.gov.ng)"
+  ],
+  "definitions": {
+    "working_age_population": "Persons aged 15 years and above",
+    "employed": "Working age population who during the reference period were engaged in any activity to produce goods or provide services for pay or profit (at least 1 hour in last 7 days)",
+    "unemployed": "Not in employment, actively searching and available (did nothing for pay or profit)",
+    "labour_force": "Working Age Population (15 years and above) that are employed and unemployed",
+    "underemployed": "Worked less than 40 hours in a week but willing and available for more hours of work",
+    "informal_employment": "Employees not protected by national labour legislation; entrepreneurs in informal units; contributing family workers",
+    "subsistence_farmers": "Farmers growing crops solely to meet household needs, produce mainly not sold in markets",
+    "discouraged_jobseekers": "Persons outside labour force who wanted employment and were available but did not search due to market-related reasons"
+  },
+  "sample_design": {
+    "total_households_annually": 35520,
+    "quarterly_sample": 8880,
+    "enumeration_areas_total": 3552,
+    "eas_per_state": 96,
+    "eas_quarterly_per_state": 24,
+    "households_per_ea": 10,
+    "households_per_state_quarterly": 240,
+    "coverage": "All 36 states + FCT, urban and rural areas"
+  },
+  "data_coverage": "All 36 states of the Federation and the Federal Capital Territory (FCT). Urban and rural areas covered. Continuous data collection for quarterly national estimates and annual state-level results.",
+  "timeline": {
+    "training_of_trainers": "3 days (4th-6th Jan 2024)",
+    "training_of_enumerators": "4 days (12th-15th Jan 2024)",
+    "fieldwork": "12 months starting 17th Jan 2024"
+  }
+}

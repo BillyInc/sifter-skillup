@@ -1,7 +1,7 @@
 /**
  * PathwaysHubScreen — the special-flows hub. It links the four dedicated
  * starting-point / pivot flows (PhD · Career change · Qualification upgrades ·
- * Chartership & credentials) under one roof.
+ * Chartership & credentials · Entrepreneurship) under one roof.
  *
  * This hub carries no data of its own — the four cards are fixed editorial
  * structure that always render and route via exploreNav. Each downstream screen
@@ -30,7 +30,7 @@ import {
 
 type Nav = Pick<Router, "push" | "replace" | "back">;
 
-// The four special flows — fixed structure, always rendered. Each navigates via
+// The special flows — fixed structure, always rendered. Each navigates via
 // exploreNav so the route strings stay centralised.
 const PATHWAYS: {
   icon: string;
@@ -57,10 +57,16 @@ const PATHWAYS: {
     go: (router) => exploreNav.qualificationUpgrades(router),
   },
   {
-    icon: "📜",
+    icon: "◆",
     title: "Chartership & credentials",
     body: "Chartered routes and the credentials that travel — CEng/COREN, CFA, ICAN/ACCA, PLAB, SQE.",
     go: (router) => exploreNav.charterships(router),
+  },
+  {
+    icon: "▦",
+    title: "Build a business",
+    body: "For students and founders who want to turn a skill, market problem or programme into a venture path.",
+    go: (router) => exploreNav.entrepreneurship(router),
   },
 ];
 

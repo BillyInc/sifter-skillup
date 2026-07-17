@@ -1,8 +1,8 @@
 /**
  * CareerHomeScreen — the personalised returning-user Home (Mockup Part 7).
  *
- * A snapshot of where the user is starting from, their subscribed opportunity
- * alerts, the domains/roles they've saved, and quick actions into the live
+ * A snapshot of where the user is starting from, saved domains/roles, and
+ * quick actions into the live
  * areas. Every data-backed section reads through `careerData`, which returns
  * `coming_soon` envelopes for now — rendered gracefully via <DataStateView>.
  * No mock rows are invented; sections degrade to friendly prompts.
@@ -33,7 +33,6 @@ import {
   comingSoon,
   type DataState,
   type SavedItem,
-  type Subscription,
 } from "../types/career";
 import type { StartingPointProfile, UserType } from "../types/onboarding";
 
@@ -46,13 +45,6 @@ const QUICK = [
     locked: false,
   },
   {
-    icon: "🌍",
-    title: "Opportunities",
-    body: "Internships & jobs — local, global, remote",
-    href: "/(tabs)/opportunities" as const,
-    locked: false,
-  },
-  {
     icon: "⭐",
     title: "Elite & special pathways",
     body: "Aspirational routes & every starting point",
@@ -62,7 +54,7 @@ const QUICK = [
   {
     icon: "🔒",
     title: "My World",
-    body: "Tracks & portfolio — coming soon",
+    body: "Locked tracks, portfolio proof and guild progress",
     href: "/(tabs)/myworld" as const,
     locked: true,
   },
@@ -140,9 +132,6 @@ export default function CareerHomeScreen() {
 
   const [starting, setStarting] = useState<StartingPointProfile | null>(null);
   const [startingLoaded, setStartingLoaded] = useState(false);
-  const [alerts, setAlerts] = useState<DataState<Subscription[]>>(() =>
-    comingSoon<Subscription[]>(),
-  );
   const [saved, setSaved] = useState<DataState<SavedItem[]>>(() =>
     comingSoon<SavedItem[]>(),
   );
@@ -150,15 +139,13 @@ export default function CareerHomeScreen() {
   useEffect(() => {
     let active = true;
     (async () => {
-      const [sp, subs, items] = await Promise.all([
+      const [sp, items] = await Promise.all([
         getStartingPoint(),
-        careerData.getSubscriptions(),
         careerData.getSavedItems(),
       ]);
       if (!active) return;
       setStarting(sp);
       setStartingLoaded(true);
-      setAlerts(subs);
       setSaved(items);
     })();
     return () => {
@@ -217,7 +204,7 @@ export default function CareerHomeScreen() {
         >
           <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
             You're browsing as a guest. Create an account to save matches and
-            get opportunity alerts.
+            notes.
           </Text>
         </View>
       ) : null}
@@ -278,7 +265,7 @@ export default function CareerHomeScreen() {
           </Text>
           <Text style={[styles.cardMeta, { color: colors.textSoft }]}>
             Complete a quick onboarding so we can tailor programmes, domains and
-            opportunities to you.
+            demand signals to you.
           </Text>
           <Text style={[styles.cardLinkText, { color: Brand.primaryDeep }]}>
             Start onboarding →
@@ -286,55 +273,28 @@ export default function CareerHomeScreen() {
         </TouchableOpacity>
       )}
 
-      {/* ── Opportunity alerts ── */}
+      {/* ── Market intelligence ── */}
       <Text style={[styles.section, { color: colors.textSoft }]}>
-        Opportunity alerts
+        Market intelligence
       </Text>
-      <DataStateView
-        state={alerts}
-        empty={(rows) => rows.length === 0}
-        emptyTitle="No alerts yet"
-        emptyBody="Subscribe to opportunities to get alerts here."
+      <View
+        style={[
+          styles.card,
+          { backgroundColor: colors.card, borderColor: colors.border },
+        ]}
       >
-        {(rows) => (
-          <View style={styles.list}>
-            {rows.map((s) => (
-              <View
-                key={s.id}
-                style={[
-                  styles.row,
-                  { backgroundColor: colors.card, borderColor: colors.border },
-                ]}
-              >
-                <Text style={styles.rowIcon}>🔔</Text>
-                <View style={{ flex: 1 }}>
-                  <Text
-                    style={[styles.rowTitle, { color: colors.text }]}
-                    numberOfLines={1}
-                  >
-                    {s.target.replace(/_/g, " ")}
-                  </Text>
-                  <Text
-                    style={[styles.rowMeta, { color: colors.textMuted }]}
-                    numberOfLines={1}
-                  >
-                    {s.targetId}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
-      </DataStateView>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={styles.linkRow}
-        onPress={() => router.push("/(tabs)/opportunities")}
-      >
-        <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
-          Browse opportunities →
+        <Text style={[styles.cardEyebrow, { color: Brand.primaryDeep }]}>
+          DEMAND + VALUE
         </Text>
-      </TouchableOpacity>
+        <Text style={[styles.cardTitle, { color: colors.text }]}>
+          Role signals will separate volume, value and access.
+        </Text>
+        <Text style={[styles.cardMeta, { color: colors.textSoft }]}>
+          Nigerian local, Nigerian remote and global demand should stay
+          separate. Low-volume/high-value roles will be labelled as selective
+          pathways, not buried as weak demand.
+        </Text>
+      </View>
 
       {/* ── Your domains ── */}
       <Text style={[styles.section, { color: colors.textSoft }]}>

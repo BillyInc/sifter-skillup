@@ -52,17 +52,17 @@ const TIERS = [
   {
     tier: "T0",
     title: "National aggregate",
-    body: "Self-declared, unverified. You see national-level aggregate intelligence only.",
+    body: "Self-declared, unverified. You can browse national market intelligence and public school/programme guidance only.",
   },
   {
     tier: "T1",
     title: "Claimed institution",
-    body: "You've claimed an institution and entered a registry anchor; proof is awaited.",
+    body: "You've claimed an institution, school or tutorial centre and entered a registry anchor. A manual review can issue/confirm your school or session code.",
   },
   {
     tier: "T2",
     title: "Verified institution dashboard",
-    body: "Verified member access — your institution's own aggregate dashboard, scoped to your programme mix.",
+    body: "Verified university staff see their own programme mix. Secondary schools and tutorial centres get guidance/session tools; individual student data still requires consent.",
   },
 ];
 
@@ -176,8 +176,11 @@ export function VerificationScreen() {
               </Text>
               <Text style={[styles.lede, { color: colors.textMuted }]}>
                 Assurance is tiered — higher tiers unlock more scoped
-                intelligence. Individual student data is never unlocked by
-                verification alone; it always also requires consent.
+                intelligence. Peer benchmarks are for verified institutions.
+                School and tutorial owners compare external schools as public
+                guidance, not their own school against a peer set. Individual
+                student data is never unlocked by verification alone; it always
+                also requires consent.
               </Text>
               <View style={styles.tiers}>
                 {TIERS.map((t) => (

@@ -47,9 +47,10 @@ export default function AuthLayout() {
     return <Redirect href="/(auth)/onboarding" />;
   }
 
-  if (user && pendingRedirect) {
-    return <Redirect href={pendingRedirect as any} />;
-  }
+  const pendingRedirect =
+    user && user.onboarding_completed
+      ? consumePendingPostAuthRedirect()
+      : null;
 
   // Educators / institution admins land on the administrator side; students
   // land on the learning app. account_type is resolved from the backend value
@@ -59,7 +60,6 @@ export default function AuthLayout() {
   }
 
   if (user && user.onboarding_completed) {
-    const pendingRedirect = consumePendingPostAuthRedirect();
     return <Redirect href={(pendingRedirect ?? resolvePostAuthHref(user)) as any} />;
   }
 

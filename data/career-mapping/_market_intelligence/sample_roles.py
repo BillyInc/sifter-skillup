@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""The 10-role validation sample for the market intelligence backfill.
+
+One role per required area: ICT, accounting/finance, healthcare, engineering,
+education, logistics, sales, HR, legal, product/design.
+
+Aliases combine ESCO also_known_as, O*NET-style titles, and Nigerian usage.
+`match_terms` are lowercase substrings used to match bulk job-board dumps.
+`query` is the primary search phrase for keyed APIs (kept short for recall).
+"""
+
+SAMPLE_ROLES = [
+    {
+        "role_key": "software_developer",
+        "role_name": "software developer",
+        "area": "ICT",
+        "domain_id": "D001",
+        "domain_name": "Software Engineering",
+        "esco_code": "2512.4",
+        "isco_group": 2512,
+        "query": "software developer",
+        "ng_aliases": ["software engineer", "backend developer", "frontend developer", "full stack developer"],
+        "match_terms": ["software developer", "software engineer", "backend developer", "back-end developer",
+                        "frontend developer", "front-end developer", "full stack", "fullstack", "web developer",
+                        "mobile developer", "application developer", "programmer"],
+    },
+    {
+        "role_key": "accountant",
+        "role_name": "accountant",
+        "area": "accounting/finance",
+        "domain_id": "D015",
+        "domain_name": "Accounting",
+        "esco_code": "2411.1",
+        "isco_group": 2411,
+        "query": "accountant",
+        "ng_aliases": ["chartered accountant", "account officer", "ICAN accountant", "bookkeeper"],
+        "match_terms": ["accountant", "account officer", "accounting officer", "bookkeeper", "finance officer",
+                        "financial accountant", "management accountant", "audit"],
+    },
+    {
+        "role_key": "nurse",
+        "role_name": "specialist nurse",
+        "area": "healthcare",
+        "domain_id": "D024",
+        "domain_name": "Nursing",
+        "esco_code": "2221.3",
+        "isco_group": 2221,
+        "query": "nurse",
+        "ng_aliases": ["registered nurse", "nursing officer", "NMCN registered nurse", "staff nurse"],
+        "match_terms": ["nurse", "nursing officer", "midwife"],
+    },
+    {
+        "role_key": "civil_engineer",
+        "role_name": "civil engineer",
+        "area": "engineering",
+        "domain_id": "D018",
+        "domain_name": "Civil",
+        "esco_code": "2142.1",
+        "isco_group": 2142,
+        "query": "civil engineer",
+        "ng_aliases": ["COREN engineer", "site engineer", "structural engineer", "construction engineer"],
+        "match_terms": ["civil engineer", "site engineer", "structural engineer", "construction engineer",
+                        "highway engineer", "geotechnical"],
+    },
+    {
+        "role_key": "secondary_teacher",
+        "role_name": "secondary school teacher",
+        "area": "education",
+        "domain_id": "D039",
+        "domain_name": "Education",
+        "esco_code": "2330",
+        "isco_group": 2330,
+        "query": "secondary school teacher",
+        "ng_aliases": ["teacher", "subject teacher", "classroom teacher", "school teacher", "NCE teacher"],
+        "match_terms": ["teacher", "tutor", "educator", "instructor"],
+    },
+    {
+        "role_key": "supply_chain_manager",
+        "role_name": "supply chain manager",
+        "area": "logistics",
+        "domain_id": "D035",
+        "domain_name": "Logistics",
+        "esco_code": "1324.8",
+        "isco_group": 1324,
+        "query": "supply chain manager",
+        "ng_aliases": ["logistics manager", "logistics officer", "supply chain officer", "procurement officer"],
+        "match_terms": ["supply chain", "logistics", "procurement", "warehouse manager", "fleet"],
+    },
+    {
+        "role_key": "sales_representative",
+        "role_name": "commercial sales representative",
+        "area": "sales",
+        "domain_id": "D031",
+        "domain_name": "Sales",
+        "esco_code": "3322",
+        "isco_group": 3322,
+        "query": "sales representative",
+        "ng_aliases": ["sales executive", "sales officer", "business development officer", "marketer"],
+        "match_terms": ["sales representative", "sales executive", "sales officer", "business development",
+                        "account executive", "sales manager", "sales agent"],
+    },
+    {
+        "role_key": "hr_officer",
+        "role_name": "human resources officer",
+        "area": "HR",
+        "domain_id": "D029",
+        "domain_name": "Human Resources",
+        "esco_code": "2423.3",
+        "isco_group": 2423,
+        "query": "human resources officer",
+        "ng_aliases": ["HR officer", "HR manager", "people operations", "CIPM HR professional", "talent acquisition"],
+        "match_terms": ["human resources", "hr officer", "hr manager", "hr generalist", "people operations",
+                        "talent acquisition", "recruiter", "recruitment"],
+    },
+    {
+        "role_key": "lawyer",
+        "role_name": "lawyer",
+        "area": "legal",
+        "domain_id": "D037",
+        "domain_name": "Legal Practice",
+        "esco_code": "2611.1",
+        "isco_group": 2611,
+        "query": "lawyer",
+        "ng_aliases": ["legal practitioner", "barrister", "solicitor", "legal officer", "legal counsel"],
+        "match_terms": ["lawyer", "legal officer", "legal counsel", "attorney", "barrister", "solicitor",
+                        "legal associate", "paralegal", "company secretary"],
+    },
+    {
+        "role_key": "product_designer",
+        "role_name": "UI/UX designer",
+        "area": "product/design",
+        "domain_id": "D007",
+        "domain_name": "UI/UX Design",
+        "esco_code": "2513",
+        "isco_group": 2513,
+        "query": "product designer",
+        "ng_aliases": ["UI/UX designer", "UX designer", "UI designer", "interaction designer"],
+        "match_terms": ["product designer", "ux designer", "ui designer", "ui/ux", "ux/ui", "user experience",
+                        "user interface designer", "interaction designer"],
+    },
+]
+
+LENSES = ["global", "ng_remote", "ng_local"]
+
+if __name__ == "__main__":
+    for r in SAMPLE_ROLES:
+        print(f"{r['role_key']:24s} {r['area']:20s} {r['domain_id']} {r['domain_name']}")

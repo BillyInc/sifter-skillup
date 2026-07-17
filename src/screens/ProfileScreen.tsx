@@ -24,6 +24,9 @@ import { xpEngine, type XPSnapshot }      from '../lib/XPEngine';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
 import { useAuth } from '../hooks/useAuth';
 import { resolveTrackContext } from '../lib/trackContext';
+import { isAdminAccount } from '../lib/accountType';
+import { getEducatorProfile } from '../lib/educatorProfile';
+import { adminHomeForProfile } from '../lib/adminAudience';
 
 // ─── XP stage ring ─────────────────────────────────────────────────────────────
 
@@ -143,6 +146,8 @@ export default function ProfileScreen() {
   const { signOut, user } = useAuth();
   const go = useCallback((href: string) => navigation.push(href as any), [navigation]);
   const trackContext = React.useMemo(() => resolveTrackContext(user), [user]);
+  const isGuest = user?.auth_provider === 'guest';
+  const isAdmin = isAdminAccount(user?.account_type);
 
   const handleSignOut = useCallback(async () => {
     try {
@@ -151,6 +156,11 @@ export default function ProfileScreen() {
       navigation.replace('/(auth)');
     }
   }, [signOut, navigation]);
+
+  const handleAdminWorkspace = useCallback(async () => {
+    const profile = await getEducatorProfile();
+    go(adminHomeForProfile(profile));
+  }, [go]);
 
   const [xp, setXp]         = useState<XPSnapshot | null>(null);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
@@ -281,6 +291,22 @@ export default function ProfileScreen() {
                 <Text style={[styles.workspaceTitle, { color: colors.text }]}>{workspaceLabel}</Text>
                 <Text style={[styles.workspaceBody, { color: colors.textSoft }]}>{workspaceBody}</Text>
                 <WebDivider />
+                {isGuest ? (
+                  <AccountRow
+                    emoji="G"
+                    label="Guest session"
+                    sub="Explore is open; saves, notes and alerts require an account"
+                    onPress={() => go('/(auth)/signup')}
+                  />
+                ) : null}
+                {isAdmin ? (
+                  <AccountRow
+                    emoji="A"
+                    label="Admin workspace"
+                    sub="Organisation profile, team access, and guidance intelligence"
+                    onPress={handleAdminWorkspace}
+                  />
+                ) : null}
                 <AccountRow
                   emoji="P"
                   label="Portfolio"
@@ -422,6 +448,22 @@ export default function ProfileScreen() {
 
         {/* ── Portfolio + Account ── */}
         <SectionCard title="WORKSPACE + ACCOUNT">
+          {isGuest ? (
+            <AccountRow
+              emoji="G"
+              label="Guest session"
+              sub="Explore is open; saves, notes and alerts require an account"
+              onPress={() => go('/(auth)/signup')}
+            />
+          ) : null}
+          {isAdmin ? (
+            <AccountRow
+              emoji="A"
+              label="Admin workspace"
+              sub="Organisation profile, team access, and guidance intelligence"
+              onPress={handleAdminWorkspace}
+            />
+          ) : null}
           <AccountRow
             emoji="💼" label="Portfolio"
             sub="Artifacts, linked platforms, and proof of work"

@@ -12,6 +12,10 @@ export const exploreNav = {
   programme(router: Nav, programmeId: string) {
     router.push(`/(tabs)/explore/programme/${programmeId}` as never);
   },
+  compare(router: Nav, programmeIds: string[] = []) {
+    const ids = programmeIds.slice(0, 4).map(encodeURIComponent).join(",");
+    router.push(`/(tabs)/explore/compare${ids ? `?ids=${ids}` : ""}` as never);
+  },
   role(router: Nav, roleId: string) {
     router.push(`/(tabs)/explore/role/${roleId}` as never);
   },
@@ -44,6 +48,9 @@ export const exploreNav = {
   },
   charterships(router: Nav) {
     router.push("/(tabs)/explore/pathways/credentials" as never);
+  },
+  entrepreneurship(router: Nav) {
+    router.push("/(tabs)/explore/pathways/entrepreneurship" as never);
   },
 
   // ─── Phase 8: admission intelligence ─────────────────────────

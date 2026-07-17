@@ -168,12 +168,16 @@ if os.path.exists(csvpath):
     SQL.append(f"-- Programme × school cut-offs: {len(rows)} rows")
     for r in rows:
         conflict_id = uid("cutoff", r["school_name"], r["programme_name"], str(r["year"]), r["form"])
-        SQL.append(f"INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)")
-        SQL.append(f"SELECT {q(conflict_id)}, s.id, p.id, {num(r['year'])}, {num(r.get('aggregate_cutoff'))}, {num(r.get('jamb_cutoff'))}, {num(r.get('postutme_cutoff'))}, {q(r['form'])}, {q(r['source_url'])}")
+        SQL.append(f"INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)")
+        SQL.append(f"SELECT {q(conflict_id)}, s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = {q(r['programme_name'])} LIMIT 1), {num(r['year'])}, {num(r.get('aggregate_cutoff'))}, {num(r.get('jamb_cutoff'))}, {num(r.get('postutme_cutoff'))}, {q(r['form'])}, {q(r['source_url'])}")
         SQL.append(f"FROM skillup_dev.schools s, skillup_dev.programmes p")
         SQL.append(f"WHERE s.name = {q(r['school_name'])} AND p.name = {q(r['programme_name'])}")
-        SQL.append(f"ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;")
+        SQL.append(f"ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;")
     SQL.append("")
+    # backfill any legacy rows that predate the jamb_programme_id column
+    SQL.append("UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = j.id")
+    SQL.append("FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.name = p.name")
+    SQL.append("WHERE c.programme_id = p.id AND c.jamb_programme_id IS NULL;")
 
 # ── Course Competitiveness ──────
 csvpath = os.path.join(HERE, "_enrichment", "admission_competitiveness_2025.csv")
@@ -200,7 +204,12 @@ if os.path.exists(csvpath):
 
 # ── Enrichment version tracking ──────
 SQL.append("-- Enrichment version tracking")
-commit = os.popen("git rev-parse --short HEAD 2>/dev/null").read().strip() or "unknown"
+try:
+    import subprocess
+    commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True,
+                            text=True, cwd=HERE).stdout.strip() or "unknown"
+except OSError:
+    commit = "unknown"
 empty_jsonb = "'{}'::jsonb"
 SQL.append(f"INSERT INTO skillup_dev.enrichment_version (source_commit_hash, seed_name, rows_upserted, applied_at)")
 SQL.append(f"SELECT {q(commit)}, 'admission', (SELECT COUNT(*) FROM skillup_dev.programme_school_cutoff), NOW()")

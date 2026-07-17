@@ -1,0 +1,128 @@
+{
+  "source_title": "Nigeria Labour Force Survey Q4 2022 & Q1 2023 Report",
+  "pages_processed": 44,
+  "employment_stats": {
+    "q4_2022": {
+      "employment_to_population_ratio": 73.6,
+      "unemployment_rate": 5.3,
+      "underemployment_rate": 13.7,
+      "wage_employment_share": 13.4,
+      "self_employment_own_business_farming": 73.1,
+      "helping_in_household_business": 10.7,
+      "apprentice_intern": 2.6,
+      "informal_employment": 93.5,
+      "informal_excluding_agriculture": 90.9,
+      "out_of_labour_force": 22.3,
+      "potential_labour_force": 3.7,
+      "subsistence_farmers": 5.0,
+      "lu1_unemployment": 5.3,
+      "lu2_underemployment_plus_unemployment": 18.2,
+      "lu3_unemployment_plus_potential": 9.5,
+      "lu4_all_underutilisation": 21.9
+    },
+    "q1_2023": {
+      "employment_to_population_ratio": 76.6,
+      "unemployment_rate": 4.1,
+      "underemployment_rate": 12.2,
+      "wage_employment_share": 11.8,
+      "self_employment_own_business_farming": 75.4,
+      "helping_in_household_business": 10.5,
+      "apprentice_intern": 2.2,
+      "informal_employment": 92.6,
+      "informal_excluding_agriculture": 89.4,
+      "out_of_labour_force": 20.1,
+      "potential_labour_force": 2.3,
+      "subsistence_farmers": 3.6,
+      "lu1_unemployment": 4.1,
+      "lu2_underemployment_plus_unemployment": 15.8,
+      "lu3_unemployment_plus_potential": 6.7,
+      "lu4_all_underutilisation": 18.1
+    }
+  },
+  "hours_worked": {
+    "q4_2022": {
+      "40_plus_hours": 63.6,
+      "20_39_hours": 28.0,
+      "1_19_hours": 8.4
+    },
+    "q1_2023": {
+      "40_plus_hours": 66.8,
+      "20_39_hours": 26.1,
+      "1_19_hours": 7.1
+    }
+  },
+  "unemployment_by_demographics_q4_2022": {
+    "sex": {
+      "male": 4.0,
+      "female": 6.6
+    },
+    "education": {
+      "none": 3.9,
+      "primary": 3.9,
+      "junior_secondary": 5.2,
+      "upper_secondary": 6.0,
+      "post_secondary": 9.0
+    },
+    "age": {
+      "15_24": 8.3,
+      "25_34": 6.9,
+      "35_44": 3.5,
+      "45_54": 2.5,
+      "55_64": 1.6,
+      "65_plus": 1.7
+    },
+    "urban_rural": {
+      "urban": 6.3,
+      "rural": 4.0
+    }
+  },
+  "employment_by_status_q4_2022": {
+    "sex": {
+      "male_employee": 17.2,
+      "female_employee": 9.2,
+      "male_own_business": 69.6,
+      "female_own_business": 76.9
+    },
+    "education": {
+      "none_employee": 4.8,
+      "primary_employee": 7.7,
+      "junior_secondary_employee": 9.8,
+      "upper_secondary_employee": 15.5,
+      "post_secondary_employee": 44.3
+    },
+    "age": {
+      "15_24_employee": 10.2,
+      "25_34_employee": 13.9,
+      "35_44_employee": 16.6,
+      "45_54_employee": 15.7
+    },
+    "urban_rural": {
+      "urban_employee": 19.7,
+      "rural_employee": 6.0
+    }
+  },
+  "methodology_changes": [
+    "Working age population changed from 15-64 to 15 years and above",
+    "Employment threshold reduced from 20 hours to 1 hour per week",
+    "Underemployment threshold changed from 20-39 hours to less than 40 hours",
+    "Questionnaire updated from 13th ICLS to 19th ICLS model",
+    "Data collection changed from cross-sectional to continuous throughout the year",
+    "Sample increased from 33,300 to 35,520 households annually",
+    "Interview period extended from 17-21 days to 40 days per quarter"
+  ],
+  "comparison_with_regional_data": "Nigeria's unemployment rate of 4.1-5.3% is in line with the ILO modelled average for Western and Central Africa region (4.7% for 2022). The pattern of low unemployment but high poverty rates is similar to Nigeria's neighbours: Benin (1.8% unemployment, 19.9% poverty), Cameroon (4.1%, 25.7%), Ghana (3.9%, 25.2%), Chad (1.5%, 30.9%), Niger (0.7%, 50.6%).",
+  "key_findings": [
+    "About three-quarters of working-age Nigerians were employed (73.6% Q4 2022, 76.7% Q1 2023)",
+    "One-third of employed persons worked less than 40 hours per week",
+    "Unemployment rate: 5.3% (Q4 2022), 4.1% (Q1 2023)",
+    "Underemployment rate: 13.7% (Q4 2022), 12.2% (Q1 2023)",
+    "Over 92% of employed Nigerians are in informal employment",
+    "Wage employment is only 11.8-13.4% - most Nigerians are self-employed",
+    "Post-secondary educated have highest unemployment (9.0% Q4 2022) - seeking formal wage jobs",
+    "Youth (15-24) unemployment at 8.3% (Q4 2022), 6.9% (Q1 2023)",
+    "Urban unemployment (5.4-6.3%) higher than rural (2.9-4.0%)",
+    "Women face higher unemployment and underemployment than men",
+    "Working poor phenomenon is common - employment does not guarantee escaping poverty",
+    "Previous Q4 2020 methodology reported 33.3% unemployment - not comparable due to methodology changes"
+  ]
+}
