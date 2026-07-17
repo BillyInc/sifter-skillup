@@ -1,16 +1,17 @@
 /**
  * EducatorOnboarding — the institutional/administrator entry flow (Part 1, the
- * educator fork of onboarding). Mirrors OnboardingFlow's 3-step Stepper shape:
+ * educator fork of onboarding). Mirrors OnboardingFlow's Stepper shape:
  *
  *   Step 1  Your organisation   → OrganizationType + name + role
- *   Step 2  Verify              → work email / registry code (intent only)
- *   Step 3  Confirm             → summary → Enter dashboard
+ *   Step 2  Access code         → owner-issued admin-mode gate
+ *   Step 3  Verify              → work email / registry code (intent only)
+ *   Step 4  Confirm             → summary → Enter dashboard
  *
  * Finishing persists the educator profile locally (src/lib/educatorProfile.ts —
  * the seam to swap for a real endpoint later), flips the local account type so
  * routing sends them to the admin side, fires a (currently coming_soon)
  * verification submit, completes onboarding on the backend, then lands on
- * /(admin). Verification stays pending: we capture intent, not proof.
+ * /(admin). Access code is not proof; verification stays pending.
  */
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
@@ -128,6 +129,10 @@ export default function EducatorOnboarding() {
   const [role, setRole] = useState<OrgRole | undefined>();
   const [workEmail, setWorkEmail] = useState("");
   const [registryCode, setRegistryCode] = useState("");
+  const [accessCode, setAccessCode] = useState("");
+  const [accessGranted, setAccessGranted] = useState(false);
+  const [accessError, setAccessError] = useState<string | null>(null);
+  const [checkingAccess, setCheckingAccess] = useState(false);
   const [finishing, setFinishing] = useState(false);
 
   const back = () => setStep((s) => Math.max(1, s - 1));
@@ -138,9 +143,36 @@ export default function EducatorOnboarding() {
     setRole((prev) =>
       prev && ROLES_FOR[t].some((r) => r.value === prev) ? prev : undefined,
     );
+    setAccessGranted(false);
+    setAccessError(null);
   };
 
   const step1Ready = !!orgType && orgName.trim().length > 0 && !!role;
+
+  const validateAccessCode = async () => {
+    const code = accessCode.trim().toUpperCase();
+    if (!code) {
+      setAccessError("Enter the access code issued by the Sifter owner.");
+      return;
+    }
+    setCheckingAccess(true);
+    setAccessError(null);
+    try {
+      await adminData.validateAdminAccessCode({
+        code,
+        organizationType: orgType,
+        organizationName: orgName.trim(),
+      });
+      setAccessCode(code);
+      setAccessGranted(true);
+      setStep(3);
+    } catch (e) {
+      setAccessGranted(false);
+      setAccessError((e as Error)?.message ?? "Invalid or expired admin access code.");
+    } finally {
+      setCheckingAccess(false);
+    }
+  };
 
   const finish = async () => {
     if (!orgType || !role) return;
@@ -165,6 +197,8 @@ export default function EducatorOnboarding() {
       registryCode: registryCode.trim() || undefined,
       verificationStatus,
       verificationMethod,
+      adminAccessStatus: "owner_code",
+      adminAccessGrantedAt: new Date().toISOString(),
       completedAt: new Date().toISOString(),
       // Centres/cafés are provider/session only — captured for downstream gating.
       ...(isProviderSession(orgType) ? { providerSessionOnly: true } : {}),
@@ -195,7 +229,7 @@ export default function EducatorOnboarding() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <Stepper step={step} total={3} onBack={step > 1 ? back : undefined} />
+      <Stepper step={step} total={4} onBack={step > 1 ? back : undefined} />
 
       {/* ── Step 1: Your organisation ── */}
       {step === 1 ? (
@@ -253,6 +287,52 @@ export default function EducatorOnboarding() {
       {step === 2 ? (
         <View style={{ gap: Spacing.lg }}>
           <Text style={[styles.title, { color: colors.text }]}>
+            Enter admin access code
+          </Text>
+          <Text style={[styles.sub, { color: colors.textSoft }]}>
+            Institution and tutorial-centre dashboards are currently invite-only.
+            Request this code from the Sifter owner. This unlocks admin mode only;
+            it does not prove ownership or replace verification.
+          </Text>
+
+          <SearchField
+            label="Owner-issued admin access code"
+            value={accessCode}
+            onChangeText={(value) => {
+              setAccessCode(value.toUpperCase());
+              setAccessError(null);
+              setAccessGranted(false);
+            }}
+            placeholder="EDU-XXXX-XXXX-XXXX-XXXX"
+          />
+
+          {accessError ? (
+            <Text style={[styles.error, { color: colors.danger }]}>
+              {accessError}
+            </Text>
+          ) : null}
+
+          <Text style={[styles.note, { color: colors.textMuted }]}>
+            This is separate from student claim codes and school affiliation
+            codes. Students never use this code.
+          </Text>
+
+          <SifterButton
+            label="Unlock admin setup →"
+            onPress={validateAccessCode}
+            loading={checkingAccess}
+            variant="track"
+            color={Brand.primary}
+            size="lg"
+            fullWidth
+          />
+        </View>
+      ) : null}
+
+      {/* ── Step 3: Verify your institution ── */}
+      {step === 3 ? (
+        <View style={{ gap: Spacing.lg }}>
+          <Text style={[styles.title, { color: colors.text }]}>
             Verify your institution
           </Text>
           <Text style={[styles.sub, { color: colors.textSoft }]}>
@@ -285,7 +365,7 @@ export default function EducatorOnboarding() {
 
           <SifterButton
             label="Continue →"
-            onPress={() => setStep(3)}
+            onPress={() => setStep(4)}
             variant="track"
             color={Brand.primary}
             size="lg"
@@ -294,8 +374,8 @@ export default function EducatorOnboarding() {
         </View>
       ) : null}
 
-      {/* ── Step 3: Confirm ── */}
-      {step === 3 ? (
+      {/* ── Step 4: Confirm ── */}
+      {step === 4 ? (
         <View style={{ gap: Spacing.xl }}>
           <View style={{ gap: Spacing.xs }}>
             <Text style={[styles.title, { color: colors.text }]}>
@@ -336,6 +416,10 @@ export default function EducatorOnboarding() {
               />
             ) : null}
             <SummaryRow label="Access tier" value="National aggregate (pending verification)" />
+            <SummaryRow
+              label="Admin gate"
+              value={accessGranted ? "Owner code accepted" : "Code required"}
+            />
             {orgType && isProviderSession(orgType) ? (
               <SummaryRow label="Mode" value="Provider / session — no roster" />
             ) : null}
@@ -345,6 +429,7 @@ export default function EducatorOnboarding() {
             label="Enter dashboard →"
             onPress={finish}
             loading={finishing}
+            disabled={!accessGranted}
             variant="track"
             color={Brand.primary}
             size="lg"
@@ -384,6 +469,11 @@ const styles = StyleSheet.create({
   note: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
+  },
+  error: {
+    fontSize: FontSize.sm,
+    fontWeight: "700",
+    lineHeight: FontSize.sm * 1.4,
   },
   summary: {
     borderWidth: 1,

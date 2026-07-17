@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="home" href="https://hitmarker.net/" />
+    <link rel="canonical" href="https://hitmarker.net/" />
+    <title>Gaming &amp; Esports Jobs | Hitmarker</title>
+    <meta name="description" content="Hitmarker is the home of gaming and esports jobs. Find your dream career. Hire top talent. Make your mark." />
+    <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content="Hitmarker" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hitmarker.net/" />
+    <meta property="og:image" content="https://hitmarker.net/assets/hitmarker-og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:site" content="@HitmarkerJobs" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#101114" />
+
+    <script>
+      (() => {
+        const storageKey = 'hitmarker.theme';
+        const eventName = 'hitmarker:theme-change';
+        const colors = { dark: '#101114', light: '#eff1f5' };
+        const labels = { dark: 'Switch to light mode', light: 'Switch to dark mode' };
+
+        const isTheme = (value) => value === 'light' || value === 'dark';
+        const normalizeTheme = (value) => value === 'light' ? 'light' : 'dark';
+        const resolveTheme = (value) => isTheme(value) ? value : 'dark';
+
+        const getStoredTheme = () => {
+          try {
+            return localStorage.getItem(storageKey);
+          } catch {
+            return null;
+          }
+        };
+
+        const systemThemeQuery = typeof window.matchMedia === 'function'
+          ? window.matchMedia('(prefers-color-scheme: dark)')
+          : null;
+        const getSystemTheme = () => (systemThemeQuery && systemThemeQuery.matches ? 'dark' : 'light');
+
+        const getTheme = () => resolveTheme(document.documentElement.dataset.theme || getStoredTheme());
+
+        const setToggleLabels = (theme) => {
+          document.querySelectorAll('[data-theme-toggle]').forEach((toggle) => {
+            toggle.setAttribute('aria-label', labels[theme]);
+            toggle.setAttribute('title', labels[theme]);
+
+            const label = toggle.querySelector('[data-theme-toggle-label]');
+            if (label) {
+              label.textContent = labels[theme];
+            }
+          });
+        };
+
+        const setTheme = (value, options = {}) => {
+          const theme = normalizeTheme(value);
+          const persist = options.persist !== false;
+          const emit = options.emit !== false;
+
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+
+          const themeColor = document.querySelector('meta[name="theme-color"]');
+          if (themeColor) {
+            themeColor.setAttribute('content', colors[theme]);
+          }
+
+          if (persist) {
+            try {
+              localStorage.setItem(storageKey, theme);
+            } catch {}
+          }
+
+          setToggleLabels(theme);
+
+          if (emit) {
+            window.dispatchEvent(new CustomEvent(eventName, { detail: { theme } }));
+          }
+
+          return theme;
+        };
+
+        const toggleTheme = () => setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+
+        window.HitmarkerTheme = { getTheme, setTheme, toggleTheme };
+        setTheme(getStoredTheme() ?? getSystemTheme(), { persist: false, emit: false });
+
+        // Follow the device theme until the user makes a manual choice.
+        if (systemThemeQuery) {
+          const handleSystemChange = () => {
+            if (getStoredTheme() === null) {
+              setTheme(getSystemTheme(), { persist: false });
+            }
+          };
+
+          if (typeof systemThemeQuery.addEventListener === 'function') {
+            systemThemeQuery.addEventListener('change', handleSystemChange);
+          } else if (typeof systemThemeQuery.addListener === 'function') {
+            systemThemeQuery.addListener(handleSystemChange);
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+          setToggleLabels(getTheme());
+
+          document.addEventListener('click', (event) => {
+            const target = event.target instanceof Element ? event.target : event.target.parentElement;
+            const toggle = target?.closest('[data-theme-toggle]');
+            if (!toggle) return;
+
+            event.preventDefault();
+            toggleTheme();
+          });
+        });
+      })();
+    </script>
+
+        <script>
+      (function () {
+        var forced = window.location.search.match(/[?&]nav_variant=(a|b)(?:&|$)/);
+        var v = forced ? forced[1] : (document.cookie.match(/(?:^|;\s*)nav_ab=(a|b)(?:;|$)/) || [])[1];
+        if (!v) {
+          v = /bot|crawl|spider|slurp|bingpreview|lighthouse|headless|preview|monitor|gtmetrix|pingdom/i.test(navigator.userAgent)
+            ? 'a'
+            : (Math.random() < 0.5 ? 'a' : 'b');
+        }
+        document.cookie = 'nav_ab=' + v + '; path=/; max-age=2592000; SameSite=Lax';
+        document.documentElement.setAttribute('data-nav-ab', v);
+      })();
+    </script>
+    <style>
+      /* Nav bar A/B gate: default (no JS / no bucket) shows the control arm. */
+      html:not([data-nav-ab="b"]) .nav-ab-b { display: none !important; }
+      html[data-nav-ab="b"] .nav-ab-a { display: none !important; }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Condensed:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://hitmarker.net//dist/css-D01EKSoc.css" />
+
+    <link rel="icon" type="image/png" href="https://hitmarker.net/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://hitmarker.net/favicon.svg" />
+    <link rel="shortcut icon" href="https://hitmarker.net/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://hitmarker.net/apple-touch-icon.png" />
+    <link rel="manifest" href="https://hitmarker.net/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Hitmarker" />
+
+    
+          <script defer id="plausible-js" data-domain="hitmarker.net"
+                src="https://analytics.hitmarker.net/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js">
+      </script>
+      <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+            <script>
+        (function () {
+          var m = document.cookie.match(/(?:^|;\s*)hp_ab=(a|b)/);
+          if (!m) return;
+          var v = m[1];
+          var s = document.getElementById('plausible-js');
+          if (s) s.setAttribute('event-hp_variant', v);
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ hp_variant: v });
+        })();
+      </script>
+
+            <script>
+        (function () {
+          var m = document.cookie.match(/(?:^|;\s*)nav_ab=(a|b)/);
+          if (!m) return;
+          var v = m[1];
+          var s = document.getElementById('plausible-js');
+          if (s) s.setAttribute('event-nav_variant', v);
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ nav_variant: v });
+        })();
+      </script>
+
+            <script>
+        (function () {
+          var v = /(?:^|;\s*)hm_li=1(?:;|$)/.test(document.cookie) ? 'true' : 'false';
+          var s = document.getElementById('plausible-js');
+          if (s) s.setAttribute('event-logged_in', v);
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ logged_in: v });
+        })();
+      </script>
+
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-MVDTJ7GC');</script>
+
+      <script src="https://t.contentsquare.net/uxa/24af8ca37e68b.js"></script>
+    
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "Hitmarker",
+        "review": {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5"
+          },
+          "name": "Hitmarker",
+          "author": {
+            "@type": "Person",
+            "name": "Google"
+          },
+          "datePublished": "2025-01-01",
+          "reviewBody": "5 Stars",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Hitmarker"
+          }
+        }
+      }
+    </script>
+
+    <script type="module">!function(){const e=document.createElement("link").relList;if(!(e&&e.supports&&e.supports("modulepreload"))){for(const e of document.querySelectorAll('link[rel="modulepreload"]'))r(e);new MutationObserver((e=>{for(const o of e)if("childList"===o.type)for(const e of o.addedNodes)if("LINK"===e.tagName&&"modulepreload"===e.rel)r(e);else if(e.querySelectorAll)for(const o of e.querySelectorAll("link[rel=modulepreload]"))r(o)})).observe(document,{childList:!0,subtree:!0})}function r(e){if(e.ep)return;e.ep=!0;const r=function(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerpolicy&&(r.referrerPolicy=e.referrerpolicy),"use-credentials"===e.crossorigin?r.credentials="include":"anonymous"===e.crossorigin?r.credentials="omit":r.credentials="same-origin",r}(e);fetch(e.href,r)}}();</script>
+<script type="module" src="https://hitmarker.net//dist/timestamp-CboAZwNM.js" crossorigin onload="e=new CustomEvent(&#039;vite-script-loaded&#039;, {detail:{path: &#039;src/js/timestamp.js&#039;}});document.dispatchEvent(e);"></script>
+
+      <script type="module" src="https://hitmarker.net//dist/index-lPod3HbK.js" crossorigin onload="e=new CustomEvent(&#039;vite-script-loaded&#039;, {detail:{path: &#039;src/js/pages/index.js&#039;}});document.dispatchEvent(e);"></script>
+<link href="https://hitmarker.net//dist/htmrkr-DGwwKQd9.js" rel="modulepreload" crossorigin>
+<link href="https://hitmarker.net//dist/IndustryMap-DXVzluwF.js" rel="modulepreload" crossorigin>
+<link href="https://hitmarker.net//dist/_plugin-vue_export-helper-DlAUqK2U.js" rel="modulepreload" crossorigin>
+<link href="https://hitmarker.net//dist/companyData-seJgkm-w.js" rel="modulepreload" crossorigin>
+<link href="https://hitmarker.net//dist/useSearch-CWLbA66n.js" rel="modulepreload" crossorigin>
+<link href="https://hitmarker.net//dist/htmrkr-BHH8rdGj.css" rel="stylesheet" media="print" onload="this.media=&#039;all&#039;">
+  <script>
+    window.TSSK = "QjFTckNNRFBWR2JOWjBvMUdlWmpEMUlYUEJJNnNnTFV6dEcxQVhvb28rVT1YNHFieyJleGNsdWRlX2ZpZWxkcyI6InRvdGFsQ291bnQsYWx0U2VhcmNoVGVybXMsYXV0aG9yIiwibGltaXRfbXVsdGlfc2VhcmNoZXMiOjEwMDAwfQ==";
+  </script>
+  <style>  #spinner {
+    display:none;
+  }
+
+  #submit-btn.htmx-request #spinner {
+    display:flex;
+  }
+
+  #submit-btn.htmx-request span:first-of-type {
+    opacity:0;
+  }
+</style></head>
+  <body class="bg-alpha-1 font-sans text-alpha-9 text-sm antialiased">
+          <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MVDTJ7GC"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <div id="app">
+                
+<header class="nav-ab-a font-slab text-base font-medium uppercase border-b border-alpha-4 px-4 md:px-8 py-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-center justify-between">
+      <div class="inline-flex w-[4.25rem] lg:hidden">
+        <mobile-menu></mobile-menu>
+      </div>
+
+      <div class="inline-flex gap-x-8">
+        <a href="https://hitmarker.net/">
+          <img src="https://hitmarker.net/assets/hitmarker.svg" alt="Hitmarker" class="size-8">
+        </a>
+
+                <div class="hidden gap-x-8 lg:inline-flex">
+          <a href="https://hitmarker.net/jobs" class="plausible-event-name=Header+Nav+Click plausible-event-item=Jobs hover:text-brand inline-flex items-center">Jobs</a>
+          <a href="https://hitmarker.net/pro" class="plausible-event-name=Header+Nav+Click plausible-event-item=Hire hover:text-brand inline-flex items-center">Hire</a>
+          <a href="https://hitmarker.net/news" class="plausible-event-name=Header+Nav+Click plausible-event-item=News hover:text-brand inline-flex items-center">News</a>
+          <a href="https://hitmarker.net/gaming-ecosystem" class="plausible-event-name=Header+Nav+Click plausible-event-item=Ecosystem hover:text-brand inline-flex items-center">Ecosystem</a>
+        </div>
+      </div>
+
+      <div class="inline-flex w-[4.25rem] items-center justify-end gap-x-3 lg:w-auto lg:gap-x-8">
+                <div id="component-fnqmix" class="inline-flex" data-hx-target="this" data-hx-include="this" data-hx-trigger="load, refresh" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;4c4b9abadec890f7104078fcb3696a4366f7e28353babdd595eb733706450068component-fnqmix&quot;,&quot;sprig:component&quot;:&quot;6435e14059a74dd5f46b237e88cc8fe0725095741643900a4310796e9c87a99d&quot;,&quot;sprig:template&quot;:&quot;00ee4133c777c407c8dc91248de0c7635d840da3ccdf18de8e0ec5ea1a5fa5d5_includes\/sprig\/user-menu&quot;}" s-trigger="load, refresh"></div>
+      </div>
+    </div>
+  </div>
+</header>
+<header
+  class="nav-ab-b site-header font-slab text-base font-medium uppercase border-b border-alpha-4 px-4 md:px-8 py-4 sticky top-0 z-40"
+  data-scroll-header data-header-search>
+  <div class="header-inner max-w-7xl mx-auto">
+    <div class="relative flex items-center justify-between gap-x-4">
+      <div class="inline-flex w-[4.25rem] lg:hidden">
+        <mobile-menu></mobile-menu>
+      </div>
+
+      <div class="inline-flex items-center gap-x-8">
+        <a href="https://hitmarker.net/">
+          <img src="https://hitmarker.net/assets/hitmarker.svg" alt="Hitmarker" class="size-8">
+        </a>
+
+                <div class="header-nav hidden gap-x-8 lg:inline-flex">
+          <a href="https://hitmarker.net/jobs" class="plausible-event-name=Header+Nav+Click plausible-event-item=Jobs hover:text-brand inline-flex items-center">Jobs</a>
+          <a href="https://hitmarker.net/pro" class="plausible-event-name=Header+Nav+Click plausible-event-item=Hire hover:text-brand inline-flex items-center">Hire</a>
+          <a href="https://hitmarker.net/news" class="plausible-event-name=Header+Nav+Click plausible-event-item=News hover:text-brand inline-flex items-center">News</a>
+          <a href="https://hitmarker.net/gaming-ecosystem" class="plausible-event-name=Header+Nav+Click plausible-event-item=Ecosystem hover:text-brand inline-flex items-center">Ecosystem</a>
+        </div>
+      </div>
+
+                      <form action="https://hitmarker.net/jobs" method="get" class="header-search hidden lg:block" aria-label="Search jobs">
+          <div class="search-field flex items-center gap-2.5 rounded-full border border-alpha-4 bg-alpha-2 py-1.5 pl-5 pr-1.5 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
+            <svg class="flex-none size-4 text-alpha-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input type="text" name="keyword" inputmode="search" placeholder="Search jobs…" data-search-sync="defer" class="min-w-0 flex-1 font-sans text-sm normal-case placeholder:text-alpha-6">
+            <button type="submit" class="btn btn-fill flex-none rounded-full px-5 py-1.5 text-sm">Search</button>
+          </div>
+        </form>
+      
+      <div class="inline-flex w-[4.25rem] items-center justify-end gap-x-3 lg:w-auto lg:gap-x-8">
+                <div id="component-yfbshe" class="inline-flex" data-hx-target="this" data-hx-include="this" data-hx-trigger="load, refresh" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;343d85011aa9dfc4dff708de730942ca801841ca007b154a925d2fff9b058f14component-yfbshe&quot;,&quot;sprig:component&quot;:&quot;6435e14059a74dd5f46b237e88cc8fe0725095741643900a4310796e9c87a99d&quot;,&quot;sprig:template&quot;:&quot;00ee4133c777c407c8dc91248de0c7635d840da3ccdf18de8e0ec5ea1a5fa5d5_includes\/sprig\/user-menu&quot;,&quot;sprig:variables[scrollHeader]&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;}" s-trigger="load, refresh"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <div id="profiles-banner" class="bg-alpha-2 border-b border-alpha-4 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <a href="https://hitmarker.net/my-profile" class="group flex items-start gap-x-3 py-2">
+        <span class="relative mt-1.5 flex size-2 shrink-0" aria-hidden="true">
+          <span class="motion-reduce:hidden absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75"></span>
+          <span class="relative inline-flex size-2 rounded-full bg-brand"></span>
+        </span>
+
+        <span class="min-w-0">
+          <span class="text-brand font-bold">New: </span>
+          <span class="font-bold">Hitmarker Profiles.</span>
+          Turn your experience and skills into a profile that gets you hired.
+          <span class="group-hover:text-brand-hover text-brand font-bold whitespace-nowrap">
+            Create profile <span aria-hidden="true">&rarr;</span>
+          </span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="px-4 md:px-8 mt-6 md:mt-12">
+    <div class="max-w-7xl mx-auto">
+      <section class="relative overflow-hidden py-8 md:py-14">
+        <div id="hero-bg" class="pointer-events-none absolute inset-0" style="-webkit-mask-image: radial-gradient(ellipse 74% 76% at 50% 46%, #000 30%, transparent 82%); mask-image: radial-gradient(ellipse 74% 76% at 50% 46%, #000 30%, transparent 82%);">
+          <div class="absolute inset-0" style="background: radial-gradient(46% 58% at 30% 34%, rgba(255,88,0,.16), transparent 60%); animation: heroFloatA 16s ease-in-out infinite;"></div>
+          <div class="absolute inset-0" style="background: radial-gradient(46% 58% at 72% 38%, rgba(150,90,255,.12), transparent 60%); animation: heroFloatB 20s ease-in-out infinite;"></div>
+          <div class="absolute inset-0" style="background: radial-gradient(42% 52% at 52% 72%, rgba(255,70,140,.09), transparent 60%); animation: heroFloatC 24s ease-in-out infinite;"></div>
+          <div class="absolute inset-0" style="background-image: radial-gradient(var(--color-alpha-4) 1px, transparent 1px); background-size: 24px 24px; opacity: .4;"></div>
+        </div>
+        <div class="relative z-1 flex flex-col items-center text-center">
+          <div class="flex items-center text-brand font-semibold gap-x-2">
+            <svg class="flex-none size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            <span>6.4k+ active gaming jobs</span>
+          </div>
+          <h1 class="max-w-2xl text-3xl md:text-4xl lg:text-5xl font-bold text-balance mt-3">Find your next role in gaming</h1>
+          <p class="max-w-md text-alpha-7 text-lg text-balance mt-3">Search verified roles from the studios you know — curated 24/7 and built for gaming careers.</p>
+
+          <form data-condense-sentinel action="https://hitmarker.net/jobs" method="get" class="w-full max-w-xl mt-8">
+            <div class="search-field flex items-center gap-3 rounded-full border border-alpha-4 bg-alpha-1 py-2 pl-6 pr-2 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
+              <svg class="flex-none size-5 text-alpha-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" name="keyword" inputmode="search" aria-label="Search gaming jobs" placeholder="Job title, skill, or studio…" data-search-sync class="min-w-0 flex-1 text-base placeholder:text-alpha-6">
+              <button type="submit" class="btn btn-fill flex-none rounded-full px-7 py-3">Search</button>
+            </div>
+          </form>
+
+          <div class="flex flex-wrap items-center justify-center gap-2 mt-5">
+            <span class="text-sm text-alpha-6">Popular:</span>
+                          <a href="https://hitmarker.net/jobs?keyword=Game+Design" class="inline-flex rounded-full border border-alpha-4 px-3.5 py-1.5 text-sm hover:border-brand hover:text-brand">Game Design</a>
+                          <a href="https://hitmarker.net/jobs?keyword=Art" class="inline-flex rounded-full border border-alpha-4 px-3.5 py-1.5 text-sm hover:border-brand hover:text-brand">Art</a>
+                          <a href="https://hitmarker.net/jobs?keyword=Esports" class="inline-flex rounded-full border border-alpha-4 px-3.5 py-1.5 text-sm hover:border-brand hover:text-brand">Esports</a>
+                          <a href="https://hitmarker.net/jobs?keyword=Community" class="inline-flex rounded-full border border-alpha-4 px-3.5 py-1.5 text-sm hover:border-brand hover:text-brand">Community</a>
+                          <a href="https://hitmarker.net/jobs?keyword=Engineering" class="inline-flex rounded-full border border-alpha-4 px-3.5 py-1.5 text-sm hover:border-brand hover:text-brand">Engineering</a>
+                      </div>
+
+          <div class="text-sm text-alpha-6 mt-6">
+            Hiring? <a href="https://hitmarker.net/pro" class="text-brand font-semibold hover:text-brand-hover">Post a job &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative h-[480px] overflow-hidden border border-alpha-4 mt-8 md:mt-12">
+        <div class="absolute inset-0 bg-cover bg-center dark:hidden" style="background-image: url(https://hitmarker.net/assets/gaming-ecosystem-white.webp);"></div>
+        <div class="absolute inset-0 hidden bg-cover bg-center dark:block" style="background-image: url(https://hitmarker.net/assets/gaming-ecosystem.webp);"></div>
+        <div class="absolute inset-0" style="background: linear-gradient(to bottom, var(--color-alpha-1) 0%, transparent 15%, transparent 34%, var(--color-alpha-1) 54%, var(--color-alpha-1) 100%);"></div>
+        <div class="relative z-1 size-full flex flex-col justify-end p-6 text-alpha-9 md:p-8">
+          <div class="text-2xl sm:text-3xl font-bold mb-2">Gaming Ecosystem</div>
+          <div class="text-base sm:text-lg text-alpha-7 text-balance mb-4">Discover the complete landscape of gaming companies, esports teams, and creators. Navigate the interconnected world of gaming and find your next opportunity.</div>
+          <a class="sm:w-fit btn btn-fill" href="https://hitmarker.net/gaming-ecosystem">Explore the Ecosystem</a>
+        </div>
+      </section>
+
+      <section class="h-10 mt-8">
+        <clients></clients>
+      </section>
+
+      
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8">
+        <div class="relative flex flex-col overflow-hidden bg-alpha-2 border border-alpha-4 p-6 md:p-8">
+          <div class="absolute inset-x-0 top-0 h-1 bg-brand" aria-hidden="true"></div>
+          <div class="flex items-center gap-x-2 mb-3">
+            <svg class="size-5 text-brand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
+            <div class="font-slab text-brand font-medium uppercase">For candidates</div>
+          </div>
+          <div class="text-2xl sm:text-3xl font-bold mb-2">Build your career</div>
+          <p class="text-base text-alpha-7 text-balance mb-4">Verified roles from real companies, curated 24/7 and organised to help you find the right opportunity faster.</p>
+          <ul class="flex-auto space-y-3 mb-6">
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Discover real jobs from real companies</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>See gaming jobs from multiple sources in one place</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Save jobs, searches, and daily alerts</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Find fresh opportunities curated 24/7</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Use powerful filters built for gaming careers</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Discover roles you might have missed elsewhere</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Spend less time searching and more time applying</span>
+        </li>
+      
+          </ul>
+          <a href="https://hitmarker.net/jobs" class="btn btn-fill">Find a Job</a>
+        </div>
+        <div class="relative flex flex-col overflow-hidden bg-alpha-3 border border-alpha-4 p-6 md:p-8">
+          <div class="absolute inset-x-0 top-0 h-1 bg-alpha-9" aria-hidden="true"></div>
+          <div class="flex items-center gap-x-2 mb-3">
+            <svg class="size-5 text-alpha-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            <div class="font-slab text-alpha-9 font-medium uppercase">For companies</div>
+          </div>
+          <div class="text-2xl sm:text-3xl font-bold mb-2">Build your team</div>
+          <p class="text-base text-alpha-7 text-balance mb-4">Reach qualified talent, elevate your employer brand, and manage hiring from application to offer in one place.</p>
+          <ul class="flex-auto space-y-3 mb-6">
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Reach the largest gaming-native talent pool</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Extend your reach across Hitmarker, Indeed, LinkedIn, and more</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Get premium employer branding and a purpose-built ATS</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Manage candidates, feedback, and hiring stages in one place</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Use AI matching and automation to save time</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Trusted by leading gaming companies since 2017</span>
+        </li>
+      
+                    <li class="flex items-start gap-x-2">
+          <span class="flex-none inline-flex items-center">
+            <span>&ZeroWidthSpace;</span>
+            <svg class="size-4 text-emerald-700 dark:text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="square" stroke-width="2" d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span>Award-winning platform with world-class support</span>
+        </li>
+      
+          </ul>
+          <a href="https://hitmarker.net/pro" class="btn btn-fill bg-alpha-9 focus:ring-alpha-9">Start Hiring</a>
+        </div>
+      </section>
+
+      <section class="mt-8 md:mt-12 bg-alpha-2 border border-alpha-4">
+        <div class="flex flex-col items-center gap-6 p-6 text-center md:p-8 lg:flex-row lg:gap-10 lg:text-left">
+          <div class="flex-none aspect-square w-40 overflow-hidden rounded-full sm:w-48 lg:w-56">
+            <video class="size-full" src="/assets/hitmarker-wheel.webm" autoplay loop muted playsinline></video>
+          </div>
+          <div>
+            <div class="font-slab text-brand font-medium uppercase mb-2">Hitmarker Pro</div>
+            <div class="text-2xl sm:text-3xl font-bold text-balance mb-2">Post a job and hire the best in gaming</div>
+            <p class="max-w-xl text-base text-alpha-7 text-balance mb-5">Reach millions of gaming professionals with premium employer branding, a purpose-built ATS, and AI matching — the entire hiring process from application to offer. Trusted by leading gaming companies since 2017.</p>
+            <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center lg:justify-start">
+              <a href="https://hitmarker.net/pro" class="btn btn-fill sm:w-fit">Explore Pro plans</a>
+              <a href="https://hitmarker.net/credits" class="btn sm:w-fit">Post a job</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-8 md:mt-16">
+        
+
+
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-y-4">
+    <div class="text-center">
+    <div class="text-5xl text-brand font-black">350k</div>
+    <div class="font-slab text-base font-medium uppercase">Registered Candidates</div>
+  </div>
+
+    <div class="text-center">
+    <div class="text-5xl text-brand font-black">214k</div>
+    <div class="font-slab text-base font-medium uppercase">Jobs Posted</div>
+  </div>
+
+    <div class="text-center">
+    <div class="text-5xl text-brand font-black">8k</div>
+    <div class="font-slab text-base font-medium uppercase">Registered Companies</div>
+  </div>
+
+    <div class="text-center">
+    <div class="text-5xl text-brand font-black">2017</div>
+    <div class="font-slab text-base font-medium uppercase">Year Founded</div>
+  </div>
+
+</div>
+
+      </section>
+
+              <recommended-for-you surface="home"></recommended-for-you>
+      
+      <section class="mt-8 md:mt-16">
+        <div class="flex justify-between font-slab text-base font-medium uppercase mb-4 md:mb-2">
+          <div>Featured Jobs</div>
+          <a href="https://hitmarker.net/jobs" class="text-brand">More Jobs</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <a href="https://hitmarker.net/jobs/swish-breaks-customer-support-lead-1965740" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Customer Support Lead</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/2003289/1783875850_14cd2528e1.webp" alt="Swish Breaks logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Swish Breaks</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🇺🇸</span>
+    <span class="text-alpha-7 truncate">
+      New York, USA
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/build-a-rocket-gmbh-senior-sales-manager-m-f-d-1774615" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">(Senior) Sales Manager (m/f/d)</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1826822/1782980641_14cd2528e1.webp" alt="build a rocket GmbH logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">build a rocket GmbH</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🇩🇪</span>
+    <span class="text-alpha-7 truncate">
+      Cologne, NW, Germany
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/packsify-community-partner-manager-1767547" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Community &amp; Partner Manager</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+        <span class="text-alpha-7 truncate">Packsify</span>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🌎</span>
+    <span class="text-alpha-7 truncate">
+      Remote (Illinois), Remote (USA)
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/infernozilla-video-editor-short-form-content-creator-1518639" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Video editor/Short Form Content Creator</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/329402/1750434422_14cd2528e1.webp" alt="Infernozilla logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Infernozilla</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🌎</span>
+    <span class="text-alpha-7 truncate">
+      Remote (Anywhere)
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/aftershock-media-group-account-manager-influencer-marketing-1742395" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Account Manager, Influencer Marketing</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1293665/1750435503_14cd2528e1.webp" alt="Aftershock Media Group logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Aftershock Media Group</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🌎</span>
+    <span class="text-alpha-7 truncate">
+      Remote (Anywhere)
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/aftershock-media-group-account-coordinator-influencer-marketing-1742363" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Account Coordinator, Influencer Marketing</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1293665/1750435503_14cd2528e1.webp" alt="Aftershock Media Group logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Aftershock Media Group</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🌎</span>
+    <span class="text-alpha-7 truncate">
+      Remote (Anywhere)
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/warforge-studio-llc-senior-3d-character-artist-1741318" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Senior 3D Character Artist</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1741323/1781962818_14cd2528e1.webp" alt="WarForge Studio LLC logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">WarForge Studio LLC</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🌎</span>
+    <span class="text-alpha-7 truncate">
+      Remote (Anywhere)
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/mattel-data-analyst-liveops-digital-gaming-1739128" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Analyst, Mobile Gaming</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1636464/1770113243_14cd2528e1.webp" alt="Mattel logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Mattel</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🇺🇸</span>
+    <span class="text-alpha-7 truncate">
+      El Segundo, CA, USA
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/mattel-senior-manager-ad-ops-mattel-digital-studio-1739132" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Senior Manager, Ad Ops - Mattel Digital Studio</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1636464/1770113243_14cd2528e1.webp" alt="Mattel logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Mattel</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🇺🇸</span>
+    <span class="text-alpha-7 truncate">
+      El Segundo, CA, USA
+          </span>
+  </div>
+    </a>
+      <a href="https://hitmarker.net/jobs/mattel-lead-artist-digital-gaming-1636472" class="block bg-alpha-2 border border-alpha-4 hover:border-brand hover:ring-[.5px] hover:ring-brand p-4">
+      
+
+<div class="font-bold truncate mb-2">Lead Artist (Digital Gaming)</div>
+
+<div class="flex items-center gap-x-1.5 mb-2">
+      <img src="https://hitmarker.net/imager/company/logo/1636464/1770113243_14cd2528e1.webp" alt="Mattel logo" class="flex-none size-4.5 rounded-full" width="500" height="500">
+        <span class="text-alpha-7 truncate">Mattel</span>
+          <svg class="flex-none size-3.5 text-blue-500 -ml-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M13.228 1.534a1.681 1.681 0 0 0-2.458 0L9.14 3.277c-.332.355-.802.55-1.287.533l-2.384-.081a1.683 1.683 0 0 0-1.74 1.739l.082 2.386c.016.486-.178.955-.534 1.287l-1.744 1.63a1.682 1.682 0 0 0 0 2.458l1.744 1.63c.356.332.55.8.534 1.287l-.082 2.385a1.685 1.685 0 0 0 1.74 1.74l2.385-.081c.485-.017.955.177 1.287.532l1.63 1.744a1.682 1.682 0 0 0 2.459 0l1.63-1.744c.331-.355.8-.55 1.286-.532l2.385.08a1.68 1.68 0 0 0 1.74-1.739l-.08-2.386a1.682 1.682 0 0 1 .532-1.286l1.744-1.63a1.682 1.682 0 0 0 0-2.459l-1.744-1.63a1.68 1.68 0 0 1-.532-1.287l.08-2.385a1.684 1.684 0 0 0-1.74-1.74l-2.385.083a1.692 1.692 0 0 1-1.287-.534l-1.631-1.743ZM6.42 12.495l4.013 4.012 6.65-7.263-1.576-1.459-5.149 5.611-2.425-2.424-1.513 1.523Z" clip-rule="evenodd"/></svg>
+      </div>
+
+      
+  <div class="flex items-center gap-x-1.5">
+    <span v-twemoji class="flex-none size-4.5">🇺🇸</span>
+    <span class="text-alpha-7 truncate">
+      El Segundo, CA, USA
+          </span>
+  </div>
+    </a>
+  </div>
+
+      </section>
+
+      <section class="mt-8 md:mt-16">
+        <div class="flex justify-between font-slab text-base font-medium uppercase mb-4 md:mb-2">
+          <div>Latest News</div>
+          <a href="https://hitmarker.net/news" class="text-brand">More News</a>
+        </div>
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 divide-y md:divide-y-0 divide-alpha-4 md:gap-x-4 md:gap-y-6">
+      <li class="lg:last-of-type:hidden xl:last-of-type:block py-4 md:py-0 first:pt-0 last:pb-0">
+      <a href="https://hitmarker.net/news/fromsoftwares-switch-2-exclusive-the-duskbloods-now-has-a-network-test-date-2309576" class="flex md:flex-col items-start hover:text-brand">
+        <div class="flex-none w-24 sm:w-auto md:w-full sm:basis-1/3">
+                      <img src="https://hitmarker.net/imager/news/2310035/1784132041_b0464c6958.webp" alt="FromSoftware&#039;s Switch 2 exclusive The Duskbloods now has a network test date" width="1280" height="720" class="aspect-[1/1] sm:aspect-auto object-cover w-full">
+                  </div>
+        <div class="flex-auto sm:basis-2/3 md:mt-2 ml-3 md:ml-0">
+          <div class="text-base font-bold leading-tight text-balance">FromSoftware&#039;s Switch 2 exclusive The Duskbloods now has a network test date</div>
+          <div class="text-xs text-alpha-7 mt-2"><div id="component-fjpewz" class="sprig-component" data-hx-target="this" data-hx-include="this" data-hx-trigger="load" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;1f3605dea920ad4842449aa02e5b062790ae9fc0b56647810d2498a11b8579ffcomponent-fjpewz&quot;,&quot;sprig:component&quot;:&quot;6435e14059a74dd5f46b237e88cc8fe0725095741643900a4310796e9c87a99d&quot;,&quot;sprig:template&quot;:&quot;fdb13414c469893005b5fab9f12de36531f979330b2b8b2feee6b82610e4e231_includes\/sprig\/timestamp&quot;,&quot;sprig:variables[date]&quot;:&quot;cc729366ed89e4e2be7d9313ff2e559733e202ba4f93d71f857ac89e6f5c8dc82026-07-15T17:14:00+01:00&quot;,&quot;sprig:variables[hideTime]&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;}" s-trigger="load"><time data-datetime="2026-07-15T17:14:00+01:00" data-hide-time></time>
+</div></div>
+        </div>
+      </a>
+    </li>
+      <li class="lg:last-of-type:hidden xl:last-of-type:block py-4 md:py-0 first:pt-0 last:pb-0">
+      <a href="https://hitmarker.net/news/a-nintendo-switch-2-oled-model-is-reportedly-in-early-discussions-with-samsung-pushing-for-the-deal-2258008" class="flex md:flex-col items-start hover:text-brand">
+        <div class="flex-none w-24 sm:w-auto md:w-full sm:basis-1/3">
+                      <img src="https://hitmarker.net/imager/news/1546766/1760716247_b0464c6958.webp" alt="A Nintendo Switch 2 OLED model is reportedly in early discussions, with Samsung pushing for the deal" width="1280" height="720" class="aspect-[1/1] sm:aspect-auto object-cover w-full">
+                  </div>
+        <div class="flex-auto sm:basis-2/3 md:mt-2 ml-3 md:ml-0">
+          <div class="text-base font-bold leading-tight text-balance">A Nintendo Switch 2 OLED model is reportedly in early discussions, with Samsung pushing for the deal</div>
+          <div class="text-xs text-alpha-7 mt-2"><div id="component-mhfogx" class="sprig-component" data-hx-target="this" data-hx-include="this" data-hx-trigger="load" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;367131bb0cb705c45c11aee9e7f1aaf0a3cb39e54f9c621aa5e05add1855738fcomponent-mhfogx&quot;,&quot;sprig:component&quot;:&quot;6435e14059a74dd5f46b237e88cc8fe0725095741643900a4310796e9c87a99d&quot;,&quot;sprig:template&quot;:&quot;fdb13414c469893005b5fab9f12de36531f979330b2b8b2feee6b82610e4e231_includes\/sprig\/timestamp&quot;,&quot;sprig:variables[date]&quot;:&quot;a0ec0e8a068559ce9882749306a64a6f082ba1a20e89c3205f0834ba5c1ef9f02026-07-15T14:52:00+01:00&quot;,&quot;sprig:variables[hideTime]&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;}" s-trigger="load"><time data-datetime="2026-07-15T14:52:00+01:00" data-hide-time></time>
+</div></div>
+        </div>
+      </a>
+    </li>
+      <li class="lg:last-of-type:hidden xl:last-of-type:block py-4 md:py-0 first:pt-0 last:pb-0">
+      <a href="https://hitmarker.net/news/new-survey-finds-every-japanese-online-game-developer-is-now-using-generative-ai-2236495" class="flex md:flex-col items-start hover:text-brand">
+        <div class="flex-none w-24 sm:w-auto md:w-full sm:basis-1/3">
+                      <img src="https://hitmarker.net/imager/news/2237872/1784107831_b0464c6958.webp" alt="New survey finds every Japanese online game developer is now using generative AI" width="1280" height="720" class="aspect-[1/1] sm:aspect-auto object-cover w-full">
+                  </div>
+        <div class="flex-auto sm:basis-2/3 md:mt-2 ml-3 md:ml-0">
+          <div class="text-base font-bold leading-tight text-balance">New survey finds every Japanese online game developer is now using generative AI</div>
+          <div class="text-xs text-alpha-7 mt-2"><div id="component-xofdqa" class="sprig-component" data-hx-target="this" data-hx-include="this" data-hx-trigger="load" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;b4e7472ad001bbecb3dbc4dd719b2a1c0b5eeb5965f55cfea122996fcc4be848component-xofdqa&quot;,&quot;sprig:component&quot;:&quot;6435e14059a74dd5f46b237e88cc8fe0725095741643900a4310796e9c87a99d&quot;,&quot;sprig:template&quot;:&quot;fdb13414c469893005b5fab9f12de36531f979330b2b8b2feee6b82610e4e231_includes\/sprig\/timestamp&quot;,&quot;sprig:variables[date]&quot;:&quot;d6e9a9b5faf16ca145bc415a0abd90970706c9a0c6acf190d565f248a271c5de2026-07-15T10:33:00+01:00&quot;,&quot;sprig:variables[hideTime]&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;}" s-trigger="load"><time data-datetime="2026-07-15T10:33:00+01:00" data-hide-time></time>
+</div></div>
+        </div>
+      </a>
+    </li>
+      <li class="lg:last-of-type:hidden xl:last-of-type:block py-4 md:py-0 first:pt-0 last:pb-0">
+      <a href="https://hitmarker.net/news/disney-has-announced-a-kingdom-hearts-panel-at-d23-and-fans-think-a-kingdom-hearts-4-update-is-coming-2132606" class="flex md:flex-col items-start hover:text-brand">
+        <div class="flex-none w-24 sm:w-auto md:w-full sm:basis-1/3">
+                      <img src="https://hitmarker.net/imager/news/1733462/1781021927_b0464c6958.webp" alt="Disney has announced a Kingdom Hearts panel at D23, and fans think a Kingdom Hearts 4 update is coming" width="1280" height="720" class="aspect-[1/1] sm:aspect-auto object-cover w-full">
+                  </div>
+        <div class="flex-auto sm:basis-2/3 md:mt-2 ml-3 md:ml-0">
+          <div class="text-base font-bold leading-tight text-balance">Disney has announced a Kingdom Hearts panel at D23, and fans think a Kingdom Hearts 4 update is coming</div>
+          <div class="text-xs text-alpha-7 mt-2"><div id="component-qokrcs" class="sprig-component" data-hx-target="this" data-hx-include="this" data-hx-trigger="load" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;caa3b156ff807884ab77e426dc5023989f2a5d7e74e7fe463f8df85ad73298ffcomponent-qokrcs&quot;,&quot;sprig:component&quot;:&quot;6435e14059a74dd5f46b237e88cc8fe0725095741643900a4310796e9c87a99d&quot;,&quot;sprig:template&quot;:&quot;fdb13414c469893005b5fab9f12de36531f979330b2b8b2feee6b82610e4e231_includes\/sprig\/timestamp&quot;,&quot;sprig:variables[date]&quot;:&quot;127ca4ce4cbd4d967e42ea8d69fb6e4ae6bc329fb4ff34db4a4f5ae60ec753902026-07-14T15:51:00+01:00&quot;,&quot;sprig:variables[hideTime]&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;}" s-trigger="load"><time data-datetime="2026-07-14T15:51:00+01:00" data-hide-time></time>
+</div></div>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+      </section>      
+    </div>
+  </div>
+
+  <footer class="border-t border-alpha-4 px-4 md:px-8 py-10 mt-16 md:mt-28">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-wrap items-center gap-3 mb-5">
+      <a target="_blank" rel="nofollow noopener" href="https://linkedin.com/company/Hitmarker" class="btn btn-sm h-9 px-2">
+        <span class="sr-only">LinkedIn</span>
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"><path fill="currentColor" d="M18.5 0h-17A1.5 1.5 0 0 0 0 1.5v17A1.5 1.5 0 0 0 1.5 20h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 18.5 0ZM6 17H3V8h3v9ZM4.5 6.25A1.75 1.75 0 1 1 6.3 4.5a1.78 1.78 0 0 1-1.8 1.75ZM17 17h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 11 12.19a.655.655 0 0 0 0 .14V17H8V8h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66L17 17Z"/></svg>
+      </a>
+      <a target="_blank" rel="nofollow noopener" href="https://twitter.com/HitmarkerJobs" class="btn btn-sm h-9 px-2">
+        <span class="sr-only">Twitter</span>
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"><g clip-path="url(#a)"><path fill="currentColor" d="M15.751.96h3.067l-6.7 7.659L20 19.039h-6.172l-4.833-6.32-5.531 6.32H.394l7.167-8.19L0 .96h6.328l4.37 5.777L15.75.96Zm-1.076 16.243h1.7L5.404 2.7H3.58l11.094 14.503Z"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h20v20H0z"/></clipPath></defs></svg>
+      </a>
+
+      <div class="w-full sm:w-auto sm:ml-1">
+        <div id="component-rgtnas" class="sprig-component" data-hx-target="this" data-hx-include="this" data-hx-trigger="refresh" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render" data-hx-vals="{&quot;sprig:siteId&quot;:&quot;55d1ccef433adf8ca8bed3437e9c2755746e61184bf275b0e56dcb4312c7b5c81&quot;,&quot;sprig:id&quot;:&quot;a8544cc3568f8534f9b0bdddf7dca36e1faf7fd5fb30eb8e0c2af9192cce46b6component-rgtnas&quot;,&quot;sprig:component&quot;:&quot;7e8d62b0664d86a8633dacf43999bbe77dc02e65cdf29b88e835920caaa54be8NewsletterForm&quot;}">
+
+<form class="flex items-center" sprig s-action="subscribe" s-indicator="#submit-btn" data-hx-get="https://hitmarker.net/index.php/actions/sprig-core/components/render?sprig%3Aaction=4f90b888b7758d503121631b9fac98b261761cadfcc4a21c76f83e8b3abc40d3subscribe" data-hx-indicator="#submit-btn" data-sprig-parsed>
+  <span class="mr-3 whitespace-nowrap font-semibold">Join our newsletter</span>
+
+  <label for="email" class="sr-only">Email Address</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    autocomplete="email"
+    placeholder="Enter your email"
+    class="input-text h-9 rounded-r-none focus:z-[2]"
+    required
+    value=""
+  />
+
+  <button id="submit-btn" type="submit" class="btn btn-fill relative -ml-px h-9 flex-none rounded-l-none px-4 text-xs font-bold">
+    <span>Sign up</span>
+    <span id="spinner" class="absolute inset-0 flex items-center justify-center">
+      <svg class="w-5 h-5 text-current" fill="currentColor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="5.254998207092285 5.168999671936035 29.89200210571289 29.89200210571289" xml:space="preserve" aria-hidden="true"><path opacity="0.2" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path><path d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0 C22.32,8.481,24.301,9.057,26.013,10.047z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform></path></svg>
+    </span>
+  </button>
+</form>
+
+
+</div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div class="flex flex-wrap text-xs text-alpha-7 gap-2">
+        <span>&copy; 2026 Hitmarker LTD</span>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/jobs" class="hover:underline">Find a Job</a>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/pro" class="hover:underline">Post a Job</a>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/about" class="hover:underline">About</a>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/contact" class="hover:underline">Contact</a>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/terms" class="hover:underline">Terms & Conditions</a>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/privacy" class="hover:underline">Privacy Policy</a>
+        <span>&middot;</span>
+        <a href="https://hitmarker.net/cookies" class="hover:underline">Cookie Policy</a>
+      </div>
+
+      <theme-toggle>
+        <button
+          type="button"
+          data-theme-toggle
+          class="inline-flex size-7 items-center justify-center hover:text-brand focus:outline-none focus-visible:ring-[1.5px] focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-alpha-1"
+          aria-label="Switch to light mode"
+          title="Switch to light mode"
+        >
+          <span class="sr-only" data-theme-toggle-label>Switch to light mode</span>
+          <svg
+            data-theme-icon="light"
+            class="size-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="m4.93 4.93 1.41 1.41" />
+            <path d="m17.66 17.66 1.41 1.41" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="m6.34 17.66-1.41 1.41" />
+            <path d="m19.07 4.93-1.41 1.41" />
+          </svg>
+          <svg
+            data-theme-icon="dark"
+            class="size-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+          >
+            <path d="M12 3a6.75 6.75 0 0 0 8.55 8.55A8.25 8.25 0 1 1 12 3Z" />
+          </svg>
+        </button>
+      </theme-toggle>
+    </div>
+  </div>
+</footer>
+        <alerts></alerts>
+      <require-login v-if="!currentUser.loading && !currentUser.data"></require-login>
+      <user-menu v-if="!currentUser.loading && currentUser.data"></user-menu>
+    </div>
+
+    <noscript>
+      <div class="pointer-events-none fixed bottom-0 left-0 z-20 w-full px-6 pb-6">
+        <div class="pointer-events-auto flex w-full sm:max-w-sm bg-rose-950 gap-x-2.5 p-4">
+          <svg class="flex-none size-5 text-rose-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+          <div>Enable JavaScript to use Hitmarker</div>
+        </div>
+      </div>
+    </noscript>
+  <script src="https://hitmarker.net/cpresources/75601382/htmx.min.js?v=1771580514"></script></body>
+</html>

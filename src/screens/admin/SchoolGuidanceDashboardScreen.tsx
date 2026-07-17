@@ -31,15 +31,15 @@ const CARDS: GuidanceCard[] = [
     note: "Which university programmes can lead toward specific roles.",
   },
   {
-    label: "Demand lens",
-    value: "NG / Global / Remote",
-    note: "Demand context for domains and roles students are considering.",
+    label: "School comparison",
+    value: "Compare two schools",
+    note: "Check two universities or programmes side by side for student guidance.",
   },
 ];
 
 const PATHWAY_ROWS = [
   ["Pick a domain", "Start from Science, Art or Commercial interests."],
-  ["Compare universities", "See programmes and likely routes by institution."],
+  ["Compare universities", "Check two schools or programmes; this is not a peer benchmark of your own school."],
   ["Shortlist roles", "Connect programmes to roles and demand signals."],
 ];
 

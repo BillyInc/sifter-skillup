@@ -67,9 +67,32 @@ def _users():
 def _resolve_school_id(current_user: dict) -> Optional[str]:
     """The school the current admin/educator administers, via institution_members."""
     try:
-        res = _svc().table("institution_members").select("school_id").eq(
-            "user_id", current_user["id"]
-        ).limit(1).execute()
+        res = (
+            _svc()
+            .table("institution_members")
+            .select("school_id")
+            .eq("user_id", current_user["id"])
+            .neq("seat_status", "revoked")
+            .order("verified", desc=True)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        if res.data:
+            return res.data[0]["school_id"]
+    except Exception as exc:  # noqa: BLE001
+        log.warning("provisioning: active school lookup skipped", error=str(exc))
+    try:
+        res = (
+            _svc()
+            .table("institution_members")
+            .select("school_id")
+            .eq("user_id", current_user["id"])
+            .order("verified", desc=True)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
         if res.data:
             return res.data[0]["school_id"]
     except Exception as exc:  # noqa: BLE001

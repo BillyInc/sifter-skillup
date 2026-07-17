@@ -60,6 +60,13 @@ export function DetailScaffold<T>({
 }: DetailScaffoldProps<T>) {
   const router = useRouter();
   const { colors } = useTheme();
+  const goBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/(tabs)/explore" as never);
+    }
+  };
 
   return (
     <ScrollView
@@ -69,7 +76,7 @@ export function DetailScaffold<T>({
     >
       <View style={styles.topRow}>
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={goBack}
           hitSlop={10}
           style={styles.back}
         >

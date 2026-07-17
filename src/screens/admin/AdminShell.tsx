@@ -84,18 +84,18 @@ function navGroupsFor(
         ],
       },
       {
-        title: "Drill-downs",
+        title: "Market intelligence",
         items: [
           {
             key: "domain-intelligence",
-            label: "Domains",
+            label: "Domain lens",
             icon: "🧭",
             match: "domain-intelligence",
             go: (n) => adminNav.domainIntelligence(n),
           },
           {
             key: "role-demand",
-            label: "Roles",
+            label: "Role value",
             icon: "💼",
             match: "role-demand",
             go: (n) => adminNav.roleDemand(n),
@@ -120,6 +120,13 @@ function navGroupsFor(
         title: "Setup",
         items: [
           {
+            key: "profile",
+            label: "Profile + team",
+            icon: "◎",
+            match: "profile",
+            go: (n) => adminNav.profile(n),
+          },
+          {
             key: "verify",
             label: "Verification",
             icon: "✅",
@@ -141,7 +148,7 @@ function navGroupsFor(
   const providerOnly = Boolean(profile?.providerSessionOnly);
   return [
     {
-      title: "Guidance",
+      title: "Guidance intelligence",
       items: [
         {
           key: "guidance",
@@ -149,6 +156,34 @@ function navGroupsFor(
           icon: "🧭",
           match: "guidance",
           go: (n) => adminNav.guidanceDashboard(n),
+        },
+        {
+          key: "domain-intelligence",
+          label: "Domain lens",
+          icon: "◈",
+          match: "domain-intelligence",
+          go: (n) => adminNav.domainIntelligence(n),
+        },
+        {
+          key: "role-demand",
+          label: "Role value",
+          icon: "▤",
+          match: "role-demand",
+          go: (n) => adminNav.roleDemand(n),
+        },
+        {
+          key: "skills-gap",
+          label: "Learning gaps",
+          icon: "▦",
+          match: "skills-gap",
+          go: (n) => adminNav.skillsGap(n),
+        },
+        {
+          key: "trends",
+          label: "Trends",
+          icon: "↗",
+          match: "trends",
+          go: (n) => adminNav.trends(n),
         },
         providerOnly
           ? {
@@ -164,13 +199,19 @@ function navGroupsFor(
               icon: "👥",
               match: "students",
               go: (n) => adminNav.students(n),
-              locked: true,
             },
       ],
     },
     {
       title: "Setup",
       items: [
+        {
+          key: "profile",
+          label: "Profile + team",
+          icon: "◎",
+          match: "profile",
+          go: (n) => adminNav.profile(n),
+        },
         {
           key: "verify",
           label: "Verification",
@@ -216,6 +257,7 @@ export function AdminShell({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const audience = adminAudienceForProfile(profile);
   const navGroups = navGroupsFor(audience, profile);
+  const homeMatch = audience === "university" ? "dashboard" : "guidance";
 
   useEffect(() => {
     let active = true;
@@ -236,6 +278,18 @@ export function AdminShell({
     }
     return audience === "university" ? "dashboard" : "guidance";
   })();
+  const isHome = activeKey === homeMatch;
+  const goBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    if (audience === "university") {
+      adminNav.dashboard(router as Nav);
+    } else {
+      adminNav.guidanceDashboard(router as Nav);
+    }
+  };
 
   const navigate = (item: AdminNavItem) => {
     setDrawerOpen(false);
@@ -284,6 +338,19 @@ export function AdminShell({
               accessibilityLabel="Open navigation"
             >
               <Text style={[styles.menuIcon, { color: colors.text }]}>☰</Text>
+            </TouchableOpacity>
+          ) : null}
+
+          {!isHome ? (
+            <TouchableOpacity
+              onPress={goBack}
+              hitSlop={10}
+              style={[styles.backBtn, { borderColor: colors.border }]}
+              accessibilityLabel="Go back"
+            >
+              <Text style={[styles.backText, { color: colors.text }]}>
+                Back
+              </Text>
             </TouchableOpacity>
           ) : null}
 
@@ -486,6 +553,15 @@ const styles = StyleSheet.create({
   },
   menuBtn: { paddingVertical: 2, paddingHorizontal: 2 },
   menuIcon: { fontSize: 22, fontWeight: FontWeight.black },
+  backBtn: {
+    minHeight: 34,
+    borderWidth: 1,
+    borderRadius: Radius.md,
+    paddingHorizontal: Spacing.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  backText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   titleWrap: { flex: 1, gap: 1 },
   eyebrow: {
     fontSize: FontSize.xs,

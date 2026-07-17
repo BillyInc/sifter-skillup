@@ -11,7 +11,7 @@
  * - Individual student reads return `locked` (consent-gated) by design — they
  *   do not become `coming_soon`; they stay locked until consent exists.
  */
-import { type DataState, comingSoon, locked } from "../types/career";
+import { type DataState, comingSoon, locked, real } from "../types/career";
 import { request } from "./api";
 import type {
   InstitutionSummary,
@@ -26,7 +26,22 @@ import type {
   Organization,
   EducatorProfile,
   AffiliationStats,
+  OrganizationTeam,
+  OrganizationInvite,
+  OrgRole,
 } from "../types/institution";
+
+function fromApi<T>(value: T | DataState<T>): DataState<T> {
+  if (
+    value &&
+    typeof value === "object" &&
+    "status" in value &&
+    "data" in value
+  ) {
+    return value as DataState<T>;
+  }
+  return real(value as T);
+}
 
 // Flip per-area as real institutional data is wired (kept here so screens can
 // branch without importing backend details). All false in this phase.
@@ -46,7 +61,7 @@ export const adminData = {
   /** The current educator's organisation (claim + verification status). */
   async getMyOrganization(): Promise<DataState<Organization>> {
     try {
-      return await request<DataState<Organization>>(`/api/institutions/me`);
+      return fromApi(await request<Organization | DataState<Organization>>(`/api/institutions/me`));
     } catch {
       return comingSoon<Organization>("Your institution profile is being loaded.");
     }
@@ -57,12 +72,59 @@ export const adminData = {
     payload: Partial<EducatorProfile>,
   ): Promise<DataState<Organization>> {
     try {
-      return await request<DataState<Organization>>(`/api/institutions/verify`, {
+      return fromApi(await request<Organization | DataState<Organization>>(`/api/institutions/verify`, {
         method: "POST",
         body: JSON.stringify(payload),
-      });
+      }));
     } catch {
       return comingSoon<Organization>("Verification submission is temporarily unavailable.");
+    }
+  },
+
+  /** Validate the owner-issued code required before entering admin mode. */
+  async validateAdminAccessCode(payload: {
+    code: string;
+    organizationType?: string;
+    organizationName?: string;
+  }): Promise<{ accepted: boolean; accessTier: "owner_code"; notice?: string }> {
+    return request<{ accepted: boolean; accessTier: "owner_code"; notice?: string }>(
+      `/api/institutions/access-code/validate`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          code: payload.code,
+          organization_type: payload.organizationType,
+          organization_name: payload.organizationName,
+        }),
+      },
+    );
+  },
+
+  /** Organisation profile + staff seats for the current admin context. */
+  async getOrganizationTeam(): Promise<DataState<OrganizationTeam>> {
+    try {
+      return fromApi(await request<OrganizationTeam | DataState<OrganizationTeam>>(`/api/institutions/me/team`));
+    } catch {
+      return comingSoon<OrganizationTeam>(
+        "Organisation team access comes online with the verification rollout.",
+      );
+    }
+  },
+
+  /** Invite another official into the same institution/school/tutorial workspace. */
+  async inviteOrganizationMember(payload: {
+    invitedEmail: string;
+    role: OrgRole;
+  }): Promise<DataState<OrganizationInvite>> {
+    try {
+      return fromApi(await request<OrganizationInvite | DataState<OrganizationInvite>>(`/api/institutions/me/invites`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }));
+    } catch {
+      return comingSoon<OrganizationInvite>(
+        "Team invitations come online with the verification rollout.",
+      );
     }
   },
 
@@ -70,7 +132,7 @@ export const adminData = {
   /** The five boardroom stat-card numbers for the institution. */
   async getInstitutionSummary(): Promise<DataState<InstitutionSummary>> {
     try {
-      return await request<DataState<InstitutionSummary>>(`/api/institutions/me/summary`);
+      return fromApi(await request<InstitutionSummary | DataState<InstitutionSummary>>(`/api/institutions/me/summary`));
     } catch {
       return comingSoon<InstitutionSummary>("Institution intelligence is being populated.");
     }
@@ -82,9 +144,9 @@ export const adminData = {
   ): Promise<DataState<ProgrammeDemandRow[]>> {
     try {
       const qs = new URLSearchParams(filter as any).toString();
-      return await request<DataState<ProgrammeDemandRow[]>>(
+      return fromApi(await request<ProgrammeDemandRow[] | DataState<ProgrammeDemandRow[]>>(
         `/api/institutions/me/programme-demand${qs ? `?${qs}` : ""}`,
-      );
+      ));
     } catch {
       return comingSoon<ProgrammeDemandRow[]>(
         "Programme-domain-demand data is being populated.",
@@ -92,14 +154,14 @@ export const adminData = {
     }
   },
 
-  /** Domains ranked by posting volume (Nigerian / Global / Remote). */
+  /** Domains ranked by the selected market lens (Nigerian / Global / Remote). */
   async getDomainRanking(
     scope: RankScope = "nigerian",
   ): Promise<DataState<DomainRankItem[]>> {
     try {
-      return await request<DataState<DomainRankItem[]>>(
+      return fromApi(await request<DomainRankItem[] | DataState<DomainRankItem[]>>(
         `/api/institutions/me/domain-ranking?scope=${scope}`,
-      );
+      ));
     } catch {
       return comingSoon<DomainRankItem[]>("Domain demand rankings are being populated.");
     }
@@ -108,7 +170,7 @@ export const adminData = {
   /** Auto-surfaced signals (gaps, drift, opportunities). */
   async getIntelligenceAlerts(): Promise<DataState<IntelligenceAlert[]>> {
     try {
-      return await request<DataState<IntelligenceAlert[]>>(`/api/institutions/me/alerts`);
+      return fromApi(await request<IntelligenceAlert[] | DataState<IntelligenceAlert[]>>(`/api/institutions/me/alerts`));
     } catch {
       return comingSoon<IntelligenceAlert[]>("Intelligence alerts are being populated.");
     }
@@ -117,16 +179,16 @@ export const adminData = {
   /** Cross-programme skills-gap report. */
   async getSkillsGapReport(): Promise<DataState<SkillGapRow[]>> {
     try {
-      return await request<DataState<SkillGapRow[]>>(`/api/institutions/me/skills-gap`);
+      return fromApi(await request<SkillGapRow[] | DataState<SkillGapRow[]>>(`/api/institutions/me/skills-gap`));
     } catch {
       return comingSoon<SkillGapRow[]>("The skills-gap report is being populated.");
     }
   },
 
-  /** Role-level demand ranking. */
+  /** Role-level demand plus value/selectivity signal. */
   async getRoleDemand(): Promise<DataState<RoleDemandRow[]>> {
     try {
-      return await request<DataState<RoleDemandRow[]>>(`/api/institutions/me/role-demand`);
+      return fromApi(await request<RoleDemandRow[] | DataState<RoleDemandRow[]>>(`/api/institutions/me/role-demand`));
     } catch {
       return comingSoon<RoleDemandRow[]>("Role demand is being populated.");
     }
@@ -135,7 +197,7 @@ export const adminData = {
   /** Peer-institution domain-coverage comparison. */
   async getPeerComparison(): Promise<DataState<PeerInstitutionRow[]>> {
     try {
-      return await request<DataState<PeerInstitutionRow[]>>(`/api/institutions/me/peers`);
+      return fromApi(await request<PeerInstitutionRow[] | DataState<PeerInstitutionRow[]>>(`/api/institutions/me/peers`));
     } catch {
       return comingSoon<PeerInstitutionRow[]>("Peer-institution benchmarks are being populated.");
     }
@@ -145,7 +207,7 @@ export const adminData = {
   /** Aggregate count of students self-affiliated via the school code. */
   async getAffiliationStats(): Promise<DataState<AffiliationStats>> {
     try {
-      return await request<DataState<AffiliationStats>>(`/api/institutions/me/affiliation`);
+      return fromApi(await request<AffiliationStats | DataState<AffiliationStats>>(`/api/institutions/me/affiliation`));
     } catch {
       return comingSoon<AffiliationStats>("Affiliation analytics come online with the school-code rollout.");
     }

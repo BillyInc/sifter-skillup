@@ -8,23 +8,43 @@ import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../th
 const SECTIONS = [
   {
     title: 'What data we collect',
-    body: 'Account details, learning progress, streaks, earned artifacts, and device information needed for sync and notifications.',
+    body: 'Account details, user type, starting point, subjects you choose to enter, saved programmes, schools, domains, subgroups, roles, notes, preferences, device/session data and security logs.',
   },
   {
-    title: 'What we do not collect',
-    body: 'Your diary content stays encrypted on-device. We do not store third-party passwords, and we do not track your geographic location.',
+    title: 'Sensitive student data',
+    body: 'We do not need grades, transcripts, exam documents or guardian documents for the core exploration flow. Institution roster visibility is consent-gated and should be limited to what is necessary.',
   },
   {
     title: 'How we use data',
-    body: 'We use it to run the platform, restore progress, send opted-in notifications, power referrals and rewards, and prevent abuse.',
+    body: 'We use data to run the platform, restore sessions, personalize guidance, improve search, prevent abuse, support institution verification, generate aggregate intelligence and honour user requests.',
   },
   {
-    title: 'Connected platforms',
-    body: 'Where you connect external accounts, we store the access token needed for the action you approved. Revoked tokens are removed from our systems.',
+    title: 'Analytics and product improvement',
+    body: 'We may use consented or legally-permitted analytics to understand searches, drop-offs, saved paths and confusing screens. Analytics should be aggregated where possible and should not expose individual student records to institutions.',
   },
   {
-    title: 'Your rights',
-    body: 'You can request access, correction, deletion, export, or opt-out of non-essential communications by contacting privacy@sifter.app.',
+    title: 'Nigeria-first privacy basis',
+    body: 'We design around Nigeria privacy obligations including the NDPA 2023 and NDPR principles: lawful basis, purpose limitation, data minimisation, security, retention limits and data-subject rights.',
+  },
+  {
+    title: 'Minors and guardians',
+    body: 'Senior-secondary users may be minors. Where a feature requires guardian or school consent, we will gate that feature and avoid unnecessary exposure of individual student details.',
+  },
+  {
+    title: 'International users',
+    body: 'Users outside Nigeria may have additional local rights, including GDPR-style access, correction, portability, objection and erasure rights where applicable.',
+  },
+  {
+    title: 'Retention',
+    body: 'We keep account and guidance data only as long as needed for the service, safety, legal compliance and auditability. Users may request deletion, subject to lawful retention requirements.',
+  },
+  {
+    title: 'Security',
+    body: 'We use access controls, authentication, role boundaries and server-side checks to reduce unauthorised access. No web service can guarantee perfect security, so sensitive details should be collected sparingly.',
+  },
+  {
+    title: 'Your rights and choices',
+    body: 'You can request access, correction, deletion, export, restriction or opt-out of non-essential communications and analytics by contacting privacy@sifter.app.',
   },
 ];
 
@@ -39,7 +59,7 @@ export default function PrivacyScreen({ onClose }: Props) {
         <View style={{ flex: 1 }}>
           <Text style={[styles.eyebrow, { color: colors.textMuted }]}>LEGAL</Text>
           <Text style={[styles.title, { color: colors.text }]}>Privacy policy</Text>
-          <Text style={[styles.sub, { color: colors.textSoft }]}>NDPR-aware, with GDPR-style user rights support.</Text>
+          <Text style={[styles.sub, { color: colors.textSoft }]}>Nigeria-first privacy with global user-rights support.</Text>
         </View>
         {onClose ? (
           <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
@@ -50,7 +70,9 @@ export default function PrivacyScreen({ onClose }: Props) {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <View style={[styles.note, { backgroundColor: colors.greenSoft, borderLeftColor: colors.green }]}>
           <Text style={[styles.noteText, { color: colors.text }]}>
-            Short version: your diary stays local, we do not sell your data, and you can ask us to delete your account data.
+            Short version: we do not sell personal data, we minimise sensitive
+            student data, and you can ask to access, correct, export or delete
+            your account data.
           </Text>
         </View>
 

@@ -9,7 +9,7 @@
  *    tappable into Explore and removable), and PERSONAL NOTES filed into folders
  *    by category (each editable + re-fileable via a bottom-sheet). The
  *    interactive upskilling tracks + Portfolio stay behind a single LOCKED
- *    "Coming Soon" card — never the whole tab, only a card inside the page.
+ *    locked preview card — never the whole tab, only a card inside the page.
  *
  *  • ON (live): the LEARNING-WORLD GATEWAY. My World becomes the doorway into the
  *    interactive upskilling world. It shows a compact character/XP/streak
@@ -49,6 +49,7 @@ import {
   type SavedItem,
   type Note,
   type SavedEntityType,
+  locked,
 } from "../types/career";
 import { useAuth } from "../hooks/useAuth";
 import { featureFlags } from "../lib/featureFlags";
@@ -58,8 +59,11 @@ import { streakEngine, type StreakStatus } from "../lib/StreakEngine";
 /** Human-friendly glyphs / labels per saved entity type. */
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
   programme: { icon: "🎓", label: "Programme" },
+  school: { icon: "🏫", label: "School" },
   domain: { icon: "🧭", label: "Domain" },
+  subgroup: { icon: "🧱", label: "Subgroup" },
   role: { icon: "💼", label: "Role" },
+  comparison: { icon: "⚖️", label: "Comparison" },
   opportunity: { icon: "📌", label: "Opportunity" },
   organisation: { icon: "🏢", label: "Employer" },
   elite_pathway: { icon: "⭐", label: "Pathway" },
@@ -67,9 +71,12 @@ const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
 
 /** Plural section titles for the saved-items groups (order = display order). */
 const SAVED_GROUP_ORDER: { type: SavedEntityType; title: string }[] = [
-  { type: "domain", title: "Domains" },
-  { type: "role", title: "Roles" },
   { type: "programme", title: "Programmes" },
+  { type: "school", title: "Schools" },
+  { type: "domain", title: "Domains" },
+  { type: "subgroup", title: "Subgroups" },
+  { type: "role", title: "Roles" },
+  { type: "comparison", title: "Comparisons" },
   { type: "opportunity", title: "Opportunities" },
   { type: "organisation", title: "Employers" },
   { type: "elite_pathway", title: "Pathways" },
@@ -86,7 +93,7 @@ interface PersonalData {
 
 /** Shared hook: load the personal saved/notes envelopes; refetch on focus and
  *  on demand (after any mutation). Active-guarded so late responses are dropped. */
-function usePersonalData(): PersonalData {
+function usePersonalData(enabled = true): PersonalData {
   const [saved, setSaved] = useState<DataState<SavedItem[]> | null>(null);
   const [notes, setNotes] = useState<DataState<Note[]> | null>(null);
 
@@ -103,18 +110,31 @@ function usePersonalData(): PersonalData {
   // Refetch every time the tab regains focus.
   useFocusEffect(
     useCallback(() => {
+      if (!enabled) {
+        setSaved(
+          locked<SavedItem[]>(
+            "Create an account to save programmes, schools, domains, roles and notes.",
+          ),
+        );
+        setNotes(
+          locked<Note[]>(
+            "Create an account to keep private notes across your career search.",
+          ),
+        );
+        return;
+      }
       let active = true;
       void load(() => active);
       return () => {
         active = false;
       };
-    }, [load]),
+    }, [enabled, load]),
   );
 
   // Imperative refetch used after mutations (fire-and-forget, always active).
   const refresh = useCallback(() => {
-    void load(() => true);
-  }, [load]);
+    if (enabled) void load(() => true);
+  }, [enabled, load]);
 
   return { saved, notes, refresh };
 }
@@ -211,8 +231,8 @@ function PersonalPage() {
   const router = useRouter();
   const { colors } = useTheme();
   const { user } = useAuth();
-  const isGuest = user?.auth_provider === "guest";
-  const personal = usePersonalData();
+  const isGuest = !user || user.auth_provider === "guest";
+  const personal = usePersonalData(!isGuest);
 
   return (
     <ScrollView
@@ -237,7 +257,7 @@ function PersonalPage() {
         >
           <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
             You're browsing as a guest. Create an account to save domains, roles
-            and notes here.
+            programmes, schools, comparisons and notes here.
           </Text>
         </View>
       ) : null}
@@ -250,7 +270,7 @@ function PersonalPage() {
   );
 }
 
-/** The single locked "Coming Soon" card — interactive upskilling tracks +
+/** The single locked preview card — interactive upskilling tracks +
  *  Portfolio live behind this and stay locked in this phase. */
 function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) {
   const { colors } = useTheme();
@@ -272,7 +292,8 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
           </View>
           <Text style={[styles.lockedBody, { color: colors.textSoft }]}>
             Interactive upskilling for your domain — guided levels and a
-            verifiable Portfolio of what you've built — is coming soon. Master
+            verifiable Portfolio of what you've built — stays locked until the
+            learning layer opens. Master
             your field, learn alongside your guild, and show employers your work.
           </Text>
         </View>
@@ -305,11 +326,11 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => router.push("/(tabs)/opportunities")}
+          onPress={() => router.push("/(tabs)/explore")}
           style={styles.linkBtn}
         >
           <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
-            See opportunities →
+            Compare demand signals →
           </Text>
         </TouchableOpacity>
       </View>
@@ -640,7 +661,11 @@ function SavedItemRow({
       exploreNav.programme(router, item.entityId);
     else if (item.entityType === "elite_pathway")
       exploreNav.elitePathway(router, item.entityId);
-    // opportunity / organisation have no Explore detail route yet — no-op.
+    else if (item.entityType === "school")
+      router.push("/(tabs)/explore/admission" as never);
+    else if (item.entityType === "subgroup")
+      router.push("/(tabs)/explore/domains" as never);
+    // comparison / opportunity / organisation have no live detail route yet.
   };
 
   const remove = async () => {

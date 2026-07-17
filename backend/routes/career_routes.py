@@ -33,6 +33,9 @@ from models import ResponseModel
 router = APIRouter(prefix="/api/career", tags=["career"])
 
 _SCHEMA = "skillup_dev"
+_MIN_PUBLIC_QUERY_LEN = 2
+_PUBLIC_SEARCH_LIMIT = 20
+_PROGRAMME_SEARCH_LIMIT = 25
 
 
 def _coming_soon(notice: Optional[str] = None) -> dict:
@@ -56,6 +59,15 @@ def _real(data: Any, notice: Optional[str] = None) -> dict:
 def _svc():
     """Service client scoped to the career schema."""
     return db.get_service_client().schema(_SCHEMA)
+
+
+def _clean_public_query(q: Optional[str]) -> str:
+    """Normalize public search text and remove wildcard characters.
+
+    Public career endpoints are intentionally sliced search endpoints, not bulk
+    export endpoints. Removing `%` and `_` prevents wildcard-only scraping.
+    """
+    return (q or "").replace("%", "").replace("_", "").strip()
 
 
 def _num(v: Any) -> Optional[float]:
@@ -164,8 +176,18 @@ def _uri_at(uris: Any, idx: int) -> Optional[str]:
 async def list_programmes(
     q: Optional[str] = None,
     institution_type: Optional[str] = None,
+    limit: int = _PROGRAMME_SEARCH_LIMIT,
 ):
     """Search the canonical programme registry. Returns ProgrammeSearchResult[]."""
+    term = _clean_public_query(q)
+    safe_limit = max(1, min(limit, _PROGRAMME_SEARCH_LIMIT))
+    if len(term) < _MIN_PUBLIC_QUERY_LEN:
+        return ResponseModel(
+            data=_real(
+                [],
+                "Type at least two characters to search programmes. Bulk listing is not exposed.",
+            )
+        )
     try:
         query = (
             db.get_service_client()
@@ -173,12 +195,11 @@ async def list_programmes(
             .table("programmes")
             .select("id, name, display_name, institution_type, discipline")
         )
-        if q:
-            like = f"%{q}%"
-            query = query.or_(f"name.ilike.{like},display_name.ilike.{like}")
+        like = f"%{term}%"
+        query = query.or_(f"name.ilike.{like},display_name.ilike.{like}")
         if institution_type:
             query = query.eq("institution_type", institution_type)
-        res = query.order("name").limit(100).execute()
+        res = query.order("name").limit(safe_limit).execute()
         items = [
             {
                 "id": r["id"],
@@ -466,32 +487,253 @@ async def get_role(role_id: str):
         return ResponseModel(data=_coming_soon("Role detail is temporarily unavailable."))
 
 
+# ── Phase 7 content: opportunities · elite pathways · scholarships ─
+# Tables ship empty (live data only); every list endpoint degrades to a
+# coming_soon envelope until content rows exist.
+
+def _opportunity_out(r: dict, org: Optional[dict]) -> dict:
+    return {
+        "id": r.get("id"),
+        "title": r.get("title"),
+        "organisation": {
+            "id": (org or {}).get("id") or r.get("organisation_id") or "",
+            "name": (org or {}).get("name") or "",
+            "sector": (org or {}).get("sector"),
+            "country": (org or {}).get("country"),
+            "nigeriaOffice": (org or {}).get("nigeria_office"),
+            "likelihood": (org or {}).get("likelihood"),
+        },
+        "type": r.get("opp_type"),
+        "scope": r.get("scope"),
+        "workMode": r.get("work_mode"),
+        "eligibleInstitutionTypes": r.get("eligible_institution_types") or [],
+        "domainIds": r.get("domain_keys") or [],
+        "roleIds": r.get("role_keys") or [],
+        "country": r.get("country"),
+        "salaryNgnMin": _num(r.get("salary_ngn_min")),
+        "salaryNgnMax": _num(r.get("salary_ngn_max")),
+        "applicationWindow": r.get("application_window"),
+        "applicationDeadline": _date_str(r.get("application_deadline")),
+        "careersUrl": r.get("careers_url"),
+        "visaRoute": r.get("visa_route"),
+        "likelihood": r.get("likelihood"),
+        "description": r.get("description"),
+        "skills": r.get("skills") or [],
+        "certifications": r.get("certifications") or [],
+    }
+
+
+def _orgs_by_id(rows: list) -> dict:
+    ids = list({r.get("organisation_id") for r in rows if r.get("organisation_id")})
+    if not ids:
+        return {}
+    res = _svc().table("organisations").select("*").in_("id", ids).execute()
+    return {o["id"]: o for o in (res.data or [])}
+
+
 @router.get("/opportunities", response_model=ResponseModel)
 async def list_opportunities(
-    programme_id: Optional[str] = None,
     domain_id: Optional[str] = None,
     institution_type: Optional[str] = None,
+    scope: Optional[str] = None,
+    opp_type: Optional[str] = None,
+    work_mode: Optional[str] = None,
+    likelihood: Optional[str] = None,
+    region: Optional[str] = None,
+    limit: int = 60,
 ):
-    """Filter opportunities. Returns a coming_soon list envelope (no data yet)."""
-    # TODO(career-data): implement against skillup_dev once data is imported
-    return ResponseModel(data=_coming_soon("Opportunities are coming soon."))
+    """Opportunities hub list. Filters mirror OpportunityFilter in career.ts."""
+    try:
+        query = _svc().table("opportunities").select("*").eq("active", True)
+        if domain_id:
+            query = query.contains("domain_keys", [domain_id])
+        if institution_type:
+            query = query.contains("eligible_institution_types", [institution_type])
+        if scope:
+            query = query.eq("scope", scope)
+        if opp_type:
+            query = query.eq("opp_type", opp_type)
+        if work_mode:
+            query = query.eq("work_mode", work_mode)
+        if likelihood:
+            query = query.eq("likelihood", likelihood)
+        if region:
+            query = query.eq("region", region)
+        rows = query.order("created_at", desc=True).limit(min(limit, 100)).execute().data or []
+        if not rows:
+            return ResponseModel(data=_coming_soon("Opportunities are coming soon."))
+        orgs = _orgs_by_id(rows)
+        return ResponseModel(data=_real([_opportunity_out(r, orgs.get(r.get("organisation_id"))) for r in rows]))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career list_opportunities failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Opportunities are temporarily unavailable."))
+
+
+@router.get("/opportunities/{opportunity_id}", response_model=ResponseModel)
+async def get_opportunity(opportunity_id: str):
+    try:
+        res = _svc().table("opportunities").select("*").eq("id", opportunity_id).limit(1).execute()
+        row = (res.data or [None])[0]
+        if not row:
+            return ResponseModel(data=_coming_soon("This opportunity is no longer available."))
+        orgs = _orgs_by_id([row])
+        return ResponseModel(data=_real(_opportunity_out(row, orgs.get(row.get("organisation_id")))))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career get_opportunity failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Opportunity detail is temporarily unavailable."))
+
+
+@router.get("/elite-pathways", response_model=ResponseModel)
+async def list_elite_pathways():
+    """ElitePathwaySummary[] for the elite hub."""
+    try:
+        rows = (
+            _svc().table("elite_pathways")
+            .select("id, name, cluster, firms, compensation_label, selectivity_label, nigerian_advantage")
+            .eq("active", True).order("name").execute().data or []
+        )
+        if not rows:
+            return ResponseModel(data=_coming_soon("Elite pathways are coming soon."))
+        return ResponseModel(data=_real([
+            {
+                "id": r["id"], "name": r["name"], "cluster": r.get("cluster"),
+                "firms": r.get("firms") or [],
+                "compensationLabel": r.get("compensation_label"),
+                "selectivityLabel": r.get("selectivity_label"),
+                "nigerianAdvantage": bool(r.get("nigerian_advantage")),
+                "eliteFlag": True,
+            }
+            for r in rows
+        ]))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career list_elite_pathways failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Elite pathways are temporarily unavailable."))
+
+
+@router.get("/elite-pathways/{pathway_id}", response_model=ResponseModel)
+async def get_elite_pathway(pathway_id: str):
+    try:
+        res = _svc().table("elite_pathways").select("*").eq("id", pathway_id).limit(1).execute()
+        r = (res.data or [None])[0]
+        if not r:
+            return ResponseModel(data=_coming_soon("This elite pathway is not published yet."))
+        return ResponseModel(data=_real({
+            "id": r["id"], "name": r["name"], "cluster": r.get("cluster"),
+            "firms": r.get("firms") or [],
+            "compensationLabel": r.get("compensation_label"),
+            "selectivityLabel": r.get("selectivity_label"),
+            "nigerianAdvantage": bool(r.get("nigerian_advantage")),
+            "eliteFlag": True,
+            "description": r.get("description"),
+            "formation": r.get("formation") or [],
+            "pinnacle": r.get("pinnacle") or [],
+            "bridgePlanId": r.get("bridge_plan_id"),
+        }))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career get_elite_pathway failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Elite pathway detail is temporarily unavailable."))
+
+
+@router.get("/bridge-plans/{plan_id}", response_model=ResponseModel)
+async def get_bridge_plan(plan_id: str):
+    try:
+        res = _svc().table("bridge_plans").select("*").eq("id", plan_id).limit(1).execute()
+        r = (res.data or [None])[0]
+        if not r:
+            return ResponseModel(data=_coming_soon("This bridge plan is not published yet."))
+        return ResponseModel(data=_real({
+            "id": r["id"], "from": r.get("from_label"), "to": r.get("to_label"),
+            "layers": r.get("layers") or [],
+            "coveredUserTypes": r.get("covered_user_types") or [],
+        }))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career get_bridge_plan failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Bridge plan is temporarily unavailable."))
+
+
+@router.get("/scholarships", response_model=ResponseModel)
+async def list_scholarships(limit: int = 60):
+    try:
+        rows = (
+            _svc().table("scholarships").select("*").eq("active", True)
+            .order("name").limit(min(limit, 100)).execute().data or []
+        )
+        if not rows:
+            return ResponseModel(data=_coming_soon("Scholarships are coming soon."))
+        return ResponseModel(data=_real([
+            {
+                "id": r["id"], "name": r["name"], "funded": r.get("funded"),
+                "level": r.get("level_label"), "destination": r.get("destination"),
+                "disciplines": r.get("disciplines") or [],
+                "opensLabel": r.get("opens_label"), "url": r.get("url"),
+            }
+            for r in rows
+        ]))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career list_scholarships failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Scholarships are temporarily unavailable."))
+
+
+@router.get("/application-windows", response_model=ResponseModel)
+async def list_application_windows(limit: int = 60):
+    """Windows with status DERIVED from opens_at/closes_at so rows never go stale."""
+    try:
+        rows = (
+            _svc().table("application_windows").select("*")
+            .order("closes_at", desc=False).limit(min(limit, 100)).execute().data or []
+        )
+        if not rows:
+            return ResponseModel(data=_coming_soon("Application windows are coming soon."))
+        today = datetime.now(timezone.utc).date()
+        out = []
+        for r in rows:
+            opens = r.get("opens_at")
+            closes = r.get("closes_at")
+            opens_d = datetime.fromisoformat(str(opens)).date() if opens else None
+            closes_d = datetime.fromisoformat(str(closes)).date() if closes else None
+            if closes_d and closes_d < today:
+                status = "closed"
+            elif opens_d and opens_d > today:
+                status = "opening_soon"
+            elif closes_d and (closes_d - today).days <= 14:
+                status = "closing_soon"
+            else:
+                status = "open"
+            out.append({
+                "id": r["id"], "title": r["title"],
+                "organisationName": r.get("organisation_name"),
+                "status": status,
+                "whenLabel": r.get("when_label")
+                or (f"Closes {closes_d.isoformat()}" if closes_d else (f"Opens {opens_d.isoformat()}" if opens_d else "Dates TBC")),
+                "opportunityId": r.get("opportunity_id"),
+            })
+        return ResponseModel(data=_real(out))
+    except Exception as exc:  # noqa: BLE001
+        log.error("career list_application_windows failed", error=str(exc))
+        return ResponseModel(data=_coming_soon("Application windows are temporarily unavailable."))
 
 
 @router.get("/search", response_model=ResponseModel)
 async def search_career(q: Optional[str] = None):
     """Grouped disambiguation search → CareerSearchResult (domains/roles/programmes)."""
-    if not q or not q.strip():
-        return ResponseModel(data=_real({"domains": [], "roles": [], "programmes": []}))
+    term = _clean_public_query(q)
+    if len(term) < _MIN_PUBLIC_QUERY_LEN:
+        return ResponseModel(
+            data=_real(
+                {"domains": [], "roles": [], "programmes": []},
+                "Type at least two characters to search. Bulk graph listing is not exposed.",
+            )
+        )
     try:
         svc = _svc()
-        like = f"%{q.strip()}%"
+        like = f"%{term}%"
 
         dres = (
             svc.table("domains")
             .select("domain_key, name, cluster")
             .ilike("name", like)
             .order("name")
-            .limit(20)
+            .limit(_PUBLIC_SEARCH_LIMIT)
             .execute()
         )
         domains = [
@@ -504,7 +746,7 @@ async def search_career(q: Optional[str] = None):
             svc.table("domain_roles")
             .select("role_key, role_name, tier, domain_id")
             .ilike("role_name", like)
-            .limit(60)
+            .limit(_PUBLIC_SEARCH_LIMIT * 2)
             .execute()
         )
         role_rows = rres.data or []
@@ -540,7 +782,7 @@ async def search_career(q: Optional[str] = None):
             .select("id, name, institution_type, discipline")
             .ilike("name", like)
             .order("name")
-            .limit(20)
+            .limit(_PUBLIC_SEARCH_LIMIT)
             .execute()
         )
         programmes = [

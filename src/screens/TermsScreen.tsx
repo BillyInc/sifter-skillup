@@ -6,15 +6,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
 
 const SECTIONS = [
-  ['Who we are', 'Sifter LevelUp is an educational platform operated by Sifter Technologies Ltd.'],
-  ['What the platform is', 'We provide learning content, simulations, artifacts, and guided practice. We are not a recruitment, legal, or financial advisory service.'],
-  ['No employment guarantee', 'Completing a path or certification does not guarantee interviews, job offers, salary increases, or any specific career outcome.'],
-  ['Interview mode', 'Interview Mode is practice based on common patterns. It is not a live feed of employer interview questions.'],
-  ['Artifact ownership', 'You own your work. We only host it in-app and push it where you explicitly authorize us to act.'],
-  ['Third-party platforms', 'LinkedIn, GitHub, Upwork, and similar services keep their own rules and may change their APIs or policies at any time.'],
-  ['Data and privacy', 'Your diary stays local. Your progress is stored so it can sync across devices. We do not sell your personal data.'],
-  ['Termination', 'We may restrict access for abuse, fraud, harmful conduct, or serious terms violations.'],
-  ['Governing law', 'These terms are governed by the laws of the Federal Republic of Nigeria, except where mandatory consumer protections override that by law.'],
+  ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
+  ['What the platform does', 'We help users explore starting points, subjects, programmes, schools, domains, sub-groups, roles, skills, tools, certifications and market-intelligence signals.'],
+  ['Guidance, not a guarantee', 'Programme mappings, cut-off marks, role readiness, demand, salary and remote-work signals are guidance. They are not admission, employment, salary, migration, legal, financial or professional advice.'],
+  ['Admissions and school data', 'Cut-off marks, school requirements and formulas are historical or indicative unless clearly marked otherwise. We do not guarantee admission, eligibility, scholarship access or school placement.'],
+  ['Jobs and market intelligence', 'Posting counts, salary ranges, employer lists and trend labels are estimates from available sources. Low-volume/high-value roles may be selective; high-volume roles may still have lower pay or progression limits.'],
+  ['Students and minors', 'Senior-secondary students and other minors should use LevelUp with guidance from a parent, guardian, school or counsellor. Individual student visibility for institutions requires consent where applicable.'],
+  ['Educators and institutions', 'Institution dashboards use aggregate intelligence. Verification does not by itself unlock individual student details. Student records, rosters and provisioning remain consent-gated.'],
+  ['Guest use', 'Guests may browse limited Explore surfaces. Saving, notes, alerts, student management and institution-specific features require an account and, where relevant, acceptance of these terms.'],
+  ['Acceptable use', 'Do not abuse the service, attack the platform, scrape restricted data, impersonate a school or educator, upload unlawful content, or use the platform to mislead students.'],
+  ['Your content', 'You keep ownership of notes, saved paths, feedback and any learning artifacts you create. You give us permission to store, process and display them only to operate the service.'],
+  ['Third-party services', 'Some sources, schools, job boards, professional bodies, APIs and linked services have their own terms. Their data, availability and rules may change without notice.'],
+  ['Changes and suspension', 'We may change features, correct data, remove misleading content, suspend abusive accounts or restrict access where needed for security, compliance or platform integrity.'],
+  ['Governing law', 'These terms are governed by the laws of the Federal Republic of Nigeria, except where mandatory consumer protections in another jurisdiction apply.'],
 ];
 
 interface Props { onClose?: () => void; }
@@ -39,7 +43,9 @@ export default function TermsScreen({ onClose }: Props) {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <View style={[styles.note, { backgroundColor: colors.goldSoft, borderLeftColor: colors.gold }]}>
           <Text style={[styles.noteText, { color: colors.text }]}>
-            This version is optimized for clarity. If you need legal guidance for your specific use, please consult a qualified lawyer.
+            This is plain-language product copy, not legal advice. Account
+            creation requires accepting the current version of these terms and
+            the Privacy Policy.
           </Text>
         </View>
 

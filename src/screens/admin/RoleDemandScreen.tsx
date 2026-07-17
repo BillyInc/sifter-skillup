@@ -1,7 +1,8 @@
 /**
  * RoleDemandScreen — role-level demand ranking across the institution's domains.
  * Pulls adminData.getRoleDemand and renders an AdminDataTable with columns:
- * role name, domain, NG postings, global postings, remote %, salary range, trend.
+ * role name, domain, NG postings, global postings, NG remote %, salary range,
+ * trend, and the market quadrant (volume x value).
  */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
@@ -33,6 +34,24 @@ function formatSalary(row: RoleDemandRow): string {
   return "—";
 }
 
+function marketLabel(row: RoleDemandRow): string {
+  if (row.interpretation) return row.interpretation;
+  switch (row.quadrant) {
+    case "high_demand_high_value":
+      return "Broad demand, strong upside";
+    case "high_demand_lower_value":
+      return "Broad entry, lower ceiling";
+    case "low_demand_high_value":
+      return "Elite pathway, selective entry";
+    case "low_demand_low_value":
+      return "Limited signal";
+    case "emerging_high_growth":
+      return "Growing fast";
+    default:
+      return "Insufficient data";
+  }
+}
+
 const COLUMNS: ColumnDef[] = [
   { key: "roleName", label: "Role", width: undefined },
   { key: "domainName", label: "Domain", width: 120 },
@@ -50,7 +69,7 @@ const COLUMNS: ColumnDef[] = [
   },
   {
     key: "remotePct",
-    label: "Remote %",
+    label: "NG remote %",
     width: 80,
     render: (val: number) => (val != null ? `${Math.round(val)}%` : "—"),
   },
@@ -65,6 +84,12 @@ const COLUMNS: ColumnDef[] = [
     label: "Trend",
     width: 70,
     render: (val: number) => (val != null ? `${val >= 0 ? "+" : ""}${val}%` : "—"),
+  },
+  {
+    key: "market",
+    label: "Market signal",
+    width: 170,
+    render: (_: any, row: RoleDemandRow) => marketLabel(row),
   },
 ];
 
@@ -98,7 +123,8 @@ export function RoleDemandScreen() {
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
             The specific roles employers are hiring for across the domains your
-            programmes reach, ranked by posting volume.
+            programmes reach. Volume is shown beside value so selective,
+            high-upside roles are not misread as weak opportunities.
           </Text>
           <ComingSoonPanel
             state={roles}

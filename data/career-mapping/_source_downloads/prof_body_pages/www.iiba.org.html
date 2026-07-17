@@ -1,0 +1,3676 @@
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <script>
+!function(T,l,y){var S=T.location,k="script",D="instrumentationKey",C="ingestionendpoint",I="disableExceptionTracking",E="ai.device.",b="toLowerCase",w="crossOrigin",N="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"5",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[b](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,u,p,l;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][b]()]=i[1])}if(!e[C]){var r=e.endpointsuffix,o=r?e.location:null;e[C]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[D]||d[D]||"",u=s[C],p=u?u+"/v2/track":d.endpointUrl,(l=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=p,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),l.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,p)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:N,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(N,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(l,p))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(k);n.src=h;var e=y[w];return!e&&""!==e||"undefined"==n[w]||(n[w]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(k)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[I]&&!0!==s[I]){var c="onerror";t(["_"+c]);var u=T[c];T[c]=function(e,t,n,a,i){var r=u&&u(e,t,n,a,i);return!0!==r&&m["_"+c]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);function a(){y.onInit&&y.onInit(n)}(T[t]=n).queue&&0===n.queue.length?(n.queue.push(a),n.trackPageView({})):a()}(window,document,{src: "https://js.monitor.azure.com/scripts/b/ai.2.gbl.min.js", crossOrigin: "anonymous", cfg: {connectionString: 'InstrumentationKey=401a3877-21fe-4d27-b203-82e5e87843fd;IngestionEndpoint=https://canadacentral-1.in.applicationinsights.azure.com/;LiveEndpoint=https://canadacentral.livediagnostics.monitor.azure.com/;ApplicationId=65c5edb9-8dfc-4c1c-96c2-14de0bf27042', disableCookiesUsage: false }});
+</script>
+
+    <meta charset="utf-8" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|IBM+Plex+Sans:700|Roboto+Condensed:400,700|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Business Analysis | The Global Standard | IIBA&#xAE;</title>
+
+    <meta name="Title" content="International Institute of Business Analysis&#x2122; | IIBA&#xAE;" />
+    <meta name="description" content="International Institute of Business Analysis&#x2122; (IIBA&#xAE;) is a professional association dedicated to supporting business analysis professionals deliver better business outcomes. IIBA connects almost 30,000 members, over 100 Chapters, and more than 500 training, academic, and corporate partners around the world. As the global voice of the business analysis community, IIBA supports recognition of the profession, networking and community engagement, standards and resource development, and comprehensive certification programs. For more information visit iiba.org. " />
+    <meta name="keywords" content="business analysis, business analytics, business data analysis, academic, certification, membership, iiba, business analysis, business impact analysis, business analysis tools, certified business analysis professional, business process analysis, business case analysis, what is business analysis" />
+
+    <!--- OG Tags --->
+    <meta property="og:url" content="https://www.iiba.org/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="International Institute of Business Analysis&#x2122; | IIBA&#xAE;" />
+    <meta property="og:description" content="International Institute of Business Analysis&#x2122; (IIBA&#xAE;) is a professional association dedicated to supporting business analysis professionals deliver better business outcomes. IIBA connects almost 30,000 members, over 100 Chapters, and more than 500 training, academic, and corporate partners around the world. As the global voice of the business analysis community, IIBA supports recognition of the profession, networking and community engagement, standards and resource development, and comprehensive certification programs. For more information visit iiba.org. " />
+    <meta property="og:image" content="https://www.iiba.org/globalassets/logos/iiba-logos/768x492_iiba_logo.jpg" />
+
+        <meta name="editingPage" content="https://www.iiba.org/EPiServer/Cms/Home/Index/#context=epi.cms.contentdata:///6&viewsetting=viewlanguage:///en" />
+
+    <link rel="icon" href="/Static/images/favicon.ico" />
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.5/lazysizes.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.5/plugins/unveilhooks/ls.unveilhooks.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.1.5/plugins/bgset/ls.bgset.min.js"></script>
+
+        <link href="/Static/css/main.css?v=1.0.0&#x2B;f9b94f325ade285861e6e3bd00d7f8dce15f8d7b" rel="stylesheet">
+
+    <link href="/Static/css/iiba-mega-menu.css?v=1.0.0&#x2B;f9b94f325ade285861e6e3bd00d7f8dce15f8d7b" rel="stylesheet">
+    <link href="/Static/css/iiba-mega-menu-mobile.css?v=1.0.0&#x2B;f9b94f325ade285861e6e3bd00d7f8dce15f8d7b" rel="stylesheet">
+    <link href="/Static/css/iiba-sticky-mobile-nav.css?v=1.0.0&#x2B;f9b94f325ade285861e6e3bd00d7f8dce15f8d7b" rel="stylesheet">
+
+    <link href="https://www.iiba.org/" rel="canonical" />
+
+    <script id="bfGDPR__cookieVarsFromBackend">
+        var bfGDPR__configObject = {"enableGDPRDialog":false,"cookieDialogTitle":"Cookies on the IIBA website","cookieDialogBackgroundColor":"#BDBDBD","cookieDialogTabText":"Privacy and Cookies","cookieDialogText":"We use cookies to give you the best digital experience while visiting our website. By accepting the use of cookies and using our website you consent to all cookies in accordance with our Privacy Policy.","cookieTextColor":"#32495D","learnMoreLinkColor_0":"#2E8DD4","learnMoreLinkColor_1":"#2E8DD4","learnMoreLinkText_0":"Privacy Policy","learnMoreLinkText_1":"Contact Us","learnMoreLinkLocation_0":"https://www.iiba.org/footer/policies/privacy-policy-page/","learnMoreLinkLocation_1":"https://www.iiba.org","acceptButtonText":"Accept Cookies","declineButtonText":"Decline Cookies","acceptButtonColor":"#49ca38","declineButtonColor":"#e3122a","nonprivacyCookieNames":""};
+    </script>
+
+<!-- Termly Cookies Consent Notice start for www.iiba.org -->
+<script src="https://app.termly.io/resource-blocker/4fe0425a-7292-43f7-8f76-517967b5a263?autoBlock=on" async></script>
+<!-- Termly Cookies Consent Notice end for www.iiba.org -->
+
+<!-- Post login redirect script -->
+<script>
+  (function () {
+    const currentPath = window.location.pathname;
+    const cameFromPercipio = document.referrer.startsWith("https://iiba.percipio.com/");
+    const isKnowledgeHubPage = currentPath.includes("/knowledgehub/");
+
+    if (cameFromPercipio && isKnowledgeHubPage) {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+      if (!isLoggedIn) {
+        const tryLoginClick = () => {
+          const loginLink = document.querySelector('a.NavUtility__listItem__link[href="/login"]');
+          if (loginLink) {
+            localStorage.setItem('postLoginReturnUrl', window.location.href);
+            localStorage.setItem('isLoggedIn', 'true');
+
+            const salesforceLoginUrl = "https://www.iiba.org/login";
+            const openInNewTab = loginLink.getAttribute("target") === "_blank";
+
+            if (openInNewTab) {
+              window.open(salesforceLoginUrl, "_blank", "noopener");
+            } else {
+              window.location.href = salesforceLoginUrl;
+            }
+          } else {
+            setTimeout(tryLoginClick, 100);
+          }
+        };
+
+        tryLoginClick();
+      }
+    }
+  })();
+</script>
+<!-- End Post login redirect script -->
+
+<!-- clarity begin -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "mx24731qch");
+</script>
+<!-- clarity end -->
+
+<!-- Mobile Menu hotfix -->
+<style type="text/css">
+.NavUtility__dropdown.v-menu__content.theme--light.utilityNavUserDropdown {
+    z-index: 8;
+}
+</style>
+
+<!-- Begin Inspectlet Asynchronous Code -->
+<script type="text/javascript">
+(function() {
+window.__insp = window.__insp || [];
+__insp.push(['wid', 64054137]);
+var ldinsp = function(){
+if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=64054137&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+setTimeout(ldinsp, 0);
+})();
+</script>
+<!-- End Inspectlet Asynchronous Code -->
+
+
+<!-- Global site tag (gtag.js) - Google Analytics, Adwords -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-786092260"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-786092260');
+
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-593WSXQ');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Twitter universal website tag code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+// Insert Twitter Pixel ID and Standard Event data below
+twq('init','o0hkq');
+twq('track','PageView');
+</script>
+<!-- End Twitter universal website tag code -->
+
+
+<!-- Bing verification -->
+
+                <meta name="msvalidate.01" content="874FBB896478FA1BE399D3EDEA57BD89" />
+
+<!-- end Bing verification -->
+
+<!-- Yandex verification -->
+
+<meta name="yandex-verification" content="dd14aea99ee10c3f" />
+
+<!-- end Yandex verification -->
+
+<!-- customer.ai begin -->
+<script async="async" src="https://static.mobilemonkey.com/js/mm_4129994c-20b8-4e76-b6a4-b595ab264830-75123020.js"></script>
+<!-- customer.ai end -->
+
+
+
+
+
+
+            <link rel="stylesheet" href="/globalassets/css/hotfix-12-05-2022.css?v=20221206143049" />
+        
+    <!-- Header scripts from this Page -->
+    
+
+
+            <link rel="stylesheet" href="/globalassets/css/hotfix-12-15-2020.css?v=20201215194512" />
+        
+    <style>
+
+.homepage--hero .after {
+
+display: none !important;
+
+}
+
+.knowledgeHub .tile_card-title {
+
+padding-top: 3rem;
+padding-left: 3rem;
+padding-right: 3rem;
+
+}
+
+.knowledgeHub .tile_card-content {
+
+padding: 2rem 2rem 3rem 3rem;
+
+}
+
+#bottom-button {
+                position:absolute;                
+                bottom:30px;                        
+                left:30px;                        
+            }
+
+</style>
+
+<!-- Foundation card scripts -->
+
+<style>
+
+    .card-container {
+      display: flex;
+      justify-content: center;
+    }
+    .card-width {
+      width: 360px;
+      margin: 50px;
+      border-radius: 2px;
+      box-shadow: 2px 2px 22px rgba(0, 0, 0, 0.2);
+      transition: .3s box-shadow, .3s margin-top ease-in-out;
+    }
+    .card-width:hover {
+      box-shadow: 2px 12px 32px rgba(0, 0, 0, 0.5);
+      margin-top: 30px;
+      cursor: pointer;
+    }
+    .img-one {
+      width: 360px;
+      height: 300px;
+      border-radius: 2px;
+      background: url('https://www.iiba.org/contentassets/0615d0d3f8bb46a287bfa565f21c8d81/become-a-member-350x300.jpg') no-repeat;
+      background-size: 100%;
+      background-position-y: 30%;
+      background-position-x: 0%;
+    }
+    .card-one {
+      height: 500px;
+      background-color: #FFE880;
+      url:(href='https://www.iiba.org/business-analysis-certifications/iiba-certifications/');
+    }
+    .btn-base {
+      display: flex;
+      width: 330px;
+      height: 50px;
+      border-radius: 4px;
+      margin: 0 auto;
+      margin-top: -25px;
+      font-size: 25px;
+      font-weight: 600;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+    .btn-one {
+      background-color: #E7A290;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .btn-one:hover {
+
+       background-color: #c16060; 
+
+    }
+
+
+
+    .card-two {
+      height: 500px;
+      background-color: #E6EAEE;
+    }
+    .img-two {
+      width: 360px;
+      height: 300px;
+      border-radius: 2px;
+      background: url('https://www.iiba.org/contentassets/0615d0d3f8bb46a287bfa565f21c8d81/get-certified-350x300.jpg') no-repeat;
+      background-size: 110%;
+      background-position-y: 10%;
+      background-position-x: 30%;
+    }
+    .btn-two {
+      background-color: #BFC8D4;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .btn-two:hover {
+
+       background-color: #7d7d7d; 
+
+    }
+
+    .card-three {
+      height: 500px;
+      background-color: #B6D8E5;
+    }
+    .img-three {
+      width: 360px;
+      height: 300px;
+      border-radius: 2px;
+      background: url('https://www.iiba.org/contentassets/0615d0d3f8bb46a287bfa565f21c8d81/explore-programs-350x300.jpg') no-repeat;
+      background-size: 100%;
+      background-position-y: 0%;
+      background-position-x: 0%;
+    }
+    .btn-three {
+      background-color: #0485D7;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .btn-three:hover {
+
+       background-color: #1b6095; 
+
+    }
+
+    .content {
+      padding: 15px 35px;
+      font-size: 16px;
+
+    }
+
+.content:not(.main--homePage), .main:not(.main--homePage) {
+    padding-top: 1rem;
+}
+
+    .card-heading {
+      padding-bottom:0.4rem !important;
+}
+
+   a.card-heading {
+      padding-bottom:0.4rem !important;
+}
+
+
+
+    @media (max-width: 1314px) {
+      .card-container {
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+      }
+      .card-width {
+        margin: 0 auto;
+        margin-top: 25px;
+      }
+      .card-width:hover {
+        box-shadow: 2px 12px 32px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+      }
+    }
+
+.section-heading {
+
+font-size:5rem;
+
+}
+
+.to-appease {
+
+padding-left: 1.8rem;
+padding-right: 1.8rem;
+
+}
+
+</style>
+
+<!-- END Foundation card scripts -->
+
+
+
+    
+    <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "International Institute of Business Analysis (IIBA)",
+  "url": "https://www.iiba.org/",
+  "logo": "https://www.iiba.org/globalassets/logos/iiba-logos/iibalogobluetextorangeball-01.svg",
+  "sameAs": [
+    "https://www.linkedin.com/company/iiba",
+    "https://twitter.com/IIBA"
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+        {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "International Institute of Business Analysis",
+  "url": "https://www.iiba.org/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "/search/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+    </script>
+
+
+    <style>
+
+        .styled-btn {
+            color: #001377;
+            background-color: #fff;
+            border-radius: 10px;
+            /* padding: 14px; */
+            border: 0px solid #d1d1d1;
+            width: 150px;
+            height: 50px;
+        }
+
+        .chatbotimg {
+            max-width: 35%;
+        }
+
+        .styled-btn-mob {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 55px;
+            left: 10px;
+            transition: all 0.1s ease-in-out;
+            background: transparent;
+            border: none;
+        }
+
+            .styled-btn-mob:hover {
+                transform: scale(1.05);
+            }
+    </style>
+
+</head>
+<body>
+
+    
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-593WSXQ"
+height="0" width="0" style="display:none;visibility:hidden" title="This is part of Google Tag Manager Tracking functionality"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+            <!-- Body scripts from this Page -->
+    
+
+
+        
+    <!-- CSS styling for IIBA Weekly RTB -->
+<style>
+.cake-layer--weekly{
+  --weekly-bg: url("https://www.iiba.org/contentassets/44fede4a883749a19516f273c9ddbfe9/videos-header-1920x740.jpg");
+  --weekly-color: #eff2f1;
+  --weekly-h-desktop: 320px;
+  --weekly-h-mobile: 360px;
+  --weekly-pad: 40px;
+}
+
+.cake-layer--weekly{
+  position: relative;     
+  z-index: 0;              
+  min-height: var(--weekly-h-desktop);
+  padding-block: var(--weekly-pad);
+}
+
+.cake-layer--weekly::before{
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; right: 50%;
+  margin-left: -50vw;    
+  margin-right: -50vw;     
+  width: 100vw;            
+  background-color: var(--weekly-color);
+  background-image: var(--weekly-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;           
+}
+
+.cake-layer--weekly > *{
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 991.98px){
+  .cake-layer--weekly{ min-height: var(--weekly-h-mobile); }
+
+
+iframe.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+}
+
+</style>
+<!-- CSS styling for IIBA Weekly RTB -->
+
+    <a tabindex="1" class="skip-nav sr-only" href="#main">Skip to content</a>
+    <div id="__layout">
+        <div data-app="true" id="vueAppContainer" class="application theme--light">
+            <div class="application--wrap">
+                
+
+
+
+
+<div class="v-overlay"></div>
+<div id="hasMainNavInside" class="hasMainNavInside">
+    <aside id="navMain" data-navstate="STATE--homePageTopAllClosed"
+           class="homePageNavigation nav--main__wrapper v-navigation-drawer v-navigation-drawer--clipped v-navigation-drawer--close v-navigation-drawer--fixed v-navigation-drawer--is-mobile theme--light"
+           style="height: 100%; margin-top: 0px; max-height: calc(100% - 0px); transform: translateX(-320px); width: 320px;"
+           data-booted="true">
+        <!-- Top Nav -->
+        <div class="container--hasNavUtility utility-nav">
+            <div class="row">
+                <div class="col-lg-12 noPadding">
+                    <nav class="NavUtility container">
+                            <ul class="NavUtility__list NavUtility__list--links list-unstyled" role="navigation" aria-label="Utility Navigation">
+                                    <li class="NavUtility__listItem">
+                                        <a href="/my-iiba/" target="" class="NavUtility__listItem__link">
+My IIBA                                        </a>
+                                    </li>
+                                    <li class="NavUtility__listItem">
+                                        <a href="/link/9aa42e102f3b46ef85424ed6ef0a6a78.aspx" class="NavUtility__listItem__link">
+KnowledgeHub                                        </a>
+                                    </li>
+                                    <li class="NavUtility__listItem">
+                                        <a href="/professional-development/knowledge-centre/digital-library-plus/" target="" class="NavUtility__listItem__link">
+Digital Library&#x2B;                                        </a>
+                                    </li>
+                                    <li class="NavUtility__listItem">
+                                        <a href="https://my.iiba.org/portal/s/store" class="NavUtility__listItem__link">
+Store                                        </a>
+                                    </li>
+                                    <li class="NavUtility__listItem">
+                                        <a href="/link/0c2d975a78334ce39d8d976afa243a5e.aspx" class="NavUtility__listItem__link">
+Blog                                        </a>
+                                    </li>
+                                    <li class="NavUtility__listItem">
+                                        <a href="/about-iiba/" target="" class="NavUtility__listItem__link">
+About IIBA&#xAE;                                        </a>
+                                    </li>
+                                    <li class="NavUtility__listItem">
+                                        <a href="/contact-us/" target="" class="NavUtility__listItem__link">
+Contact Us                                        </a>
+                                    </li>
+                            </ul>
+
+                        <div class="NavUtility__userControls" role="navigation" aria-label="User Menu">
+                            <!-- only some of these will show based on user status -->
+                                
+
+
+    <a class="NavUtility__listItem__link" href="/login"><i class="material-icons">power_settings_new</i>Login</a>
+
+
+                                    
+
+ <a class="bf-btn button button--NavUtility" href="https://my.iiba.org/portal/s/dashboard" target="">Join | Renew</a> 
+                        </div>
+
+                        <div class="NavUtility__hasAutoComplete__wrapper">
+                            <div class="NavUtility__searchForm">
+                                <form action="/search/" method="get" class="NavUtility__searchForm__formElement" _lpchecked="1" ref="utilsearchform">
+                                    <div class="v-input v-text-field v-select v-autocomplete theme--light">
+                                        <div class="v-input__control">
+                                            <div class="v-input__slot">
+                                                <div class="v-menu v-menu--inline">
+                                                    <div class="v-menu__activator">
+                                                        <div class="v-select__slot">
+                                                            <input name="q" type="text" placeholder="Search"
+                                                                   autocomplete="off" role="combobox">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="v-text-field__details">
+                                                <div class="v-messages theme--light">
+                                                    <div class="v-messages__wrapper"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="bf-btn button--clean v-btn v-btn">
+                                        <div class="v-btn__content"><i role="search" class="material-icons material-icons--search">search</i></div>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Nav -->
+        <div class="container container__hasNavMain">
+            <div class="row justify-content-between">
+
+                    <div class="col-md-12 col--hasLogo col-lg-3 noPadding">
+                        <div class="logo__wrapper">
+                            <a class="logo__link" href="/">
+                                <img src="/globalassets/logos/iiba-logos/iibalogobluetextorangeball-01.svg" data-src="/globalassets/logos/iiba-logos/iibalogobluetextorangeball-01.svg" alt="IIBA Logo" class="logo logo--primary lazyload">
+
+                                    <!-- don't lazyLoad second image because it needs to be ready to swap -->
+                                    <img src="/globalassets/logos/iiba-logos/iibalogowhitetextorangeball-01.svg" alt="IIBA Logo" class="logo logo--alt">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-9 col--hasNav noPadding">
+                        
+    <div class="iiba-desktop-nav">
+
+        <nav class="iiba-main-nav" aria-label="Main navigation">
+                <button type="button" class="iiba-nav-item" data-menu="menu-9" aria-expanded="false" aria-controls="menu-9">
+                    Certification
+                    <span class="iiba-nav-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+                <button type="button" class="iiba-nav-item" data-menu="menu-8" aria-expanded="false" aria-controls="menu-8">
+                    Membership
+                    <span class="iiba-nav-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+                <button type="button" class="iiba-nav-item" data-menu="menu-13244" aria-expanded="false" aria-controls="menu-13244">
+                    Organizations
+                    <span class="iiba-nav-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+                <button type="button" class="iiba-nav-item" data-menu="menu-13247" aria-expanded="false" aria-controls="menu-13247">
+                    Career Resources
+                    <span class="iiba-nav-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+                <button type="button" class="iiba-nav-item" data-menu="menu-12" aria-expanded="false" aria-controls="menu-12">
+                    Events
+                    <span class="iiba-nav-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+                <button type="button" class="iiba-nav-item" data-menu="menu-13" aria-expanded="false" aria-controls="menu-13">
+                    Get Involved
+                    <span class="iiba-nav-arrow" aria-hidden="true">&#9660;</span>
+                </button>
+        </nav>
+
+                <div class="iiba-mega-menu" id="menu-9"
+                     style="--iiba-menu-bg: #ffffff;">
+                    <div class="iiba-mega-grid iiba-grid-5">
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Foundational</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/ecba/" target="">Entry Certificate in Business Analysis (ECBA)</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Core</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/ccba/" target="">Certification of Capability in Business Analysis (CCBA)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/cbap/" target="">Certified Business Analysis Professional (CBAP)</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Specialized</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/agile-analysis/" target="">Agile Analysis Certification (AAC)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/business-data-analytics-certification/" target="">Certification in Business Data Analytics (CBDA)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certificate-in-cybersecurity-analysis/" target="">Certificate in Cybersecurity Analysis (CCA)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certificate-in-product-ownership-analysis-iiba-cpoa/" target="">Certificate in Product Ownership Analysis (CPOA)</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Resources</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/4-simple-steps-to-business-analysis-certification/" target="">Steps to Certification</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-fees/" target="">Certification Fees</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/exam-information/" target="">Exam Information</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-handbooks/" target="">Certification Handbooks</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-partnerships/iiba-endorsed-training/" target="">IIBA Exam Prep Providers</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/partner-program/" target="">Certify Your Team</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Maintain &amp; Renew</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/recertification/" target="">Recertification Requirements</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/documents/terms-conditions-codes-of-conduct/certification-code-of-ethical-conduct-and-professional-standards.pdf" target="_blank">Code of Ethical Conduct and Professional Standards</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-digital-badge-program-and-directory/" target="">Access Your Badge &amp; Directory</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                    </div>
+
+                        <div class="iiba-mega-footer">
+                            <div class="iiba-footer-help">
+                                <div class="iiba-footer-text-block">
+                                        <span class="iiba-footer-strong">All IIBA Certifications</span>
+                                        <span class="iiba-footer-muted">Explore certifications for every stage of your business analysis career.</span>
+                                </div>
+                            </div>
+                            <div class="iiba-footer-contact">
+                                    <a href="/business-analysis-certifications/iiba-certifications/">
+                                        View All Certifications &rarr;
+                                    </a>
+                            </div>
+                        </div>
+                </div>
+                <div class="iiba-mega-menu" id="menu-8"
+                     style="--iiba-menu-bg: #ffffff;">
+                    <div class="iiba-mega-grid iiba-grid-3">
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">PLANS AND PRICING</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/membership-pricing/" target="">Membership Pricing</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/individual/" target="">How to Become a Member</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/partner-program/" target="">Team Membership</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://go.iiba.org/FAQs-New-Student-Membership" target="_blank">Student Membership</a>
+                                            </li>
+                                            <li>
+                                                <a href="/about-iiba/business-analysis-driving-business-success/" target="">Why IIBA?</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">MEMBER BENEFITS</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/membership-benefits/" target="">Explore All Benefits</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-digital-badge-program-and-directory/" target="">IIBA Professional Directory</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/knowledge-hub/" target="">KnowledgeHub</a>
+                                            </li>
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/digital-library-plus/" target="">Digital Library&#x2B;</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/chapters/" target="">Chapters</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">CURRENT MEMBERS</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="https://my.iiba.org/portal/s/dashboard?_gl=1*1ub6xqp*_gcl_au*MjA2MTI4MDEzNC4xNzc1Njc4OTIx*_ga*MTMyMzg5MTY2OS4xNzc1Njc4OTIy*_ga_2KELDBPLRW*czE3NzkyODQ2MzkkbzI1JGcxJHQxNzc5MjkzNDQ5JGo1OSRsMCRoMTQ2NzU0OTU4NA" target="">Manage Your Membership</a>
+                                            </li>
+                                    </ul>
+                                    <div class="iiba-cta-card">
+                                        <div class="iiba-cta-content">
+                                                <div class="iiba-cta-headline">Already a member? </div>
+                                                <div class="iiba-cta-body">Access all your exclusive member resources</div>
+                                                <a href="https://my.iiba.org/portal/s/dashboard" class="iiba-cta-link">
+                                                    Log in to My IIBA &rarr;
+                                                </a>
+                                        </div>
+                                    </div>
+                            </div>
+                    </div>
+
+                </div>
+                <div class="iiba-mega-menu" id="menu-13244"
+                     style="--iiba-menu-bg: #ffffff;">
+                    <div class="iiba-mega-grid iiba-grid-3">
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Business and Government</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/partner-program/" target="">Partner Program Overview</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/membership/corporate/files/iiba-partner-program.pdf" target="_blank">Partner Program Tiers and Benefits</a>
+                                            </li>
+                                            <li>
+                                                <a href="/about-iiba/business-analysis-driving-business-success/" target="">Success Stories</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Academic Institutions</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/academic-partner-program/" target="">Academic Partner Program Overview</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/membership/academic-partner/files/academic-partner-program-brochure.pdf" target="_blank">Academic Partner Benefits</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Training Partners</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/training-partner-program/" target="">Training Partner Program Overview</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/membership/training-partner/files/training-partner-program-brochure.pdf#page=[2]" target="_blank">Training Partner Benefits</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                    </div>
+
+                        <div class="iiba-mega-footer">
+                            <div class="iiba-footer-help">
+                                <div class="iiba-footer-text-block">
+                                        <span class="iiba-footer-strong">Grow Your Organization with IIBA Partnership</span>
+                                        <span class="iiba-footer-muted">Built for enterprises, academia, and training providers.</span>
+                                </div>
+                            </div>
+                            <div class="iiba-footer-contact">
+                                    <a href="/business-analysis-membership/partner-program/#contact-iiba-partner-manager">
+                                        Contact a Partner Manager &rarr;
+                                    </a>
+                            </div>
+                        </div>
+                </div>
+                <div class="iiba-mega-menu" id="menu-13247"
+                     style="--iiba-menu-bg: #ffffff;">
+                    <div class="iiba-mega-grid iiba-grid-4">
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Standards &amp; Resources</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/knowledge-hub/" target="">KnowledgeHub</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/babok/" target="">A Guide to the Business Analysis Body of Knowledge (BABOK Guide)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/the-foundation-for-effective-business-analysis/" target="">The Business Analysis Standard</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/global-business-analysis-standards-regulations-and-best-practices/" target="">IIBA Standards &amp; Guides</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/iiba-bookstore/" target="">IIBA Bookstore</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Research &amp; Insights</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-blogs/" target="">Analyst Catalyst Blog</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-business-analysis-member-articles/" target="">IIBA Member Articles</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-the-corner/" target="">The Corner</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/reports-research/" target="">IIBA Global Research</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Professional Development</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/digital-library-plus/" target="">Digital Library&#x2B;</a>
+                                            </li>
+                                            <li>
+                                                <a href="/professional-development/business-analysis-competency-model/" target="">Business Analysis Competency Model</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-partnerships/iiba-endorsed-training/" target="">IIBA Training Providers</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Build Your Career</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/career-resources/new-to-business-analysis/" target="">Getting Started</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-specialization/" target="">Business Analysis Specialization</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://careercenter.iiba.org/" target="_blank">IIBA Career Centre</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/the-global-state-of-business-analysis/the-global-state-of-business-analysis-reports-and-surveys/" target="">Salary and Career Insights</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                    </div>
+
+                        <div class="iiba-mega-footer">
+                            <div class="iiba-footer-help">
+                                <div class="iiba-footer-text-block">
+                                        <span class="iiba-footer-strong">   Already a member?</span>
+                                </div>
+                            </div>
+                            <div class="iiba-footer-contact">
+                                    <a href="/login/">
+                                        Login to access all of your resources &rarr;
+                                    </a>
+                            </div>
+                        </div>
+                </div>
+                <div class="iiba-mega-menu" id="menu-12"
+                     style="--iiba-menu-bg: #ffffff;">
+                    <div class="iiba-mega-grid iiba-grid-3">
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Live Events</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/webinars/#upcoming-webinars" target="">Upcoming Webinars</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://my.iiba.org/portal/s/events?_gl=1*3n5l7i*_gcl_au*MjA2MTI4MDEzNC4xNzc1Njc4OTIx*_ga*MTMyMzg5MTY2OS4xNzc1Njc4OTIy*_ga_2KELDBPLRW*czE3ODA0OTE5ODYkbzM1JGcxJHQxNzgwNTE2NjY1JGo1NCRsMCRoMTA2OTAwMDAyMw" target="">Chapter Events</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">On Demand Events</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/podcasts/" target="">Podcasts</a>
+                                            </li>
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/webinars/webinar-archives/" target="">Webinar Archive</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Global Events and Awards</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/events/global-events-calendar/" target="">Global Events</a>
+                                            </li>
+                                            <li>
+                                                <a href="/events/building-business-capability/" target="">Building Business Capability (BBC)</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://go.iiba.org/Global-Business-Analysis-Day-2026" target="_blank">Global Business Analysis Day</a>
+                                            </li>
+                                            <li>
+                                                <a href="/events/iiba-annual-awards-program/" target="">IIBA Awards</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                    </div>
+
+                </div>
+                <div class="iiba-mega-menu" id="menu-13"
+                     style="--iiba-menu-bg: #ffffff;">
+                    <div class="iiba-mega-grid iiba-grid-3">
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Connect</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/chapters/" target="">IIBA Chapters</a>
+                                            </li>
+                                            <li>
+                                                <a href="/get-involved/special-interest-groups/" target="">Special Interest Groups</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">Volunteer</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="https://volunteer.iiba.org/" target="_blank">Volunteer Opportunities</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://volunteer.iiba.org/volunteer-account-overview" target="_blank">Volunteer Portal</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mega-col">
+                                    <div class="iiba-col-heading">About IIBA</div>
+                                <div class="iiba-col-divider"></div>
+                                    <ul class="iiba-col-links">
+                                            <li>
+                                                <a href="/about-iiba/" target="">Who We Are</a>
+                                            </li>
+                                            <li>
+                                                <a href="/about-iiba/iiba-careers/" target="">Careers at IIBA</a>
+                                            </li>
+                                            <li>
+                                                <a href="/contact-us/" target="">Contact Us</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                    </div>
+
+                        <div class="iiba-mega-footer">
+                            <div class="iiba-footer-help">
+                                <div class="iiba-footer-text-block">
+                                        <span class="iiba-footer-strong">Want to contribute?</span>
+                                        <span class="iiba-footer-muted">Tell us how you&#x27;d like to get involved.</span>
+                                </div>
+                            </div>
+                            <div class="iiba-footer-contact">
+                                    <a href="mailto:volunteer@iiba.org">
+                                        Contact Us &rarr;
+                                    </a>
+                            </div>
+                        </div>
+                </div>
+
+    </div>
+
+                    </div>
+
+            </div>
+        </div>
+        <div class="v-navigation-drawer__border"></div>
+
+            
+
+
+
+    <div class="iiba-mobile-nav">
+
+        <nav class="iiba-mobile-nav-list" aria-label="Main mobile navigation">
+                <button type="button" 
+                        class="iiba-mobile-nav-item" 
+                        data-mobile-menu="mobile-menu-9" 
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu-9">
+                    Certification
+                    <span class="iiba-mobile-nav-chevron" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 4 13 10 7 16"></polyline>
+                        </svg>
+                    </span>
+                </button>
+                <button type="button" 
+                        class="iiba-mobile-nav-item" 
+                        data-mobile-menu="mobile-menu-8" 
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu-8">
+                    Membership
+                    <span class="iiba-mobile-nav-chevron" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 4 13 10 7 16"></polyline>
+                        </svg>
+                    </span>
+                </button>
+                <button type="button" 
+                        class="iiba-mobile-nav-item" 
+                        data-mobile-menu="mobile-menu-13244" 
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu-13244">
+                    Organizations
+                    <span class="iiba-mobile-nav-chevron" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 4 13 10 7 16"></polyline>
+                        </svg>
+                    </span>
+                </button>
+                <button type="button" 
+                        class="iiba-mobile-nav-item" 
+                        data-mobile-menu="mobile-menu-13247" 
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu-13247">
+                    Career Resources
+                    <span class="iiba-mobile-nav-chevron" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 4 13 10 7 16"></polyline>
+                        </svg>
+                    </span>
+                </button>
+                <button type="button" 
+                        class="iiba-mobile-nav-item" 
+                        data-mobile-menu="mobile-menu-12" 
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu-12">
+                    Events
+                    <span class="iiba-mobile-nav-chevron" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 4 13 10 7 16"></polyline>
+                        </svg>
+                    </span>
+                </button>
+                <button type="button" 
+                        class="iiba-mobile-nav-item" 
+                        data-mobile-menu="mobile-menu-13" 
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu-13">
+                    Get Involved
+                    <span class="iiba-mobile-nav-chevron" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="7 4 13 10 7 16"></polyline>
+                        </svg>
+                    </span>
+                </button>
+
+                <div class="iiba-mobile-utility-links">
+                        <a href="/my-iiba/" target="" class="iiba-mobile-utility-link">
+                            My IIBA
+                        </a>
+                        <a href="/link/9aa42e102f3b46ef85424ed6ef0a6a78.aspx" class="iiba-mobile-utility-link">
+                            KnowledgeHub
+                        </a>
+                        <a href="/professional-development/knowledge-centre/digital-library-plus/" target="" class="iiba-mobile-utility-link">
+                            Digital Library&#x2B;
+                        </a>
+                        <a href="https://my.iiba.org/portal/s/store" class="iiba-mobile-utility-link">
+                            Store
+                        </a>
+                        <a href="/link/0c2d975a78334ce39d8d976afa243a5e.aspx" class="iiba-mobile-utility-link">
+                            Blog
+                        </a>
+                        <a href="/about-iiba/" target="" class="iiba-mobile-utility-link">
+                            About IIBA&#xAE;
+                        </a>
+                        <a href="/contact-us/" target="" class="iiba-mobile-utility-link">
+                            Contact Us
+                        </a>
+                </div>
+            <div class="iiba-mobile-user-section">
+                    <a href="/login" class="iiba-mobile-login-link">
+                        <i class="material-icons" aria-hidden="true">power_settings_new</i>
+                        Login
+                    </a>
+            </div>
+
+                <div class="iiba-mobile-cta-wrapper">
+                    <a href="https://my.iiba.org/portal/s/dashboard" target="" class="iiba-mobile-cta-button">
+                        Join | Renew
+                    </a>
+                </div>
+        </nav>
+
+                <div class="iiba-mobile-panel" id="mobile-menu-9" aria-hidden="true">
+
+                    <div class="iiba-mobile-panel-header">
+                        <button type="button" class="iiba-mobile-back-btn" aria-label="Back to main menu">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="13 4 7 10 13 16"></polyline>
+                            </svg>
+                        </button>
+                        <span class="iiba-mobile-panel-title">Certification</span>
+                    </div>
+
+                    <div class="iiba-mobile-panel-content">
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Foundational</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/ecba/" target="">Entry Certificate in Business Analysis (ECBA)</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Core</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/ccba/" target="">Certification of Capability in Business Analysis (CCBA)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/cbap/" target="">Certified Business Analysis Professional (CBAP)</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Specialized</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/agile-analysis/" target="">Agile Analysis Certification (AAC)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/business-data-analytics-certification/" target="">Certification in Business Data Analytics (CBDA)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certificate-in-cybersecurity-analysis/" target="">Certificate in Cybersecurity Analysis (CCA)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certificate-in-product-ownership-analysis-iiba-cpoa/" target="">Certificate in Product Ownership Analysis (CPOA)</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Resources</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/4-simple-steps-to-business-analysis-certification/" target="">Steps to Certification</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-fees/" target="">Certification Fees</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/exam-information/" target="">Exam Information</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-handbooks/" target="">Certification Handbooks</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-partnerships/iiba-endorsed-training/" target="">IIBA Exam Prep Providers</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/partner-program/" target="">Certify Your Team</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Maintain &amp; Renew</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-certifications/recertification/" target="">Recertification Requirements</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/documents/terms-conditions-codes-of-conduct/certification-code-of-ethical-conduct-and-professional-standards.pdf" target="_blank">Code of Ethical Conduct and Professional Standards</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-digital-badge-program-and-directory/" target="">Access Your Badge &amp; Directory</a>
+                                            </li>
+                                    </ul>
+                            </div>
+
+
+                    </div>
+
+                        <div class="iiba-mobile-panel-footer">
+                            <div class="iiba-mobile-footer-text">
+                                    <strong>All IIBA Certifications</strong>
+                                    <span>Explore certifications for every stage of your business analysis career.</span>
+                            </div>
+                                <a href="/business-analysis-certifications/iiba-certifications/" class="iiba-mobile-footer-link">
+                                    View All Certifications →
+                                </a>
+                        </div>
+
+                </div>
+                <div class="iiba-mobile-panel" id="mobile-menu-8" aria-hidden="true">
+
+                    <div class="iiba-mobile-panel-header">
+                        <button type="button" class="iiba-mobile-back-btn" aria-label="Back to main menu">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="13 4 7 10 13 16"></polyline>
+                            </svg>
+                        </button>
+                        <span class="iiba-mobile-panel-title">Membership</span>
+                    </div>
+
+                    <div class="iiba-mobile-panel-content">
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">PLANS AND PRICING</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/membership-pricing/" target="">Membership Pricing</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/individual/" target="">How to Become a Member</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/partner-program/" target="">Team Membership</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://go.iiba.org/FAQs-New-Student-Membership" target="_blank">Student Membership</a>
+                                            </li>
+                                            <li>
+                                                <a href="/about-iiba/business-analysis-driving-business-success/" target="">Why IIBA?</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">MEMBER BENEFITS</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/membership-benefits/" target="">Explore All Benefits</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-certifications/certification-digital-badge-program-and-directory/" target="">IIBA Professional Directory</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/knowledge-hub/" target="">KnowledgeHub</a>
+                                            </li>
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/digital-library-plus/" target="">Digital Library&#x2B;</a>
+                                            </li>
+                                            <li>
+                                                <a href="/business-analysis-membership/chapters/" target="">Chapters</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">CURRENT MEMBERS</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="https://my.iiba.org/portal/s/dashboard?_gl=1*1ub6xqp*_gcl_au*MjA2MTI4MDEzNC4xNzc1Njc4OTIx*_ga*MTMyMzg5MTY2OS4xNzc1Njc4OTIy*_ga_2KELDBPLRW*czE3NzkyODQ2MzkkbzI1JGcxJHQxNzc5MjkzNDQ5JGo1OSRsMCRoMTQ2NzU0OTU4NA" target="">Manage Your Membership</a>
+                                            </li>
+                                    </ul>
+                            </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="iiba-mobile-panel" id="mobile-menu-13244" aria-hidden="true">
+
+                    <div class="iiba-mobile-panel-header">
+                        <button type="button" class="iiba-mobile-back-btn" aria-label="Back to main menu">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="13 4 7 10 13 16"></polyline>
+                            </svg>
+                        </button>
+                        <span class="iiba-mobile-panel-title">Organizations</span>
+                    </div>
+
+                    <div class="iiba-mobile-panel-content">
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Business and Government</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/partner-program/" target="">Partner Program Overview</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/membership/corporate/files/iiba-partner-program.pdf" target="_blank">Partner Program Tiers and Benefits</a>
+                                            </li>
+                                            <li>
+                                                <a href="/about-iiba/business-analysis-driving-business-success/" target="">Success Stories</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Academic Institutions</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/academic-partner-program/" target="">Academic Partner Program Overview</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/membership/academic-partner/files/academic-partner-program-brochure.pdf" target="_blank">Academic Partner Benefits</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Training Partners</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/training-partner-program/" target="">Training Partner Program Overview</a>
+                                            </li>
+                                            <li>
+                                                <a href="/globalassets/membership/training-partner/files/training-partner-program-brochure.pdf#page=[2]" target="_blank">Training Partner Benefits</a>
+                                            </li>
+                                    </ul>
+                            </div>
+
+
+                    </div>
+
+                        <div class="iiba-mobile-panel-footer">
+                            <div class="iiba-mobile-footer-text">
+                                    <strong>Grow Your Organization with IIBA Partnership</strong>
+                                    <span>Built for enterprises, academia, and training providers.</span>
+                            </div>
+                                <a href="/business-analysis-membership/partner-program/#contact-iiba-partner-manager" class="iiba-mobile-footer-link">
+                                    Contact a Partner Manager →
+                                </a>
+                        </div>
+
+                </div>
+                <div class="iiba-mobile-panel" id="mobile-menu-13247" aria-hidden="true">
+
+                    <div class="iiba-mobile-panel-header">
+                        <button type="button" class="iiba-mobile-back-btn" aria-label="Back to main menu">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="13 4 7 10 13 16"></polyline>
+                            </svg>
+                        </button>
+                        <span class="iiba-mobile-panel-title">Career Resources</span>
+                    </div>
+
+                    <div class="iiba-mobile-panel-content">
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Standards &amp; Resources</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/knowledge-hub/" target="">KnowledgeHub</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/babok/" target="">A Guide to the Business Analysis Body of Knowledge (BABOK Guide)</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/the-foundation-for-effective-business-analysis/" target="">The Business Analysis Standard</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/global-business-analysis-standards-regulations-and-best-practices/" target="">IIBA Standards &amp; Guides</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/iiba-bookstore/" target="">IIBA Bookstore</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Research &amp; Insights</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-blogs/" target="">Analyst Catalyst Blog</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-business-analysis-member-articles/" target="">IIBA Member Articles</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-the-corner/" target="">The Corner</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-resources/reports-research/" target="">IIBA Global Research</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Professional Development</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/digital-library-plus/" target="">Digital Library&#x2B;</a>
+                                            </li>
+                                            <li>
+                                                <a href="/professional-development/business-analysis-competency-model/" target="">Business Analysis Competency Model</a>
+                                            </li>
+                                            <li>
+                                                <a href="/iiba-partnerships/iiba-endorsed-training/" target="">IIBA Training Providers</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Build Your Career</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/career-resources/new-to-business-analysis/" target="">Getting Started</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/business-analysis-specialization/" target="">Business Analysis Specialization</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://careercenter.iiba.org/" target="_blank">IIBA Career Centre</a>
+                                            </li>
+                                            <li>
+                                                <a href="/career-resources/the-global-state-of-business-analysis/the-global-state-of-business-analysis-reports-and-surveys/" target="">Salary and Career Insights</a>
+                                            </li>
+                                    </ul>
+                            </div>
+
+
+                    </div>
+
+                        <div class="iiba-mobile-panel-footer">
+                            <div class="iiba-mobile-footer-text">
+                                    <strong>   Already a member?</strong>
+                            </div>
+                                <a href="/login/" class="iiba-mobile-footer-link">
+                                    Login to access all of your resources →
+                                </a>
+                        </div>
+
+                </div>
+                <div class="iiba-mobile-panel" id="mobile-menu-12" aria-hidden="true">
+
+                    <div class="iiba-mobile-panel-header">
+                        <button type="button" class="iiba-mobile-back-btn" aria-label="Back to main menu">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="13 4 7 10 13 16"></polyline>
+                            </svg>
+                        </button>
+                        <span class="iiba-mobile-panel-title">Events</span>
+                    </div>
+
+                    <div class="iiba-mobile-panel-content">
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Live Events</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/webinars/#upcoming-webinars" target="">Upcoming Webinars</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://my.iiba.org/portal/s/events?_gl=1*3n5l7i*_gcl_au*MjA2MTI4MDEzNC4xNzc1Njc4OTIx*_ga*MTMyMzg5MTY2OS4xNzc1Njc4OTIy*_ga_2KELDBPLRW*czE3ODA0OTE5ODYkbzM1JGcxJHQxNzgwNTE2NjY1JGo1NCRsMCRoMTA2OTAwMDAyMw" target="">Chapter Events</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">On Demand Events</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/podcasts/" target="">Podcasts</a>
+                                            </li>
+                                            <li>
+                                                <a href="/professional-development/knowledge-centre/webinars/webinar-archives/" target="">Webinar Archive</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Global Events and Awards</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/events/global-events-calendar/" target="">Global Events</a>
+                                            </li>
+                                            <li>
+                                                <a href="/events/building-business-capability/" target="">Building Business Capability (BBC)</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://go.iiba.org/Global-Business-Analysis-Day-2026" target="_blank">Global Business Analysis Day</a>
+                                            </li>
+                                            <li>
+                                                <a href="/events/iiba-annual-awards-program/" target="">IIBA Awards</a>
+                                            </li>
+                                    </ul>
+                            </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="iiba-mobile-panel" id="mobile-menu-13" aria-hidden="true">
+
+                    <div class="iiba-mobile-panel-header">
+                        <button type="button" class="iiba-mobile-back-btn" aria-label="Back to main menu">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="13 4 7 10 13 16"></polyline>
+                            </svg>
+                        </button>
+                        <span class="iiba-mobile-panel-title">Get Involved</span>
+                    </div>
+
+                    <div class="iiba-mobile-panel-content">
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Connect</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/business-analysis-membership/chapters/" target="">IIBA Chapters</a>
+                                            </li>
+                                            <li>
+                                                <a href="/get-involved/special-interest-groups/" target="">Special Interest Groups</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">Volunteer</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="https://volunteer.iiba.org/" target="_blank">Volunteer Opportunities</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://volunteer.iiba.org/volunteer-account-overview" target="_blank">Volunteer Portal</a>
+                                            </li>
+                                    </ul>
+                            </div>
+                            <div class="iiba-mobile-section">
+                                    <div class="iiba-mobile-section-heading">About IIBA</div>
+                                    <ul class="iiba-mobile-section-links">
+                                            <li>
+                                                <a href="/about-iiba/" target="">Who We Are</a>
+                                            </li>
+                                            <li>
+                                                <a href="/about-iiba/iiba-careers/" target="">Careers at IIBA</a>
+                                            </li>
+                                            <li>
+                                                <a href="/contact-us/" target="">Contact Us</a>
+                                            </li>
+                                    </ul>
+                            </div>
+
+
+                    </div>
+
+                        <div class="iiba-mobile-panel-footer">
+                            <div class="iiba-mobile-footer-text">
+                                    <strong>Want to contribute?</strong>
+                                    <span>Tell us how you&#x27;d like to get involved.</span>
+                            </div>
+                                <a href="mailto:volunteer@iiba.org" class="iiba-mobile-footer-link">
+                                    Contact Us →
+                                </a>
+                        </div>
+
+                </div>
+
+    </div>
+
+
+        <!-- kh menu -->
+    </aside>
+
+    <div class="navMain__toolbarMobile"></div>
+
+    <div class="NavUtility__hasAutoComplete__wrapper--mobile">
+        <div class="NavUtility__searchForm">
+            <form action="/search/" method="get" class="NavUtility__searchForm__formElement">
+                <div class="v-input v-text-field v-select v-autocomplete theme--light">
+                    <div class="v-input__control">
+                        <div class="v-input__slot" style="">
+                            <div class="v-menu v-menu--inline">
+                                <div class="v-menu__activator">
+                                    <div class="v-select__slot">
+                                        <input name="q" type="text" placeholder="Search" autocomplete="off"
+                                               role="combobox">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="v-text-field__details">
+                            <div class="v-messages theme--light">
+                                <div class="v-messages__wrapper"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <button type="submit" class="bf-btn button--clean v-btn v-btn">
+                    <div class="v-btn__content"><i role="search" class="material-icons material-icons--search">search</i></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+        <div class="logo__wrapper--mobile">
+            <a href="/" class="logo__link logo__link--mobile">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/globalassets/logos/iiba-logos/iibalogomobile.svg" alt="IIBA Logo" class="logo lazyload">
+            </a>
+        </div>
+
+    <button id="navMain__toggleButton" class="button--clean">
+        <i class="material-icons navMain__icon--hamburger icon-visible">menu</i>
+        <i class="material-icons navMain__icon--close" style="display:none">close</i>
+        <div class="navMain__icon__text">menu</div>
+    </button>
+
+</div>
+
+
+                
+
+
+
+
+
+<main id="main" class="main main--homePage">
+    
+<div><div>
+
+
+
+<section data-bg="/contentassets/44872f8136a84163b3f556a7b69e92fa/ba-studio-header-01-1920x740.jpg" class="homepage--hero background-image lazyload">
+    <div class="row hero-inner d-flex align-items-end">
+    <div class="container">
+        <div class="col-md-10 hero-content-wrap">
+            <div class="hero-content">
+                <div class="hero-content-inner">
+
+
+
+                        <div class="hero-excerpt">
+                            
+<div class="container">
+<div class="row">
+<div class="col-xl-12">
+<h1 class="cta__header" style="color: #fff; text-shadow: 1px 1px 3px #000000;">Learn the Skill. Apply It With Confidence.</h1>
+</div>
+<div class="col-xl-11">
+<h4 class="cta__subheader" style="color: #fff; text-shadow: 1px 1px 3px #000000;">Jump into real-world scenarios and practise business analysis techniques step by step. Business Analysis Studio delivers interactive simulations with instant checkpoints and feedback. Perfect for early-career professionals, valuable at any level, and exclusively for IIBA members.</h4>
+
+
+<p><a class="bf-btn has-arrow" title="Not a Member? Start Your Free Trial" href="https://go.iiba.org/l/590871/2026-06-29/41gwsk" target="_blank" rel="noopener" data-ga-location="homepage_carousel" data-ga-campaign="ba_studio_launch" data-ga-slide="business_analysis_studio" data-ga-cta="start_free_trial">Not a Member? Start Your Free Trial</a></p>
+<p><a class="bf-btn has-arrow" title="Already a member? Access in the Knowledgehub" href="/knowledgehub/#tools-and-resources" data-ga-location="homepage_carousel" data-ga-campaign="ba_studio_launch" data-ga-slide="business_analysis_studio" data-ga-cta="access_knowledgehub">Already a member? Access in the Knowledgehub</a></p>
+
+
+<style>
+.btn-orange {
+
+color: #fff; 
+background-color: #d86018; 
+padding: 20px 20px; 
+border: none; 
+border-radius: 2px; 
+cursor: pointer;
+font-weight: bold;
+font-size:2rem;
+}
+
+.btn-orange:hover {
+
+background-color: #BA3E1D; 
+
+}
+
+.btn-aqua {
+
+color: #fff; 
+background-color: #00758C; 
+padding: 20px 20px; 
+border: none; 
+border-radius: 2px; 
+cursor: pointer;
+font-weight: bold;
+font-size:2rem;
+}
+
+.btn-aqua:hover {
+
+background-color: #005869; 
+
+}
+
+
+.btn-green {
+
+color: #fff; 
+background-color: #009F4D; 
+padding: 20px 20px; 
+border: none; 
+border-radius: 2px; 
+cursor: pointer;
+font-weight: bold;
+font-size:2rem;
+}
+
+.btn-green:hover {
+
+background-color: #005a2c; 
+
+}
+
+</style>
+</div>
+</div>
+</div>
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section></div></div>
+
+    <section class="cake-layer">
+        
+<div><div>
+
+
+
+<h2 style="text-align: center; margin-top: 50px;">Your Path to Success in Business Analysis</h2>
+<h4 class="to-appease" style="text-align: center;">Business analysis is evolving. At IIBA, we support professionals and organizations in mastering the tools, techniques, and certifications that drive success in a changing world. Join a global community that advances the practice of business analysis.</h4>
+<div class="card-container">
+<div class="card-one card-width">
+<div class="img-one">&nbsp;</div>
+<button class="btn-base btn-one"> <a class="card-heading" style="color: #fff;" title="Become an IIBA  Member" href="/business-analysis-membership/individual/?utm_source=Homepage&amp;utm_campaign=Foundations%2bBlock&amp;utm_id=Become%2ba%2bMember">BECOME A MEMBER</a> </button>
+<div class="content">
+<p>Join a global network of business analysis professionals with IIBA membership. Access exclusive resources, including access to the KnowledgeHub, and connect with peers worldwide to advance your career.</p>
+</div>
+</div>
+<div class="card-two card-width">
+<div class="img-two">&nbsp;</div>
+<button class="btn-base btn-two"> <a class="card-heading" style="color: #fff;" title="Get Certified with IIBA" href="/business-analysis-certifications/iiba-certifications/?utm_source=Homepage&amp;utm_campaign=Foundations%2bBlock&amp;utm_id=Get%2bCertified">GET CERTIFIED</a> </button>
+<div class="content">
+<p>Enhance your professional credibility with IIBA's globally recognized certifications. From ECBA to CBAP, validate your expertise and open new career opportunities in business analysis.</p>
+</div>
+</div>
+<div class="card-three card-width">
+<div class="img-three">&nbsp;</div>
+<button class="btn-base btn-three"> <a class="card-heading" style="color: #fff;" title="Explore IIBA Partner Programs" href="/business-analysis-membership/partner-program/?utm_source=Homepage&amp;utm_campaign=Foundations%2bBlock&amp;utm_id=Explore%2bPrograms">EXPLORE PROGRAMS</a> </button>
+<div class="content">
+<p>Stay ahead in the dynamic field of business analysis with IIBA's Partner Programs. Designed for organizations, academic institutions, and training providers, these programs help elevate skills and advance career prospects.</p>
+</div>
+</div>
+</div></div><div>
+
+
+
+<div class="container cake-layer--weekly">
+<div class="row">
+<div class="col-xl-1">&nbsp;</div>
+<div class="col-xl-7">
+<div class="alert-pill-orange" style="margin-bottom: 5px; margin-top: 30px;"><em>Updated: July 13, 2026</em></div>
+<h2>IIBA Weekly</h2>
+<h4 class="cta__subheader">IIBA Weekly is your trusted pulse on business analysis everywhere&mdash;spotlighting community stories, ideas, and updates you might have missed. Stay connected, stay inspired.</h4>
+</div>
+<div class="col-xl-4" style="z-index: 1000; padding-top: 30px; padding-bottom: 20px;"><iframe class="center" style="border-radius: 4px;" title="IIBA Weekly: GIFs, IIBA Volunteer Award Nomination,  On-Demand Series" src="https://www.youtube.com/embed/79fNCC2txRc" width="169" height="300" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+</div>
+</div></div><div>
+
+
+
+<section class="component less-pad component--CardCollection background-grey">
+	<div class="container">
+
+		<div class="component__header text-center accent__top">
+			<h3 class="section-heading">Featured Highlights: Analysis Everywhere, Events, and Community</h3>
+		</div>
+
+			    <div class="row justify-content-center">
+
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/iiba-the-corner/analysts-architects-and-agents-enabling-the-operating-model-for-change/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/22ec9f0309eb4066aa04b0279efd9b5f/the-corner-blog-card.jpg" alt="A speech box with the words &quot;The Corner&quot;" class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=143"><span>The Corner</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/iiba-the-corner/analysts-architects-and-agents-enabling-the-operating-model-for-change/">
+                                Analysts, Architects, and Agents: Enabling the Operating Model for Change
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>Business analysis and business architecture have long operated in silos, to everyone's detriment. Dr. Terry Roach makes the case for why AI makes alignment between the two professions not just overdue, but urgent, and what it means for practitioners stepping into the agentic era</p>
+					</div>
+
+
+					<a href="/iiba-the-corner/analysts-architects-and-agents-enabling-the-operating-model-for-change/" class="bf-btn has-arrow bf-card__button">
+						Read the Article
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="https://forms.office.com/r/rKZ54Kg4Bd" target="_blank">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/18258375605043059832fd3bb3d23ec0/volunteer-award-nomination-promo-website-card-768x432_.jpg" alt="Volunteer-Award-Nomination-Promo-Website-Card-768x432_.jpg" class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="https://forms.office.com/r/rKZ54Kg4Bd" target="_blank">
+                                Recognizing Outstanding Volunteers
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>&nbsp;The IIBA Volunteer Awards honour those who have substantially contributed to the business analysis community.</p>
+<p>Nominate deserving IIBA volunteers for the 2026 Volunteer Award by<strong> July 31</strong>. Submit your nomination(s) today!</p>
+					</div>
+
+
+					<a href="https://forms.office.com/r/rKZ54Kg4Bd" target="_blank" class="bf-btn has-arrow bf-card__button">
+						Submit Your Nomination
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/career-resources/the-global-state-of-business-analysis/the-global-state-of-business-analysis-reports-and-surveys/the-global-state-of-business-analysis-2026/" target="_blank">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/d37333214e1b4c71ba2f6ed0f190bca1/gsba26-card-768x432.jpg" alt="GSBA26-Card-768x432.jpg" class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/career-resources/the-global-state-of-business-analysis/the-global-state-of-business-analysis-reports-and-surveys/the-global-state-of-business-analysis-2026/" target="_blank">
+                                2026 Global State of Business Analysis Report 
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p><strong>The business analysis profession, measured annually&nbsp;</strong></p>
+<p>The <em>2026 Global State of Business Analysis Report</em> offers a data-driven look at the profession worldwide. Explore key insights on compensation, certification value, AI adoption, emerging skills, and the trends influencing the future of business analysis.&nbsp;</p>
+					</div>
+
+
+					<a href="/career-resources/the-global-state-of-business-analysis/the-global-state-of-business-analysis-reports-and-surveys/the-global-state-of-business-analysis-2026/" target="_blank" class="bf-btn has-arrow bf-card__button">
+						Access the Report
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+			    </div>
+
+	</div>
+</section></div><div>
+
+
+
+<section class="component less-pad component--CardCollection background-blue-dark">
+	<div class="container">
+
+		<div class="component__header text-center accent__top">
+			<h3 class="section-heading">Elevate Your Career: Business Analysis Resources</h3>
+		</div>
+
+			    <div class="row justify-content-center">
+
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/career-resources/new-to-business-analysis/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/0da2817e759f4736ad98d00f9f223aaf/new-to-ba-card-768x432.jpg" alt="New-to-BA-Card-768x432.jpg" class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/career-resources/new-to-business-analysis/">
+                                New to Business Analysis?
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						Business analysis is both a role and a discipline. Business Analysts and professionals of many different titles use business analysis to enable successful change in an organization.
+					</div>
+
+
+					<a href="/career-resources/new-to-business-analysis/" class="bf-btn has-arrow bf-card__button">
+						Learn More
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/career-resources/business-analysis-resources/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/1357f109aa5a4d81a389f9a7bac49dd4/ba-resources-card-768x432-1.jpg" alt="ba-resources-Card-768x432 (1).jpg" class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/career-resources/business-analysis-resources/">
+                                Business Analysis Resources
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						A curated body of knowledge dedicated to advancing your career in business analysis to create better business outcomes for your organization.
+					</div>
+
+
+					<a href="/career-resources/business-analysis-resources/" class="bf-btn has-arrow bf-card__button">
+						take advantage
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/career-resources/a-business-analysis-professionals-foundation-for-success/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/d331c2a9155042ac9fd90887170bec6d/ba-foundation-for-success-card-768x432.jpg" alt="BA-foundation-for-Success-Card-768x432.jpg" class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/career-resources/a-business-analysis-professionals-foundation-for-success/">
+                                A Business Analysis Foundation for Success
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						Introduce and manage change&nbsp;successfully&nbsp;for your organization&nbsp;with&nbsp;the globally recognized standards of the business analysis profession.
+					</div>
+
+
+					<a href="/career-resources/a-business-analysis-professionals-foundation-for-success/" class="bf-btn has-arrow bf-card__button">
+						Get Started
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+			    </div>
+
+	</div>
+</section></div><div>
+
+
+    <section class="component component--RichText1Col">
+        <div class="container">
+            <div class="text-center">
+                <h3 class="component__headline">
+                    
+                </h3>
+            </div>
+            <div class='content__container d-flex flex-row flex-wrap-reverse'>
+
+
+                <div class='content--column'>
+                    <div class="rich-text-wrap">
+                        
+<div class="component__header text-center accent__top" style="margin-top: -50px !important;">
+<h3 class="section-heading"><a class="link dont-break-out" title="On-demand Insights, Techniques, and Resources for Business Analysis Professionals" href="/knowledgehub/">On-demand Insights, Techniques, and Resources for Business Analysis Professionals</a></h3>
+</div>
+<h3 class="knowledgeHub_heading-large" style="text-align: center;">Become a Member and <a class="link dont-break-out" title="Explore IIBA&rsquo;s KnowledgeHub" href="/knowledgehub/">Explore IIBA&rsquo;s KnowledgeHub</a></h3>
+
+
+<div class="container">
+    <div class="knowledgeHub knowledgeHub_carousel blockMargin-large">
+        <div class="container">
+            <h3 class="knowledgeHub_heading-large"></h3>
+        </div>
+        <div class="knowledgeHub knowledgeHub_carousel-slide flickity buttonsBottom"  data-flickity-arrows="true" data-flickity-dots="true" data-flickity-autoplay="false">
+
+    <div class="tile tile_card ">    
+        <div class="tile_card-title">
+            &#x2018;How do I&#x2019; Scenarios
+        </div>
+        <div class="tile_card-content">
+            
+<p><img style="border-radius: 2px;" src="/contentassets/9d3bb145d7d24f6d91d14ed27927d65d/main_carousel-card-mobile-375x250.jpg" alt="Main_Carousel Card Mobile 375x250.jpg" width="375" height="250" /></p>
+<p>Want to achieve better business outcomes? Get actionable content including downloadable tips, tools, and templates contributed by business analysis professionals.</p>
+<p>&nbsp;</p>
+<p><button id="bottom-button" class="btn-orange-sm-plus"><a style="color: #fff;" title="Become an IIBA Member to View Now" href="/career-resources/business-analysis-resources/knowledge-hub/">View Now</a></button></p>
+
+<style>
+.btn-orange-sm-plus {
+
+color: #fff; 
+background-color: #d86018; 
+padding: 10px 14px; 
+border: none; 
+border-radius: 2px; 
+cursor: pointer;
+font-weight: bold;
+font-size:14px;
+}
+
+.btn-orange-sm-plus:hover {
+
+background-color: #b55216; 
+
+}
+</style>
+        </div>
+
+    </div>
+
+    <div class="tile tile_card ">    
+        <div class="tile_card-title">
+            Running a Virtual Workshop?
+        </div>
+        <div class="tile_card-content">
+            
+<p><img style="border-radius: 2px;" src="/contentassets/7d241f25c5e4453c96770650b965e8be/vrtualworkshop_carousel-card-mobile-375x250.jpg" alt="VrtualWorkshop_Carousel Card Mobile 375x250.jpg" width="375" height="250" /></p>
+<p>Get the step-by-step Business Analyst's guide to ​running a customer journey workshop​.</p>
+<p>&nbsp;</p>
+<p><button id="bottom-button" class="btn-orange-sm-plus"><a style="color: #fff;" title="Become an IIBA Member to Get Started" href="/career-resources/business-analysis-resources/knowledge-hub/">Get Started</a></button></p>
+        </div>
+
+    </div>
+
+    <div class="tile tile_card ">    
+        <div class="tile_card-title">
+            Understanding Stakeholder Analysis
+        </div>
+        <div class="tile_card-content">
+            
+<p><img style="border-radius: 2px;" src="/contentassets/6235942ab39a4a68bc544f3dd329311c/stakeholder-analyis_carousel-card-mobile-375x250.jpg" alt="Stakeholder Analyis_Carousel Card Mobile 375x250.jpg" width="375" height="250" /></p>
+<p>Your initiative&rsquo;s success depends on involving stakeholders that will influence or impact the product. Understand stakeholder analysis what you can do, and how you can do it.</p>
+<p>&nbsp;</p>
+<p><button id="bottom-button" class="btn-orange-sm-plus"><a style="color: #fff;" title="Become an IIBA Member to Start Here" href="/career-resources/business-analysis-resources/knowledge-hub/">Start Here</a></button></p>
+        </div>
+
+    </div>
+
+    <div class="tile tile_card ">    
+        <div class="tile_card-title">
+            Agile Extension to the BABOK&#xAE; Guide
+        </div>
+        <div class="tile_card-content">
+            
+<p><img style="border-radius: 2px;" src="/contentassets/25df2d1d48e14ff797c951173292ca92/agile-analysis_carousel-card-mobile-375x250_main.jpg" alt="Agile Analysis_Carousel Card Mobile 375x250_Main.jpg" width="375" height="250" /></p>
+<p>The Agile Extension to the BABOK&reg; Guide is the leading guide for describing the benefits, activities, tasks, skills, and practices required for effective business analysis with an agile mindset.</p>
+<p>&nbsp;</p>
+<p><button id="bottom-button" class="btn-orange-sm-plus"><a style="color: #fff;" title="Become an IIBA Member to Explore the Guide" href="/career-resources/business-analysis-resources/knowledge-hub/">Explore the Guide</a></button></p>
+        </div>
+
+    </div>
+
+    <div class="tile tile_card ">    
+        <div class="tile_card-title">
+            Guide to Business Data Analytics
+        </div>
+        <div class="tile_card-content">
+            
+<p><img style="border-radius: 2px;" src="/contentassets/e440ac95e37a40f2a2c6ce8abc402102/a_carousel-card-mobile-375x250_main.jpg" alt="A_Carousel Card Mobile 375x250_Main.jpg" width="375" height="250" /></p>
+<p>IIBA&rsquo;s Guide to Business Data Analytics provides a foundational understanding of business data analytics concepts and includes how to develop a framework and more.</p>
+<p>&nbsp;</p>
+<p><button id="bottom-button" class="btn-orange-sm-plus"><a style="color: #fff;" title="Become an IIBA Member to Explore the Guide" href="/career-resources/business-analysis-resources/knowledge-hub/">Explore the Guide</a></button></p>
+        </div>
+
+    </div>
+        </div>
+    </div>
+</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div><div>
+
+
+
+<section class="component less-pad component--CardCollection background-grey">
+	<div class="container">
+
+		<div class="component__header text-center accent__top">
+			<h3 class="section-heading">Trends &amp; Innovation: The Latest Blogs and Member Articles</h3>
+		</div>
+
+			    <div class="row justify-content-center">
+
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/business-analysis-blogs/the-artefacts-that-will-survive-ai-arent-the-ones-you-think/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/8d15a6067d1e4c03ad4595a03c12436b/the-artefacts-that-will-survive-ai-arent-the-ones-you-think-blog-card.jpg" alt="A person wearing a white shirt and dark pants selects a book from a full bookshelf. The setting is an indoor library, and the time of day is daytime. Sunlight is streaming into the library, creating a warm, inviting atmosphere. The composition is a waist-up shot, highlighting the action of reaching for the book. This serene and studious image could be used for projects related to education, reading, personal development, or academic research." class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=144"><span>AI</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/business-analysis-blogs/the-artefacts-that-will-survive-ai-arent-the-ones-you-think/">
+                                The Artefacts That Will Survive AI Aren&#x2019;t the Ones You Think
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>The debate about which business analysis artefacts survive AI is asking the wrong question. The more important question is what those artefacts were actually doing&mdash;and whether that work still needs to happen.&nbsp;</p>
+					</div>
+
+
+					<a href="/business-analysis-blogs/the-artefacts-that-will-survive-ai-arent-the-ones-you-think/" class="bf-btn has-arrow bf-card__button">
+						Read the Blog
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/business-analysis-blogs/business-analysis-beyond-requirements-the-messy-middle/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/2065700d02d44be2b3876afd1f82fdec/ba-beyond-req-the-messy-middle-blog-card.jpg" alt="A densely wooded area is filled with tall trees covered in moss on a foggy day. A narrow trail covered with leaves leads deeper into the mysterious forest. The scene evokes a sense of natural serenity and peaceful escape. This image could be used for projects focusing on nature, outdoor adventures, mindfulness, environmental conservation, or mystery and suspense themes." class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=131"><span>Business Analysis Techniques</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/business-analysis-blogs/business-analysis-beyond-requirements-the-messy-middle/">
+                                Business Analysis Beyond Requirements: Messy Middle
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>Requirements are just the start. Learn how business analysts sustain alignment, decisions, and clarity through the "messy middle" of transformation delivery.</p>
+					</div>
+
+
+					<a href="/business-analysis-blogs/business-analysis-beyond-requirements-the-messy-middle/" class="bf-btn has-arrow bf-card__button">
+						Read the Blog
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/business-analysis-blogs/ba-for-ai-agentic-ai-and-the-future-of-business-analysis/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/16769cf82ab6480aa7e48e5eb3b9fbda/ba-for-ai-not-ai-for-ba-blog-card.png" alt="An airport control tower stands silhouetted against a vibrant sunrise or sunset sky, creating a peaceful scene. A silhouetted airplane takes off or lands in the distance, adding a dynamic element to the composition. The building features a distinctive control room and many windows. Soft, warm colors create a tranquil mood. This serene image could be used for projects relating to travel, aviation, airport operations, or the beauty of sunrise and sunset." class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=144"><span>AI</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/business-analysis-blogs/ba-for-ai-agentic-ai-and-the-future-of-business-analysis/">
+                                BA for AI: Agentic AI and the Future of Business Analysis
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>IIBA President and CEO Delvin Fletcher joined futurist Susan Yu on agentic AI, decision architecture, and the skills business analysts need to shape AI instead of being replaced by it.</p>
+					</div>
+
+
+					<a href="/business-analysis-blogs/ba-for-ai-agentic-ai-and-the-future-of-business-analysis/" class="bf-btn has-arrow bf-card__button">
+						Read the Blog
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/business-analysis-blogs/ais-last-mile-failure-is-a-requirement-problem/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/9766b7c4ce40433e9eeb5cfee5ebe1f2/ais-last-mile-failure-is-a-requirement-problem-blog-card.png" alt="Two athletes are depicted on a reddish-brown running track, with white lines clearly marking the lanes. One of the athletes is in the process of passing a vibrant red baton to the other. The focus is on the action and athleticism of the relay race. This image is suitable for projects that center on teamwork, athletics, competition, sports, fitness, and urban settings." class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=144"><span>AI</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/business-analysis-blogs/ais-last-mile-failure-is-a-requirement-problem/">
+                                AI&#x27;s Last Mile Failure Is a Requirement Problem
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>Most AI pilots look great in demo and fall apart in production. Here&rsquo;s why that &ldquo;last mile&rdquo; keeps breaking, and why business analysts are the best people to fix it.</p>
+					</div>
+
+
+					<a href="/business-analysis-blogs/ais-last-mile-failure-is-a-requirement-problem/" class="bf-btn has-arrow bf-card__button">
+						Read the Blog
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/business-analysis-blogs/stop-reporting-data-start-telling-stories/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/710ffcfb41d2424eb8b22906c132f7cb/stop-reporting-data-start-telling-stories-blog-card.png" alt="A sophisticated seamless pattern in 2 color themes featuring human face profiles integrated with electronic elements, microchips, puzzles, and control symbols. This design explores themes of artificial intelligence, neuroscience, data analytics, and high-tech innovation. With a refined aesthetic, it&#x2019;s ideal for projects related to futuristic technology, science, marketing strategy, and intelligent systems." class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=60"><span>Business Data Analytics</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/business-analysis-blogs/stop-reporting-data-start-telling-stories/">
+                                Stop Reporting Data. Start Telling Stories.
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>A Verizon Wireless analytics lead shares five recurring lessons from his data visualization workshops, covering decision-first chart design, simplicity as a deliberate choice, when (and when not) to use pie charts, a context-insight-action framework for presentations, and how to benchmark performance without historical data.</p>
+					</div>
+
+
+					<a href="/business-analysis-blogs/stop-reporting-data-start-telling-stories/" class="bf-btn has-arrow bf-card__button">
+						Read the Blog
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4">
+        <div class="bf-card d-flex flex-column align-items-stretch">
+
+            <div class="bf-card__image">
+                        <a href="/business-analysis-blogs/business-analysis-studio-learn-the-techniques-apply-them-with-confidence/">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/contentassets/2c2f98f83ce14f8d8d767e542877ac6a/business-analysis-studio-is-here-learn-the-techniques-apply-them-with--confidence-blog-card-768x432.jpg" alt="A smiling young Asian woman stands with a notepad against a teal background. Next to her are the words &quot;Business analysis studio. Learn it. Practice it. Apply it." class="lazyload">
+                        </a>
+            </div>
+
+
+			<div class="bf-card__body">
+
+					<div class="bf-card__category">
+						
+
+
+		<a class="bf-btn" href="/search/?catid=139"><span>Announcement</span></a>
+
+					</div>
+
+		
+				    <h3 class="bf-card__title">
+                            <a class="bf-card__title__link" href="/business-analysis-blogs/business-analysis-studio-learn-the-techniques-apply-them-with-confidence/">
+                                Business Analysis Studio: Learn the Techniques. Apply Them With Confidence.
+                            </a>
+				        
+				    </h3>
+
+					<div class="bf-card__text">
+						<p>Business Analysis Studio is a new interactive learning experience from IIBA. Practise real business analysis techniques through guided, scenario-based simulations. Available now in KnowledgeHub.</p>
+					</div>
+
+
+					<a href="/business-analysis-blogs/business-analysis-studio-learn-the-techniques-apply-them-with-confidence/" class="bf-btn has-arrow bf-card__button">
+						Read the Blog
+					</a>
+
+			</div>
+        </div>
+    </div>
+
+			    </div>
+
+		<footer class="component__footer col-sm-12 text-center">
+			
+
+
+<a href="/business-analysis-blogs/" class="bf-btn has-arrow">
+    <span>View more posts</span>
+</a>
+		</footer>
+	</div>
+</section></div></div>
+
+    </section>
+</main>
+
+
+
+
+
+                
+<footer class="footer--main component component--FooterMain">
+    <div class="container-fluid">
+        
+<svg class="hidden-def" style="display:none;">
+    <symbol id="iconFacebook">
+        <path fill="white" style="transform: scale(1);" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+    </symbol>
+    <symbol id="iconTwitter">
+        <path fill="white" style="transform: scale(1);" d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z" />
+    </symbol>
+    <symbol id="iconYouTube">
+        <path fill="white" style="transform: scale(1);" d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408z" />
+    </symbol>
+    <symbol id="iconLinkedIn">
+        <path fill="white" style="transform: scale(1);" d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401m-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4" />
+    </symbol>
+</svg>
+
+    <div class="row footer__row--hasSocial text-center">
+        <div class="col-sm-12">
+            <div class="socialIconsSet__wrapper">
+                     <span class="socialIcon__wrapper">
+                        <a class="socialIcon__link" rel="noopener" href="http://www.facebook.com/IIBA.org" target="_blank">
+                            <svg class="socialIcon" width="22" height="22" viewBox="0 0 16 16">
+                                <use xlink:href="#iconFacebook"></use>
+                            </svg>
+                        </a>
+                        &nbsp
+                    </span> 
+                     <span class="socialIcon__wrapper">
+                        <a class="socialIcon__link" rel="noopener" href="https://twitter.com/IIBA/" target="_blank">
+                            <svg class="socialIcon" width="22" height="22" viewBox="0 0 16 16">
+                                <use xlink:href="#iconTwitter"></use>
+                            </svg>
+                        </a>
+                        &nbsp
+                    </span> 
+                     <span class="socialIcon__wrapper">
+                        <a class="socialIcon__link" rel="noopener" href="https://www.linkedin.com/company/iiba/" target="_blank">
+                            <svg class="socialIcon" width="22" height="22" viewBox="0 0 16 16">
+                                <use xlink:href="#iconLinkedIn"></use>
+                            </svg>
+                        </a>
+                        &nbsp
+                    </span> 
+                     <span class="socialIcon__wrapper">
+                            <a class="socialIcon__link" rel="noopener" href="https://www.youtube.com/channel/UCtpU0wWTg_QBEXnp4HujLEg" target="_blank">
+                                <svg class="socialIcon" width="28" height="28" viewBox="0 0 16 16">
+                                    <use xlink:href="#iconYouTube"></use>
+                                </svg>
+                            </a>
+                        &nbsp
+                    </span> 
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="container" role="navigation" aria-label="Footer Links">
+
+            <div class="row d-none footer__row--footerNav d-md-flex flex-md-nowrap" > 
+                        <div class="col-md footerNav__col">
+                            <div class="footerNav__headline">
+                                Membership
+                            </div>
+                                <ul class="list-unstyled list--footerNav">
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/how-to-become-a-member/" target="">
+                                                How to Become a Member?
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/become-a-member/" target="">
+                                                Become a Member
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/membership-benefits/" target="">
+                                                Membership Benefits
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/individual/" target="">
+                                                Individual Membership
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/partner-program/" target="">
+                                                Partner Program
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/academic-partner-program/" target="">
+                                                Academic Partner Program
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/membership-pricing/" target="">
+                                                Individual Membership Pricing
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/footer/policies/iiba-membership-policy/">
+                                                IIBA&#xAE; Membership Policy
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="https://my.iiba.org/portal/s/login/">
+                                                IIBA&#xAE; Member Login
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="col-md footerNav__col">
+                            <div class="footerNav__headline">
+                                Certifications
+                            </div>
+                                <ul class="list-unstyled list--footerNav">
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/4-simple-steps-to-business-analysis-certification/" target="">
+                                                4 Steps to Certification
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/ecba/" target="">
+                                                Entry Certificate in Business Analysis  (ECBA)
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/ccba/" target="">
+                                                Certification of Capability in Business Analysis&#x2122; (CCBA&#xAE;)
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/cbap/" target="">
+                                                Certified Business Analysis Professional (CBAP&#xAE;)
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/certificate-in-cybersecurity-analysis/" target="">
+                                                Certificate in Cybersecurity Analysis (IIBA&#xAE;- CCA)
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/agile-analysis/" target="">
+                                                Agile Analysis Certification (IIBA&#xAE;-AAC)
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/business-data-analytics-certification/" target="">
+                                                Business Data Analytics Certification (IIBA&#xAE;-CBDA)
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-certifications/certificate-in-product-ownership-analysis-iiba-cpoa/" target="">
+                                                Certificate in Product Ownership Analysis (IIBA&#xAE;-CPOA)
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="col-md footerNav__col">
+                            <div class="footerNav__headline">
+                                Global Thought Leadership
+                            </div>
+                                <ul class="list-unstyled list--footerNav">
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-blogs/" target="">
+                                                Analyst Catalyst Blog
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/career-resources/business-analysis-resources/whitepapers-studies/" target="">
+                                                Whitepapers &amp; Studies
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/professional-development/knowledge-centre/webinars/" target="">
+                                                Webinars
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/professional-development/knowledge-centre/podcasts/" target="">
+                                                Podcasts
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/professional-development/knowledge-centre/articles/" target="">
+                                                Articles
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="col-md footerNav__col">
+                            <div class="footerNav__headline">
+                                Chapters
+                            </div>
+                                <ul class="list-unstyled list--footerNav">
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/chapters/" target="">
+                                                IIBA Chapters
+                                            </a>
+                                        </li>
+                                        <li class="listItem--footerNav">
+                                            <a class="link--footerNav" href="/business-analysis-membership/chapters/chapter-start-up/" target="">
+                                                Chapter Start-Up
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+            </div>
+
+        <div class="footer-contact">
+            <div class="row footer__row--hasLogoAndContact">
+                    <div class="d-none d-md-block col-md-5">
+                        <a href="/" target="">
+                            <img class="lazyload" data-src="/globalassets/logos/iiba-logos/iiba_horizontal-white-orangedot_transparent.svg"
+                                 src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                 alt="IIBA logo - Horizontal International institute of business analysisWhite Orange Dot ">
+                        </a>
+                    </div>
+
+                    
+<div class="col-md-7">
+        <div class="row">
+            <div class="col-md">
+                <strong>International Institute of Business Analysis</strong><br>
+                2544 Weston Rd
+
+                    <br/>
+Unit #529                    <br/>
+North York, ON M9N 2A6 Canada
+            </div>
+            <div class="col-md">
+                    <strong>Phone:</strong>
+                    <a href="tel:&#x2B;1 647-426-3735">
+                        &#x2B;1 647-426-3735
+                    </a>
+
+                        <br>
+                    <strong>Canada/USA Phone:</strong>
+                    <a href="tel:&#x2B;1 866-789-4422">&#x2B;1 866-789-4422</a>
+
+            </div>
+        </div>
+</div>
+            </div>
+                <div class="row footer__row--hasUtilLinks">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-7">
+                            <a href="/contact-us/" target="">
+                                Contact Us
+                            </a>
+                            <a href="https://go.iiba.org/email-signup?utm_source=Web&amp;utm_medium=footer&amp;utm_campaign=iiba-newsletter" target="_blank">
+                                Newsletter Sign up
+                            </a>
+                            <a href="/about-iiba/iiba-careers/" target="">
+                                IIBA Careers
+                            </a>
+                    </div>
+                </div>
+        </div>
+
+        <div class="row footer__row--hasCopyright text-center" role="contentinfo">
+            <div class="col">
+                <div class="contentEditableByClient">
+                    &copy;2026 International Institute of Business Analysis
+
+ |                             <a href="/footer/terms-of-use/" target="">
+                                Terms of Use
+                            </a>
+ |                             <a href="/about-iiba/brand-centre-brand-identity-marketing-media/trademarks-and-guidelines/" target="">
+                                Trademarks and Guidelines
+                            </a>
+ |                             <a href="/footer/policies/iiba-privacy-policy/" target="">
+                                Privacy Policy
+                            </a>
+ |                             <a href="/footer/policies/iiba-cookie-policy/#cookie-settings" target="">
+                                Cookies
+                            </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+                    
+<span id="backToTopWrapperId" class="backToTop__wrapper" ref="backToTop__wrapper__ref" data-scrolledstate="false">
+    <button id="myBtn" ref="backToTop__btn" class="backToTop__btn" onclick="topFunction()">
+        <span class="backToTop__btn__textSpan">Back to Top</span>
+    </button>
+</span>
+
+                
+
+    <nav class="iiba-sticky-bottom-nav" aria-label="Mobile quick navigation">
+            <a href="/"
+               class="iiba-sticky-nav-item"
+               data-sticky-nav-href="/">
+                <span class="iiba-sticky-nav-icon" aria-hidden="true">
+                    <svg id="Icon-Home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="M31.58,6.56L2.76,27.32c-.55.4-.27,1.27.41,1.27h5.59v29.15h16v-22.31c0-.51.41-.92.92-.92h12.64c.51,0,.92.41.92.92v22.31h16.02v-29.15h5.57c.68,0,.96-.87.41-1.27L32.4,6.56c-.24-.18-.57-.18-.82,0Z"/>
+</svg>
+                </span>
+                <span class="iiba-sticky-nav-label">Home</span>
+            </a>
+            <a href="/business-analysis-membership/become-a-member/"
+               class="iiba-sticky-nav-item"
+               data-sticky-nav-href="/business-analysis-membership/become-a-member/">
+                <span class="iiba-sticky-nav-icon" aria-hidden="true">
+                    <svg id="Icon-Membership" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="M19.93,15.58c0,4.1-3.32,7.42-7.42,7.42s-7.42-3.32-7.42-7.42,3.32-7.42,7.42-7.42,7.42,3.32,7.42,7.42ZM15.57,24.24h-6.04c-4.67,0-8.46,3.79-8.46,8.46v8.92c-.04.08-.07.16-.07.24,0,1.2,5.17,2.17,11.55,2.17.97,0,1.91-.02,2.81-.06v-4.02c0-5.03,3.39-9.26,8-10.55-1.29-3.03-4.29-5.15-7.79-5.15ZM41.29,18.97c0,5.29-4.29,9.57-9.57,9.57s-9.57-4.29-9.57-9.57,4.29-9.57,9.57-9.57,9.57,4.29,9.57,9.57ZM46.56,52.72v-11.56c0-4.98-3.32-9.19-7.86-10.52-.98-.29-2.01-.44-3.07-.44h-7.81c-1.02,0-2.01.14-2.95.4-4.61,1.29-7.99,5.53-7.99,10.55v11.56c-.06.1-.09.2-.09.31,0,1.56,6.68,2.81,14.93,2.81s14.93-1.26,14.93-2.81c0-.1-.03-.21-.09-.31ZM58.91,15.85c0,4.1-3.32,7.42-7.42,7.42s-7.42-3.32-7.42-7.42,3.32-7.42,7.42-7.42,7.42,3.32,7.42,7.42ZM62.93,41.9v-8.92c0-4.67-3.79-8.46-8.46-8.46h-6.04c-3.51,0-6.53,2.14-7.8,5.19,4.55,1.33,7.88,5.54,7.88,10.52v4.01c.94.05,1.93.07,2.94.07,6.38,0,11.55-.97,11.55-2.17,0-.08-.02-.16-.07-.24Z"/>
+</svg>
+                </span>
+                <span class="iiba-sticky-nav-label">Membership</span>
+            </a>
+            <a href="/business-analysis-certifications/iiba-certifications/"
+               class="iiba-sticky-nav-item"
+               data-sticky-nav-href="/business-analysis-certifications/iiba-certifications/">
+                <span class="iiba-sticky-nav-icon" aria-hidden="true">
+                    <svg id="Icon-Certification" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="M50.54,24.96c1.42-.36,2.38-1.58,2.38-3.05s-.96-2.69-2.38-3.05c-.76-.19-1.33-.75-1.53-1.51-.2-.76.01-1.53.57-2.07.94-.91,1.22-2.22.74-3.42-.49-1.21-1.62-1.99-2.88-1.99-.3,0-.6.04-.91.13-.2.06-.4.08-.59.08-.65,0-1.28-.32-1.69-.85-.4-.53-.53-1.21-.34-1.85.28-.98.11-1.95-.48-2.73-.61-.8-1.57-1.29-2.57-1.29-.83,0-1.62.34-2.23.97-.4.42-.94.65-1.51.65-.98,0-1.83-.66-2.07-1.61-.36-1.42-1.58-2.38-3.05-2.38s-2.69.96-3.05,2.38c-.24.95-1.09,1.61-2.07,1.61-.57,0-1.11-.23-1.51-.65-.61-.64-1.39-.97-2.23-.97-1,0-1.96.48-2.57,1.29-.59.78-.76,1.75-.48,2.73.19.65.06,1.32-.34,1.85-.4.53-1.03.85-1.69.85-.2,0-.4-.03-.59-.08-.3-.09-.61-.13-.91-.13-1.26,0-2.39.78-2.88,1.99-.49,1.2-.2,2.51.74,3.42.56.54.78,1.32.57,2.07-.2.76-.78,1.32-1.53,1.51-1.42.36-2.38,1.58-2.38,3.05s.96,2.69,2.38,3.05c.76.19,1.33.75,1.53,1.51.2.76-.01,1.53-.57,2.07-.94.91-1.22,2.22-.74,3.42.49,1.21,1.62,1.99,2.88,1.99.3,0,.61-.04.91-.13.2-.06.4-.08.59-.08.65,0,1.28.32,1.69.85.4.53.53,1.21.34,1.85-.28.98-.11,1.95.48,2.73.61.8,1.57,1.29,2.57,1.29.83,0,1.62-.34,2.23-.97.4-.42.94-.65,1.51-.65.98,0,1.83.66,2.07,1.61.36,1.42,1.58,2.38,3.05,2.38s2.69-.95,3.05-2.38c.24-.95,1.09-1.61,2.07-1.61.57,0,1.11.23,1.51.65.61.64,1.39.97,2.23.97.5,0,.99-.12,1.43-.34.44-.22.83-.54,1.14-.94.59-.78.76-1.75.48-2.73-.19-.65-.06-1.32.34-1.85.4-.53,1.03-.85,1.69-.85.2,0,.4.03.59.08.3.09.61.13.91.13,1.26,0,2.39-.78,2.88-1.99.49-1.2.2-2.51-.74-3.42-.56-.54-.78-1.32-.57-2.07.2-.76.78-1.32,1.53-1.51ZM32,34.75c-7.08,0-12.83-5.76-12.83-12.83s5.75-12.83,12.83-12.83,12.83,5.76,12.83,12.83-5.76,12.83-12.83,12.83ZM31.05,43.22l-4.76,18.61-5.72-9.91-9.91,5.72,6.61-23.25c.11-.02.23-.05.34-.08.15-.04.3-.07.45-.07.49,0,.97.24,1.28.65.18.24.45.73.26,1.41-.32,1.14-.12,2.27.57,3.18.7.93,1.82,1.49,2.97,1.49.97,0,1.89-.4,2.6-1.13.39-.41.84-.49,1.15-.49.63,0,1.36.38,1.57,1.22.33,1.34,1.33,2.32,2.59,2.64ZM46.38,34.31l6.96,24.5-9.91-5.72-5.72,9.91-5.04-19.72c1.4-.25,2.52-1.27,2.88-2.71.21-.84.94-1.22,1.57-1.22.31,0,.75.09,1.15.49.7.73,1.62,1.13,2.6,1.13,1.16,0,2.27-.56,2.97-1.49.69-.91.89-2.04.57-3.18-.19-.67.08-1.17.26-1.41.31-.41.78-.65,1.28-.65.15,0,.3.02.44.06ZM43.66,21.92c0,6.44-5.22,11.66-11.66,11.66s-11.66-5.22-11.66-11.66,5.22-11.66,11.66-11.66,11.66,5.22,11.66,11.66Z"/>
+</svg>
+                </span>
+                <span class="iiba-sticky-nav-label">Certification</span>
+            </a>
+            <a href="/get-involved/volunteering/"
+               class="iiba-sticky-nav-item"
+               data-sticky-nav-href="/get-involved/volunteering/">
+                <span class="iiba-sticky-nav-icon" aria-hidden="true">
+                    <svg id="Icon-Involve" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="M53.21,10.79C41.49-.93,22.51-.93,10.79,10.79-.93,22.51-.93,41.49,10.79,53.21c11.72,11.72,30.71,11.72,42.42,0,11.72-11.72,11.72-30.71,0-42.42ZM47.97,36.85l-11.18-.06.04,11.18c0,.81-.65,1.46-1.45,1.45h-6.76c-.81,0-1.45-.66-1.45-1.46l.05-11.17-11.18.04c-.81,0-1.46-.65-1.45-1.45v-6.76c0-.81.66-1.45,1.46-1.45l11.17.05-.04-11.18c0-.81.65-1.46,1.45-1.45h6.77c.81,0,1.45.65,1.45,1.45l-.06,11.18,11.18-.04c.81,0,1.46.65,1.45,1.45v6.77c0,.81-.65,1.45-1.45,1.45Z"/>
+</svg>
+                </span>
+                <span class="iiba-sticky-nav-label">Get Involved</span>
+            </a>
+            <a href="/career-resources/business-analysis-resources/"
+               class="iiba-sticky-nav-item"
+               data-sticky-nav-href="/career-resources/business-analysis-resources/">
+                <span class="iiba-sticky-nav-icon" aria-hidden="true">
+                    <svg id="Icon-Resources" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="M28.25,53.51c-1.18-.01-2.2-.8-2.38-1.92-.51-3.22-3.05-9.71-5.24-12.09-2.82-3.08-4.07-6.81-3.77-10.97.42-5.76,3.26-9.99,8.36-12.67,5.85-3.07,13.63-1.6,18,3.35,3.32,3.76,4.56,8.12,3.71,13.05-.51,2.94-1.85,5.49-3.91,7.65-2.03,2.13-4.34,8.46-4.82,11.37-.24,1.45-1.19,2.24-2.65,2.24-1.53,0-5.71.01-7.29,0ZM38.64,57.29c0-.18-.48-.32-1.26-.42v-.56c.8-.18,1.27-.38,1.26-.56,0-.18-.48-.32-1.26-.42v-.78h-10.75v1.33c-.8.18-1.27.38-1.26.56,0,.18.48.32,1.26.42v.56c-.8.18-1.27.38-1.26.56,0,.18.48.32,1.26.42v.43c-.8.18-1.27.38-1.26.56,0,.18.48.32,1.26.42v.43c-.8.18-1.27.38-1.26.56,0,.18.48.32,1.26.42v.76h2.75c0,.57,1.17,1.02,2.62,1.02s2.62-.46,2.62-1.02h2.75v-1.31c.8-.18,1.27-.38,1.26-.56,0-.18-.48-.32-1.26-.42v-.43c.8-.18,1.27-.38,1.26-.56,0-.18-.48-.32-1.26-.42v-.43c.8-.18,1.27-.38,1.26-.56ZM12.94,30.25h0c0-.5-.41-.91-.91-.91H3.66c-.5,0-.91.41-.91.91h0c0,.5.41.91.91.91h8.38c.5,0,.91-.41.91-.91ZM61.25,30.25h0c0-.5-.41-.91-.91-.91h-8.38c-.5,0-.91.41-.91.91h0c0,.5.41.91.91.91h8.38c.5,0,.91-.41.91-.91ZM32,11.19h0c.5,0,.91-.41.91-.91V1.91c0-.5-.41-.91-.91-.91h0c-.5,0-.91.41-.91.91v8.38c0,.5.41.91.91.91ZM18.52,16.77h0c.35-.35.35-.93,0-1.28l-5.92-5.92c-.35-.35-.93-.35-1.28,0h0c-.35.35-.35.93,0,1.28l5.92,5.92c.35.35.93.35,1.28,0ZM52.68,50.93h0c.35-.35.35-.93,0-1.28l-5.92-5.92c-.35-.35-.93-.35-1.28,0h0c-.35.35-.35.93,0,1.28l5.92,5.92c.35.35.93.35,1.28,0ZM45.48,16.77h0c.35.35.93.35,1.28,0l5.92-5.92c.35-.35.35-.93,0-1.28h0c-.35-.35-.93-.35-1.28,0l-5.92,5.92c-.35.35-.35.93,0,1.28ZM11.32,50.93h0c.35.35.93.35,1.28,0l5.92-5.92c.35-.35.35-.93,0-1.28h0c-.35-.35-.93-.35-1.28,0l-5.92,5.92c-.35.35-.35.93,0,1.28Z"/>
+</svg>
+                </span>
+                <span class="iiba-sticky-nav-label">Resources</span>
+            </a>
+    </nav>
+    <script>
+        (function () {
+            var currentPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
+            document.querySelectorAll('.iiba-sticky-nav-item[data-sticky-nav-href]').forEach(function (el) {
+                var href = (el.getAttribute('data-sticky-nav-href') || '').toLowerCase().replace(/\/$/, '');
+                if (href && currentPath === href) {
+                    el.classList.add('active');
+                }
+            });
+        })();
+    </script>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/Static/js/iiba-mega-menu.js?v=1.0.0&#x2B;f9b94f325ade285861e6e3bd00d7f8dce15f8d7b"></script>
+    <script src="/Static/js/iiba-mega-menu-mobile.js?v=1.0.0&#x2B;f9b94f325ade285861e6e3bd00d7f8dce15f8d7b"></script>
+
+    <script async src="/Static/js/bfGDPRcookie.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+<!-- Post login redirect script -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const knowledgeHubUrl = "https://www.iiba.org/special-pages/the-global-standard-for-business-analysis-knowledgehub/";
+
+    // Select all <a> tags and filter them manually
+    const allLinks = document.querySelectorAll('a');
+
+    allLinks.forEach(function (link) {
+        const href = (link.getAttribute("href") || "").toLowerCase();
+        const text = link.textContent.trim().toLowerCase();
+        const title = (link.getAttribute("title") || "").toLowerCase();
+
+        // Check if it's a login-related link based on text, title, or href
+        const isLoginLink =
+            text.includes("login") || text.includes("log in") ||
+            title.includes("login") || title.includes("log in");
+
+        if (isLoginLink) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                // Use document.referrer if login is clicked on the Knowledge Hub page,
+                // otherwise use the current page URL
+                const isKnowledgeHubPage = window.location.href.toLowerCase() === knowledgeHubUrl.toLowerCase();
+                const returnUrl = isKnowledgeHubPage && document.referrer
+                    ? document.referrer
+                    : window.location.href;
+
+                localStorage.setItem('postLoginReturnUrl', returnUrl);
+                localStorage.setItem('postLoginRedirect', returnUrl);
+
+                const salesforceLoginUrl = "https://www.iiba.org/login";
+                const openInNewTab = link.getAttribute("target") === "_blank";
+
+                if (openInNewTab) {
+                    window.open(salesforceLoginUrl, "_blank", "noopener");
+                } else {
+                    window.location.href = salesforceLoginUrl;
+                }
+            });
+        }
+    });
+});
+</script>
+
+<!--  End Post login redirect script -->
+
+<!-- Linkedin universal website tag code -->
+<script type="text/javascript">
+_linkedin_partner_id = "416740";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=416740&fmt=gif" />
+</noscript>
+<!-- End Linkedin universal website tag code -->
+
+
+
+
+<script> (function(){ var s = document.createElement('script'); var h = document.querySelector('head') || document.body; s.src = 'https://acsbapp.com/apps/app/dist/js/app.js'; s.async = true; s.onload = function(){ acsbJS.init({ statementLink : '', footerHtml : '', hideMobile : false, hideTrigger : false, disableBgProcess : false, language : 'en', position : 'left', leadColor : '#146ff8', triggerColor : '#146ff8', triggerRadius : '50%', triggerPositionX : 'left', triggerPositionY : 'bottom', triggerIcon : 'people', triggerSize : 'medium', triggerOffsetX : 20, triggerOffsetY : 10, mobile : { triggerSize : 'small', triggerPositionX : 'right', triggerPositionY : 'bottom', triggerOffsetX : 10, triggerOffsetY : 30, triggerRadius : '50%' } }); }; h.appendChild(s); })(); </script>
+
+
+
+<!-- Pardot tracking Code -->
+
+<script type="text/javascript">
+piAId = '591871';
+piCId = '92128';
+piHostname = 'pi.pardot.com';
+
+(function() {
+	function async_load(){
+		var s = document.createElement('script'); s.type = 'text/javascript';
+		s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+		var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+	}
+	if(window.attachEvent) { window.attachEvent('onload', async_load); }
+	else { window.addEventListener('load', async_load, false); }
+})();
+</script>
+
+<!-- end of Pardot tracking code -->
+
+<!-- Go to www.sharethis.com/dashboard to customize your tools -->
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=66958c813ca64b0019342bb9&product=sop' async='async'></script>
+
+<!-- Start of iibacustomerservice Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=b2b33de2-f136-43ba-9308-c548f33671fb" defer> </script>
+<!-- End of iibacustomerservice Zendesk Widget script -->
+
+<!-- Zendesk Widget mobile adjustment start -->
+
+<script type="text/javascript">
+  window.zESettings = {
+    webWidget: {
+     helpCenter: {
+          suppress: false
+},
+      offset: {
+        mobile: {
+          horizontal: '-15px',
+          vertical: '145px'
+        }
+      }
+    }
+  };
+</script>
+
+<!-- Zendesk Widget mobile adjustment end -->
+
+<!-- Script to append primary marketing source for pardot forms start -->
+<script>
+(function () {
+  /**
+   * Reads a query parameter value from the current page URL.
+   * e.g. ?Primary_Marketing_Source=GoogleAds  →  "GoogleAds"
+   */
+  function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  /**
+   * Appends or updates a query parameter on a URL string.
+   */
+  function setQueryParam(url, name, value) {
+    try {
+      const parsed = new URL(url, window.location.origin);
+      parsed.searchParams.set(name, value);
+      return parsed.href;
+    } catch (e) {
+      return url; // return original if URL parsing fails
+    }
+  }
+
+  /**
+   * Finds all Pardot form iframes and injects the Primary_Marketing_Source
+   * parameter into their src URL.
+   */
+  function injectMarketingSource(value) {
+    const iframes = document.querySelectorAll('iframe');
+
+    iframes.forEach(function (iframe) {
+      const src = iframe.getAttribute('src') || '';
+
+      // Target only Pardot form iframes (go.pardot.com or your Pardot domain)
+      if (src.includes('go.pardot.com') || src.includes('pardot.com') || src.includes('go.iiba.org')) {
+        const newSrc = setQueryParam(src, 'Primary_Marketing_Source', value);
+        if (newSrc !== src) {
+          iframe.setAttribute('src', newSrc);
+        }
+      }
+    });
+  }
+
+  /**
+   * Main execution — also handles iframes that may be added to the DOM
+   * after initial page load (e.g. lazy-loaded or CMS-injected iframes).
+   */
+  function init() {
+    const marketingSource = getQueryParam('Primary_Marketing_Source');
+
+    if (!marketingSource) return; // Nothing to inject if param isn't in the URL
+
+    // Handle iframes already in the DOM
+    injectMarketingSource(marketingSource);
+
+    // Handle iframes injected into the DOM after page load
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeName === 'IFRAME') {
+            const src = node.getAttribute('src') || '';
+            if (src.includes('pardot.com') || src.includes('go.iiba.org')) {
+              node.setAttribute('src', setQueryParam(src, 'Primary_Marketing_Source', marketingSource));
+            }
+          }
+          // Also check children of added nodes (e.g. a div containing an iframe)
+          if (node.querySelectorAll) {
+            node.querySelectorAll('iframe').forEach(function (iframe) {
+              const src = iframe.getAttribute('src') || '';
+              if (src.includes('pardot.com') || src.includes('go.iiba.org')) {
+                iframe.setAttribute('src', setQueryParam(src, 'Primary_Marketing_Source', marketingSource));
+              }
+            });
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<script>
+(function () {
+  function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  function setQueryParam(url, name, value) {
+    try {
+      const parsed = new URL(url, window.location.origin);
+      parsed.searchParams.set(name, value);
+      return parsed.href;
+    } catch (e) {
+      return url;
+    }
+  }
+
+  const marketingSource = getQueryParam('Primary_Marketing_Source');
+  console.log('1. Detected Primary_Marketing_Source:', marketingSource);
+
+  if (!marketingSource) {
+    console.warn('⚠️ No Primary_Marketing_Source found in URL. Make sure the URL includes ?Primary_Marketing_Source=GoogleAds');
+    return;
+  }
+
+  const iframes = document.querySelectorAll('iframe');
+  console.log('2. Total iframes found on page:', iframes.length);
+
+  iframes.forEach(function (iframe, index) {
+    const src = iframe.getAttribute('src') || '';
+    console.log(`3. iframe[${index}] src:`, src);
+
+    if (src.includes('go.iiba.org') || src.includes('pardot.com')) {
+      const newSrc = setQueryParam(src, 'Primary_Marketing_Source', marketingSource);
+      iframe.setAttribute('src', newSrc);
+      console.log(`✅ iframe[${index}] UPDATED src:`, newSrc);
+    } else {
+      console.log(`⏭️ iframe[${index}] skipped (not a Pardot iframe)`);
+    }
+  });
+})();
+
+</script>
+<!-- Script to append primary marketing source for pardot forms END -->
+
+
+            <script type="text/javascript" src="/globalassets/scripts/all-hotfix-july12-kh-predictive-search.js?v=20210713025605"></script>
+            <script type="text/javascript" src="/globalassets/scripts/hotfix-june29-dropdownmenu.js?v=20230629125550"></script>
+            <!-- Footer scripts from this Page -->
+    
+
+
+        
+    <!-- Post login redirect script -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const returnUrl = localStorage.getItem('postLoginReturnUrl');
+    const refUrl = document.referrer; 
+
+    // If returnUrl exists and we are on the homepage, redirect
+    if (returnUrl && window.location.pathname === "/" && document.referrer && returnUrl !== refUrl) {
+        localStorage.removeItem('postLoginReturnUrl');
+        localStorage.setItem('returningfromHomePage',1 );
+        window.location.href = returnUrl;
+    }
+});
+</script>
+<!-- End Post login redirect script -->
+
+
+<!-- The following styling is for the gradient overlayed on the home page hero carousel image -->
+<style>
+.slide_container-image {
+    position: relative;
+}
+
+
+.slide_container-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0) 80%);
+    z-index: 1; /* Adjust the z-index to ensure the gradient is behind the image */
+}
+
+
+
+    /* Gradient adjustment for mobile devices in general */
+    @media only screen and (max-width: 767px) {
+
+
+.slide_container-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.6) 70%);
+    z-index: 1; /* Adjust the z-index to ensure the gradient is behind the image */
+}
+
+
+
+}
+
+
+.cta__header{
+position: relative;
+z-index:2;
+}
+.cta__subheader{
+position:relative;
+z-index:2;
+}
+.btn-orange{
+position:relative;
+z-index:2;
+}
+
+.bf-btn.has-arrow{
+position:relative;
+z-index:2;
+}
+</style>
+
+<!--  End of home page hero carousel image gradient styling. -->
+
+
+<script>
+$(document).ready(function() {
+    $('.NavUtility__userControls__welcomeText').click(function() {
+        if (window.scrollY < 150) {
+                   $('.logo__link .logo--alt').toggle();
+                    $('.logo__link .logo--primary').toggle(); 
+       }  
+    });
+});
+</script>
+<style>
+
+.dropdown-item {
+
+font-size: 16px !important;
+
+}
+
+#widget_title {
+
+font-family: "Roboto Condensed" !important;
+font-size: 3.2rem !important;
+font-weight: 700 !important;
+
+}
+
+.bf-btn.button {
+padding: .6rem;
+}
+
+@media only screen and (max-device-width: 390px) and (max-device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+    .col-xl-9 {
+        margin-top: -8rem;
+    }
+}
+</style>
+
+<style>
+
+.alert-pill-orange {
+
+    color: #fff;
+    background-color: #d86018;
+    padding: 4px 4px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    width: 200px;
+    text-align: center;
+
+}
+</style>
+
+    <script defer="defer" src="/Util/Find/epi-util/find.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){if(typeof FindApi === 'function'){var api = new FindApi();api.setApplicationUrl('/');api.setServiceApiBaseUrl('/find_v2/');api.processEventFromCurrentUri();api.bindWindowEvents();api.bindAClickEvent();api.sendBufferedEvents();}})
+</script>
+
+
+    <script>
+        // Get all accordion buttons and panels
+        const accordionButtons = document.querySelectorAll('.accordion');
+        const panels = document.querySelectorAll('.panel');
+
+        // Function to open all accordions
+        const accordionOpenAll = (id) => {
+            const startIndex = id.lastIndexOf('-') + 1;
+            const acc_id = id.substring(startIndex);
+
+            const accordionButtons = document.querySelectorAll(".accordion-" + acc_id);
+            const panels = document.querySelectorAll(".panel-" + acc_id);
+            accordionButtons.forEach((button, index) => {
+                button.classList.add('active');
+                panels[index].style.maxHeight = panels[index].scrollHeight + 'px';
+
+            });
+        };
+
+        // Function to close all accordions
+        const accordionCloseAll = (id) => {
+            const startIndex = id.lastIndexOf('-') + 1;
+            const acc_id = id.substring(startIndex);
+
+            const accordionButtons = document.querySelectorAll(".accordion-" + acc_id);
+            const panels = document.querySelectorAll(".panel-" + acc_id);
+            accordionButtons.forEach((button, index) => {
+                button.classList.remove('active');
+                panels[index].style.maxHeight = null;
+                panels[index].classList.remove('active-panel');
+            });
+        };
+
+        // Add click event listeners to Expand and Collapse All buttons
+        const expandButtons = document.querySelectorAll('[id^="accordion-exp-"]');
+        const collapseButtons = document.querySelectorAll('[id^="accordion-col-"]');
+        expandButtons.forEach((button) => {
+            button.addEventListener('click', () => accordionOpenAll(button.id))
+        });
+
+        collapseButtons.forEach((button) => {
+            button.addEventListener('click', () => accordionCloseAll(button.id))
+        });
+
+    </script>
+
+    <style>
+
+        .mediabox-wrap {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            background-color: rgba(0,0,0,0.8);
+            top: 0;
+            left: 0;
+            opacity: 0;
+            z-index: 999;
+            -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-name: mediabox;
+            animation-name: mediabox;
+        }
+
+        @-webkit-keyframes mediabox {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes mediabox {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .mediabox-content {
+            max-width: 680px;
+            display: block;
+            margin: 0 auto;
+            height: 100%;
+            position: relative;
+        }
+
+            .mediabox-content iframe {
+                max-width: 100% !important;
+                width: 100% !important;
+                display: block !important;
+                height: 480px !important;
+                border: none !important;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto 0;
+            }
+
+        .mediabox-hide {
+            -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-name: mediaboxhide;
+            animation-name: mediaboxhide;
+        }
+
+        @-webkit-keyframes mediaboxhide {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes mediaboxhide {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .mediabox-close {
+            position: absolute;
+            top: 0;
+            cursor: pointer;
+            bottom: 528px;
+            right: 0px;
+            margin: auto 0;
+            width: 24px;
+            height: 24px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAMvSURBVHja7Js9aBRBFMd/d1lPY6FiJVjY+Fkoxl7wA1Q0prQRS6tgoZV2MWIRRVHUUq3U+JnESrS2sBXBzipREWMlATXwt8gFznC5nd15M7Nn8uC45nZnfr/dY96+N1uTxFKOOks8lgUU/H2t4tJqIQUcAiaBGeBymcECRgO4B/wBPgJ9zkdKcvkclfRL/8ZtSTXH40N+GpLGF8zth6Q9Lse7DHCsDXxVJLSDLyQhb4B+Sb/VOVJJ6ATfKqGvrIDjDvCpJLjAz8d0JwmLDTBQAD62hIakiYJzm5a021VAfwn4WBLKwLdK2JUnIJP0XX4RSoIP/Hy8W3jeepv1dL3nmjwI3DLOExrAU2DA8zwb8xKhGeCuwYQtJTSAZwbwAHdcEqFM0mPZhO/foSHppdFcrraby2IDV0FCcPi8PCClhCjwLplgCgkrDeGv5I3pcjViSogK7yogloTo8EUEhJaQBL6oAGsJ9yVtkrRD0qsU8JKolagKZ8AD4ETFymFXgPOAQpXE5mMWOAk86XZ4n6pwlSSUhvcti1dBghe8RV8gpYQRX3irxkgKCSPABV94y85QTAlm8NatsRgSTOGBUnmAS57w3KiA0Ro3gHOW8KEEAOwE3hvfXWubFauu6A6vCND07OmW9viq5vpsGT3AtRAN2XoA+BfAwQBiTweoNpMZw48BRwKuAoPN7zNVWwZjwAfpO9S7DN5cQmYAPw4cTvAsYPJ3qHcpvNmdUO9ieBMJZQT0AhMVgfeWUC8BP87cjjHfuA6sATY0c4c0EgpUUHslvTaq3l5aUL1N1oarAnxSCVWBTyYhJvyw41XJJI3GkpAH/yYyfHQJi01gdUL4qBKqCh9NQrtBx4wGvGi0XS6T9MhoTkN5AtZVDN5awlTePsGfwDfPjGwYGDKu3s4Cp4BRz/N8cskED0iaqciVt7wTvkra5roKlJEQGt5HwhdJ24vmAUUkDEV+VyCT9NBxbp/bXXnXTNBFQmx4IhI6wrs+C+zvICEVvIuEKUlbrZ4G97WRkBq+k4RJSVusd4ntlfSheVudrQh8q4SbmntH6K2kzSF3if1Xsfzq7LKAJR5/BwCdAQBJn4egPgAAAABJRU5ErkJggg==') no-repeat;
+            background-size: 24px 24px;
+            -webkit-background-size: 24px 24px;
+            -moz-background-size: 24px 24px;
+            -o-background-size: 24px 24px;
+        }
+
+            .mediabox-close:hover {
+                opacity: 0.5;
+            }
+
+        @media all and (max-width: 768px) and (min-width: 10px) {
+            .mediabox-content {
+                max-width: 90%;
+            }
+        }
+
+        @media all and (max-width: 600px) and (min-width: 10px) {
+            .mediabox-content iframe {
+                height: 320px !important;
+            }
+
+            .mediabox-close {
+                bottom: 362px;
+            }
+        }
+
+        @media all and (max-width: 480px) and (min-width: 10px) {
+            .mediabox-content iframe {
+                height: 220px !important;
+            }
+
+            .mediabox-close {
+                bottom: 262px;
+            }
+        }
+    </style>
+
+    <script>
+
+        (function (root, factory) {
+            "use strict";
+            if (typeof define === 'function' && define.amd) {
+                define([], factory);
+            } else if (typeof exports === 'object') {
+                module.exports = factory();
+            } else {
+                root.MediaBox = factory();
+            }
+        }(this, function () {
+            "use strict";
+
+            var MediaBox = function (element) {
+                if (!this || !(this instanceof MediaBox)) {
+                    return new MediaBox(element);
+                }
+
+                this.selector = document.querySelectorAll(element);
+                this.root = document.querySelector('body');
+                this.run();
+            };
+
+            MediaBox.prototype = {
+                run: function () {
+                    Array.prototype.forEach.call(this.selector, function (el) {
+                        el.addEventListener('click', function (e) {
+                            e.preventDefault();
+
+                            var link = this.parseUrl(el.getAttribute('href'));
+                            this.render(link);
+                            this.close();
+                        }.bind(this), false);
+                    }.bind(this));
+                },
+                template: function (s, d) {
+                    var p;
+
+                    for (p in d) {
+                        if (d.hasOwnProperty(p)) {
+                            s = s.replace(new RegExp('{' + p + '}', 'g'), d[p]);
+                        }
+                    }
+                    return s;
+                },
+                parseUrl: function (url) {
+                    var service = {},
+                        matches;
+
+                    if (matches = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/)) {
+                        service.provider = "youtube";
+                        service.id = matches[2];
+                    } else if (matches = url.match(/https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/)) {
+                        service.provider = "vimeo";
+                        service.id = matches[3];
+                    } else {
+                        service.provider = "Unknown";
+                        service.id = '';
+                    }
+
+                    return service;
+                },
+                render: function (service) {
+                    var embedLink,
+                        lightbox;
+
+                    if (service.provider === 'youtube') {
+                        embedLink = 'https://www.youtube.com/embed/' + service.id;
+                    } else if (service.provider === 'vimeo') {
+                        embedLink = 'https://player.vimeo.com/video/' + service.id;
+                    } else {
+                        throw new Error("Invalid video URL");
+                    }
+
+                    lightbox = this.template(
+                        '<div class="mediabox-wrap"><div class="mediabox-content"><span class="mediabox-close"></span><iframe src="{embed}?autoplay=1" frameborder="0" allowfullscreen></iframe></div></div>', {
+                        embed: embedLink
+                    });
+
+                    this.root.insertAdjacentHTML('beforeend', lightbox);
+                },
+                close: function () {
+                    var wrapper = document.querySelector('.mediabox-wrap');
+
+                    wrapper.addEventListener('click', function (e) {
+                        if (e.target && e.target.nodeName === 'SPAN' && e.target.className === 'mediabox-close') {
+                            wrapper.classList.add('mediabox-hide');
+                            setTimeout(function () {
+                                this.root.removeChild(wrapper);
+                            }.bind(this), 500);
+                        }
+                    }.bind(this), false);
+                }
+            };
+
+            return MediaBox;
+        }));
+
+        //Initialize the MediaBox.
+        MediaBox('.mediabox');
+    </script>
+
+    
+<style>
+
+.styled-btn {
+color: #001377;
+background-color: #fff;
+border-radius: 10px;
+/* padding: 14px; */
+border: 0px solid #d1d1d1;
+width: 150px;
+height: 50px;
+}
+
+.chatbotimg {
+max-width: 35%;
+}
+
+.styled-btn-mob{
+   width: 65px;
+   height: 65px;
+border-radius: 50%;
+   position: fixed;
+   bottom: 55px;
+   left: 10px;
+  transition: all 0.1s ease-in-out;
+background: transparent;
+border: none;
+}
+
+.styled-btn-mob:hover {
+ 
+   transform: scale(1.05);
+}
+
+</style>
+
+<script>
+var chatbot = document.getElementById('myChatbot');
+var btn = document.getElementById("chatbotBtn");
+var mobbtn = document.getElementById("chatbotBtnMob");
+var span = document.getElementsByClassName("chatbot-close")[0];
+var body = document.body;
+
+var babotwidget = document.getElementById("babotwidget");
+
+var userName = document.querySelector(".NavUtility__userControls__welcomeText span");
+var username = userName ? userName.textContent.split(',')[1].trim() : "";
+
+if (btn) {
+  btn.onclick = function() {
+    localStorage.setItem("AspNetCookieSet", "true");
+
+    var url = "https://ai.iiba.org/?username=" + encodeURIComponent(username);
+    window.open(url, "_blank");
+  }
+}
+
+if (mobbtn) {
+  mobbtn.onclick = function() {
+    localStorage.setItem("AspNetCookieSet", "true");
+
+    var url = "https://ai.iiba.org/?username=" + encodeURIComponent(username);
+    window.open(url, "_blank");
+  }
+}
+
+if (babotwidget) {
+  babotwidget.onclick = function() {
+    localStorage.setItem("AspNetCookieSet", "true");
+
+    var url = "https://ai.iiba.org/?username=" + encodeURIComponent(username);
+    babotwidget.href = url;
+  }
+}
+
+</script>
+
+
+
+</body>
+</html>

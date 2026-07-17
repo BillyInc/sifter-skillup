@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+
+
+ 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+  <!--  <link rel="stylesheet" href="tpl/fip2019/content/themes/fiporg/inc/fw_assets/fonts/font-awesome.min.css">-->
+     <link rel="stylesheet" href="tpl/fip2019/content/themes/fiporg/fontawesome6/css/fontawesome.css">
+     <link href="tpl/fip2019/content/themes/fiporg/fontawesome6/css/brands.css" rel="stylesheet">
+  <link href="tpl/fip2019/content/themes/fiporg/fontawesome6/css/solid.css" rel="stylesheet">
+  <link href="tpl/fip2019/content/themes/fiporg/fontawesome6/css/v4-font-face.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<title>Home -  FIP - International Pharmaceutical Federation  Home</title>
+
+
+<link rel='stylesheet' id='bootstrap-css'  href='tpl/fip2019/content/themes/fiporg/inc/fw_assets/bootstrap/css/bootstrap.min.css?ver=4.9.11' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrapstarter-style-css'  href='tpl/fip2019/content/themes/fiporg/style.css?ver=5.2.20' type='text/css' media='all' />
+<link rel='stylesheet' id='mobile-style-css'  href='tpl/fip2019/content/themes/fiporg/new-mobile.css' type='text/css' media='all' />
+<script type='text/javascript' src='tpl/fip2019/content/themes/fiporg/inc/fw_assets/jquery/jquery-3.3.1.min.js?ver=4.9.10'></script><!-- slim. -->
+<script type='text/javascript' src='tpl/fip2019/content/themes/fiporg/inc/fw_assets/jquery/popper.min.js?ver=4.9.10'></script>
+<script type='text/javascript' src='tpl/fip2019/content/themes/fiporg/inc/fw_assets/bootstrap/js/bootstrap.min.js?ver=4.9.10'></script>
+
+<link rel="canonical" href="https://www.fip.org/" />
+<link rel='shortlink' href='https://www.fip.org/' />
+<!-- <base href="https://www.fip.org/"> -->
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@FIP_org">
+<meta name="twitter:creator" content="@FIP_org">
+<meta name="twitter:title" content="Home">
+<meta name="twitter:description" content="The International Pharmaceutical Federation (FIP) is the global body representing over 5.5 million pharmacists and pharmaceutical scientists. We work to meet the world's healthcare needs. FIP is a non-governmental organisation that has been in official relations with the World Health Organization since 1948. More about FIP ">
+
+
+
+<!-- Facebook -->
+<meta property="og:url" content="https://www.fip.org//">
+<meta property="og:title" content="Home">
+<meta property="og:description" content="The International Pharmaceutical Federation (FIP) is the global body representing over 5.5 million pharmacists and pharmaceutical scientists. We work to meet the world's healthcare needs. FIP is a non-governmental organisation that has been in official relations with the World Health Organization since 1948. More about FIP ">
+<meta property="og:type" content="article">
+
+
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+			
+
+<script>
+
+//$('.nav-link').hover(function() {
+//	  $(this).closest('.nav-item.dropdown').siblings('.dropdown-menu').removeClass('show').find('.dropdown-menu').addClass('show');
+//	})
+
+
+$(function(){
+	$('.navbar-collapse').find('.nav-link').click(function(){
+   	 	var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var href = $(this).attr('href');
+
+        var desktop = $('.navbar-toggler').hasClass("navbar-expand-lg");
+        
+        if (w>=992) 
+        	if (href!='#')window.location=href;
+    });
+});
+
+
+$(document).ready(function() {
+
+	 $('img').each(function() {
+	        if (!$(this).attr('alt')) {
+	            const filename = $(this).attr('src').split('/').pop().replace(/\.[^/.]+$/, '');
+	            const altText = filename
+                .replace(/\d{4}-\d{2}-\d{2}/g, '')  // 2025-06-02
+                .replace(/\d{2}-\d{2}-\d{4}/g, '')  // 06-02-2025
+                .replace(/\d{4}\d{2}\d{2}/g, '')    // 20250602
+                .replace(/\d{2}\d{2}\d{4}/g, '')    // 06022025
+                .replace(/[_-]/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase())
+                .replace(/\s+/g, ' ')
+                .trim();
+            $(this).attr('alt', altText);
+	        }
+	    });
+	    
+	$('.ul.nav li.dropdown').hover(function() {
+    	//alert("hello"+$(this).parent());
+		//console.log ($(this).parent());
+		console.log ($(this).parent().find('.dropdown-menu'));
+		$(this).find('.dropdown-menu').stop(true,true).delay(200).fadeOut(500);	  	
+		}, function() {
+	  	$(this).find('.dropdown-menu').stop(true,true).delay(200).fadeOut(500);
+	})
+	
+	,
+	
+	$('.selector-menu').hover(function() {
+    	//alert("hello"+$(this).parent());
+		//console.log ($(this).parent());
+		$(this).find('.select-menu-dropdown').collapse('show');
+	  }, function() {
+		  $(this).find('.select-menu-dropdown').collapse('hide');
+	  }
+	)
+	
+/*
+	, $('[data-toggle="offcanvas"]').on('click', function () {
+		    $('.offcanvas-collapse').toggleClass('open')
+		  })
+	, $(".offcanvas-collapse a.off-has-subs").click(function(e) {
+        e.preventDefault(), $(this).next(".off-level").addClass("active")
+    	})
+    , $(".offcanvas-collapse a.off-back").click(function(e) {
+        e.preventDefault(), $(this).closest(".off-level").removeClass("active")
+   		 })
+*/
+,
+	$("#toggleOffCanvas").on('click', function() {
+    	$("body").toggleClass("side-menu");
+	})
+, $(".off-canvas a.off-has-subs").click(function(e) {
+    e.preventDefault(), $(this).next(".off-level").addClass("active")
+})
+, $(".off-canvas a.off-back").click(function(e) {
+    e.preventDefault(), $(this).closest(".off-level").removeClass("active")
+}),
+
+
+
+
+   	 $(document).on("click", ".openpopup", function(e) {
+   	    e.preventDefault();
+   	    var t = $(document).scrollTop(),
+   	        i = $(window).height() / 2,
+   	        a = $(this).attr("data-popupid"),
+   	        s = $("#" + a).outerHeight() / 2;
+   	    $("#" + a).css("top", t + i - s), $("#" + a).addClass("offcenter"), $(".overlay, #" + a).addClass("open")
+   		}),
+
+     $(document).on("click", ".closepopup, .overlay", function(e) {
+             e.preventDefault(), $(".overlay, .popup").removeClass("open"), $(".popup").removeClass("offcenter")
+         })
+   
+,
+	$("form").submit(function(e) {
+     	    var ref = $(this).find("[required]");
+     	    $(ref).each(function(){
+     	        if ( $(this).val() == '' )
+     	        {
+     	            alert("Required field should not be blank.");
+     	            $(this).focus();
+     	            e.preventDefault();
+     	            return false;
+     	        }
+     	    });  return true;
+     	});			
+
+	/*,
+	
+	 $("#content-page").find("a[href^='\#']").each(function(){ 
+	    this.href=location.href.split("#")[0]+'#'+this.href.substr(this.href.indexOf('#')+1);
+	  });
+	});
+   		*/
+	var hash = window.location.hash.substr(1);
+	if (hash=="join-fip")
+	{
+		$('.openpopup').each(function(){
+		open_popup($(this));
+		});
+	}
+		
+});
+
+function open_popup(obj)
+{
+	  
+	    var t = $(document).scrollTop(),
+	        i = $(window).height() / 2,
+	        a = obj.attr("data-popupid"),
+	        s = $("#" + a).outerHeight() / 2;
+	    $("#" + a).css("top", t + i - s), $("#" + a).addClass("offcenter"), $(".overlay, #" + a).addClass("open")
+	
+}
+
+//alert(href);
+/*
+if (href!="#")
+{
+	href = $(this).closest("nav-link[href|='http']").attr('href');
+	alert(href);
+}*/
+</script>
+<style>
+
+</style>
+
+<meta name="description" content="Home Home" />
+<meta name="keywords" content=", Home" />
+<meta name="revisit-after" content="1 days"/>
+<meta name="robots" content="index, follow"/>
+<link rel="shortcut icon" href="/fip.ico" type="image/ico" />
+
+<!-- PAGE SCRIPT -->
+<link rel='stylesheet' href='tpl/fip2019/content/themes/fiporg/fip2026-chrome.css?ver=1782733590'>
+<link rel='stylesheet' href='tpl/fip2019/content/themes/fiporg/fip2026.css?ver=1782993880'>
+
+<!-- PAGE SCRIPT -->
+
+
+</head>
+
+<body class="home page-template page-template-frontpage-page page-template-frontpage-page-php page page-id-132" id="body-__www.fip.org">
+        <div class="off-canvas" id="leftMenu">
+            <span class="off-title">Menu</span>
+           <ul>        <li><a href="#" class="off-has-subs">About FIP</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/about"  class="off-title">About FIP</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/who-we-are" >Who we are </a>
+            </li>            <li>
+                <a href="https://www.fip.org/vision-mission" >Our vision, mission and strategy</a>
+            </li>            <li>
+                <a href="https://www.fip.org/awards" >Awards</a>
+            </li>            <li>
+                <a href="https://developmentgoals.fip.org" >FIP Development Goals</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-partners" >Our partners</a>
+            </li>            <li>
+                <a href="https://www.fip.org/our-team" >Our team</a>
+            </li>            <li>
+                <a href="https://www.fip.org/news" >News</a>
+            </li>            <li>
+                <a href="https://www.fip.org/press-releases" >Press releases</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-representation" >FIP representation</a>
+            </li>            <li>
+                <a href="https://www.fip.org/contact-us" >Contact us</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Structures</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/structures"  class="off-title">Structures</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/structure-and-statutes" >Structure and statutes</a>
+            </li>        <li><a href="#" class="off-has-subs">Pharmaceutical practice and the sections</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/pharmacy-practice"  class="off-title">Pharmaceutical practice and the sections</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/academic-pharmacy" >Academic pharmacy</a>
+            </li>            <li>
+                <a href="https://www.fip.org/clinical-biology" >Clinical biology</a>
+            </li>        <li><a href="#" class="off-has-subs">Community pharmacy</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/community-pharmacy"  class="off-title">Community pharmacy</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/cps-activities" >CPS activities</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Health and medicines information</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/health-and-medicines-information"  class="off-title">Health and medicines information</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/hamis-activities" >HaMIS activities</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Hospital pharmacy</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/hospital-pharmacy"  class="off-title">Hospital pharmacy</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/hospital-activities" >HPS activities</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Industrial pharmacy</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/industrial-pharmacy"  class="off-title">Industrial pharmacy</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/ips-activities" >IPS activities</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Military and emergency pharmacy</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/military-emergency-pharmacy"  class="off-title">Military and emergency pharmacy</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/emergency-activities" >MEPS activities</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/administrative-pharmacy" >Social and administrative pharmacy</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Pharmaceutical sciences and the special interest groups</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/pharmaceutical-sciences"  class="off-title">Pharmaceutical sciences and the special interest groups</a>
+           <ul>        <li><a href="#" class="off-has-subs">Drug delivery and manufacturing </a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/drug-delivery-and-manufacturing"  class="off-title">Drug delivery and manufacturing </a>
+           <ul>            <li>
+                <a href="https://www.fip.org/pharmaceuticalscientists-drugdeliveryandmanufacturing-paediatric-formulations" >Pediatric formulations focus group</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/new-generation-of-pharmaceutical-scientists" >New generation of pharmaceutical scientists</a>
+            </li>            <li>
+                <a href="https://www.fip.org/new-medicines " >New medicines</a>
+            </li>            <li>
+                <a href="https://www.fip.org/personalised-and-precision-medicine" >Personalised and precision medicine</a>
+            </li>            <li>
+                <a href="https://www.fip.org/pharmacy-practice-research" >Pharmacy practice research</a>
+            </li>            <li>
+                <a href="https://www.fip.org/regulatory-sciences-and-quality" >Regulatory sciences and quality</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Pharmaceutical education</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/pharmacy-education"  class="off-title">Pharmaceutical education</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/academic-institutional-membership" >Academic Institutional Membership (AIM)</a>
+            </li>            <li>
+                <a href="https://www.fip.org/academic-pharmacy" >Academic Pharmacy Section</a>
+            </li>            <li>
+                <a href="https://www.fip.org/world-list-of-pharmacy-schools" >FIP World List of Pharmacy Schools</a>
+            </li>        <li><a href="#" class="off-has-subs">FIP-UNESCO UNITWIN network</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/fip-unesco-unitwin-network"  class="off-title">FIP-UNESCO UNITWIN network</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/educationtransformation" >FIP Education Transformation Toolkit</a>
+            </li>            <li>
+                <a href="https://www.fip.org/inequitiesineducation" >FIP toolkit inequities in pharmaceutical education</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-unitwin-pathfinder-toolkit" >FIP UNITWIN Pathfinder Toolkit</a>
+            </li>           </ul>
+            
+            </div>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/fip-council" >FIP Council</a>
+            </li>        <li><a href="#" class="off-has-subs">FIP Regional Forums</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/fip-regional-forums"  class="off-title">FIP Regional Forums</a>
+           <ul>        <li><a href="#" class="off-has-subs">African Regional Pharmaceutical Forum</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/african-regional-pharmaceutical-forum"  class="off-title">African Regional Pharmaceutical Forum</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/african-regional-pharmaceutical-activities" >APF Activities</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Regional Pharmaceutical Forum of the Americas</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/regional-pharmaceutical-forum-of-the-americas"  class="off-title">Regional Pharmaceutical Forum of the Americas</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/regional-pharmaceutical-of-the-americas-activites" >Regional Pharmaceutical Forums Activities</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/eastern-mediterranean-regional-pharmaceutical-forum" >Eastern Mediterranean Regional Pharmaceutical Forum</a>
+            </li>        <li><a href="#" class="off-has-subs">South East Asian Regional Pharmaceutical Forum</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/south-east-asian-regional-pharmaceutical-forum"  class="off-title">South East Asian Regional Pharmaceutical Forum</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/south-east-asian-regional-pharmaceutical-activities" >South East Asian Regional Pharmaceutical Activities</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/western-pacific-regional-pharmaceutical-forum" >Western Pacific Regional Pharmaceutical Forum</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/antimicrobial-resistance#AMRcommission" >AMR Commission</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-ethics-advisory-group" >FIP Ethics Advisory Group</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-humanitarian-resilience-advisory-group" >FIP Humanitarian Resilience Advisory Group</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-regulators-advisory-group" >FIP Regulators Advisory Group</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-technology-advisory-group" >FIP Technology Advisory Group</a>
+            </li>        <li><a href="#" class="off-has-subs">Early Career Pharmaceutical Group</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/early-career-pharmaceutical-group"  class="off-title">Early Career Pharmaceutical Group</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/about-early-career-pharmaceutical-group" >About the Early Career Pharmaceutical Group</a>
+            </li>            <li>
+                <a href="https://www.fip.org/ecpg-activities" >ECPG activities</a>
+            </li>            <li>
+                <a href="https://www.fip.org/grants-and-opportunities-for-early-career-professional" >Career support and opportunities</a>
+            </li>            <li>
+                <a href="https://www.fip.org/grants-and-scholarships-for-ecpg-members" >Grants and scholarships for ECPG members</a>
+            </li>           </ul>
+            
+            </div>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">What we do</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/what-we-do"  class="off-title">What we do</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/antimicrobial-resistance" >Antimicrobial resistance</a>
+            </li>            <li>
+                <a href="https://gpo.fip.org" >Data and intelligence</a>
+            </li>            <li>
+                <a href="https://prevention.fip.org/" >Disease prevention</a>
+            </li>            <li>
+                <a href="https://equityrx.fip.org/" >Equity and equality</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fip-hub" >FIP Hub</a>
+            </li>        <li><a href="#" class="off-has-subs">FIP Women in Science and Education (FIPWiSE)</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://equityrx.fip.org/fipwise" _blank class="off-title">FIP Women in Science and Education (FIPWiSE)</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/fipwiserisingstars" >FIPWiSE Rising Stars</a>
+            </li>            <li>
+                <a href="https://www.fip.org/fipwise-ppe-toolkit" >FIPWiSE toolkit </a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://humanitarian.fip.org/" >Humanitarian in pharmacy</a>
+            </li>            <li>
+                <a href="https://www.fip.org/medicines-shortages" >Medicines shortages</a>
+            </li>            <li>
+                <a href="https://ncd.fip.org/" >Non-communicable diseases</a>
+            </li>            <li>
+                <a href="https://www.fip.org/patient-safety" >Patient safety</a>
+            </li>            <li>
+                <a href="https://primaryhealthcare.fip.org/" >Primary health care</a>
+            </li>            <li>
+                <a href="https://provision.fip.org/courses-with-fip-seal/" >Professional development</a>
+            </li>            <li>
+                <a href="https://www.fip.org/activities-priorityareas-professionalethics" >Professional ethics</a>
+            </li>            <li>
+                <a href="https://provision.fip.org/" >Provision and partnerships</a>
+            </li>            <li>
+                <a href="https://www.fip.org/public-health-emergencies" >Public health emergencies</a>
+            </li>            <li>
+                <a href="https://selfcare.fip.org/" >Self-care and common ailments</a>
+            </li>            <li>
+                <a href="https://www.fip.org/falsified-medicines" >Substandard and falsified medicines</a>
+            </li>            <li>
+                <a href="https://sustainability.fip.org/" >Sustainability in pharmacy</a>
+            </li>            <li>
+                <a href="https://www.fip.org/workforce-transformation" >Workforce development </a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Get involved</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/join-fip"  class="off-title">Get involved</a>
+           <ul>        <li><a href="#" class="off-has-subs">Membership</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/membership"  class="off-title">Membership</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/member-organisations" >FIP member organisations</a>
+            </li>            <li>
+                <a href="https://www.fip.org/allied-organisations" >FIP allied organisations</a>
+            </li>            <li>
+                <a href="https://www.fip.org/aim" >Academic institutional members</a>
+            </li>            <li>
+                <a href="https://www.fip.org/individual-members" >Individual members</a>
+            </li>            <li>
+                <a href="https://www.fip.org/membership_registration" >Apply or renew membership</a>
+            </li>            <li>
+                <a href="https://www.fip.org/membership-faq" >Membership FAQ</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">FIP members across the globe</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/fip-members-across-the-globe"  class="off-title">FIP members across the globe</a>
+           <ul>            <li>
+                <a href="https://www.fip.org/organisations-in-membership" >Organisations in membership</a>
+            </li>            <li>
+                <a href="https://www.fip.org/pharmacy-in-china" >FIP in China</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/fip-newsletters" >FIP Newsletters - sign up</a>
+            </li>            <li>
+                <a href="https://www.fip.org/journals" >Journals</a>
+            </li>            <li>
+                <a href="https://www.fip.org/world-pharmacists-day" >World Pharmacists Day</a>
+            </li>            <li>
+                <a href="https://www.fip.org/think-health-think-pharmacy" >Join FIP’s Think Health, Think Pharmacy Campaign</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">Congress and events</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/congress-and-events"  class="off-title">Congress and events</a>
+           <ul>        <li><a href="#" class="off-has-subs">FIP congresses</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/fip-congresses"  class="off-title">FIP congresses</a>
+           <ul>            <li>
+                <a href="https://montreal2026.fip.org" >Montreal 2026</a>
+            </li>            <li>
+                <a href="./previous-congresses" >Previous Congresses</a>
+            </li>            <li>
+                <a href="./abstracts" >Abstracts</a>
+            </li>           </ul>
+            
+            </div>        <li><a href="#" class="off-has-subs">FIP events</a>
+            <div class="off-level">
+           <a href="#" class="off-back"><i class="fa fa-angle-left" aria-hidden="true"></i>back</a>    
+           <a href="https://www.fip.org/fip-digital-events"  class="off-title">FIP events</a>
+           <ul>            <li>
+                <a href="https://events.fip.org" >FIP digital events </a>
+            </li>            <li>
+                <a href="./events?tab=2&eventCategory=&eventWhen=upcoming" >All events</a>
+            </li>            <li>
+                <a href="https://events.fip.org/previous-fip-digital-events/" >Previous digital events</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/external-events" >External events</a>
+            </li>           </ul>
+            
+            </div>            <li>
+                <a href="https://www.fip.org/publications" >FIP Library</a>
+            </li><a href="https://www.fip.org/files/content/footer/terms-of-use.pdf" target="_blank">Terms of use</a>
+<span class="off-title">Dashboard</span>
+<a href="/login_members">Login</a>
+           </ul>
+        </div>
+<div id="page-wrapper">
+            <!-- start .side-menu-overlay -->
+            <div id="sideMenuOverlay" class="side-menu-overlay"></div>
+            <!-- / .side-menu-overlay -->
+
+            <!-- start .menu-overlay -->
+            <div id="menuOverlay" class="menu-overlay"></div>
+            <!-- / .menu-overlay -->
+            
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+    <div class="header-top-bar">
+        <div class="container clearfix">
+            <ul class="header-top-bar-nav">
+                <li><a href="https://www.fip.org" class="header-top-bar-nav-home"><i class="fa fa-home" aria-hidden="true" aria-label="Home"></i></a></li>
+
+                <!-- pill-shaped search, left of the translate widget -->
+                <li class="topbar-search">
+                    <form action="/search" method="get" role="search" class="topbar-search__form">
+                        <i class="fa fa-search topbar-search__icon" aria-hidden="true"></i>
+                        <input type="search" name="s" class="topbar-search__input" placeholder="Search" aria-label="Search">
+                    </form>
+                </li>
+
+<!-- HIER START LI TRANSLATE -->
+							<li><span class="icon-gt">
+								<div id="google_translate_element"></div><script>
+								function googleTranslateElementInit() {
+									new google.translate.TranslateElement({
+										pageLanguage: 'en'
+									}, 'google_translate_element');
+								}
+								</script><script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script></span>
+							</li>
+<!-- HIER END LI TRANSLATE -->
+							
+							   
+                <!--<li><a href='/?&textonly=on'>Text version</a></li>  -->
+                 <li><a href="./join-fip" class="topbar-join"><i class="fa fa-donate mo"  aria-hidden="true"></i>JOIN US!</a></li>
+                <li><a href="./login_members"><i class="fa fa-donate mo"  aria-hidden="true"></i>Login</a></li>
+             <!--    <li><a href="./contact"><i class="fa fa-address-card mo" aria-hidden="true"></i>Contact</a></li>--> 
+            </ul>
+        </div>
+    </div>		
+    <header id="masthead" class="site-header container">
+		<div class="site-branding" style="display:none">
+							<p class="site-title"><a href="https://www.fip.org/" rel="home">FIP </a></p>
+							<p class="site-description">FIP </p>
+					</div><!-- .site-branding -->
+
+		        
+		                     
+    <div class="container">
+        <div class="header-nav row">
+            <div class="col m-0 p-0">
+                <div id="nav_wrapper">
+                    <!-- MegaNavbar BS4 -->
+                    
+                    <nav class="navbar navbar-inverse navbar-expand-lg  m-0 p-0 navbar-light" id="main_navbar" role="navigation" data-offset="471">
+                    <div class="container pl-0 ps-0 pe-0">
+                    <!-- MegaNavbar BS4 brand -->
+                      <a class="navbar-brand navbar-brand-home-logo" href="https://www.fip.org/"><img src="tpl/fip2019/content/themes/fiporg//inc/fw_assets/images/logo-fip.svg" class="navbar-logo-img"></a>
+                    <!-- <a class="navbar-brand" href="#"><i class="fa fa-home"></i> FIP  </a>-->
+                    <!-- MegaNavbar BS4 toggler -->
+                    
+<!-- 2019 -->
+<button class="btn-hamburger" id="toggleOffCanvas">
+           <span></span>
+</button>
+
+ <div class="collapse navbar-collapse" id="navbar">
+               <!-- NEW     <div class=" navbar-collapse Ooffcanvas-collapse" id="navbar"> -->
+                        <ul class="navbar-nav ml-auto ms-auto me-0">
+                        
+                            <!-- menus -->
+                                                                    
+                <li class="nav-item dropdown show nav-item-spotlight nav-item-spotlight-1">
+                
+                    <a class="nav-link dropdown-toggle nav-link-spotlight " href="https://www.fip.org/about" id="id_dropdown_2099"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="nav-link-title">About FIP</span></a>
+                        <div class="dropdown-menu  ffade nav-link-content-about" aria-labelledby="id_dropdown_2099"
+                                id="nav-link-content-id_dropdown_2099" ><div class='row'><div class='col ncol-1'>                    <a class="dropdown-item" href="https://www.fip.org/who-we-are" ><span class="nav-link-title">Who we are </span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/vision-mission" ><span class="nav-link-title">Our vision, mission and strategy</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/awards" ><span class="nav-link-title">Awards</span></a>
+                    <a class="dropdown-item" href="https://developmentgoals.fip.org" target='_blank'><span class="nav-link-title">FIP Development Goals</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-partners" ><span class="nav-link-title">Our partners</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/our-team" ><span class="nav-link-title">Our team</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/news" ><span class="nav-link-title">News</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/press-releases" ><span class="nav-link-title">Press releases</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-representation" ><span class="nav-link-title">FIP representation</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/contact-us" ><span class="nav-link-title">Contact us</span></a>
+</div></div>                        </div>
+                </li>                                        
+                <li class="nav-item dropdown show nav-item-spotlight nav-item-spotlight-2">
+                
+                    <a class="nav-link dropdown-toggle nav-link-spotlight " href="https://www.fip.org/structures" id="id_dropdown_2271"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="nav-link-title">Structures</span></a>
+                        <div class="dropdown-menu  ffade nav-link-content-structures" aria-labelledby="id_dropdown_2271"
+                                id="nav-link-content-id_dropdown_2271" ><div class='row'><div class='col ncol-1'>                    <a class="dropdown-item" href="https://www.fip.org/structure-and-statutes" ><span class="nav-link-title">Structure and statutes</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/pharmacy-practice" ><span class="nav-link-title">Pharmaceutical practice and the sections</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/pharmaceutical-sciences" ><span class="nav-link-title">Pharmaceutical sciences and the special interest groups</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/pharmacy-education" ><span class="nav-link-title">Pharmaceutical education</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-council" ><span class="nav-link-title">FIP Council</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-regional-forums" ><span class="nav-link-title">FIP Regional Forums</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/antimicrobial-resistance#AMRcommission" ><span class="nav-link-title">AMR Commission</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-ethics-advisory-group" ><span class="nav-link-title">FIP Ethics Advisory Group</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-humanitarian-resilience-advisory-group" ><span class="nav-link-title">FIP Humanitarian Resilience Advisory Group</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-regulators-advisory-group" ><span class="nav-link-title">FIP Regulators Advisory Group</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-technology-advisory-group" ><span class="nav-link-title">FIP Technology Advisory Group</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/early-career-pharmaceutical-group" ><span class="nav-link-title">Early Career Pharmaceutical Group</span></a>
+</div></div>                        </div>
+                </li>                                        
+                <li class="nav-item dropdown show nav-item-spotlight nav-item-spotlight-2">
+                
+                    <a class="nav-link dropdown-toggle nav-link-spotlight " href="https://www.fip.org/what-we-do" id="id_dropdown_2272"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="nav-link-title">What we do</span></a>
+                        <div class="dropdown-menu  ffade nav-link-content-what-we-do" aria-labelledby="id_dropdown_2272"
+                                id="nav-link-content-id_dropdown_2272" ><div class='row'>           <div class='col col-6 '><!--1,10-->
+                    <a class="dropdown-item" href="https://www.fip.org/antimicrobial-resistance" ><span class="nav-link-title">Antimicrobial resistance</span></a>
+                    <a class="dropdown-item" href="https://gpo.fip.org" target='_blank'><span class="nav-link-title">Data and intelligence</span></a>
+                    <a class="dropdown-item" href="https://prevention.fip.org/" target='_blank'><span class="nav-link-title">Disease prevention</span></a>
+                    <a class="dropdown-item" href="https://equityrx.fip.org/" target='_blank'><span class="nav-link-title">Equity and equality</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-hub" ><span class="nav-link-title">FIP Hub</span></a>
+                    <a class="dropdown-item" href="https://equityrx.fip.org/fipwise" target='_blank'><span class="nav-link-title">FIP Women in Science and Education (FIPWiSE)</span></a>
+                    <a class="dropdown-item" href="https://humanitarian.fip.org/" ><span class="nav-link-title">Humanitarian in pharmacy</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/medicines-shortages" ><span class="nav-link-title">Medicines shortages</span></a>
+                    <a class="dropdown-item" href="https://ncd.fip.org/" target='_blank'><span class="nav-link-title">Non-communicable diseases</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/patient-safety" ><span class="nav-link-title">Patient safety</span></a>
+           </div>           <div class='col col-6 '><!--2,10-->
+                    <a class="dropdown-item" href="https://primaryhealthcare.fip.org/" target='_blank'><span class="nav-link-title">Primary health care</span></a>
+                    <a class="dropdown-item" href="https://provision.fip.org/courses-with-fip-seal/" target='_blank'><span class="nav-link-title">Professional development</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/activities-priorityareas-professionalethics" ><span class="nav-link-title">Professional ethics</span></a>
+                    <a class="dropdown-item" href="https://provision.fip.org/" target='_blank'><span class="nav-link-title">Provision and partnerships</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/public-health-emergencies" ><span class="nav-link-title">Public health emergencies</span></a>
+                    <a class="dropdown-item" href="https://selfcare.fip.org/" target='_blank'><span class="nav-link-title">Self-care and common ailments</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/falsified-medicines" ><span class="nav-link-title">Substandard and falsified medicines</span></a>
+                    <a class="dropdown-item" href="https://sustainability.fip.org/" target='_blank'><span class="nav-link-title">Sustainability in pharmacy</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/workforce-transformation" ><span class="nav-link-title">Workforce development </span></a>
+
+           </div></div>                        </div>
+                </li>                                        
+                <li class="nav-item dropdown show nav-item-spotlight nav-item-spotlight-2">
+                
+                    <a class="nav-link dropdown-toggle nav-link-spotlight " href="https://www.fip.org/join-fip" id="id_dropdown_2166"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="nav-link-title">Get involved</span></a>
+                        <div class="dropdown-menu  ffade nav-link-content-join-fip" aria-labelledby="id_dropdown_2166"
+                                id="nav-link-content-id_dropdown_2166" ><div class='row'><div class='col ncol-1'>                    <a class="dropdown-item" href="https://www.fip.org/membership" ><span class="nav-link-title">Membership</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-members-across-the-globe" ><span class="nav-link-title">FIP members across the globe</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-newsletters" ><span class="nav-link-title">FIP Newsletters - sign up</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/journals" ><span class="nav-link-title">Journals</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/world-pharmacists-day" ><span class="nav-link-title">World Pharmacists Day</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/think-health-think-pharmacy" ><span class="nav-link-title">Join FIP’s Think Health, Think Pharmacy Campaign</span></a>
+</div></div>                        </div>
+                </li>                                        
+                <li class="nav-item dropdown show nav-item-regular nav-item-regular-1">
+                
+                    <a class="nav-link dropdown-toggle nav-link-regular " href="https://www.fip.org/congress-and-events" id="id_dropdown_2139"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="nav-link-title">Congress and events</span></a>
+                        <div class="dropdown-menu dropdown-menu-right ffade nav-link-content-congress-and-events" aria-labelledby="id_dropdown_2139"
+                                id="nav-link-content-id_dropdown_2139" ><div class='row'><div class='col ncol-1'>                    <a class="dropdown-item" href="https://www.fip.org/fip-congresses" ><span class="nav-link-title">FIP congresses</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/fip-digital-events" ><span class="nav-link-title">FIP events</span></a>
+                    <a class="dropdown-item" href="https://www.fip.org/external-events" ><span class="nav-link-title">External events</span></a>
+</div></div>                        </div>
+                </li>                    <li class="nav-item">
+                            <a class="nav-link nav-link-regular" href="https://www.fip.org/publications"><span class="nav-link-title">FIP Library</span></a>
+                    </li>
+                                
+                        </ul>
+                    </div>
+                </div> <!-- nav_wrapper -->
+            </div>
+        </div>
+    </div>
+<style>
+                                
+                                
+</style>
+                                
+                                
+		         
+   
+    
+    	</header><!-- #masthead -->
+
+<!-- FIP 2026 new 3-column homepage body. Sections filled from home2026.inc.php.
+     Head/utility bar/nav (above) and footer (below) are reused from fip2019. -->
+
+<section class="hero" id="heroBanner">
+    <div class="hero__bg"><div class="fip2026-carousel fip2026-carousel--single hero__carousel"><div class="carousel-item active"><img src="https://www.fip.org/files/content/carousel/2026/hero-3.jpg" class="d-block w-100 fip2026-carousel__img" alt=""></div>
+</div></div>
+    <div class="hero__gradient"></div>
+    <div class="hero__pattern"></div>
+    <div class="container">
+        <p class="hero__eyebrow">100+ years</p>
+        <h1 class="hero__title">Advancing pharmacy<br>worldwide</h1>
+    </div>
+</section>
+
+<div class="quick-bar">
+    <div class="container">
+        <div class="quick-bar__links">
+            <span class="quick-bar__label">Quick access</span>
+            <a href="https://montreal2026.fip.org" target="_blank" rel="noopener" class="quick-bar__link">Montreal 2026</a>
+<a href="./publications" class="quick-bar__link">Publications</a>
+<a href="https://www.fip.org/fip-development-goals" class="quick-bar__link">Development Goals</a>
+<a href="./news" class="quick-bar__link">News</a>
+<a href="https://www.fip.org/membership_registration" target="_blank" rel="noopener" class="quick-bar__link">Join FIP</a>
+<a href="https://www.fip.org/think-health-think-pharmacy" class="quick-bar__link">Think Health, Think Pharmacy</a>
+<a href="./fip-newsletters" class="quick-bar__link">Newsletters</a>
+<a href="https://www.fip.org/world-pharmacists-day" class="quick-bar__link">#WPD2026</a>
+<a href="https://www.fip.org/join-fip" class="quick-bar__link">Membership</a>
+
+        </div>
+    </div>
+</div>
+
+<section class="intro-section">
+    <div class="container">
+        <div class="row g-4 align-items-start">
+            <div class="col-12 col-md-9 intro-section__body">
+                <h2 class="intro-section__heading">We are FIP</h2>
+                <p class="intro-section__subline">Integrity, passion, performance!</p>
+                <p class="intro-section__text">The International Pharmaceutical Federation (FIP) is the global
+                    body representing over 5.5 million pharmacists, pharmacy educators and pharmaceutical scientists. We work to meet
+                    the world's healthcare needs. FIP is a non-governmental organisation that has been in
+                    official relations with the World Health Organization since 1948.</p>
+                <a href="https://www.fip.org/about" class="intro-section__more">More about FIP &rarr;</a>
+            </div>
+            <div class="col-12 col-md-3 intro-section__aside">
+                <div class="fip2026-carousel fip2026-carousel--single intro-banner-badge"><div class="carousel-item active"><a href="https://www.fip.org/world-pharmacists-day" class="fip2026-carousel__link"><img src="https://www.fip.org/files/content/carousel/2026/banner-intro-worldpharmacyday.jpg" class="d-block w-100 fip2026-carousel__img" alt=""></a></div>
+</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="main-content container">
+    <div class="row g-0">
+
+    <!-- LEFT COLUMN · What we do -->
+    <div class="col-12 col-lg-3 col-left">
+        <div class="col-section">
+            <div class="col-section__header">
+                <h3 class="col-section__title">What we do</h3>
+                <a href="https://www.fip.org/what-we-do" class="col-section__more">All &rarr;</a>
+            </div>
+            <div class="topic-list">
+                <a href="./antimicrobial-resistance"><i class="topic-list__icon fa-solid fa-shield-virus"></i>Antimicrobial resistance</a>
+<a href="https://prevention.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-shield-heart"></i>Disease prevention</a>
+<a href="https://equityrx.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-scale-balanced"></i>Equity and equality</a>
+<a href="https://humanitarian.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-hands-holding-circle"></i>Humanitarian in pharmacy</a>
+<a href="https://www.fip.org/medicines-shortages" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-prescription-bottle-medical"></i>Medicines shortages</a>
+<a href="https://ncd.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-heart-pulse"></i>Non-communicable diseases</a>
+<a href="./patient-safety"><i class="topic-list__icon fa-solid fa-user-shield"></i>Patient safety</a>
+<a href="https://primaryhealthcare.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-stethoscope"></i>Primary health care</a>
+<a href="https://provision.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-handshake-angle"></i>Provision and partnerships</a>
+<a href="https://selfcare.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-kit-medical"></i>Self-care and common ailments</a>
+<a href="https://sustainability.fip.org/" target="_blank" rel="noopener"><i class="topic-list__icon fa-solid fa-leaf"></i>Sustainability in pharmacy</a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTER COLUMN · CMS banner(s) (HOMEPAGE-CENTER) — carousel if >1 -->
+    <div class="col-12 col-lg-6 col-center">
+        <div class="fip2026-carousel fip2026-carousel--single center-banner"><div class="carousel-item active"><a href="https://montreal2026.fip.org" class="fip2026-carousel__link"><img src="https://www.fip.org/files/content/carousel/2026/banner-center-montreal2026.jpg" class="d-block w-100 fip2026-carousel__img" alt=""></a></div>
+</div><div class="fip2026-carousel fip2026-carousel--single center-banner center-banner--imgtext"><div class="carousel-item active"><img src="https://www.fip.org/files/content/carousel/2026/imagetext-catherine.jpg" class="d-block w-100 fip2026-carousel__img" alt=""><div class="fip2026-carousel__overlay" style=""><span class="fip2026-carousel__caption">Catherine Duggan, FIP CEO,  joined a policy dialogue exploring how evidence on the value of self-care can inform policy decisions, support health system sustainability and be better reflected in OECD health and economic frameworks on 23 June 2026 in Paris</span></div></div>
+</div>
+    </div>
+
+    <!-- RIGHT COLUMN · Upcoming events -->
+    <div class="col-12 col-lg-3 col-right">
+        <div class="col-section">
+            <div class="col-section__header">
+                <h3 class="col-section__title">Upcoming events</h3>
+                <a href="https://www.fip.org/events" class="col-section__more">All &rarr;</a>
+            </div>
+            <div class="events-list">            <a href="https://us02web.zoom.us/webinar/register/2917830783339/WN_UYkQvFADTAC9_6pQw95k8A" class="event-compact">
+                <div class="event-compact__date"><div class="event-compact__day">16</div><div class="event-compact__month">Jul</div></div>
+                <div class="event-compact__info"><div class="event-compact__type">Digital event</div><div class="event-compact__name">Professional Identity Formation in Pharmacy in the Era of Artificial Intelligence</div></div>
+            </a>
+            <a href="https://www.fip.org/events?event=item&event-item=1291" class="event-compact">
+                <div class="event-compact__date"><div class="event-compact__day">30&ndash;2</div><div class="event-compact__month">Aug</div></div>
+                <div class="event-compact__info"><div class="event-compact__type">Congress</div><div class="event-compact__name">84th FIP World Congress of Pharmacy and Pharmaceutical Sciences</div></div>
+            </a>
+            <a href="https://www.fip.org/events?event=item&event-item=1331" class="event-compact">
+                <div class="event-compact__date"><div class="event-compact__day">12&ndash;15</div><div class="event-compact__month">Sep</div></div>
+                <div class="event-compact__info"><div class="event-compact__type">Congress</div><div class="event-compact__name">85th FIP World Congress of Pharmacy and Pharmaceutical Sciences</div></div>
+            </a>
+</div>
+            <a href="https://www.fip.org/events?eventWhen=upcoming" class="col-section__more" style="display:inline-block;margin-top:12px;">Upcoming overview &rarr;</a>
+        </div>
+    </div>
+    </div><!-- /.row -->
+</div>
+
+<section class="thtp-section">
+    <div class="container">
+        <div class="fip2026-carousel fip2026-carousel--single wide-banner"><div class="carousel-item active"><a href="https://www.fip.org/think-health-think-pharmacy" class="fip2026-carousel__link"><img src="https://www.fip.org/files/content/carousel/2026/banner-homepage-ultrawide-support-think.jpg" class="d-block w-100 fip2026-carousel__img" alt=""></a></div>
+</div>
+    </div>
+</section>
+
+<section class="feature-cards">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Data & Intelligence -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="feature-card feature-card--data">
+                    <h3 class="feature-card__kicker">Data &amp;<span>Intelligence</span></h3>
+                    <div class="feature-card__media">
+                        <img src="tpl/fip2019/content/themes/fiporg/fip2026/images/data-intelligence-image.jpg" alt="Global Pharmaceutical Observatory">
+                    </div>
+                    <div class="feature-card__body">
+                        <h4 class="feature-card__title">Global Pharmaceutical Observatory</h4>
+                        <p>Advancing FIP Development Goals to 2030</p>
+                        <p>Learn more about FIP's new Country Profile Pharmacy Series Initiative
+                            <a href="https://gpo.fip.org/" class="feature-card__link"><span class="feature-card__link-text">here</span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Publications -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="feature-card feature-card--pub">
+                    <h3 class="feature-card__kicker">Recent<span>Publications</span></h3>
+                    <!-- Preview of the most recent publication: portrait thumb (~1/3)
+                         left, title + subline right, on a dark-green band. -->
+                                        <a href="./publications?publications=item&publication-item=1102" class="pub-preview">
+                        <div class="pub-preview__thumb"><img src="https://www.fip.org/file/6612" alt=""></div>
+                        <div class="pub-preview__caption">
+                            <span class="pub-preview__title">FIP representation at the 79th World Health Assembly: Impact and success report</span>
+                            <span class="pub-preview__sub"></span>
+                        </div>
+                    </a>
+                    <div class="feature-card__body">
+                        <p>FIP makes it a priority to publish the latest developments in pharmacy practice
+                            and pharmaceutical sciences, related global news and prominent events.</p>
+                        <label class="feature-card__select feature-card__select--lg">
+                            <select aria-label="Select a category" onchange="if(this.value){window.location=this.value;}">
+                                <option value="">Select a category</option>
+                                <option value="https://www.fip.org/publications?publicationCategory=18">Annual reports</option>
+<option value="https://www.fip.org/publications?publicationCategory=32">Education and workforce</option>
+<option value="https://www.fip.org/publications?publicationCategory=125">FIP Development Goals</option>
+<option value="https://www.fip.org/publications?publicationCategory=101">FIP Global Pharmaceutical Observatory intelligence</option>
+<option value="https://www.fip.org/publications?publicationCategory=16">Journals</option>
+<option value="https://www.fip.org/publications?publicationCategory=20">Newsletters</option>
+<option value="https://www.fip.org/publications?publicationCategory=36">Pharmaceutical sciences</option>
+<option value="https://www.fip.org/publications?publicationCategory=26">Pharmacy practice</option>
+<option value="https://www.fip.org/publications?publicationCategory=24">Policies/ Professional standards/ Guidance/ Statements</option>
+<option value="https://www.fip.org/publications?publicationCategory=127">Regional Pharmaceutical Forums</option>
+<option value="https://www.fip.org/publications?publicationCategory=2">Reports/ Reference papers/ Handbooks/ Toolkits</option>
+<option value="https://www.fip.org/publications?publicationCategory=83">Young pharmacists and new graduates</option>
+
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Digital Events -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="feature-card feature-card--events">
+                    <h3 class="feature-card__kicker">Recent<span>Digital Events</span></h3>
+                                        <a href="https://www.fip.org/events?event=item&event-item=1427" class="feature-card__media">
+                        <img src="https://www.fip.org//files/content/events/2026/3006_WEB_2.jpg" alt="Artificial Intelligence in Pharmacy Education: Defining ethical boundaries for academic leadership">
+                    </a>
+                                        <div class="feature-card__body">
+                        <div class="feature-card__date">30 June 2026</div>
+                        <h4 class="feature-card__title">Artificial Intelligence in Pharmacy Education: Defining ethical boundaries for academic leadership</h4>
+                        <a href="https://www.fip.org/events?event=item&event-item=1427" class="feature-card__link"><span class="feature-card__link-text">Watch recording</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latest News -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="feature-card feature-card--news">
+                    <h3 class="feature-card__kicker">Latest<span>News</span></h3>
+                                        <a href="./news?news=newsitem&newsitem=714" class="feature-card__media">
+                        <img src="https://www.fip.org//files/content/getinvolved/WPD2026/factsheet.png" alt="New World Pharmacists Day factsheet highlights how empowering pharmacists strengthens health systems">
+                    </a>
+                                        <div class="feature-card__body">
+                        <div class="feature-card__date">13 July 2026</div>
+                        <h4 class="feature-card__title">New World Pharmacists Day factsheet highlights how empowering pharmacists strengthens health systems</h4>
+                        <a href="./news?news=newsitem&newsitem=714" class="feature-card__link"><span class="feature-card__link-text">More</span></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════ END FIP 2026 HOMEPAGE BODY ═══════════════════════ -->
+	
+<section class="footerlinks">
+    <div class="container">
+    <div class="row">
+        <div class="column col-12 col-md-8">
+            <div class="row normal">
+                <div class="column col-6">
+                    <h3>Partners</h3>
+                    <ul >
+<li ><a href='./fip-who-collaboration' target=''>World Health Organization</a>
+<li ><a href='https://en.unesco.org/' target=''>UNESCO</a>
+<li ><a href='https://www.whpa.org/' target=''>World Health Professions Alliance</a>
+<li ><a href='http://fipfoundation.org/' target=''>FIP Foundation for Education and Research</a>
+<li ><a href='https://www.ipsf.org/' target=''>International Pharmaceutical Students' Federation</a>
+</ul>
+
+                   
+                </div>
+                <div class="column col-6">
+                    <h3>FIP works for</h3>
+                    <ul >
+<li ><a href='./pharmacy-practice' target=''>Pharmacy practitioners</a>
+<li ><a href='./pharmaceutical-sciences' target=''>Pharmaceutical scientists</a>
+<li ><a href='./pharmacy-education' target=''>Pharmaceutical educators</a>
+<li ><a href='./young-pharmacists-group' target=''>Young pharmacists and new graduates</a>
+</ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="column col-12 col-md-4">
+            <figure>
+                <img src="tpl/fip2019/content/themes/fiporg/inc/fw_assets/images/footer-fip-building.jpg" alt="">
+                <figcaption class="blue has-ribbon top center">
+                    <span class="title">Our contact details</span>
+                    <span class="text">
+                   <!-- <span class="text--bold"></span><br/>  -->
+                        Andries Bickerweg 5<br>
+                        2517 JP The Hague<br>
+                        Netherlands<br><br>
+                                  +31 (0) 70 30 21 970<br/>
+                            <a href="mailto:fip@fip.org" style="overflow-wrap: break-word;">fip@fip.org</a>
+                        </span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+</section>	
+
+<footer class="footer">
+    <div class="container contain--relative  footer-container">
+    	<div class="row">
+    	<div class="col-12 col-md-6">
+        <a href="https://www.fip.org" target="_blank" class="logo"><img src="tpl/fip2019/content/themes/fiporg/inc/fw_assets/images/logo-fip.svg" title="fip" alt="fip"></a>
+        <span class="copy">© Copyright International Pharmaceutical Federation 2026 </span>
+        </div>
+        <div class="col-12 col-md-6 footer-right"><!--  
+            <ul class="float-right">
+
+			<li><a href="https://fip.org/files/fip/Privacy-Statement.pdf" target="_blank">Privacy statement</a></li>
+            <li><a id="btnToTop" href="#">Scroll to top</a></li>
+             </ul>
+             -->
+             <ul class='float-right' id='footer-bar'>
+<li ><a href='/files/content/footer/terms-of-use.pdf' target=''>Terms of use</a>
+<li ><a href='/files/content/footer/privacy-statement.pdf' target=''>Privacy statement</a>
+<li ><a href='#top' target=''>Scroll to top</a>
+</ul>
+
+        </div>
+        </div>
+    </div>
+</footer>
+	
+ 
+	
+	
+</div><!-- #page -->
+</div> <!-- #page-wrapper  -->
+
+<!--  *F* -->
+<script type='text/javascript' src='tpl/fip2019/content/themes/fiporg/js/navigation.js?ver=20151215'></script>
+<script type='text/javascript' src='tpl/fip2019/content/themes/fiporg/js/skip-link-focus-fix.js?ver=20151215'></script>
+
+<!--  *F* -->
+
+<div class="popup become-member" id="member_benefits_popup" style="top: 342.5px;">
+
+    <div class="content ">
+        <h2>To which group do you belong?</h2>
+        
+        <div class="row ">
+            <div class="column col-sm-4">
+                <div class="choice">
+                    <h3>I am an individual</h3>
+                    
+                    
+                    <a href="https://www.fip.org/membership_registration" class="btn">Join FIP now!</a>
+                    
+                    <a href="https://www.fip.org/registration" class="read-more">Read benefits <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="column col-sm-4">
+                <div class="choice">
+                    <h3>We are an organisation</h3>
+                    
+                    
+                    <a href="https://www.fip.org/member-organisation-benefits#scr1" class="btn">Register interest</a>
+                    
+                    <a href="https://www.fip.org/member-organisation-benefits" class="read-more">Read benefits <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="column col-sm-4">
+                <div class="choice">
+                    <h3>We are a school or faculty</h3>
+                    
+                    
+                    <a href="https://www.fip.org/university-registration#scr1" class="btn">Apply for membership</a>
+                    
+                    <a href=https://www.fip.org//university-registration"  class="read-more">Read benefits <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+                        
+        <span class="close top closepopup">Not right now, maybe later... <i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+</div>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1245618-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-1245618-1', { 'anonymize_ip': true });
+    gtag('config', 'G-LSVWETHYSS', { 'anonymize_ip': true });
+
+    $('[href$=".pdf"],[href$=".docx"],[href$=".doc"],[href$=".jpg"]').on("click", function() { // get the link attribute and find the filename of the PDF 
+		var pdfLink = $(this).attr("href");//, 
+		pdfLocation = pdfLink.substr(pdfLink.lastIndexOf("/")).replace("/","") ; 
+		gtag('event', 'downloads', {
+				'event_category': 'fip_home',
+			    'event_label':  pdfLink,
+			    }   
+		);
+  	});
+
+
+ </script>
+ 
+ <!-- 
+<script>
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1245618-1', 'fip.org');
+  ga('send', 'pageview');
+
+</script>
+ -->
+ 
+ <!-- Google tag (gtag.js) -->
+ <!-- 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LSVWETHYSS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+     gtag('config', 'G-LSVWETHYSS', { 'anonymize_ip': true });
+</script>
+ -->
+
+<div style="display:none">
+<h1>FIP Congresses</h1>
+<ul>
+<li><a href="https://abudhabi2019.fip.org" title="FIP 2019" alt="FIP 2019">FIP 2019 Abu Dhabi</a></li>
+<li><a href="https://pswc2020.fip.org" title="PSWC 2020" alt="PSWC 2020">PSWC 2020 Montreal</a></li>
+<li><a href="https://glasgow2018.fip.org" title="FIP 2018" alt="FIP 2018">FIP 2018 Glasgow</a></li>
+<li><a href="https://ankara2019.fip.org" title="Ankara 2019" alt="Ankara2019">FIp Ankara 2019</a></li>
+<li><a href="https://join.fip.org" title="Join FIP" alt="Join FIP">Join FIP</a></li>
+</ul>
+	
+	
+
+</div>
+	
+<!--  fip_home  -->
+</body>
+</html>

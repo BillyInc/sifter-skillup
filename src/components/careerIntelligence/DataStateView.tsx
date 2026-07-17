@@ -1,8 +1,8 @@
 /**
  * DataStateView — renders children only when a DataState is `real`, otherwise
- * shows a compact, on-brand inline state (coming soon / locked / pending /
+ * shows a compact, on-brand inline state (locked preview / locked / pending /
  * error / empty). This is how the whole career module honours the rule:
- * unbuilt or unpopulated areas read "Coming Soon" — never a blank or a fake.
+ * unbuilt or unpopulated areas read as locked previews — never a blank or a fake.
  *
  * Use it to wrap any data-driven block:
  *   <DataStateView state={state} empty={(d) => d.length === 0}>
@@ -19,14 +19,14 @@ const PRESET: Record<
   { icon: string; title: string; body: string }
 > = {
   coming_soon: {
-    icon: "🚧",
-    title: "Coming soon",
-    body: "This is being populated. Check back shortly.",
+    icon: "🔒",
+    title: "Locked",
+    body: "This page is designed, but the verified data is not ready yet.",
   },
   locked: {
     icon: "🔒",
-    title: "Create an account",
-    body: "Sign up to unlock this — it takes a few seconds.",
+    title: "Locked",
+    body: "Create an account or wait for release to unlock this surface.",
   },
   pending: {
     icon: "🕐",
@@ -94,7 +94,9 @@ export function DataStateView<T>({
   }
 
   const preset =
-    PRESET[state.status as Exclude<DataStatus, "real">] ?? PRESET.coming_soon;
+    state.status === "coming_soon"
+      ? lockedPreviewFor(state.meta?.notice)
+      : PRESET[state.status as Exclude<DataStatus, "real">] ?? PRESET.coming_soon;
   return (
     <StatePanel
       icon={preset.icon}
@@ -148,6 +150,47 @@ export function DataStateView<T>({
       </View>
     );
   }
+}
+
+function lockedPreviewFor(notice?: string): {
+  icon: string;
+  title: string;
+  body: string;
+} {
+  const copy = notice?.trim();
+  const lower = copy?.toLowerCase() ?? "";
+  const icon =
+    lower.includes("scholarship") || lower.includes("application window")
+      ? "🎯"
+      : lower.includes("admission") || lower.includes("jamb") || lower.includes("cut-off")
+        ? "🎓"
+        : lower.includes("elite")
+          ? "⭐"
+          : lower.includes("phd")
+            ? "🔬"
+            : lower.includes("charter") || lower.includes("credential")
+              ? "📜"
+              : lower.includes("qualification") || lower.includes("upgrade")
+                ? "🪜"
+                : lower.includes("opportunit") || lower.includes("internship") || lower.includes("job")
+                  ? "💼"
+                  : lower.includes("employer") || lower.includes("organisation")
+                    ? "🏢"
+                    : lower.includes("domain") || lower.includes("role") || lower.includes("search")
+                      ? "🧭"
+                      : lower.includes("salary") || lower.includes("demand") || lower.includes("market")
+                        ? "📊"
+                        : lower.includes("note") || lower.includes("saved")
+                          ? "🗂️"
+                          : "🔒";
+
+  return {
+    icon,
+    title: "Locked",
+    body:
+      copy ??
+      "This page is ready in shape and waiting for verified data before it opens.",
+  };
 }
 
 export default DataStateView;

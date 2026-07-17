@@ -165,4 +165,13 @@ class Settings:
     # ── Track gates ───────────────────────────────────────────
     QUANT_DEV_PYTHON_GATE_CHAPTERS: int = 5
 
+    # ── Institution/admin access gate ─────────────────────────
+    # Comma-separated owner-issued codes that allow educators, tutorial centres,
+    # and institutions to enter admin mode before the full verification pipeline.
+    EDUCATOR_ACCESS_CODES: list = [
+        code.strip().upper()
+        for code in os.getenv("EDUCATOR_ACCESS_CODES", "").split(",")
+        if code.strip()
+    ]
+
 settings = Settings()

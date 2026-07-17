@@ -112,6 +112,34 @@ ingest_offerings("jamb/arts_hum_offerings.json", "Arts and Humanities", "B.A")
 ingest_offerings("jamb/engineering_offerings.json", "Engineering/Environmental/Technology", "B.Eng/B.Tech")
 ingest_offerings("jamb/education_offerings.json", "Education", "B.Ed")
 
+# ── 2b. jamb/enrich overlay — richer per-programme requirements ─
+# 101 per-programme files (medical/agriculture/education/engineering/arts_hum)
+# extracted straight from the brochures; they supersede the coarser offerings
+# fields for the same jamb_name. Same row id (uid("psr", jname)) -> replace.
+import glob as _g2
+_psr_ix = {r[0]: i for i, r in enumerate(rows["programme_subject_requirements"])}
+_enrich_applied = _enrich_skipped = 0
+for f in sorted(_g2.glob(os.path.join(HERE, "jamb", "enrich", "*.json"))):
+    if os.path.basename(f).startswith("_"):
+        continue
+    e = json.load(open(f, encoding="utf-8"))
+    jname = e.get("jamb_name")
+    if not jname:
+        continue
+    jid = uid("jamb", jname)
+    if jid not in _seen_jids:
+        _enrich_skipped += 1  # programme not in any offerings file — nothing to attach to
+        continue
+    row = (uid("psr", jname), jid, as_text(e.get("utme_subjects")),
+           e.get("olevel_requirement"), e.get("direct_entry"))
+    i = _psr_ix.get(row[0])
+    if i is not None:
+        rows["programme_subject_requirements"][i] = row
+    else:
+        rows["programme_subject_requirements"].append(row)
+    _enrich_applied += 1
+print(f"jamb/enrich overlay: {_enrich_applied} applied, {_enrich_skipped} skipped (no offerings entry)")
+
 # ── 3. programme_mapping (bridge) ───────────────────────────────
 pm = load("programme_mapping.json")
 custom_link = {"Intelligence and Security Studies": "Intelligence and Security Studies",

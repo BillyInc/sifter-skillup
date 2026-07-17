@@ -55,6 +55,21 @@ jamb_dom = load("jamb_domain_map.json")
 scores = load("programme_role_scores.json")
 
 EXCLUDED = {d for d in meta if meta[d].get("excluded")}
+# UNIVERSITY-PIPELINE SCOPE (owner decision 2026-07-16, adversarially verified):
+# hide domains by REACHABILITY, not by institution_type[] — that flag describes
+# who staffs the domain's workforce, and would wrongly hide 28 domains that
+# CCMAS programmes / JAMB names actually map into (Food Science, Chemical
+# Engineering, agriculture, trades reached as functional/adjacent links).
+# HIDDEN = excluded ∪ domains with no CCMAS-programme link AND no JAMB-name
+# link (verified 2026-07-16: exactly 8 — D086 D087 D088 D089 D100 D101 D108 D113).
+_reachable = set()
+for _v in prog_dom.values():
+    for _l in (_v["links"] if isinstance(_v, dict) and "links" in _v else _v):
+        _reachable.add(_l["domain_id"])
+for _ent in jamb_dom.values():
+    for _l in _ent.get("links", []):
+        _reachable.add(_l["domain_id"])
+HIDDEN = EXCLUDED | {d for d in meta if d not in _reachable}
 def dom_uid(dk): return uid("domain", dk)
 def sg_uid(dk, sm): return uid("subgroup", dk, str(sm))
 
@@ -62,6 +77,7 @@ R = defaultdict(list)  # table -> list[list[str sql-literals]]
 
 # ── 1. domains ──────────────────────────────────────────────────
 for dk, m in meta.items():
+    if dk in HIDDEN: continue
     st = struct.get(dk, {})
     R["domains"].append([
         q(dom_uid(dk)), q(dk), q(m.get("domain_name")), q(m.get("cluster")),
@@ -72,6 +88,7 @@ for dk, m in meta.items():
 
 # ── 2. domain_subgroups ─────────────────────────────────────────
 for dk, st in struct.items():
+    if dk in HIDDEN: continue
     for sg in st.get("subgroups", []):
         R["domain_subgroups"].append([
             q(sg_uid(dk, sg["isco_submajor"])), q(dom_uid(dk)),
@@ -87,7 +104,7 @@ for dk, st in struct.items():
         sg_by[(dk, str(sg["isco_submajor"]))] = sg_uid(dk, sg["isco_submajor"])
 for r in roles:
     dk = r["domain_id"]
-    if dk not in meta: continue
+    if dk not in meta or dk in HIDDEN: continue
     rk = f'{dk}|{r["role_name"]}'
     sm = str(r.get("isco_group", ""))[:2]
     sgid = sg_by.get((dk, sm))
@@ -103,32 +120,67 @@ for r in roles:
 def tool_rows(dk, entry, scope, sgid):
     for grp in ("distinctive_tools", "common_tools", "distinctive", "common"):
         pass
+# leakage drop-list from _audit_tools_leakage.py (cross-domain SOC artifacts)
+_drop_path = os.path.join(HERE, "_audit", "tools_leakage_drop.json")
+DROPPED_TOOLS = set()
+if os.path.exists(_drop_path):
+    for d in json.load(open(_drop_path, encoding="utf-8")):
+        DROPPED_TOOLS.add((d["domain"], d.get("isco_submajor"), d["tool"].lower()))
+    print(f"tools leakage drop-list: {len(DROPPED_TOOLS)} entries")
+
 ti = 0
 for dk, tv in tools.items():
-    if dk == "_meta": continue
+    if dk == "_meta" or dk in HIDDEN: continue
     for grp_key, grp_name in [("distinctive_tools","distinctive"),("common_tools","common")]:
         for t in tv.get(grp_key, []):
+            if (dk, None, t["tool"].lower()) in DROPPED_TOOLS: continue
             ti += 1
             R["domain_tools"].append([
                 q(uid("tool", dk, "d", grp_name, t["tool"])), q(dom_uid(dk)), "NULL",
                 q("domain"), q(t["tool"]), q(grp_name),
                 numornull(t.get("role_freq")), numornull(t.get("score")),
-                boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet")])
+                boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet"),
+                "NULL"])
     for sm, sgt in (tv.get("subgroup_tools") or {}).items():
         sgid = sg_by.get((dk, str(sm)))
         if not sgid: continue
         for grp_name in ("distinctive","common"):
             for t in sgt.get(grp_name, []):
+                if (dk, str(sm), t["tool"].lower()) in DROPPED_TOOLS: continue
                 ti += 1
                 R["domain_tools"].append([
                     q(uid("tool", dk, sm, grp_name, t["tool"])), q(dom_uid(dk)), q(sgid),
                     q("subgroup"), q(t["tool"]), q(grp_name),
                     numornull(t.get("role_freq")), numornull(t.get("score")),
-                    boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet")])
+                    boolsql(t.get("hot")), boolsql(t.get("in_demand")), q(t.get("source") or "onet"),
+                    "NULL"])
+
+# ── 4b. role-level tools (L3T) from role_tools.json, if built ────
+# Emitted as scope='role' rows (requires migration_role_tools.sql).
+rt_path = os.path.join(HERE, "role_tools.json")
+role_tools_n = 0
+if os.path.exists(rt_path):
+    role_tools = json.load(open(rt_path, encoding="utf-8"))
+    for rk, ent in role_tools.items():
+        dk = rk.split("|", 1)[0]
+        if dk not in meta or dk in HIDDEN: continue
+        rid = uid("role", rk)
+        for t in ent.get("tools", []):
+            role_tools_n += 1
+            grp = "distinctive" if (t.get("hot") or t.get("in_demand")) else "common"
+            R["domain_tools"].append([
+                q(uid("tool", dk, "r", rk, t["tool"])), q(dom_uid(dk)), "NULL",
+                q("role"), q(t["tool"]), q(grp),
+                "NULL", "NULL",
+                boolsql(t.get("hot")), boolsql(t.get("in_demand")), q("onet"),
+                q(rid)])
+else:
+    print("note: role_tools.json not found — L3T rows skipped (run _build_role_tools.py first)")
 
 # ── 5. domain_certifications (gateway/subgroup/role_hint split) ──
 ci = 0
 for dk, st in struct.items():
+    if dk in HIDDEN: continue
     for c in st.get("gateway_certifications", []):
         ci += 1
         R["domain_certifications"].append([
@@ -159,7 +211,7 @@ for key, v in prog_dom.items():
     links = v["links"] if isinstance(v, dict) and "links" in v else v
     for l in links:
         dk = l["domain_id"]
-        if dk not in meta: continue
+        if dk not in meta or dk in HIDDEN: continue
         R["programme_domain"].append([
             q(uid("pd", pid, dk)), q(pid), q(dom_uid(dk)), q(l.get("match_type"))])
 
@@ -171,7 +223,7 @@ for key, v in scores.items():
     if not pid: continue
     for d in v["domains"]:
         dk = d["domain_id"]
-        if dk not in meta: continue
+        if dk not in meta or dk in HIDDEN: continue
         for r in d["roles"]:
             rk = f'{dk}|{r["role"]}'
             prs += 1
@@ -184,7 +236,7 @@ for key, v in scores.items():
 for jname, ent in jamb_dom.items():
     for l in ent.get("links", []):
         dk = l["domain_id"]
-        if dk not in meta: continue
+        if dk not in meta or dk in HIDDEN: continue
         R["jamb_programme_domain"].append([
             q(uid("jpd", jname, dk)), q(jname), q(dom_uid(dk)), q(l.get("match_type"))])
 
@@ -197,7 +249,7 @@ STOP = set("and or the of for to in a an with on at by".split())
 dom_skills = defaultdict(set)
 for r in roles:
     dk = r["domain_id"]
-    if dk in EXCLUDED or dk not in meta: continue
+    if dk in HIDDEN or dk not in meta: continue
     for s in r.get("essential_skills", []):
         dom_skills[dk].add(s.strip().lower())
 # down-weight ubiquitous skills (in >40% of domains) so overlap reflects DISTINCTIVE transfer
@@ -225,8 +277,19 @@ for a, sa in dom_sig.items():
 
 # ── emit SQL ────────────────────────────────────────────────────
 out = ["-- AUTO-GENERATED by data/career-mapping/_gen_career_seed.py — DO NOT EDIT",
-       "-- Post-sweep career taxonomy seed. Run AFTER migration_career_v2.sql.",
+       "-- Post-sweep career taxonomy seed. Run AFTER migration_career_v2.sql",
+       "-- (+ migration_role_tools.sql for the role-scoped tool rows).",
        "SET search_path TO skillup_dev;", "BEGIN;", ""]
+
+# university-pipeline scope: remove hidden domains if previously seeded
+# (FK cascades clean subgroups/roles/tools/certs/links/overlap/demand rows).
+if HIDDEN:
+    out.append(f"-- hidden domains (excluded or unreachable from CCMAS/JAMB): {', '.join(sorted(HIDDEN))}")
+    out.append("DELETE FROM jamb_programme_domain WHERE domain_id IN (" +
+               ", ".join(q(dom_uid(d)) for d in sorted(HIDDEN)) + ");")
+    out.append("DELETE FROM domains WHERE id IN (" +
+               ", ".join(q(dom_uid(d)) for d in sorted(HIDDEN)) + ");")
+    out.append("")
 
 def emit(table, cols, vals, conflict="id"):
     if not vals: out.append(f"-- {table}: 0 rows"); return
@@ -244,7 +307,7 @@ def emit(table, cols, vals, conflict="id"):
 emit("domains", ["id","domain_key","name","cluster","clusters","description","institution_type","elite_domain","excluded","role_count","foundation_skills"], R["domains"])
 emit("domain_subgroups", ["id","domain_id","isco_submajor","label","description","raw_isco_label","role_count","cluster_skills"], R["domain_subgroups"])
 emit("domain_roles", ["id","domain_id","subgroup_id","role_key","role_name","also_known_as","tier","isco_group","esco_code","elite_status","essential_skills","optional_skills"], R["domain_roles"])
-emit("domain_tools", ["id","domain_id","subgroup_id","scope","tool_name","tool_group","role_freq","score","hot","in_demand","source"], R["domain_tools"])
+emit("domain_tools", ["id","domain_id","subgroup_id","scope","tool_name","tool_group","role_freq","score","hot","in_demand","source","role_id"], R["domain_tools"])
 emit("domain_certifications", ["id","domain_id","subgroup_id","placement","name","body","region","level","gate_reason"], R["domain_certifications"])
 emit("programme_domain", ["id","programme_id","domain_id","match_type"], R["programme_domain"])
 emit("programme_role_score", ["id","programme_id","domain_id","role_key","role_name","label","coverage","tier","subgroup_label","bridge_skills"], R["programme_role_score"])

@@ -40,6 +40,9 @@ export const adminNav = {
   guidanceDashboard(router: Nav) {
     router.push("/(admin)/guidance" as never);
   },
+  profile(router: Nav) {
+    router.push("/(admin)/profile" as never);
+  },
   domainIntelligence(router: Nav) {
     router.push("/(admin)/domain-intelligence" as never);
   },
@@ -105,6 +108,14 @@ function dashboardItem(label: string): AdminNavItem {
   };
 }
 
+const PROFILE_ITEM: AdminNavItem = {
+  key: "profile",
+  label: "Profile + team",
+  icon: "◎",
+  match: "profile",
+  go: (n) => adminNav.profile(n),
+};
+
 const AFFILIATION_ITEM: AdminNavItem = {
   key: "affiliation",
   label: "Affiliation",
@@ -148,47 +159,57 @@ export function getAdminNavGroups(
           icon: "👥",
           match: "students",
           go: (n) => adminNav.students(n),
-          locked: true,
         };
+
+  const intelligenceItems: AdminNavItem[] = [
+    dashboardItem(dashboardLabel),
+    {
+      key: "domain-intelligence",
+      label: audience === "university" ? "Domain lens" : "Domain lens",
+      icon: "🧭",
+      match: "domain-intelligence",
+      go: (n) => adminNav.domainIntelligence(n),
+    },
+    {
+      key: "role-demand",
+      label: audience === "university" ? "Role value" : "Role value",
+      icon: "💼",
+      match: "role-demand",
+      go: (n) => adminNav.roleDemand(n),
+    },
+    {
+      key: "skills-gap",
+      label: audience === "university" ? "Skills gaps" : "Learning gaps",
+      icon: "🧩",
+      match: "skills-gap",
+      go: (n) => adminNav.skillsGap(n),
+    },
+    {
+      key: "trends",
+      label: "Trends",
+      icon: "📈",
+      match: "trends",
+      go: (n) => adminNav.trends(n),
+    },
+  ];
+  if (audience === "university") {
+    intelligenceItems.push({
+      key: "peers",
+      label: "Peer benchmarks",
+      icon: "🏛️",
+      match: "peers",
+      go: (n) => adminNav.peers(n),
+    });
+  }
 
   return [
     {
-      title: "Intelligence",
-      items: [
-        dashboardItem(dashboardLabel),
-        {
-          key: "domain-intelligence",
-          label: audience === "university" ? "Domain drilldown" : "Career domains",
-          icon: "🧭",
-          match: "domain-intelligence",
-          go: (n) => adminNav.domainIntelligence(n),
-        },
-        {
-          key: "role-demand",
-          label: audience === "university" ? "Role demand" : "Career demand",
-          icon: "💼",
-          match: "role-demand",
-          go: (n) => adminNav.roleDemand(n),
-        },
-        {
-          key: "skills-gap",
-          label: audience === "university" ? "Skills gaps" : "Learning gaps",
-          icon: "🧩",
-          match: "skills-gap",
-          go: (n) => adminNav.skillsGap(n),
-        },
-        {
-          key: "peers",
-          label: audience === "university" ? "Peer benchmarks" : "Benchmarks",
-          icon: "🏛️",
-          match: "peers",
-          go: (n) => adminNav.peers(n),
-        },
-      ],
+      title: audience === "university" ? "Market intelligence" : "Guidance intelligence",
+      items: intelligenceItems,
     },
     {
       title: setupTitle,
-      items: [AFFILIATION_ITEM, VERIFICATION_ITEM, learnerItem],
+      items: [PROFILE_ITEM, AFFILIATION_ITEM, VERIFICATION_ITEM, learnerItem],
     },
   ];
 }

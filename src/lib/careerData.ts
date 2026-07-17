@@ -302,7 +302,7 @@ export const careerData = {
   async getDomainClusters(): Promise<DataState<DomainClusterGroup[]>> {
     // TODO(career-data): GET /api/career/domains (grouped by cluster)
     return comingSoon<DomainClusterGroup[]>(
-      "The full domain map comes online with University & NCE first.",
+      "Explore career domains by cluster, then open the paths that match your programme and goals.",
     );
   },
 
@@ -335,7 +335,7 @@ export const careerData = {
   /** A domain incl. its domain-level bridge skills and role list. */
   async getDomain(_domainId: string): Promise<DataState<Domain>> {
     // TODO(career-data): GET /api/career/domains/{id}
-    return comingSoon<Domain>("Domain detail is being populated.");
+    return comingSoon<Domain>("See what this field does, the skills it needs, and the roles it can unlock.");
   },
 
   /** v2 domain detail: foundation skills, subgroups, tools, certs, demand metrics. */
@@ -352,14 +352,14 @@ export const careerData = {
       // Offline / transient: serve a cached copy if we have a fresh one.
       const cached = await getCached<DataState<DomainV2>>(cacheKey);
       if (cached) return cached;
-      return comingSoon<DomainV2>("Domain detail is being populated.");
+      return comingSoon<DomainV2>("See what this field does, the skills it needs, and the roles it can unlock.");
     }
   },
 
   /** A role incl. its role-level bridge skills and coverage. */
   async getRole(_roleId: string): Promise<DataState<Role>> {
     // TODO(career-data): GET /api/career/roles/{id}
-    return comingSoon<Role>("Role detail is being populated.");
+    return comingSoon<Role>("Understand the role, the bridge skills, and the proof you need to become credible.");
   },
 
   /** v2 role detail: essential/optional skills, tier, appearsIn, demand metrics. */
@@ -374,28 +374,48 @@ export const careerData = {
     } catch {
       const cached = await getCached<DataState<DomainRoleV2>>(cacheKey);
       if (cached) return cached;
-      return comingSoon<DomainRoleV2>("Role detail is being populated.");
+      return comingSoon<DomainRoleV2>("Understand the role, the bridge skills, and the proof you need to become credible.");
     }
   },
 
-  /** Opportunities matched to a programme/domain, eligibility-filtered. */
+  /** Opportunities matched to a programme/domain, eligibility-filtered.
+   *  Backed by /api/career/opportunities — returns coming_soon while the
+   *  content tables are empty (live data only, no mock rows). */
   async getOpportunities(
-    _params: {
+    params: {
       programmeId?: string;
       domainId?: string;
       roleId?: string;
     } & OpportunityFilter = {},
   ): Promise<DataState<Opportunity[]>> {
-    // TODO(career-data): GET /api/career/opportunities?...
-    return comingSoon<Opportunity[]>("Internships & jobs are being populated.");
+    try {
+      const qs = new URLSearchParams();
+      if (params.domainId) qs.set("domain_id", params.domainId);
+      if (params.institutionType) qs.set("institution_type", params.institutionType);
+      if (params.scope) qs.set("scope", params.scope);
+      if (params.type) qs.set("opp_type", params.type);
+      if (params.workMode) qs.set("work_mode", params.workMode);
+      if (params.likelihood) qs.set("likelihood", params.likelihood);
+      if (params.region) qs.set("region", params.region);
+      return await request<DataState<Opportunity[]>>(
+        `/api/career/opportunities${qs.toString() ? `?${qs.toString()}` : ""}`,
+      );
+    } catch {
+      return comingSoon<Opportunity[]>("Find internships, jobs, and entry points that fit your programme, level, and location.");
+    }
   },
 
   /** A single opportunity's full detail. */
   async getOpportunity(
-    _opportunityId: string,
+    opportunityId: string,
   ): Promise<DataState<Opportunity>> {
-    // TODO(career-data): GET /api/career/opportunities/{id}
-    return comingSoon<Opportunity>("This opportunity is being populated.");
+    try {
+      return await request<DataState<Opportunity>>(
+        `/api/career/opportunities/${encodeURIComponent(opportunityId)}`,
+      );
+    } catch {
+      return comingSoon<Opportunity>("Review the role, eligibility, deadlines, and next action before you apply.");
+    }
   },
 
   /** Organisations (employers) list, optionally filtered. */
@@ -403,7 +423,7 @@ export const careerData = {
     _params: OpportunityFilter = {},
   ): Promise<DataState<Organisation[]>> {
     // TODO(career-data): GET /api/career/organisations?...
-    return comingSoon<Organisation[]>("Employer profiles are being populated.");
+    return comingSoon<Organisation[]>("Discover employers, what they hire for, and where graduates can enter.");
   },
 
   /** A single organisation profile. */
@@ -412,22 +432,30 @@ export const careerData = {
   ): Promise<DataState<Organisation>> {
     // TODO(career-data): GET /api/career/organisations/{id}
     return comingSoon<Organisation>(
-      "This employer profile is being populated.",
+      "See what this employer does, the roles it hires for, and the routes into its team.",
     );
   },
 
   /** Scholarships — a secondary feature. */
   async getScholarships(): Promise<DataState<Scholarship[]>> {
-    // TODO(career-data): GET /api/career/scholarships
-    return comingSoon<Scholarship[]>("Scholarships are being populated.");
+    try {
+      return await request<DataState<Scholarship[]>>(`/api/career/scholarships`);
+    } catch {
+      return comingSoon<Scholarship[]>("Find funded routes, eligibility rules, deadlines, and what each award actually covers.");
+    }
   },
 
-  /** Upcoming application windows / deadlines. */
+  /** Upcoming application windows / deadlines (status derived server-side). */
   async getApplicationWindows(): Promise<DataState<ApplicationWindow[]>> {
-    // TODO(career-data): GET /api/career/application-windows
-    return comingSoon<ApplicationWindow[]>(
-      "Application windows are being populated.",
-    );
+    try {
+      return await request<DataState<ApplicationWindow[]>>(
+        `/api/career/application-windows`,
+      );
+    } catch {
+      return comingSoon<ApplicationWindow[]>(
+        "Track scholarship, fellowship, admission, and job windows before they close.",
+      );
+    }
   },
 
   // ─── User-owned (require an account; guests get `locked`) ────
@@ -761,43 +789,58 @@ export const careerData = {
   // ─── Phase 7: elite pathways · bridge · special flows ────────
   /** The 17 elite domains, for the Elite Pathways hub. */
   async getElitePathways(): Promise<DataState<ElitePathwaySummary[]>> {
-    // TODO(career-data): GET /api/career/elite-pathways
-    return comingSoon<ElitePathwaySummary[]>(
-      "Elite pathways are being populated.",
-    );
+    try {
+      return await request<DataState<ElitePathwaySummary[]>>(
+        `/api/career/elite-pathways`,
+      );
+    } catch {
+      return comingSoon<ElitePathwaySummary[]>(
+        "Compare high-selectivity paths and the Nigerian bridge into each one.",
+      );
+    }
   },
 
   /** A single elite pathway (Formation / Pinnacle / bridge plan). */
-  async getElitePathway(_pathwayId: string): Promise<DataState<ElitePathway>> {
-    // TODO(career-data): GET /api/career/elite-pathways/{id}
-    return comingSoon<ElitePathway>("This elite pathway is being populated.");
+  async getElitePathway(pathwayId: string): Promise<DataState<ElitePathway>> {
+    try {
+      return await request<DataState<ElitePathway>>(
+        `/api/career/elite-pathways/${encodeURIComponent(pathwayId)}`,
+      );
+    } catch {
+      return comingSoon<ElitePathway>("See the global standard, Nigerian gap, bridge steps, costs, entry points, and proof.");
+    }
   },
 
   /** "Is Elite Right For Me" self-check questions (scored client-side). */
   async getEliteReadiness(): Promise<DataState<EliteReadinessQuestion[]>> {
     // TODO(career-data): GET /api/career/elite-pathways/readiness
     return comingSoon<EliteReadinessQuestion[]>(
-      "The elite readiness check is being populated.",
+      "Check fit, trade-offs, and starting point before committing to an elite path.",
     );
   },
 
   /** A 6-layer bridge plan (Model 5) for a (start → destination) pair. */
-  async getBridgePlan(_bridgePlanId: string): Promise<DataState<BridgePlan>> {
-    // TODO(career-data): GET /api/career/bridge-plans/{id}
-    return comingSoon<BridgePlan>("This bridge plan is being populated.");
+  async getBridgePlan(bridgePlanId: string): Promise<DataState<BridgePlan>> {
+    try {
+      return await request<DataState<BridgePlan>>(
+        `/api/career/bridge-plans/${encodeURIComponent(bridgePlanId)}`,
+      );
+    } catch {
+      return comingSoon<BridgePlan>("Follow the six-step bridge from your Nigerian starting point to the target route.");
+    }
   },
 
   /** PhD non-academic routes (+ the PhD-quant standalone). */
   async getPhdRoutes(): Promise<DataState<PhdRoute[]>> {
     // TODO(career-data): GET /api/career/phd-routes
-    return comingSoon<PhdRoute[]>("PhD pathways are being populated.");
+    return comingSoon<PhdRoute[]>("Map a doctorate into research, policy, quant, consulting, R&D, or venture paths.");
   },
 
   /** Career-changer paths (4 types) + their skills-translation matrices. */
   async getCareerChangerPaths(): Promise<DataState<CareerChangerPath[]>> {
     // TODO(career-data): GET /api/career/career-changer
     return comingSoon<CareerChangerPath[]>(
-      "Career-change pathways are being populated.",
+      "Translate your current experience into adjacent pivots, fast-stability routes, and longer-term paths.",
     );
   },
 
@@ -807,7 +850,7 @@ export const careerData = {
   > {
     // TODO(career-data): GET /api/career/qualification-upgrades
     return comingSoon<QualificationUpgrade[]>(
-      "Qualification-upgrade routes are being populated.",
+      "Move from OND, HND, NCE, or field credentials into recognised degree and professional routes.",
     );
   },
 
@@ -815,7 +858,7 @@ export const careerData = {
   async getCharterships(): Promise<DataState<Chartership[]>> {
     // TODO(career-data): GET /api/career/charterships
     return comingSoon<Chartership[]>(
-      "The chartership & credentials engine is being populated.",
+      "Find credentials that travel, the exemptions you can claim, and where recognition is limited.",
     );
   },
 

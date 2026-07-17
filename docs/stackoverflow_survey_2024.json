@@ -1,0 +1,1574 @@
+{
+  "source": {
+    "source_title": "Stack Overflow Developer Survey 2024",
+    "source_body": "Annual developer survey covering demographics, technologies, compensation, and career data",
+    "source_url": "https://survey.stackoverflow.co/",
+    "source_type": "labour-market report",
+    "publication_year": 2024,
+    "version": null,
+    "country_or_region": "Global",
+    "license_or_usage_notes": "Survey data - public release",
+    "extraction_confidence": "high",
+    "document_pages_used": [1, 5328]
+  },
+  "domain_relevance": [
+    "Software Engineering",
+    "Data Science",
+    "Data Engineering",
+    "Artificial Intelligence",
+    "Cloud Computing",
+    "Cybersecurity",
+    "Game Design",
+    "IoT",
+    "Quantitative Finance",
+    "UI/UX Design",
+    "Scientific Research",
+    "Higher Education",
+    "General Management",
+    "Project Management",
+    "Product Management",
+    "Business Intelligence"
+  ],
+  "roles": [
+    {
+      "role_name": "Developer, full-stack",
+      "normalized_role_name": "Full-Stack Developer",
+      "role_aliases": ["Full-Stack Engineer", "Web Developer", "Software Engineer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Fintech", "Healthcare", "Government", "Retail"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "broad",
+      "elite_reason": "Largest respondent group (28.4%) across all industries; highest representation globally",
+      "description": "Designs and implements both client-side and server-side software components of web applications",
+      "responsibilities": [
+        "Develop and maintain web application front-end and back-end",
+        "Design and implement RESTful APIs and database schemas",
+        "Collaborate with product and design teams on feature delivery",
+        "Ensure application performance, security, and scalability"
+      ],
+      "skills": [
+        "JavaScript", "HTML/CSS", "TypeScript", "Python", "SQL",
+        "React", "Node.js", "Next.js", "PostgreSQL", "Docker",
+        "Express", "Vue.js", "Angular", "MongoDB", "AWS",
+        "Git", "REST APIs", "GraphQL"
+      ],
+      "tools_or_technologies": [
+        "Visual Studio Code", "npm", "Vite", "Webpack", "Docker",
+        "PostgreSQL", "MongoDB", "Redis", "AWS", "Vercel",
+        "Supabase", "Firebase"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 145665, "count": 272},
+        {"country": "Germany", "currency": "EUR", "median": 64030, "count": 92},
+        {"country": "United Kingdom", "currency": "GBP", "median": 65000, "count": 81},
+        {"country": "Canada", "currency": "CAD", "median": 110000, "count": 57},
+        {"country": "India", "currency": "INR", "median": 1200000, "count": 31},
+        {"country": "Netherlands", "currency": "EUR", "median": 70000, "count": 25},
+        {"country": "France", "currency": "EUR", "median": 66250, "count": 34},
+        {"country": "Australia", "currency": "AUD", "median": 131000, "count": 32}
+      ],
+      "demand_or_growth_signals": [
+        "Largest role category at 28.4% of all developers",
+        "1351 survey respondents",
+        "Present across Software Development, Fintech, and other major industries",
+        "High remote work adoption (438 remote out of 1351)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[0]", "value": "Developer, full-stack, count=1351, percentage=28.4"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "JavaScript(3060), HTML/CSS(2900), TypeScript(2055)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$145,665"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Developer, full-stack: 3 respondents"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, back-end",
+      "normalized_role_name": "Back-End Developer",
+      "role_aliases": ["Backend Engineer", "Server-Side Developer", "API Developer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Fintech", "Banking", "Healthcare"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "broad",
+      "elite_reason": "Second largest role category (15.3%) with strong cross-industry presence",
+      "description": "Builds and maintains server-side logic, APIs, and data storage systems",
+      "responsibilities": [
+        "Design and implement server-side application logic",
+        "Build and optimize database schemas and queries",
+        "Develop RESTful and GraphQL APIs",
+        "Ensure system reliability, scalability, and security"
+      ],
+      "skills": [
+        "Python", "Java", "Go", "Rust", "SQL", "Node.js",
+        "PostgreSQL", "MySQL", "Redis", "Docker", "Kubernetes",
+        "FastAPI", "Spring Boot", "Django", "Flask", "ASP.NET Core"
+      ],
+      "tools_or_technologies": [
+        "Docker", "Kubernetes", "PostgreSQL", "MySQL", "Redis",
+        "MongoDB", "AWS", "Terraform", "Bash/Shell", "Linux"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 170000, "count": 119},
+        {"country": "Germany", "currency": "EUR", "median": 80000, "count": 49},
+        {"country": "United Kingdom", "currency": "GBP", "median": 85000, "count": 41},
+        {"country": "Canada", "currency": "CAD", "median": 150000, "count": 24},
+        {"country": "India", "currency": "INR", "median": 1300000, "count": 29}
+      ],
+      "demand_or_growth_signals": [
+        "Second largest role at 15.3% of all developers",
+        "729 survey respondents",
+        "Strong presence in Fintech and Banking/Financial Services",
+        "High remote work adoption (267 remote out of 729)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[1]", "value": "Developer, back-end, count=729, percentage=15.3"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Python(2571), Java(1278), Go(768)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$170,000"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Developer, back-end: 1 respondent"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Architect, software or solutions",
+      "normalized_role_name": "Software Architect",
+      "role_aliases": ["Solutions Architect", "Technical Architect", "System Architect"],
+      "role_family": "Software Engineering",
+      "seniority_level": "senior",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Fintech", "Banking", "Healthcare"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Senior technical role (6.9%) with highest US median salary among software roles at $180,000",
+      "description": "Defines technical architecture and system design for complex software solutions",
+      "responsibilities": [
+        "Define and govern software architecture standards",
+        "Design scalable, resilient system architectures",
+        "Evaluate technology choices and integration patterns",
+        "Mentor engineering teams on architectural best practices"
+      ],
+      "skills": [
+        "System Design", "Cloud Architecture", "Microservices", "API Design",
+        "Docker", "Kubernetes", "AWS", "Azure", "Java", "C#",
+        "PostgreSQL", "Redis", "Terraform", "Domain-Driven Design"
+      ],
+      "tools_or_technologies": [
+        "AWS", "Azure", "Kubernetes", "Docker", "Terraform",
+        "PostgreSQL", "MongoDB", "Redis", "Visio", "Draw.io"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 180000, "count": 50},
+        {"country": "Germany", "currency": "EUR", "median": 92000, "count": 22},
+        {"country": "United Kingdom", "currency": "GBP", "median": 84000, "count": 14},
+        {"country": "Spain", "currency": "EUR", "median": 57000, "count": 14},
+        {"country": "France", "currency": "EUR", "median": 74150, "count": 12}
+      ],
+      "demand_or_growth_signals": [
+        "Third largest role at 6.9% of all developers",
+        "330 survey respondents",
+        "High remote work adoption (100 remote out of 330)",
+        "Strong presence in Software Development and Fintech"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[2]", "value": "Architect, software or solutions, count=330, percentage=6.9"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$180,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, desktop or enterprise applications",
+      "normalized_role_name": "Desktop/Enterprise Developer",
+      "role_aliases": ["Enterprise Application Developer", "Desktop Application Developer", ".NET Developer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Manufacturing", "Healthcare"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "specialized",
+      "elite_reason": "Enterprise-focused role (5.3%) with strong manufacturing and enterprise sector presence",
+      "description": "Develops desktop and enterprise-grade applications for business operations",
+      "responsibilities": [
+        "Design and develop enterprise application features",
+        "Integrate with legacy systems and databases",
+        "Implement UI for desktop or enterprise platforms",
+        "Ensure application stability and performance"
+      ],
+      "skills": [
+        "C#", "Java", "WPF", "Electron", "SQL", "Microsoft SQL Server",
+        "Azure", "ASP.NET", "REST APIs", "Entity Framework",
+        "PowerShell", "Docker"
+      ],
+      "tools_or_technologies": [
+        "Visual Studio", "Microsoft SQL Server", "Azure", "NuGet",
+        "MSBuild", "PowerShell", "Docker", "PostgreSQL"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 136000, "count": 37},
+        {"country": "Germany", "currency": "EUR", "median": 72000, "count": 16},
+        {"country": "United Kingdom", "currency": "GBP", "median": 62000, "count": 13},
+        {"country": "Canada", "currency": "CAD", "median": 91500, "count": 6}
+      ],
+      "demand_or_growth_signals": [
+        "5.3% of all developers (254 respondents)",
+        "Strong Manufacturing sector presence",
+        "Moderate remote work adoption (67 remote out of 254)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[3]", "value": "Developer, desktop or enterprise applications, count=254, percentage=5.3"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$136,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Student",
+      "normalized_role_name": "Student",
+      "role_aliases": ["Computer Science Student", "Coding Student", "Bootcamp Student"],
+      "role_family": "Entry-Level",
+      "seniority_level": "entry-level",
+      "domain_names": [],
+      "cross_domain_presence": ["Higher Education"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "low",
+      "elite_signal": "entry",
+      "elite_reason": "Entry-level position (4.8%) representing emerging talent pipeline",
+      "description": "Pursuing education in computer science, software development, or related fields",
+      "responsibilities": [
+        "Complete coursework and programming assignments",
+        "Build personal projects and portfolio",
+        "Learn programming languages and frameworks",
+        "Seek internships and entry-level positions"
+      ],
+      "skills": [
+        "HTML/CSS", "JavaScript", "Python", "SQL", "Java", "C++", "Git"
+      ],
+      "tools_or_technologies": [
+        "Visual Studio Code", "GitHub", "Jupyter Notebook", "Docker", "PostgreSQL"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 28000, "count": 8},
+        {"country": "Germany", "currency": "EUR", "median": 13080, "count": 9},
+        {"country": "India", "currency": "INR", "median": 60000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "4.8% of respondents (228 individuals)",
+        "Key talent pipeline for all tech roles",
+        "Strong Higher Education industry presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[4]", "value": "Student, count=228, percentage=4.8"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$28,000"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Student: 2 respondents"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, front-end",
+      "normalized_role_name": "Front-End Developer",
+      "role_aliases": ["Frontend Engineer", "UI Developer", "Web UI Developer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Fintech", "Media", "Retail"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "broad",
+      "elite_reason": "Core web development role (4.1%) with high demand across industries",
+      "description": "Builds user interfaces and client-side application logic for web applications",
+      "responsibilities": [
+        "Develop responsive and interactive UI components",
+        "Implement client-side state management and routing",
+        "Optimize frontend performance and accessibility",
+        "Collaborate with designers and backend engineers"
+      ],
+      "skills": [
+        "JavaScript", "HTML/CSS", "TypeScript", "React", "Vue.js",
+        "Angular", "Svelte", "Next.js", "CSS-in-JS", "REST APIs",
+        "Webpack", "Vite"
+      ],
+      "tools_or_technologies": [
+        "Visual Studio Code", "npm", "Webpack", "Vite", "React",
+        "Vue.js", "Angular", "Chrome DevTools", "Figma"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 130000, "count": 33},
+        {"country": "Germany", "currency": "EUR", "median": 72500, "count": 12},
+        {"country": "United Kingdom", "currency": "GBP", "median": 65000, "count": 5},
+        {"country": "Canada", "currency": "CAD", "median": 100000, "count": 9}
+      ],
+      "demand_or_growth_signals": [
+        "4.1% of all developers (197 respondents)",
+        "High remote work adoption (72 remote out of 197)",
+        "Strong Fintech and Software Development presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[5]", "value": "Developer, front-end, count=197, percentage=4.1"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "React(1538), Angular(625), Vue.js(601)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$130,000"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Developer, front-end: 2 respondents"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Other (please specify):",
+      "normalized_role_name": "Other Tech Role",
+      "role_aliases": ["Miscellaneous Tech Role", "Unspecified Developer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "unknown",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Higher Education", "Various"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "unknown",
+      "elite_reason": "Heterogeneous catch-all category (4.1%) spanning multiple specialties",
+      "description": "Miscellaneous technology roles not captured by standard DevType categories",
+      "responsibilities": [],
+      "skills": [],
+      "tools_or_technologies": [],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 114500, "count": 37},
+        {"country": "Germany", "currency": "EUR", "median": 80000, "count": 12},
+        {"country": "Canada", "currency": "CAD", "median": 120000, "count": 9},
+        {"country": "Netherlands", "currency": "EUR", "median": 55000, "count": 5},
+        {"country": "United Kingdom", "currency": "GBP", "median": 85000, "count": 5}
+      ],
+      "demand_or_growth_signals": [
+        "4.1% of respondents (193 individuals)",
+        "Broad industry coverage across Software Development, Higher Education",
+        "Moderate remote work adoption (35 remote out of 193)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[6]", "value": "Other (please specify):, count=193, percentage=4.1"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$114,500"}
+      ],
+      "confidence": "low"
+    },
+    {
+      "role_name": "Engineering manager",
+      "normalized_role_name": "Engineering Manager",
+      "role_aliases": ["Tech Lead Manager", "Engineering Director", "VP of Engineering"],
+      "role_family": "General Management",
+      "seniority_level": "senior",
+      "domain_names": ["General Management", "Project Management"],
+      "cross_domain_presence": ["Fintech", "Banking", "Healthcare"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "medium",
+      "elite_signal": "specialized",
+      "elite_reason": "Leadership role (3.0%) with highest engineering salary at US median $193,500",
+      "description": "Leads engineering teams, manages technical delivery, and drives organizational engineering practices",
+      "responsibilities": [
+        "Lead and manage engineering teams",
+        "Define technical strategy and roadmap",
+        "Drive hiring, mentoring, and team development",
+        "Ensure delivery quality and operational excellence"
+      ],
+      "skills": [
+        "Team Leadership", "Project Management", "Agile/Scrum",
+        "Technical Architecture", "Budget Management", "Hiring",
+        "Performance Management", "Strategic Planning"
+      ],
+      "tools_or_technologies": [
+        "Jira", "Confluence", "GitHub", "Slack", "OKR tools"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 193500, "count": 40},
+        {"country": "Canada", "currency": "CAD", "median": 175000, "count": 7},
+        {"country": "Germany", "currency": "EUR", "median": 95000, "count": 7},
+        {"country": "India", "currency": "INR", "median": 4500000, "count": 7},
+        {"country": "United Kingdom", "currency": "GBP", "median": 85000, "count": 9}
+      ],
+      "demand_or_growth_signals": [
+        "3.0% of all developers (143 respondents)",
+        "High remote work adoption (49 remote out of 143)",
+        "Strong presence in Software Development, Fintech"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[7]", "value": "Engineering manager, count=143, percentage=3.0"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$193,500"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, mobile",
+      "normalized_role_name": "Mobile Developer",
+      "role_aliases": ["Mobile Engineer", "iOS Developer", "Android Developer", "React Native Developer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Fintech", "Retail", "Healthcare"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Specialized mobile role (3.0%) with high US salary at $160,000 median",
+      "description": "Develops mobile applications for iOS, Android, or cross-platform environments",
+      "responsibilities": [
+        "Design and develop mobile applications",
+        "Implement responsive UI for mobile devices",
+        "Integrate with backend APIs and services",
+        "Optimize app performance and user experience"
+      ],
+      "skills": [
+        "Swift", "Kotlin", "Dart", "React Native", "Flutter",
+        "JavaScript", "TypeScript", "REST APIs", "Mobile UI Design",
+        "Xcode", "Android Studio"
+      ],
+      "tools_or_technologies": [
+        "Android Studio", "Xcode", "Firebase", "React Native",
+        "Flutter", "Supabase", "PostgreSQL", "Docker"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 160000, "count": 24},
+        {"country": "Germany", "currency": "EUR", "median": 81500, "count": 10},
+        {"country": "United Kingdom", "currency": "GBP", "median": 80000, "count": 7},
+        {"country": "Canada", "currency": "CAD", "median": 125000, "count": 5}
+      ],
+      "demand_or_growth_signals": [
+        "3.0% of all developers (141 respondents)",
+        "High remote work adoption (56 remote out of 141)",
+        "Strong Fintech and Retail industry presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[8]", "value": "Developer, mobile, count=141, percentage=3.0"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Swift(267), Kotlin(483), Dart(235)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$160,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, embedded applications or devices",
+      "normalized_role_name": "Embedded Systems Developer",
+      "role_aliases": ["Embedded Engineer", "IoT Developer", "Firmware Developer"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering", "IoT"],
+      "cross_domain_presence": ["Manufacturing", "Healthcare"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "low",
+      "elite_signal": "specialized",
+      "elite_reason": "Hardware-adjacent specialization (2.8%) in embedded/IoT systems",
+      "description": "Develops software for embedded systems, IoT devices, and hardware interfaces",
+      "responsibilities": [
+        "Develop firmware for embedded devices",
+        "Implement low-level hardware interfaces",
+        "Optimize resource-constrained applications",
+        "Design IoT communication protocols"
+      ],
+      "skills": [
+        "C", "C++", "Rust", "Assembly", "MicroPython",
+        "Linux", "RTOS", "SPI", "I2C", "UART",
+        "Docker", "MQTT", "Embedded Linux"
+      ],
+      "tools_or_technologies": [
+        "Git", "Make", "CMake", "JTAG Debuggers", "Logic Analyzers",
+        "Oscilloscopes", "PlatformIO", "Arduino IDE"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 130000, "count": 21},
+        {"country": "Germany", "currency": "EUR", "median": 73000, "count": 15},
+        {"country": "France", "currency": "EUR", "median": 43500, "count": 8},
+        {"country": "United Kingdom", "currency": "GBP", "median": 60000, "count": 7}
+      ],
+      "demand_or_growth_signals": [
+        "2.8% of all developers (135 respondents)",
+        "Manufacturing sector presence indicates industrial IoT demand",
+        "Lower remote work adoption (18 remote out of 135)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[9]", "value": "Developer, embedded applications or devices, count=135, percentage=2.8"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "C(950), C++(1066), Assembly(286)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$130,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Academic researcher",
+      "normalized_role_name": "Academic Researcher",
+      "role_aliases": ["University Researcher", "Research Scientist", "Postdoctoral Researcher"],
+      "role_family": "Scientific Research",
+      "seniority_level": "senior",
+      "domain_names": ["Scientific Research", "Higher Education"],
+      "cross_domain_presence": ["Healthcare", "Government", "Software Development"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "low",
+      "elite_signal": "specialized",
+      "elite_reason": "Academic role (2.6%) with deep domain expertise in Higher Education sector",
+      "description": "Conducts original research in computer science or related fields at academic institutions",
+      "responsibilities": [
+        "Conduct original research and publish papers",
+        "Teach university courses and mentor students",
+        "Secure research funding and grants",
+        "Collaborate on interdisciplinary research projects"
+      ],
+      "skills": [
+        "Python", "R", "MATLAB", "SQL", "LaTeX",
+        "Machine Learning", "Statistical Analysis", "Research Methodology",
+        "Academic Writing", "Data Analysis"
+      ],
+      "tools_or_technologies": [
+        "Jupyter Notebook", "RStudio", "MATLAB", "Git",
+        "PostgreSQL", "Google Scholar", "Overleaf"
+      ],
+      "certifications_or_credentials": ["PhD (preferred)"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 82500, "count": 18},
+        {"country": "Germany", "currency": "EUR", "median": 57000, "count": 17},
+        {"country": "United Kingdom", "currency": "GBP", "median": 45000, "count": 11},
+        {"country": "France", "currency": "EUR", "median": 27300, "count": 6}
+      ],
+      "demand_or_growth_signals": [
+        "2.6% of all developers (124 respondents)",
+        "Higher Education is the dominant industry",
+        "Low remote work adoption (8 remote out of 124)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[10]", "value": "Academic researcher, count=124, percentage=2.6"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$82,500"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Academic researcher: 1 respondent"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "DevOps engineer or professional",
+      "normalized_role_name": "DevOps Engineer",
+      "role_aliases": ["DevOps Professional", "CI/CD Engineer", "Platform Engineer"],
+      "role_family": "Cloud Computing",
+      "seniority_level": "mid-level",
+      "domain_names": ["Cloud Computing"],
+      "cross_domain_presence": ["Banking", "Healthcare", "Government"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Critical infrastructure role (2.4%) with US median $171,000 and high remote work",
+      "description": "Automates, builds, and manages CI/CD pipelines and cloud infrastructure",
+      "responsibilities": [
+        "Design and maintain CI/CD pipelines",
+        "Manage cloud infrastructure and deployments",
+        "Implement monitoring and alerting systems",
+        "Automate operational processes and ensure system reliability"
+      ],
+      "skills": [
+        "Docker", "Kubernetes", "AWS", "Azure", "Terraform",
+        "Ansible", "Jenkins", "GitLab CI", "Prometheus", "Grafana",
+        "Bash/Shell", "Python", "Linux"
+      ],
+      "tools_or_technologies": [
+        "Docker", "Kubernetes", "Terraform", "Ansible", "Jenkins",
+        "Prometheus", "Grafana", "AWS", "Azure", "Datadog"
+      ],
+      "certifications_or_credentials": ["AWS Certified DevOps Engineer", "CKA/CKAD", "HashiCorp Terraform Associate"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 171000, "count": 23},
+        {"country": "Germany", "currency": "EUR", "median": 60000, "count": 11},
+        {"country": "Canada", "currency": "CAD", "median": 140000, "count": 5},
+        {"country": "Switzerland", "currency": "CHF", "median": 147000, "count": 5}
+      ],
+      "demand_or_growth_signals": [
+        "2.4% of all developers (113 respondents)",
+        "High remote work adoption (30 remote out of 113)",
+        "Strong Banking and Financial Services presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[11]", "value": "DevOps engineer or professional, count=113, percentage=2.4"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Docker(2622), Kubernetes(1046), Terraform(688)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$171,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Data scientist",
+      "normalized_role_name": "Data Scientist",
+      "role_aliases": ["Machine Learning Scientist", "Analytics Scientist"],
+      "role_family": "Data Science",
+      "seniority_level": "mid-level",
+      "domain_names": ["Data Science"],
+      "cross_domain_presence": ["Healthcare", "Government", "Software Development"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "High-skill analytics role (1.6%) with US median $150,000",
+      "description": "Applies statistical analysis, machine learning, and data mining to extract insights from data",
+      "responsibilities": [
+        "Build and validate predictive and descriptive models",
+        "Perform statistical analysis and hypothesis testing",
+        "Communicate findings to stakeholders",
+        "Develop data pipelines and analysis workflows"
+      ],
+      "skills": [
+        "Python", "R", "SQL", "TensorFlow", "PyTorch",
+        "Scikit-learn", "Pandas", "NumPy", "Jupyter Notebook",
+        "Statistical Modeling", "Machine Learning", "BigQuery"
+      ],
+      "tools_or_technologies": [
+        "Jupyter Notebook", "Python", "RStudio", "BigQuery",
+        "Snowflake", "PostgreSQL", "MongoDB", "Databricks SQL"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 150000, "count": 18},
+        {"country": "Germany", "currency": "EUR", "median": 80000, "count": 11},
+        {"country": "United Kingdom", "currency": "GBP", "median": 60900, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "1.6% of all developers (75 respondents)",
+        "High remote work adoption (20 remote out of 75)",
+        "Strong Government and Healthcare sector demand"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[12]", "value": "Data scientist, count=75, percentage=1.6"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Python(2571), R(243), SQL(2774)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$150,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Senior executive (C-suite, VP, etc.)",
+      "normalized_role_name": "Senior Executive (C-Suite/VP)",
+      "role_aliases": ["CTO", "VP of Engineering", "CEO", "Chief Technology Officer"],
+      "role_family": "General Management",
+      "seniority_level": "executive",
+      "domain_names": ["General Management"],
+      "cross_domain_presence": ["Fintech", "Software Development", "Media"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "medium",
+      "elite_signal": "elite",
+      "elite_reason": "Top leadership role (1.6%) with US median $170,000 across major tech sectors",
+      "description": "Senior technology leadership responsible for organizational strategy and technical direction",
+      "responsibilities": [
+        "Define organizational technology strategy",
+        "Oversee technical teams and engineering organizations",
+        "Drive digital transformation and innovation",
+        "Report to board and stakeholders on technology initiatives"
+      ],
+      "skills": [
+        "Strategic Planning", "Leadership", "Business Acumen",
+        "Technology Architecture", "Budget Management",
+        "Stakeholder Management", "Change Management"
+      ],
+      "tools_or_technologies": [],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 170000, "count": 17},
+        {"country": "Netherlands", "currency": "EUR", "median": 84560, "count": 5},
+        {"country": "United Kingdom", "currency": "GBP", "median": 105000, "count": 5},
+        {"country": "Germany", "currency": "EUR", "median": 90000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "1.6% of all developers (74 respondents)",
+        "Moderate remote work adoption (23 remote out of 74)",
+        "Present across Software Development, Fintech, and Telecomm"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[13]", "value": "Senior executive (C-suite, VP, etc.), count=74, percentage=1.6"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$170,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Data engineer",
+      "normalized_role_name": "Data Engineer",
+      "role_aliases": ["Data Platform Engineer", "Pipeline Engineer", "ETL Engineer"],
+      "role_family": "Data Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Data Engineering"],
+      "cross_domain_presence": ["Banking", "Healthcare", "Internet/Telecomm"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Infrastructure-critical role (1.5%) with US median $167,000 and strong remote adoption",
+      "description": "Builds and maintains data infrastructure, pipelines, and warehouses for analytics and ML",
+      "responsibilities": [
+        "Design and build data pipelines and ETL processes",
+        "Maintain data warehouses and data lakes",
+        "Ensure data quality and reliability",
+        "Support analytics and ML teams with data infrastructure"
+      ],
+      "skills": [
+        "Python", "SQL", "Spark", "Airflow", "Kafka",
+        "AWS", "Azure", "BigQuery", "Snowflake", "dbt",
+        "Docker", "Terraform", "PostgreSQL"
+      ],
+      "tools_or_technologies": [
+        "AWS", "Azure", "Snowflake", "BigQuery", "Spark",
+        "Airflow", "Kafka", "Docker", "Terraform", "dbt"
+      ],
+      "certifications_or_credentials": ["AWS Certified Data Analytics", "Google Professional Data Engineer"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 167000, "count": 17},
+        {"country": "France", "currency": "EUR", "median": 57500, "count": 6},
+        {"country": "Spain", "currency": "EUR", "median": 70000, "count": 6},
+        {"country": "Brazil", "currency": "BRL", "median": 230000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "1.5% of all developers (72 respondents)",
+        "High remote work adoption (28 remote out of 72)",
+        "Strong Banking/Financial Services and Internet/Telecomm presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[14]", "value": "Data engineer, count=72, percentage=1.5"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Python(2571), SQL(2774), Spark"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$167,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Retired",
+      "normalized_role_name": "Retired",
+      "role_aliases": ["Former Developer", "Retired Engineer"],
+      "role_family": "Entry-Level",
+      "seniority_level": "unknown",
+      "domain_names": [],
+      "cross_domain_presence": [],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "low",
+      "remote_work_relevance": "low",
+      "elite_signal": "unknown",
+      "elite_reason": "Inactive respondents (1.5%) with historical industry experience",
+      "description": "Former technology professionals who are no longer actively employed in tech",
+      "responsibilities": [],
+      "skills": [],
+      "tools_or_technologies": [],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 117600, "count": 5}
+      ],
+      "demand_or_growth_signals": [
+        "1.5% of respondents (71 individuals)",
+        "Minimal remote work (2 remote out of 71)",
+        "Historical industry experience in Software Development, Healthcare, Fintech"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[15]", "value": "Retired, count=71, percentage=1.5"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$117,600"}
+      ],
+      "confidence": "low"
+    },
+    {
+      "role_name": "Developer, game or graphics",
+      "normalized_role_name": "Game/Graphics Developer",
+      "role_aliases": ["Game Developer", "Game Engine Developer", "Graphics Programmer"],
+      "role_family": "Game Design",
+      "seniority_level": "mid-level",
+      "domain_names": ["Game Design"],
+      "cross_domain_presence": ["Manufacturing", "Media"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "specialized",
+      "elite_reason": "Creative-technical niche (1.2%) in game development and graphics rendering",
+      "description": "Develops game mechanics, rendering engines, and interactive graphics applications",
+      "responsibilities": [
+        "Develop game mechanics and physics systems",
+        "Implement real-time rendering and graphics pipelines",
+        "Optimize game performance for target platforms",
+        "Collaborate with artists and designers on game features"
+      ],
+      "skills": [
+        "C++", "C#", "GDScript", "Lua", "Rust",
+        "Unity", "Unreal Engine", "OpenGL", "Vulkan",
+        "Linear Algebra", "3D Math", "Physics Simulation"
+      ],
+      "tools_or_technologies": [
+        "Unity", "Unreal Engine", "Godot", "Visual Studio",
+        "Blender", "Perforce", "Git"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 35500, "count": 8},
+        {"country": "Canada", "currency": "CAD", "median": 115000, "count": 3},
+        {"country": "Germany", "currency": "EUR", "median": 65000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "1.2% of all developers (57 respondents)",
+        "Moderate remote work (18 remote out of 57)",
+        "Niche but growing creative-tech sector"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[16]", "value": "Developer, game or graphics, count=57, percentage=1.2"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "C++(1066), GDScript(139), Lua(502)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$35,500"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "AI/ML engineer",
+      "normalized_role_name": "AI/ML Engineer",
+      "role_aliases": ["Machine Learning Engineer", "AI Engineer", "Applied ML Engineer"],
+      "role_family": "Artificial Intelligence",
+      "seniority_level": "mid-level",
+      "domain_names": ["Artificial Intelligence"],
+      "cross_domain_presence": ["Internet/Telecomm", "Software Development", "Fintech"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "elite",
+      "elite_reason": "Highest-demand specialization (1.2%) with US median $277,500 - highest among all roles",
+      "description": "Builds, trains, and deploys machine learning models and AI systems at scale",
+      "responsibilities": [
+        "Design and train ML models for production",
+        "Develop MLOps pipelines and model monitoring",
+        "Optimize model inference and deployment",
+        "Collaborate with data scientists on model research"
+      ],
+      "skills": [
+        "Python", "PyTorch", "TensorFlow", "SQL", "Docker",
+        "Kubernetes", "MLOps", "Feature Engineering",
+        "Distributed Systems", "Deep Learning", "NLP"
+      ],
+      "tools_or_technologies": [
+        "Python", "PyTorch", "TensorFlow", "Jupyter Notebook",
+        "Docker", "Kubernetes", "AWS SageMaker", "MLflow",
+        "Weights & Biases", "Hugging Face"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 277500, "count": 8},
+        {"country": "Canada", "currency": "CAD", "median": 150000, "count": 4},
+        {"country": "Germany", "currency": "EUR", "median": 107500, "count": 4},
+        {"country": "United Kingdom", "currency": "GBP", "median": 110000, "count": 3},
+        {"country": "France", "currency": "EUR", "median": 70000, "count": 5}
+      ],
+      "demand_or_growth_signals": [
+        "1.2% of all developers (57 respondents)",
+        "Highest remote work ratio (12 remote out of 57 = 21%)",
+        "Strong Internet/Telecomm and Software Development presence",
+        "Highest US median salary of all roles at $277,500"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[17]", "value": "AI/ML engineer, count=57, percentage=1.2"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Python(2571), PyTorch, TensorFlow"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$277,500"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Founder, technology or otherwise",
+      "normalized_role_name": "Founder",
+      "role_aliases": ["Tech Founder", "Startup Founder", "CEO/Founder"],
+      "role_family": "General Management",
+      "seniority_level": "executive",
+      "domain_names": ["General Management"],
+      "cross_domain_presence": ["Fintech", "Software Development"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "elite",
+      "elite_reason": "Entrepreneurial leadership role (1.1%) with high salary variance ($5,000-$600,000)",
+      "description": "Founders and entrepreneurs leading technology companies or startups",
+      "responsibilities": [
+        "Define company vision and strategy",
+        "Raise funding and manage finances",
+        "Build and lead product and engineering teams",
+        "Drive business development and go-to-market"
+      ],
+      "skills": [
+        "Entrepreneurship", "Product Development", "Business Strategy",
+        "Fundraising", "Leadership", "Software Development",
+        "Marketing", "Sales"
+      ],
+      "tools_or_technologies": [],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 235000, "count": 7},
+        {"country": "United Kingdom", "currency": "GBP", "median": 80000, "count": 5}
+      ],
+      "demand_or_growth_signals": [
+        "1.1% of all developers (52 respondents)",
+        "Moderate remote work (12 remote out of 52)",
+        "Strong Fintech presence among founders"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[18]", "value": "Founder, technology or otherwise, count=52, percentage=1.1"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$235,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "System administrator",
+      "normalized_role_name": "System Administrator",
+      "role_aliases": ["Sysadmin", "Linux Administrator", "IT Administrator"],
+      "role_family": "Cloud Computing",
+      "seniority_level": "mid-level",
+      "domain_names": ["Cloud Computing"],
+      "cross_domain_presence": ["Government", "Computer Systems Design", "Internet/Telecomm"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "low",
+      "elite_signal": "specialized",
+      "elite_reason": "Infrastructure role (0.9%) with Government sector prominence",
+      "description": "Manages and maintains computer systems, networks, and server infrastructure",
+      "responsibilities": [
+        "Manage and maintain server infrastructure",
+        "Monitor system performance and uptime",
+        "Implement security patches and updates",
+        "Manage user accounts and access controls"
+      ],
+      "skills": [
+        "Linux", "Windows Server", "Bash/Shell", "PowerShell",
+        "Networking", "DNS", "Active Directory", "Docker",
+        "Ansible", "Monitoring"
+      ],
+      "tools_or_technologies": [
+        "Linux", "Ansible", "Docker", "Prometheus", "Grafana",
+        "AWS", "Azure", "Kubernetes", "PostgreSQL"
+      ],
+      "certifications_or_credentials": ["CompTIA Linux+", "RHCE", "AWS SysOps"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 91000, "count": 5},
+        {"country": "Germany", "currency": "EUR", "median": 60200, "count": 6},
+        {"country": "Poland", "currency": "PLN", "median": 100000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "0.9% of all developers (43 respondents)",
+        "Low remote work (2 remote out of 43)",
+        "Government sector is a key employer"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[19]", "value": "System administrator, count=43, percentage=0.9"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$91,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Cloud infrastructure engineer",
+      "normalized_role_name": "Cloud Infrastructure Engineer",
+      "role_aliases": ["Cloud Engineer", "Cloud Architect", "Infrastructure Engineer"],
+      "role_family": "Cloud Computing",
+      "seniority_level": "mid-level",
+      "domain_names": ["Cloud Computing"],
+      "cross_domain_presence": ["Internet/Telecomm", "Media"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "elite",
+      "elite_reason": "Highest-paying cloud role (0.9%) with US median $245,000",
+      "description": "Designs, builds, and manages cloud infrastructure and platform services",
+      "responsibilities": [
+        "Design cloud architecture solutions",
+        "Implement infrastructure as code",
+        "Optimize cloud costs and performance",
+        "Ensure cloud security and compliance"
+      ],
+      "skills": [
+        "AWS", "Azure", "GCP", "Terraform", "Kubernetes",
+        "Docker", "CloudFormation", "Ansible", "Python",
+        "Linux", "Networking", "Security"
+      ],
+      "tools_or_technologies": [
+        "AWS", "Azure", "GCP", "Terraform", "Kubernetes",
+        "Docker", "CloudFormation", "Ansible", "Datadog"
+      ],
+      "certifications_or_credentials": ["AWS Solutions Architect", "GCP Professional Cloud Architect", "Azure Solutions Architect"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 245000, "count": 7},
+        {"country": "Canada", "currency": "CAD", "median": 180000, "count": 6},
+        {"country": "Germany", "currency": "EUR", "median": 91500, "count": 4},
+        {"country": "United Kingdom", "currency": "GBP", "median": 85500, "count": 4}
+      ],
+      "demand_or_growth_signals": [
+        "0.9% of all developers (42 respondents)",
+        "Very high remote work ratio (15 remote out of 42 = 36%)",
+        "Strong Internet/Telecomm sector presence",
+        "Second-highest US median salary at $245,000"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[20]", "value": "Cloud infrastructure engineer, count=42, percentage=0.9"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "AWS(1669), Azure(1001), GCP(867)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$245,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Cybersecurity or InfoSec professional",
+      "normalized_role_name": "Cybersecurity/InfoSec Professional",
+      "role_aliases": ["Security Engineer", "Information Security Analyst", "InfoSec Professional"],
+      "role_family": "Cybersecurity",
+      "seniority_level": "mid-level",
+      "domain_names": ["Cybersecurity"],
+      "cross_domain_presence": ["Software Development", "Internet/Telecomm", "Computer Systems Design"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Critical security role (0.8%) with US median $200,000 and strong Nigeria presence",
+      "description": "Protects systems and networks from cybersecurity threats and vulnerabilities",
+      "responsibilities": [
+        "Conduct vulnerability assessments and penetration testing",
+        "Implement security controls and monitoring",
+        "Respond to security incidents and investigate breaches",
+        "Develop security policies and compliance frameworks"
+      ],
+      "skills": [
+        "Network Security", "Penetration Testing", "SIEM",
+        "Python", "Bash/Shell", "Linux", "AWS", "Docker",
+        "Incident Response", "Compliance", "Threat Modeling"
+      ],
+      "tools_or_technologies": [
+        "Splunk", "Wireshark", "Metasploit", "Burp Suite",
+        "Nessus", "AWS Security", "Docker", "Ansible"
+      ],
+      "certifications_or_credentials": ["CISSP", "CEH", "CompTIA Security+", "OSCP", "AWS Security Specialty"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 200000, "count": 12},
+        {"country": "Germany", "currency": "EUR", "median": 80000, "count": 4}
+      ],
+      "demand_or_growth_signals": [
+        "0.8% of all developers (39 respondents)",
+        "High remote work (14 remote out of 39 = 36%)",
+        "Strong presence across Software Development and Telecomm",
+        "Present in Nigerian market (1 respondent)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[21]", "value": "Cybersecurity or InfoSec professional, count=39, percentage=0.8"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$200,000"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Cybersecurity or InfoSec professional: 1 respondent"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Applied scientist",
+      "normalized_role_name": "Applied Scientist",
+      "role_aliases": ["Research Scientist", "Applied ML Scientist", "Industry Scientist"],
+      "role_family": "Scientific Research",
+      "seniority_level": "senior",
+      "domain_names": ["Scientific Research"],
+      "cross_domain_presence": ["Software Development", "Higher Education"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "specialized",
+      "elite_reason": "Research-applied role (0.8%) bridging academia and industry with US median $117,500",
+      "description": "Applies scientific methods and research to solve practical industry problems",
+      "responsibilities": [
+        "Conduct applied research to solve business problems",
+        "Develop and validate experimental solutions",
+        "Publish findings and patent novel approaches",
+        "Collaborate with engineering teams on research-driven features"
+      ],
+      "skills": [
+        "Python", "R", "Machine Learning", "Statistical Analysis",
+        "Deep Learning", "NLP", "Computer Vision",
+        "Research Methodology", "SQL", "Jupyter Notebook"
+      ],
+      "tools_or_technologies": [
+        "Python", "Jupyter Notebook", "TensorFlow", "PyTorch",
+        "R", "MATLAB", "AWS", "PostgreSQL"
+      ],
+      "certifications_or_credentials": ["PhD (preferred)"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 117500, "count": 12}
+      ],
+      "demand_or_growth_signals": [
+        "0.8% of all developers (39 respondents)",
+        "Moderate remote work (4 remote out of 39)",
+        "Bridges academic research with industry application"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[22]", "value": "Applied scientist, count=39, percentage=0.8"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$117,500"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Data or business analyst",
+      "normalized_role_name": "Data/Business Analyst",
+      "role_aliases": ["Business Analyst", "Data Analyst", "Analytics Analyst"],
+      "role_family": "Business Intelligence",
+      "seniority_level": "mid-level",
+      "domain_names": ["Business Intelligence"],
+      "cross_domain_presence": ["Manufacturing", "Internet/Telecomm", "Software Development"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "medium",
+      "elite_signal": "broad",
+      "elite_reason": "Cross-functional analytical role (0.8%) with US median $104,000",
+      "description": "Analyzes business data to generate insights and drive data-informed decisions",
+      "responsibilities": [
+        "Analyze business data and generate reports",
+        "Build dashboards and visualization tools",
+        "Support stakeholders with data-driven insights",
+        "Define and track KPIs and business metrics"
+      ],
+      "skills": [
+        "SQL", "Python", "Excel", "Tableau", "Power BI",
+        "Data Visualization", "Statistical Analysis",
+        "Business Acumen", "Requirements Gathering", "Jupyter Notebook"
+      ],
+      "tools_or_technologies": [
+        "SQL", "Excel", "Tableau", "Power BI", "Python",
+        "Jupyter Notebook", "Google Sheets", "Looker"
+      ],
+      "certifications_or_credentials": ["Tableau Desktop Specialist", "Microsoft Power BI Data Analyst"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 104000, "count": 14},
+        {"country": "United Kingdom", "currency": "GBP", "median": 48000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "0.8% of all developers (37 respondents)",
+        "Moderate remote work (8 remote out of 37)",
+        "Manufacturing and Internet/Telecomm sector demand"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[23]", "value": "Data or business analyst, count=37, percentage=0.8"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "SQL(2774), Python(2571)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$104,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Project manager",
+      "normalized_role_name": "Project Manager",
+      "role_aliases": ["Technical Project Manager", "IT Project Manager", "Delivery Manager"],
+      "role_family": "Project Management",
+      "seniority_level": "mid-level",
+      "domain_names": ["Project Management"],
+      "cross_domain_presence": ["Software Development", "Energy", "Government"],
+      "nigerian_market_relevance": "high",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "specialized",
+      "elite_reason": "Delivery-focused role (0.6%) with US median $200,000 and Nigerian market presence",
+      "description": "Manages project planning, execution, and delivery across technology teams",
+      "responsibilities": [
+        "Define project scope, timeline, and budget",
+        "Coordinate cross-functional teams for delivery",
+        "Track project progress and manage risks",
+        "Communicate status to stakeholders and leadership"
+      ],
+      "skills": [
+        "Agile/Scrum", "Jira", "Risk Management", "Budget Management",
+        "Stakeholder Communication", "Requirements Analysis",
+        "Waterfall", "Kanban", "Microsoft Project"
+      ],
+      "tools_or_technologies": [
+        "Jira", "Confluence", "Asana", "Trello", "Slack",
+        "Microsoft Project", "Notion"
+      ],
+      "certifications_or_credentials": ["PMP", "CSM", "PRINCE2", "PMI-ACP"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 200000, "count": 3},
+        {"country": "Italy", "currency": "EUR", "median": 42000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "0.6% of all developers (30 respondents)",
+        "Moderate remote work (5 remote out of 30)",
+        "Strong Nigerian market presence (1 respondent)"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[24]", "value": "Project manager, count=30, percentage=0.6"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$200,000"},
+        {"source": "a4_nigeria.json", "field": "aggregated_metrics.role_distribution", "value": "Project manager: 1 respondent"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, QA or test",
+      "normalized_role_name": "QA/Test Developer",
+      "role_aliases": ["QA Engineer", "Test Engineer", "SDET", "Software Development Engineer in Test"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Fintech", "Software Development"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Quality-focused specialization (0.6%) with US median $135,000",
+      "description": "Develops automated test frameworks and ensures software quality through testing",
+      "responsibilities": [
+        "Design and implement automated test frameworks",
+        "Write and maintain integration and end-to-end tests",
+        "Perform code reviews for test quality",
+        "Collaborate with developers on testability requirements"
+      ],
+      "skills": [
+        "Python", "JavaScript", "Selenium", "Cypress", "JUnit",
+        "Test Automation", "API Testing", "SQL", "CI/CD",
+        "Docker", "Postman"
+      ],
+      "tools_or_technologies": [
+        "Selenium", "Cypress", "Jenkins", "GitHub Actions",
+        "Postman", "Docker", "Jira", "pytest"
+      ],
+      "certifications_or_credentials": ["ISTQB", "AWS Certified Developer"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 135000, "count": 8}
+      ],
+      "demand_or_growth_signals": [
+        "0.6% of all developers (28 respondents)",
+        "High remote work adoption (9 remote out of 28 = 32%)",
+        "Strong Fintech presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[25]", "value": "Developer, QA or test, count=28, percentage=0.6"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$135,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Database administrator or engineer",
+      "normalized_role_name": "Database Administrator/Engineer",
+      "role_aliases": ["DBA", "Database Engineer", "Data Platform Engineer"],
+      "role_family": "Data Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Data Engineering"],
+      "cross_domain_presence": ["Government", "Software Development", "Transportation"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "specialized",
+      "elite_reason": "Data infrastructure specialist (0.5%) with US median $156,500",
+      "description": "Manages, optimizes, and secures database systems and data storage infrastructure",
+      "responsibilities": [
+        "Design and manage database schemas and storage",
+        "Optimize database performance and query efficiency",
+        "Implement backup and disaster recovery procedures",
+        "Ensure database security and compliance"
+      ],
+      "skills": [
+        "SQL", "PostgreSQL", "MySQL", "Microsoft SQL Server",
+        "Oracle", "MongoDB", "Redis", "Performance Tuning",
+        "Backup/Recovery", "Database Security"
+      ],
+      "tools_or_technologies": [
+        "PostgreSQL", "MySQL", "Microsoft SQL Server", "Oracle",
+        "MongoDB", "Redis", "pgAdmin", "DBeaver"
+      ],
+      "certifications_or_credentials": ["Oracle OCP", "Microsoft Azure Database Administrator"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 156500, "count": 4},
+        {"country": "United Kingdom", "currency": "GBP", "median": 55000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "0.5% of all developers (22 respondents)",
+        "Moderate remote work (4 remote out of 22)",
+        "Government sector is a key employer"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[26]", "value": "Database administrator or engineer, count=22, percentage=0.5"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "SQL(2774), PostgreSQL(2076), MySQL(1466)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$156,500"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Support engineer or analyst",
+      "normalized_role_name": "Support Engineer/Analyst",
+      "role_aliases": ["Technical Support Engineer", "Customer Support Engineer", "Support Analyst"],
+      "role_family": "Software Engineering",
+      "seniority_level": "mid-level",
+      "domain_names": ["Software Engineering"],
+      "cross_domain_presence": ["Software Development", "Internet/Telecomm", "Computer Systems Design"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "broad",
+      "elite_reason": "Customer-facing technical role (0.4%) with US median $75,000",
+      "description": "Provides technical support, troubleshooting, and escalation for software products",
+      "responsibilities": [
+        "Diagnose and resolve technical issues reported by users",
+        "Escalate complex issues to engineering teams",
+        "Document known issues and solutions",
+        "Improve support processes and knowledge base"
+      ],
+      "skills": [
+        "Troubleshooting", "SQL", "Linux", "Networking",
+        "Python", "Bash/Shell", "Customer Communication",
+        "Ticketing Systems", "Ticket Resolution"
+      ],
+      "tools_or_technologies": [
+        "Jira", "Zendesk", "ServiceNow", "Slack",
+        "SQL Workbench", "Linux Terminal"
+      ],
+      "certifications_or_credentials": ["ITIL Foundation", "CompTIA A+"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 75000, "count": 7}
+      ],
+      "demand_or_growth_signals": [
+        "0.4% of all developers (21 respondents)",
+        "Moderate remote work (8 remote out of 21 = 38%)",
+        "Strong Internet/Telecomm sector presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[27]", "value": "Support engineer or analyst, count=21, percentage=0.4"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$75,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Developer, AI apps or physical AI",
+      "normalized_role_name": "AI Applications Developer",
+      "role_aliases": ["AI Application Developer", "Physical AI Developer", "Robotics Software Engineer"],
+      "role_family": "Artificial Intelligence",
+      "seniority_level": "mid-level",
+      "domain_names": ["Artificial Intelligence", "Robotics Engineering"],
+      "cross_domain_presence": ["Software Development", "Banking/Financial Services"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Emerging AI apps specialization (0.4%) with US median $150,000",
+      "description": "Develops applications incorporating AI/ML models, including physical AI and robotics systems",
+      "responsibilities": [
+        "Integrate AI models into production applications",
+        "Develop APIs and services for AI-powered features",
+        "Optimize model serving and inference performance",
+        "Build real-time AI systems and robotic control software"
+      ],
+      "skills": [
+        "Python", "TensorFlow", "PyTorch", "Docker",
+        "REST APIs", "Computer Vision", "NLP",
+        "Edge Computing", "C++", "ROS"
+      ],
+      "tools_or_technologies": [
+        "Python", "TensorFlow", "PyTorch", "Docker",
+        "AWS", "Azure", "Raspberry Pi", "NVIDIA Jetson"
+      ],
+      "certifications_or_credentials": [],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 150000, "count": 4},
+        {"country": "Germany", "currency": "EUR", "median": 83000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "0.4% of all developers (20 respondents)",
+        "High remote work adoption (6 remote out of 20 = 30%)",
+        "Emerging field with growing Banking sector demand"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[28]", "value": "Developer, AI apps or physical AI, count=20, percentage=0.4"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$150,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Product manager",
+      "normalized_role_name": "Product Manager",
+      "role_aliases": ["Technical Product Manager", "Product Owner", "Program Manager"],
+      "role_family": "Product Management",
+      "seniority_level": "mid-level",
+      "domain_names": ["Product Management"],
+      "cross_domain_presence": ["Software Development", "Government", "Healthcare"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "high",
+      "remote_work_relevance": "high",
+      "elite_signal": "specialized",
+      "elite_reason": "Strategic product role (0.3%) with US median $190,000",
+      "description": "Defines product vision and strategy, prioritizes features, and drives product delivery",
+      "responsibilities": [
+        "Define product vision, strategy, and roadmap",
+        "Prioritize features based on user needs and business value",
+        "Work with engineering and design on delivery",
+        "Analyze product metrics and user feedback"
+      ],
+      "skills": [
+        "Product Strategy", "User Research", "A/B Testing",
+        "Data Analysis", "SQL", "Agile/Scrum",
+        "Roadmapping", "Stakeholder Management"
+      ],
+      "tools_or_technologies": [
+        "Jira", "Confluence", "Figma", "Amplitude",
+        "Mixpanel", "Google Analytics", "Miro", "Notion"
+      ],
+      "certifications_or_credentials": ["Pragmatic Institute", "Scrum Product Owner (CSPO)"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 190000, "count": 4}
+      ],
+      "demand_or_growth_signals": [
+        "0.3% of all developers (15 respondents)",
+        "High remote work adoption (6 remote out of 15 = 40%)",
+        "Cross-industry presence in Software Development, Government, Healthcare"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[29]", "value": "Product manager, count=15, percentage=0.3"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$190,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "Financial analyst or engineer",
+      "normalized_role_name": "Financial Analyst/Engineer",
+      "role_aliases": ["Quantitative Analyst", "Financial Engineer", "FinTech Developer"],
+      "role_family": "Quantitative Finance",
+      "seniority_level": "mid-level",
+      "domain_names": ["Quantitative Finance"],
+      "cross_domain_presence": ["Banking/Financial Services", "Fintech", "Manufacturing"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "medium",
+      "elite_signal": "elite",
+      "elite_reason": "Niche financial specialization (0.3%) with US median $190,000",
+      "description": "Develops financial models, algorithms, and systems for banking and fintech",
+      "responsibilities": [
+        "Develop quantitative financial models",
+        "Build trading algorithms and risk systems",
+        "Analyze financial data and market trends",
+        "Ensure regulatory compliance in financial software"
+      ],
+      "skills": [
+        "Python", "R", "SQL", "MATLAB", "Statistics",
+        "Financial Modeling", "Derivatives Pricing",
+        "Machine Learning", "Excel", "C++"
+      ],
+      "tools_or_technologies": [
+        "Python", "R", "MATLAB", "Bloomberg Terminal",
+        "Excel", "Jupyter Notebook", "PostgreSQL"
+      ],
+      "certifications_or_credentials": ["CFA", "FRM", "PRM"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [
+        {"country": "United States of America", "currency": "USD", "median": 190000, "count": 3}
+      ],
+      "demand_or_growth_signals": [
+        "0.3% of all developers (12 respondents)",
+        "Moderate remote work (3 remote out of 12)",
+        "Strong Banking/Financial Services and Fintech presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[30]", "value": "Financial analyst or engineer, count=12, percentage=0.3"},
+        {"source": "a2_skills.json", "field": "technologies", "value": "Python(2571), SQL(2774), R(243)"},
+        {"source": "a3_market.json", "field": "salary_by_role_country", "value": "US median=$190,000"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "role_name": "UX, Research Ops or UI design professional",
+      "normalized_role_name": "UX/UI Design Professional",
+      "role_aliases": ["UX Designer", "UI Designer", "UX Researcher", "Product Designer"],
+      "role_family": "UI/UX Design",
+      "seniority_level": "mid-level",
+      "domain_names": ["UI/UX Design"],
+      "cross_domain_presence": ["Media & Advertising", "Software Development"],
+      "nigerian_market_relevance": "low",
+      "global_market_relevance": "medium",
+      "remote_work_relevance": "low",
+      "elite_signal": "specialized",
+      "elite_reason": "Design-focused role (0.2%) bridging user research and visual design",
+      "description": "Designs user experiences, conducts UX research, and creates interface designs for digital products",
+      "responsibilities": [
+        "Conduct user research and usability testing",
+        "Design wireframes, prototypes, and high-fidelity mockups",
+        "Develop and maintain design systems",
+        "Collaborate with product and engineering on implementation"
+      ],
+      "skills": [
+        "Figma", "Sketch", "Adobe XD", "User Research",
+        "Prototyping", "Information Architecture",
+        "Usability Testing", "Design Systems", "HTML/CSS"
+      ],
+      "tools_or_technologies": [
+        "Figma", "Sketch", "Adobe Creative Suite",
+        "Maze", "Hotjar", "InVision", "Miro"
+      ],
+      "certifications_or_credentials": ["Google UX Design Certificate", "Nielsen Norman UX Certification"],
+      "regulatory_or_license_requirements": [],
+      "salary_or_value_signals": [],
+      "demand_or_growth_signals": [
+        "0.2% of all developers (9 respondents)",
+        "Low remote work (2 remote out of 9)",
+        "Strong Media & Advertising Services sector presence"
+      ],
+      "source_evidence": [
+        {"source": "a1_roles.json", "field": "roles[31]", "value": "UX, Research Ops or UI design professional, count=9, percentage=0.2"}
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "certifications": [],
+  "market_intelligence": {
+    "global_industry_distribution": [
+      {"industry": "Software Development", "total": 2043, "top_role": "Developer, full-stack"},
+      {"industry": "Fintech", "total": 221, "top_role": "Developer, full-stack"},
+      {"industry": "Internet, Telecomm or Information Services", "total": 203, "top_role": "Developer, full-stack"},
+      {"industry": "Banking/Financial Services", "total": 189, "top_role": "Developer, full-stack"},
+      {"industry": "Healthcare", "total": 183, "top_role": "Developer, full-stack"},
+      {"industry": "Higher Education", "total": 175, "top_role": "Academic researcher"},
+      {"industry": "Government", "total": 153, "top_role": "Developer, full-stack"},
+      {"industry": "Manufacturing", "total": 146, "top_role": "Developer, full-stack"},
+      {"industry": "Retail and Consumer Services", "total": 120, "top_role": "Developer, back-end"},
+      {"industry": "Computer Systems Design and Services", "total": 111, "top_role": "Developer, full-stack"},
+      {"industry": "Transportation, or Supply Chain", "total": 110, "top_role": "Developer, full-stack"},
+      {"industry": "Media & Advertising Services", "total": 100, "top_role": "Developer, full-stack"},
+      {"industry": "Energy", "total": 95, "top_role": "Developer, full-stack"},
+      {"industry": "Insurance", "total": 59, "top_role": "Developer, full-stack"}
+    ],
+    "salary_highlights": {
+      "highest_us_median_salary_role": "AI/ML engineer ($277,500)",
+      "second_highest_us_median_salary_role": "Cloud infrastructure engineer ($245,000)",
+      "third_highest_us_median_salary_role": "Founder, technology or otherwise ($235,000)"
+    },
+    "remote_work_highlights": {
+      "highest_remote_ratio_role": "Cloud infrastructure engineer (36%)",
+      "second_highest_remote_ratio": "Support engineer or analyst (38%)",
+      "third_highest_remote_ratio": "Product manager (40%)"
+    }
+  },
+  "gaps_and_warnings": [
+    "No Nigerian-specific salary data available in a3_market.json - all salary data is from other countries",
+    "Nigerian sample size is very small (11 respondents) - Nigerian market relevance assessments are directional, not statistically robust",
+    "Career mobility data in a3_market.json shows zero transitions across all roles - this may indicate a data collection artifact rather than actual stability",
+    "Remote work data in a3_market.json shows zero hybrid responses for all roles - likely incomplete survey field",
+    "Role 'Other (please specify):' is heterogeneous and cannot be reliably mapped to specific skills or domain",
+    "Role 'Retired' represents inactive respondents and has limited market intelligence value",
+    "Student salary data reflects internship/part-time work, not full-time market rates",
+    "Some salary data points have very small sample sizes (count < 5) and may not be representative"
+  ]
+}

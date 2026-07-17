@@ -2,12 +2,10 @@
  * Shared building blocks for the redesigned auth flow (Login / Sign up /
  * Forgot password). Keeps the three screens visually identical and reduces
  * duplication: a branded gradient scaffold, labelled inputs with a password
- * reveal toggle, the Google/Apple social row, and the legal footer.
- *
- * Social sign-in is intentionally stubbed for now — there is no backend OAuth
- * token-exchange endpoint yet (see TODO(levelup-oauth)). The buttons render in
- * full brand fidelity but surface an honest "coming soon" notice rather than a
- * fake success. Email/password is fully live via the existing useAuth methods.
+ * reveal toggle, and the legal footer. Email/password is fully live via the
+ * existing useAuth methods. OAuth helpers remain below for a later provider
+ * rollout, but they are not part of the primary auth screen until token
+ * exchange is live.
  */
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import {

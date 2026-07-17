@@ -1,0 +1,79 @@
+{
+  "developers.csv": {
+    "rows_including_header": 5657,
+    "header": [
+      "developers",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  },
+  "economy_collaborators.csv": {
+    "rows_including_header": 82198,
+    "header": [
+      "weight",
+      "source",
+      "destination",
+      "year",
+      "quarter"
+    ]
+  },
+  "git_pushes.csv": {
+    "rows_including_header": 4389,
+    "header": [
+      "git_pushes",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  },
+  "languages.csv": {
+    "rows_including_header": 180339,
+    "header": [
+      "num_pushers",
+      "language",
+      "language_type",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  },
+  "licenses.csv": {
+    "rows_including_header": 21571,
+    "header": [
+      "num_pushers",
+      "spdx_license",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  },
+  "organizations.csv": {
+    "rows_including_header": 4570,
+    "header": [
+      "organizations",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  },
+  "repositories.csv": {
+    "rows_including_header": 5636,
+    "header": [
+      "repositories",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  },
+  "topics.csv": {
+    "rows_including_header": 82592,
+    "header": [
+      "num_pushers",
+      "topic",
+      "iso2_code",
+      "year",
+      "quarter"
+    ]
+  }
+}

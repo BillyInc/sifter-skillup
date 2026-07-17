@@ -33,12 +33,15 @@
 #   GET  /{institution_id}/peers          — list[PeerInstitutionRow]
 #   GET  /{institution_id}/affiliation    — AffiliationStats (aggregate, k-anonymised)
 # ============================================================
+from datetime import datetime, timedelta, timezone
+import hmac
 from typing import List, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends
 from pydantic import BaseModel, ConfigDict, Field
 
 from auth import Auth
+from config import settings
 from database import db
 from logger import log
 from models import ResponseModel
@@ -65,15 +68,185 @@ def _resolve_org(current_user: dict) -> Optional[str]:
     name is kept as _resolve_org for call-site stability, but the identity it
     returns is a skillup_dev.schools id.
     """
+    member = _membership_for_user(current_user)
+    return (member or {}).get("school_id")
+
+
+def _membership_for_user(current_user: dict) -> Optional[dict]:
+    """Best institution_members row for the current user, or None.
+
+    Prefer live, verified, newest memberships. Fall back for older schemas that
+    may not yet have seat_status or verified columns.
+    """
     try:
-        res = _svc().table("institution_members").select("school_id").eq(
-            "user_id", current_user["id"]
-        ).limit(1).execute()
+        res = (
+            _svc()
+            .table("institution_members")
+            .select("*")
+            .eq("user_id", current_user["id"])
+            .neq("seat_status", "revoked")
+            .order("verified", desc=True)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
         if res.data:
-            return res.data[0]["school_id"]
+            return res.data[0]
     except Exception as exc:
-        log.warning("institutions: school membership lookup skipped", error=str(exc))
-    return None
+        log.warning("institutions: active membership lookup skipped", error=str(exc))
+    try:
+        res = (
+            _svc()
+            .table("institution_members")
+            .select("*")
+            .eq("user_id", current_user["id"])
+            .order("verified", desc=True)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        return (res.data or [None])[0]
+    except Exception as exc:
+        log.warning("institutions: membership lookup skipped", error=str(exc))
+        return None
+
+
+def _can_invite_members(member: Optional[dict], current_user: dict) -> bool:
+    role = (member or {}).get("role") or current_user.get("account_type")
+    return role in {"owner", "institution_admin", "admin"}
+
+
+def _org_from_school(school_id: str) -> Optional["Organization"]:
+    try:
+        row = (_svc().table("schools").select("*").eq("id", school_id).limit(1).execute().data or [None])[0]
+        if not row:
+            return None
+        raw_type = row.get("institution_type") or "university"
+        org_type = raw_type if raw_type in {"secondary_school", "university", "tutorial_centre", "jamb_cafe"} else "university"
+        return Organization(
+            id=row.get("id") or school_id,
+            type=org_type,
+            name=row.get("name") or "",
+            jamb_code=row.get("jamb_code"),
+            state=row.get("state"),
+            school_code=row.get("school_code"),
+            verification_status=row.get("verification_status") or "unverified",
+            provider_session_only=bool(row.get("provider_session_only") or org_type in {"tutorial_centre", "jamb_cafe"}),
+        )
+    except Exception as exc:
+        log.warning("institutions: school profile read skipped", error=str(exc))
+        return None
+
+
+def _normal_org_type(raw: Optional[str]) -> str:
+    if raw in {"secondary_school", "university", "tutorial_centre", "jamb_cafe"}:
+        return raw
+    return "university"
+
+
+def _normal_account_type(raw: Optional[str], role: Optional[str]) -> str:
+    if raw in {"educator", "institution_admin"}:
+        return raw
+    if role in {"owner", "dean", "institution_admin", "admin"}:
+        return "institution_admin"
+    return "educator"
+
+
+def _find_or_create_school(claim: "VerificationClaim") -> Optional["Organization"]:
+    name = (claim.organization_name or "").strip()
+    if not name:
+        return None
+    org_type = _normal_org_type(claim.organization_type)
+    svc = _svc()
+    existing = (
+        svc.table("schools")
+        .select("*")
+        .ilike("name", name)
+        .eq("institution_type", org_type)
+        .limit(1)
+        .execute()
+        .data
+        or []
+    )
+    row = existing[0] if existing else None
+    if not row:
+        row = (
+            svc.table("schools")
+            .insert(
+                {
+                    "name": name,
+                    "institution_type": org_type,
+                    "ibass_verified": False,
+                }
+            )
+            .execute()
+            .data
+            or [None]
+        )[0]
+    if not row:
+        return None
+    school_id = row.get("id")
+    if claim.provider_session_only:
+        try:
+            svc.table("schools").update({"provider_session_only": True}).eq(
+                "id", school_id
+            ).execute()
+            row["provider_session_only"] = True
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: provider flag update skipped", error=str(exc))
+    return _org_from_school(school_id)
+
+
+def _attach_member(
+    current_user: dict,
+    school_id: str,
+    account_type: str,
+    role: Optional[str],
+) -> None:
+    svc = _svc()
+    existing = (
+        svc.table("institution_members")
+        .select("id")
+        .eq("user_id", current_user["id"])
+        .eq("school_id", school_id)
+        .limit(1)
+        .execute()
+        .data
+        or []
+    )
+    member_role = role or account_type
+    if existing:
+        try:
+            svc.table("institution_members").update(
+                {"role": member_role, "verified": False, "seat_status": "active"}
+            ).eq("id", existing[0]["id"]).execute()
+            return
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: member update with seat_status skipped", error=str(exc))
+            svc.table("institution_members").update(
+                {"role": account_type, "verified": False}
+            ).eq("id", existing[0]["id"]).execute()
+            return
+    try:
+        svc.table("institution_members").insert(
+            {
+                "user_id": current_user["id"],
+                "school_id": school_id,
+                "role": member_role,
+                "verified": False,
+                "seat_status": "active",
+            }
+        ).execute()
+    except Exception as exc:  # noqa: BLE001
+        log.warning("institutions: member insert with full role skipped", error=str(exc))
+        svc.table("institution_members").insert(
+            {
+                "user_id": current_user["id"],
+                "school_id": school_id,
+                "role": account_type,
+                "verified": False,
+            }
+        ).execute()
 
 
 def _institution_programme_ids(school_id: Optional[str]) -> Optional[list]:
@@ -120,13 +293,30 @@ def _latest_demand(domain_id: str, rank_lens: str) -> dict:
         res = _svc().table("domain_demand_metrics").select(
             "postings_count, postings_yoy, remote_pct, "
             "entry_salary_local_ngn, entry_salary_remote_usd, "
-            "top_employers, top_certs, plain_label, month"
+            "top_employers, top_certs, plain_label, month, "
+            "value_band, demand_band, quadrant, interpretation, source_confidence"
         ).eq("domain_id", domain_id).eq("rank_lens", rank_lens).order(
             "month", desc=True
         ).limit(1).execute()
         return (res.data or [{}])[0]
     except Exception as exc:
         log.warning("institutions: demand read skipped", error=str(exc))
+        return {}
+
+
+def _latest_role_demand(role_key: str, rank_lens: str) -> dict:
+    """Latest populated role demand row; {} when none ingested."""
+    try:
+        res = _svc().table("role_demand_metrics").select(
+            "postings_count, postings_yoy, remote_pct, salary_min, salary_max, "
+            "top_employers, top_certs, trend_pct, value_band, demand_band, "
+            "quadrant, interpretation, source_confidence, month"
+        ).eq("role_id", role_key).eq("rank_lens", rank_lens).order(
+            "month", desc=True
+        ).limit(1).execute()
+        return (res.data or [{}])[0]
+    except Exception as exc:
+        log.warning("institutions: role demand read skipped", error=str(exc))
         return {}
 
 
@@ -210,10 +400,24 @@ def _programme_domain_rows(programme_ids: list, cap: int = 4000) -> list:
 
 # ─────────────────────────────────────────────────────────────
 # Pydantic v2 response models — field-compatible with
-# src/types/institution.ts (snake_case; names kept obvious).
+# src/types/institution.ts. Internally we keep snake_case; over the wire we
+# accept and emit camelCase so the TypeScript contracts line up.
 # ─────────────────────────────────────────────────────────────
 
-class Organization(BaseModel):
+def _to_camel(name: str) -> str:
+    head, *tail = name.split("_")
+    return head + "".join(part[:1].upper() + part[1:] for part in tail)
+
+
+class _InstitutionBase(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=_to_camel,
+        populate_by_name=True,
+        extra="ignore",
+    )
+
+
+class Organization(_InstitutionBase):
     id: str
     type: str  # secondary_school | university | tutorial_centre | jamb_cafe
     name: str
@@ -229,7 +433,44 @@ class Organization(BaseModel):
     provider_session_only: bool = False
 
 
-class VerificationClaim(BaseModel):
+class OrganizationMember(_InstitutionBase):
+    id: str
+    organization_id: str
+    user_id: str
+    role: str
+    seat_status: str = "active"
+    display_name: Optional[str] = None
+    email: Optional[str] = None
+    title: Optional[str] = None
+    invited_by: Optional[str] = None
+    accepted_at: Optional[str] = None
+    last_active_at: Optional[str] = None
+
+
+class OrganizationInvite(_InstitutionBase):
+    id: str
+    organization_id: str
+    invited_email: str
+    role: str
+    status: str = "pending"
+    invited_by: Optional[str] = None
+    expires_at: Optional[str] = None
+    created_at: str
+
+
+class OrganizationTeam(_InstitutionBase):
+    organization: Optional[Organization] = None
+    members: List[OrganizationMember] = Field(default_factory=list)
+    invites: List[OrganizationInvite] = Field(default_factory=list)
+    can_invite: bool = False
+
+
+class InviteMemberInput(_InstitutionBase):
+    invited_email: str
+    role: str = "counsellor"
+
+
+class VerificationClaim(_InstitutionBase):
     """Payload mirroring EducatorProfile from institution.ts."""
     account_type: Optional[str] = None  # educator | institution_admin
     organization_type: Optional[str] = None
@@ -242,7 +483,20 @@ class VerificationClaim(BaseModel):
     verification_method: Optional[str] = None
 
 
-class InstitutionSummary(BaseModel):
+class AdminAccessCodeRequest(_InstitutionBase):
+    """Owner-issued gate code for educator/institution admin mode.
+
+    This is deliberately separate from verification proof, school codes, and
+    student claim codes. It allows controlled admin-mode access while the full
+    verification review pipeline is still manual.
+    """
+
+    code: str
+    organization_type: Optional[str] = None
+    organization_name: Optional[str] = None
+
+
+class InstitutionSummary(_InstitutionBase):
     institution_name: str
     institution_code: str
     active_programmes: int = 0
@@ -260,25 +514,25 @@ class InstitutionSummary(BaseModel):
     data_status: Literal["coming_soon"] = "coming_soon"
 
 
-class ProgrammeDomainBadge(BaseModel):
+class ProgrammeDomainBadge(_InstitutionBase):
     domain_id: str
     short_label: str
     match_type: str  # direct | functional | adjacent
 
 
-class DemandSkill(BaseModel):
+class DemandSkill(_InstitutionBase):
     name: str
     in_curriculum: bool
     note: Optional[str] = None
 
 
-class ProgrammeDemandDetail(BaseModel):
+class ProgrammeDemandDetail(_InstitutionBase):
     top_skills: List[DemandSkill] = Field(default_factory=list)
     top_certifications: List[DemandSkill] = Field(default_factory=list)
     top_employers: List[str] = Field(default_factory=list)
 
 
-class ProgrammeDemandRow(BaseModel):
+class ProgrammeDemandRow(_InstitutionBase):
     id: str
     programme_name: str
     jamb_name: str
@@ -296,7 +550,7 @@ class ProgrammeDemandRow(BaseModel):
     detail: Optional[ProgrammeDemandDetail] = None
 
 
-class DomainRankItem(BaseModel):
+class DomainRankItem(_InstitutionBase):
     rank: int
     domain_id: str
     domain_name: str
@@ -305,16 +559,20 @@ class DomainRankItem(BaseModel):
     bar_ratio: Optional[float] = None
     trend_pct: Optional[float] = None
     trend_direction: Optional[str] = None
+    value_band: Optional[str] = None
+    demand_band: Optional[str] = None
+    quadrant: Optional[str] = None
+    interpretation: Optional[str] = None
 
 
-class IntelligenceAlert(BaseModel):
+class IntelligenceAlert(_InstitutionBase):
     id: str
     severity: str  # info | opportunity | warning | critical
     title: str
     body: str
 
 
-class SkillGapRow(BaseModel):
+class SkillGapRow(_InstitutionBase):
     programme_name: str
     domain_name: str
     skill: str
@@ -322,7 +580,7 @@ class SkillGapRow(BaseModel):
     in_curriculum: bool = False
 
 
-class RoleDemandRow(BaseModel):
+class RoleDemandRow(_InstitutionBase):
     role_id: str
     role_name: str
     domain_name: Optional[str] = None
@@ -332,9 +590,16 @@ class RoleDemandRow(BaseModel):
     salary_min: Optional[int] = None
     salary_max: Optional[int] = None
     trend_pct: Optional[float] = None
+    rank_lens: Optional[str] = None
+    value_band: Optional[str] = None
+    demand_band: Optional[str] = None
+    quadrant: Optional[str] = None
+    interpretation: Optional[str] = None
+    top_employers: List[str] = Field(default_factory=list)
+    top_certifications: List[str] = Field(default_factory=list)
 
 
-class PeerInstitutionRow(BaseModel):
+class PeerInstitutionRow(_InstitutionBase):
     institution_name: str
     domains_accessible: int = 0
     unique_domains: Optional[List[str]] = None
@@ -346,7 +611,7 @@ class PeerInstitutionRow(BaseModel):
     is_self: bool = False
 
 
-class AffiliationStats(BaseModel):
+class AffiliationStats(_InstitutionBase):
     organization_id: str
     # Self-reported affiliations; suppressed below the k-anonymity threshold.
     affiliated_students: Optional[int] = None
@@ -375,11 +640,184 @@ async def get_my_organization(current_user: dict = Depends(Auth.get_current_user
     Scaffolding: no organisations exist yet, so this returns data=None with a
     coming_soon notice. Returns 200 (not 404) so the client can branch cleanly.
     """
-    # TODO(institutions): read skillup_dev.organization_members + organizations
-    log.info("Institution /me (stub)", user_id=current_user["id"])
+    member = _membership_for_user(current_user)
+    school_id = (member or {}).get("school_id")
+    if school_id:
+        org = _org_from_school(school_id)
+        if org:
+            return ResponseModel(data=org.model_dump(by_alias=True))
+    log.info("Institution /me empty", user_id=current_user["id"])
     return ResponseModel(
         data=None,
-        message="Your institution profile comes online with the institutional rollout.",
+        message="Claim or verify an institution to create your organisation profile.",
+    )
+
+
+@router.get("/me/team", response_model=ResponseModel)
+async def get_my_team(current_user: dict = Depends(Auth.require_admin)):
+    """Organisation profile + team seats for the current admin context."""
+    member = _membership_for_user(current_user)
+    school_id = (member or {}).get("school_id")
+    if not school_id:
+        team = OrganizationTeam(organization=None, members=[], invites=[], can_invite=False)
+        return ResponseModel(data=team.model_dump(by_alias=True))
+
+    org = _org_from_school(school_id)
+    can_invite = _can_invite_members(member, current_user)
+
+    members: List[OrganizationMember] = []
+    try:
+        rows = _svc().table("institution_members").select("*").eq(
+            "school_id", school_id
+        ).order("created_at", desc=False).limit(200).execute().data or []
+        user_ids = [r.get("user_id") for r in rows if r.get("user_id")]
+        users_by_id = {}
+        if user_ids:
+            user_rows = _svc().table("users").select(
+                "id, username, email, last_login"
+            ).in_("id", user_ids).limit(200).execute().data or []
+            users_by_id = {u.get("id"): u for u in user_rows}
+        for row in rows:
+            user_row = users_by_id.get(row.get("user_id"), {})
+            members.append(
+                OrganizationMember(
+                    id=row.get("id") or f"{school_id}:{row.get('user_id')}",
+                    organization_id=school_id,
+                    user_id=row.get("user_id") or "",
+                    role=row.get("role") or "educator",
+                    seat_status=row.get("seat_status") or ("active" if row.get("verified", True) else "invited"),
+                    display_name=user_row.get("username"),
+                    email=user_row.get("email"),
+                    title=row.get("title"),
+                    invited_by=row.get("invited_by"),
+                    accepted_at=row.get("accepted_at"),
+                    last_active_at=user_row.get("last_login"),
+                )
+            )
+    except Exception as exc:
+        log.warning("institutions: team members read skipped", error=str(exc))
+
+    invites: List[OrganizationInvite] = []
+    try:
+        rows = _svc().table("institution_member_invites").select("*").eq(
+            "school_id", school_id
+        ).order("created_at", desc=True).limit(100).execute().data or []
+        for row in rows:
+            invites.append(
+                OrganizationInvite(
+                    id=row.get("id"),
+                    organization_id=school_id,
+                    invited_email=row.get("invited_email") or "",
+                    role=row.get("role") or "counsellor",
+                    status=row.get("status") or "pending",
+                    invited_by=row.get("invited_by"),
+                    expires_at=row.get("expires_at"),
+                    created_at=row.get("created_at") or "",
+                )
+            )
+    except Exception as exc:
+        log.warning("institutions: team invites read skipped", error=str(exc))
+
+    team = OrganizationTeam(
+        organization=org,
+        members=members,
+        invites=invites,
+        can_invite=can_invite,
+    )
+    return ResponseModel(data=team.model_dump(by_alias=True))
+
+
+@router.post("/me/invites", response_model=ResponseModel)
+async def invite_team_member(
+    payload: InviteMemberInput,
+    current_user: dict = Depends(Auth.require_admin),
+):
+    """Create an invitation for another official from the same organisation."""
+    member = _membership_for_user(current_user)
+    school_id = (member or {}).get("school_id")
+    if not school_id or not _can_invite_members(member, current_user):
+        return ResponseModel(
+            data=None,
+            message="Only verified owners/admins can invite officials.",
+        )
+
+    invited_email = (payload.invited_email or "").strip().lower()
+    if not invited_email:
+        return ResponseModel(data=None, message="Invitation email is required.")
+
+    expires = datetime.now(timezone.utc) + timedelta(days=14)
+    row = {
+        "school_id": school_id,
+        "invited_email": invited_email,
+        "role": payload.role,
+        "status": "pending",
+        "invited_by": current_user["id"],
+        "expires_at": expires.isoformat(),
+    }
+    try:
+        created = _svc().table("institution_member_invites").insert(row).execute().data[0]
+        invite = OrganizationInvite(
+            id=created.get("id"),
+            organization_id=school_id,
+            invited_email=created.get("invited_email") or invited_email,
+            role=created.get("role") or payload.role,
+            status=created.get("status") or "pending",
+            invited_by=created.get("invited_by"),
+            expires_at=created.get("expires_at"),
+            created_at=created.get("created_at") or "",
+        )
+        return ResponseModel(data=invite.model_dump(by_alias=True))
+    except Exception as exc:
+        log.warning("institutions: team invite create skipped", error=str(exc))
+        return ResponseModel(
+            data=None,
+            message="Team invitations are not active until the institution team schema is applied.",
+        )
+
+
+@router.post("/access-code/validate", response_model=ResponseModel)
+async def validate_admin_access_code(
+    payload: AdminAccessCodeRequest = Body(...),
+    current_user: dict = Depends(Auth.get_current_user),
+):
+    """Validate an owner-issued admin access code.
+
+    The code unlocks controlled admin-mode entry for institutions/tutorial
+    centres while proof review remains manual. It does not verify ownership,
+    create an institution membership, or replace school/student claim codes.
+    """
+    submitted = (payload.code or "").strip().upper()
+    ok = bool(submitted) and any(
+        hmac.compare_digest(submitted, configured)
+        for configured in settings.EDUCATOR_ACCESS_CODES
+    )
+    if not ok:
+        log.info(
+            "Institution access code rejected",
+            user_id=current_user["id"],
+            organization_type=payload.organization_type,
+        )
+        return ResponseModel(
+            success=False,
+            message="Invalid or expired admin access code.",
+            data=None,
+        )
+
+    log.info(
+        "Institution access code accepted",
+        user_id=current_user["id"],
+        organization_type=payload.organization_type,
+        organization_name=payload.organization_name,
+    )
+    return ResponseModel(
+        data={
+            "accepted": True,
+            "accessTier": "owner_code",
+            "notice": (
+                "Admin access unlocked by owner code. Organisation verification "
+                "is still pending until proof is reviewed."
+            ),
+        }
     )
 
 
@@ -390,26 +828,50 @@ async def submit_verification(
 ):
     """Accept a verification claim payload.
 
-    Scaffolding: no real review pipeline yet. We echo back an Organization with
-    status 'claimed' (or 'pending' if a verification method was supplied). No
-    write is performed — this just acknowledges the claim shape.
+    Owner-code access and proof review stay separate: this creates/reuses the
+    organisation shell and links the current user so admin/provisioning routes
+    can scope correctly, while verification itself remains pending.
     """
-    # TODO(institutions): persist claim to skillup_dev.organizations and queue review
-    log.info("Institution verify claim (stub)", user_id=current_user["id"])
     status = "pending" if claim.verification_method else "claimed"
-    org = Organization(
-        id="",  # assigned once a real record is created
-        type=claim.organization_type or "university",
-        name=claim.organization_name or "",
-        school_code=None,
-        verification_status=status,
-        verification_method=claim.verification_method,
-        provider_session_only=claim.provider_session_only,
-    )
-    return ResponseModel(
-        data=org.model_dump(),
-        message="Verification review comes online with the institutional rollout.",
-    )
+    account_type = _normal_account_type(claim.account_type, claim.role)
+    try:
+        org = _find_or_create_school(claim)
+        if not org:
+            return ResponseModel(
+                data=None,
+                message="Organisation name is required to create the admin workspace.",
+            )
+        _attach_member(current_user, org.id, account_type, claim.role)
+        try:
+            _svc().table("users").update(
+                {
+                    "account_type": account_type,
+                    "onboarding_completed": True,
+                }
+            ).eq("id", current_user["id"]).execute()
+        except Exception as exc:  # noqa: BLE001
+            log.warning("institutions: user account_type update skipped", error=str(exc))
+
+        org.verification_status = status
+        org.verification_method = claim.verification_method
+        org.provider_session_only = claim.provider_session_only or org.provider_session_only
+        log.info(
+            "Institution verify claim linked",
+            user_id=current_user["id"],
+            school_id=org.id,
+            account_type=account_type,
+        )
+        return ResponseModel(
+            data=org.model_dump(by_alias=True),
+            message="Admin workspace linked. Verification remains pending until proof is reviewed.",
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.error("Institution verify claim failed", user_id=current_user["id"], error=str(exc))
+        return ResponseModel(
+            success=False,
+            message="Could not create the institution workspace.",
+            data=None,
+        )
 
 
 # ─────────────────────────────────────────────────────────────
@@ -440,11 +902,11 @@ async def get_institution_summary(
             active_programmes=len(programmes),
             domains_accessible=domains_accessible,
         )
-        return ResponseModel(data=summary.model_dump())
+        return ResponseModel(data=summary.model_dump(by_alias=True))
     except Exception as exc:  # noqa: BLE001
         log.error("institutions summary failed", error=str(exc))
         summary = InstitutionSummary(institution_name="", institution_code=institution_id)
-        return ResponseModel(data=summary.model_dump())
+        return ResponseModel(data=summary.model_dump(by_alias=True))
 
 
 @router.get("/{institution_id}/programme-demand", response_model=ResponseModel)
@@ -495,7 +957,7 @@ async def get_programme_demand(
                     domain_overflow=(len(links) - 6) if len(links) > 6 else None,
                 )
             )
-        return ResponseModel(data=[r.model_dump() for r in rows])
+        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions programme_demand failed", error=str(exc))
         return ResponseModel(data=[])
@@ -512,6 +974,7 @@ async def get_domain_ranking(
     postings_per_month stays 0; bar_ratio comes from the feeder count."""
     try:
         programmes = _school_programmes(institution_id, current_user, cap=1000)
+        rank_lens = _RANK_LENS[scope]
         prog_ids = [p["id"] for p in programmes]
         pd_rows = _programme_domain_rows(prog_ids)
         # Feeder count + best in_demand_score per domain.
@@ -535,18 +998,33 @@ async def get_domain_ranking(
             key=lambda kv: (kv[1], demand.get(kv[0], 0.0)),
             reverse=True,
         )[:50]
-        rows = [
-            DomainRankItem(
-                rank=i + 1,
-                domain_id=(dmap.get(did, {}).get("domain_key") or did),
-                domain_name=(dmap.get(did, {}).get("name") or "—"),
-                route_note=f"{n} programme(s) feed this domain",
-                postings_per_month=0,
-                bar_ratio=round(n / max_feeders, 3) if max_feeders else None,
+        rows = []
+        for i, (did, n) in enumerate(ranked):
+            latest = _latest_demand(did, rank_lens)
+            postings = int(latest.get("postings_count") or 0)
+            rows.append(
+                DomainRankItem(
+                    rank=i + 1,
+                    domain_id=(dmap.get(did, {}).get("domain_key") or did),
+                    domain_name=(dmap.get(did, {}).get("name") or "—"),
+                    route_note=f"{n} programme(s) feed this domain",
+                    postings_per_month=postings,
+                    bar_ratio=round(n / max_feeders, 3) if max_feeders else None,
+                    trend_pct=latest.get("postings_yoy"),
+                    trend_direction=(
+                        "up"
+                        if (latest.get("postings_yoy") or 0) > 0
+                        else "down"
+                        if (latest.get("postings_yoy") or 0) < 0
+                        else "flat"
+                    ) if latest else None,
+                    value_band=latest.get("value_band"),
+                    demand_band=latest.get("demand_band"),
+                    quadrant=latest.get("quadrant"),
+                    interpretation=latest.get("interpretation") or latest.get("plain_label"),
+                )
             )
-            for i, (did, n) in enumerate(ranked)
-        ]
-        return ResponseModel(data=[r.model_dump() for r in rows])
+        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions domain_ranking failed", error=str(exc))
         return ResponseModel(data=[])
@@ -560,7 +1038,7 @@ async def get_alerts(
     """list[IntelligenceAlert] — empty until ingestion."""
     # TODO(institutions): surface gaps / drift / opportunity signals
     rows: List[IntelligenceAlert] = []
-    return ResponseModel(data=[r.model_dump() for r in rows])
+    return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
 
 
 @router.get("/{institution_id}/skills-gap", response_model=ResponseModel)
@@ -615,7 +1093,7 @@ async def get_skills_gap(
                 )
                 if len(rows) >= 100:
                     break
-        return ResponseModel(data=[r.model_dump() for r in rows])
+        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions skills_gap failed", error=str(exc))
         return ResponseModel(data=[])
@@ -644,15 +1122,34 @@ async def get_role_demand(
             .limit(200)
             .execute()
         )
-        rows = [
-            RoleDemandRow(
-                role_id=r.get("role_key") or "",
-                role_name=r.get("role_name") or "",
-                domain_name=(dmap.get(r.get("domain_id"), {}).get("name")),
+        rows = []
+        for r in (rres.data or []):
+            role_key = r.get("role_key") or ""
+            local = _latest_role_demand(role_key, "ng_local")
+            global_row = _latest_role_demand(role_key, "global")
+            remote = _latest_role_demand(role_key, "ng_remote")
+            primary = local or remote or global_row or {}
+            rows.append(
+                RoleDemandRow(
+                    role_id=role_key,
+                    role_name=r.get("role_name") or "",
+                    domain_name=(dmap.get(r.get("domain_id"), {}).get("name")),
+                    ng_postings=local.get("postings_count"),
+                    global_postings=global_row.get("postings_count"),
+                    remote_pct=remote.get("remote_pct") or local.get("remote_pct"),
+                    salary_min=primary.get("salary_min"),
+                    salary_max=primary.get("salary_max"),
+                    trend_pct=primary.get("trend_pct") or primary.get("postings_yoy"),
+                    rank_lens="nigerian" if local else "remote" if remote else "global" if global_row else None,
+                    value_band=primary.get("value_band"),
+                    demand_band=primary.get("demand_band"),
+                    quadrant=primary.get("quadrant"),
+                    interpretation=primary.get("interpretation"),
+                    top_employers=primary.get("top_employers") or [],
+                    top_certifications=primary.get("top_certs") or [],
+                )
             )
-            for r in (rres.data or [])
-        ]
-        return ResponseModel(data=[r.model_dump() for r in rows])
+        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions role_demand failed", error=str(exc))
         return ResponseModel(data=[])
@@ -765,7 +1262,7 @@ async def get_peers(
             )
         # Strongest coverage first.
         rows.sort(key=lambda r: r.domains_accessible, reverse=True)
-        return ResponseModel(data=[r.model_dump() for r in rows])
+        return ResponseModel(data=[r.model_dump(by_alias=True) for r in rows])
     except Exception as exc:  # noqa: BLE001
         log.error("institutions peers failed", error=str(exc))
         return ResponseModel(data=[])
@@ -794,7 +1291,7 @@ async def get_affiliation_stats(
         below_threshold=True,
         school_code="",
     )
-    return ResponseModel(data=stats.model_dump())
+    return ResponseModel(data=stats.model_dump(by_alias=True))
 
 
 # ─────────────────────────────────────────────────────────────

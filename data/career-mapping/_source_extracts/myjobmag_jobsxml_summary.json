@@ -1,0 +1,37 @@
+{
+  "items": 100,
+  "fields": [
+    "description",
+    "guid",
+    "industry",
+    "link",
+    "pubDate",
+    "title"
+  ],
+  "sample": [
+    {
+      "title": "Technical Superintendent at Boskalis",
+      "industry": "Engineering / Technical",
+      "link": "https://www.myjobmag.com/jobs/technical-superintendent-at-boskalis-5",
+      "guid": "https://www.myjobmag.com/jobs/technical-superintendent-at-boskalis-5",
+      "pubDate": "Tue, 14 Jul 2026 19:57:21 GMT",
+      "description": "Boskalis is a leading global services provider operating in the dredging, maritime infrastructure and maritime services sectors. The company provides creative and innovative all-round solutions to infrastructural challenges in the maritime, coastal and delta regions of the world. With core activities such as coastal defense, riverbank protection and land reclamation Boskalis is able to provide adaptive and mitigating solutions to combat the effects of climate change, such as extreme weather conditions and rising sea levels, as well as delivering solutions for the increasing need for space in coastal and delta regions across the world. The company facilitates the development of offshore energy infrastructure, including renewable wind energy and is active in the construction and maintenance of ports, waterways, access channels and civil infrastructure. In addition, Boskalis is a global marine salvage expert and provides terminal services at various locations worldwide. With a versatile fleet of more than 500 vessels and floating equipment and over 11,000 employees, Boskalis is creating new horizons around the world."
+    },
+    {
+      "title": "Latest Jobs at CapitalSage Technology Limited",
+      "industry": "Banking / Financial Services",
+      "link": "https://www.myjobmag.com/jobs/senior-procurement-manager-at-capitalsage-technology-limited",
+      "guid": "https://www.myjobmag.com/jobs/senior-procurement-manager-at-capitalsage-technology-limited",
+      "pubDate": "Tue, 14 Jul 2026 19:55:08 GMT",
+      "description": "Located in the most populous country in the most diverse continent, we have come to realise that conventional financial institutions are handicapped in creating sustainable value for the present generation and the next."
+    },
+    {
+      "title": "Associate Manager-QA (External Manufacturing)  at Shalina Healthcare",
+      "industry": "NGO / Non-Profit Associations",
+      "link": "https://www.myjobmag.com/jobs/associate-manager-qa-external-manufacturing-at-shalina-healthcare",
+      "guid": "https://www.myjobmag.com/jobs/associate-manager-qa-external-manufacturing-at-shalina-healthcare",
+      "pubDate": "Tue, 14 Jul 2026 19:53:44 GMT",
+      "description": "Shalina Healthcare is a market leader in making quality healthcare products affordable and available across Africa. We achieve this by sourcing from WHO-approved production facilities in India and China and by focusing on our first-class distribution expertise. \n\nShalina Healthcare is privately owned and part of the Shalina Group. We have been operating in Africa for more than thirty years. The Shalina Group is headquartered in Dubai and we have operating offices in Nigeria, Zambia, The Democratic Republic of Congo, Angola, Ghana, Republic of South Sudan, Kenya, Cameroon, Central African Republic, India and China. We employ over one thousand people worldwide. Shalina Group&rsquo;s second business vertical is Shalina Resources, a minerals company located in Southern DRC. \n\nShalina Healthcare is a market leader and we offer a wide basket of more than two hundred and fifty products. We participate in both the prescription and over-the-counter categories in a broad range of therapeutic groups, including anti-malarials, antibiotics, anti-inflammatory and nutrition. Our range includes both generic and branded generic products. Shalina Healthcare also offers a range of consumer products in the hygiene segment, most notable with our brand Germol. \n\nOur reputation as reliable manufacturers and distributors of healthcare products is reinforced every time we launch a new product into the market. It may be the first time the drug has been launched in the remote regions that we serve and we support this with regular continuing medical education campaigns for the doctors and nurses. \n\nOver the last thirty years, Shalina's reputation as a quality healthcare provider in Africa has been well accepted by the medical community, who has no hesitation in prescribing Shalina products to their patients. We work closely with the local communities to help people live longer and healthier lives. None of this would be possible without the immense contribution of our dedicated employees."
+    }
+  ]
+}

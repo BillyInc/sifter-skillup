@@ -353,7 +353,7 @@ export default function CareerProfileScreen() {
             </View>
             <Text style={[styles.subtle, { color: colors.textSoft }]}>
               Your gamified domain tracks, levels and verifiable portfolio are
-              coming soon.
+              locked until the learning layer opens.
             </Text>
           </TouchableOpacity>
         </Section>

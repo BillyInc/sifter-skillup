@@ -1,7 +1,7 @@
 /**
  * TrendsScreen — demand trends over time for the institution's domains.
  * Calls adminData.getDomainRanking(scope) to show domain demand data, with
- * ScopeToggle for Nigerian/Global/Remote scopes.
+ * ScopeToggle for NG local/Global/NG remote scopes.
  */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";

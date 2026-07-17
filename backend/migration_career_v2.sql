@@ -170,11 +170,25 @@ ALTER TABLE skillup_dev.users
 CREATE TABLE IF NOT EXISTS skillup_dev.saved_items (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES skillup_dev.users(id) ON DELETE CASCADE,
-    entity_type TEXT CHECK (entity_type IN ('programme', 'domain', 'role', 'opportunity', 'organisation', 'elite_pathway')),
+    entity_type TEXT CHECK (entity_type IN ('programme', 'school', 'domain', 'subgroup', 'role', 'comparison', 'opportunity', 'organisation', 'elite_pathway')),
     entity_id   TEXT NOT NULL,
     label       TEXT,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'saved_items_entity_type_check'
+          AND conrelid = 'skillup_dev.saved_items'::regclass
+    ) THEN
+        ALTER TABLE skillup_dev.saved_items
+            DROP CONSTRAINT saved_items_entity_type_check;
+    END IF;
+    ALTER TABLE skillup_dev.saved_items
+        ADD CONSTRAINT saved_items_entity_type_check
+        CHECK (entity_type IN ('programme', 'school', 'domain', 'subgroup', 'role', 'comparison', 'opportunity', 'organisation', 'elite_pathway'));
+END $$;
 CREATE INDEX IF NOT EXISTS idx_saved_items_user ON skillup_dev.saved_items(user_id);
 
 CREATE TABLE IF NOT EXISTS skillup_dev.user_notes (

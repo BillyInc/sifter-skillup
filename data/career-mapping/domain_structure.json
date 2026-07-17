@@ -681,7 +681,20 @@
     "isco_submajor": "35",
     "label": "Network Support Technicians",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "perform risk analysis",
+     "manage data",
+     "tolerate stress",
+     "have computer literacy",
+     "work in an aviation team",
+     "apply technical communication skills",
+     "present reports",
+     "communicate in air traffic services",
+     "manage flight data communications programme",
+     "common aviation safety regulations",
+     "write work-related reports",
+     "use different communication channels"
+    ],
     "description": "Technicians installing and maintaining telecom and network equipment.",
     "raw_isco_label": "ICT Technicians",
     "certifications": [
@@ -736,7 +749,17 @@
     "isco_submajor": "21",
     "label": "Game Art & Animation",
     "role_count": 19,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "finish project within budget",
+     "adapt to type of media",
+     "ict software specifications",
+     "motion graphics",
+     "multimedia systems",
+     "3d lighting",
+     "holography",
+     "digital media",
+     "digital arts"
+    ],
     "description": "Build 3D models, animations and visual worlds for games",
     "raw_isco_label": "Science & Engineering Professionals",
     "certifications": [
@@ -914,7 +937,16 @@
     "isco_submajor": "25",
     "label": "Data & AI Engineers",
     "role_count": 16,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "data engineering",
+     "data mining",
+     "information extraction",
+     "visual presentation techniques",
+     "information structure",
+     "systems development life-cycle",
+     "business process modelling",
+     "digital systems"
+    ],
     "description": "Build data pipelines, AI models, and software systems",
     "raw_isco_label": "ICT Professionals",
     "certifications": [
@@ -1533,7 +1565,20 @@
     "isco_submajor": "24",
     "label": "Insurance Risk Analysts",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "credit control processes",
+     "advise on financial matters",
+     "insurance market",
+     "analyse loans",
+     "prepare credit reports",
+     "synthesise financial information",
+     "obtain financial information",
+     "examine credit ratings",
+     "risk modelling",
+     "capital modelling",
+     "stress testing",
+     "solvency analysis"
+    ],
     "description": "Analyse ratings and risk to guide insurance decisions.",
     "raw_isco_label": "Business & Administration Professionals"
    }
@@ -1822,7 +1867,20 @@
     "isco_submajor": "24",
     "label": "Financial Analysis & Compliance",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "aml/kyc",
+     "sanctions screening",
+     "regulatory compliance",
+     "financial crime monitoring",
+     "audit",
+     "risk reporting",
+     "credit assessment",
+     "financial modeling",
+     "financial statement analysis",
+     "forecasting",
+     "valuation",
+     "excel"
+    ],
     "description": "Analysts assessing finances and enforcing regulatory compliance.",
     "raw_isco_label": "Business & Administration Professionals",
     "certifications": [
@@ -3578,7 +3636,13 @@
     "isco_submajor": "31",
     "label": "Plant & Robot Operators",
     "role_count": 6,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "petroleum",
+     "natural gas",
+     "perform risk analysis",
+     "robotic components",
+     "maintain control systems for automated equipment"
+    ],
     "description": "Run control rooms, PLC/SCADA systems, and industrial robots",
     "raw_isco_label": "Science & Engineering Technicians",
     "certifications": [
@@ -3595,7 +3659,20 @@
     "isco_submajor": "21",
     "label": "Automation & Control Engineers",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "hmi development",
+     "commissioning",
+     "industrial networks (profibus/ethernet-ip)",
+     "control system design",
+     "plc programming",
+     "scada configuration",
+     "closed-loop control design",
+     "safety instrumented systems",
+     "instrumentation",
+     "functional testing",
+     "process control tuning",
+     "dcs/plc"
+    ],
     "description": "Design automation and control systems for factories",
     "raw_isco_label": "Science & Engineering Professionals",
     "certifications": [
@@ -3855,7 +3932,20 @@
     "isco_submajor": "13",
     "label": "Healthcare Facility Managers",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "advise policy makers in healthcare",
+     "manage budgets",
+     "manage health and safety standards",
+     "healthcare administration",
+     "budgetary principles",
+     "keep task records",
+     "set quality assurance objectives",
+     "implement policy in healthcare practices",
+     "delegate emergency care",
+     "manage healthcare staff",
+     "health care system",
+     "multi-professional cooperation in health care"
+    ],
     "description": "Run hospitals and manage clinical information systems.",
     "raw_isco_label": "Production & Specialised Services Mgmt",
     "certifications": [
@@ -4077,7 +4167,20 @@
     "isco_submajor": "32",
     "label": "Pharmacy Support Staff",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "record data from biomedical tests",
+     "clinical reports",
+     "apply good clinical practices",
+     "evidence-based approach in general practice",
+     "maintain treatment records",
+     "clinical science",
+     "manage healthcare users' data",
+     "perform clinical coding procedures",
+     "medical studies",
+     "conduct health related research",
+     "professional documentation in health care",
+     "maintain pharmaceutical records"
+    ],
     "description": "Assist dispensing, clinical trials, and pharmacy operations.",
     "raw_isco_label": "Health Associate Professionals"
    }
@@ -4158,7 +4261,17 @@
     "isco_submajor": "21",
     "label": "Epidemiology & Health Data",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "epidemiological methods",
+     "r/sas",
+     "statistical analysis",
+     "clinical trial design",
+     "study design",
+     "population health data analysis",
+     "disease surveillance",
+     "outbreak investigation",
+     "biostatistics"
+    ],
     "description": "Scientists tracking diseases and analysing health statistics.",
     "raw_isco_label": "Science & Engineering Professionals"
    }
@@ -5128,7 +5241,15 @@
     "isco_submajor": "24",
     "label": "Brand & Content Specialists",
     "role_count": 32,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "advertising techniques",
+     "product comprehension",
+     "implement marketing strategies",
+     "manage staff",
+     "communication principles",
+     "copyright legislation",
+     "identify customer's needs"
+    ],
     "description": "Creatives and analysts building brands, campaigns and customer engagement.",
     "raw_isco_label": "Business & Administration Professionals",
     "certifications": [
@@ -5622,7 +5743,12 @@
     "isco_submajor": "43",
     "label": "Transport & Cargo Coordinators",
     "role_count": 26,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "vessel traffic services",
+     "types of maritime vessels",
+     "apply company policies",
+     "communicate verbal instructions"
+    ],
     "description": "Schedule freight, ships, rail, and cargo movements",
     "raw_isco_label": "Numerical & Recording Clerks"
    },
@@ -5893,7 +6019,14 @@
     "isco_submajor": "33",
     "label": "Buyers, Traders & Brokers",
     "role_count": 17,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "negotiate price",
+     "track price trends",
+     "international import export regulations",
+     "embargo regulations",
+     "negotiate with stakeholders",
+     "manage budgets"
+    ],
     "description": "Purchase goods and trade commodities, freight and imports.",
     "raw_isco_label": "Business & Admin Associates",
     "certifications": [
@@ -6237,7 +6370,20 @@
     "isco_submajor": "33",
     "label": "Legal Records & Admin",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "procedural law",
+     "manage personnel agenda",
+     "legal department processes",
+     "perform office routine activities",
+     "perform clerical duties",
+     "communicate by telephone",
+     "meet deadlines for preparing legal cases",
+     "register death",
+     "officiate weddings",
+     "review civil documentation",
+     "act discreetly",
+     "check official documents"
+    ],
     "description": "Register records and support legal offices administratively",
     "raw_isco_label": "Business & Admin Associates",
     "certifications": [
@@ -6277,7 +6423,14 @@
     "isco_submajor": "33",
     "label": "Inspectors & Enforcement Officers",
     "role_count": 22,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "respond to enquiries",
+     "check official documents",
+     "undertake inspections",
+     "conduct research interview",
+     "protect client interests",
+     "apply technical communication skills"
+    ],
     "description": "Inspect goods, borders, and enforce laws and taxes",
     "raw_isco_label": "Business & Admin Associates",
     "certifications": [
@@ -6294,7 +6447,15 @@
     "isco_submajor": "24",
     "label": "Policy & Government Officers",
     "role_count": 19,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "liaise with local authorities",
+     "maintain relations with local representatives",
+     "advise on legislative acts",
+     "scientific research methodology",
+     "project management principles",
+     "establish collaborative relations",
+     "international business"
+    ],
     "description": "Shape public policy, programmes, and international relations",
     "raw_isco_label": "Business & Administration Professionals"
    },
@@ -6526,7 +6687,20 @@
     "isco_submajor": "26",
     "label": "Immigration Lawyers & Advocates",
     "role_count": 4,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "speak different languages",
+     "establish collaborative relations",
+     "conduct research interview",
+     "investigate human rights violations",
+     "scientific research methodology",
+     "advise on legal decisions",
+     "promote human rights implementation",
+     "facilitate official agreement",
+     "promote social awareness",
+     "support victims of human rights violations",
+     "international human rights law",
+     "analyse legal evidence"
+    ],
     "description": "Lawyers and rights officers representing migrants and asylum seekers",
     "raw_isco_label": "Legal, Social & Cultural Professionals"
    },
@@ -6534,7 +6708,20 @@
     "isco_submajor": "34",
     "label": "Legal Caseworkers & Advisers",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "assist judge",
+     "comply with legal regulations",
+     "observe confidentiality",
+     "send summons",
+     "record court procedures",
+     "brief court officials",
+     "revise legal documents",
+     "handle case evidence",
+     "study court hearings",
+     "meet deadlines for preparing legal cases",
+     "legal department processes",
+     "use word processing software"
+    ],
     "description": "Advisers, clerks and assistants handling immigration casework",
     "raw_isco_label": "Legal, Social & Cultural Associates",
     "certifications": [
@@ -6839,7 +7026,11 @@
     "isco_submajor": "23",
     "label": "Vocational & Skills Instructors",
     "role_count": 30,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "adapt teaching to student's capabilities",
+     "assess students",
+     "customer service"
+    ],
     "description": "Teach trade, technical and applied skills to learners.",
     "raw_isco_label": "Teaching Professionals",
     "certifications": [
@@ -6962,7 +7153,16 @@
     "isco_submajor": "21",
     "label": "Chemistry & Environmental Science",
     "role_count": 29,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "manage research data",
+     "statistics",
+     "habitat restoration",
+     "physics",
+     "analytical chemistry",
+     "environmental policy",
+     "chemistry",
+     "ecology"
+    ],
     "description": "Research chemistry, ecology, earth, and environmental sciences.",
     "raw_isco_label": "Science & Engineering Professionals",
     "certifications": [
@@ -7279,7 +7479,15 @@
     "isco_submajor": "21",
     "label": "Digital & Product Design",
     "role_count": 25,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "monitor developments in technology used for design",
+     "monitor sociological trends",
+     "copyright legislation",
+     "finish project within budget",
+     "ict software specifications",
+     "multimedia systems",
+     "digital media"
+    ],
     "description": "Design graphics, interfaces, fashion and physical products",
     "raw_isco_label": "Science & Engineering Professionals",
     "certifications": [
@@ -7338,7 +7546,19 @@
     "isco_submajor": "34",
     "label": "Photography",
     "role_count": 1,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "set up photographic equipment",
+     "prepare personal work environment",
+     "operate a camera",
+     "set up cameras",
+     "select photos",
+     "create digital images",
+     "determine image composition",
+     "maintain photographic equipment",
+     "select photographic equipment",
+     "develop visual elements",
+     "select auxiliary equipment for photographic work"
+    ],
     "description": "Capture images for news, media and commercial work",
     "raw_isco_label": "Legal, Social & Cultural Associates"
    }
@@ -7629,7 +7849,20 @@
     "isco_submajor": "34",
     "label": "Art Handlers & Preservers",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "digitization",
+     "digital curation",
+     "data extraction, transformation and loading tools",
+     "business intelligence",
+     "database management systems",
+     "database development tools",
+     "resource description framework query language",
+     "digital data processing",
+     "data models",
+     "manage ict data classification",
+     "query languages",
+     "database"
+    ],
     "description": "Handle artworks, taxidermy, and digital archive support",
     "raw_isco_label": "Legal, Social & Cultural Associates"
    }
@@ -7706,7 +7939,20 @@
     "isco_submajor": "21",
     "label": "Technical Game Audio Designers",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "audio middleware (wwise/fmod)",
+     "sound effect creation and foley",
+     "implementation in game engines (unity/unreal)",
+     "music and ambience integration",
+     "mixing for interactive systems",
+     "interactive and adaptive audio design",
+     "audio systems and dsp design",
+     "middleware integration (wwise/fmod)",
+     "runtime performance and voice budgeting",
+     "debugging audio in engine",
+     "procedural and generative audio",
+     "scripting for audio (c#/blueprint/python)"
+    ],
     "description": "Engineer interactive and technical audio for video games.",
     "raw_isco_label": "Science & Engineering Professionals",
     "certifications": [
@@ -7773,7 +8019,20 @@
     "isco_submajor": "34",
     "label": "Fashion & Visual Merchandisers",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "change window displays",
+     "communicate on merchandise visual display",
+     "coach team on visual merchandising",
+     "develop store design",
+     "conduct research on trends in design",
+     "assemble visual displays",
+     "execute visual presentation changes",
+     "sales strategies",
+     "carry out cross merchandising",
+     "carry out sales analysis",
+     "negotiate terms with suppliers",
+     "plan retail space"
+    ],
     "description": "Style outfits and design product displays for brands.",
     "raw_isco_label": "Legal, Social & Cultural Associates"
    },
@@ -7781,7 +8040,20 @@
     "isco_submajor": "51",
     "label": "Personal Stylists & Makeup Artists",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "cosmetics",
+     "skin types",
+     "make-up techniques",
+     "test make-up",
+     "art history",
+     "follow work schedule",
+     "ensure continuous styling of artists",
+     "make up performing artists",
+     "perform quick make-up changeovers",
+     "monitor sociological trends",
+     "perform quality control of design during a run",
+     "communicate during show"
+    ],
     "description": "Create personal looks with styling, hair and makeup.",
     "raw_isco_label": "Personal Service Workers"
    }
@@ -7803,7 +8075,14 @@
     "isco_submajor": "33",
     "label": "Inspection & Enforcement Officers",
     "role_count": 23,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "respond to enquiries",
+     "check official documents",
+     "undertake inspections",
+     "conduct research interview",
+     "protect client interests",
+     "apply technical communication skills"
+    ],
     "description": "Inspect, investigate, and enforce customs, tax, and safety rules.",
     "raw_isco_label": "Business & Admin Associates"
    },
@@ -8119,7 +8398,18 @@
     "isco_submajor": "26",
     "label": "Curators & Archivists",
     "role_count": 11,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "develop solutions to information issues",
+     "data quality assessment",
+     "manage digital libraries",
+     "manage budgets",
+     "create solutions to problems",
+     "provide project information on exhibitions",
+     "art history",
+     "coordinate operational activities",
+     "establish high standards of collections care",
+     "work with cultural venue specialists"
+    ],
     "description": "Manage collections, exhibitions, libraries and archives",
     "raw_isco_label": "Legal, Social & Cultural Professionals",
     "certifications": [
@@ -8150,7 +8440,20 @@
     "isco_submajor": "34",
     "label": "Collection Handling Support",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "digital curation",
+     "data extraction, transformation and loading tools",
+     "business intelligence",
+     "database management systems",
+     "database development tools",
+     "resource description framework query language",
+     "digital data processing",
+     "data models",
+     "manage ict data classification",
+     "query languages",
+     "database",
+     "handle artworks"
+    ],
     "description": "Handle artefacts and support archive and preservation work",
     "raw_isco_label": "Legal, Social & Cultural Associates"
    }
@@ -8196,7 +8499,13 @@
     "isco_submajor": "54",
     "label": "Security & Emergency Officers",
     "role_count": 28,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "first aid",
+     "fire safety regulations",
+     "restrain individuals",
+     "provide first aid",
+     "illegal substances"
+    ],
     "description": "Guard people, property, and respond to emergencies",
     "raw_isco_label": "Protective Services",
     "certifications": [
@@ -8452,7 +8761,14 @@
     "isco_submajor": "21",
     "label": "Forensic & Physical Science",
     "role_count": 1,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "trace evidence analysis",
+     "toxicology",
+     "dna profiling",
+     "laboratory instrumentation",
+     "evidence documentation",
+     "chain of custody"
+    ],
     "description": "Forensic scientists and physicists analysing evidence and phenomena",
     "raw_isco_label": "Science & Engineering Professionals"
    },
@@ -8460,7 +8776,14 @@
     "isco_submajor": "22",
     "label": "Forensic Medicine",
     "role_count": 1,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "cause-of-death determination",
+     "court testimony",
+     "medico-legal reporting",
+     "autopsy",
+     "histopathology",
+     "toxicological interpretation"
+    ],
     "description": "Pathologists and doctors examining bodies and medical evidence",
     "raw_isco_label": "Health Professionals"
    }
@@ -8632,7 +8955,20 @@
     "isco_submajor": "26",
     "label": "Criminologists & Probation Officers",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "scientific literature",
+     "anthropology",
+     "research design",
+     "criminal law",
+     "forensic psychiatry",
+     "sociology",
+     "scientific research methodology",
+     "draft scientific or academic papers and technical documentation",
+     "psychology",
+     "statistics",
+     "mathematics",
+     "rehabilitation planning"
+    ],
     "description": "Study crime and supervise offender rehabilitation",
     "raw_isco_label": "Legal, Social & Cultural Professionals",
     "certifications": [
@@ -9632,7 +9968,19 @@
     "isco_submajor": "42",
     "label": "Front Desk & Guest Services",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "reservation handling",
+     "billing",
+     "upselling",
+     "pms operation",
+     "guest check-in/out",
+     "guest enquiries",
+     "guest services",
+     "booking arrangements",
+     "itinerary planning",
+     "local recommendations",
+     "request fulfilment"
+    ],
     "description": "Receptionists and concierges welcoming and assisting hotel guests",
     "raw_isco_label": "Customer Services Clerks"
    }
@@ -9753,7 +10101,20 @@
     "isco_submajor": "13",
     "label": "Oil & Gas Production Managers",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "deal with pressure from unexpected circumstances",
+     "inform on workplace safety standards",
+     "write production reports",
+     "gas market",
+     "manage staff",
+     "ensure compliance with environmental legislation",
+     "ensure compliance with safety legislation",
+     "leadership principles",
+     "manage heavy equipment",
+     "natural gas",
+     "fuel gas",
+     "emergency response"
+    ],
     "description": "Manage offshore installations and production output",
     "raw_isco_label": "Production & Specialised Services Mgmt"
    }
@@ -10073,7 +10434,13 @@
     "isco_submajor": "25",
     "label": "Health Informatics & Development",
     "role_count": 5,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "hl7/fhir",
+     "data governance",
+     "clinical workflows",
+     "health information systems",
+     "health data apis"
+    ],
     "description": "Build health data systems, records, and mHealth apps.",
     "raw_isco_label": "ICT Professionals",
     "certifications": [
@@ -10097,7 +10464,20 @@
     "isco_submajor": "13",
     "label": "Clinical Informatics Management",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "advise policy makers in healthcare",
+     "manage budgets",
+     "manage health and safety standards",
+     "healthcare administration",
+     "budgetary principles",
+     "keep task records",
+     "set quality assurance objectives",
+     "implement policy in healthcare practices",
+     "delegate emergency care",
+     "manage healthcare staff",
+     "health care system",
+     "multi-professional cooperation in health care"
+    ],
     "description": "Lead healthcare institutions and clinical informatics teams.",
     "raw_isco_label": "Production & Specialised Services Mgmt"
    }
@@ -10368,7 +10748,13 @@
     "isco_submajor": "42",
     "label": "Front Desk & Call Handling",
     "role_count": 16,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "guarantee customer satisfaction",
+     "perform multiple tasks at the same time",
+     "provide tourism related information",
+     "maintain customer service",
+     "information confidentiality"
+    ],
     "description": "Answer calls, greet visitors and assist customers",
     "raw_isco_label": "Customer Services Clerks",
     "certifications": [
@@ -10392,7 +10778,20 @@
     "isco_submajor": "33",
     "label": "Medical Office Support",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "manage budgets",
+     "type on electronic devices",
+     "medical informatics",
+     "clinical reports",
+     "send samples to laboratory",
+     "manage personnel agenda",
+     "maintain healthcare user data confidentiality",
+     "collect healthcare user's general data",
+     "use spreadsheets software",
+     "administrative tasks in a medical environment",
+     "answer patients' questions",
+     "use communication techniques"
+    ],
     "description": "Run medical practice admin, records and transcription",
     "raw_isco_label": "Business & Admin Associates"
    }
@@ -11150,7 +11549,20 @@
     "isco_submajor": "52",
     "label": "Quick-Service Crew",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "plan shifts of employees",
+     "supervise crew",
+     "manage staff",
+     "greet guests",
+     "monitor stock level",
+     "maintain personal hygiene standards",
+     "supervise the work of staff on different shifts",
+     "handle customer complaints",
+     "maintain food specifications",
+     "clean kitchen equipment",
+     "follow hygienic procedures during food processing",
+     "food allergies"
+    ],
     "description": "Food service workers and team leaders in fast-food outlets",
     "raw_isco_label": "Sales Workers"
    }
@@ -11449,7 +11861,20 @@
     "isco_submajor": "72",
     "label": "Farm Machinery Technicians",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "apply health and safety standards",
+     "diagnose fuel systems",
+     "health and safety regulations",
+     "inspect machinery",
+     "principles of mechanical engineering",
+     "assemble machines",
+     "hydraulics",
+     "analyse ict system",
+     "solve ict system problems",
+     "repair ict devices",
+     "debug software",
+     "maintain mechanical equipment"
+    ],
     "description": "Repair and maintain agricultural and forestry machinery.",
     "raw_isco_label": "Metal & Machinery Trades"
    },
@@ -11457,7 +11882,20 @@
     "isco_submajor": "83",
     "label": "Farm Machinery Operators",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "monitor work site",
+     "soil structure",
+     "agronomy",
+     "supervise equipment",
+     "supervise staff",
+     "crop production principles",
+     "pest control in plants",
+     "advise client on technical possibilities",
+     "organise labour",
+     "evaluate employees work",
+     "variety of botanicals",
+     "programme work according to incoming orders"
+    ],
     "description": "Operate and supervise land-based and forestry equipment.",
     "raw_isco_label": "Drivers & Mobile-Plant Operators",
     "certifications": [
@@ -11474,7 +11912,19 @@
     "isco_submajor": "61",
     "label": "Crop & Mixed Farmers",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "crop planting",
+     "pest and weed control",
+     "farm record-keeping",
+     "soil preparation",
+     "irrigation",
+     "farm planning",
+     "feeding and breeding",
+     "crop husbandry",
+     "land management",
+     "animal husbandry",
+     "produce marketing"
+    ],
     "description": "Grow crops and raise mixed crop-and-livestock farms.",
     "raw_isco_label": "Agricultural Workers",
     "certifications": [
@@ -12599,7 +13049,13 @@
     "isco_submajor": "81",
     "label": "Fabric Machine Operation",
     "role_count": 34,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "manufacture wearing apparel products",
+     "use textile finishing machine technologies",
+     "tend spinning machines",
+     "textile techniques",
+     "evaluate textile characteristics"
+    ],
     "description": "Run spinning, knitting, braiding and laundry machines",
     "raw_isco_label": "Plant & Machine Operators"
    },
@@ -12639,7 +13095,20 @@
     "isco_submajor": "75",
     "label": "Tailoring & Inspection",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "database quality standards",
+     "challenging issues in the textile industry",
+     "oversee quality control",
+     "textile measurement",
+     "define data quality criteria",
+     "textile technologies",
+     "data quality assessment",
+     "health and safety in the textile industry",
+     "fabric measuring and cutting",
+     "fabric/interfacing selection",
+     "garment fitting and alteration",
+     "bespoke garment construction"
+    ],
     "description": "Tailor garments and inspect finished textile goods",
     "raw_isco_label": "Food/Wood/Garment Trades",
     "certifications": [
@@ -12867,7 +13336,12 @@
     "isco_submajor": "82",
     "label": "Product & Equipment Assembly",
     "role_count": 36,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "assemble metal parts",
+     "read standard blueprints",
+     "monitor machine operations",
+     "electricity"
+    ],
     "description": "Assemblers building vehicles, electronics, machinery and devices",
     "raw_isco_label": "Assemblers",
     "certifications": [
@@ -12891,7 +13365,20 @@
     "isco_submajor": "81",
     "label": "Packaging Machine Operation",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "line quality inspection",
+     "fill-weight calibration",
+     "jam clearing",
+     "machine setup and changeover",
+     "seal/closure integrity checks",
+     "product filling and dosing",
+     "reel/ribbon changeover",
+     "label applicator setup",
+     "line speed control",
+     "barcode and print verification",
+     "label alignment adjustment",
+     "quality checking"
+    ],
     "description": "Operators running cartoning, labelling and filling machines",
     "raw_isco_label": "Plant & Machine Operators"
    }
@@ -13193,7 +13680,20 @@
     "isco_submajor": "61",
     "label": "Farm & Vineyard Managers",
     "role_count": 19,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "agronomical production principles",
+     "ecology",
+     "plant harvest methods",
+     "health and safety regulations",
+     "agricultural business management",
+     "winery production process",
+     "supervise hygiene procedures in agricultural settings",
+     "quality criteria for storage facilities",
+     "project management principles",
+     "greenhouse types",
+     "pruning techniques",
+     "perform pest control"
+    ],
     "description": "Lead crop, orchard, vineyard, and landscape production",
     "raw_isco_label": "Agricultural Workers",
     "certifications": [
@@ -13685,7 +14185,20 @@
     "isco_submajor": "33",
     "label": "Medical Office Administrators",
     "role_count": 4,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "manage budgets",
+     "type on electronic devices",
+     "clinical reports",
+     "send samples to laboratory",
+     "manage personnel agenda",
+     "collect healthcare user's general data",
+     "use spreadsheets software",
+     "use communication techniques",
+     "database",
+     "archive healthcare users' records",
+     "transcribe medical data",
+     "comply with legislation related to health care"
+    ],
     "description": "Secretaries and managers running medical practice administration.",
     "raw_isco_label": "Business & Admin Associates",
     "certifications": [
@@ -13709,7 +14222,20 @@
     "isco_submajor": "42",
     "label": "Medical Reception & Front Desk",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "health care system",
+     "contribute to continuity of health care",
+     "manage healthcare users' data",
+     "health care legislation",
+     "veterinary terminology",
+     "animal welfare legislation",
+     "signs of animal illness",
+     "handle customer complaints",
+     "animal welfare",
+     "biosecurity related to animals",
+     "safe work practices in a veterinary setting",
+     "process booking"
+    ],
     "description": "Receptionists greeting patients at medical and veterinary clinics.",
     "raw_isco_label": "Customer Services Clerks"
    }
@@ -13873,7 +14399,20 @@
     "isco_submajor": "13",
     "label": "Nursery Leadership",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "promote the safeguarding of young people",
+     "coordinate educational programmes",
+     "contribute to the safeguarding of children",
+     "entertain people",
+     "provide after school care",
+     "coordinate events",
+     "apply person-centred care",
+     "pedagogy",
+     "manage budgets",
+     "curriculum objectives",
+     "assist in the organisation of school events",
+     "instructional strategies"
+    ],
     "description": "Manage childcare centres and lead nursery schools",
     "raw_isco_label": "Production & Specialised Services Mgmt"
    },
@@ -13881,7 +14420,19 @@
     "isco_submajor": "23",
     "label": "Preschool Teaching",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "early childhood curriculum design",
+     "parent communication",
+     "safeguarding",
+     "play-based learning",
+     "literacy and numeracy foundations",
+     "child development observation",
+     "lesson planning for young children",
+     "developmental assessment",
+     "classroom management",
+     "phonics instruction",
+     "social-emotional development support"
+    ],
     "description": "Teach early years and preschool learners",
     "raw_isco_label": "Teaching Professionals",
     "certifications": [
@@ -14075,7 +14626,12 @@
     "isco_submajor": "21",
     "label": "Vehicle & Powertrain Engineering",
     "role_count": 15,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "principles of mechanical engineering",
+     "computer simulation",
+     "cad software",
+     "troubleshoot"
+    ],
     "description": "Engineers designing engines, aerodynamics and vehicle performance",
     "raw_isco_label": "Science & Engineering Professionals"
    },
@@ -14382,7 +14938,20 @@
     "isco_submajor": "21",
     "label": "Automotive & Powertrain Engineers",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "energy saving potential of automated shift systems",
+     "operation of different engines",
+     "design drawings",
+     "types of vehicles",
+     "electronic test procedures",
+     "electric motors",
+     "types of fuels",
+     "principles of mechanical engineering",
+     "vehicle electrical systems",
+     "industrial engineering",
+     "hybrid vehicle architecture",
+     "manufacturing processes"
+    ],
     "description": "Engineer vehicle systems, powertrains and telecommunications hardware.",
     "raw_isco_label": "Science & Engineering Professionals"
    },
@@ -14390,7 +14959,20 @@
     "isco_submajor": "25",
     "label": "Self-Driving Software Engineers",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "develop automated migration methods",
+     "integrated development environment software",
+     "tools for software configuration management",
+     "computer programming",
+     "identify customer requirements",
+     "web services",
+     "use an application-specific interface",
+     "project management",
+     "ict debugging tools",
+     "computer vision",
+     "sensor fusion",
+     "data pipelines"
+    ],
     "description": "Build embedded, machine learning and software for autonomous systems.",
     "raw_isco_label": "ICT Professionals",
     "certifications": [
@@ -14559,7 +15141,13 @@
     "isco_submajor": "21",
     "label": "Aircraft & Aerospace Engineering",
     "role_count": 6,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "operate oxy-fuel welding torch",
+     "apply arc welding techniques",
+     "design drawings",
+     "types of metal",
+     "welding techniques"
+    ],
     "description": "Design aircraft, engines, aerodynamics, and flight tests.",
     "raw_isco_label": "Science & Engineering Professionals"
    },
@@ -14567,7 +15155,20 @@
     "isco_submajor": "31",
     "label": "Aircraft Assembly & Inspection",
     "role_count": 2,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "electrical engineering",
+     "quality assurance procedures",
+     "electronics",
+     "aircraft flight control systems",
+     "inspect quality of products",
+     "electricity",
+     "manage health and safety standards",
+     "read standard blueprints",
+     "oversee production requirements",
+     "supervise staff",
+     "analyse the need for technical resources",
+     "evaluate employees work"
+    ],
     "description": "Supervise assembly and inspect avionics and metals.",
     "raw_isco_label": "Science & Engineering Technicians",
     "certifications": [
@@ -14950,7 +15551,20 @@
     "isco_submajor": "21",
     "label": "Neuroscience & Cognitive Research",
     "role_count": 4,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "perform laboratory tests",
+     "laboratory techniques",
+     "interact professionally in research and professional environments",
+     "human anatomy",
+     "manage research data",
+     "scientific research methodology",
+     "histology",
+     "draft scientific or academic papers and technical documentation",
+     "disseminate results to the scientific community",
+     "biology",
+     "operate open source software",
+     "human physiology"
+    ],
     "description": "Scientists studying the brain, cognition and behaviour.",
     "raw_isco_label": "Science & Engineering Professionals"
    }
@@ -15035,7 +15649,13 @@
     "isco_submajor": "25",
     "label": "Quantum Software & Algorithms",
     "role_count": 5,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "mathematical optimisation",
+     "quantum algorithm design",
+     "quantum error mitigation",
+     "complexity theory",
+     "network security"
+    ],
     "description": "Build quantum software, algorithms and cryptography",
     "raw_isco_label": "ICT Professionals",
     "certifications": [
@@ -15052,7 +15672,19 @@
     "isco_submajor": "21",
     "label": "Quantum Hardware & Sensing",
     "role_count": 3,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "qubit fabrication",
+     "control electronics",
+     "cryogenic systems",
+     "signal processing",
+     "precision measurement",
+     "quantum metrology",
+     "sensor design",
+     "quantum chemistry applications",
+     "quantum optimisation",
+     "stakeholder communication",
+     "use case analysis"
+    ],
     "description": "Engineer quantum hardware, sensors and applications",
     "raw_isco_label": "Science & Engineering Professionals"
    }
@@ -15095,7 +15727,13 @@
     "isco_submajor": "21",
     "label": "XR Designers & Hardware Engineers",
     "role_count": 13,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "3d interaction design",
+     "cross-functional collaboration",
+     "storyboarding and concept sketching",
+     "spatial ux design",
+     "user-centered design"
+    ],
     "description": "Design immersive experiences and build XR hardware",
     "raw_isco_label": "Science & Engineering Professionals"
    },
@@ -15103,7 +15741,13 @@
     "isco_submajor": "25",
     "label": "AR/VR Software Developers",
     "role_count": 5,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "c# / c++ programming",
+     "real-time rendering",
+     "unreal engine",
+     "ar/vr sdks (openxr, arkit, arcore, openxr)",
+     "performance profiling and optimization"
+    ],
     "description": "Code AR, VR, and spatial computing applications",
     "raw_isco_label": "ICT Professionals",
     "certifications": [
@@ -15199,7 +15843,10 @@
     "isco_submajor": "34",
     "label": "Stage & Production Crew",
     "role_count": 31,
-    "cluster_skills": [],
+    "cluster_skills": [
+     "safeguard artistic quality of performance",
+     "draw up artistic production"
+    ],
     "description": "Lighting, prop, costume and stage technicians running shows",
     "raw_isco_label": "Legal, Social & Cultural Associates"
    }

@@ -4,8 +4,8 @@
  * by their match type (Direct → Functional → Adjacent) and ordered by the
  * in-demand signal within each tier, then a "Level Up" CTA into the learning app.
  *
- * Two tracks live behind a header tab switch: "Employment" (Track A, live) and
- * "Business" (Track B, entrepreneurship — coming soon). getProgramme currently
+ * Three tracks live behind a header tab switch: "Employment" (Track A),
+ * "Entrepreneurship" (Track B), and "Admission" (Track C). getProgramme currently
  * returns a `coming_soon` envelope, so DetailScaffold renders the graceful state
  * automatically; the populated branches below are what ship once data lands.
  */
@@ -46,7 +46,7 @@ export interface ProgrammeOverviewScreenProps {
   programmeId: string;
 }
 
-type TrackTab = "employment" | "business" | "admission";
+type TrackTab = "employment" | "entrepreneurship" | "admission";
 
 // Section order is fixed by the model: Direct → Functional → Adjacent.
 const DOMAIN_TIERS: { type: DomainMatchType; title: string }[] = [
@@ -55,8 +55,8 @@ const DOMAIN_TIERS: { type: DomainMatchType; title: string }[] = [
   { type: "adjacent", title: "Adjacent domains" },
 ];
 
-// Minimal Programme used only to satisfy the Business tab's `real` envelope —
-// TrackBBusiness ignores its `data` entirely (it's a fixed coming-soon panel).
+// Minimal Programme used only to satisfy Track B's `real` envelope.
+// TrackBEntrepreneurship ignores its `data` entirely (fixed pathway entry panel).
 const PLACEHOLDER: Programme = {
   id: "",
   name: "Programme",
@@ -124,9 +124,9 @@ export function ProgrammeOverviewScreen({
         onPress={() => setTab("employment")}
       />
       <TrackTabButton
-        label="🚀 Business"
-        active={tab === "business"}
-        onPress={() => setTab("business")}
+        label="🚀 Entrepreneurship"
+        active={tab === "entrepreneurship"}
+        onPress={() => setTab("entrepreneurship")}
       />
       <TrackTabButton
         label="🎓 Admission"
@@ -136,13 +136,13 @@ export function ProgrammeOverviewScreen({
     </View>
   );
 
-  // Track B (Business) is always coming-soon by scope, so it must render
+  // Track B (Entrepreneurship) is a designed pathway entry, so it must render
   // regardless of the programme's data state — force a `real` envelope for it.
   // Track A (Employment) honours the real getProgramme state and so shows the
   // graceful Coming Soon panel until intelligence is populated.
   // Track C (Admission) uses admissionState which has its own data envelope.
   const scaffoldState: DataState<Programme> =
-    tab === "business"
+    tab === "entrepreneurship"
       ? { status: "real", data: state.data ?? PLACEHOLDER }
       : state;
 
@@ -165,8 +165,8 @@ export function ProgrammeOverviewScreen({
             status={state.status}
             meta={state.meta}
           />
-        ) : tab === "business" ? (
-          <TrackBBusiness colors={colors} />
+        ) : tab === "entrepreneurship" ? (
+          <TrackBEntrepreneurship colors={colors} router={router} />
         ) : (
           <TrackCAdmission
             programmeId={programmeId}
@@ -292,8 +292,14 @@ function TrackAEmployment({
   );
 }
 
-/** Track B — entrepreneurship paths. Coming soon per scope (inline panel). */
-function TrackBBusiness({ colors }: { colors: ColorPalette }) {
+/** Track B — entrepreneurship as the build path beside employment. */
+function TrackBEntrepreneurship({
+  colors,
+  router,
+}: {
+  colors: ColorPalette;
+  router: Router;
+}) {
   return (
     <View
       style={[
@@ -303,15 +309,24 @@ function TrackBBusiness({ colors }: { colors: ColorPalette }) {
     >
       <Text style={styles.businessIcon}>🚀</Text>
       <Text style={[styles.businessEyebrow, { color: Brand.primaryDeep }]}>
-        BUSINESS · TRACK B
+        ENTREPRENEURSHIP · TRACK B
       </Text>
       <Text style={[styles.businessTitle, { color: colors.text }]}>
-        Entrepreneurship paths — coming soon
+        Build from this programme
       </Text>
       <Text style={[styles.businessBody, { color: colors.textSoft }]}>
-        Turn your programme into a venture: the business routes, starter
-        playbooks and funding paths are being populated. Check back shortly.
+        Employment is one path. Track B shows the ventures, creator routes,
+        service models and scalable business archetypes a field can support.
       </Text>
+      <TouchableOpacity
+        activeOpacity={0.85}
+        onPress={() => exploreNav.entrepreneurship(router)}
+        style={[styles.admissionCTA, { backgroundColor: Brand.primary }]}
+      >
+        <Text style={styles.admissionCTAText}>
+          Open entrepreneurship pathway →
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -6,7 +6,7 @@
  *  - Else on web (Platform.OS === 'web') it calls window.print(), guarded by a
  *    `typeof window !== 'undefined'` check.
  *  - Else (native) no print/file-system lib is installed, so it DEGRADES
- *    GRACEFULLY: it shows an inline "PDF export is coming soon" notice instead
+ *    GRACEFULLY: it shows an inline locked export notice instead
  *    of attempting an unavailable native print.
  */
 import React, { useRef, useState } from "react";
@@ -53,7 +53,7 @@ export function PdfExportButton({
       return;
     }
     // No expo-print / file-system lib installed — be honest on native.
-    showHint("PDF export is coming soon on mobile.");
+    showHint("PDF export is locked on mobile while the export flow is prepared.");
   };
 
   return (

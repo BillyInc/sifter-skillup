@@ -1,0 +1,136 @@
+{
+  "source_title": "ILOSTAT SDMX API Data Dissemination Web Service Reference Guide V4.1",
+  "pages_processed": 18,
+  "publication_date": "2024-04-26",
+  "available_indicators": [
+    "Employment by Sex and Age (EMP_TEMP_SEX_AGE_NB)",
+    "Employment by Sex and Economic activity (EMP_TEMP_SEX_ECO_NB)",
+    "Share of temporary employees by sex (EES_XTMP_SEX_RT)",
+    "Unemployment by Sex and Age (UNE_TUNE_SEX_AGE_NB)",
+    "Labour force participation rate",
+    "Employment-to-population ratio",
+    "Unemployment rate",
+    "Time-related underemployment",
+    "Informal employment",
+    "Working poverty",
+    "All ILOSTAT Decent Work Indicators"
+  ],
+  "country_coverage": "All ILO member countries. Country grouping extensions available (e.g., X85_COU for BRICS: Brazil, Russia, India, China, South Africa). Countries identified by REF_AREA codes.",
+  "data_structure": {
+    "base_url_production": "https://sdmx.ilo.org/rest",
+    "base_url_testing": "https://sdmx-test.ilo.org/rest",
+    "protocol": "SDMX RESTful API (partial implementation of SDMX Standards Section 7)",
+    "access_method": "HTTPS GET requests",
+    "supported_formats": [
+      "SDMX-ML Generic Data (v2.0/v2.1)",
+      "SDMX-ML Structure Specific Data (v2.1 compact)",
+      "SDMX-JSON Data (v1.0.0-wd)",
+      "SDMX-CSV Data (v1.0.0)",
+      "SDMX-ML Structure (v2.1)",
+      "SDMX-JSON Structure (v1.0)"
+    ],
+    "structural_metadata_resources": [
+      "datastructure",
+      "conceptscheme",
+      "codelist",
+      "dataflow",
+      "categoryscheme",
+      "categorisation",
+      "agencyscheme",
+      "contentconstraint"
+    ],
+    "concept_schemes": [
+      "CS_ILOSTAT (common concepts)",
+      "CS_CLASSIF_TYPE (classification dimensions)",
+      "CS_NOTE_TYPE (descriptive metadata)"
+    ],
+    "query_types": {
+      "structural_metadata": "/resource/agencyID/resourceID/version/itemID?queryStringParameters",
+      "data_queries": "/resource/flowRef/key/providerRef?queryStringParameters"
+    },
+    "data_query_parameters": [
+      "startPeriod",
+      "endPeriod",
+      "firstNObservations",
+      "lastNObservations",
+      "dimensionAtObservation",
+      "detail (serieskeysonly/dataonly/nodata/full)"
+    ],
+    "filtering": "Dot-separated dimension values with wildcarding and OR (+) operator support",
+    "content_constraints": "Actual Content Constraints (Availability) generated for each dataflow as CCA_<DF id>",
+    "key_dataflows": {
+      "employment_by_sex_age": "DF_EMP_TEMP_SEX_AGE_NB",
+      "employment_by_sex_economic_activity": "DF_EMP_TEMP_SEX_ECO_NB",
+      "unemployment_by_sex_age": "DF_UNE_TUNE_SEX_AGE_NB"
+    },
+    "annotations": [
+      "ORDER (sort/prevalence)",
+      "Is_Total (Y/N)",
+      "LAYOUT_ROW",
+      "LAYOUT_COLUMN",
+      "NAME_COMPLEMENT",
+      "FULL_NAME",
+      "NOT_DISPLAYED",
+      "DEFAULT"
+    ],
+    "observation_attributes": [
+      "Unit of measure",
+      "Unit multiplier",
+      "Currency",
+      "Time format",
+      "SOURCE",
+      "SOURCE_NOTE",
+      "INDICATOR_NOTE",
+      "CLASSIFICATION_NOTE",
+      "CURRENCY_NOTE",
+      "OBS_STATUS"
+    ],
+    "version_history": [
+      {
+        "version": "3.1",
+        "date": "2018-11-09",
+        "changes": "New Base URLs using HTTPS, Generic v2.1 default, CSV format added"
+      },
+      {
+        "version": "3.2",
+        "date": "2019-07-10",
+        "changes": "JSON for structural metadata, country groups extension"
+      },
+      {
+        "version": "3.3",
+        "date": "2020-05-01",
+        "changes": "SURVEY dimension removed, descriptive metadata reformatted"
+      },
+      {
+        "version": "4.0",
+        "date": "2021-10-01",
+        "changes": "COLLECTION dimension removed, firstNObservations/lastNObservations fully implemented"
+      },
+      {
+        "version": "4.1",
+        "date": "2024-04-26",
+        "changes": "New base URLs at sdmx.ilo.org/rest"
+      }
+    ],
+    "example_queries": [
+      "/data/ILO,DF_EMP_TEMP_SEX_AGE_NB/ALL - fetch all employment data",
+      "/data/ILO,DF_EMP_TEMP_SEX_AGE_NB/MEX+ESP.... - Mexico and Spain data",
+      "/data/ILO,DF_EMP_TEMP_SEX_AGE_NB/FRA.A..SEX_F.AGE_5YRBANDS_15-19+AGE_5YRBANDS_60-64 - France, female, specific age groups",
+      "/data/ILO,DF_EMP_TEMP_SEX_AGE_NB/X85.... - BRICS aggregate",
+      "/codelist - all available code lists",
+      "/dataflow/ILO - all dissemination dataflows (best for discovering data availability)",
+      "/categoryscheme/ILO - all categories (best for starting navigation of ILOSTAT data)"
+    ]
+  },
+  "key_insights": [
+    "ILOSTAT provides comprehensive labour statistics for all ILO member countries",
+    "API supports SDMX standard for statistical data exchange",
+    "Data available in multiple formats: XML, JSON, CSV",
+    "One dataflow defined per DSD/indicator for easy discovery",
+    "Content constraints show actual data availability per indicator",
+    "Can filter by country, sex, age, economic activity, time period",
+    "Supports time series queries with startPeriod/endPeriod",
+    "Descriptive metadata includes source notes, indicator notes, and classification notes",
+    "Old base URLs decommissioned June 2020 - must use new sdmx.ilo.org/rest endpoint"
+  ]
+}

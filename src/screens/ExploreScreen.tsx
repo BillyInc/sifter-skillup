@@ -38,10 +38,10 @@ import {
   InfoTooltip,
   CoachMark,
 } from "../components/careerIntelligence";
-import { SifterCard, PressableCard, SectionHeader } from "../components/ui";
+import { SifterButton, SifterCard, PressableCard, SectionHeader } from "../components/ui";
 import { careerData } from "../lib/careerData";
 import { exploreNav } from "../lib/exploreNav";
-import { type DataState, type CareerSearchResult } from "../types/career";
+import { locked, type DataState, type CareerSearchResult } from "../types/career";
 import { useAuth } from "../hooks/useAuth";
 
 const DOORS = [
@@ -78,9 +78,10 @@ const isEmptyResult = (r: CareerSearchResult): boolean =>
 
 export default function ExploreScreen() {
   const { colors } = useTheme();
-  const { user } = useAuth();
+  const { user, signInGuest } = useAuth();
   const router = useRouter();
-  const isGuest = user?.auth_provider === "guest";
+  const isGuest = !user || user.auth_provider === "guest";
+  const hasSession = Boolean(user);
 
   const searchRef = useRef<TextInput>(null);
   const [query, setQuery] = useState("");
@@ -98,6 +99,14 @@ export default function ExploreScreen() {
       setResults(null);
       return;
     }
+    if (!hasSession) {
+      setResults(
+        locked<CareerSearchResult>(
+          "Start a guest session to search programmes, fields and roles.",
+        ),
+      );
+      return;
+    }
     let active = true;
     const t = setTimeout(async () => {
       const state = await careerData.searchCareer(q);
@@ -107,7 +116,7 @@ export default function ExploreScreen() {
       active = false;
       clearTimeout(t);
     };
-  }, [query]);
+  }, [hasSession, query]);
 
   const trimmed = query.trim();
   const searching = trimmed.length >= MIN_QUERY;
@@ -147,6 +156,16 @@ export default function ExploreScreen() {
             You're browsing as a guest. Create an account to save matches and
             get alerts.
           </Text>
+          {!hasSession ? (
+            <SifterButton
+              label="Continue as guest"
+              onPress={() => void signInGuest()}
+              variant="track"
+              color={Brand.primary}
+              size="sm"
+              fullWidth={false}
+            />
+          ) : null}
         </View>
       ) : null}
 
@@ -309,7 +328,23 @@ export default function ExploreScreen() {
               {/* Programmes */}
               {data.programmes.length ? (
                 <View style={styles.group}>
-                  <SectionHeader title="Programmes" icon="🎓" />
+                  <View style={styles.groupHead}>
+                    <SectionHeader title="Programmes" icon="🎓" />
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() =>
+                        exploreNav.compare(
+                          router,
+                          data.programmes.slice(0, 4).map((p) => p.id),
+                        )
+                      }
+                      style={styles.compareLink}
+                    >
+                      <Text style={[styles.compareText, { color: Brand.primaryDeep }]}>
+                        Compare visible →
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                   {data.programmes.map((p) => {
                     const meta = p.discipline ?? p.institutionType;
                     return (
@@ -410,6 +445,16 @@ export default function ExploreScreen() {
             </Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => exploreNav.compare(router)}
+            style={styles.browse}
+          >
+            <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
+              ⚖️ Compare programmes →
+            </Text>
+          </TouchableOpacity>
+
           {/* Aspirational + every-starting-point routes (Phase 7). */}
           <TouchableOpacity
             activeOpacity={0.7}
@@ -489,6 +534,19 @@ const styles = StyleSheet.create({
   // ── Results ──────────────────────────────────────────────────
   results: { gap: Spacing.lg, marginTop: Spacing.xs },
   group: { gap: Spacing.sm },
+  groupHead: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: Spacing.md,
+    flexWrap: "wrap",
+  },
+  compareLink: {
+    minHeight: 34,
+    justifyContent: "center",
+    paddingHorizontal: Spacing.xs,
+  },
+  compareText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
   row: {
     flexDirection: "row",
     alignItems: "center",

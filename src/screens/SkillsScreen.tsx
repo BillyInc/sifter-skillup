@@ -100,7 +100,7 @@ function FieldCard({ field, onPress }: { field: Field; onPress: () => void }) {
       <View style={styles.fieldCardTop}>
         <Text style={styles.fieldEmoji}>{field.emoji}</Text>
         <View style={[styles.statusPill, { backgroundColor: isLive ? colors.greenSoft : colors.bgSecondary }]}>
-          <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Soon'}</Text>
+          <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Locked'}</Text>
         </View>
       </View>
       <Text style={[styles.fieldName, { color: colors.text }]} numberOfLines={2}>{field.name}</Text>
@@ -150,7 +150,7 @@ function InlineTrackCard({
           <Text style={[styles.inlineTrackTagline, { color: colors.textSoft }]} numberOfLines={2}>{track.tagline}</Text>
         </View>
         <View style={[styles.statusPill, { backgroundColor: isLive ? colors.greenSoft : colors.card }]}>
-          <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Soon'}</Text>
+          <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Locked'}</Text>
         </View>
       </View>
 
@@ -163,7 +163,7 @@ function InlineTrackCard({
       <Text style={[styles.inlineTrackDescription, { color: colors.textSoft }]} numberOfLines={2}>{track.description}</Text>
 
       <View style={[styles.inlineTrackAction, { backgroundColor: isActionable ? field.color : colors.card }]}>
-        <Text style={[styles.inlineTrackActionText, { color: isActionable ? '#fff' : colors.textMuted }]}>{isActionable ? 'Open Track' : 'Track setup coming soon'}</Text>
+        <Text style={[styles.inlineTrackActionText, { color: isActionable ? '#fff' : colors.textMuted }]}>{isActionable ? 'Open Track' : 'Locked preview'}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -205,7 +205,7 @@ function FieldAccordionCard({
         </View>
         <View style={styles.fieldAccordionRight}>
           <View style={[styles.statusPill, { backgroundColor: isLive ? colors.greenSoft : colors.bgSecondary }]}>
-            <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Soon'}</Text>
+            <Text style={[styles.statusPillText, { color: isLive ? colors.green : colors.textMuted }]}>{isLive ? 'Live' : 'Locked'}</Text>
           </View>
           <Text style={[styles.fieldAccordionArrow, { color: field.color }]}>{expanded ? '-' : '+'}</Text>
         </View>
@@ -231,8 +231,8 @@ function FieldAccordionCard({
             </View>
           ) : (
             <View style={[styles.inlineInfoCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-              <Text style={[styles.inlineInfoTitle, { color: colors.text }]}>Tracks coming soon</Text>
-              <Text style={[styles.inlineInfoText, { color: colors.textSoft }]}>This field is listed, but its dedicated sub-tracks are still being prepared.</Text>
+              <Text style={[styles.inlineInfoTitle, { color: colors.text }]}>Tracks locked</Text>
+              <Text style={[styles.inlineInfoText, { color: colors.textSoft }]}>This field is mapped, and its dedicated sub-tracks are being prepared behind the lock.</Text>
             </View>
           )}
         </View>
@@ -374,7 +374,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
                         <Text style={[styles.trackTagline, { color: colors.textSoft }]}>{track.tagline}</Text>
                       </View>
                       <View style={[styles.statusPill, { backgroundColor: hasContent ? colors.greenSoft : colors.bgSecondary }]}>
-                        <Text style={[styles.statusPillText, { color: hasContent ? colors.green : colors.textMuted }]}>{hasContent ? 'Live' : 'Soon'}</Text>
+                        <Text style={[styles.statusPillText, { color: hasContent ? colors.green : colors.textMuted }]}>{hasContent ? 'Live' : 'Locked'}</Text>
                       </View>
                     </View>
 
@@ -388,7 +388,7 @@ function FieldDetailModal({ field, onClose }: { field: Field; onClose: () => voi
                 );
               }) : (
                 <SifterCard style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                  <Text style={[styles.sectionTitle, { color: colors.text }]}>Tracks coming soon</Text>
+                  <Text style={[styles.sectionTitle, { color: colors.text }]}>Tracks locked</Text>
                   <Text style={[styles.bodyText, { color: colors.textSoft }]}>We are still building the dedicated curriculum for this field.</Text>
                 </SifterCard>
               )}
@@ -579,7 +579,7 @@ export default function SkillsScreen() {
                 ))}
               </View>
 
-              <Text style={[styles.webSectionTitle, { color: colors.text }]}>Coming Soon</Text>
+              <Text style={[styles.webSectionTitle, { color: colors.text }]}>Locked previews</Text>
               <View style={styles.webAccordionStack}>
                 {soon.map((field) => (
                   <FieldAccordionCard
@@ -675,7 +675,7 @@ export default function SkillsScreen() {
               {live.map(field => <FieldCard key={field.id} field={field} onPress={() => setSelected(field)} />)}
             </View>
 
-            <Text style={[styles.sectionHeader, { color: colors.text }]}>Coming soon</Text>
+            <Text style={[styles.sectionHeader, { color: colors.text }]}>Locked previews</Text>
             <View style={styles.grid}>
               {soon.map(field => <FieldCard key={field.id} field={field} onPress={() => setSelected(field)} />)}
             </View>
@@ -737,7 +737,7 @@ export default function SkillsScreen() {
                         <Text style={[styles.searchRowSub, { color: colors.textSoft }]}>{track.tagline}</Text>
                       </View>
                       <View style={[styles.statusPill, { backgroundColor: track.comingSoon ? colors.bgSecondary : colors.greenSoft }]}>
-                        <Text style={[styles.statusPillText, { color: track.comingSoon ? colors.textMuted : colors.green }]}>{track.comingSoon ? 'Soon' : 'Live'}</Text>
+                        <Text style={[styles.statusPillText, { color: track.comingSoon ? colors.textMuted : colors.green }]}>{track.comingSoon ? 'Locked' : 'Live'}</Text>
                       </View>
                     </View>
                   ))}

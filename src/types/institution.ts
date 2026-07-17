@@ -32,10 +32,15 @@ export type OrganizationType =
 /** Role of a member within an organisation (drives scope, not built out yet). */
 export type OrgRole =
   | "owner"
+  | "institution_admin"
+  | "admin"
   | "counsellor" // secondary-school guidance & counselling officer
   | "course_advisor"
   | "hod"
-  | "dean";
+  | "dean"
+  | "admissions_officer"
+  | "provisioning_manager"
+  | "data_viewer";
 
 /** Tiered identity assurance. Real verification logic lands with data/ops. */
 export type VerificationStatus =
@@ -74,6 +79,30 @@ export interface OrganizationMember {
   userId: string;
   role: OrgRole;
   seatStatus: "invited" | "active" | "suspended";
+  displayName?: string;
+  email?: string;
+  title?: string;
+  invitedBy?: string;
+  acceptedAt?: string;
+  lastActiveAt?: string;
+}
+
+export interface OrganizationInvite {
+  id: string;
+  organizationId: string;
+  invitedEmail: string;
+  role: OrgRole;
+  status: "pending" | "accepted" | "revoked" | "expired";
+  invitedBy?: string;
+  expiresAt?: string;
+  createdAt: string;
+}
+
+export interface OrganizationTeam {
+  organization: Organization | null;
+  members: OrganizationMember[];
+  invites: OrganizationInvite[];
+  canInvite: boolean;
 }
 
 /** The educator's own onboarding/profile (persisted locally for now). */
@@ -89,6 +118,9 @@ export interface EducatorProfile {
   registryCode?: string;
   /** True for tutorial_centre/jamb_cafe — provider/session only, no roster. */
   providerSessionOnly?: boolean;
+  /** Owner-issued code gate state. This is admin access, not proof/verification. */
+  adminAccessStatus?: "owner_code";
+  adminAccessGrantedAt?: string;
   verificationStatus: VerificationStatus;
   verificationMethod?: VerificationMethod;
   completedAt?: string;
@@ -262,6 +294,15 @@ export interface ProgrammeFilter {
 
 // ─── Domain demand ranking (right panel) ──────────────────────
 export type RankScope = "nigerian" | "global" | "remote";
+export type MarketValueBand = "high" | "medium" | "low" | "unknown";
+export type MarketDemandBand = "high" | "medium" | "low" | "unknown";
+export type MarketQuadrant =
+  | "high_demand_high_value"
+  | "high_demand_lower_value"
+  | "low_demand_high_value"
+  | "low_demand_low_value"
+  | "emerging_high_growth"
+  | "insufficient_data";
 
 export interface DomainRankItem {
   rank: number;
@@ -274,6 +315,10 @@ export interface DomainRankItem {
   barRatio?: number;
   trendPct?: number;
   trendDirection?: TrendDirection;
+  valueBand?: MarketValueBand;
+  demandBand?: MarketDemandBand;
+  quadrant?: MarketQuadrant;
+  interpretation?: string;
 }
 
 // ─── Intelligence alerts ──────────────────────────────────────
@@ -305,6 +350,13 @@ export interface RoleDemandRow {
   salaryMin?: number;
   salaryMax?: number;
   trendPct?: number;
+  rankLens?: RankScope;
+  valueBand?: MarketValueBand;
+  demandBand?: MarketDemandBand;
+  quadrant?: MarketQuadrant;
+  interpretation?: string;
+  topEmployers?: string[];
+  topCertifications?: string[];
 }
 
 export interface PeerInstitutionRow {

@@ -989,9 +989,9 @@ export default function PortfolioScreen() {
 
             {trackPlatforms.primary.length === 0 && trackPlatforms.secondary.length === 0 && (
               <View style={s.emptyState}>
-                <Text style={{ fontSize: 18 }}>🔜</Text>
-                <Text style={s.emptyTitle}>Platforms coming soon</Text>
-                <Text style={s.emptySub}>Tap Explore to browse all available platforms.</Text>
+                <Text style={{ fontSize: 18 }}>🔒</Text>
+                <Text style={s.emptyTitle}>Platforms locked</Text>
+                <Text style={s.emptySub}>Explore stays open while platform integrations are prepared.</Text>
               </View>
             )}
           </>
@@ -1268,5 +1268,4 @@ const pushSt = StyleSheet.create({
   submitBtn:         { backgroundColor: Colors.accent, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
   submitText:        { color: '#fff', fontWeight: '700', fontSize: 11 },
 });
-
 

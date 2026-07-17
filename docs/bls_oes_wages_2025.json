@@ -1,0 +1,1152 @@
+{
+  "source": "BLS OES May 2025",
+  "extracted_at": "2026-07-15T18:36:14.137806",
+  "occupations": [
+    {
+      "soc_code": "11-1021",
+      "title": "General and Operations Managers",
+      "annual_mean_wage": 134940,
+      "annual_median_wage": 105770,
+      "hourly_mean_wage": 64.87,
+      "employment_count": 3503020,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-1252",
+      "title": "Software Developers",
+      "annual_mean_wage": 148100,
+      "annual_median_wage": 135980,
+      "hourly_mean_wage": 71.2,
+      "employment_count": 1687890,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-2011",
+      "title": "Accountants and Auditors",
+      "annual_mean_wage": 94750,
+      "annual_median_wage": 83680,
+      "hourly_mean_wage": 45.56,
+      "employment_count": 1449500,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1199",
+      "title": "Business Operations Specialists, All Other",
+      "annual_mean_wage": 93970,
+      "annual_median_wage": 83050,
+      "hourly_mean_wage": 45.18,
+      "employment_count": 1087090,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1082",
+      "title": "Project Management Specialists",
+      "annual_mean_wage": 110740,
+      "annual_median_wage": 102320,
+      "hourly_mean_wage": 53.24,
+      "employment_count": 1066670,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1071",
+      "title": "Human Resources Specialists",
+      "annual_mean_wage": 81990,
+      "annual_median_wage": 75940,
+      "hourly_mean_wage": 39.42,
+      "employment_count": 912430,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1161",
+      "title": "Market Research Analysts and Marketing Specialists",
+      "annual_mean_wage": 89490,
+      "annual_median_wage": 78760,
+      "hourly_mean_wage": 43.03,
+      "employment_count": 899580,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1111",
+      "title": "Management Analysts",
+      "annual_mean_wage": 113790,
+      "annual_median_wage": 101860,
+      "hourly_mean_wage": 54.71,
+      "employment_count": 898280,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-3031",
+      "title": "Financial Managers",
+      "annual_mean_wage": 186910,
+      "annual_median_wage": 166570,
+      "hourly_mean_wage": 89.86,
+      "employment_count": 841710,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-1232",
+      "title": "Computer User Support Specialists",
+      "annual_mean_wage": 67330,
+      "annual_median_wage": 61860,
+      "hourly_mean_wage": 32.37,
+      "employment_count": 717190,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "11-3021",
+      "title": "Computer and Information Systems Managers",
+      "annual_mean_wage": 192160,
+      "annual_median_wage": 175140,
+      "hourly_mean_wage": 92.39,
+      "employment_count": 670570,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-2022",
+      "title": "Sales Managers",
+      "annual_mean_wage": 164350,
+      "annual_median_wage": 148270,
+      "hourly_mean_wage": 79.02,
+      "employment_count": 637080,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9199",
+      "title": "Managers, All Other",
+      "annual_mean_wage": 153890,
+      "annual_median_wage": 141900,
+      "hourly_mean_wage": 73.99,
+      "employment_count": 622190,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9111",
+      "title": "Medical and Health Services Managers",
+      "annual_mean_wage": 140970,
+      "annual_median_wage": 123860,
+      "hourly_mean_wage": 67.77,
+      "employment_count": 597080,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-1211",
+      "title": "Computer Systems Analysts",
+      "annual_mean_wage": 114610,
+      "annual_median_wage": 105850,
+      "hourly_mean_wage": 55.1,
+      "employment_count": 519530,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-1020",
+      "title": "Buyers and Purchasing Agents",
+      "annual_mean_wage": 83770,
+      "annual_median_wage": 77710,
+      "hourly_mean_wage": 40.27,
+      "employment_count": 491430,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1151",
+      "title": "Training and Development Specialists",
+      "annual_mean_wage": 75550,
+      "annual_median_wage": 69280,
+      "hourly_mean_wage": 36.32,
+      "employment_count": 458300,
+      "category": "Business"
+    },
+    {
+      "soc_code": "15-1299",
+      "title": "Computer Occupations, All Other",
+      "annual_mean_wage": 122230,
+      "annual_median_wage": 116580,
+      "hourly_mean_wage": 58.77,
+      "employment_count": 435370,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-1041",
+      "title": "Compliance Officers",
+      "annual_mean_wage": 88400,
+      "annual_median_wage": 80730,
+      "hourly_mean_wage": 42.5,
+      "employment_count": 417070,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-2021",
+      "title": "Marketing Managers",
+      "annual_mean_wage": 177770,
+      "annual_median_wage": 166790,
+      "hourly_mean_wage": 85.47,
+      "employment_count": 395240,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9021",
+      "title": "Construction Managers",
+      "annual_mean_wage": 124360,
+      "annual_median_wage": 114990,
+      "hourly_mean_wage": 59.79,
+      "employment_count": 380360,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2051",
+      "title": "Civil Engineers",
+      "annual_mean_wage": 108670,
+      "annual_median_wage": 100840,
+      "hourly_mean_wage": 52.24,
+      "employment_count": 367840,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-2112",
+      "title": "Industrial Engineers",
+      "annual_mean_wage": 109900,
+      "annual_median_wage": 102440,
+      "hourly_mean_wage": 52.84,
+      "employment_count": 365740,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-2051",
+      "title": "Financial and Investment Analysts",
+      "annual_mean_wage": 116800,
+      "annual_median_wage": 102740,
+      "hourly_mean_wage": 56.15,
+      "employment_count": 361980,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-9032",
+      "title": "Education Administrators, Kindergarten through Secondary",
+      "annual_mean_wage": 116100,
+      "annual_median_wage": 105870,
+      "hourly_mean_wage": 0.0,
+      "employment_count": 328330,
+      "category": "Management"
+    },
+    {
+      "soc_code": "13-1031",
+      "title": "Claims Adjusters, Examiners, and Investigators",
+      "annual_mean_wage": 80470,
+      "annual_median_wage": 78000,
+      "hourly_mean_wage": 38.69,
+      "employment_count": 324230,
+      "category": "Business"
+    },
+    {
+      "soc_code": "15-1244",
+      "title": "Network and Computer Systems Administrators",
+      "annual_mean_wage": 103680,
+      "annual_median_wage": 99130,
+      "hourly_mean_wage": 49.85,
+      "employment_count": 314340,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "11-9141",
+      "title": "Property, Real Estate, and Community Association Managers",
+      "annual_mean_wage": 83710,
+      "annual_median_wage": 69990,
+      "hourly_mean_wage": 40.25,
+      "employment_count": 311180,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2141",
+      "title": "Mechanical Engineers",
+      "annual_mean_wage": 113610,
+      "annual_median_wage": 104110,
+      "hourly_mean_wage": 54.62,
+      "employment_count": 296810,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-2072",
+      "title": "Loan Officers",
+      "annual_mean_wage": 87790,
+      "annual_median_wage": 76690,
+      "hourly_mean_wage": 42.21,
+      "employment_count": 274330,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-2052",
+      "title": "Personal Financial Advisors",
+      "annual_mean_wage": 156670,
+      "annual_median_wage": 105070,
+      "hourly_mean_wage": 75.32,
+      "employment_count": 266800,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-3012",
+      "title": "Administrative Services Managers",
+      "annual_mean_wage": 129870,
+      "annual_median_wage": 114130,
+      "hourly_mean_wage": 62.44,
+      "employment_count": 263960,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-2051",
+      "title": "Data Scientists",
+      "annual_mean_wage": 126800,
+      "annual_median_wage": 120230,
+      "hourly_mean_wage": 60.96,
+      "employment_count": 262440,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-1081",
+      "title": "Logisticians",
+      "annual_mean_wage": 89730,
+      "annual_median_wage": 82320,
+      "hourly_mean_wage": 43.14,
+      "employment_count": 251040,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-3051",
+      "title": "Industrial Production Managers",
+      "annual_mean_wage": 134170,
+      "annual_median_wage": 126060,
+      "hourly_mean_wage": 64.5,
+      "employment_count": 246250,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9051",
+      "title": "Food Service Managers",
+      "annual_mean_wage": 74880,
+      "annual_median_wage": 69390,
+      "hourly_mean_wage": 36.0,
+      "employment_count": 238430,
+      "category": "Management"
+    },
+    {
+      "soc_code": "13-1051",
+      "title": "Cost Estimators",
+      "annual_mean_wage": 85390,
+      "annual_median_wage": 78740,
+      "hourly_mean_wage": 41.06,
+      "employment_count": 224220,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-3071",
+      "title": "Transportation, Storage, and Distribution Managers",
+      "annual_mean_wage": 121600,
+      "annual_median_wage": 107230,
+      "hourly_mean_wage": 58.46,
+      "employment_count": 221180,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-3121",
+      "title": "Human Resources Managers",
+      "annual_mean_wage": 164230,
+      "annual_median_wage": 149280,
+      "hourly_mean_wage": 78.96,
+      "employment_count": 220660,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9041",
+      "title": "Architectural and Engineering Managers",
+      "annual_mean_wage": 181540,
+      "annual_median_wage": 171270,
+      "hourly_mean_wage": 87.28,
+      "employment_count": 220260,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9151",
+      "title": "Social and Community Service Managers",
+      "annual_mean_wage": 88880,
+      "annual_median_wage": 80390,
+      "hourly_mean_wage": 42.73,
+      "employment_count": 209330,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-1011",
+      "title": "Chief Executives",
+      "annual_mean_wage": 269630,
+      "annual_median_wage": 213990,
+      "hourly_mean_wage": 129.63,
+      "employment_count": 204350,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2071",
+      "title": "Electrical Engineers",
+      "annual_mean_wage": 125100,
+      "annual_median_wage": 120630,
+      "hourly_mean_wage": 60.15,
+      "employment_count": 198750,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "15-1212",
+      "title": "Information Security Analysts",
+      "annual_mean_wage": 132510,
+      "annual_median_wage": 129180,
+      "hourly_mean_wage": 63.71,
+      "employment_count": 190650,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "15-1253",
+      "title": "Software Quality Assurance Analysts and Testers",
+      "annual_mean_wage": 111490,
+      "annual_median_wage": 104300,
+      "hourly_mean_wage": 53.6,
+      "employment_count": 186740,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "11-9033",
+      "title": "Education Administrators, Postsecondary",
+      "annual_mean_wage": 126540,
+      "annual_median_wage": 104590,
+      "hourly_mean_wage": 60.84,
+      "employment_count": 180470,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-1241",
+      "title": "Computer Network Architects",
+      "annual_mean_wage": 139580,
+      "annual_median_wage": 134050,
+      "hourly_mean_wage": 67.11,
+      "employment_count": 179740,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "11-3013",
+      "title": "Facilities Managers",
+      "annual_mean_wage": 116890,
+      "annual_median_wage": 106660,
+      "hourly_mean_wage": 56.2,
+      "employment_count": 156180,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2199",
+      "title": "Engineers, All Other",
+      "annual_mean_wage": 125330,
+      "annual_median_wage": 122930,
+      "hourly_mean_wage": 60.26,
+      "employment_count": 154070,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "15-1231",
+      "title": "Computer Network Support Specialists",
+      "annual_mean_wage": 81870,
+      "annual_median_wage": 76220,
+      "hourly_mean_wage": 39.36,
+      "employment_count": 146190,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-1121",
+      "title": "Meeting, Convention, and Event Planners",
+      "annual_mean_wage": 66520,
+      "annual_median_wage": 61160,
+      "hourly_mean_wage": 31.98,
+      "employment_count": 142860,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-2099",
+      "title": "Financial Specialists, All Other",
+      "annual_mean_wage": 93810,
+      "annual_median_wage": 81100,
+      "hourly_mean_wage": 45.1,
+      "employment_count": 132130,
+      "category": "Business"
+    },
+    {
+      "soc_code": "15-1255",
+      "title": "Web and Digital Interface Designers",
+      "annual_mean_wage": 117490,
+      "annual_median_wage": 104000,
+      "hourly_mean_wage": 56.49,
+      "employment_count": 113330,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-1141",
+      "title": "Compensation, Benefits, and Job Analysis Specialists",
+      "annual_mean_wage": 84330,
+      "annual_median_wage": 78210,
+      "hourly_mean_wage": 40.54,
+      "employment_count": 112380,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-1131",
+      "title": "Fundraisers",
+      "annual_mean_wage": 77200,
+      "annual_median_wage": 72550,
+      "hourly_mean_wage": 37.12,
+      "employment_count": 111040,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-9121",
+      "title": "Natural Sciences Managers",
+      "annual_mean_wage": 180250,
+      "annual_median_wage": 167220,
+      "hourly_mean_wage": 86.66,
+      "employment_count": 108690,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-2031",
+      "title": "Operations Research Analysts",
+      "annual_mean_wage": 99730,
+      "annual_median_wage": 88940,
+      "hourly_mean_wage": 47.95,
+      "employment_count": 108510,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "17-1011",
+      "title": "Architects, Except Landscape and Naval",
+      "annual_mean_wage": 106260,
+      "annual_median_wage": 99280,
+      "hourly_mean_wage": 51.09,
+      "employment_count": 106770,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-2053",
+      "title": "Insurance Underwriters",
+      "annual_mean_wage": 93700,
+      "annual_median_wage": 81370,
+      "hourly_mean_wage": 45.05,
+      "employment_count": 105420,
+      "category": "Business"
+    },
+    {
+      "soc_code": "17-3011",
+      "title": "Architectural and Civil Drafters",
+      "annual_mean_wage": 70740,
+      "annual_median_wage": 66150,
+      "hourly_mean_wage": 34.01,
+      "employment_count": 103700,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-2072",
+      "title": "Electronics Engineers, Except Computer",
+      "annual_mean_wage": 137280,
+      "annual_median_wage": 130220,
+      "hourly_mean_wage": 66.0,
+      "employment_count": 96900,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-3023",
+      "title": "Electrical and Electronic Engineering Technologists and Technicians",
+      "annual_mean_wage": 80680,
+      "annual_median_wage": 78190,
+      "hourly_mean_wage": 38.79,
+      "employment_count": 95130,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "15-1251",
+      "title": "Computer Programmers",
+      "annual_mean_wage": 105170,
+      "annual_median_wage": 100390,
+      "hourly_mean_wage": 50.56,
+      "employment_count": 92230,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "11-3061",
+      "title": "Purchasing Managers",
+      "annual_mean_wage": 156360,
+      "annual_median_wage": 148080,
+      "hourly_mean_wage": 75.17,
+      "employment_count": 84320,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2061",
+      "title": "Computer Hardware Engineers",
+      "annual_mean_wage": 162670,
+      "annual_median_wage": 161740,
+      "hourly_mean_wage": 78.21,
+      "employment_count": 76660,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-2082",
+      "title": "Tax Preparers",
+      "annual_mean_wage": 60930,
+      "annual_median_wage": 54920,
+      "hourly_mean_wage": 29.3,
+      "employment_count": 76480,
+      "category": "Business"
+    },
+    {
+      "soc_code": "17-3026",
+      "title": "Industrial Engineering Technologists and Technicians",
+      "annual_mean_wage": 70700,
+      "annual_median_wage": 66120,
+      "hourly_mean_wage": 33.99,
+      "employment_count": 75570,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-2032",
+      "title": "Public Relations Managers",
+      "annual_mean_wage": 164760,
+      "annual_median_wage": 146910,
+      "hourly_mean_wage": 79.21,
+      "employment_count": 74850,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9031",
+      "title": "Education and Childcare Administrators, Preschool and Daycare",
+      "annual_mean_wage": 64800,
+      "annual_median_wage": 59300,
+      "hourly_mean_wage": 31.15,
+      "employment_count": 73660,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-1254",
+      "title": "Web Developers",
+      "annual_mean_wage": 98770,
+      "annual_median_wage": 92650,
+      "hourly_mean_wage": 47.49,
+      "employment_count": 70190,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "15-1242",
+      "title": "Database Administrators",
+      "annual_mean_wage": 110090,
+      "annual_median_wage": 104620,
+      "hourly_mean_wage": 52.93,
+      "employment_count": 69990,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "17-3022",
+      "title": "Civil Engineering Technologists and Technicians",
+      "annual_mean_wage": 68990,
+      "annual_median_wage": 64950,
+      "hourly_mean_wage": 33.17,
+      "employment_count": 68520,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-2061",
+      "title": "Financial Examiners",
+      "annual_mean_wage": 106240,
+      "annual_median_wage": 94160,
+      "hourly_mean_wage": 51.08,
+      "employment_count": 67830,
+      "category": "Business"
+    },
+    {
+      "soc_code": "17-2011",
+      "title": "Aerospace Engineers",
+      "annual_mean_wage": 142060,
+      "annual_median_wage": 134960,
+      "hourly_mean_wage": 68.3,
+      "employment_count": 67710,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "15-1243",
+      "title": "Database Architects",
+      "annual_mean_wage": 144440,
+      "annual_median_wage": 139500,
+      "hourly_mean_wage": 69.44,
+      "employment_count": 67140,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-1075",
+      "title": "Labor Relations Specialists",
+      "annual_mean_wage": 98720,
+      "annual_median_wage": 95420,
+      "hourly_mean_wage": 47.46,
+      "employment_count": 64810,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-2041",
+      "title": "Credit Analysts",
+      "annual_mean_wage": 100850,
+      "annual_median_wage": 83510,
+      "hourly_mean_wage": 48.49,
+      "employment_count": 64390,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-2054",
+      "title": "Financial Risk Specialists",
+      "annual_mean_wage": 124420,
+      "annual_median_wage": 117330,
+      "hourly_mean_wage": 59.82,
+      "employment_count": 63850,
+      "category": "Business"
+    },
+    {
+      "soc_code": "17-3029",
+      "title": "Engineering Technologists and Technicians, Except Drafters, All Other",
+      "annual_mean_wage": 80960,
+      "annual_median_wage": 78350,
+      "hourly_mean_wage": 38.93,
+      "employment_count": 59930,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-3031",
+      "title": "Surveying and Mapping Technicians",
+      "annual_mean_wage": 58000,
+      "annual_median_wage": 54240,
+      "hourly_mean_wage": 27.89,
+      "employment_count": 58010,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-2020",
+      "title": "Property Appraisers and Assessors",
+      "annual_mean_wage": 75770,
+      "annual_median_wage": 67960,
+      "hourly_mean_wage": 36.43,
+      "employment_count": 57070,
+      "category": "Business"
+    },
+    {
+      "soc_code": "13-2081",
+      "title": "Tax Examiners and Collectors, and Revenue Agents",
+      "annual_mean_wage": 70520,
+      "annual_median_wage": 62370,
+      "hourly_mean_wage": 33.91,
+      "employment_count": 56610,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-9039",
+      "title": "Education Administrators, All Other",
+      "annual_mean_wage": 101900,
+      "annual_median_wage": 95200,
+      "hourly_mean_wage": 48.99,
+      "employment_count": 55130,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-1022",
+      "title": "Surveyors",
+      "annual_mean_wage": 80570,
+      "annual_median_wage": 75440,
+      "hourly_mean_wage": 38.73,
+      "employment_count": 50830,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-3131",
+      "title": "Training and Development Managers",
+      "annual_mean_wage": 148370,
+      "annual_median_wage": 133000,
+      "hourly_mean_wage": 71.33,
+      "employment_count": 48050,
+      "category": "Management"
+    },
+    {
+      "soc_code": "13-2031",
+      "title": "Budget Analysts",
+      "annual_mean_wage": 96370,
+      "annual_median_wage": 91640,
+      "hourly_mean_wage": 46.33,
+      "employment_count": 47160,
+      "category": "Business"
+    },
+    {
+      "soc_code": "11-9081",
+      "title": "Lodging Managers",
+      "annual_mean_wage": 78740,
+      "annual_median_wage": 69250,
+      "hourly_mean_wage": 37.86,
+      "employment_count": 42620,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-3013",
+      "title": "Mechanical Drafters",
+      "annual_mean_wage": 75060,
+      "annual_median_wage": 71550,
+      "hourly_mean_wage": 36.09,
+      "employment_count": 39960,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-2033",
+      "title": "Fundraising Managers",
+      "annual_mean_wage": 140020,
+      "annual_median_wage": 125470,
+      "hourly_mean_wage": 67.32,
+      "employment_count": 38810,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2081",
+      "title": "Environmental Engineers",
+      "annual_mean_wage": 112910,
+      "annual_median_wage": 107110,
+      "hourly_mean_wage": 54.29,
+      "employment_count": 38340,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-9072",
+      "title": "Entertainment and Recreation Managers, Except Gambling",
+      "annual_mean_wage": 89750,
+      "annual_median_wage": 79520,
+      "hourly_mean_wage": 43.15,
+      "employment_count": 37980,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-1221",
+      "title": "Computer and Information Research Scientists",
+      "annual_mean_wage": 153930,
+      "annual_median_wage": 140300,
+      "hourly_mean_wage": 74.0,
+      "employment_count": 37200,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "17-3027",
+      "title": "Mechanical Engineering Technologists and Technicians",
+      "annual_mean_wage": 76380,
+      "annual_median_wage": 74510,
+      "hourly_mean_wage": 36.72,
+      "employment_count": 36190,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "15-2041",
+      "title": "Statisticians",
+      "annual_mean_wage": 115700,
+      "annual_median_wage": 105650,
+      "hourly_mean_wage": 55.63,
+      "employment_count": 29030,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "13-2071",
+      "title": "Credit Counselors",
+      "annual_mean_wage": 57210,
+      "annual_median_wage": 52230,
+      "hourly_mean_wage": 27.51,
+      "employment_count": 27770,
+      "category": "Business"
+    },
+    {
+      "soc_code": "15-2011",
+      "title": "Actuaries",
+      "annual_mean_wage": 141480,
+      "annual_median_wage": 130000,
+      "hourly_mean_wage": 68.02,
+      "employment_count": 26670,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "17-2031",
+      "title": "Bioengineers and Biomedical Engineers",
+      "annual_mean_wage": 116890,
+      "annual_median_wage": 109370,
+      "hourly_mean_wage": 56.2,
+      "employment_count": 23480,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-3111",
+      "title": "Compensation and Benefits Managers",
+      "annual_mean_wage": 162640,
+      "annual_median_wage": 149230,
+      "hourly_mean_wage": 78.19,
+      "employment_count": 22940,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2131",
+      "title": "Materials Engineers",
+      "annual_mean_wage": 120250,
+      "annual_median_wage": 112860,
+      "hourly_mean_wage": 57.81,
+      "employment_count": 22770,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-2011",
+      "title": "Advertising and Promotions Managers",
+      "annual_mean_wage": 154280,
+      "annual_median_wage": 133660,
+      "hourly_mean_wage": 74.18,
+      "employment_count": 21470,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2111",
+      "title": "Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",
+      "annual_mean_wage": 119770,
+      "annual_median_wage": 115160,
+      "hourly_mean_wage": 57.58,
+      "employment_count": 21450,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-2041",
+      "title": "Chemical Engineers",
+      "annual_mean_wage": 129980,
+      "annual_median_wage": 125040,
+      "hourly_mean_wage": 62.49,
+      "employment_count": 21070,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-1012",
+      "title": "Landscape Architects",
+      "annual_mean_wage": 88780,
+      "annual_median_wage": 79870,
+      "hourly_mean_wage": 42.68,
+      "employment_count": 19600,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-2171",
+      "title": "Petroleum Engineers",
+      "annual_mean_wage": 157150,
+      "annual_median_wage": 144910,
+      "hourly_mean_wage": 75.55,
+      "employment_count": 18060,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-3012",
+      "title": "Electrical and Electronics Drafters",
+      "annual_mean_wage": 81280,
+      "annual_median_wage": 76870,
+      "hourly_mean_wage": 39.08,
+      "employment_count": 17920,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-3028",
+      "title": "Calibration Technologists and Technicians",
+      "annual_mean_wage": 74170,
+      "annual_median_wage": 67820,
+      "hourly_mean_wage": 35.66,
+      "employment_count": 16540,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-3024",
+      "title": "Electro-Mechanical and Mechatronics Technologists and Technicians",
+      "annual_mean_wage": 76420,
+      "annual_median_wage": 73900,
+      "hourly_mean_wage": 36.74,
+      "employment_count": 15520,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-2161",
+      "title": "Nuclear Engineers",
+      "annual_mean_wage": 140420,
+      "annual_median_wage": 133970,
+      "hourly_mean_wage": 67.51,
+      "employment_count": 15280,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-3019",
+      "title": "Drafters, All Other",
+      "annual_mean_wage": 68250,
+      "annual_median_wage": 63520,
+      "hourly_mean_wage": 32.81,
+      "employment_count": 14470,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "17-1021",
+      "title": "Cartographers and Photogrammetrists",
+      "annual_mean_wage": 86690,
+      "annual_median_wage": 81390,
+      "hourly_mean_wage": 41.68,
+      "employment_count": 14260,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-9171",
+      "title": "Funeral Home Managers",
+      "annual_mean_wage": 92840,
+      "annual_median_wage": 78790,
+      "hourly_mean_wage": 44.63,
+      "employment_count": 13910,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9131",
+      "title": "Postmasters and Mail Superintendents",
+      "annual_mean_wage": 97360,
+      "annual_median_wage": 96660,
+      "hourly_mean_wage": 46.81,
+      "employment_count": 13810,
+      "category": "Management"
+    },
+    {
+      "soc_code": "11-9161",
+      "title": "Emergency Management Directors",
+      "annual_mean_wage": 102420,
+      "annual_median_wage": 93330,
+      "hourly_mean_wage": 49.24,
+      "employment_count": 13500,
+      "category": "Management"
+    },
+    {
+      "soc_code": "13-1011",
+      "title": "Agents and Business Managers of Artists, Performers, and Athletes",
+      "annual_mean_wage": 141580,
+      "annual_median_wage": 82890,
+      "hourly_mean_wage": 68.07,
+      "employment_count": 12620,
+      "category": "Business"
+    },
+    {
+      "soc_code": "17-3025",
+      "title": "Environmental Engineering Technologists and Technicians",
+      "annual_mean_wage": 64870,
+      "annual_median_wage": 59920,
+      "hourly_mean_wage": 31.19,
+      "employment_count": 12190,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-1032",
+      "title": "Insurance Appraisers, Auto Damage",
+      "annual_mean_wage": 78900,
+      "annual_median_wage": 78240,
+      "hourly_mean_wage": 37.93,
+      "employment_count": 11560,
+      "category": "Business"
+    },
+    {
+      "soc_code": "17-3021",
+      "title": "Aerospace Engineering and Operations Technologists and Technicians",
+      "annual_mean_wage": 91310,
+      "annual_median_wage": 82890,
+      "hourly_mean_wage": 43.9,
+      "employment_count": 11280,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-9179",
+      "title": "Personal Service Managers, All Other",
+      "annual_mean_wage": 78190,
+      "annual_median_wage": 69770,
+      "hourly_mean_wage": 37.59,
+      "employment_count": 10450,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2121",
+      "title": "Marine Engineers and Naval Architects",
+      "annual_mean_wage": 124180,
+      "annual_median_wage": 112230,
+      "hourly_mean_wage": 59.7,
+      "employment_count": 8250,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-9013",
+      "title": "Farmers, Ranchers, and Other Agricultural Managers",
+      "annual_mean_wage": 99820,
+      "annual_median_wage": 89900,
+      "hourly_mean_wage": 47.99,
+      "employment_count": 6500,
+      "category": "Management"
+    },
+    {
+      "soc_code": "17-2151",
+      "title": "Mining and Geological Engineers, Including Mining Safety Engineers",
+      "annual_mean_wage": 115410,
+      "annual_median_wage": 106220,
+      "hourly_mean_wage": 55.49,
+      "employment_count": 6080,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "11-9071",
+      "title": "Gambling Managers",
+      "annual_mean_wage": 103050,
+      "annual_median_wage": 93220,
+      "hourly_mean_wage": 49.54,
+      "employment_count": 5030,
+      "category": "Management"
+    },
+    {
+      "soc_code": "15-2099",
+      "title": "Mathematical Science Occupations, All Other",
+      "annual_mean_wage": 91550,
+      "annual_median_wage": 81490,
+      "hourly_mean_wage": 44.02,
+      "employment_count": 3720,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "15-2021",
+      "title": "Mathematicians",
+      "annual_mean_wage": 129260,
+      "annual_median_wage": 126710,
+      "hourly_mean_wage": 62.15,
+      "employment_count": 2030,
+      "category": "Computer and Mathematical"
+    },
+    {
+      "soc_code": "17-2021",
+      "title": "Agricultural Engineers",
+      "annual_mean_wage": 108230,
+      "annual_median_wage": 98590,
+      "hourly_mean_wage": 52.04,
+      "employment_count": 1480,
+      "category": "Engineering"
+    },
+    {
+      "soc_code": "13-1074",
+      "title": "Farm Labor Contractors",
+      "annual_mean_wage": 58470,
+      "annual_median_wage": 58460,
+      "hourly_mean_wage": 28.11,
+      "employment_count": 310,
+      "category": "Business"
+    }
+  ],
+  "summary_stats": {
+    "total_occupations": 126,
+    "tech_occupations": 21,
+    "engineering_occupations": 36,
+    "management_occupations": 37,
+    "business_occupations": 32,
+    "mean_wage_range": {
+      "min": 57210,
+      "max": 269630
+    },
+    "total_employment": 29534040
+  }
+}

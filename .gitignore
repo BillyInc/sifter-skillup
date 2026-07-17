@@ -39,6 +39,8 @@ build-*.apk
 data/career-mapping/_tax_src/
 data/career-mapping/_pdftxt/
 data/career-mapping/_ccmas_txt/
+# Market intelligence raw API responses (provider content not licensed for redistribution)
+data/career-mapping/_source_downloads/market_intelligence/
 # Career-mapping: agent/scratch working dirs + run logs (intermediate I/O)
 data/career-mapping/_sweep/
 data/career-mapping/_role_sweep/
@@ -51,3 +53,4 @@ data/career-mapping/_legit_subgroups.json
 data/career-mapping/*.out
 backend/seed_career_v2.sql
 backend/seed_career_pilot.sql
+nul

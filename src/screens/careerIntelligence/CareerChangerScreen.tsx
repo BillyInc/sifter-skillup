@@ -37,7 +37,6 @@ import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import {
   comingSoon,
-  real,
   type DataState,
   type PivotResult,
   type CareerSearchResult,
@@ -62,6 +61,27 @@ const MAX_SHARED_SKILLS = 4;
 type BackgroundDomain = { id: string; name: string };
 type TargetDomain = { id: string; name: string };
 type TargetRole = { id: string; name: string };
+
+type PivotGapWire = {
+  coverage?: number | null;
+  haveSkills?: string[];
+  bridgeSkills?: string[];
+  target?: { label?: string; kind?: "domain" | "role" };
+};
+
+function readinessFromCoverage(coverage?: number | null): Readiness {
+  if (coverage != null && coverage >= 0.75) return "ready";
+  if (coverage != null && coverage >= 0.35) return "bridge";
+  return "stretch";
+}
+
+function goBackOrExplore(router: ReturnType<typeof useRouter>) {
+  if (router.canGoBack()) {
+    router.back();
+    return;
+  }
+  router.replace("/(tabs)/explore" as any);
+}
 
 export function CareerChangerScreen() {
   const { colors } = useTheme();
@@ -211,45 +231,24 @@ export function CareerChangerScreen() {
       return;
     }
     let active = true;
-    setGapAnalysisState(comingSoon<{ have: string[]; bridge: string[]; readiness: Readiness }>());
+    setGapAnalysisState({ status: "pending", data: null });
     (async () => {
-      try {
-        // TODO: Replace with actual API call when backend endpoint is available
-        // For now, we'll simulate by getting the target domain details and comparing
-        // In a real implementation, this would be: await careerData.getDomainGapAnalysis(background.id, targetDomain.id)
-        const domainResult = await careerData.getDomainV2(targetDomain.id);
-        if (domainResult.status === "real" && domainResult.data) {
-          const domain = domainResult.data;
-          // This is a simplified version - in reality, we'd compare skills properly
-          // For now, we'll just show some placeholder logic
-          const haveSkills = (domain.domainBridgeSkills ?? [])
-            .filter(skill => skill.covered) // Assuming some are covered
-            .map(skill => skill.name);
-          const bridgeSkills = (domain.domainBridgeSkills ?? [])
-            .filter(skill => !skill.covered) // Assuming some are not covered
-            .map(skill => skill.name);
-          
-          // Determine readiness based on overlap (simplified)
-          const readiness: Readiness = bridgeSkills.length === 0 ? 'ready' :
-                                     bridgeSkills.length <= 2 ? 'bridge' : 'stretch';
-          
-          if (active) {
-            setGapAnalysisState(real({ have: haveSkills, bridge: bridgeSkills, readiness }));
-          }
-        } else {
-          if (active) {
-            setGapAnalysisState(comingSoon<{ have: string[]; bridge: string[]; readiness: Readiness }>(
-              "Unable to load target domain details."
-            ));
-          }
-        }
-      } catch (error) {
-        if (active) {
-          setGapAnalysisState(comingSoon<{ have: string[]; bridge: string[]; readiness: Readiness }>(
-            "Analysis is temporarily unavailable."
-          ));
-        }
+      const result = await careerData.getPivotGap(background.id, targetDomain.id);
+      if (!active) return;
+      if (result.status === "real" && result.data) {
+        const gap = result.data as PivotGapWire;
+        setGapAnalysisState({
+          status: "real",
+          data: {
+            have: gap.haveSkills ?? [],
+            bridge: gap.bridgeSkills ?? [],
+            readiness: readinessFromCoverage(gap.coverage),
+          },
+          meta: result.meta,
+        });
+        return;
       }
+      setGapAnalysisState(result as DataState<{ have: string[]; bridge: string[]; readiness: Readiness }>);
     })();
     return () => {
       active = false;
@@ -269,74 +268,32 @@ export function CareerChangerScreen() {
       return;
     }
     let active = true;
-    setRoleGapAnalysisState(comingSoon<{
-      covered: string[];
-      missing: string[];
-      readiness: Readiness;
-      tier: "entry" | "mid" | "senior";
-      careerLadder: string[];
-    }>());
+    setRoleGapAnalysisState({ status: "pending", data: null });
     (async () => {
-      try {
-        // TODO: Replace with actual API call when backend endpoint is available
-        // For now, we'll simulate by getting the role details
-        // In a real implementation, this would be: await careerData.getRoleGapAnalysis(background.id, targetRole.id)
-        const roleResult = await careerData.getRoleV2(targetRole.id);
-        if (roleResult.status === "real" && roleResult.data) {
-          const role = roleResult.data;
-          // This is a simplified version - in reality, we'd compare with background skills
-          const coveredSkills = role.coveredSkills || [];
-          const missingSkills = (role.roleBridgeSkills ?? [])
-            .filter(skill => !skill.covered)
-            .map(skill => skill.name);
-          
-          // Determine readiness (simplified)
-          const readiness: Readiness = missingSkills.length === 0 ? 'ready' :
-                                     missingSkills.length <= 3 ? 'bridge' : 'stretch';
-          
-          // Determine tier based on role seniority (simplified)
-          const tier: "entry" | "mid" | "senior" = role.name.toLowerCase().includes('senior') ? 'senior' :
-                                                   role.name.toLowerCase().includes('lead') || 
-                                                   role.name.toLowerCase().includes('manager') ? 'mid' : 'entry';
-          
-          // Get career ladder (from role or default)
-          const careerLadder = role.careerLadder || [];
-          
-          if (active) {
-            setRoleGapAnalysisState(real({ 
-              covered: coveredSkills, 
-              missing: missingSkills, 
-              readiness, 
-              tier, 
-              careerLadder 
-            }));
-          }
-        } else {
-          if (active) {
-            setRoleGapAnalysisState(comingSoon<{
-              covered: string[];
-              missing: string[];
-              readiness: Readiness;
-              tier: "entry" | "mid" | "senior";
-              careerLadder: string[];
-            }>(
-              "Unable to load target role details."
-            ));
-          }
-        }
-      } catch (error) {
-        if (active) {
-          setRoleGapAnalysisState(comingSoon<{
-            covered: string[];
-            missing: string[];
-            readiness: Readiness;
-            tier: "entry" | "mid" | "senior";
-            careerLadder: string[];
-          }>(
-            "Analysis is temporarily unavailable."
-          ));
-        }
+      const result = await careerData.getPivotGap(background.id, undefined, targetRole.id);
+      if (!active) return;
+      if (result.status === "real" && result.data) {
+        const gap = result.data as PivotGapWire;
+        setRoleGapAnalysisState({
+          status: "real",
+          data: {
+            covered: gap.haveSkills ?? [],
+            missing: gap.bridgeSkills ?? [],
+            readiness: readinessFromCoverage(gap.coverage),
+            tier: "entry",
+            careerLadder: [],
+          },
+          meta: result.meta,
+        });
+        return;
       }
+      setRoleGapAnalysisState(result as DataState<{
+        covered: string[];
+        missing: string[];
+        readiness: Readiness;
+        tier: "entry" | "mid" | "senior";
+        careerLadder: string[];
+      }>);
     })();
     return () => {
       active = false;
@@ -392,7 +349,7 @@ export function CareerChangerScreen() {
       showsVerticalScrollIndicator={false}
     >
       <TouchableOpacity
-        onPress={() => router.back()}
+        onPress={() => goBackOrExplore(router)}
         hitSlop={10}
         style={styles.back}
       >

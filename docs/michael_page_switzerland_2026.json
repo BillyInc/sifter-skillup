@@ -1,0 +1,1829 @@
+{
+  "source_title": "Salary Guide 2026 - Michael Page Switzerland",
+  "currency": "CHF",
+  "salary_unit": "Yearly gross fixed salary in kCHF (thousands)",
+  "pages_processed": 48,
+  "market_overview": "Switzerland's job market is undergoing a recalibration. Talent mobility has slowed, candidate optimism has softened, and hiring cycles are stretching. Over 50% of temporary/interim roles convert into permanent positions. Salary levels across most sectors remain flat, signaling stabilisation after years of volatility.",
+  "salary_data": {
+    "banking_and_financial_services": {
+      "asset_management": {
+        "investment_analysis_research": [
+          {
+            "role": "Fundamental Analyst",
+            "min": 125,
+            "avg": 150,
+            "max": 200
+          },
+          {
+            "role": "Quantitative Analyst",
+            "min": 115,
+            "avg": 145,
+            "max": 160
+          },
+          {
+            "role": "Economist",
+            "min": 120,
+            "avg": 150,
+            "max": 190
+          }
+        ],
+        "portfolio_management": [
+          {
+            "role": "Portfolio Operations Specialist",
+            "min": 80,
+            "avg": 95,
+            "max": 115
+          },
+          {
+            "role": "Client Reporting Specialist",
+            "min": 110,
+            "avg": 125,
+            "max": 140
+          },
+          {
+            "role": "Junior Portfolio Manager",
+            "min": 90,
+            "avg": 110,
+            "max": 130
+          },
+          {
+            "role": "Equity Portfolio Manager",
+            "min": 130,
+            "avg": 160,
+            "max": 220
+          },
+          {
+            "role": "Fixed Income Portfolio Manager",
+            "min": 130,
+            "avg": 170,
+            "max": 225
+          },
+          {
+            "role": "Portfolio Manager Multiasset Class",
+            "min": 130,
+            "avg": 170,
+            "max": 220
+          },
+          {
+            "role": "Quantitative Portfolio Manager",
+            "min": 140,
+            "avg": 190,
+            "max": 240
+          }
+        ],
+        "investment_management": [
+          {
+            "role": "CIO / Chief Investment Officer",
+            "min": 220,
+            "avg": 320,
+            "max": 450
+          },
+          {
+            "role": "Execution/Trading",
+            "min": 110,
+            "avg": 130,
+            "max": 160
+          },
+          {
+            "role": "Investment Advisor",
+            "min": 120,
+            "avg": 150,
+            "max": 195
+          },
+          {
+            "role": "Manager Selection",
+            "min": 120,
+            "avg": 140,
+            "max": 180
+          },
+          {
+            "role": "Investment Support (Marketing/RFP/CRM)",
+            "min": 90,
+            "avg": 100,
+            "max": 120
+          }
+        ],
+        "sales_institutional_wholesale": [
+          {
+            "role": "Sales Assistant / Support",
+            "min": 80,
+            "avg": 95,
+            "max": 100
+          },
+          {
+            "role": "Wholesale",
+            "min": 120,
+            "avg": 140,
+            "max": 180
+          },
+          {
+            "role": "Institutional Sales (traditional asset classes)",
+            "min": 120,
+            "avg": 140,
+            "max": 180
+          },
+          {
+            "role": "Structured Products Sales",
+            "min": 110,
+            "avg": 150,
+            "max": 175
+          },
+          {
+            "role": "Sales Alternative Investments",
+            "min": 150,
+            "avg": 180,
+            "max": 220
+          },
+          {
+            "role": "Head Institutional Sales",
+            "min": 200,
+            "avg": 250,
+            "max": 320
+          }
+        ],
+        "private_equity_private_markets": [
+          {
+            "role": "Analyst",
+            "min": 90,
+            "avg": 100,
+            "max": 120
+          },
+          {
+            "role": "Associate",
+            "min": 120,
+            "avg": 130,
+            "max": 150
+          },
+          {
+            "role": "Investment Manager",
+            "min": 150,
+            "avg": 170,
+            "max": 180
+          },
+          {
+            "role": "Investment Director",
+            "min": 180,
+            "avg": 200,
+            "max": 250
+          },
+          {
+            "role": "Managing Director",
+            "min": 250,
+            "avg": 300,
+            "max": 380
+          }
+        ]
+      },
+      "investment_banking_ma": [
+        {
+          "role": "Analyst",
+          "min": 90,
+          "avg": 100,
+          "max": 120
+        },
+        {
+          "role": "Associate",
+          "min": 120,
+          "avg": 135,
+          "max": 160
+        },
+        {
+          "role": "Vice President",
+          "min": 160,
+          "avg": 170,
+          "max": 180
+        },
+        {
+          "role": "Director",
+          "min": 180,
+          "avg": 220,
+          "max": 250
+        },
+        {
+          "role": "Managing Director",
+          "min": 250,
+          "avg": 280,
+          "max": 350
+        }
+      ],
+      "private_banking": {
+        "relationship_management": [
+          {
+            "role": "Relationship Manager Assistant",
+            "min": 80,
+            "avg": 100,
+            "max": 125
+          },
+          {
+            "role": "Junior Relationship Manager",
+            "min": 100,
+            "avg": 110,
+            "max": 130
+          },
+          {
+            "role": "Relationship Manager (Farmer)",
+            "min": 130,
+            "avg": 150,
+            "max": 200
+          },
+          {
+            "role": "Relationship Manager (Hunter)",
+            "min": 160,
+            "avg": 220,
+            "max": 310
+          },
+          {
+            "role": "Team Head Private Banking",
+            "min": 180,
+            "avg": 220,
+            "max": 250
+          },
+          {
+            "role": "Head Private Banking",
+            "min": 250,
+            "avg": 380,
+            "max": 500
+          },
+          {
+            "role": "Wealth Planner",
+            "min": 140,
+            "avg": 180,
+            "max": 220
+          }
+        ],
+        "trust_management": [
+          {
+            "role": "Trust Accountant",
+            "min": 90,
+            "avg": 105,
+            "max": 130
+          },
+          {
+            "role": "Trust Administrator / Assistant",
+            "min": 80,
+            "avg": 90,
+            "max": 100
+          },
+          {
+            "role": "Trust Officer",
+            "min": 90,
+            "avg": 110,
+            "max": 130
+          },
+          {
+            "role": "Trust Manager",
+            "min": 130,
+            "avg": 145,
+            "max": 160
+          },
+          {
+            "role": "Trust Director",
+            "min": 160,
+            "avg": 175,
+            "max": 200
+          }
+        ]
+      },
+      "corporate_retail_banking": [
+        {
+          "role": "Relationship Manager Assistant",
+          "min": 70,
+          "avg": 85,
+          "max": 100
+        },
+        {
+          "role": "Relationship Manager Retail Clients",
+          "min": 75,
+          "avg": 95,
+          "max": 120
+        },
+        {
+          "role": "Branch Manager Retail",
+          "min": 120,
+          "avg": 135,
+          "max": 155
+        },
+        {
+          "role": "Relationship Manager SMEs",
+          "min": 120,
+          "avg": 145,
+          "max": 160
+        },
+        {
+          "role": "Relationship Manager Large & Mid caps",
+          "min": 150,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Senior Relationship Manager Multinationals",
+          "min": 180,
+          "avg": 210,
+          "max": 240
+        },
+        {
+          "role": "Managing Director (Corporate Banking)",
+          "min": 220,
+          "avg": 260,
+          "max": 340
+        }
+      ],
+      "corporate_functions": {
+        "legal_compliance": [
+          {
+            "role": "Junior Compliance Officer",
+            "min": 90,
+            "avg": 100,
+            "max": 110
+          },
+          {
+            "role": "Compliance Officer",
+            "min": 110,
+            "avg": 125,
+            "max": 160
+          },
+          {
+            "role": "Head of Compliance",
+            "min": 170,
+            "avg": 200,
+            "max": 250
+          },
+          {
+            "role": "Legal Counsel",
+            "min": 140,
+            "avg": 170,
+            "max": 200
+          },
+          {
+            "role": "Head Legal / Chief Legal Counsel",
+            "min": 200,
+            "avg": 250,
+            "max": 330
+          }
+        ],
+        "finance_accounting": [
+          {
+            "role": "Accountant",
+            "min": 90,
+            "avg": 100,
+            "max": 110
+          },
+          {
+            "role": "Senior Accountant",
+            "min": 110,
+            "avg": 120,
+            "max": 140
+          },
+          {
+            "role": "Head of Accounting",
+            "min": 140,
+            "avg": 160,
+            "max": 185
+          },
+          {
+            "role": "Financial Controller",
+            "min": 110,
+            "avg": 130,
+            "max": 160
+          },
+          {
+            "role": "Finance Director",
+            "min": 150,
+            "avg": 200,
+            "max": 250
+          },
+          {
+            "role": "CFO / Chief Financial Officer",
+            "min": 185,
+            "avg": 250,
+            "max": 360
+          }
+        ],
+        "risk_control": [
+          {
+            "role": "Internal Auditor",
+            "min": 110,
+            "avg": 130,
+            "max": 150
+          },
+          {
+            "role": "Head of Internal Audit",
+            "min": 160,
+            "avg": 185,
+            "max": 210
+          },
+          {
+            "role": "Risk Manager (Market, Credit, Operational)",
+            "min": 110,
+            "avg": 145,
+            "max": 180
+          },
+          {
+            "role": "CRO / Chief Risk Officer",
+            "min": 180,
+            "avg": 265,
+            "max": 350
+          }
+        ],
+        "operations": [
+          {
+            "role": "Back Office (Cash/Settlement/Reconciliation)",
+            "min": 80,
+            "avg": 95,
+            "max": 120
+          },
+          {
+            "role": "Operations Manager",
+            "min": 100,
+            "avg": 120,
+            "max": 140
+          },
+          {
+            "role": "Head of Operations",
+            "min": 140,
+            "avg": 160,
+            "max": 180
+          },
+          {
+            "role": "COO / Chief Operations Officer",
+            "min": 180,
+            "avg": 240,
+            "max": 360
+          }
+        ],
+        "tax": [
+          {
+            "role": "Tax Manager",
+            "min": 130,
+            "avg": 150,
+            "max": 170
+          },
+          {
+            "role": "Tax Director",
+            "min": 185,
+            "avg": 235,
+            "max": 280
+          }
+        ]
+      },
+      "most_wanted_positions": [
+        "Front Office / Sales",
+        "Finance",
+        "Investment roles",
+        "Risk & Compliance",
+        "Trust / Corporate Functions"
+      ],
+      "top_compensating_sectors": [
+        "Corporate & investment banking",
+        "Private Banking",
+        "Asset Management / Private Equity"
+      ]
+    },
+    "commodity_trading": {
+      "finance": [
+        {
+          "role": "CFO",
+          "min": 250,
+          "avg": 320,
+          "max": 400
+        },
+        {
+          "role": "Finance Manager",
+          "min": 160,
+          "avg": 200,
+          "max": 250
+        },
+        {
+          "role": "Accounting Manager",
+          "min": 120,
+          "avg": 130,
+          "max": 160
+        },
+        {
+          "role": "Senior Accountant",
+          "min": 100,
+          "avg": 110,
+          "max": 130
+        },
+        {
+          "role": "Trade Accountant",
+          "min": 100,
+          "avg": 120,
+          "max": 140
+        },
+        {
+          "role": "Financial Controller",
+          "min": 120,
+          "avg": 140,
+          "max": 160
+        },
+        {
+          "role": "Tax Manager",
+          "min": 130,
+          "avg": 170,
+          "max": 220
+        },
+        {
+          "role": "Internal Auditor",
+          "min": 110,
+          "avg": 130,
+          "max": 160
+        }
+      ],
+      "trade_finance": [
+        {
+          "role": "Head of Treasury - Financing",
+          "min": 150,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Trade Finance Manager",
+          "min": 130,
+          "avg": 150,
+          "max": 180
+        },
+        {
+          "role": "Trade Finance Officer",
+          "min": 100,
+          "avg": 120,
+          "max": 130
+        },
+        {
+          "role": "Treasury Manager",
+          "min": 130,
+          "avg": 150,
+          "max": 180
+        },
+        {
+          "role": "Treasury Analyst",
+          "min": 90,
+          "avg": 100,
+          "max": 120
+        },
+        {
+          "role": "Documentary Credit Specialist",
+          "min": 90,
+          "avg": 100,
+          "max": 110
+        },
+        {
+          "role": "Credit Risk Manager",
+          "min": 140,
+          "avg": 160,
+          "max": 180
+        },
+        {
+          "role": "Credit Risk Analyst",
+          "min": 90,
+          "avg": 115,
+          "max": 135
+        }
+      ],
+      "middle_office_risk": [
+        {
+          "role": "Risk Manager",
+          "min": 150,
+          "avg": 170,
+          "max": 200
+        },
+        {
+          "role": "Middle Office Manager",
+          "min": 150,
+          "avg": 170,
+          "max": 200
+        },
+        {
+          "role": "Middle Office Specialist",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Risk Analyst",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        }
+      ],
+      "operations_execution": [
+        {
+          "role": "COO",
+          "min": 220,
+          "avg": 260,
+          "max": 320
+        },
+        {
+          "role": "Head of Operations",
+          "min": 160,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Senior Operator",
+          "min": 130,
+          "avg": 150,
+          "max": 170
+        },
+        {
+          "role": "Operator / Trade Execution",
+          "min": 90,
+          "avg": 115,
+          "max": 130
+        }
+      ],
+      "research_analysis": [
+        {
+          "role": "Head of Analysis",
+          "min": 160,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Quantitative Analyst",
+          "min": 130,
+          "avg": 150,
+          "max": 170
+        },
+        {
+          "role": "Market / Research Analyst",
+          "min": 130,
+          "avg": 150,
+          "max": 170
+        },
+        {
+          "role": "Data Scientist",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        }
+      ],
+      "trading": [
+        {
+          "role": "Head of Trading",
+          "min": 200,
+          "avg": 300,
+          "max": 400
+        },
+        {
+          "role": "Business Development Manager",
+          "min": 160,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Energy Trader",
+          "min": 150,
+          "avg": 200,
+          "max": 300
+        },
+        {
+          "role": "Metals Trader",
+          "min": 150,
+          "avg": 200,
+          "max": 250
+        },
+        {
+          "role": "Soft Commodities Trader",
+          "min": 120,
+          "avg": 150,
+          "max": 250
+        },
+        {
+          "role": "Freight Trader",
+          "min": 120,
+          "avg": 150,
+          "max": 250
+        }
+      ],
+      "most_wanted_positions": [
+        "Traders",
+        "Controlling / Finance / Audit / Accounting",
+        "Risk & Middle Office",
+        "Treasury",
+        "Operations"
+      ],
+      "top_compensating_sectors": [
+        "Oil & Gas",
+        "Metals",
+        "Agricultural Commodities"
+      ]
+    },
+    "engineering_and_manufacturing": {
+      "production": [
+        {
+          "role": "Director/Plant Manager/Operations Director",
+          "min": 160,
+          "avg": 180,
+          "max": 200
+        },
+        {
+          "role": "Manager",
+          "min": 115,
+          "avg": 140,
+          "max": 165
+        },
+        {
+          "role": "Team Leader",
+          "min": 90,
+          "avg": 110,
+          "max": 130
+        },
+        {
+          "role": "Engineer",
+          "min": 85,
+          "avg": 97.5,
+          "max": 110
+        },
+        {
+          "role": "Technician",
+          "min": 72,
+          "avg": 86,
+          "max": 100
+        }
+      ],
+      "maintenance": [
+        {
+          "role": "Technical Director",
+          "min": 130,
+          "avg": 150,
+          "max": 170
+        },
+        {
+          "role": "Team Leader/Manager",
+          "min": 95,
+          "avg": 117.5,
+          "max": 140
+        },
+        {
+          "role": "Engineer",
+          "min": 85,
+          "avg": 102.5,
+          "max": 120
+        },
+        {
+          "role": "Technician",
+          "min": 72,
+          "avg": 86,
+          "max": 100
+        },
+        {
+          "role": "Field Service Engineer",
+          "min": 80,
+          "avg": 102.5,
+          "max": 125
+        }
+      ],
+      "rd_innovation": [
+        {
+          "role": "Director",
+          "min": 160,
+          "avg": 180,
+          "max": 200
+        },
+        {
+          "role": "Team Leader/Manager",
+          "min": 115,
+          "avg": 137.5,
+          "max": 160
+        },
+        {
+          "role": "Engineer",
+          "min": 85,
+          "avg": 112.5,
+          "max": 140
+        },
+        {
+          "role": "Technician",
+          "min": 72,
+          "avg": 83.5,
+          "max": 95
+        }
+      ],
+      "quality_ehs": [
+        {
+          "role": "Director",
+          "min": 160,
+          "avg": 200,
+          "max": 220
+        },
+        {
+          "role": "Team Leader/Manager",
+          "min": 91,
+          "avg": 120.5,
+          "max": 150
+        },
+        {
+          "role": "Engineer",
+          "min": 85,
+          "avg": 102.5,
+          "max": 120
+        },
+        {
+          "role": "Technician",
+          "min": 72,
+          "avg": 83.5,
+          "max": 95
+        }
+      ],
+      "project_management": [
+        {
+          "role": "Program Manager / Head of Projects",
+          "min": 120,
+          "avg": 155,
+          "max": 190
+        },
+        {
+          "role": "Technical Project Manager",
+          "min": 88,
+          "avg": 114,
+          "max": 140
+        }
+      ],
+      "most_wanted_positions": [
+        "Production & Operations Management",
+        "Technical Project Management",
+        "Method & Industrialisation",
+        "Maintenance & Reliability",
+        "Quality & EHS Management"
+      ],
+      "top_compensating_sectors": [
+        "Life Sciences",
+        "Medical Device",
+        "Luxury Industry",
+        "Machinery",
+        "Manufacturing"
+      ]
+    },
+    "esg": {
+      "corporate_functions": [
+        {
+          "role": "ESG Head / Director",
+          "min": 200,
+          "avg": 240,
+          "max": 280
+        },
+        {
+          "role": "ESG Lead / Manager / Senior",
+          "min": 150,
+          "avg": 175,
+          "max": 200
+        },
+        {
+          "role": "ESG Specialist",
+          "min": 95,
+          "avg": 125,
+          "max": 150
+        },
+        {
+          "role": "ESG Project Manager",
+          "min": 90,
+          "avg": 115,
+          "max": 140
+        },
+        {
+          "role": "Chief Sustainability Officer / Director",
+          "min": 200,
+          "avg": 230,
+          "max": 260
+        },
+        {
+          "role": "Sustainability Manager / Senior Manager",
+          "min": 150,
+          "avg": 175,
+          "max": 200
+        },
+        {
+          "role": "Sustainability Specialist",
+          "min": 95,
+          "avg": 120,
+          "max": 140
+        },
+        {
+          "role": "Head of Climate Change",
+          "min": 120,
+          "avg": 145,
+          "max": 170
+        },
+        {
+          "role": "Corporate Responsibility Head / Director",
+          "min": 160,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Corporate Responsibility Lead / Manager / Senior",
+          "min": 120,
+          "avg": 140,
+          "max": 160
+        },
+        {
+          "role": "Corporate Responsibility Specialist",
+          "min": 90,
+          "avg": 110,
+          "max": 120
+        }
+      ],
+      "investment_functions": [
+        {
+          "role": "Head of ESG Investments",
+          "min": 210,
+          "avg": 250,
+          "max": 320
+        },
+        {
+          "role": "ESG Director",
+          "min": 170,
+          "avg": 190,
+          "max": 210
+        },
+        {
+          "role": "ESG Manager",
+          "min": 130,
+          "avg": 145,
+          "max": 170
+        },
+        {
+          "role": "ESG Analyst",
+          "min": 90,
+          "avg": 115,
+          "max": 130
+        }
+      ]
+    },
+    "finance_and_accounting": {
+      "sme": [
+        {
+          "role": "Finance Director",
+          "min": 150,
+          "avg": 200,
+          "max": 250
+        },
+        {
+          "role": "Deputy Finance Director",
+          "min": 140,
+          "avg": 160,
+          "max": 180
+        },
+        {
+          "role": "Head of Controlling",
+          "min": 150,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "Finance & Accounting Manager",
+          "min": 130,
+          "avg": 145,
+          "max": 160
+        },
+        {
+          "role": "Financial Controller",
+          "min": 85,
+          "avg": 110,
+          "max": 140
+        },
+        {
+          "role": "Accountant - Sole contributor",
+          "min": 90,
+          "avg": 105,
+          "max": 120
+        },
+        {
+          "role": "Junior/ Assistant accountant",
+          "min": 65,
+          "avg": 75,
+          "max": 85
+        }
+      ],
+      "audit_fiduciaries": [
+        {
+          "role": "External Auditor - Big 4 - Manager /Senior Manager",
+          "min": 115,
+          "avg": 130,
+          "max": 160
+        },
+        {
+          "role": "External Auditor - Big 4 - Assistant / Senior / Assistant Manager",
+          "min": 80,
+          "avg": 95,
+          "max": 110
+        },
+        {
+          "role": "Senior Fiduciary Accountant",
+          "min": 85,
+          "avg": 110,
+          "max": 130
+        },
+        {
+          "role": "Tax Specialist",
+          "min": 110,
+          "avg": 145,
+          "max": 180
+        }
+      ],
+      "bluechips_multinationals_senior_leadership": [
+        {
+          "role": "Chief Financial Officer",
+          "min": 280,
+          "avg": 360,
+          "max": 450
+        },
+        {
+          "role": "VP Finance / Controlling",
+          "min": 250,
+          "avg": 300,
+          "max": 350
+        },
+        {
+          "role": "Regional Finance Director",
+          "min": 200,
+          "avg": 240,
+          "max": 280
+        },
+        {
+          "role": "Group Financial Controller",
+          "min": 180,
+          "avg": 230,
+          "max": 280
+        }
+      ],
+      "bluechips_multinationals_accounting": [
+        {
+          "role": "Consolidation Manager",
+          "min": 140,
+          "avg": 155,
+          "max": 170
+        },
+        {
+          "role": "Accounting Manager",
+          "min": 120,
+          "avg": 140,
+          "max": 160
+        },
+        {
+          "role": "Senior Accountant",
+          "min": 100,
+          "avg": 115,
+          "max": 130
+        },
+        {
+          "role": "GL Accountant",
+          "min": 90,
+          "avg": 105,
+          "max": 120
+        },
+        {
+          "role": "AP / AR Accountant",
+          "min": 75,
+          "avg": 85,
+          "max": 100
+        }
+      ],
+      "bluechips_multinationals_fp_controlling": [
+        {
+          "role": "Financial Controlling Manager / Group Controller",
+          "min": 160,
+          "avg": 195,
+          "max": 230
+        },
+        {
+          "role": "Financial Planning & Analysis (FP&A) Manager",
+          "min": 150,
+          "avg": 170,
+          "max": 190
+        },
+        {
+          "role": "Financial Controller",
+          "min": 120,
+          "avg": 135,
+          "max": 150
+        },
+        {
+          "role": "FP&A / Business Analyst",
+          "min": 90,
+          "avg": 105,
+          "max": 130
+        }
+      ],
+      "bluechips_multinationals_audit": [
+        {
+          "role": "Head of Internal Audit - Compliance",
+          "min": 180,
+          "avg": 210,
+          "max": 240
+        },
+        {
+          "role": "Internal Audit Manager",
+          "min": 140,
+          "avg": 150,
+          "max": 170
+        },
+        {
+          "role": "(Senior) Internal Auditor",
+          "min": 100,
+          "avg": 115,
+          "max": 130
+        }
+      ],
+      "bluechips_multinationals_tax_specialist": [
+        {
+          "role": "Tax Director",
+          "min": 200,
+          "avg": 230,
+          "max": 260
+        },
+        {
+          "role": "Tax Manager",
+          "min": 150,
+          "avg": 165,
+          "max": 180
+        },
+        {
+          "role": "Group Treasurer",
+          "min": 200,
+          "avg": 230,
+          "max": 270
+        },
+        {
+          "role": "Treasury Manager",
+          "min": 125,
+          "avg": 145,
+          "max": 165
+        },
+        {
+          "role": "Transfer Pricing Specialist",
+          "min": 110,
+          "avg": 135,
+          "max": 160
+        },
+        {
+          "role": "Payroll Specialist",
+          "min": 85,
+          "avg": 98,
+          "max": 110
+        }
+      ]
+    },
+    "human_resources": {
+      "multinational_companies": [
+        {
+          "role": "Senior Vice President / Chief HR Officer",
+          "min": 240,
+          "avg": 280,
+          "max": 340
+        },
+        {
+          "role": "Vice President HR",
+          "min": 240,
+          "avg": 280,
+          "max": 320
+        },
+        {
+          "role": "HR Director - Head of HR",
+          "min": 180,
+          "avg": 200,
+          "max": 240
+        },
+        {
+          "role": "Global HR Business Partner",
+          "min": 160,
+          "avg": 200,
+          "max": 240
+        },
+        {
+          "role": "HR Business Partner EMEA / People & Culture Manager",
+          "min": 130,
+          "avg": 155,
+          "max": 180
+        },
+        {
+          "role": "HR Generalist",
+          "min": 90,
+          "avg": 115,
+          "max": 130
+        },
+        {
+          "role": "HR Assistant",
+          "min": 70,
+          "avg": 80,
+          "max": 90
+        }
+      ],
+      "compensation_benefits": [
+        {
+          "role": "Director",
+          "min": 180,
+          "avg": 230,
+          "max": 280
+        },
+        {
+          "role": "Manager",
+          "min": 130,
+          "avg": 170,
+          "max": 180
+        },
+        {
+          "role": "Payroll Manager",
+          "min": 120,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Specialist",
+          "min": 100,
+          "avg": 120,
+          "max": 130
+        },
+        {
+          "role": "HRIS Specialist",
+          "min": 90,
+          "avg": 120,
+          "max": 150
+        }
+      ],
+      "small_medium_companies": [
+        {
+          "role": "HR Director / Head of HR",
+          "min": 150,
+          "avg": 180,
+          "max": 220
+        },
+        {
+          "role": "HR Manager / Local HR Business Partner",
+          "min": 120,
+          "avg": 140,
+          "max": 160
+        },
+        {
+          "role": "Recruiter",
+          "min": 75,
+          "avg": 100,
+          "max": 120
+        }
+      ],
+      "talent_acquisition": [
+        {
+          "role": "Director",
+          "min": 180,
+          "avg": 210,
+          "max": 240
+        },
+        {
+          "role": "Manager",
+          "min": 130,
+          "avg": 150,
+          "max": 180
+        },
+        {
+          "role": "Specialist",
+          "min": 90,
+          "avg": 110,
+          "max": 130
+        }
+      ],
+      "talent_development_ld": [
+        {
+          "role": "Director",
+          "min": 160,
+          "avg": 195,
+          "max": 230
+        },
+        {
+          "role": "Manager",
+          "min": 120,
+          "avg": 140,
+          "max": 180
+        },
+        {
+          "role": "Specialist",
+          "min": 90,
+          "avg": 110,
+          "max": 130
+        }
+      ]
+    },
+    "information_technology": {
+      "management_senior": [
+        {
+          "role": "Chief Information Officer (CIO)",
+          "min": 220,
+          "avg": 270,
+          "max": 350
+        },
+        {
+          "role": "Head of IT / IT Director / CTO",
+          "min": 170,
+          "avg": 200,
+          "max": 240
+        },
+        {
+          "role": "Chief Digital Officer (CDO)",
+          "min": 200,
+          "avg": 230,
+          "max": 300
+        },
+        {
+          "role": "Chief Information Security Officer (CISO)",
+          "min": 170,
+          "avg": 220,
+          "max": 280
+        },
+        {
+          "role": "IT Manager",
+          "min": 125,
+          "avg": 150,
+          "max": 170
+        }
+      ],
+      "project_management": [
+        {
+          "role": "Programme Director / PMO",
+          "min": 140,
+          "avg": 175,
+          "max": 210
+        },
+        {
+          "role": "Project Manager",
+          "min": 110,
+          "avg": 140,
+          "max": 160
+        },
+        {
+          "role": "Business Analyst",
+          "min": 100,
+          "avg": 125,
+          "max": 150
+        }
+      ],
+      "infrastructure_system_network": [
+        {
+          "role": "System Administrator / Engineer",
+          "min": 90,
+          "avg": 110,
+          "max": 140
+        },
+        {
+          "role": "Cloud Engineer",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Workplace Engineer",
+          "min": 90,
+          "avg": 115,
+          "max": 140
+        },
+        {
+          "role": "SecOps / SysOps Engineer",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Network Engineer",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Database Administrator",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        }
+      ],
+      "support_helpdesk": [
+        {
+          "role": "Helpdesk Specialist (level 1)",
+          "min": 60,
+          "avg": 80,
+          "max": 85
+        },
+        {
+          "role": "IT Support (levels 1-2)",
+          "min": 70,
+          "avg": 85,
+          "max": 100
+        },
+        {
+          "role": "Support Engineer (levels 2-3)",
+          "min": 85,
+          "avg": 100,
+          "max": 120
+        }
+      ],
+      "security": [
+        {
+          "role": "Security Engineer / Consultant",
+          "min": 90,
+          "avg": 125,
+          "max": 150
+        },
+        {
+          "role": "Information Security Officer",
+          "min": 130,
+          "avg": 150,
+          "max": 180
+        },
+        {
+          "role": "Network Security Engineer",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "SOC Analyst",
+          "min": 75,
+          "avg": 100,
+          "max": 130
+        },
+        {
+          "role": "IAM / PAM Engineer",
+          "min": 110,
+          "avg": 125,
+          "max": 140
+        }
+      ],
+      "architecture": [
+        {
+          "role": "Enterprise Architect",
+          "min": 150,
+          "avg": 180,
+          "max": 200
+        },
+        {
+          "role": "Solution Architect",
+          "min": 140,
+          "avg": 160,
+          "max": 190
+        },
+        {
+          "role": "Technical Architect",
+          "min": 130,
+          "avg": 145,
+          "max": 160
+        }
+      ],
+      "software_development": [
+        {
+          "role": ".NET / Java Developer",
+          "min": 90,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "DevOps Engineer",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Embedded Software Developer",
+          "min": 100,
+          "avg": 120,
+          "max": 150
+        },
+        {
+          "role": "Testing Specialist / QA",
+          "min": 85,
+          "avg": 120,
+          "max": 130
+        },
+        {
+          "role": "Blockchain Engineer (Web3)",
+          "min": 110,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Full-stack Developer",
+          "min": 90,
+          "avg": 120,
+          "max": 130
+        },
+        {
+          "role": "Front-End Developer (JS)",
+          "min": 80,
+          "avg": 105,
+          "max": 120
+        }
+      ],
+      "erp": [
+        {
+          "role": "ERP Business Analyst",
+          "min": 110,
+          "avg": 135,
+          "max": 150
+        },
+        {
+          "role": "ERP Project Manager",
+          "min": 120,
+          "avg": 150,
+          "max": 170
+        }
+      ],
+      "data_ai": [
+        {
+          "role": "Data Scientist",
+          "min": 100,
+          "avg": 130,
+          "max": 170
+        },
+        {
+          "role": "Data Engineer",
+          "min": 85,
+          "avg": 115,
+          "max": 140
+        },
+        {
+          "role": "Data Analyst",
+          "min": 75,
+          "avg": 90,
+          "max": 115
+        },
+        {
+          "role": "AI Engineer",
+          "min": 95,
+          "avg": 120,
+          "max": 140
+        },
+        {
+          "role": "ML Engineer",
+          "min": 90,
+          "avg": 120,
+          "max": 140
+        },
+        {
+          "role": "BI Specialist",
+          "min": 80,
+          "avg": 110,
+          "max": 140
+        }
+      ],
+      "most_wanted_positions": [
+        "System Engineer",
+        "IT Architect",
+        "Software Engineer",
+        "PM / BA",
+        "Security Engineer"
+      ],
+      "top_compensating_sectors": [
+        "Commodities",
+        "Tobacco",
+        "Banking",
+        "Life Sciences",
+        "Financial services"
+      ],
+      "trends": "Strong demand for specialists in cybersecurity, cloud engineering, AI integration, and data analytics. Employers favour hybrid profiles combining technical expertise with interpersonal skills."
+    },
+    "property_and_construction": {
+      "bim_management": [
+        {
+          "role": "BIM Designer",
+          "min": 70,
+          "avg": 80,
+          "max": 95
+        },
+        {
+          "role": "BIM Coordinator",
+          "min": 75,
+          "avg": 95,
+          "max": 115
+        },
+        {
+          "role": "BIM Manager",
+          "min": 90,
+          "avg": 120,
+          "max": 150
+        }
+      ],
+      "property_management": [
+        {
+          "role": "Property Management Assistant",
+          "min": 65,
+          "avg": 75,
+          "max": 85
+        },
+        {
+          "role": "Rental Property Manager",
+          "min": 75,
+          "avg": 85,
+          "max": 91
+        },
+        {
+          "role": "Technical Property Manager",
+          "min": 85,
+          "avg": 95,
+          "max": 110
+        },
+        {
+          "role": "360 Property Manager",
+          "min": 85,
+          "avg": 100,
+          "max": 120
+        },
+        {
+          "role": "Branch Director",
+          "min": 120,
+          "avg": 130,
+          "max": 150
+        }
+      ],
+      "construction": [
+        {
+          "role": "Project Assistant",
+          "min": 65,
+          "avg": 75,
+          "max": 85
+        },
+        {
+          "role": "Construction site Manager",
+          "min": 82,
+          "avg": 95,
+          "max": 115
+        },
+        {
+          "role": "Economist",
+          "min": 80,
+          "avg": 100,
+          "max": 120
+        },
+        {
+          "role": "Project Manager",
+          "min": 100,
+          "avg": 125,
+          "max": 150
+        },
+        {
+          "role": "Development Project Manager",
+          "min": 110,
+          "avg": 135,
+          "max": 175
+        }
+      ],
+      "investments": [
+        {
+          "role": "Analyst",
+          "min": 85,
+          "avg": 105,
+          "max": 125
+        },
+        {
+          "role": "Asset Manager",
+          "min": 105,
+          "avg": 125,
+          "max": 150
+        },
+        {
+          "role": "Portfolio Manager",
+          "min": 110,
+          "avg": 135,
+          "max": 170
+        },
+        {
+          "role": "Transaction Manager",
+          "min": 120,
+          "avg": 140,
+          "max": 170
+        },
+        {
+          "role": "Fund Manager",
+          "min": 130,
+          "avg": 160,
+          "max": 220
+        },
+        {
+          "role": "Head of Real Estate Investments",
+          "min": 190,
+          "avg": 230,
+          "max": 320
+        }
+      ]
+    },
+    "sales_and_marketing": {
+      "sales_it": [
+        {
+          "role": "Business Development Manager / Account Executive",
+          "min": 75,
+          "avg": 95,
+          "max": 125
+        },
+        {
+          "role": "Sales Manager (bilingual or trilingual)",
+          "min": 100,
+          "avg": 130,
+          "max": 150
+        },
+        {
+          "role": "Sr Business Development Manager",
+          "min": 170,
+          "avg": 190,
+          "max": 210
+        },
+        {
+          "role": "Key Account Manager",
+          "min": 95,
+          "avg": 120,
+          "max": 140
+        },
+        {
+          "role": "Sales Engineer / Technical Sales",
+          "min": 95,
+          "avg": 120,
+          "max": 140
+        },
+        {
+          "role": "Sales Director",
+          "min": 140,
+          "avg": 190,
+          "max": 240
+        }
+      ],
+      "digital_marketing": [
+        {
+          "role": "Digital Marketing Coordinator",
+          "min": 75,
+          "avg": 85,
+          "max": 95
+        },
+        {
+          "role": "Social Media Manager / Community Manager",
+          "min": 75,
+          "avg": 95,
+          "max": 120
+        },
+        {
+          "role": "Digital Innovation Manager",
+          "min": 130,
+          "avg": 140,
+          "max": 160
+        },
+        {
+          "role": "UX/UI/Graphic Designer",
+          "min": 80,
+          "avg": 95,
+          "max": 110
+        },
+        {
+          "role": "CRM Manager",
+          "min": 90,
+          "avg": 110,
+          "max": 140
+        },
+        {
+          "role": "E-Commerce Manager",
+          "min": 110,
+          "avg": 130,
+          "max": 170
+        },
+        {
+          "role": "Head of Digital Marketing",
+          "min": 130,
+          "avg": 150,
+          "max": 180
+        }
+      ],
+      "executive": [
+        {
+          "role": "Chief Digital Officer (CDO)",
+          "min": 160,
+          "avg": 230,
+          "max": 300
+        },
+        {
+          "role": "Chief Marketing Officer (CMO)",
+          "min": 220,
+          "avg": 260,
+          "max": 330
+        },
+        {
+          "role": "Chief Sales Officer (CSO)",
+          "min": 220,
+          "avg": 240,
+          "max": 300
+        },
+        {
+          "role": "Country Manager (MD)",
+          "min": 180,
+          "avg": 230,
+          "max": 260
+        }
+      ],
+      "bonus_info": "Highest bonus range in IT sales positions: 30-60%. Manufacturing/consumer goods: 10-35%. Business services: 15-20%. Marketing: 5-15%. Digital: 10-25%. Executive: 15-25%."
+    }
+  },
+  "key_insights": [
+    "Salary levels across most sectors remain flat in 2026, signalling stabilisation after years of volatility",
+    "Over 50% of temporary/interim roles convert into permanent positions",
+    "Strong demand for cybersecurity, cloud engineering, AI integration, and data analytics specialists",
+    "Hybrid profiles combining technical expertise with interpersonal skills are most sought after",
+    "Candidate experience has become a strategic lever in recruitment",
+    "Salary transparency gaining ground driven by European regulations",
+    "Switzerland faces talent shortage exacerbated by low unemployment and retirement of Baby Boomers",
+    "Remote work options declining, especially in legal/compliance roles",
+    "Blockchain/Web3 engineers command 110-150k CHF",
+    "Data Scientists: 100-170k CHF; AI/ML Engineers: 90-140k CHF"
+  ]
+}
