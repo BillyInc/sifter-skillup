@@ -53,7 +53,7 @@ if os.path.exists(csvpath):
         vals.append(f"  ({q(did)}, {q(r['cert_name'])}, {q(r['cert_body'])}, {q(r.get('official_url'))}, {num(r.get('seniority_tier'))}, {q(r.get('tier_type'))}, {num(r.get('price'))}, {q(r.get('currency'))}, {q(r.get('price_as_of'))}, {q(r.get('price_source'))})")
     SQL.append(",\n".join(vals))
     SQL.append(") AS sub(domain_id, cert_name, cert_body, official_url, seniority_tier, tier_type, price, currency, price_as_of, price_source)")
-    SQL.append("WHERE skillup_dev.domain_certifications.domain_id = sub.domain_id")
+    SQL.append("WHERE skillup_dev.domain_certifications.domain_id = sub.domain_id::uuid")
     SQL.append("  AND skillup_dev.domain_certifications.name = sub.cert_name")
     SQL.append("  AND skillup_dev.domain_certifications.body = sub.cert_body;")
     SQL.append("")
@@ -115,7 +115,7 @@ if os.path.exists(csvpath):
         vals.append(f"  ({q(did)}, {q(r['tool_name'])}, {num(r.get('demand_score'))}, {q(r.get('demand_source'))}, {q(r.get('demand_as_of'))}, {q(r.get('tool_url'))})")
     SQL.append(",\n".join(vals))
     SQL.append(") AS sub(domain_id, tool_name, demand_score, demand_source, demand_as_of, tool_url)")
-    SQL.append("WHERE skillup_dev.domain_tools.domain_id = sub.domain_id")
+    SQL.append("WHERE skillup_dev.domain_tools.domain_id = sub.domain_id::uuid")
     SQL.append("  AND skillup_dev.domain_tools.tool_name = sub.tool_name;")
     SQL.append("")
 
@@ -135,7 +135,7 @@ if os.path.exists(csvpath):
         vals.append(f"  ({q(rid)}, {q(r['currency_status'])}, {q(r.get('currency_source'))}, {q(r.get('currency_verified_at'))})")
     SQL.append(",\n".join(vals))
     SQL.append(") AS sub(id, currency_status, currency_source, currency_verified_at)")
-    SQL.append("WHERE skillup_dev.domain_roles.id = sub.id;")
+    SQL.append("WHERE skillup_dev.domain_roles.id = sub.id::uuid;")
     SQL.append("")
 
 # ── JAMB Floor ──────
@@ -169,7 +169,7 @@ if os.path.exists(csvpath):
     for r in rows:
         conflict_id = uid("cutoff", r["school_name"], r["programme_name"], str(r["year"]), r["form"])
         SQL.append(f"INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)")
-        SQL.append(f"SELECT {q(conflict_id)}, s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = {q(r['programme_name'])} LIMIT 1), {num(r['year'])}, {num(r.get('aggregate_cutoff'))}, {num(r.get('jamb_cutoff'))}, {num(r.get('postutme_cutoff'))}, {q(r['form'])}, {q(r['source_url'])}")
+        SQL.append(f"SELECT {q(conflict_id)}, s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = {q(r['programme_name'])} LIMIT 1), {num(r['year'])}, {num(r.get('aggregate_cutoff'))}, {num(r.get('jamb_cutoff'))}, {num(r.get('postutme_cutoff'))}, {q(r['form'])}, {q(r['source_url'])}")
         SQL.append(f"FROM skillup_dev.schools s, skillup_dev.programmes p")
         SQL.append(f"WHERE s.name = {q(r['school_name'])} AND p.name = {q(r['programme_name'])}")
         SQL.append(f"ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;")
@@ -177,7 +177,7 @@ if os.path.exists(csvpath):
     # backfill any legacy rows that predate the jamb_programme_id column:
     # 1) exact name match (canonical programme name == JAMB name)
     SQL.append("UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = j.id")
-    SQL.append("FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.name = p.name")
+    SQL.append("FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.jamb_name = p.name")
     SQL.append("WHERE c.programme_id = p.id AND c.jamb_programme_id IS NULL;")
     # 2) via the curated programme_mapping bridge (covers renamed programmes,
     #    e.g. canonical "Law" -> JAMB "Civil Law")

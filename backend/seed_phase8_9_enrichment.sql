@@ -36,7 +36,7 @@ FROM (VALUES
   ('db622a68-7662-53bb-b9cc-da4d5a3edd2e', 'CPA', 'Nigerian Accounting Standards Board', 'https://www.frcn.gov.ng/', 2, 'stages', 75000, 'NGN', '2025-01-15', 'https://www.frcn.gov.ng/fees'),
   ('db622a68-7662-53bb-b9cc-da4d5a3edd2e', 'ACCA', 'Association of Chartered Certified Accountants', 'https://www.accaglobal.com/gb/en/qualifications/glance.html', 2, 'stages', 150, 'GBP', '2025-01-15', 'https://www.accaglobal.com/gb/en/student/exam-entry-and-administration/exam-fees.html')
 ) AS sub(domain_id, cert_name, cert_body, official_url, seniority_tier, tier_type, price, currency, price_as_of, price_source)
-WHERE skillup_dev.domain_certifications.domain_id = sub.domain_id
+WHERE skillup_dev.domain_certifications.domain_id = sub.domain_id::uuid
   AND skillup_dev.domain_certifications.name = sub.cert_name
   AND skillup_dev.domain_certifications.body = sub.cert_body;
 
@@ -530,7 +530,7 @@ FROM (VALUES
   ('203eb541-571e-536b-9c78-59c00018533e', 'Git', 0.88, 'adzuna', '2025-01-15', 'https://git-scm.com/'),
   ('203eb541-571e-536b-9c78-59c00018533e', 'Jira', 0.72, 'adzuna', '2025-01-15', 'https://www.atlassian.com/software/jira')
 ) AS sub(domain_id, tool_name, demand_score, demand_source, demand_as_of, tool_url)
-WHERE skillup_dev.domain_tools.domain_id = sub.domain_id
+WHERE skillup_dev.domain_tools.domain_id = sub.domain_id::uuid
   AND skillup_dev.domain_tools.tool_name = sub.tool_name;
 
 -- Roles currency status: 40 rows
@@ -580,7 +580,7 @@ FROM (VALUES
   ('9aec7b75-9e9b-5c2f-b16a-181ecc664c58', 'emerging', 'wef_foj_2025', '2025-01-15'),
   ('fae997b8-994d-567b-bd34-aab949e1e0ce', 'legacy', 'lightcast', '2025-01-15')
 ) AS sub(id, currency_status, currency_source, currency_verified_at)
-WHERE skillup_dev.domain_roles.id = sub.id;
+WHERE skillup_dev.domain_roles.id = sub.id::uuid;
 
 -- National JAMB floor: 2 rows
 INSERT INTO skillup_dev.national_jamb_floor (year, floor_score, context_note, source_url)
@@ -674,113 +674,113 @@ ON CONFLICT (school_id, year) DO UPDATE SET jamb_weight = EXCLUDED.jamb_weight, 
 
 -- Programme × school cut-offs: 21 rows
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '5fec3005-2bf8-5d0c-9619-9733ca483528', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 72.5, 250, 65, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
+SELECT '5fec3005-2bf8-5d0c-9619-9733ca483528', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 72.5, 250, 65, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Lagos' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '14e2ca65-ace1-5dd8-98fe-88cf264b80a6', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Electrical Engineering' LIMIT 1), 2025, 68.2, 240, 60, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
+SELECT '14e2ca65-ace1-5dd8-98fe-88cf264b80a6', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Electrical Engineering' LIMIT 1), 2025, 68.2, 240, 60, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Lagos' AND p.name = 'Electrical Engineering'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT 'bf62bbf2-8a8f-5a2a-8ef3-9e0ae4b3f51d', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Medicine and Surgery' LIMIT 1), 2025, 85.0, 280, 80, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
+SELECT 'bf62bbf2-8a8f-5a2a-8ef3-9e0ae4b3f51d', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Medicine and Surgery' LIMIT 1), 2025, 85.0, 280, 80, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Lagos' AND p.name = 'Medicine and Surgery'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '40b0887c-265e-5a80-b54c-3c0299bd494b', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Law' LIMIT 1), 2025, 78.5, 270, 70, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
+SELECT '40b0887c-265e-5a80-b54c-3c0299bd494b', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Law' LIMIT 1), 2025, 78.5, 270, 70, 'UTME', 'https://admissions.unilag.edu.ng/cutoff-marks'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Lagos' AND p.name = 'Law'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '3f3219eb-e0da-53ca-98a0-a428b31eadd2', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 70.0, 245, 62, 'UTME', 'https://admissions.ui.edu.ng/cutoffs'
+SELECT '3f3219eb-e0da-53ca-98a0-a428b31eadd2', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 70.0, 245, 62, 'UTME', 'https://admissions.ui.edu.ng/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Ibadan' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '61968bca-c6e2-57fa-9cd2-93fc1a685da5', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Medicine' LIMIT 1), 2025, 82.0, 275, 78, 'UTME', 'https://admissions.ui.edu.ng/cutoffs'
+SELECT '61968bca-c6e2-57fa-9cd2-93fc1a685da5', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Medicine' LIMIT 1), 2025, 82.0, 275, 78, 'UTME', 'https://admissions.ui.edu.ng/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Ibadan' AND p.name = 'Medicine'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '241b9702-e466-540c-9ac9-0292081546f0', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Law' LIMIT 1), 2025, 76.0, 260, 68, 'UTME', 'https://admissions.ui.edu.ng/cutoffs'
+SELECT '241b9702-e466-540c-9ac9-0292081546f0', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Law' LIMIT 1), 2025, 76.0, 260, 68, 'UTME', 'https://admissions.ui.edu.ng/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Ibadan' AND p.name = 'Law'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '9b1d5d14-7623-5ebd-af6f-14cc44c07883', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 65.0, 220, 55, 'UTME', 'https://abu.edu.ng/admissions/cutoffs'
+SELECT '9b1d5d14-7623-5ebd-af6f-14cc44c07883', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 65.0, 220, 55, 'UTME', 'https://abu.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Ahmadu Bello University' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '1226cff9-a699-584d-97b9-6301cf453dc7', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Medicine' LIMIT 1), 2025, 78.0, 250, 70, 'UTME', 'https://abu.edu.ng/admissions/cutoffs'
+SELECT '1226cff9-a699-584d-97b9-6301cf453dc7', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Medicine' LIMIT 1), 2025, 78.0, 250, 70, 'UTME', 'https://abu.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Ahmadu Bello University' AND p.name = 'Medicine'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '21b7ac9e-5a81-53c5-98e0-17e007923e73', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 69.5, 240, 60, 'UTME', 'https://oauife.edu.ng/admissions/cutoffs'
+SELECT '21b7ac9e-5a81-53c5-98e0-17e007923e73', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 69.5, 240, 60, 'UTME', 'https://oauife.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Obafemi Awolowo University' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '350f5337-a1de-5159-a995-115bccd4a4f3', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Medicine' LIMIT 1), 2025, 81.0, 270, 75, 'UTME', 'https://oauife.edu.ng/admissions/cutoffs'
+SELECT '350f5337-a1de-5159-a995-115bccd4a4f3', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Medicine' LIMIT 1), 2025, 81.0, 270, 75, 'UTME', 'https://oauife.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Obafemi Awolowo University' AND p.name = 'Medicine'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '2cfc0fd8-daea-55bc-bba4-806085c0dc13', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 67.0, 230, 58, 'UTME', 'https://unn.edu.ng/admissions/cutoffs'
+SELECT '2cfc0fd8-daea-55bc-bba4-806085c0dc13', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 67.0, 230, 58, 'UTME', 'https://unn.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Nigeria Nsukka' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '1014f64c-9187-5eb2-bfb8-034b8763caf6', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Medicine' LIMIT 1), 2025, 79.5, 265, 72, 'UTME', 'https://unn.edu.ng/admissions/cutoffs'
+SELECT '1014f64c-9187-5eb2-bfb8-034b8763caf6', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Medicine' LIMIT 1), 2025, 79.5, 265, 72, 'UTME', 'https://unn.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Nigeria Nsukka' AND p.name = 'Medicine'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '5faa7948-4ef0-5ecd-9ae4-68a06b883f81', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 66.0, 225, 55, 'UTME', 'https://futa.edu.ng/admissions/cutoffs'
+SELECT '5faa7948-4ef0-5ecd-9ae4-68a06b883f81', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 66.0, 225, 55, 'UTME', 'https://futa.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Federal University of Technology Akure' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT 'bc5871f8-8aac-5e6e-9e07-b5334cf8a397', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Electrical Engineering' LIMIT 1), 2025, 64.5, 220, 52, 'UTME', 'https://futa.edu.ng/admissions/cutoffs'
+SELECT 'bc5871f8-8aac-5e6e-9e07-b5334cf8a397', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Electrical Engineering' LIMIT 1), 2025, 64.5, 220, 52, 'UTME', 'https://futa.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Federal University of Technology Akure' AND p.name = 'Electrical Engineering'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '229eb93a-dd54-5f95-a3a0-1b5cac2320b9', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 65.5, 230, 55, 'UTME', 'https://uniben.edu/admissions/cutoffs'
+SELECT '229eb93a-dd54-5f95-a3a0-1b5cac2320b9', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 65.5, 230, 55, 'UTME', 'https://uniben.edu/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Benin' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT 'f2232185-57f6-505d-be2d-7ecef1e9b848', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Medicine' LIMIT 1), 2025, 77.0, 260, 68, 'UTME', 'https://uniben.edu/admissions/cutoffs'
+SELECT 'f2232185-57f6-505d-be2d-7ecef1e9b848', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Medicine' LIMIT 1), 2025, 77.0, 260, 68, 'UTME', 'https://uniben.edu/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Benin' AND p.name = 'Medicine'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '930fb1f5-e0dd-5e7f-9408-182bf9b709a5', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 62.0, 210, 50, 'UTME', 'https://lasu.edu.ng/admissions/cutoffs'
+SELECT '930fb1f5-e0dd-5e7f-9408-182bf9b709a5', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 62.0, 210, 50, 'UTME', 'https://lasu.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Lagos State University' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '811c1b86-963f-59f0-bd56-45f1b21cd662', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Law' LIMIT 1), 2025, 70.0, 235, 60, 'UTME', 'https://lasu.edu.ng/admissions/cutoffs'
+SELECT '811c1b86-963f-59f0-bd56-45f1b21cd662', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Law' LIMIT 1), 2025, 70.0, 235, 60, 'UTME', 'https://lasu.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Lagos State University' AND p.name = 'Law'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT 'b86557cb-6498-5762-a432-05bdbc907fbe', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 60.0, 200, 50, 'UTME', 'https://buk.edu.ng/admissions/cutoffs'
+SELECT 'b86557cb-6498-5762-a432-05bdbc907fbe', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 60.0, 200, 50, 'UTME', 'https://buk.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'Bayero University Kano' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 INSERT INTO skillup_dev.programme_school_cutoff (id, school_id, programme_id, jamb_programme_id, year, aggregate_cutoff, jamb_cutoff, postutme_cutoff, form, source_url)
-SELECT '006848ca-5daa-572b-8967-65238aded6c2', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.name = 'Computer Science' LIMIT 1), 2025, 68.0, 235, 58, 'UTME', 'https://unilorin.edu.ng/admissions/cutoffs'
+SELECT '006848ca-5daa-572b-8967-65238aded6c2', s.id, p.id, (SELECT j.id FROM skillup_dev.jamb_programmes j WHERE j.jamb_name = 'Computer Science' LIMIT 1), 2025, 68.0, 235, 58, 'UTME', 'https://unilorin.edu.ng/admissions/cutoffs'
 FROM skillup_dev.schools s, skillup_dev.programmes p
 WHERE s.name = 'University of Ilorin' AND p.name = 'Computer Science'
 ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;
 
 UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = j.id
-FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.name = p.name
+FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.jamb_name = p.name
 WHERE c.programme_id = p.id AND c.jamb_programme_id IS NULL;
 UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = pm.jamb_programme_id
 FROM skillup_dev.programme_mapping pm
