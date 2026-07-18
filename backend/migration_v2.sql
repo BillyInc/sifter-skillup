@@ -9,6 +9,8 @@
 -- ============================================================
 
 -- â”€â”€ 1. EXTEND USERS TABLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+BEGIN;
+
 ALTER TABLE skillup_dev.users
   ADD COLUMN IF NOT EXISTS email                TEXT UNIQUE,
   ADD COLUMN IF NOT EXISTS password_hash        TEXT,
@@ -346,3 +348,5 @@ CREATE POLICY "public_read_challenges" ON skillup_dev.challenges           FOR S
 CREATE POLICY "public_read_feed"       ON skillup_dev.feed_items           FOR SELECT USING (is_published = true);
 CREATE POLICY "public_read_merch"      ON skillup_dev.merchandise_items    FOR SELECT USING (available = true);
 CREATE POLICY "public_read_content"    ON skillup_dev.content_cache        FOR SELECT USING (true);
+
+COMMIT;

@@ -849,8 +849,8 @@ export default function LessonScreen({
     ?? ((user as any)?.current_track_name)
     ?? inferredTrackId;
   const resolvedLabIndex = labNumber ?? labIndexFromLegacyId(labId) ?? (inferredTrackId === 'starknet-islands' ? 18 : 0);
-  const resolvedLabTitle = starknetLab?.title
-    ?? (inferredTrackId === 'starknet-islands' ? 'Starknet Islands' : inferredTrackName);
+  const resolvedLabTitle =
+    inferredTrackId === 'starknet-islands' ? 'Starknet Islands' : inferredTrackName;
   const nextTarget = hasNextStarknetLesson
     ? {
         levelId: getStarknetLessonRuntimeId(
@@ -915,7 +915,7 @@ export default function LessonScreen({
       labIndex: resolvedLabIndex,
       simulatorState: null,
     }).catch(() => {});
-  }, [inferredTrackId, inferredTrackName, labId, labNumber, lessonTopic, levelId, lessonIndex, resolvedLabIndex, resolvedLabTitle, savePosition, starknetLab?.title, trackId, user]);
+  }, [inferredTrackId, inferredTrackName, labId, labNumber, lessonTopic, levelId, lessonIndex, resolvedLabIndex, resolvedLabTitle, savePosition, trackId, user]);
 
   useEffect(()=>{loadBookmarks().then(bm=>setIsBookmarked(bm.some(b=>b.levelId===levelId)));}, [levelId]);
   useEffect(()=>{

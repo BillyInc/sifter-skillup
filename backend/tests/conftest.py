@@ -1,4 +1,4 @@
-import importlib
+import sys
 
 import pytest
 from unittest.mock import MagicMock, patch
@@ -8,45 +8,43 @@ from fastapi.testclient import TestClient
 @pytest.fixture(autouse=True)
 def patch_all_db_modules(monkeypatch):
     """
-    Patch the module-level `db` reference in every backend module that does
-    `from database import db`. New route modules capture the reference at
-    import time, so simply patching `database.db` is not enough.
-    Also disables SINGLE_DEVICE_ENFORCEMENT so middleware doesn't 401 on
-    requests without an X-Device-Id header.
+    Patch the module-level `db` reference in every backend module that did
+    `from database import db`. Route/service/middleware modules capture the
+    reference at import time, so patching `database.db` alone is not enough.
+
+    We identify those modules by scanning `sys.modules` for any already-imported
+    module whose `db` attribute *is* the original `database.db` singleton. This
+    avoids a hardcoded module list that silently rots when code moves (the app
+    now mounts `routes.starknet_routes`, `services.offline_sync`,
+    `middleware.device_sessions`, etc. — the old bare-name list missed all of
+    those, so the real modules kept a live Supabase client and the tests hit the
+    network). Importing `main` at the top of each test module ensures every
+    mounted route module is already in `sys.modules` by the time this runs.
+
+    Also disables SINGLE_DEVICE_ENFORCEMENT (a settings singleton, so patching it
+    once affects the middleware app-wide) so requests without an X-Device-Id
+    header aren't 401'd.
     """
     import database
+    original_db = database.db
     mock = MagicMock()
     mock.get_client.return_value = MagicMock()
     mock.get_service_client.return_value = MagicMock()
     monkeypatch.setattr(database, "db", mock)
-    for mod_name in [
-        "main",
-        "auth",
-        "starknet_routes",
-        "device_sessions",
-        "phase5_routes",
-        "feed_routes",
-        "social_rewards_routes",
-        "interview_routes",
-        "content_routes",
-        "game_extra_routes",
-        "offline_sync",
-        "airtable_sync",
-        "session_middleware",
-        "portfolio_routes",
-        "community_routes",
-        "missing_routes",
-    ]:
-        try:
-            mod = importlib.import_module(mod_name)
-        except ImportError:
+
+    for module in list(sys.modules.values()):
+        if module is None:
             continue
-        if hasattr(mod, "db"):
-            monkeypatch.setattr(f"{mod_name}.db", mock, raising=False)
-    # Disable single-device enforcement for tests so middleware lets us through
+        try:
+            if module.__dict__.get("db") is original_db:
+                monkeypatch.setattr(module, "db", mock, raising=False)
+        except (AttributeError, TypeError):
+            continue
+
+    # Disable single-device enforcement for tests so middleware lets us through.
     try:
-        import session_middleware
-        monkeypatch.setattr(session_middleware.settings, "SINGLE_DEVICE_ENFORCEMENT", False, raising=False)
+        from config import settings
+        monkeypatch.setattr(settings, "SINGLE_DEVICE_ENFORCEMENT", False, raising=False)
     except Exception:
         pass
     return mock

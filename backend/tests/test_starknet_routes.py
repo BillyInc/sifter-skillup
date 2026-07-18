@@ -8,10 +8,21 @@ import pytest
 from fastapi.testclient import TestClient
 from fastapi import BackgroundTasks
 
-import starknet_routes
+# Import the module where the route code actually lives (the app mounts
+# `routes.starknet_routes`). The root `starknet_routes.py` is a `import *`
+# compatibility shim: it doesn't re-export underscore-prefixed helpers like
+# `_verify_privy_token`, and even if it did, monkeypatching the shim wouldn't
+# affect the functions running inside `routes.starknet_routes`' own globals.
+import routes.starknet_routes as starknet_routes
 from auth import Auth
 from main import app
 from models import StarknetAuthRequest
+
+
+# A stub token shaped like a real Privy JWT so it passes `_looks_like_jwt`
+# (needs exactly two dots and length > 100); the actual verification is
+# monkeypatched per-test.
+VALID_PRIVY_TOKEN = "a" * 60 + "." + "b" * 60 + "." + "c" * 60
 
 
 SAMPLE_USER = {
@@ -122,7 +133,7 @@ class TestStarknetAuthEmail:
 
         r = auth_client.post(
             "/api/starknet/auth/email",
-            json={"email": "alice@example.com", "privy_token": "x" * 20},
+            json={"email": "alice@example.com", "privy_token": VALID_PRIVY_TOKEN},
         )
         assert r.status_code == 503
 
@@ -143,7 +154,7 @@ class TestStarknetAuthEmail:
 
         r = auth_client.post(
             "/api/starknet/auth/email",
-            json={"email": "alice@example.com", "privy_token": "x" * 20},
+            json={"email": "alice@example.com", "privy_token": VALID_PRIVY_TOKEN},
         )
         assert r.status_code == 200, r.text
         assert r.json()["success"] is True
@@ -176,7 +187,7 @@ class TestStarknetAuthEmail:
         monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
-            StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+            StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
             BackgroundTasks(),
             None,
         ))
@@ -214,7 +225,7 @@ class TestStarknetAuthEmail:
         monkeypatch.setattr(starknet_routes.Auth, "create_jwt", lambda user_id: f"jwt-{user_id}")
 
         result = asyncio.run(starknet_routes.starknet_auth_email(
-            StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+            StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
             BackgroundTasks(),
             None,
         ))
@@ -253,7 +264,7 @@ class TestStarknetAuthEmail:
 
         with pytest.raises(starknet_routes.HTTPException) as exc_info:
             asyncio.run(starknet_routes.starknet_auth_email(
-                StarknetAuthRequest(email="alice@example.com", privy_token="x" * 20),
+                StarknetAuthRequest(email="alice@example.com", privy_token=VALID_PRIVY_TOKEN),
                 BackgroundTasks(),
                 None,
             ))
