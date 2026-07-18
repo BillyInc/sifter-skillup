@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 
 from auth import Auth
 from config import settings
@@ -18,6 +18,12 @@ from models import (
 )
 
 router = APIRouter(prefix="/api/v2", tags=["phase5"])
+
+# Max XP a single client-submitted event may award (anti-abuse). Larger awards
+# (badges, challenges) are computed server-side from DB values, not the client.
+MAX_XP_PER_EVENT = 1000
+# Max rows returnable from a history query in one page.
+MAX_HISTORY_LIMIT = 100
 
 
 # ─────────────────────────────────────────────────────────────
@@ -36,15 +42,15 @@ async def record_xp_event(
     """
     user_id = current_user["id"]
 
-    # Fetch fresh points to prevent stale-read race
-    fresh = db.get_service_client().table("users").select("points") \
-        .eq("id", user_id).single().execute().data
-    current_points = fresh["points"] if fresh else current_user["points"]
-    new_points = current_points + event.xp_amount
+    # Reject non-positive or abusively large client-supplied awards.
+    if event.xp_amount <= 0 or event.xp_amount > MAX_XP_PER_EVENT:
+        raise HTTPException(422, f"xp_amount must be between 1 and {MAX_XP_PER_EVENT}")
 
-    db.get_service_client().table("users") \
-        .update({"points": new_points}) \
-        .eq("id", user_id).execute()
+    # Atomic increment via RPC — avoids the read-then-write race entirely.
+    new_points = db.get_service_client().rpc(
+        "increment_user_points",
+        {"p_user_id": user_id, "p_delta": event.xp_amount},
+    ).execute().data
 
     db.get_service_client().table("xp_events").insert({
         "id":         str(uuid.uuid4()),
@@ -66,7 +72,7 @@ async def record_xp_event(
 
 @router.get("/xp/history", response_model=ResponseModel)
 async def xp_history(
-    limit: int = 50,
+    limit: int = Query(50, ge=1, le=MAX_HISTORY_LIMIT),
     current_user: dict = Depends(Auth.get_current_user),
 ):
     result = db.get_service_client().table("xp_events") \
@@ -254,16 +260,16 @@ async def redeem_merch(
     item = item.data[0]
     cost = item["credit_cost"]
 
-    fresh = db.get_service_client().table("users").select("merch_credits") \
-        .eq("id", current_user["id"]).single().execute().data
-    current_credits = fresh["merch_credits"] if fresh else 0
+    # Atomic check-and-decrement: the RPC only deducts when the user has enough
+    # (WHERE merch_credits >= p_amount) and returns the remaining balance, or
+    # NULL if insufficient. Avoids the read-then-write race and TOCTOU spend.
+    new_credits = db.get_service_client().rpc(
+        "decrement_merch_credits",
+        {"p_user_id": current_user["id"], "p_amount": cost},
+    ).execute().data
 
-    if current_credits < cost:
-        raise HTTPException(400, f"Insufficient credits: need {cost}, have {current_credits}")
-
-    new_credits = current_credits - cost
-    db.get_service_client().table("users") \
-        .update({"merch_credits": new_credits}).eq("id", current_user["id"]).execute()
+    if new_credits is None:
+        raise HTTPException(400, f"Insufficient credits: need {cost}")
 
     order = db.get_service_client().table("merchandise_orders").insert({
         "id":           str(uuid.uuid4()),
@@ -271,7 +277,7 @@ async def redeem_merch(
         "item_id":      item_id,
         "credits_used": cost,
         "status":       "pending",
-        "shipping_info": body.get("shipping_info"),
+        "shipping_info": body.get("shipping_address") or body.get("shipping_info"),
         "created_at":   datetime.utcnow().isoformat(),
     }).execute()
 

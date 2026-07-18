@@ -7,7 +7,7 @@ rest here so the remaining work has clear owners. Buckets:
 | Check | Status after this PR | Owner |
 |-------|----------------------|-------|
 | Frontend Checks (TypeScript + jest + web build) | ✅ fixed | — |
-| Backend Checks (pytest) | ⚠️ 10 of 24 failures fixed; 14 documented below | backend dev |
+| Backend Checks (pytest) | ⚠️ 23 of 24 failures fixed; 1 documented below | backend dev |
 | CodeQL (×3) | ❌ needs a repo setting (below) | repo admin |
 | Netlify deploy previews (×6) | ⚠️ should recover now the web build compiles | infra / dev |
 
@@ -62,9 +62,9 @@ this PR the web build should compile again; if the previews still fail afterward
 is a Netlify config/secret issue (build command, env vars) that needs someone with
 Netlify access — not a code change.
 
-## 3. Backend tests — pre-existing test-vs-refactor divergence (14)
+## 3. Backend tests — 23 of 24 fixed; 1 documented (was: pre-existing test-vs-refactor divergence)
 
-### Fixed here (real, unambiguous)
+### Test-infra fixes
 - **conftest DB mock never reached the live modules.** `tests/conftest.py` patched
   bare module names (`starknet_routes`, `device_sessions`, `phase5_routes`,
   `offline_sync`, `feed_routes`), but the app mounts `routes.starknet_routes`,
@@ -72,60 +72,57 @@ Netlify access — not a code change.
   `routes.feed_routes`. The real modules kept a live Supabase client, so tests hit
   the network (`httpx.ConnectError`). Now patched by identity sweep over
   `sys.modules` — robust to future moves. **This alone fixed ~10 failures.**
-- **RPC method allowlist** restored on `StarknetRPCRequest` (rejects non-allowlisted
-  methods with 422; read-only methods only).
 - **`migration_v2.sql`** wrapped in `BEGIN;`/`COMMIT;` (smoke test).
 - **`test_starknet_routes.py`** imports the real `routes.starknet_routes` (the root
-  `starknet_routes.py` is an `import *` shim that can't expose `_verify_privy_token`,
-  and patching the shim wouldn't affect the live route anyway), and uses a
-  JWT-shaped token stub so it passes `_looks_like_jwt`. (7/9 starknet tests now pass.)
+  `starknet_routes.py` is an `import *` shim that can't expose `_verify_privy_token`)
+  and uses a JWT-shaped token stub so it passes `_looks_like_jwt`.
 
-### Still failing — need the backend dev's intent (do NOT silently bless)
-These tests were written against **older implementations** that have since been
-refactored and/or relocated. Each is either a **real regression to fix in code** or
-an **intended change that needs the test updated** — and only the dev can say which.
-Several touch **security-relevant behavior**, so they were left failing rather than
-guessed at.
+### Production regressions restored (the refactor dropped these; tests correctly guarded them)
+> ⚠️ **Deployment note:** the offline-sync and merch/XP fixes call the atomic Postgres
+> functions defined in **`migration_v2_atomic.sql`** (`increment_user_points`,
+> `decrement_merch_credits`, `try_award_offline_xp`). They must be applied to the
+> database for these paths to work at runtime. The tests mock the RPCs, so green tests
+> alone don't prove the functions are deployed — verify before shipping.
 
-**`tests/test_offline_sync.py` (5)** — written for the stale root `offline_sync.py`
-(has `MAX_XP_PER_ITEM`, `MAX_CLOCK_SKEW_SECONDS`, per-item XP cap, unknown-endpoint
-rejection). The app mounts `services/offline_sync.py`, a refactor with a different
-API (`_ENDPOINT_MAP`, `MAX_ITEM_AGE_HOURS`, `MAX_BATCH_SIZE`; no XP/skew constants):
-- `test_unknown_endpoint_rejected` — refactor returns `applied`, not `rejected`, for
-  an unknown endpoint. **Security: should unknown offline endpoints be rejected?**
-- `test_xp_amount_capped_to_max_per_item` — no per-item XP cap in the refactor.
-- `test_per_batch_cap_enforced` — no per-batch XP cap in the refactor.
-- `test_clock_skew_rejects_batch` — no clock-skew rejection in the refactor.
-- `test_priority_order_critical_first` — priority ordering differs.
+- **`services/offline_sync.py`** — the live drain endpoint had lost, vs the stale root
+  reference, its abuse protections. Restored: per-item XP cap (`MAX_XP_PER_ITEM=500`),
+  per-batch XP cap (`MAX_XP_PER_BATCH=5000`, reject-up-front pre-pass), clock-skew hard
+  reject (`MAX_CLOCK_SKEW_SECONDS=24h`), and routing XP awards through the atomic
+  `try_award_offline_xp` RPC with a "capped → REJECTED" result. (Unknown-endpoint
+  rejection and priority ordering were already present — those 2 tests only needed the
+  import fix so the `_already_applied` monkeypatch reached the live module.)
+- **`routes/starknet_routes.py`** — restored `0x`-hex transaction-hash format
+  validation on `POST /api/starknet/transactions` (was persisting arbitrary strings).
+  Plus the read-only RPC method allowlist on `StarknetRPCRequest` (422 on unknown).
+- **`routes/phase5_routes.py`** — restored the atomic-RPC design the migration intends:
+  `POST /xp/event` now uses `increment_user_points` (was a read-then-write race) and
+  caps client XP at `MAX_XP_PER_EVENT=1000`; `POST /merch/redeem` uses
+  `decrement_merch_credits` (atomic check-and-deduct; was a TOCTOU race on a stale
+  read); `GET /xp/history?limit=` is bounded (`le=100` → 422 over cap).
 
-**`tests/test_device_sessions.py` (2)** — written for root `device_sessions.py`
-(imports `FCMService`); app mounts `middleware/device_sessions.py` (no `FCMService`):
-- `test_second_device_revokes_first` — patches `device_sessions.FCMService`, absent
-  on the live module; second-device revocation/notification path differs.
-- `test_middleware_missing_x_device_id_rejects` — middleware rejection behavior differs.
+### Test-only fixes (genuine refactors — updated the test, no prod change)
+- `test_second_device_revokes_first` — the live middleware notifies the old device via
+  a module-level `_send_logout_push(...)` coroutine (the `FCMService.send_device_logout_notification`
+  path was refactored out); the test now patches the actual symbol.
+- `test_debug_fallback` → replaced with `test_new_user_email_auth_creates_account`, a
+  direct-call test of the real current email-auth happy path (the old DEBUG bypass it
+  exercised no longer exists; it mocked `_verify_privy_token` with the wrong signature).
 
-**`tests/test_starknet_routes.py` (2)**:
-- `test_debug_fallback` — exercises a DEBUG bypass the refactored route no longer has
-  (route always requires `PRIVY_APP_SECRET`; test mocks `_verify_privy_token` as an
-  async fn returning an address, but it is sync returning a claims dict). Needs a test
-  rewrite or a route decision on whether a DEBUG fallback should exist.
-- `test_invalid_hash_rejected` — the route no longer format-validates the tx hash
-  (accepts `"not-a-hash"`). **Security: restore `0x`-hex hash validation?**
+### Still failing — needs the dev's decision (1)
+- **`test_middleware_missing_x_device_id_rejects`** — expects a request with **no
+  `X-Device-Id` header** to be rejected `401 device_required` when single-device
+  enforcement is on. The live `DeviceSessionMiddleware` deliberately lets such requests
+  through (`"No device_id header = old client version, let it through"`).
+  **This one is a genuine product/security tradeoff and was left as-is:**
+  `SINGLE_DEVICE_ENFORCEMENT` **defaults to `true`**, so flipping this would immediately
+  `401` every currently-deployed client that doesn't send the header. It's coherent to
+  require it (the enforcement model is meaningless without a device id, and
+  `validate_device_header` returns `True` on no-session so registration still works) —
+  but the rollout needs all clients updated first. **Decide: require the header (tighten
+  `middleware/session_middleware.py`), or update the test to the current lenient contract.**
 
-**`tests/test_phase5_routes.py` (5)**:
-- `test_xp_event_capped` — XP event amount no longer validated/capped.
-- `test_limit_too_large_rejected` — XP-history `limit` no longer bounded.
-- `test_xp_event_uses_atomic_rpc` — route no longer calls the `increment_user_points`
-  atomic RPC. **Atomicity: intended, or a regression?**
-- `test_insufficient_credits`, `test_success` (MerchRedeem) — route reads credits via
-  `.data[...]`; the test's mock shape doesn't match the refactored data access, so the
-  route hits `MagicMock < int`. Needs the mock updated to the current access pattern.
-
-### Recommended next step for the dev
-Go test-by-test: if the old behavior is still wanted (esp. the security items —
-unknown-endpoint rejection, hash validation, XP/credit caps, atomic RPC), restore it
-in the live `routes.*`/`services.*`/`middleware.*` modules. If the refactor is
-intended, update the test to the new contract. Also consider deleting the stale root
-duplicates (`offline_sync.py`, `device_sessions.py`, `phase5_routes.py`,
-`feed_routes.py`, `starknet_routes.py` shim) once nothing imports them, so tests can't
-target dead code again.
+### Cleanup worth doing
+Delete the stale root duplicates (`offline_sync.py`, `device_sessions.py`,
+`phase5_routes.py`, `feed_routes.py`, `session_middleware.py`, and the
+`starknet_routes.py` shim) once nothing imports them, so tests can't target dead code
+again — they're what caused most of this divergence.
