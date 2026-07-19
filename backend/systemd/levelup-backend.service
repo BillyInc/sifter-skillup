@@ -1,0 +1,28 @@
+[Unit]
+Description=LevelUp Backend API (Uvicorn)
+After=network.target redis.service
+Wants=redis.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/levelup-backend
+Environment="PATH=/home/ubuntu/levelup-backend/.venv/bin"
+EnvironmentFile=/home/ubuntu/levelup-backend/.env
+# NOTE: keep a single literal "--port 8000" — deploy-prod.yml sed-remaps it to 8001.
+ExecStart=/home/ubuntu/levelup-backend/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --workers 2
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+KillMode=mixed
+TimeoutStopSec=30
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/ubuntu/levelup-backend
+
+[Install]
+WantedBy=multi-user.target

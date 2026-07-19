@@ -1,0 +1,228 @@
+name: Deploy Production
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref to deploy
+        required: true
+        default: main
+
+concurrency:
+  group: levelup-prod-deploy
+  cancel-in-progress: false
+
+env:
+  PYTHON_VERSION: '3.13'
+  PROD_BACKEND_DIR: ~/levelup-backend-prod
+  PROD_FRONTEND_DIR: ~/levelup-frontend-prod
+
+jobs:
+  verify:
+    name: Verify (lint & test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: uv sync --extra test
+      - run: uv run ruff check . || true
+      - name: Pytest
+        run: uv run pytest --tb=short -q
+        env:
+          DEBUG: 'true'
+          JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder
+          SUPABASE_SERVICE_KEY: placeholder
+          REDIS_URL: redis://localhost:6379/0
+          SINGLE_DEVICE_ENFORCEMENT: 'false'
+
+  deploy-backend:
+    name: Deploy backend (prod)
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER: ${{ secrets.SERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SERVER" >> ~/.ssh/known_hosts
+
+      - name: Create prod .env on first deploy only
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-backend-prod'
+          if ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" '[ -f ~/levelup-backend-prod/.env ]'; then
+            echo "prod .env already present — leaving untouched."
+          else
+            printf '%s' "$ENV_FILE" > /tmp/levelup-prod.env
+            scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no /tmp/levelup-prod.env "$SERVER_USER@$SERVER_HOST:~/levelup-backend-prod/.env"
+            rm -f /tmp/levelup-prod.env
+          fi
+
+      - name: Rsync backend to prod dir
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          rsync -avz --delete \
+            --exclude '.venv' --exclude '__pycache__' --exclude '*.pyc' \
+            --exclude 'logs/' --exclude '*.db' --exclude '.git' --exclude '.env' \
+            --exclude 'celerybeat-schedule' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            backend/ "$SERVER_USER@$SERVER_HOST:~/levelup-backend-prod/"
+
+      - name: Derive prod units, install, restart
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -e
+          cd ~/levelup-backend-prod
+          chmod 600 .env
+          command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
+          export PATH="$HOME/.local/bin:$PATH"
+          uv sync --no-dev
+          mkdir -p logs
+          # Derive -prod units from the dev units: repoint dir, remap port 8000->8001, tag description.
+          for f in systemd/levelup-*.service; do
+            base=$(basename "$f" .service)
+            sudo bash -c "sed -e 's#/home/ubuntu/levelup-backend#$HOME/levelup-backend-prod#g' \
+                              -e 's/--port 8000/--port 8001/' \
+                              -e 's/LevelUp /LevelUp PROD /' \
+                              '$f' > /etc/systemd/system/${base}-prod.service"
+          done
+          sudo systemctl daemon-reload
+          sudo systemctl enable levelup-backend-prod levelup-celery-worker-prod levelup-celery-beat-prod
+          sudo systemctl reload-or-restart levelup-backend-prod
+          sudo systemctl restart levelup-celery-worker-prod levelup-celery-beat-prod
+          EOSSH
+
+      - name: Configure prod nginx + TLS on first deploy
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -e
+          DOMAIN=api.levelup.com.ng
+          SITE=/etc/nginx/sites-available/levelup-api-prod
+          if [ ! -f "$SITE" ]; then
+            sudo tee "$SITE" >/dev/null <<NGINX
+          server {
+              server_name $DOMAIN;
+              location / {
+                  proxy_pass http://localhost:8001;
+                  proxy_set_header Host \$host;
+                  proxy_set_header X-Real-IP \$remote_addr;
+                  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto \$scheme;
+              }
+              listen 80;
+          }
+          NGINX
+            sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-api-prod
+            sudo nginx -t && sudo systemctl reload nginx
+            sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?)"
+          fi
+          EOSSH
+
+      - name: Cleanup
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+  deploy-frontend:
+    name: Deploy frontend (prod)
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Export web bundle (prod)
+        run: npx expo export --platform web
+        env:
+          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL || 'https://api.levelup.com.ng' }}
+          EXPO_PUBLIC_PRIVY_APP_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_APP_ID }}
+          EXPO_PUBLIC_PRIVY_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_CLIENT_ID }}
+          EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_WEB_CLIENT_ID }}
+          EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_PRIVY_NATIVE_CLIENT_ID }}
+
+      - name: Setup SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER: ${{ secrets.SERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SERVER" >> ~/.ssh/known_hosts
+
+      - name: Rsync web bundle to prod dir
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-frontend-prod'
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            dist/ "$SERVER_USER@$SERVER_HOST:~/levelup-frontend-prod/"
+
+      - name: Configure prod nginx + TLS on first deploy
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -e
+          DOMAIN=levelup.com.ng
+          SITE=/etc/nginx/sites-available/levelup-web-prod
+          if [ ! -f "$SITE" ]; then
+            sudo tee "$SITE" >/dev/null <<NGINX
+          server {
+              server_name $DOMAIN;
+              root /home/ubuntu/levelup-frontend-prod;
+              index index.html;
+              location / { try_files \$uri \$uri/ /index.html; }
+              location /assets { expires 1y; add_header Cache-Control "public, immutable"; }
+              add_header X-Frame-Options "SAMEORIGIN" always;
+              add_header X-Content-Type-Options "nosniff" always;
+              add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+              listen 80;
+          }
+          NGINX
+            sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-web-prod
+            sudo nginx -t && sudo systemctl reload nginx
+            sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?)"
+          fi
+          EOSSH
+
+      - name: Cleanup
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

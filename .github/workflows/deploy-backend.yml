@@ -1,0 +1,152 @@
+name: Deploy Backend (dev)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: levelup-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEPLOY_PATH: ~/levelup-backend
+  PYTHON_VERSION: '3.13'
+
+jobs:
+  test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: uv sync --extra test
+      - name: Ruff
+        run: uv run ruff check . || true
+      - name: Pytest
+        run: uv run pytest --tb=short -q
+        env:
+          DEBUG: 'true'
+          JWT_SECRET: ci-test-secret-must-be-at-least-32-characters-long
+          SUPABASE_URL: https://placeholder.supabase.co
+          SUPABASE_ANON_KEY: placeholder
+          SUPABASE_SERVICE_KEY: placeholder
+          REDIS_URL: redis://localhost:6379/0
+          SINGLE_DEVICE_ENFORCEMENT: 'false'
+
+  deploy:
+    name: Deploy to storytime
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER: ${{ secrets.SERVER_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$SERVER" >> ~/.ssh/known_hosts
+
+      - name: Create .env on first deploy only
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: |
+          if ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" '[ -f ~/levelup-backend/.env ]'; then
+            echo ".env already present on server — leaving it untouched."
+          else
+            echo "First deploy — seeding .env from ENV_FILE secret."
+            ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'mkdir -p ~/levelup-backend'
+            printf '%s' "$ENV_FILE" > /tmp/levelup.env
+            scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no /tmp/levelup.env "$SERVER_USER@$SERVER_HOST:~/levelup-backend/.env"
+            rm -f /tmp/levelup.env
+          fi
+
+      - name: Rsync backend to server
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          rsync -avz --delete \
+            --exclude '.venv' --exclude '__pycache__' --exclude '*.pyc' \
+            --exclude 'logs/' --exclude '*.db' --exclude '.git' --exclude '.env' \
+            --exclude 'celerybeat-schedule' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            backend/ "$SERVER_USER@$SERVER_HOST:~/levelup-backend/"
+
+      - name: Install deps, install units, restart services
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -e
+          cd ~/levelup-backend
+          chmod 600 .env
+          command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
+          export PATH="$HOME/.local/bin:$PATH"
+          uv sync --no-dev
+          mkdir -p logs
+          sudo cp systemd/levelup-*.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable levelup-backend levelup-celery-worker levelup-celery-beat
+          sudo systemctl reload-or-restart levelup-backend
+          sudo systemctl restart levelup-celery-worker levelup-celery-beat
+          EOSSH
+
+      - name: Configure nginx + TLS on first deploy
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" bash -s <<'EOSSH'
+          set -e
+          DOMAIN=api.dev.levelup.com.ng
+          SITE=/etc/nginx/sites-available/levelup-api-dev
+          if [ ! -f "$SITE" ]; then
+            sudo tee "$SITE" >/dev/null <<NGINX
+          server {
+              server_name $DOMAIN;
+              location / {
+                  proxy_pass http://localhost:8000;
+                  proxy_set_header Host \$host;
+                  proxy_set_header X-Real-IP \$remote_addr;
+                  proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto \$scheme;
+              }
+              listen 80;
+          }
+          NGINX
+            sudo ln -sf "$SITE" /etc/nginx/sites-enabled/levelup-api-dev
+            sudo nginx -t && sudo systemctl reload nginx
+            sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos --redirect --keep-until-expiring -m admin@levelup.com.ng || echo "certbot failed (DNS not ready?) — re-run after DNS resolves."
+          fi
+          EOSSH
+
+      - name: Health check
+        continue-on-error: true
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST" 'curl -sf http://localhost:8000/health && echo OK'
+
+      - name: Cleanup
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

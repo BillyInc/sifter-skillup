@@ -1,0 +1,26 @@
+[Unit]
+Description=LevelUp Celery Worker
+After=network.target redis.service
+Wants=redis.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/levelup-backend
+Environment="PATH=/home/ubuntu/levelup-backend/.venv/bin"
+EnvironmentFile=/home/ubuntu/levelup-backend/.env
+ExecStart=/home/ubuntu/levelup-backend/.venv/bin/celery -A celery_worker worker --loglevel=info --concurrency=2
+Restart=on-failure
+RestartSec=5
+KillMode=mixed
+TimeoutStopSec=30
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/ubuntu/levelup-backend
+
+[Install]
+WantedBy=multi-user.target
