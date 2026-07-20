@@ -782,6 +782,9 @@ ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_i
 UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = j.id
 FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.name = p.name
 WHERE c.programme_id = p.id AND c.jamb_programme_id IS NULL;
+UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = pm.jamb_programme_id
+FROM skillup_dev.programme_mapping pm
+WHERE c.programme_id = pm.programme_id AND c.jamb_programme_id IS NULL;
 -- National competitiveness: 20 rows
 INSERT INTO skillup_dev.course_competitiveness (id, broad_course, year, applied, admitted, ratio, source, note)
 VALUES ('ec5e016e-8c0c-50bd-9376-645bf2e68113', 'Medicine', 2025, 45000, 7500, 0.1667, 'JAMB Annual Report 2024', 'faculty-level; ~1 in 6')
@@ -852,19 +855,19 @@ ON CONFLICT (id) DO UPDATE SET label = EXCLUDED.label, year = EXCLUDED.year, com
 
 -- Enrichment version tracking
 INSERT INTO skillup_dev.enrichment_version (source_commit_hash, seed_name, rows_upserted, applied_at)
-SELECT 'unknown', 'admission', (SELECT COUNT(*) FROM skillup_dev.programme_school_cutoff), NOW()
+SELECT '3fb080d', 'admission', (SELECT COUNT(*) FROM skillup_dev.programme_school_cutoff), NOW()
 WHERE EXISTS (SELECT 1 FROM skillup_dev.programme_school_cutoff LIMIT 1);
 INSERT INTO skillup_dev.enrichment_version (source_commit_hash, seed_name, rows_upserted, applied_at)
-SELECT 'unknown', 'certs', (SELECT COUNT(*) FROM skillup_dev.domain_certifications WHERE official_url IS NOT NULL), NOW()
+SELECT '3fb080d', 'certs', (SELECT COUNT(*) FROM skillup_dev.domain_certifications WHERE official_url IS NOT NULL), NOW()
 WHERE EXISTS (SELECT 1 FROM skillup_dev.domain_certifications WHERE official_url IS NOT NULL LIMIT 1);
 INSERT INTO skillup_dev.enrichment_version (source_commit_hash, seed_name, rows_upserted, applied_at)
-SELECT 'unknown', 'tools', (SELECT COUNT(*) FROM skillup_dev.domain_tools WHERE demand_score IS NOT NULL), NOW()
+SELECT '3fb080d', 'tools', (SELECT COUNT(*) FROM skillup_dev.domain_tools WHERE demand_score IS NOT NULL), NOW()
 WHERE EXISTS (SELECT 1 FROM skillup_dev.domain_tools WHERE demand_score IS NOT NULL LIMIT 1);
 INSERT INTO skillup_dev.enrichment_version (source_commit_hash, seed_name, rows_upserted, applied_at)
-SELECT 'unknown', 'skills', (SELECT COUNT(*) FROM skillup_dev.domains WHERE foundation_skill_uris != '{}'::jsonb), NOW()
+SELECT '3fb080d', 'skills', (SELECT COUNT(*) FROM skillup_dev.domains WHERE foundation_skill_uris != '{}'::jsonb), NOW()
 WHERE EXISTS (SELECT 1 FROM skillup_dev.domains WHERE foundation_skill_uris != '{}'::jsonb LIMIT 1);
 INSERT INTO skillup_dev.enrichment_version (source_commit_hash, seed_name, rows_upserted, applied_at)
-SELECT 'unknown', 'roles_currency', (SELECT COUNT(*) FROM skillup_dev.domain_roles WHERE currency_status IS NOT NULL), NOW()
+SELECT '3fb080d', 'roles_currency', (SELECT COUNT(*) FROM skillup_dev.domain_roles WHERE currency_status IS NOT NULL), NOW()
 WHERE EXISTS (SELECT 1 FROM skillup_dev.domain_roles WHERE currency_status IS NOT NULL LIMIT 1);
 
 COMMIT;
