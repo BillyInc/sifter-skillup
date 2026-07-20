@@ -174,10 +174,16 @@ if os.path.exists(csvpath):
         SQL.append(f"WHERE s.name = {q(r['school_name'])} AND p.name = {q(r['programme_name'])}")
         SQL.append(f"ON CONFLICT (school_id, programme_id, year, form) DO UPDATE SET jamb_programme_id = EXCLUDED.jamb_programme_id, aggregate_cutoff = EXCLUDED.aggregate_cutoff, jamb_cutoff = EXCLUDED.jamb_cutoff, postutme_cutoff = EXCLUDED.postutme_cutoff, source_url = EXCLUDED.source_url;")
     SQL.append("")
-    # backfill any legacy rows that predate the jamb_programme_id column
+    # backfill any legacy rows that predate the jamb_programme_id column:
+    # 1) exact name match (canonical programme name == JAMB name)
     SQL.append("UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = j.id")
     SQL.append("FROM skillup_dev.programmes p JOIN skillup_dev.jamb_programmes j ON j.name = p.name")
     SQL.append("WHERE c.programme_id = p.id AND c.jamb_programme_id IS NULL;")
+    # 2) via the curated programme_mapping bridge (covers renamed programmes,
+    #    e.g. canonical "Law" -> JAMB "Civil Law")
+    SQL.append("UPDATE skillup_dev.programme_school_cutoff c SET jamb_programme_id = pm.jamb_programme_id")
+    SQL.append("FROM skillup_dev.programme_mapping pm")
+    SQL.append("WHERE c.programme_id = pm.programme_id AND c.jamb_programme_id IS NULL;")
 
 # ── Course Competitiveness ──────
 csvpath = os.path.join(HERE, "_enrichment", "admission_competitiveness_2025.csv")

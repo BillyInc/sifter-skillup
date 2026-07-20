@@ -55,7 +55,14 @@ python data\career-mapping\_parse_subject_options.py || goto :fail
 echo.
 echo ================================================================
 echo DONE. Apply these to Supabase (SQL editor or psql) IN THIS ORDER.
-echo Migrations are idempotent - safe to re-run; skip any already applied.
+echo.
+echo *** WARNING: migration_career_v2.sql DROPS and recreates the ***
+echo *** taxonomy tables. NEVER re-apply it after seeding unless  ***
+echo *** you immediately re-apply migration_role_tools.sql +      ***
+echo *** seed_career_v2.sql + seed_phase8_9_enrichment.sql +      ***
+echo *** repair_demand_fkeys.sql afterwards.                      ***
+echo.
+echo Other migrations are idempotent - safe to re-run anytime.
 echo   1. backend\migration_career_pilot.sql
 echo   2. backend\migration_career_v2.sql
 echo   3. backend\migration_enrichment_v1.sql
