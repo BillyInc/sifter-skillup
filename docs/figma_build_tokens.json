@@ -1,0 +1,116 @@
+{
+  "_meta": {
+    "purpose": "Frozen token spec for the Sifter COMPASS Figma design system build",
+    "sources": {
+      "authoritative_design": "docs/COMPASS_DESIGN_SYSTEM.md",
+      "brief": "docs/FIGMA_REDESIGN_BRIEF.md",
+      "code_reference": "src/theme/index.tsx + src/theme/fonts.ts"
+    },
+    "decision": "Where code and COMPASS doc disagree (bg values), COMPASS doc wins — it is the redesign target; code chrome only partially adopted it. Semantic taxonomy colors (direct/functional/adjacent/match/readiness/tier badges) come from CODE because getDomainBadge/getRoleBadge/getReadinessBadge key off them.",
+    "modes": ["Light", "Analyst Dark"]
+  },
+  "collections": {
+    "chrome": {
+      "scopes_note": "bg/card/bgSunken -> FRAME_FILL,SHAPE_FILL; text* -> TEXT_FILL; border -> STROKE_COLOR; cobalt* dual TEXT_FILL+FRAME_FILL+STROKE_COLOR",
+      "variables": {
+        "bg":          { "Light": "#F6F7F4", "Analyst Dark": "#0F1729" },
+        "card":        { "Light": "#FFFFFF", "Analyst Dark": "#161F33" },
+        "bgSunken":    { "Light": "#EDEFEA", "Analyst Dark": "#0B1120" },
+        "text":        { "Light": "#141A2E", "Analyst Dark": "#EEF1F8" },
+        "textSoft":    { "Light": "#3B4256", "Analyst Dark": "#B7C0D6" },
+        "textMuted":   { "Light": "#6A7286", "Analyst Dark": "#7C879E" },
+        "border":      { "Light": "#E2E4DE", "Analyst Dark": "#26314A" },
+        "cobalt":      { "Light": "#3B3AC4", "Analyst Dark": "#6E6CF0" },
+        "cobaltDeep":  { "Light": "#2E2A8F", "Analyst Dark": "#3B3AC4" },
+        "cobaltWash":  { "Light": "#EEEEFB", "Analyst Dark": "#1B2145" },
+        "apricot":     { "Light": "#F5A65B", "Analyst Dark": "#F7B679" },
+        "apricotWash": { "Light": "#FDF0E2", "Analyst Dark": "#2A2114" }
+      },
+      "brief_aliases": {
+        "_note": "FIGMA_REDESIGN_BRIEF semantic names aliased onto chrome so both naming schemes resolve",
+        "surface.base": "bg", "surface.raised": "card", "surface.subtle": "bgSunken",
+        "text.primary": "text", "text.secondary": "textSoft", "text.muted": "textMuted", "text.placeholder": "textMuted",
+        "border.subtle": "border",
+        "accent.action": "cobalt"
+      }
+    },
+    "semantics": {
+      "_note": "Preserved taxonomy — meanings must not change",
+      "variables": {
+        "direct":      { "Light": "#0E9F6E", "Analyst Dark": "#34D399" },
+        "functional":  { "Light": "#2563EB", "Analyst Dark": "#7C96FF" },
+        "adjacent":    { "Light": "#B45309", "Analyst Dark": "#F4B74A" },
+        "demand":      { "Light": "#0D9488", "Analyst Dark": "#2DD4BF" },
+        "elite":       { "Light": "#B8860B", "Analyst Dark": "#E9C46A" },
+        "danger":      { "Light": "#DC2626", "Analyst Dark": "#F87171" },
+        "success":     { "Light": "#0E9F6E", "Analyst Dark": "#34D399" },
+        "successSoft": { "Light": "#E6F6EF", "Analyst Dark": "#0E2A22" },
+        "dangerSoft":  { "Light": "#FDECEC", "Analyst Dark": "#341A1C" },
+        "demandSoft":  { "Light": "#E2F5F2", "Analyst Dark": "#0C2A28" },
+        "eliteSoft":   { "Light": "#FBF3DD", "Analyst Dark": "#2A230F" }
+      },
+      "badges_from_code": {
+        "domain_match": {
+          "direct":     { "light": { "bg": "#ECFDF5", "border": "#A7F3D0", "text": "#047857" }, "dark": { "bg": "#0C2A22", "border": "#1E5345", "text": "#34D399" } },
+          "functional": { "light": { "bg": "#EFF6FF", "border": "#BFDBFE", "text": "#1D4ED8" }, "dark": { "bg": "#0E1E3A", "border": "#244B85", "text": "#7C96FF" } },
+          "adjacent":   { "light": { "bg": "#FFFBEB", "border": "#FDE68A", "text": "#B45309" }, "dark": { "bg": "#2A2008", "border": "#5C4715", "text": "#F4B74A" } }
+        },
+        "readiness": {
+          "ready":   { "light": { "bg": "#ECFDF5", "border": "#A7F3D0", "text": "#047857" } },
+          "bridge":  { "light": { "bg": "#FFFBEB", "border": "#FDE68A", "text": "#B45309" } },
+          "stretch": { "light": { "bg": "#EFF6FF", "border": "#BFDBFE", "text": "#1D4ED8" } }
+        },
+        "tier": {
+          "entry":  { "light": { "bg": "#F5F5F5", "border": "#E5E7EB", "text": "#6B7280" } },
+          "mid":    { "light": { "bg": "#EFF6FF", "border": "#DBEAFE", "text": "#2563EB" } },
+          "senior": { "light": { "bg": "#F5F3FF", "border": "#DDD6FE", "text": "#7C3AED" } }
+        }
+      }
+    },
+    "spacing": {
+      "_note": "4px base grid (brief); FLOAT vars, scope GAP + WIDTH_HEIGHT",
+      "variables": { "space-4": 4, "space-8": 8, "space-12": 12, "space-16": 16, "space-24": 24, "space-32": 32, "space-48": 48 }
+    },
+    "radius": {
+      "variables": { "radius-sm": 6, "radius-md": 9, "radius-lg": 11, "radius-xl": 14, "radius-xxl": 18, "radius-xxxl": 24, "radius-full": 99 }
+    }
+  },
+  "typography": {
+    "families": {
+      "display": "Bricolage Grotesque",
+      "body": "Hanken Grotesk",
+      "data": "Spline Sans Mono"
+    },
+    "weights": { "display": [600, 700, 800], "body": [400, 500, 600, 700], "data": [400, 500] },
+    "scale": { "xs": 9, "sm": 11, "md": 13, "lg": 15, "xl": 17, "xxl": 19, "xxxl": 22, "display": 26, "hero": 30 },
+    "styles": [
+      { "name": "Display/Hero",    "family": "Bricolage Grotesque", "style": "ExtraBold", "size": 30 },
+      { "name": "Display/Title",   "family": "Bricolage Grotesque", "style": "Bold",      "size": 26 },
+      { "name": "Display/Section", "family": "Bricolage Grotesque", "style": "SemiBold",  "size": 22 },
+      { "name": "Display/Eyebrow", "family": "Bricolage Grotesque", "style": "SemiBold",  "size": 11, "letterSpacing": 1.2, "caps": true },
+      { "name": "Body/LG",         "family": "Hanken Grotesk", "style": "Regular",  "size": 15 },
+      { "name": "Body/MD",         "family": "Hanken Grotesk", "style": "Regular",  "size": 13 },
+      { "name": "Body/SM",         "family": "Hanken Grotesk", "style": "Regular",  "size": 11 },
+      { "name": "Body/Label",      "family": "Hanken Grotesk", "style": "SemiBold", "size": 11 },
+      { "name": "Body/Emphasis",   "family": "Hanken Grotesk", "style": "SemiBold", "size": 13 },
+      { "name": "Data/Hero",       "family": "Spline Sans Mono", "style": "Medium",  "size": 22 },
+      { "name": "Data/Value",      "family": "Spline Sans Mono", "style": "Regular", "size": 15 },
+      { "name": "Data/Stamp",      "family": "Spline Sans Mono", "style": "Regular", "size": 9 }
+    ]
+  },
+  "signature_components": {
+    "RouteLine": {
+      "variants": { "variant": ["headerRule", "inlineSpine", "journeyDiagram"] },
+      "station_states": { "filled": "you/covered/reached", "ring": "functional/bridge/in-progress", "target": "adjacent/stretch/locked" },
+      "edges": { "solid": "Direct", "dash": "Adjacent" },
+      "color": "cobalt only"
+    },
+    "StatTile": {
+      "rows": ["value (Data/Hero)", "label (Body/Label)", "delta (semantic color + arrow)", "scope+freshness (Data/Stamp, textMuted)"],
+      "variants": { "state": ["default", "live", "pending", "warning", "verified", "stale"] },
+      "stale_rule": "freshness > 12 months -> desaturate + 'indicative' tag"
+    },
+    "LockedTile": { "rule": "never plain 'coming soon' — icon + catchy one-liner + lock badge + next action" }
+  },
+  "build_pages": ["Cover", "01 Tokens", "02 Type", "03 Core Components", "04 Search System", "05 App Shell", "06 Guest", "07 Student", "08 Educator", "09 Institution", "10 Tutorial Centre", "11 Platform Admin"]
+}

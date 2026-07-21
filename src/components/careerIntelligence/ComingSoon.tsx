@@ -5,12 +5,12 @@
  */
 import React, { type ReactNode } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
   Spacing,
   Radius,
   FontSize,
-  Brand,
   webContainer,
 } from "../../theme";
 import { LevelUpLogo } from "../brand/LevelUpLogo";
@@ -28,7 +28,7 @@ export interface ComingSoonProps {
 }
 
 export function ComingSoon({
-  icon = "🔒",
+  icon = "lock",
   eyebrow = "LOCKED",
   title,
   body,
@@ -39,7 +39,7 @@ export function ComingSoon({
   const { colors } = useTheme();
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
@@ -47,15 +47,33 @@ export function ComingSoon({
         {showLogo ? (
           <LevelUpLogo size={72} />
         ) : (
-          <Text style={styles.icon}>{icon}</Text>
+          <View
+            style={[
+              styles.icon,
+              { backgroundColor: colors.state.lockedSoft, borderColor: colors.borderRole.subtle },
+            ]}
+          >
+            <Feather name={icon as keyof typeof Feather.glyphMap} size={22} color={colors.state.locked} />
+          </View>
         )}
-        <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+        <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
           {eyebrow}
         </Text>
-        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+        <Text style={[styles.title, { color: colors.textRole.primary }]}>{title}</Text>
         {body ? (
-          <Text style={[styles.body, { color: colors.textSoft }]}>{body}</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>{body}</Text>
         ) : null}
+        <View
+          style={[
+            styles.lockBadge,
+            { backgroundColor: colors.state.lockedSoft, borderColor: colors.borderRole.subtle },
+          ]}
+        >
+          <Feather name="lock" size={12} color={colors.state.locked} />
+          <Text style={[styles.lockBadgeText, { color: colors.state.locked }]}>
+            Locked
+          </Text>
+        </View>
       </View>
 
       {bullets?.length ? (
@@ -65,15 +83,15 @@ export function ComingSoon({
               key={b.title}
               style={[
                 styles.bullet,
-                { backgroundColor: colors.card, borderColor: colors.border },
+                { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
               ]}
             >
               <Text style={styles.bulletIcon}>{b.icon}</Text>
               <View style={{ flex: 1 }}>
-                <Text style={[styles.bulletTitle, { color: colors.text }]}>
+                <Text style={[styles.bulletTitle, { color: colors.textRole.primary }]}>
                   {b.title}
                 </Text>
-                <Text style={[styles.bulletBody, { color: colors.textSoft }]}>
+                <Text style={[styles.bulletBody, { color: colors.textRole.secondary }]}>
                   {b.body}
                 </Text>
               </View>
@@ -94,11 +112,11 @@ export function LockedPill({ label = "Locked" }: { label?: string }) {
     <View
       style={[
         styles.pill,
-        { backgroundColor: colors.bgSecondary, borderColor: colors.border },
+        { backgroundColor: colors.state.lockedSoft, borderColor: colors.borderRole.subtle },
       ]}
     >
-      <Text style={[styles.pillText, { color: colors.textMuted }]}>
-        🔒 {label}
+      <Text style={[styles.pillText, { color: colors.state.locked }]}>
+        {label}
       </Text>
     </View>
   );
@@ -112,16 +130,24 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   hero: { alignItems: "center", gap: Spacing.sm, marginTop: Spacing.lg },
-  icon: { fontSize: 56 },
+  icon: {
+    width: 48,
+    height: 48,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
-    letterSpacing: 1.5,
+    fontWeight: "600",
+    letterSpacing: 0.9,
     marginTop: Spacing.sm,
+    textTransform: "uppercase",
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
+    fontWeight: "700",
     textAlign: "center",
     lineHeight: FontSize.display * 1.15,
   },
@@ -132,13 +158,24 @@ const styles = StyleSheet.create({
     maxWidth: 420,
     marginTop: Spacing.xs,
   },
+  lockBadge: {
+    minHeight: 24,
+    borderRadius: Radius.full,
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: Spacing.sm,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    marginTop: Spacing.xs,
+  },
+  lockBadgeText: { fontSize: FontSize.xs, fontWeight: "600" },
   bullets: { gap: Spacing.md },
   bullet: {
     flexDirection: "row",
     gap: Spacing.md,
     padding: Spacing.lg,
-    borderRadius: Radius.lg,
-    borderWidth: 1,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: "flex-start",
   },
   bulletIcon: { fontSize: 24 },
@@ -151,12 +188,12 @@ const styles = StyleSheet.create({
   footer: { gap: Spacing.md },
   pill: {
     alignSelf: "flex-start",
-    paddingHorizontal: Spacing.md,
+    paddingHorizontal: Spacing.sm,
     paddingVertical: 5,
     borderRadius: Radius.full,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  pillText: { fontSize: FontSize.xs, fontWeight: "700" },
+  pillText: { fontSize: FontSize.xs, fontWeight: "600" },
 });
 
 export default ComingSoon;

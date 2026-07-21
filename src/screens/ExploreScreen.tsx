@@ -27,7 +27,6 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
   webContainer,
   type TierType,
 } from "../theme";
@@ -37,8 +36,11 @@ import {
   TierBadgeView,
   InfoTooltip,
   CoachMark,
+  ListRow,
+  SearchBar,
+  SectionLabel,
 } from "../components/careerIntelligence";
-import { SifterButton, SifterCard, PressableCard, SectionHeader } from "../components/ui";
+import { SifterButton, SifterCard, PressableCard } from "../components/ui";
 import { careerData } from "../lib/careerData";
 import { exploreNav } from "../lib/exploreNav";
 import { locked, type DataState, type CareerSearchResult } from "../types/career";
@@ -129,7 +131,7 @@ export default function ExploreScreen() {
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
         EXPLORE
       </Text>
       <View style={styles.titleRow}>
@@ -147,12 +149,12 @@ export default function ExploreScreen() {
           style={[
             styles.banner,
             {
-              backgroundColor: colors.goldSoft,
-              borderColor: `${Brand.primary}40`,
+              backgroundColor: colors.surface.subtle,
+              borderColor: colors.borderRole.subtle,
             },
           ]}
         >
-          <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.bannerText, { color: colors.textRole.secondary }]}>
             You're browsing as a guest. Create an account to save matches and
             get alerts.
           </Text>
@@ -161,7 +163,7 @@ export default function ExploreScreen() {
               label="Continue as guest"
               onPress={() => void signInGuest()}
               variant="track"
-              color={Brand.primary}
+              color={colors.accentRole.action}
               size="sm"
               fullWidth={false}
             />
@@ -174,25 +176,20 @@ export default function ExploreScreen() {
         storageKey="explore-intro-v1"
         text="Search a programme, field or job here — or scroll down and pick a starting point that fits where you are."
       >
-        <View
-          style={[
-            styles.search,
-            { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
-          ]}
-        >
-          <Text style={[styles.searchIcon, { color: colors.textMuted }]}>🔍</Text>
-          <TextInput
-            ref={searchRef}
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search a field, role or programme — e.g. nursing, data scientist"
-            placeholderTextColor={colors.textMuted}
-            returnKeyType="search"
-            autoCorrect={false}
-            style={[styles.searchInput, { color: colors.text }]}
-          />
-        </View>
+        <SearchBar
+          ref={searchRef}
+          value={query}
+          onChangeText={setQuery}
+          scope="All"
+          placeholder="Search programmes, domains or roles"
+        />
       </CoachMark>
+
+      {trimmed.length > 0 && trimmed.length < MIN_QUERY ? (
+        <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>
+          Type at least {MIN_QUERY} characters to search the career map.
+        </Text>
+      ) : null}
 
       {searching && results ? (
         // ── Results mode ────────────────────────────────────────────
@@ -207,43 +204,16 @@ export default function ExploreScreen() {
               {/* Fields (domains) */}
               {data.domains.length ? (
                 <View style={styles.group}>
-                  <SectionHeader title="Fields" icon="🧭" />
+                  <SectionLabel>Domains</SectionLabel>
                   {data.domains.map((d) => (
-                    <PressableCard
+                    <ListRow
                       key={d.id}
                       onPress={() => exploreNav.domain(router, d.id)}
-                      glowColor={Brand.primary}
-                    >
-                      <View style={styles.row}>
-                        <View style={styles.rowMain}>
-                          <Text
-                            style={[styles.rowTitle, { color: colors.text }]}
-                            numberOfLines={1}
-                          >
-                            {d.name}
-                          </Text>
-                          {d.cluster ? (
-                            <Text
-                              style={[
-                                styles.rowMeta,
-                                { color: colors.textMuted },
-                              ]}
-                              numberOfLines={1}
-                            >
-                              {d.cluster}
-                            </Text>
-                          ) : null}
-                        </View>
-                        <Text
-                          style={[
-                            styles.chevron,
-                            { color: colors.textMuted },
-                          ]}
-                        >
-                          →
-                        </Text>
-                      </View>
-                    </PressableCard>
+                      icon="compass"
+                      title={d.name}
+                      subtitle={d.cluster}
+                      meta="Domain route"
+                    />
                   ))}
                 </View>
               ) : null}
@@ -251,7 +221,7 @@ export default function ExploreScreen() {
               {/* Roles — each lists the domains it's reachable from */}
               {data.roles.length ? (
                 <View style={styles.group}>
-                  <SectionHeader title="Roles" icon="💼" />
+                  <SectionLabel>Roles</SectionLabel>
                   {data.roles.map((r, ri) => {
                     const single =
                       r.domains.length === 1 ? r.domains[0] : undefined;
@@ -288,8 +258,8 @@ export default function ExploreScreen() {
                                 style={[
                                   styles.chip,
                                   {
-                                    backgroundColor: colors.bgSecondary,
-                                    borderColor: colors.border,
+                                    backgroundColor: colors.surface.subtle,
+                                    borderColor: colors.borderRole.subtle,
                                   },
                                 ]}
                               >
@@ -314,7 +284,7 @@ export default function ExploreScreen() {
                       <PressableCard
                         key={`${r.name}-${ri}`}
                         onPress={() => exploreNav.role(router, single.roleKey)}
-                        glowColor={Brand.primary}
+                        glowColor={colors.accentRole.action}
                       >
                         {roleBody}
                       </PressableCard>
@@ -329,7 +299,7 @@ export default function ExploreScreen() {
               {data.programmes.length ? (
                 <View style={styles.group}>
                   <View style={styles.groupHead}>
-                    <SectionHeader title="Programmes" icon="🎓" />
+                    <SectionLabel>Programmes</SectionLabel>
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() =>
@@ -340,7 +310,7 @@ export default function ExploreScreen() {
                       }
                       style={styles.compareLink}
                     >
-                      <Text style={[styles.compareText, { color: Brand.primaryDeep }]}>
+                      <Text style={[styles.compareText, { color: colors.accentRole.action }]}>
                         Compare visible →
                       </Text>
                     </TouchableOpacity>
@@ -348,41 +318,14 @@ export default function ExploreScreen() {
                   {data.programmes.map((p) => {
                     const meta = p.discipline ?? p.institutionType;
                     return (
-                      <PressableCard
+                      <ListRow
                         key={p.id}
                         onPress={() => exploreNav.programme(router, p.id)}
-                        glowColor={Brand.primary}
-                      >
-                        <View style={styles.row}>
-                          <View style={styles.rowMain}>
-                            <Text
-                              style={[styles.rowTitle, { color: colors.text }]}
-                              numberOfLines={2}
-                            >
-                              {p.name}
-                            </Text>
-                            {meta ? (
-                              <Text
-                                style={[
-                                  styles.rowMeta,
-                                  { color: colors.textMuted },
-                                ]}
-                                numberOfLines={1}
-                              >
-                                {meta}
-                              </Text>
-                            ) : null}
-                          </View>
-                          <Text
-                            style={[
-                              styles.chevron,
-                              { color: colors.textMuted },
-                            ]}
-                          >
-                            →
-                          </Text>
-                        </View>
-                      </PressableCard>
+                        icon="book-open"
+                        title={p.name}
+                        subtitle={meta}
+                        meta={p.institutionType ?? "Programme"}
+                      />
                     );
                   })}
                 </View>
@@ -440,8 +383,8 @@ export default function ExploreScreen() {
             onPress={() => exploreNav.domains(router)}
             style={styles.browse}
           >
-            <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
-              🧭 Browse all domains →
+            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
+              Browse all domains
             </Text>
           </TouchableOpacity>
 
@@ -450,8 +393,8 @@ export default function ExploreScreen() {
             onPress={() => exploreNav.compare(router)}
             style={styles.browse}
           >
-            <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
-              ⚖️ Compare programmes →
+            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
+              Compare programmes
             </Text>
           </TouchableOpacity>
 
@@ -461,8 +404,8 @@ export default function ExploreScreen() {
             onPress={() => exploreNav.elitePathways(router)}
             style={styles.browse}
           >
-            <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
-              ⭐ Explore elite pathways →
+            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
+              Explore elite pathways
             </Text>
           </TouchableOpacity>
 
@@ -471,9 +414,8 @@ export default function ExploreScreen() {
             onPress={() => exploreNav.pathways(router)}
             style={styles.browse}
           >
-            <Text style={[styles.browseText, { color: Brand.primaryDeep }]}>
-              🚪 Special pathways — PhD · career change · upgrades · credentials
-              →
+            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
+              Special pathways: PhD, career change, upgrades, credentials
             </Text>
           </TouchableOpacity>
 
@@ -528,8 +470,11 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     marginTop: Spacing.xs,
   },
-  searchIcon: { fontSize: 16 },
-  searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: 0 },
+  stateLine: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+    marginTop: -Spacing.xs,
+  },
 
   // ── Results ──────────────────────────────────────────────────
   results: { gap: Spacing.lg, marginTop: Spacing.xs },

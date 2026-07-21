@@ -1,0 +1,6 @@
+{
+ "jamb_name": "HUMAN BIOLOGY",
+ "utme_subjects": "three (3) relevant Science subject. Biology, Chemistry and Physics or Mathematics.",
+ "extraction_source": "Sciences.pdf (layout-aware, row-group)",
+ "extraction_confidence": "high"
+}

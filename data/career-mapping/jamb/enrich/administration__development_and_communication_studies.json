@@ -1,0 +1,8 @@
+{
+  "jamb_name": "Development and Communication Studies",
+  "utme_subjects": "Literature in English, Economics and Government.",
+  "olevel_requirement": "Five (5) SSC credit passes to include English Language, Literature in English and Government plus a pass in Mathematics.",
+  "direct_entry": "Two (2) 'A' Level passes in Literature in English, Economics or Government.",
+  "extraction_source": "Administration.txt",
+  "extraction_confidence": "high"
+}

@@ -1,9 +1,6 @@
 {
-  "jamb_name": "Food Science and Engineering",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": [
-    {"institution": "LAUTECH", "note": "Direct Entry: accepts ND/HND upper credit in relevant programmes into 200 level and 'A' Level passes in Mathematics, Physics and Chemistry. LAUTECH may accept 'A' Level Biology in lieu of Physics."}
-  ]
+ "jamb_name": "Food Science and Engineering",
+ "utme_subjects": "i. Mathematics, Chemistryand Physicsor Biology.",
+ "extraction_source": "Engineering _ Enviromental _ Technology.pdf p74 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

@@ -1,0 +1,956 @@
+{
+ "blocks": [
+  {
+   "hdr": 73,
+   "general": "Biology, Chemistry and Physics or Mathematics."
+  },
+  {
+   "hdr": 783,
+   "general": "Biology, Chemistry and Physics or Mathematics."
+  },
+  {
+   "hdr": 978,
+   "general": "Physics, Mathematics and Chemistry or Biology."
+  },
+  {
+   "hdr": 2043,
+   "general": "Physics, Mathematics and Chemistry or Biology."
+  },
+  {
+   "hdr": 2083,
+   "general": "Mathematics and any two (2) of Physics, Chemistry, Economics, Biology and Agricultural Science."
+  },
+  {
+   "hdr": 2230,
+   "general": "Chemistry and two (2) of Physics, Biology and Mathematics."
+  },
+  {
+   "hdr": 3065,
+   "general": "Chemistry, Mathematics/ Physics and Agricultural Science"
+  },
+  {
+   "hdr": 3108,
+   "general": "any of Physics/Biology/ Agricultural Science."
+  },
+  {
+   "hdr": 3626,
+   "general": "Chemistry, and Biology Mathematics or Physics."
+  },
+  {
+   "hdr": 3670,
+   "general": "Any three (3) of Chemistry, Physics, Mathematics, Biology and Geography."
+  },
+  {
+   "hdr": 4190,
+   "general": "Biology, Physics Agricultural Science."
+  },
+  {
+   "hdr": 4326,
+   "general": "Physics, Mathematics, and any of Chemistry, Geography, Art, Biology and Economics."
+  },
+  {
+   "hdr": 4783,
+   "general": "include English Language, and two other science sub"
+  },
+  {
+   "hdr": 5116,
+   "general": "a) GCE `A' Level or IJMB examinations passes and Chemistry/Physic b) ND in any Natural, Agr courses with a minim recognised instituti UT"
+  },
+  {
+   "hdr": 5292,
+   "general": "Health Science Physics will b (xxxviii)MAUTY accepts English Langua Chemistry and For Biotechnol Credit passes Biology, Chemi"
+  },
+  {
+   "hdr": 5385,
+   "general": "Mathematics, Chemistry and Physics"
+  },
+  {
+   "hdr": 5827,
+   "general": "English any two (2) of"
+  },
+  {
+   "hdr": 6719,
+   "general": "any other from Biology/Chemistry/ more than two sittings."
+  },
+  {
+   "hdr": 6913,
+   "general": "Any three (3) of Physics, Chemistry, Biology and Mathematics."
+  },
+  {
+   "hdr": 7109,
+   "general": "Biology and any two (2) relevant subjects."
+  },
+  {
+   "hdr": 7153,
+   "general": "Biology, Chemistry and either Physics or Mathematics."
+  },
+  {
+   "hdr": 7712,
+   "general": "and Biology. ND/HND at cr fields."
+  },
+  {
+   "hdr": 8041,
+   "general": "and Physics. For Science Laboratory Five (5) SSC credit pas Mathematics, Chemistry,"
+  },
+  {
+   "hdr": 8191,
+   "general": "Biology or Agricultural Science or Chemistry or Geography."
+  },
+  {
+   "hdr": 8226,
+   "general": "Mathematics, Economics and any other Science or Social Science subject."
+  },
+  {
+   "hdr": 8280,
+   "general": "Mathematics, Chemistry and Biology."
+  },
+  {
+   "hdr": 8371,
+   "general": "Physics, Chemistry Biology."
+  },
+  {
+   "hdr": 8418,
+   "general": "Mathematics, Physics and one (1) of Biology, Chemistry, Agric Science, Economics and Geography."
+  },
+  {
+   "hdr": 8461,
+   "general": "Studies. b) Candidates with Upper Credi Diploma (ND) in the physi engineering disciplines m direct entry."
+  },
+  {
+   "hdr": 9827,
+   "general": "Mathematics, Physics and any other Science subject Mathematics, Physics and any one (1) of Chemistry, Economics and Biology."
+  },
+  {
+   "hdr": 9910,
+   "general": "Any three (3) relevant Science subject."
+  },
+  {
+   "hdr": 10121,
+   "general": "Level requirements."
+  },
+  {
+   "hdr": 10306,
+   "general": "Chemistry, Biology and either Physics or Mathematics."
+  },
+  {
+   "hdr": 10391,
+   "general": "Mathematics and any other two (2) either Science or Social Science subjects."
+  },
+  {
+   "hdr": 10470,
+   "general": "Biology, Chemistry Physics or Mathematics."
+  },
+  {
+   "hdr": 10518,
+   "general": "Mathematics, Physics, Chemistry or Geography"
+  },
+  {
+   "hdr": 10574,
+   "general": "Science, Biology, Chemistry, Physics, Literature in English, Government, History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, Civics, and French."
+  }
+ ],
+ "assign": {
+  "CYBER SECURITY": [
+   [
+    9399,
+    8461
+   ],
+   [
+    9404,
+    8461
+   ]
+  ],
+  "PHYSICS WITH ELECTRONICS": [
+   [
+    1241,
+    978
+   ],
+   [
+    1346,
+    978
+   ]
+  ],
+  "INFORMATION TECHNOLOGY": [
+   [
+    9086,
+    8461
+   ],
+   [
+    9650,
+    8461
+   ]
+  ],
+  "Plant Science and Biotechnology": [
+   [
+    4956,
+    4783
+   ]
+  ],
+  "INFORMATION SYSTEMS": [
+   [
+    9123,
+    8461
+   ],
+   [
+    9322,
+    8461
+   ],
+   [
+    9360,
+    8461
+   ]
+  ],
+  "Data Science": [
+   [
+    4601,
+    4326
+   ]
+  ],
+  "INFORMATION AND COMMUNICATION TECHNOLOGY": [
+   [
+    9275,
+    8461
+   ]
+  ],
+  "Animal and Environmental Biology": [
+   [
+    5573,
+    5385
+   ]
+  ],
+  "Geophysics": [
+   [
+    2059,
+    2043
+   ],
+   [
+    3818,
+    3670
+   ],
+   [
+    3822,
+    3670
+   ],
+   [
+    6984,
+    6913
+   ]
+  ],
+  "Petroleum Chemistry": [
+   [
+    2681,
+    2230
+   ]
+  ],
+  "Pure and Industrial Chemistry": [
+   [
+    3331,
+    3108
+   ]
+  ],
+  "APPLIED BIOLOGY": [
+   [
+    10354,
+    10306
+   ]
+  ],
+  "Environmental Management": [
+   [
+    4208,
+    4190
+   ],
+   [
+    7696,
+    7153
+   ]
+  ],
+  "Chemical Sciences": [
+   [
+    2633,
+    2230
+   ]
+  ],
+  "Geology and Mining": [
+   [
+    3825,
+    3670
+   ]
+  ],
+  "Mathematics with Computer Science": [
+   [
+    6188,
+    5827
+   ]
+  ],
+  "Pure and Applied Chemistry": [
+   [
+    2622,
+    2230
+   ]
+  ],
+  "Plant Biology": [
+   [
+    5042,
+    4783
+   ]
+  ],
+  "Plant Science": [
+   [
+    5048,
+    4783
+   ]
+  ],
+  "Genetics and Biotechnology": [
+   [
+    5187,
+    5116
+   ]
+  ],
+  "Computer Science and Information Technology": [
+   [
+    8885,
+    8461
+   ]
+  ],
+  "BIOCHEMISTRY AND MOLECULAR BIOLOGY": [
+   [
+    332,
+    73
+   ],
+   [
+    418,
+    73
+   ]
+  ],
+  "INFORMATION AND COMMUNICATION SCIENCE": [
+   [
+    8858,
+    8461
+   ],
+   [
+    9312,
+    8461
+   ]
+  ],
+  "COMPUTER SCIENCE WITH ECONOMICS": [
+   [
+    9365,
+    8461
+   ]
+  ],
+  "COMPUTER WITH STATISTICS": [
+   [
+    9848,
+    9827
+   ]
+  ],
+  "Electronics": [
+   [
+    1347,
+    978
+   ],
+   [
+    1470,
+    978
+   ],
+   [
+    8912,
+    8461
+   ]
+  ],
+  "Pure Chemistry": [
+   [
+    2595,
+    2230
+   ]
+  ],
+  "Applied Chemistry": [
+   [
+    2717,
+    2230
+   ]
+  ],
+  "Biostatistics": [
+   [
+    4564,
+    4326
+   ]
+  ],
+  "Statistics and Data Sciences": [
+   [
+    4569,
+    4326
+   ]
+  ],
+  "Marine Science": [
+   [
+    5657,
+    5385
+   ]
+  ],
+  "INFORMATION TECHNOLOGY AND HEALTH INFORMATICS": [
+   [
+    9240,
+    8461
+   ]
+  ],
+  "MANAGEMENT INFORMATION SYSTEM": [
+   [
+    9249,
+    8461
+   ]
+  ],
+  "INFORMATION SYSTEMS AND TECHNOLOGY": [
+   [
+    9360,
+    8461
+   ]
+  ],
+  "CYBER SECURITY SCIENCE": [
+   [
+    9399,
+    8461
+   ]
+  ],
+  "COMMUNICATIONS TECHNOLOGY": [
+   [
+    9589,
+    8461
+   ]
+  ],
+  "INFORMATION SCIENCE AND MEDIA STUDIES": [
+   [
+    9661,
+    8461
+   ]
+  ],
+  "APPLIED BIOLOGY AND BIOTECHNOLOGY": [
+   [
+    10366,
+    10306
+   ]
+  ],
+  "FISHERIES AND AQUACULTURE": [
+   [
+    10481,
+    10470
+   ]
+  ],
+  "Physics Electronics": [
+   [
+    1466,
+    978
+   ]
+  ],
+  "Physics/Industrial Physics": [
+   [
+    1513,
+    978
+   ]
+  ],
+  "Applied Physics": [
+   [
+    2023,
+    978
+   ]
+  ],
+  "Chemistry and Industrial Chemistry": [
+   [
+    2585,
+    2230
+   ],
+   [
+    2673,
+    2230
+   ]
+  ],
+  "Applied Geology": [
+   [
+    3870,
+    3670
+   ]
+  ],
+  "Applied Zoology": [
+   [
+    5533,
+    5385
+   ]
+  ],
+  "Molecular Biology": [
+   [
+    419,
+    73
+   ],
+   [
+    425,
+    73
+   ],
+   [
+    7550,
+    7153
+   ]
+  ],
+  "Computer Science and Information Science": [
+   [
+    8897,
+    8461
+   ]
+  ],
+  "BIOTECHNOLOGY AND MOLECULAR BIOLOGY": [
+   [
+    424,
+    73
+   ]
+  ],
+  "DATA MANAGEMENT": [
+   [
+    9246,
+    8461
+   ]
+  ],
+  "COMMUNICATION AND WIRELESS TECHNOLOGY": [
+   [
+    9371,
+    8461
+   ]
+  ],
+  "TELECOMMUNICATION MANAGEMENT": [
+   [
+    9375,
+    8461
+   ]
+  ],
+  "TELECOMMUNICATION SCIENCE": [
+   [
+    9395,
+    8461
+   ]
+  ],
+  "TELECOMMUNICATION AND WIRELESS TECHNOLOGY": [
+   [
+    9584,
+    8461
+   ]
+  ],
+  "COMMUNICATION AND DIGITAL MEDIA STUDIES": [
+   [
+    9594,
+    8461
+   ]
+  ],
+  "LIBRARY AND INFORMATION TECHNOLOGY": [
+   [
+    9649,
+    8461
+   ]
+  ],
+  "INFORMATION AND MEDIA SCIENCE": [
+   [
+    9683,
+    8461
+   ]
+  ],
+  "INFORMATION SCIENCE": [
+   [
+    9600,
+    8461
+   ],
+   [
+    9661,
+    8461
+   ],
+   [
+    9687,
+    8461
+   ]
+  ],
+  "COMPUTER SCIENCE WITH MATHEMATICS": [
+   [
+    9844,
+    9827
+   ]
+  ],
+  "ELECTRONICS AND COMPUTER SYSTEMS": [
+   [
+    9876,
+    9827
+   ]
+  ],
+  "ELECTRONICS AND COMMUNICATIONS": [
+   [
+    9880,
+    9827
+   ]
+  ],
+  "HUMAN BIOLOGY": [
+   [
+    10097,
+    9910
+   ]
+  ],
+  "APPLIED BOTANY": [
+   [
+    10336,
+    10306
+   ]
+  ],
+  "APPLIED BIOLOGY AND GENETICS": [
+   [
+    10362,
+    10306
+   ]
+  ],
+  "CELL BIOLOGY & GENETICS": [
+   [
+    10371,
+    10306
+   ]
+  ],
+  "HOME SCIENCE": [
+   [
+    10584,
+    10574
+   ]
+  ],
+  "Physics and Computer Electronic": [
+   [
+    1461,
+    978
+   ]
+  ],
+  "Electrons": [
+   [
+    1494,
+    978
+   ]
+  ],
+  "Physics with Solar Energy": [
+   [
+    1505,
+    978
+   ]
+  ],
+  "Physics and Energy Studies": [
+   [
+    1509,
+    978
+   ]
+  ],
+  "Physics/Astrology": [
+   [
+    1545,
+    978
+   ]
+  ],
+  "Energy Studies": [
+   [
+    1554,
+    978
+   ]
+  ],
+  "Pure and Applied Physics": [
+   [
+    2019,
+    978
+   ]
+  ],
+  "Pure Physics": [
+   [
+    2027,
+    978
+   ]
+  ],
+  "Industrial Mathematics /Applied Statistics": [
+   [
+    2164,
+    2083
+   ]
+  ],
+  "Applied Mathematics with Statistics": [
+   [
+    2169,
+    2083
+   ]
+  ],
+  "Applied Statistics": [
+   [
+    2184,
+    2083
+   ]
+  ],
+  "Industral Mathematics/Computer": [
+   [
+    2187,
+    2083
+   ]
+  ],
+  "Industrial Chemistry and Chemical Entrepreneurship": [
+   [
+    2590,
+    2230
+   ]
+  ],
+  "Industrial and Environmental Chemistry": [
+   [
+    2712,
+    2230
+   ]
+  ],
+  "Food Science & Nutrition": [
+   [
+    3094,
+    3065
+   ]
+  ],
+  "Geological Sciences": [
+   [
+    3810,
+    3670
+   ]
+  ],
+  "Geology and Mineral Sciences": [
+   [
+    3813,
+    3670
+   ]
+  ],
+  "Geology and Geophysics": [
+   [
+    3817,
+    3670
+   ]
+  ],
+  "Geology and Applied Geophysics": [
+   [
+    3821,
+    3670
+   ]
+  ],
+  "Geology and Petroleum Studies": [
+   [
+    3866,
+    3670
+   ]
+  ],
+  "Geology and Mineral Science": [
+   [
+    3874,
+    3670
+   ]
+  ],
+  "Marine Geology": [
+   [
+    3878,
+    3670
+   ]
+  ],
+  "Geography and Environmental Management": [
+   [
+    4207,
+    4190
+   ]
+  ],
+  "Building Technology": [
+   [
+    4338,
+    4326
+   ]
+  ],
+  "Statistics with Demography": [
+   [
+    4560,
+    4326
+   ]
+  ],
+  "Botany and Ecological Studies": [
+   [
+    4951,
+    4783
+   ]
+  ],
+  "Plant Science and Forestry": [
+   [
+    5032,
+    4783
+   ]
+  ],
+  "Plant Science and Microbiology": [
+   [
+    5037,
+    4783
+   ]
+  ],
+  "Biotechnology and Food Technology": [
+   [
+    5183,
+    5116
+   ]
+  ],
+  "Ecology": [
+   [
+    5194,
+    5116
+   ]
+  ],
+  "Applied Ecology": [
+   [
+    5206,
+    5116
+   ]
+  ],
+  "Ecology and Environmental Studies": [
+   [
+    5209,
+    5116
+   ]
+  ],
+  "Zoology and Aquaculture": [
+   [
+    5529,
+    5385
+   ]
+  ],
+  "Animal Biology and Environment": [
+   [
+    5537,
+    5385
+   ]
+  ],
+  "Conservation Biology": [
+   [
+    5612,
+    5385
+   ]
+  ],
+  "Conservation and Environmental Biology": [
+   [
+    5615,
+    5385
+   ]
+  ],
+  "Environmental Biology": [
+   [
+    814,
+    783
+   ],
+   [
+    5574,
+    5385
+   ],
+   [
+    5616,
+    5385
+   ],
+   [
+    5625,
+    5385
+   ],
+   [
+    7685,
+    7153
+   ]
+  ],
+  "Environmental Biology and Fisheries": [
+   [
+    5629,
+    5385
+   ]
+  ],
+  "Aviation Business": [
+   [
+    5662,
+    5385
+   ]
+  ],
+  "Geoscience": [
+   [
+    7019,
+    6913
+   ]
+  ],
+  "Earth Science": [
+   [
+    7027,
+    6913
+   ]
+  ],
+  "Microbiology and Biotechnology": [
+   [
+    7538,
+    7153
+   ]
+  ],
+  "Microbiology/Parasitology": [
+   [
+    7542,
+    7153
+   ]
+  ],
+  "Biology/Biotechnology": [
+   [
+    7546,
+    7153
+   ]
+  ],
+  "Microbiology and Industrial Biotechnology": [
+   [
+    7554,
+    7153
+   ]
+  ],
+  "Industrial Microbiology": [
+   [
+    7586,
+    7153
+   ]
+  ],
+  "Environmental Chemistry and Toxicology": [
+   [
+    7759,
+    7712
+   ]
+  ],
+  "Energy and Petroleum Studies": [
+   [
+    7764,
+    7712
+   ]
+  ],
+  "Computer, Information and Communication Science": [
+   [
+    8857,
+    8461
+   ]
+  ],
+  "Computer Science and Informatics": [
+   [
+    8864,
+    8461
+   ]
+  ],
+  "Computing and Artificial Intelligence": [
+   [
+    8905,
+    8461
+   ]
+  ],
+  "Computer with Electronics": [
+   [
+    8911,
+    8461
+   ]
+  ],
+  "Software Engineering and Digital Entrepreneurship": [
+   [
+    9077,
+    8461
+   ]
+  ],
+  "Robotics (Artificial Intelligence)": [
+   [
+    9082,
+    8461
+   ]
+  ]
+ }
+}

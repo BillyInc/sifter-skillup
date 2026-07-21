@@ -1,7 +1,6 @@
 {
-  "jamb_name": "Christian Studies",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": []
+ "jamb_name": "Christian Studies",
+ "utme_subjects": "OF ARTS (Hons.)] International Relations 53. German/Russian 54. 55. Environmental 56. 57. 58. 59. Archaeology 60. Studies 61. 62. Studies 63. Studies 64. Studies 65. 66.",
+ "extraction_source": "Arts _ Humanities.pdf p0 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

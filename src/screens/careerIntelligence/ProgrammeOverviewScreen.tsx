@@ -19,8 +19,9 @@ import {
   DomainMappingExplainer,
   NotesWidget,
   LevelUpCTA,
+  SectionLabel,
+  TextTabs,
 } from "@/components/careerIntelligence";
-import { SectionHeader } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import {
@@ -38,7 +39,6 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
   type ColorPalette,
 } from "@/theme";
 
@@ -117,23 +117,16 @@ export function ProgrammeOverviewScreen({
   }, [programmeId]);
 
   const header = (
-    <View style={styles.tabs}>
-      <TrackTabButton
-        label="💼 Employment"
-        active={tab === "employment"}
-        onPress={() => setTab("employment")}
-      />
-      <TrackTabButton
-        label="🚀 Entrepreneurship"
-        active={tab === "entrepreneurship"}
-        onPress={() => setTab("entrepreneurship")}
-      />
-      <TrackTabButton
-        label="🎓 Admission"
-        active={tab === "admission"}
-        onPress={() => setTab("admission")}
-      />
-    </View>
+    <TextTabs
+      value={tab}
+      onChange={setTab}
+      tabs={[
+        { value: "employment", label: "Employment" },
+        { value: "entrepreneurship", label: "Entrepreneurship" },
+        { value: "admission", label: "Admission" },
+      ]}
+      style={styles.tabs}
+    />
   );
 
   // Track B (Entrepreneurship) is a designed pathway entry, so it must render
@@ -223,18 +216,18 @@ function TrackAEmployment({
   return (
     <View style={styles.trackBody}>
       <View style={styles.leadRow}>
-        <Text style={[styles.lead, { color: colors.textSoft }]}>
-          🎯 The domains your programme unlocks — strongest matches first.
+        <Text style={[styles.lead, { color: colors.textRole.secondary }]}>
+          The domains your programme unlocks, strongest matches first.
         </Text>
         <TouchableOpacity
           onPress={() => setExplainerOpen(true)}
           accessibilityRole="button"
           accessibilityLabel="How mapping works"
           hitSlop={8}
-          style={[styles.howBtn, { borderColor: colors.border }]}
+          style={[styles.howBtn, { borderColor: colors.borderRole.subtle }]}
         >
-          <Text style={[styles.howText, { color: Brand.primaryDeep }]}>
-            ⓘ How mapping works
+          <Text style={[styles.howText, { color: colors.accentRole.action }]}>
+            How mapping works
           </Text>
         </TouchableOpacity>
       </View>
@@ -259,7 +252,7 @@ function TrackAEmployment({
         if (!links.length) return null;
         return (
           <View key={type} style={styles.section}>
-            <SectionHeader title={title} />
+            <SectionLabel>{title}</SectionLabel>
             <View style={styles.chips}>
               {links.map((link) => (
                 <DomainChip
@@ -304,27 +297,26 @@ function TrackBEntrepreneurship({
     <View
       style={[
         styles.business,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
-      <Text style={styles.businessIcon}>🚀</Text>
-      <Text style={[styles.businessEyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.businessEyebrow, { color: colors.textRole.muted }]}>
         ENTREPRENEURSHIP · TRACK B
       </Text>
-      <Text style={[styles.businessTitle, { color: colors.text }]}>
+      <Text style={[styles.businessTitle, { color: colors.textRole.primary }]}>
         Build from this programme
       </Text>
-      <Text style={[styles.businessBody, { color: colors.textSoft }]}>
+      <Text style={[styles.businessBody, { color: colors.textRole.secondary }]}>
         Employment is one path. Track B shows the ventures, creator routes,
         service models and scalable business archetypes a field can support.
       </Text>
       <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => exploreNav.entrepreneurship(router)}
-        style={[styles.admissionCTA, { backgroundColor: Brand.primary }]}
+        style={[styles.admissionCTA, { backgroundColor: colors.accentRole.action }]}
       >
         <Text style={styles.admissionCTAText}>
-          Open entrepreneurship pathway →
+          Open entrepreneurship pathway
         </Text>
       </TouchableOpacity>
     </View>
@@ -347,48 +339,47 @@ function TrackCAdmission({
     <View
       style={[
         styles.business,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
-      <Text style={styles.businessIcon}>🎓</Text>
-      <Text style={[styles.businessEyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.businessEyebrow, { color: colors.textRole.muted }]}>
         ADMISSION · TRACK C
       </Text>
       <View style={styles.admissionContent}>
         {admissionState.status === "real" && admissionState.data ? (
           <>
-            <Text style={[styles.businessTitle, { color: colors.text }]}>
+            <Text style={[styles.businessTitle, { color: colors.textRole.primary }]}>
               Cut-offs & Formula ({admissionState.data.year})
             </Text>
-            <Text style={[styles.admissionLabel, { color: colors.textSoft }]}>
+            <Text style={[styles.admissionLabel, { color: colors.textRole.secondary }]}>
               {admissionState.data.label}
             </Text>
-            <Text style={[styles.admissionLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.admissionLabel, { color: colors.textRole.muted }]}>
               {admissionState.data.programmeCount} programme(s) with cut-off data
             </Text>
-            <Text style={[styles.admissionNote, { color: colors.textMuted }]}>
+            <Text style={[styles.admissionNote, { color: colors.textRole.muted }]}>
               Data is indicative — based on the {admissionState.data.year} admission cycle.
             </Text>
           </>
         ) : admissionState.status === "fallback" ? (
           <>
-            <Text style={[styles.businessTitle, { color: colors.text }]}>
+            <Text style={[styles.businessTitle, { color: colors.textRole.primary }]}>
               Admission data (fallback)
             </Text>
-            <Text style={[styles.admissionNote, { color: colors.textSoft }]}>
+            <Text style={[styles.admissionNote, { color: colors.textRole.secondary }]}>
               {admissionState.meta?.notice}
             </Text>
           </>
         ) : (
           <>
-            <Text style={[styles.businessTitle, { color: colors.text }]}>
+            <Text style={[styles.businessTitle, { color: colors.textRole.primary }]}>
               University Admission Intelligence
             </Text>
-            <Text style={[styles.admissionBody, { color: colors.textSoft }]}>
+            <Text style={[styles.admissionBody, { color: colors.textRole.secondary }]}>
               Annual Dec/Jan compile of JAMB cut-offs, aggregate formulas, and
               national competitiveness. Data will appear here once compiled.
             </Text>
-            <Text style={[styles.admissionNote, { color: colors.textMuted }]}>
+            <Text style={[styles.admissionNote, { color: colors.textRole.muted }]}>
               {admissionState.meta?.notice}
             </Text>
           </>
@@ -399,10 +390,10 @@ function TrackCAdmission({
           activeOpacity={0.85}
           onPress={() => exploreNav.admission(router, programmeId)}
           accessibilityRole="button"
-          style={[styles.admissionCTA, { backgroundColor: Brand.primary }]}
+          style={[styles.admissionCTA, { backgroundColor: colors.accentRole.action }]}
         >
           <Text style={styles.admissionCTAText}>
-            View full admission insight →
+            View full admission insight
           </Text>
         </TouchableOpacity>
       </View>
@@ -410,64 +401,11 @@ function TrackCAdmission({
   );
 }
 
-function TrackTabButton({
-  label,
-  active,
-  onPress,
-}: {
-  label: string;
-  active: boolean;
-  onPress: () => void;
-}) {
-  const { colors } = useTheme();
-  return (
-    <TouchableOpacity
-      activeOpacity={0.85}
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ selected: active }}
-      style={[
-        styles.tab,
-        {
-          backgroundColor: active ? colors.accentSoft : colors.bgSecondary,
-          borderColor: active ? colors.accent : colors.border,
-        },
-      ]}
-    >
-      <Text
-        style={[
-          styles.tabLabel,
-          { color: active ? colors.accent : colors.textMuted },
-        ]}
-        numberOfLines={1}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
 export default ProgrammeOverviewScreen;
 
 const styles = StyleSheet.create({
   tabs: {
-    flexDirection: "row",
-    gap: Spacing.sm,
     marginTop: Spacing.md,
-  },
-  tab: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: Radius.full,
-    paddingVertical: Spacing.sm,
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 40,
-  },
-  tabLabel: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
-    letterSpacing: 0.2,
   },
   trackBody: {
     gap: Spacing.xl,
@@ -482,7 +420,7 @@ const styles = StyleSheet.create({
   },
   howBtn: {
     alignSelf: "flex-start",
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 6,
@@ -491,7 +429,7 @@ const styles = StyleSheet.create({
   },
   howText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   provenance: {
     gap: 4,
@@ -509,22 +447,21 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   business: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     padding: Spacing.xl,
     gap: Spacing.sm,
     alignItems: "center",
   },
-  businessIcon: { fontSize: 40 },
   businessEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
-    letterSpacing: 1.5,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.9,
     marginTop: Spacing.xs,
   },
   businessTitle: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
     textAlign: "center",
   },
   businessBody: {
@@ -550,13 +487,13 @@ const styles = StyleSheet.create({
     marginTop: Spacing.md,
     paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.lg,
-    borderRadius: Radius.full,
+    borderRadius: Radius.md,
     alignItems: "center",
   },
   admissionCTAText: {
     color: "#fff",
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   admissionLink: {
     fontSize: FontSize.sm,

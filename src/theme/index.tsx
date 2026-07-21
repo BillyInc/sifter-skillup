@@ -3,9 +3,9 @@
  * ─────────────────────────────────────────────────────────────
  * REPLACES: src/theme/index.ts
  *
- * Base token system aligned to the Sifter reference shell.
+ * Base token system aligned to the calm career intelligence shell.
  * Backward-compatible: { Colors } still works everywhere.
- * New: Stitch palette, dark mode, FontWeight, useTheme hook,
+ * New: Semantic surface/text/border/accent/state tokens, dark mode, FontWeight, useTheme hook,
  *      world themes, XP system, streak constants, track tools,
  *      animation presets, notification config, font stacks.
  *
@@ -87,9 +87,45 @@ export interface ColorPalette {
   stitch: string; stitchSoft: string;
   levelBadge: string; levelBadgeText: string;
   streakFire: string; xpGreen: string;
-  // ── COMPASS design system ──────────────────────────────────
-  // Brand chrome: the cobalt accent is reserved for wayfinding + current-state
-  // only (route line, active chip, you-are-here). apricot is the one warm note.
+  // ── Redesign semantic tokens ───────────────────────────────
+  surface: {
+    base: string;
+    raised: string;
+    subtle: string;
+    sunken: string;
+    inverse: string;
+  };
+  textRole: {
+    primary: string;
+    secondary: string;
+    muted: string;
+    placeholder: string;
+    inverse: string;
+  };
+  borderRole: {
+    subtle: string;
+    strong: string;
+    focus: string;
+  };
+  accentRole: {
+    action: string;
+    status: string;
+    warning: string;
+    danger: string;
+    success: string;
+  };
+  state: {
+    locked: string;
+    lockedSoft: string;
+    pending: string;
+    pendingSoft: string;
+    verified: string;
+    verifiedSoft: string;
+    live: string;
+    liveSoft: string;
+  };
+  // Legacy COMPASS aliases retained so old screens keep rendering while the
+  // redesign migrates to the semantic groups above.
   cobalt: string; cobaltDeep: string; cobaltWash: string;
   apricot: string; apricotWash: string;
   bgSunken: string;
@@ -107,71 +143,143 @@ export interface ColorPalette {
 // ─── Light palette ────────────────────────────────────────────
 
 export const LightColors: ColorPalette = {
-  bg: '#F0F2F6', bgSecondary: '#F5F5F5', bgTertiary: '#E5E7EB',
-  card: '#FFFFFF', cardElevated: '#FFFFFF', navy: '#111111',
-  accent: '#111111', accentSoft: '#F5F5F5', accentDim: '#374151', accentDeep: '#000000',
-  green: '#10B981', greenSoft: '#ECFDF5',
-  red: '#EF4444', redSoft: '#FEF2F2',
-  gold: '#F59E0B', goldSoft: '#FFF7ED',
-  orange: '#F97316', orangeSoft: '#FFF7ED',
-  text: '#111111', textSoft: '#374151', textMuted: '#6B7280', textInverse: '#FFFFFF',
-  border: '#E5E7EB', borderDark: '#D1D5DB', borderFocus: '#111111',
+  bg: '#F7F7F8', bgSecondary: '#FFFFFF', bgTertiary: '#EFEFF1',
+  card: '#FFFFFF', cardElevated: '#FFFFFF', navy: '#111214',
+  accent: '#1F5EFF', accentSoft: '#EEF4FF', accentDim: '#4266A6', accentDeep: '#123AAE',
+  green: '#159A63', greenSoft: '#EAF7F0',
+  red: '#D92D20', redSoft: '#FDECEC',
+  gold: '#B8860B', goldSoft: '#FBF3DD',
+  orange: '#B45309', orangeSoft: '#FBF0E2',
+  text: '#111214', textSoft: '#4B5563', textMuted: '#7C8490', textInverse: '#FFFFFF',
+  border: '#E3E5E8', borderDark: '#C9CDD3', borderFocus: '#1F5EFF',
   beginner: '#10B981', intermediate: '#F59E0B', pro: '#F59E0B',
   bitcoin: '#F7931A', ethereum: '#627EEA', defi: '#10B981', nft: '#8B5CF6',
   bridge: '#06B6D4', meme: '#EF4444', base: '#0052FF', ton: '#0088CC',
   bnb: '#F0B90B', solana: '#9945FF', starknet: '#F59E0B',
-  tabBar: '#FFFFFF', tabBarBorder: '#E5E7EB', tabBarActive: '#111111',
-  inputBg: '#F5F5F5', inputBorder: '#E5E7EB',
-  overlay: 'rgba(17,17,17,0.46)', shimmer: '#F5F5F5', shimmerHighlight: '#E5E7EB',
-  stitch: '#111111', stitchSoft: '#F5F5F5',
-  levelBadge: '#FFF7ED', levelBadgeText: '#B45309',
-  streakFire: '#F97316', xpGreen: '#10B981',
-  // ── COMPASS ──
-  cobalt: '#3B3AC4', cobaltDeep: '#2E2A8F', cobaltWash: '#EEEEFB',
-  apricot: '#F5A65B', apricotWash: '#FDF0E2',
-  bgSunken: '#EDEFEA',
-  success: '#0E9F6E', successSoft: '#E6F6EF',
+  tabBar: '#FFFFFF', tabBarBorder: '#E3E5E8', tabBarActive: '#111214',
+  inputBg: '#FFFFFF', inputBorder: '#D9DDE3',
+  overlay: 'rgba(17,18,20,0.46)', shimmer: '#EEEFF1', shimmerHighlight: '#F8F8F9',
+  stitch: '#111214', stitchSoft: '#F1F2F4',
+  levelBadge: '#F6F7F8', levelBadgeText: '#4B5563',
+  streakFire: '#B45309', xpGreen: '#159A63',
+  surface: {
+    base: '#F7F7F8',
+    raised: '#FFFFFF',
+    subtle: '#F1F2F4',
+    sunken: '#ECEEF1',
+    inverse: '#111214',
+  },
+  textRole: {
+    primary: '#111214',
+    secondary: '#4B5563',
+    muted: '#7C8490',
+    placeholder: '#9AA1AA',
+    inverse: '#FFFFFF',
+  },
+  borderRole: {
+    subtle: '#E3E5E8',
+    strong: '#C9CDD3',
+    focus: '#1F5EFF',
+  },
+  accentRole: {
+    action: '#1F5EFF',
+    status: '#2563EB',
+    warning: '#B45309',
+    danger: '#D92D20',
+    success: '#159A63',
+  },
+  state: {
+    locked: '#6B7280',
+    lockedSoft: '#F1F2F4',
+    pending: '#B45309',
+    pendingSoft: '#FBF0E2',
+    verified: '#159A63',
+    verifiedSoft: '#EAF7F0',
+    live: '#159A63',
+    liveSoft: '#EAF7F0',
+  },
+  // ── Legacy aliases ──
+  cobalt: '#1F5EFF', cobaltDeep: '#123AAE', cobaltWash: '#EEF4FF',
+  apricot: '#B45309', apricotWash: '#FBF0E2',
+  bgSunken: '#ECEEF1',
+  success: '#159A63', successSoft: '#EAF7F0',
   warning: '#B45309', warningSoft: '#FBF0E2',
-  danger: '#DC2626', dangerSoft: '#FDECEC',
-  info: '#2563EB', infoSoft: '#E9F0FE',
+  danger: '#D92D20', dangerSoft: '#FDECEC',
+  info: '#2563EB', infoSoft: '#EEF4FF',
   demand: '#0D9488', demandSoft: '#E2F5F2',
   elite: '#B8860B', eliteSoft: '#FBF3DD',
-  routeLine: '#C9CCE9', routeNode: '#3B3AC4', routeNodeMuted: '#C4C8D4',
+  routeLine: '#C9D6F2', routeNode: '#1F5EFF', routeNodeMuted: '#C4C8D4',
 };
 
 // ─── Dark palette ─────────────────────────────────────────────
 
 export const DarkColors: ColorPalette = {
-  bg: '#11141A', bgSecondary: '#171B22', bgTertiary: '#20252E',
-  card: '#1A2029', cardElevated: '#202733', navy: '#F8FAFC',
-  accent: '#E8EDF5', accentSoft: '#262D38', accentDim: '#B8C1CD', accentDeep: '#FFFFFF',
+  bg: '#151618', bgSecondary: '#1B1D20', bgTertiary: '#24272B',
+  card: '#1B1D20', cardElevated: '#22252A', navy: '#F4F5F6',
+  accent: '#7EA6FF', accentSoft: '#18233A', accentDim: '#AEB7C6', accentDeep: '#C9DAFF',
   green: '#34D399', greenSoft: '#102E27',
   red: '#F87171', redSoft: '#34181B',
   gold: '#F4B74A', goldSoft: '#342815',
   orange: '#FB923C', orangeSoft: '#392414',
-  text: '#F4F7FB', textSoft: '#CBD5E1', textMuted: '#94A3B8', textInverse: '#11141A',
-  border: '#2B3442', borderDark: '#3A4658', borderFocus: '#CBD5E1',
+  text: '#F4F5F6', textSoft: '#C7CCD3', textMuted: '#8E959F', textInverse: '#111214',
+  border: '#30343A', borderDark: '#444A53', borderFocus: '#7EA6FF',
   beginner: '#34D399', intermediate: '#F4B74A', pro: '#F87171',
   bitcoin: '#F7931A', ethereum: '#7C96FF', defi: '#34D399', nft: '#A78BFA',
   bridge: '#22D3EE', meme: '#F87171', base: '#3B82F6', ton: '#38BDF8',
   bnb: '#FBB024', solana: '#B57AFF', starknet: '#F4B74A',
-  tabBar: '#171B22', tabBarBorder: '#2B3442', tabBarActive: '#F4F7FB',
-  inputBg: '#151A22', inputBorder: '#324051',
-  overlay: 'rgba(6,10,16,0.76)', shimmer: '#1F2732', shimmerHighlight: '#2A3442',
-  stitch: '#F4F7FB', stitchSoft: '#262D38',
+  tabBar: '#1B1D20', tabBarBorder: '#30343A', tabBarActive: '#F4F5F6',
+  inputBg: '#1B1D20', inputBorder: '#383D45',
+  overlay: 'rgba(8,9,10,0.76)', shimmer: '#24272B', shimmerHighlight: '#30343A',
+  stitch: '#F4F5F6', stitchSoft: '#24272B',
   levelBadge: '#342815', levelBadgeText: '#F4B74A',
   streakFire: '#FB923C', xpGreen: '#34D399',
-  // ── COMPASS (Analyst) ──
-  cobalt: '#6E6CF0', cobaltDeep: '#3B3AC4', cobaltWash: '#1B2145',
-  apricot: '#F7B679', apricotWash: '#2A2114',
-  bgSunken: '#0B1120',
+  surface: {
+    base: '#151618',
+    raised: '#1B1D20',
+    subtle: '#22252A',
+    sunken: '#101113',
+    inverse: '#F4F5F6',
+  },
+  textRole: {
+    primary: '#F4F5F6',
+    secondary: '#C7CCD3',
+    muted: '#8E959F',
+    placeholder: '#767E89',
+    inverse: '#111214',
+  },
+  borderRole: {
+    subtle: '#30343A',
+    strong: '#444A53',
+    focus: '#7EA6FF',
+  },
+  accentRole: {
+    action: '#7EA6FF',
+    status: '#7EA6FF',
+    warning: '#F4B74A',
+    danger: '#F87171',
+    success: '#34D399',
+  },
+  state: {
+    locked: '#8E959F',
+    lockedSoft: '#24272B',
+    pending: '#F4B74A',
+    pendingSoft: '#2A2110',
+    verified: '#34D399',
+    verifiedSoft: '#0E2A22',
+    live: '#34D399',
+    liveSoft: '#0E2A22',
+  },
+  // ── Legacy aliases ──
+  cobalt: '#7EA6FF', cobaltDeep: '#4C78E6', cobaltWash: '#18233A',
+  apricot: '#F4B74A', apricotWash: '#2A2110',
+  bgSunken: '#101113',
   success: '#34D399', successSoft: '#0E2A22',
   warning: '#F4B74A', warningSoft: '#2A2110',
   danger: '#F87171', dangerSoft: '#341A1C',
-  info: '#7C96FF', infoSoft: '#141F3C',
+  info: '#7EA6FF', infoSoft: '#18233A',
   demand: '#2DD4BF', demandSoft: '#0C2A28',
   elite: '#E9C46A', eliteSoft: '#2A230F',
-  routeLine: '#2C3654', routeNode: '#6E6CF0', routeNodeMuted: '#3A4560',
+  routeLine: '#2B3A59', routeNode: '#7EA6FF', routeNodeMuted: '#444A53',
 };
 
 // Backward-compatible static export — existing code `import { Colors }` still works

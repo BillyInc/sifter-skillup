@@ -1,33 +1,6 @@
 {
-  "jamb_name": "Crop Science",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": [
-    {"institution": "KWASU", "note": "KWASU accepts ND/HND, NCE in relevant subjects in addition to the UTME requirements."},
-    {"institution": "MAKURDI", "note": "MAKURDI accepts; (a) Two (2) 'A' Level passes in any of Chemistry and Biology/Agricultural Science/Botany/Zoology or Mathematics (Pure & Applied), Physics, Geology and Economics. (b) NCE/ND/HND credit/merit in Agriculture."},
-    {"institution": "LAUTECH", "note": "LAUTECH accepts; (a) Two (2) 'A' Level passes in any of Chemistry, Biology/Agricultural Science or Physics. (b) NCE/ND/HND credit/merit in Agriculture."},
-    {"institution": "EBSU", "note": "EBSU accepts a) two (2) 'A' level passes in Chemistry and Biology/Agricultural Science/Zoology or Physics/Mathematics/Economics. b) NCE with minimum merit passes in relevant subjects. c) HND and ND with minimum of upper credit in relevant programs."},
-    {"institution": "DELSU, MAKURDI, UMUDIKE, UNN", "note": "UTME: Same as in Agricultural Economics."},
-    {"institution": "OOU", "note": "UTME: OOU requires 'O' Level credit passes in English Language, Mathematics and Physics."},
-    {"institution": "NDU", "note": "UTME: NDU requires five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Physics, Biology or Agricultural Science."},
-    {"institution": "DELSU", "note": "DELSU accepts D7 in English Language."},
-    {"institution": "NAUB", "note": "As in Animal Production."},
-    {"institution": "MINNA and FUTO", "note": "MINNA and FUTO require 'O' Level credit passes in English Language and Mathematics."},
-    {"institution": "BAUCHI", "note": "BAUCHI requires 'O' Level credit pass in English Language but accept 'O' Level pass in Physics."},
-    {"institution": "PHC", "note": "Same as in Fisheries."},
-    {"institution": "COOU and ABSU", "note": "COOU and ABSU require five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology or Agricultural Science."},
-    {"institution": "MAUTY", "note": "MAUTY requires Five (5) O' Level credit passes in English Language, Mathematics, Biology/Agricultural Science, Chemistry, and any one from Physics/Geography/Economics/Horticulture."},
-    {"institution": "FUNAAB", "note": "As in Agriculture Extension and Rural Development."},
-    {"institution": "FUTA", "note": "FUTA requires five (5) 'O' Level credits at SSC, or equivalent at a maximum of two (2) sittings in the following subjects: English Language, Mathematics, Chemistry, Biology or Agricultural Science, Economics or Geography. At least 'O' Level pass in Physics is required."},
-    {"institution": "MAKURDI", "note": "MAKURDI requires five (5) 'O' Level credit passes in Biology or Agricultural Science, Chemistry, Mathematics, English Language, Physics or any other Science subjects. Accepts 'O' Level pass in Physics."},
-    {"institution": "LAUTECH", "note": "LAUTECH requires five (5) 'O' Level credit passes in Biology or Agriculture Science, Chemistry, Mathematics, English Language and Physics."},
-    {"institution": "RSU", "note": "Same as in Animal Science."},
-    {"institution": "EBSU", "note": "EBSU accepts five (5) SSCE credit passes to include English Language, Chemistry, Biology/Agricultural Science, Mathematics and one Science/Social Science subject and at least a pass in Physics."},
-    {"institution": "FUTA", "note": "UTME SUBJECTS: FUTA requires Mathematics/Physics, Chemistry, Biology/Agricultural Science."},
-    {"institution": "SALEM", "note": "UTME SUBJECTS: Same as in Soil Science."},
-    {"institution": "LAUTECH", "note": "UTME SUBJECTS: LAUTECH requires English Language, Chemistry, Biology/Agriculture Science, and Physics/Mathematics."},
-    {"institution": "OOU", "note": "UTME SUBJECTS: OOU requires Chemistry and any two (2) of Physics, Mathematics, Biology, Agricultural Science and Geography."},
-    {"institution": "MAUTY", "note": "UTME SUBJECTS: MAUTY requires Biology/Agric. Sc. and any other two of Chemistry, Physics, Geography, Economics and Mathematics."}
-  ]
+ "jamb_name": "Crop Science",
+ "utme_subjects": "AGRICULTURE/VET.MEDICINE B.Agric.Tech.) DVM] 35 Fisheries 36 Fisheries 37 Food 38 Food 39 Food 40 Forestry 41 Forestry/Forest 42 Forestry 43 Forestry 44 Forestry, 45 Forestry 46 Home 47 Home 48 Home 49 Horticulture 50 Hotel 51 Livestock 52 Nutrition 53 Pasture & 54 Plant 55 Plant Science 56 Plant Science 57 Plant Science 58 Plant 59 Plant 60 Public & 61 Soil Science 62 Soil Science 63 Soil Science.",
+ "extraction_source": "Agriculture.pdf p0 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

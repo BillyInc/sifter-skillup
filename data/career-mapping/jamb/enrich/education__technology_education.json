@@ -1,7 +1,6 @@
 {
-  "jamb_name": "Technology Education",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": []
+ "jamb_name": "Technology Education",
+ "utme_subjects": "EDUCATION 21 22 23 24 Science Education 25 26 (Visual Handicaps) EDUCATION 1 2 COURSES 3 Education 4 5 6 7 Social Sciences 8 Religious Studies 9 10 Language 11 Applied Arts 12 13 14 15 16 17 18 Arts 19 and French 20 21 22 Studies 23.",
+ "extraction_source": "Education.pdf p0 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

@@ -1,7 +1,6 @@
 {
-  "jamb_name": "Home Science, Nutrition and Dietetics",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": []
+ "jamb_name": "Home Science, Nutrition and Dietetics",
+ "utme_subjects": "UTMESUBJECTS SPECIAL and at which Chemistry, DIRECTENTRY Biology or Agricultureand in Mathematics or Physics.",
+ "extraction_source": "Agriculture.pdf p72 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }
