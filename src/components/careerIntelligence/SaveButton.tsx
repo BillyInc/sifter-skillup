@@ -17,7 +17,8 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, Brand } from "../../theme";
+import { Feather } from "@expo/vector-icons";
+import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import { careerData } from "../../lib/careerData";
 import type { SavedEntityType } from "../../types/career";
 
@@ -78,7 +79,6 @@ export function SaveButton({
     }
   };
 
-  const glyph = saved ? "🔖" : "🏷️";
   const text = saved ? "Saved" : "Save";
 
   return (
@@ -93,22 +93,26 @@ export function SaveButton({
           styles.btn,
           compact ? styles.btnCompact : styles.btnFull,
           {
-            backgroundColor: saved ? colors.goldSoft : colors.bgSecondary,
-            borderColor: saved ? `${Brand.primary}55` : colors.border,
+            backgroundColor: saved ? colors.accentSoft : colors.surface.raised,
+            borderColor: saved ? colors.accentRole.action : colors.borderRole.subtle,
             opacity: busy ? 0.6 : 1,
           },
         ]}
       >
         {busy ? (
-          <ActivityIndicator size="small" color={colors.textSoft} />
+          <ActivityIndicator size="small" color={colors.textRole.secondary} />
         ) : (
-          <Text style={styles.glyph}>{glyph}</Text>
+          <Feather
+            name={saved ? "bookmark" : "bookmark"}
+            size={compact ? 16 : 15}
+            color={saved ? colors.accentRole.action : colors.textRole.secondary}
+          />
         )}
         {!compact && (
           <Text
             style={[
               styles.label,
-              { color: saved ? Brand.primaryDeep : colors.textSoft },
+              { color: saved ? colors.accentRole.action : colors.textRole.secondary },
             ]}
           >
             {text}
@@ -117,7 +121,7 @@ export function SaveButton({
       </TouchableOpacity>
 
       {hint ? (
-        <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
+        <Text style={[styles.hint, { color: colors.textRole.muted }]}>{hint}</Text>
       ) : null}
     </View>
   );
@@ -130,14 +134,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: Spacing.sm,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     minHeight: 44,
   },
   btnFull: { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm },
   btnCompact: { width: 44, height: 44, borderRadius: Radius.full },
-  glyph: { fontSize: FontSize.lg },
-  label: { fontSize: FontSize.sm, fontWeight: "700" },
+  label: { fontSize: FontSize.sm, fontWeight: "600" },
   hint: { fontSize: FontSize.xs, fontWeight: "600", maxWidth: 220 },
 });
 

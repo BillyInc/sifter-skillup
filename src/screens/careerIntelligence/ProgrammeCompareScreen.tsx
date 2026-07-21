@@ -10,13 +10,18 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { DataStateView, DomainChip } from "@/components/careerIntelligence";
-import { SifterButton, SifterCard, SectionHeader } from "@/components/ui";
+import {
+  DataStateView,
+  DomainChip,
+  ListRow,
+  SearchBar,
+  SectionLabel,
+} from "@/components/careerIntelligence";
+import { SifterButton, SifterCard } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import {
@@ -27,7 +32,7 @@ import {
   type ProgrammeSearchResult,
 } from "@/types/career";
 import {
-  Brand,
+  CompassFonts,
   FontSize,
   FontWeight,
   Radius,
@@ -138,42 +143,31 @@ export default function ProgrammeCompareScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
       <TouchableOpacity onPress={goBack} hitSlop={10} style={styles.back}>
-        <Text style={[styles.backText, { color: colors.accent }]}>← Back</Text>
+        <Text style={[styles.backText, { color: colors.textRole.secondary }]}>Explore / Compare</Text>
       </TouchableOpacity>
 
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>COMPARE</Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>COMPARE</Text>
+      <Text style={[styles.title, { color: colors.textRole.primary }]}>
         Compare programmes side by side
       </Text>
-      <Text style={[styles.lede, { color: colors.textSoft }]}>
+      <Text style={[styles.lede, { color: colors.textRole.secondary }]}>
         Pick two to four programmes and compare the domains, admission signal and
         build paths they open. This is a decision view, not a database export.
       </Text>
 
-      <View
-        style={[
-          styles.search,
-          { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
-        ]}
-      >
-        <Text style={[styles.searchIcon, { color: colors.textMuted }]}>🔍</Text>
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder={canAdd ? "Search programme to add" : "Remove one to add another"}
-          placeholderTextColor={colors.textMuted}
-          editable={canAdd}
-          autoCorrect={false}
-          returnKeyType="search"
-          style={[styles.searchInput, { color: colors.text }]}
-        />
-      </View>
+      <SearchBar
+        value={query}
+        onChangeText={setQuery}
+        scope="Programmes"
+        placeholder={canAdd ? "Search programme to add" : "Remove one to add another"}
+        editable={canAdd}
+      />
 
       {search ? (
         <DataStateView
@@ -193,26 +187,16 @@ export default function ProgrammeCompareScreen() {
                     activeOpacity={0.8}
                     onPress={() => addProgramme(row.id)}
                     disabled={added || !canAdd}
-                    style={[
-                      styles.searchRow,
-                      {
-                        backgroundColor: colors.card,
-                        borderColor: added ? Brand.primary : colors.border,
-                        opacity: added ? 0.62 : 1,
-                      },
-                    ]}
+                    style={styles.searchRowPress}
                   >
-                    <View style={{ flex: 1 }}>
-                      <Text style={[styles.searchTitle, { color: colors.text }]}>
-                        {row.name}
-                      </Text>
-                      <Text style={[styles.searchMeta, { color: colors.textMuted }]}>
-                        {row.discipline ?? row.institutionType}
-                      </Text>
-                    </View>
-                    <Text style={[styles.addText, { color: Brand.primaryDeep }]}>
-                      {added ? "Added" : "Add"}
-                    </Text>
+                    <ListRow
+                      title={row.name}
+                      subtitle={row.discipline ?? row.institutionType}
+                      meta={added ? "Added" : "Tap to add"}
+                      icon="book-open"
+                      selected={added}
+                      locked={!canAdd && !added}
+                    />
                   </TouchableOpacity>
                 );
               })}
@@ -223,11 +207,10 @@ export default function ProgrammeCompareScreen() {
 
       {selectedIds.length < 2 ? (
         <SifterCard style={styles.emptyCard}>
-          <Text style={styles.emptyIcon}>⚖️</Text>
-          <Text style={[styles.emptyTitle, { color: colors.text }]}>
+          <Text style={[styles.emptyTitle, { color: colors.textRole.primary }]}>
             Add at least two programmes
           </Text>
-          <Text style={[styles.emptyBody, { color: colors.textSoft }]}>
+          <Text style={[styles.emptyBody, { color: colors.textRole.secondary }]}>
             Search above to build a comparison. Guests can inspect the view, but
             saving comparisons belongs in an account.
           </Text>
@@ -261,13 +244,18 @@ function ProgrammeCompareCard({
   router: ReturnType<typeof useRouter>;
 }) {
   return (
-    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+      ]}
+    >
       <View style={styles.cardUtility}>
-        <Text style={[styles.cardUtilityText, { color: colors.textMuted }]}>
+        <Text style={[styles.cardUtilityText, { color: colors.textRole.muted }]}>
           Selected programme
         </Text>
         <TouchableOpacity onPress={onRemove} hitSlop={8}>
-          <Text style={[styles.remove, { color: colors.textMuted }]}>Remove</Text>
+          <Text style={[styles.remove, { color: colors.textRole.muted }]}>Remove</Text>
         </TouchableOpacity>
       </View>
       <DataStateView
@@ -283,10 +271,10 @@ function ProgrammeCompareCard({
             <View style={styles.cardContent}>
               <View style={styles.cardTop}>
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.cardTitle, { color: colors.text }]}>
+                  <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
                     {programme.displayName ?? programme.name}
                   </Text>
-                  <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
+                  <Text style={[styles.cardMeta, { color: colors.textRole.muted }]}>
                     {[programme.qualification, programme.discipline, programme.institutionType]
                       .filter(Boolean)
                       .join(" · ")}
@@ -302,7 +290,7 @@ function ProgrammeCompareCard({
 
               {topDomains.length ? (
                 <View style={styles.domainSection}>
-                  <SectionHeader title="Top linked domains" />
+                  <SectionLabel>Top linked domains</SectionLabel>
                   <View style={styles.domainChips}>
                     {topDomains.map((domain) => (
                       <DomainChip
@@ -324,7 +312,7 @@ function ProgrammeCompareCard({
                   label="Open programme"
                   onPress={() => exploreNav.programme(router, programme.id)}
                   variant="track"
-                  color={Brand.primary}
+                  color={colors.accentRole.action}
                   size="sm"
                   fullWidth={false}
                 />
@@ -333,8 +321,8 @@ function ProgrammeCompareCard({
                   onPress={() => exploreNav.entrepreneurship(router)}
                   style={styles.linkBtn}
                 >
-                  <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
-                    Build path →
+                  <Text style={[styles.linkText, { color: colors.accentRole.action }]}>
+                    Build path
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -356,9 +344,9 @@ function MiniMetric({
   colors: ReturnType<typeof useTheme>["colors"];
 }) {
   return (
-    <View style={[styles.metric, { backgroundColor: colors.bgSecondary }]}>
-      <Text style={[styles.metricValue, { color: colors.text }]}>{value}</Text>
-      <Text style={[styles.metricLabel, { color: colors.textMuted }]}>{label}</Text>
+    <View style={[styles.metric, { backgroundColor: colors.surface.subtle }]}>
+      <Text style={[styles.metricValue, CompassFonts.data, { color: colors.textRole.primary }]}>{value}</Text>
+      <Text style={[styles.metricLabel, { color: colors.textRole.muted }]}>{label}</Text>
     </View>
   );
 }
@@ -375,9 +363,9 @@ function AdmissionLine({
       ? `${state.data.label} · ${state.data.programmeCount} cutoff row${state.data.programmeCount === 1 ? "" : "s"}`
       : state.meta?.notice ?? "Admission signal is being compiled.";
   return (
-    <View style={[styles.admissionLine, { backgroundColor: colors.goldSoft }]}>
-      <Text style={[styles.admissionText, { color: Brand.primaryDeep }]}>
-        🎓 {text}
+    <View style={[styles.admissionLine, { backgroundColor: colors.surface.subtle }]}>
+      <Text style={[styles.admissionText, { color: colors.textRole.secondary }]}>
+        {text}
       </Text>
     </View>
   );
@@ -391,48 +379,25 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   back: { paddingVertical: 4 },
-  backText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  backText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
-    letterSpacing: 1.5,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.9,
   },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.xxl * 1.16,
   },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
   },
-  search: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-    borderWidth: 1.5,
-    borderRadius: Radius.lg,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 13,
-  },
-  searchIcon: { fontSize: 16 },
-  searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: 0 },
   searchResults: { gap: Spacing.sm },
-  searchRow: {
-    minHeight: 56,
-    borderWidth: 1,
-    borderRadius: Radius.md,
-    padding: Spacing.md,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.md,
-  },
-  searchTitle: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
-  searchMeta: { fontSize: FontSize.xs, marginTop: 2 },
-  addText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  searchRowPress: { display: "flex" },
   emptyCard: { alignItems: "center", gap: Spacing.xs },
-  emptyIcon: { fontSize: 34 },
-  emptyTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  emptyTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   emptyBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -445,8 +410,8 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   card: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     padding: Spacing.md,
     flexBasis: 280,
     flexGrow: 1,
@@ -462,7 +427,7 @@ const styles = StyleSheet.create({
   },
   cardUtilityText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     textTransform: "uppercase",
   },
   cardTop: {
@@ -471,9 +436,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: Spacing.md,
   },
-  cardTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  cardTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   cardMeta: { fontSize: FontSize.xs, marginTop: 4 },
-  remove: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  remove: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
   metrics: {
     flexDirection: "row",
     gap: Spacing.sm,
@@ -485,10 +450,10 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     minWidth: 86,
   },
-  metricValue: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  metricValue: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   metricLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     textTransform: "uppercase",
   },
   domainSection: { gap: Spacing.sm },
@@ -499,7 +464,7 @@ const styles = StyleSheet.create({
   },
   admissionText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.4,
   },
   actions: {
@@ -509,5 +474,5 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   linkBtn: { minHeight: 38, justifyContent: "center" },
-  linkText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  linkText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
 });
