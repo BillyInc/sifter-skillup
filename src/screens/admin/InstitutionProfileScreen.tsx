@@ -21,7 +21,6 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Shadow,
   webContainer,
 } from "../../theme";
 import { adminData } from "../../lib/adminData";
@@ -34,6 +33,7 @@ import type {
 } from "../../types/institution";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { SectionLabel } from "../../components/careerIntelligence";
 
 const ROLE_OPTIONS: { value: OrgRole; label: string; body: string }[] = [
   {
@@ -128,25 +128,27 @@ export function InstitutionProfileScreen() {
   return (
     <AdminShell title="Profile + team" eyebrow="Organisation workspace">
       <ScrollView
-        style={{ flex: 1, backgroundColor: colors.bg }}
+        style={{ flex: 1, backgroundColor: colors.surface.base }}
         contentContainerStyle={[styles.scroll, webContainer as object]}
         showsVerticalScrollIndicator={false}
       >
         <View
           style={[
             styles.hero,
-            { backgroundColor: colors.card, borderColor: colors.border },
-            Shadow.xs,
+            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
           ]}
         >
           <View style={{ flex: 1 }}>
-            <Text style={[styles.kicker, { color: colors.textMuted }]}>
+            <Text style={[styles.kicker, { color: colors.textRole.muted }]}>
               ORGANISATION
             </Text>
-            <Text style={[styles.title, { color: colors.text }]}>{orgName}</Text>
-            <Text style={[styles.lede, { color: colors.textMuted }]}>
-              {orgType} · {verification.replace(/_/g, " ")}
-            </Text>
+            <Text style={[styles.title, { color: colors.textRole.primary }]}>{orgName}</Text>
+            <View style={styles.statusLine}>
+              <Text style={[styles.lede, { color: colors.textRole.secondary }]}>
+                {orgType}
+              </Text>
+              <VerificationBadge status={verification} />
+            </View>
           </View>
           <View style={styles.stats}>
             <Stat label="Members" value={String(memberCount)} />
@@ -155,10 +157,8 @@ export function InstitutionProfileScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
-            Access model
-          </Text>
-          <Text style={[styles.body, { color: colors.textMuted }]}>
+          <SectionLabel>Access model</SectionLabel>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>
             One school, university or tutorial centre can have multiple
             officials. The owner or verified admin invites each person by email,
             assigns a role, and that person signs in with their own account.
@@ -170,12 +170,10 @@ export function InstitutionProfileScreen() {
           <View
             style={[
               styles.panel,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
-            <Text style={[styles.panelTitle, { color: colors.text }]}>
-              Team members
-            </Text>
+            <SectionLabel>Team members</SectionLabel>
             <ComingSoonPanel state={team}>
               {(data) => (
                 <View style={styles.rows}>
@@ -188,7 +186,7 @@ export function InstitutionProfileScreen() {
                       />
                     ))
                   ) : (
-                    <Text style={[styles.empty, { color: colors.textMuted }]}>
+                    <Text style={[styles.empty, { color: colors.textRole.muted }]}>
                       No member seats have been returned yet.
                     </Text>
                   )}
@@ -200,13 +198,11 @@ export function InstitutionProfileScreen() {
           <View
             style={[
               styles.panel,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
-            <Text style={[styles.panelTitle, { color: colors.text }]}>
-              Invite an official
-            </Text>
-            <Text style={[styles.body, { color: colors.textMuted }]}>
+            <SectionLabel>Invite an official</SectionLabel>
+            <Text style={[styles.body, { color: colors.textRole.secondary }]}>
               {canInvite
                 ? "Invite another official into this same workspace."
                 : "Invites unlock for verified owners/admins. Until then, this explains the workflow."}
@@ -222,10 +218,10 @@ export function InstitutionProfileScreen() {
               placeholderTextColor={colors.textMuted}
               style={[
                 styles.input,
-                {
-                  color: colors.text,
-                  borderColor: colors.border,
-                  backgroundColor: colors.bgSecondary,
+              {
+                  color: colors.textRole.primary,
+                  borderColor: colors.borderRole.subtle,
+                  backgroundColor: colors.surface.raised,
                 },
               ]}
             />
@@ -241,15 +237,15 @@ export function InstitutionProfileScreen() {
                     style={[
                       styles.roleOption,
                       {
-                        borderColor: active ? colors.accent : colors.border,
-                        backgroundColor: active ? colors.accentSoft : colors.bgSecondary,
+                        borderColor: active ? colors.borderRole.strong : colors.borderRole.subtle,
+                        backgroundColor: active ? colors.surface.subtle : colors.surface.raised,
                       },
                     ]}
                   >
-                    <Text style={[styles.roleLabel, { color: colors.text }]}>
+                    <Text style={[styles.roleLabel, { color: colors.textRole.primary }]}>
                       {option.label}
                     </Text>
-                    <Text style={[styles.roleBody, { color: colors.textMuted }]}>
+                    <Text style={[styles.roleBody, { color: colors.textRole.secondary }]}>
                       {option.body}
                     </Text>
                   </TouchableOpacity>
@@ -265,14 +261,14 @@ export function InstitutionProfileScreen() {
                 styles.cta,
                 {
                   backgroundColor:
-                    canInvite && email.trim() ? colors.navy : colors.bgSecondary,
+                    canInvite && email.trim() ? colors.surface.inverse : colors.surface.subtle,
                 },
               ]}
             >
               <Text
                 style={[
                   styles.ctaText,
-                  { color: canInvite && email.trim() ? colors.textInverse : colors.textMuted },
+                  { color: canInvite && email.trim() ? colors.textRole.inverse : colors.textRole.muted },
                 ]}
               >
                 {submitting ? "Creating invite..." : `Invite as ${selectedRole.label}`}
@@ -280,7 +276,7 @@ export function InstitutionProfileScreen() {
             </TouchableOpacity>
 
             {feedback ? (
-              <Text style={[styles.feedback, { color: colors.textMuted }]}>
+              <Text style={[styles.feedback, { color: colors.textRole.muted }]}>
                 {feedback}
               </Text>
             ) : null}
@@ -289,9 +285,7 @@ export function InstitutionProfileScreen() {
 
         {team.status === "real" && team.data?.invites.length ? (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>
-              Pending invitations
-            </Text>
+            <SectionLabel>Pending invitations</SectionLabel>
             <View style={styles.rows}>
               {team.data.invites.map((invite) => (
                 <TeamRow
@@ -313,10 +307,11 @@ function roleLabel(role: OrgRole): string {
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
+  const { colors } = useTheme();
   return (
-    <View style={styles.stat}>
-      <Text style={styles.statValue}>{value}</Text>
-      <Text style={styles.statLabel}>{label}</Text>
+    <View style={[styles.stat, { backgroundColor: colors.surface.subtle }]}>
+      <Text style={[styles.statValue, { color: colors.textRole.primary }]}>{value}</Text>
+      <Text style={[styles.statLabel, { color: colors.textRole.muted }]}>{label}</Text>
     </View>
   );
 }
@@ -324,12 +319,32 @@ function Stat({ label, value }: { label: string; value: string }) {
 function TeamRow({ primary, secondary }: { primary: string; secondary: string }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.teamRow, { borderColor: colors.border }]}>
-      <Text style={[styles.teamPrimary, { color: colors.text }]} numberOfLines={1}>
+    <View style={[styles.teamRow, { borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.teamPrimary, { color: colors.textRole.primary }]} numberOfLines={1}>
         {primary}
       </Text>
-      <Text style={[styles.teamSecondary, { color: colors.textMuted }]}>
+      <Text style={[styles.teamSecondary, { color: colors.textRole.muted }]}>
         {secondary}
+      </Text>
+    </View>
+  );
+}
+
+function VerificationBadge({ status }: { status: string }) {
+  const { colors } = useTheme();
+  const normalized = status.replace(/_/g, " ");
+  const tone =
+    status === "verified"
+      ? { bg: colors.state.verifiedSoft, text: colors.state.verified }
+      : status === "rejected"
+        ? { bg: colors.dangerSoft, text: colors.danger }
+        : status === "pending"
+          ? { bg: colors.state.pendingSoft, text: colors.state.pending }
+          : { bg: colors.state.lockedSoft, text: colors.state.locked };
+  return (
+    <View style={[styles.verifyBadge, { backgroundColor: tone.bg }]}>
+      <Text style={[styles.verifyBadgeText, { color: tone.text }]}>
+        {normalized}
       </Text>
     </View>
   );
@@ -345,26 +360,45 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   hero: {
-    borderWidth: 1,
-    borderRadius: Radius.xl,
-    padding: Spacing.xl,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.lg,
   },
   kicker: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
-    letterSpacing: 1.2,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.9,
   },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
     marginTop: Spacing.xs,
   },
   lede: {
     fontSize: FontSize.sm,
     marginTop: Spacing.xs,
+    textTransform: "capitalize",
+  },
+  statusLine: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+    marginTop: Spacing.xs,
+  },
+  verifyBadge: {
+    minHeight: 22,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  verifyBadgeText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
     textTransform: "capitalize",
   },
   stats: {
@@ -373,36 +407,33 @@ const styles = StyleSheet.create({
   },
   stat: {
     minWidth: 92,
-    borderRadius: Radius.lg,
+    borderRadius: Radius.md,
     padding: Spacing.md,
-    backgroundColor: "rgba(0,0,0,0.04)",
   },
   statValue: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
   },
   statLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     marginTop: 2,
   },
   section: { gap: Spacing.sm },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   body: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.lg },
   panel: {
     flex: 1,
     minWidth: 300,
-    borderWidth: 1,
-    borderRadius: Radius.xl,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     padding: Spacing.lg,
     gap: Spacing.md,
   },
-  panelTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
   rows: { gap: Spacing.sm },
   empty: { fontSize: FontSize.sm },
   input: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
@@ -411,12 +442,12 @@ const styles = StyleSheet.create({
   },
   roleList: { gap: Spacing.sm },
   roleOption: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     padding: Spacing.md,
     gap: 3,
   },
-  roleLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  roleLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   roleBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
   cta: {
     minHeight: 44,
@@ -425,14 +456,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: Spacing.md,
   },
-  ctaText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  ctaText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   feedback: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   teamRow: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     padding: Spacing.md,
   },
-  teamPrimary: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  teamPrimary: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   teamSecondary: {
     fontSize: FontSize.xs,
     textTransform: "capitalize",

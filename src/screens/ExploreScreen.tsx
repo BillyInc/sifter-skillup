@@ -11,7 +11,7 @@
  * When the query is empty (<2 chars) the screen falls back to the three SS3
  * "doors" and the browse links — the onboarding entry points.
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -36,6 +36,7 @@ import {
   TierBadgeView,
   InfoTooltip,
   CoachMark,
+  FilterChip,
   ListRow,
   SearchBar,
   SectionLabel,
@@ -72,6 +73,7 @@ const DOORS = [
 
 const MIN_QUERY = 2;
 const TIERS: readonly TierType[] = ["entry", "mid", "senior"];
+type ResultFilter = "all" | "domains" | "roles" | "programmes";
 const asTier = (t?: string): TierType | undefined =>
   t && (TIERS as readonly string[]).includes(t) ? (t as TierType) : undefined;
 
@@ -87,6 +89,9 @@ export default function ExploreScreen() {
 
   const searchRef = useRef<TextInput>(null);
   const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<ResultFilter>("all");
+  const [loading, setLoading] = useState(false);
+  const [recents, setRecents] = useState<string[]>(["Medicine", "Data analyst", "Law"]);
   // Only hold a result state once the term is searchable (>=2 chars), so the
   // three-door onboarding shows until the user has meaningfully typed.
   const [results, setResults] = useState<DataState<CareerSearchResult> | null>(
@@ -97,6 +102,7 @@ export default function ExploreScreen() {
   // (domains, roles, programmes) wrapped in a DataState the view renders.
   useEffect(() => {
     const q = query.trim();
+    setLoading(false);
     if (q.length < MIN_QUERY) {
       setResults(null);
       return;
@@ -110,18 +116,38 @@ export default function ExploreScreen() {
       return;
     }
     let active = true;
+    setLoading(true);
     const t = setTimeout(async () => {
       const state = await careerData.searchCareer(q);
-      if (active) setResults(state);
+      if (active) {
+        setResults(state);
+        setLoading(false);
+      }
     }, 275);
     return () => {
       active = false;
       clearTimeout(t);
+      setLoading(false);
     };
   }, [hasSession, query]);
 
   const trimmed = query.trim();
   const searching = trimmed.length >= MIN_QUERY;
+  const filters = useMemo(
+    () => [
+      { value: "all" as const, label: "All" },
+      { value: "domains" as const, label: "Domains" },
+      { value: "roles" as const, label: "Roles" },
+      { value: "programmes" as const, label: "Programmes" },
+    ],
+    [],
+  );
+
+  const rememberSearch = () => {
+    const q = query.trim();
+    if (q.length < MIN_QUERY) return;
+    setRecents((prev) => [q, ...prev.filter((item) => item.toLowerCase() !== q.toLowerCase())].slice(0, 5));
+  };
 
   return (
     <ScrollView
@@ -180,10 +206,23 @@ export default function ExploreScreen() {
           ref={searchRef}
           value={query}
           onChangeText={setQuery}
-          scope="All"
+          scope={filters.find((item) => item.value === filter)?.label ?? "All"}
           placeholder="Search programmes, domains or roles"
+          loading={loading}
+          onSubmitEditing={rememberSearch}
         />
       </CoachMark>
+
+      <View style={styles.filterRow}>
+        {filters.map((item) => (
+          <FilterChip
+            key={item.value}
+            label={item.label}
+            active={filter === item.value}
+            onPress={() => setFilter(item.value)}
+          />
+        ))}
+      </View>
 
       {trimmed.length > 0 && trimmed.length < MIN_QUERY ? (
         <Text style={[styles.stateLine, { color: colors.textRole.muted }]}>
@@ -191,7 +230,25 @@ export default function ExploreScreen() {
         </Text>
       ) : null}
 
-      {searching && results ? (
+      {!searching ? (
+        <>
+          <SearchIdleState
+            recents={recents}
+            onPick={(term) => {
+              setQuery(term);
+              searchRef.current?.focus();
+            }}
+          />
+          <ExploreStartingPoints
+            onFocusSearch={() => searchRef.current?.focus()}
+            router={router}
+          />
+        </>
+      ) : isGuest ? (
+        <GuestLimitedSearch query={trimmed} onStartGuest={() => void signInGuest()} />
+      ) : loading ? (
+        <SearchLoadingRows />
+      ) : searching && results ? (
         // ── Results mode ────────────────────────────────────────────
         <DataStateView
           state={results}
@@ -202,7 +259,7 @@ export default function ExploreScreen() {
           {(data) => (
             <View style={styles.results}>
               {/* Fields (domains) */}
-              {data.domains.length ? (
+              {(filter === "all" || filter === "domains") && data.domains.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Domains</SectionLabel>
                   {data.domains.map((d) => (
@@ -219,7 +276,7 @@ export default function ExploreScreen() {
               ) : null}
 
               {/* Roles — each lists the domains it's reachable from */}
-              {data.roles.length ? (
+              {(filter === "all" || filter === "roles") && data.roles.length ? (
                 <View style={styles.group}>
                   <SectionLabel>Roles</SectionLabel>
                   {data.roles.map((r, ri) => {
@@ -229,7 +286,7 @@ export default function ExploreScreen() {
                       <View>
                         <View style={styles.roleHead}>
                           <Text
-                            style={[styles.rowTitle, { color: colors.text }]}
+                            style={[styles.rowTitle, { color: colors.textRole.primary }]}
                             numberOfLines={2}
                           >
                             {r.name}
@@ -240,7 +297,7 @@ export default function ExploreScreen() {
                           <Text
                             style={[
                               styles.rowMeta,
-                              { color: colors.textMuted },
+                              { color: colors.textRole.muted },
                             ]}
                             numberOfLines={1}
                           >
@@ -266,7 +323,7 @@ export default function ExploreScreen() {
                                 <Text
                                   style={[
                                     styles.chipText,
-                                    { color: colors.textSoft },
+                                    { color: colors.textRole.secondary },
                                   ]}
                                   numberOfLines={1}
                                 >
@@ -296,7 +353,7 @@ export default function ExploreScreen() {
               ) : null}
 
               {/* Programmes */}
-              {data.programmes.length ? (
+              {(filter === "all" || filter === "programmes") && data.programmes.length ? (
                 <View style={styles.group}>
                   <View style={styles.groupHead}>
                     <SectionLabel>Programmes</SectionLabel>
@@ -334,99 +391,208 @@ export default function ExploreScreen() {
           )}
         </DataStateView>
       ) : (
-        // ── Default onboarding mode (three doors + browse links) ─────
-        <>
-          <Text style={[styles.section, { color: colors.textSoft }]}>
-            Where are you starting from?
-          </Text>
-
-          {DOORS.map((d) => (
-            <TouchableOpacity
-              key={d.key}
-              activeOpacity={0.85}
-              onPress={
-                d.key === "know"
-                  ? () => searchRef.current?.focus()
-                  : d.key === "what"
-                    ? () =>
-                        router.push(
-                          "/(tabs)/explore/admission?mode=programme" as never,
-                        )
-                    : () =>
-                        router.push(
-                          "/(tabs)/explore/admission?mode=subjects" as never,
-                        )
-              }
-              style={[
-                styles.card,
-                { backgroundColor: colors.card, borderColor: colors.border },
-              ]}
-            >
-              <Text style={styles.cardIcon}>{d.icon}</Text>
-              <View style={{ flex: 1 }}>
-                <View style={styles.cardHeadRow}>
-                  <Text style={[styles.cardTitle, { color: colors.text }]}>
-                    {d.title}
-                  </Text>
-                  {d.live ? null : <LockedPill />}
-                </View>
-                <Text style={[styles.cardBody, { color: colors.textSoft }]}>
-                  {d.body}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-
-          {/* Browse the full domain map (context-free explorer). */}
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => exploreNav.domains(router)}
-            style={styles.browse}
-          >
-            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
-              Browse all domains
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => exploreNav.compare(router)}
-            style={styles.browse}
-          >
-            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
-              Compare programmes
-            </Text>
-          </TouchableOpacity>
-
-          {/* Aspirational + every-starting-point routes (Phase 7). */}
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => exploreNav.elitePathways(router)}
-            style={styles.browse}
-          >
-            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
-              Explore elite pathways
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => exploreNav.pathways(router)}
-            style={styles.browse}
-          >
-            <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
-              Special pathways: PhD, career change, upgrades, credentials
-            </Text>
-          </TouchableOpacity>
-
-          <Text style={[styles.note, { color: colors.textMuted }]}>
-            University and College of Education programmes come online first.
-            Other institution types, opportunities and elite pathways are being
-            populated.
-          </Text>
-        </>
+        <DataLimitedState />
       )}
     </ScrollView>
+  );
+}
+
+function SearchIdleState({
+  recents,
+  onPick,
+}: {
+  recents: string[];
+  onPick: (term: string) => void;
+}) {
+  const { colors } = useTheme();
+  const suggestions = ["Nursing", "Software engineer", "Accounting", "Civil engineering"];
+  return (
+    <View style={styles.commandState}>
+      <View style={styles.commandGroup}>
+        <SectionLabel>Suggested searches</SectionLabel>
+        <View style={styles.filterRow}>
+          {suggestions.map((term) => (
+            <FilterChip key={term} label={term} onPress={() => onPick(term)} />
+          ))}
+        </View>
+      </View>
+      {recents.length ? (
+        <View style={styles.commandGroup}>
+          <SectionLabel>Recent</SectionLabel>
+          {recents.map((term) => (
+            <ListRow
+              key={term}
+              title={term}
+              subtitle="Search again"
+              meta="Recent query"
+              icon="clock"
+              onPress={() => onPick(term)}
+            />
+          ))}
+        </View>
+      ) : null}
+      <View
+        style={[
+          styles.dataNotice,
+          { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
+        ]}
+      >
+        <Text style={[styles.dataNoticeText, { color: colors.textRole.secondary }]}>
+          Search is grouped by domains, roles and programmes. Guest previews stay limited.
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+function SearchLoadingRows() {
+  return (
+    <View style={styles.results}>
+      <SectionLabel>Searching</SectionLabel>
+      <ListRow title="Loading domain matches" icon="search" loading />
+      <ListRow title="Loading role matches" icon="briefcase" loading />
+      <ListRow title="Loading programme matches" icon="book-open" loading />
+    </View>
+  );
+}
+
+function GuestLimitedSearch({
+  query,
+  onStartGuest,
+}: {
+  query: string;
+  onStartGuest: () => void;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={[
+        styles.guestPanel,
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+      ]}
+    >
+      <SectionLabel>Guest preview</SectionLabel>
+      <Text style={[styles.guestTitle, { color: colors.textRole.primary }]}>
+        Limited results for "{query}"
+      </Text>
+      <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>
+        Start a guest session to see preview rows. Create an account later to save,
+        compare and unlock full browsing.
+      </Text>
+      <View style={styles.guestRows}>
+        <ListRow title="Programme matches" subtitle="Preview available after guest session" meta="Limited" icon="book-open" locked />
+        <ListRow title="Role matches" subtitle="Preview available after guest session" meta="Limited" icon="briefcase" locked />
+      </View>
+      <SifterButton
+        label="Start guest preview"
+        onPress={onStartGuest}
+        variant="track"
+        color={colors.accentRole.action}
+        size="sm"
+        fullWidth={false}
+      />
+    </View>
+  );
+}
+
+function ExploreStartingPoints({
+  onFocusSearch,
+  router,
+}: {
+  onFocusSearch: () => void;
+  router: ReturnType<typeof useRouter>;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.commandGroup}>
+      <SectionLabel>Starting points</SectionLabel>
+      {DOORS.map((d) => (
+        <TouchableOpacity
+          key={d.key}
+          activeOpacity={0.85}
+          onPress={
+            d.key === "know"
+              ? onFocusSearch
+              : d.key === "what"
+                ? () =>
+                    router.push(
+                      "/(tabs)/explore/admission?mode=programme" as never,
+                    )
+                : () =>
+                    router.push(
+                      "/(tabs)/explore/admission?mode=subjects" as never,
+                    )
+          }
+          style={[
+            styles.card,
+            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+          ]}
+        >
+          <View style={[styles.cardIconBox, { backgroundColor: colors.surface.subtle }]}>
+            <Text style={styles.cardIcon}>{d.icon}</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <View style={styles.cardHeadRow}>
+              <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
+                {d.title}
+              </Text>
+              {d.live ? null : <LockedPill />}
+            </View>
+            <Text style={[styles.cardBody, { color: colors.textRole.secondary }]}>
+              {d.body}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+
+      <View style={styles.browseGrid}>
+        <BrowseLink label="Browse all domains" onPress={() => exploreNav.domains(router)} />
+        <BrowseLink label="Compare programmes" onPress={() => exploreNav.compare(router)} />
+        <BrowseLink label="Explore elite pathways" onPress={() => exploreNav.elitePathways(router)} />
+        <BrowseLink label="Special pathways" onPress={() => exploreNav.pathways(router)} />
+      </View>
+
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>
+        University and College of Education programmes come online first. Other
+        institution types, opportunities and elite pathways are being populated.
+      </Text>
+    </View>
+  );
+}
+
+function BrowseLink({ label, onPress }: { label: string; onPress: () => void }) {
+  const { colors } = useTheme();
+  return (
+    <TouchableOpacity
+      activeOpacity={0.76}
+      onPress={onPress}
+      style={[
+        styles.browse,
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+      ]}
+    >
+      <Text style={[styles.browseText, { color: colors.accentRole.action }]}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
+}
+
+function DataLimitedState() {
+  const { colors } = useTheme();
+  return (
+    <View
+      style={[
+        styles.dataNotice,
+        { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
+      ]}
+    >
+      <SectionLabel>Data-limited</SectionLabel>
+      <Text style={[styles.dataNoticeText, { color: colors.textRole.secondary }]}>
+        This query is valid, but the current data source did not return a visible group.
+        Try a broader term or switch the result filter.
+      </Text>
+    </View>
   );
 }
 
@@ -439,13 +605,13 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
-    letterSpacing: 1.5,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.9,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.display * 1.15,
   },
   titleRow: {
@@ -454,27 +620,56 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: Spacing.sm,
   },
-  banner: { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1 },
+  banner: {
+    borderRadius: Radius.md,
+    padding: Spacing.md,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
   bannerText: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.4,
-  },
-  search: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-    borderWidth: 1.5,
-    borderRadius: Radius.lg,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 13,
-    marginTop: Spacing.xs,
   },
   stateLine: {
     fontSize: FontSize.xs,
     fontWeight: FontWeight.semibold,
     marginTop: -Spacing.xs,
   },
+  filterRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.xs,
+  },
+  commandState: {
+    gap: Spacing.lg,
+    marginTop: Spacing.xs,
+  },
+  commandGroup: { gap: Spacing.sm },
+  dataNotice: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.sm,
+    padding: Spacing.md,
+  },
+  dataNoticeText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.xs * 1.5,
+  },
+  guestPanel: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
+    gap: Spacing.sm,
+  },
+  guestTitle: {
+    fontSize: FontSize.lg,
+    fontWeight: FontWeight.semibold,
+  },
+  guestBody: {
+    fontSize: FontSize.sm,
+    lineHeight: FontSize.sm * 1.5,
+  },
+  guestRows: { gap: Spacing.sm, marginTop: Spacing.xs },
 
   // ── Results ──────────────────────────────────────────────────
   results: { gap: Spacing.lg, marginTop: Spacing.xs },
@@ -491,7 +686,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: Spacing.xs,
   },
-  compareText: { fontSize: FontSize.sm, fontWeight: FontWeight.black },
+  compareText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -500,9 +695,8 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   rowMain: { flex: 1 },
-  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
   rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
-  chevron: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy },
   roleHead: {
     flexDirection: "row",
     alignItems: "center",
@@ -520,7 +714,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.xs,
   },
   chip: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 6,
@@ -528,38 +722,48 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: "100%",
   },
-  chipText: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  chipText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
 
   // ── Onboarding ───────────────────────────────────────────────
   browse: {
     minHeight: 44,
     justifyContent: "center",
-    paddingVertical: Spacing.xs,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    flexGrow: 1,
+    flexBasis: 180,
   },
-  browseText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
-  section: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.heavy,
-    letterSpacing: 0.5,
-    marginTop: Spacing.md,
-    textTransform: "uppercase",
+  browseGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
   },
+  browseText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   card: {
     flexDirection: "row",
     gap: Spacing.md,
     padding: Spacing.lg,
-    borderRadius: Radius.lg,
-    borderWidth: 1,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: "flex-start",
   },
-  cardIcon: { fontSize: 26 },
+  cardIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardIcon: { fontSize: 18 },
   cardHeadRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
     flexWrap: "wrap",
   },
-  cardTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy },
+  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
   cardBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,

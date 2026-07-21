@@ -16,9 +16,10 @@ import {
   Linking,
   type ViewStyle,
 } from "react-native";
-import { useTheme, Spacing, FontSize, FontWeight } from "../../theme";
+import { CompassFonts, useTheme, Spacing, FontSize, FontWeight } from "../../theme";
 import type { FoundationSkillEnriched } from "../../types/career";
 import { ProgressBar } from "../ui";
+import { SectionLabel } from "./RedesignPrimitives";
 
 export interface FoundationSkillsBlockProps {
   skills: FoundationSkillEnriched[];
@@ -39,8 +40,8 @@ export function FoundationSkillsBlock({
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
-      <Text style={[styles.caption, { color: colors.textMuted }]}>
+      <SectionLabel>{title}</SectionLabel>
+      <Text style={[styles.caption, { color: colors.textRole.muted }]}>
         Common across roles here — not required for every one.
       </Text>
       <View style={styles.rows}>
@@ -53,7 +54,7 @@ export function FoundationSkillsBlock({
             <View key={`${s.skill}-${i}`} style={styles.row}>
               <View style={styles.rowHead}>
                 <Text
-                  style={[styles.skill, { color: colors.textSoft }]}
+                  style={[styles.skill, { color: colors.textRole.secondary }]}
                   numberOfLines={1}
                 >
                   {s.skill}
@@ -61,20 +62,20 @@ export function FoundationSkillsBlock({
                 {s.uri ? (
                   <Text
                     onPress={openUri}
-                    style={[styles.link, { color: colors.accent }]}
+                    style={[styles.link, { color: colors.accentRole.action }]}
                     accessibilityRole="link"
                   >
                     ↗
                   </Text>
                 ) : null}
-                <Text style={[styles.pct, { color: colors.textMuted }]}>
+                <Text style={[styles.pct, CompassFonts.data, { color: colors.textRole.muted }]}>
                   {pct}%
                 </Text>
               </View>
               <ProgressBar
                 progress={s.prevalence}
-                color={colors.accent}
-                trackColor={colors.bgSecondary}
+                color={colors.accentRole.action}
+                trackColor={colors.surface.subtle}
                 height={5}
               />
             </View>
@@ -89,7 +90,6 @@ export default FoundationSkillsBlock;
 
 const styles = StyleSheet.create({
   container: { gap: Spacing.sm },
-  title: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
   caption: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.medium,
@@ -110,11 +110,11 @@ const styles = StyleSheet.create({
   },
   link: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   pct: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     fontVariant: ["tabular-nums"],
   },
 });

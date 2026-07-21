@@ -30,8 +30,8 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
 
   if (!data || data.length === 0) {
     return (
-      <View style={[styles.empty, { borderColor: colors.border }]}>
-        <Text style={[styles.emptyText, { color: colors.textMuted }]}>
+      <View style={[styles.empty, { borderColor: colors.borderRole.subtle }]}>
+        <Text style={[styles.emptyText, { color: colors.textRole.muted }]}>
           No data to display.
         </Text>
       </View>
@@ -39,15 +39,20 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
   }
 
   return (
-    <View style={[styles.container, { borderColor: colors.border }]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+      ]}
+    >
       {/* Header */}
-      <View style={[styles.headerRow, { borderBottomColor: colors.borderDark }]}>
+      <View style={[styles.headerRow, { borderBottomColor: colors.borderRole.subtle }]}>
         {columns.map((col) => (
           <Text
             key={col.key}
             style={[
               styles.headerCell,
-              { color: colors.textMuted },
+              { color: colors.textRole.muted },
               col.width ? { width: col.width } : styles.flexCell,
             ]}
             numberOfLines={1}
@@ -64,8 +69,8 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
           style={[
             styles.dataRow,
             ri < data.length - 1 && {
-              borderBottomWidth: 1,
-              borderBottomColor: colors.border,
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              borderBottomColor: colors.borderRole.subtle,
             },
           ]}
         >
@@ -81,7 +86,7 @@ export function AdminDataTable({ columns, data }: AdminDataTableProps) {
                 ? col.render(row[col.key], row)
                 : (
                   <Text
-                    style={[styles.cellText, { color: colors.text }]}
+                    style={[styles.cellText, { color: colors.textRole.primary }]}
                     numberOfLines={2}
                   >
                     {row[col.key] != null ? String(row[col.key]) : "—"}
@@ -99,22 +104,22 @@ export default AdminDataTable;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     overflow: "hidden",
   },
   headerRow: {
     flexDirection: "row",
     paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.md,
-    borderBottomWidth: 2,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     gap: Spacing.sm,
   },
   headerCell: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     textTransform: "uppercase",
-    letterSpacing: 0.5,
+    letterSpacing: 0.8,
   },
   dataRow: {
     flexDirection: "row",
@@ -132,11 +137,11 @@ const styles = StyleSheet.create({
   },
   cellText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
+    fontWeight: FontWeight.medium,
   },
   empty: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     padding: Spacing.xl,
     alignItems: "center",
   },
