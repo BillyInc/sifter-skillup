@@ -28,7 +28,7 @@
 import React, { useRef, useEffect, type ReactNode } from 'react';
 import {
   View, Text, TouchableOpacity,
-  Animated, ViewStyle, type StyleProp,
+  Animated, StyleSheet, ViewStyle, type StyleProp,
 } from 'react-native';
 import {
   useTheme, Spacing, Radius, FontSize, FontWeight,
@@ -57,13 +57,13 @@ export function SifterCard({
   const onPressOut = () => onPress && Animated.spring(scale, { toValue: 1, ...AnimPreset.springGentle }).start();
 
   const cardStyle: ViewStyle = {
-    backgroundColor: elevated ? colors.cardElevated : colors.card,
-    borderRadius: Radius.lg,
+    backgroundColor: elevated ? colors.surface.raised : colors.surface.raised,
+    borderRadius: Radius.md,
     padding: noPadding ? 0 : Spacing.md,
-    ...(elevated ? Shadow.sm : Shadow.xs),
+    ...(elevated ? Shadow.xs : {}),
     ...(accent ? { borderLeftWidth: 2, borderLeftColor: accent } : {}),
-    borderWidth: accent ? 0 : 1,
-    borderColor: colors.border,
+    borderWidth: accent ? 0 : StyleSheet.hairlineWidth,
+    borderColor: colors.borderRole.subtle,
   };
 
   if (onPress) {
@@ -127,11 +127,10 @@ export function PressableCard({
   return (
     <Animated.View style={[
       {
-        backgroundColor: colors.card,
-        borderRadius: Radius.lg,
-        borderWidth: 1,
+        backgroundColor: colors.surface.raised,
+        borderRadius: Radius.sm,
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor,
-        ...Shadow.xs,
         transform: [{ scale }],
         overflow: 'hidden',
       },

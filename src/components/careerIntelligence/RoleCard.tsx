@@ -8,7 +8,16 @@
  */
 import React from "react";
 import { View, Text, StyleSheet, type ViewStyle } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, FontWeight, type TierType } from "../../theme";
+import { Feather } from "@expo/vector-icons";
+import {
+  CompassFonts,
+  useTheme,
+  Spacing,
+  Radius,
+  FontSize,
+  FontWeight,
+  type TierType,
+} from "../../theme";
 import type { RoleMatchType, Readiness } from "../../types/career";
 import { PressableCard, SifterCard } from "../ui";
 import { RoleMatchBadge } from "./RoleMatchBadge";
@@ -87,14 +96,14 @@ export function RoleCard({
       <View style={styles.header}>
         <View style={styles.titleCol}>
           <Text
-            style={[styles.title, { color: colors.text }]}
+            style={[styles.title, { color: colors.textRole.primary }]}
             numberOfLines={2}
           >
             {name}
           </Text>
           {aka ? (
             <Text
-              style={[styles.aka, { color: colors.textMuted }]}
+              style={[styles.aka, { color: colors.textRole.muted }]}
               numberOfLines={1}
             >
               {aka}
@@ -120,14 +129,24 @@ export function RoleCard({
       {(inDemandScore != null || eliteFlag) ? (
         <View style={styles.chipRow}>
           {eliteFlag ? (
-            <View style={[styles.chip, { backgroundColor: colors.goldSoft }]}>
-              <Text style={[styles.chipText, { color: colors.gold }]}>⭐ Elite</Text>
+            <View
+              style={[
+                styles.chip,
+                { backgroundColor: colors.eliteSoft, borderColor: colors.elite },
+              ]}
+            >
+              <Text style={[styles.chipText, { color: colors.elite }]}>Elite</Text>
             </View>
           ) : null}
           {inDemandScore != null && inDemandScore > 0 ? (
-            <View style={[styles.chip, { backgroundColor: colors.greenSoft }]}>
-              <Text style={[styles.chipText, { color: colors.green }]}>
-                📈 {inDemandScore >= 80 ? "High demand" : inDemandScore >= 50 ? "In demand" : "Growing"}
+            <View
+              style={[
+                styles.chip,
+                { backgroundColor: colors.demandSoft, borderColor: colors.demand },
+              ]}
+            >
+              <Text style={[styles.chipText, { color: colors.demand }]}>
+                {inDemandScore >= 80 ? "High demand" : inDemandScore >= 50 ? "In demand" : "Growing"}
               </Text>
             </View>
           ) : null}
@@ -136,8 +155,8 @@ export function RoleCard({
 
       {salary ? (
         <View style={styles.metaRow}>
-          <Text style={styles.metaGlyph}>💸</Text>
-          <Text style={[styles.metaText, { color: colors.textSoft }]}>
+          <Feather name="credit-card" size={14} color={colors.textRole.muted} />
+          <Text style={[styles.metaText, CompassFonts.data, { color: colors.textRole.secondary }]}>
             {salary}
           </Text>
         </View>
@@ -145,12 +164,12 @@ export function RoleCard({
 
       {companies ? (
         <View style={styles.metaRow}>
-          <Text style={styles.metaGlyph}>🏢</Text>
+          <Feather name="briefcase" size={14} color={colors.textRole.muted} />
           <Text
-            style={[styles.metaText, { color: colors.textMuted }]}
+            style={[styles.metaText, { color: colors.textRole.muted }]}
             numberOfLines={1}
           >
-            <Text style={{ fontWeight: FontWeight.bold }}>Companies: </Text>
+            <Text style={{ fontWeight: FontWeight.semibold }}>Companies: </Text>
             {companies}
           </Text>
         </View>
@@ -173,7 +192,7 @@ export default RoleCard;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: Radius.lg,
+    borderRadius: Radius.sm,
   },
   body: {
     gap: Spacing.sm,
@@ -191,9 +210,9 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   title: {
-    fontSize: FontSize.lg,
-    fontWeight: FontWeight.heavy,
-    lineHeight: FontSize.lg * 1.25,
+    fontSize: FontSize.md,
+    fontWeight: FontWeight.semibold,
+    lineHeight: FontSize.md * 1.25,
   },
   aka: {
     fontSize: FontSize.sm,
@@ -218,19 +237,17 @@ const styles = StyleSheet.create({
   },
   chip: {
     borderRadius: Radius.full,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 2,
   },
   chipText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
-  },
-  metaGlyph: {
-    fontSize: FontSize.md,
+    fontWeight: FontWeight.semibold,
   },
   metaText: {
     flex: 1,
-    fontSize: FontSize.sm,
+    fontSize: FontSize.xs,
     fontWeight: FontWeight.semibold,
   },
 });

@@ -4,8 +4,8 @@
  *  - "Core tools" (distinctive) — what characterises this field; prominent chips.
  *  - "Also expected" (common)   — widely-used, still expected; lighter chips.
  *
- * A `hot` tool shows a small 🔥; an `inDemand` tool gets a subtle gold dot. When
- * a tool has a `demandScore` ≥ 0.8 it shows a "🔥 High demand" flag; a `toolUrl`
+ * A high-demand tool gets a subtle demand flag. When a tool has
+ * `demandScore` >= 0.8 it shows a "High" flag; a `toolUrl`
  * makes the chip tappable (opens canonical docs). Chips wrap. Renders nothing
  * when both groups are empty.
  */
@@ -13,6 +13,7 @@ import React from "react";
 import { View, Text, StyleSheet, Linking, type ViewStyle } from "react-native";
 import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
 import type { ToolGroupsEnriched, ToolV2Enriched } from "../../types/career";
+import { SectionLabel } from "./RedesignPrimitives";
 
 export interface ToolGroupsBlockProps {
   tools: ToolGroupsEnriched;
@@ -30,9 +31,9 @@ function ToolChip({
   prominent: boolean;
 }) {
   const { colors } = useTheme();
-  const bg = prominent ? colors.accentSoft : colors.bgSecondary;
-  const border = prominent ? colors.borderDark : colors.border;
-  const textColor = prominent ? colors.text : colors.textSoft;
+  const bg = prominent ? colors.surface.subtle : colors.surface.raised;
+  const border = colors.borderRole.subtle;
+  const textColor = prominent ? colors.textRole.primary : colors.textRole.secondary;
   const hasUrl = !!tool.toolUrl;
   const highDemand =
     typeof tool.demandScore === "number" && tool.demandScore >= HIGH_DEMAND;
@@ -45,14 +46,13 @@ function ToolChip({
     <View
       style={[styles.chip, { backgroundColor: bg, borderColor: border }]}
     >
-      {tool.hot ? <Text style={styles.hot}>🔥</Text> : null}
       <Text
         onPress={hasUrl ? openUrl : undefined}
         style={[
           styles.chipText,
           {
             color: textColor,
-            fontWeight: prominent ? FontWeight.bold : FontWeight.semibold,
+            fontWeight: FontWeight.semibold,
           },
           hasUrl ? styles.chipLink : null,
         ]}
@@ -62,13 +62,13 @@ function ToolChip({
         {hasUrl ? " ↗" : ""}
       </Text>
       {highDemand ? (
-        <View style={[styles.demand, { backgroundColor: colors.goldSoft }]}>
-          <Text style={[styles.demandText, { color: colors.gold }]}>
-            🔥 High
+        <View style={[styles.demand, { backgroundColor: colors.demandSoft }]}>
+          <Text style={[styles.demandText, { color: colors.demand }]}>
+            High
           </Text>
         </View>
       ) : tool.inDemand ? (
-        <View style={[styles.dot, { backgroundColor: colors.gold }]} />
+        <View style={[styles.dot, { backgroundColor: colors.demand }]} />
       ) : null}
     </View>
   );
@@ -88,7 +88,7 @@ function ToolGroup({
 
   return (
     <View style={styles.group}>
-      <Text style={[styles.subLabel, { color: colors.textMuted }]}>
+      <Text style={[styles.subLabel, { color: colors.textRole.muted }]}>
         {label}
       </Text>
       <View style={styles.chipWrap}>
@@ -101,7 +101,6 @@ function ToolGroup({
 }
 
 export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
-  const { colors } = useTheme();
   const distinctive = tools?.distinctive ?? [];
   const common = tools?.common ?? [];
   if (!distinctive.length && !common.length) return null;
@@ -109,7 +108,7 @@ export function ToolGroupsBlock({ tools, title, style }: ToolGroupsBlockProps) {
   return (
     <View style={[styles.container, style]}>
       {title ? (
-        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+        <SectionLabel>{title}</SectionLabel>
       ) : null}
       <ToolGroup label="Core tools" tools={distinctive} prominent />
       <ToolGroup label="Also expected" tools={common} prominent={false} />
@@ -121,12 +120,11 @@ export default ToolGroupsBlock;
 
 const styles = StyleSheet.create({
   container: { gap: Spacing.md },
-  title: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
   group: { gap: Spacing.sm },
   subLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
-    letterSpacing: 0.5,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.8,
     textTransform: "uppercase",
   },
   chipWrap: {
@@ -138,14 +136,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 5,
   },
   chipText: { fontSize: FontSize.sm },
   chipLink: { textDecorationLine: "underline" },
-  hot: { fontSize: FontSize.xs },
   demand: {
     borderRadius: Radius.full,
     paddingHorizontal: 6,
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
   },
   demandText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   dot: {
     width: 6,

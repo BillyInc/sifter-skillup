@@ -14,7 +14,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Shadow,
+  CompassFonts,
 } from "../../theme";
 import type { DataState } from "../../types/career";
 
@@ -50,18 +50,17 @@ export function StatCard<T>({
     <View
       style={[
         styles.card,
-        { backgroundColor: colors.card, borderColor: colors.border },
-        Shadow.xs,
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       <View style={styles.head}>
         <View
-          style={[styles.iconWrap, { backgroundColor: colors.bgSecondary }]}
+          style={[styles.iconWrap, { backgroundColor: colors.surface.subtle }]}
         >
           <Text style={styles.icon}>{icon}</Text>
         </View>
         <Text
-          style={[styles.label, { color: colors.textMuted }]}
+          style={[styles.label, { color: colors.textRole.muted }]}
           numberOfLines={2}
         >
           {label}
@@ -71,7 +70,8 @@ export function StatCard<T>({
       <Text
         style={[
           styles.value,
-          { color: populated ? colors.text : colors.textMuted },
+          CompassFonts.data,
+          { color: populated ? colors.textRole.primary : colors.textRole.muted },
         ]}
         numberOfLines={1}
       >
@@ -82,7 +82,7 @@ export function StatCard<T>({
         <Text
           style={[
             styles.delta,
-            { color: isUp ? colors.green : colors.textMuted },
+            { color: isUp ? colors.success : colors.textRole.muted },
           ]}
           numberOfLines={1}
         >
@@ -90,10 +90,10 @@ export function StatCard<T>({
         </Text>
       ) : !populated ? (
         <Text
-          style={[styles.delta, { color: colors.textMuted }]}
+          style={[styles.delta, { color: colors.state.locked }]}
           numberOfLines={1}
         >
-          Coming soon
+          Locked
         </Text>
       ) : null}
     </View>
@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     minWidth: 150,
-    borderWidth: 1,
-    borderRadius: Radius.lg,
-    padding: Spacing.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.md,
     gap: Spacing.sm,
   },
   head: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
@@ -124,13 +124,14 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: FontSize.xs,
     fontWeight: FontWeight.semibold,
-    letterSpacing: 0.4,
+    letterSpacing: 0.8,
     textTransform: "uppercase",
   },
   value: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0,
     lineHeight: FontSize.display * 1.1,
   },
-  delta: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  delta: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
 });
