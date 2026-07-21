@@ -1,7 +1,6 @@
 {
-  "jamb_name": "English Studies",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": []
+ "jamb_name": "English Studies",
+ "utme_subjects": "67. and 68. Comparative 69. 70. 71. 72. 73. 74. and Yoruba 75. Linguistics 76. Literature OFFICIALLY RECEIVED HAVE BEEN APPROVED.",
+ "extraction_source": "Arts _ Humanities.pdf p1 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

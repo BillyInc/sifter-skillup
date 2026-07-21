@@ -19,13 +19,13 @@ import {
   FontSize,
   webContainer,
   CompassFonts,
+  Radius,
 } from "../../theme";
 import type { DataState, SavedEntityType } from "../../types/career";
 import { DataStateView } from "./DataStateView";
 import { SaveButton } from "./SaveButton";
 import { PdfExportButton } from "./PdfExportButton";
 import { CareerDisclaimer } from "./CareerDisclaimer";
-import { RouteLine } from "./RouteLine";
 
 export interface DetailScaffoldProps<T> {
   eyebrow?: string;
@@ -70,48 +70,59 @@ export function DetailScaffold<T>({
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.topRow}>
-        <TouchableOpacity
-          onPress={goBack}
-          hitSlop={10}
-          style={styles.back}
-        >
-          <Text style={[styles.backText, { color: colors.accent }]}>
-            ← Back
+      <View
+        style={[
+          styles.header,
+          { borderBottomColor: colors.borderRole.subtle },
+        ]}
+      >
+        <View style={styles.breadcrumbRow}>
+          <TouchableOpacity onPress={goBack} hitSlop={10} style={styles.back}>
+            <Text style={[styles.backText, { color: colors.textRole.secondary }]}>
+              Explore
+            </Text>
+          </TouchableOpacity>
+          <Text style={[styles.crumbSep, { color: colors.textRole.muted }]}>/</Text>
+          <Text
+            style={[styles.backText, CompassFonts.data, { color: colors.textRole.muted }]}
+            numberOfLines={1}
+          >
+            {eyebrow ?? "DETAIL"}
           </Text>
-        </TouchableOpacity>
-        <View style={styles.actions}>
-          {save ? (
-            <SaveButton
-              entityType={save.entityType}
-              entityId={save.entityId}
-              label={save.label}
-              compact
-            />
-          ) : null}
-          {pdf ? <PdfExportButton title={pdfTitle ?? title} /> : null}
+        </View>
+
+        <View style={styles.titleRow}>
+          <View style={styles.titleBlock}>
+            {eyebrow ? (
+              <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
+                {eyebrow}
+              </Text>
+            ) : null}
+            <Text style={[styles.title, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>
+              {title}
+            </Text>
+          </View>
+          <View style={styles.actions}>
+            {save ? (
+              <SaveButton
+                entityType={save.entityType}
+                entityId={save.entityId}
+                label={save.label}
+                compact
+              />
+            ) : null}
+            {pdf ? <PdfExportButton title={pdfTitle ?? title} /> : null}
+          </View>
         </View>
       </View>
 
-      {eyebrow ? (
-        <Text style={[styles.eyebrow, CompassFonts.data, { color: colors.cobalt }]}>
-          {eyebrow}
-        </Text>
-      ) : null}
-      <Text style={[styles.title, CompassFonts.display, { color: colors.text }]}>
-        {title}
-      </Text>
-
-      {/* Signature: the route-line rule draws in beneath the title. */}
-      <RouteLine variant="rule" style={styles.rule} />
-
       {header}
 
-      <View style={{ marginTop: Spacing.md }}>
+      <View style={styles.bodyWrap}>
         <DataStateView state={state} empty={empty}>
           {children}
         </DataStateView>
@@ -128,32 +139,49 @@ const styles = StyleSheet.create({
   scroll: {
     paddingVertical: Spacing.lg,
     paddingHorizontal: Spacing.lg,
-    gap: Spacing.sm,
+    gap: Spacing.md,
     flexGrow: 1,
   },
-  topRow: {
+  header: {
+    gap: Spacing.sm,
+    paddingBottom: Spacing.md,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  breadcrumbRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    gap: Spacing.xs,
   },
-  back: { paddingVertical: 4 },
-  backText: { fontSize: FontSize.md, fontWeight: "700" },
-  actions: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
+  back: { minHeight: 28, justifyContent: "center" },
+  backText: { fontSize: FontSize.xs, fontWeight: "600" },
+  crumbSep: { fontSize: FontSize.xs },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    gap: Spacing.md,
+    flexWrap: "wrap",
+  },
+  titleBlock: { flex: 1, minWidth: 220, gap: 3 },
+  actions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.sm,
+    minHeight: 36,
+  },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
-    letterSpacing: 1.5,
+    fontWeight: "600",
+    letterSpacing: 0.9,
     textTransform: "uppercase",
-    marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
+    fontWeight: "600",
     lineHeight: FontSize.display * 1.15,
   },
-  rule: {
-    marginTop: Spacing.sm,
-    marginBottom: Spacing.xs,
-    maxWidth: 96,
+  bodyWrap: {
+    marginTop: Spacing.xs,
+    borderRadius: Radius.sm,
   },
 });

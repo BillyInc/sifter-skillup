@@ -1,20 +1,6 @@
 {
-  "jamb_name": "Hotel Management & Tourism",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": "Two (2) 'A' Level passes or equivalents in Chemistry and Biology/Botany/Agric Science/Economics/Physics/Mathematics/Geography.",
-  "institution_waivers": [
-    {"institution": "UMUDIKE", "note": "(a) For Home Economics - Same as in Agriculture. (b) For Hotel Management and Tourism, it requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry and any of Physics, Economics and Government."},
-    {"institution": "MAKURDI", "note": "Accepts D7 in English Language."},
-    {"institution": "ILORIN", "note": "Requires at least 'O' Level passes in Physics and Biology."},
-    {"institution": "BELLS", "note": "As in Food Science and Technology."},
-    {"institution": "UNIOSUN", "note": "Requires five (5) 'O' Level credit passes in the SSC or its equivalent at not more than two (2) sittings in addition to an acceptable score in the UTME."},
-    {"institution": "FUNAAB", "note": "Requires five (5) 'O' Level credit passes in English Language, Mathematics, Chemistry, Biology and Physics. UTME: requires Chemistry, Biology and Physics or Mathematics."},
-    {"institution": "CRUTECH", "note": "Accepts one (1) Social Science subject - Economics or Accounting/Commerce in place of Food and Nutrition/Home Economics. UTME: accepts one of Economics, Accounting or Commerce."},
-    {"institution": "FED-GASHUA", "note": "Requires five (5) SSC Credit passes to include: English Language, Mathematics, Chemistry, Biology/Agric Science and Physics. UTME: accepts Chemistry, Biology, Mathematics or Physics."},
-    {"institution": "FED-OYE EKITI", "note": "Requires five (5) SSC credit passes in Chemistry, Biology/Agric Science, Mathematics, Physics, English Language and any one of Nutrition, Fine Arts, Textile, Construction, Technical Drawing, Basic Electricity, Basic Catering and Food Services, Bakery and Confectioneries, General Metal Work, Men Garment Construction and Finishing, Spinning, Weaving, Surface Design and Printing, Bleaching, Dyeing and Finishing, Ladies Garment Construction and Finishing. UTME: requires Chemistry, Biology/Agriculture and Mathematics/Physics or one Social Science subject."},
-    {"institution": "FED-WUKARI", "note": "Requires Five (5) Credits passes at not more than two sittings in SSCE/GCE/NECO/NABTEB or (its equivalent) which must include: English Language, Mathematics, Chemistry and any of the following; Biology/Agriculture, Geography/Economics/Tourism/Home Economics. UTME: requires Chemistry, Biology/Agricultural Science and any one of Geography/Home Economics/Economics. Direct Entry candidates must obtain two A/L passes in GCE/IJBM/Advanced NABTEB or at least a Merit pass at NCE or a Lower Credit at OND, HND which must include one of the following Tourism Studies, Nutrition and Catering Management, Home Economics, and Geography."},
-    {"institution": "OAU", "note": "UTME: accepts Physics, Geography, Home Management, Statistics, Economics, Business Studies, Zoology, Commerce or any of the following pairs Chemistry and Biology, Chemistry and Agriculture and Chemistry and Economics."},
-    {"institution": "UYO", "note": "Accepts five (5) merit passes in TC II in relevant subjects."}
-  ]
+ "jamb_name": "Hotel Management & Tourism",
+ "utme_subjects": "Chemistry and any two (2) of Biology/Botany/Agricultural Science, Economics, Physics, Mathematics and Geography.",
+ "extraction_source": "Agriculture brochure — Home Economics/Hotel Management row group (L3649)",
+ "extraction_confidence": "high"
 }

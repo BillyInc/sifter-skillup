@@ -33,8 +33,8 @@ import {
   RouteLine,
   SkillsBridge,
   MappingFeedbackButton,
+  SectionLabel,
 } from "@/components/careerIntelligence";
-import { SectionHeader } from "@/components/ui";
 
 export interface DomainDetailScreenProps {
   /** Stable domain key (e.g. "D001"). */
@@ -124,8 +124,8 @@ function DomainBody({
                   style={[
                     styles.clusterChip,
                     {
-                      backgroundColor: colors.bgSecondary,
-                      borderColor: colors.border,
+                      backgroundColor: colors.surface.subtle,
+                      borderColor: colors.borderRole.subtle,
                     },
                   ]}
                 >
@@ -141,7 +141,7 @@ function DomainBody({
                 <View
                   style={[
                     styles.eliteChip,
-                    { backgroundColor: colors.goldSoft, borderColor: colors.gold },
+                    { backgroundColor: colors.eliteSoft, borderColor: colors.elite },
                   ]}
                 >
                   <Text style={styles.eliteGlyph}>★</Text>
@@ -190,7 +190,7 @@ function DomainBody({
 
       {/* 4 — gateway + role-hint certs (empty gateway is meaningful) */}
       <View style={{ gap: Spacing.sm }}>
-        <SectionHeader title="Certifications" icon="🎓" />
+        <SectionLabel>Certifications</SectionLabel>
         <CertPlacementList
           gateway={domain.gatewayCertifications}
           roleHint={domain.roleHintCertifications}
@@ -211,7 +211,7 @@ function DomainBody({
       {roles.length ? (
         subgroups.length ? (
           <View style={{ gap: Spacing.md }}>
-            <SectionHeader title="Roles in this field" icon="🧭" />
+            <SectionLabel>Roles in this field</SectionLabel>
             {subgroups.map((sg, i) => {
               const sgRoles = roles.filter((r) => r.subgroupId === sg.id);
               if (!sgRoles.length) return null;
@@ -240,7 +240,7 @@ function DomainBody({
           </View>
         ) : (
           <View style={{ gap: Spacing.sm }}>
-            <SectionHeader title="Roles" icon="🧭" />
+            <SectionLabel>Roles</SectionLabel>
             <View style={styles.roleList}>{roles.map(renderRoleCard)}</View>
           </View>
         )
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   clusterChip: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 4,
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 4,
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   eliteGlyph: { fontSize: FontSize.xs },
   eliteText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   roleList: { gap: Spacing.sm },
   otherLabel: {

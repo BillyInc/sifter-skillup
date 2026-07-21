@@ -1,7 +1,6 @@
 {
-  "jamb_name": "Portuguese/English",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": []
+ "jamb_name": "Portuguese/English",
+ "utme_subjects": "French and any other two (2) subjects from Arts and Social Sciences.",
+ "extraction_source": "Arts _ Humanities.pdf p45 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

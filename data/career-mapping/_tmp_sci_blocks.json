@@ -1,0 +1,1382 @@
+[
+ {
+  "hdr": 73,
+  "mline": 73,
+  "mcol": 67,
+  "general": "Biology, D Chemistry and Physics or Mathematics."
+ },
+ {
+  "hdr": 119,
+  "mline": 120,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 175,
+  "mline": 176,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 222,
+  "mline": 223,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 275,
+  "mline": 276,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 320,
+  "mline": 321,
+  "mcol": 58,
+  "general": ""
+ },
+ {
+  "hdr": 372,
+  "mline": 373,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 406,
+  "mline": 407,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 442,
+  "mline": 443,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 480,
+  "mline": 481,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 520,
+  "mline": 521,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 563,
+  "mline": 564,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 605,
+  "mline": 606,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 649,
+  "mline": 650,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 686,
+  "mline": 687,
+  "mcol": 53,
+  "general": "U"
+ },
+ {
+  "hdr": 732,
+  "mline": 733,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 783,
+  "mline": 784,
+  "mcol": 77,
+  "general": "Biology, Chemistry and Physics or Mathematics."
+ },
+ {
+  "hdr": 837,
+  "mline": 838,
+  "mcol": 52,
+  "general": ""
+ },
+ {
+  "hdr": 880,
+  "mline": 881,
+  "mcol": 55,
+  "general": ""
+ },
+ {
+  "hdr": 932,
+  "mline": 933,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 978,
+  "mline": 979,
+  "mcol": 72,
+  "general": "Physics, Mathematics and Chemistry or Biology."
+ },
+ {
+  "hdr": 1024,
+  "mline": 1025,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1077,
+  "mline": 1078,
+  "mcol": 62,
+  "general": ""
+ },
+ {
+  "hdr": 1130,
+  "mline": 1131,
+  "mcol": 59,
+  "general": ""
+ },
+ {
+  "hdr": 1171,
+  "mline": 1172,
+  "mcol": 54,
+  "general": ""
+ },
+ {
+  "hdr": 1225,
+  "mline": 1226,
+  "mcol": 62,
+  "general": ""
+ },
+ {
+  "hdr": 1275,
+  "mline": 1276,
+  "mcol": 60,
+  "general": ""
+ },
+ {
+  "hdr": 1322,
+  "mline": 1323,
+  "mcol": 56,
+  "general": ""
+ },
+ {
+  "hdr": 1366,
+  "mline": 1367,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1413,
+  "mline": 1414,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1448,
+  "mline": 1449,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1488,
+  "mline": 1489,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1539,
+  "mline": 1540,
+  "mcol": 60,
+  "general": ""
+ },
+ {
+  "hdr": 1586,
+  "mline": 1587,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1626,
+  "mline": 1627,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1666,
+  "mline": 1667,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1708,
+  "mline": 1709,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1762,
+  "mline": 1763,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1812,
+  "mline": 1813,
+  "mcol": 48,
+  "general": ""
+ },
+ {
+  "hdr": 1850,
+  "mline": 1851,
+  "mcol": 53,
+  "general": "U"
+ },
+ {
+  "hdr": 1897,
+  "mline": 1898,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 1950,
+  "mline": 1951,
+  "mcol": 67,
+  "general": ""
+ },
+ {
+  "hdr": 2002,
+  "mline": 2003,
+  "mcol": 43,
+  "general": ""
+ },
+ {
+  "hdr": 2043,
+  "mline": 2044,
+  "mcol": 69,
+  "general": "Physics, Mathematics and Chemistry or Biology."
+ },
+ {
+  "hdr": 2083,
+  "mline": 2084,
+  "mcol": 71,
+  "general": "Mathematics and any two (2) of Physics, Chemistry, Economics, Biology and Agricultural Science."
+ },
+ {
+  "hdr": 2137,
+  "mline": 2138,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2180,
+  "mline": 2181,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2230,
+  "mline": 2231,
+  "mcol": 70,
+  "general": "Chemistry and two (2) of Physics, Biology and Mathematics."
+ },
+ {
+  "hdr": 2276,
+  "mline": 2277,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2327,
+  "mline": 2328,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2380,
+  "mline": 2381,
+  "mcol": 57,
+  "general": ""
+ },
+ {
+  "hdr": 2421,
+  "mline": 2422,
+  "mcol": 59,
+  "general": ""
+ },
+ {
+  "hdr": 2460,
+  "mline": 2461,
+  "mcol": 58,
+  "general": ""
+ },
+ {
+  "hdr": 2513,
+  "mline": 2514,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2562,
+  "mline": 2563,
+  "mcol": 54,
+  "general": ""
+ },
+ {
+  "hdr": 2615,
+  "mline": 2616,
+  "mcol": 56,
+  "general": ""
+ },
+ {
+  "hdr": 2667,
+  "mline": 2668,
+  "mcol": 56,
+  "general": ""
+ },
+ {
+  "hdr": 2710,
+  "mline": 2711,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2754,
+  "mline": 2755,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2789,
+  "mline": 2790,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2829,
+  "mline": 2830,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2869,
+  "mline": 2870,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2915,
+  "mline": 2916,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 2966,
+  "mline": 2967,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3015,
+  "mline": 3016,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3065,
+  "mline": 3066,
+  "mcol": 70,
+  "general": "Chemistry, Mathematics/ Physics and Agricultural Science 518"
+ },
+ {
+  "hdr": 3108,
+  "mline": 3108,
+  "mcol": 68,
+  "general": "any of Physics/Biology/ Agricultural Science."
+ },
+ {
+  "hdr": 3163,
+  "mline": 3164,
+  "mcol": 60,
+  "general": ""
+ },
+ {
+  "hdr": 3215,
+  "mline": 3216,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3254,
+  "mline": 3255,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3294,
+  "mline": 3295,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3345,
+  "mline": 3346,
+  "mcol": 54,
+  "general": ""
+ },
+ {
+  "hdr": 3385,
+  "mline": 3386,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3435,
+  "mline": 3436,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3481,
+  "mline": 3482,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3532,
+  "mline": 3533,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3582,
+  "mline": 3583,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3626,
+  "mline": 3627,
+  "mcol": 73,
+  "general": "Chemistry, and Biology Mathematics or Physics."
+ },
+ {
+  "hdr": 3670,
+  "mline": 3671,
+  "mcol": 74,
+  "general": "Any three (3) of Chemistry, Physics, Mathematics, Biology and Geography."
+ },
+ {
+  "hdr": 3719,
+  "mline": 3720,
+  "mcol": 59,
+  "general": ""
+ },
+ {
+  "hdr": 3761,
+  "mline": 3762,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3806,
+  "mline": 3807,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3857,
+  "mline": 3858,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3911,
+  "mline": 3912,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3954,
+  "mline": 3955,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 3993,
+  "mline": 3994,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4039,
+  "mline": 4040,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4087,
+  "mline": 4088,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4137,
+  "mline": 4138,
+  "mcol": 60,
+  "general": ""
+ },
+ {
+  "hdr": 4190,
+  "mline": 4190,
+  "mcol": 62,
+  "general": "Biology, Physics Agricultural Science."
+ },
+ {
+  "hdr": 4243,
+  "mline": 4244,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4282,
+  "mline": 4283,
+  "mcol": 43,
+  "general": ""
+ },
+ {
+  "hdr": 4326,
+  "mline": 4327,
+  "mcol": 75,
+  "general": "Physics, Mathematics, and any of Chemistry, Geography, Art, Biology and Economics."
+ },
+ {
+  "hdr": 4376,
+  "mline": 4378,
+  "mcol": 78,
+  "general": ""
+ },
+ {
+  "hdr": 4430,
+  "mline": 4431,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4473,
+  "mline": 4474,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4513,
+  "mline": 4514,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4554,
+  "mline": 4555,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4597,
+  "mline": 4598,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4638,
+  "mline": 4639,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4679,
+  "mline": 4680,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4731,
+  "mline": 4732,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4783,
+  "mline": 4784,
+  "mcol": 43,
+  "general": "include English Language, and two other science sub"
+ },
+ {
+  "hdr": 4831,
+  "mline": 4832,
+  "mcol": 48,
+  "general": ""
+ },
+ {
+  "hdr": 4867,
+  "mline": 4869,
+  "mcol": 72,
+  "general": ""
+ },
+ {
+  "hdr": 4908,
+  "mline": 4909,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4949,
+  "mline": 4950,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 4989,
+  "mline": 4990,
+  "mcol": 57,
+  "general": ""
+ },
+ {
+  "hdr": 5030,
+  "mline": 5031,
+  "mcol": 53,
+  "general": "("
+ },
+ {
+  "hdr": 5076,
+  "mline": 5077,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5116,
+  "mline": 5117,
+  "mcol": 43,
+  "general": "a) GCE `A' Level or IJMB examinations passes and Chemistry/Physic b) ND in any Natural, Agr courses with a minim recognised instituti UT"
+ },
+ {
+  "hdr": 5165,
+  "mline": 5166,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5204,
+  "mline": 5205,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5249,
+  "mline": 5250,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5292,
+  "mline": 5293,
+  "mcol": 43,
+  "general": "Health Science Physics will b (xxxviii)MAUTY accepts English Langua Chemistry and For Biotechnol Credit passes Biology, Chemi"
+ },
+ {
+  "hdr": 5340,
+  "mline": 5341,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5385,
+  "mline": 5386,
+  "mcol": 68,
+  "general": "Mathematics, Chemistry and Physics"
+ },
+ {
+  "hdr": 5429,
+  "mline": 5430,
+  "mcol": 74,
+  "general": ""
+ },
+ {
+  "hdr": 5476,
+  "mline": 5477,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5519,
+  "mline": 5520,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5568,
+  "mline": 5569,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5610,
+  "mline": 5611,
+  "mcol": 75,
+  "general": "("
+ },
+ {
+  "hdr": 5652,
+  "mline": 5653,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5692,
+  "mline": 5693,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5739,
+  "mline": 5740,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 5785,
+  "mline": 5786,
+  "mcol": 43,
+  "general": ""
+ },
+ {
+  "hdr": 5827,
+  "mline": 5828,
+  "mcol": 65,
+  "general": "English any two (2) of"
+ },
+ {
+  "hdr": 5867,
+  "mline": 5868,
+  "mcol": 73,
+  "general": ""
+ },
+ {
+  "hdr": 5916,
+  "mline": 5917,
+  "mcol": 55,
+  "general": ""
+ },
+ {
+  "hdr": 5961,
+  "mline": 5962,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6000,
+  "mline": 6001,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6044,
+  "mline": 6045,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6095,
+  "mline": 6096,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6140,
+  "mline": 6141,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6183,
+  "mline": 6184,
+  "mcol": 54,
+  "general": ""
+ },
+ {
+  "hdr": 6231,
+  "mline": 6232,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6276,
+  "mline": 6277,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6315,
+  "mline": 6316,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6356,
+  "mline": 6357,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6399,
+  "mline": 6400,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6452,
+  "mline": 6453,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6502,
+  "mline": 6503,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6543,
+  "mline": 6544,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6584,
+  "mline": 6585,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6625,
+  "mline": 6626,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6676,
+  "mline": 6677,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6719,
+  "mline": 6720,
+  "mcol": 43,
+  "general": "any other from Biology/Chemistry/ more than two sittings."
+ },
+ {
+  "hdr": 6761,
+  "mline": 6762,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6811,
+  "mline": 6812,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6862,
+  "mline": 6863,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 6913,
+  "mline": 6914,
+  "mcol": 70,
+  "general": "Any three (3) of Physics, Chemistry, Biology and Mathematics."
+ },
+ {
+  "hdr": 6967,
+  "mline": 6968,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7017,
+  "mline": 7018,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7059,
+  "mline": 7060,
+  "mcol": 43,
+  "general": ""
+ },
+ {
+  "hdr": 7109,
+  "mline": 7110,
+  "mcol": 74,
+  "general": "Biology and any two (2) relevant subjects."
+ },
+ {
+  "hdr": 7153,
+  "mline": 7154,
+  "mcol": 69,
+  "general": "Biology, D Chemistry and either Physics or Mathematics."
+ },
+ {
+  "hdr": 7193,
+  "mline": 7194,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7238,
+  "mline": 7239,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7287,
+  "mline": 7288,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7340,
+  "mline": 7341,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7382,
+  "mline": 7383,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7428,
+  "mline": 7429,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7476,
+  "mline": 7477,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7526,
+  "mline": 7527,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7582,
+  "mline": 7583,
+  "mcol": 58,
+  "general": ""
+ },
+ {
+  "hdr": 7635,
+  "mline": 7636,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7674,
+  "mline": 7675,
+  "mcol": 49,
+  "general": ""
+ },
+ {
+  "hdr": 7712,
+  "mline": 7713,
+  "mcol": 43,
+  "general": "and Biology. ND/HND at cr fields."
+ },
+ {
+  "hdr": 7757,
+  "mline": 7758,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7798,
+  "mline": 7799,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7851,
+  "mline": 7852,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7897,
+  "mline": 7898,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7941,
+  "mline": 7942,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 7989,
+  "mline": 7990,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8041,
+  "mline": 8042,
+  "mcol": 43,
+  "general": "and Physics. For Science Laboratory Five (5) SSC credit pas Mathematics, Chemistry,"
+ },
+ {
+  "hdr": 8089,
+  "mline": 8090,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8137,
+  "mline": 8138,
+  "mcol": 57,
+  "general": ""
+ },
+ {
+  "hdr": 8191,
+  "mline": 8191,
+  "mcol": 70,
+  "general": "Biology or Agricultural Science or Chemistry or Geography."
+ },
+ {
+  "hdr": 8226,
+  "mline": 8227,
+  "mcol": 73,
+  "general": "Mathematics, Economics and any other Science or Social Science subject."
+ },
+ {
+  "hdr": 8280,
+  "mline": 8281,
+  "mcol": 74,
+  "general": "Mathematics, DI Chemistry and Biology."
+ },
+ {
+  "hdr": 8324,
+  "mline": 8325,
+  "mcol": 62,
+  "general": ""
+ },
+ {
+  "hdr": 8371,
+  "mline": 8372,
+  "mcol": 71,
+  "general": "Physics, Chemistry Biology."
+ },
+ {
+  "hdr": 8418,
+  "mline": 8419,
+  "mcol": 70,
+  "general": "Mathematics, D Physics and one (1) of Biology, Chemistry, Agric Science, Economics and Geography."
+ },
+ {
+  "hdr": 8461,
+  "mline": 8462,
+  "mcol": 53,
+  "general": "Studies. b) Candidates with Upper Credi Diploma (ND) in the physi engineering disciplines m direct entry."
+ },
+ {
+  "hdr": 8495,
+  "mline": 8496,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8543,
+  "mline": 8544,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8593,
+  "mline": 8594,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8647,
+  "mline": 8648,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8700,
+  "mline": 8701,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8743,
+  "mline": 8744,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8793,
+  "mline": 8794,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8839,
+  "mline": 8840,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8883,
+  "mline": 8884,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8925,
+  "mline": 8926,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 8969,
+  "mline": 8970,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9022,
+  "mline": 9022,
+  "mcol": 48,
+  "general": ""
+ },
+ {
+  "hdr": 9075,
+  "mline": 9076,
+  "mcol": 75,
+  "general": ""
+ },
+ {
+  "hdr": 9120,
+  "mline": 9121,
+  "mcol": 49,
+  "general": ""
+ },
+ {
+  "hdr": 9176,
+  "mline": 9177,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9227,
+  "mline": 9228,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9268,
+  "mline": 9269,
+  "mcol": 56,
+  "general": ""
+ },
+ {
+  "hdr": 9310,
+  "mline": 9311,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9351,
+  "mline": 9352,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9391,
+  "mline": 9392,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9432,
+  "mline": 9433,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9483,
+  "mline": 9484,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9534,
+  "mline": 9535,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9582,
+  "mline": 9583,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9626,
+  "mline": 9627,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9678,
+  "mline": 9679,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9730,
+  "mline": 9731,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9780,
+  "mline": 9781,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9827,
+  "mline": 9828,
+  "mcol": 77,
+  "general": "Mathematics, U Physics and any other Science subject Mathematics, D Physics and any one (1) of Chemistry, Economics and Biology."
+ },
+ {
+  "hdr": 9865,
+  "mline": 9866,
+  "mcol": 43,
+  "general": ""
+ },
+ {
+  "hdr": 9910,
+  "mline": 9911,
+  "mcol": 81,
+  "general": "Any three (3) relevant Science subject."
+ },
+ {
+  "hdr": 9955,
+  "mline": 9956,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 9998,
+  "mline": 9999,
+  "mcol": 54,
+  "general": ""
+ },
+ {
+  "hdr": 10040,
+  "mline": 10041,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 10082,
+  "mline": 10083,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 10121,
+  "mline": 10122,
+  "mcol": 43,
+  "general": "Level requirements."
+ },
+ {
+  "hdr": 10163,
+  "mline": 10164,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 10207,
+  "mline": 10208,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 10257,
+  "mline": 10258,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 10306,
+  "mline": 10307,
+  "mcol": 74,
+  "general": "Chemistry, Biology and either Physics or Mathematics."
+ },
+ {
+  "hdr": 10352,
+  "mline": 10353,
+  "mcol": 53,
+  "general": ""
+ },
+ {
+  "hdr": 10391,
+  "mline": 10392,
+  "mcol": 68,
+  "general": "Mathematics and any other two (2) either Science or Social Science subjects."
+ },
+ {
+  "hdr": 10436,
+  "mline": 10437,
+  "mcol": 83,
+  "general": "U"
+ },
+ {
+  "hdr": 10470,
+  "mline": 10471,
+  "mcol": 67,
+  "general": "Biology, & Chemistry Physics or Mathematics."
+ },
+ {
+  "hdr": 10518,
+  "mline": 10519,
+  "mcol": 76,
+  "general": "Mathematics, Physics, Chemistry or Geography"
+ },
+ {
+  "hdr": 10574,
+  "mline": 10574,
+  "mcol": 73,
+  "general": "Science, Biology, Chemistry, Physics, Literature in English, Government, U History, Economics, Geography, Further Mathematics, Technical Drawing, Visual Arts, Computer Studies, Information Technology, U Civics, and French."
+ }
+]

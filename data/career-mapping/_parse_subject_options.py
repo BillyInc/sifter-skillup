@@ -73,6 +73,9 @@ SUBJECT_CODES = {
     "christian religious studies": "CRS", "christian religious knowledge": "CRS",
     "crs": "CRS", "crk": "CRS", "bible knowledge": "CRS",
     "islamic religious studies": "IRS", "islamic studies": "IRS", "irs": "IRS", "irk": "IRS",
+    "arabic studies": "ARA", "religious studies": "CRS",
+    "christian religious studies islamic studies": "CRS",
+    "account": "ACC", "accounts": "ACC",
     "social studies": "SOS", "civic education": "CIV", "civics": "CIV",
     "yoruba": "YOR", "hausa": "HAU", "igbo": "IGB", "french": "FRE", "arabic": "ARA",
     "music": "MUS", "fine art": "ART", "fine arts": "ART", "art": "ART",
@@ -178,10 +181,36 @@ def parse_head(head):
     return [("required", c) for c in codes]
 
 
+def preclean(seg):
+    """Normalize brochure/PDF artifacts before grammar matching."""
+    # cut page-noise tails: "... UTME SUBJECT(S) (i) MAUTY and FUTA require ..."
+    seg = re.split(r"\bUTME\s+SUBJECTS?\b", seg)[0]
+    # cut trailing institution-waiver fragments that leaked in
+    seg = re.sub(r"\(?\b[ivxlcdm]{1,6}\)\s+[A-Z][A-Z\-]{2,}.*$", "", seg)
+    # strip parenthetical cross-refs "(same as in X)" — handled at statement level
+    seg = re.sub(r"\(\s*same\s+as\s+in[^)]*\)", "", seg, flags=re.I)
+    # strip stray enumeration markers "(a)" "a." "b)" glued into statements
+    seg = re.sub(r"\(\s*[a-d]\s*\)|\b[a-d]\)\s|\s[a-d]\.\s*$", " ", seg)
+    # deglue known collisions from PDF extraction
+    GLUE = ["and", "or", "either", "any", "other", "subject", "subjects", "Science", "Sciences"]
+    for w in GLUE:
+        seg = re.sub(rf"(?<=[a-z])({w})\b", r" \1", seg)
+        seg = re.sub(rf"\b({w})(?=[A-Z])", r"\1 ", seg)
+    # missing number word: "and (2) of" -> "and two (2) of"
+    seg = re.sub(r"\b(and|plus)\s*\(\s*(\d)\s*\)\s*(of|from)", lambda m: f"{m.group(1)} {'one two three four'.split()[int(m.group(2))-1]} ({m.group(2)}) {m.group(3)}", seg)
+    # "any (1) of" -> "any one (1) of"
+    seg = re.sub(r"\bany\s*\(\s*(\d)\s*\)\s*(of|from)", lambda m: f"any {'one two three four'.split()[int(m.group(1))-1]} ({m.group(1)}) {m.group(2)}", seg)
+    # "either X or Y" -> "X or Y" (either is grammar noise for us)
+    seg = re.sub(r"\beither\s+", "", seg, flags=re.I)
+    # "another" -> "one other"
+    seg = re.sub(r"\banother\b", "one other", seg, flags=re.I)
+    return re.sub(r"\s+", " ", seg).strip()
+
+
 def parse_segment(seg):
     """One ';'-separated segment -> list of ('required', code) | ('one_of', n, [codes])
     Returns None if the segment cannot be represented faithfully."""
-    seg = seg.strip(" .;,")
+    seg = preclean(seg.strip(" .;,"))
     # normalize brochure connectors/filler
     seg = re.sub(r"\bplus\b", "and", seg, flags=re.I)
     seg = re.sub(r"\b(?:of|from)\s+the\s+following:?\s*", "of ", seg, flags=re.I)
@@ -222,16 +251,25 @@ def parse_segment(seg):
     # "X and/or two (2) other Arts or Social Science subjects" (category group,
     # possibly with a leading plain-subject head: "Government or History and two ...")
     m = re.search(r"(?:\b(?:and\s+)?(?:any\s+)?(?:other\s+)?(one|two|three|1|2|3)\s*(?:\(\s*\d\s*\))?\s*(?:other\s+)?)((?:[\w /]|-)*subjects?\.?)$", seg, re.I)
+    if not m:
+        # no-number variant: "any other Arts subject" -> one_of(1)
+        m = re.search(r"(?:\b(?:and\s+)?any()\s+(?:other\s+)?)((?:[\w /]|-)*subjects?\.?)$", seg, re.I)
     if m:
         cat = category_codes(m.group(2))
         if cat:
-            n = NUM_WORDS.get(m.group(1).lower(), 1)
+            n = NUM_WORDS.get((m.group(1) or "one").lower(), 1)
             head = seg[:m.start()].strip(" .;,")
             head = re.sub(r"\b(?:and|any)\s*$", "", head, flags=re.I).strip(" .;,")
             results = parse_head(head)
             if results is None:
                 return None
             return results + [("one_of", n, cat)]
+    # "any other Science subject" / "one other Arts subject" (bare category, no number list)
+    m = re.match(r"^(?:and\s+)?(?:any|one)\s+other\s+(.+?subjects?)$", seg, re.I)
+    if m:
+        cat = category_codes(m.group(1))
+        if cat:
+            return [("one_of", 1, cat)]
     # comma list of plain subjects: "Biology, Mathematics, Economics, Geography"
     items = split_list(seg)
     if len(items) > 1 and not re.search(r"\bor\b", seg, re.I):
@@ -343,7 +381,7 @@ def main():
         parts = parsed.get(jname)
         if utme and parts is None:
             stats["needs_review"] += 1
-            review_names.append(jname)
+            review_names.append((jname, utme[:140]))
             SQL.append(f"UPDATE programme_subject_requirements SET parse_status='needs_review' WHERE id = {q(rid)};")
             continue
 
@@ -426,11 +464,11 @@ def main():
     print(f"  empty requirement : {stats['empty']}")
     print(f"-> {os.path.abspath(dest)}")
     if review_names:
-        print("\nneeds_review programmes:")
-        for n in review_names[:40]:
-            print(f"  - {n}")
-        if len(review_names) > 40:
-            print(f"  ... and {len(review_names) - 40} more")
+        print("\nneeds_review programmes (with the text that failed):")
+        for n, txt in review_names[:62]:
+            print(f"  - {n}\n      {txt}")
+        if len(review_names) > 62:
+            print(f"  ... and {len(review_names) - 62} more")
 
 
 if __name__ == "__main__":

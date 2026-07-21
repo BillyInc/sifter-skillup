@@ -1,7 +1,6 @@
 {
-  "jamb_name": "Food Technology",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": []
+ "jamb_name": "Food Technology",
+ "utme_subjects": "i. Mathematics, Chemistryand Physicsor Biology.",
+ "extraction_source": "Engineering _ Enviromental _ Technology.pdf p74 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

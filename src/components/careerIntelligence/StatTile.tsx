@@ -1,5 +1,5 @@
 /**
- * StatTile — the COMPASS data-context contract.
+ * StatTile — the career intelligence data-context contract.
  *
  * The category research is unanimous: a metric without context is noise. Every
  * tile frames its value with meaning — a comparison (delta vs a prior period or
@@ -81,7 +81,7 @@ export function StatTile({
     <View
       style={[
         styles.tile,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
         style,
       ]}
     >
@@ -89,13 +89,13 @@ export function StatTile({
         style={[
           styles.value,
           CompassFonts.data,
-          { color: stale ? colors.textMuted : (tone ?? colors.text) },
+          { color: stale ? colors.textRole.muted : (tone ?? colors.textRole.primary) },
         ]}
         numberOfLines={1}
       >
         {display}
       </Text>
-      <Text style={[styles.label, { color: colors.textSoft }]} numberOfLines={2}>
+      <Text style={[styles.label, { color: colors.textRole.secondary }]} numberOfLines={2}>
         {label}
       </Text>
       {delta ? (
@@ -105,7 +105,7 @@ export function StatTile({
       ) : null}
       {stamp ? (
         <Text
-          style={[styles.stamp, CompassFonts.data, { color: colors.textMuted }]}
+          style={[styles.stamp, CompassFonts.data, { color: colors.textRole.muted }]}
           numberOfLines={1}
         >
           {stale ? '⚑ ' : ''}{stamp}
@@ -121,13 +121,13 @@ const styles = StyleSheet.create({
   tile: {
     flex: 1,
     minWidth: 128,
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.md,
     gap: 3,
   },
-  value: { fontSize: FontSize.xxxl, letterSpacing: -0.5 },
+  value: { fontSize: FontSize.xxxl, letterSpacing: 0 },
   label: { fontSize: FontSize.sm, fontWeight: '600', marginTop: 2 },
   delta: { fontSize: FontSize.xs, fontWeight: '700', marginTop: 2 },
   stamp: { fontSize: FontSize.xs, marginTop: 2, letterSpacing: 0 },

@@ -28,7 +28,7 @@ type NavId =
 interface ShellNavItem {
   id: NavId;
   label: string;
-  icon: string;
+  icon: keyof typeof Feather.glyphMap;
   href: string;
   sub: string;
 }
@@ -42,17 +42,17 @@ interface ShellSearchItem {
 }
 
 const PRIMARY_NAV: ShellNavItem[] = [
-  { id: 'home',          label: 'Home',          icon: '🏠', href: '/(tabs)/home',          sub: 'Your snapshot' },
-  { id: 'explore',       label: 'Explore',       icon: '🔍', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
-  { id: 'myworld',       label: 'My World',      icon: '🔒', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
-  { id: 'profile',       label: 'Profile',       icon: '👤', href: '/(tabs)/profile',       sub: 'Account & saved' },
+  { id: 'home',          label: 'Home',          icon: 'home', href: '/(tabs)/home',          sub: 'Your snapshot' },
+  { id: 'explore',       label: 'Explore',       icon: 'search', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
+  { id: 'myworld',       label: 'My World',      icon: 'briefcase', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
+  { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
 
-const MOBILE_NAV: { id: NavId; label: string; icon: string; href: string }[] = [
-  { id: 'home',          label: 'Home',    icon: '🏠', href: '/(tabs)/home' },
-  { id: 'explore',       label: 'Explore', icon: '🔍', href: '/(tabs)/explore' },
-  { id: 'myworld',       label: 'My World', icon: '🔒', href: '/(tabs)/myworld' },
-  { id: 'profile',       label: 'Profile', icon: '👤', href: '/(tabs)/profile' },
+const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMap; href: string }[] = [
+  { id: 'home',          label: 'Home',    icon: 'home', href: '/(tabs)/home' },
+  { id: 'explore',       label: 'Explore', icon: 'search', href: '/(tabs)/explore' },
+  { id: 'myworld',       label: 'My World', icon: 'briefcase', href: '/(tabs)/myworld' },
+  { id: 'profile',       label: 'Profile', icon: 'user', href: '/(tabs)/profile' },
 ];
 
 function buildPrimaryNav(_trackContext: TrackContext): ShellNavItem[] {
@@ -132,13 +132,17 @@ function NavList({
             <View
               style={[
                 styles.navIconWrap,
-                { backgroundColor: active ? 'rgba(255,255,255,0.16)' : colors.bgSecondary },
+                { backgroundColor: active ? 'rgba(255,255,255,0.12)' : 'transparent' },
               ]}
             >
-              <Text style={styles.navIcon}>{item.icon}</Text>
+              <Feather
+                name={item.icon}
+                size={15}
+                color={active ? colors.textInverse : colors.textMuted}
+              />
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={[styles.navLabel, { color: active ? '#fff' : colors.text }]}>{item.label}</Text>
+              <Text style={[styles.navLabel, { color: active ? colors.textInverse : colors.textSoft }]}>{item.label}</Text>
             </View>
           </TouchableOpacity>
         );
@@ -227,12 +231,12 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           ]}
         >
           <View style={styles.brandRow}>
-            <View style={[styles.brandBadge, { backgroundColor: colors.gold }]}>
+            <View style={[styles.brandBadge, { backgroundColor: colors.text }]}>
               <Text style={styles.brandBadgeText}>S</Text>
             </View>
             <View>
               <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
-              <Text style={[styles.brandSub, { color: colors.gold }]}>LEVELUP</Text>
+              <Text style={[styles.brandSub, { color: colors.textMuted }]}>LEVELUP</Text>
             </View>
           </View>
 
@@ -242,10 +246,10 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={() => router.push('/(tabs)/profile' as any)}
-              style={[styles.profileMini, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
+              style={[styles.profileMini, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
             >
-              <View style={[styles.profileMiniAvatar, { backgroundColor: colors.accent }]}>
-                <Text style={styles.profileMiniAvatarText}>👤</Text>
+              <View style={[styles.profileMiniAvatar, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Feather name="user" size={14} color={colors.textMuted} />
               </View>
               <View>
                 <Text style={[styles.profileMiniLabel, { color: colors.text }]}>Profile</Text>
@@ -287,7 +291,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           <View style={styles.topbarActions}>
             {isWide && (
               <View style={styles.searchWrap}>
-                <View style={[styles.searchStub, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                <View style={[styles.searchStub, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
                   <Feather name="search" size={14} color={colors.textMuted} />
                   <TextInput
                     value={searchQuery}
@@ -322,7 +326,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={toggle}
-              style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
+              style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
             >
               <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.text} />
             </TouchableOpacity>
@@ -332,7 +336,7 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               onPress={() => router.push('/(tabs)/profile' as any)}
               style={[styles.avatarBtn, { backgroundColor: colors.text }]}
             >
-              <Text style={styles.avatarBtnText}>👤</Text>
+              <Feather name="user" size={15} color={colors.textInverse} />
             </TouchableOpacity>
           </View>
         </View>
@@ -357,12 +361,13 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                   key={item.id}
                   activeOpacity={0.85}
                   onPress={() => router.push(item.href as any)}
-                  style={styles.mobileTab}
+                  style={[
+                    styles.mobileTab,
+                    active && { backgroundColor: colors.text },
+                  ]}
                 >
-                  <View style={[styles.mobileTabIconWrap, { backgroundColor: active ? colors.text : colors.bgSecondary }]}>
-                    <Text style={[styles.mobileTabIcon, { color: active ? '#fff' : colors.text }]}>{item.icon}</Text>
-                  </View>
-                  <Text style={[styles.mobileTabLabel, { color: active ? colors.text : colors.textMuted }]}>{item.label}</Text>
+                  <Feather name={item.icon} size={16} color={active ? colors.textInverse : colors.textMuted} />
+                  <Text style={[styles.mobileTabLabel, { color: active ? colors.textInverse : colors.textMuted }]}>{item.label}</Text>
                 </TouchableOpacity>
               );
             })}
@@ -385,12 +390,12 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           >
             <View style={styles.drawerHeader}>
               <View style={styles.brandRow}>
-                <View style={[styles.brandBadge, { backgroundColor: colors.gold }]}>
+                <View style={[styles.brandBadge, { backgroundColor: colors.text }]}>
                   <Text style={styles.brandBadgeText}>S</Text>
                 </View>
                 <View>
                   <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
-                  <Text style={[styles.brandSub, { color: colors.gold }]}>LEVELUP</Text>
+                  <Text style={[styles.brandSub, { color: colors.textMuted }]}>LEVELUP</Text>
                 </View>
               </View>
               <TouchableOpacity onPress={() => setDrawerOpen(false)}>
@@ -408,9 +413,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                     setDrawerOpen(false);
                     router.push('/(tabs)/feed' as any);
                   }}
-                  style={[styles.secondaryBtn, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
+                  style={[styles.secondaryBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
                 >
-                  <Text style={styles.secondaryBtnIcon}>📺</Text>
+                  <Feather name="activity" size={16} color={colors.textMuted} />
                   <Text style={[styles.secondaryBtnLabel, { color: colors.text }]}>Open Feed</Text>
                 </TouchableOpacity>
 
@@ -420,9 +425,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                     setDrawerOpen(false);
                     router.push('/(tabs)/profile' as any);
                   }}
-                  style={[styles.secondaryBtn, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
+                  style={[styles.secondaryBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
                 >
-                  <Text style={styles.secondaryBtnIcon}>👤</Text>
+                  <Feather name="user" size={16} color={colors.textMuted} />
                   <Text style={[styles.secondaryBtnLabel, { color: colors.text }]}>Profile</Text>
                 </TouchableOpacity>
               </View>
@@ -440,9 +445,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   sidebar: {
-    width: 210,
+    width: 224,
     borderRightWidth: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingBottom: Spacing.lg,
   },
   brandRow: {
@@ -452,8 +457,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   brandBadge: {
-    width: 32,
-    height: 32,
+    width: 30,
+    height: 30,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -465,11 +470,11 @@ const styles = StyleSheet.create({
   },
   brandTitle: {
     fontSize: 14,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
   },
   brandSub: {
     fontSize: 9,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
     letterSpacing: 1,
   },
   navList: {
@@ -479,10 +484,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 9,
-    minHeight: 34,
-    paddingHorizontal: 11,
+    minHeight: 40,
+    paddingHorizontal: 12,
     paddingVertical: 9,
-    borderRadius: 9,
+    borderRadius: Radius.full,
     borderWidth: 0,
   },
   navIconWrap: {
@@ -498,7 +503,7 @@ const styles = StyleSheet.create({
   },
   navLabel: {
     fontSize: 13,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   sidebarFooter: {
     marginTop: 'auto',
@@ -518,17 +523,13 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  profileMiniAvatarText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: FontWeight.black,
-  },
   profileMiniLabel: {
     fontSize: 11,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   profileMiniSub: {
     fontSize: 9,
@@ -538,9 +539,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topbar: {
-    borderBottomWidth: 1,
-    paddingHorizontal: 12,
-    paddingBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -554,13 +555,13 @@ const styles = StyleSheet.create({
   },
   pageEyebrow: {
     fontSize: 10,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   pageTitle: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.black,
+    fontWeight: FontWeight.semibold,
     marginTop: 1,
   },
   topbarActions: {
@@ -572,19 +573,15 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   searchStub: {
-    minWidth: 180,
-    maxWidth: 300,
-    borderRadius: Radius.full,
-    borderWidth: 1,
+    minWidth: 260,
+    maxWidth: 340,
+    minHeight: 44,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 12,
-    paddingVertical: 7,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  searchIcon: {
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
   },
   searchInput: {
     minWidth: 170,
@@ -596,15 +593,15 @@ const styles = StyleSheet.create({
     top: 52,
     left: 0,
     right: 0,
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     overflow: 'hidden',
-    ...Shadow.md,
+    ...Shadow.sm,
   },
   searchResultRow: {
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   searchResultTitle: {
     fontSize: FontSize.sm,
@@ -617,29 +614,16 @@ const styles = StyleSheet.create({
   topbarIconBtn: {
     width: 34,
     height: 34,
-    borderRadius: 10,
+    borderRadius: Radius.md,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  topbarIconText: {
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  },
-  topbarActionLabel: {
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
   },
   avatarBtn: {
     width: 34,
     height: 34,
-    borderRadius: 10,
+    borderRadius: Radius.md,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  avatarBtnText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: FontWeight.black,
   },
   content: {
     flex: 1,
@@ -649,7 +633,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    borderTopWidth: 1,
+    borderTopWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.md,
     paddingTop: Spacing.sm,
     flexDirection: 'row',
@@ -658,23 +642,17 @@ const styles = StyleSheet.create({
   },
   mobileTab: {
     flex: 1,
-    alignItems: 'center',
-    gap: 4,
-  },
-  mobileTabIconWrap: {
-    width: 44,
-    height: 44,
-    borderRadius: 14,
+    minHeight: 42,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  mobileTabIcon: {
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
+    flexDirection: 'row',
+    gap: 6,
+    borderRadius: Radius.full,
+    paddingHorizontal: 8,
   },
   mobileTabLabel: {
     fontSize: 11,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   drawerOverlay: {
     flex: 1,
@@ -683,7 +661,7 @@ const styles = StyleSheet.create({
   },
   drawerSheet: {
     width: 320,
-    borderRightWidth: 1,
+    borderRightWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Spacing.lg,
     paddingBottom: Spacing.lg,
   },
@@ -693,26 +671,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: Spacing.xl,
   },
-  closeText: {
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  },
   drawerSecondary: {
     marginTop: Spacing.lg,
     paddingTop: Spacing.lg,
-    borderTopWidth: 1,
+    borderTopWidth: StyleSheet.hairlineWidth,
     gap: Spacing.sm,
   },
   secondaryBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    borderRadius: Radius.xl,
-    borderWidth: 1,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     padding: Spacing.md,
-  },
-  secondaryBtnIcon: {
-    fontSize: 18,
   },
   secondaryBtnLabel: {
     fontSize: FontSize.sm,

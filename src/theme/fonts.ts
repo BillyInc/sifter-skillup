@@ -1,17 +1,18 @@
 /**
- * COMPASS typography loader.
+ * Career intelligence typography loader.
  *
- * Loads the three COMPASS faces via expo-font when the @expo-google-fonts
+ * Loads the redesign faces via expo-font when the @expo-google-fonts
  * packages are installed, and degrades gracefully to the system stack otherwise
  * — so the app never blocks on fonts that aren't present yet.
  *
- *   Display : Bricolage Grotesque  (screen titles, hero numerals, eyebrows)
- *   Body    : Hanken Grotesk       (all UI / body text)
- *   Data    : Spline Sans Mono     (scores, cut-offs, salary, %, freshness)
+ *   Sans : Hanken Grotesk    (all UI text, titles, section labels)
+ *   Data : Spline Sans Mono  (scores, cut-offs, salary, %, freshness)
+ *
+ * Legacy display roles intentionally map to Hanken so existing call sites keep
+ * working without carrying the old Bricolage display voice into the redesign.
  *
  * To activate the real faces:
- *   npm i @expo-google-fonts/bricolage-grotesque \
- *         @expo-google-fonts/hanken-grotesk \
+ *   npm i @expo-google-fonts/hanken-grotesk \
  *         @expo-google-fonts/spline-sans-mono
  * then set COMPASS_FONTS_AVAILABLE = true below. The font *names* used across the
  * app never change — only the underlying file binding does.
@@ -47,9 +48,9 @@ const _SYS_MONO = Platform.select({
  */
 export const Fonts = COMPASS_FONTS_AVAILABLE
   ? {
-      display:      { fontFamily: 'BricolageGrotesque_800ExtraBold' },
-      displayBold:  { fontFamily: 'BricolageGrotesque_700Bold' },
-      displaySemi:  { fontFamily: 'BricolageGrotesque_600SemiBold' },
+      display:      { fontFamily: 'HankenGrotesk_600SemiBold' },
+      displayBold:  { fontFamily: 'HankenGrotesk_700Bold' },
+      displaySemi:  { fontFamily: 'HankenGrotesk_600SemiBold' },
       body:         { fontFamily: 'HankenGrotesk_400Regular' },
       bodyMedium:   { fontFamily: 'HankenGrotesk_500Medium' },
       bodySemibold: { fontFamily: 'HankenGrotesk_600SemiBold' },
@@ -88,16 +89,12 @@ export function useCompassFonts(): boolean {
       try {
         // Dynamically imported so the bundle doesn't hard-depend on packages that
         // may not be installed. Guarded by COMPASS_FONTS_AVAILABLE.
-        const [Font, bricolage, hanken, spline] = await Promise.all([
+        const [Font, hanken, spline] = await Promise.all([
           import('expo-font'),
-          import('@expo-google-fonts/bricolage-grotesque' as string),
           import('@expo-google-fonts/hanken-grotesk' as string),
           import('@expo-google-fonts/spline-sans-mono' as string),
         ]);
         await Font.loadAsync({
-          BricolageGrotesque_800ExtraBold: bricolage.BricolageGrotesque_800ExtraBold,
-          BricolageGrotesque_700Bold: bricolage.BricolageGrotesque_700Bold,
-          BricolageGrotesque_600SemiBold: bricolage.BricolageGrotesque_600SemiBold,
           HankenGrotesk_400Regular: hanken.HankenGrotesk_400Regular,
           HankenGrotesk_500Medium: hanken.HankenGrotesk_500Medium,
           HankenGrotesk_600SemiBold: hanken.HankenGrotesk_600SemiBold,

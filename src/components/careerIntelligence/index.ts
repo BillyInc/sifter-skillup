@@ -17,8 +17,16 @@ export { DomainMappingExplainer } from "./DomainMappingExplainer";
 export type { DomainMappingExplainerProps } from "./DomainMappingExplainer";
 export { DomainChip } from "./DomainChip";
 export { RoleMatchBadge } from "./RoleMatchBadge";
+export {
+  FilterChip,
+  ListRow,
+  LockedTile,
+  SearchBar,
+  SectionLabel,
+  TextTabs,
+} from "./RedesignPrimitives";
 
-// ── COMPASS design system ─────────────────────────────────────
+// ── Career intelligence design system ─────────────────────────
 export { RouteLine } from "./RouteLine";
 export type {
   RouteLineProps, RouteStation, StationState, EdgeKind,

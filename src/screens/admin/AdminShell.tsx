@@ -30,7 +30,6 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
   Shadow,
 } from "../../theme";
 import { adminNav } from "../../lib/adminNav";
@@ -308,13 +307,13 @@ export function AdminShell({
   );
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.bg }]}>
+    <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {/* Persistent sidebar (wide only) */}
       {wide ? (
         <View
           style={[
             styles.sidebar,
-            { backgroundColor: colors.card, borderRightColor: colors.border },
+            { backgroundColor: colors.surface.raised, borderRightColor: colors.borderRole.subtle },
           ]}
         >
           {Nav}
@@ -327,7 +326,7 @@ export function AdminShell({
         <View
           style={[
             styles.topBar,
-            { backgroundColor: colors.card, borderBottomColor: colors.border },
+            { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle },
           ]}
         >
           {!wide ? (
@@ -345,7 +344,7 @@ export function AdminShell({
             <TouchableOpacity
               onPress={goBack}
               hitSlop={10}
-              style={[styles.backBtn, { borderColor: colors.border }]}
+              style={[styles.backBtn, { borderColor: colors.borderRole.subtle }]}
               accessibilityLabel="Go back"
             >
               <Text style={[styles.backText, { color: colors.text }]}>
@@ -405,16 +404,21 @@ function NavList({
   return (
     <View style={{ flex: 1 }}>
       {/* Brand header */}
-      <View style={[styles.brand, { borderBottomColor: colors.border }]}>
-        <View style={styles.brandMark}>
-          <Text style={styles.brandEmoji}>⚡</Text>
+      <View style={[styles.brand, { borderBottomColor: colors.borderRole.subtle }]}>
+        <View
+          style={[
+            styles.brandMark,
+            { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
+          ]}
+        >
+          <Text style={[styles.brandEmoji, { color: colors.textRole.primary }]}>S</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.brandName, { color: colors.text }]}>
-            {Brand.short}
+          <Text style={[styles.brandName, { color: colors.textRole.primary }]}>
+            {adminAudienceLabel(audience)}
           </Text>
-          <Text style={[styles.brandSub, { color: Brand.primaryDeep }]}>
-            {adminAudienceLabel(audience).toUpperCase()}
+          <Text style={[styles.brandSub, { color: colors.textRole.muted }]}>
+            Workspace
           </Text>
         </View>
         {showClose ? (
@@ -442,7 +446,7 @@ function NavList({
                   activeOpacity={0.75}
                   style={[
                     styles.navRow,
-                    active && { backgroundColor: colors.navy },
+                    active && { backgroundColor: colors.surface.inverse },
                   ]}
                 >
                   <Text style={styles.navIcon}>{item.icon}</Text>
@@ -450,7 +454,7 @@ function NavList({
                     style={[
                       styles.navLabel,
                       {
-                        color: active ? colors.textInverse : colors.textSoft,
+                        color: active ? colors.textRole.inverse : colors.textRole.secondary,
                         fontWeight: active
                           ? FontWeight.bold
                           : FontWeight.medium,
@@ -471,7 +475,7 @@ function NavList({
 
         {audience === "school" ? (
           <Text style={[styles.privacyNote, { color: colors.textMuted }]}>
-            🔒 Student data stays private. Individual access requires verified
+            Student data stays private. Individual access requires verified
             consent.
           </Text>
         ) : null}
@@ -520,8 +524,8 @@ function Drawer({
         style={[
           styles.drawer,
           {
-            backgroundColor: colors.card,
-            borderRightColor: colors.border,
+            backgroundColor: colors.surface.raised,
+            borderRightColor: colors.borderRole.subtle,
             transform: [{ translateX: slide }],
           },
           Shadow.lg,
@@ -539,7 +543,7 @@ const styles = StyleSheet.create({
   root: { flex: 1, flexDirection: "row" },
   sidebar: {
     width: SIDEBAR_WIDTH,
-    borderRightWidth: 1,
+    borderRightWidth: StyleSheet.hairlineWidth,
     flexShrink: 0,
   },
   content: { flex: 1 },
@@ -549,27 +553,27 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   menuBtn: { paddingVertical: 2, paddingHorizontal: 2 },
   menuIcon: { fontSize: 22, fontWeight: FontWeight.black },
   backBtn: {
     minHeight: 34,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
     alignItems: "center",
     justifyContent: "center",
   },
-  backText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  backText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   titleWrap: { flex: 1, gap: 1 },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     letterSpacing: 0.6,
     textTransform: "uppercase",
   },
-  title: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  title: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   actions: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
 
   // Brand
@@ -580,35 +584,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.xl,
     paddingBottom: Spacing.lg,
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   brandMark: {
     width: 32,
     height: 32,
     borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Brand.primary,
   },
-  brandEmoji: { fontSize: 16 },
+  brandEmoji: { fontSize: 15, fontWeight: FontWeight.semibold },
   brandName: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
-    letterSpacing: -0.3,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0,
   },
   brandSub: {
-    fontSize: 9,
-    fontWeight: FontWeight.bold,
-    letterSpacing: 1.1,
+    fontSize: 10,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
-  close: { fontSize: FontSize.lg, fontWeight: FontWeight.bold },
+  close: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
 
   // Nav
   navScroll: { paddingVertical: Spacing.md, gap: Spacing.lg },
   navGroup: { paddingHorizontal: Spacing.md, gap: 2 },
   groupTitle: {
     fontSize: 9,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     letterSpacing: 1,
     paddingHorizontal: Spacing.sm,
     paddingBottom: Spacing.xs,
@@ -620,7 +625,7 @@ const styles = StyleSheet.create({
     minHeight: 38,
     paddingVertical: 9,
     paddingHorizontal: Spacing.md,
-    borderRadius: Radius.md,
+    borderRadius: Radius.full,
   },
   navIcon: { fontSize: 15, width: 20, textAlign: "center" },
   navLabel: { flex: 1, fontSize: FontSize.sm },
@@ -642,6 +647,6 @@ const styles = StyleSheet.create({
   drawer: {
     width: SIDEBAR_WIDTH,
     height: "100%",
-    borderRightWidth: 1,
+    borderRightWidth: StyleSheet.hairlineWidth,
   },
 });

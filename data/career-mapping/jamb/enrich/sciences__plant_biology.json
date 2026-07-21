@@ -1,0 +1,6 @@
+{
+ "jamb_name": "Plant Biology",
+ "utme_subjects": "Biology, Chemistry and anyother Sciencesubject.",
+ "extraction_source": "Sciences.pdf (layout-aware, row-group)",
+ "extraction_confidence": "high"
+}

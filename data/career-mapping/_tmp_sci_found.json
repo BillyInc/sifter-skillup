@@ -1,0 +1,381 @@
+{
+ "CYBER SECURITY": [
+  9399,
+  9404
+ ],
+ "PHYSICS WITH ELECTRONICS": [
+  1241,
+  1346
+ ],
+ "INFORMATION TECHNOLOGY": [
+  9086,
+  9650
+ ],
+ "Plant Science and Biotechnology": [
+  4956
+ ],
+ "INFORMATION SYSTEMS": [
+  9123,
+  9322,
+  9360
+ ],
+ "Data Science": [
+  4601
+ ],
+ "INFORMATION AND COMMUNICATION TECHNOLOGY": [
+  9275
+ ],
+ "Animal and Environmental Biology": [
+  5573
+ ],
+ "Geophysics": [
+  2059,
+  3818,
+  3822,
+  6984
+ ],
+ "Petroleum Chemistry": [
+  2681
+ ],
+ "Pure and Industrial Chemistry": [
+  3331
+ ],
+ "APPLIED BIOLOGY": [
+  10354
+ ],
+ "Environmental Management": [
+  4208,
+  7696
+ ],
+ "Chemical Sciences": [
+  2633
+ ],
+ "Geology and Mining": [
+  3825
+ ],
+ "Mathematics with Computer Science": [
+  6188
+ ],
+ "Pure and Applied Chemistry": [
+  2622
+ ],
+ "Plant Biology": [
+  5042
+ ],
+ "Plant Science": [
+  5048
+ ],
+ "Genetics and Biotechnology": [
+  5187
+ ],
+ "Computer Science and Information Technology": [
+  8885
+ ],
+ "BIOCHEMISTRY AND MOLECULAR BIOLOGY": [
+  332,
+  418
+ ],
+ "INFORMATION AND COMMUNICATION SCIENCE": [
+  8858,
+  9312
+ ],
+ "COMPUTER SCIENCE WITH ECONOMICS": [
+  9365
+ ],
+ "COMPUTER WITH STATISTICS": [
+  9848
+ ],
+ "Electronics": [
+  1347,
+  1470,
+  8912
+ ],
+ "Pure Chemistry": [
+  2595
+ ],
+ "Applied Chemistry": [
+  2717
+ ],
+ "Biostatistics": [
+  4564
+ ],
+ "Statistics and Data Sciences": [
+  4569
+ ],
+ "Marine Science": [
+  5657
+ ],
+ "INFORMATION TECHNOLOGY AND HEALTH INFORMATICS": [
+  9240
+ ],
+ "MANAGEMENT INFORMATION SYSTEM": [
+  9249
+ ],
+ "INFORMATION SYSTEMS AND TECHNOLOGY": [
+  9360
+ ],
+ "CYBER SECURITY SCIENCE": [
+  9399
+ ],
+ "COMMUNICATIONS TECHNOLOGY": [
+  9589
+ ],
+ "INFORMATION SCIENCE AND MEDIA STUDIES": [
+  9661
+ ],
+ "APPLIED BIOLOGY AND BIOTECHNOLOGY": [
+  10366
+ ],
+ "FISHERIES AND AQUACULTURE": [
+  10481
+ ],
+ "Physics Electronics": [
+  1466
+ ],
+ "Physics/Industrial Physics": [
+  1513
+ ],
+ "Applied Physics": [
+  2023
+ ],
+ "Chemistry and Industrial Chemistry": [
+  2585,
+  2673
+ ],
+ "Applied Geology": [
+  3870
+ ],
+ "Applied Zoology": [
+  5533
+ ],
+ "Molecular Biology": [
+  419,
+  425,
+  7550
+ ],
+ "Computer Science and Information Science": [
+  8897
+ ],
+ "BIOTECHNOLOGY AND MOLECULAR BIOLOGY": [
+  424
+ ],
+ "DATA MANAGEMENT": [
+  9246
+ ],
+ "COMMUNICATION AND WIRELESS TECHNOLOGY": [
+  9371
+ ],
+ "TELECOMMUNICATION MANAGEMENT": [
+  9375
+ ],
+ "TELECOMMUNICATION SCIENCE": [
+  9395
+ ],
+ "TELECOMMUNICATION AND WIRELESS TECHNOLOGY": [
+  9584
+ ],
+ "COMMUNICATION AND DIGITAL MEDIA STUDIES": [
+  9594
+ ],
+ "LIBRARY AND INFORMATION TECHNOLOGY": [
+  9649
+ ],
+ "INFORMATION AND MEDIA SCIENCE": [
+  9683
+ ],
+ "INFORMATION SCIENCE": [
+  9600,
+  9661,
+  9687
+ ],
+ "COMPUTER SCIENCE WITH MATHEMATICS": [
+  9844
+ ],
+ "ELECTRONICS AND COMPUTER SYSTEMS": [
+  9876
+ ],
+ "ELECTRONICS AND COMMUNICATIONS": [
+  9880
+ ],
+ "HUMAN BIOLOGY": [
+  10097
+ ],
+ "APPLIED BOTANY": [
+  10336
+ ],
+ "APPLIED BIOLOGY AND GENETICS": [
+  10362
+ ],
+ "CELL BIOLOGY & GENETICS": [
+  10371
+ ],
+ "HOME SCIENCE": [
+  10584
+ ],
+ "Physics and Computer Electronic": [
+  1461
+ ],
+ "Electrons": [
+  1494
+ ],
+ "Physics with Solar Energy": [
+  1505
+ ],
+ "Physics and Energy Studies": [
+  1509
+ ],
+ "Physics/Astrology": [
+  1545
+ ],
+ "Energy Studies": [
+  1554
+ ],
+ "Pure and Applied Physics": [
+  2019
+ ],
+ "Pure Physics": [
+  2027
+ ],
+ "Industrial Mathematics /Applied Statistics": [
+  2164
+ ],
+ "Applied Mathematics with Statistics": [
+  2169
+ ],
+ "Applied Statistics": [
+  2184
+ ],
+ "Industral Mathematics/Computer": [
+  2187
+ ],
+ "Industrial Chemistry and Chemical Entrepreneurship": [
+  2590
+ ],
+ "Industrial and Environmental Chemistry": [
+  2712
+ ],
+ "Food Science & Nutrition": [
+  3094
+ ],
+ "Geological Sciences": [
+  3810
+ ],
+ "Geology and Mineral Sciences": [
+  3813
+ ],
+ "Geology and Geophysics": [
+  3817
+ ],
+ "Geology and Applied Geophysics": [
+  3821
+ ],
+ "Geology and Petroleum Studies": [
+  3866
+ ],
+ "Geology and Mineral Science": [
+  3874
+ ],
+ "Marine Geology": [
+  3878
+ ],
+ "Geography and Environmental Management": [
+  4207
+ ],
+ "Building Technology": [
+  4338
+ ],
+ "Statistics with Demography": [
+  4560
+ ],
+ "Botany and Ecological Studies": [
+  4951
+ ],
+ "Plant Science and Forestry": [
+  5032
+ ],
+ "Plant Science and Microbiology": [
+  5037
+ ],
+ "Biotechnology and Food Technology": [
+  5183
+ ],
+ "Ecology": [
+  5194
+ ],
+ "Applied Ecology": [
+  5206
+ ],
+ "Ecology and Environmental Studies": [
+  5209
+ ],
+ "Zoology and Aquaculture": [
+  5529
+ ],
+ "Animal Biology and Environment": [
+  5537
+ ],
+ "Conservation Biology": [
+  5612
+ ],
+ "Conservation and Environmental Biology": [
+  5615
+ ],
+ "Environmental Biology": [
+  814,
+  5574,
+  5616,
+  5625,
+  7685
+ ],
+ "Environmental Biology and Fisheries": [
+  5629
+ ],
+ "Aviation Business": [
+  5662
+ ],
+ "Geoscience": [
+  7019
+ ],
+ "Earth Science": [
+  7027
+ ],
+ "Microbiology and Biotechnology": [
+  7538
+ ],
+ "Microbiology/Parasitology": [
+  7542
+ ],
+ "Biology/Biotechnology": [
+  7546
+ ],
+ "Microbiology and Industrial Biotechnology": [
+  7554
+ ],
+ "Industrial Microbiology": [
+  7586
+ ],
+ "Environmental Chemistry and Toxicology": [
+  7759
+ ],
+ "Energy and Petroleum Studies": [
+  7764
+ ],
+ "Computer, Information and Communication Science": [
+  8857
+ ],
+ "Computer Science and Informatics": [
+  8864
+ ],
+ "Computing and Artificial Intelligence": [
+  8905
+ ],
+ "Computer with Electronics": [
+  8911
+ ],
+ "Software Engineering and Digital Entrepreneurship": [
+  9077
+ ],
+ "Robotics (Artificial Intelligence)": [
+  9082
+ ]
+}

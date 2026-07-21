@@ -11,35 +11,36 @@
  */
 import React, { type ReactNode } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, Brand } from "../../theme";
+import { Feather } from "@expo/vector-icons";
+import { useTheme, Spacing, Radius, FontSize } from "../../theme";
 import type { DataState, DataStatus } from "../../types/career";
 
 const PRESET: Record<
   Exclude<DataStatus, "real">,
-  { icon: string; title: string; body: string }
+  { icon: keyof typeof Feather.glyphMap; title: string; body: string }
 > = {
   coming_soon: {
-    icon: "🔒",
+    icon: "lock",
     title: "Locked",
-    body: "This page is designed, but the verified data is not ready yet.",
+    body: "This surface is designed and waiting for verified data.",
   },
   locked: {
-    icon: "🔒",
+    icon: "lock",
     title: "Locked",
     body: "Create an account or wait for release to unlock this surface.",
   },
   pending: {
-    icon: "🕐",
+    icon: "clock",
     title: "Data pending",
-    body: "We’re still adding detail here. It will update automatically.",
+    body: "Verified detail is still being added. This will update automatically.",
   },
   fallback: {
-    icon: "ℹ️",
+    icon: "info",
     title: "Standard data",
     body: "Showing the national standard while detailed data is added.",
   },
   error: {
-    icon: "⚠️",
+    icon: "alert-triangle",
     title: "Something went wrong",
     body: "Please try again in a moment.",
   },
@@ -74,7 +75,7 @@ export function DataStateView<T>({
   if (state.status === "pending" && spinnerOnPending) {
     return (
       <View style={styles.spinner}>
-        <ActivityIndicator color={Brand.primary} />
+        <ActivityIndicator color={colors.accentRole.action} />
       </View>
     );
   }
@@ -83,7 +84,7 @@ export function DataStateView<T>({
     if (empty && empty(state.data)) {
       return (
         <StatePanel
-          icon="📭"
+          icon="inbox"
           title={emptyTitle}
           body={state.meta?.notice ?? emptyBody}
           compact={compact}
@@ -112,7 +113,7 @@ export function DataStateView<T>({
     body,
     compact: isCompact,
   }: {
-    icon: string;
+    icon: keyof typeof Feather.glyphMap;
     title: string;
     body: string;
     compact?: boolean;
@@ -122,12 +123,12 @@ export function DataStateView<T>({
         <View
           style={[
             styles.compact,
-            { backgroundColor: colors.bgSecondary, borderColor: colors.border },
+            { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
           ]}
         >
-          <Text style={styles.compactIcon}>{icon}</Text>
+          <Feather name={icon} size={15} color={colors.state.locked} />
           <Text
-            style={[styles.compactText, { color: colors.textMuted }]}
+            style={[styles.compactText, { color: colors.textRole.muted }]}
             numberOfLines={2}
           >
             {title} · {body}
@@ -139,12 +140,14 @@ export function DataStateView<T>({
       <View
         style={[
           styles.panel,
-          { backgroundColor: colors.card, borderColor: colors.border },
+          { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
         ]}
       >
-        <Text style={styles.panelIcon}>{icon}</Text>
-        <Text style={[styles.panelTitle, { color: colors.text }]}>{title}</Text>
-        <Text style={[styles.panelBody, { color: colors.textSoft }]}>
+        <View style={[styles.panelIcon, { backgroundColor: colors.state.lockedSoft }]}>
+          <Feather name={icon} size={20} color={colors.state.locked} />
+        </View>
+        <Text style={[styles.panelTitle, { color: colors.textRole.primary }]}>{title}</Text>
+        <Text style={[styles.panelBody, { color: colors.textRole.secondary }]}>
           {body}
         </Text>
       </View>
@@ -153,7 +156,7 @@ export function DataStateView<T>({
 }
 
 function lockedPreviewFor(notice?: string): {
-  icon: string;
+  icon: keyof typeof Feather.glyphMap;
   title: string;
   body: string;
 } {
@@ -161,28 +164,28 @@ function lockedPreviewFor(notice?: string): {
   const lower = copy?.toLowerCase() ?? "";
   const icon =
     lower.includes("scholarship") || lower.includes("application window")
-      ? "🎯"
+      ? "calendar"
       : lower.includes("admission") || lower.includes("jamb") || lower.includes("cut-off")
-        ? "🎓"
+        ? "book-open"
         : lower.includes("elite")
-          ? "⭐"
+          ? "award"
           : lower.includes("phd")
-            ? "🔬"
+            ? "search"
             : lower.includes("charter") || lower.includes("credential")
-              ? "📜"
+              ? "file-text"
               : lower.includes("qualification") || lower.includes("upgrade")
-                ? "🪜"
+                ? "trending-up"
                 : lower.includes("opportunit") || lower.includes("internship") || lower.includes("job")
-                  ? "💼"
+                  ? "briefcase"
                   : lower.includes("employer") || lower.includes("organisation")
-                    ? "🏢"
+                    ? "home"
                     : lower.includes("domain") || lower.includes("role") || lower.includes("search")
-                      ? "🧭"
+                      ? "compass"
                       : lower.includes("salary") || lower.includes("demand") || lower.includes("market")
-                        ? "📊"
+                        ? "bar-chart-2"
                         : lower.includes("note") || lower.includes("saved")
-                          ? "🗂️"
-                          : "🔒";
+                          ? "folder"
+                          : "lock";
 
   return {
     icon,
@@ -198,16 +201,22 @@ export default DataStateView;
 const styles = StyleSheet.create({
   spinner: { paddingVertical: Spacing.xxl, alignItems: "center" },
   panel: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     padding: Spacing.xl,
     alignItems: "center",
     gap: 4,
   },
-  panelIcon: { fontSize: 32 },
+  panelIcon: {
+    width: 42,
+    height: 42,
+    borderRadius: Radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   panelTitle: {
     fontSize: FontSize.lg,
-    fontWeight: "800",
+    fontWeight: "600",
     marginTop: Spacing.xs,
   },
   panelBody: {
@@ -220,11 +229,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
   },
-  compactIcon: { fontSize: 14 },
   compactText: { flex: 1, fontSize: FontSize.xs, fontWeight: "600" },
 });

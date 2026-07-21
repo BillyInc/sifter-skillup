@@ -16,9 +16,9 @@ import {
   LevelUpCTA,
   SkillsBridge,
   MappingFeedbackButton,
+  SectionLabel,
 } from "@/components/careerIntelligence";
 import { DemandMetricsBlock } from "@/components/careerIntelligence/DemandMetricsBlock";
-import { SectionHeader } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import {
@@ -100,7 +100,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
                 <View
                   style={[
                     styles.eliteChip,
-                    { backgroundColor: colors.goldSoft, borderColor: colors.gold },
+                    { backgroundColor: colors.eliteSoft, borderColor: colors.elite },
                   ]}
                 >
                   <Text style={styles.eliteGlyph}>★</Text>
@@ -124,13 +124,13 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
         <View style={{ gap: Spacing.md }}>
           {essential.length ? (
             <View style={{ gap: Spacing.sm }}>
-              <SectionHeader title="Essential skills" icon="🎯" />
+              <SectionLabel>Essential skills</SectionLabel>
               <ChipCloud items={essential} colors={colors} prominent />
             </View>
           ) : null}
           {optional.length ? (
             <View style={{ gap: Spacing.sm }}>
-              <SectionHeader title="Optional / edge skills" icon="✨" />
+              <SectionLabel>Optional / edge skills</SectionLabel>
               <ChipCloud items={optional} colors={colors} prominent={false} />
             </View>
           ) : null}
@@ -148,7 +148,7 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
       {/* 3 — reachable from: role is a destination from multiple fields */}
       {appearsIn.length ? (
         <View style={{ gap: Spacing.sm }}>
-          <SectionHeader title="Reachable from" icon="🧭" />
+          <SectionLabel>Reachable from</SectionLabel>
           <Text style={[styles.caption, { color: colors.textMuted }]}>
             This role is a destination from {appearsIn.length}{" "}
             {appearsIn.length === 1 ? "field" : "fields"}.
@@ -161,14 +161,14 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
                 style={[
                   styles.domainChip,
                   {
-                    backgroundColor: colors.accentSoft,
-                    borderColor: colors.borderDark,
+                    backgroundColor: colors.surface.subtle,
+                    borderColor: colors.borderRole.subtle,
                     color: colors.text,
                   },
                 ]}
                 numberOfLines={1}
               >
-                {a.domainName} →
+                {a.domainName}
               </Text>
             ))}
           </View>
@@ -204,9 +204,9 @@ function ChipCloud({
   colors: ColorPalette;
   prominent: boolean;
 }) {
-  const bg = prominent ? colors.accentSoft : colors.bgSecondary;
-  const border = prominent ? colors.borderDark : colors.border;
-  const textColor = prominent ? colors.text : colors.textSoft;
+  const bg = prominent ? colors.surface.subtle : colors.surface.raised;
+  const border = colors.borderRole.subtle;
+  const textColor = prominent ? colors.textRole.primary : colors.textRole.secondary;
   return (
     <View style={styles.chipWrap}>
       {items.map((s, i) => (
@@ -262,15 +262,15 @@ function CurrencyBadge({
     },
     emerging: {
       label: "Emerging",
-      bg: colors.accentSoft,
-      text: colors.accent,
-      border: colors.borderDark,
+      bg: colors.infoSoft,
+      text: colors.info,
+      border: colors.borderRole.subtle,
     },
     legacy: {
       label: "Legacy",
-      bg: colors.bgSecondary,
-      text: colors.textMuted,
-      border: colors.border,
+      bg: colors.surface.subtle,
+      text: colors.textRole.muted,
+      border: colors.borderRole.subtle,
     },
   };
   const c = config[status];
@@ -313,14 +313,14 @@ const styles = StyleSheet.create({
   },
   currencyChip: {
     alignSelf: "flex-start",
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 3,
   },
   currencyText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
     letterSpacing: 0.3,
     textTransform: "uppercase",
   },
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 4,
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   eliteGlyph: { fontSize: FontSize.xs },
   eliteText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   chipWrap: {
     flexDirection: "row",
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   chip: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 5,
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   },
   domainChip: {
     overflow: "hidden",
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 6,

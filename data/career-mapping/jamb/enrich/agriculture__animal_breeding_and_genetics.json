@@ -1,24 +1,6 @@
 {
-  "jamb_name": "Animal Breeding and Genetics",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": [
-    {"institution": "CALABAR", "note": "Accepts HND credit, ND/NCE merit in Agricultural Science or related programs. Accepts Geography and Economics and requires 'O' Level credit pass in Physics. UTME subjects require Mathematics or Physics."},
-    {"institution": "TSUJ", "note": "Accepts ND in Animal Production and Health or any other program with animal science related options with a minimum of lower credit pass in addition to the UTME requirements. With ABSU require five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language. TSUJ accepts 'O' Level pass in Physics."},
-    {"institution": "EBSU", "note": "Accepts: (a) NCE with minimum merit passes in relevant subjects; (b) HND and ND with minimum of upper credit in relevant programs. Requires at least 'O' Level pass in Physics."},
-    {"institution": "BENIN", "note": "As in Agricultural Economics."},
-    {"institution": "UNN", "note": "As in Agricultural Economics. UTME subjects as in Agricultural Economics."},
-    {"institution": "IBADAN", "note": "As in Agriculture. UTME subjects as in Agriculture."},
-    {"institution": "RSU", "note": "Requires five (5) 'O' Level credit passes to include English Language, Mathematics, Chemistry, Biology or Agric Science and any other subject. UTME subjects require Agricultural Science or Biology."},
-    {"institution": "IMSU", "note": "Accepts 'O' Level pass in English Language."},
-    {"institution": "DELSU", "note": "Accepts 'O' Level pass in English Language."},
-    {"institution": "MAKURDI", "note": "Requires five (5) credit passes in SSC or equivalent at not more than two (2) sittings in Chemistry, Biology or Agricultural Science, Mathematics, English Language and any other subject. At least 'O' Level pass in Physics is required. 'O' Level credit pass in Agricultural Science must be backed with at least 'O' Level pass in Biology. 'O' Level pass in English Language is acceptable if high grades are scored in the Science subjects."},
-    {"institution": "ESUTECH", "note": "Accepts 'O' Level passes in Physics and English Language and 'O' Level credit pass in Mathematics."},
-    {"institution": "PHC", "note": "Requires Five (5) SSC credit passes to include English Language, Mathematics, Chemistry, Biology/Agricultural Science and any one of Physics, Geography and Economics. UTME subjects require CC."},
-    {"institution": "FUTO", "note": "Requires at least five (5) 'O' Level Credit passes in English Language, Mathematics, Chemistry, Biology/Agricultural Science and any other subject, in not more than two (2) sittings. At least a Pass is required in Physics. UTME subjects require Chemistry, and any two (2) of Biology/Agricultural Science, Mathematics and Physics."},
-    {"institution": "FUNAAB", "note": "As in Agriculture Extension and Rural Development."},
-    {"institution": "UNIOSUN", "note": "Requires five (5) 'O' Level credit passes in the SSC or its equivalent at not more than two (2) sittings in addition to an acceptable score in the UTME. UTME subjects same as in Fisheries."},
-    {"institution": "ABSU", "note": "With TSUJ require five (5) SSC credit passes in Chemistry, Mathematics, Biology/Agricultural Science, Physics and English Language."}
-  ]
+ "jamb_name": "Animal Breeding and Genetics",
+ "utme_subjects": "UTMESUBJECTS SPECIAL Health. English other Chemistry, DIRECTENTRY Biology/Agricultur OAU and OAU Mathematics /Physics.",
+ "extraction_source": "Agriculture.pdf p37 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }

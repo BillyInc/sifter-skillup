@@ -1,14 +1,6 @@
 {
-  "jamb_name": "Linguistics",
-  "utme_subjects": null,
-  "olevel_requirement": null,
-  "direct_entry": null,
-  "institution_waivers": [
-    {"institution": "OAU", "note": "Requires five (5) 'O' Level credit passes in English Language, one Arts subject and three (3) other subjects from Sciences, Social Sciences or Arts."},
-    {"institution": "UNN", "note": "Requires five (5) 'O' Level credit passes to include English Language and one Science subject. Candidates for Linguistics must possess 'O' Level credit pass in Literature in English while candidates for Linguistics and Nigerian Language must possess 'O' Level credit pass in the Nigerian language to be combined with Linguistics."},
-    {"institution": "LAGOS", "note": "Requires five O/Level credit passes in English Language, Mathematics and any three Arts, Science or Social Sciences. Social Studies and Civic Education are also accepted."},
-    {"institution": "UNIZIK", "note": "Accepts Chinese in lieu of Igbo (UTME subjects)."},
-    {"institution": "UNN", "note": "UTME subjects: requires Igbo or any other Language and any other two (2) subjects. For Linguistics (Option), requires Literature in English and two (2) other subjects."},
-    {"institution": "LAGOS", "note": "UTME subjects: requires English Language and any three Arts, Science or Social Sciences."}
-  ]
+ "jamb_name": "Linguistics",
+ "utme_subjects": "Arabic and two (2)subjectsfrom Arts and/or SocialSciences. Sameasin ArabicStudies.",
+ "extraction_source": "Arts _ Humanities.pdf p6 (layout-aware row-group)",
+ "extraction_confidence": "high"
 }
