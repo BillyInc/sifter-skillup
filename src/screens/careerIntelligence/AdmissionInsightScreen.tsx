@@ -11,8 +11,8 @@ import {
   DetailScaffold,
   DataSourceBadge,
   NotesWidget,
+  SectionLabel,
 } from "@/components/careerIntelligence";
-import { SectionHeader } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
 import {
   type DataState,
@@ -28,7 +28,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
+  CompassFonts,
   type ColorPalette,
 } from "@/theme";
 
@@ -152,8 +152,13 @@ export function AdmissionInsightScreen({
       {(data) => (
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
           {/* Snapshot banner */}
-          <View style={[styles.banner, { backgroundColor: colors.card }]}>
-            <Text style={[styles.bannerLabel, { color: colors.text }]}>
+          <View
+            style={[
+              styles.banner,
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+            ]}
+          >
+            <Text style={[styles.bannerLabel, { color: colors.textRole.primary }]}>
               {activeLabel}
             </Text>
             <DataSourceBadge
@@ -164,41 +169,41 @@ export function AdmissionInsightScreen({
 
           {/* National JAMB Floor */}
           <View style={styles.section}>
-            <SectionHeader title="National JAMB Floor" />
-            <View style={[styles.card, { backgroundColor: colors.card }]}>
+            <SectionLabel>National JAMB floor</SectionLabel>
+            <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
               {floorState.status === "real" && floorState.data ? (
                 <View>
-                  <Text style={[styles.floorScore, { color: colors.text }]}>
+                  <Text style={[styles.floorScore, CompassFonts.data, { color: colors.textRole.primary }]}>
                     {floorState.data.floorScore}
                   </Text>
-                  <Text style={[styles.floorNote, { color: colors.textMuted }]}>
+                  <Text style={[styles.floorNote, { color: colors.textRole.secondary }]}>
                     {floorState.data.contextNote ?? "University minimum floor"}
                   </Text>
-                  <Text style={[styles.floorSource, { color: colors.textMuted }]}>
+                  <Text style={[styles.floorSource, { color: colors.textRole.muted }]}>
                     Source: {floorState.data.sourceUrl ?? "JAMB"}
                   </Text>
                 </View>
               ) : floorState.status === "fallback" ? (
-                <Text style={[styles.floorScore, { color: Brand.warning }]}>
+                <Text style={[styles.floorScore, CompassFonts.data, { color: colors.warning }]}>
                   ~150 (indicative)
                 </Text>
               ) : (
-                <Text style={{ color: colors.textMuted }}>Loading floor score…</Text>
+                <Text style={{ color: colors.textRole.muted }}>Loading floor score...</Text>
               )}
             </View>
           </View>
 
           {/* Cut-offs */}
           <View style={styles.section}>
-            <SectionHeader
-              title={
+            <SectionLabel>
+              {
                 programmeId
                   ? "This Programme's Cut-offs"
                   : schoolId
                   ? "This School's Cut-offs"
                   : "Cut-offs (select a programme or school)"
               }
-            />
+            </SectionLabel>
             {cutoffsState.status === "real" && cutoffsState.data?.length ? (
               <View style={{ gap: Spacing.sm }}>
                 {cutoffsState.data.map((c) => (
@@ -206,39 +211,39 @@ export function AdmissionInsightScreen({
                 ))}
               </View>
             ) : cutoffsState.status === "fallback" ? (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
-                <Text style={{ color: colors.textMuted }}>
+              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Text style={{ color: colors.textRole.muted }}>
                   No cut-off data for this selection in {year}.
                 </Text>
               </View>
             ) : (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
-                <Text style={{ color: colors.textMuted }}>Loading cut-offs…</Text>
+              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Text style={{ color: colors.textRole.muted }}>Loading cut-offs...</Text>
               </View>
             )}
           </View>
 
           {/* School Aggregate Formula */}
           <View style={styles.section}>
-            <SectionHeader title="How This School Calculates Aggregate" />
+            <SectionLabel>Aggregate formula</SectionLabel>
             {formulaState.status === "real" && formulaState.data ? (
               <FormulaCard formula={formulaState.data} colors={colors} />
             ) : formulaState.status === "fallback" ? (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
-                <Text style={{ color: colors.textMuted }}>
+              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Text style={{ color: colors.textRole.muted }}>
                   No aggregate formula published for this school in {year}.
                 </Text>
               </View>
             ) : (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
-                <Text style={{ color: colors.textMuted }}>Loading formula…</Text>
+              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Text style={{ color: colors.textRole.muted }}>Loading formula...</Text>
               </View>
             )}
           </View>
 
           {/* National Competitiveness */}
           <View style={styles.section}>
-            <SectionHeader title="National Competitiveness (Broad Course)" />
+            <SectionLabel>National competitiveness</SectionLabel>
             {competitivenessState.status === "real" &&
             competitivenessState.data?.length ? (
               <View style={{ gap: Spacing.sm }}>
@@ -252,14 +257,14 @@ export function AdmissionInsightScreen({
                 ))}
               </View>
             ) : competitivenessState.status === "fallback" ? (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
-                <Text style={{ color: colors.textMuted }}>
+              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Text style={{ color: colors.textRole.muted }}>
                   No competitiveness data for {year}.
                 </Text>
               </View>
             ) : (
-              <View style={[styles.card, { backgroundColor: colors.card }]}>
-                <Text style={{ color: colors.textMuted }}>Loading competitiveness…</Text>
+              <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+                <Text style={{ color: colors.textRole.muted }}>Loading competitiveness...</Text>
               </View>
             )}
           </View>
@@ -283,53 +288,56 @@ function CutoffCard({
 }) {
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.card }]}
+      style={[
+        styles.card,
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
+      ]}
       hitSlop={8}
     >
       <View style={styles.cutoffHeader}>
-        <Text style={[styles.cutoffSchool, { color: colors.text }]}>
+        <Text style={[styles.cutoffSchool, { color: colors.textRole.primary }]}>
           {cutoff.schoolName}
         </Text>
-        <Text style={[styles.cutoffForm, { color: colors.textMuted }]}>
+        <Text style={[styles.cutoffForm, { color: colors.textRole.muted }]}>
           {cutoff.form}
         </Text>
       </View>
-      <Text style={[styles.cutoffProgramme, { color: colors.textSoft }]}>
+      <Text style={[styles.cutoffProgramme, { color: colors.textRole.secondary }]}>
         {cutoff.programmeName}
       </Text>
       <View style={styles.cutoffScores}>
         {cutoff.aggregateCutoff != null && (
           <View style={styles.scorePill}>
-            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
               Aggregate
             </Text>
-            <Text style={[styles.scoreValue, { color: colors.text }]}>
+            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.textRole.primary }]}>
               {cutoff.aggregateCutoff}
             </Text>
           </View>
         )}
         {cutoff.jambCutoff != null && (
           <View style={styles.scorePill}>
-            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
               JAMB
             </Text>
-            <Text style={[styles.scoreValue, { color: colors.text }]}>
+            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.textRole.primary }]}>
               {cutoff.jambCutoff}
             </Text>
           </View>
         )}
         {cutoff.postUtmeCutoff != null && (
           <View style={styles.scorePill}>
-            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.scoreLabel, { color: colors.textRole.muted }]}>
               Post-UTME
             </Text>
-            <Text style={[styles.scoreValue, { color: colors.text }]}>
+            <Text style={[styles.scoreValue, CompassFonts.data, { color: colors.textRole.primary }]}>
               {cutoff.postUtmeCutoff}
             </Text>
           </View>
         )}
       </View>
-      <Text style={[styles.cutoffSource, { color: colors.textMuted }]}>
+      <Text style={[styles.cutoffSource, { color: colors.textRole.muted }]}>
         Source: {cutoff.sourceUrl}
       </Text>
     </TouchableOpacity>
@@ -345,22 +353,22 @@ function FormulaCard({
 }) {
   const total = formula.jambWeight + formula.postUtmeWeight + formula.olevelWeight;
   return (
-    <View style={[styles.card, { backgroundColor: colors.card }]}>
+    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <View style={styles.formulaRow}>
         <FormulaPill label="JAMB" weight={formula.jambWeight} colors={colors} />
         <FormulaPill label="Post-UTME" weight={formula.postUtmeWeight} colors={colors} />
         <FormulaPill label="O'level" weight={formula.olevelWeight} colors={colors} />
       </View>
       {formula.description && (
-        <Text style={[styles.formulaDesc, { color: colors.textMuted }]}>
+        <Text style={[styles.formulaDesc, { color: colors.textRole.secondary }]}>
           {formula.description}
         </Text>
       )}
-      <Text style={[styles.formulaTotal, { color: colors.textMuted }]}>
+      <Text style={[styles.formulaTotal, { color: colors.textRole.muted }]}>
         Total: {Math.round(total * 100)}%
       </Text>
       {formula.sourceUrl && (
-        <Text style={[styles.formulaSource, { color: colors.textMuted }]}>
+        <Text style={[styles.formulaSource, { color: colors.textRole.muted }]}>
           Source: {formula.sourceUrl}
         </Text>
       )}
@@ -380,10 +388,10 @@ function FormulaPill({
   const pct = Math.round(weight * 100);
   return (
     <View style={styles.formulaPill}>
-      <Text style={[styles.formulaPillLabel, { color: colors.textMuted }]}>
+      <Text style={[styles.formulaPillLabel, { color: colors.textRole.muted }]}>
         {label}
       </Text>
-      <Text style={[styles.formulaPillValue, { color: colors.text }]}>
+      <Text style={[styles.formulaPillValue, CompassFonts.data, { color: colors.textRole.primary }]}>
         {pct}%
       </Text>
     </View>
@@ -400,39 +408,39 @@ function CompetitivenessCard({
   year: number;
 }) {
   return (
-    <View style={[styles.card, { backgroundColor: colors.card }]}>
+    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
       <View style={styles.compHeader}>
-        <Text style={[styles.compCourse, { color: colors.text }]}>
+        <Text style={[styles.compCourse, { color: colors.textRole.primary }]}>
           {data.broadCourse}
         </Text>
-        <Text style={[styles.compYear, { color: colors.textMuted }]}>
+        <Text style={[styles.compYear, { color: colors.textRole.muted }]}>
           {year}
         </Text>
       </View>
       {data.applied != null && data.admitted != null && (
         <View style={styles.compStats}>
           <View style={styles.compStat}>
-            <Text style={[styles.compStatValue, { color: colors.text }]}>
+            <Text style={[styles.compStatValue, CompassFonts.data, { color: colors.textRole.primary }]}>
               {data.applied.toLocaleString()}
             </Text>
-            <Text style={[styles.compStatLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
               Applied
             </Text>
           </View>
           <View style={styles.compStat}>
-            <Text style={[styles.compStatValue, { color: colors.text }]}>
+            <Text style={[styles.compStatValue, CompassFonts.data, { color: colors.textRole.primary }]}>
               {data.admitted.toLocaleString()}
             </Text>
-            <Text style={[styles.compStatLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
               Admitted
             </Text>
           </View>
           {data.ratio != null && (
             <View style={styles.compStat}>
-              <Text style={[styles.compStatValue, { color: Brand.primaryDeep }]}>
+              <Text style={[styles.compStatValue, CompassFonts.data, { color: colors.accentRole.action }]}>
                 {Math.round(data.ratio * 10000) / 100}%
               </Text>
-              <Text style={[styles.compStatLabel, { color: colors.textMuted }]}>
+              <Text style={[styles.compStatLabel, { color: colors.textRole.muted }]}>
                 Ratio
               </Text>
             </View>
@@ -440,12 +448,12 @@ function CompetitivenessCard({
         </View>
       )}
       {data.note && (
-        <Text style={[styles.compNote, { color: colors.textMuted }]}>
+        <Text style={[styles.compNote, { color: colors.textRole.secondary }]}>
           {data.note}
         </Text>
       )}
       {data.source && (
-        <Text style={[styles.compSource, { color: colors.textMuted }]}>
+        <Text style={[styles.compSource, { color: colors.textRole.muted }]}>
           Source: {data.source}
         </Text>
       )}
@@ -460,58 +468,58 @@ const styles = StyleSheet.create({
   content: { gap: Spacing.xl, paddingBottom: Spacing.xxl },
   banner: {
     padding: Spacing.md,
-    borderRadius: Radius.lg,
-    borderWidth: 1,
+    borderRadius: Radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: Spacing.xs,
   },
   bannerLabel: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.semibold,
   },
   section: { gap: Spacing.sm },
   card: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
     padding: Spacing.md,
   },
-  floorScore: { fontSize: FontSize.xxxl, fontWeight: FontWeight.black },
+  floorScore: { fontSize: FontSize.xxxl, fontWeight: FontWeight.semibold },
   floorNote: { fontSize: FontSize.sm, marginTop: Spacing.xs },
   floorSource: { fontSize: FontSize.xs, marginTop: Spacing.xs },
   cutoffHeader: { flexDirection: "row", justifyContent: "space-between" },
-  cutoffSchool: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  cutoffSchool: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
   cutoffForm: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
   cutoffProgramme: { fontSize: FontSize.sm, marginTop: Spacing.xs },
   cutoffScores: { flexDirection: "row", gap: Spacing.sm, marginTop: Spacing.sm },
   scorePill: {
-    backgroundColor: Brand.primarySoft,
+    backgroundColor: "rgba(0,0,0,0.04)",
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.xs,
     gap: 2,
   },
   scoreLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
-  scoreValue: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  scoreValue: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   cutoffSource: { fontSize: FontSize.xs, marginTop: Spacing.sm },
   formulaRow: { flexDirection: "row", gap: Spacing.sm },
   formulaPill: {
     flex: 1,
-    backgroundColor: Brand.primarySoft,
-    borderRadius: Radius.lg,
+    backgroundColor: "rgba(0,0,0,0.04)",
+    borderRadius: Radius.md,
     padding: Spacing.md,
     alignItems: "center",
     gap: 2,
   },
-  formulaPillLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  formulaPillValue: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  formulaPillLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  formulaPillValue: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   formulaDesc: { fontSize: FontSize.sm, marginTop: Spacing.sm },
   formulaTotal: { fontSize: FontSize.sm, marginTop: Spacing.xs },
   formulaSource: { fontSize: FontSize.xs, marginTop: Spacing.xs },
   compHeader: { flexDirection: "row", justifyContent: "space-between" },
-  compCourse: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  compCourse: { fontSize: FontSize.md, fontWeight: FontWeight.semibold },
   compYear: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
   compStats: { flexDirection: "row", gap: Spacing.md, marginTop: Spacing.sm },
   compStat: { flex: 1 },
-  compStatValue: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  compStatValue: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   compStatLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
   compNote: { fontSize: FontSize.xs, marginTop: Spacing.xs },
   compSource: { fontSize: FontSize.xs, marginTop: Spacing.xs },

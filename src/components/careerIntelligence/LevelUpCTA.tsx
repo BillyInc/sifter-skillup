@@ -11,7 +11,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { SifterButton } from "../ui";
-import { useTheme, Spacing, Radius, FontSize, FontWeight, Brand } from "../../theme";
+import { useTheme, Spacing, Radius, FontSize, FontWeight } from "../../theme";
 
 export interface LevelUpCTAProps {
   title?: string;
@@ -24,7 +24,7 @@ export interface LevelUpCTAProps {
 export function LevelUpCTA({
   title = "Ready to close the gap?",
   body = "Build the bridge skills this path needs — one level at a time, in your world.",
-  label = "Level Up →",
+  label = "Open My World",
   onPress,
 }: LevelUpCTAProps) {
   const router = useRouter();
@@ -34,17 +34,15 @@ export function LevelUpCTA({
     <View
       style={[
         styles.cta,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
-      <Text style={styles.ctaIcon}>⚡</Text>
-      <Text style={[styles.ctaTitle, { color: colors.text }]}>{title}</Text>
-      <Text style={[styles.ctaBody, { color: colors.textSoft }]}>{body}</Text>
+      <Text style={[styles.ctaTitle, { color: colors.textRole.primary }]}>{title}</Text>
+      <Text style={[styles.ctaBody, { color: colors.textRole.secondary }]}>{body}</Text>
       <SifterButton
         label={label}
-        icon="🚀"
         variant="track"
-        color={Brand.primary}
+        color={colors.accentRole.action}
         onPress={onPress ?? (() => router.push("/(tabs)/myworld"))}
       />
     </View>
@@ -55,14 +53,13 @@ export default LevelUpCTA;
 
 const styles = StyleSheet.create({
   cta: {
-    borderWidth: 1,
-    borderRadius: Radius.lg,
-    padding: Spacing.xl,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
     gap: Spacing.sm,
     alignItems: "flex-start",
   },
-  ctaIcon: { fontSize: 28 },
-  ctaTitle: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  ctaTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
   ctaBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,

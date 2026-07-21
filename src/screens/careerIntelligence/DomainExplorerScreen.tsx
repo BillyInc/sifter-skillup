@@ -9,9 +9,15 @@
  * domain map lands. Each chip taps through to its domain detail via exploreNav.
  */
 import React, { useEffect, useMemo, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { DataStateView, DomainChip } from "@/components/careerIntelligence";
+import {
+  DataStateView,
+  DomainChip,
+  FilterChip,
+  SearchBar,
+  SectionLabel,
+} from "@/components/careerIntelligence";
 import { careerData, type DomainClusterGroup } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
 import { comingSoon, type DataState } from "@/types/career";
@@ -20,7 +26,6 @@ import {
   Spacing,
   Radius,
   FontSize,
-  Brand,
   webContainer,
 } from "@/theme";
 
@@ -101,39 +106,27 @@ export function DomainExplorerScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>
         EXPLORE
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }]}>
         Domain Explorer
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textSoft }]}>
+      <Text style={[styles.subtitle, { color: colors.textRole.secondary }]}>
         Explore domains across every cluster
       </Text>
 
-      {/* Local filter */}
-      <View
-        style={[
-          styles.search,
-          { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
-        ]}
-      >
-        <Text style={[styles.searchIcon, { color: colors.textMuted }]}>🔍</Text>
-        <TextInput
-          value={filter}
-          onChangeText={setFilter}
-          placeholder="Filter domains…"
-          placeholderTextColor={colors.textMuted}
-          returnKeyType="search"
-          autoCorrect={false}
-          style={[styles.searchInput, { color: colors.text }]}
-        />
-      </View>
+      <SearchBar
+        value={filter}
+        onChangeText={setFilter}
+        scope="Domains"
+        placeholder="Filter domains"
+      />
 
       {/* Filter chips */}
       <ScrollView
@@ -167,9 +160,9 @@ export function DomainExplorerScreen() {
         ))}
       </ScrollView>
 
-      <Text style={[styles.note, { color: colors.textMuted }]}>
-        🧭 The full domain map comes online with University & College of
-        Education first.
+      <Text style={[styles.note, { color: colors.textRole.muted }]}>
+        The full domain map comes online with University and College of
+        Education programmes first.
       </Text>
 
       <DataStateView state={filtered} empty={(g) => g.length === 0}>
@@ -177,9 +170,7 @@ export function DomainExplorerScreen() {
           <View style={styles.clusters}>
             {groups.map((g) => (
               <View key={g.cluster} style={styles.cluster}>
-                <Text style={[styles.clusterTitle, { color: colors.text }]}>
-                  {g.cluster}
-                </Text>
+                <SectionLabel>{g.cluster}</SectionLabel>
                 <View style={styles.chips}>
                   {g.domains.map((d) => (
                     <DomainChip
@@ -201,41 +192,6 @@ export function DomainExplorerScreen() {
   );
 }
 
-/** Inline filter chip — a small pill-shaped toggle. */
-function FilterChip({
-  label,
-  active,
-  onPress,
-}: {
-  label: string;
-  active: boolean;
-  onPress: () => void;
-}) {
-  const { colors } = useTheme();
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.8}
-      style={[
-        styles.filterChip,
-        {
-          backgroundColor: active ? Brand.primary : colors.card,
-          borderColor: active ? Brand.primary : colors.border,
-        },
-      ]}
-    >
-      <Text
-        style={[
-          styles.filterChipLabel,
-          { color: active ? "#fff" : colors.textSoft },
-        ]}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
 export default DomainExplorerScreen;
 
 const styles = StyleSheet.create({
@@ -247,46 +203,23 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
-    letterSpacing: 1.5,
+    fontWeight: "600",
+    letterSpacing: 0.9,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
+    fontWeight: "600",
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {
     fontSize: FontSize.md,
     lineHeight: FontSize.md * 1.4,
   },
-  search: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.sm,
-    borderWidth: 1.5,
-    borderRadius: Radius.lg,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 13,
-    marginTop: Spacing.xs,
-    minHeight: 44,
-  },
-  searchIcon: { fontSize: 16 },
-  searchInput: { flex: 1, fontSize: FontSize.md, paddingVertical: 0 },
   chipRow: {
     flexDirection: "row",
     gap: Spacing.sm,
     paddingVertical: Spacing.xs,
-  },
-  filterChip: {
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 8,
-    borderRadius: Radius.full,
-    borderWidth: 1.5,
-  },
-  filterChipLabel: {
-    fontSize: FontSize.sm,
-    fontWeight: "700",
   },
   note: {
     fontSize: FontSize.xs,
@@ -294,7 +227,6 @@ const styles = StyleSheet.create({
   },
   clusters: { gap: Spacing.lg, marginTop: Spacing.xs },
   cluster: { gap: Spacing.sm },
-  clusterTitle: { fontSize: FontSize.lg, fontWeight: "800" },
   chips: {
     flexDirection: "row",
     flexWrap: "wrap",
