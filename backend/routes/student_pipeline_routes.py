@@ -376,8 +376,9 @@ async def search_jamb_programmes(q: Optional[str] = Query(None), limit: int = Qu
 @router.get("/jamb-programmes/{jamb_programme_id}", response_model=ResponseModel)
 async def get_jamb_programme(jamb_programme_id: str):
     try:
+        svc = _svc()
         res = (
-            _svc()
+            svc
             .table("v_jamb_programme_details")
             .select("*")
             .eq("jamb_programme_id", jamb_programme_id)
@@ -386,7 +387,30 @@ async def get_jamb_programme(jamb_programme_id: str):
         )
         if not res.data:
             return ResponseModel(data=_real(None, "JAMB programme not found."))
-        return ResponseModel(data=_real(_jamb_detail_out(res.data[0])))
+        out = _jamb_detail_out(res.data[0])
+        # Requirements block: general brochure text + parse status. Programmes whose
+        # requirement is institution-variant prose (parse_status = needs_review)
+        # surface it as "requirements vary by institution" info, not a gap.
+        try:
+            req = (
+                svc.table("programme_subject_requirements")
+                .select("utme_subjects, olevel_requirement, direct_entry, parse_status")
+                .eq("jamb_programme_id", jamb_programme_id)
+                .limit(1)
+                .execute()
+            )
+            if req.data:
+                r = req.data[0]
+                out["requirements"] = {
+                    "utmeSubjects": r.get("utme_subjects"),
+                    "olevelRequirement": r.get("olevel_requirement"),
+                    "directEntry": r.get("direct_entry"),
+                    "parseStatus": r.get("parse_status"),
+                    "variesByInstitution": r.get("parse_status") == "needs_review",
+                }
+        except Exception as exc:  # noqa: BLE001
+            log.warning("jamb requirements lookup skipped", error=str(exc))
+        return ResponseModel(data=_real(out))
     except Exception as exc:  # noqa: BLE001
         log.error("student jamb-programme detail failed", error=str(exc))
         return ResponseModel(data=_coming_soon("JAMB programme detail is temporarily unavailable."))
@@ -460,7 +484,36 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
         if target_year:
             query = query.eq("year", target_year)
         res = query.order("school_name").limit(200).execute()
-        items = [_cutoff_out(r) for r in (res.data or [])]
+        # Per-institution requirement deltas live on school_programmes (extracted
+        # from the brochure's waiver lists). Fetch once, key by school_id, and
+        # attach to every row so all three student doors can show "this school's
+        # own rule" beside the general requirement.
+        per_school: dict = {}
+        try:
+            offs = (
+                svc.table("v_school_jamb_programmes")
+                .select("school_id, utme_subjects, olevel_requirement, direct_entry, remarks")
+                .eq("jamb_programme_id", jamb_programme_id)
+                .limit(400)
+                .execute()
+            )
+            per_school = {o["school_id"]: o for o in (offs.data or [])}
+        except Exception as exc:  # noqa: BLE001
+            log.warning("school requirements lookup skipped", error=str(exc))
+
+        def _attach_reqs(item: dict) -> dict:
+            o = per_school.get(item.get("schoolId")) or {}
+            remarks = (o.get("remarks") or "").strip() or None
+            item["schoolRequirements"] = {
+                "utmeSubjects": o.get("utme_subjects"),
+                "olevelRequirement": o.get("olevel_requirement"),
+                "directEntry": o.get("direct_entry"),
+                "institutionNote": remarks,
+                "hasInstitutionNote": bool(remarks),
+            }
+            return item
+
+        items = [_attach_reqs(_cutoff_out(r)) for r in (res.data or [])]
         if not items:
             offerings = (
                 svc.table("v_school_jamb_programmes")
@@ -471,7 +524,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                 .execute()
             )
             items = [
-                {
+                _attach_reqs({
                     "schoolId": r.get("school_id"),
                     "schoolName": r.get("school_name"),
                     "institutionType": r.get("institution_type"),
@@ -485,7 +538,7 @@ async def get_jamb_programme_schools(jamb_programme_id: str, year: Optional[int]
                     "postUtmeCutoff": None,
                     "form": None,
                     "sourceUrl": None,
-                }
+                })
                 for r in (offerings.data or [])
             ]
             return ResponseModel(data=_fallback(items, "No cutoffs found yet; showing schools offering the programme."))

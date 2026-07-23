@@ -380,6 +380,10 @@ def main():
 
         parts = parsed.get(jname)
         if utme and parts is None:
+            # Institution-variant prose: no single structured rule exists, but the
+            # text is real information — keep it displayable (parse_status
+            # needs_review = "requirements vary by institution" in the UI, and
+            # matching falls back to text). Never a dead bucket.
             stats["needs_review"] += 1
             review_names.append((jname, utme[:140]))
             SQL.append(f"UPDATE programme_subject_requirements SET parse_status='needs_review' WHERE id = {q(rid)};")

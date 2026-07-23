@@ -630,6 +630,19 @@ export interface NationalJambFloor {
 }
 
 /** Per-school × programme cut-off row. */
+/** Per-institution requirement delta for a school×programme pair, extracted
+ *  from the JAMB brochure's waiver lists. Attached by
+ *  /api/student/jamb-programmes/{id}/schools so every student door can show
+ *  "this school's own rule" beside the general requirement. */
+export interface SchoolRequirements {
+  utmeSubjects?: string | null;
+  olevelRequirement?: string | null;
+  directEntry?: string | null;
+  /** The school-specific waiver note ("AAU requires Mathematics…"). */
+  institutionNote?: string | null;
+  hasInstitutionNote: boolean;
+}
+
 export interface ProgrammeSchoolCutoff {
   id: string;
   schoolId: string;
@@ -644,6 +657,8 @@ export interface ProgrammeSchoolCutoff {
   sourceUrl: string;
   verifiedAt?: string;
   dataDate: string;
+  /** Per-institution requirement block (may be absent on older payloads). */
+  schoolRequirements?: SchoolRequirements;
 }
 
 /** How a university calculates aggregate (JAMB% + Post-UTME% + O'level%). */
