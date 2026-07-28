@@ -46,6 +46,7 @@ import {
   type SchoolAggregateFormula,
   type CourseCompetitiveness,
   type AdmissionSnapshotVersion,
+  type SchoolRequirements,
   comingSoon,
   type MappingFeedback,
   type FeedbackType,
@@ -111,6 +112,7 @@ export interface JambProgrammeSchool {
   postUtmeCutoff?: number | null;
   form?: "UTME" | "DE" | null;
   sourceUrl?: string | null;
+  schoolRequirements?: SchoolRequirements | null;
 }
 
 export interface StudentAffiliation {

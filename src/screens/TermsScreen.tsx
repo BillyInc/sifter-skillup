@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, CompassFonts, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
+import { useTheme, CompassFonts, Spacing, Radius, FontSize, Shadow, webContainer } from '@/theme';
 
 const SECTIONS = [
   ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
+    fontFamily: 'HankenGrotesk_700Bold',
     letterSpacing: 1,
   },
   title: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.heavy,
+    fontFamily: 'HankenGrotesk_700Bold',
   },
   sub: {
     fontSize: FontSize.xs,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   closeText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
+    fontFamily: 'HankenGrotesk_600SemiBold',
   },
   body: {
     ...webContainer,
@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
   sectionNum: {
     width: 24,
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.heavy,
+    fontFamily: 'HankenGrotesk_700Bold',
   },
   sectionTitle: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.heavy,
+    fontFamily: 'HankenGrotesk_700Bold',
     marginBottom: 4,
   },
   sectionBody: {
@@ -144,6 +144,6 @@ const styles = StyleSheet.create({
   emailBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.heavy,
+    fontFamily: 'HankenGrotesk_700Bold',
   },
 });

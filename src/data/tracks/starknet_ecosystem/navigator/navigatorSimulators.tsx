@@ -1686,7 +1686,7 @@ export function JuniorAllocatorSim({ onComplete, onSkip, colors }: SimProps) {
 // matter most (upgrade mechanism).
 // ══════════════════════════════════════════════════════════════════════════════
 
-const RISK_DIMENSIONS: ReadonlyArray<{ id: string; label: string; icon: string; description: string; critical?: boolean }> = [
+const RISK_DIMENSIONS: readonly { id: string; label: string; icon: string; description: string; critical?: boolean }[] = [
   { id: 'audit', label: 'Audit quality', icon: '🔍', description: 'Multiple firms, recent, all findings resolved?' },
   { id: 'team', label: 'Team transparency', icon: '👤', description: 'Deanonymised, track record, responsive?' },
   { id: 'upgrade', label: 'Upgrade mechanism', icon: '⚙️', description: 'Who can change code, how many keys, timelock?', critical: true },

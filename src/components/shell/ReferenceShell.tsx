@@ -14,7 +14,7 @@ import {
 import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
-import { CompassFonts, FontSize, FontWeight, Radius, Spacing, useTheme } from '../../theme';
+import { FontSize, FontWeight, Radius, Spacing, useTheme } from '../../theme';
 import { useAuth } from '../../hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '../../lib/trackContext';
 import { SearchOverlay, SearchBar } from '../careerIntelligence';
@@ -159,8 +159,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [overlayScope, setOverlayScope] = useState<SearchScope>("all");
-  const [overlayResults, setOverlayResults] = useState<{ label: string; items: SearchResult[] }[]>([]);
-  const [overlayLoading, setOverlayLoading] = useState(false);
+  const [overlayResults] = useState<{ label: string; items: SearchResult[] }[]>([]);
+  const [overlayLoading] = useState(false);
   const routeTrackId = readParam(params.trackId);
   const routeTrackName = readParam(params.trackName);
   const trackContext = useMemo(() => resolveTrackContext(user, {

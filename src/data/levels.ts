@@ -30,7 +30,7 @@ export interface Level {
   glossaryWord?: string;
   simulatorLesson?: string;
   lessonSimulations?: LessonSimulation[];
-  links?: Array<{ label: string; url: string }>;
+  links?: { label: string; url: string }[];
 }
 
 export interface GlossaryEntry {

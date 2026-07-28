@@ -42,7 +42,7 @@ const TOKEN_KEY = 'sifter_auth_token_v2';
  *
  * Each usage has a comment pointing at the canonical type in types/api.ts.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 type CompatAny = any;
 
 async function getToken(): Promise<string | null> {
@@ -215,7 +215,7 @@ export const API = {
     request<Guild>(`/api/guilds/${id}/join`, { method: 'POST' }) as Promise<CompatAny>,
 
   // Withdrawals
-  getWithdrawals: () => request<Array<Record<string, unknown>>>('/api/withdrawals'),
+  getWithdrawals: () => request<Record<string, unknown>[]>('/api/withdrawals'),
   requestWithdrawal: (data: Record<string, unknown>) =>
     request<Record<string, unknown>>('/api/withdrawals', { method: 'POST', body: JSON.stringify(data) }),
 
@@ -232,7 +232,7 @@ export const API = {
   githubRepos: () =>
     request<GitHubRepo[]>('/api/github/repos'),
 
-  pushPortfolio: (repo_name: string, files: Array<{ path: string; content: string }>) =>
+  pushPortfolio: (repo_name: string, files: { path: string; content: string }[]) =>
     request<GitHubPushResult>('/api/github/push-portfolio', {
       method: 'POST',
       body: JSON.stringify({ repo_name, files }),
@@ -424,7 +424,7 @@ export const API = {
     }),
 
   feedGetBookmarks: () =>
-    request<Array<Record<string, unknown>>>('/api/bookmarks') as Promise<CompatAny[]>,
+    request<Record<string, unknown>[]>('/api/bookmarks') as Promise<CompatAny[]>,
 
   // ── Phase 5 (XP, Badges, Challenges, Merch) ────────────────────────────────
   xpRecordEvent: (data: { event_type: string; xp: number; source?: string; metadata?: Record<string, unknown> }) =>
@@ -470,7 +470,7 @@ export const API = {
       method: 'POST', body: JSON.stringify(data),
     }),
 
-  socialBlast: (data: { platforms: Array<SocialPlatform | string>; content_type: string; content_id: string; caption: string }) =>
+  socialBlast: (data: { platforms: (SocialPlatform | string)[]; content_type: string; content_id: string; caption: string }) =>
     request<SocialShare[]>('/api/social/blast', {
       method: 'POST', body: JSON.stringify(data),
     }),
@@ -589,7 +589,7 @@ export const API = {
   // ── Rooms ──────────────────────────────────────────────────────────────────
   // type assertion: TrackRoomScreen declares its own RoomMessage
   roomGetMessages: (roomId: string, limit = 50) =>
-    request<Array<Record<string, unknown>>>(`/api/rooms/${roomId}/messages?limit=${limit}`) as Promise<CompatAny[]>,
+    request<Record<string, unknown>[]>(`/api/rooms/${roomId}/messages?limit=${limit}`) as Promise<CompatAny[]>,
 
   roomPostMessage: (roomId: string, data: Record<string, unknown>) =>
     request<Record<string, unknown>>(`/api/rooms/${roomId}/messages`, {

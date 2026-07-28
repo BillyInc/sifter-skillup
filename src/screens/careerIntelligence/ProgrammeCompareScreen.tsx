@@ -1,9 +1,11 @@
 /**
- * ProgrammeCompareScreen — lightweight student comparison.
+ * ProgrammeCompareScreen — side-by-side programme comparison.
  *
- * This deliberately compares selected programmes only. It does not expose a
- * bulk programme/domain graph export; students search, pick up to four, and see
- * a side-by-side decision view.
+ * Students search, pick up to four programmes, and see a side-by-side
+ * decision view: domain match counts, top linked domains, admission signal.
+ *
+ * Phase 10 redesign: editorial header, responsive card grid, responsive
+ * 2-column desktop layout, section nav, all legacy tokens migrated.
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -14,16 +16,18 @@ import {
   View,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   DataStateView,
   DomainChip,
   ListRow,
   SearchBar,
   SectionLabel,
+  NotesWidget,
 } from "@/components/careerIntelligence";
-import { SifterButton, SifterCard } from "@/components/ui";
 import { careerData } from "@/lib/careerData";
 import { exploreNav } from "@/lib/exploreNav";
+import { useResponsive } from "@/hooks/useResponsive";
 import {
   type AdmissionInsight,
   type DataState,
@@ -34,11 +38,11 @@ import {
 import {
   CompassFonts,
   FontSize,
-  FontWeight,
   Radius,
   Spacing,
   useTheme,
   webContainer,
+  type ColorPalette,
 } from "@/theme";
 
 const MAX_COMPARE = 4;
@@ -73,6 +77,7 @@ function matchCounts(programme?: Programme | null): Record<DomainMatchType, numb
 export default function ProgrammeCompareScreen() {
   const { colors } = useTheme();
   const router = useRouter();
+  const resp = useResponsive();
   const params = useLocalSearchParams<{ ids?: string | string[] }>();
   const seeded = useMemo(() => readIds(params.ids), [params.ids]);
   const hydratedSeedRef = useRef(false);
@@ -117,9 +122,7 @@ export default function ProgrammeCompareScreen() {
       );
       if (active) setItems(rows);
     })();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [selectedIds]);
 
   const canAdd = selectedIds.length < MAX_COMPARE;
@@ -141,6 +144,11 @@ export default function ProgrammeCompareScreen() {
     else router.replace("/(tabs)/explore" as any);
   };
 
+  const isDesktop = resp.isDesktop && resp.isWeb;
+  const isTablet = resp.isTablet;
+
+  const cardWidth = isDesktop ? "23%" : isTablet ? "48%" : "100%";
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: colors.surface.base }}
@@ -148,19 +156,28 @@ export default function ProgrammeCompareScreen() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
+      {/* ── Back link ────────────────────────────────────────── */}
       <TouchableOpacity onPress={goBack} hitSlop={10} style={styles.back}>
-        <Text style={[styles.backText, { color: colors.textRole.secondary }]}>Explore / Compare</Text>
+        <Text style={[styles.backText, { color: colors.textRole.secondary }, CompassFonts.bodySemibold]}>
+          Explore / Compare
+        </Text>
       </TouchableOpacity>
 
-      <Text style={[styles.eyebrow, { color: colors.textRole.muted }]}>COMPARE</Text>
-      <Text style={[styles.title, { color: colors.textRole.primary }]}>
-        Compare programmes side by side
-      </Text>
-      <Text style={[styles.lede, { color: colors.textRole.secondary }]}>
-        Pick two to four programmes and compare the domains, admission signal and
-        build paths they open. This is a decision view, not a database export.
-      </Text>
+      {/* ── Editorial hero ───────────────────────────────────── */}
+      <View style={styles.hero}>
+        <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+          COMPARE
+        </Text>
+        <Text style={[styles.title, CompassFonts.displaySemi, { color: colors.textRole.primary }]}>
+          Compare programmes side by side
+        </Text>
+        <Text style={[styles.lede, { color: colors.textRole.secondary }]}>
+          Pick two to four programmes and compare the domains, admission signal and
+          build paths they open. This is a decision view, not a database export.
+        </Text>
+      </View>
 
+      {/* ── Search ───────────────────────────────────────────── */}
       <SearchBar
         value={query}
         onChangeText={setQuery}
@@ -187,7 +204,6 @@ export default function ProgrammeCompareScreen() {
                     activeOpacity={0.8}
                     onPress={() => addProgramme(row.id)}
                     disabled={added || !canAdd}
-                    style={styles.searchRowPress}
                   >
                     <ListRow
                       title={row.name}
@@ -205,26 +221,30 @@ export default function ProgrammeCompareScreen() {
         </DataStateView>
       ) : null}
 
+      {/* ── Empty state ────────────────────────────────────── */}
       {selectedIds.length < 2 ? (
-        <SifterCard style={styles.emptyCard}>
-          <Text style={[styles.emptyTitle, { color: colors.textRole.primary }]}>
+        <View style={[styles.emptyCard, { borderColor: colors.borderRole.subtle }]}>
+          <Feather name="columns" size={24} color={colors.textRole.muted} />
+          <Text style={[styles.emptyTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
             Add at least two programmes
           </Text>
           <Text style={[styles.emptyBody, { color: colors.textRole.secondary }]}>
             Search above to build a comparison. Guests can inspect the view, but
             saving comparisons belongs in an account.
           </Text>
-        </SifterCard>
+        </View>
       ) : (
+        /* ── Side-by-side comparison grid ───────────────────── */
         <View style={styles.compareWrap}>
           {items.map((item) => (
-            <ProgrammeCompareCard
-              key={item.id}
-              item={item}
-              onRemove={() => removeProgramme(item.id)}
-              colors={colors}
-              router={router}
-            />
+            <View key={item.id} style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle, width: cardWidth }]}>
+              <ProgrammeCompareCard
+                item={item}
+                onRemove={() => removeProgramme(item.id)}
+                colors={colors}
+                router={router}
+              />
+            </View>
           ))}
         </View>
       )}
@@ -240,97 +260,88 @@ function ProgrammeCompareCard({
 }: {
   item: ComparedProgramme;
   onRemove: () => void;
-  colors: ReturnType<typeof useTheme>["colors"];
+  colors: ColorPalette;
   router: ReturnType<typeof useRouter>;
 }) {
   return (
-    <View
-      style={[
-        styles.card,
-        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-      ]}
+    <DataStateView
+      state={item.programme}
+      empty={(programme) => programme.domains.length === 0}
+      emptyTitle="Programme mapping pending"
+      emptyBody="This programme is selected, but its domain links are not populated yet."
     >
-      <View style={styles.cardUtility}>
-        <Text style={[styles.cardUtilityText, { color: colors.textRole.muted }]}>
-          Selected programme
-        </Text>
-        <TouchableOpacity onPress={onRemove} hitSlop={8}>
-          <Text style={[styles.remove, { color: colors.textRole.muted }]}>Remove</Text>
-        </TouchableOpacity>
-      </View>
-      <DataStateView
-        state={item.programme}
-        empty={(programme) => programme.domains.length === 0}
-        emptyTitle="Programme mapping pending"
-        emptyBody="This programme is selected, but its domain links are not populated yet."
-      >
-        {(programme) => {
-          const counts = matchCounts(programme);
-          const topDomains = programme.domains.slice(0, 5);
-          return (
-            <View style={styles.cardContent}>
-              <View style={styles.cardTop}>
-                <View style={{ flex: 1 }}>
-                  <Text style={[styles.cardTitle, { color: colors.textRole.primary }]}>
-                    {programme.displayName ?? programme.name}
-                  </Text>
-                  <Text style={[styles.cardMeta, { color: colors.textRole.muted }]}>
-                    {[programme.qualification, programme.discipline, programme.institutionType]
-                      .filter(Boolean)
-                      .join(" · ")}
-                  </Text>
-                </View>
+      {(programme) => {
+        const counts = matchCounts(programme);
+        const topDomains = programme.domains.slice(0, 5);
+        return (
+          <View style={styles.cardContent}>
+            {/* Card header */}
+            <View style={styles.cardTop}>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodySemibold]} numberOfLines={2}>
+                  {programme.displayName ?? programme.name}
+                </Text>
+                <Text style={[styles.cardMeta, { color: colors.textRole.muted }]} numberOfLines={1}>
+                  {[programme.qualification, programme.discipline, programme.institutionType]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </Text>
               </View>
-
-              <View style={styles.metrics}>
-                <MiniMetric label="Direct" value={counts.direct} colors={colors} />
-                <MiniMetric label="Functional" value={counts.functional} colors={colors} />
-                <MiniMetric label="Adjacent" value={counts.adjacent} colors={colors} />
-              </View>
-
-              {topDomains.length ? (
-                <View style={styles.domainSection}>
-                  <SectionLabel>Top linked domains</SectionLabel>
-                  <View style={styles.domainChips}>
-                    {topDomains.map((domain) => (
-                      <DomainChip
-                        key={domain.domainId}
-                        label={domain.domainName}
-                        matchType={domain.matchType}
-                        elite={domain.eliteFlag}
-                        onPress={() => exploreNav.domain(router, domain.domainId)}
-                      />
-                    ))}
-                  </View>
-                </View>
-              ) : null}
-
-              <AdmissionLine state={item.admission} colors={colors} />
-
-              <View style={styles.actions}>
-                <SifterButton
-                  label="Open programme"
-                  onPress={() => exploreNav.programme(router, programme.id)}
-                  variant="track"
-                  color={colors.accentRole.action}
-                  size="sm"
-                  fullWidth={false}
-                />
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => exploreNav.entrepreneurship(router)}
-                  style={styles.linkBtn}
-                >
-                  <Text style={[styles.linkText, { color: colors.accentRole.action }]}>
-                    Build path
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity onPress={onRemove} hitSlop={8} style={styles.removeBtn}>
+                <Feather name="x" size={14} color={colors.textRole.muted} />
+              </TouchableOpacity>
             </View>
-          );
-        }}
-      </DataStateView>
-    </View>
+
+            {/* Domain match metrics */}
+            <View style={styles.metrics}>
+              <MiniMetric label="Direct" value={counts.direct} colors={colors} accent={colors.accentRole.action} />
+              <MiniMetric label="Functional" value={counts.functional} colors={colors} accent={colors.demand} />
+              <MiniMetric label="Adjacent" value={counts.adjacent} colors={colors} accent={colors.textRole.muted} />
+            </View>
+
+            {/* Top linked domains */}
+            {topDomains.length ? (
+              <View style={styles.domainSection}>
+                <SectionLabel>Top domains</SectionLabel>
+                <View style={styles.domainChips}>
+                  {topDomains.map((domain) => (
+                    <DomainChip
+                      key={domain.domainId}
+                      label={domain.domainName}
+                      matchType={domain.matchType}
+                      elite={domain.eliteFlag}
+                      onPress={() => exploreNav.domain(router, domain.domainId)}
+                    />
+                  ))}
+                </View>
+              </View>
+            ) : null}
+
+            {/* Admission signal */}
+            <AdmissionLine state={item.admission} colors={colors} />
+
+            {/* Actions */}
+            <View style={styles.actions}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => exploreNav.programme(router, programme.id)}
+                style={[styles.actionBtn, { backgroundColor: colors.accentRole.action }]}
+              >
+                <Text style={styles.actionBtnText}>Open programme</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => exploreNav.entrepreneurship(router)}
+              >
+                <Text style={[styles.actionLink, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
+                  Build path →
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        );
+      }}
+    </DataStateView>
   );
 }
 
@@ -338,15 +349,17 @@ function MiniMetric({
   label,
   value,
   colors,
+  accent,
 }: {
   label: string;
   value: number;
-  colors: ReturnType<typeof useTheme>["colors"];
+  colors: ColorPalette;
+  accent: string;
 }) {
   return (
     <View style={[styles.metric, { backgroundColor: colors.surface.subtle }]}>
-      <Text style={[styles.metricValue, CompassFonts.data, { color: colors.textRole.primary }]}>{value}</Text>
-      <Text style={[styles.metricLabel, { color: colors.textRole.muted }]}>{label}</Text>
+      <Text style={[styles.metricValue, CompassFonts.data, { color: accent }]}>{value}</Text>
+      <Text style={[styles.metricLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>{label}</Text>
     </View>
   );
 }
@@ -356,7 +369,7 @@ function AdmissionLine({
   colors,
 }: {
   state: DataState<AdmissionInsight>;
-  colors: ReturnType<typeof useTheme>["colors"];
+  colors: ColorPalette;
 }) {
   const text =
     state.status === "real" && state.data
@@ -364,7 +377,8 @@ function AdmissionLine({
       : state.meta?.notice ?? "Admission signal is being compiled.";
   return (
     <View style={[styles.admissionLine, { backgroundColor: colors.surface.subtle }]}>
-      <Text style={[styles.admissionText, { color: colors.textRole.secondary }]}>
+      <Feather name="bar-chart-2" size={12} color={colors.textRole.muted} style={{ marginRight: Spacing.xs }} />
+      <Text style={[styles.admissionText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
         {text}
       </Text>
     </View>
@@ -379,100 +393,122 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   back: { paddingVertical: 4 },
-  backText: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  backText: { fontSize: FontSize.xs },
+
+  // ── Hero ──────────────────────────────────────────────────
+  hero: { gap: 4, marginBottom: Spacing.sm },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.9,
   },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.xxl * 1.16,
   },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
+    marginTop: 4,
   },
+
+  // ── Search ────────────────────────────────────────────────
   searchResults: { gap: Spacing.sm },
-  searchRowPress: { display: "flex" },
-  emptyCard: { alignItems: "center", gap: Spacing.xs },
-  emptyTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
+
+  // ── Empty ─────────────────────────────────────────────────
+  emptyCard: {
+    alignItems: "center",
+    gap: Spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.lg,
+    padding: Spacing.xxl,
+    marginTop: Spacing.md,
+  },
+  emptyTitle: { fontSize: FontSize.lg, textAlign: "center" },
   emptyBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
     textAlign: "center",
+    maxWidth: 400,
   },
+
+  // ── Comparison grid ───────────────────────────────────────
   compareWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.md,
     alignItems: "stretch",
+    marginTop: Spacing.md,
   },
   card: {
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     padding: Spacing.md,
-    flexBasis: 280,
     flexGrow: 1,
-    maxWidth: 520,
+    minWidth: 240,
   },
   cardContent: { gap: Spacing.md },
-  cardUtility: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: Spacing.md,
-    marginBottom: Spacing.sm,
-  },
-  cardUtilityText: {
-    fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
-    textTransform: "uppercase",
-  },
   cardTop: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    gap: Spacing.md,
+    gap: Spacing.sm,
   },
-  cardTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
-  cardMeta: { fontSize: FontSize.xs, marginTop: 4 },
-  remove: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  cardTitle: { fontSize: FontSize.md },
+  cardMeta: { fontSize: FontSize.xs, marginTop: 2 },
+  removeBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: Radius.full,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  // ── Metrics ───────────────────────────────────────────────
   metrics: {
     flexDirection: "row",
     gap: Spacing.sm,
-    flexWrap: "wrap",
   },
   metric: {
-    borderRadius: Radius.md,
-    paddingHorizontal: Spacing.md,
+    flex: 1,
+    borderRadius: Radius.sm,
     paddingVertical: Spacing.sm,
-    minWidth: 86,
+    paddingHorizontal: Spacing.sm,
+    alignItems: "center",
+    gap: 2,
   },
-  metricValue: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
-  metricLabel: {
-    fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
-    textTransform: "uppercase",
-  },
-  domainSection: { gap: Spacing.sm },
-  domainChips: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
+  metricValue: { fontSize: FontSize.lg },
+  metricLabel: { fontSize: FontSize.xs },
+
+  // ── Domains ───────────────────────────────────────────────
+  domainSection: { gap: Spacing.xs },
+  domainChips: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.xs },
+
+  // ── Admission ─────────────────────────────────────────────
   admissionLine: {
-    borderRadius: Radius.md,
-    padding: Spacing.md,
+    borderRadius: Radius.sm,
+    padding: Spacing.sm,
+    flexDirection: "row",
+    alignItems: "center",
   },
-  admissionText: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
-    lineHeight: FontSize.sm * 1.4,
-  },
+  admissionText: { fontSize: FontSize.xs, flex: 1, lineHeight: FontSize.xs * 1.4 },
+
+  // ── Actions ───────────────────────────────────────────────
   actions: {
     flexDirection: "row",
     alignItems: "center",
     flexWrap: "wrap",
     gap: Spacing.md,
   },
-  linkBtn: { minHeight: 38, justifyContent: "center" },
-  linkText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  actionBtn: {
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    borderRadius: Radius.sm,
+    alignItems: "center",
+  },
+  actionBtnText: {
+    color: "#fff",
+    fontSize: FontSize.sm,
+    fontFamily: "HankenGrotesk_600SemiBold",
+  },
+  actionLink: { fontSize: FontSize.sm },
 });

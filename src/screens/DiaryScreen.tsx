@@ -15,14 +15,14 @@ import {
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Spacing, Radius, FontSize, Shadow, useTheme, CompassFonts } from '../theme';
-import { useAuth } from '../hooks/useAuth';
-import DisclaimerFooter from '../components/DisclaimerFooter';
+import { Spacing, Radius, FontSize, Shadow, useTheme, CompassFonts } from '@/theme';
+import { useAuth } from '@/hooks/useAuth';
+import DisclaimerFooter from '@/components/DisclaimerFooter';
 import {
   DiaryNote, Bookmark, NoteCategory, NoteField,
   createNote, getAllNotes, updateNote, deleteNote,
   getBookmarks, deleteBookmark, convertImportedContent,
-} from '../lib/diaryEngine';
+} from '@/lib/diaryEngine';
 
 type DiaryTab = 'notes' | 'bookmarks' | 'import';
 

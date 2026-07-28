@@ -891,7 +891,7 @@ export function AirdropExpectedValueSim({ onComplete, onSkip }: SimProps) {
             ['Low ($)', lowEst, setLowEst, probLow, setProbLow],
             ['Mid ($)', midEst, setMidEst, probMid, setProbMid],
             ['High ($)', highEst, setHighEst, null, null],
-          ] as Array<[string, string, (value: string) => void, string | null, ((value: string) => void) | null]>).map(([label, val, setVal, prob, setProb]) => (
+          ] as [string, string, (value: string) => void, string | null, ((value: string) => void) | null][]).map(([label, val, setVal, prob, setProb]) => (
             <View key={label as string} style={{ flex: 1 }}>
               <Text style={s.fl}>{label}</Text>
               <TextInput style={s.inp} value={val as string} onChangeText={setVal as any} keyboardType="decimal-pad" placeholderTextColor={Colors.textMuted} editable={!confirmed} />

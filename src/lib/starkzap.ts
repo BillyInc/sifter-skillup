@@ -22,7 +22,7 @@ export interface StarkzapWallet {
   ensureReady?: (options?: any) => Promise<void>;
   isDeployed?: () => Promise<boolean>;
   balanceOf: (token: StarkzapToken) => Promise<StarkzapAmount>;
-  transfer: (token: StarkzapToken, transfers: Array<{ to: string; amount: StarkzapAmount }>, options?: any) => Promise<StarkzapTx>;
+  transfer: (token: StarkzapToken, transfers: { to: string; amount: StarkzapAmount }[], options?: any) => Promise<StarkzapTx>;
   swap: (req: SwapRequest, options?: any) => Promise<StarkzapTx>;
   stake: (pool: string, amount: StarkzapAmount, options?: any) => Promise<StarkzapTx>;
   getStakerPools?: (stakerAddress: string) => Promise<StarkzapPool[]>;
@@ -75,10 +75,10 @@ function tryLoadSdk() {
   try {
     // Web needs the browser build; native platforms use the RN package.
     if (Platform.OS === 'web') {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+       
       _pkgExports = require('starkzap');
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+       
       _pkgExports = require('starkzap-native');
     }
     const { StarkZap } = _pkgExports;

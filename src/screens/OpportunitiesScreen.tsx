@@ -2,12 +2,9 @@
  * OpportunitiesScreen — the live Opportunities hub.
  *
  * Internships & jobs (local · global · remote) the user's domains/roles map to.
- * Scope is employment only: internship | graduate_trainee | entry_level |
- * fellowship | contract — never NYSC/PPA, IT placement or apprenticeship.
  *
- * The body calls careerData.getOpportunities(filter) into a DataState and lets
- * <DataStateView> render its graceful states. Semantic tokens + CompassFonts
- * (BRIEF chrome).
+ * Phase 10 redesign: editorial header, FilterChip rail, responsive card grid,
+ * all legacy tokens migrated.
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -18,6 +15,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import {
   useTheme,
   Spacing,
@@ -29,6 +27,7 @@ import {
 } from "../theme";
 import { careerData } from "../lib/careerData";
 import { opportunitiesNav } from "../lib/opportunitiesNav";
+import { useResponsive } from "../hooks/useResponsive";
 import {
   comingSoon,
   type DataState,
@@ -44,15 +43,14 @@ import {
   SubscribeButton,
   SearchBar,
   FilterChip,
+  StatTile,
 } from "../components/careerIntelligence";
 
-// ─── Filter chip option tables ────────────────────────────────
-// `undefined` value = the "All" chip (clears that facet of the filter).
 const SCOPE_OPTIONS: { label: string; value?: OpportunityScope }[] = [
   { label: "All" },
-  { label: "🇳🇬 Local", value: "local" },
-  { label: "✈️ Global", value: "global" },
-  { label: "💻 Remote", value: "remote" },
+  { label: "Local", value: "local" },
+  { label: "Global", value: "global" },
+  { label: "Remote", value: "remote" },
 ];
 
 const TYPE_OPTIONS: { label: string; value?: OpportunityType }[] = [
@@ -66,30 +64,31 @@ const TYPE_OPTIONS: { label: string; value?: OpportunityType }[] = [
 
 const LIKELIHOOD_OPTIONS: { label: string; value?: Likelihood }[] = [
   { label: "All" },
-  { label: "🟢 High", value: "high" },
-  { label: "🟡 Medium", value: "medium" },
+  { label: "High", value: "high" },
+  { label: "Medium", value: "medium" },
 ];
 
 export function OpportunitiesScreen() {
   const router = useRouter();
   const { colors } = useTheme();
+  const resp = useResponsive();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<OpportunityFilter>({});
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
     comingSoon<Opportunity[]>("Internships & jobs are being populated."),
   );
 
-  // Re-run whenever the filter changes; getOpportunities returns coming_soon now.
   useEffect(() => {
     let active = true;
     (async () => {
       const result = await careerData.getOpportunities({ ...filter, query: query.trim() || undefined });
       if (active) setState(result);
     })();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [filter, query]);
+
+  const isDesktop = resp.isDesktop && resp.isWeb;
+  const isTablet = resp.isTablet;
 
   return (
     <ScrollView
@@ -97,87 +96,114 @@ export function OpportunitiesScreen() {
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.heading, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        Opportunities
-      </Text>
-      <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
-        Internships & jobs — local, global, remote
-      </Text>
-
-      {/* Quick links */}
-      <View style={styles.quickLinks}>
-        <QuickLink
-          label="🎓 Scholarships →"
-          onPress={() => opportunitiesNav.scholarships(router)}
-          colors={colors}
-        />
-        <QuickLink
-          label="📅 Application windows →"
-          onPress={() => opportunitiesNav.windows(router)}
-          colors={colors}
-        />
+      {/* ── Editorial hero ───────────────────────────────────── */}
+      <View style={styles.hero}>
+        <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
+          OPPORTUNITIES
+        </Text>
+        <Text style={[styles.heading, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
+          Opportunities
+        </Text>
+        <Text style={[styles.subtitle, { color: colors.textRole.secondary }]}>
+          Internships and jobs — local, global, remote
+        </Text>
       </View>
 
-      {/* Search */}
+      {/* ── Quick links ────────────────────────────────────── */}
+      <View style={styles.quickLinks}>
+        <TouchableOpacity
+          onPress={() => opportunitiesNav.scholarships(router)}
+          activeOpacity={0.85}
+          style={[styles.quickLink, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+        >
+          <Feather name="award" size={14} color={colors.accentRole.status} style={{ marginRight: Spacing.xs }} />
+          <Text style={[styles.quickLinkText, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            Scholarships
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => opportunitiesNav.windows(router)}
+          activeOpacity={0.85}
+          style={[styles.quickLink, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
+        >
+          <Feather name="calendar" size={14} color={colors.accentRole.action} style={{ marginRight: Spacing.xs }} />
+          <Text style={[styles.quickLinkText, { color: colors.textRole.primary }, CompassFonts.bodySemibold]}>
+            Application windows
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* ── Search ──────────────────────────────────────────── */}
       <SearchBar
         value={query}
         onChangeText={setQuery}
         placeholder="Search opportunities…"
       />
 
-      {/* Filters */}
-      <View style={styles.filters}>
-        <ChipRow label="Scope">
-          {SCOPE_OPTIONS.map((opt) => (
-            <Chip
-              key={opt.label}
-              label={opt.label}
-              active={filter.scope === opt.value}
-              onPress={() => setFilter((f) => ({ ...f, scope: opt.value }))}
-              colors={colors}
-            />
-          ))}
-        </ChipRow>
-        <ChipRow label="Type">
-          {TYPE_OPTIONS.map((opt) => (
-            <Chip
-              key={opt.label}
-              label={opt.label}
-              active={filter.type === opt.value}
-              onPress={() => setFilter((f) => ({ ...f, type: opt.value }))}
-              colors={colors}
-            />
-          ))}
-        </ChipRow>
-        <ChipRow label="Likelihood">
-          {LIKELIHOOD_OPTIONS.map((opt) => (
-            <Chip
-              key={opt.label}
-              label={opt.label}
-              active={filter.likelihood === opt.value}
-              onPress={() =>
-                setFilter((f) => ({ ...f, likelihood: opt.value }))
-              }
-              colors={colors}
-            />
-          ))}
-        </ChipRow>
+      {/* ── Filter chips ────────────────────────────────────── */}
+      <View style={styles.filterRail}>
+        <View style={styles.filterGroup}>
+          <Text style={[styles.filterLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
+            Scope
+          </Text>
+          <View style={styles.chipRow}>
+            {SCOPE_OPTIONS.map((opt) => (
+              <FilterChip
+                key={opt.label}
+                label={opt.label}
+                active={filter.scope === opt.value}
+                onPress={() => setFilter((f) => ({ ...f, scope: opt.value }))}
+              />
+            ))}
+          </View>
+        </View>
+        <View style={styles.filterGroup}>
+          <Text style={[styles.filterLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
+            Type
+          </Text>
+          <View style={styles.chipRow}>
+            {TYPE_OPTIONS.map((opt) => (
+              <FilterChip
+                key={opt.label}
+                label={opt.label}
+                active={filter.type === opt.value}
+                onPress={() => setFilter((f) => ({ ...f, type: opt.value }))}
+              />
+            ))}
+          </View>
+        </View>
+        <View style={styles.filterGroup}>
+          <Text style={[styles.filterLabel, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
+            Likelihood
+          </Text>
+          <View style={styles.chipRow}>
+            {LIKELIHOOD_OPTIONS.map((opt) => (
+              <FilterChip
+                key={opt.label}
+                label={opt.label}
+                active={filter.likelihood === opt.value}
+                onPress={() => setFilter((f) => ({ ...f, likelihood: opt.value }))}
+              />
+            ))}
+          </View>
+        </View>
       </View>
 
-      {/* Results */}
+      {/* ── Results ─────────────────────────────────────────── */}
       <View style={styles.results}>
         <DataStateView state={state} empty={(d) => d.length === 0}>
           {(opportunities) => (
-            <View style={styles.cards}>
+            <View style={[styles.cards, (isDesktop || isTablet) ? styles.cardsGrid : undefined]}>
               {opportunities.map((o) => (
-                <OpportunityCard
-                  key={o.id}
-                  opportunity={o}
-                  onPress={() => opportunitiesNav.opportunity(router, o.id)}
-                  subscribeSlot={
-                    <SubscribeButton target="opportunity" targetId={o.id} />
-                  }
-                />
+                <View key={o.id} style={(isDesktop || isTablet) ? styles.cardWrap : undefined}>
+                  <OpportunityCard
+                    opportunity={o}
+                    onPress={() => opportunitiesNav.opportunity(router, o.id)}
+                    subscribeSlot={
+                      <SubscribeButton target="opportunity" targetId={o.id} />
+                    }
+                  />
+                </View>
               ))}
             </View>
           )}
@@ -189,106 +215,18 @@ export function OpportunitiesScreen() {
 
 export default OpportunitiesScreen;
 
-// ─── Local building blocks ────────────────────────────────────
-
-/** A labelled horizontal, non-wrapping row of filter chips. */
-function ChipRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  const { colors } = useTheme();
-  return (
-    <View style={styles.chipRowWrap}>
-      <Text style={[styles.chipRowLabel, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
-        {label}
-      </Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.chipRowContent}
-      >
-        {children}
-      </ScrollView>
-    </View>
-  );
-}
-
-/** A single reusable filter chip. Touch target >= 44pt tall. */
-function Chip({
-  label,
-  active,
-  onPress,
-  colors,
-}: {
-  label: string;
-  active: boolean;
-  onPress: () => void;
-  colors: ColorPalette;
-}) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.85}
-      accessibilityRole="button"
-      accessibilityState={{ selected: active }}
-      style={[
-        styles.chip,
-        {
-          backgroundColor: active ? colors.accentRole.action + "14" : colors.surface.raised,
-          borderColor: active ? colors.accentRole.action : colors.borderRole.subtle,
-        },
-      ]}
-    >
-      <Text
-        style={[
-          styles.chipText,
-          { color: active ? colors.accentRole.action : colors.textRole.muted },
-          CompassFonts.bodyBold,
-        ]}
-        numberOfLines={1}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
-/** A pill-style quick link to the secondary stacks. */
-function QuickLink({
-  label,
-  onPress,
-  colors,
-}: {
-  label: string;
-  onPress: () => void;
-  colors: ColorPalette;
-}) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.85}
-      accessibilityRole="link"
-      style={[
-        styles.quickLink,
-        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
-      ]}
-    >
-      <Text style={[styles.quickLinkText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-}
-
 const styles = StyleSheet.create({
   scroll: {
     paddingVertical: Spacing.lg,
     paddingHorizontal: Spacing.lg,
     gap: Spacing.md,
     flexGrow: 1,
+  },
+  hero: { gap: 4, marginBottom: Spacing.xs },
+  eyebrow: {
+    fontSize: FontSize.xs,
+    letterSpacing: 0.9,
+    textTransform: "uppercase",
   },
   heading: {
     fontSize: FontSize.display,
@@ -297,37 +235,54 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: FontSize.md,
     lineHeight: FontSize.md * 1.4,
+    marginTop: 4,
   },
+
+  // ── Quick links ──────────────────────────────────────────
   quickLinks: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.sm,
-    marginTop: Spacing.xs,
   },
   quickLink: {
-    borderWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
-    paddingHorizontal: Spacing.lg,
-    minHeight: 44,
-    justifyContent: "center",
+    paddingHorizontal: Spacing.md,
+    minHeight: 36,
   },
   quickLinkText: { fontSize: FontSize.sm },
-  filters: { gap: Spacing.sm, marginTop: Spacing.xs },
-  chipRowWrap: { gap: Spacing.xs },
-  chipRowLabel: {
+
+  // ── Filter rail ──────────────────────────────────────────
+  filterRail: {
+    gap: Spacing.sm,
+  },
+  filterGroup: {
+    gap: Spacing.xs,
+  },
+  filterLabel: {
     fontSize: FontSize.xs,
-    letterSpacing: 0.8,
+    letterSpacing: 0.7,
     textTransform: "uppercase",
   },
-  chipRowContent: { gap: Spacing.sm, paddingRight: Spacing.md },
-  chip: {
-    borderWidth: 1,
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.lg,
-    minHeight: 44,
-    justifyContent: "center",
+  chipRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
   },
-  chipText: { fontSize: FontSize.sm },
-  results: { marginTop: Spacing.sm },
+
+  // ── Results ──────────────────────────────────────────────
+  results: { marginTop: Spacing.xs },
   cards: { gap: Spacing.md },
+  cardsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.md,
+  },
+  cardWrap: {
+    flexBasis: 320,
+    flexGrow: 1,
+    minWidth: 280,
+  },
 });
