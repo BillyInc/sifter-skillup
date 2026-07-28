@@ -56,7 +56,7 @@ export function PeersScreen() {
             Peer-institution benchmarks
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
-            How your programme mix's domain coverage compares with peer
+            How your programme mix&apos;s domain coverage compares with peer
             institutions — aggregate only, no peer-level student data.
           </Text>
           <ComingSoonPanel

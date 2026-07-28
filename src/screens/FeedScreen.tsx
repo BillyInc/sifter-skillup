@@ -99,7 +99,7 @@ function SectionHeader({
       activeOpacity={0.7}
     >
       <Text style={styles.sectionIcon}>{icon}</Text>
-      <Text style={[styles.sectionTitle, { color: colors.textRole.primary, fontFamily: CompassFonts.bodyBold }]}>{title}</Text>
+      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{title}</Text>
       <View style={styles.sectionRight}>
         <View style={[styles.sectionCount, { backgroundColor: color + '20' }]}>
           <Text style={[styles.sectionCountText, { color }]}>{count}</Text>
@@ -236,8 +236,8 @@ export default function FeedScreen() {
       {/* ── Header ── */}
       <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
         <View>
-          <Text style={[styles.headerEyebrow, { color: colors.textRole.muted, fontFamily: CompassFonts.bodyBold }]}>COMMUNITY FEED</Text>
-          <Text style={[styles.headerTitle, { color: colors.textRole.primary, fontFamily: CompassFonts.displayBold }]}>Feed</Text>
+          <Text style={[styles.headerEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>COMMUNITY FEED</Text>
+          <Text style={[styles.headerTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Feed</Text>
           <Text style={[styles.headerCopy, { color: colors.textRole.secondary }]}>
             Track activity, learner signals, and workspace updates in one compact stream.
           </Text>

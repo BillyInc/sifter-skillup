@@ -60,7 +60,7 @@ export function VsNationalScreen() {
             Your institution vs national aggregate
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
-            Where your programme mix's demand coverage sits against the national
+            Where your programme mix&apos;s demand coverage sits against the national
             aggregate baseline — anonymous, aggregate only.
           </Text>
 
@@ -100,7 +100,7 @@ export function VsNationalScreen() {
               </Text>
               <Text style={[styles.pendingBody, { color: colors.textSoft }]}>
                 The vs-national comparison endpoint (WS2d) is being built on the
-                backend. Once it lands, this screen will show your institution's
+                backend. Once it lands, this screen will show your institution&apos;s
                 metrics side by side with national averages — domains accessible,
                 posting volumes, skills gaps, and remote eligibility.
               </Text>

@@ -72,7 +72,7 @@ export function ApplicationWindowsScreen() {
         Application Windows
       </Text>
       <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
-        Upcoming openings & deadlines — don't miss these.
+        Upcoming openings &amp; deadlines — don&apos;t miss these.
       </Text>
 
       <View style={{ marginTop: Spacing.md }}>

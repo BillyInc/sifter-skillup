@@ -14,7 +14,7 @@ import {
   TextInput, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Spacing, Radius, FontSize, Shadow, webContainer, useTheme, type ColorPalette } from '../theme';
+import { Spacing, Radius, FontSize, FontWeight, Shadow, webContainer, useTheme, type ColorPalette } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -194,51 +194,51 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   screen:          { flex: 1, backgroundColor: colors.surface.base },
   scroll:          { ...webContainer, gap: Spacing.md, paddingBottom: Spacing.xxxl },
   header:          { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
-  headerTitle:     { fontSize: FontSize.xl, fontWeight: '900', color: colors.textRole.primary },
+  headerTitle:     { fontSize: FontSize.xl, fontWeight: FontWeight.black, color: colors.textRole.primary },
   headerSub:       { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
-  learnLink:       { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: '700' },
+  learnLink:       { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: FontWeight.bold },
   card:            { backgroundColor: colors.surface.raised, borderRadius: Radius.lg, borderWidth: 1.5, borderColor: colors.borderRole.subtle, padding: Spacing.lg, gap: Spacing.sm },
   heroCard:        { alignItems: 'center', paddingVertical: Spacing.xl },
   heroIcon:        { fontSize: 18, marginBottom: 12 },
-  heroTitle:       { fontSize: FontSize.xl, fontWeight: '900', color: colors.textRole.primary, textAlign: 'center', marginBottom: 8 },
+  heroTitle:       { fontSize: FontSize.xl, fontWeight: FontWeight.black, color: colors.textRole.primary, textAlign: 'center', marginBottom: 8 },
   heroSub:         { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center', lineHeight: 22 },
-  sectionLabel:    { fontSize: FontSize.xs, fontWeight: '800', color: colors.accentRole.action, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 },
+  sectionLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.heavy, color: colors.accentRole.action, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 },
   body:            { fontSize: FontSize.sm, color: colors.textRole.primary, lineHeight: 21 },
-  fieldLabel:      { fontSize: FontSize.xs, fontWeight: '700', color: colors.textRole.secondary, marginTop: 8, marginBottom: 4, textTransform: 'uppercase' },
+  fieldLabel:      { fontSize: FontSize.xs, fontWeight: FontWeight.bold, color: colors.textRole.secondary, marginTop: 8, marginBottom: 4, textTransform: 'uppercase' },
   input:           { borderWidth: 1.5, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, padding: Spacing.md, fontSize: FontSize.sm, color: colors.textRole.primary, backgroundColor: '#f8fafc', marginBottom: Spacing.sm },
   primaryBtn:      { backgroundColor: colors.accentRole.action, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center' },
-  primaryBtnText:  { color: colors.textRole.inverse, fontSize: FontSize.md, fontWeight: '800' },
+  primaryBtnText:  { color: colors.textRole.inverse, fontSize: FontSize.md, fontWeight: FontWeight.heavy },
   ghostBtn:        { alignItems: 'center', paddingVertical: Spacing.md },
-  ghostBtnText:    { color: colors.textRole.secondary, fontSize: FontSize.sm, fontWeight: '600' },
+  ghostBtnText:    { color: colors.textRole.secondary, fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
   divider:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   dividerLine:     { flex: 1, height: 1, backgroundColor: colors.borderRole.subtle },
-  dividerText:     { fontSize: FontSize.xs, color: colors.textRole.secondary, fontWeight: '600' },
+  dividerText:     { fontSize: FontSize.xs, color: colors.textRole.secondary, fontWeight: FontWeight.semibold },
   featureRow:      { flexDirection: 'row', gap: 12, paddingVertical: 8, alignItems: 'flex-start', borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
   featureIcon:     { fontSize: 18, width: 36, textAlign: 'center' },
-  featureTitle:    { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary },
+  featureTitle:    { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.textRole.primary },
   featureDesc:     { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2, lineHeight: 17 },
   connectedBadge:  { flexDirection: 'row', alignItems: 'center', gap: 12 },
   ghAvatar:        { fontSize: 18 },
-  connectedLabel:  { fontSize: FontSize.sm, fontWeight: '800', color: '#16a34a' },
+  connectedLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: '#16a34a' },
   connectedUser:   { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
-  viewLink:        { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: '700' },
+  viewLink:        { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: FontWeight.bold },
   resultBox:       { borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.sm },
   fileRow:         { paddingVertical: 6, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
-  fileName:        { fontSize: FontSize.xs, fontWeight: '800', color: colors.accentRole.action, fontFamily: 'monospace' },
+  fileName:        { fontSize: FontSize.xs, fontWeight: FontWeight.heavy, color: colors.accentRole.action, fontFamily: 'monospace' },
   fileDesc:        { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
   repoRow:         { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle, gap: 8 },
-  repoName:        { fontSize: FontSize.sm, fontWeight: '800', color: colors.accentRole.action },
+  repoName:        { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.accentRole.action },
   repoDesc:        { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
   repoMeta:        { fontSize: FontSize.xs, color: colors.textRole.secondary },
   progressTrack:   { height: 6, backgroundColor: '#e2e8f0', borderRadius: 3, marginHorizontal: Spacing.md, marginBottom: 4 },
   progressFill:    { height: 6, backgroundColor: colors.accentRole.action, borderRadius: 3 },
   progressLabel:   { fontSize: FontSize.xs, color: colors.textRole.secondary, textAlign: 'center', marginBottom: Spacing.md },
   lessonIcon:      { fontSize: 18, textAlign: 'center', marginBottom: 8 },
-  lessonTitle:     { fontSize: FontSize.lg, fontWeight: '900', color: colors.textRole.primary, marginBottom: 8 },
+  lessonTitle:     { fontSize: FontSize.lg, fontWeight: FontWeight.black, color: colors.textRole.primary, marginBottom: 8 },
   optionBtn:       { borderRadius: Radius.md, padding: Spacing.md, marginBottom: 8 },
-  optionText:      { fontSize: FontSize.sm, fontWeight: '700' },
+  optionText:      { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
   explanationBox:  { backgroundColor: '#f0f4ff', borderRadius: Radius.md, padding: Spacing.md, marginTop: 4 },
-  explanationText: { fontSize: FontSize.sm, color: '#1e3a8a', fontWeight: '600' },
+  explanationText: { fontSize: FontSize.sm, color: '#1e3a8a', fontWeight: FontWeight.semibold },
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -357,7 +357,7 @@ function LearnModule({ onClose }: { onClose: () => void }) {
         {/* Quiz */}
         <Card>
           <SectionLabel text="QUICK CHECK" />
-          <Text style={[styles.body, { fontWeight: '700', marginBottom: 12 }]}>{lesson.quiz.q}</Text>
+          <Text style={[styles.body, { fontWeight: FontWeight.bold, marginBottom: 12 }]}>{lesson.quiz.q}</Text>
           {lesson.quiz.opts.map((opt, i) => {
             let bg = '#f1f5f9';
             let tc = colors.textRole.primary;

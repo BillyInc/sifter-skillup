@@ -181,7 +181,7 @@ export default function ExploreScreen() {
           ]}
         >
           <Text style={[styles.bannerText, { color: colors.textRole.secondary }]}>
-            You're browsing as a guest. Create an account to save matches and
+            You&apos;re browsing as a guest. Create an account to save matches and
             get alerts.
           </Text>
           {!hasSession ? (
@@ -473,7 +473,7 @@ function GuestLimitedSearch({
     >
       <SectionLabel>Guest preview</SectionLabel>
       <Text style={[styles.guestTitle, { color: colors.textRole.primary }]}>
-        Limited results for "{query}"
+        Limited results for &ldquo;{query}&rdquo;
       </Text>
       <Text style={[styles.guestBody, { color: colors.textRole.secondary }]}>
         Start a guest session to see preview rows. Create an account later to save,

@@ -220,8 +220,8 @@ function ReadinessPanel({ colors }: { colors: ColorPalette }) {
       </Text>
       <Text style={[styles.readinessBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
         This is a few honest questions about fit and trade-offs — not a
-        personality test, and there are no wrong answers. It's being populated
-        so it can point you to where you'd realistically start.
+        personality test, and there are no wrong answers. It&apos;s being populated
+        so it can point you to where you&apos;d realistically start.
       </Text>
     </View>
   );

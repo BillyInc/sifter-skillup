@@ -88,13 +88,13 @@ export function AffiliationScreen() {
         {/* Explainer */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
-            Your institution's school code
+            Your institution&apos;s school code
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
             Share this code with your students. When they enter it, they
             self-report their affiliation — which powers aggregate, k-anonymised
             attribution for your dashboard. It never grants access to any
-            individual student's data.
+            individual student&apos;s data.
           </Text>
         </View>
 

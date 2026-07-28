@@ -168,7 +168,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   typeBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: Spacing.md, flexWrap: 'wrap', backgroundColor: colors.surface.raised, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: colors.borderRole.subtle },
   typeEmoji: { fontSize: 20 },
   typeLabel: { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary },
-  fromArtifactBadge: { backgroundColor: colors.statusSoft, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  fromArtifactBadge: { backgroundColor: `${colors.accentRole.status}18`, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
   fromArtifactText: { fontSize: 10, color: colors.accentRole.status, fontWeight: '700' },
 
   contextBox: { backgroundColor: colors.surface.raised, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: colors.borderRole.subtle, borderLeftWidth: 3, borderLeftColor: colors.accentRole.action },
@@ -211,7 +211,7 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   criterionIcon: { fontSize: 14, width: 20 },
   criterionText: { flex: 1, fontSize: FontSize.xs, color: colors.textRole.primary, lineHeight: 18 },
 
-  retryNote: { backgroundColor: colors.statusSoft, borderRadius: Radius.sm, padding: Spacing.md, marginVertical: Spacing.md },
+  retryNote: { backgroundColor: `${colors.accentRole.status}18`, borderRadius: Radius.sm, padding: Spacing.md, marginVertical: Spacing.md },
   retryNoteText: { fontSize: FontSize.sm, color: colors.accentRole.status, textAlign: 'center' },
 
   retryBtn: { backgroundColor: colors.accentRole.action, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', marginBottom: Spacing.sm },

@@ -207,7 +207,7 @@ export default function CareerHomeScreen() {
           ]}
         >
           <Text style={[styles.bannerText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
-            You're browsing as a guest. Create an account to save matches and
+            You&apos;re browsing as a guest. Create an account to save matches and
             notes.
           </Text>
         </View>
@@ -265,7 +265,7 @@ export default function CareerHomeScreen() {
         >
           <Text style={styles.promptIcon}>🧭</Text>
           <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-            Tell us where you're starting from
+            Tell us where you&apos;re starting from
           </Text>
           <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
             Complete a quick onboarding so we can tailor programmes, domains and

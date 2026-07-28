@@ -160,7 +160,7 @@ export default function SettingsScreen() {
         <SettingsCard title="LEGAL">
           <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Privacy and terms</Text>
           <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            Privacy contact: privacy@sifter.app. Legal contact: legal@sifter.app. Governing jurisdiction remains Nigeria per the app's existing legal copy.
+            Privacy contact: privacy@sifter.app. Legal contact: legal@sifter.app. Governing jurisdiction remains Nigeria per the app&apos;s existing legal copy.
           </Text>
           <TouchableOpacity
             activeOpacity={0.85}

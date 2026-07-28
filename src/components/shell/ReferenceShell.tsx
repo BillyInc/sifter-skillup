@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Animated,
   Modal,
   Platform,
   Pressable,
@@ -13,7 +14,7 @@ import {
 import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
-import { FontSize, FontWeight, Radius, Spacing, useTheme } from '../../theme';
+import { CompassFonts, FontSize, FontWeight, Radius, Spacing, useTheme } from '../../theme';
 import { useAuth } from '../../hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '../../lib/trackContext';
 import { SearchOverlay, SearchBar } from '../careerIntelligence';
@@ -119,8 +120,8 @@ function NavList({
             style={[
               styles.navItem,
               {
-                backgroundColor: active ? colors.text : colors.card,
-                borderColor: active ? colors.text : colors.border,
+                backgroundColor: active ? colors.textRole.primary : colors.surface.raised,
+                borderColor: active ? colors.textRole.primary : colors.borderRole.subtle,
               },
             ]}
           >
@@ -133,11 +134,11 @@ function NavList({
               <Feather
                 name={item.icon}
                 size={15}
-                color={active ? colors.textInverse : colors.textMuted}
+                color={active ? colors.textRole.inverse : colors.textRole.muted}
               />
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={[styles.navLabel, { color: active ? colors.textInverse : colors.textSoft }]}>{item.label}</Text>
+              <Text style={[styles.navLabel, { color: active ? colors.textRole.inverse : colors.textRole.secondary }]}>{item.label}</Text>
             </View>
           </TouchableOpacity>
         );
@@ -174,48 +175,61 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
   const isWide = Platform.OS === 'web' && width >= 1100;
 
+  const tabDotX = useRef(new Animated.Value(0)).current;
+  const activeIdx = MOBILE_NAV.findIndex(n => n.id === activeMobileId);
+
+  useEffect(() => {
+    Animated.spring(tabDotX, {
+      toValue: Math.max(0, activeIdx),
+      useNativeDriver: true,
+      damping: 18,
+      stiffness: 220,
+      mass: 0.6,
+    }).start();
+  }, [activeIdx, tabDotX]);
+
   const goTo = (item: ShellNavItem) => {
     setDrawerOpen(false);
     router.push(item.href as any);
   };
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.bg }]}>
+    <View style={[styles.root, { backgroundColor: colors.surface.base }]}>
       {isWide && (
         <View
           style={[
             styles.sidebar,
             {
               paddingTop: Math.max(insets.top, Spacing.lg),
-              backgroundColor: colors.card,
-              borderRightColor: colors.border,
+              backgroundColor: colors.surface.raised,
+              borderRightColor: colors.borderRole.subtle,
             },
           ]}
         >
           <View style={styles.brandRow}>
-            <View style={[styles.brandBadge, { backgroundColor: colors.text }]}>
+            <View style={[styles.brandBadge, { backgroundColor: colors.textRole.primary }]}>
               <Text style={styles.brandBadgeText}>S</Text>
             </View>
             <View>
-              <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
-              <Text style={[styles.brandSub, { color: colors.textMuted }]}>LEVELUP</Text>
+              <Text style={[styles.brandTitle, { color: colors.textRole.primary }]}>Sifter</Text>
+              <Text style={[styles.brandSub, { color: colors.textRole.muted }]}>LEVELUP</Text>
             </View>
           </View>
 
           <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
-          <View style={[styles.sidebarFooter, { borderTopColor: colors.border }]}>
+          <View style={[styles.sidebarFooter, { borderTopColor: colors.borderRole.subtle }]}>
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={() => router.push('/(tabs)/profile' as any)}
               style={[styles.profileMini, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
             >
               <View style={[styles.profileMiniAvatar, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                <Feather name="user" size={14} color={colors.textMuted} />
+                <Feather name="user" size={14} color={colors.textRole.muted} />
               </View>
               <View>
-                <Text style={[styles.profileMiniLabel, { color: colors.text }]}>Profile</Text>
-                <Text style={[styles.profileMiniSub, { color: colors.textMuted }]}>Topbar shortcut too</Text>
+                <Text style={[styles.profileMiniLabel, { color: colors.textRole.primary }]}>Profile</Text>
+                <Text style={[styles.profileMiniSub, { color: colors.textRole.muted }]}>Topbar shortcut too</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -228,8 +242,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
             styles.topbar,
             {
               paddingTop: Math.max(insets.top, Spacing.md),
-              backgroundColor: colors.card,
-              borderBottomColor: colors.border,
+              backgroundColor: colors.surface.raised,
+              borderBottomColor: colors.borderRole.subtle,
             },
           ]}
         >
@@ -238,15 +252,15 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={() => setDrawerOpen(true)}
-                style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
+                style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
               >
-                <Feather name="menu" size={18} color={colors.text} />
+                <Feather name="menu" size={18} color={colors.textRole.primary} />
               </TouchableOpacity>
             )}
 
             <View>
-              <Text style={[styles.pageEyebrow, { color: colors.textMuted }]}>{pageMeta.eyebrow}</Text>
-              <Text style={[styles.pageTitle, { color: colors.text }]}>{pageMeta.title}</Text>
+              <Text style={[styles.pageEyebrow, { color: colors.textRole.muted }]}>{pageMeta.eyebrow}</Text>
+              <Text style={[styles.pageTitle, { color: colors.textRole.primary }]}>{pageMeta.title}</Text>
             </View>
           </View>
 
@@ -268,9 +282,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={() => setOverlayVisible(true)}
-                style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
+                style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
               >
-                <Feather name="search" size={18} color={colors.text} />
+                <Feather name="search" size={18} color={colors.textRole.primary} />
               </TouchableOpacity>
             )}
 
@@ -279,51 +293,82 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               onPress={toggle}
               style={[styles.topbarIconBtn, { backgroundColor: colors.surface.subtle }]}
             >
-              <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.text} />
+              <Feather name={isDark ? 'sun' : 'moon'} size={16} color={colors.textRole.primary} />
             </TouchableOpacity>
 
             <TouchableOpacity
               activeOpacity={0.85}
               onPress={() => router.push('/(tabs)/profile' as any)}
-              style={[styles.avatarBtn, { backgroundColor: colors.text }]}
+              style={[styles.avatarBtn, { backgroundColor: colors.textRole.primary }]}
             >
-              <Feather name="user" size={15} color={colors.textInverse} />
+              <Feather name="user" size={15} color={colors.textRole.inverse} />
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={[styles.content, !isWide && { paddingBottom: 18 }]}>{children}</View>
 
-        {!isWide && (
-          <View
-            style={[
-              styles.mobileTabbar,
-              {
-                paddingBottom: Math.max(insets.bottom, Spacing.sm),
-                backgroundColor: colors.card,
-                borderTopColor: colors.border,
-              },
-            ]}
-          >
-            {MOBILE_NAV.map(item => {
-              const active = item.id === activeMobileId;
-              return (
-                <TouchableOpacity
-                  key={item.id}
-                  activeOpacity={0.85}
-                  onPress={() => router.push(item.href as any)}
-                  style={[
-                    styles.mobileTab,
-                    active && { backgroundColor: colors.text },
-                  ]}
-                >
-                  <Feather name={item.icon} size={16} color={active ? colors.textInverse : colors.textMuted} />
-                  <Text style={[styles.mobileTabLabel, { color: active ? colors.textInverse : colors.textMuted }]}>{item.label}</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        )}
+        {!isWide && (() => {
+          const DOT_W = 16;
+          const DOT_H = 3;
+          const tabW = (width - Spacing.md * 2 - Spacing.xs * 4) / 5;
+          const stride = tabW + Spacing.xs;
+          const baseLeft = Spacing.md + tabW / 2 - DOT_W / 2;
+          const dotTranslateX = tabDotX.interpolate({
+            inputRange: [0, 1, 2, 3, 4],
+            outputRange: [0, stride, stride * 2, stride * 3, stride * 4],
+          });
+          return (
+            <View
+              style={[
+                styles.mobileTabbar,
+                {
+                  paddingBottom: Math.max(insets.bottom, Spacing.sm),
+                  backgroundColor: colors.surface.raised,
+                  borderTopColor: colors.borderRole.subtle,
+                },
+              ]}
+            >
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  bottom: Math.max(insets.bottom, Spacing.sm) + 2,
+                  left: baseLeft,
+                  width: DOT_W,
+                  height: DOT_H,
+                  borderRadius: DOT_H / 2,
+                  backgroundColor: colors.accentRole.action,
+                  transform: [{ translateX: dotTranslateX }],
+                }}
+              />
+              {MOBILE_NAV.map(item => {
+                const active = item.id === activeMobileId;
+                return (
+                  <TouchableOpacity
+                    key={item.id}
+                    activeOpacity={0.85}
+                    onPress={() => router.push(item.href as any)}
+                    style={styles.mobileTab}
+                  >
+                    <Feather
+                      name={item.icon}
+                      size={16}
+                      color={active ? colors.accentRole.action : colors.textRole.muted}
+                    />
+                    <Text
+                      style={[
+                        styles.mobileTabLabel,
+                        { color: active ? colors.textRole.primary : colors.textRole.muted },
+                      ]}
+                    >
+                      {item.label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          );
+        })()}
       </View>
 
       <Modal visible={drawerOpen && !isWide} animationType="fade" transparent onRequestClose={() => setDrawerOpen(false)}>
@@ -334,30 +379,30 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
               styles.drawerSheet,
               {
                 paddingTop: Math.max(insets.top, Spacing.lg),
-                backgroundColor: colors.card,
-                borderRightColor: colors.border,
+                backgroundColor: colors.surface.raised,
+                borderRightColor: colors.borderRole.subtle,
               },
             ]}
           >
             <View style={styles.drawerHeader}>
               <View style={styles.brandRow}>
-                <View style={[styles.brandBadge, { backgroundColor: colors.text }]}>
+                <View style={[styles.brandBadge, { backgroundColor: colors.textRole.primary }]}>
                   <Text style={styles.brandBadgeText}>S</Text>
                 </View>
                 <View>
-                  <Text style={[styles.brandTitle, { color: colors.text }]}>Sifter</Text>
-                  <Text style={[styles.brandSub, { color: colors.textMuted }]}>LEVELUP</Text>
+                  <Text style={[styles.brandTitle, { color: colors.textRole.primary }]}>Sifter</Text>
+                  <Text style={[styles.brandSub, { color: colors.textRole.muted }]}>LEVELUP</Text>
                 </View>
               </View>
               <TouchableOpacity onPress={() => setDrawerOpen(false)}>
-                <Feather name="x" size={18} color={colors.textMuted} />
+                <Feather name="x" size={18} color={colors.textRole.muted} />
               </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
               <NavList items={primaryNav} activeId={activeId} onNavigate={goTo} />
 
-              <View style={[styles.drawerSecondary, { borderTopColor: colors.border }]}>
+              <View style={[styles.drawerSecondary, { borderTopColor: colors.borderRole.subtle }]}>
                 <TouchableOpacity
                   activeOpacity={0.85}
                   onPress={() => {
@@ -366,8 +411,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                   }}
                   style={[styles.secondaryBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
                 >
-                  <Feather name="activity" size={16} color={colors.textMuted} />
-                  <Text style={[styles.secondaryBtnLabel, { color: colors.text }]}>Open Feed</Text>
+                  <Feather name="activity" size={16} color={colors.textRole.muted} />
+                  <Text style={[styles.secondaryBtnLabel, { color: colors.textRole.primary }]}>Open Feed</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -378,8 +423,8 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
                   }}
                   style={[styles.secondaryBtn, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
                 >
-                  <Feather name="user" size={16} color={colors.textMuted} />
-                  <Text style={[styles.secondaryBtnLabel, { color: colors.text }]}>Profile</Text>
+                  <Feather name="user" size={16} color={colors.textRole.muted} />
+                  <Text style={[styles.secondaryBtnLabel, { color: colors.textRole.primary }]}>Profile</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>

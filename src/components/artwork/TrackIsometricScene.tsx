@@ -523,6 +523,8 @@ export default function TrackScene({
 }: TrackSceneProps) {
   const sectors = TRACK_SCENES[trackId] ?? (fieldId ? FIELD_SCENES[fieldId] : undefined);
   const footerLabel = titleFromTrackId(trackId || fieldId || 'track');
+  const numWidth = typeof width === 'string' ? parseFloat(width) || 560 : width;
+  const numHeight = typeof height === 'string' ? parseFloat(height) || 300 : height;
 
   if (!sectors) {
     return (
@@ -533,8 +535,8 @@ export default function TrackScene({
           { label: 'Expert', height: 0.8, color: `${accentColor}AA` },
         ]}
         accentColor={accentColor}
-        width={width}
-        height={height}
+        width={numWidth}
+        height={numHeight}
         footerLabel={footerLabel}
       />
     );
@@ -544,8 +546,8 @@ export default function TrackScene({
     <TrackIsometricScene
       sectors={sectors}
       accentColor={accentColor}
-      width={width}
-      height={height}
+      width={numWidth}
+      height={numHeight}
       footerLabel={footerLabel}
     />
   );

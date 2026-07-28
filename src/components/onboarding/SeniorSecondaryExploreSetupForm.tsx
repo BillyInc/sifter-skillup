@@ -84,7 +84,7 @@ export function SeniorSecondaryExploreSetupForm({
     <View style={{ gap: Spacing.xl }}>
       <View style={{ gap: Spacing.xs }}>
         <Text style={[styles.heading, { color: colors.text }]}>
-          SS1 / SS2 — let's explore
+          SS1 / SS2 — let&apos;s explore
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
           Which class are you in right now?
@@ -116,7 +116,7 @@ export function SeniorSecondaryExploreSetupForm({
       </Text>
 
       <ChoiceChips
-        label="Subjects you're strongest in / enjoy"
+        label="Subjects you&apos;re strongest in / enjoy"
         options={SUBJECTS}
         value={value.jambSubjects}
         onChange={(v) => onChange({ jambSubjects: v as string[] })}
