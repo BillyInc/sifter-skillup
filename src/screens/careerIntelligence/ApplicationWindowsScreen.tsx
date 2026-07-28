@@ -4,12 +4,7 @@
  *
  * This is a LIST screen, so it ships its own inline back+header chrome
  * (mirroring DetailScaffold visually) and renders the body through
- * DataStateView. Data comes from careerData.getApplicationWindows, which
- * returns a `coming_soon` envelope in this phase — DataStateView renders the
- * graceful "Coming soon" panel for it, and flips to real cards (or the empty
- * state) automatically once data lands, with no changes here. Windows linked to
- * an opportunity also surface an inline SubscribeButton (itself degrading
- * gracefully while alerts are not yet live).
+ * DataStateView. Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -20,7 +15,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, webContainer } from "../../theme";
+import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
 import { careerData } from "../../lib/careerData";
 import {
   comingSoon,
@@ -51,7 +46,7 @@ export function ApplicationWindowsScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
@@ -64,20 +59,20 @@ export function ApplicationWindowsScreen() {
           hitSlop={10}
           style={styles.back}
         >
-          <Text style={[styles.backText, { color: colors.accent }]}>
+          <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             ← Back
           </Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={[styles.eyebrow, { color: colors.textMuted }]}>
+      <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         OPPORTUNITIES
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Application Windows
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textSoft }]}>
-        🗓️ Upcoming openings & deadlines — don't miss these.
+      <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
+        Upcoming openings & deadlines — don't miss these.
       </Text>
 
       <View style={{ marginTop: Spacing.md }}>
@@ -127,16 +122,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   back: { paddingVertical: 4, minHeight: 44, justifyContent: "center" },
-  backText: { fontSize: FontSize.md, fontWeight: "700" },
+  backText: { fontSize: FontSize.md },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 1,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {

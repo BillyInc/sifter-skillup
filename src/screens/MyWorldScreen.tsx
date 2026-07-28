@@ -37,9 +37,8 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
-  Brand,
   webContainer,
+  CompassFonts,
 } from "../theme";
 import { DataStateView, LockedPill } from "../components/careerIntelligence";
 import { careerData } from "../lib/careerData";
@@ -147,7 +146,7 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
   return (
     <>
       {/* ── Saved domains & roles (grouped by entity type) ────────── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>
+      <Text style={[styles.section, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>
         Saved domains & roles
       </Text>
       {saved ? (
@@ -162,7 +161,7 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
               {groupSavedByType(items).map((group) => (
                 <View key={group.type} style={styles.savedGroup}>
                   <Text
-                    style={[styles.groupLabel, { color: colors.textMuted }]}
+                    style={[styles.groupLabel, CompassFonts.bodyBold, { color: colors.textRole.muted }]}
                   >
                     {group.title} · {group.items.length}
                   </Text>
@@ -183,7 +182,7 @@ function PersonalCareerBlocks({ saved, notes, refresh }: PersonalData) {
       ) : null}
 
       {/* ── My notes, filed into folders by category ──────────────── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>My notes</Text>
+      <Text style={[styles.section, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>My notes</Text>
       {notes ? (
         <DataStateView
           state={notes}
@@ -236,12 +235,12 @@ function PersonalPage() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>MY WORLD</Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>MY WORLD</Text>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Your saved careers,{"\n"}bookmarks & notes
       </Text>
 
@@ -250,14 +249,13 @@ function PersonalPage() {
           style={[
             styles.banner,
             {
-              backgroundColor: colors.goldSoft,
-              borderColor: `${Brand.primary}40`,
+              backgroundColor: colors.surface.subtle,
+              borderColor: `${colors.accentRole.action}30`,
             },
           ]}
         >
-          <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
-            You're browsing as a guest. Create an account to save domains, roles
-            programmes, schools, comparisons and notes here.
+          <Text style={[styles.bannerText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
+            {"You\u2019re browsing as a guest. Create an account to save domains, roles, programmes, schools, comparisons and notes here."}
           </Text>
         </View>
       ) : null}
@@ -278,21 +276,21 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
     <View
       style={[
         styles.lockedCard,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       <View style={styles.lockedHead}>
         <Text style={styles.lockedIcon}>🧭</Text>
         <View style={{ flex: 1 }}>
           <View style={styles.lockedHeadRow}>
-            <Text style={[styles.lockedTitle, { color: colors.text }]}>
+            <Text style={[styles.lockedTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
               Skill Tracks & Portfolio
             </Text>
             <LockedPill />
           </View>
-          <Text style={[styles.lockedBody, { color: colors.textSoft }]}>
+          <Text style={[styles.lockedBody, { color: colors.textRole.secondary }]}>
             Interactive upskilling for your domain — guided levels and a
-            verifiable Portfolio of what you've built — stays locked until the
+            verifiable Portfolio of what you{"\u2019"}ve built — stays locked until the
             learning layer opens. Master
             your field, learn alongside your guild, and show employers your work.
           </Text>
@@ -303,8 +301,8 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
         {LOCKED_BULLETS.map((b) => (
           <View key={b.title} style={styles.lockedBullet}>
             <Text style={styles.lockedBulletIcon}>{b.icon}</Text>
-            <Text style={[styles.lockedBulletText, { color: colors.textSoft }]}>
-              <Text style={{ fontWeight: FontWeight.heavy, color: colors.text }}>
+            <Text style={[styles.lockedBulletText, { color: colors.textRole.secondary }]}>
+              <Text style={[CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
                 {b.title}.{" "}
               </Text>
               {b.body}
@@ -320,7 +318,7 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
           onPress={() => router.push("/(tabs)/explore")}
           style={styles.linkBtn}
         >
-          <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
             Explore programmes & roles →
           </Text>
         </TouchableOpacity>
@@ -329,7 +327,7 @@ function LockedTracksCard({ router }: { router: ReturnType<typeof useRouter> }) 
           onPress={() => router.push("/(tabs)/explore")}
           style={styles.linkBtn}
         >
-          <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
             Compare demand signals →
           </Text>
         </TouchableOpacity>
@@ -363,7 +361,7 @@ function PrimaryCard({
     <View
       style={[
         styles.primaryCard,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       <View style={styles.primaryHead}>
@@ -371,10 +369,10 @@ function PrimaryCard({
           <Text style={styles.primaryIcon}>{icon}</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.primaryTitle, { color: colors.text }]}>
+          <Text style={[styles.primaryTitle, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
             {title}
           </Text>
-          <Text style={[styles.primaryBody, { color: colors.textSoft }]}>
+          <Text style={[styles.primaryBody, { color: colors.textRole.secondary }]}>
             {body}
           </Text>
         </View>
@@ -387,7 +385,7 @@ function PrimaryCard({
             onPress={() => router.push(l.href)}
             style={[styles.chip, { borderColor: `${accent}55` }]}
           >
-            <Text style={[styles.chipText, { color: accent }]}>{l.label}</Text>
+            <Text style={[styles.chipText, CompassFonts.bodyBold, { color: accent }]}>{l.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -426,13 +424,13 @@ function LiveWorldHub() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>MY WORLD</Text>
-      <Text style={[styles.title, { color: colors.text }]}>
-        Welcome back —{"\n"}let's level up
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>MY WORLD</Text>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        Welcome back —{"\n"}{"let\u2019s level up"}
       </Text>
 
       {isGuest ? (
@@ -440,14 +438,13 @@ function LiveWorldHub() {
           style={[
             styles.banner,
             {
-              backgroundColor: colors.goldSoft,
-              borderColor: `${Brand.primary}40`,
+              backgroundColor: colors.surface.subtle,
+              borderColor: `${colors.accentRole.action}30`,
             },
           ]}
         >
-          <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
-            You're browsing as a guest. Create an account to keep your XP, streak
-            and portfolio.
+          <Text style={[styles.bannerText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
+            {"You\u2019re browsing as a guest. Create an account to keep your XP, streak and portfolio."}
           </Text>
         </View>
       ) : null}
@@ -458,35 +455,35 @@ function LiveWorldHub() {
         onPress={() => router.push("/(tabs)/myworld/game-profile")}
         style={[
           styles.snapshot,
-          { backgroundColor: colors.card, borderColor: colors.border },
+          { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
         ]}
       >
         <View style={styles.snapshotAvatar}>
           <Text style={styles.snapshotEmoji}>🧑‍💻</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.snapshotStage, { color: colors.text }]}>
+          <Text style={[styles.snapshotStage, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
             {stageName}
           </Text>
           <View style={styles.snapshotStats}>
-            <Text style={[styles.snapshotStat, { color: colors.accent }]}>
+            <Text style={[styles.snapshotStat, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
               {xp?.totalXp ?? 0} XP
             </Text>
-            <Text style={[styles.snapshotDot, { color: colors.textMuted }]}>
+            <Text style={[styles.snapshotDot, { color: colors.textRole.muted }]}>
               ·
             </Text>
-            <Text style={[styles.snapshotStat, { color: colors.orange }]}>
+            <Text style={[styles.snapshotStat, CompassFonts.bodyBold, { color: colors.accentRole.warning }]}>
               {streak?.streak ?? 0}🔥
             </Text>
-            <Text style={[styles.snapshotDot, { color: colors.textMuted }]}>
+            <Text style={[styles.snapshotDot, { color: colors.textRole.muted }]}>
               ·
             </Text>
-            <Text style={[styles.snapshotStat, { color: colors.gold }]}>
+            <Text style={[styles.snapshotStat, CompassFonts.bodyBold, { color: colors.accentRole.status }]}>
               Stage {stage}/8
             </Text>
           </View>
         </View>
-        <Text style={[styles.snapshotArrow, { color: colors.textMuted }]}>›</Text>
+        <Text style={[styles.snapshotArrow, CompassFonts.bodyBold, { color: colors.textRole.muted }]}>›</Text>
       </TouchableOpacity>
 
       {/* ── Three primary live sections ──────────────────────────── */}
@@ -498,7 +495,7 @@ function LiveWorldHub() {
       <PersonalCareerBlocks {...personal} />
 
       {/* ── More: the rest of the learning world ─────────────────── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>More</Text>
+      <Text style={[styles.section, { color: colors.textRole.secondary }]}>More</Text>
       <View style={styles.moreGrid}>
         {MORE_LINKS.map((m) => (
           <TouchableOpacity
@@ -507,12 +504,12 @@ function LiveWorldHub() {
             onPress={() => router.push(m.href)}
             style={[
               styles.moreTile,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
             <Text style={styles.moreIcon}>{m.icon}</Text>
             <Text
-              style={[styles.moreLabel, { color: colors.text }]}
+              style={[styles.moreLabel, { color: colors.textRole.primary }]}
               numberOfLines={2}
             >
               {m.label}
@@ -531,7 +528,9 @@ function resolveAccent(
   key: "accent" | "green" | "gold",
   colors: ReturnType<typeof useTheme>["colors"],
 ): string {
-  return colors[key];
+  if (key === "accent") return colors.accentRole.action;
+  if (key === "green") return colors.accentRole.success;
+  return colors.accentRole.status;
 }
 
 const PRIMARY_SECTIONS: {
@@ -682,7 +681,7 @@ function SavedItemRow({
     <View
       style={[
         styles.row,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
         removing && { opacity: 0.5 },
       ]}
     >
@@ -696,13 +695,13 @@ function SavedItemRow({
         <Text style={styles.rowIcon}>{meta.icon}</Text>
         <View style={{ flex: 1 }}>
           <Text
-            style={[styles.rowTitle, { color: colors.text }]}
+            style={[styles.rowTitle, { color: colors.textRole.primary }]}
             numberOfLines={1}
           >
             {item.label ?? item.entityId}
           </Text>
-          <View style={[styles.typeChip, { backgroundColor: colors.bgSecondary }]}>
-            <Text style={[styles.typeChipText, { color: colors.textMuted }]}>
+          <View style={[styles.typeChip, { backgroundColor: colors.surface.subtle }]}>
+            <Text style={[styles.typeChipText, { color: colors.textRole.muted }]}>
               {meta.label}
             </Text>
           </View>
@@ -717,7 +716,7 @@ function SavedItemRow({
         accessibilityRole="button"
         accessibilityLabel={`Remove ${item.label ?? meta.label}`}
       >
-        <Text style={[styles.removeIcon, { color: colors.textMuted }]}>✕</Text>
+        <Text style={[styles.removeIcon, { color: colors.textRole.muted }]}>✕</Text>
       </TouchableOpacity>
     </View>
   );
@@ -744,14 +743,14 @@ function NoteFolder({
         accessibilityRole="button"
         accessibilityLabel={`${category} folder, ${notes.length} notes`}
       >
-        <Text style={[styles.folderChevron, { color: colors.textMuted }]}>
+        <Text style={[styles.folderChevron, { color: colors.textRole.muted }]}>
           {open ? "▾" : "▸"}
         </Text>
         <Text style={styles.folderIcon}>{open ? "📂" : "📁"}</Text>
-        <Text style={[styles.folderName, { color: colors.text }]} numberOfLines={1}>
+        <Text style={[styles.folderName, { color: colors.textRole.primary }]} numberOfLines={1}>
           {category}
         </Text>
-        <Text style={[styles.folderCount, { color: colors.textMuted }]}>
+        <Text style={[styles.folderCount, { color: colors.textRole.muted }]}>
           {notes.length}
         </Text>
       </TouchableOpacity>
@@ -776,20 +775,20 @@ function NoteCard({ note, onPress }: { note: Note; onPress: () => void }) {
       onPress={onPress}
       style={[
         styles.noteCard,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
       accessibilityRole="button"
       accessibilityLabel={`Edit note on ${label}`}
     >
       <View style={styles.noteHead}>
-        <Text style={[styles.noteEntity, { color: colors.textMuted }]} numberOfLines={1}>
+        <Text style={[styles.noteEntity, { color: colors.textRole.muted }]} numberOfLines={1}>
           {ENTITY_META[note.entityType].icon} {label}
         </Text>
-        <Text style={[styles.noteTime, { color: colors.textMuted }]}>
+        <Text style={[styles.noteTime, { color: colors.textRole.muted }]}>
           {formatWhen(note.updatedAt)}
         </Text>
       </View>
-      <Text style={[styles.noteBody, { color: colors.text }]} numberOfLines={2}>
+      <Text style={[styles.noteBody, { color: colors.textRole.primary }]} numberOfLines={2}>
         {note.body}
       </Text>
     </TouchableOpacity>
@@ -887,60 +886,60 @@ function NoteEditorSheet({
         <Pressable
           style={[
             styles.sheet,
-            { backgroundColor: colors.card, borderColor: colors.border },
+            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
           ]}
           onPress={() => {}}
         >
-          <View style={[styles.sheetHandle, { backgroundColor: colors.border }]} />
+          <View style={[styles.sheetHandle, { backgroundColor: colors.borderRole.subtle }]} />
 
-          <Text style={[styles.sheetTitle, { color: colors.text }]}>Edit note</Text>
+          <Text style={[styles.sheetTitle, { color: colors.textRole.primary }]}>Edit note</Text>
           {label ? (
-            <Text style={[styles.sheetSubtitle, { color: colors.textMuted }]}>
+            <Text style={[styles.sheetSubtitle, { color: colors.textRole.muted }]}>
               {note ? ENTITY_META[note.entityType].icon : ""} {label}
             </Text>
           ) : null}
 
-          <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>Note</Text>
+          <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }]}>Note</Text>
           <View
             style={[
               styles.inputWrap,
-              { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+              { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle },
             ]}
           >
             <TextInput
-              style={[styles.bodyInput, { color: colors.text }]}
+              style={[styles.bodyInput, { color: colors.textRole.primary }]}
               value={body}
               onChangeText={setBody}
               placeholder="Jot a thought…"
-              placeholderTextColor={colors.textMuted}
+              placeholderTextColor={colors.textRole.muted}
               multiline
               textAlignVertical="top"
               editable={!busy}
             />
           </View>
 
-          <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+          <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }]}>
             Folder / category
           </Text>
           <View
             style={[
               styles.inputWrap,
-              { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+              { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle },
             ]}
           >
             <TextInput
-              style={[styles.categoryInput, { color: colors.text }]}
+              style={[styles.categoryInput, { color: colors.textRole.primary }]}
               value={category}
               onChangeText={setCategory}
               placeholder="e.g. Admissions, To research (blank = Uncategorised)"
-              placeholderTextColor={colors.textMuted}
+              placeholderTextColor={colors.textRole.muted}
               editable={!busy}
               returnKeyType="done"
             />
           </View>
 
           {notice ? (
-            <Text style={[styles.sheetNotice, { color: colors.red }]}>{notice}</Text>
+            <Text style={[styles.sheetNotice, { color: colors.accentRole.danger }]}>{notice}</Text>
           ) : null}
 
           <View style={styles.sheetActions}>
@@ -948,11 +947,11 @@ function NoteEditorSheet({
               activeOpacity={0.7}
               onPress={remove}
               disabled={busy}
-              style={[styles.sheetDeleteBtn, { borderColor: colors.border }]}
+              style={[styles.sheetDeleteBtn, { borderColor: colors.borderRole.subtle }]}
               accessibilityRole="button"
               accessibilityLabel="Delete note"
             >
-              <Text style={[styles.sheetDeleteText, { color: colors.red }]}>
+              <Text style={[styles.sheetDeleteText, { color: colors.accentRole.danger }]}>
                 Delete
               </Text>
             </TouchableOpacity>
@@ -962,12 +961,12 @@ function NoteEditorSheet({
               disabled={busy}
               style={[
                 styles.sheetSaveBtn,
-                { backgroundColor: colors.accent, opacity: busy ? 0.5 : 1 },
+                { backgroundColor: colors.accentRole.action, opacity: busy ? 0.5 : 1 },
               ]}
               accessibilityRole="button"
               accessibilityLabel="Save note"
             >
-              <Text style={[styles.sheetSaveText, { color: colors.textInverse }]}>
+              <Text style={[styles.sheetSaveText, { color: colors.textRole.inverse }]}>
                 {busy ? "Saving…" : "Save"}
               </Text>
             </TouchableOpacity>
@@ -1003,24 +1002,20 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
     letterSpacing: 1.5,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.black,
     lineHeight: FontSize.display * 1.15,
   },
   banner: { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1 },
   bannerText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
     lineHeight: FontSize.sm * 1.4,
   },
   section: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.heavy,
     letterSpacing: 0.5,
     marginTop: Spacing.md,
     textTransform: "uppercase",
@@ -1032,7 +1027,6 @@ const styles = StyleSheet.create({
   savedGroup: { gap: Spacing.sm },
   groupLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
     letterSpacing: 1,
     textTransform: "uppercase",
   },
@@ -1052,7 +1046,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   rowIcon: { fontSize: 22 },
-  rowTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  rowTitle: { fontSize: FontSize.md },
   typeChip: {
     alignSelf: "flex-start",
     borderRadius: Radius.full,
@@ -1062,7 +1056,6 @@ const styles = StyleSheet.create({
   },
   typeChipText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     letterSpacing: 0.3,
   },
   removeBtn: {
@@ -1072,7 +1065,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: Spacing.xs,
   },
-  removeIcon: { fontSize: FontSize.lg, fontWeight: FontWeight.bold },
+  removeIcon: { fontSize: FontSize.lg },
 
   // ── Notes: folders + cards ──────────────────────────────────
   noteGroups: { gap: Spacing.md },
@@ -1088,11 +1081,9 @@ const styles = StyleSheet.create({
   folderName: {
     flex: 1,
     fontSize: FontSize.md,
-    fontWeight: FontWeight.heavy,
   },
   folderCount: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
   },
   folderNotes: { gap: Spacing.sm, paddingLeft: Spacing.lg },
   noteCard: {
@@ -1108,8 +1099,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: Spacing.sm,
   },
-  noteEntity: { flex: 1, fontSize: FontSize.xs, fontWeight: FontWeight.bold },
-  noteTime: { fontSize: FontSize.xs, fontWeight: FontWeight.medium },
+  noteEntity: { flex: 1, fontSize: FontSize.xs },
+  noteTime: { fontSize: FontSize.xs },
   noteBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -1136,15 +1127,13 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     marginBottom: Spacing.sm,
   },
-  sheetTitle: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  sheetTitle: { fontSize: FontSize.xl },
   sheetSubtitle: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
     marginBottom: Spacing.xs,
   },
   fieldLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
     letterSpacing: 0.5,
     textTransform: "uppercase",
     marginTop: Spacing.xs,
@@ -1158,7 +1147,6 @@ const styles = StyleSheet.create({
   categoryInput: { minHeight: 44, paddingVertical: 11, fontSize: FontSize.md },
   sheetNotice: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.semibold,
   },
   sheetActions: {
     flexDirection: "row",
@@ -1173,7 +1161,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  sheetDeleteText: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  sheetDeleteText: { fontSize: FontSize.md },
   sheetSaveBtn: {
     flex: 1,
     minHeight: 44,
@@ -1181,7 +1169,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  sheetSaveText: { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  sheetSaveText: { fontSize: FontSize.md },
 
   // ── Live hub: snapshot ──────────────────────────────────────
   snapshot: {
@@ -1201,16 +1189,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   snapshotEmoji: { fontSize: 30 },
-  snapshotStage: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  snapshotStage: { fontSize: FontSize.md },
   snapshotStats: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.xs,
     marginTop: 3,
   },
-  snapshotStat: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  snapshotStat: { fontSize: FontSize.sm },
   snapshotDot: { fontSize: FontSize.sm },
-  snapshotArrow: { fontSize: FontSize.xxl, fontWeight: FontWeight.bold },
+  snapshotArrow: { fontSize: FontSize.xxl },
 
   // ── Live hub: primary cards ─────────────────────────────────
   primaryCard: {
@@ -1232,7 +1220,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   primaryIcon: { fontSize: 24 },
-  primaryTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  primaryTitle: { fontSize: FontSize.lg },
   primaryBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -1251,7 +1239,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  chipText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  chipText: { fontSize: FontSize.sm },
 
   // ── Live hub: more grid ─────────────────────────────────────
   moreGrid: {
@@ -1273,7 +1261,6 @@ const styles = StyleSheet.create({
   moreIcon: { fontSize: 24 },
   moreLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textAlign: "center",
   },
 
@@ -1297,7 +1284,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     flexWrap: "wrap",
   },
-  lockedTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy },
+  lockedTitle: { fontSize: FontSize.lg },
   lockedBody: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -1316,5 +1303,5 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: "center",
   },
-  linkText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  linkText: { fontSize: FontSize.sm },
 });

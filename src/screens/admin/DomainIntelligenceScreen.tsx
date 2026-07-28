@@ -11,7 +11,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Brand,
   webContainer,
 } from "../../theme";
@@ -50,7 +50,7 @@ export function DomainIntelligenceScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Domain demand intelligence
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -86,17 +86,17 @@ export function DomainIntelligenceScreen() {
                       <View key={item.domainId} style={styles.item}>
                         <View style={styles.itemHead}>
                           <Text
-                            style={[styles.rank, { color: colors.textMuted }]}
+                            style={[styles.rank, CompassFonts.displayBold, { color: colors.textMuted }]}
                           >
                             #{item.rank}
                           </Text>
                           <Text
-                            style={[styles.domain, { color: colors.text }]}
+                            style={[styles.domain, CompassFonts.bodyBold, { color: colors.text }]}
                             numberOfLines={1}
                           >
                             {item.domainName}
                           </Text>
-                          <Text style={[styles.count, { color: colors.text }]}>
+                          <Text style={[styles.count, CompassFonts.bodyBold, { color: colors.text }]}>
                             {item.postingsPerMonth.toLocaleString()}/mo
                           </Text>
                         </View>
@@ -111,7 +111,7 @@ export function DomainIntelligenceScreen() {
                             style={[
                               styles.barFill,
                               {
-                                backgroundColor: Brand.primary,
+                                backgroundColor: colors.accentRole.action,
                                 width: `${Math.round(
                                   Math.min(1, Math.max(0, ratio)) * 100,
                                 )}%`,
@@ -130,7 +130,7 @@ export function DomainIntelligenceScreen() {
                         ) : null}
                         {item.interpretation ? (
                           <Text
-                            style={[styles.route, { color: Brand.primaryDeep }]}
+                            style={[styles.route, { color: colors.accentRole.action }]}
                             numberOfLines={1}
                           >
                             {item.interpretation}
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -168,11 +168,10 @@ const styles = StyleSheet.create({
   itemHead: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
   rank: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
     minWidth: 22,
   },
-  domain: { flex: 1, fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  count: { fontSize: FontSize.xs, fontWeight: FontWeight.heavy },
+  domain: { flex: 1, fontSize: FontSize.sm },
+  count: { fontSize: FontSize.xs },
   barTrack: {
     height: 6,
     borderRadius: Radius.full,

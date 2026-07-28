@@ -1,8 +1,7 @@
-import { Stack } from 'expo-router';
+import { Stack, Redirect } from 'expo-router';
 import { useAuth } from '../../src/hooks/useAuth';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { Colors } from '../../src/theme';
-import { Redirect } from 'expo-router';
 import { consumePendingPostAuthRedirect } from '../../src/lib/postAuthRedirect';
 import { useEffectiveAccountType, isAdminAccount } from '../../src/lib/accountType';
 import { useEffect, useState } from 'react';
@@ -39,10 +38,14 @@ export default function AuthLayout() {
   }
 
   // Guests skip onboarding entirely and land in Explore "browse everything" mode.
+  // Redirect replaces the entire auth stack — no back-button return to auth.
   if (user && user.auth_provider === 'guest') {
     return <Redirect href="/(tabs)/explore" />;
   }
 
+  // Signed-up users who haven't finished onboarding go to onboarding.
+  // The Redirect component replaces the Stack, so there is nothing to go
+  // back to — preventing the broken back-to-signup loop.
   if (user && !user.onboarding_completed) {
     return <Redirect href="/(auth)/onboarding" />;
   }
@@ -63,6 +66,7 @@ export default function AuthLayout() {
     return <Redirect href={(pendingRedirect ?? resolvePostAuthHref(user)) as any} />;
   }
 
+  // No user — show the auth stack (welcome / login / signup / forgot).
   return (
     <Stack screenOptions={{ headerShown: false }} />
   );

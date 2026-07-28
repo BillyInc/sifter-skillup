@@ -33,7 +33,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
+  CompassFonts,
   type ColorPalette,
 } from "@/theme";
 
@@ -65,7 +65,7 @@ export function CharteredCredentialsScreen() {
     >
       {() => (
         <View style={styles.body}>
-          <Text style={[styles.lead, { color: colors.textSoft }]}>
+          <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
             A credential that travels turns a Nigerian qualification into one an
             employer abroad recognises. The engine maps the chartered routes and
             professional credentials, the exemptions you can claim, and — just as
@@ -79,18 +79,18 @@ export function CharteredCredentialsScreen() {
               { backgroundColor: colors.card, borderColor: colors.border },
             ]}
           >
-            <Text style={[styles.overviewLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.overviewLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
               Credential families covered
             </Text>
             {CREDENTIAL_FAMILIES.map((c) => (
               <Text
                 key={c}
-                style={[styles.overviewItem, { color: colors.textSoft }]}
+                style={[styles.overviewItem, { color: colors.textRole.secondary }, CompassFonts.body]}
               >
                 • {c}
               </Text>
             ))}
-            <Text style={[styles.overviewNote, { color: colors.textMuted }]}>
+            <Text style={[styles.overviewNote, { color: colors.textRole.muted }, CompassFonts.body]}>
               Examples of coverage — the per-credential detail is being populated
               and appears below once it lands.
             </Text>
@@ -104,7 +104,7 @@ export function CharteredCredentialsScreen() {
             ]}
           >
             <Text style={styles.caveatIcon}>⚠️</Text>
-            <Text style={[styles.caveatText, { color: colors.textSoft }]}>
+            <Text style={[styles.caveatText, { color: colors.textRole.secondary }, CompassFonts.body]}>
               Be careful with engineering: NSE holds only PROVISIONAL Washington
               Accord signatory status, so a Nigerian engineering degree is not
               automatically recognised for CEng. Plan on the ELR (Experience &
@@ -172,27 +172,27 @@ function CredentialCard({
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
     >
-      <Text style={[styles.cardTitle, { color: colors.text }]}>
+      <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         {credential.name}
       </Text>
       {credential.field ? (
-        <Text style={[styles.cardField, { color: Brand.primaryDeep }]}>
+        <Text style={[styles.cardField, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
           {credential.field}
         </Text>
       ) : null}
       {credential.body ? (
-        <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+        <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
           {credential.body}
         </Text>
       ) : null}
 
       {credential.exemptions?.length ? (
         <View style={styles.exemptions}>
-          <Text style={[styles.exemptionLabel, { color: colors.textMuted }]}>
+          <Text style={[styles.exemptionLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
             Exemptions
           </Text>
           {credential.exemptions.map((ex, i) => (
-            <Text key={i} style={[styles.exemption, { color: colors.textSoft }]}>
+            <Text key={i} style={[styles.exemption, { color: colors.textRole.secondary }, CompassFonts.body]}>
               • {ex}
             </Text>
           ))}

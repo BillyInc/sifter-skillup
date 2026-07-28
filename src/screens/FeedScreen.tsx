@@ -17,6 +17,7 @@ import {
   Platform, useWindowDimensions,
 } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
+import { CompassFonts } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import FeedWebLayout from '../components/FeedWebLayout';
 import { useFeed } from '../hooks/useFeed';
@@ -43,7 +44,7 @@ function TrackChips({
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={[styles.chipsScroll, { borderBottomColor: colors.border }]}
+      style={[styles.chipsScroll, { borderBottomColor: colors.borderRole.subtle }]}
       contentContainerStyle={styles.chipsContent}
     >
       {tracks.map(track => {
@@ -55,13 +56,13 @@ function TrackChips({
             style={[
               styles.chip,
               {
-                backgroundColor: isActive ? track.accentColor : colors.card,
-                borderColor: isActive ? track.accentColor : colors.border,
+                backgroundColor: isActive ? track.accentColor : colors.surface.raised,
+                borderColor: isActive ? track.accentColor : colors.borderRole.subtle,
               },
             ]}
           >
             <Text style={styles.chipEmoji}>{track.emoji}</Text>
-            <Text style={[styles.chipLabel, { color: isActive ? '#fff' : colors.textSoft }]}>
+            <Text style={[styles.chipLabel, { color: isActive ? colors.surface.inverse : colors.textRole.secondary }]}>
               {track.label}
             </Text>
             {track.isPrimary && (
@@ -74,9 +75,9 @@ function TrackChips({
       {/* Monitor more button */}
       <TouchableOpacity
         onPress={onManage}
-        style={[styles.chip, styles.manageChip, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}
+        style={[styles.chip, styles.manageChip, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}
       >
-        <Text style={[styles.chipLabel, { color: colors.textMuted }]}>Manage</Text>
+        <Text style={[styles.chipLabel, { color: colors.textRole.muted }]}>Manage</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -98,12 +99,12 @@ function SectionHeader({
       activeOpacity={0.7}
     >
       <Text style={styles.sectionIcon}>{icon}</Text>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
+      <Text style={[styles.sectionTitle, { color: colors.textRole.primary, fontFamily: CompassFonts.bodyBold }]}>{title}</Text>
       <View style={styles.sectionRight}>
         <View style={[styles.sectionCount, { backgroundColor: color + '20' }]}>
           <Text style={[styles.sectionCountText, { color }]}>{count}</Text>
         </View>
-        <Text style={[styles.sectionChevron, { color: colors.textMuted }]}>
+        <Text style={[styles.sectionChevron, { color: colors.textRole.muted }]}>
           {collapsed ? '›' : '⌄'}
         </Text>
       </View>
@@ -116,10 +117,10 @@ function SectionHeader({
 function SkeletonCard() {
   const { colors } = useTheme();
   return (
-    <View style={[styles.skeleton, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <View style={[styles.skeletonLine, { width: '40%', backgroundColor: colors.bgSecondary }]} />
-      <View style={[styles.skeletonLine, { width: '90%', backgroundColor: colors.bgSecondary }]} />
-      <View style={[styles.skeletonLine, { width: '70%', backgroundColor: colors.bgSecondary }]} />
+    <View style={[styles.skeleton, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <View style={[styles.skeletonLine, { width: '40%', backgroundColor: colors.surface.subtle }]} />
+      <View style={[styles.skeletonLine, { width: '90%', backgroundColor: colors.surface.subtle }]} />
+      <View style={[styles.skeletonLine, { width: '70%', backgroundColor: colors.surface.subtle }]} />
     </View>
   );
 }
@@ -163,7 +164,7 @@ export default function FeedScreen() {
 
   // Active track accent color
   const activeTrack   = monitoredTracks.find(t => t.id === activeTrackId);
-  const accentColor   = activeTrack?.accentColor ?? colors.accent;
+  const accentColor   = activeTrack?.accentColor ?? colors.accentRole.action;
 
   const handleComment = useCallback((item: FeedItem) => {
     setCommentItem(item);
@@ -231,13 +232,13 @@ export default function FeedScreen() {
       </>
     ) : (
     // ── Mobile: vertical scroll ───────────────────────────────────────────────
-    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       {/* ── Header ── */}
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+      <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
         <View>
-          <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>COMMUNITY FEED</Text>
-          <Text style={[styles.headerTitle, { color: colors.text }]}>Feed</Text>
-          <Text style={[styles.headerCopy, { color: colors.textSoft }]}>
+          <Text style={[styles.headerEyebrow, { color: colors.textRole.muted, fontFamily: CompassFonts.bodyBold }]}>COMMUNITY FEED</Text>
+          <Text style={[styles.headerTitle, { color: colors.textRole.primary, fontFamily: CompassFonts.displayBold }]}>Feed</Text>
+          <Text style={[styles.headerCopy, { color: colors.textRole.secondary }]}>
             Track activity, learner signals, and workspace updates in one compact stream.
           </Text>
           <Text style={[styles.headerSub, { color: accentColor }]}>
@@ -257,7 +258,7 @@ export default function FeedScreen() {
       {/* ── Section filter chips ── */}
       <ScrollView
         horizontal showsHorizontalScrollIndicator={false}
-        style={[styles.sectionFilter, { borderBottomColor: colors.border }]}
+        style={[styles.sectionFilter, { borderBottomColor: colors.borderRole.subtle }]}
         contentContainerStyle={styles.sectionFilterContent}
       >
         {sectionOptions.map(opt => {
@@ -269,13 +270,13 @@ export default function FeedScreen() {
               style={[
                 styles.sectionFilterChip,
                 {
-                  backgroundColor: isActive ? accentColor + '20' : colors.card,
-                  borderColor: isActive ? accentColor : colors.border,
+                  backgroundColor: isActive ? accentColor + '20' : colors.surface.raised,
+                  borderColor: isActive ? accentColor : colors.borderRole.subtle,
                 },
               ]}
             >
               <Text style={styles.sectionFilterIcon}>{opt.icon}</Text>
-              <Text style={[styles.sectionFilterLabel, { color: isActive ? accentColor : colors.textSoft }]}>
+              <Text style={[styles.sectionFilterLabel, { color: isActive ? accentColor : colors.textRole.secondary }]}>
                 {opt.label}
               </Text>
             </TouchableOpacity>
@@ -322,8 +323,8 @@ export default function FeedScreen() {
                   sectionLoading ? (
                     <SkeletonCard />
                   ) : items.length === 0 ? (
-                    <View style={[styles.emptySection, { backgroundColor: colors.card }]}>
-                      <Text style={[styles.emptySectionText, { color: colors.textMuted }]}>
+                    <View style={[styles.emptySection, { backgroundColor: colors.surface.raised }]}>
+                      <Text style={[styles.emptySectionText, { color: colors.textRole.muted }]}>
                         Loading {section.title.replace(/^[^\s]+\s/, '').toLowerCase()}…
                       </Text>
                     </View>

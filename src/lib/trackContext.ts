@@ -26,7 +26,7 @@ type TrackMetric = {
 };
 
 export type TrackContext = {
-  mode: 'overview' | 'track';
+  mode: 'overview' | 'track' | 'island';
   fieldId: string | null;
   trackId: string | null;
   trackName: string;

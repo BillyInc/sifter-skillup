@@ -5,6 +5,8 @@
  * · ToggleRow. Selectors that depend on CCMAS/NCE/IBASS data accept a
  * `comingSoon` flag so they render an honest "Live soon" state instead of an
  * empty dropdown until that data is imported.
+ *
+ * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useState } from "react";
 import {
@@ -19,10 +21,10 @@ import {
   Platform,
   type ViewStyle,
 } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, Brand } from "../../theme";
+import { useTheme, Spacing, Radius, FontSize, Brand, CompassFonts } from "../../theme";
 import { LockedPill } from "../careerIntelligence/ComingSoon";
 
-// ─── Stepper header ───────────────────────────────────────────
+// ─── Stepper header (route-line stations) ─────────────────────
 export function Stepper({
   step,
   total,
@@ -37,14 +39,14 @@ export function Stepper({
     <View style={styles.stepper}>
       {onBack ? (
         <TouchableOpacity onPress={onBack} hitSlop={10} style={styles.stepBack}>
-          <Text style={[styles.stepBackText, { color: colors.accent }]}>
+          <Text style={[styles.stepBackText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             ← Back
           </Text>
         </TouchableOpacity>
       ) : (
         <View style={styles.stepBack} />
       )}
-      <Text style={[styles.stepLabel, { color: colors.textMuted }]}>
+      <Text style={[styles.stepLabel, { color: colors.textRole.muted }, CompassFonts.body]}>
         Step {step} of {total}
       </Text>
       <View style={styles.stepDots}>
@@ -53,7 +55,9 @@ export function Stepper({
             key={i}
             style={[
               styles.stepDot,
-              { backgroundColor: i < step ? Brand.primary : colors.border },
+              {
+                backgroundColor: i < step ? colors.accentRole.action : colors.borderRole.subtle,
+              },
             ]}
           />
         ))}
@@ -84,24 +88,24 @@ export function OptionCard({
       style={[
         styles.optionCard,
         {
-          backgroundColor: colors.card,
-          borderColor: selected ? Brand.primary : colors.border,
+          backgroundColor: colors.surface.raised,
+          borderColor: selected ? colors.accentRole.action : colors.borderRole.subtle,
           borderWidth: selected ? 2 : 1,
         },
       ]}
     >
       <Text style={styles.optionIcon}>{icon}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.optionTitle, { color: colors.text }]}>
+        <Text style={[styles.optionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
           {title}
         </Text>
         {subtitle ? (
-          <Text style={[styles.optionSub, { color: colors.textMuted }]}>
+          <Text style={[styles.optionSub, { color: colors.textRole.muted }, CompassFonts.body]}>
             {subtitle}
           </Text>
         ) : null}
       </View>
-      {selected ? <Text style={styles.optionCheck}>✓</Text> : null}
+      {selected ? <Text style={[styles.optionCheck, { color: colors.accentRole.action }]}>✓</Text> : null}
     </TouchableOpacity>
   );
 }
@@ -143,7 +147,7 @@ export function ChoiceChips({
   return (
     <View style={{ gap: Spacing.sm }}>
       {label ? (
-        <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+        <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
           {label}
         </Text>
       ) : null}
@@ -158,15 +162,16 @@ export function ChoiceChips({
               style={[
                 styles.chip,
                 {
-                  backgroundColor: on ? Brand.primary : colors.card,
-                  borderColor: on ? Brand.primary : colors.border,
+                  backgroundColor: on ? colors.accentRole.action : colors.surface.raised,
+                  borderColor: on ? colors.accentRole.action : colors.borderRole.subtle,
                 },
               ]}
             >
               <Text
                 style={[
                   styles.chipText,
-                  { color: on ? Brand.onPrimary : colors.text },
+                  { color: on ? colors.textRole.inverse : colors.textRole.primary },
+                  CompassFonts.bodyBold,
                 ]}
               >
                 {o.label}
@@ -205,7 +210,7 @@ export function SelectField({
   return (
     <View style={{ gap: 6 }}>
       {label ? (
-        <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+        <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
           {label}
         </Text>
       ) : null}
@@ -214,13 +219,14 @@ export function SelectField({
         onPress={() => !comingSoon && setOpen(true)}
         style={[
           styles.select,
-          { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+          { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
         ]}
       >
         <Text
           style={[
             styles.selectText,
-            { color: selectedLabel ? colors.text : colors.textMuted },
+            { color: selectedLabel ? colors.textRole.primary : colors.textRole.placeholder },
+            CompassFonts.body,
           ]}
           numberOfLines={1}
         >
@@ -231,11 +237,11 @@ export function SelectField({
         {comingSoon ? (
           <LockedPill label="Live soon" />
         ) : (
-          <Text style={{ color: colors.textMuted }}>▾</Text>
+          <Text style={{ color: colors.textRole.muted }}>▾</Text>
         )}
       </TouchableOpacity>
       {hint ? (
-        <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
+        <Text style={[styles.hint, { color: colors.textRole.muted }, CompassFonts.body]}>{hint}</Text>
       ) : null}
 
       <Modal
@@ -252,10 +258,10 @@ export function SelectField({
           <View
             style={[
               styles.modalSheet,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
-            <Text style={[styles.modalTitle, { color: colors.text }]}>
+            <Text style={[styles.modalTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
               {label ?? "Select"}
             </Text>
             <ScrollView style={{ maxHeight: 360 }}>
@@ -264,18 +270,18 @@ export function SelectField({
                   key={o.value}
                   style={[
                     styles.modalRow,
-                    { borderBottomColor: colors.border },
+                    { borderBottomColor: colors.borderRole.subtle },
                   ]}
                   onPress={() => {
                     onSelect?.(o.value);
                     setOpen(false);
                   }}
                 >
-                  <Text style={[styles.modalRowText, { color: colors.text }]}>
+                  <Text style={[styles.modalRowText, { color: colors.textRole.primary }, CompassFonts.body]}>
                     {o.label}
                   </Text>
                   {value === o.value ? (
-                    <Text style={{ color: Brand.primary }}>✓</Text>
+                    <Text style={{ color: colors.accentRole.action }}>✓</Text>
                   ) : null}
                 </TouchableOpacity>
               ))}
@@ -305,23 +311,23 @@ export function SearchField({
   return (
     <View style={{ gap: 6 }}>
       {label ? (
-        <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+        <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
           {label}
         </Text>
       ) : null}
       <View
         style={[
           styles.search,
-          { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+          { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
         ]}
       >
-        <Text style={{ color: colors.textMuted }}>🔍</Text>
+        <Text style={{ color: colors.textRole.muted }}>🔍</Text>
         <TextInput
-          style={[styles.searchInput, { color: colors.text }]}
+          style={[styles.searchInput, { color: colors.textRole.primary }, CompassFonts.body]}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor={colors.textMuted}
+          placeholderTextColor={colors.textRole.placeholder}
           editable={!comingSoon}
           autoCorrect={false}
         />
@@ -344,15 +350,17 @@ export function ToggleRow({
   const { colors } = useTheme();
   return (
     <View style={styles.toggleRow}>
-      <Text style={[styles.toggleLabel, { color: colors.text }]}>{label}</Text>
+      <Text style={[styles.toggleLabel, { color: colors.textRole.primary }, CompassFonts.body]}>
+        {label}
+      </Text>
       <Switch
         value={value}
         onValueChange={onValueChange}
-        trackColor={{ true: Brand.primary, false: colors.border }}
+        trackColor={{ true: colors.accentRole.action, false: colors.borderRole.subtle }}
         thumbColor={
           Platform.OS === "android"
             ? value
-              ? Brand.onPrimary
+              ? colors.textRole.inverse
               : "#f4f3f4"
             : undefined
         }
@@ -371,8 +379,8 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   stepBack: { minWidth: 64 },
-  stepBackText: { fontSize: FontSize.md, fontWeight: "700" },
-  stepLabel: { fontSize: FontSize.sm, fontWeight: "600" },
+  stepBackText: { fontSize: FontSize.md },
+  stepLabel: { fontSize: FontSize.sm },
   stepDots: {
     flexDirection: "row",
     gap: 5,
@@ -388,14 +396,14 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
   },
   optionIcon: { fontSize: 28 },
-  optionTitle: { fontSize: FontSize.lg, fontWeight: "800" },
+  optionTitle: { fontSize: FontSize.lg },
   optionSub: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.4,
     marginTop: 2,
   },
-  optionCheck: { fontSize: 18, fontWeight: "900", color: Brand.primary },
-  fieldLabel: { fontSize: FontSize.sm, fontWeight: "700" },
+  optionCheck: { fontSize: 18 },
+  fieldLabel: { fontSize: FontSize.sm },
   chipWrap: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   chip: {
     borderWidth: 1.5,
@@ -405,7 +413,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
     justifyContent: "center",
   },
-  chipText: { fontSize: FontSize.sm, fontWeight: "700" },
+  chipText: { fontSize: FontSize.sm },
   select: {
     flexDirection: "row",
     alignItems: "center",
@@ -433,7 +441,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: FontSize.lg,
-    fontWeight: "800",
     marginBottom: Spacing.xs,
   },
   modalRow: {
@@ -464,7 +471,6 @@ const styles = StyleSheet.create({
   toggleLabel: {
     flex: 1,
     fontSize: FontSize.md,
-    fontWeight: "600",
     paddingRight: Spacing.md,
   },
 });

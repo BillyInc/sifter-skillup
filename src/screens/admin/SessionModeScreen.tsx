@@ -17,7 +17,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Shadow,
   webContainer,
 } from "../../theme";
@@ -88,7 +88,7 @@ export function SessionModeScreen() {
               ]}
             >
               <Text style={styles.heroIcon}>🎯</Text>
-              <Text style={[styles.heroTitle, { color: colors.text }]}>
+              <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
                 Run a career-guidance session
               </Text>
               <Text style={[styles.heroBody, { color: colors.textSoft }]}>
@@ -99,7 +99,7 @@ export function SessionModeScreen() {
             </View>
 
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
                 How a session works
               </Text>
               <View style={styles.cards}>
@@ -115,7 +115,7 @@ export function SessionModeScreen() {
                     ]}
                   >
                     <Text style={styles.cardIcon}>{s.icon}</Text>
-                    <Text style={[styles.cardTitle, { color: colors.text }]}>
+                    <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>
                       {s.title}
                     </Text>
                     <Text style={[styles.cardBody, { color: colors.textMuted }]}>
@@ -127,7 +127,7 @@ export function SessionModeScreen() {
             </View>
 
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
                 Start guidance session
               </Text>
               <ComingSoonPanel state={ctaState}>{() => null}</ComingSoonPanel>
@@ -142,7 +142,7 @@ export function SessionModeScreen() {
             ]}
           >
             <Text style={styles.heroIcon}>ℹ️</Text>
-            <Text style={[styles.heroTitle, { color: colors.text }]}>
+            <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
               Session mode is for providers
             </Text>
             <Text style={[styles.heroBody, { color: colors.textSoft }]}>
@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
   heroIcon: { fontSize: 30, marginBottom: Spacing.xs },
   heroTitle: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.black,
     textAlign: "center",
   },
   heroBody: {
@@ -187,7 +186,7 @@ const styles = StyleSheet.create({
     maxWidth: 460,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   cards: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   card: {
     flex: 1,
@@ -198,6 +197,6 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   cardIcon: { fontSize: 22 },
-  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  cardTitle: { fontSize: FontSize.md },
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
 });

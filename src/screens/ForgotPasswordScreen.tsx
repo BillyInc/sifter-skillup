@@ -5,11 +5,13 @@
  * the full UX — email entry → confirmation state → 60s resend cooldown — and
  * will call the real Supabase/backend reset endpoint once available. For now it
  * optimistically shows the confirmation so the flow is testable end-to-end.
+ *
+ * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, Brand } from "../theme";
+import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "../theme";
 import { SifterButton } from "../components/ui";
 import { AuthScaffold, AuthField, ErrorNote } from "./auth/authShared";
 
@@ -54,15 +56,15 @@ export default function ForgotPasswordScreen() {
         onPress={() => router.back()}
         hitSlop={8}
       >
-        <Text style={[styles.backText, { color: colors.accent }]}>← Back</Text>
+        <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>← Back</Text>
       </TouchableOpacity>
 
       {!sent ? (
         <>
-          <Text style={[styles.title, { color: colors.text }]}>
+          <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
             Reset your password
           </Text>
-          <Text style={[styles.body, { color: colors.textSoft }]}>
+          <Text style={[styles.body, { color: colors.textRole.secondary }, CompassFonts.body]}>
             Enter your email and we'll send you a reset link.
           </Text>
           <ErrorNote message={error} />
@@ -87,10 +89,10 @@ export default function ForgotPasswordScreen() {
       ) : (
         <>
           <Text style={styles.check}>✅</Text>
-          <Text style={[styles.title, { color: colors.text }]}>
+          <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
             Check your inbox
           </Text>
-          <Text style={[styles.body, { color: colors.textSoft }]}>
+          <Text style={[styles.body, { color: colors.textRole.secondary }, CompassFonts.body]}>
             We sent a reset link to {email}. It expires in 30 minutes.
           </Text>
           <SifterButton
@@ -106,7 +108,7 @@ export default function ForgotPasswordScreen() {
             onPress={() => router.replace("/(auth)")}
             hitSlop={8}
           >
-            <Text style={[styles.link, { color: Brand.primaryDeep }]}>
+            <Text style={[styles.link, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
               Back to sign in
             </Text>
           </TouchableOpacity>
@@ -118,10 +120,9 @@ export default function ForgotPasswordScreen() {
 
 const styles = StyleSheet.create({
   back: { alignSelf: "flex-start", paddingVertical: 4 },
-  backText: { fontSize: FontSize.md, fontWeight: "700" },
+  backText: { fontSize: FontSize.md },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: "900",
     textAlign: "center",
     marginBottom: Spacing.xs,
   },
@@ -133,5 +134,5 @@ const styles = StyleSheet.create({
   },
   check: { fontSize: 48, textAlign: "center" },
   row: { alignSelf: "center", paddingVertical: Spacing.sm },
-  link: { fontSize: FontSize.md, fontWeight: "800" },
+  link: { fontSize: FontSize.md },
 });

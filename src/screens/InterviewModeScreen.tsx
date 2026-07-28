@@ -28,7 +28,7 @@ import {
   TextInput, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
+import { Spacing, Radius, FontSize, Shadow, webContainer, useTheme, type ColorPalette } from '../theme';
 import { API } from '../lib/api';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 
@@ -120,6 +120,107 @@ const QUESTION_TYPE_LABELS: Record<QuestionType, { label: string; emoji: string;
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Styles factory
+// ─────────────────────────────────────────────────────────────────────────────
+
+const makeStyles = (colors: ColorPalette) => StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.surface.base },
+  header: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised },
+  backBtn: { padding: Spacing.sm, marginRight: Spacing.sm },
+  backBtnText: { fontSize: 18, color: colors.textRole.primary },
+  headerEyebrow: { fontSize: 10, fontWeight: '800', color: colors.accentRole.action, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
+  headerTitle: { fontSize: FontSize.md, fontWeight: '800', color: colors.textRole.primary },
+  headerSub: { fontSize: FontSize.xs, color: colors.textRole.secondary },
+
+  // Intro
+  introContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
+  heroCard: { backgroundColor: colors.surface.raised, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: colors.borderRole.subtle, marginBottom: Spacing.lg },
+  introEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.md },
+  kicker: { fontSize: 10, fontWeight: '800', color: colors.accentRole.action, letterSpacing: 1, textTransform: 'uppercase', marginBottom: Spacing.xs },
+  introTitle: { fontSize: FontSize.xl, fontWeight: '800', color: colors.textRole.primary, textAlign: 'center', marginBottom: Spacing.xs },
+  introSub: { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center' },
+
+  industryNoteBox: { backgroundColor: colors.accentSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  industryNoteLabel: { fontSize: 9, fontWeight: '800', color: colors.accentRole.action, letterSpacing: 1, marginBottom: Spacing.xs },
+  industryNoteText: { fontSize: FontSize.sm, color: colors.navy, lineHeight: 20 },
+
+  structureTitle: { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary, marginBottom: Spacing.sm },
+  structureRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: 10, paddingHorizontal: Spacing.md, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised },
+  structureNum: { width: 24, height: 24, borderRadius: 12, backgroundColor: colors.accentRole.action, alignItems: 'center', justifyContent: 'center' },
+  structureNumText: { color: colors.textRole.inverse, fontSize: 11, fontWeight: '800' },
+  structureEmoji: { fontSize: 16, width: 24 },
+  structureLabel: { fontSize: FontSize.sm, color: colors.textRole.primary, fontWeight: '600' },
+
+  rulesBox: { backgroundColor: colors.surface.raised, borderRadius: Radius.lg, padding: Spacing.md, marginVertical: Spacing.xl, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  ruleRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: 3 },
+  ruleDot: { color: colors.textRole.muted },
+  ruleText: { fontSize: FontSize.sm, color: colors.textRole.secondary, flex: 1 },
+
+  startBtn: { backgroundColor: colors.accentRole.action, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', ...Shadow.md },
+  startBtnText: { color: colors.textRole.inverse, fontWeight: '800', fontSize: FontSize.md },
+
+  // Question
+  questionContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
+  progressBar: { height: 4, backgroundColor: colors.borderRole.subtle, borderRadius: 2, marginBottom: Spacing.xs },
+  progressFill: { height: 4, backgroundColor: colors.accentRole.action, borderRadius: 2 },
+  progressLabel: { fontSize: FontSize.xs, color: colors.textRole.muted, textAlign: 'right', marginBottom: Spacing.lg },
+
+  typeBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: Spacing.md, flexWrap: 'wrap', backgroundColor: colors.surface.raised, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  typeEmoji: { fontSize: 20 },
+  typeLabel: { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary },
+  fromArtifactBadge: { backgroundColor: colors.statusSoft, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
+  fromArtifactText: { fontSize: 10, color: colors.accentRole.status, fontWeight: '700' },
+
+  contextBox: { backgroundColor: colors.surface.raised, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: colors.borderRole.subtle, borderLeftWidth: 3, borderLeftColor: colors.accentRole.action },
+  contextLabel: { fontSize: 9, fontWeight: '800', color: colors.textRole.muted, letterSpacing: 1, marginBottom: 4 },
+  contextText: { fontSize: FontSize.sm, color: colors.textRole.primary, lineHeight: 20 },
+
+  questionText: { fontSize: FontSize.lg, fontWeight: '800', color: colors.textRole.primary, lineHeight: 22, marginBottom: Spacing.md },
+
+  guidanceBox: { backgroundColor: colors.successSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  guidanceLabel: { fontSize: 9, fontWeight: '800', color: '#166534', letterSpacing: 1, marginBottom: 4 },
+  guidanceText: { fontSize: FontSize.sm, color: '#166534', lineHeight: 18 },
+  timingText: { fontSize: FontSize.xs, color: '#166534', marginTop: 4, fontStyle: 'italic' },
+
+  answerInput: { backgroundColor: colors.surface.raised, borderWidth: 1.5, borderColor: colors.borderRole.subtle, borderRadius: Radius.lg, padding: Spacing.md, fontSize: FontSize.sm, color: colors.textRole.primary, minHeight: 180, lineHeight: 22 },
+  wordCount: { fontSize: FontSize.xs, color: colors.textRole.muted, textAlign: 'right', marginTop: 4, marginBottom: Spacing.lg },
+
+  submitBtn: { backgroundColor: colors.accentRole.action, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' },
+  submitBtnDisabled: { opacity: 0.4 },
+  submitBtnText: { color: colors.textRole.inverse, fontWeight: '800', fontSize: FontSize.md },
+
+  // Reviewing
+  reviewingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.md, paddingHorizontal: Spacing.xl },
+  reviewingText: { fontSize: FontSize.lg, fontWeight: '800', color: colors.textRole.primary },
+  reviewingSub: { fontSize: FontSize.sm, color: colors.textRole.secondary },
+
+  // Result
+  resultContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
+  resultEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.md },
+  resultTitle: { fontSize: FontSize.xl, fontWeight: '800', color: colors.textRole.primary, textAlign: 'center', marginBottom: Spacing.xl },
+
+  portfolioPushedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: '#86efac' },
+  portfolioPushedTitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#065f46', marginBottom: 4 },
+  portfolioPushedText: { fontSize: FontSize.sm, color: '#065f46', lineHeight: 18, marginBottom: Spacing.sm },
+  platformPushed: { fontSize: FontSize.xs, color: '#065f46', fontWeight: '600' },
+
+  criteriaTitle: { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary, marginBottom: Spacing.sm },
+  qCriteriaBlock: { backgroundColor: colors.surface.raised, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  qCriteriaHeader: { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary, marginBottom: Spacing.sm },
+  criterionRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: 4 },
+  criterionIcon: { fontSize: 14, width: 20 },
+  criterionText: { flex: 1, fontSize: FontSize.xs, color: colors.textRole.primary, lineHeight: 18 },
+
+  retryNote: { backgroundColor: colors.statusSoft, borderRadius: Radius.sm, padding: Spacing.md, marginVertical: Spacing.md },
+  retryNoteText: { fontSize: FontSize.sm, color: colors.accentRole.status, textAlign: 'center' },
+
+  retryBtn: { backgroundColor: colors.accentRole.action, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', marginBottom: Spacing.sm },
+  retryBtnText: { color: colors.textRole.inverse, fontWeight: '800', fontSize: FontSize.md },
+  doneBtn: { padding: Spacing.md, alignItems: 'center' },
+  doneBtnText: { fontSize: FontSize.sm, color: colors.textRole.secondary },
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Sub-components
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -132,6 +233,8 @@ function InterviewIntro({
   trackName: string;
   onStart: () => void;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const structure = INTERVIEW_STRUCTURE[level];
 
   return (
@@ -199,6 +302,8 @@ function QuestionView({
   onSubmit: () => void;
   submitting: boolean;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const cfg = QUESTION_TYPE_LABELS[question.type];
 
   return (
@@ -245,7 +350,7 @@ function QuestionView({
         onChangeText={onAnswerChange}
         multiline
         placeholder="Type your answer here..."
-        placeholderTextColor={Colors.textMuted}
+        placeholderTextColor={colors.textRole.muted}
         textAlignVertical="top"
       />
       <Text style={styles.wordCount}>
@@ -259,7 +364,7 @@ function QuestionView({
         activeOpacity={0.85}
       >
         {submitting
-          ? <ActivityIndicator color="#fff" />
+          ? <ActivityIndicator color={colors.textRole.inverse} />
           : <Text style={styles.submitBtnText}>
               {question.index === question.total ? 'Submit Final Answer' : 'Submit & Continue →'}
             </Text>
@@ -280,6 +385,8 @@ function ResultView({
   onRetry: () => void;
   onDone: () => void;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const totalCriteria = result.criteriaResults.reduce((sum, q) => sum + q.criteriaResults.length, 0);
   const passedCriteria = result.criteriaResults.reduce(
     (sum, q) => sum + q.criteriaResults.filter(c => c.passed).length, 0
@@ -361,6 +468,8 @@ interface Props {
 }
 
 export default function InterviewModeScreen({ trackId, level, trackName, onBack }: Props) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const [phase, setPhase] = useState<InterviewPhase>('intro');
   const [session, setSession] = useState<InterviewSession | null>(null);
   const [currentAnswer, setCurrentAnswer] = useState('');
@@ -449,7 +558,7 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
 
       {phase === 'reviewing' && (
         <View style={styles.reviewingContainer}>
-          <ActivityIndicator color={Colors.accent} size="large" />
+          <ActivityIndicator color={colors.accentRole.action} size="large" />
           <Text style={styles.reviewingText}>Reviewing your answers…</Text>
           <Text style={styles.reviewingSub}>Scoring against industry criteria</Text>
         </View>
@@ -467,104 +576,3 @@ export default function InterviewModeScreen({ trackId, level, trackName, onBack 
       </SafeAreaView>
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Styles
-// ─────────────────────────────────────────────────────────────────────────────
-
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bg },
-  header: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.card },
-  backBtn: { padding: Spacing.sm, marginRight: Spacing.sm },
-  backBtnText: { fontSize: 18, color: Colors.text },
-  headerEyebrow: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 },
-  headerTitle: { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
-  headerSub: { fontSize: FontSize.xs, color: Colors.textSoft },
-
-  // Intro
-  introContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
-  heroCard: { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, alignItems: 'center', borderWidth: 1, borderColor: Colors.border, marginBottom: Spacing.lg },
-  introEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.md },
-  kicker: { fontSize: 10, fontWeight: '800', color: Colors.accent, letterSpacing: 1, textTransform: 'uppercase', marginBottom: Spacing.xs },
-  introTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xs },
-  introSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center' },
-
-  industryNoteBox: { backgroundColor: Colors.accentSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: Colors.border },
-  industryNoteLabel: { fontSize: 9, fontWeight: '800', color: Colors.accent, letterSpacing: 1, marginBottom: Spacing.xs },
-  industryNoteText: { fontSize: FontSize.sm, color: Colors.navy, lineHeight: 20 },
-
-  structureTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  structureRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: 10, paddingHorizontal: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, backgroundColor: Colors.card },
-  structureNum: { width: 24, height: 24, borderRadius: 12, backgroundColor: Colors.accent, alignItems: 'center', justifyContent: 'center' },
-  structureNumText: { color: '#fff', fontSize: 11, fontWeight: '800' },
-  structureEmoji: { fontSize: 16, width: 24 },
-  structureLabel: { fontSize: FontSize.sm, color: Colors.text, fontWeight: '600' },
-
-  rulesBox: { backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginVertical: Spacing.xl, borderWidth: 1, borderColor: Colors.border },
-  ruleRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: 3 },
-  ruleDot: { color: Colors.textMuted },
-  ruleText: { fontSize: FontSize.sm, color: Colors.textSoft, flex: 1 },
-
-  startBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', ...Shadow.md },
-  startBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
-
-  // Question
-  questionContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
-  progressBar: { height: 4, backgroundColor: Colors.border, borderRadius: 2, marginBottom: Spacing.xs },
-  progressFill: { height: 4, backgroundColor: Colors.accent, borderRadius: 2 },
-  progressLabel: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'right', marginBottom: Spacing.lg },
-
-  typeBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: Spacing.md, flexWrap: 'wrap', backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: Colors.border },
-  typeEmoji: { fontSize: 20 },
-  typeLabel: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  fromArtifactBadge: { backgroundColor: Colors.goldSoft, borderRadius: 4, paddingHorizontal: 6, paddingVertical: 2 },
-  fromArtifactText: { fontSize: 10, color: Colors.gold, fontWeight: '700' },
-
-  contextBox: { backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border, borderLeftWidth: 3, borderLeftColor: Colors.accent },
-  contextLabel: { fontSize: 9, fontWeight: '800', color: Colors.textMuted, letterSpacing: 1, marginBottom: 4 },
-  contextText: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
-
-  questionText: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text, lineHeight: 22, marginBottom: Spacing.md },
-
-  guidanceBox: { backgroundColor: Colors.greenSoft, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border },
-  guidanceLabel: { fontSize: 9, fontWeight: '800', color: '#166534', letterSpacing: 1, marginBottom: 4 },
-  guidanceText: { fontSize: FontSize.sm, color: '#166534', lineHeight: 18 },
-  timingText: { fontSize: FontSize.xs, color: '#166534', marginTop: 4, fontStyle: 'italic' },
-
-  answerInput: { backgroundColor: Colors.card, borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.lg, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text, minHeight: 180, lineHeight: 22 },
-  wordCount: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'right', marginTop: 4, marginBottom: Spacing.lg },
-
-  submitBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center' },
-  submitBtnDisabled: { opacity: 0.4 },
-  submitBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
-
-  // Reviewing
-  reviewingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: Spacing.md, paddingHorizontal: Spacing.xl },
-  reviewingText: { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text },
-  reviewingSub: { fontSize: FontSize.sm, color: Colors.textSoft },
-
-  // Result
-  resultContainer: { ...webContainer, paddingBottom: Spacing.xxxl },
-  resultEmoji: { fontSize: 18, textAlign: 'center', marginBottom: Spacing.md },
-  resultTitle: { fontSize: FontSize.xl, fontWeight: '800', color: Colors.text, textAlign: 'center', marginBottom: Spacing.xl },
-
-  portfolioPushedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.xl, borderWidth: 1, borderColor: '#86efac' },
-  portfolioPushedTitle: { fontSize: FontSize.sm, fontWeight: '800', color: '#065f46', marginBottom: 4 },
-  portfolioPushedText: { fontSize: FontSize.sm, color: '#065f46', lineHeight: 18, marginBottom: Spacing.sm },
-  platformPushed: { fontSize: FontSize.xs, color: '#065f46', fontWeight: '600' },
-
-  criteriaTitle: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  qCriteriaBlock: { backgroundColor: Colors.card, borderRadius: Radius.lg, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
-  qCriteriaHeader: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm },
-  criterionRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: 4 },
-  criterionIcon: { fontSize: 14, width: 20 },
-  criterionText: { flex: 1, fontSize: FontSize.xs, color: Colors.text, lineHeight: 18 },
-
-  retryNote: { backgroundColor: Colors.goldSoft, borderRadius: Radius.sm, padding: Spacing.md, marginVertical: Spacing.md },
-  retryNoteText: { fontSize: FontSize.sm, color: Colors.gold, textAlign: 'center' },
-
-  retryBtn: { backgroundColor: Colors.accent, borderRadius: Radius.lg, padding: Spacing.lg, alignItems: 'center', marginBottom: Spacing.sm },
-  retryBtnText: { color: '#fff', fontWeight: '800', fontSize: FontSize.md },
-  doneBtn: { padding: Spacing.md, alignItems: 'center' },
-  doneBtnText: { fontSize: FontSize.sm, color: Colors.textSoft },
-});

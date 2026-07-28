@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, webContainer } from '../theme';
+import { Radius, Shadow, Spacing, FontSize, FontWeight, useTheme, CompassFonts, webContainer } from '../theme';
 import { requestPushPermission, scheduleDailyReminder } from '../lib/notificationEngine';
 import { enqueueWrite } from '../lib/offlineStorage';
 import { useAuth } from '../hooks/useAuth';
@@ -30,8 +30,8 @@ function SettingsCard({
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-      <Text style={[styles.cardTitle, { color: colors.textMuted }]}>{title}</Text>
+    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+      <Text style={[styles.cardTitle, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>{title}</Text>
       {children}
     </View>
   );
@@ -105,12 +105,12 @@ export default function NotificationSettingsScreen() {
   ];
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <View style={[styles.hero, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-          <Text style={[styles.heroEyebrow, { color: colors.textMuted }]}>Notifications</Text>
-          <Text style={[styles.heroTitle, { color: colors.text }]}>Keep the reminders useful, not noisy.</Text>
-          <Text style={[styles.heroBody, { color: colors.textSoft }]}>
+        <View style={[styles.hero, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+          <Text style={[styles.heroEyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Notifications</Text>
+          <Text style={[styles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Keep the reminders useful, not noisy.</Text>
+          <Text style={[styles.heroBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
             Delivery is tuned around {workspaceLabel}, your streak timing, and the channels you actually want to hear from.
           </Text>
         </View>
@@ -121,25 +121,25 @@ export default function NotificationSettingsScreen() {
               key={channel.key}
               style={[
                 styles.channelRow,
-                { borderTopColor: index === 0 ? 'transparent' : colors.border },
+                { borderTopColor: index === 0 ? 'transparent' : colors.borderRole.subtle },
               ]}
             >
               <View style={styles.channelCopy}>
                 <View style={styles.channelLabelRow}>
-                  <Text style={[styles.channelLabel, { color: colors.text }]}>{channel.label}</Text>
+                  <Text style={[styles.channelLabel, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{channel.label}</Text>
                   {channel.recommended ? (
-                    <View style={[styles.recBadge, { backgroundColor: colors.accentSoft }]}>
-                      <Text style={[styles.recText, { color: colors.accent }]}>Recommended</Text>
+                    <View style={[styles.recBadge, { backgroundColor: `${colors.accentRole.action}14` }]}>
+                      <Text style={[styles.recText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>Recommended</Text>
                     </View>
                   ) : null}
                 </View>
-                <Text style={[styles.channelSub, { color: colors.textSoft }]}>{channel.sub}</Text>
+                <Text style={[styles.channelSub, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>{channel.sub}</Text>
               </View>
 
               <Switch
                 value={channel.value}
                 onValueChange={channel.set}
-                trackColor={{ false: colors.border, true: colors.accent }}
+                trackColor={{ false: colors.borderRole.subtle, true: colors.accentRole.action }}
                 thumbColor="#fff"
               />
             </View>
@@ -147,8 +147,8 @@ export default function NotificationSettingsScreen() {
         </SettingsCard>
 
         <SettingsCard title="REMINDER TIMING">
-          <Text style={[styles.cardHeadline, { color: colors.text }]}>Daily rhythm</Text>
-          <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+          <Text style={[styles.cardHeadline, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Daily rhythm</Text>
+          <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
             {reminderPreview}. Choose the time you are most likely to protect your streak and continue your workspace.
           </Text>
 
@@ -168,12 +168,12 @@ export default function NotificationSettingsScreen() {
                     style={[
                       styles.timeChip,
                       {
-                        backgroundColor: active ? colors.accent : colors.bgSecondary,
-                        borderColor: active ? colors.accent : colors.border,
+                        backgroundColor: active ? colors.accentRole.action : colors.surface.subtle,
+                        borderColor: active ? colors.accentRole.action : colors.borderRole.subtle,
                       },
                     ]}
                   >
-                    <Text style={[styles.timeChipText, { color: active ? '#fff' : colors.text }]}>
+                    <Text style={[styles.timeChipText, { color: active ? '#fff' : colors.textRole.primary }, CompassFonts.bodyMedium]}>
                       {HOURS[hour].label}
                     </Text>
                   </TouchableOpacity>
@@ -181,8 +181,8 @@ export default function NotificationSettingsScreen() {
               })}
             </ScrollView>
           ) : (
-            <View style={[styles.infoPanel, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-              <Text style={[styles.infoPanelText, { color: colors.textSoft }]}>
+            <View style={[styles.infoPanel, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+              <Text style={[styles.infoPanelText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
                 Turn push reminders back on if you want a scheduled daily reminder time.
               </Text>
             </View>
@@ -190,15 +190,15 @@ export default function NotificationSettingsScreen() {
         </SettingsCard>
 
         <SettingsCard title="PREVIEW">
-          <View style={[styles.previewCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-            <Text style={[styles.previewTitle, { color: colors.text }]}>Daily reminder</Text>
-            <Text style={[styles.previewBody, { color: colors.textSoft }]}>
+          <View style={[styles.previewCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.previewTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Daily reminder</Text>
+            <Text style={[styles.previewBody, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
               You still have time to make progress in {workspaceLabel}. A quick session today keeps your streak moving.
             </Text>
           </View>
-          <View style={[styles.previewCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-            <Text style={[styles.previewTitle, { color: colors.text }]}>Recovery alert</Text>
-            <Text style={[styles.previewBody, { color: colors.textSoft }]}>
+          <View style={[styles.previewCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.previewTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Recovery alert</Text>
+            <Text style={[styles.previewBody, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}>
               Your streak needs attention. Re-open your workspace today to avoid losing momentum.
             </Text>
           </View>
@@ -206,16 +206,16 @@ export default function NotificationSettingsScreen() {
 
         <TouchableOpacity
           activeOpacity={0.85}
-          style={[styles.saveBtn, { backgroundColor: colors.accent }, saving && styles.saveBtnDisabled]}
+          style={[styles.saveBtn, { backgroundColor: colors.accentRole.action }, saving && styles.saveBtnDisabled]}
           onPress={handleSave}
           disabled={saving}
         >
-          <Text style={styles.saveBtnText}>
+          <Text style={[styles.saveBtnText, CompassFonts.bodyBold]}>
             {saving ? 'Saving...' : saved ? 'Saved' : 'Save Preferences'}
           </Text>
         </TouchableOpacity>
 
-        <Text style={[styles.optOutNote, { color: colors.textMuted }]}>
+        <Text style={[styles.optOutNote, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
           You can disable all notifications from device settings at any time. SMS and email preferences still follow local privacy and delivery rules.
         </Text>
       </ScrollView>

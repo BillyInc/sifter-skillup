@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import { API } from '../lib/api';
-import { Colors, Spacing, Radius, FontSize, useTheme } from '../theme';
+import { Spacing, Radius, FontSize, FontWeight, useTheme, type ColorPalette } from '../theme';
 import {
   getPlatformsForField,
   PLATFORMS,
@@ -101,15 +101,15 @@ function PlatformCard({
 
         <View style={{ flex: 1, gap: 4 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <Text style={{ fontSize: FontSize.sm, fontWeight: '800', color: colors.text }}>{platform.name}</Text>
+            <Text style={{ fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.text }}>{platform.name}</Text>
             {badge === 'primary' && (
               <View style={{ backgroundColor: colors.accentSoft, borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2 }}>
-                <Text style={{ fontSize: 10, fontWeight: '800', color: colors.accent }}>Essential</Text>
+                <Text style={{ fontSize: 10, fontWeight: FontWeight.heavy, color: colors.accent }}>Essential</Text>
               </View>
             )}
             {isConnected && (
-              <View style={{ backgroundColor: Colors.greenSoft, borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2 }}>
-                <Text style={{ fontSize: 10, fontWeight: '800', color: Colors.green }}>Connected</Text>
+              <View style={{ backgroundColor: colors.greenSoft, borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2 }}>
+                <Text style={{ fontSize: 10, fontWeight: FontWeight.heavy, color: colors.green }}>Connected</Text>
               </View>
             )}
           </View>
@@ -118,7 +118,7 @@ function PlatformCard({
             {platform.what_to_post}
           </Text>
 
-          <Text style={{ fontSize: FontSize.xs, color: isConnected ? platform.color : colors.textMuted, fontWeight: '700' }}>
+          <Text style={{ fontSize: FontSize.xs, color: isConnected ? platform.color : colors.textMuted, fontWeight: FontWeight.bold }}>
             {isConnected
               ? `@${connected?.username}`
               : platform.integration === 'oauth' || platform.integration === 'api_key'
@@ -127,7 +127,7 @@ function PlatformCard({
           </Text>
         </View>
 
-        <Text style={{ fontSize: FontSize.xs, color: platform.color, fontWeight: '800' }}>
+        <Text style={{ fontSize: FontSize.xs, color: platform.color, fontWeight: FontWeight.heavy }}>
           {isConnected ? 'Manage' : 'Connect'}
         </Text>
       </View>
@@ -153,6 +153,8 @@ function PlatformConnectModal({
   onConnected: (account: ConnectedAccount) => void;
   onOauthConnected?: () => void | Promise<void>;
 }) {
+  const { colors } = useTheme();
+  const mStyle = makeModalStyles(colors);
   const [mode, setMode] = useState<'choose' | 'create' | 'link'>(existing ? 'link' : 'choose');
   const [username, setUsername] = useState(existing?.username ?? '');
   const [email, setEmail]       = useState('');
@@ -249,7 +251,7 @@ function PlatformConnectModal({
 
   return (
     <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface.base }}>
 
         {/* Header */}
         <View style={mStyle.header}>
@@ -287,7 +289,7 @@ function PlatformConnectModal({
                       </Text>
                     </View>
                     {oauthBusy
-                      ? <ActivityIndicator color={Colors.accent} />
+                      ? <ActivityIndicator color={colors.accentRole.action} />
                       : <Text style={mStyle.chevron}>›</Text>}
                   </TouchableOpacity>
                 )}
@@ -359,7 +361,7 @@ function PlatformConnectModal({
                     <TextInput
                       style={mStyle.input}
                       placeholder={`your_${platform.id}_handle`}
-                      placeholderTextColor={Colors.textMuted}
+                      placeholderTextColor={colors.textRole.muted}
                       value={username}
                       onChangeText={setUsername}
                       autoCapitalize="none"
@@ -369,7 +371,7 @@ function PlatformConnectModal({
                     <TextInput
                       style={mStyle.input}
                       placeholder="your@email.com"
-                      placeholderTextColor={Colors.textMuted}
+                      placeholderTextColor={colors.textRole.muted}
                       value={email}
                       onChangeText={setEmail}
                       keyboardType="email-address"
@@ -378,7 +380,7 @@ function PlatformConnectModal({
 
                     <View style={mStyle.attributionBox}>
                       <Text style={mStyle.attributionText}>
-                        ⚡ Your profile will be credited: <Text style={{ fontWeight: '800' }}>{'"'}Trained via Sifter LevelUp{'"'}</Text> — so recruiters know where your skills came from.
+                        ⚡ Your profile will be credited: <Text style={{ fontWeight: FontWeight.heavy }}>{'"'}Trained via Sifter LevelUp{'"'}</Text> — so recruiters know where your skills came from.
                       </Text>
                     </View>
 
@@ -388,7 +390,7 @@ function PlatformConnectModal({
                       disabled={loading}
                       activeOpacity={0.85}>
                       {loading
-                        ? <ActivityIndicator color="#fff" size="small" />
+                        ? <ActivityIndicator color={colors.textRole.inverse} size="small" />
                         : <Text style={mStyle.submitText}>Create Account →</Text>}
                     </TouchableOpacity>
                   </>
@@ -413,7 +415,7 @@ function PlatformConnectModal({
                 <TextInput
                   style={mStyle.input}
                   placeholder={platform.profileUrlTemplate.replace('{username}', 'your_username')}
-                  placeholderTextColor={Colors.textMuted}
+                  placeholderTextColor={colors.textRole.muted}
                   value={username}
                   onChangeText={setUsername}
                   autoCapitalize="none"
@@ -431,7 +433,7 @@ function PlatformConnectModal({
                   disabled={loading}
                   activeOpacity={0.85}>
                   {loading
-                    ? <ActivityIndicator color="#fff" size="small" />
+                    ? <ActivityIndicator color={colors.textRole.inverse} size="small" />
                     : <Text style={mStyle.submitText}>{existing ? 'Update' : 'Connect Account →'}</Text>}
                 </TouchableOpacity>
               </>
@@ -459,6 +461,8 @@ function PushItemModal({
   onClose: () => void;
   onPushed: (platformId: string, postUrl: string) => void;
 }) {
+  const { colors } = useTheme();
+  const pushSt = makePushStyles(colors);
   const [selected, setSelected] = useState<string[]>([]);
   const [caption, setCaption]   = useState(`${item.title}\n\nBuild: Sifter LevelUp · sifter.app`);
   const [loading, setLoading]   = useState(false);
@@ -495,7 +499,7 @@ function PushItemModal({
 
   return (
     <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface.base }}>
         <View style={pushSt.topBar}>
           <Text style={pushSt.heading}>Push to Platforms</Text>
           <TouchableOpacity onPress={onClose}><Text style={pushSt.closeX}>✕</Text></TouchableOpacity>
@@ -531,7 +535,7 @@ function PushItemModal({
                       {alreadyDone
                         ? <Text style={pushSt.postedBadge}>Posted</Text>
                         : <View style={[pushSt.checkbox, isSelected && pushSt.checkboxOn]}>
-                            {isSelected && <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>OK</Text>}
+                            {isSelected && <Text style={{ color: colors.textRole.inverse, fontWeight: FontWeight.heavy, fontSize: 13 }}>OK</Text>}
                           </View>}
                     </TouchableOpacity>
                   );
@@ -593,7 +597,7 @@ function PushItemModal({
                 disabled={loading || selected.length === 0}
                 activeOpacity={0.85}>
                 {loading
-                  ? <ActivityIndicator color="#fff" />
+                  ? <ActivityIndicator color={colors.textRole.inverse} />
                   : <Text style={pushSt.submitText}>
                       Push to {selected.length} platform{selected.length !== 1 ? 's' : ''} →
                     </Text>}
@@ -613,6 +617,7 @@ function PushItemModal({
 
 export default function PortfolioScreen() {
   const { colors } = useTheme();
+  const s = makeSStyles(colors);
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const trackContext = useMemo(() => resolveTrackContext(user), [user]);
@@ -672,7 +677,7 @@ export default function PortfolioScreen() {
   if (loading) {
     return (
       <SafeAreaView style={s.screen}>
-        <ActivityIndicator color={Colors.accent} style={{ marginTop: 80 }} />
+        <ActivityIndicator color={colors.accentRole.action} style={{ marginTop: 80 }} />
       </SafeAreaView>
     );
   }
@@ -715,17 +720,17 @@ export default function PortfolioScreen() {
 
               <WebCard title="Workspace Snapshot" accentBar accentColor={trackContext.mode === 'track' ? trackContext.color : colors.gold} style={{ marginTop: 20 }}>
                 <Text style={{ color: colors.textSoft, fontSize: FontSize.xs, marginBottom: 6 }}>{portfolioSubtitle}</Text>
-                <WebListRow icon="XP" title="Total XP" sub={xp?.stage.name ?? 'Progress stage'} right={<Text style={{ color: colors.text, fontWeight: '800' }}>{xp?.totalXp ?? 0}</Text>} />
-                <WebListRow icon="ST" title="Current Streak" sub={streak?.completedToday ? 'Protected today' : 'Needs action today'} right={<Text style={{ color: colors.text, fontWeight: '800' }}>{streak?.streak ?? 0}d</Text>} />
-                <WebListRow icon="PL" title="Track Platforms" sub={trackContext.mode === 'track' ? trackContext.trackName : 'Current workspace'} right={<Text style={{ color: colors.text, fontWeight: '800' }}>{totalTrackPlatformCount}</Text>} />
-                <WebListRow icon="OK" title="Artifacts Pushed" sub="Items already shared" right={<Text style={{ color: colors.text, fontWeight: '800' }}>{pushedCount}</Text>} />
+                <WebListRow icon="XP" title="Total XP" sub={xp?.stage.name ?? 'Progress stage'} right={<Text style={{ color: colors.text, fontWeight: FontWeight.heavy }}>{xp?.totalXp ?? 0}</Text>} />
+                <WebListRow icon="ST" title="Current Streak" sub={streak?.completedToday ? 'Protected today' : 'Needs action today'} right={<Text style={{ color: colors.text, fontWeight: FontWeight.heavy }}>{streak?.streak ?? 0}d</Text>} />
+                <WebListRow icon="PL" title="Track Platforms" sub={trackContext.mode === 'track' ? trackContext.trackName : 'Current workspace'} right={<Text style={{ color: colors.text, fontWeight: FontWeight.heavy }}>{totalTrackPlatformCount}</Text>} />
+                <WebListRow icon="OK" title="Artifacts Pushed" sub="Items already shared" right={<Text style={{ color: colors.text, fontWeight: FontWeight.heavy }}>{pushedCount}</Text>} />
               </WebCard>
 
               {/* Connected platforms summary */}
               <WebCard title="Connected Platforms" accentBar accentColor={colors.green} style={{ marginTop: 20 }}>
                 {connectedAccounts.length === 0 ? (
                   <View style={{ alignItems: 'center', paddingVertical: 20 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '800', color: colors.textMuted }}>LN</Text>
+                    <Text style={{ fontSize: 18, fontWeight: FontWeight.heavy, color: colors.textMuted }}>LN</Text>
                     <Text style={{ color: colors.textSoft, marginTop: 8, fontSize: 13, textAlign: 'center' }}>
                       No platforms connected yet.{'\n'}Go to My Track to connect.
                     </Text>
@@ -783,14 +788,14 @@ export default function PortfolioScreen() {
                   {tab === 'my-work' && (
                     <>
                       <View style={[s.autoSaveBanner, { backgroundColor: colors.accentSoft, borderRadius: Radius.md, marginBottom: 16 }]}>
-                        <Text style={{ fontSize: 18, fontWeight: '800', color: colors.accent }}>AUTO</Text>
+                        <Text style={{ fontSize: 18, fontWeight: FontWeight.heavy, color: colors.accent }}>AUTO</Text>
                         <Text style={[s.autoSaveText, { color: colors.textSoft }]}>
                           Artifacts are created automatically when you complete lessons and labs.
                         </Text>
                       </View>
                       {workspaceItems.length === 0 ? (
                         <View style={{ alignItems: 'center', paddingVertical: 18 }}>
-                          <Text style={{ fontSize: 18, fontWeight: '800', color: colors.textMuted }}>ART</Text>
+                          <Text style={{ fontSize: 18, fontWeight: FontWeight.heavy, color: colors.textMuted }}>ART</Text>
                           <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 14, textAlign: 'center' }}>
                             Complete lessons on your skill track and your work appears here automatically.
                           </Text>
@@ -942,7 +947,7 @@ export default function PortfolioScreen() {
         style={s.scroll}
         contentContainerStyle={s.scrollContent}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => load(true)} tintColor={Colors.accent} />}>
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => load(true)} tintColor={colors.accentRole.action} />}>
 
         {/* ══════════════════════════════════
             TAB 1 — MY TRACK
@@ -1005,7 +1010,7 @@ export default function PortfolioScreen() {
         {tab === 'my-work' && (
           <>
             <View style={s.autoSaveBanner}>
-              <Text style={{ fontSize: 18, fontWeight: '800', color: colors.accent }}>AUTO</Text>
+              <Text style={{ fontSize: 18, fontWeight: FontWeight.heavy, color: colors.accent }}>AUTO</Text>
               <Text style={s.autoSaveText}>
                 Artifacts are created automatically when you complete lessons, labs, and boss battles. Tap any item to push it to your connected platforms.
               </Text>
@@ -1161,111 +1166,110 @@ export default function PortfolioScreen() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// StyleSheets
+// StyleSheets (makeStyles factories — require `colors` from useTheme)
 // ─────────────────────────────────────────────────────────────
 
-const s = StyleSheet.create({
+const makeSStyles = (colors: ColorPalette) => StyleSheet.create({
   // screen & chrome
-  screen:            { flex: 1, backgroundColor: Colors.bg },
-  header:            { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
-  headerTitle:       { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
-  headerSub:         { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
+  screen:            { flex: 1, backgroundColor: colors.surface.base },
+  header:            { paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, backgroundColor: colors.surface.raised, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
+  headerTitle:       { fontSize: FontSize.xl, fontWeight: FontWeight.black, color: colors.textRole.primary },
+  headerSub:         { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
   summaryStrip:      { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Spacing.lg, paddingTop: Spacing.sm },
-  summaryCard:       { flex: 1, backgroundColor: Colors.card, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border, gap: 4 },
-  summaryLabel:      { fontSize: 10, fontWeight: '800', color: Colors.textMuted, textTransform: 'uppercase' },
-  summaryValue:      { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  tabBar:            { flexDirection: 'row', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: Colors.border },
+  summaryCard:       { flex: 1, backgroundColor: colors.surface.raised, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.borderRole.subtle, gap: 4 },
+  summaryLabel:      { fontSize: 10, fontWeight: FontWeight.heavy, color: colors.textRole.muted, textTransform: 'uppercase' },
+  summaryValue:      { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.textRole.primary },
+  tabBar:            { flexDirection: 'row', backgroundColor: colors.surface.raised, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
   tab:               { flex: 1, paddingVertical: Spacing.sm, alignItems: 'center' },
-  tabActive:         { borderBottomWidth: 2.5, borderBottomColor: Colors.accent },
-  tabText:           { fontSize: 11, fontWeight: '700', color: Colors.textSoft },
-  tabTextActive:     { color: Colors.accent, fontWeight: '800' },
+  tabActive:         { borderBottomWidth: 2.5, borderBottomColor: colors.accentRole.action },
+  tabText:           { fontSize: 11, fontWeight: FontWeight.bold, color: colors.textRole.secondary },
+  tabTextActive:     { color: colors.accentRole.action, fontWeight: FontWeight.heavy },
   scroll:            { flex: 1 },
   scrollContent:     { padding: Spacing.lg, gap: Spacing.md },
-  sectionHeading:    { fontSize: 13, fontWeight: '800', color: Colors.text, marginTop: Spacing.xs, marginBottom: 10 },
+  sectionHeading:    { fontSize: 13, fontWeight: FontWeight.heavy, color: colors.textRole.primary, marginTop: Spacing.xs, marginBottom: 10 },
 
   // My Track tab
-  trackBanner:       { backgroundColor: Colors.accentSoft, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.accent + '40', gap: 6 },
-  trackBannerTitle:  { fontSize: FontSize.sm, fontWeight: '900', color: Colors.accent },
-  trackBannerBody:   { fontSize: FontSize.xs, color: Colors.text, lineHeight: 17 },
+  trackBanner:       { backgroundColor: colors.accentSoft, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.accentRole.action + '40', gap: 6 },
+  trackBannerTitle:  { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: colors.accentRole.action },
+  trackBannerBody:   { fontSize: FontSize.xs, color: colors.textRole.primary, lineHeight: 17 },
 
   // My Work tab
-  autoSaveBanner:    { backgroundColor: Colors.greenSoft, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, borderWidth: 1, borderColor: Colors.green + '30' },
-  autoSaveText:      { flex: 1, fontSize: FontSize.xs, color: Colors.text, lineHeight: 17 },
-  workCard:          { backgroundColor: Colors.card, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border, gap: Spacing.sm },
-  workTitle:         { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  workDesc:          { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 17 },
+  autoSaveBanner:    { backgroundColor: colors.successSoft, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, borderWidth: 1, borderColor: colors.accentRole.success + '30' },
+  autoSaveText:      { flex: 1, fontSize: FontSize.xs, color: colors.textRole.primary, lineHeight: 17 },
+  workCard:          { backgroundColor: colors.surface.raised, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.borderRole.subtle, gap: Spacing.sm },
+  workTitle:         { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.textRole.primary },
+  workDesc:          { fontSize: FontSize.xs, color: colors.textRole.secondary, lineHeight: 17 },
   workMeta:          { flexDirection: 'row', gap: Spacing.md, flexWrap: 'wrap' },
-  workMetaText:      { fontSize: FontSize.xs, color: Colors.textMuted },
-  pushedBadge:       { backgroundColor: Colors.greenSoft, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
-  pushedBadgeText:   { fontSize: 9, fontWeight: '700', color: Colors.green },
+  workMetaText:      { fontSize: FontSize.xs, color: colors.textRole.muted },
+  pushedBadge:       { backgroundColor: colors.successSoft, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  pushedBadgeText:   { fontSize: 9, fontWeight: FontWeight.bold, color: colors.accentRole.success },
   tagRow:            { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  tag:               { backgroundColor: Colors.accentSoft, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
-  tagText:           { fontSize: 9, fontWeight: '700', color: Colors.accent },
-  pushCta:           { fontSize: FontSize.xs, color: Colors.accent, fontWeight: '700' },
+  tag:               { backgroundColor: colors.accentSoft, borderRadius: 5, paddingHorizontal: 7, paddingVertical: 3 },
+  tagText:           { fontSize: 9, fontWeight: FontWeight.bold, color: colors.accentRole.action },
+  pushCta:           { fontSize: FontSize.xs, color: colors.accentRole.action, fontWeight: FontWeight.bold },
 
   // All Platforms tab
-  exploreIntro:      { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 19 },
+  exploreIntro:      { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 19 },
   fieldGroup:        { gap: 6 },
-  fieldHeader:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.card, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border, borderLeftWidth: 4 },
-  fieldName:         { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  fieldCount:        { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 1 },
-  fieldChevron:      { fontSize: 11, color: Colors.textMuted },
+  fieldHeader:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: colors.surface.raised, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.borderRole.subtle, borderLeftWidth: 4 },
+  fieldName:         { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.textRole.primary },
+  fieldCount:        { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 1 },
+  fieldChevron:      { fontSize: 11, color: colors.textRole.muted },
   fieldContent:      { paddingLeft: 4, gap: 4 },
 
   // shared empty state
   emptyState:        { alignItems: 'center', paddingVertical: Spacing.xxl, gap: Spacing.sm },
-  emptyTitle:        { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text },
-  emptySub:          { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20 },
+  emptyTitle:        { fontSize: FontSize.lg, fontWeight: FontWeight.black, color: colors.textRole.primary },
+  emptySub:          { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center', lineHeight: 20 },
 });
 
 // Connect modal styles
-const mStyle = StyleSheet.create({
-  header:            { backgroundColor: Colors.card, padding: Platform.OS === 'web' ? 14 : 12, alignItems: 'center', borderBottomWidth: 1, borderBottomColor: Colors.border, gap: 3 },
-  closeBtn:          { position: 'absolute', top: Spacing.lg, right: Spacing.lg, width: 32, height: 32, borderRadius: 16, backgroundColor: Colors.bg, alignItems: 'center', justifyContent: 'center' },
-  closeX:            { color: Colors.textSoft, fontWeight: '700', fontSize: 16 },
-  title:             { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
-  subtitle:          { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center' },
-  sectionLabel:      { fontSize: 13, fontWeight: '800', color: Colors.text, marginBottom: 10 },
-  modeCard:          { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.card, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border },
-  modeTitle:         { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text, marginBottom: 3 },
-  modeSub:           { fontSize: FontSize.xs, color: Colors.textSoft, lineHeight: 16 },
-  chevron:           { fontSize: 20, color: Colors.textMuted },
-  backBtn:           { color: Colors.accent, fontWeight: '700', fontSize: FontSize.sm, marginBottom: 4 },
-  inputLabel:        { fontSize: FontSize.xs, fontWeight: '800', color: Colors.text, marginBottom: 4 },
-  input:             { backgroundColor: Colors.card, borderRadius: Radius.md, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text },
-  attributionBox:    { backgroundColor: Colors.accentSoft, borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1, borderColor: Colors.accent + '30' },
-  attributionText:   { fontSize: FontSize.xs, color: Colors.text, lineHeight: 17 },
-  submitBtn:         { backgroundColor: Colors.accent, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
-  submitText:        { color: '#fff', fontWeight: '700', fontSize: 11 },
+const makeModalStyles = (colors: ColorPalette) => StyleSheet.create({
+  header:            { backgroundColor: colors.surface.raised, padding: Platform.OS === 'web' ? 14 : 12, alignItems: 'center', borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle, gap: 3 },
+  closeBtn:          { position: 'absolute', top: Spacing.lg, right: Spacing.lg, width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surface.base, alignItems: 'center', justifyContent: 'center' },
+  closeX:            { color: colors.textRole.secondary, fontWeight: FontWeight.bold, fontSize: 16 },
+  title:             { fontSize: FontSize.xl, fontWeight: FontWeight.black, color: colors.textRole.primary },
+  subtitle:          { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center' },
+  sectionLabel:      { fontSize: 13, fontWeight: FontWeight.heavy, color: colors.textRole.primary, marginBottom: 10 },
+  modeCard:          { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: colors.surface.raised, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  modeTitle:         { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.textRole.primary, marginBottom: 3 },
+  modeSub:           { fontSize: FontSize.xs, color: colors.textRole.secondary, lineHeight: 16 },
+  chevron:           { fontSize: 20, color: colors.textRole.muted },
+  backBtn:           { color: colors.accentRole.action, fontWeight: FontWeight.bold, fontSize: FontSize.sm, marginBottom: 4 },
+  inputLabel:        { fontSize: FontSize.xs, fontWeight: FontWeight.heavy, color: colors.textRole.primary, marginBottom: 4 },
+  input:             { backgroundColor: colors.surface.raised, borderRadius: Radius.md, borderWidth: 1.5, borderColor: colors.borderRole.subtle, padding: Spacing.md, fontSize: FontSize.sm, color: colors.textRole.primary },
+  attributionBox:    { backgroundColor: colors.accentSoft, borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1, borderColor: colors.accentRole.action + '30' },
+  attributionText:   { fontSize: FontSize.xs, color: colors.textRole.primary, lineHeight: 17 },
+  submitBtn:         { backgroundColor: colors.accentRole.action, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
+  submitText:        { color: colors.textRole.inverse, fontWeight: FontWeight.bold, fontSize: 11 },
   openProfile:       { alignSelf: 'flex-start' },
-  openProfileText:   { color: Colors.accent, fontWeight: '700', fontSize: FontSize.sm },
+  openProfileText:   { color: colors.accentRole.action, fontWeight: FontWeight.bold, fontSize: FontSize.sm },
   doneBox:           { alignItems: 'center', paddingVertical: Spacing.xxl, gap: Spacing.md },
-  doneText:          { fontSize: FontSize.lg, fontWeight: '800', color: Colors.text },
+  doneText:          { fontSize: FontSize.lg, fontWeight: FontWeight.heavy, color: colors.textRole.primary },
 });
 
 // Push modal styles
-const pushSt = StyleSheet.create({
-  topBar:            { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: Spacing.lg, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.card },
-  heading:           { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text },
-  closeX:            { color: Colors.textSoft, fontWeight: '700', fontSize: 18 },
-  itemCard:          { backgroundColor: Colors.accentSoft, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.accent + '30' },
-  itemTitle:         { fontSize: FontSize.sm, fontWeight: '900', color: Colors.accent },
-  itemMeta:          { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
-  sectionLabel:      { fontSize: 13, fontWeight: '800', color: Colors.text, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 },
-  platformRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.card, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border },
-  platformRowOn:     { borderColor: Colors.accent, backgroundColor: Colors.accentSoft },
-  platformName:      { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  platformUser:      { fontSize: FontSize.xs, color: Colors.textSoft },
-  postedBadge:       { fontSize: FontSize.xs, color: Colors.green, fontWeight: '800' },
-  checkbox:          { width: 24, height: 24, borderRadius: 6, borderWidth: 2, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },
-  checkboxOn:        { backgroundColor: Colors.accent, borderColor: Colors.accent },
-  captionInput:      { backgroundColor: Colors.bg, borderRadius: Radius.md, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text, height: 110 },
-  attributionNote:   { backgroundColor: Colors.accentSoft, borderRadius: Radius.md, padding: Spacing.sm },
-  attributionNoteText: { fontSize: FontSize.xs, color: Colors.accent, lineHeight: 16 },
-  packageBtn:        { fontSize: FontSize.xs, color: Colors.accent, fontWeight: '800' },
-  noAccounts:        { backgroundColor: Colors.bg, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: Colors.border, alignItems: 'center' },
-  noAccountsText:    { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20 },
-  submitBtn:         { backgroundColor: Colors.accent, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
-  submitText:        { color: '#fff', fontWeight: '700', fontSize: 11 },
+const makePushStyles = (colors: ColorPalette) => StyleSheet.create({
+  topBar:            { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: Spacing.lg, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised },
+  heading:           { fontSize: FontSize.lg, fontWeight: FontWeight.black, color: colors.textRole.primary },
+  closeX:            { color: colors.textRole.secondary, fontWeight: FontWeight.bold, fontSize: 18 },
+  itemCard:          { backgroundColor: colors.accentSoft, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.accentRole.action + '30' },
+  itemTitle:         { fontSize: FontSize.sm, fontWeight: FontWeight.black, color: colors.accentRole.action },
+  itemMeta:          { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
+  sectionLabel:      { fontSize: 13, fontWeight: FontWeight.heavy, color: colors.textRole.primary, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 },
+  platformRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: colors.surface.raised, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.borderRole.subtle },
+  platformRowOn:     { borderColor: colors.accentRole.action, backgroundColor: colors.accentSoft },
+  platformName:      { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: colors.textRole.primary },
+  platformUser:      { fontSize: FontSize.xs, color: colors.textRole.secondary },
+  postedBadge:       { fontSize: FontSize.xs, color: colors.accentRole.success, fontWeight: FontWeight.heavy },
+  checkbox:          { width: 24, height: 24, borderRadius: 6, borderWidth: 2, borderColor: colors.borderRole.subtle, alignItems: 'center', justifyContent: 'center' },
+  checkboxOn:        { backgroundColor: colors.accentRole.action, borderColor: colors.accentRole.action },
+  captionInput:      { backgroundColor: colors.surface.base, borderRadius: Radius.md, borderWidth: 1.5, borderColor: colors.borderRole.subtle, padding: Spacing.md, fontSize: FontSize.sm, color: colors.textRole.primary, height: 110 },
+  attributionNote:   { backgroundColor: colors.accentSoft, borderRadius: Radius.md, padding: Spacing.sm },
+  attributionNoteText: { fontSize: FontSize.xs, color: colors.accentRole.action, lineHeight: 16 },
+  packageBtn:        { fontSize: FontSize.xs, color: colors.accentRole.action, fontWeight: FontWeight.heavy },
+  noAccounts:        { backgroundColor: colors.surface.base, borderRadius: 11, padding: Platform.OS === 'web' ? 14 : 12, borderWidth: 1, borderColor: colors.borderRole.subtle, alignItems: 'center' },
+  noAccountsText:    { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center', lineHeight: 20 },
+  submitBtn:         { backgroundColor: colors.accentRole.action, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
+  submitText:        { color: colors.textRole.inverse, fontWeight: FontWeight.bold, fontSize: 11 },
 });
-

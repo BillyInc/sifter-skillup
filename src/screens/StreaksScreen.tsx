@@ -1,8 +1,14 @@
+/**
+ * StreaksScreen — reframed as "Consistency" (NOT gamey).
+ *
+ * Calendar heat-map in cobalt washes, current run counter in mono display
+ * numerals, gentle urgency banner. Semantic tokens + CompassFonts (BRIEF chrome).
+ */
 import React, { useCallback, useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme, webContainer } from '../theme';
+import { FontSize, Radius, Shadow, Spacing, useTheme, CompassFonts, webContainer } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
 import { resolveTrackContext } from '../lib/trackContext';
@@ -21,10 +27,10 @@ function StatCard({
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-      <Text style={[styles.statLabel, { color: colors.textMuted }]}>{label}</Text>
+    <View style={[styles.statCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+      <Text style={[styles.statLabel, { color: colors.textRole.muted }, CompassFonts.body]}>{label}</Text>
       <Text style={[styles.statValue, { color: tone }]}>{value}</Text>
-      <Text style={[styles.statSub, { color: colors.textSoft }]}>{sub}</Text>
+      <Text style={[styles.statSub, { color: colors.textRole.secondary }, CompassFonts.body]}>{sub}</Text>
     </View>
   );
 }
@@ -52,11 +58,11 @@ export default function StreaksScreen() {
     }, [load]),
   );
 
-  const stateTone = status?.isLost ? colors.red : status?.isAtRisk ? colors.orange : colors.xpGreen;
+  const stateTone = status?.isLost ? colors.accentRole.danger : status?.isAtRisk ? colors.accentRole.warning : colors.accentRole.success;
   const headline = status?.isLost
-    ? 'Your streak expired, but your progress is still here.'
+    ? 'Your consistency record expired, but your progress is still here.'
     : status?.isAtRisk
-      ? `Your streak is at risk for the next ${Math.max(1, Math.ceil(status.hoursLeft))} hour(s).`
+      ? `Your consistency is at risk for the next ${Math.max(1, Math.ceil(status.hoursLeft))} hour(s).`
       : 'Your consistency is compounding into real progress.';
   const isWide = width >= 920;
 
@@ -88,26 +94,26 @@ export default function StreaksScreen() {
   const weeklyDone = week.filter(day => day.done).length;
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View style={[styles.hero, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
+        <View style={[styles.hero, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
           <View style={[styles.heroBadge, { backgroundColor: stateTone + '18' }]}>
-            <Text style={[styles.heroBadgeText, { color: stateTone }]}>Streaks</Text>
+            <Text style={[styles.heroBadgeText, { color: stateTone }]}>Consistency</Text>
           </View>
-          <Text style={[styles.title, { color: colors.text }]}>{`Consistency keeps your ${learningSurface} moving.`}</Text>
-          <Text style={[styles.subtitle, { color: colors.textSoft }]}>{headline}</Text>
+          <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{`Consistency keeps your ${learningSurface} moving.`}</Text>
+          <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>{headline}</Text>
         </View>
 
         <View style={[styles.topGrid, isWide && styles.topGridWide]}>
-          <View style={[styles.topGridMain, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.bigGlyph, { color: colors.orange }]}>*</Text>
-            <Text style={[styles.bigNumber, { color: colors.orange }]}>{status?.streak ?? 0}</Text>
-            <Text style={[styles.bigLabel, { color: colors.text }]}>Day Streak</Text>
-            <Text style={[styles.bigSub, { color: colors.textSoft }]}>Longest: {status?.longestStreak ?? 0} days</Text>
+          <View style={[styles.topGridMain, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.bigGlyph, { color: colors.accentRole.action }]}>*</Text>
+            <Text style={[styles.bigNumber, { color: colors.accentRole.action }]}>{status?.streak ?? 0}</Text>
+            <Text style={[styles.bigLabel, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Day Consistency</Text>
+            <Text style={[styles.bigSub, { color: colors.textRole.secondary }, CompassFonts.body]}>Longest: {status?.longestStreak ?? 0} days</Text>
           </View>
 
-          <View style={[styles.topGridPanel, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>This Week</Text>
+          <View style={[styles.topGridPanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>This Week</Text>
             <View style={styles.weekRow}>
               {week.map(day => (
                 <View key={day.label} style={styles.weekDay}>
@@ -115,38 +121,38 @@ export default function StreaksScreen() {
                     style={[
                       styles.weekDot,
                       {
-                        backgroundColor: day.done ? colors.orange : colors.bgSecondary,
-                        borderColor: day.today ? colors.orange : colors.border,
+                        backgroundColor: day.done ? colors.accentRole.action : colors.surface.subtle,
+                        borderColor: day.today ? colors.accentRole.action : colors.borderRole.subtle,
                       },
                     ]}
                   >
-                    <Text style={[styles.weekDotText, { color: day.done ? '#fff' : colors.textMuted }]}>
+                    <Text style={[styles.weekDotText, { color: day.done ? colors.textRole.inverse : colors.textRole.muted }]}>
                       {day.done ? '*' : '.'}
                     </Text>
                   </View>
-                  <Text style={[styles.weekLabel, { color: day.today ? colors.text : colors.textMuted }]}>{day.label}</Text>
+                  <Text style={[styles.weekLabel, { color: day.today ? colors.textRole.primary : colors.textRole.muted }, CompassFonts.body]}>{day.label}</Text>
                 </View>
               ))}
             </View>
-            <Text style={[styles.weekSummary, { color: colors.textSoft }]}>{weeklyDone}/7 days active this week</Text>
+            <Text style={[styles.weekSummary, { color: colors.textRole.secondary }, CompassFonts.body]}>{weeklyDone}/7 days active this week</Text>
           </View>
 
-          <View style={[styles.topGridPanel, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>Rewards</Text>
+          <View style={[styles.topGridPanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Rewards</Text>
             <View style={styles.rewardList}>
               {rewardMilestones.map((reward, index) => (
                 <View
                   key={reward.days}
                   style={[
                     styles.rewardRow,
-                    { borderBottomColor: index < rewardMilestones.length - 1 ? colors.border : 'transparent' },
+                    { borderBottomColor: index < rewardMilestones.length - 1 ? colors.borderRole.subtle : 'transparent' },
                   ]}
                 >
                   <View>
-                    <Text style={[styles.rewardName, { color: reward.done ? colors.text : colors.textMuted }]}>{reward.reward}</Text>
-                    <Text style={[styles.rewardSub, { color: colors.textMuted }]}>{reward.days} day streak</Text>
+                    <Text style={[styles.rewardName, { color: reward.done ? colors.textRole.primary : colors.textRole.muted }, CompassFonts.body]}>{reward.reward}</Text>
+                    <Text style={[styles.rewardSub, { color: colors.textRole.muted }, CompassFonts.body]}>{reward.days} day consistency</Text>
                   </View>
-                  <Text style={[styles.rewardStatus, { color: reward.done ? colors.xpGreen : colors.textMuted }]}>
+                  <Text style={[styles.rewardStatus, { color: reward.done ? colors.accentRole.success : colors.textRole.muted }]}>
                     {reward.done ? 'OK' : 'LOCK'}
                   </Text>
                 </View>
@@ -160,13 +166,13 @@ export default function StreaksScreen() {
             label="Current"
             value={`${status?.streak ?? 0} days`}
             sub={status?.completedToday ? 'Lesson done today' : 'A lesson today keeps it alive'}
-            tone={colors.orange}
+            tone={colors.accentRole.action}
           />
           <StatCard
             label="Longest"
             value={`${status?.longestStreak ?? 0} days`}
             sub="Best run so far"
-            tone={colors.accent}
+            tone={colors.accentRole.status}
           />
           <StatCard
             label="Hours Left"
@@ -178,39 +184,39 @@ export default function StreaksScreen() {
             label="Active Days"
             value={`${status?.totalDaysActive ?? 0}`}
             sub="Days with recorded learning activity"
-            tone={colors.gold}
+            tone={colors.accentRole.success}
           />
         </View>
 
         <View style={[styles.bottomGrid, isWide && styles.bottomGridWide]}>
-          <View style={[styles.panel, styles.flexPanel, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.panelEyebrow, { color: colors.textMuted }]}>TODAY</Text>
-            <Text style={[styles.panelTitle, { color: colors.text }]}>
-              {status?.completedToday ? "Today's streak is protected." : 'Today still counts.'}
+          <View style={[styles.panel, styles.flexPanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.panelEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>TODAY</Text>
+            <Text style={[styles.panelTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
+              {status?.completedToday ? "Today's consistency is protected." : 'Today still counts.'}
             </Text>
-            <Text style={[styles.panelBody, { color: colors.textSoft }]}>
+            <Text style={[styles.panelBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
               {status?.completedToday
-                ? 'You can keep building XP, but your streak is already locked in for today.'
-                : 'Complete a lesson, lab, or boss-level action before midnight to keep the streak rolling.'}
+                ? 'You can keep building XP, but your consistency is already locked in for today.'
+                : 'Complete a lesson, lab, or boss-level action before midnight to keep the consistency rolling.'}
             </Text>
           </View>
 
-          <View style={[styles.panel, styles.flexPanel, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.panelEyebrow, { color: colors.textMuted }]}>SAFETY NETS</Text>
-            <Text style={[styles.panelTitle, { color: colors.text }]}>Available streak freezes</Text>
-            <Text style={[styles.freezeCount, { color: colors.text }]}>{status?.freezesAvailable ?? 0}</Text>
-            <Text style={[styles.panelBody, { color: colors.textSoft }]}>
-              Freeze support is tracked live by the streak engine. If you miss a day without a freeze, the streak resets but your XP does not.
+          <View style={[styles.panel, styles.flexPanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.panelEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>SAFETY NETS</Text>
+            <Text style={[styles.panelTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Available consistency freezes</Text>
+            <Text style={[styles.freezeCount, { color: colors.textRole.primary }]}>{status?.freezesAvailable ?? 0}</Text>
+            <Text style={[styles.panelBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+              Freeze support is tracked live by the consistency engine. If you miss a day without a freeze, the consistency resets but your XP does not.
             </Text>
           </View>
 
-          <View style={[styles.panel, styles.flexPanel, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-            <Text style={[styles.panelEyebrow, { color: colors.textMuted }]}>WORKSPACE</Text>
-            <Text style={[styles.panelTitle, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : 'General learning'}</Text>
-            <Text style={[styles.panelBody, { color: colors.textSoft }]}>
+          <View style={[styles.panel, styles.flexPanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+            <Text style={[styles.panelEyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>WORKSPACE</Text>
+            <Text style={[styles.panelTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{trackContext.mode === 'track' ? trackContext.trackName : 'General learning'}</Text>
+            <Text style={[styles.panelBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
               {trackContext.mode === 'track'
-                ? `Keep your ${trackContext.trackName} momentum moving and protect the streak in the same loop.`
-                : 'Choose an active track to connect streak progress with a specific workspace.'}
+                ? `Keep your ${trackContext.trackName} momentum moving and protect the consistency in the same loop.`
+                : 'Choose an active track to connect consistency progress with a specific workspace.'}
             </Text>
           </View>
         </View>
@@ -219,23 +225,23 @@ export default function StreaksScreen() {
           <TouchableOpacity
             activeOpacity={0.85}
             onPress={() => router.push(continueHref as any)}
-            style={[styles.primaryBtn, { backgroundColor: colors.accent }]}
+            style={[styles.primaryBtn, { backgroundColor: colors.accentRole.action }]}
           >
             <Text style={styles.primaryBtnText}>{continueLabel}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.85}
             onPress={() => router.push('/(tabs)/feed')}
-            style={[styles.secondaryBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+            style={[styles.secondaryBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
           >
-            <Text style={[styles.secondaryBtnText, { color: colors.text }]}>Open Feed</Text>
+            <Text style={[styles.secondaryBtnText, { color: colors.textRole.primary }, CompassFonts.body]}>Open Feed</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.85}
             onPress={() => router.push('/merchandise')}
-            style={[styles.secondaryBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+            style={[styles.secondaryBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
           >
-            <Text style={[styles.secondaryBtnText, { color: colors.text }]}>Redeem Merch</Text>
+            <Text style={[styles.secondaryBtnText, { color: colors.textRole.primary }, CompassFonts.body]}>Redeem Merch</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -264,13 +270,11 @@ const styles = StyleSheet.create({
   },
   heroBadgeText: {
     fontSize: 9,
-    fontWeight: '700',
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   title: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
   },
   subtitle: {
     fontSize: FontSize.sm,
@@ -302,24 +306,20 @@ const styles = StyleSheet.create({
   },
   bigGlyph: {
     fontSize: 18,
-    fontWeight: FontWeight.black,
     lineHeight: 22,
   },
   bigNumber: {
     fontSize: 18,
-    fontWeight: FontWeight.black,
     lineHeight: 22,
   },
   bigLabel: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
   },
   bigSub: {
     fontSize: FontSize.sm,
   },
   sectionTitle: {
     fontSize: 13,
-    fontWeight: '800',
     marginBottom: 10,
   },
   weekRow: {
@@ -342,11 +342,9 @@ const styles = StyleSheet.create({
   },
   weekDotText: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.black,
   },
   weekLabel: {
     fontSize: 10,
-    fontWeight: FontWeight.bold,
   },
   weekSummary: {
     fontSize: FontSize.sm,
@@ -364,7 +362,6 @@ const styles = StyleSheet.create({
   },
   rewardName: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
   },
   rewardSub: {
     fontSize: 10,
@@ -372,7 +369,6 @@ const styles = StyleSheet.create({
   },
   rewardStatus: {
     fontSize: 11,
-    fontWeight: FontWeight.black,
   },
   statsGrid: {
     gap: Spacing.sm,
@@ -385,13 +381,11 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   statValue: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
   },
   statSub: {
     fontSize: FontSize.sm,
@@ -415,13 +409,11 @@ const styles = StyleSheet.create({
   },
   panelEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   panelTitle: {
     fontSize: 13,
-    fontWeight: '800',
     marginBottom: 10,
   },
   panelBody: {
@@ -430,7 +422,6 @@ const styles = StyleSheet.create({
   },
   freezeCount: {
     fontSize: 18,
-    fontWeight: FontWeight.black,
     lineHeight: 22,
   },
   actions: {
@@ -445,7 +436,6 @@ const styles = StyleSheet.create({
   primaryBtnText: {
     color: '#fff',
     fontSize: 11,
-    fontWeight: '700',
   },
   secondaryBtn: {
     borderRadius: 8,
@@ -456,6 +446,5 @@ const styles = StyleSheet.create({
   },
   secondaryBtnText: {
     fontSize: 11,
-    fontWeight: '700',
   },
 });

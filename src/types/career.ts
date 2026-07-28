@@ -226,6 +226,8 @@ export interface OpportunityFilter {
   institutionType?: InstitutionType;
   /** Region grouping (e.g. 'nigeria' | 'uk' | 'ireland' | 'remote' | ...). */
   region?: string;
+  /** Free-text search query (title/role matching). */
+  query?: string;
 }
 
 // ─── Scholarships (secondary) ─────────────────────────────────
@@ -816,4 +818,36 @@ export interface MappingFeedback {
   expertVerified?: boolean;
   createdAt: string;
   resolvedAt?: string | null;
+}
+
+// ─── Search UI types ────────────────────────────────────────────
+
+export type SearchResultType =
+  | "programme"
+  | "domain"
+  | "role"
+  | "university"
+  | "scholarship"
+  | "opportunity"
+  | "admin";
+
+export type SearchScope = "all" | "programmes" | "domains" | "roles";
+
+export interface SearchResult {
+  id: string;
+  type: SearchResultType;
+  title: string;
+  subtitle?: string;
+  /** Mono metadata line (e.g. salary range, cut-off, role count). */
+  meta?: string;
+  /** Feather icon name for the left icon slot. */
+  icon?: string;
+  /** Source attribution (e.g. "JAMB 2025", "NUC CCMAS"). */
+  source?: string;
+  /** ISO date string for freshness display. */
+  freshness?: string;
+  /** When true, render with lock icon and reduced opacity. */
+  locked?: boolean;
+  /** When true, the row is not navigable. */
+  disabled?: boolean;
 }

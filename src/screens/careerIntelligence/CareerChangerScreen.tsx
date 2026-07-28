@@ -49,6 +49,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
+  CompassFonts,
   type ColorPalette,
 } from "@/theme";
 
@@ -343,7 +344,7 @@ export function CareerChangerScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={styles.scroll}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -353,19 +354,19 @@ export function CareerChangerScreen() {
         hitSlop={10}
         style={styles.back}
       >
-        <Text style={[styles.backText, { color: colors.accent }]}>← Back</Text>
+        <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>← Back</Text>
       </TouchableOpacity>
 
-      <Text style={[styles.eyebrow, { color: colors.textMuted }]}>
+      <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
         CAREER CHANGE
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Fields you can move into
       </Text>
 
       {/* ── Scenario selector ───────────────────────────────────── */}
       <View style={styles.scenarioSelector}>
-        <Text style={[styles.scenarioLabel, { color: colors.text }]}>
+        <Text style={[styles.scenarioLabel, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
           Choose your scenario:
         </Text>
         <View style={styles.scenarioTabs}>
@@ -377,7 +378,7 @@ export function CareerChangerScreen() {
               scenario === 'A' ? styles.scenarioTabActive : styles.scenarioTabInactive,
             ]}
           >
-            <Text style={[styles.scenarioTabText, { color: scenario === 'A' ? colors.accent : colors.text }]}>
+            <Text style={[styles.scenarioTabText, { color: scenario === 'A' ? colors.accentRole.action : colors.textRole.primary }, CompassFonts.bodyMedium]}>
               Explore Options
             </Text>
           </TouchableOpacity>
@@ -389,7 +390,7 @@ export function CareerChangerScreen() {
               scenario === 'B1' ? styles.scenarioTabActive : styles.scenarioTabInactive,
             ]}
           >
-            <Text style={[styles.scenarioTabText, { color: scenario === 'B1' ? colors.accent : colors.text }]}>
+            <Text style={[styles.scenarioTabText, { color: scenario === 'B1' ? colors.accentRole.action : colors.textRole.primary }, CompassFonts.bodyMedium]}>
               Target Field Gap
             </Text>
           </TouchableOpacity>
@@ -401,7 +402,7 @@ export function CareerChangerScreen() {
               scenario === 'B2' ? styles.scenarioTabActive : styles.scenarioTabInactive,
             ]}
           >
-            <Text style={[styles.scenarioTabText, { color: scenario === 'B2' ? colors.accent : colors.text }]}>
+            <Text style={[styles.scenarioTabText, { color: scenario === 'B2' ? colors.accentRole.action : colors.textRole.primary }, CompassFonts.bodyMedium]}>
               Target Role Gap
             </Text>
           </TouchableOpacity>
@@ -410,17 +411,17 @@ export function CareerChangerScreen() {
 
       {/* ── Background picker ─────────────────────────────────── */}
       <View style={styles.pickerBlock}>
-        <Text style={[styles.pickerLabel, { color: colors.text }]}>
+        <Text style={[styles.pickerLabel, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
           What did you study or do?
         </Text>
-        <Text style={[styles.pickerHelp, { color: colors.textMuted }]}>
-          Tell us your background field and we’ll find the fields your existing
+        <Text style={[styles.pickerHelp, { color: colors.textRole.muted }, CompassFonts.body]}>
+          Tell us your background field and we'll find the fields your existing
           skills transfer into.
         </Text>
         <View
           style={[
             styles.searchBox,
-            { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+            { backgroundColor: colors.surface.base, borderColor: colors.borderRole.subtle },
           ]}
         >
           <Text style={styles.searchIcon}>🔎</Text>
@@ -428,15 +429,15 @@ export function CareerChangerScreen() {
             value={query}
             onChangeText={setQuery}
             placeholder="e.g. Accounting, Nursing, Law…"
-            placeholderTextColor={colors.textMuted}
-            style={[styles.searchInput, { color: colors.text }]}
+            placeholderTextColor={colors.textRole.muted}
+            style={[styles.searchInput, { color: colors.textRole.primary }, CompassFonts.body]}
             autoCapitalize="none"
             autoCorrect={false}
             returnKeyType="search"
           />
           {query.length > 0 ? (
             <TouchableOpacity onPress={() => setQuery("")} hitSlop={8}>
-              <Text style={[styles.clear, { color: colors.textMuted }]}>✕</Text>
+              <Text style={[styles.clear, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>✕</Text>
             </TouchableOpacity>
           ) : null}
         </View>
@@ -460,17 +461,17 @@ export function CareerChangerScreen() {
                     style={[
                       styles.chip,
                       {
-                        backgroundColor: colors.accentSoft,
-                        borderColor: colors.border,
+                        backgroundColor: `${colors.accentRole.action}14`,
+                        borderColor: colors.borderRole.subtle,
                       },
                     ]}
                   >
-                    <Text style={[styles.chipText, { color: colors.text }]}>
+                    <Text style={[styles.chipText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
                       {d.name}
                     </Text>
                     {d.cluster ? (
                       <Text
-                        style={[styles.chipCluster, { color: colors.textMuted }]}
+                        style={[styles.chipCluster, { color: colors.textRole.muted }, CompassFonts.body]}
                       >
                         {d.cluster}
                       </Text>
@@ -488,10 +489,10 @@ export function CareerChangerScreen() {
             <View
               style={[
                 styles.selectedPill,
-                { backgroundColor: colors.greenSoft, borderColor: colors.green },
+                { backgroundColor: `${colors.accentRole.success}14`, borderColor: colors.accentRole.success },
               ]}
             >
-              <Text style={[styles.selectedText, { color: colors.green }]}>
+              <Text style={[styles.selectedText, { color: colors.accentRole.success }, CompassFonts.bodyBold]}>
                 Background: {background.name}
               </Text>
             </View>
@@ -500,7 +501,7 @@ export function CareerChangerScreen() {
               hitSlop={8}
               activeOpacity={0.7}
             >
-              <Text style={[styles.change, { color: colors.accent }]}>
+              <Text style={[styles.change, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
                 Change
               </Text>
             </TouchableOpacity>
@@ -561,14 +562,14 @@ function IntroCard({ colors }: { colors: ColorPalette }) {
   return (
     <SifterCard style={styles.introCard}>
       <Text style={styles.introIcon}>🧭</Text>
-      <Text style={[styles.introTitle, { color: colors.text }]}>
-        Changing direction isn’t starting from zero
+      <Text style={[styles.introTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        Changing direction isn't starting from zero
       </Text>
-      <Text style={[styles.introBody, { color: colors.textSoft }]}>
-        Pick the field you studied or worked in above. We’ll rank the fields you
+      <Text style={[styles.introBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
+        Pick the field you studied or worked in above. We'll rank the fields you
         can realistically move into — ordered by how much of your existing skill
         set transfers — and show you exactly which skills carry over. Some moves
-        are short sideways steps; others are bigger, honest stretches. We’ll tell
+        are short sideways steps; others are bigger, honest stretches. We'll tell
         you which is which.
       </Text>
     </SifterCard>
@@ -601,8 +602,8 @@ function PivotResults({
         style={[
           styles.banner,
           {
-            backgroundColor: isStretch ? colors.goldSoft : colors.greenSoft,
-            borderColor: isStretch ? colors.gold : colors.green,
+            backgroundColor: isStretch ? `${colors.accentRole.status}14` : `${colors.accentRole.success}14`,
+            borderColor: isStretch ? colors.accentRole.status : colors.accentRole.success,
           },
         ]}
       >
@@ -610,7 +611,7 @@ function PivotResults({
         <Text
           style={[
             styles.bannerText,
-            { color: isStretch ? colors.gold : colors.green },
+            { color: isStretch ? colors.accentRole.status : colors.accentRole.success }, CompassFonts.bodyMedium,
           ]}
         >
           {isStretch
@@ -625,10 +626,10 @@ function PivotResults({
         const extra = move.sharedSkills.length - shared.length;
         const barColor =
           move.overlapScore >= 0.4
-            ? colors.green
+            ? colors.accentRole.success
             : move.overlapScore >= STRETCH_THRESHOLD
-              ? colors.gold
-              : colors.orange;
+              ? colors.accentRole.status
+              : colors.accentRole.warning;
 
         return (
           <PressableCard
@@ -639,14 +640,14 @@ function PivotResults({
               <View style={styles.moveHeader}>
                 <View style={styles.moveTitleWrap}>
                   <Text
-                    style={[styles.moveName, { color: colors.text }]}
+                    style={[styles.moveName, { color: colors.textRole.primary }, CompassFonts.displayBold]}
                     numberOfLines={2}
                   >
                     {move.domainName}
                   </Text>
                   {move.cluster ? (
                     <Text
-                      style={[styles.moveCluster, { color: colors.textMuted }]}
+                      style={[styles.moveCluster, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}
                     >
                       {move.cluster}
                     </Text>
@@ -656,10 +657,10 @@ function PivotResults({
                   <View
                     style={[
                       styles.eliteBadge,
-                      { backgroundColor: colors.goldSoft },
+                      { backgroundColor: `${colors.accentRole.status}14` },
                     ]}
                   >
-                    <Text style={[styles.eliteText, { color: colors.gold }]}>
+                    <Text style={[styles.eliteText, { color: colors.accentRole.status }, CompassFonts.bodySemibold]}>
                       ⭐ Elite
                     </Text>
                   </View>
@@ -683,7 +684,7 @@ function PivotResults({
               {/* Shared skills that carry over. */}
               {shared.length > 0 ? (
                 <View style={styles.sharedWrap}>
-                  <Text style={[styles.sharedLabel, { color: colors.textMuted }]}>
+                  <Text style={[styles.sharedLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
                     shared:
                   </Text>
                   {shared.map((s) => (
@@ -691,18 +692,18 @@ function PivotResults({
                       key={s}
                       style={[
                         styles.sharedChip,
-                        { backgroundColor: colors.bgSecondary },
+                        { backgroundColor: colors.surface.subtle },
                       ]}
                     >
                       <Text
-                        style={[styles.sharedChipText, { color: colors.textSoft }]}
+                        style={[styles.sharedChipText, { color: colors.textRole.secondary }, CompassFonts.bodyMedium]}
                       >
                         {s}
                       </Text>
                     </View>
                   ))}
                   {extra > 0 ? (
-                    <Text style={[styles.sharedMore, { color: colors.textMuted }]}>
+                    <Text style={[styles.sharedMore, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
                       +{extra} more
                     </Text>
                   ) : null}
@@ -735,16 +736,16 @@ function GapAnalysisResult({
           {
             backgroundColor:
               data.readiness === 'ready'
-                ? colors.greenSoft
+                ? `${colors.accentRole.success}14`
                 : data.readiness === 'bridge'
-                  ? colors.goldSoft
-                  : colors.orangeSoft,
+                  ? `${colors.accentRole.status}14`
+                  : `${colors.accentRole.warning}14`,
             borderColor:
               data.readiness === 'ready'
-                ? colors.green
+                ? colors.accentRole.success
                 : data.readiness === 'bridge'
-                  ? colors.gold
-                  : colors.orange,
+                  ? colors.accentRole.status
+                  : colors.accentRole.warning,
           },
         ]}
       >
@@ -757,11 +758,11 @@ function GapAnalysisResult({
             {
               color:
                 data.readiness === 'ready'
-                  ? colors.green
+                  ? colors.accentRole.success
                   : data.readiness === 'bridge'
-                    ? colors.gold
-                    : colors.orange,
-            },
+                    ? colors.accentRole.status
+                    : colors.accentRole.warning,
+            }, CompassFonts.bodyMedium,
           ]}
         >
           {data.readiness === 'ready'
@@ -779,7 +780,7 @@ function GapAnalysisResult({
           <View style={styles.skillsList}>
             {data.have.map((skill) => (
               <View key={skill} style={styles.skillItem}>
-                <Text style={styles.skillText}>• {skill}</Text>
+                <Text style={[styles.skillText, CompassFonts.body]}>• {skill}</Text>
               </View>
             ))}
           </View>
@@ -793,7 +794,7 @@ function GapAnalysisResult({
           <View style={styles.skillsList}>
             {data.bridge.map((skill) => (
               <View key={skill} style={styles.skillItem}>
-                <Text style={styles.skillText}>• {skill}</Text>
+                <Text style={[styles.skillText, CompassFonts.body]}>• {skill}</Text>
               </View>
             ))}
           </View>
@@ -830,16 +831,16 @@ function RoleGapAnalysisResult({
           {
             backgroundColor:
               data.readiness === 'ready'
-                ? colors.greenSoft
+                ? `${colors.accentRole.success}14`
                 : data.readiness === 'bridge'
-                  ? colors.goldSoft
-                  : colors.orangeSoft,
+                  ? `${colors.accentRole.status}14`
+                  : `${colors.accentRole.warning}14`,
             borderColor:
               data.readiness === 'ready'
-                ? colors.green
+                ? colors.accentRole.success
                 : data.readiness === 'bridge'
-                  ? colors.gold
-                  : colors.orange,
+                  ? colors.accentRole.status
+                  : colors.accentRole.warning,
           },
         ]}
       >
@@ -852,11 +853,11 @@ function RoleGapAnalysisResult({
             {
               color:
                 data.readiness === 'ready'
-                  ? colors.green
+                  ? colors.accentRole.success
                   : data.readiness === 'bridge'
-                    ? colors.gold
-                    : colors.orange,
-            },
+                    ? colors.accentRole.status
+                    : colors.accentRole.warning,
+            }, CompassFonts.bodyMedium,
           ]}
         >
           {data.readiness === 'ready'
@@ -874,7 +875,7 @@ function RoleGapAnalysisResult({
           <View style={styles.skillsList}>
             {data.covered.map((skill) => (
               <View key={skill} style={styles.skillItem}>
-                <Text style={styles.skillText}>• {skill}</Text>
+                <Text style={[styles.skillText, CompassFonts.body]}>• {skill}</Text>
               </View>
             ))}
           </View>
@@ -888,7 +889,7 @@ function RoleGapAnalysisResult({
           <View style={styles.skillsList}>
             {data.missing.map((skill) => (
               <View key={skill} style={styles.skillItem}>
-                <Text style={styles.skillText}>• {skill}</Text>
+                <Text style={[styles.skillText, CompassFonts.body]}>• {skill}</Text>
               </View>
             ))}
           </View>
@@ -963,12 +964,12 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
   },
   scenarioTabActive: {
-    backgroundColor: Colors.accentSoft,
-    borderColor: Colors.accent,
+    backgroundColor: `${Colors.accentRole.action}14`,
+    borderColor: Colors.accentRole.action,
   },
   scenarioTabInactive: {
-    backgroundColor: Colors.bgSecondary,
-    borderColor: Colors.border,
+    backgroundColor: Colors.surface.subtle,
+    borderColor: Colors.borderRole.subtle,
   },
   scenarioTabText: {
     fontSize: FontSize.sm,
@@ -1106,12 +1107,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: Spacing.xs,
-    backgroundColor: Colors.bgSecondary,
+    backgroundColor: Colors.surface.subtle,
     borderRadius: Radius.sm,
   },
   skillText: {
     fontSize: FontSize.sm,
-    color: Colors.text,
+    color: Colors.textRole.primary,
   },
 
   // Tier section for role gap analysis
@@ -1124,7 +1125,7 @@ const styles = StyleSheet.create({
   tierLabel: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.medium,
-    color: Colors.textMuted,
+    color: Colors.textRole.muted,
   },
   tierValue: {
     fontSize: FontSize.sm,
@@ -1140,11 +1141,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: Spacing.xs,
-    backgroundColor: Colors.bgSecondary,
+    backgroundColor: Colors.surface.subtle,
     borderRadius: Radius.sm,
   },
   careerLadderText: {
     fontSize: FontSize.sm,
-    color: Colors.text,
+    color: Colors.textRole.primary,
   },
 });

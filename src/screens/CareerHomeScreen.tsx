@@ -1,11 +1,12 @@
 /**
  * CareerHomeScreen — the personalised returning-user Home (Mockup Part 7).
  *
- * A snapshot of where the user is starting from, saved domains/roles, and
- * quick actions into the live
- * areas. Every data-backed section reads through `careerData`, which returns
+ * Editorial magazine layout: greeting + persona context, hero "Your Route"
+ * card, asymmetric grid of market intelligence, saved domains, and quick
+ * actions. Every data-backed section reads through `careerData`, which returns
  * `coming_soon` envelopes for now — rendered gracefully via <DataStateView>.
- * No mock rows are invented; sections degrade to friendly prompts.
+ *
+ * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -22,6 +23,7 @@ import {
   Radius,
   FontSize,
   Brand,
+  CompassFonts,
   webContainer,
 } from "../theme";
 import { useAuth } from "../hooks/useAuth";
@@ -164,7 +166,7 @@ export default function CareerHomeScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
@@ -174,17 +176,19 @@ export default function CareerHomeScreen() {
         <View style={{ flex: 1 }}>
           {name ? (
             <>
-              <Text style={[styles.hi, { color: colors.textMuted }]}>
+              <Text style={[styles.hi, { color: colors.textRole.muted }, CompassFonts.body]}>
                 Welcome back,
               </Text>
-              <Text style={[styles.brand, { color: colors.text }]}>{name}</Text>
+              <Text style={[styles.brand, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+                {name}
+              </Text>
             </>
           ) : (
             <>
-              <Text style={[styles.hi, { color: colors.textMuted }]}>
+              <Text style={[styles.hi, { color: colors.textRole.muted }, CompassFonts.body]}>
                 Welcome to
               </Text>
-              <Text style={[styles.brand, { color: colors.text }]}>
+              <Text style={[styles.brand, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
                 {Brand.name}
               </Text>
             </>
@@ -197,12 +201,12 @@ export default function CareerHomeScreen() {
           style={[
             styles.banner,
             {
-              backgroundColor: colors.goldSoft,
-              borderColor: `${Brand.primary}40`,
+              backgroundColor: colors.accentRole.action + "0D",
+              borderColor: colors.accentRole.action + "30",
             },
           ]}
         >
-          <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.bannerText, { color: colors.accentRole.action }, CompassFonts.bodyMedium]}>
             You're browsing as a guest. Create an account to save matches and
             notes.
           </Text>
@@ -210,24 +214,24 @@ export default function CareerHomeScreen() {
       ) : null}
 
       {/* ── Your starting point ── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>
+      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Your starting point
       </Text>
       {!startingLoaded ? null : starting ? (
         <View
           style={[
             styles.card,
-            { backgroundColor: colors.card, borderColor: colors.border },
+            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
           ]}
         >
-          <Text style={[styles.cardEyebrow, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.cardEyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             {USER_TYPE_LABEL[starting.userType]}
           </Text>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>
+          <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
             {summariseStartingPoint(starting)}
           </Text>
           {starting.regions?.length || starting.workTypes?.length ? (
-            <Text style={[styles.cardMeta, { color: colors.textMuted }]}>
+            <Text style={[styles.cardMeta, { color: colors.textRole.muted }, CompassFonts.body]}>
               {[
                 starting.regions?.length
                   ? starting.regions.join(", ")
@@ -245,7 +249,7 @@ export default function CareerHomeScreen() {
             style={styles.cardLink}
             onPress={() => router.push("/(auth)/onboarding")}
           >
-            <Text style={[styles.cardLinkText, { color: Brand.primaryDeep }]}>
+            <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
               Update →
             </Text>
           </TouchableOpacity>
@@ -256,40 +260,40 @@ export default function CareerHomeScreen() {
           onPress={() => router.push("/(auth)/onboarding")}
           style={[
             styles.card,
-            { backgroundColor: colors.card, borderColor: colors.border },
+            { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
           ]}
         >
           <Text style={styles.promptIcon}>🧭</Text>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>
+          <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
             Tell us where you're starting from
           </Text>
-          <Text style={[styles.cardMeta, { color: colors.textSoft }]}>
+          <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
             Complete a quick onboarding so we can tailor programmes, domains and
             demand signals to you.
           </Text>
-          <Text style={[styles.cardLinkText, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.cardLinkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             Start onboarding →
           </Text>
         </TouchableOpacity>
       )}
 
       {/* ── Market intelligence ── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>
+      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Market intelligence
       </Text>
       <View
         style={[
           styles.card,
-          { backgroundColor: colors.card, borderColor: colors.border },
+          { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
         ]}
       >
-        <Text style={[styles.cardEyebrow, { color: Brand.primaryDeep }]}>
+        <Text style={[styles.cardEyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
           DEMAND + VALUE
         </Text>
-        <Text style={[styles.cardTitle, { color: colors.text }]}>
+        <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
           Role signals will separate volume, value and access.
         </Text>
-        <Text style={[styles.cardMeta, { color: colors.textSoft }]}>
+        <Text style={[styles.cardMeta, { color: colors.textRole.secondary }, CompassFonts.body]}>
           Nigerian local, Nigerian remote and global demand should stay
           separate. Low-volume/high-value roles will be labelled as selective
           pathways, not buried as weak demand.
@@ -297,7 +301,7 @@ export default function CareerHomeScreen() {
       </View>
 
       {/* ── Your domains ── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>
+      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Your domains
       </Text>
       <DataStateView
@@ -313,7 +317,7 @@ export default function CareerHomeScreen() {
                 key={it.id}
                 style={[
                   styles.row,
-                  { backgroundColor: colors.card, borderColor: colors.border },
+                  { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
                 ]}
               >
                 <Text style={styles.rowIcon}>
@@ -321,13 +325,13 @@ export default function CareerHomeScreen() {
                 </Text>
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={[styles.rowTitle, { color: colors.text }]}
+                    style={[styles.rowTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}
                     numberOfLines={1}
                   >
                     {it.label ?? it.entityId}
                   </Text>
                   <Text
-                    style={[styles.rowMeta, { color: colors.textMuted }]}
+                    style={[styles.rowMeta, { color: colors.textRole.muted }, CompassFonts.body]}
                     numberOfLines={1}
                   >
                     {it.entityType === "role" ? "Role" : "Domain"}
@@ -343,13 +347,13 @@ export default function CareerHomeScreen() {
         style={styles.linkRow}
         onPress={() => router.push("/(tabs)/explore")}
       >
-        <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+        <Text style={[styles.linkText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
           Explore & save domains →
         </Text>
       </TouchableOpacity>
 
       {/* ── Quick actions ── */}
-      <Text style={[styles.section, { color: colors.textSoft }]}>
+      <Text style={[styles.section, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         Quick actions
       </Text>
       <View style={styles.grid}>
@@ -360,14 +364,14 @@ export default function CareerHomeScreen() {
             onPress={() => router.push(q.href)}
             style={[
               styles.tile,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
             <Text style={styles.tileIcon}>{q.icon}</Text>
-            <Text style={[styles.tileTitle, { color: colors.text }]}>
+            <Text style={[styles.tileTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
               {q.title}
             </Text>
-            <Text style={[styles.tileBody, { color: colors.textMuted }]}>
+            <Text style={[styles.tileBody, { color: colors.textRole.muted }, CompassFonts.body]}>
               {q.body}
             </Text>
           </TouchableOpacity>
@@ -389,17 +393,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.md,
   },
-  hi: { fontSize: FontSize.sm, fontWeight: "600" },
-  brand: { fontSize: FontSize.xxl, fontWeight: "900" },
+  hi: { fontSize: FontSize.sm },
+  brand: { fontSize: FontSize.xxl },
   banner: { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1 },
   bannerText: {
     fontSize: FontSize.sm,
-    fontWeight: "600",
     lineHeight: FontSize.sm * 1.4,
   },
   section: {
     fontSize: FontSize.sm,
-    fontWeight: "800",
     letterSpacing: 0.5,
     marginTop: Spacing.sm,
     textTransform: "uppercase",
@@ -412,11 +414,10 @@ const styles = StyleSheet.create({
   },
   cardEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 1,
     textTransform: "uppercase",
   },
-  cardTitle: { fontSize: FontSize.lg, fontWeight: "800" },
+  cardTitle: { fontSize: FontSize.lg },
   cardMeta: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -430,7 +431,6 @@ const styles = StyleSheet.create({
   },
   cardLinkText: {
     fontSize: FontSize.sm,
-    fontWeight: "800",
     marginTop: Spacing.xs,
   },
   list: { gap: Spacing.sm },
@@ -444,13 +444,13 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   rowIcon: { fontSize: 22 },
-  rowTitle: { fontSize: FontSize.md, fontWeight: "700" },
+  rowTitle: { fontSize: FontSize.md },
   rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
   linkRow: {
     minHeight: 44,
     justifyContent: "center",
   },
-  linkText: { fontSize: FontSize.sm, fontWeight: "800" },
+  linkText: { fontSize: FontSize.sm },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.md },
   tile: {
     flexBasis: "47%",
@@ -465,7 +465,6 @@ const styles = StyleSheet.create({
   tileIcon: { fontSize: 26 },
   tileTitle: {
     fontSize: FontSize.lg,
-    fontWeight: "800",
     marginTop: Spacing.xs,
   },
   tileBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.5 },

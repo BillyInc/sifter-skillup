@@ -1,27 +1,23 @@
 /**
  * SignUpScreen — create a Sifter LevelUp account.
- * Email/password live via useAuth.signUpEmail; social stubbed (TODO levelup-oauth).
- * On success → onboarding (career setup). For now routes to the existing
- * onboarding entry; Phase 3 replaces it with the institution-type flow.
+ * Email/password live via useAuth.signUpEmail.
+ * On success → onboarding (AccountTypeGate → persona setup).
+ *
+ * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../hooks/useAuth";
-import { useTheme, Spacing, FontSize, Brand } from "../theme";
+import { useTheme, Spacing, FontSize, Brand, CompassFonts } from "../theme";
 import { SifterButton } from "../components/ui";
 import {
   AuthScaffold,
   AuthField,
-  SocialRow,
-  OrDivider,
   LegalFooter,
   ErrorNote,
-  InfoNote,
+  TermsModal,
 } from "./auth/authShared";
-
-const SOCIAL_SOON =
-  "Google & Apple sign-up are coming soon — use email for now.";
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -34,11 +30,10 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [info, setInfo] = useState("");
+  const [showTerms, setShowTerms] = useState(false);
 
   const handleCreate = async () => {
     setError("");
-    setInfo("");
     if (!email || !password) {
       setError("Enter your email and a password.");
       return;
@@ -67,18 +62,16 @@ export default function SignUpScreen() {
         onPress={() => router.back()}
         hitSlop={8}
       >
-        <Text style={[styles.backText, { color: colors.accent }]}>← Back</Text>
+        <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
+          ← Back
+        </Text>
       </TouchableOpacity>
 
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Create your account
       </Text>
 
-      <SocialRow onUnavailable={() => setInfo(SOCIAL_SOON)} />
-      <OrDivider />
-
       <ErrorNote message={error} />
-      <InfoNote message={info} />
 
       <View style={styles.nameRow}>
         <View style={{ flex: 1 }}>
@@ -87,6 +80,7 @@ export default function SignUpScreen() {
             value={firstName}
             onChangeText={setFirstName}
             placeholder="Chidi"
+            autoFocus
           />
         </View>
         <View style={{ flex: 1 }}>
@@ -126,27 +120,28 @@ export default function SignUpScreen() {
       />
 
       <View style={styles.row}>
-        <Text style={[styles.muted, { color: colors.textMuted }]}>
+        <Text style={[styles.muted, { color: colors.textRole.muted }, CompassFonts.body]}>
           Already have an account?
         </Text>
         <TouchableOpacity onPress={() => router.replace("/(auth)")} hitSlop={8}>
-          <Text style={[styles.link, { color: Brand.primaryDeep }]}>
+          <Text style={[styles.link, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             Sign in
           </Text>
         </TouchableOpacity>
       </View>
 
-      <LegalFooter action="creating an account" />
+      <LegalFooter action="creating an account" onShowTerms={() => setShowTerms(true)} />
+
+      <TermsModal visible={showTerms} onClose={() => setShowTerms(false)} />
     </AuthScaffold>
   );
 }
 
 const styles = StyleSheet.create({
   back: { alignSelf: "flex-start", paddingVertical: 4 },
-  backText: { fontSize: FontSize.md, fontWeight: "700" },
+  backText: { fontSize: FontSize.md },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: "900",
     textAlign: "center",
     marginBottom: Spacing.xs,
   },
@@ -159,5 +154,5 @@ const styles = StyleSheet.create({
     marginTop: Spacing.xs,
   },
   muted: { fontSize: FontSize.sm },
-  link: { fontSize: FontSize.sm, fontWeight: "800" },
+  link: { fontSize: FontSize.sm },
 });

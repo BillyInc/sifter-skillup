@@ -6,7 +6,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   useWindowDimensions,
@@ -14,9 +13,11 @@ import {
 import { useLocalSearchParams, usePathname, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
-import { FontSize, FontWeight, Radius, Shadow, Spacing, useTheme } from '../../theme';
+import { FontSize, FontWeight, Radius, Spacing, useTheme } from '../../theme';
 import { useAuth } from '../../hooks/useAuth';
 import { resolveTrackContext, type TrackContext } from '../../lib/trackContext';
+import { SearchOverlay, SearchBar } from '../careerIntelligence';
+import type { SearchResult, SearchScope } from '../../types/career';
 
 type NavId =
   | 'home'
@@ -33,25 +34,19 @@ interface ShellNavItem {
   sub: string;
 }
 
-interface ShellSearchItem {
-  id: string;
-  label: string;
-  hint: string;
-  href: string;
-  keywords: string[];
-}
-
 const PRIMARY_NAV: ShellNavItem[] = [
   { id: 'home',          label: 'Home',          icon: 'home', href: '/(tabs)/home',          sub: 'Your snapshot' },
-  { id: 'explore',       label: 'Explore',       icon: 'search', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
-  { id: 'myworld',       label: 'My World',      icon: 'briefcase', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
+  { id: 'explore',       label: 'Explore',       icon: 'compass', href: '/(tabs)/explore',       sub: 'Programmes, domains & roles' },
+  { id: 'opportunities', label: 'Opportunities', icon: 'briefcase', href: '/(tabs)/opportunities', sub: 'Jobs, scholarships & windows' },
+  { id: 'myworld',       label: 'My World',      icon: 'book-open', href: '/(tabs)/myworld',       sub: 'Tracks · Portfolio · Guild' },
   { id: 'profile',       label: 'Profile',       icon: 'user', href: '/(tabs)/profile',       sub: 'Account & saved' },
 ];
 
 const MOBILE_NAV: { id: NavId; label: string; icon: keyof typeof Feather.glyphMap; href: string }[] = [
   { id: 'home',          label: 'Home',    icon: 'home', href: '/(tabs)/home' },
-  { id: 'explore',       label: 'Explore', icon: 'search', href: '/(tabs)/explore' },
-  { id: 'myworld',       label: 'My World', icon: 'briefcase', href: '/(tabs)/myworld' },
+  { id: 'explore',       label: 'Explore', icon: 'compass', href: '/(tabs)/explore' },
+  { id: 'opportunities', label: 'Jobs',    icon: 'briefcase', href: '/(tabs)/opportunities' },
+  { id: 'myworld',       label: 'My World', icon: 'book-open', href: '/(tabs)/myworld' },
   { id: 'profile',       label: 'Profile', icon: 'user', href: '/(tabs)/profile' },
 ];
 
@@ -73,7 +68,7 @@ function getActiveNavId(pathname: string | null): NavId {
   if (pathname.includes('/explore') || pathname.includes('/programme')
     || pathname.includes('/domain') || pathname.includes('/role')) return 'explore';
   if (pathname.includes('/opportunities') || pathname.includes('/opportunity')
-    || pathname.includes('/company')) return 'explore';
+    || pathname.includes('/company') || pathname.includes('/scholarship')) return 'opportunities';
   // Everything from the legacy learning app now lives under My World.
   if (
     pathname.includes('/myworld')
@@ -161,7 +156,10 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchFocused, setSearchFocused] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [overlayScope, setOverlayScope] = useState<SearchScope>("all");
+  const [overlayResults, setOverlayResults] = useState<{ label: string; items: SearchResult[] }[]>([]);
+  const [overlayLoading, setOverlayLoading] = useState(false);
   const routeTrackId = readParam(params.trackId);
   const routeTrackName = readParam(params.trackName);
   const trackContext = useMemo(() => resolveTrackContext(user, {
@@ -176,45 +174,9 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
   const pageMeta = useMemo(() => getPageMeta(trackContext, activeId, activeItem), [trackContext, activeId, activeItem]);
   const isWide = Platform.OS === 'web' && width >= 1100;
 
-  const searchItems = useMemo<ShellSearchItem[]>(() => {
-    return [
-      { id: 'home', label: 'Home', hint: 'Your snapshot and saved paths', href: '/(tabs)/home', keywords: ['home', 'dashboard', 'overview'] },
-      { id: 'explore', label: 'Explore', hint: 'Programmes, domains and roles', href: '/(tabs)/explore', keywords: ['explore', 'programme', 'course', 'domain', 'role', 'search', 'jamb'] },
-      { id: 'myworld', label: 'My World', hint: 'Locked tracks, portfolio and guild progress', href: '/(tabs)/myworld', keywords: ['my world', 'tracks', 'learn', 'portfolio', 'guild', 'levels'] },
-      { id: 'profile', label: 'Profile', hint: 'Account, saved items and settings', href: '/(tabs)/profile', keywords: ['profile', 'account', 'saved', 'bookmarks', 'settings', 'notes'] },
-    ];
-  }, []);
-
-  const filteredSearchItems = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return searchItems.slice(0, 5);
-    return searchItems
-      .filter(item =>
-        item.label.toLowerCase().includes(q)
-        || item.hint.toLowerCase().includes(q)
-        || item.keywords.some(keyword => keyword.includes(q)),
-      )
-      .slice(0, 6);
-  }, [searchItems, searchQuery]);
-
   const goTo = (item: ShellNavItem) => {
     setDrawerOpen(false);
     router.push(item.href as any);
-  };
-
-  const openSearchResult = (href: string) => {
-    setSearchFocused(false);
-    setSearchQuery('');
-    router.push(href as any);
-  };
-
-  const handleSearchSubmit = () => {
-    const first = filteredSearchItems[0];
-    if (first) {
-      openSearchResult(first.href);
-      return;
-    }
-    openSearchResult('/(tabs)/explore');
   };
 
   return (
@@ -291,36 +253,25 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           <View style={styles.topbarActions}>
             {isWide && (
               <View style={styles.searchWrap}>
-                <View style={[styles.searchStub, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
-                  <Feather name="search" size={14} color={colors.textMuted} />
-                  <TextInput
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                    onFocus={() => setSearchFocused(true)}
-                    onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
-                    onSubmitEditing={handleSearchSubmit}
-                    placeholder="Search programmes, domains and roles"
-                    placeholderTextColor={colors.textMuted}
-                    style={[styles.searchInput, { color: colors.text }]}
-                    returnKeyType="search"
-                  />
-                </View>
-                {searchFocused && filteredSearchItems.length > 0 && (
-                  <View style={[styles.searchResults, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                    {filteredSearchItems.map(item => (
-                      <TouchableOpacity
-                        key={item.id}
-                        activeOpacity={0.8}
-                        onPress={() => openSearchResult(item.href)}
-                        style={[styles.searchResultRow, { borderBottomColor: colors.border }]}
-                      >
-                        <Text style={[styles.searchResultTitle, { color: colors.text }]}>{item.label}</Text>
-                        <Text style={[styles.searchResultHint, { color: colors.textMuted }]}>{item.hint}</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                )}
+                <SearchBar
+                  value=""
+                  onChangeText={() => setOverlayVisible(true)}
+                  placeholder="Search programmes, domains and roles…"
+                  editable={false}
+                  pointerEvents="none"
+                  style={styles.searchStub}
+                />
               </View>
+            )}
+
+            {!isWide && (
+              <TouchableOpacity
+                activeOpacity={0.85}
+                onPress={() => setOverlayVisible(true)}
+                style={[styles.topbarIconBtn, { backgroundColor: colors.bgSecondary }]}
+              >
+                <Feather name="search" size={18} color={colors.text} />
+              </TouchableOpacity>
             )}
 
             <TouchableOpacity
@@ -435,6 +386,32 @@ export function ReferenceShell({ children }: { children: React.ReactNode }) {
           </Pressable>
         </Pressable>
       </Modal>
+
+      <SearchOverlay
+        visible={overlayVisible}
+        onClose={() => { setOverlayVisible(false); setSearchQuery(""); }}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        scope={overlayScope}
+        onScopeChange={setOverlayScope}
+        loading={overlayLoading}
+        results={overlayResults}
+        onResultPress={(result) => {
+          setOverlayVisible(false);
+          setSearchQuery("");
+          // Navigate based on result type — actual routing wired by screens
+          router.push(`/(tabs)/explore` as any);
+        }}
+        recentSearches={["Medicine & Surgery", "UNILAG", "Computer Science"]}
+        onRecentPress={(term) => setSearchQuery(term)}
+        suggestions={["Law", "Engineering", "Accounting", "Nursing"]}
+        onSuggestionPress={(term) => setSearchQuery(term)}
+        isGuest={!user}
+        onSignIn={() => {
+          setOverlayVisible(false);
+          router.push("/(auth)" as any);
+        }}
+      />
     </View>
   );
 }
@@ -575,41 +552,6 @@ const styles = StyleSheet.create({
   searchStub: {
     minWidth: 260,
     maxWidth: 340,
-    minHeight: 44,
-    borderRadius: Radius.md,
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  searchInput: {
-    minWidth: 170,
-    fontSize: FontSize.xs,
-    paddingVertical: 0,
-  },
-  searchResults: {
-    position: 'absolute',
-    top: 52,
-    left: 0,
-    right: 0,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.md,
-    overflow: 'hidden',
-    ...Shadow.sm,
-  },
-  searchResultRow: {
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  searchResultTitle: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
-    marginBottom: 2,
-  },
-  searchResultHint: {
-    fontSize: 11,
   },
   topbarIconBtn: {
     width: 34,

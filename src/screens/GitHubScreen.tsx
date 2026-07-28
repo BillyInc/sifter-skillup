@@ -14,7 +14,7 @@ import {
   TextInput, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
+import { Spacing, Radius, FontSize, Shadow, webContainer, useTheme, type ColorPalette } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -34,38 +34,6 @@ interface Repo {
   description: string | null;
   stars: number;
   updated: string;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared UI
-// ─────────────────────────────────────────────────────────────────────────────
-function Card({ children, style }: { children: React.ReactNode; style?: object }) {
-  return <View style={[styles.card, Shadow.sm, style]}>{children}</View>;
-}
-
-function PrimaryBtn({ label, onPress, loading = false, icon = '' }: {
-  label: string; onPress: () => void; loading?: boolean; icon?: string;
-}) {
-  return (
-    <TouchableOpacity style={styles.primaryBtn} onPress={onPress} activeOpacity={0.85} disabled={loading}>
-      {loading
-        ? <ActivityIndicator color="#fff" />
-        : <Text style={styles.primaryBtnText}>{icon ? `${icon}  ` : ''}{label}</Text>
-      }
-    </TouchableOpacity>
-  );
-}
-
-function GhostBtn({ label, onPress }: { label: string; onPress: () => void }) {
-  return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={styles.ghostBtn}>
-      <Text style={styles.ghostBtnText}>{label}</Text>
-    </TouchableOpacity>
-  );
-}
-
-function SectionLabel({ text }: { text: string }) {
-  return <Text style={styles.sectionLabel}>{text}</Text>;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -219,7 +187,106 @@ Sifter generates these repos for you from your completed labs.`,
   },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Styles (factory so each component gets theme-aware styles)
+// ─────────────────────────────────────────────────────────────────────────────
+const makeStyles = (colors: ColorPalette) => StyleSheet.create({
+  screen:          { flex: 1, backgroundColor: colors.surface.base },
+  scroll:          { ...webContainer, gap: Spacing.md, paddingBottom: Spacing.xxxl },
+  header:          { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
+  headerTitle:     { fontSize: FontSize.xl, fontWeight: '900', color: colors.textRole.primary },
+  headerSub:       { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
+  learnLink:       { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: '700' },
+  card:            { backgroundColor: colors.surface.raised, borderRadius: Radius.lg, borderWidth: 1.5, borderColor: colors.borderRole.subtle, padding: Spacing.lg, gap: Spacing.sm },
+  heroCard:        { alignItems: 'center', paddingVertical: Spacing.xl },
+  heroIcon:        { fontSize: 18, marginBottom: 12 },
+  heroTitle:       { fontSize: FontSize.xl, fontWeight: '900', color: colors.textRole.primary, textAlign: 'center', marginBottom: 8 },
+  heroSub:         { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center', lineHeight: 22 },
+  sectionLabel:    { fontSize: FontSize.xs, fontWeight: '800', color: colors.accentRole.action, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 },
+  body:            { fontSize: FontSize.sm, color: colors.textRole.primary, lineHeight: 21 },
+  fieldLabel:      { fontSize: FontSize.xs, fontWeight: '700', color: colors.textRole.secondary, marginTop: 8, marginBottom: 4, textTransform: 'uppercase' },
+  input:           { borderWidth: 1.5, borderColor: colors.borderRole.subtle, borderRadius: Radius.md, padding: Spacing.md, fontSize: FontSize.sm, color: colors.textRole.primary, backgroundColor: '#f8fafc', marginBottom: Spacing.sm },
+  primaryBtn:      { backgroundColor: colors.accentRole.action, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center' },
+  primaryBtnText:  { color: colors.textRole.inverse, fontSize: FontSize.md, fontWeight: '800' },
+  ghostBtn:        { alignItems: 'center', paddingVertical: Spacing.md },
+  ghostBtnText:    { color: colors.textRole.secondary, fontSize: FontSize.sm, fontWeight: '600' },
+  divider:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  dividerLine:     { flex: 1, height: 1, backgroundColor: colors.borderRole.subtle },
+  dividerText:     { fontSize: FontSize.xs, color: colors.textRole.secondary, fontWeight: '600' },
+  featureRow:      { flexDirection: 'row', gap: 12, paddingVertical: 8, alignItems: 'flex-start', borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
+  featureIcon:     { fontSize: 18, width: 36, textAlign: 'center' },
+  featureTitle:    { fontSize: FontSize.sm, fontWeight: '800', color: colors.textRole.primary },
+  featureDesc:     { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2, lineHeight: 17 },
+  connectedBadge:  { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  ghAvatar:        { fontSize: 18 },
+  connectedLabel:  { fontSize: FontSize.sm, fontWeight: '800', color: '#16a34a' },
+  connectedUser:   { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
+  viewLink:        { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: '700' },
+  resultBox:       { borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.sm },
+  fileRow:         { paddingVertical: 6, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle },
+  fileName:        { fontSize: FontSize.xs, fontWeight: '800', color: colors.accentRole.action, fontFamily: 'monospace' },
+  fileDesc:        { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
+  repoRow:         { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.borderRole.subtle, gap: 8 },
+  repoName:        { fontSize: FontSize.sm, fontWeight: '800', color: colors.accentRole.action },
+  repoDesc:        { fontSize: FontSize.xs, color: colors.textRole.secondary, marginTop: 2 },
+  repoMeta:        { fontSize: FontSize.xs, color: colors.textRole.secondary },
+  progressTrack:   { height: 6, backgroundColor: '#e2e8f0', borderRadius: 3, marginHorizontal: Spacing.md, marginBottom: 4 },
+  progressFill:    { height: 6, backgroundColor: colors.accentRole.action, borderRadius: 3 },
+  progressLabel:   { fontSize: FontSize.xs, color: colors.textRole.secondary, textAlign: 'center', marginBottom: Spacing.md },
+  lessonIcon:      { fontSize: 18, textAlign: 'center', marginBottom: 8 },
+  lessonTitle:     { fontSize: FontSize.lg, fontWeight: '900', color: colors.textRole.primary, marginBottom: 8 },
+  optionBtn:       { borderRadius: Radius.md, padding: Spacing.md, marginBottom: 8 },
+  optionText:      { fontSize: FontSize.sm, fontWeight: '700' },
+  explanationBox:  { backgroundColor: '#f0f4ff', borderRadius: Radius.md, padding: Spacing.md, marginTop: 4 },
+  explanationText: { fontSize: FontSize.sm, color: '#1e3a8a', fontWeight: '600' },
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Shared UI
+// ─────────────────────────────────────────────────────────────────────────────
+function Card({ children, style }: { children: React.ReactNode; style?: object }) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
+  return <View style={[styles.card, Shadow.sm, style]}>{children}</View>;
+}
+
+function PrimaryBtn({ label, onPress, loading = false, icon = '' }: {
+  label: string; onPress: () => void; loading?: boolean; icon?: string;
+}) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
+  return (
+    <TouchableOpacity style={styles.primaryBtn} onPress={onPress} activeOpacity={0.85} disabled={loading}>
+      {loading
+        ? <ActivityIndicator color={colors.textRole.inverse} />
+        : <Text style={styles.primaryBtnText}>{icon ? `${icon}  ` : ''}{label}</Text>
+      }
+    </TouchableOpacity>
+  );
+}
+
+function GhostBtn({ label, onPress }: { label: string; onPress: () => void }) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
+  return (
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={styles.ghostBtn}>
+      <Text style={styles.ghostBtnText}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function SectionLabel({ text }: { text: string }) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
+  return <Text style={styles.sectionLabel}>{text}</Text>;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// LEARN MODULE — plain-English Git concepts
+// ─────────────────────────────────────────────────────────────────────────────
 function LearnModule({ onClose }: { onClose: () => void }) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
   const [idx, setIdx] = useState(0);
   const [answered, setAnswered] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -255,7 +322,7 @@ function LearnModule({ onClose }: { onClose: () => void }) {
             <Text style={[styles.body, { textAlign: 'center', marginTop: 8 }]}>
               {score}/{LESSONS.length} correct
             </Text>
-            <Text style={[styles.body, { textAlign: 'center', color: Colors.textSoft, marginTop: 8 }]}>
+            <Text style={[styles.body, { textAlign: 'center', color: colors.textRole.secondary, marginTop: 8 }]}>
               {score === LESSONS.length
                 ? "Perfect. You understand Git. Now connect your account and push your portfolio."
                 : "Good start. Connect GitHub and your portfolio will make it concrete."}
@@ -293,7 +360,7 @@ function LearnModule({ onClose }: { onClose: () => void }) {
           <Text style={[styles.body, { fontWeight: '700', marginBottom: 12 }]}>{lesson.quiz.q}</Text>
           {lesson.quiz.opts.map((opt, i) => {
             let bg = '#f1f5f9';
-            let tc = Colors.text;
+            let tc = colors.textRole.primary;
             if (answered !== null) {
               if (i === lesson.quiz.correct) { bg = '#d1fae5'; tc = '#065f46'; }
               else if (i === answered && i !== lesson.quiz.correct) { bg = '#fee2e2'; tc = '#7f1d1d'; }
@@ -341,6 +408,8 @@ function NotConnectedView({
   onLearn: () => void;
   loading: boolean;
 }) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
   return (
     <ScrollView contentContainerStyle={styles.scroll}>
       {/* Hero */}
@@ -408,6 +477,8 @@ function ConnectedView({
   onDisconnect: () => void;
   onLearn: () => void;
 }) {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
   const { user } = useAuth();
   const [repos, setRepos] = useState<Repo[]>([]);
   const [pushing, setPushing] = useState(false);
@@ -508,9 +579,9 @@ function ConnectedView({
       {/* Repos */}
       <Card>
         <SectionLabel text="YOUR REPOS" />
-        {loadingRepos && <ActivityIndicator color={Colors.accent} style={{ marginVertical: 16 }} />}
+        {loadingRepos && <ActivityIndicator color={colors.accentRole.action} style={{ marginVertical: 16 }} />}
         {!loadingRepos && repos.length === 0 && (
-          <Text style={[styles.body, { color: Colors.textSoft }]}>No repos yet. Push your portfolio above to create your first one.</Text>
+          <Text style={[styles.body, { color: colors.textRole.secondary }]}>No repos yet. Push your portfolio above to create your first one.</Text>
         )}
         {repos.map(repo => (
           <TouchableOpacity
@@ -944,6 +1015,8 @@ if __name__ == "__main__":
 // Main Screen
 // ─────────────────────────────────────────────────────────────────────────────
 export default function GitHubScreen() {
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
   const [status, setStatus] = useState<GitHubStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [connectLoading, setConnectLoading] = useState(false);
@@ -996,7 +1069,7 @@ export default function GitHubScreen() {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.surface.base} />
       <View style={styles.header}>
         <View>
           <Text style={styles.headerTitle}>🐙 GitHub</Text>
@@ -1011,7 +1084,7 @@ export default function GitHubScreen() {
 
       {loading && (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <ActivityIndicator color={Colors.accent} size="large" />
+          <ActivityIndicator color={colors.accentRole.action} size="large" />
         </View>
       )}
 
@@ -1034,57 +1107,3 @@ export default function GitHubScreen() {
       </SafeAreaView>
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Styles
-// ─────────────────────────────────────────────────────────────────────────────
-const styles = StyleSheet.create({
-  screen:          { flex: 1, backgroundColor: Colors.bg },
-  scroll:          { ...webContainer, gap: Spacing.md, paddingBottom: Spacing.xxxl },
-  header:          { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1, borderBottomColor: Colors.border },
-  headerTitle:     { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text },
-  headerSub:       { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
-  learnLink:       { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
-  card:            { backgroundColor: Colors.card, borderRadius: Radius.lg, borderWidth: 1.5, borderColor: Colors.border, padding: Spacing.lg, gap: Spacing.sm },
-  heroCard:        { alignItems: 'center', paddingVertical: Spacing.xl },
-  heroIcon:        { fontSize: 18, marginBottom: 12 },
-  heroTitle:       { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, textAlign: 'center', marginBottom: 8 },
-  heroSub:         { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 22 },
-  sectionLabel:    { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 4 },
-  body:            { fontSize: FontSize.sm, color: Colors.text, lineHeight: 21 },
-  fieldLabel:      { fontSize: FontSize.xs, fontWeight: '700', color: Colors.textSoft, marginTop: 8, marginBottom: 4, textTransform: 'uppercase' },
-  input:           { borderWidth: 1.5, borderColor: Colors.border, borderRadius: Radius.md, padding: Spacing.md, fontSize: FontSize.sm, color: Colors.text, backgroundColor: '#f8fafc', marginBottom: Spacing.sm },
-  primaryBtn:      { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center' },
-  primaryBtnText:  { color: '#fff', fontSize: FontSize.md, fontWeight: '800' },
-  ghostBtn:        { alignItems: 'center', paddingVertical: Spacing.md },
-  ghostBtnText:    { color: Colors.textSoft, fontSize: FontSize.sm, fontWeight: '600' },
-  divider:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  dividerLine:     { flex: 1, height: 1, backgroundColor: Colors.border },
-  dividerText:     { fontSize: FontSize.xs, color: Colors.textSoft, fontWeight: '600' },
-  featureRow:      { flexDirection: 'row', gap: 12, paddingVertical: 8, alignItems: 'flex-start', borderBottomWidth: 1, borderBottomColor: Colors.border },
-  featureIcon:     { fontSize: 18, width: 36, textAlign: 'center' },
-  featureTitle:    { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  featureDesc:     { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2, lineHeight: 17 },
-  connectedBadge:  { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  ghAvatar:        { fontSize: 18 },
-  connectedLabel:  { fontSize: FontSize.sm, fontWeight: '800', color: '#16a34a' },
-  connectedUser:   { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
-  viewLink:        { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '700' },
-  resultBox:       { borderRadius: Radius.md, padding: Spacing.md, marginTop: Spacing.sm },
-  fileRow:         { paddingVertical: 6, borderBottomWidth: 1, borderBottomColor: Colors.border },
-  fileName:        { fontSize: FontSize.xs, fontWeight: '800', color: Colors.accent, fontFamily: 'monospace' },
-  fileDesc:        { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
-  repoRow:         { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: Colors.border, gap: 8 },
-  repoName:        { fontSize: FontSize.sm, fontWeight: '800', color: Colors.accent },
-  repoDesc:        { fontSize: FontSize.xs, color: Colors.textSoft, marginTop: 2 },
-  repoMeta:        { fontSize: FontSize.xs, color: Colors.textSoft },
-  progressTrack:   { height: 6, backgroundColor: '#e2e8f0', borderRadius: 3, marginHorizontal: Spacing.md, marginBottom: 4 },
-  progressFill:    { height: 6, backgroundColor: Colors.accent, borderRadius: 3 },
-  progressLabel:   { fontSize: FontSize.xs, color: Colors.textSoft, textAlign: 'center', marginBottom: Spacing.md },
-  lessonIcon:      { fontSize: 18, textAlign: 'center', marginBottom: 8 },
-  lessonTitle:     { fontSize: FontSize.lg, fontWeight: '900', color: Colors.text, marginBottom: 8 },
-  optionBtn:       { borderRadius: Radius.md, padding: Spacing.md, marginBottom: 8 },
-  optionText:      { fontSize: FontSize.sm, fontWeight: '700' },
-  explanationBox:  { backgroundColor: '#f0f4ff', borderRadius: Radius.md, padding: Spacing.md, marginTop: 4 },
-  explanationText: { fontSize: FontSize.sm, color: '#1e3a8a', fontWeight: '600' },
-});

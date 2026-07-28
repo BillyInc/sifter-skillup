@@ -9,7 +9,7 @@ import {
   useTheme,
   Spacing,
   FontSize,
-  FontWeight,
+  CompassFonts,
   webContainer,
 } from "../../theme";
 import { adminData } from "../../lib/adminData";
@@ -47,7 +47,7 @@ export function TrendsScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Demand trends over time
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -81,13 +81,14 @@ export function TrendsScreen() {
                   >
                     <View style={styles.cardHead}>
                       <Text
-                        style={[styles.domainName, { color: colors.text }]}
+                        style={[styles.domainName, CompassFonts.bodyBold, { color: colors.text }]}
                       >
                         {item.domainName}
                       </Text>
                       <Text
                         style={[
                           styles.trendValue,
+                          CompassFonts.bodyBold,
                           {
                             color:
                               item.trendDirection === "down"
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -150,11 +151,9 @@ const styles = StyleSheet.create({
   },
   domainName: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.heavy,
   },
   trendValue: {
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
   },
   postings: {
     fontSize: FontSize.sm,

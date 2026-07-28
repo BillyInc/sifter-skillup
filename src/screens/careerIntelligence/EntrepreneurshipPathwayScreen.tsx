@@ -21,7 +21,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
+  CompassFonts,
   webContainer,
   type ColorPalette,
 } from "@/theme";
@@ -73,7 +73,7 @@ export function EntrepreneurshipPathwayScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
@@ -84,18 +84,18 @@ export function EntrepreneurshipPathwayScreen() {
           if (router.canGoBack()) router.back();
           else router.replace("/(tabs)/explore/pathways" as any);
         }}
-        style={[styles.backButton, { borderColor: colors.border }]}
+        style={[styles.backButton, { borderColor: colors.borderRole.subtle }]}
       >
-        <Text style={[styles.backText, { color: colors.text }]}>Back</Text>
+        <Text style={[styles.backText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Back</Text>
       </TouchableOpacity>
 
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
         ENTREPRENEURSHIP PATHWAY
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Build a business
       </Text>
-      <Text style={[styles.lead, { color: colors.textSoft }]}>
+      <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
         A venture path for students, graduates and early founders. Start from
         what you know, what you can make, or the market problem you want to
         solve.
@@ -108,7 +108,7 @@ export function EntrepreneurshipPathwayScreen() {
       </View>
 
       <Section title="What the graph will track" colors={colors}>
-        <Text style={[styles.copy, { color: colors.textMuted }]}>
+        <Text style={[styles.copy, { color: colors.textRole.muted }, CompassFonts.body]}>
           Entrepreneurship needs a different readiness model from employment.
           LevelUp will track capability, evidence and market access: customer
           proof, revenue model, route to market, operating costs, compliance
@@ -123,7 +123,7 @@ export function EntrepreneurshipPathwayScreen() {
               key={item}
               style={[
                 styles.chip,
-                { color: colors.text, borderColor: colors.border, backgroundColor: colors.card },
+                { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, CompassFonts.bodyBold,
               ]}
             >
               {item}
@@ -139,7 +139,7 @@ export function EntrepreneurshipPathwayScreen() {
               key={item}
               style={[
                 styles.chip,
-                { color: colors.text, borderColor: colors.border, backgroundColor: colors.card },
+                { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }, CompassFonts.bodyBold,
               ]}
             >
               {item}
@@ -151,13 +151,13 @@ export function EntrepreneurshipPathwayScreen() {
       <View
         style={[
           styles.note,
-          { backgroundColor: Brand.primarySoft, borderColor: Brand.primary },
+          { backgroundColor: colors.accentRole.action + "0A", borderColor: colors.accentRole.action },
         ]}
       >
-        <Text style={[styles.noteTitle, { color: Brand.primaryDeep }]}>
+        <Text style={[styles.noteTitle, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
           Product decision
         </Text>
-        <Text style={[styles.noteBody, { color: colors.text }]}>
+        <Text style={[styles.noteBody, { color: colors.textRole.primary }, CompassFonts.body]}>
           Entrepreneurship stays inside LevelUp as a pathway, but it is not
           forced into the same job-posting rank as employed roles. It will use
           business-readiness evidence plus adjacent domain skills and tools.
@@ -177,8 +177,8 @@ function Section({
   colors: ColorPalette;
 }) {
   return (
-    <View style={[styles.section, { borderColor: colors.border }]}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
+    <View style={[styles.section, { borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
       {children}
     </View>
   );
@@ -194,9 +194,9 @@ function InfoCard({
   colors: ColorPalette;
 }) {
   return (
-    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-      <Text style={[styles.cardTitle, { color: colors.text }]}>{title}</Text>
-      <Text style={[styles.cardBody, { color: colors.textMuted }]}>{body}</Text>
+    <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
+      <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>{body}</Text>
     </View>
   );
 }

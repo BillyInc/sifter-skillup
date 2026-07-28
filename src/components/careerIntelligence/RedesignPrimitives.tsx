@@ -144,12 +144,16 @@ export function FilterChip({
   );
 }
 
-export const SearchBar = forwardRef<TextInput, Omit<TextInputProps, "style" | "value" | "onChangeText"> & {
+export const SearchBar = forwardRef<TextInput, Omit<TextInputProps, "style" | "value" | "onChangeText" | "onFocus" | "onBlur"> & {
   value: string;
   onChangeText: (value: string) => void;
   scope?: string;
   loading?: boolean;
+  error?: boolean;
+  disabled?: boolean;
   onClear?: () => void;
+  onFocus?: TextInputProps["onFocus"];
+  onBlur?: TextInputProps["onBlur"];
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
 }>(function SearchBar({
@@ -158,25 +162,38 @@ export const SearchBar = forwardRef<TextInput, Omit<TextInputProps, "style" | "v
   placeholder = "Search",
   scope,
   loading,
+  error,
+  disabled,
   onClear,
+  onFocus,
+  onBlur,
   style,
   inputStyle,
   ...inputProps
 }, ref) {
   const { colors } = useTheme();
+  const [focused, setFocused] = React.useState(false);
   const showClear = value.length > 0 && !loading;
+
+  const borderColor = error
+    ? colors.accentRole.danger
+    : focused
+      ? colors.borderRole.focus
+      : colors.borderRole.subtle;
+
   return (
     <View
       style={[
         styles.searchBar,
         {
           backgroundColor: colors.surface.raised,
-          borderColor: colors.borderRole.subtle,
+          borderColor,
         },
+        focused && { borderWidth: 1.5 },
         style,
       ]}
     >
-      <Feather name="search" size={17} color={colors.textRole.muted} />
+      <Feather name="search" size={17} color={error ? colors.accentRole.danger : colors.textRole.muted} />
       {scope ? (
         <View
           style={[
@@ -194,10 +211,18 @@ export const SearchBar = forwardRef<TextInput, Omit<TextInputProps, "style" | "v
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={colors.textRole.placeholder}
+        placeholderTextColor={error ? colors.accentRole.danger + "80" : colors.textRole.placeholder}
         returnKeyType="search"
         autoCorrect={false}
-        style={[styles.searchInput, { color: colors.textRole.primary }, inputStyle]}
+        editable={!disabled}
+        onFocus={(e) => { setFocused(true); onFocus?.(e); }}
+        onBlur={(e) => { setFocused(false); onBlur?.(e); }}
+        style={[
+          styles.searchInput,
+          { color: colors.textRole.primary },
+          disabled && { opacity: 0.5 },
+          inputStyle,
+        ]}
         {...inputProps}
       />
       {loading ? (

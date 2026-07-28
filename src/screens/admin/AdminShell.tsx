@@ -29,7 +29,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Shadow,
 } from "../../theme";
 import { adminNav } from "../../lib/adminNav";
@@ -336,7 +336,7 @@ export function AdminShell({
               style={styles.menuBtn}
               accessibilityLabel="Open navigation"
             >
-              <Text style={[styles.menuIcon, { color: colors.text }]}>☰</Text>
+              <Text style={[styles.menuIcon, CompassFonts.displayBold, { color: colors.text }]}>☰</Text>
             </TouchableOpacity>
           ) : null}
 
@@ -347,7 +347,7 @@ export function AdminShell({
               style={[styles.backBtn, { borderColor: colors.borderRole.subtle }]}
               accessibilityLabel="Go back"
             >
-              <Text style={[styles.backText, { color: colors.text }]}>
+              <Text style={[styles.backText, CompassFonts.bodySemibold, { color: colors.text }]}>
                 Back
               </Text>
             </TouchableOpacity>
@@ -356,14 +356,14 @@ export function AdminShell({
           <View style={styles.titleWrap}>
             {eyebrow ? (
               <Text
-                style={[styles.eyebrow, { color: colors.textMuted }]}
+                style={[styles.eyebrow, CompassFonts.bodySemibold, { color: colors.textMuted }]}
                 numberOfLines={1}
               >
                 {eyebrow}
               </Text>
             ) : null}
             <Text
-              style={[styles.title, { color: colors.text }]}
+              style={[styles.title, CompassFonts.bodySemibold, { color: colors.text }]}
               numberOfLines={1}
             >
               {title}
@@ -411,19 +411,19 @@ function NavList({
             { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle },
           ]}
         >
-          <Text style={[styles.brandEmoji, { color: colors.textRole.primary }]}>S</Text>
+          <Text style={[styles.brandEmoji, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>S</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.brandName, { color: colors.textRole.primary }]}>
+          <Text style={[styles.brandName, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>
             {adminAudienceLabel(audience)}
           </Text>
-          <Text style={[styles.brandSub, { color: colors.textRole.muted }]}>
+          <Text style={[styles.brandSub, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>
             Workspace
           </Text>
         </View>
         {showClose ? (
           <TouchableOpacity onPress={onClose} hitSlop={10}>
-            <Text style={[styles.close, { color: colors.textMuted }]}>✕</Text>
+            <Text style={[styles.close, CompassFonts.bodySemibold, { color: colors.textMuted }]}>✕</Text>
           </TouchableOpacity>
         ) : null}
       </View>
@@ -434,7 +434,7 @@ function NavList({
       >
         {groups.map((group) => (
           <View key={group.title} style={styles.navGroup}>
-            <Text style={[styles.groupTitle, { color: colors.textMuted }]}>
+            <Text style={[styles.groupTitle, CompassFonts.bodySemibold, { color: colors.textMuted }]}>
               {group.title.toUpperCase()}
             </Text>
             {group.items.map((item) => {
@@ -444,22 +444,20 @@ function NavList({
                   key={item.key}
                   onPress={() => onNavigate(item)}
                   activeOpacity={0.75}
-                  style={[
-                    styles.navRow,
-                    active && { backgroundColor: colors.surface.inverse },
-                  ]}
-                >
-                  <Text style={styles.navIcon}>{item.icon}</Text>
-                  <Text
                     style={[
-                      styles.navLabel,
-                      {
-                        color: active ? colors.textRole.inverse : colors.textRole.secondary,
-                        fontWeight: active
-                          ? FontWeight.bold
-                          : FontWeight.medium,
-                      },
+                      styles.navRow,
+                      active && { backgroundColor: colors.surface.inverse },
                     ]}
+                  >
+                    <Text style={styles.navIcon}>{item.icon}</Text>
+                    <Text
+                      style={[
+                        styles.navLabel,
+                        active ? CompassFonts.bodyBold : CompassFonts.bodyMedium,
+                        {
+                          color: active ? colors.textRole.inverse : colors.textRole.secondary,
+                        },
+                      ]}
                     numberOfLines={1}
                   >
                     {item.label}
@@ -556,7 +554,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   menuBtn: { paddingVertical: 2, paddingHorizontal: 2 },
-  menuIcon: { fontSize: 22, fontWeight: FontWeight.black },
+  menuIcon: { fontSize: 22 },
   backBtn: {
     minHeight: 34,
     borderWidth: StyleSheet.hairlineWidth,
@@ -565,15 +563,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  backText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  backText: { fontSize: FontSize.sm },
   titleWrap: { flex: 1, gap: 1 },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.6,
     textTransform: "uppercase",
   },
-  title: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
+  title: { fontSize: FontSize.lg },
   actions: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
 
   // Brand
@@ -594,26 +591,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  brandEmoji: { fontSize: 15, fontWeight: FontWeight.semibold },
+  brandEmoji: { fontSize: 15 },
   brandName: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0,
   },
   brandSub: {
     fontSize: 10,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.8,
     textTransform: "uppercase",
   },
-  close: { fontSize: FontSize.lg, fontWeight: FontWeight.semibold },
+  close: { fontSize: FontSize.lg },
 
   // Nav
   navScroll: { paddingVertical: Spacing.md, gap: Spacing.lg },
   navGroup: { paddingHorizontal: Spacing.md, gap: 2 },
   groupTitle: {
     fontSize: 9,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 1,
     paddingHorizontal: Spacing.sm,
     paddingBottom: Spacing.xs,

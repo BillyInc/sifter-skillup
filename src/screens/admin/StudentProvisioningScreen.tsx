@@ -32,7 +32,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Shadow,
   webContainer,
 } from "../../theme";
@@ -84,6 +84,7 @@ export function StudentProvisioningScreen() {
               <Text
                 style={[
                   styles.tabLabel,
+                  CompassFonts.bodyBold,
                   { color: tab === t ? colors.text : colors.textMuted },
                 ]}
               >
@@ -195,7 +196,7 @@ function RosterTab() {
               Shadow.xs,
             ]}
           >
-            <Text style={[styles.countValue, { color: colors.text }]}>{c.value}</Text>
+            <Text style={[styles.countValue, CompassFonts.displayBold, { color: colors.text }]}>{c.value}</Text>
             <Text style={[styles.countLabel, { color: colors.textMuted }]}>{c.label}</Text>
           </View>
         ))}
@@ -224,7 +225,7 @@ function RosterTab() {
           ]}
         >
           <Text style={styles.emptyGlyph}>🔒</Text>
-          <Text style={[styles.emptyTitle, { color: colors.text }]}>
+          <Text style={[styles.emptyTitle, CompassFonts.displayBold, { color: colors.text }]}>
             No individually-visible students yet
           </Text>
           <Text style={[styles.emptyBody, { color: colors.textMuted }]}>
@@ -243,7 +244,7 @@ function RosterTab() {
               ]}
             >
               <View style={{ flex: 1 }}>
-                <Text style={[styles.rosterName, { color: colors.text }]}>
+                <Text style={[styles.rosterName, CompassFonts.bodyBold, { color: colors.text }]}>
                   {s.fullName || "Unnamed student"}
                 </Text>
                 {!![s.studentClass, s.stream ? `${streamLabel(s.stream)} stream` : null].filter(Boolean).length && (
@@ -255,6 +256,7 @@ function RosterTab() {
               <Text
                 style={[
                   styles.badge,
+                  CompassFonts.bodyBold,
                   {
                     color: colors.textMuted,
                     backgroundColor: colors.bgSecondary,
@@ -272,7 +274,7 @@ function RosterTab() {
                 onPress={() => provisioningData.openReportHtml(s.userId)}
                 style={[styles.miniBtn, { borderColor: colors.border }]}
               >
-                <Text style={[styles.miniBtnText, { color: colors.text }]}>Report</Text>
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report</Text>
               </TouchableOpacity>
             </View>
           ))}
@@ -303,7 +305,7 @@ function MergeCandidatesPanel({
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
     >
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>
+      <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
         Merge candidates
       </Text>
       <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -333,10 +335,10 @@ function MergeCandidatesPanel({
           >
             <View style={styles.mergeNames}>
               <View style={styles.mergeNameBlock}>
-                <Text style={[styles.mergeLabel, { color: colors.textMuted }]}>
+                <Text style={[styles.mergeLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
                   Provisioned
                 </Text>
-                <Text style={[styles.rosterName, { color: colors.text }]}>
+                <Text style={[styles.rosterName, CompassFonts.bodyBold, { color: colors.text }]}>
                   {candidate.provisionedFullName || "Unnamed student"}
                 </Text>
                 {!!provisionedMeta.length && (
@@ -345,12 +347,12 @@ function MergeCandidatesPanel({
                   </Text>
                 )}
               </View>
-              <Text style={[styles.mergeArrow, { color: colors.textMuted }]}>→</Text>
+              <Text style={[styles.mergeArrow, CompassFonts.bodyBold, { color: colors.textMuted }]}>→</Text>
               <View style={styles.mergeNameBlock}>
-                <Text style={[styles.mergeLabel, { color: colors.textMuted }]}>
+                <Text style={[styles.mergeLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
                   Claimed
                 </Text>
-                <Text style={[styles.rosterName, { color: colors.text }]}>
+                <Text style={[styles.rosterName, CompassFonts.bodyBold, { color: colors.text }]}>
                   {candidate.claimedFullName || "Unnamed account"}
                 </Text>
                 {!!candidate.claimedContact && (
@@ -376,7 +378,7 @@ function MergeCandidatesPanel({
                   { borderColor: colors.border, opacity: actioningCandidate ? 0.6 : 1 },
                 ]}
               >
-                <Text style={[styles.miniBtnText, { color: colors.text }]}>
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>
                   {actioningCandidate === `confirm:${candidate.id}` ? "Confirming..." : "Confirm merge"}
                 </Text>
               </TouchableOpacity>
@@ -388,7 +390,7 @@ function MergeCandidatesPanel({
                   { borderColor: colors.border, opacity: actioningCandidate ? 0.6 : 1 },
                 ]}
               >
-                <Text style={[styles.miniBtnText, { color: colors.text }]}>
+                <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>
                   {actioningCandidate === `dismiss:${candidate.id}` ? "Dismissing..." : "Dismiss"}
                 </Text>
               </TouchableOpacity>
@@ -551,7 +553,7 @@ function AddStudentsTab() {
       keyboardShouldPersistTaps="handled"
     >
       {error && (
-        <Text style={[styles.errorText, { color: colors.danger }]}>
+        <Text style={[styles.errorText, CompassFonts.bodyBold, { color: colors.danger }]}>
           {error}
         </Text>
       )}
@@ -571,7 +573,7 @@ function AddStudentsTab() {
 
       {stage === "review" && (
         <View style={{ gap: Spacing.md }}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Review &amp; select
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -601,7 +603,7 @@ function AddStudentsTab() {
                   },
                 ]}
               >
-                {selected[d.id] && <Text style={styles.checkmark}>✓</Text>}
+                {selected[d.id] && <Text style={[styles.checkmark, CompassFonts.displayBold]}>✓</Text>}
               </TouchableOpacity>
               <View style={{ flex: 1, gap: Spacing.xs }}>
                 <TextInput
@@ -637,7 +639,7 @@ function AddStudentsTab() {
                 />
               </View>
               {d.needsReview && (
-                <Text style={[styles.reviewFlag, { color: colors.warning ?? "#e0a106" }]}>
+                <Text style={[styles.reviewFlag, CompassFonts.bodyBold, { color: colors.warning ?? "#e0a106" }]}>
                   Check
                 </Text>
               )}
@@ -702,7 +704,7 @@ function GeneratedCards({
 
   return (
     <View style={{ gap: Spacing.md }}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>
+      <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
         {generated.length} account{generated.length > 1 ? "s" : ""} created
       </Text>
       <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -720,11 +722,11 @@ function GeneratedCards({
             Shadow.xs,
           ]}
         >
-          <Text style={[styles.cardName, { color: colors.text }]}>
+          <Text style={[styles.cardName, CompassFonts.bodyBold, { color: colors.text }]}>
             {g.fullName}
             {g.studentClass ? `  ·  ${g.studentClass}` : ""}
           </Text>
-          <Text style={[styles.cardCodeLabel, { color: colors.textMuted }]}>
+          <Text style={[styles.cardCodeLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
             CLAIM CODE
           </Text>
           <TouchableOpacity
@@ -734,7 +736,7 @@ function GeneratedCards({
               setTimeout(() => setCopied(null), 1500);
             }}
           >
-            <Text style={[styles.cardCode, { color: colors.text }]}>
+            <Text style={[styles.cardCode, CompassFonts.displayBold, { color: colors.text }]}>
               {g.claimCode}
             </Text>
           </TouchableOpacity>
@@ -746,7 +748,7 @@ function GeneratedCards({
               onPress={() => provisioningData.openLoginCard(g.userId)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, { color: colors.text }]}>Print card</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Print card</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
@@ -757,13 +759,13 @@ function GeneratedCards({
               }
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, { color: colors.text }]}>Report (Word)</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (Word)</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => provisioningData.openReportHtml(g.userId)}
               style={[styles.miniBtn, { borderColor: colors.border }]}
             >
-              <Text style={[styles.miniBtnText, { color: colors.text }]}>Report (PDF)</Text>
+              <Text style={[styles.miniBtnText, CompassFonts.bodyBold, { color: colors.text }]}>Report (PDF)</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -797,7 +799,7 @@ function StreamPicker({
   return (
     <View style={[styles.streamPicker, compact && styles.streamPickerCompact]}>
       {!!label && (
-        <Text style={[styles.streamPickerLabel, { color: colors.textMuted }]}>
+        <Text style={[styles.streamPickerLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
           {label}
         </Text>
       )}
@@ -819,6 +821,7 @@ function StreamPicker({
               <Text
                 style={[
                   styles.streamPillText,
+                  CompassFonts.bodyBold,
                   { color: active ? colors.bg : colors.text },
                 ]}
               >
@@ -851,7 +854,7 @@ function PrimaryButton({
       {busy ? (
         <ActivityIndicator color={colors.bg} />
       ) : (
-        <Text style={[styles.btnPrimaryText, { color: colors.bg }]}>{label}</Text>
+        <Text style={[styles.btnPrimaryText, CompassFonts.bodyBold, { color: colors.bg }]}>{label}</Text>
       )}
     </TouchableOpacity>
   );
@@ -864,7 +867,7 @@ function SecondaryButton({ label, onPress }: { label: string; onPress: () => voi
       onPress={onPress}
       style={[styles.btnSecondary, { borderColor: colors.border }]}
     >
-      <Text style={[styles.btnSecondaryText, { color: colors.text }]}>{label}</Text>
+      <Text style={[styles.btnSecondaryText, CompassFonts.bodyBold, { color: colors.text }]}>{label}</Text>
     </TouchableOpacity>
   );
 }
@@ -879,7 +882,7 @@ const styles = StyleSheet.create({
   },
   tabBar: { flexDirection: "row", borderBottomWidth: 1, paddingHorizontal: Spacing.lg },
   tab: { paddingVertical: Spacing.md, marginRight: Spacing.xl },
-  tabLabel: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  tabLabel: { fontSize: FontSize.md },
 
   countRow: { flexDirection: "row", gap: Spacing.sm, flexWrap: "wrap" },
   countCard: {
@@ -891,7 +894,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.xs,
   },
-  countValue: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  countValue: { fontSize: FontSize.xxl },
   countLabel: { fontSize: FontSize.xs, textAlign: "center" },
   privacyNote: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
 
@@ -903,7 +906,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   emptyGlyph: { fontSize: 30 },
-  emptyTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, textAlign: "center" },
+  emptyTitle: { fontSize: FontSize.lg, textAlign: "center" },
   emptyBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.6, textAlign: "center", maxWidth: 440 },
 
   rosterRow: {
@@ -914,11 +917,10 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     gap: Spacing.md,
   },
-  rosterName: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  rosterName: { fontSize: FontSize.md },
   rosterMeta: { fontSize: FontSize.sm },
   badge: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     borderWidth: 1,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.sm,
@@ -946,10 +948,9 @@ const styles = StyleSheet.create({
   mergeNameBlock: { flex: 1, minWidth: 180, gap: 2 },
   mergeLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textTransform: "uppercase",
   },
-  mergeArrow: { fontSize: FontSize.lg, fontWeight: FontWeight.bold },
+  mergeArrow: { fontSize: FontSize.lg },
   mergeReason: { fontSize: FontSize.xs },
   cardActions: {
     flexDirection: "row",
@@ -969,13 +970,12 @@ const styles = StyleSheet.create({
   },
   miniBtnText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textAlign: "center",
   },
 
   lede: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
-  errorText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  sectionTitle: { fontSize: FontSize.lg },
+  errorText: { fontSize: FontSize.sm },
 
   gridRow: {
     flexDirection: "row",
@@ -993,7 +993,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  checkmark: { color: "#fff", fontSize: 14, fontWeight: "900" },
+  checkmark: { color: "#fff", fontSize: 14 },
   input: {
     borderWidth: 1,
     borderRadius: Radius.md,
@@ -1009,7 +1009,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     maxWidth: 160,
   },
-  reviewFlag: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  reviewFlag: { fontSize: FontSize.xs },
 
   cardOut: {
     borderWidth: 1,
@@ -1018,15 +1018,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.xs,
   },
-  cardName: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
-  cardCodeLabel: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1.2, marginTop: Spacing.sm },
-  cardCode: { fontSize: FontSize.hero, fontWeight: FontWeight.black, letterSpacing: 4 },
+  cardName: { fontSize: FontSize.md },
+  cardCodeLabel: { fontSize: FontSize.xs, letterSpacing: 1.2, marginTop: Spacing.sm },
+  cardCode: { fontSize: FontSize.hero, letterSpacing: 4 },
   cardHint: { fontSize: FontSize.xs },
   streamPicker: { gap: Spacing.xs },
   streamPickerCompact: { flex: 1, minWidth: 180 },
   streamPickerLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textTransform: "uppercase",
   },
   streamPills: {
@@ -1045,7 +1044,6 @@ const styles = StyleSheet.create({
   },
   streamPillText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
   },
 
   btnPrimary: {
@@ -1054,7 +1052,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  btnPrimaryText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  btnPrimaryText: { fontSize: FontSize.md },
   btnSecondary: {
     borderWidth: 1,
     borderRadius: Radius.full,
@@ -1062,5 +1060,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     alignItems: "center",
   },
-  btnSecondaryText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  btnSecondaryText: { fontSize: FontSize.sm },
 });

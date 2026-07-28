@@ -8,7 +8,7 @@ import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIsla
 import { QUANT_LEVELS } from '../data/quantLevels';
 import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme, webContainer } from '../theme';
+import { Spacing, Radius, FontSize, Shadow, useTheme, webContainer, type ColorPalette } from '../theme';
 import LessonScreen from './LessonScreen';
 import { VRBridge } from '../lib/vrBridge';
 import type { VRScenarioKey } from '../lib/vrBridge';
@@ -226,9 +226,11 @@ function LevelDot({ levelId, labColor, onPress, completed, isBoss, locked, inter
   levelId: number; labColor: string; onPress: () => void;
   completed: boolean; isBoss: boolean; locked: boolean; interviewStyle?: boolean;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const size = isBoss ? 54 : 42;
-  const bg = locked ? Colors.border : completed ? labColor : '#fff';
-  const border = locked ? Colors.borderDark ?? '#cbd5e1' : labColor;
+  const bg = locked ? colors.borderRole.subtle : completed ? labColor : colors.surface.inverse;
+  const border = locked ? colors.borderDark : labColor;
   const emoji = locked ? 'L' : isBoss ? (interviewStyle ? 'X' : 'B') : undefined;
 
   return (
@@ -243,7 +245,7 @@ function LevelDot({ levelId, labColor, onPress, completed, isBoss, locked, inter
     >
       {emoji
         ? <Text style={{ fontSize: isBoss ? 18 : 14, fontWeight: '800' }}>{emoji}</Text>
-        : <Text style={[styles.dotText, { color: completed ? '#fff' : labColor, fontSize: isBoss ? 16 : 12 }]}>
+        : <Text style={[styles.dotText, { color: completed ? colors.textRole.inverse : labColor, fontSize: isBoss ? 16 : 12 }]}>
             {String(levelId - 1000)}
           </Text>}
     </TouchableOpacity>
@@ -254,13 +256,15 @@ function LabCard({ lab, completedLevels, onLevelPress, unlocked }: {
   lab: QuantLab; completedLevels: number[];
   onLevelPress: (id: number) => void; unlocked: boolean;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const [expanded, setExpanded] = useState(false);
   const total = lab.end - lab.start + 1;
   const done = completedLevels.filter(l => l >= lab.start && l <= lab.end).length;
   const pct = Math.round((done / total) * 100);
   const tierColor = TIER_COLORS[lab.tier];
   const state = getLabState(lab, completedLevels);
-  const stateColor = state === 'review' ? '#10B981' : state === 'continue' ? lab.color : state === 'ready' ? tierColor : Colors.textMuted;
+  const stateColor = state === 'review' ? '#10B981' : state === 'continue' ? lab.color : state === 'ready' ? tierColor : colors.textRole.muted;
   const stateLabel = state === 'review' ? 'Review' : state === 'continue' ? 'Continue' : state === 'ready' ? 'Start' : 'Locked';
 
   const levels = Array.from({ length: total }, (_, i) => lab.start + i);
@@ -353,6 +357,8 @@ function VRPromptModal({ visible, scenarioKey, labName, onDismiss }: {
   visible: boolean; scenarioKey: VRScenarioKey | undefined;
   labName: string; onDismiss: () => void;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   if (!scenarioKey) return null;
   const info = VRBridge.getScenarioInfo(scenarioKey);
 
@@ -397,6 +403,7 @@ function VRPromptModal({ visible, scenarioKey, labName, onDismiss }: {
 
 function QuantHeader({ completedLevels }: { completedLevels: number[] }) {
   const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const total = Object.keys(QUANT_LEVELS).length;
   const done = completedLevels.filter(l => l >= 1001 && l <= 1090).length;
   const labsDone = QUANT_LABS.filter(lab =>
@@ -437,11 +444,12 @@ function QuantHeader({ completedLevels }: { completedLevels: number[] }) {
 
 export default function QuantMapScreen() {
   const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
   const { user } = useAuth();
   const { completeLevel } = useProgress();
   const isWebWide = useIsWebWide();
   const screenWidth = Dimensions.get('window').width;
-  const activeTrackId = user?.active_track_id ?? '';
+  const activeTrackId = user?.active_track ?? '';
   const cfg = TRACK_DASHBOARD_CONFIG[activeTrackId] ?? DEFAULT_DASHBOARD_CONFIG;
   const accentColor = cfg.accentColor;
   const [activeLevelId, setActiveLevelId] = useState<number | null>(null);
@@ -577,7 +585,7 @@ export default function QuantMapScreen() {
     const labsUnlocked = QUANT_LABS.filter(l => isQuantLabUnlocked(l, completed)).length;
 
     return (
-      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
         <WebShell>
           {dashboardHeader}
           <WebPageHeader
@@ -657,7 +665,7 @@ export default function QuantMapScreen() {
                             style={{ backgroundColor: accent, borderRadius: Radius.md, paddingVertical: 8, alignItems: 'center' }}
                             onPress={() => handleLevelPress(lab.start)}
                           >
-                            <Text style={{ color: '#FFF', fontSize: 12, fontWeight: '700' }}>{state === 'continue' ? 'Continue Lab' : 'Start Lab'}</Text>
+                            <Text style={{ color: colors.textRole.inverse, fontSize: 12, fontWeight: '700' }}>{state === 'continue' ? 'Continue Lab' : 'Start Lab'}</Text>
                           </TouchableOpacity>
                         )}
                       </WebCard>
@@ -682,7 +690,7 @@ export default function QuantMapScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={Colors.bg} />
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={colors.surface.base} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
@@ -721,40 +729,40 @@ export default function QuantMapScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bg },
+const makeStyles = (colors: ColorPalette) => StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.surface.base },
   scroll: { flex: 1 },
   scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: 18 },
-  header: { backgroundColor: Colors.navy, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
+  header: { backgroundColor: colors.navy, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
   headerTop: { gap: 2 },
   headerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
-  headerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: '#fff' },
+  headerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: colors.textRole.inverse },
   headerSub: { fontSize: FontSize.sm, color: '#94a3b8', fontWeight: '600' },
   headerStats: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
   stat: { alignItems: 'center' },
-  statVal: { fontSize: FontSize.xl, fontWeight: '800', color: '#fff' },
+  statVal: { fontSize: FontSize.xl, fontWeight: '800', color: colors.textRole.inverse },
   statLabel: { fontSize: FontSize.xs, color: '#94a3b8', fontWeight: '600' },
   statDivider: { width: 1, height: 32, backgroundColor: '#334155' },
   overallBar: { height: 6, backgroundColor: '#334155', borderRadius: 3, overflow: 'hidden' },
-  overallFill: { height: '100%', backgroundColor: Colors.accent, borderRadius: 3 },
+  overallFill: { height: '100%', backgroundColor: colors.accentRole.action, borderRadius: 3 },
   overallLabel: { fontSize: FontSize.xs, color: '#94a3b8', textAlign: 'center', fontWeight: '600' },
-  labCard: { backgroundColor: Colors.card, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: Colors.border },
+  labCard: { backgroundColor: colors.surface.raised, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: colors.borderRole.subtle },
   labCardLocked: { opacity: 0.65 },
   labHeader: { flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, alignItems: 'flex-start' },
   labIcon: { fontSize: 18, lineHeight: 22 },
-  labName: { fontSize: FontSize.lg, fontWeight: '900', color: '#fff', marginTop: 2 },
+  labName: { fontSize: FontSize.lg, fontWeight: '900', color: colors.textRole.inverse, marginTop: 2 },
   labSubtitle: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)', fontWeight: '600', marginTop: 2 },
   tierPill: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2, marginBottom: 4 },
   tierText: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 0.5 },
   stateBadge: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5, alignSelf: 'flex-start' },
   stateBadgeText: { fontSize: 10, fontWeight: '800' },
   labBody: { padding: Spacing.lg, gap: Spacing.md },
-  labDesc: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
-  stateHelper: { fontSize: FontSize.xs, color: Colors.textMuted, lineHeight: 18 },
+  labDesc: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
+  stateHelper: { fontSize: FontSize.xs, color: colors.textRole.muted, lineHeight: 18 },
   progressRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  progressTrack: { flex: 1, height: 6, backgroundColor: Colors.border, borderRadius: 3, overflow: 'hidden' },
+  progressTrack: { flex: 1, height: 6, backgroundColor: colors.borderRole.subtle, borderRadius: 3, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: 3 },
-  progressLabel: { fontSize: FontSize.xs, color: Colors.textMuted, fontWeight: '700', minWidth: 72, textAlign: 'right' },
+  progressLabel: { fontSize: FontSize.xs, color: colors.textRole.muted, fontWeight: '700', minWidth: 72, textAlign: 'right' },
   vrBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: 10, paddingVertical: 6, alignSelf: 'flex-start' },
   vrBadgeIcon: { fontSize: 12, fontWeight: '800' },
   vrBadgeText: { fontSize: FontSize.xs, fontWeight: '800' },
@@ -764,23 +772,23 @@ const styles = StyleSheet.create({
   dotText: { fontWeight: '800' },
   lockedOverlay: { padding: Spacing.xl, alignItems: 'center', gap: Spacing.sm },
   lockedIcon: { fontSize: 16, fontWeight: '800' },
-  lockedText: { fontSize: FontSize.sm, color: Colors.textMuted, fontWeight: '600', textAlign: 'center' },
+  lockedText: { fontSize: FontSize.sm, color: colors.textRole.muted, fontWeight: '600', textAlign: 'center' },
   vrOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.7)', justifyContent: 'center', alignItems: 'center', padding: Spacing.xl },
-  vrModal: { backgroundColor: Colors.card, borderRadius: Radius.xl, padding: Spacing.xl, width: '100%', maxWidth: 380, gap: Spacing.md },
+  vrModal: { backgroundColor: colors.surface.raised, borderRadius: Radius.xl, padding: Spacing.xl, width: '100%', maxWidth: 380, gap: Spacing.md },
   vrModalIcon: { fontSize: 18, fontWeight: '800', textAlign: 'center' },
-  vrModalTitle: { fontSize: FontSize.lg, fontWeight: '900', color: Colors.accent, textAlign: 'center' },
-  vrModalLab: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', fontWeight: '600' },
-  vrModalName: { fontSize: FontSize.xl, fontWeight: '900', color: Colors.text, textAlign: 'center' },
-  vrModalDesc: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20, textAlign: 'center' },
+  vrModalTitle: { fontSize: FontSize.lg, fontWeight: '900', color: colors.accentRole.action, textAlign: 'center' },
+  vrModalLab: { fontSize: FontSize.sm, color: colors.textRole.secondary, textAlign: 'center', fontWeight: '600' },
+  vrModalName: { fontSize: FontSize.xl, fontWeight: '900', color: colors.textRole.primary, textAlign: 'center' },
+  vrModalDesc: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20, textAlign: 'center' },
   vrModalMeta: { flexDirection: 'row', justifyContent: 'center', gap: Spacing.md, flexWrap: 'wrap' },
-  vrMetaItem: { fontSize: FontSize.xs, color: Colors.textMuted, fontWeight: '600' },
-  vrLaunchBtn: { backgroundColor: Colors.accent, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center' },
-  vrLaunchBtnText: { color: '#fff', fontSize: FontSize.lg, fontWeight: '800' },
+  vrMetaItem: { fontSize: FontSize.xs, color: colors.textRole.muted, fontWeight: '600' },
+  vrLaunchBtn: { backgroundColor: colors.accentRole.action, borderRadius: Radius.md, paddingVertical: Spacing.lg, alignItems: 'center' },
+  vrLaunchBtnText: { color: colors.textRole.inverse, fontSize: FontSize.lg, fontWeight: '800' },
   vrDismissBtn: { alignItems: 'center', paddingVertical: Spacing.sm },
-  vrDismissBtnText: { color: Colors.textSoft, fontSize: FontSize.sm, fontWeight: '600' },
+  vrDismissBtnText: { color: colors.textRole.secondary, fontSize: FontSize.sm, fontWeight: '600' },
   footer: { alignItems: 'center', gap: 6, paddingTop: Spacing.md },
-  footerText: { fontSize: FontSize.sm, color: Colors.textSoft, fontWeight: '600', textAlign: 'center' },
-  footerSub: { fontSize: FontSize.xs, color: Colors.textMuted, textAlign: 'center' },
+  footerText: { fontSize: FontSize.sm, color: colors.textRole.secondary, fontWeight: '600', textAlign: 'center' },
+  footerSub: { fontSize: FontSize.xs, color: colors.textRole.muted, textAlign: 'center' },
 });
 
 const dashStyles = StyleSheet.create({

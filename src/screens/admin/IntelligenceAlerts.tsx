@@ -13,7 +13,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   type ColorPalette,
 } from "../../theme";
 import { ComingSoonPanel } from "./ComingSoonPanel";
@@ -68,7 +68,7 @@ export function IntelligenceAlerts({
               >
                 <Text style={styles.icon}>{s.icon}</Text>
                 <View style={{ flex: 1, gap: 2 }}>
-                  <Text style={[styles.title, { color: colors.text }]}>
+                  <Text style={[styles.title, CompassFonts.bodyBold, { color: colors.text }]}>
                     {alert.title}
                   </Text>
                   <Text style={[styles.body, { color: colors.textSoft }]}>
@@ -97,6 +97,6 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
   },
   icon: { fontSize: 16 },
-  title: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  title: { fontSize: FontSize.sm },
   body: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.6 },
 });

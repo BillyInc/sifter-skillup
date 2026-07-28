@@ -14,7 +14,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Shadow,
   webContainer,
 } from "../../theme";
@@ -80,7 +80,7 @@ export function StudentManagementScreen() {
           <View style={[styles.lockBadge, { backgroundColor: colors.bgSecondary }]}>
             <Text style={styles.lockGlyph}>🔒</Text>
           </View>
-          <Text style={[styles.heroTitle, { color: colors.text }]}>
+          <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Individual student data is private
           </Text>
           <Text style={[styles.heroBody, { color: colors.textSoft }]}>
@@ -90,7 +90,7 @@ export function StudentManagementScreen() {
 
         {/* What it would take */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             What individual visibility requires
           </Text>
           <View style={styles.cards}>
@@ -103,7 +103,7 @@ export function StudentManagementScreen() {
                 ]}
               >
                 <Text style={styles.cardIcon}>{r.icon}</Text>
-                <Text style={[styles.cardTitle, { color: colors.text }]}>
+                <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>
                   {r.title}
                 </Text>
                 <Text style={[styles.cardBody, { color: colors.textMuted }]}>
@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
   lockGlyph: { fontSize: 26 },
   heroTitle: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.black,
     textAlign: "center",
   },
   heroBody: {
@@ -161,7 +160,7 @@ const styles = StyleSheet.create({
     maxWidth: 460,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   cards: { flexDirection: "row", flexWrap: "wrap", gap: Spacing.sm },
   card: {
     flex: 1,
@@ -172,7 +171,7 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   cardIcon: { fontSize: 22 },
-  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  cardTitle: { fontSize: FontSize.md },
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   footnote: {
     fontSize: FontSize.xs,

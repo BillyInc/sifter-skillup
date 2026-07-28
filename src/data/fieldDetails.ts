@@ -21,6 +21,7 @@ export interface FieldSkillTrack {
   description: string;
   status: TrackStatus;
   navigateTo?: 'Quant' | 'CryptoMap' | 'IslandMap' | 'StarknetTrack' | 'World';
+  accentColor?: string;
 }
 
 export interface FieldDetail {

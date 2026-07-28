@@ -9,7 +9,7 @@ import {
   SafeAreaView, RefreshControl, TextInput, KeyboardAvoidingView,
   Platform, ActivityIndicator, Alert,
 } from 'react-native';
-import { useTheme, Spacing, Radius, FontSize, Shadow } from '../theme';
+import { useTheme, CompassFonts, FontWeight, Spacing, Radius, FontSize, Shadow } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { API, API_BASE } from '../lib/api';
 import { streakEngine, type StreakStatus } from '../lib/StreakEngine';
@@ -57,7 +57,7 @@ function TierBadge({ tier, accent }: { tier: string; accent: string }) {
   return (
     <View style={{ backgroundColor: `${accent}20`, borderRadius: Radius.sm,
       paddingHorizontal: 8, paddingVertical: 2 }}>
-      <Text style={{ color: accent, fontSize: 10, fontWeight: '800' }}>{label}</Text>
+      <Text style={{ color: accent, fontSize: 10, fontWeight: FontWeight.heavy }}>{label}</Text>
     </View>
   );
 }
@@ -67,20 +67,20 @@ function GuildCard({ guild, onJoin, joined }: {
 }) {
   const { colors } = useTheme();
   return (
-    <View style={[gc.card, { backgroundColor: colors.card, borderColor: `${guild.accent}30` }]}>
+    <View style={[gc.card, { backgroundColor: colors.surface.raised, borderColor: `${guild.accent}30` }]}>
       <View style={gc.row}>
         <Text style={{ fontSize: 18 }}>{guild.icon}</Text>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <Text style={[gc.name, { color: colors.text }]}>{guild.name}</Text>
+            <Text style={[gc.name, { color: colors.textRole.primary }]}>{guild.name}</Text>
             <TierBadge tier={guild.tier} accent={guild.accent} />
           </View>
-          <Text style={[gc.desc, { color: colors.textSoft }]}>{guild.description}</Text>
+          <Text style={[gc.desc, { color: colors.textRole.secondary }]}>{guild.description}</Text>
         </View>
       </View>
       <View style={gc.stats}>
-        <Text style={[gc.stat, { color: colors.textMuted }]}>👥 {guild.member_count} members</Text>
-        <Text style={[gc.stat, { color: colors.textMuted }]}>⚡ {guild.pool_xp.toLocaleString()} XP pooled</Text>
+        <Text style={[gc.stat, { color: colors.textRole.muted }]}>👥 {guild.member_count} members</Text>
+        <Text style={[gc.stat, { color: colors.textRole.muted }]}>⚡ {guild.pool_xp.toLocaleString()} XP pooled</Text>
       </View>
       <TouchableOpacity
         style={[gc.btn, { backgroundColor: joined ? '#10B981' : guild.accent }]}
@@ -88,7 +88,7 @@ function GuildCard({ guild, onJoin, joined }: {
         disabled={joined}
         activeOpacity={0.85}
       >
-        <Text style={gc.btnTxt}>{joined ? '✓ Joined' : `Join ${guild.name}`}</Text>
+        <Text style={[gc.btnTxt, { color: colors.surface.inverse }]}>{joined ? '✓ Joined' : `Join ${guild.name}`}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -102,7 +102,7 @@ const gc = StyleSheet.create({
   stats: { flexDirection: 'row', gap: Spacing.lg },
   stat:  { fontSize: 11, fontWeight: '600' },
   btn:   { borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14, alignItems: 'center' },
-  btnTxt:{ color: '#fff', fontWeight: '700', fontSize: 11 },
+  btnTxt:{ fontWeight: FontWeight.bold, fontSize: 11 },
 });
 
 // ── Main Screen ────────────────────────────────────────────────────────────────
@@ -207,8 +207,8 @@ export default function GuildScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
-        <ActivityIndicator color={colors.accent} size="large" style={{ marginTop: 80 }} />
+      <SafeAreaView style={[s.screen, { backgroundColor: colors.surface.base }]}>
+        <ActivityIndicator color={colors.accentRole.action} size="large" style={{ marginTop: 80 }} />
       </SafeAreaView>
     );
   }
@@ -218,14 +218,14 @@ export default function GuildScreen() {
 
   if (isWebWide) {
     return (
-      <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[s.screen, { backgroundColor: colors.surface.base }]}>
         <WebShell>
           <WebPageHeader
             title="Guilds"
             subtitle={trackContext.mode === 'track'
               ? `${trackContext.trackName} workspace · compete, collaborate, and stay accountable`
               : 'Compete, collaborate, and stay accountable'}
-            accentColor={colors.accent}
+            accentColor={colors.accentRole.action}
             right={
               <View style={s.webTabRow}>
                 {TABS.map(t => {
@@ -238,12 +238,12 @@ export default function GuildScreen() {
                       style={[
                         s.webTab,
                         {
-                          backgroundColor: active ? colors.text : colors.card,
-                          borderColor: active ? colors.text : colors.border,
+                          backgroundColor: active ? colors.textRole.primary : colors.surface.raised,
+                          borderColor: active ? colors.textRole.primary : colors.borderRole.subtle,
                         },
                       ]}
                     >
-                      <Text style={{ color: active ? '#fff' : colors.textSoft, fontSize: 12, fontWeight: '700' }}>
+                      <Text style={{ color: active ? colors.surface.inverse : colors.textRole.secondary, fontSize: 12, fontWeight: FontWeight.bold }}>
                         {t.label}
                       </Text>
                     </TouchableOpacity>
@@ -265,21 +265,21 @@ export default function GuildScreen() {
                         </View>
                         <View style={{ flex: 1 }}>
                           <View style={s.webGuildTitleRow}>
-                            <Text style={[s.webGuildName, { color: colors.text }]}>{myGuild.name}</Text>
+                            <Text style={[s.webGuildName, { color: colors.textRole.primary }]}>{myGuild.name}</Text>
                             <TierBadge tier={myGuild.tier} accent={myGuild.accent} />
                           </View>
-                          <Text style={[s.webGuildDesc, { color: colors.textSoft }]}>{myGuild.description}</Text>
+                          <Text style={[s.webGuildDesc, { color: colors.textRole.secondary }]}>{myGuild.description}</Text>
                           <View style={s.webMetaRow}>
-                            <Text style={[s.webMetaText, { color: colors.textMuted }]}>Members: {myGuild.member_count}</Text>
-                            <Text style={[s.webMetaText, { color: colors.textMuted }]}>Pool XP: {myGuild.pool_xp?.toLocaleString()}</Text>
-                            <Text style={[s.webMetaText, { color: colors.textMuted }]}>Your Rank: #{myGuild.user_rank ?? '-'}</Text>
+                            <Text style={[s.webMetaText, { color: colors.textRole.muted }]}>Members: {myGuild.member_count}</Text>
+                            <Text style={[s.webMetaText, { color: colors.textRole.muted }]}>Pool XP: {myGuild.pool_xp?.toLocaleString()}</Text>
+                            <Text style={[s.webMetaText, { color: colors.textRole.muted }]}>Your Rank: #{myGuild.user_rank ?? '-'}</Text>
                           </View>
                         </View>
                         <TouchableOpacity
-                          style={[gc.btn, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border, paddingHorizontal: Spacing.lg }]}
+                          style={[gc.btn, { backgroundColor: colors.surface.raised, borderWidth: 1, borderColor: colors.borderRole.subtle, paddingHorizontal: Spacing.lg }]}
                           onPress={handleLeave}
                         >
-                          <Text style={[gc.btnTxt, { color: colors.text }]}>Leave</Text>
+                          <Text style={[gc.btnTxt, { color: colors.textRole.primary }]}>Leave</Text>
                         </TouchableOpacity>
                       </View>
                     </WebCard>
@@ -291,34 +291,34 @@ export default function GuildScreen() {
                           style={[
                             s.memberRow,
                             {
-                              backgroundColor: colors.card,
+                              backgroundColor: colors.surface.raised,
                               borderBottomWidth: i < 4 ? 1 : 0,
-                              borderBottomColor: colors.border,
+                              borderBottomColor: colors.borderRole.subtle,
                               borderRadius: 0,
                               paddingHorizontal: 0,
                             },
                           ]}
                         >
-                          <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textMuted }]}>#{i + 1}</Text>
+                          <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textRole.muted }]}>#{i + 1}</Text>
                           <View style={{ flex: 1 }}>
-                            <Text style={[s.memberName, { color: colors.text }]}>{m.username}{m.id === user?.id ? ' (You)' : ''}</Text>
-                            <Text style={{ color: colors.textMuted, fontSize: 11 }}>Streak {m.streak}d</Text>
+                            <Text style={[s.memberName, { color: colors.textRole.primary }]}>{m.username}{m.id === user?.id ? ' (You)' : ''}</Text>
+                            <Text style={{ color: colors.textRole.muted, fontSize: 11 }}>Streak {m.streak}d</Text>
                           </View>
-                          <Text style={[s.pts, { color: colors.textSoft }]}>{m.points?.toLocaleString()} XP</Text>
+                          <Text style={[s.pts, { color: colors.textRole.secondary }]}>{m.points?.toLocaleString()} XP</Text>
                         </View>
                       ))}
                     </WebCard>
                   </>
                 ) : (
-                  <WebCard accentBar accentColor={colors.accent}>
+                  <WebCard accentBar accentColor={colors.accentRole.action}>
                     <View style={s.emptyState}>
                       <Text style={{ fontSize: 18 }}>Guilds</Text>
-                      <Text style={[s.emptyTitle, { color: colors.text }]}>Join a Guild</Text>
-                      <Text style={[s.emptySub, { color: colors.textSoft, maxWidth: 520 }]}>
+                      <Text style={[s.emptyTitle, { color: colors.textRole.primary }]}>Join a Guild</Text>
+                      <Text style={[s.emptySub, { color: colors.textRole.secondary, maxWidth: 520 }]}>
                         Guilds keep your workspace social with shared XP, rankings, and team accountability.
                       </Text>
-                      <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accent }]} onPress={() => setTab('browse')}>
-                        <Text style={{ color: '#fff', fontWeight: '800', fontSize: FontSize.md }}>Browse Guilds</Text>
+                      <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accentRole.action }]} onPress={() => setTab('browse')}>
+                        <Text style={{ color: colors.surface.inverse, fontWeight: FontWeight.heavy, fontSize: FontSize.md }}>Browse Guilds</Text>
                       </TouchableOpacity>
                     </View>
                   </WebCard>
@@ -326,7 +326,7 @@ export default function GuildScreen() {
               )}
 
               {tab === 'browse' && (
-                <WebCard title="Guild Directory" accentBar accentColor={colors.accent}>
+                <WebCard title="Guild Directory" accentBar accentColor={colors.accentRole.action}>
                   <View style={s.webGuildGrid}>
                     {featuredGuilds.map(g => (
                       <GuildCard key={g.id} guild={g} joined={userGuildId === g.id} onJoin={() => handleJoin(g.id)} />
@@ -338,14 +338,14 @@ export default function GuildScreen() {
               {tab === 'leaderboard' && (
                 <WebCard title="Global Guild Rankings" accentBar accentColor={colors.gold}>
                   {globalLb.map((g, i) => (
-                    <View key={g.id} style={[s.lbRow, { backgroundColor: colors.card, borderColor: i < 3 ? `${g.accent}40` : colors.border, marginBottom: Spacing.sm }]}>
-                      <Text style={[s.lbRank, { color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : colors.textMuted }]}>
+                    <View key={g.id} style={[s.lbRow, { backgroundColor: colors.surface.raised, borderColor: i < 3 ? `${g.accent}40` : colors.borderRole.subtle, marginBottom: Spacing.sm }]}>
+                      <Text style={[s.lbRank, { color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : colors.textRole.muted }]}>
                         {i === 0 ? '1' : i === 1 ? '2' : i === 2 ? '3' : `${i + 1}`}
                       </Text>
                       <Text style={{ fontSize: 18 }}>{g.icon}</Text>
                       <View style={{ flex: 1 }}>
-                        <Text style={[s.lbName, { color: colors.text }]}>{g.name}</Text>
-                        <Text style={{ color: colors.textMuted, fontSize: 11 }}>{g.member_count} members</Text>
+                        <Text style={[s.lbName, { color: colors.textRole.primary }]}>{g.name}</Text>
+                        <Text style={{ color: colors.textRole.muted, fontSize: 11 }}>{g.member_count} members</Text>
                       </View>
                       <Text style={[s.lbXP, { color: g.accent }]}>{g.pool_xp?.toLocaleString()} XP</Text>
                     </View>
@@ -354,48 +354,48 @@ export default function GuildScreen() {
               )}
 
               {tab === 'chat' && (
-                <WebCard title="Guild Chat" accentBar accentColor={colors.accent}>
+                <WebCard title="Guild Chat" accentBar accentColor={colors.accentRole.action}>
                   {userGuildId ? (
                     <>
                       <View style={s.chatMessages}>
                         {chat.length === 0 ? (
-                          <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
+                          <Text style={{ color: colors.textRole.muted, textAlign: 'center', padding: Spacing.xl }}>
                             No messages yet. Start the workspace conversation.
                           </Text>
                         ) : (
                           chat.map(msg => (
                             <View key={msg.id} style={[s.bubble, {
-                              backgroundColor: msg.user_id === user?.id ? `${colors.accent}20` : colors.card,
+                              backgroundColor: msg.user_id === user?.id ? `${colors.accentRole.action}20` : colors.surface.raised,
                               alignSelf: msg.user_id === user?.id ? 'flex-end' : 'flex-start',
-                              borderColor: msg.user_id === user?.id ? `${colors.accent}40` : colors.border,
+                              borderColor: msg.user_id === user?.id ? `${colors.accentRole.action}40` : colors.borderRole.subtle,
                             }]}>
-                              <Text style={{ color: colors.accent, fontSize: 10, fontWeight: '800', marginBottom: 2 }}>{msg.username}</Text>
-                              <Text style={{ color: colors.text, fontSize: FontSize.sm, lineHeight: 18 }}>{msg.content}</Text>
+                              <Text style={{ color: colors.accentRole.action, fontSize: 10, fontWeight: FontWeight.heavy, marginBottom: 2 }}>{msg.username}</Text>
+                              <Text style={{ color: colors.textRole.primary, fontSize: FontSize.sm, lineHeight: 18 }}>{msg.content}</Text>
                             </View>
                           ))
                         )}
                       </View>
-                      <View style={[s.chatInput, { backgroundColor: colors.card, borderColor: colors.border, marginTop: Spacing.md }]}>
+                      <View style={[s.chatInput, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle, marginTop: Spacing.md }]}>
                         <TextInput
-                          style={[s.input, { color: colors.text }]}
+                          style={[s.input, { color: colors.textRole.primary }]}
                           placeholder="Message your guild..."
-                          placeholderTextColor={colors.textMuted}
+                          placeholderTextColor={colors.textRole.muted}
                           value={chatInput}
                           onChangeText={setChatInput}
                           maxLength={500}
                           multiline
                         />
                         <TouchableOpacity
-                          style={[s.sendBtn, { backgroundColor: colors.accent, opacity: chatInput.trim() ? 1 : 0.4 }]}
+                          style={[s.sendBtn, { backgroundColor: colors.accentRole.action, opacity: chatInput.trim() ? 1 : 0.4 }]}
                           onPress={sendChat}
                           disabled={!chatInput.trim() || sending}
                         >
-                          <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>{sending ? '...' : '>'}</Text>
+                          <Text style={{ color: colors.surface.inverse, fontWeight: FontWeight.heavy, fontSize: 13 }}>{sending ? '...' : '>'}</Text>
                         </TouchableOpacity>
                       </View>
                     </>
                   ) : (
-                    <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
+                    <Text style={{ color: colors.textRole.muted, textAlign: 'center', padding: Spacing.xl }}>
                       Join a guild to unlock guild chat.
                     </Text>
                   )}
@@ -404,17 +404,17 @@ export default function GuildScreen() {
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Leaderboard" accentBar accentColor={colors.accent} style={{ marginBottom: 20 }}>
+              <WebCard title="Leaderboard" accentBar accentColor={colors.accentRole.action} style={{ marginBottom: 20 }}>
                 {sideLeaders.map((m: GuildMember, i: number) => (
-                  <View key={m.id ?? `${m.username}-${i}`} style={[s.webLeaderboardRow, { borderBottomColor: colors.border }]}>
-                    <View style={[s.webRankDot, { backgroundColor: i < 3 ? ['#FFD700', '#C0C0C0', '#CD7F32'][i] : colors.bgSecondary }]}>
-                      <Text style={{ color: i < 3 ? '#fff' : colors.textMuted, fontSize: 10, fontWeight: '800' }}>{m.rank ?? i + 1}</Text>
+                  <View key={m.id ?? `${m.username}-${i}`} style={[s.webLeaderboardRow, { borderBottomColor: colors.borderRole.subtle }]}>
+                    <View style={[s.webRankDot, { backgroundColor: i < 3 ? ['#FFD700', '#C0C0C0', '#CD7F32'][i] : colors.surface.subtle }]}>
+                      <Text style={{ color: i < 3 ? colors.surface.inverse : colors.textRole.muted, fontSize: 10, fontWeight: FontWeight.heavy }}>{m.rank ?? i + 1}</Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ color: m.is_current_user ? colors.accent : colors.text, fontSize: 12, fontWeight: m.is_current_user ? '800' : '700' }}>
+                      <Text style={{ color: m.is_current_user ? colors.accentRole.action : colors.textRole.primary, fontSize: 12, fontWeight: m.is_current_user ? FontWeight.heavy : FontWeight.bold }}>
                         {m.username}{m.is_current_user ? ' (You)' : ''}
                       </Text>
-                      <Text style={{ color: colors.textMuted, fontSize: 10 }}>{m.points?.toLocaleString()} XP · Streak {m.streak}d</Text>
+                      <Text style={{ color: colors.textRole.muted, fontSize: 10 }}>{m.points?.toLocaleString()} XP · Streak {m.streak}d</Text>
                     </View>
                   </View>
                 ))}
@@ -423,7 +423,7 @@ export default function GuildScreen() {
               <WebCard accentBar accentColor={colors.green}>
                 <Text style={[s.webStreakLabel, { color: colors.green }]}>Your Streak</Text>
                 <Text style={[s.webStreakNumber, { color: colors.green }]}>{streak?.streak ?? 0} Days</Text>
-                <Text style={[s.webStreakSub, { color: colors.textSoft }]}>
+                <Text style={[s.webStreakSub, { color: colors.textRole.secondary }]}>
                   {streak?.completedToday ? 'Lesson completed today.' : `${Math.max(0, Math.floor(streak?.hoursLeft ?? 0))} hours left to protect it.`}
                 </Text>
               </WebCard>
@@ -435,16 +435,16 @@ export default function GuildScreen() {
   }
 
   return (
-    <SafeAreaView style={[s.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[s.screen, { backgroundColor: colors.surface.base }]}>
       {/* Header */}
-      <View style={[s.header, { borderBottomColor: colors.border, backgroundColor: colors.card }]}>
+      <View style={[s.header, { borderBottomColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
         <View>
-          <Text style={[s.eyebrow, { color: colors.textMuted }]}>GUILDS</Text>
-          <Text style={[s.title, { color: colors.text }]}>Guilds</Text>
+          <Text style={[s.eyebrow, { color: colors.textRole.muted }]}>GUILDS</Text>
+          <Text style={[s.title, { color: colors.textRole.primary }]}>Guilds</Text>
         </View>
         {userGuildId && myGuild && (
           <View style={[s.guildChip, { backgroundColor: `${myGuild.accent}20`, borderColor: `${myGuild.accent}40` }]}>
-            <Text style={{ color: myGuild.accent, fontWeight: '800', fontSize: 12 }}>
+            <Text style={{ color: myGuild.accent, fontWeight: FontWeight.heavy, fontSize: 12 }}>
               {myGuild.icon} {myGuild.name}
             </Text>
           </View>
@@ -452,11 +452,11 @@ export default function GuildScreen() {
       </View>
 
       {/* Tab bar */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[s.tabBar, { borderBottomColor: colors.border }]}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[s.tabBar, { borderBottomColor: colors.borderRole.subtle }]}>
         {TABS.map(t => (
-          <TouchableOpacity key={t.id} style={[s.tab, tab === t.id && { borderBottomColor: colors.accent, borderBottomWidth: 2 }]}
+          <TouchableOpacity key={t.id} style={[s.tab, tab === t.id && { borderBottomColor: colors.accentRole.action, borderBottomWidth: 2 }]}
             onPress={() => setTab(t.id)}>
-            <Text style={[s.tabTxt, { color: tab === t.id ? colors.accent : colors.textMuted }]}>{t.label}</Text>
+            <Text style={[s.tabTxt, { color: tab === t.id ? colors.accentRole.action : colors.textRole.muted }]}>{t.label}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -473,55 +473,55 @@ export default function GuildScreen() {
               <>
                 <View style={[s.card, { backgroundColor: `${myGuild.accent}10`, borderColor: `${myGuild.accent}30` }]}>
                   <Text style={{ fontSize: 18 }}>{myGuild.icon}</Text>
-                  <Text style={[s.guildName, { color: colors.text }]}>{myGuild.name}</Text>
-                  <Text style={[s.guildDesc, { color: colors.textSoft }]}>{myGuild.description}</Text>
+                  <Text style={[s.guildName, { color: colors.textRole.primary }]}>{myGuild.name}</Text>
+                  <Text style={[s.guildDesc, { color: colors.textRole.secondary }]}>{myGuild.description}</Text>
                   <View style={s.statsRow}>
                     <View style={s.statBox}>
                       <Text style={[s.statVal, { color: myGuild.accent }]}>{myGuild.member_count}</Text>
-                      <Text style={[s.statLbl, { color: colors.textMuted }]}>Members</Text>
+                      <Text style={[s.statLbl, { color: colors.textRole.muted }]}>Members</Text>
                     </View>
                     <View style={s.statBox}>
                       <Text style={[s.statVal, { color: myGuild.accent }]}>{myGuild.pool_xp?.toLocaleString()}</Text>
-                      <Text style={[s.statLbl, { color: colors.textMuted }]}>Pool XP</Text>
+                      <Text style={[s.statLbl, { color: colors.textRole.muted }]}>Pool XP</Text>
                     </View>
                     <View style={s.statBox}>
                       <Text style={[s.statVal, { color: myGuild.accent }]}>#{myGuild.user_rank ?? '—'}</Text>
-                      <Text style={[s.statLbl, { color: colors.textMuted }]}>Your Rank</Text>
+                      <Text style={[s.statLbl, { color: colors.textRole.muted }]}>Your Rank</Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={[s.leaveBtn, { borderColor: colors.border }]} onPress={handleLeave}>
-                    <Text style={[s.leaveTxt, { color: colors.textMuted }]}>Leave Guild</Text>
+                  <TouchableOpacity style={[s.leaveBtn, { borderColor: colors.borderRole.subtle }]} onPress={handleLeave}>
+                    <Text style={[s.leaveTxt, { color: colors.textRole.muted }]}>Leave Guild</Text>
                   </TouchableOpacity>
                 </View>
 
-                <Text style={[s.section, { color: colors.text }]}>TOP MEMBERS</Text>
+                <Text style={[s.section, { color: colors.textRole.primary }]}>TOP MEMBERS</Text>
                 {(myGuild.top_members || []).slice(0, 5).map((m: GuildMember, i: number) => (
-                  <View key={m.id} style={[s.memberRow, { backgroundColor: colors.card }]}>
-                    <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textMuted }]}>#{i + 1}</Text>
+                  <View key={m.id} style={[s.memberRow, { backgroundColor: colors.surface.raised }]}>
+                    <Text style={[s.rank, { color: i < 3 ? myGuild.accent : colors.textRole.muted }]}>#{i + 1}</Text>
                     <View style={{ flex: 1 }}>
-                      <Text style={[s.memberName, { color: colors.text }]}>
+                      <Text style={[s.memberName, { color: colors.textRole.primary }]}>
                         {m.username}{m.id === user?.id ? ' (You)' : ''}
                       </Text>
                       {m.starknet_address && (
-                        <Text style={{ color: colors.textMuted, fontSize: 10, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' }}>
+                        <Text style={{ color: colors.textRole.muted, fontSize: 10, fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' }}>
                           {m.starknet_address.slice(0, 10)}…
                         </Text>
                       )}
                     </View>
-                    <Text style={[s.pts, { color: colors.textSoft }]}>{m.points?.toLocaleString()} XP</Text>
+                    <Text style={[s.pts, { color: colors.textRole.secondary }]}>{m.points?.toLocaleString()} XP</Text>
                   </View>
                 ))}
               </>
             ) : (
               <View style={s.emptyState}>
                 <Text style={{ fontSize: 18 }}>⚔️</Text>
-                <Text style={[s.emptyTitle, { color: colors.text }]}>Join a Guild</Text>
-                <Text style={[s.emptySub, { color: colors.textSoft }]}>
+                <Text style={[s.emptyTitle, { color: colors.textRole.primary }]}>Join a Guild</Text>
+                <Text style={[s.emptySub, { color: colors.textRole.secondary }]}>
                   Guilds keep your workspace social with shared XP, rankings, and team accountability.
                 </Text>
-                <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accent }]}
+                <TouchableOpacity style={[s.browseCta, { backgroundColor: colors.accentRole.action }]}
                   onPress={() => setTab('browse')}>
-                  <Text style={{ color: '#fff', fontWeight: '800', fontSize: FontSize.md }}>Browse Guilds</Text>
+                  <Text style={{ color: colors.surface.inverse, fontWeight: FontWeight.heavy, fontSize: FontSize.md }}>Browse Guilds</Text>
                 </TouchableOpacity>
               </View>
             )
@@ -536,16 +536,16 @@ export default function GuildScreen() {
           {/* LEADERBOARD TAB */}
           {tab === 'leaderboard' && (
             <>
-              <Text style={[s.section, { color: colors.text }]}>GLOBAL GUILD RANKINGS</Text>
+              <Text style={[s.section, { color: colors.textRole.primary }]}>GLOBAL GUILD RANKINGS</Text>
               {globalLb.map((g, i) => (
-                <View key={g.id} style={[s.lbRow, { backgroundColor: colors.card, borderColor: i < 3 ? `${g.accent}40` : colors.border }]}>
-                  <Text style={[s.lbRank, { color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : colors.textMuted }]}>
+                <View key={g.id} style={[s.lbRow, { backgroundColor: colors.surface.raised, borderColor: i < 3 ? `${g.accent}40` : colors.borderRole.subtle }]}>
+                  <Text style={[s.lbRank, { color: i === 0 ? '#FFD700' : i === 1 ? '#C0C0C0' : i === 2 ? '#CD7F32' : colors.textRole.muted }]}>
                     {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}
                   </Text>
                   <Text style={{ fontSize: 18 }}>{g.icon}</Text>
                   <View style={{ flex: 1 }}>
-                    <Text style={[s.lbName, { color: colors.text }]}>{g.name}</Text>
-                    <Text style={{ color: colors.textMuted, fontSize: 11 }}>{g.member_count} members</Text>
+                    <Text style={[s.lbName, { color: colors.textRole.primary }]}>{g.name}</Text>
+                    <Text style={{ color: colors.textRole.muted, fontSize: 11 }}>{g.member_count} members</Text>
                   </View>
                   <Text style={[s.lbXP, { color: g.accent }]}>{g.pool_xp?.toLocaleString()} XP</Text>
                 </View>
@@ -553,19 +553,19 @@ export default function GuildScreen() {
 
               {userGuildId && leaderboard.length > 0 && (
                 <>
-                  <Text style={[s.section, { color: colors.text, marginTop: Spacing.lg }]}>YOUR GUILD MEMBERS</Text>
+                  <Text style={[s.section, { color: colors.textRole.primary, marginTop: Spacing.lg }]}>YOUR GUILD MEMBERS</Text>
                   {leaderboard.slice(0, 10).map(m => (
-                    <View key={m.id} style={[s.lbRow, { backgroundColor: colors.card, borderColor: m.is_current_user ? colors.accent : colors.border }]}>
-                      <Text style={[s.lbRank, { color: m.rank && m.rank <= 3 ? '#FFD700' : colors.textMuted }]}>#{m.rank}</Text>
+                    <View key={m.id} style={[s.lbRow, { backgroundColor: colors.surface.raised, borderColor: m.is_current_user ? colors.accentRole.action : colors.borderRole.subtle }]}>
+                      <Text style={[s.lbRank, { color: m.rank && m.rank <= 3 ? '#FFD700' : colors.textRole.muted }]}>#{m.rank}</Text>
                       <View style={{ flex: 1 }}>
-                        <Text style={[s.lbName, { color: m.is_current_user ? colors.accent : colors.text }]}>
+                        <Text style={[s.lbName, { color: m.is_current_user ? colors.accentRole.action : colors.textRole.primary }]}>
                           {m.username}{m.is_current_user ? ' ← You' : ''}
                         </Text>
-                        <Text style={{ color: colors.textMuted, fontSize: 11 }}>
+                        <Text style={{ color: colors.textRole.muted, fontSize: 11 }}>
                           🔥 {m.streak} day streak · {(m as any).levels_completed ?? 0} levels
                         </Text>
                       </View>
-                      <Text style={[s.lbXP, { color: colors.textSoft }]}>{m.points?.toLocaleString()} XP</Text>
+                      <Text style={[s.lbXP, { color: colors.textRole.secondary }]}>{m.points?.toLocaleString()} XP</Text>
                     </View>
                   ))}
                 </>
@@ -579,45 +579,45 @@ export default function GuildScreen() {
               <>
                 <View style={s.chatMessages}>
                   {chat.length === 0 ? (
-                    <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
+                    <Text style={{ color: colors.textRole.muted, textAlign: 'center', padding: Spacing.xl }}>
                       No messages yet. Start the workspace conversation.
                     </Text>
                   ) : (
                     chat.map(msg => (
                       <View key={msg.id} style={[s.bubble, {
-                        backgroundColor: msg.user_id === user?.id ? `${colors.accent}20` : colors.card,
+                        backgroundColor: msg.user_id === user?.id ? `${colors.accentRole.action}20` : colors.surface.raised,
                         alignSelf: msg.user_id === user?.id ? 'flex-end' : 'flex-start',
-                        borderColor: msg.user_id === user?.id ? `${colors.accent}40` : colors.border,
+                        borderColor: msg.user_id === user?.id ? `${colors.accentRole.action}40` : colors.borderRole.subtle,
                       }]}>
-                        <Text style={{ color: colors.accent, fontSize: 10, fontWeight: '800', marginBottom: 2 }}>{msg.username}</Text>
-                        <Text style={{ color: colors.text, fontSize: FontSize.sm, lineHeight: 18 }}>{msg.content}</Text>
+                        <Text style={{ color: colors.accentRole.action, fontSize: 10, fontWeight: FontWeight.heavy, marginBottom: 2 }}>{msg.username}</Text>
+                        <Text style={{ color: colors.textRole.primary, fontSize: FontSize.sm, lineHeight: 18 }}>{msg.content}</Text>
                       </View>
                     ))
                   )}
                 </View>
-                <View style={[s.chatInput, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                <View style={[s.chatInput, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
                   <TextInput
-                    style={[s.input, { color: colors.text }]}
+                    style={[s.input, { color: colors.textRole.primary }]}
                     placeholder="Message your guild…"
-                    placeholderTextColor={colors.textMuted}
+                    placeholderTextColor={colors.textRole.muted}
                     value={chatInput}
                     onChangeText={setChatInput}
                     maxLength={500}
                     multiline
                   />
                   <TouchableOpacity
-                    style={[s.sendBtn, { backgroundColor: colors.accent, opacity: chatInput.trim() ? 1 : 0.4 }]}
+                    style={[s.sendBtn, { backgroundColor: colors.accentRole.action, opacity: chatInput.trim() ? 1 : 0.4 }]}
                     onPress={sendChat}
                     disabled={!chatInput.trim() || sending}
                   >
-                    <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>
+                    <Text style={{ color: colors.surface.inverse, fontWeight: FontWeight.heavy, fontSize: 13 }}>
                       {sending ? '…' : '→'}
                     </Text>
                   </TouchableOpacity>
                 </View>
               </>
             ) : (
-              <Text style={{ color: colors.textMuted, textAlign: 'center', padding: Spacing.xl }}>
+              <Text style={{ color: colors.textRole.muted, textAlign: 'center', padding: Spacing.xl }}>
                 Join a guild to unlock guild chat.
               </Text>
             )
@@ -648,12 +648,12 @@ const s = StyleSheet.create({
   webGuildGrid:{ gap: Spacing.md },
   webLeaderboardRow:{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: 10, borderBottomWidth: 1 },
   webRankDot:  { width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-  webStreakLabel:{ fontSize: 12, fontWeight: '800', marginBottom: 4 },
-  webStreakNumber:{ fontSize: 18, fontWeight: '800' },
+  webStreakLabel:{ fontSize: 12, fontWeight: FontWeight.heavy, marginBottom: 4 },
+  webStreakNumber:{ fontSize: 18, fontWeight: FontWeight.heavy },
   webStreakSub:{ fontSize: 11, marginTop: 4, lineHeight: 17 },
   tabBar:      { borderBottomWidth: 1, maxHeight: 44 },
   tab:         { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm },
-  tabTxt:      { fontSize: 12, fontWeight: '700' },
+  tabTxt:      { fontSize: 12, fontWeight: FontWeight.bold },
   content:     { padding: Spacing.md, gap: Spacing.md, paddingBottom: 18 },
   card:        { borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12,
                  alignItems: 'center', gap: Spacing.sm },
@@ -661,22 +661,22 @@ const s = StyleSheet.create({
   guildDesc:   { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
   statsRow:    { flexDirection: 'row', gap: Spacing.xl, marginTop: Spacing.sm },
   statBox:     { alignItems: 'center' },
-  statVal:     { fontSize: 20, fontWeight: '800' },
+  statVal:     { fontSize: 20, fontWeight: FontWeight.heavy },
   statLbl:     { fontSize: 10, fontWeight: '600', marginTop: 2 },
   leaveBtn:    { borderWidth: 1, borderRadius: 8, paddingHorizontal: 14,
                  paddingVertical: 8, marginTop: Spacing.sm },
-  leaveTxt:    { fontSize: 11, fontWeight: '700' },
-  section:     { fontSize: 13, fontWeight: '800', letterSpacing: 0.8, marginBottom: 10 },
+  leaveTxt:    { fontSize: 11, fontWeight: FontWeight.bold },
+  section:     { fontSize: 13, fontWeight: FontWeight.heavy, letterSpacing: 0.8, marginBottom: 10 },
   memberRow:   { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm,
                  borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
-  rank:        { width: 28, fontSize: 13, fontWeight: '800', textAlign: 'center' },
-  memberName:  { fontSize: FontSize.sm, fontWeight: '700' },
-  pts:         { fontSize: 12, fontWeight: '700' },
+  rank:        { width: 28, fontSize: 13, fontWeight: FontWeight.heavy, textAlign: 'center' },
+  memberName:  { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  pts:         { fontSize: 12, fontWeight: FontWeight.bold },
   lbRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm,
                  borderRadius: 11, borderWidth: 1, padding: Platform.OS === 'web' ? 14 : 12 },
   lbRank:      { width: 32, fontSize: 18, textAlign: 'center' },
-  lbName:      { fontSize: FontSize.sm, fontWeight: '800' },
-  lbXP:        { fontSize: 13, fontWeight: '800' },
+  lbName:      { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  lbXP:        { fontSize: 13, fontWeight: FontWeight.heavy },
   emptyState:  { alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.xxxl },
   emptyTitle:  { fontSize: FontSize.xl, fontWeight: '900' },
   emptySub:    { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 22 },

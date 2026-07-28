@@ -12,7 +12,7 @@ import { ALL_FIELDS, type Field } from '../data/fields';
 import { SKILL_TRACKS } from '../data/skills';
 import { findTrackById, getTrackHref } from '../lib/trackContext';
 import {
-  Colors, Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
+  Spacing, Radius, FontSize, Shadow, FontWeight, useTheme,
 } from '../theme';
 import DisclaimerFooter from '../components/DisclaimerFooter';
 import { SifterButton, SifterCard } from '../components/ui';
@@ -163,7 +163,7 @@ function InlineTrackCard({
       <Text style={[styles.inlineTrackDescription, { color: colors.textSoft }]} numberOfLines={2}>{track.description}</Text>
 
       <View style={[styles.inlineTrackAction, { backgroundColor: isActionable ? field.color : colors.card }]}>
-        <Text style={[styles.inlineTrackActionText, { color: isActionable ? '#fff' : colors.textMuted }]}>{isActionable ? 'Open Track' : 'Locked preview'}</Text>
+        <Text style={[styles.inlineTrackActionText, { color: isActionable ? colors.textRole.inverse : colors.textMuted }]}>{isActionable ? 'Open Track' : 'Locked preview'}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -767,7 +767,7 @@ export default function SkillsScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: Colors.bg },
+  screen: { flex: 1 },
   topBar: {
     flexDirection: 'row',
     alignItems: 'center',

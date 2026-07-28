@@ -16,7 +16,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, Brand, webContainer } from "../../theme";
+import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
 import { SifterButton } from "../../components/ui";
 import { useAuth } from "../../hooks/useAuth";
 import { API } from "../../lib/api";
@@ -276,7 +276,7 @@ export default function EducatorOnboarding() {
             onPress={() => setStep(2)}
             disabled={!step1Ready}
             variant="track"
-            color={Brand.primary}
+            color={colors.accentRole.action}
             size="lg"
             fullWidth
           />
@@ -322,7 +322,7 @@ export default function EducatorOnboarding() {
             onPress={validateAccessCode}
             loading={checkingAccess}
             variant="track"
-            color={Brand.primary}
+            color={colors.accentRole.action}
             size="lg"
             fullWidth
           />
@@ -367,7 +367,7 @@ export default function EducatorOnboarding() {
             label="Continue →"
             onPress={() => setStep(4)}
             variant="track"
-            color={Brand.primary}
+            color={colors.accentRole.action}
             size="lg"
             fullWidth
           />
@@ -431,7 +431,7 @@ export default function EducatorOnboarding() {
             loading={finishing}
             disabled={!accessGranted}
             variant="track"
-            color={Brand.primary}
+            color={colors.accentRole.action}
             size="lg"
             fullWidth
           />
@@ -462,7 +462,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: "900",
     lineHeight: FontSize.xxl * 1.2,
   },
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
@@ -472,7 +471,6 @@ const styles = StyleSheet.create({
   },
   error: {
     fontSize: FontSize.sm,
-    fontWeight: "700",
     lineHeight: FontSize.sm * 1.4,
   },
   summary: {
@@ -487,10 +485,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     gap: Spacing.md,
   },
-  summaryLabel: { fontSize: FontSize.sm, fontWeight: "600" },
+  summaryLabel: { fontSize: FontSize.sm },
   summaryValue: {
     fontSize: FontSize.sm,
-    fontWeight: "700",
     flexShrink: 1,
     textAlign: "right",
   },

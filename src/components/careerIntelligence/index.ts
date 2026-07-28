@@ -26,6 +26,31 @@ export {
   TextTabs,
 } from "./RedesignPrimitives";
 
+// ── Search system (Phase 7) ────────────────────────────────────
+export {
+  SearchOverlay,
+  SearchResultRow,
+  SearchResultsGroup,
+  SearchLoadingSkeleton,
+  SearchEmptyState,
+  ScopeChip,
+  TermHighlight,
+} from "./SearchComponents";
+
+// ── Layout primitives (shared across all screen families) ─────
+export {
+  ScreenHeader,
+  Card,
+  Banner,
+  SettingsRow,
+  LinkButton,
+  KeyValueRow,
+  InfoCard,
+  Callout,
+  StatCard,
+  EmptyState,
+} from "./LayoutPrimitives";
+
 // ── Career intelligence design system ─────────────────────────
 export { RouteLine } from "./RouteLine";
 export type {
@@ -75,6 +100,32 @@ export { PdfExportButton } from "./PdfExportButton";
 export { MappingFeedbackButton } from "./MappingFeedbackButton";
 export type { MappingFeedbackButtonProps } from "./MappingFeedbackButton";
 
+// ── Toast system ───────────────────────────────────────────────
+export { Toast, ToastProvider, showToast } from "./Toast";
+export type { ToastVariant } from "./Toast";
+
+// ── Status badge ───────────────────────────────────────────────
+export { StatusBadge } from "./StatusBadge";
+export type { StatusKey } from "./StatusBadge";
+
+// ── Skeleton shimmer set ───────────────────────────────────────
+export {
+  Skeleton,
+  SkeletonText,
+  SkeletonAvatar,
+  SkeletonCard,
+  SkeletonRow,
+  SkeletonStat,
+} from "./SkeletonRedesign";
+
+// ── Persona card ───────────────────────────────────────────────
+export { PersonaCard } from "./PersonaCard";
+export type { PersonaOption } from "./PersonaCard";
+
+// ── Application window timeline ────────────────────────────────
+export { ApplicationWindowTimeline } from "./ApplicationWindowTimeline";
+export type { TimelineWindow } from "./ApplicationWindowTimeline";
+
 // ── Phase 10–13 shells (UX / comprehension / legal) ───────────
 export { InfoTooltip } from "./InfoTooltip";
 export type { InfoTooltipProps } from "./InfoTooltip";
@@ -84,3 +135,19 @@ export { NotesFab } from "./NotesFab";
 export type { NotesFabProps } from "./NotesFab";
 export { CoachMark } from "./CoachMark";
 export type { CoachMarkProps } from "./CoachMark";
+
+// ── Metric tooltip (relocated from admin/) ────────────────────
+export { MetricTooltip } from "./MetricTooltip";
+export type { MetricTooltipProps } from "./MetricTooltip";
+
+// ── Input components (Phase 8) ───────────────────────────────
+export {
+  SifterTextInput,
+  SifterSelect,
+  ChipSelect,
+  SifterDatePicker,
+} from "./InputComponents";
+export type { SelectOption } from "./InputComponents";
+
+// ── Banner variants (Phase 8) ────────────────────────────────
+export type { BannerVariant } from "./LayoutPrimitives";

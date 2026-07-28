@@ -28,6 +28,7 @@ import {
   Spacing,
   Radius,
   FontSize,
+  CompassFonts,
   Brand,
   webContainer,
 } from "../theme";
@@ -59,8 +60,11 @@ const USER_TYPE_LABEL: Record<UserType, string> = {
 
 const ENTITY_META: Record<SavedEntityType, { icon: string; label: string }> = {
   programme: { icon: "🎓", label: "Programme" },
+  school: { icon: "🏫", label: "School" },
   domain: { icon: "🧭", label: "Domain" },
+  subgroup: { icon: "📚", label: "Subgroup" },
   role: { icon: "💼", label: "Role" },
+  comparison: { icon: "⚖️", label: "Comparison" },
   opportunity: { icon: "📌", label: "Opportunity" },
   organisation: { icon: "🏢", label: "Employer" },
   elite_pathway: { icon: "⭐", label: "Pathway" },
@@ -145,19 +149,19 @@ export default function CareerProfileScreen() {
   }, [signOut, router]);
 
   return (
-    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       <ScrollView
         contentContainerStyle={[styles.scroll, webContainer as object]}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+        <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
           PROFILE
         </Text>
-        <Text style={[styles.title, { color: colors.text }]}>
+        <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
           {displayName ?? "Your profile"}
         </Text>
         {user?.email ? (
-          <Text style={[styles.subtle, { color: colors.textMuted }]}>
+          <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
             {user.email}
           </Text>
         ) : null}
@@ -167,14 +171,13 @@ export default function CareerProfileScreen() {
             style={[
               styles.banner,
               {
-                backgroundColor: colors.goldSoft,
-                borderColor: `${Brand.primary}40`,
+                backgroundColor: colors.surface.subtle,
+                borderColor: `${colors.accentRole.action}30`,
               },
             ]}
           >
-            <Text style={[styles.bannerText, { color: Brand.primaryDeep }]}>
-              You're browsing as a guest. Create an account to keep your saved
-              items, notes and alerts.
+            <Text style={[styles.bannerText, CompassFonts.bodySemibold, { color: colors.accentRole.action }]}>
+              {"You\u2019re browsing as a guest. Create an account to keep your saved items, notes and alerts."}
             </Text>
           </View>
         ) : null}
@@ -184,22 +187,21 @@ export default function CareerProfileScreen() {
           <View
             style={[
               styles.card,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
             {profile ? (
               <>
-                <Text style={[styles.cardEyebrow, { color: Brand.primaryDeep }]}>
+                <Text style={[styles.cardEyebrow, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
                   {USER_TYPE_LABEL[profile.userType] ?? "Profile"}
                 </Text>
-                <Text style={[styles.cardBody, { color: colors.text }]}>
+                <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
                   {summariseStartingPoint(profile)}
                 </Text>
               </>
             ) : (
-              <Text style={[styles.cardBody, { color: colors.textSoft }]}>
-                Tell us where you're starting from so we can tailor the domains,
-                roles and jobs we show you.
+              <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.secondary }]}>
+                {"Tell us where you\u2019re starting from so we can tailor the domains, roles and jobs we show you."}
               </Text>
             )}
             <TouchableOpacity
@@ -207,7 +209,7 @@ export default function CareerProfileScreen() {
               onPress={() => router.push("/(auth)/onboarding")}
               style={styles.linkBtn}
             >
-              <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+              <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
                 {profile ? "Update your starting point →" : "Start onboarding →"}
               </Text>
             </TouchableOpacity>
@@ -237,7 +239,7 @@ export default function CareerProfileScreen() {
             onPress={() => router.push("/(tabs)/explore")}
             style={styles.linkBtn}
           >
-            <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+            <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
               Explore & save domains →
             </Text>
           </TouchableOpacity>
@@ -256,7 +258,7 @@ export default function CareerProfileScreen() {
                 <View style={styles.noteGroups}>
                   {groupNotesByCategory(rows).map((group) => (
                     <View key={group.category} style={styles.noteGroup}>
-                      <Text style={[styles.groupLabel, { color: colors.textMuted }]}>
+                      <Text style={[styles.groupLabel, CompassFonts.bodyBold, { color: colors.textRole.muted }]}>
                         {group.category.toUpperCase()}
                       </Text>
                       {group.notes.map((note) => (
@@ -293,7 +295,7 @@ export default function CareerProfileScreen() {
             onPress={() => router.push("/(tabs)/opportunities")}
             style={styles.linkBtn}
           >
-            <Text style={[styles.linkText, { color: Brand.primaryDeep }]}>
+            <Text style={[styles.linkText, CompassFonts.bodyBold, { color: colors.accentRole.action }]}>
               Browse opportunities →
             </Text>
           </TouchableOpacity>
@@ -304,28 +306,28 @@ export default function CareerProfileScreen() {
           <View
             style={[
               styles.card,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
             {!profile ? (
-              <Text style={[styles.subtle, { color: colors.textMuted }]}>
+              <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
                 Complete onboarding to save your notification preferences.
               </Text>
             ) : null}
             {NOTIF_LABELS.map((n) => (
               <View key={n.key} style={styles.toggleRow}>
-                <Text style={[styles.toggleLabel, { color: colors.text }]}>
+                <Text style={[styles.toggleLabel, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>
                   {n.label}
                 </Text>
                 <Switch
                   value={notifValue(n.key)}
                   disabled={!profile}
                   onValueChange={(val) => onToggleNotif(n.key, val)}
-                  trackColor={{ true: Brand.primary, false: colors.border }}
+                  trackColor={{ true: colors.accentRole.action, false: colors.borderRole.subtle }}
                   thumbColor={
                     Platform.OS === "android"
                       ? notifValue(n.key)
-                        ? Brand.onPrimary
+                        ? colors.textRole.inverse
                         : "#f4f3f4"
                       : undefined
                   }
@@ -342,16 +344,16 @@ export default function CareerProfileScreen() {
             onPress={() => router.push("/(tabs)/myworld")}
             style={[
               styles.card,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
             <View style={styles.lockedHead}>
-              <Text style={[styles.cardBody, { color: colors.text, flex: 1 }]}>
+              <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.primary, flex: 1 }]}>
                 🎮 Learning Tracks & Portfolio
               </Text>
               <LockedPill />
             </View>
-            <Text style={[styles.subtle, { color: colors.textSoft }]}>
+            <Text style={[styles.subtle, { color: colors.textRole.secondary }]}>
               Your gamified domain tracks, levels and verifiable portfolio are
               locked until the learning layer opens.
             </Text>
@@ -363,7 +365,7 @@ export default function CareerProfileScreen() {
           <View
             style={[
               styles.card,
-              { backgroundColor: colors.card, borderColor: colors.border, gap: 0 },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle, gap: 0 },
             ]}
           >
             <AccountRow
@@ -386,13 +388,13 @@ export default function CareerProfileScreen() {
           <View
             style={[
               styles.card,
-              { backgroundColor: colors.card, borderColor: colors.border },
+              { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
             ]}
           >
-            <Text style={[styles.cardBody, { color: colors.text }]}>
+            <Text style={[styles.cardBody, CompassFonts.bodyBold, { color: colors.textRole.primary }]}>
               {Brand.promise}
             </Text>
-            <Text style={[styles.subtle, { color: colors.textMuted }]}>
+            <Text style={[styles.subtle, { color: colors.textRole.muted }]}>
               {Brand.name} maps your discipline to the domains, roles and jobs it
               unlocks — local, global and remote — and shows the honest bridge to
               get there. {Brand.tagline}
@@ -475,7 +477,7 @@ function Section({
   const { colors } = useTheme();
   return (
     <View style={styles.sectionWrap}>
-      <Text style={[styles.section, { color: colors.textSoft }]}>{title}</Text>
+      <Text style={[styles.section, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>{title}</Text>
       {children}
     </View>
   );
@@ -488,15 +490,15 @@ function SavedRow({ item }: { item: SavedItem }) {
     <View
       style={[
         styles.row,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       <Text style={styles.rowIcon}>{meta.icon}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.rowTitle, { color: colors.text }]} numberOfLines={1}>
+        <Text style={[styles.rowTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]} numberOfLines={1}>
           {item.label ?? meta.label}
         </Text>
-        <Text style={[styles.rowMeta, { color: colors.textMuted }]}>
+        <Text style={[styles.rowMeta, { color: colors.textRole.muted }]}>
           {meta.label}
         </Text>
       </View>
@@ -511,19 +513,19 @@ function SubscriptionRow({ sub }: { sub: Subscription }) {
     <View
       style={[
         styles.row,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       <Text style={styles.rowIcon}>{meta.icon}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.rowTitle, { color: colors.text }]} numberOfLines={1}>
+        <Text style={[styles.rowTitle, CompassFonts.bodyBold, { color: colors.textRole.primary }]} numberOfLines={1}>
           {meta.label}
         </Text>
-        <Text style={[styles.rowMeta, { color: colors.textMuted }]} numberOfLines={1}>
+        <Text style={[styles.rowMeta, { color: colors.textRole.muted }]} numberOfLines={1}>
           {sub.targetId}
         </Text>
       </View>
-      <Text style={[styles.rowMeta, { color: colors.green }]}>🔔 On</Text>
+      <Text style={[styles.rowMeta, { color: colors.accentRole.success }]}>🔔 On</Text>
     </View>
   );
 }
@@ -534,15 +536,15 @@ function NoteCard({ note }: { note: Note }) {
     <View
       style={[
         styles.noteCard,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       {note.entityLabel ? (
-        <Text style={[styles.noteEntity, { color: colors.textMuted }]}>
+        <Text style={[styles.noteEntity, CompassFonts.bodyBold, { color: colors.textRole.muted }]}>
           {note.entityLabel}
         </Text>
       ) : null}
-      <Text style={[styles.noteBody, { color: colors.text }]}>{note.body}</Text>
+      <Text style={[styles.noteBody, { color: colors.textRole.primary }]}>{note.body}</Text>
     </View>
   );
 }
@@ -570,20 +572,21 @@ function AccountRow({
       <Text style={styles.accountIcon}>{icon}</Text>
       <View style={{ flex: 1 }}>
         <Text
-          style={[
-            styles.accountLabel,
-            { color: danger ? colors.red : colors.text },
-          ]}
+            style={[
+              styles.accountLabel,
+              CompassFonts.bodyBold,
+              { color: danger ? colors.accentRole.danger : colors.textRole.primary },
+            ]}
         >
           {label}
         </Text>
         {sub ? (
-          <Text style={[styles.accountSub, { color: colors.textMuted }]}>
+          <Text style={[styles.accountSub, { color: colors.textRole.muted }]}>
             {sub}
           </Text>
         ) : null}
       </View>
-      <Text style={[styles.accountArrow, { color: colors.textMuted }]}>›</Text>
+      <Text style={[styles.accountArrow, { color: colors.textRole.muted }]}>›</Text>
     </TouchableOpacity>
   );
 }
@@ -598,26 +601,22 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 1.5,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
     lineHeight: FontSize.display * 1.15,
   },
   subtle: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   banner: { borderRadius: Radius.md, padding: Spacing.md, borderWidth: 1 },
   bannerText: {
     fontSize: FontSize.sm,
-    fontWeight: "600",
     lineHeight: FontSize.sm * 1.4,
   },
   sectionWrap: { gap: Spacing.sm, marginTop: Spacing.md },
   section: {
     fontSize: FontSize.sm,
-    fontWeight: "800",
     letterSpacing: 0.5,
     textTransform: "uppercase",
   },
@@ -629,16 +628,14 @@ const styles = StyleSheet.create({
   },
   cardEyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 0.8,
   },
   cardBody: {
     fontSize: FontSize.md,
-    fontWeight: "700",
     lineHeight: FontSize.md * 1.4,
   },
   linkBtn: { minHeight: 44, justifyContent: "center" },
-  linkText: { fontSize: FontSize.sm, fontWeight: "800" },
+  linkText: { fontSize: FontSize.sm },
   list: { gap: Spacing.sm },
   row: {
     flexDirection: "row",
@@ -650,18 +647,18 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   rowIcon: { fontSize: 22 },
-  rowTitle: { fontSize: FontSize.md, fontWeight: "700" },
+  rowTitle: { fontSize: FontSize.md },
   rowMeta: { fontSize: FontSize.xs, marginTop: 2 },
   noteGroups: { gap: Spacing.lg },
   noteGroup: { gap: Spacing.sm },
-  groupLabel: { fontSize: FontSize.xs, fontWeight: "800", letterSpacing: 1 },
+  groupLabel: { fontSize: FontSize.xs, letterSpacing: 1 },
   noteCard: {
     padding: Spacing.md,
     borderRadius: Radius.lg,
     borderWidth: 1,
     gap: 2,
   },
-  noteEntity: { fontSize: FontSize.xs, fontWeight: "700" },
+  noteEntity: { fontSize: FontSize.xs },
   noteBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   toggleRow: {
     flexDirection: "row",
@@ -673,7 +670,6 @@ const styles = StyleSheet.create({
   toggleLabel: {
     flex: 1,
     fontSize: FontSize.md,
-    fontWeight: "600",
     paddingRight: Spacing.md,
   },
   lockedHead: {
@@ -689,7 +685,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
   },
   accountIcon: { fontSize: 18 },
-  accountLabel: { fontSize: FontSize.md, fontWeight: "700" },
+  accountLabel: { fontSize: FontSize.md },
   accountSub: { fontSize: FontSize.xs, marginTop: 2 },
   accountArrow: { fontSize: FontSize.lg },
 });

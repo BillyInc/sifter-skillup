@@ -24,7 +24,7 @@ import {
   StatusBar, Linking, ActivityIndicator, Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, Shadow, useTheme, webContainer } from '../theme';
+import { Spacing, Radius, FontSize, Shadow, useTheme, webContainer, FontWeight, ColorPalette } from '../theme';
 import { API } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import DisclaimerFooter from '../components/DisclaimerFooter';
@@ -153,16 +153,18 @@ const CREDENTIAL_STATEMENT =
 
 function Card({ children, style }: { children: React.ReactNode; style?: object }) {
   const { colors } = useTheme();
-  return <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm, style]}>{children}</View>;
+  const styles = makeStyles(colors);
+  return <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm, style]}>{children}</View>;
 }
 
 function PrimaryBtn({
   label, onPress, loading = false, icon = '', disabled = false,
 }: { label: string; onPress: () => void; loading?: boolean; icon?: string; disabled?: boolean }) {
   const { colors } = useTheme();
+  const styles = makeStyles(colors);
   return (
     <TouchableOpacity
-      style={[styles.primaryBtn, { backgroundColor: colors.accent }, disabled && styles.primaryBtnDisabled]}
+      style={[styles.primaryBtn, { backgroundColor: colors.accentRole.action }, disabled && styles.primaryBtnDisabled]}
       onPress={onPress}
       activeOpacity={0.85}
       disabled={loading || disabled}
@@ -176,16 +178,18 @@ function PrimaryBtn({
 
 function SecondaryBtn({ label, onPress }: { label: string; onPress: () => void }) {
   const { colors } = useTheme();
+  const styles = makeStyles(colors);
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={[styles.secondaryBtn, { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
-      <Text style={[styles.secondaryBtnText, { color: colors.text }]}>{label}</Text>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={[styles.secondaryBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+      <Text style={[styles.secondaryBtnText, { color: colors.textRole.primary }]}>{label}</Text>
     </TouchableOpacity>
   );
 }
 
 function Tag({ text, color }: { text: string; color?: string }) {
   const { colors } = useTheme();
-  const resolvedColor = color ?? colors.accent;
+  const styles = makeStyles(colors);
+  const resolvedColor = color ?? colors.accentRole.action;
   return (
     <View style={[styles.tag, { backgroundColor: `${resolvedColor}18`, borderColor: `${resolvedColor}40` }]}>
       <Text style={[styles.tagText, { color: resolvedColor }]}>{text}</Text>
@@ -195,7 +199,8 @@ function Tag({ text, color }: { text: string; color?: string }) {
 
 function SectionLabel({ text }: { text: string }) {
   const { colors } = useTheme();
-  return <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{text}</Text>;
+  const styles = makeStyles(colors);
+  return <Text style={[styles.sectionLabel, { color: colors.textRole.muted }]}>{text}</Text>;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -207,6 +212,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
   platformStatuses: PlatformStatus[];
 }) {
   const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const juniorCount = artifacts.filter(a => a.level === 'junior').length;
   const intermediateCount = artifacts.filter(a => a.level === 'intermediate').length;
   const seniorCount = artifacts.filter(a => a.level === 'senior').length;
@@ -223,7 +229,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
             { label: 'Junior', value: juniorCount, color: '#10b981' },
             { label: 'Intermediate', value: intermediateCount, color: '#f59e0b' },
             { label: 'Senior', value: seniorCount, color: '#ef4444' },
-            { label: 'Platforms', value: connectedCount, color: colors.accent },
+            { label: 'Platforms', value: connectedCount, color: colors.accentRole.action },
           ].map(s => (
             <View key={s.label} style={styles.statBox}>
               <Text style={[styles.statValue, { color: s.color }]}>{s.value}</Text>
@@ -252,7 +258,7 @@ function OverviewTab({ artifacts, platformStatuses }: {
             <Text style={styles.platformEmoji}>{cfg.emoji}</Text>
             <View style={{ flex: 1 }}>
               <View style={styles.platformNameRow}>
-                <Text style={[styles.platformName, { color: colors.text }]}>{cfg.name}</Text>
+                <Text style={[styles.platformName, { color: colors.textRole.primary }]}>{cfg.name}</Text>
                 <Tag
                   text={cfg.isPrimary ? 'PRIMARY' : 'SECONDARY'}
                   color={cfg.isPrimary ? '#10b981' : '#6366f1'}
@@ -278,6 +284,8 @@ function OverviewTab({ artifacts, platformStatuses }: {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function ArtifactCard({ artifact, onPush }: { artifact: PortfolioArtifact; onPush: (a: PortfolioArtifact, platformId: string) => void }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const [expanded, setExpanded] = useState(false);
   const levelColors: Record<string, string> = { junior: '#10b981', intermediate: '#f59e0b', senior: '#ef4444' };
 
@@ -354,6 +362,9 @@ function ArtifactsTab({ artifacts, onPush }: {
   artifacts: PortfolioArtifact[];
   onPush: (a: PortfolioArtifact, platformId: string) => void;
 }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
+
   if (artifacts.length === 0) {
     return (
       <Card>
@@ -398,6 +409,7 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
   onDisconnect: (platformId: string) => void;
 }) {
   const { colors } = useTheme();
+  const styles = makeStyles(colors);
   const primary = platformStatuses.filter(p => p.isPrimary);
   const secondary = platformStatuses.filter(p => !p.isPrimary);
 
@@ -408,7 +420,7 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
         <Text style={styles.platformItemEmoji}>{cfg?.emoji ?? '🔗'}</Text>
         <View style={{ flex: 1 }}>
           <View style={styles.platformNameRow}>
-            <Text style={[styles.platformName, { color: colors.text }]}>{ps.name}</Text>
+            <Text style={[styles.platformName, { color: colors.textRole.primary }]}>{ps.name}</Text>
             {ps.connected && <Tag text="Connected" color="#10b981" />}
           </View>
           {ps.connected && ps.username && (
@@ -451,6 +463,9 @@ function PlatformsTab({ platformStatuses, onConnect, onDisconnect }: {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function CredibilityTab({ artifacts: _artifacts }: { artifacts: PortfolioArtifact[] }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
+
   return (
     <>
       <Card>
@@ -512,6 +527,8 @@ function CredibilityTab({ artifacts: _artifacts }: { artifacts: PortfolioArtifac
 // ─────────────────────────────────────────────────────────────────────────────
 
 function RequirementRow({ label, status, met }: { label: string; status: string; met: boolean }) {
+  const { colors } = useTheme();
+  const styles = makeStyles(colors);
   return (
     <View style={styles.reqRow}>
       <Text style={[styles.reqIcon, { color: met ? '#10b981' : '#ef4444' }]}>{met ? '✅' : '❌'}</Text>
@@ -537,13 +554,14 @@ function ProgressionTab({
   onSubmitEndOfLevelRetry: (simId: string) => void;
 }) {
   const { colors } = useTheme();
+  const styles = makeStyles(colors);
   return (
     <>
       {/* Phase 2 gate */}
       <Card>
         <SectionLabel text="PHASE 2 CERTIFICATION — GATE STATUS" />
         {gateStatus === null ? (
-          <ActivityIndicator color={colors.accent} />
+          <ActivityIndicator color={colors.accentRole.action} />
         ) : gateStatus.unlocked ? (
           <View style={styles.unlockedBox}>
             <Text style={styles.unlockedText}>🏆 Phase 2 Certification Attempt is UNLOCKED</Text>
@@ -551,7 +569,7 @@ function ProgressionTab({
           </View>
         ) : (
           <>
-            <Text style={[styles.body, { color: '#ef4444', fontWeight: '700', marginBottom: 8 }]}>
+            <Text style={[styles.body, { color: '#ef4444', fontWeight: FontWeight.bold, marginBottom: 8 }]}>
               🔒 Phase 2 locked — requirements below must be met
             </Text>
             {gateStatus.blockers.map((b, i) => (
@@ -565,7 +583,7 @@ function ProgressionTab({
       <Card>
         <SectionLabel text="AGGREGATE SIMULATIONS — 90% REQUIRED" />
         {aggSimStatus === null ? (
-          <ActivityIndicator color={colors.accent} />
+          <ActivityIndicator color={colors.accentRole.action} />
         ) : (
           <>
             <View style={styles.aggRow}>
@@ -634,7 +652,7 @@ function ProgressionTab({
                 </Text>
               </View>
               <View style={[styles.remStatus, { backgroundColor: rs.cleared ? '#d1fae5' : '#fee2e2' }]}>
-                <Text style={{ fontSize: 10, fontWeight: '700', color: rs.cleared ? '#065f46' : '#7f1d1d' }}>
+                <Text style={{ fontSize: 10, fontWeight: FontWeight.bold, color: rs.cleared ? '#065f46' : '#7f1d1d' }}>
                   {rs.cleared ? 'CLEARED' : 'PENDING'}
                 </Text>
               </View>
@@ -703,7 +721,8 @@ function ProgressionTab({
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function PortfolioHubScreen() {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
+  const styles = makeStyles(colors);
   const { user } = useAuth();
   const isWebWide = useIsWebWide();
   const [activeTab, setActiveTab] = useState<HubTab>('overview');
@@ -831,21 +850,21 @@ export default function PortfolioHubScreen() {
   if (isWebWide) {
     const connectedCount = platformStatuses.filter(p => p.connected).length;
     return (
-      <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
         <WebShell>
           <WebPageHeader
             title="⚡ Artifacts Hub"
             subtitle={`${artifacts.length} artifacts · ${connectedCount} platforms connected`}
-            accentColor={colors.accent}
+            accentColor={colors.accentRole.action}
           />
 
           {/* Row 1: XP stats (3 col) */}
           <WebRow cols={3}>
-            <WebCard accentBar accentColor={colors.accent}>
-              <WebStatTile emoji="⚡" label="Total XP" value={(user?.points ?? 0).toLocaleString()} color={colors.accent} />
+            <WebCard accentBar accentColor={colors.accentRole.action}>
+              <WebStatTile emoji="⚡" label="Total XP" value={(user?.points ?? 0).toLocaleString()} color={colors.accentRole.action} />
             </WebCard>
-            <WebCard accentBar accentColor={colors.orange}>
-              <WebStatTile emoji="🔥" label="Day Streak" value={`${user?.streak ?? 0} days`} color={colors.orange} />
+            <WebCard accentBar accentColor={colors.accentRole.warning}>
+              <WebStatTile emoji="🔥" label="Day Streak" value={`${user?.streak ?? 0} days`} color={colors.accentRole.warning} />
             </WebCard>
             <WebCard accentBar accentColor={colors.xpGreen}>
               <WebStatTile emoji="📚" label="Levels Done" value={`${(user?.completed_levels ?? []).length}`} color={colors.xpGreen} />
@@ -855,7 +874,7 @@ export default function PortfolioHubScreen() {
           {/* Row 2: Tabs left (1) + content right (2) */}
           <WebRow>
             <WebCol weight={1}>
-              <WebCard title="Sections" accentBar accentColor={colors.accent}>
+              <WebCard title="Sections" accentBar accentColor={colors.accentRole.action}>
                 {TABS.map(tab => (
                   <WebListRow
                     key={tab.id}
@@ -865,7 +884,7 @@ export default function PortfolioHubScreen() {
                     right={
                       <View style={{
                         width: 8, height: 8, borderRadius: 4,
-                        backgroundColor: activeTab === tab.id ? colors.accent : 'transparent',
+                        backgroundColor: activeTab === tab.id ? colors.accentRole.action : 'transparent',
                         marginLeft: 8,
                       }} />
                     }
@@ -874,7 +893,7 @@ export default function PortfolioHubScreen() {
               </WebCard>
 
               {/* Quick platform status */}
-              <WebCard title="Platforms" accentBar accentColor={colors.green} style={{ marginTop: 20 }}>
+              <WebCard title="Platforms" accentBar accentColor={colors.accentRole.success} style={{ marginTop: 20 }}>
                 {platformStatuses.slice(0, 5).map(p => (
                   <WebListRow
                     key={p.id}
@@ -884,9 +903,9 @@ export default function PortfolioHubScreen() {
                     right={
                       <View style={{
                         paddingHorizontal: 8, paddingVertical: 3, borderRadius: 12,
-                        backgroundColor: p.connected ? colors.xpGreen + '20' : colors.bgSecondary,
+                        backgroundColor: p.connected ? colors.xpGreen + '20' : colors.surface.subtle,
                       }}>
-                        <Text style={{ fontSize: 10, fontWeight: '700', color: p.connected ? colors.xpGreen : colors.textMuted }}>
+                        <Text style={{ fontSize: 10, fontWeight: FontWeight.bold, color: p.connected ? colors.xpGreen : colors.textRole.muted }}>
                           {p.connected ? 'Live' : 'Off'}
                         </Text>
                       </View>
@@ -900,12 +919,12 @@ export default function PortfolioHubScreen() {
               {loading ? (
                 <WebCard>
                   <View style={{ alignItems: 'center', paddingVertical: 18 }}>
-                    <ActivityIndicator color={colors.accent} size="large" />
-                    <Text style={{ color: colors.textSoft, marginTop: 12, fontSize: 13 }}>Loading artifacts…</Text>
+                    <ActivityIndicator color={colors.accentRole.action} size="large" />
+                    <Text style={{ color: colors.textRole.secondary, marginTop: 12, fontSize: 13 }}>Loading artifacts…</Text>
                   </View>
                 </WebCard>
               ) : (
-                <WebCard title={TABS.find(t => t.id === activeTab)?.label ?? ''} accentBar accentColor={colors.accent}>
+                <WebCard title={TABS.find(t => t.id === activeTab)?.label ?? ''} accentBar accentColor={colors.accentRole.action}>
                   <ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 600 }}>
                     {activeTab === 'overview'     && <OverviewTab    artifacts={artifacts} platformStatuses={platformStatuses} />}
                     {activeTab === 'artifacts'    && <ArtifactsTab   artifacts={artifacts} onPush={handlePush} />}
@@ -933,13 +952,13 @@ export default function PortfolioHubScreen() {
 
   // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <StatusBar barStyle={colors.bg === '#0b1020' ? 'light-content' : 'dark-content'} backgroundColor={colors.bg} />
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={colors.surface.base} />
 
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-        <Text style={[styles.headerTitle, { color: colors.text }]}>⚡ Artifacts Hub</Text>
-        <Text style={[styles.headerSub, { color: colors.textSoft }]}>Supply Chain Analyst</Text>
+      <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
+        <Text style={[styles.headerTitle, { color: colors.textRole.primary }]}>⚡ Artifacts Hub</Text>
+        <Text style={[styles.headerSub, { color: colors.textRole.secondary }]}>Supply Chain Analyst</Text>
       </View>
 
       {/* Tabs */}
@@ -951,7 +970,7 @@ export default function PortfolioHubScreen() {
             onPress={() => setActiveTab(tab.id)}
             activeOpacity={0.7}
           >
-            <Text style={[styles.tabText, { color: colors.textSoft }, activeTab === tab.id && { color: colors.accent, fontWeight: '800' }]}>
+            <Text style={[styles.tabText, { color: colors.textRole.secondary }, activeTab === tab.id && { color: colors.accentRole.action, fontWeight: FontWeight.heavy }]}>
               {tab.emoji} {tab.label}
             </Text>
           </TouchableOpacity>
@@ -960,13 +979,13 @@ export default function PortfolioHubScreen() {
 
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator color={colors.accent} size="large" />
+          <ActivityIndicator color={colors.accentRole.action} size="large" />
           <Text style={styles.loadingText}>Loading your artifacts…</Text>
         </View>
       ) : (
         <>
         {/* XP Hero Banner */}
-        <View style={[styles.xpBanner, { backgroundColor: colors.accent }]}>
+        <View style={[styles.xpBanner, { backgroundColor: colors.accentRole.action }]}>
           <View style={styles.xpRow}>
             <View style={styles.xpStat}>
               <Text style={styles.xpStatVal}>⚡ {(user?.points ?? 0).toLocaleString()}</Text>
@@ -1023,11 +1042,11 @@ export default function PortfolioHubScreen() {
 // Styles
 // ─────────────────────────────────────────────────────────────────────────────
 
-const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bg },
+const makeStyles = (colors: ColorPalette) => StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.surface.base },
   scroll: { ...webContainer, paddingBottom: 18 },
   loadingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12 },
-  loadingText: { fontSize: FontSize.sm, color: Colors.textSoft },
+  loadingText: { fontSize: FontSize.sm, color: colors.textRole.secondary },
 
   xpBanner: {
     borderRadius: Radius.xl,
@@ -1045,12 +1064,12 @@ const styles = StyleSheet.create({
   },
   xpStatVal: {
     fontSize: FontSize.md,
-    fontWeight: '800',
-    color: '#fff',
+    fontWeight: FontWeight.heavy,
+    color: colors.textRole.inverse,
   },
   xpStatLabel: {
     fontSize: 10,
-    fontWeight: '600',
+    fontWeight: FontWeight.semibold,
     color: 'rgba(255,255,255,0.8)',
     marginTop: 2,
   },
@@ -1064,17 +1083,17 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.md,
     paddingBottom: Spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: colors.borderRole.subtle,
   },
-  headerTitle: { fontSize: FontSize.lg, fontWeight: '800' },
-  headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: '700' },
+  headerTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.heavy },
+  headerSub: { fontSize: FontSize.xs, marginTop: 2, fontWeight: FontWeight.bold },
 
   tabBar: {
     flexDirection: 'row',
     paddingHorizontal: Spacing.sm,
     paddingVertical: Spacing.xs,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: colors.borderRole.subtle,
     gap: 4,
   },
   tab: {
@@ -1085,8 +1104,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabActive: {},
-  tabText: { fontSize: 10, fontWeight: '700', textAlign: 'center' },
-  tabTextActive: { fontWeight: '800' },
+  tabText: { fontSize: 10, fontWeight: FontWeight.bold, textAlign: 'center' },
+  tabTextActive: { fontWeight: FontWeight.heavy },
 
   card: {
     borderRadius: Radius.xl,
@@ -1096,47 +1115,47 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 10,
-    fontWeight: '800',
-    color: Colors.textSoft,
+    fontWeight: FontWeight.heavy,
+    color: colors.textRole.secondary,
     letterSpacing: 1,
     marginBottom: Spacing.sm,
   },
-  body: { fontSize: FontSize.sm, color: Colors.text, lineHeight: 20, marginBottom: Spacing.sm },
-  subLabel: { fontSize: 10, fontWeight: '700', color: Colors.textSoft, letterSpacing: 0.5, marginBottom: 4 },
+  body: { fontSize: FontSize.sm, color: colors.textRole.primary, lineHeight: 20, marginBottom: Spacing.sm },
+  subLabel: { fontSize: 10, fontWeight: FontWeight.bold, color: colors.textRole.secondary, letterSpacing: 0.5, marginBottom: 4 },
 
   statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: Spacing.sm },
   statBox: { flex: 1, alignItems: 'center' },
-  statValue: { fontSize: 18, fontWeight: '800' },
-  statLabel: { fontSize: 10, color: Colors.textSoft, marginTop: 2 },
+  statValue: { fontSize: 18, fontWeight: FontWeight.heavy },
+  statLabel: { fontSize: 10, color: colors.textRole.secondary, marginTop: 2 },
 
   alertBox: {
-    backgroundColor: Colors.accent + '22',
+    backgroundColor: colors.accentRole.action + '22',
     borderRadius: Radius.sm,
     padding: Spacing.sm,
     marginTop: Spacing.sm,
   },
-  alertText: { fontSize: FontSize.sm, color: Colors.accent, fontWeight: '600' },
+  alertText: { fontSize: FontSize.sm, color: colors.accentRole.action, fontWeight: FontWeight.semibold },
 
   platformRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     paddingVertical: Spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: Colors.border,
+    borderTopColor: colors.borderRole.subtle,
     gap: Spacing.sm,
   },
   platformEmoji: { fontSize: 18, width: 36, textAlign: 'center' },
   platformNameRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 2 },
-  platformName: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
-  platformDesc: { fontSize: 12, color: Colors.textSoft, lineHeight: 16 },
-  platformUsername: { fontSize: 12, color: Colors.accent, marginBottom: 2 },
+  platformName: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  platformDesc: { fontSize: 12, color: colors.textRole.secondary, lineHeight: 16 },
+  platformUsername: { fontSize: 12, color: colors.accentRole.action, marginBottom: 2 },
 
   platformItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     paddingVertical: Spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: Colors.border,
+    borderTopColor: colors.borderRole.subtle,
     gap: Spacing.sm,
   },
   platformItemEmoji: { fontSize: 18, width: 36, textAlign: 'center', marginTop: 2 },
@@ -1147,32 +1166,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
-  tagText: { fontSize: 9, fontWeight: '800', letterSpacing: 0.3 },
+  tagText: { fontSize: 9, fontWeight: FontWeight.heavy, letterSpacing: 0.3 },
 
   credCard: { backgroundColor: '#0D0D0D' },
-  credTitle: { fontSize: 11, fontWeight: '800', color: Colors.accent, letterSpacing: 1, marginBottom: Spacing.sm },
+  credTitle: { fontSize: 11, fontWeight: FontWeight.heavy, color: colors.accentRole.action, letterSpacing: 1, marginBottom: Spacing.sm },
   credText: { fontSize: FontSize.sm, color: '#ccc', lineHeight: 20, marginBottom: Spacing.sm },
 
   levelHeader: {
     fontSize: FontSize.sm,
-    fontWeight: '800',
-    color: Colors.text,
+    fontWeight: FontWeight.heavy,
+    color: colors.textRole.primary,
     marginBottom: Spacing.sm,
     marginTop: Spacing.sm,
   },
   artifactCard: { marginBottom: Spacing.sm },
   artifactHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   levelDot: { width: 10, height: 10, borderRadius: 5 },
-  artifactSkill: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
-  artifactMeta: { fontSize: 11, color: Colors.textSoft, marginTop: 1 },
-  artifactFramework: { fontSize: 11, color: Colors.textSoft, marginTop: 4 },
-  chevron: { fontSize: 12, color: Colors.textSoft },
+  artifactSkill: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  artifactMeta: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
+  artifactFramework: { fontSize: 11, color: colors.textRole.secondary, marginTop: 4 },
+  chevron: { fontSize: 12, color: colors.textRole.secondary },
   pushedRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 6 },
 
-  artifactDetail: { marginTop: Spacing.md, borderTopWidth: 1, borderTopColor: Colors.border, paddingTop: Spacing.md },
+  artifactDetail: { marginTop: Spacing.md, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, paddingTop: Spacing.md },
   caseStudyPreview: {
     fontSize: 11,
-    color: Colors.text,
+    color: colors.textRole.primary,
     lineHeight: 16,
     fontFamily: 'Courier',
     backgroundColor: '#f7f7f7',
@@ -1185,25 +1204,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 6,
     borderTopWidth: 1,
-    borderTopColor: Colors.border,
+    borderTopColor: colors.borderRole.subtle,
   },
-  pushPlatformName: { fontSize: FontSize.sm, fontWeight: '600', color: Colors.text },
-  pushCondition: { fontSize: 10, color: Colors.textSoft },
-  pushedLabel: { fontSize: 11, color: '#10b981', fontWeight: '700' },
+  pushPlatformName: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, color: colors.textRole.primary },
+  pushCondition: { fontSize: 10, color: colors.textRole.secondary },
+  pushedLabel: { fontSize: 11, color: '#10b981', fontWeight: FontWeight.bold },
 
-  emptyTitle: { fontSize: FontSize.md, fontWeight: '700', color: Colors.text, marginBottom: Spacing.sm },
-  emptyBody: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  emptyTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold, color: colors.textRole.primary, marginBottom: Spacing.sm },
+  emptyBody: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
 
-  interviewItem: { marginBottom: Spacing.md, borderLeftWidth: 3, borderLeftColor: Colors.accent, paddingLeft: Spacing.sm },
-  interviewQ: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text, marginBottom: 4, fontStyle: 'italic' },
-  interviewA: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 20 },
+  interviewItem: { marginBottom: Spacing.md, borderLeftWidth: 3, borderLeftColor: colors.accentRole.action, paddingLeft: Spacing.sm },
+  interviewQ: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary, marginBottom: 4, fontStyle: 'italic' },
+  interviewA: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
 
-  proveItem: { paddingVertical: Spacing.sm, borderTopWidth: 1, borderTopColor: Colors.border },
-  proveLevel: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text, marginBottom: 2 },
-  proveText: { fontSize: FontSize.sm, color: Colors.textSoft, lineHeight: 18 },
+  proveItem: { paddingVertical: Spacing.sm, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle },
+  proveLevel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary, marginBottom: 2 },
+  proveText: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 18 },
 
   primaryBtn: {
-    backgroundColor: Colors.accent,
+    backgroundColor: colors.accentRole.action,
     borderRadius: Radius.md,
     paddingVertical: 10,
     paddingHorizontal: 16,
@@ -1211,49 +1230,49 @@ const styles = StyleSheet.create({
     marginTop: Spacing.sm,
   },
   primaryBtnDisabled: { opacity: 0.5 },
-  primaryBtnText: { color: '#fff', fontWeight: '700', fontSize: FontSize.sm },
+  primaryBtnText: { color: colors.textRole.inverse, fontWeight: FontWeight.bold, fontSize: FontSize.sm },
 
   secondaryBtn: {
     borderWidth: 1,
-    borderColor: Colors.border,
+    borderColor: colors.borderRole.subtle,
     borderRadius: Radius.sm,
     paddingVertical: 6,
     paddingHorizontal: 12,
     alignItems: 'center',
   },
-  secondaryBtnText: { color: Colors.text, fontWeight: '600', fontSize: 12 },
+  secondaryBtnText: { color: colors.textRole.primary, fontWeight: FontWeight.semibold, fontSize: 12 },
 
   // Progression tab
-  reqRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, paddingVertical: 6, borderTopWidth: 1, borderTopColor: Colors.border },
+  reqRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle },
   reqIcon: { fontSize: 16, width: 20 },
-  reqLabel: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
-  reqStatus: { fontSize: 11, color: Colors.textSoft, marginTop: 1 },
+  reqLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  reqStatus: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
 
   unlockedBox: { backgroundColor: '#d1fae5', borderRadius: Radius.sm, padding: Spacing.sm },
-  unlockedText: { fontSize: FontSize.sm, fontWeight: '800', color: '#065f46' },
+  unlockedText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy, color: '#065f46' },
   unlockedSub: { fontSize: 11, color: '#065f46', marginTop: 4 },
 
   aggRow: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: Spacing.sm },
   aggStat: { alignItems: 'center' },
   thresholdBar: { borderRadius: Radius.sm, padding: Spacing.sm, marginBottom: Spacing.sm },
-  thresholdText: { fontSize: FontSize.sm, fontWeight: '700' },
+  thresholdText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
 
-  failedSimRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderTopWidth: 1, borderTopColor: Colors.border, gap: 8 },
-  failedSimId: { fontSize: 12, fontWeight: '700', color: Colors.text },
-  failedSimAttempts: { fontSize: 11, color: Colors.textSoft },
+  failedSimRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: 8 },
+  failedSimId: { fontSize: 12, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  failedSimAttempts: { fontSize: 11, color: colors.textRole.secondary },
 
-  remRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 8, borderTopWidth: 1, borderTopColor: Colors.border, gap: 8 },
-  remConcept: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
-  remProgress: { fontSize: 11, color: Colors.textSoft, marginTop: 1 },
+  remRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 8, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: 8 },
+  remConcept: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  remProgress: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
   remStatus: { borderRadius: 4, paddingHorizontal: 6, paddingVertical: 3 },
 
-  retryRow: { paddingVertical: Spacing.sm, borderTopWidth: 1, borderTopColor: Colors.border, gap: 6 },
-  retryConcept: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
-  retryLab: { fontSize: 11, color: Colors.textSoft },
+  retryRow: { paddingVertical: Spacing.sm, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: 6 },
+  retryConcept: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  retryLab: { fontSize: 11, color: colors.textRole.secondary },
 
-  stepRow: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: 6, borderTopWidth: 1, borderTopColor: Colors.border, gap: Spacing.sm },
-  stepNum: { width: 24, height: 24, borderRadius: 12, backgroundColor: Colors.accent, alignItems: 'center', justifyContent: 'center' },
-  stepNumText: { color: '#fff', fontSize: 11, fontWeight: '800' },
-  stepLabel: { fontSize: FontSize.sm, fontWeight: '700', color: Colors.text },
-  stepDetail: { fontSize: 11, color: Colors.textSoft, marginTop: 1 },
+  stepRow: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: 6, borderTopWidth: 1, borderTopColor: colors.borderRole.subtle, gap: Spacing.sm },
+  stepNum: { width: 24, height: 24, borderRadius: 12, backgroundColor: colors.accentRole.action, alignItems: 'center', justifyContent: 'center' },
+  stepNumText: { color: colors.textRole.inverse, fontSize: 11, fontWeight: FontWeight.heavy },
+  stepLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, color: colors.textRole.primary },
+  stepDetail: { fontSize: 11, color: colors.textRole.secondary, marginTop: 1 },
 });
