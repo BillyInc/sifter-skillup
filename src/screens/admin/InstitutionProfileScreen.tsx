@@ -20,7 +20,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   webContainer,
 } from "../../theme";
 import { adminData } from "../../lib/adminData";
@@ -139,10 +139,10 @@ export function InstitutionProfileScreen() {
           ]}
         >
           <View style={{ flex: 1 }}>
-            <Text style={[styles.kicker, { color: colors.textRole.muted }]}>
+            <Text style={[styles.kicker, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>
               ORGANISATION
             </Text>
-            <Text style={[styles.title, { color: colors.textRole.primary }]}>{orgName}</Text>
+            <Text style={[styles.title, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{orgName}</Text>
             <View style={styles.statusLine}>
               <Text style={[styles.lede, { color: colors.textRole.secondary }]}>
                 {orgType}
@@ -242,7 +242,7 @@ export function InstitutionProfileScreen() {
                       },
                     ]}
                   >
-                    <Text style={[styles.roleLabel, { color: colors.textRole.primary }]}>
+                    <Text style={[styles.roleLabel, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>
                       {option.label}
                     </Text>
                     <Text style={[styles.roleBody, { color: colors.textRole.secondary }]}>
@@ -268,6 +268,7 @@ export function InstitutionProfileScreen() {
               <Text
                 style={[
                   styles.ctaText,
+                  CompassFonts.bodySemibold,
                   { color: canInvite && email.trim() ? colors.textRole.inverse : colors.textRole.muted },
                 ]}
               >
@@ -310,8 +311,8 @@ function Stat({ label, value }: { label: string; value: string }) {
   const { colors } = useTheme();
   return (
     <View style={[styles.stat, { backgroundColor: colors.surface.subtle }]}>
-      <Text style={[styles.statValue, { color: colors.textRole.primary }]}>{value}</Text>
-      <Text style={[styles.statLabel, { color: colors.textRole.muted }]}>{label}</Text>
+      <Text style={[styles.statValue, CompassFonts.bodySemibold, { color: colors.textRole.primary }]}>{value}</Text>
+      <Text style={[styles.statLabel, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>{label}</Text>
     </View>
   );
 }
@@ -320,7 +321,7 @@ function TeamRow({ primary, secondary }: { primary: string; secondary: string })
   const { colors } = useTheme();
   return (
     <View style={[styles.teamRow, { borderColor: colors.borderRole.subtle }]}>
-      <Text style={[styles.teamPrimary, { color: colors.textRole.primary }]} numberOfLines={1}>
+      <Text style={[styles.teamPrimary, CompassFonts.bodySemibold, { color: colors.textRole.primary }]} numberOfLines={1}>
         {primary}
       </Text>
       <Text style={[styles.teamSecondary, { color: colors.textRole.muted }]}>
@@ -343,7 +344,7 @@ function VerificationBadge({ status }: { status: string }) {
           : { bg: colors.state.lockedSoft, text: colors.state.locked };
   return (
     <View style={[styles.verifyBadge, { backgroundColor: tone.bg }]}>
-      <Text style={[styles.verifyBadgeText, { color: tone.text }]}>
+      <Text style={[styles.verifyBadgeText, CompassFonts.bodySemibold, { color: tone.text }]}>
         {normalized}
       </Text>
     </View>
@@ -369,12 +370,10 @@ const styles = StyleSheet.create({
   },
   kicker: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.9,
   },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: FontWeight.semibold,
     marginTop: Spacing.xs,
   },
   lede: {
@@ -398,7 +397,6 @@ const styles = StyleSheet.create({
   },
   verifyBadgeText: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     textTransform: "capitalize",
   },
   stats: {
@@ -412,11 +410,9 @@ const styles = StyleSheet.create({
   },
   statValue: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.semibold,
   },
   statLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     marginTop: 2,
   },
   section: { gap: Spacing.sm },
@@ -447,7 +443,7 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     gap: 3,
   },
-  roleLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  roleLabel: { fontSize: FontSize.sm },
   roleBody: { fontSize: FontSize.xs, lineHeight: FontSize.xs * 1.45 },
   cta: {
     minHeight: 44,
@@ -456,14 +452,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: Spacing.md,
   },
-  ctaText: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  ctaText: { fontSize: FontSize.sm },
   feedback: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.45 },
   teamRow: {
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.md,
     padding: Spacing.md,
   },
-  teamPrimary: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  teamPrimary: { fontSize: FontSize.sm },
   teamSecondary: {
     fontSize: FontSize.xs,
     textTransform: "capitalize",

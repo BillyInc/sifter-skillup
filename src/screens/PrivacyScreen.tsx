@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
+import { useTheme, CompassFonts, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
 
 const SECTIONS = [
   {
@@ -54,22 +54,22 @@ export default function PrivacyScreen({ onClose }: Props) {
   const { colors } = useTheme();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
+      <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>LEGAL</Text>
-          <Text style={[styles.title, { color: colors.text }]}>Privacy policy</Text>
-          <Text style={[styles.sub, { color: colors.textSoft }]}>Nigeria-first privacy with global user-rights support.</Text>
+          <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>LEGAL</Text>
+          <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Privacy policy</Text>
+          <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Nigeria-first privacy with global user-rights support.</Text>
         </View>
         {onClose ? (
-          <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
-            <Text style={[styles.closeText, { color: colors.textSoft }]}>Close</Text>
+          <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+            <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
           </TouchableOpacity>
         ) : null}
       </View>
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <View style={[styles.note, { backgroundColor: colors.greenSoft, borderLeftColor: colors.green }]}>
-          <Text style={[styles.noteText, { color: colors.text }]}>
+        <View style={[styles.note, { backgroundColor: `${colors.accentRole.success}14`, borderLeftColor: colors.accentRole.success }]}>
+          <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
             Short version: we do not sell personal data, we minimise sensitive
             student data, and you can ask to access, correct, export or delete
             your account data.
@@ -77,23 +77,23 @@ export default function PrivacyScreen({ onClose }: Props) {
         </View>
 
         {SECTIONS.map((section) => (
-          <View key={section.title} style={[styles.section, Shadow.sm, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>{section.title}</Text>
-            <Text style={[styles.sectionBody, { color: colors.textSoft }]}>{section.body}</Text>
+          <View key={section.title} style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{section.title}</Text>
+            <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{section.body}</Text>
           </View>
         ))}
 
-        <View style={[styles.section, Shadow.sm, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>Contact</Text>
-          <Text style={[styles.sectionBody, { color: colors.textSoft }]}>
+        <View style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Contact</Text>
+          <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
             Privacy concerns: privacy@sifter.app{'\n'}
             Data deletion requests: privacy@sifter.app{'\n'}
             Legal and compliance: legal@sifter.app
           </Text>
         </View>
 
-        <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.text }]} onPress={() => Linking.openURL('mailto:privacy@sifter.app')}>
-          <Text style={styles.emailBtnText}>Email privacy@sifter.app</Text>
+        <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:privacy@sifter.app')}>
+          <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email privacy@sifter.app</Text>
         </TouchableOpacity>
         <View style={{ height: 40 }} />
       </ScrollView>
@@ -111,12 +111,12 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
     letterSpacing: 1,
   },
   title: {
     fontSize: FontSize.lg,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
   },
   sub: {
     fontSize: FontSize.xs,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   closeText: {
     fontSize: FontSize.xs,
-    fontWeight: '700',
+    fontWeight: FontWeight.bold,
   },
   body: {
     ...webContainer,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FontSize.sm,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
     marginBottom: 6,
   },
   sectionBody: {
@@ -170,6 +170,6 @@ const styles = StyleSheet.create({
   emailBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
   },
 });

@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Spacing, Radius, FontSize, Shadow, webContainer } from '../theme';
+import { useTheme, CompassFonts, Spacing, Radius, FontSize, FontWeight, Shadow, webContainer } from '../theme';
 
 const SECTIONS = [
   ['Who we are', 'Sifter LevelUp is a career-intelligence and education platform operated for students, educators, schools, tutorial centres and institutions.'],
@@ -27,22 +27,22 @@ export default function TermsScreen({ onClose }: Props) {
   const { colors } = useTheme();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
+      <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>LEGAL</Text>
-          <Text style={[styles.title, { color: colors.text }]}>Terms of service</Text>
-          <Text style={[styles.sub, { color: colors.textSoft }]}>Plain-language overview of the platform rules.</Text>
+          <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>LEGAL</Text>
+          <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Terms of service</Text>
+          <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>Plain-language overview of the platform rules.</Text>
         </View>
         {onClose ? (
-          <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
-            <Text style={[styles.closeText, { color: colors.textSoft }]}>Close</Text>
+          <TouchableOpacity onPress={onClose} style={[styles.closeBtn, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+            <Text style={[styles.closeText, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>Close</Text>
           </TouchableOpacity>
         ) : null}
       </View>
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <View style={[styles.note, { backgroundColor: colors.goldSoft, borderLeftColor: colors.gold }]}>
-          <Text style={[styles.noteText, { color: colors.text }]}>
+        <View style={[styles.note, { backgroundColor: `${colors.accentRole.status}14`, borderLeftColor: colors.accentRole.status }]}>
+          <Text style={[styles.noteText, { color: colors.textRole.primary }, CompassFonts.body]}>
             This is plain-language product copy, not legal advice. Account
             creation requires accepting the current version of these terms and
             the Privacy Policy.
@@ -50,17 +50,17 @@ export default function TermsScreen({ onClose }: Props) {
         </View>
 
         {SECTIONS.map(([title, body], index) => (
-          <View key={title} style={[styles.section, Shadow.sm, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Text style={[styles.sectionNum, { color: colors.accent }]}>{index + 1}.</Text>
+          <View key={title} style={[styles.section, Shadow.sm, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.sectionNum, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>{index + 1}.</Text>
             <View style={{ flex: 1 }}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
-              <Text style={[styles.sectionBody, { color: colors.textSoft }]}>{body}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>{title}</Text>
+              <Text style={[styles.sectionBody, { color: colors.textRole.secondary }, CompassFonts.body]}>{body}</Text>
             </View>
           </View>
         ))}
 
-        <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.text }]} onPress={() => Linking.openURL('mailto:legal@sifter.app')}>
-          <Text style={styles.emailBtnText}>Email legal@sifter.app</Text>
+        <TouchableOpacity style={[styles.emailBtn, { backgroundColor: colors.textRole.primary }]} onPress={() => Linking.openURL('mailto:legal@sifter.app')}>
+          <Text style={[styles.emailBtnText, CompassFonts.bodyBold]}>Email legal@sifter.app</Text>
         </TouchableOpacity>
         <View style={{ height: 40 }} />
       </ScrollView>
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
     letterSpacing: 1,
   },
   title: {
     fontSize: FontSize.lg,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
   },
   sub: {
     fontSize: FontSize.xs,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   closeText: {
     fontSize: FontSize.xs,
-    fontWeight: '700',
+    fontWeight: FontWeight.bold,
   },
   body: {
     ...webContainer,
@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
   sectionNum: {
     width: 24,
     fontSize: FontSize.sm,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
   },
   sectionTitle: {
     fontSize: FontSize.sm,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
     marginBottom: 4,
   },
   sectionBody: {
@@ -144,6 +144,6 @@ const styles = StyleSheet.create({
   emailBtnText: {
     color: '#fff',
     fontSize: FontSize.sm,
-    fontWeight: '800',
+    fontWeight: FontWeight.heavy,
   },
 });

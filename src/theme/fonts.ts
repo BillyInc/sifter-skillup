@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 
 /** Flip to true once the @expo-google-fonts packages are installed. */
-export const COMPASS_FONTS_AVAILABLE = false;
+export const COMPASS_FONTS_AVAILABLE = true;
 
 const _EMOJI = [
   'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',

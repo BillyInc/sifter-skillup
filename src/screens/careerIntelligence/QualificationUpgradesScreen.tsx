@@ -28,7 +28,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
+  CompassFonts,
   type ColorPalette,
 } from "@/theme";
 
@@ -60,7 +60,7 @@ export function QualificationUpgradesScreen() {
     >
       {() => (
         <View style={styles.body}>
-          <Text style={[styles.lead, { color: colors.textSoft }]}>
+          <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
             An OND or HND is not the ceiling — it's a rung. The routes below move
             you up the ladder honestly, naming the entry requirement and the real
             number of years each step takes, with no over-claiming.
@@ -76,18 +76,18 @@ export function QualificationUpgradesScreen() {
               { backgroundColor: colors.card, borderColor: colors.border },
             ]}
           >
-            <Text style={[styles.altsLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.altsLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
               Other routes covered
             </Text>
             {ALT_ROUTES.map((r) => (
               <Text
                 key={r}
-                style={[styles.altsItem, { color: colors.textSoft }]}
+                style={[styles.altsItem, { color: colors.textRole.secondary }, CompassFonts.body]}
               >
                 • {r}
               </Text>
             ))}
-            <Text style={[styles.altsNote, { color: colors.textMuted }]}>
+            <Text style={[styles.altsNote, { color: colors.textRole.muted }, CompassFonts.body]}>
               The step-by-step detail for these routes is being populated and
               appears below once it lands.
             </Text>
@@ -133,22 +133,22 @@ function OndDirectEntryModel({ colors }: { colors: ColorPalette }) {
         { backgroundColor: colors.goldSoft, borderColor: colors.gold },
       ]}
     >
-      <Text style={[styles.modelEyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.modelEyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
         THE MODEL ROUTE
       </Text>
-      <Text style={[styles.modelTitle, { color: colors.text }]}>
+      <Text style={[styles.modelTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         OND → JAMB Direct Entry → 200L → B.Sc (3 yrs)
       </Text>
-      <Text style={[styles.modelBody, { color: colors.textSoft }]}>
+      <Text style={[styles.modelBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
         With an OND you apply through JAMB Direct Entry and enter the degree at
         200 level — completing the B.Sc in three years rather than starting again
         at 100 level.
       </Text>
-      <Text style={[styles.modelReqLabel, { color: colors.textMuted }]}>
+      <Text style={[styles.modelReqLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
         What you need
       </Text>
       {OND_REQUIREMENTS.map((req) => (
-        <Text key={req} style={[styles.modelReq, { color: colors.textSoft }]}>
+        <Text key={req} style={[styles.modelReq, { color: colors.textRole.secondary }, CompassFonts.body]}>
           • {req}
         </Text>
       ))}
@@ -185,11 +185,11 @@ function UpgradeCard({
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
     >
-      <Text style={[styles.cardTitle, { color: colors.text }]}>
+      <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         {route.title}
       </Text>
       {route.body ? (
-        <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+        <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
           {route.body}
         </Text>
       ) : null}
@@ -197,7 +197,7 @@ function UpgradeCard({
       {route.steps?.length ? (
         <View style={styles.steps}>
           {route.steps.map((step, i) => (
-            <Text key={i} style={[styles.step, { color: colors.textSoft }]}>
+            <Text key={i} style={[styles.step, { color: colors.textRole.secondary }, CompassFonts.body]}>
               {i + 1}. {step}
             </Text>
           ))}
@@ -206,11 +206,11 @@ function UpgradeCard({
 
       {route.requirements?.length ? (
         <View style={styles.reqs}>
-          <Text style={[styles.reqLabel, { color: colors.textMuted }]}>
+          <Text style={[styles.reqLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
             Requirements
           </Text>
           {route.requirements.map((req, i) => (
-            <Text key={i} style={[styles.req, { color: colors.textSoft }]}>
+            <Text key={i} style={[styles.req, { color: colors.textRole.secondary }, CompassFonts.body]}>
               • {req}
             </Text>
           ))}

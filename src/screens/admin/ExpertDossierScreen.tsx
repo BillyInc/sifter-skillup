@@ -17,7 +17,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import { useTheme, Spacing, Radius, FontSize, Brand, FontWeight, webContainer } from "../../theme";
+import { useTheme, Spacing, Radius, FontSize, CompassFonts, webContainer } from "../../theme";
 import { AdminShell } from "./AdminShell";
 import { ComingSoonPanel } from "./ComingSoonPanel";
 import { careerData } from "../../lib/careerData";
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -247,11 +247,9 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     fontSize: FontSize.xl,
-    fontWeight: FontWeight.black,
   },
   metricLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textTransform: "uppercase",
   },
   groupCard: {
@@ -267,7 +265,6 @@ const styles = StyleSheet.create({
   },
   groupTitle: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.black,
   },
   groupStats: {
     marginTop: -Spacing.xs,
@@ -285,7 +282,6 @@ const styles = StyleSheet.create({
   },
   edgeType: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     letterSpacing: 0.5,
     textTransform: "uppercase",
     flex: 1,
@@ -297,13 +293,11 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     fontSize: 10,
-    fontWeight: FontWeight.black,
     letterSpacing: 0.3,
     textTransform: "uppercase",
   },
   edgeLabel: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.semibold,
   },
   notes: {
     fontSize: FontSize.sm,

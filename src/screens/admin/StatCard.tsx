@@ -13,7 +13,6 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
   CompassFonts,
 } from "../../theme";
 import type { DataState } from "../../types/career";
@@ -60,7 +59,7 @@ export function StatCard<T>({
           <Text style={styles.icon}>{icon}</Text>
         </View>
         <Text
-          style={[styles.label, { color: colors.textRole.muted }]}
+          style={[styles.label, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}
           numberOfLines={2}
         >
           {label}
@@ -80,17 +79,18 @@ export function StatCard<T>({
 
       {delta ? (
         <Text
-          style={[
-            styles.delta,
-            { color: isUp ? colors.success : colors.textRole.muted },
-          ]}
+            style={[
+              styles.delta,
+              CompassFonts.bodySemibold,
+              { color: isUp ? colors.success : colors.textRole.muted },
+            ]}
           numberOfLines={1}
         >
           {delta}
         </Text>
       ) : !populated ? (
         <Text
-          style={[styles.delta, { color: colors.state.locked }]}
+          style={[styles.delta, CompassFonts.bodySemibold, { color: colors.state.locked }]}
           numberOfLines={1}
         >
           Locked
@@ -123,15 +123,13 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0.8,
     textTransform: "uppercase",
   },
   value: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.semibold,
     letterSpacing: 0,
     lineHeight: FontSize.display * 1.1,
   },
-  delta: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  delta: { fontSize: FontSize.xs },
 });

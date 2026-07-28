@@ -1,19 +1,23 @@
 /**
- * OnboardingFlow — Sifter LevelUp's 3-step starting-point capture (Mockup Part 1).
+ * OnboardingFlow — Sifter LevelUp's 2-step starting-point capture.
  *
- *   Step 1  Who are you?            → one of five front doors
- *   Step 2  Setup (branches)        → JAMB / student / professional / skilled / graduate
- *   Step 3  Preferences             → regions, work types, notifications
+ *   Step 1  Setup (branches)        → JAMB / student / professional / skilled / graduate
+ *   Step 2  Preferences             → regions, work types, notifications
+ *
+ * Persona is now selected upstream (AccountTypeGate). This screen receives
+ * `initialPersona` and skips the "Who are you?" step.
  *
  * Finishing persists the starting-point profile (locally for now — see
  * src/lib/startingPoint.ts) and flips onboarding_completed via the existing
  * backend endpoint, then lands the user on Home. Selectors that need
  * CCMAS/NCE/IBASS data render "Live soon" until that data is imported.
+ *
+ * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, Brand, webContainer } from "../theme";
+import { useTheme, Spacing, FontSize, Brand, CompassFonts, webContainer } from "../theme";
 import { SifterButton } from "../components/ui";
 import { useAuth } from "../hooks/useAuth";
 import { API } from "../lib/api";
@@ -21,57 +25,16 @@ import { saveStartingPoint } from "../lib/startingPoint";
 import type { StartingPointProfile, UserType } from "../types/onboarding";
 import {
   Stepper,
-  OptionCard,
   ChoiceChips,
   ToggleRow,
 } from "../components/onboarding/primitives";
 import { SeniorSecondaryExploreSetupForm } from "../components/onboarding/SeniorSecondaryExploreSetupForm";
 import { JambSetupForm } from "../components/onboarding/JambSetupForm";
 import { GraduateSetupForm } from "../components/onboarding/GraduateSetupForm";
+import { OnboardingBackGuard } from "../components/onboarding/OnboardingBackGuard";
 import { CurrentStudentSetupForm } from "../components/onboarding/CurrentStudentSetupForm";
 import { ProfessionalSetupForm } from "../components/onboarding/ProfessionalSetupForm";
 import { SkilledWorkerSetupForm } from "../components/onboarding/SkilledWorkerSetupForm";
-
-const WHO: { type: UserType; icon: string; title: string; subtitle: string }[] =
-  [
-    {
-      type: "senior_secondary",
-      icon: "🌱",
-      title: "I'm in SS1 or SS2",
-      subtitle: "Exploring — career & subject guidance",
-    },
-    {
-      type: "jamb",
-      icon: "📚",
-      title: "I'm preparing for JAMB",
-      subtitle: "SS3 student / UTME candidate",
-    },
-    {
-      type: "student",
-      icon: "🎓",
-      title: "I'm currently in a programme",
-      subtitle:
-        "University · Polytechnic · Monotechnic · College of Education · College of Health · Technical College",
-    },
-    {
-      type: "skilled_worker",
-      icon: "🔧",
-      title: "I'm a skilled worker / artisan",
-      subtitle: "Understand my domain and grow",
-    },
-    {
-      type: "professional",
-      icon: "💼",
-      title: "I'm working / changing direction",
-      subtitle: "Professional · White-collar · Blue-collar",
-    },
-    {
-      type: "graduate",
-      icon: "🌍",
-      title: "I'm a graduate",
-      subtitle: "NYSC / job seeker / early career",
-    },
-  ];
 
 const REGIONS = [
   { label: "🇳🇬 Nigeria (local)", value: "nigeria" },
@@ -134,23 +97,23 @@ function nextHrefForStartingPoint(profile: StartingPointProfile): string {
   return "/(tabs)/home";
 }
 
-export default function OnboardingFlow() {
+export default function OnboardingFlow({
+  initialPersona,
+}: {
+  initialPersona?: UserType;
+}) {
   const router = useRouter();
   const { colors } = useTheme();
   const { refreshUser } = useAuth();
   const [step, setStep] = useState(1);
   const [profile, setProfile] = useState<Partial<StartingPointProfile>>({
+    userType: initialPersona,
     notifications: Object.fromEntries(NOTIFS.map((n) => [n.key, n.default])),
   });
   const [finishing, setFinishing] = useState(false);
 
   const patch = (p: Partial<StartingPointProfile>) =>
     setProfile((prev) => ({ ...prev, ...p }));
-
-  const pickType = (type: UserType) => {
-    patch({ userType: type });
-    setStep(2);
-  };
 
   const back = () => setStep((s) => Math.max(1, s - 1));
 
@@ -175,41 +138,20 @@ export default function OnboardingFlow() {
   const setupProps = {
     value: profile,
     onChange: patch,
-    onContinue: () => setStep(3),
+    onContinue: () => setStep(2),
   };
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <Stepper step={step} total={3} onBack={step > 1 ? back : undefined} />
+      <OnboardingBackGuard />
+      <Stepper step={step} total={2} onBack={step > 1 ? back : undefined} />
 
       {step === 1 ? (
-        <View style={{ gap: Spacing.md }}>
-          <Text style={[styles.title, { color: colors.text }]}>
-            First, where are you right now?
-          </Text>
-          <Text style={[styles.sub, { color: colors.textSoft }]}>
-            This shapes everything we show you — programmes, domains, roles and
-            the jobs they unlock.
-          </Text>
-          {WHO.map((w) => (
-            <OptionCard
-              key={w.type}
-              icon={w.icon}
-              title={w.title}
-              subtitle={w.subtitle}
-              selected={profile.userType === w.type}
-              onPress={() => pickType(w.type)}
-            />
-          ))}
-        </View>
-      ) : null}
-
-      {step === 2 ? (
         <View>
           {profile.userType === "senior_secondary" ? (
             <SeniorSecondaryExploreSetupForm {...setupProps} />
@@ -232,13 +174,13 @@ export default function OnboardingFlow() {
         </View>
       ) : null}
 
-      {step === 3 ? (
+      {step === 2 ? (
         <View style={{ gap: Spacing.xl }}>
           <View style={{ gap: Spacing.xs }}>
-            <Text style={[styles.title, { color: colors.text }]}>
+            <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
               Almost there.
             </Text>
-            <Text style={[styles.sub, { color: colors.textSoft }]}>
+            <Text style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}>
               These personalise what we show you. You can change them anytime.
             </Text>
           </View>
@@ -260,7 +202,7 @@ export default function OnboardingFlow() {
           />
 
           <View style={{ gap: 2 }}>
-            <Text style={[styles.fieldLabel, { color: colors.textSoft }]}>
+            <Text style={[styles.fieldLabel, { color: colors.textRole.secondary }, CompassFonts.bodyBold]}>
               🔔 Notify me about
             </Text>
             {NOTIFS.map((n) => (
@@ -304,13 +246,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.xxl,
-    fontWeight: "900",
     lineHeight: FontSize.xxl * 1.2,
   },
   sub: { fontSize: FontSize.md, lineHeight: FontSize.md * 1.5 },
   fieldLabel: {
     fontSize: FontSize.sm,
-    fontWeight: "700",
     marginBottom: Spacing.sm,
   },
 });

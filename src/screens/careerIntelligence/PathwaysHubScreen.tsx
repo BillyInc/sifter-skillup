@@ -23,7 +23,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
+  CompassFonts,
   webContainer,
   type ColorPalette,
 } from "@/theme";
@@ -76,17 +76,17 @@ export function PathwaysHubScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
         PATHWAYS
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Special pathways
       </Text>
-      <Text style={[styles.lead, { color: colors.textSoft }]}>
+      <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
         Routes for every starting point and pivot.
       </Text>
 
@@ -128,17 +128,17 @@ function PathwayCard({
       accessibilityLabel={title}
       style={[
         styles.card,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
       <Text style={styles.cardIcon}>{icon}</Text>
       <View style={styles.cardText}>
-        <Text style={[styles.cardTitle, { color: colors.text }]}>{title}</Text>
-        <Text style={[styles.cardBody, { color: colors.textMuted }]}>
+        <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{title}</Text>
+        <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
           {body}
         </Text>
       </View>
-      <Text style={[styles.chevron, { color: colors.textMuted }]}>›</Text>
+      <Text style={[styles.chevron, { color: colors.textRole.muted }, CompassFonts.body]}>›</Text>
     </TouchableOpacity>
   );
 }

@@ -18,7 +18,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
 } from "../../theme";
 import { Badge } from "../../components/ui";
 import { SparklineBar } from "../../components/admin/SparklineBar";
@@ -57,7 +57,7 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
         <View style={styles.rowMain}>
           <View style={styles.rowTitleLine}>
             <Text
-              style={[styles.programme, { color: colors.text }]}
+              style={[styles.programme, CompassFonts.bodyBold, { color: colors.text }]}
               numberOfLines={1}
             >
               {row.programmeName}
@@ -80,7 +80,7 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
               />
             ))}
             {row.domainOverflow ? (
-              <Text style={[styles.overflow, { color: colors.textMuted }]}>
+              <Text style={[styles.overflow, CompassFonts.bodySemibold, { color: colors.textMuted }]}>
                 +{row.domainOverflow} more
               </Text>
             ) : null}
@@ -91,7 +91,7 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
           {row.sparkline && row.sparkline.length > 0 ? (
             <SparklineBar data={row.sparkline} height={24} />
           ) : null}
-          <Text style={[styles.postings, { color: colors.text }]}>
+          <Text style={[styles.postings, CompassFonts.displayBold, { color: colors.text }]}>
             {row.ngPostingsPerMonth.toLocaleString()}
           </Text>
           <Text style={[styles.postingsLabel, { color: colors.textMuted }]}>
@@ -101,6 +101,7 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
             <Text
               style={[
                 styles.trend,
+                CompassFonts.bodyBold,
                 {
                   color:
                     row.trendDirection === "down" ? colors.red : colors.green,
@@ -116,7 +117,7 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
       {/* Sub-line: salary band + gaps + expand affordance */}
       <View style={styles.subLine}>
         {band ? (
-          <Text style={[styles.subMeta, { color: colors.textSoft }]}>
+          <Text style={[styles.subMeta, CompassFonts.bodySemibold, { color: colors.textSoft }]}>
             Entry {band}
           </Text>
         ) : null}
@@ -131,7 +132,7 @@ function Row({ row }: { row: ProgrammeDemandRow }) {
         ) : (
           <Badge label="No gaps" variant="success" size="sm" />
         )}
-        <Text style={[styles.expand, { color: colors.accent }]}>
+        <Text style={[styles.expand, CompassFonts.bodyBold, { color: colors.accent }]}>
           {open ? "Hide detail ▲" : "Detail ▼"}
         </Text>
       </View>
@@ -174,7 +175,7 @@ function DetailGroup({ title, items }: { title: string; items: string[] }) {
   if (!items.length) return null;
   return (
     <View style={styles.detailGroup}>
-      <Text style={[styles.detailTitle, { color: colors.textMuted }]}>
+      <Text style={[styles.detailTitle, CompassFonts.bodyBold, { color: colors.textMuted }]}>
         {title}
       </Text>
       <Text style={[styles.detailItems, { color: colors.text }]}>
@@ -227,7 +228,6 @@ const styles = StyleSheet.create({
   },
   programme: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.heavy,
     flexShrink: 1,
   },
   domains: {
@@ -236,22 +236,21 @@ const styles = StyleSheet.create({
     gap: 4,
     alignItems: "center",
   },
-  overflow: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  overflow: { fontSize: FontSize.xs },
   rowMetrics: { alignItems: "flex-end", minWidth: 64 },
-  postings: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  postings: { fontSize: FontSize.lg },
   postingsLabel: { fontSize: FontSize.xs },
-  trend: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, marginTop: 2 },
+  trend: { fontSize: FontSize.xs, marginTop: 2 },
   subLine: {
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.sm,
     flexWrap: "wrap",
   },
-  subMeta: { fontSize: FontSize.xs, fontWeight: FontWeight.semibold },
+  subMeta: { fontSize: FontSize.xs },
   expand: {
     marginLeft: "auto",
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
   },
   detail: {
     borderTopWidth: 1,
@@ -263,7 +262,6 @@ const styles = StyleSheet.create({
   detailGroup: { gap: 2 },
   detailTitle: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },

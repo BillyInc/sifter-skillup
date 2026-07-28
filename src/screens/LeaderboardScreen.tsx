@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
+import { CompassFonts } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { leaderboardEngine, type LeaderboardScope } from '../lib/leaderboardEngine';
 import type { Leaderboard, LeaderboardEntry } from '../types/social';
@@ -57,21 +58,21 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   // ── Single row ─────────────────────────────────────────────────────────────
 
   const Row = ({ entry, isUser }: { entry: LeaderboardEntry; isUser: boolean }) => {
-    const stageColor = STAGE_COLORS[entry.xp_stage] ?? colors.textMuted;
+    const stageColor = STAGE_COLORS[entry.xp_stage] ?? colors.textRole.muted;
     const medal      = RANK_MEDALS[entry.rank];
     const delta      = entry.delta_rank ?? 0;
 
     return (
       <View style={[
         styles.row,
-        isUser && { backgroundColor: colors.accentSoft, borderRadius: Radius.lg },
-        { borderBottomColor: colors.border },
+        isUser && { backgroundColor: `${colors.accentRole.action}14`, borderRadius: Radius.lg },
+        { borderBottomColor: colors.borderRole.subtle },
       ]}>
         {/* Rank */}
         <View style={styles.rankCell}>
           {medal
             ? <Text style={styles.medal}>{medal}</Text>
-            : <Text style={[styles.rankNum, { color: isUser ? colors.accent : colors.textMuted }]}>#{entry.rank}</Text>}
+            : <Text style={[styles.rankNum, { color: isUser ? colors.accentRole.action : colors.textRole.muted }]}>#{entry.rank}</Text>}
           {delta !== 0 && (
             <Text style={[styles.delta, { color: leaderboardEngine.deltaColor(delta, colors) }]}>
               {leaderboardEngine.deltaLabel(delta)}
@@ -84,7 +85,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
           <Text style={[styles.avatarText, { color: stageColor }]}>{entry.avatar_emoji || '👤'}</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.username, { color: isUser ? colors.accent : colors.text, fontWeight: isUser ? FontWeight.black : FontWeight.semibold }]}>
+          <Text style={[styles.username, { color: isUser ? colors.accentRole.action : colors.textRole.primary, fontWeight: isUser ? FontWeight.black : FontWeight.semibold }]}>
             {entry.username}{isUser ? ' (You)' : ''}
           </Text>
           <Text style={[styles.stageName, { color: stageColor }]}>Stage {entry.xp_stage}</Text>
@@ -92,8 +93,8 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
 
         {/* XP */}
         <View style={styles.xpCell}>
-          <Text style={[styles.weeklyXp, { color: colors.accent }]}>{entry.weekly_xp.toLocaleString()} XP</Text>
-          <Text style={[styles.totalXp, { color: colors.textMuted }]}>
+          <Text style={[styles.weeklyXp, { color: colors.accentRole.action }]}>{entry.weekly_xp.toLocaleString()} XP</Text>
+          <Text style={[styles.totalXp, { color: colors.textRole.muted }]}>
             {entry.total_xp.toLocaleString()} total
           </Text>
         </View>
@@ -107,10 +108,10 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
     if (!board?.user_entry) return null;
     const e = board.user_entry;
     return (
-      <View style={[styles.userPosCard, { backgroundColor: colors.accentSoft, borderColor: colors.accent + '40' }]}>
-        <Text style={[styles.userPosTitle, { color: colors.accent }]}>YOUR POSITION</Text>
-        <Text style={[styles.userPosRank, { color: colors.accent }]}>#{e.rank}</Text>
-        <Text style={[styles.userPosXp, { color: colors.textSoft }]}>
+      <View style={[styles.userPosCard, { backgroundColor: `${colors.accentRole.action}14`, borderColor: colors.accentRole.action + '40' }]}>
+        <Text style={[styles.userPosTitle, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>YOUR POSITION</Text>
+        <Text style={[styles.userPosRank, { color: colors.accentRole.action }]}>#{e.rank}</Text>
+        <Text style={[styles.userPosXp, { color: colors.textRole.secondary }]}>
           {e.weekly_xp.toLocaleString()} XP this week
         </Text>
       </View>
@@ -124,11 +125,11 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
     const start = leaderboardEngine.formatWeekLabel(board.week_start);
     const end   = leaderboardEngine.formatWeekLabel(board.week_end);
     return (
-      <View style={[styles.weekBanner, { backgroundColor: colors.bgSecondary }]}>
-        <Text style={[styles.weekText, { color: colors.textMuted }]}>
+      <View style={[styles.weekBanner, { backgroundColor: colors.surface.subtle }]}>
+        <Text style={[styles.weekText, { color: colors.textRole.muted }]}>
           Week of {start} – {end} · Resets Sunday 23:59 UTC
         </Text>
-        <Text style={[styles.weekReward, { color: colors.gold }]}>
+        <Text style={[styles.weekReward, { color: colors.accentRole.status }]}>
           Top 3 earn bonus XP, merch credits, and leaderboard badges.
         </Text>
       </View>
@@ -138,17 +139,17 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   // ── Scope tabs ─────────────────────────────────────────────────────────────
 
   const ScopeTabs = () => (
-    <View style={[styles.scopeTabs, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+    <View style={[styles.scopeTabs, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
       {SCOPE_TABS.map(t => {
         const isActive = scope === t.scope;
         return (
           <TouchableOpacity
             key={t.scope}
-            style={[styles.scopeTab, isActive && { borderBottomColor: colors.accent, borderBottomWidth: 2 }]}
+            style={[styles.scopeTab, isActive && { borderBottomColor: colors.accentRole.action, borderBottomWidth: 2 }]}
             onPress={() => setScope(t.scope)}
           >
             <Text style={styles.scopeTabEmoji}>{t.emoji}</Text>
-            <Text style={[styles.scopeTabLabel, { color: isActive ? colors.accent : colors.textSoft, fontWeight: isActive ? FontWeight.black : FontWeight.semibold }]}>
+            <Text style={[styles.scopeTabLabel, { color: isActive ? colors.accentRole.action : colors.textRole.secondary, fontWeight: isActive ? FontWeight.black : FontWeight.semibold }]}>
               {t.label}
             </Text>
           </TouchableOpacity>
@@ -162,15 +163,15 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   const ListBody = () => {
     if (loading) return (
       <View style={styles.centreLoad}>
-        <ActivityIndicator color={colors.accent} />
-        <Text style={[styles.loadText, { color: colors.textMuted }]}>Loading leaderboard…</Text>
+        <ActivityIndicator color={colors.accentRole.action} />
+        <Text style={[styles.loadText, { color: colors.textRole.muted }]}>Loading leaderboard…</Text>
       </View>
     );
     if (!board || board.entries.length === 0) return (
       <View style={styles.empty}>
         <Text style={styles.emptyEmoji}>🏆</Text>
-        <Text style={[styles.emptyTitle, { color: colors.text }]}>No entries yet this week</Text>
-        <Text style={[styles.emptySub, { color: colors.textMuted }]}>Complete workspace activity to appear on the board.</Text>
+        <Text style={[styles.emptyTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>No entries yet this week</Text>
+        <Text style={[styles.emptySub, { color: colors.textRole.muted }]}>Complete workspace activity to appear on the board.</Text>
       </View>
     );
     return (
@@ -191,31 +192,31 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   // ── Scope left panel (web wide) ───────────────────────────────────────────
 
   const ScopePanel = () => (
-    <View style={[styles.scopePanel, { backgroundColor: colors.card, borderRightColor: colors.border }]}>
-      <Text style={[styles.scopePanelTitle, { color: colors.textMuted }]}>LEADERBOARD SCOPE</Text>
+    <View style={[styles.scopePanel, { backgroundColor: colors.surface.raised, borderRightColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.scopePanelTitle, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>LEADERBOARD SCOPE</Text>
       {SCOPE_TABS.map(t => {
         const isActive = scope === t.scope;
         return (
           <TouchableOpacity
             key={t.scope}
-            style={[styles.scopeRow, isActive && { backgroundColor: colors.accentSoft, borderRadius: Radius.md }]}
+            style={[styles.scopeRow, isActive && { backgroundColor: `${colors.accentRole.action}14`, borderRadius: Radius.md }]}
             onPress={() => setScope(t.scope)}
           >
             <Text style={styles.scopeRowEmoji}>{t.emoji}</Text>
-            <Text style={[styles.scopeRowLabel, { color: isActive ? colors.accent : colors.textSoft }]}>{t.label}</Text>
+            <Text style={[styles.scopeRowLabel, { color: isActive ? colors.accentRole.action : colors.textRole.secondary }]}>{t.label}</Text>
           </TouchableOpacity>
         );
       })}
-      <View style={[styles.divider, { backgroundColor: colors.border }]} />
-      <Text style={[styles.scopePanelTitle, { color: colors.textMuted }]}>TOP 3 REWARDS</Text>
+      <View style={[styles.divider, { backgroundColor: colors.borderRole.subtle }]} />
+      <Text style={[styles.scopePanelTitle, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>TOP 3 REWARDS</Text>
       {[
         { rank: '🥇 #1', xp: '+200 XP', credits: '+20 Credits' },
         { rank: '🥈 #2', xp: '+150 XP', credits: '+10 Credits' },
         { rank: '🥉 #3', xp: '+100 XP', credits: '+5 Credits'  },
       ].map(r => (
         <View key={r.rank} style={styles.rewardRow}>
-          <Text style={[styles.rewardRank, { color: colors.text }]}>{r.rank}</Text>
-          <Text style={[styles.rewardDetail, { color: colors.gold }]}>{r.xp} · {r.credits}</Text>
+          <Text style={[styles.rewardRank, { color: colors.textRole.primary }]}>{r.rank}</Text>
+          <Text style={[styles.rewardDetail, { color: colors.accentRole.status }]}>{r.xp} · {r.credits}</Text>
         </View>
       ))}
     </View>
@@ -224,10 +225,10 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   const Header = () => (
-    <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-      <Text style={[styles.headerTitle, { color: colors.text }]}>Leaderboard</Text>
+    <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
+      <Text style={[styles.headerTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Leaderboard</Text>
       {board && (
-        <Text style={[styles.headerSub, { color: colors.accent }]}>
+        <Text style={[styles.headerSub, { color: colors.accentRole.action }]}>
           {board.entries.length} players · {scope === 'global'
             ? 'Global'
             : scope === 'field'
@@ -240,16 +241,16 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
 
   if (isWebWide) {
     return (
-      <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
-        <View style={[styles.webRoot, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
+        <View style={[styles.webRoot, { backgroundColor: colors.surface.base }]}>
           <ScopePanel />
           <ScrollView style={{ flex: 1 }} contentContainerStyle={{ ...webContainer, paddingBottom: 18 }}>
             <View style={{ marginBottom: 14, paddingBottom: 16, position: 'relative' }}>
-              <Text style={{ fontSize: 18, fontWeight: FontWeight.black, color: colors.text, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
-              <Text style={{ fontSize: FontSize.md, color: colors.textSoft }}>
+              <Text style={{ fontSize: 18, fontWeight: FontWeight.black, color: colors.textRole.primary, letterSpacing: -0.5, marginBottom: 4 }}>Leaderboard</Text>
+              <Text style={{ fontSize: FontSize.md, color: colors.textRole.secondary }}>
                 Global, field, and workspace competition with a weekly reset.
               </Text>
-              <View style={{ position: 'absolute', bottom: 0, left: 0, height: 3, width: 48, borderRadius: Radius.full, backgroundColor: colors.accent }} />
+              <View style={{ position: 'absolute', bottom: 0, left: 0, height: 3, width: 48, borderRadius: Radius.full, backgroundColor: colors.accentRole.action }} />
             </View>
             <Header />
             <ScopeTabs />
@@ -261,7 +262,7 @@ export default function LeaderboardScreen({ navigation: _navigation }: any) {
   }
 
   return (
-    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       <Header />
       <ScopeTabs />
       <ListBody />

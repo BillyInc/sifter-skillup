@@ -1,11 +1,11 @@
 /**
- * Shared building blocks for the redesigned auth flow (Login / Sign up /
- * Forgot password). Keeps the three screens visually identical and reduces
- * duplication: a branded gradient scaffold, labelled inputs with a password
- * reveal toggle, and the legal footer. Email/password is fully live via the
- * existing useAuth methods. OAuth helpers remain below for a later provider
- * rollout, but they are not part of the primary auth screen until token
- * exchange is live.
+ * Shared building blocks for the auth flow (Welcome / Login / Signup / Forgot).
+ *
+ * Visual grammar (BRIEF-wins-on-chrome):
+ *   - CompassFonts (Hanken Grotesk) for all text
+ *   - Semantic tokens: surface.raised, textRole.*, borderRole.*, accentRole.*
+ *   - Hairline borders, one accent per screen (Brand.primary for CTA only)
+ *   - 4px grid spacing
  */
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import {
@@ -19,6 +19,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   SafeAreaView,
+  Modal,
   type KeyboardTypeOptions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,8 +30,30 @@ import {
   FontSize,
   Brand,
   webContainer,
+  CompassFonts,
 } from "../../theme";
 import { LevelUpLogo } from "../../components/brand/LevelUpLogo";
+import TermsScreen from "../TermsScreen";
+
+// ─── Terms Modal ────────────────────────────────────────────
+export function TermsModal({
+  visible,
+  onClose,
+}: {
+  visible: boolean;
+  onClose: () => void;
+}) {
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={onClose}
+    >
+      <TermsScreen onClose={onClose} />
+    </Modal>
+  );
+}
 
 // ─── Scaffold ─────────────────────────────────────────────────
 export function AuthScaffold({
@@ -53,7 +76,7 @@ export function AuthScaffold({
 
   const gradient: [string, string] = isDark
     ? ["#0B0B10", "#13100A"]
-    : ["#FFFDF8", "#FFF6E8"];
+    : [colors.surface.base, colors.surface.subtle];
   const cardStyle = {
     opacity: fade,
     transform: [
@@ -67,7 +90,7 @@ export function AuthScaffold({
   };
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <View style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       <LinearGradient colors={gradient} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView
@@ -79,11 +102,26 @@ export function AuthScaffold({
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
           >
-            <Animated.View style={[styles.card, cardStyle]}>
+            <Animated.View
+              style={[
+                styles.card,
+                {
+                  backgroundColor: colors.surface.raised,
+                  borderColor: colors.borderRole.subtle,
+                },
+                cardStyle,
+              ]}
+            >
               {showLogo ? (
                 <View style={styles.logoWrap}>
                   <LevelUpLogo size={64} />
-                  <Text style={[styles.brand, { color: colors.text }]}>
+                  <Text
+                    style={[
+                      styles.brand,
+                      { color: colors.textRole.primary },
+                      CompassFonts.displayBold,
+                    ]}
+                  >
                     {Brand.name}
                   </Text>
                 </View>
@@ -122,19 +160,34 @@ export function AuthField({
 
   return (
     <View style={styles.fieldGroup}>
-      <Text style={[styles.label, { color: colors.textSoft }]}>{label}</Text>
+      <Text
+        style={[
+          styles.label,
+          { color: colors.textRole.secondary },
+          CompassFonts.bodyBold,
+        ]}
+      >
+        {label}
+      </Text>
       <View
         style={[
           styles.inputWrap,
-          { backgroundColor: colors.inputBg, borderColor: colors.inputBorder },
+          {
+            backgroundColor: colors.surface.subtle,
+            borderColor: colors.borderRole.subtle,
+          },
         ]}
       >
         <TextInput
-          style={[styles.input, { color: colors.text }]}
+          style={[
+            styles.input,
+            { color: colors.textRole.primary },
+            CompassFonts.body,
+          ]}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor={colors.textMuted}
+          placeholderTextColor={colors.textRole.placeholder}
           secureTextEntry={hidden}
           keyboardType={keyboardType}
           autoCapitalize="none"
@@ -152,65 +205,55 @@ export function AuthField({
         ) : null}
       </View>
       {hint ? (
-        <Text style={[styles.hint, { color: colors.textMuted }]}>{hint}</Text>
+        <Text
+          style={[
+            styles.hint,
+            { color: colors.textRole.muted },
+            CompassFonts.body,
+          ]}
+        >
+          {hint}
+        </Text>
       ) : null}
     </View>
   );
 }
 
-// ─── Social row (Google / Apple) — stubbed, honest ────────────
-export function SocialRow({ onUnavailable }: { onUnavailable: () => void }) {
-  const { colors } = useTheme();
-  const providers: { id: string; label: string; mark: string }[] = [
-    { id: "google", label: "Continue with Google", mark: "G" },
-    { id: "apple", label: "Continue with Apple", mark: "" },
-  ];
-  return (
-    <View style={{ gap: Spacing.sm }}>
-      {providers.map((p) => (
-        <TouchableOpacity
-          key={p.id}
-          style={[
-            styles.social,
-            { borderColor: colors.border, backgroundColor: colors.card },
-          ]}
-          onPress={onUnavailable}
-          activeOpacity={0.85}
-          // TODO(levelup-oauth): wire to Supabase OAuth + backend token-exchange.
-        >
-          <Text style={[styles.socialMark, { color: colors.text }]}>
-            {p.mark}
-          </Text>
-          <Text style={[styles.socialLabel, { color: colors.text }]}>
-            {p.label}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
-}
-
-export function OrDivider() {
+// ─── Legal footer — tappable Terms & Privacy ──────────────────
+export function LegalFooter({
+  action,
+  onShowTerms,
+}: {
+  action: string;
+  onShowTerms?: () => void;
+}) {
   const { colors } = useTheme();
   return (
-    <View style={styles.dividerRow}>
-      <View style={[styles.divLine, { backgroundColor: colors.border }]} />
-      <Text style={[styles.divText, { color: colors.textMuted }]}>or</Text>
-      <View style={[styles.divLine, { backgroundColor: colors.border }]} />
-    </View>
-  );
-}
-
-export function LegalFooter({ action }: { action: string }) {
-  const { colors } = useTheme();
-  return (
-    <Text style={[styles.legal, { color: colors.textMuted }]}>
+    <Text
+      style={[
+        styles.legal,
+        { color: colors.textRole.muted },
+        CompassFonts.body,
+      ]}
+    >
       By {action}, you agree to our{" "}
-      <Text style={{ color: colors.textSoft, fontWeight: "700" }}>
+      <Text
+        style={[
+          { color: colors.textRole.secondary, fontWeight: "700" },
+          CompassFonts.bodyBold,
+        ]}
+        onPress={onShowTerms}
+      >
         Terms of Service
       </Text>{" "}
       and{" "}
-      <Text style={{ color: colors.textSoft, fontWeight: "700" }}>
+      <Text
+        style={[
+          { color: colors.textRole.secondary, fontWeight: "700" },
+          CompassFonts.bodyBold,
+        ]}
+        onPress={onShowTerms}
+      >
         Privacy Policy
       </Text>
       .
@@ -218,12 +261,23 @@ export function LegalFooter({ action }: { action: string }) {
   );
 }
 
+// ─── Inline banners ──────────────────────────────────────────
 export function ErrorNote({ message }: { message?: string }) {
   const { colors } = useTheme();
   if (!message) return null;
   return (
-    <View style={[styles.errorBox, { backgroundColor: colors.redSoft }]}>
-      <Text style={[styles.errorText, { color: colors.red }]}>{message}</Text>
+    <View
+      style={[styles.errorBox, { backgroundColor: colors.accentRole.danger + "14" }]}
+    >
+      <Text
+        style={[
+          styles.errorText,
+          { color: colors.accentRole.danger },
+          CompassFonts.bodyMedium,
+        ]}
+      >
+        {message}
+      </Text>
     </View>
   );
 }
@@ -235,10 +289,19 @@ export function InfoNote({ message }: { message?: string }) {
     <View
       style={[
         styles.infoBox,
-        { backgroundColor: colors.goldSoft, borderColor: `${Brand.primary}40` },
+        {
+          backgroundColor: colors.accentRole.action + "0D",
+          borderColor: colors.accentRole.action + "30",
+        },
       ]}
     >
-      <Text style={[styles.infoText, { color: Brand.primaryDeep }]}>
+      <Text
+        style={[
+          styles.infoText,
+          { color: colors.accentRole.action },
+          CompassFonts.bodyMedium,
+        ]}
+      >
         {message}
       </Text>
     </View>
@@ -254,15 +317,26 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.xxxl,
     alignItems: "center",
   },
-  card: { width: "100%", maxWidth: 440, padding: Spacing.xl, gap: Spacing.md },
-  logoWrap: { alignItems: "center", gap: Spacing.sm, marginBottom: Spacing.sm },
+  card: {
+    width: "100%",
+    maxWidth: 440,
+    padding: Spacing.xl,
+    gap: Spacing.md,
+    borderRadius: Radius.xl,
+    borderWidth: 1,
+  },
+  logoWrap: {
+    alignItems: "center",
+    gap: Spacing.sm,
+    marginBottom: Spacing.sm,
+  },
   brand: { fontSize: FontSize.xxl, fontWeight: "900" },
   fieldGroup: { gap: 6 },
   label: { fontSize: FontSize.sm, fontWeight: "700" },
   inputWrap: {
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderRadius: Radius.md,
     paddingHorizontal: Spacing.md,
   },
@@ -270,35 +344,12 @@ const styles = StyleSheet.create({
   eyeBtn: { paddingLeft: Spacing.sm, paddingVertical: 8 },
   eye: { fontSize: 18 },
   hint: { fontSize: FontSize.xs, marginTop: 2 },
-  social: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: Spacing.sm,
-    borderWidth: 1.5,
-    borderRadius: Radius.lg,
-    paddingVertical: 13,
-  },
-  socialMark: {
-    fontSize: FontSize.lg,
-    fontWeight: "900",
-    width: 18,
-    textAlign: "center",
-  },
-  socialLabel: { fontSize: FontSize.md, fontWeight: "700" },
-  dividerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: Spacing.md,
-    marginVertical: Spacing.xs,
-  },
-  divLine: { flex: 1, height: 1 },
-  divText: { fontSize: FontSize.sm },
   legal: {
     fontSize: FontSize.xs,
     lineHeight: 17,
     textAlign: "center",
     marginTop: Spacing.sm,
+    paddingHorizontal: Spacing.xl,
   },
   errorBox: { borderRadius: Radius.md, padding: Spacing.md },
   errorText: { fontSize: FontSize.sm, fontWeight: "600", textAlign: "center" },

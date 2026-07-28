@@ -152,7 +152,7 @@ export function PressableCard({
 
 // ─── SifterButton ──────────────────────────────────────────────────────────────
 
-type ButtonVariant = 'primary' | 'ghost' | 'danger' | 'success' | 'track';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'destructive' | 'success' | 'track';
 
 interface ButtonProps {
   label: string;
@@ -178,13 +178,14 @@ export function SifterButton({
   const onPressOut = () => Animated.spring(scale, { toValue: 1,    ...AnimPreset.springGentle }).start();
 
   const bg = variant === 'primary'  ? '#111111'
-    : variant === 'danger'          ? colors.red
-    : variant === 'success'         ? colors.xpGreen
-    : variant === 'track'           ? (color ?? colors.accent)
+    : variant === 'secondary'     ? colors.bgSecondary
+    : variant === 'destructive'   ? colors.red
+    : variant === 'success'       ? colors.xpGreen
+    : variant === 'track'         ? (color ?? colors.accent)
     : colors.bgSecondary;
 
-  const borderColor = variant === 'ghost' ? colors.border : 'transparent';
-  const txtColor    = variant === 'ghost' ? colors.text : '#fff';
+  const borderColor = variant === 'ghost' ? colors.border : variant === 'secondary' ? colors.border : 'transparent';
+  const txtColor    = variant === 'ghost' ? colors.text : variant === 'secondary' ? colors.text : '#fff';
 
   const fontSize = size === 'sm' ? FontSize.sm : size === 'lg' ? FontSize.lg : FontSize.md;
 
@@ -202,7 +203,7 @@ export function SifterButton({
         activeOpacity={1}
         style={{
           backgroundColor: bg,
-          borderWidth: variant === 'ghost' ? 1 : 0,
+          borderWidth: (variant === 'ghost' || variant === 'secondary') ? 1 : 0,
           borderColor,
           borderRadius: Radius.md,
           paddingVertical: size === 'sm' ? 7 : size === 'lg' ? 11 : 9,
@@ -212,7 +213,7 @@ export function SifterButton({
           justifyContent: 'center',
           gap: Spacing.sm,
           opacity: (loading || disabled) ? 0.5 : 1,
-          ...(variant === 'ghost' ? {} : Shadow.sm),
+          ...(variant === 'ghost' || variant === 'secondary' ? {} : Shadow.sm),
         }}
       >
         {icon && <Text style={{ fontSize: fontSize + 2 }}>{icon}</Text>}

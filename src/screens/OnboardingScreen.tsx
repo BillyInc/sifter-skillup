@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LearnMoreScreen from './LearnMoreScreen';
 import {
-  Colors, Spacing, Radius, FontSize, Shadow, FontWeight, useTheme, webContainer,
+  Spacing, Radius, FontSize, Shadow, FontWeight, useTheme, webContainer,
 } from '../theme';
 import { SifterButton, SifterCard } from '../components/ui';
 
@@ -382,7 +382,7 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
           >
             {index === 0 ? (
               <View style={[styles.bestBadge, { backgroundColor: colors.accent }]}>
-                <Text style={styles.bestBadgeText}>BEST MATCH</Text>
+                <Text style={[styles.bestBadgeText, { color: colors.textRole.inverse }]}>BEST MATCH</Text>
               </View>
             ) : null}
             <Text style={styles.resultEmoji}>{result.emoji}</Text>
@@ -401,7 +401,7 @@ export default function OnboardingScreen({ onComplete, onBrowse }: Props) {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bg },
+  safe: { flex: 1 },
   scrollBody: { ...webContainer, paddingBottom: Spacing.xxxl, gap: Spacing.md },
   eyebrow: { fontSize: FontSize.xs, fontWeight: FontWeight.bold, letterSpacing: 1, textAlign: 'center', marginBottom: Spacing.xs },
   heroCard: { marginBottom: Spacing.md },
@@ -452,7 +452,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     marginBottom: Spacing.sm,
   },
-  bestBadgeText: { color: '#fff', fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8 },
+  bestBadgeText: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 0.8 },
   resultEmoji: { fontSize: 18, marginBottom: Spacing.sm },
   resultName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: Spacing.sm },
   resultWhy: { fontSize: FontSize.sm, lineHeight: 20, marginBottom: Spacing.sm },

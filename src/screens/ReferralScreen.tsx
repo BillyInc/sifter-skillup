@@ -17,7 +17,8 @@ import {
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors, Spacing, Radius, FontSize, webContainer } from '../theme';
+import { useTheme, Spacing, Radius, FontSize, FontWeight, webContainer } from '../theme';
+import { CompassFonts } from '../theme';
 import { API } from '../lib/api';
 import { offlineRead } from '../lib/offlineQueue';
 
@@ -48,6 +49,7 @@ export default function ReferralScreen() {
   const [stats,   setStats]   = useState<ReferralStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied,  setCopied]  = useState(false);
+  const { colors } = useTheme();
 
   useEffect(() => {
     offlineRead('referral_stats', () => API.getReferralStats(), 5 * 60 * 1000)
@@ -71,70 +73,70 @@ export default function ReferralScreen() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (loading) return <ActivityIndicator style={{ flex: 1 }} color={Colors.accent} />;
+  if (loading) return <ActivityIndicator style={{ flex: 1 }} color={colors.accentRole.action} />;
 
   const totalProgress = (stats?.totalPoints ?? 0);
   const nextTier = REWARD_TIERS.find(t => t.points > totalProgress);
   const nextTierProgress = nextTier ? Math.min(100, (totalProgress / nextTier.points) * 100) : 100;
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={[styles.safe, { backgroundColor: colors.surface.base }]}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 
         {/* Hero */}
         <View style={styles.hero}>
           <Text style={styles.heroEmoji}>🎁</Text>
-          <Text style={styles.heroTitle}>Refer & Earn</Text>
-          <Text style={styles.heroSub}>
+          <Text style={[styles.heroTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>Refer & Earn</Text>
+          <Text style={[styles.heroSub, { color: colors.textRole.secondary }]}>
             Earn points for every person who joins through your link — and for everyone they refer too.
           </Text>
         </View>
 
         {/* Stats */}
         <View style={styles.statsRow}>
-          <View style={styles.statCard}>
-            <Text style={styles.statNum}>{stats?.directReferrals ?? 0}</Text>
-            <Text style={styles.statLabel}>Direct</Text>
+          <View style={[styles.statCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.statNum, { color: colors.textRole.primary }]}>{stats?.directReferrals ?? 0}</Text>
+            <Text style={[styles.statLabel, { color: colors.textRole.secondary }]}>Direct</Text>
           </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statNum}>{stats?.indirectReferrals ?? 0}</Text>
-            <Text style={styles.statLabel}>Indirect</Text>
+          <View style={[styles.statCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.statNum, { color: colors.textRole.primary }]}>{stats?.indirectReferrals ?? 0}</Text>
+            <Text style={[styles.statLabel, { color: colors.textRole.secondary }]}>Indirect</Text>
           </View>
-          <View style={[styles.statCard, { backgroundColor: Colors.accent }]}>
-            <Text style={[styles.statNum, { color: '#fff' }]}>{stats?.totalPoints ?? 0}</Text>
+          <View style={[styles.statCard, { backgroundColor: colors.accentRole.action }]}>
+            <Text style={[styles.statNum, { color: colors.surface.inverse }]}>{stats?.totalPoints ?? 0}</Text>
             <Text style={[styles.statLabel, { color: 'rgba(255,255,255,0.8)' }]}>Points</Text>
           </View>
         </View>
 
         {/* Progress to next reward */}
         {nextTier && (
-          <View style={styles.progressSection}>
-            <Text style={styles.progressLabel}>
+          <View style={[styles.progressSection, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.progressLabel, { color: colors.textRole.secondary }]}>
               {totalProgress} / {nextTier.points} points → {nextTier.reward}
             </Text>
-            <View style={styles.progressTrack}>
-              <View style={[styles.progressFill, { width: `${nextTierProgress}%` }]} />
+            <View style={[styles.progressTrack, { backgroundColor: colors.borderRole.subtle }]}>
+              <View style={[styles.progressFill, { backgroundColor: colors.accentRole.action, width: `${nextTierProgress}%` }]} />
             </View>
           </View>
         )}
 
         {/* Share link */}
-        <View style={styles.linkCard}>
-          <Text style={styles.linkLabel}>YOUR REFERRAL LINK</Text>
-          <Text style={styles.linkUrl} numberOfLines={1}>{stats?.referralUrl}</Text>
+        <View style={[styles.linkCard, { backgroundColor: `${colors.accentRole.action}14`, borderColor: colors.accentRole.action }]}>
+          <Text style={[styles.linkLabel, { color: colors.accentRole.action }]}>YOUR REFERRAL LINK</Text>
+          <Text style={[styles.linkUrl, { color: colors.textRole.primary }]} numberOfLines={1}>{stats?.referralUrl}</Text>
           <View style={styles.linkBtns}>
-            <TouchableOpacity style={styles.copyBtn} onPress={handleCopy}>
-              <Text style={styles.copyBtnText}>{copied ? '✓ Copied' : '📋 Copy'}</Text>
+            <TouchableOpacity style={[styles.copyBtn, { backgroundColor: colors.surface.raised, borderColor: colors.accentRole.action }]} onPress={handleCopy}>
+              <Text style={[styles.copyBtnText, { color: colors.accentRole.action }]}>{copied ? '✓ Copied' : '📋 Copy'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.shareBtn} onPress={handleShare}>
-              <Text style={styles.shareBtnText}>Share →</Text>
+            <TouchableOpacity style={[styles.shareBtn, { backgroundColor: colors.accentRole.action }]} onPress={handleShare}>
+              <Text style={[styles.shareBtnText, { color: colors.surface.inverse }]}>Share →</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* How it works */}
-        <Text style={styles.sectionHead}>How it works</Text>
-        <View style={styles.howCard}>
+        <Text style={[styles.sectionHead, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>How it works</Text>
+        <View style={[styles.howCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
           {[
             { icon: '1️⃣', text: 'Share your link with anyone who wants to build real career skills' },
             { icon: '2️⃣', text: 'They sign up free — you earn 50 points per direct referral' },
@@ -143,40 +145,40 @@ export default function ReferralScreen() {
           ].map((step, i) => (
             <View key={i} style={styles.howRow}>
               <Text style={styles.howIcon}>{step.icon}</Text>
-              <Text style={styles.howText}>{step.text}</Text>
+              <Text style={[styles.howText, { color: colors.textRole.primary }]}>{step.text}</Text>
             </View>
           ))}
         </View>
 
         {/* Reward tiers */}
-        <Text style={styles.sectionHead}>Reward Tiers</Text>
+        <Text style={[styles.sectionHead, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Reward Tiers</Text>
         {REWARD_TIERS.map((tier, i) => (
-          <View key={i} style={[styles.tierCard, totalProgress >= tier.points && styles.tierCardEarned]}>
+          <View key={i} style={[styles.tierCard, { backgroundColor: totalProgress >= tier.points ? colors.successSoft : colors.surface.raised, borderColor: totalProgress >= tier.points ? colors.accentRole.success : colors.borderRole.subtle }]}>
             <View style={styles.tierPoints}>
-              <Text style={[styles.tierPointsNum, totalProgress >= tier.points && { color: Colors.green }]}>
+              <Text style={[styles.tierPointsNum, { color: totalProgress >= tier.points ? colors.accentRole.success : colors.textRole.primary }]}>
                 {tier.points}
               </Text>
-              <Text style={styles.tierPointsLabel}>pts</Text>
+              <Text style={[styles.tierPointsLabel, { color: colors.textRole.muted }]}>pts</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.tierReward}>{tier.reward}</Text>
-              <Text style={styles.tierDesc}>{tier.desc}</Text>
+              <Text style={[styles.tierReward, { color: colors.textRole.primary }]}>{tier.reward}</Text>
+              <Text style={[styles.tierDesc, { color: colors.textRole.secondary }]}>{tier.desc}</Text>
             </View>
-            {totalProgress >= tier.points && <Text style={styles.tierEarned}>✓</Text>}
+            {totalProgress >= tier.points && <Text style={[styles.tierEarned, { color: colors.accentRole.success }]}>✓</Text>}
           </View>
         ))}
 
         {/* Recent referrals */}
         {(stats?.recentReferrals?.length ?? 0) > 0 && (
           <>
-            <Text style={styles.sectionHead}>Recent Activity</Text>
+            <Text style={[styles.sectionHead, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>Recent Activity</Text>
             {stats!.recentReferrals.map((r, i) => (
-              <View key={i} style={styles.referralRow}>
+              <View key={i} style={[styles.referralRow, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.referralName}>{r.username}</Text>
-                  <Text style={styles.referralType}>{r.type === 'direct' ? 'Direct referral' : 'Indirect referral'}</Text>
+                  <Text style={[styles.referralName, { color: colors.textRole.primary }]}>{r.username}</Text>
+                  <Text style={[styles.referralType, { color: colors.textRole.secondary }]}>{r.type === 'direct' ? 'Direct referral' : 'Indirect referral'}</Text>
                 </View>
-                <Text style={styles.referralPoints}>+{r.pointsEarned} pts</Text>
+                <Text style={[styles.referralPoints, { color: colors.accentRole.success }]}>+{r.pointsEarned} pts</Text>
               </View>
             ))}
           </>
@@ -189,49 +191,48 @@ export default function ReferralScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: Colors.bg },
+  safe: { flex: 1 },
   content: { ...webContainer },
   hero: { alignItems: 'center', marginBottom: Spacing.xl },
   heroEmoji: { fontSize: 18, marginBottom: Spacing.md },
-  heroTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: Colors.text, marginBottom: Spacing.sm },
-  heroSub: { fontSize: FontSize.sm, color: Colors.textSoft, textAlign: 'center', lineHeight: 20 },
+  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, marginBottom: Spacing.sm },
+  heroSub: { fontSize: FontSize.sm, textAlign: 'center', lineHeight: 20 },
 
   statsRow: { flexDirection: 'row', gap: Spacing.sm, marginBottom: Spacing.lg },
-  statCard: { flex: 1, backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center', borderWidth: 1, borderColor: Colors.border },
-  statNum: { fontSize: FontSize.xxl, fontWeight: '800', color: Colors.text },
-  statLabel: { fontSize: FontSize.xs, color: Colors.textSoft },
+  statCard: { flex: 1, borderRadius: Radius.md, padding: Spacing.md, alignItems: 'center', borderWidth: 1 },
+  statNum: { fontSize: FontSize.xxl, fontWeight: FontWeight.heavy },
+  statLabel: { fontSize: FontSize.xs },
 
-  progressSection: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 1, borderColor: Colors.border },
-  progressLabel: { fontSize: FontSize.xs, color: Colors.textSoft, marginBottom: Spacing.sm },
-  progressTrack: { height: 8, backgroundColor: Colors.border, borderRadius: 4 },
-  progressFill: { height: 8, backgroundColor: Colors.accent, borderRadius: 4 },
+  progressSection: { borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 1 },
+  progressLabel: { fontSize: FontSize.xs, marginBottom: Spacing.sm },
+  progressTrack: { height: 8, borderRadius: 4 },
+  progressFill: { height: 8, borderRadius: 4 },
 
-  linkCard: { backgroundColor: Colors.accentSoft, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 2, borderColor: Colors.accent },
-  linkLabel: { fontSize: 9, fontWeight: '800', color: Colors.accent, letterSpacing: 1, marginBottom: 4 },
-  linkUrl: { fontSize: FontSize.sm, color: Colors.navy, fontWeight: '600', marginBottom: Spacing.md },
+  linkCard: { borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.lg, borderWidth: 2 },
+  linkLabel: { fontSize: 9, fontWeight: FontWeight.heavy, letterSpacing: 1, marginBottom: 4 },
+  linkUrl: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, marginBottom: Spacing.md },
   linkBtns: { flexDirection: 'row', gap: Spacing.sm },
-  copyBtn: { flex: 1, backgroundColor: '#fff', borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center', borderWidth: 1, borderColor: Colors.accent },
-  copyBtnText: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.accent },
-  shareBtn: { flex: 1, backgroundColor: Colors.accent, borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center' },
-  shareBtnText: { fontSize: FontSize.sm, fontWeight: '800', color: '#fff' },
+  copyBtn: { flex: 1, borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center', borderWidth: 1 },
+  copyBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  shareBtn: { flex: 1, borderRadius: Radius.sm, padding: Spacing.sm, alignItems: 'center' },
+  shareBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
 
-  sectionHead: { fontSize: FontSize.md, fontWeight: '800', color: Colors.text, marginBottom: Spacing.sm, marginTop: Spacing.md },
-  howCard: { backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1, borderColor: Colors.border },
+  sectionHead: { fontSize: FontSize.md, fontWeight: FontWeight.heavy, marginBottom: Spacing.sm, marginTop: Spacing.md },
+  howCard: { borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.md, borderWidth: 1 },
   howRow: { flexDirection: 'row', gap: Spacing.sm, paddingVertical: Spacing.xs },
   howIcon: { fontSize: 18, width: 26 },
-  howText: { flex: 1, fontSize: FontSize.sm, color: Colors.text, lineHeight: 20 },
+  howText: { flex: 1, fontSize: FontSize.sm, lineHeight: 20 },
 
-  tierCard: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: '#fff', borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
-  tierCardEarned: { borderColor: Colors.green, backgroundColor: Colors.greenSoft },
+  tierCard: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderRadius: Radius.md, padding: Spacing.md, marginBottom: Spacing.sm, borderWidth: 1 },
   tierPoints: { width: 48, alignItems: 'center' },
-  tierPointsNum: { fontSize: FontSize.md, fontWeight: '800', color: Colors.text },
-  tierPointsLabel: { fontSize: 10, color: Colors.textMuted },
-  tierReward: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  tierDesc: { fontSize: FontSize.xs, color: Colors.textSoft },
-  tierEarned: { fontSize: 20, color: Colors.green, fontWeight: '800' },
+  tierPointsNum: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
+  tierPointsLabel: { fontSize: 10 },
+  tierReward: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  tierDesc: { fontSize: FontSize.xs },
+  tierEarned: { fontSize: 20, fontWeight: FontWeight.heavy },
 
-  referralRow: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, backgroundColor: '#fff', borderRadius: Radius.md, marginBottom: Spacing.sm, borderWidth: 1, borderColor: Colors.border },
-  referralName: { fontSize: FontSize.sm, fontWeight: '800', color: Colors.text },
-  referralType: { fontSize: FontSize.xs, color: Colors.textSoft },
-  referralPoints: { fontSize: FontSize.md, fontWeight: '800', color: Colors.green },
+  referralRow: { flexDirection: 'row', alignItems: 'center', padding: Spacing.md, borderRadius: Radius.md, marginBottom: Spacing.sm, borderWidth: 1 },
+  referralName: { fontSize: FontSize.sm, fontWeight: FontWeight.heavy },
+  referralType: { fontSize: FontSize.xs },
+  referralPoints: { fontSize: FontSize.md, fontWeight: FontWeight.heavy },
 });

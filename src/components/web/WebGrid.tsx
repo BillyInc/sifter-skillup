@@ -19,7 +19,7 @@
 import React from 'react';
 import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity,
-  Platform, useWindowDimensions,
+  Platform, useWindowDimensions, type DimensionValue,
 } from 'react-native';
 import { useTheme, Spacing, Radius, FontSize, FontWeight, Shadow } from '../../theme';
 
@@ -153,7 +153,7 @@ export function WebRow({
       <View style={[styles.row, { gap, flexWrap: 'wrap' }, style]}>
         {React.Children.map(children, (child) =>
           child ? (
-            <View style={{ width: colWidth, minWidth: 0 }}>{child}</View>
+            <View style={{ width: colWidth as DimensionValue, minWidth: 0 }}>{child}</View>
           ) : null
         )}
       </View>

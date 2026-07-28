@@ -185,8 +185,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function authGuest() {
-    const data = await API.authGuest();
-    await _handleAuthResponse(data);
+    // Local-first guest: no backend required.
+    // The auth layout detects auth_provider === 'guest' and redirects to Explore.
+    const guestProfile = _normalise({
+      id: `guest_${Date.now()}`,
+      username: 'Guest',
+      auth_provider: 'guest',
+      email: '',
+      onboarding_completed: true,
+    });
+    setUser(guestProfile);
   }
 
   async function signInEmail(email: string, password: string) {

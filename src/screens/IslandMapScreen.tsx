@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  type DimensionValue,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -194,7 +195,7 @@ function IslandCard({
                 styles.progressFill,
                 {
                   backgroundColor: completed ? '#10B981' : island.color,
-                  width: stateCopy.progress,
+                  width: stateCopy.progress as DimensionValue,
                 },
               ]}
             />

@@ -16,7 +16,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Shadow,
   webContainer,
 } from "../../theme";
@@ -87,7 +87,7 @@ export function AffiliationScreen() {
       >
         {/* Explainer */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Your institution's school code
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -106,17 +106,18 @@ export function AffiliationScreen() {
             Shadow.xs,
           ]}
         >
-          <Text style={[styles.codeLabel, { color: colors.textMuted }]}>
+          <Text style={[styles.codeLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
             SCHOOL CODE
           </Text>
           {code ? (
-            <Text style={[styles.codeValue, { color: colors.text }]}>
+            <Text style={[styles.codeValue, CompassFonts.displayBold, { color: colors.text }]}>
               {code}
             </Text>
           ) : (
             <Text
               style={[
                 styles.codePlaceholder,
+                CompassFonts.displayBold,
                 {
                   color: colors.textMuted,
                   backgroundColor: colors.bgSecondary,
@@ -133,7 +134,7 @@ export function AffiliationScreen() {
               { backgroundColor: colors.bgSecondary, borderColor: colors.border },
             ]}
           >
-            <Text style={[styles.copyBtnText, { color: colors.textMuted }]}>
+            <Text style={[styles.copyBtnText, CompassFonts.bodyBold, { color: colors.textMuted }]}>
               {code ? "Copy code" : "Available after verification"}
             </Text>
           </View>
@@ -145,7 +146,7 @@ export function AffiliationScreen() {
 
         {/* Aggregate count */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Affiliated students (aggregate)
           </Text>
           <ComingSoonPanel state={stats}>{() => null}</ComingSoonPanel>
@@ -153,7 +154,7 @@ export function AffiliationScreen() {
 
         {/* Privacy framing */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             How affiliation respects privacy
           </Text>
           <View style={styles.cards}>
@@ -166,7 +167,7 @@ export function AffiliationScreen() {
                 ]}
               >
                 <Text style={styles.cardIcon}>{p.icon}</Text>
-                <Text style={[styles.cardTitle, { color: colors.text }]}>
+                <Text style={[styles.cardTitle, CompassFonts.bodyBold, { color: colors.text }]}>
                   {p.title}
                 </Text>
                 <Text style={[styles.cardBody, { color: colors.textMuted }]}>
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -206,17 +207,14 @@ const styles = StyleSheet.create({
   },
   codeLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     letterSpacing: 1.2,
   },
   codeValue: {
     fontSize: FontSize.hero,
-    fontWeight: FontWeight.black,
     letterSpacing: 4,
   },
   codePlaceholder: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.black,
     letterSpacing: 8,
     borderWidth: 1,
     borderRadius: Radius.lg,
@@ -231,7 +229,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     opacity: 0.7,
   },
-  copyBtnText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  copyBtnText: { fontSize: FontSize.sm },
   codeNote: {
     fontSize: FontSize.xs,
     lineHeight: FontSize.xs * 1.6,
@@ -248,6 +246,6 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   cardIcon: { fontSize: 22 },
-  cardTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  cardTitle: { fontSize: FontSize.md },
   cardBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
 });

@@ -24,6 +24,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import {
   useTheme,
+  CompassFonts,
   Spacing,
   Radius,
   FontSize,
@@ -123,24 +124,24 @@ export default function MySchoolScreen() {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }} edges={["top"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface.base }} edges={["top"]}>
       <ScrollView
         contentContainerStyle={[styles.scroll, webContainer as object]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         <TouchableOpacity onPress={() => router.back()} style={styles.back}>
-          <Text style={[styles.backText, { color: colors.textMuted }]}>‹ Back</Text>
+          <Text style={[styles.backText, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>‹ Back</Text>
         </TouchableOpacity>
 
-        <Text style={[styles.h1, { color: colors.text }]}>My school</Text>
+        <Text style={[styles.h1, { color: colors.textRole.primary }, CompassFonts.displayBold]}>My school</Text>
 
         {/* Claim card */}
-        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>
+        <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+          <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
             Have a claim code?
           </Text>
-          <Text style={[styles.cardBody, { color: colors.textMuted }]}>
+          <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
             If your school set up an account for you, enter the code from your
             card to make it yours. Add a phone number (or email) so you can log in
             again later.
@@ -150,16 +151,16 @@ export default function MySchoolScreen() {
             onChangeText={setClaimCode}
             autoCapitalize="characters"
             placeholder="Claim code"
-            placeholderTextColor={colors.textMuted}
-            style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg }]}
+            placeholderTextColor={colors.textRole.muted}
+            style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
           />
           <TextInput
             value={phone}
             onChangeText={setPhone}
             keyboardType="phone-pad"
             placeholder="Phone number"
-            placeholderTextColor={colors.textMuted}
-            style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg }]}
+            placeholderTextColor={colors.textRole.muted}
+            style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
           />
           <TextInput
             value={email}
@@ -167,30 +168,30 @@ export default function MySchoolScreen() {
             keyboardType="email-address"
             autoCapitalize="none"
             placeholder="Email (optional)"
-            placeholderTextColor={colors.textMuted}
-            style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg }]}
+            placeholderTextColor={colors.textRole.muted}
+            style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
           />
-          {claimErr && <Text style={[styles.err, { color: colors.danger }]}>{claimErr}</Text>}
-          {claimMsg && <Text style={[styles.ok, { color: colors.success }]}>{claimMsg}</Text>}
+          {claimErr && <Text style={[styles.err, { color: colors.accentRole.danger }]}>{claimErr}</Text>}
+          {claimMsg && <Text style={[styles.ok, { color: colors.accentRole.success }]}>{claimMsg}</Text>}
           <TouchableOpacity
             onPress={doClaim}
             disabled={claimBusy}
-            style={[styles.btnPrimary, { backgroundColor: colors.text, opacity: claimBusy ? 0.6 : 1 }]}
+            style={[styles.btnPrimary, { backgroundColor: colors.textRole.primary, opacity: claimBusy ? 0.6 : 1 }]}
           >
             {claimBusy ? (
-              <ActivityIndicator color={colors.bg} />
+              <ActivityIndicator color={colors.surface.inverse} />
             ) : (
-              <Text style={[styles.btnPrimaryText, { color: colors.bg }]}>Claim my account</Text>
+              <Text style={[styles.btnPrimaryText, { color: colors.surface.inverse }, CompassFonts.bodyBold]}>Claim my account</Text>
             )}
           </TouchableOpacity>
         </View>
 
         {/* Affiliate + consent card */}
-        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>
+        <View style={[styles.card, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+          <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
             Link your school
           </Text>
-          <Text style={[styles.cardBody, { color: colors.textMuted }]}>
+          <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
             Enter your school's code to link your account. By default your school
             only sees anonymous totals — never your individual progress — unless
             you choose to share it below.
@@ -203,32 +204,32 @@ export default function MySchoolScreen() {
                 onChangeText={setSchoolCode}
                 autoCapitalize="characters"
                 placeholder="School code"
-                placeholderTextColor={colors.textMuted}
-                style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.bg }]}
+                placeholderTextColor={colors.textRole.muted}
+                style={[styles.input, { color: colors.textRole.primary, borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.base }]}
               />
-              {affErr && <Text style={[styles.err, { color: colors.danger }]}>{affErr}</Text>}
+              {affErr && <Text style={[styles.err, { color: colors.accentRole.danger }]}>{affErr}</Text>}
               <TouchableOpacity
                 onPress={doAffiliate}
                 disabled={affBusy}
-                style={[styles.btnPrimary, { backgroundColor: colors.text, opacity: affBusy ? 0.6 : 1 }]}
+                style={[styles.btnPrimary, { backgroundColor: colors.textRole.primary, opacity: affBusy ? 0.6 : 1 }]}
               >
                 {affBusy ? (
-                  <ActivityIndicator color={colors.bg} />
+                  <ActivityIndicator color={colors.surface.inverse} />
                 ) : (
-                  <Text style={[styles.btnPrimaryText, { color: colors.bg }]}>Link school</Text>
+                  <Text style={[styles.btnPrimaryText, { color: colors.surface.inverse }, CompassFonts.bodyBold]}>Link school</Text>
                 )}
               </TouchableOpacity>
             </>
           ) : (
             <View style={{ gap: Spacing.md }}>
-              <Text style={[styles.cardBody, { color: colors.text }]}>
+              <Text style={[styles.cardBody, { color: colors.textRole.primary }, CompassFonts.body]}>
                 Linked to {affiliated.schoolName ?? "your school"}.
               </Text>
-              <View style={[styles.consentBox, { borderColor: colors.border, backgroundColor: colors.bgSecondary }]}>
-                <Text style={[styles.consentTitle, { color: colors.text }]}>
+              <View style={[styles.consentBox, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.subtle }]}>
+                <Text style={[styles.consentTitle, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
                   Share your individual progress with {affiliated.schoolName ?? "your school"}?
                 </Text>
-                <Text style={[styles.cardBody, { color: colors.textMuted }]}>
+                <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
                   This lets your school's counsellor see your career progress and
                   report. You can turn it off anytime.
                 </Text>
@@ -239,12 +240,12 @@ export default function MySchoolScreen() {
                     style={[
                       styles.choice,
                       {
-                        borderColor: colors.border,
-                        backgroundColor: consentState === "shared" ? colors.text : "transparent",
+                        borderColor: colors.borderRole.subtle,
+                        backgroundColor: consentState === "shared" ? colors.textRole.primary : "transparent",
                       },
                     ]}
                   >
-                    <Text style={[styles.choiceText, { color: consentState === "shared" ? colors.bg : colors.text }]}>
+                    <Text style={[styles.choiceText, { color: consentState === "shared" ? colors.surface.inverse : colors.textRole.primary }, CompassFonts.bodyBold]}>
                       Share
                     </Text>
                   </TouchableOpacity>
@@ -254,17 +255,17 @@ export default function MySchoolScreen() {
                     style={[
                       styles.choice,
                       {
-                        borderColor: colors.border,
-                        backgroundColor: consentState === "none" ? colors.text : "transparent",
+                        borderColor: colors.borderRole.subtle,
+                        backgroundColor: consentState === "none" ? colors.textRole.primary : "transparent",
                       },
                     ]}
                   >
-                    <Text style={[styles.choiceText, { color: consentState === "none" ? colors.bg : colors.text }]}>
+                    <Text style={[styles.choiceText, { color: consentState === "none" ? colors.surface.inverse : colors.textRole.primary }, CompassFonts.bodyBold]}>
                       Keep private
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <Text style={[styles.consentStatus, { color: colors.textMuted }]}>
+                <Text style={[styles.consentStatus, { color: colors.textRole.muted }, CompassFonts.bodyMedium]}>
                   {consentState === "shared"
                     ? "Sharing is on — your school can see your progress."
                     : "Private — your school only sees anonymous totals."}

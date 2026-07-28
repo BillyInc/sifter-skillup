@@ -31,7 +31,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
-  Brand,
+  CompassFonts,
   type ColorPalette,
 } from "@/theme";
 
@@ -61,7 +61,7 @@ export function PhdPathwayScreen() {
     >
       {() => (
         <View style={styles.body}>
-          <Text style={[styles.lead, { color: colors.textSoft }]}>
+          <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
             A PhD is a research credential, not a single-job ticket. The
             platform treats it as a route selector: first we identify your PhD
             signal, then we map the verified bridge into academic, policy,
@@ -80,13 +80,13 @@ export function PhdPathwayScreen() {
                   ]}
                 >
                   <Text style={styles.startIcon}>{point.icon}</Text>
-                  <Text style={[styles.startTitle, { color: colors.text }]}>
+                  <Text style={[styles.startTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
                     {point.title}
                   </Text>
-                  <Text style={[styles.startBody, { color: colors.textSoft }]}>
+                  <Text style={[styles.startBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
                     {point.body}
                   </Text>
-                  <Text style={[styles.startBridge, { color: Brand.primaryDeep }]}>
+                  <Text style={[styles.startBridge, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
                     {point.bridge}
                   </Text>
                 </View>
@@ -95,13 +95,13 @@ export function PhdPathwayScreen() {
           </View>
 
           <View style={styles.routePreview}>
-            <Text style={[styles.previewLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.previewLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>
               Non-academic routes this page will unlock:
             </Text>
             {NON_ACADEMIC_ROUTES.map((label) => (
               <Text
                 key={label}
-                style={[styles.previewItem, { color: colors.textSoft }]}
+                style={[styles.previewItem, { color: colors.textRole.secondary }, CompassFonts.body]}
               >
                 • {label}
               </Text>
@@ -119,10 +119,10 @@ export function PhdPathwayScreen() {
                 { backgroundColor: colors.bgSecondary, borderColor: colors.border },
               ]}
             >
-              <Text style={[styles.unlockTitle, { color: colors.text }]}>
+              <Text style={[styles.unlockTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
                 Route detail stays locked until it passes evidence checks
               </Text>
-              <Text style={[styles.unlockBody, { color: colors.textSoft }]}>
+              <Text style={[styles.unlockBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
                 Each route must show the global standard, Nigerian qualification
                 map, bridge inventory, timeline and cost, Nigerian entry point,
                 and proof-of-concept status before it becomes actionable.
@@ -131,7 +131,7 @@ export function PhdPathwayScreen() {
                 {PHD_UNLOCK_CHECKS.map((check) => (
                   <Text
                     key={check}
-                    style={[styles.check, { color: colors.textSoft }]}
+                    style={[styles.check, { color: colors.textRole.secondary }, CompassFonts.body]}
                   >
                     🔒 {check}
                   </Text>
@@ -223,13 +223,13 @@ function PhdQuantCallout({ colors }: { colors: ColorPalette }) {
       ]}
     >
       <Text style={styles.calloutIcon}>📈</Text>
-      <Text style={[styles.calloutEyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.calloutEyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
         PHD-QUANT · STANDALONE
       </Text>
-      <Text style={[styles.calloutTitle, { color: colors.text }]}>
+      <Text style={[styles.calloutTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         The quant route is a technical-screen path
       </Text>
-      <Text style={[styles.calloutBody, { color: colors.textSoft }]}>
+      <Text style={[styles.calloutBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
         Quant finance and data science deserve their own route because selection
         can depend heavily on demonstrated mathematics, coding, probability, and
         interview performance. The platform should not promise access from a CV
@@ -242,7 +242,7 @@ function PhdQuantCallout({ colors }: { colors: ColorPalette }) {
             key={signal}
             style={[styles.signalPill, { borderColor: colors.gold }]}
           >
-            <Text style={[styles.signalText, { color: Brand.primaryDeep }]}>
+            <Text style={[styles.signalText, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
               {signal}
             </Text>
           </View>
@@ -273,18 +273,18 @@ function PhdRouteCard({
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
     >
-      <Text style={[styles.cardTitle, { color: colors.text }]}>
+      <Text style={[styles.cardTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         {route.title}
       </Text>
       {route.body ? (
-        <Text style={[styles.cardBody, { color: colors.textSoft }]}>
+        <Text style={[styles.cardBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
           {route.body}
         </Text>
       ) : null}
       {route.signals?.length ? (
         <View style={styles.signals}>
           {route.signals.map((signal, i) => (
-            <Text key={i} style={[styles.signal, { color: colors.textSoft }]}>
+            <Text key={i} style={[styles.signal, { color: colors.textRole.secondary }, CompassFonts.body]}>
               • {signal}
             </Text>
           ))}

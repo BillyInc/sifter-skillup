@@ -25,7 +25,7 @@ import {
   useTheme,
   Spacing,
   FontSize,
-  FontWeight,
+  CompassFonts,
   webContainer,
 } from "../../theme";
 import { PdfExportButton } from "../../components/careerIntelligence/PdfExportButton";
@@ -184,11 +184,11 @@ export function ProgrammeDashboardScreen() {
         </View>
 
         {summary.status !== "real" ? (
-          <Text style={[styles.dataNote, { color: colors.textMuted }]}>
+          <Text style={[styles.dataNote, CompassFonts.bodySemibold, { color: colors.textMuted }]}>
             {summary.meta?.notice ?? STAT_PENDING}
           </Text>
         ) : summary.data?.dataAsOf ? (
-          <Text style={[styles.dataNote, { color: colors.textMuted }]}>
+          <Text style={[styles.dataNote, CompassFonts.bodySemibold, { color: colors.textMuted }]}>
             Market data as of {summary.data.dataAsOf}.
           </Text>
         ) : null}
@@ -232,7 +232,7 @@ function Section({
 }) {
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.text }]}>{title}</Text>
+      <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>{title}</Text>
       {children}
     </View>
   );
@@ -254,13 +254,11 @@ const styles = StyleSheet.create({
   },
   dataNote: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
     marginTop: -Spacing.md,
   },
   section: { gap: Spacing.md },
   sectionTitle: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.black,
   },
   grid: { gap: Spacing.xl },
   gridWide: { flexDirection: "row", alignItems: "flex-start" },

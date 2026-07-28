@@ -12,8 +12,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
-  useTheme, Spacing, Radius, FontSize, FontWeight, Shadow,
-  AnimPreset, XP_STAGES, webContainer,
+  useTheme, Spacing, Radius, FontSize, Shadow,
+  AnimPreset, XP_STAGES, webContainer, CompassFonts,
 } from '../theme';
 import { WorkerCharacter, DeskScene } from '../components/CharacterSystem';
 import {
@@ -95,15 +95,15 @@ function SkillBar({ label, value, color }: { label: string; value: number; color
 
   return (
     <View style={styles.skillBarRow}>
-      <Text style={[styles.skillBarLabel, { color: colors.textSoft }]}>{label}</Text>
+      <Text style={[styles.skillBarLabel, { color: colors.textRole.secondary }, CompassFonts.bodySemibold]}>{label}</Text>
       <View style={styles.skillBarTrack}>
-        <View style={[styles.skillBarBg, { backgroundColor: colors.bgSecondary }]} />
+        <View style={[styles.skillBarBg, { backgroundColor: colors.surface.subtle }]} />
         <Animated.View style={[
           styles.skillBarFill,
           { backgroundColor: color, width: widthAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) },
         ]} />
       </View>
-      <Text style={[styles.skillBarPct, { color }]}>{value}%</Text>
+      <Text style={[styles.skillBarPct, { color }, CompassFonts.displayBold]}>{value}%</Text>
     </View>
   );
 }
@@ -113,8 +113,8 @@ function SkillBar({ label, value, color }: { label: string; value: number; color
 function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.sm]}>
-      <Text style={[styles.sectionCardTitle, { color: colors.textMuted }]}>{title}</Text>
+    <View style={[styles.sectionCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, Shadow.sm]}>
+      <Text style={[styles.sectionCardTitle, { color: colors.textRole.muted }, CompassFonts.displayBold]}>{title}</Text>
       {children}
     </View>
   );
@@ -130,10 +130,10 @@ function AccountRow({ emoji, label, sub, onPress, color }: {
     <TouchableOpacity style={styles.accountRow} onPress={onPress} activeOpacity={0.7}>
       <Text style={styles.accountRowEmoji}>{emoji}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.accountRowLabel, { color: color ?? colors.text }]}>{label}</Text>
-        {sub && <Text style={[styles.accountRowSub, { color: colors.textMuted }]}>{sub}</Text>}
+        <Text style={[styles.accountRowLabel, { color: color ?? colors.textRole.primary }, CompassFonts.bodySemibold]}>{label}</Text>
+        {sub && <Text style={[styles.accountRowSub, { color: colors.textRole.muted }]}>{sub}</Text>}
       </View>
-      <Text style={[styles.accountRowArrow, { color: colors.textMuted }]}>›</Text>
+      <Text style={[styles.accountRowArrow, { color: colors.textRole.muted }]}>›</Text>
     </TouchableOpacity>
   );
 }
@@ -193,10 +193,10 @@ export default function ProfileScreen() {
 
   // Mock skill bars — replace with real data from user profile
   const skillBars = [
-    { label: 'DeFi Fundamentals',    value: 82, color: colors.green },
-    { label: 'On-Chain Analysis',    value: 65, color: colors.accent },
-    { label: 'Smart Contracts',      value: 48, color: colors.orange },
-    { label: 'Quant Finance',        value: 30, color: colors.gold },
+    { label: 'DeFi Fundamentals',    value: 82, color: colors.accentRole.success },
+    { label: 'On-Chain Analysis',    value: 65, color: colors.accentRole.action },
+    { label: 'Smart Contracts',      value: 48, color: colors.accentRole.warning },
+    { label: 'Quant Finance',        value: 30, color: colors.accentRole.status },
   ];
 
   const allStages  = XP_STAGES;
@@ -205,12 +205,12 @@ export default function ProfileScreen() {
   // ── WEB LAYOUT ──────────────────────────────────────────────────────────────
   if (isWebWide) {
     return (
-      <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
         <WebShell>
-          <WebPageHeader title="Profile" subtitle={`${workspaceLabel} · ${stageName} · Stage ${stage}/8`} accentColor={colors.accent}
+          <WebPageHeader title="Profile" subtitle={`${workspaceLabel} · ${stageName} · Stage ${stage}/8`} accentColor={colors.accentRole.action}
             right={
               <TouchableOpacity onPress={() => go('/(tabs)/settings')}
-                style={{ padding: 8, borderRadius: Radius.md, backgroundColor: colors.card }}>
+                style={{ padding: 8, borderRadius: Radius.md, backgroundColor: colors.surface.raised }}>
                 <Text style={{ fontSize: 20 }}>⚙️</Text>
               </TouchableOpacity>
             }
@@ -219,16 +219,16 @@ export default function ProfileScreen() {
           {/* Row 1: Character hero (1/3) + Stats + Skills (2/3) */}
           <WebRow>
             <WebCol weight={1}>
-              <WebCard accentBar accentColor={colors.accent}>
+              <WebCard accentBar accentColor={colors.accentRole.action}>
                 <View style={{ alignItems: 'center', paddingVertical: 12 }}>
                   <View style={{ position: 'relative', width: 150, height: 150, alignItems: 'center', justifyContent: 'center' }}>
-                    <StageRing progress={progress} color={colors.accent} size={150} />
+                    <StageRing progress={progress} color={colors.accentRole.action} size={150} />
                     <View style={{ position: 'absolute' }}>
                       <WorkerCharacter stage={stage} trackId={trackId} size={110} mood="neutral" />
                     </View>
                   </View>
-                  <Text style={[styles.stageName, { color: colors.text, textAlign: 'center', marginTop: 12 }]}>{stageName}</Text>
-                  <Text style={[styles.stageDesc, { color: colors.textSoft, textAlign: 'center', marginTop: 4 }]}>
+                  <Text style={[styles.stageName, { color: colors.textRole.primary, textAlign: 'center', marginTop: 12 }, CompassFonts.displayBold]}>{stageName}</Text>
+                  <Text style={[styles.stageDesc, { color: colors.textRole.secondary, textAlign: 'center', marginTop: 4 }]}>
                     {xp?.stage.description ?? 'Building the foundation.'}
                   </Text>
                 </View>
@@ -239,34 +239,34 @@ export default function ProfileScreen() {
                   sub="Spend merch credits on apparel and shoes"
                   onPress={() => go('/merchandise')}
                 />
-                <WebStatTile emoji="⚡" label="Total XP"  value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to Stage ${stage + 1}`} color={colors.accent} />
-                <WebStatTile emoji="🔥" label="Streak"    value={`${streak?.streak ?? 0} days`} sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} color={colors.orange} />
-                <WebStatTile emoji="🏝️" label="Levels"    value={`${(xp?.totalXp ?? 0) > 0 ? Math.floor((xp?.totalXp ?? 0) / 10) : 0}`} sub="Total lessons completed" color={colors.green} />
+                <WebStatTile emoji="⚡" label="Total XP"  value={`${xp?.totalXp ?? 0}`}           sub={`${xp?.xpToNextStage ?? '—'} to Stage ${stage + 1}`} color={colors.accentRole.action} />
+                <WebStatTile emoji="🔥" label="Streak"    value={`${streak?.streak ?? 0} days`} sub={streak?.completedToday ? 'Done today ✓' : 'Do a lesson'} color={colors.accentRole.warning} />
+                <WebStatTile emoji="🏝️" label="Levels"    value={`${(xp?.totalXp ?? 0) > 0 ? Math.floor((xp?.totalXp ?? 0) / 10) : 0}`} sub="Total lessons completed" color={colors.accentRole.success} />
               </WebCard>
             </WebCol>
 
             <WebCol weight={2}>
-              <WebCard title="Career Stages" accentBar accentColor={colors.gold} style={{ marginBottom: 20 }}>
+              <WebCard title="Career Stages" accentBar accentColor={colors.accentRole.status} style={{ marginBottom: 20 }}>
                 {allStages.map(s => {
                   const isActive   = s.stage === stage;
                   const isComplete = s.stage < stage;
                   return (
-                    <View key={s.stage} style={[styles.stageRow, isActive && { backgroundColor: colors.accentSoft, borderRadius: Radius.md }]}>
-                      <View style={[styles.stageDot, { backgroundColor: isComplete ? colors.green : isActive ? colors.accent : colors.bgTertiary, borderColor: isActive ? colors.accent : colors.border }]}>
-                        <Text style={{ fontSize: 10, color: isComplete || isActive ? '#fff' : colors.textMuted, fontWeight: FontWeight.black }}>{isComplete ? '✓' : s.stage}</Text>
+                    <View key={s.stage} style={[styles.stageRow, isActive && { backgroundColor: `${colors.accentRole.action}14`, borderRadius: Radius.md }]}>
+                      <View style={[styles.stageDot, { backgroundColor: isComplete ? colors.accentRole.success : isActive ? colors.accentRole.action : colors.surface.sunken, borderColor: isActive ? colors.accentRole.action : colors.borderRole.subtle }]}>
+                        <Text style={[{ fontSize: 10, color: isComplete || isActive ? colors.surface.inverse : colors.textRole.muted }, CompassFonts.displayBold]}>{isComplete ? '✓' : s.stage}</Text>
                       </View>
                       <View style={{ flex: 1 }}>
-                        <Text style={[styles.stageRowName, { color: isActive ? colors.accent : colors.textSoft }]}>{s.name}</Text>
-                        <Text style={[styles.stageRowRange, { color: colors.textMuted }]}>{s.minXp}–{s.maxXp} XP</Text>
+                        <Text style={[styles.stageRowName, { color: isActive ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodyBold]}>{s.name}</Text>
+                        <Text style={[styles.stageRowRange, { color: colors.textRole.muted }]}>{s.minXp}–{s.maxXp} XP</Text>
                       </View>
-                      {isActive && <View style={[styles.activeTag, { backgroundColor: colors.accent }]}><Text style={styles.activeTagText}>NOW</Text></View>}
+                      {isActive && <View style={[styles.activeTag, { backgroundColor: colors.accentRole.action }]}><Text style={[styles.activeTagText, CompassFonts.displayBold]}>NOW</Text></View>}
                     </View>
                   );
                 })}
               </WebCard>
 
-              <WebCard title="Current Focus" accentBar accentColor={colors.green}>
-                <Text style={[styles.supportingCopy, { color: colors.textSoft }]}>
+              <WebCard title="Current Focus" accentBar accentColor={colors.accentRole.success}>
+                <Text style={[styles.supportingCopy, { color: colors.textRole.secondary }]}>
                   These focus areas show what this workspace is currently emphasizing.
                 </Text>
                 {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
@@ -277,19 +277,19 @@ export default function ProfileScreen() {
           {/* Row 2: Desk scene (2/3) + Account actions (1/3) */}
           <WebRow>
             <WebCol weight={2}>
-              <WebCard title="Your Workstation" accentBar accentColor={colors.accent}>
+              <WebCard title="Your Workstation" accentBar accentColor={colors.accentRole.action}>
                 <DeskScene stage={stage} trackId={trackId} width={480} height={200} />
-                <Text style={[styles.deskLabel, { color: colors.textMuted, marginTop: 10 }]}>
+                <Text style={[styles.deskLabel, { color: colors.textRole.muted, marginTop: 10 }]}>
                   Stage {stage} · {stageName}. {xp?.xpToNextStage ?? '—'} XP to the next upgrade.
                 </Text>
               </WebCard>
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Workspace + Account" accentBar accentColor={colors.gold}>
-                <Text style={[styles.workspaceLabel, { color: colors.textMuted }]}>ACTIVE WORKSPACE</Text>
-                <Text style={[styles.workspaceTitle, { color: colors.text }]}>{workspaceLabel}</Text>
-                <Text style={[styles.workspaceBody, { color: colors.textSoft }]}>{workspaceBody}</Text>
+              <WebCard title="Workspace + Account" accentBar accentColor={colors.accentRole.status}>
+                <Text style={[styles.workspaceLabel, { color: colors.textRole.muted }, CompassFonts.displayBold]}>ACTIVE WORKSPACE</Text>
+                <Text style={[styles.workspaceTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{workspaceLabel}</Text>
+                <Text style={[styles.workspaceBody, { color: colors.textRole.secondary }]}>{workspaceBody}</Text>
                 <WebDivider />
                 {isGuest ? (
                   <AccountRow
@@ -336,7 +336,7 @@ export default function ProfileScreen() {
                   emoji="O"
                   label="Sign Out"
                   onPress={handleSignOut}
-                  color={colors.red}
+                  color={colors.accentRole.danger}
                 />
               </WebCard>
             </WebCol>
@@ -348,7 +348,7 @@ export default function ProfileScreen() {
 
   // ── MOBILE LAYOUT ────────────────────────────────────────────────────────────
   return (
-    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
 
         {/* ── Hero: worker character ── */}
@@ -363,38 +363,38 @@ export default function ProfileScreen() {
         >
           {/* Settings gear */}
           <TouchableOpacity style={styles.settingsBtn} onPress={() => go('/(tabs)/settings')}>
-            <Text style={[styles.settingsBtnText, { color: colors.textMuted }]}>⚙</Text>
+            <Text style={[styles.settingsBtnText, { color: colors.textRole.muted }]}>⚙</Text>
           </TouchableOpacity>
 
           {/* Character with stage ring overlay */}
           <View style={styles.characterWrap}>
-            <StageRing progress={progress} color={colors.accent} size={150} />
+            <StageRing progress={progress} color={colors.accentRole.action} size={150} />
             <View style={styles.characterOverlay}>
               <WorkerCharacter stage={stage} trackId={trackId} size={110} mood="neutral" />
             </View>
           </View>
 
-          <Text style={[styles.eyebrow, { color: colors.textMuted }]}>{workspaceLabel.toUpperCase()}</Text>
-          <Text style={[styles.stageName, { color: colors.text }]}>{stageName}</Text>
-          <Text style={[styles.stageDesc, { color: colors.textSoft }]}>
+          <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.displayBold]}>{workspaceLabel.toUpperCase()}</Text>
+          <Text style={[styles.stageName, { color: colors.textRole.primary }, CompassFonts.displayBold]}>{stageName}</Text>
+          <Text style={[styles.stageDesc, { color: colors.textRole.secondary }]}>
             {xp?.stage.description ?? workspaceBody}
           </Text>
 
           {/* XP + streak row */}
           <View style={styles.heroStats}>
             <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: colors.accent }]}>{xp?.totalXp ?? 0}</Text>
-              <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Total XP</Text>
+              <Text style={[styles.heroStatValue, { color: colors.accentRole.action }, CompassFonts.displayBold]}>{xp?.totalXp ?? 0}</Text>
+              <Text style={[styles.heroStatLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Total XP</Text>
             </View>
-            <View style={[styles.heroStatDivider, { backgroundColor: colors.border }]} />
+            <View style={[styles.heroStatDivider, { backgroundColor: colors.borderRole.subtle }]} />
             <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: colors.orange }]}>{streak?.streak ?? 0}🔥</Text>
-              <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Day Streak</Text>
+              <Text style={[styles.heroStatValue, { color: colors.accentRole.warning }, CompassFonts.displayBold]}>{streak?.streak ?? 0}🔥</Text>
+              <Text style={[styles.heroStatLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Day Streak</Text>
             </View>
-            <View style={[styles.heroStatDivider, { backgroundColor: colors.border }]} />
+            <View style={[styles.heroStatDivider, { backgroundColor: colors.borderRole.subtle }]} />
             <View style={styles.heroStat}>
-              <Text style={[styles.heroStatValue, { color: colors.gold }]}>{stage} / 8</Text>
-              <Text style={[styles.heroStatLabel, { color: colors.textMuted }]}>Stage</Text>
+              <Text style={[styles.heroStatValue, { color: colors.accentRole.status }, CompassFonts.displayBold]}>{stage} / 8</Text>
+              <Text style={[styles.heroStatLabel, { color: colors.textRole.muted }, CompassFonts.bodySemibold]}>Stage</Text>
             </View>
           </View>
         </Animated.View>
@@ -403,7 +403,7 @@ export default function ProfileScreen() {
         <Animated.View style={{ opacity: entranceAnim }}>
           <SectionCard title="YOUR WORKSTATION">
             <DeskScene stage={stage} trackId={trackId} width={320} height={160} />
-            <Text style={[styles.deskLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.deskLabel, { color: colors.textRole.muted }]}>
               Stage {stage} · {stageName}. {xp?.xpToNextStage ?? '—'} XP to the next upgrade.
             </Text>
           </SectionCard>
@@ -415,22 +415,22 @@ export default function ProfileScreen() {
             const isActive   = s.stage === stage;
             const isComplete = s.stage < stage;
             return (
-              <View key={s.stage} style={[styles.stageRow, isActive && { backgroundColor: colors.accentSoft, borderRadius: Radius.md }]}>
+              <View key={s.stage} style={[styles.stageRow, isActive && { backgroundColor: `${colors.accentRole.action}14`, borderRadius: Radius.md }]}>
                 <View style={[styles.stageDot, {
-                  backgroundColor: isComplete ? colors.green : isActive ? colors.accent : colors.bgTertiary,
-                  borderColor: isActive ? colors.accent : colors.border,
+                  backgroundColor: isComplete ? colors.accentRole.success : isActive ? colors.accentRole.action : colors.surface.sunken,
+                  borderColor: isActive ? colors.accentRole.action : colors.borderRole.subtle,
                 }]}>
-                  <Text style={{ fontSize: 10, color: isComplete || isActive ? '#fff' : colors.textMuted, fontWeight: FontWeight.black }}>
+                  <Text style={[{ fontSize: 10, color: isComplete || isActive ? colors.surface.inverse : colors.textRole.muted }, CompassFonts.displayBold]}>
                     {isComplete ? '✓' : s.stage}
                   </Text>
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.stageRowName, { color: isActive ? colors.accent : colors.textSoft }]}>{s.name}</Text>
-                  <Text style={[styles.stageRowRange, { color: colors.textMuted }]}>{s.minXp}–{s.maxXp} XP</Text>
+                  <Text style={[styles.stageRowName, { color: isActive ? colors.accentRole.action : colors.textRole.secondary }, CompassFonts.bodyBold]}>{s.name}</Text>
+                  <Text style={[styles.stageRowRange, { color: colors.textRole.muted }]}>{s.minXp}–{s.maxXp} XP</Text>
                 </View>
                 {isActive && (
-                  <View style={[styles.activeTag, { backgroundColor: colors.accent }]}>
-                    <Text style={styles.activeTagText}>NOW</Text>
+                  <View style={[styles.activeTag, { backgroundColor: colors.accentRole.action }]}>
+                    <Text style={[styles.activeTagText, CompassFonts.displayBold]}>NOW</Text>
                   </View>
                 )}
               </View>
@@ -440,7 +440,7 @@ export default function ProfileScreen() {
 
         {/* ── Skills ── */}
         <SectionCard title="CURRENT FOCUS">
-          <Text style={[styles.supportingCopy, { color: colors.textSoft }]}>
+          <Text style={[styles.supportingCopy, { color: colors.textRole.secondary }]}>
             These focus areas reflect the direction of your current workspace.
           </Text>
           {skillBars.map(s => <SkillBar key={s.label} {...s} />)}
@@ -487,7 +487,7 @@ export default function ProfileScreen() {
           <AccountRow
             emoji="●" label="Sign Out"
             onPress={handleSignOut}
-            color={colors.red}
+            color={colors.accentRole.danger}
           />
         </SectionCard>
 
@@ -506,45 +506,45 @@ const styles = StyleSheet.create({
   heroSection:      { alignItems: 'center', paddingTop: Spacing.md, paddingBottom: Spacing.sm, position: 'relative' },
   settingsBtn:      { position: 'absolute', top: Spacing.md, right: 0 },
   settingsBtnText:  { fontSize: 18 },
-  eyebrow:          { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginTop: Spacing.md },
+  eyebrow:          { fontSize: FontSize.xs, letterSpacing: 0.8, marginTop: Spacing.md },
   characterWrap:    { position: 'relative', alignItems: 'center', justifyContent: 'center', width: 150, height: 150 },
   characterOverlay: { position: 'absolute' },
   ringBg:           { position: 'absolute' },
   ringFg:           {},
-  stageName:        { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginTop: Spacing.md },
+  stageName:        { fontSize: FontSize.lg, marginTop: Spacing.md },
   stageDesc:        { fontSize: FontSize.sm, textAlign: 'center', maxWidth: 280, marginTop: 4, lineHeight: 18 },
   heroStats:        { flexDirection: 'row', alignItems: 'center', marginTop: Spacing.md, gap: 0 },
   heroStat:         { flex: 1, alignItems: 'center' },
-  heroStatValue:    { fontSize: FontSize.lg, fontWeight: FontWeight.black },
-  heroStatLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, marginTop: 2 },
+  heroStatValue:    { fontSize: FontSize.lg },
+  heroStatLabel:    { fontSize: FontSize.xs, marginTop: 2 },
   heroStatDivider:  { width: 1, height: 32 },
 
   sectionCard:      { borderRadius: Radius.xl, padding: Spacing.md, borderWidth: 1, gap: Spacing.md },
-  sectionCardTitle: { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8, marginBottom: Spacing.xs },
+  sectionCardTitle: { fontSize: FontSize.xs, letterSpacing: 0.8, marginBottom: Spacing.xs },
   supportingCopy:   { fontSize: FontSize.xs, lineHeight: 18 },
 
   deskLabel:        { fontSize: FontSize.xs, textAlign: 'center', marginTop: Spacing.sm },
 
   stageRow:         { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: 10, paddingHorizontal: Spacing.sm },
   stageDot:         { width: 28, height: 28, borderRadius: 14, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
-  stageRowName:     { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  stageRowName:     { fontSize: FontSize.sm },
   stageRowRange:    { fontSize: FontSize.xs, marginTop: 1 },
   activeTag:        { paddingHorizontal: 8, paddingVertical: 2, borderRadius: Radius.full },
-  activeTagText:    { fontSize: 9, fontWeight: FontWeight.black, color: '#fff' },
+  activeTagText:    { fontSize: 9, color: '#fff' },
 
   skillBarRow:      { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-  skillBarLabel:    { fontSize: FontSize.xs, fontWeight: FontWeight.semibold, width: 130 },
+  skillBarLabel:    { fontSize: FontSize.xs, width: 130 },
   skillBarTrack:    { flex: 1, height: 7, borderRadius: Radius.full, position: 'relative', overflow: 'hidden' },
   skillBarBg:       { ...StyleSheet.absoluteFillObject },
   skillBarFill:     { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: Radius.full },
-  skillBarPct:      { fontSize: FontSize.xs, fontWeight: FontWeight.black, width: 34, textAlign: 'right' },
+  skillBarPct:      { fontSize: FontSize.xs, width: 34, textAlign: 'right' },
 
   accountRow:       { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.sm },
   accountRowEmoji:  { fontSize: 18 },
-  accountRowLabel:  { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  accountRowLabel:  { fontSize: FontSize.sm },
   accountRowSub:    { fontSize: FontSize.xs, marginTop: 2 },
   accountRowArrow:  { fontSize: FontSize.lg },
-  workspaceLabel:   { fontSize: FontSize.xs, fontWeight: FontWeight.black, letterSpacing: 0.8 },
-  workspaceTitle:   { fontSize: FontSize.md, fontWeight: FontWeight.black },
+  workspaceLabel:   { fontSize: FontSize.xs, letterSpacing: 0.8 },
+  workspaceTitle:   { fontSize: FontSize.md },
   workspaceBody:    { fontSize: FontSize.sm, lineHeight: 20 },
 });

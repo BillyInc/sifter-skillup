@@ -16,7 +16,7 @@
 import React, {
   createContext, useContext, useState, useEffect, type ReactNode,
 } from 'react';
-import { Platform } from 'react-native';
+import { Platform, type DimensionValue } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // ─── Spacing ──────────────────────────────────────────────────
@@ -526,8 +526,8 @@ export function getRewardTier(xp: number): RewardTier {
 }
 
 export const WEB_MAX_WIDTH = 1088;
-export const webContainer = Platform.OS === 'web'
-  ? { maxWidth: 1088, alignSelf: 'center' as const, width: '100%', paddingHorizontal: 14, paddingTop: 14 }
+export const webContainer: { maxWidth?: number; alignSelf?: 'center'; width?: DimensionValue; paddingHorizontal: number; paddingTop: number } = Platform.OS === 'web'
+  ? { maxWidth: 1088, alignSelf: 'center', width: '100%' as DimensionValue, paddingHorizontal: 14, paddingTop: 14 }
   : { paddingHorizontal: 14, paddingTop: 12 };
 
 // ─── Brand ────────────────────────────────────────────────────

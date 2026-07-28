@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import {
+  CompassFonts,
   FontSize,
-  FontWeight,
   Radius,
   Shadow,
   Spacing,
@@ -69,7 +69,7 @@ export function SchoolGuidanceDashboardScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.hero}>
-          <Text style={[styles.heroTitle, { color: colors.text }]}>
+          <Text style={[styles.heroTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Student pathway guidance
           </Text>
           <Text style={[styles.heroSub, { color: colors.textMuted }]}>
@@ -88,10 +88,10 @@ export function SchoolGuidanceDashboardScreen() {
                 Shadow.xs,
               ]}
             >
-              <Text style={[styles.cardLabel, { color: colors.textMuted }]}>
+              <Text style={[styles.cardLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
                 {card.label}
               </Text>
-              <Text style={[styles.cardValue, { color: colors.text }]}>
+              <Text style={[styles.cardValue, CompassFonts.displayBold, { color: colors.text }]}>
                 {card.value}
               </Text>
               <Text style={[styles.cardNote, { color: colors.textMuted }]}>
@@ -107,7 +107,7 @@ export function SchoolGuidanceDashboardScreen() {
             { backgroundColor: colors.card, borderColor: colors.border },
           ]}
         >
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Guidance workflow
           </Text>
           {PATHWAY_ROWS.map(([label, detail]) => (
@@ -115,7 +115,7 @@ export function SchoolGuidanceDashboardScreen() {
               key={label}
               style={[styles.row, { borderTopColor: colors.border }]}
             >
-              <Text style={[styles.rowLabel, { color: colors.text }]}>
+              <Text style={[styles.rowLabel, CompassFonts.bodyBold, { color: colors.text }]}>
                 {label}
               </Text>
               <Text style={[styles.rowDetail, { color: colors.textMuted }]}>
@@ -131,7 +131,7 @@ export function SchoolGuidanceDashboardScreen() {
             { backgroundColor: colors.card, borderColor: colors.border },
           ]}
         >
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Workspace
           </Text>
           <Text style={[styles.cardNote, { color: colors.textMuted }]}>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   hero: { gap: Spacing.xs },
-  heroTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black },
+  heroTitle: { fontSize: FontSize.xxl },
   heroSub: {
     maxWidth: 760,
     fontSize: FontSize.sm,
@@ -172,10 +172,9 @@ const styles = StyleSheet.create({
   },
   cardLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     textTransform: "uppercase",
   },
-  cardValue: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  cardValue: { fontSize: FontSize.lg },
   cardNote: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   panel: {
     borderWidth: 1,
@@ -183,12 +182,12 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
     gap: Spacing.sm,
   },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   row: {
     borderTopWidth: 1,
     paddingTop: Spacing.sm,
     gap: 2,
   },
-  rowLabel: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  rowLabel: { fontSize: FontSize.md },
   rowDetail: { fontSize: FontSize.sm },
 });

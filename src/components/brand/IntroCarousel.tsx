@@ -5,6 +5,8 @@
  * then hand off to auth. Shown once (gated by INTRO_SEEN_KEY); returning users
  * never see it. Horizontal paging via ScrollView (no extra dependency), with a
  * subtle parallax on the logo and animated progress dots.
+ *
+ * Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useRef, useState, useCallback } from "react";
 import {
@@ -27,6 +29,7 @@ import {
   Spacing,
   FontSize,
   Brand,
+  CompassFonts,
   INTRO_SEEN_KEY,
 } from "../../theme";
 import { SifterButton } from "../ui";
@@ -96,7 +99,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
 
   const gradient: [string, string] = isDark
     ? ["#0B0B10", "#161108"]
-    : ["#FFFDF8", "#FFF4E0"];
+    : [colors.surface.base, colors.surface.subtle];
 
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
@@ -104,7 +107,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
 
       {/* Skip */}
       <TouchableOpacity style={styles.skip} onPress={finish} hitSlop={12}>
-        <Text style={[styles.skipText, { color: colors.textMuted }]}>Skip</Text>
+        <Text style={[styles.skipText, { color: colors.textRole.muted }, CompassFonts.body]}>Skip</Text>
       </TouchableOpacity>
 
       <ScrollView
@@ -139,13 +142,13 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
                 }}
               >
                 <LevelUpLogo size={132} animated={i === 0} />
-                <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+                <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
                   {slide.eyebrow}
                 </Text>
-                <Text style={[styles.title, { color: colors.text }]}>
+                <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
                   {slide.title}
                 </Text>
-                <Text style={[styles.body, { color: colors.textSoft }]}>
+                <Text style={[styles.body, { color: colors.textRole.secondary }, CompassFonts.body]}>
                   {slide.body}
                 </Text>
               </Animated.View>
@@ -191,7 +194,7 @@ export function IntroCarousel({ onDone }: { onDone: () => void }) {
         />
         {isLast ? (
           <TouchableOpacity style={styles.signIn} onPress={finish} hitSlop={8}>
-            <Text style={[styles.signInText, { color: colors.textSoft }]}>
+            <Text style={[styles.signInText, { color: colors.textRole.secondary }, CompassFonts.body]}>
               I already have an account
             </Text>
           </TouchableOpacity>
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     padding: Spacing.sm,
   },
-  skipText: { fontSize: FontSize.md, fontWeight: "600" },
+  skipText: { fontSize: FontSize.md },
   slide: {
     flex: 1,
     alignItems: "center",
@@ -221,13 +224,11 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 1.5,
     marginTop: Spacing.xl,
   },
   title: {
     fontSize: FontSize.hero,
-    fontWeight: "900",
     textAlign: "center",
     marginTop: Spacing.sm,
     lineHeight: FontSize.hero * 1.15,
@@ -249,5 +250,5 @@ const styles = StyleSheet.create({
   dot: { height: 8, borderRadius: 4 },
   cta: { paddingHorizontal: Spacing.huge, paddingBottom: 48, gap: Spacing.md },
   signIn: { alignSelf: "center", paddingVertical: Spacing.sm },
-  signInText: { fontSize: FontSize.md, fontWeight: "600" },
+  signInText: { fontSize: FontSize.md },
 });

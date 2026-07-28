@@ -21,7 +21,8 @@ import {
   useTheme,
   Spacing,
   FontSize,
-  Brand,
+  FontWeight,
+  CompassFonts,
   webContainer,
 } from "@/theme";
 
@@ -45,22 +46,22 @@ export function ElitePathwaysHubScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.eyebrow, { color: Brand.primaryDeep }]}>
+      <Text style={[styles.eyebrow, { color: colors.accentRole.action }, CompassFonts.bodySemibold]}>
         ELITE PATHWAYS
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         The 17 elite domains
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textSoft }]}>
+      <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
         The highest-selectivity global paths and how a Nigerian start reaches
         them.
       </Text>
 
-      <Text style={[styles.note, { color: colors.textMuted }]}>
+      <Text style={[styles.note, { color: colors.textRole.muted }, CompassFonts.body]}>
         ⭐ Each path shows its Formation → Pinnacle progression and the honest
         bridge from a Nigerian start.
       </Text>
@@ -97,13 +98,13 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
+    fontWeight: FontWeight.heavy,
     letterSpacing: 1.5,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
+    fontWeight: FontWeight.black,
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {

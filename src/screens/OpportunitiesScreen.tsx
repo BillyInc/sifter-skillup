@@ -6,11 +6,8 @@
  * fellowship | contract — never NYSC/PPA, IT placement or apprenticeship.
  *
  * The body calls careerData.getOpportunities(filter) into a DataState and lets
- * <DataStateView> render its graceful states. Today every call returns a
- * `coming_soon` envelope, so the hub shows the on-brand "Coming soon" panel
- * automatically — the filter chrome stays fully interactive. When the FastAPI
- * routes land and the client starts returning `real` rows, the same JSX maps
- * each opportunity to an <OpportunityCard> with no UI changes.
+ * <DataStateView> render its graceful states. Semantic tokens + CompassFonts
+ * (BRIEF chrome).
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -26,7 +23,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   webContainer,
   type ColorPalette,
 } from "../theme";
@@ -45,6 +42,8 @@ import {
   DataStateView,
   OpportunityCard,
   SubscribeButton,
+  SearchBar,
+  FilterChip,
 } from "../components/careerIntelligence";
 
 // ─── Filter chip option tables ────────────────────────────────
@@ -74,6 +73,7 @@ const LIKELIHOOD_OPTIONS: { label: string; value?: Likelihood }[] = [
 export function OpportunitiesScreen() {
   const router = useRouter();
   const { colors } = useTheme();
+  const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<OpportunityFilter>({});
   const [state, setState] = useState<DataState<Opportunity[]>>(() =>
     comingSoon<Opportunity[]>("Internships & jobs are being populated."),
@@ -83,24 +83,24 @@ export function OpportunitiesScreen() {
   useEffect(() => {
     let active = true;
     (async () => {
-      const result = await careerData.getOpportunities(filter);
+      const result = await careerData.getOpportunities({ ...filter, query: query.trim() || undefined });
       if (active) setState(result);
     })();
     return () => {
       active = false;
     };
-  }, [filter]);
+  }, [filter, query]);
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
-      <Text style={[styles.heading, { color: colors.text }]}>
+      <Text style={[styles.heading, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         Opportunities
       </Text>
-      <Text style={[styles.subtitle, { color: colors.textSoft }]}>
+      <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
         Internships & jobs — local, global, remote
       </Text>
 
@@ -117,6 +117,13 @@ export function OpportunitiesScreen() {
           colors={colors}
         />
       </View>
+
+      {/* Search */}
+      <SearchBar
+        value={query}
+        onChangeText={setQuery}
+        placeholder="Search opportunities…"
+      />
 
       {/* Filters */}
       <View style={styles.filters}>
@@ -195,7 +202,7 @@ function ChipRow({
   const { colors } = useTheme();
   return (
     <View style={styles.chipRowWrap}>
-      <Text style={[styles.chipRowLabel, { color: colors.textMuted }]}>
+      <Text style={[styles.chipRowLabel, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         {label}
       </Text>
       <ScrollView
@@ -230,15 +237,16 @@ function Chip({
       style={[
         styles.chip,
         {
-          backgroundColor: active ? colors.accentSoft : colors.bgSecondary,
-          borderColor: active ? colors.accent : colors.border,
+          backgroundColor: active ? colors.accentRole.action + "14" : colors.surface.raised,
+          borderColor: active ? colors.accentRole.action : colors.borderRole.subtle,
         },
       ]}
     >
       <Text
         style={[
           styles.chipText,
-          { color: active ? colors.accent : colors.textMuted },
+          { color: active ? colors.accentRole.action : colors.textRole.muted },
+          CompassFonts.bodyBold,
         ]}
         numberOfLines={1}
       >
@@ -265,10 +273,10 @@ function QuickLink({
       accessibilityRole="link"
       style={[
         styles.quickLink,
-        { backgroundColor: colors.card, borderColor: colors.border },
+        { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle },
       ]}
     >
-      <Text style={[styles.quickLinkText, { color: colors.text }]}>
+      <Text style={[styles.quickLinkText, { color: colors.textRole.primary }, CompassFonts.bodyBold]}>
         {label}
       </Text>
     </TouchableOpacity>
@@ -284,12 +292,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: FontSize.display,
-    fontWeight: FontWeight.black,
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {
     fontSize: FontSize.md,
-    fontWeight: FontWeight.medium,
     lineHeight: FontSize.md * 1.4,
   },
   quickLinks: {
@@ -305,12 +311,11 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: "center",
   },
-  quickLinkText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  quickLinkText: { fontSize: FontSize.sm },
   filters: { gap: Spacing.sm, marginTop: Spacing.xs },
   chipRowWrap: { gap: Spacing.xs },
   chipRowLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.heavy,
     letterSpacing: 0.8,
     textTransform: "uppercase",
   },
@@ -322,7 +327,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: "center",
   },
-  chipText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  chipText: { fontSize: FontSize.sm },
   results: { marginTop: Spacing.sm },
   cards: { gap: Spacing.md },
 });

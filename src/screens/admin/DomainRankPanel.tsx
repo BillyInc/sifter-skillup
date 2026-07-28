@@ -14,7 +14,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Brand,
 } from "../../theme";
 import { ComingSoonPanel } from "./ComingSoonPanel";
@@ -57,10 +57,11 @@ export function DomainRankPanel({
               ]}
             >
               <Text
-                style={[
-                  styles.toggleLabel,
-                  { color: active ? colors.text : colors.textMuted },
-                ]}
+                  style={[
+                    styles.toggleLabel,
+                    CompassFonts.bodyBold,
+                    { color: active ? colors.text : colors.textMuted },
+                  ]}
               >
                 {s.label}
               </Text>
@@ -91,17 +92,17 @@ export function DomainRankPanel({
                   <View key={item.domainId} style={styles.item}>
                     <View style={styles.itemHead}>
                       <Text
-                        style={[styles.rank, { color: colors.textMuted }]}
+                        style={[styles.rank, CompassFonts.displayBold, { color: colors.textMuted }]}
                       >
                         #{item.rank}
                       </Text>
                       <Text
-                        style={[styles.domain, { color: colors.text }]}
+                        style={[styles.domain, CompassFonts.bodyBold, { color: colors.text }]}
                         numberOfLines={1}
                       >
                         {item.domainName}
                       </Text>
-                      <Text style={[styles.count, { color: colors.text }]}>
+                      <Text style={[styles.count, CompassFonts.bodyBold, { color: colors.text }]}>
                         {item.postingsPerMonth.toLocaleString()}/mo
                       </Text>
                     </View>
@@ -116,7 +117,7 @@ export function DomainRankPanel({
                         style={[
                           styles.barFill,
                           {
-                            backgroundColor: Brand.primary,
+                            backgroundColor: colors.accentRole.action,
                             width: `${Math.round(
                               Math.min(1, Math.max(0, ratio)) * 100,
                             )}%`,
@@ -159,16 +160,15 @@ const styles = StyleSheet.create({
     borderRadius: Radius.sm,
     alignItems: "center",
   },
-  toggleLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.bold },
+  toggleLabel: { fontSize: FontSize.sm },
   item: { gap: 4 },
   itemHead: { flexDirection: "row", alignItems: "center", gap: Spacing.sm },
   rank: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
     minWidth: 22,
   },
-  domain: { flex: 1, fontSize: FontSize.sm, fontWeight: FontWeight.bold },
-  count: { fontSize: FontSize.xs, fontWeight: FontWeight.heavy },
+  domain: { flex: 1, fontSize: FontSize.sm },
+  count: { fontSize: FontSize.xs },
   barTrack: {
     height: 6,
     borderRadius: Radius.full,

@@ -61,8 +61,8 @@ interface TrackIsometricSceneProps {
 interface TrackSceneProps {
   trackId: string;
   accentColor: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   fieldId?: string;
 }
 

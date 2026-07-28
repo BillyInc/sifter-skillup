@@ -31,6 +31,7 @@ import {
   Radius,
   FontSize,
   FontWeight,
+  CompassFonts,
   type ColorPalette,
 } from "@/theme";
 
@@ -87,14 +88,14 @@ export function ElitePathwayDetailScreen({
       {(data) => (
         <View style={styles.body}>
           {data.description ? (
-            <Text style={[styles.lead, { color: colors.textSoft }]}>
+            <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
               {data.description}
             </Text>
           ) : null}
 
           <View style={styles.section}>
             <SectionHeader title="Formation" icon="🌱" />
-            <Text style={[styles.sectionNote, { color: colors.textMuted }]}>
+            <Text style={[styles.sectionNote, { color: colors.textRole.muted }, CompassFonts.body]}>
               How you build toward this path from a Nigerian start.
             </Text>
             <StageList stages={data.formation} colors={colors} />
@@ -102,7 +103,7 @@ export function ElitePathwayDetailScreen({
 
           <View style={styles.section}>
             <SectionHeader title="Pinnacle" icon="🏔️" />
-            <Text style={[styles.sectionNote, { color: colors.textMuted }]}>
+            <Text style={[styles.sectionNote, { color: colors.textRole.muted }, CompassFonts.body]}>
               What the top of this path looks like.
             </Text>
             <StageList stages={data.pinnacle} colors={colors} />
@@ -141,7 +142,7 @@ function StageList({
 }) {
   if (!stages?.length) {
     return (
-      <Text style={[styles.pending, { color: colors.textMuted }]}>
+      <Text style={[styles.pending, { color: colors.textRole.muted }, CompassFonts.body]}>
         🕐 Being populated
       </Text>
     );
@@ -156,20 +157,20 @@ function StageList({
             { backgroundColor: colors.card, borderColor: colors.border },
           ]}
         >
-          <Text style={[styles.stageTitle, { color: colors.text }]}>
+          <Text style={[styles.stageTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
             {stage.title}
           </Text>
           {stage.body ? (
-            <Text style={[styles.stageBody, { color: colors.textSoft }]}>
+            <Text style={[styles.stageBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
               {stage.body}
             </Text>
           ) : null}
           {stage.milestones?.length ? (
             <View style={styles.milestones}>
               {stage.milestones.map((m, j) => (
-                <Text
-                  key={j}
-                  style={[styles.milestone, { color: colors.textSoft }]}
+                  <Text
+                    key={j}
+                    style={[styles.milestone, { color: colors.textRole.secondary }, CompassFonts.body]}
                 >
                   • {m}
                 </Text>
@@ -214,10 +215,10 @@ function ReadinessPanel({ colors }: { colors: ColorPalette }) {
       ]}
     >
       <Text style={styles.readinessIcon}>🧭</Text>
-      <Text style={[styles.readinessTitle, { color: colors.text }]}>
+      <Text style={[styles.readinessTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
         A short, honest self-check — coming soon
       </Text>
-      <Text style={[styles.readinessBody, { color: colors.textSoft }]}>
+      <Text style={[styles.readinessBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
         This is a few honest questions about fit and trade-offs — not a
         personality test, and there are no wrong answers. It's being populated
         so it can point you to where you'd realistically start.

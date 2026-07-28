@@ -9,7 +9,7 @@ import {
   useTheme,
   Spacing,
   FontSize,
-  FontWeight,
+  CompassFonts,
   webContainer,
 } from "../../theme";
 import { adminData } from "../../lib/adminData";
@@ -70,7 +70,7 @@ export function SkillsGapScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
             Cross-programme skills gap
           </Text>
           <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,

@@ -4,10 +4,7 @@
  * Scholarships are a SECONDARY, supporting feature (they never compete with the
  * primary employment opportunities). This is a LIST screen, so it ships its own
  * inline back+header chrome (mirroring DetailScaffold visually) and renders the
- * body through DataStateView. Data comes from careerData.getScholarships, which
- * returns a `coming_soon` envelope in this phase — DataStateView renders the
- * graceful "Coming soon" panel for it, and flips to real cards (or the empty
- * state) automatically once data lands, with no changes here.
+ * body through DataStateView. Semantic tokens + CompassFonts (BRIEF chrome).
  */
 import React, { useEffect, useState } from "react";
 import {
@@ -18,7 +15,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useTheme, Spacing, FontSize, webContainer } from "../../theme";
+import { useTheme, Spacing, FontSize, CompassFonts, webContainer } from "../../theme";
 import { careerData } from "../../lib/careerData";
 import {
   comingSoon,
@@ -48,7 +45,7 @@ export function ScholarshipsScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: colors.bg }}
+      style={{ flex: 1, backgroundColor: colors.surface.base }}
       contentContainerStyle={[styles.scroll, webContainer as object]}
       showsVerticalScrollIndicator={false}
     >
@@ -61,19 +58,20 @@ export function ScholarshipsScreen() {
           hitSlop={10}
           style={styles.back}
         >
-          <Text style={[styles.backText, { color: colors.accent }]}>
+          <Text style={[styles.backText, { color: colors.accentRole.action }, CompassFonts.bodyBold]}>
             ← Back
           </Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={[styles.eyebrow, { color: colors.textMuted }]}>
+      <Text style={[styles.eyebrow, { color: colors.textRole.muted }, CompassFonts.bodyBold]}>
         OPPORTUNITIES
       </Text>
-      <Text style={[styles.title, { color: colors.text }]}>Scholarships</Text>
-      <Text style={[styles.subtitle, { color: colors.textSoft }]}>
-        🎓 A secondary, supporting feature — funding routes alongside the main
-        opportunities.
+      <Text style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
+        Scholarships
+      </Text>
+      <Text style={[styles.subtitle, { color: colors.textRole.secondary }, CompassFonts.body]}>
+        Funding routes alongside the main opportunities.
       </Text>
 
       <View style={{ marginTop: Spacing.md }}>
@@ -118,16 +116,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   back: { paddingVertical: 4, minHeight: 44, justifyContent: "center" },
-  backText: { fontSize: FontSize.md, fontWeight: "700" },
+  backText: { fontSize: FontSize.md },
   eyebrow: {
     fontSize: FontSize.xs,
-    fontWeight: "800",
     letterSpacing: 1,
     marginTop: Spacing.sm,
   },
   title: {
     fontSize: FontSize.display,
-    fontWeight: "900",
     lineHeight: FontSize.display * 1.15,
   },
   subtitle: {

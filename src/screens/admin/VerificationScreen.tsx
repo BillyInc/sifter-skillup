@@ -23,7 +23,7 @@ import {
   Spacing,
   Radius,
   FontSize,
-  FontWeight,
+  CompassFonts,
   Shadow,
   webContainer,
 } from "../../theme";
@@ -135,10 +135,10 @@ export function VerificationScreen() {
                   {meta.icon}
                 </Text>
                 <View style={{ flex: 1 }}>
-                  <Text style={[styles.statusLabel, { color: colors.textMuted }]}>
+                  <Text style={[styles.statusLabel, CompassFonts.bodyBold, { color: colors.textMuted }]}>
                     CURRENT STATUS
                   </Text>
-                  <Text style={[styles.statusValue, { color: tintColor }]}>
+                  <Text style={[styles.statusValue, CompassFonts.displayBold, { color: tintColor }]}>
                     {meta.label}
                   </Text>
                 </View>
@@ -171,7 +171,7 @@ export function VerificationScreen() {
 
             {/* Tiers */}
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
+              <Text style={[styles.sectionTitle, CompassFonts.displayBold, { color: colors.text }]}>
                 Verification tiers
               </Text>
               <Text style={[styles.lede, { color: colors.textMuted }]}>
@@ -194,10 +194,10 @@ export function VerificationScreen() {
                       },
                     ]}
                   >
-                    <Text style={[styles.tierBadge, { color: colors.text }]}>
+                    <Text style={[styles.tierBadge, CompassFonts.displayBold, { color: colors.text }]}>
                       {t.tier}
                     </Text>
-                    <Text style={[styles.tierTitle, { color: colors.text }]}>
+                    <Text style={[styles.tierTitle, CompassFonts.bodyBold, { color: colors.text }]}>
                       {t.title}
                     </Text>
                     <Text style={[styles.tierBody, { color: colors.textMuted }]}>
@@ -222,7 +222,7 @@ export function VerificationScreen() {
                   },
                 ]}
               >
-                <Text style={[styles.ctaText, { color: colors.textInverse }]}>
+                <Text style={[styles.ctaText, CompassFonts.bodyBold, { color: colors.textInverse }]}>
                   {submitting ? "Submitting…" : "Resubmit / update verification"}
                 </Text>
               </TouchableOpacity>
@@ -260,9 +260,9 @@ function Row({
 }) {
   return (
     <View style={styles.row}>
-      <Text style={[styles.rowLabel, { color: colors.textMuted }]}>{label}</Text>
+      <Text style={[styles.rowLabel, CompassFonts.bodySemibold, { color: colors.textMuted }]}>{label}</Text>
       <Text
-        style={[styles.rowValue, { color: colors.text }]}
+        style={[styles.rowValue, CompassFonts.bodyBold, { color: colors.text }]}
         numberOfLines={1}
       >
         {value}
@@ -287,13 +287,12 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   statusHead: { flexDirection: "row", alignItems: "center", gap: Spacing.md },
-  statusDot: { fontSize: 26, fontWeight: FontWeight.black },
+  statusDot: { fontSize: 26 },
   statusLabel: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.bold,
     letterSpacing: 1,
   },
-  statusValue: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  statusValue: { fontSize: FontSize.xl },
   divider: { height: 1, marginVertical: Spacing.xs },
   row: {
     flexDirection: "row",
@@ -301,16 +300,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.md,
   },
-  rowLabel: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold },
+  rowLabel: { fontSize: FontSize.sm },
   rowValue: {
     flex: 1,
     textAlign: "right",
     fontSize: FontSize.sm,
-    fontWeight: FontWeight.bold,
     textTransform: "capitalize",
   },
   section: { gap: Spacing.md },
-  sectionTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black },
+  sectionTitle: { fontSize: FontSize.lg },
   lede: {
     fontSize: FontSize.sm,
     lineHeight: FontSize.sm * 1.5,
@@ -325,17 +323,16 @@ const styles = StyleSheet.create({
   },
   tierBadge: {
     fontSize: FontSize.xs,
-    fontWeight: FontWeight.black,
     letterSpacing: 1,
   },
-  tierTitle: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  tierTitle: { fontSize: FontSize.md },
   tierBody: { fontSize: FontSize.sm, lineHeight: FontSize.sm * 1.5 },
   cta: {
     borderRadius: Radius.full,
     paddingVertical: Spacing.lg,
     alignItems: "center",
   },
-  ctaText: { fontSize: FontSize.md, fontWeight: FontWeight.bold },
+  ctaText: { fontSize: FontSize.md },
   feedback: {
     borderWidth: 1,
     borderRadius: Radius.lg,
