@@ -76,7 +76,7 @@ export default function FlagModal({ visible, lessonId, lessonTitle, questionId, 
             <Text style={styles.thankEmoji}>🙏</Text>
             <Text style={[styles.thankTitle, { color: colors.text }]}>Thanks for flagging that</Text>
             <Text style={[styles.thankSub, { color: colors.textSoft }]}>
-              Our curriculum team reviews every flag. If you're right, we'll fix it and credit your report.
+              Our curriculum team reviews every flag. If you&apos;re right, we&apos;ll fix it and credit your report.
             </Text>
             <TouchableOpacity style={[styles.doneBtn, { backgroundColor: colors.accent }]} onPress={handleClose}>
               <Text style={styles.doneBtnText}>Done</Text>
@@ -88,7 +88,7 @@ export default function FlagModal({ visible, lessonId, lessonTitle, questionId, 
               <Text style={[styles.lessonRef, { color: colors.textSoft }]}>“{lessonTitle}”</Text>
             </View>
 
-            <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>What's the issue?</Text>
+            <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>What&apos;s the issue?</Text>
             {FLAG_TYPES.map(t => (
               <TouchableOpacity
                 key={t.id}

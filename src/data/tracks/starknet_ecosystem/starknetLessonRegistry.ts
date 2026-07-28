@@ -129,6 +129,7 @@ export interface StarknetLabRef {
   labNumber: number;   // 1-based for navigator/ecosystem labs; 0 for Cairo setup / Ecosystem primer
   bossLevelId: number; // e.g. 3001 for navigator lab 1
   lessons: any[];      // flat ordered list of lesson objects (no boss)
+  title?: string;      // optional human-readable lab title
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

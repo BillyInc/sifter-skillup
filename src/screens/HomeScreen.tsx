@@ -11,7 +11,9 @@ import {
   View,
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { RouteLine, StatTile, SectionLabel } from '../components/careerIntelligence';
 import {
+  CompassFonts,
   FontSize,
   FontWeight,
   Radius,
@@ -105,8 +107,8 @@ function StreakBanner({ status }: { status: StreakStatus }) {
   const atRisk = (status as any).isAtRisk;
   if (!atRisk && status.streak < 2) return null;
 
-  const backgroundColor = atRisk ? `${colors.orange}18` : `${colors.xpGreen}18`;
-  const color = atRisk ? colors.orange : colors.xpGreen;
+  const backgroundColor = atRisk ? `${colors.accentRole.status}18` : `${colors.accentRole.success}18`;
+  const color = atRisk ? colors.accentRole.status : colors.accentRole.success;
   const msg = atRisk
     ? `Streak at risk. ${(((status as any).hoursUntilLoss ?? 0) as number).toFixed(0)}h left to save it.`
     : `${status.streak}-day streak active. Keep it moving.`;
@@ -148,18 +150,18 @@ function XPProgressBar({
   return (
     <View style={{ gap: 6 }}>
       <View style={styles.progressLabelRow}>
-        <Text style={[styles.progressLabel, { color: colors.textSoft }]}>Stage Progress</Text>
+        <Text style={[styles.progressLabel, { color: colors.textRole.secondary }]}>Stage Progress</Text>
         <Text style={[styles.progressValue, { color }]}>{Math.round(progress * 100)}%</Text>
       </View>
-      <View style={[styles.progressTrack, { backgroundColor: colors.bgSecondary }]}>
+      <View style={[styles.progressTrack, { backgroundColor: colors.surface.subtle }]}>
         <Animated.View style={[styles.progressFill, { backgroundColor: color, width }]} />
       </View>
       <View style={styles.progressLabelRow}>
-        <Text style={[styles.progressLabel, { color: colors.textSoft }]}>Daily Goal</Text>
-        <Text style={[styles.progressValue, { color: colors.xpGreen }]}>{dailyXp} / {dailyGoalTarget} XP</Text>
+        <Text style={[styles.progressLabel, { color: colors.textRole.secondary }]}>Daily Goal</Text>
+        <Text style={[styles.progressValue, { color: colors.accentRole.success }]}>{dailyXp} / {dailyGoalTarget} XP</Text>
       </View>
-      <View style={[styles.progressTrack, { backgroundColor: colors.bgSecondary }]}>
-        <Animated.View style={[styles.progressFill, { backgroundColor: colors.xpGreen, width: dailyWidth }]} />
+      <View style={[styles.progressTrack, { backgroundColor: colors.surface.subtle }]}>
+        <Animated.View style={[styles.progressFill, { backgroundColor: colors.accentRole.success, width: dailyWidth }]} />
       </View>
     </View>
   );
@@ -216,14 +218,14 @@ function OverviewTrackCard({
         <View style={[styles.trackIconBadge, { backgroundColor: `${accentColor}14`, borderColor: `${accentColor}26` }]}>
           <Text style={[styles.trackIconBadgeText, { color: accentColor }]}>{iconLabel}</Text>
         </View>
-        <Text style={[styles.webTrackName, { color: colors.text }]}>{name}</Text>
-        <Text style={[styles.webTrackArrow, { color: colors.textMuted }]}>{'>'}</Text>
+        <Text style={[styles.webTrackName, { color: colors.textRole.primary }]}>{name}</Text>
+        <Text style={[styles.webTrackArrow, { color: colors.textRole.muted }]}>{'>'}</Text>
       </View>
-      <Text style={[styles.overviewTrackSummary, { color: colors.textSoft }]}>{summary}</Text>
+      <Text style={[styles.overviewTrackSummary, { color: colors.textRole.secondary }]}>{summary}</Text>
       <WebMiniChart color={accentColor} values={[12, 24, 21, 38, 44, 57, 63]} />
       <View style={{ marginTop: 10, gap: 4 }}>
         {points.map((point) => (
-          <Text key={point} style={[styles.webTrackKey, { color: colors.textSoft }]}>{`- ${point}`}</Text>
+          <Text key={point} style={[styles.webTrackKey, { color: colors.textRole.secondary }]}>{`- ${point}`}</Text>
         ))}
       </View>
       <SifterButton
@@ -267,15 +269,15 @@ function TrackHeroCard({
 
   return (
     <WebCard noPad style={{ overflow: 'hidden' }}>
-      <View style={[styles.heroPanel, { backgroundColor: colors.card }]}>
+      <View style={[styles.heroPanel, { backgroundColor: colors.surface.raised }]}>
         <View style={styles.heroPanelCopy}>
           <ReferenceBadge label={eyebrow} color={accentColor} />
-          <Text style={[styles.heroPanelTitle, { color: colors.text }]}>{title}</Text>
-          <Text style={[styles.heroPanelSummary, { color: colors.textSoft }]}>{summary}</Text>
+          <Text style={[styles.heroPanelTitle, { color: colors.textRole.primary }]}>{title}</Text>
+          <Text style={[styles.heroPanelSummary, { color: colors.textRole.secondary }]}>{summary}</Text>
           <View style={styles.heroPanelTags}>
             {focusAreas.map((item) => (
-              <View key={item} style={[styles.heroTag, { backgroundColor: colors.bgSecondary }]}>
-                <Text style={[styles.heroTagText, { color: colors.textSoft }]}>{item}</Text>
+              <View key={item} style={[styles.heroTag, { backgroundColor: colors.surface.subtle }]}>
+                <Text style={[styles.heroTagText, { color: colors.textRole.secondary }]}>{item}</Text>
               </View>
             ))}
           </View>
@@ -307,8 +309,8 @@ function TrackHeroCard({
               />
             )}
           </View>
-          <View style={[styles.heroPanelMiniCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-            <Text style={[styles.heroPanelMiniLabel, { color: colors.textMuted }]}>Momentum</Text>
+          <View style={[styles.heroPanelMiniCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+            <Text style={[styles.heroPanelMiniLabel, { color: colors.textRole.muted }]}>Momentum</Text>
             <WebMiniChart color={accentColor} values={chartValues} />
           </View>
         </View>
@@ -332,13 +334,13 @@ function StatCard({
 }) {
   const { colors } = useTheme();
   return (
-    <SifterCard style={[styles.statCard, { borderColor: colors.border, backgroundColor: colors.card }]}>
+    <SifterCard style={[styles.statCard, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <View style={[styles.statBadge, { backgroundColor: `${color}14`, borderColor: `${color}22` }]}>
         <Text style={[styles.statBadgeText, { color }]}>{iconLabel}</Text>
       </View>
       <Text style={[styles.statValue, { color }]}>{value}</Text>
-      <Text style={[styles.statLabel, { color: colors.textSoft }]}>{label}</Text>
-      {sub ? <Text style={[styles.statSub, { color: colors.textMuted }]}>{sub}</Text> : null}
+      <Text style={[styles.statLabel, { color: colors.textRole.secondary }]}>{label}</Text>
+      {sub ? <Text style={[styles.statSub, { color: colors.textRole.muted }]}>{sub}</Text> : null}
     </SifterCard>
   );
 }
@@ -358,15 +360,15 @@ function QuickAction({
 }) {
   const { colors } = useTheme();
   return (
-    <SifterCard onPress={onPress} style={[styles.quickAction, { borderColor: colors.border, backgroundColor: colors.card }]}>
+    <SifterCard onPress={onPress} style={[styles.quickAction, { borderColor: colors.borderRole.subtle, backgroundColor: colors.surface.raised }]}>
       <View style={[styles.quickActionIcon, { backgroundColor: `${color}14`, borderColor: `${color}22` }]}>
         <Text style={[styles.quickActionIconText, { color }]}>{iconLabel}</Text>
       </View>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.quickActionLabel, { color: colors.text }]}>{label}</Text>
-        <Text style={[styles.quickActionSub, { color: colors.textMuted }]}>{sub}</Text>
+        <Text style={[styles.quickActionLabel, { color: colors.textRole.primary }]}>{label}</Text>
+        <Text style={[styles.quickActionSub, { color: colors.textRole.muted }]}>{sub}</Text>
       </View>
-      <Text style={[styles.quickActionArrow, { color: colors.textMuted }]}>{'>'}</Text>
+      <Text style={[styles.quickActionArrow, { color: colors.textRole.muted }]}>{'>'}</Text>
     </SifterCard>
   );
 }
@@ -420,7 +422,7 @@ export default function HomeScreen() {
 
   const stage = xp?.stage.stage ?? 1;
   const dailyGoal = XP_DAILY_GOALS[xp?.dailyGoalKey ?? 'regular']?.xp ?? 20;
-  const accentColor = trackContext.color || colors.accent;
+  const accentColor = trackContext.color || colors.accentRole.action;
   const isCryptoOrIsland =
     trackContext.mode === 'island' ||
     trackContext.artFieldId === 'crypto' ||
@@ -489,7 +491,7 @@ export default function HomeScreen() {
     ];
 
     return (
-      <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+      <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
         <WebShell>
           <WebPageHeader
             title={trackContext.mode === 'track' ? `${trackContext.trackName} Dashboard` : `${getGreeting()}, your dashboard is ready.`}
@@ -498,7 +500,7 @@ export default function HomeScreen() {
             right={(
               <TouchableOpacity
                 onPress={() => go('/(tabs)/profile')}
-                style={[styles.webBoltBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+                style={[styles.webBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
               >
                 <TheBolt size={32} animate />
                 <Text style={[styles.webBoltLabel, { color: accentColor }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
@@ -525,48 +527,48 @@ export default function HomeScreen() {
                   onContinue={() => go(continueHref)}
                 />
               ) : (
-                <WebCard accentBar accentColor={colors.accent} title="Progress Overview">
+                <WebCard accentBar accentColor={colors.accentRole.action} title="Progress Overview">
                   <View style={styles.webProgressCard}>
                     <View style={styles.overviewGlobeWrap}>
                       <IslandGlobe pins={trackAwarePins} width="100%" height="100%" />
                     </View>
                     <View style={{ flex: 1 }}>
-                      <Text style={[styles.webStageName, { color: colors.accent }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
-                      <Text style={[styles.webStageDesc, { color: colors.textSoft }]}>
+                      <Text style={[styles.webStageName, { color: colors.accentRole.action }]}>{xp?.stage.name ?? 'Raw Recruit'}</Text>
+                      <Text style={[styles.webStageDesc, { color: colors.textRole.secondary }]}>
                         {xp?.stage.description ?? 'Just starting out. Empty desk, full potential.'}
                       </Text>
                       {xp ? (
                         <XPProgressBar
                           progress={xp.progress}
-                          color={colors.accent}
+                          color={colors.accentRole.action}
                           dailyXp={xp.dailyXp}
                           dailyGoalTarget={dailyGoal}
                         />
                       ) : null}
                     </View>
-                    <WebMiniChart color={colors.accent} values={[20, 35, 28, 50, 45, 60, 72]} />
+                    <WebMiniChart color={colors.accentRole.action} values={[20, 35, 28, 50, 45, 60, 72]} />
                   </View>
                 </WebCard>
               )}
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title={trackContext.mode === 'track' ? 'Track Snapshot' : 'Today'} accentBar accentColor={colors.xpGreen}>
-                <WebStatTile emoji="DAY" label="Streak" value={`${streak?.streak ?? 0}`} sub={streak?.completedToday ? 'Checked in today' : 'Complete one lesson'} color={colors.orange} />
+              <WebCard title={trackContext.mode === 'track' ? 'Track Snapshot' : 'Today'} accentBar accentColor={colors.accentRole.success}>
+                <WebStatTile emoji="DAY" label="Streak" value={`${streak?.streak ?? 0}`} sub={streak?.completedToday ? 'Checked in today' : 'Complete one lesson'} color={colors.accentRole.status} />
                 <WebStatTile emoji="XP" label="Total XP" value={`${xp?.totalXp ?? 0}`} sub={`${xp?.xpToNextStage ?? '-'} to next stage`} color={accentColor} />
                 <WebStatTile
                   emoji="GOAL"
                   label={trackContext.mode === 'track' ? (trackContext.stats[0]?.label ?? 'Focus') : 'Daily XP'}
                   value={trackContext.mode === 'track' ? (trackContext.stats[0]?.value ?? 'Ready') : `${xp?.dailyXp ?? 0}`}
                   sub={trackContext.mode === 'track' ? (trackContext.stats[1]?.value ?? trackContext.tagline) : `Goal: ${dailyGoal} XP`}
-                  color={trackContext.mode === 'track' ? accentColor : colors.xpGreen}
+                  color={trackContext.mode === 'track' ? accentColor : colors.accentRole.success}
                 />
                 <WebStatTile
                   emoji="LVL"
                   label={trackContext.mode === 'track' ? (trackContext.stats[2]?.label ?? 'Mode') : 'Stage'}
                   value={trackContext.mode === 'track' ? (trackContext.stats[2]?.value ?? 'Track view') : `${stage} / 8`}
                   sub={trackContext.mode === 'track' ? (trackContext.stats[3]?.value ?? trackContext.worldName) : xp?.stage.name}
-                  color={colors.gold}
+                  color={colors.accentRole.status}
                 />
               </WebCard>
             </WebCol>
@@ -578,13 +580,13 @@ export default function HomeScreen() {
               <WebRow>
                 <WebCol weight={2}>
                   <WebCard accentBar accentColor={accentColor}>
-                    <Text style={[styles.trackFeatureTitle, { color: colors.text }]}>{trackContext.challengeTitle}</Text>
-                    <Text style={[styles.trackFeatureSummary, { color: colors.textSoft }]}>{trackContext.challengeSummary}</Text>
+                    <Text style={[styles.trackFeatureTitle, { color: colors.textRole.primary }]}>{trackContext.challengeTitle}</Text>
+                    <Text style={[styles.trackFeatureSummary, { color: colors.textRole.secondary }]}>{trackContext.challengeSummary}</Text>
                     <View style={styles.trackFeatureGrid}>
                       {trackContext.focusAreas.map((item, index) => (
-                        <View key={item} style={[styles.trackFeatureItem, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                        <View key={item} style={[styles.trackFeatureItem, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
                           <Text style={[styles.trackFeatureIndex, { color: accentColor }]}>{`0${index + 1}`}</Text>
-                          <Text style={[styles.trackFeatureItemText, { color: colors.textSoft }]}>{item}</Text>
+                          <Text style={[styles.trackFeatureItemText, { color: colors.textRole.secondary }]}>{item}</Text>
                         </View>
                       ))}
                     </View>
@@ -627,26 +629,26 @@ export default function HomeScreen() {
 
           <WebRow>
             <WebCol weight={2}>
-              <WebCard title={trackContext.mode === 'track' ? `${trackContext.trackName} Guild` : 'Guild'} accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accent}>
+              <WebCard title={trackContext.mode === 'track' ? `${trackContext.trackName} Guild` : 'Guild'} accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
                 <WebListRow icon="GUILD" title={trackContext.mode === 'track' ? `${trackContext.trackName} Circle` : 'Alpha Seekers Guild'} sub="Active - 1h ago" onPress={() => go('/(tabs)/guild')} />
-                <View style={[styles.webDiscussionCard, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
-                  <Text style={[styles.webDiscTitle, { color: colors.textMuted }]}>ACTIVE THREADS</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>{`Chat: ${trackContext.mode === 'track' ? `${trackContext.trackName} tactics and next steps` : 'Machine learning in alpha generation'}`}</Text>
-                  <Text style={[styles.webDiscItem, { color: colors.textSoft }]}>{`Chat: ${trackContext.mode === 'track' ? `How to progress faster inside ${trackContext.trackName}` : 'Optimal artifact packaging for interviews'}`}</Text>
+                <View style={[styles.webDiscussionCard, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
+                  <Text style={[styles.webDiscTitle, { color: colors.textRole.muted }]}>ACTIVE THREADS</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }]}>{`Chat: ${trackContext.mode === 'track' ? `${trackContext.trackName} tactics and next steps` : 'Machine learning in alpha generation'}`}</Text>
+                  <Text style={[styles.webDiscItem, { color: colors.textRole.secondary }]}>{`Chat: ${trackContext.mode === 'track' ? `How to progress faster inside ${trackContext.trackName}` : 'Optimal artifact packaging for interviews'}`}</Text>
                 </View>
-                <WebListRow icon="TASK" title="Challenge Queue" sub="Track prompts and guild tasks" badge={3} badgeColor={colors.orange} onPress={() => go('/(tabs)/guild')} />
+                <WebListRow icon="TASK" title="Challenge Queue" sub="Track prompts and guild tasks" badge={3} badgeColor={colors.accentRole.status} onPress={() => go('/(tabs)/guild')} />
               </WebCard>
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard accentBar accentColor={colors.orange} style={{ marginBottom: GRID_GAP }}>
-                <Text style={[styles.webStreakLabel, { color: colors.textMuted }]}>ACTIVE STREAK</Text>
-                <Text style={[styles.webStreakNum, { color: colors.orange }]}>{streak?.streak ?? 0} days</Text>
-                <Text style={[styles.webStreakSub, { color: colors.textSoft }]}>
+              <WebCard accentBar accentColor={colors.accentRole.status} style={{ marginBottom: GRID_GAP }}>
+                <Text style={[styles.webStreakLabel, { color: colors.textRole.muted }]}>ACTIVE STREAK</Text>
+                <Text style={[styles.webStreakNum, { color: colors.accentRole.status }]}>{streak?.streak ?? 0} days</Text>
+                <Text style={[styles.webStreakSub, { color: colors.textRole.secondary }]}>
                   {streak?.completedToday ? 'Lesson completed today.' : 'Complete a lesson to extend it.'}
                 </Text>
               </WebCard>
-              <WebCard title="Signals" accentBar accentColor={colors.xpGreen}>
+              <WebCard title="Signals" accentBar accentColor={colors.accentRole.success}>
                 <WebListRow icon="LAB" title={trackContext.mode === 'track' ? `${trackContext.trackName} board` : 'Vol Arb Challenge'} sub={trackContext.mode === 'track' ? trackContext.challengeSummary : 'Trading competition'} onPress={() => go('/(tabs)/guild')} />
                 <WebListRow icon="LIVE" title="Feed + Guild Signals" sub="Track news, jobs, and collaboration" badge="Live" badgeColor={accentColor} onPress={() => go('/(tabs)/feed')} />
               </WebCard>
@@ -657,31 +659,31 @@ export default function HomeScreen() {
             <WebCol weight={2}>
               <WebCard
                 title={trackContext.mode === 'track' ? `${trackContext.trackName} Artifacts + XP` : 'Artifacts + XP'}
-                titleRight={<ReferenceBadge label={`${Math.max(1, Math.floor((xp?.totalXp ?? 0) / 120))} artifacts earned`} color={colors.xpGreen} />}
+                titleRight={<ReferenceBadge label={`${Math.max(1, Math.floor((xp?.totalXp ?? 0) / 120))} artifacts earned`} color={colors.accentRole.success} />}
                 accentBar
-                accentColor={colors.xpGreen}
+                accentColor={colors.accentRole.success}
               >
-                <View style={[styles.webChartArea, { backgroundColor: colors.bgSecondary, borderColor: colors.border }]}>
+                <View style={[styles.webChartArea, { backgroundColor: colors.surface.subtle, borderColor: colors.borderRole.subtle }]}>
                   <WebMiniChart
-                    color={trackContext.mode === 'track' ? accentColor : colors.xpGreen}
+                    color={trackContext.mode === 'track' ? accentColor : colors.accentRole.success}
                     values={trackContext.mode === 'track' ? trackContext.chartValues : [500, 700, 650, 900, 850, 1100, 1050, 1300, 1250, 1500, 1450, 1700]}
                   />
                 </View>
                 <View style={styles.webChartMetrics}>
                   <View>
-                    <Text style={[styles.webMetricVal, { color: colors.text }]}>{xp?.totalXp ?? 0} XP</Text>
-                    <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Total XP</Text>
+                    <Text style={[styles.webMetricVal, { color: colors.textRole.primary }]}>{xp?.totalXp ?? 0} XP</Text>
+                    <Text style={[styles.webMetricLbl, { color: colors.textRole.muted }]}>Total XP</Text>
                   </View>
                   <View>
                     <Text style={[styles.webMetricVal, { color: accentColor }]}>{trackContext.trackName}</Text>
-                    <Text style={[styles.webMetricLbl, { color: colors.textMuted }]}>Current Track</Text>
+                    <Text style={[styles.webMetricLbl, { color: colors.textRole.muted }]}>Current Track</Text>
                   </View>
                 </View>
               </WebCard>
             </WebCol>
 
             <WebCol weight={1}>
-              <WebCard title="Quick Actions" accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accent}>
+              <WebCard title="Quick Actions" accentBar accentColor={trackContext.mode === 'track' ? accentColor : colors.accentRole.action}>
                 {[
                   {
                     emoji: 'GO',
@@ -699,7 +701,7 @@ export default function HomeScreen() {
                     title={item.label}
                     sub={item.sub}
                     onPress={() => go(item.route)}
-                    right={<Text style={{ color: colors.textMuted, fontSize: 16 }}>{'>'}</Text>}
+                    right={<Text style={{ color: colors.textRole.muted, fontSize: 16 }}>{'>'}</Text>}
                   />
                 ))}
               </WebCard>
@@ -720,70 +722,94 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.screen, { backgroundColor: colors.bg }]}>
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.surface.base }]}>
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={accentColor} />}
       >
-        <Animated.View style={[styles.header, headerStyle]}>
+        {/* ── Editorial header ── */}
+        <Animated.View style={[styles.editorialHeader, headerStyle]}>
           <View style={styles.headerLeft}>
-            <Text style={[styles.greeting, { color: colors.textMuted }]}>{trackContext.mode === 'track' ? trackContext.heroEyebrow : getGreeting()}</Text>
-            <Text style={[styles.headline, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : 'Your dashboard'}</Text>
-            <Text style={[styles.mobileHeaderSub, { color: colors.textSoft }]}>
+            <Text style={[styles.greeting, CompassFonts.bodySemibold, { color: colors.textRole.muted }]}>
+              {trackContext.mode === 'track' ? trackContext.heroEyebrow : getGreeting()}
+            </Text>
+            <Text style={[styles.headline, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
+              {trackContext.mode === 'track' ? trackContext.trackName : 'Your dashboard'}
+            </Text>
+            <Text style={[styles.mobileHeaderSub, CompassFonts.body, { color: colors.textRole.secondary }]}>
               {trackContext.mode === 'track' ? trackContext.tagline : 'Streak, XP, and next actions in one place.'}
             </Text>
           </View>
           <TouchableOpacity
             onPress={() => go('/(tabs)/profile')}
             activeOpacity={0.85}
-            style={[styles.mobileBoltBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+            style={[styles.mobileBoltBtn, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}
           >
-            <TheBolt size={44} animate />
+            <TheBolt size={40} animate />
           </TouchableOpacity>
         </Animated.View>
 
         {streak ? <StreakBanner status={streak} /> : null}
 
-        <Animated.View style={[styles.mobileHeroCard, { backgroundColor: colors.card, borderColor: colors.border }, Shadow.md, contentStyle]}>
-          <View style={styles.mobileHeroHeader}>
+        {/* ── Hero: Your Route card ── */}
+        <Animated.View style={[styles.heroRouteCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }, contentStyle]}>
+          <View style={styles.heroRouteHeader}>
             <ReferenceBadge label={trackContext.heroEyebrow} color={accentColor} />
             {trackContext.mode === 'track' ? (
-              <Text style={[styles.mobileHeroTrackPill, { color: accentColor }]}>{trackContext.trackName}</Text>
+              <Text style={[styles.mobileHeroTrackPill, CompassFonts.bodyBold, { color: accentColor }]}>{trackContext.trackName}</Text>
             ) : null}
           </View>
-          <View style={styles.mobileHeroBody}>
-            <View style={heroVisual === 'globe' ? styles.mobileArtworkGlobe : styles.mobileArtworkScene}>
-              {heroVisual === 'globe' ? (
-                <IslandGlobe
-                  pins={trackAwarePins}
-                  width="100%"
-                  height="100%"
-                />
-              ) : (
+
+          <View style={styles.heroRouteVisual}>
+            {heroVisual === 'globe' ? (
+              <View style={styles.mobileArtworkGlobe}>
+                <IslandGlobe pins={trackAwarePins} width="100%" height="100%" />
+              </View>
+            ) : (
+              <View style={styles.mobileArtworkScene}>
                 <TrackScene
                   trackId={trackContext.trackId ?? trackContext.artFieldId}
                   accentColor={accentColor}
                   width="100%"
                   height="100%"
                 />
-              )}
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.mobileHeroTitle, { color: colors.text }]}>{trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}</Text>
-              <Text style={[styles.mobileHeroSummary, { color: colors.textSoft }]}>
+              </View>
+            )}
+            <View style={styles.heroRouteCopy}>
+              <Text style={[styles.mobileHeroTitle, CompassFonts.displayBold, { color: colors.textRole.primary }]}>
+                {trackContext.mode === 'track' ? trackContext.trackName : (xp?.stage.name ?? 'Raw Recruit')}
+              </Text>
+              <Text style={[styles.mobileHeroSummary, CompassFonts.body, { color: colors.textRole.secondary }]}>
                 {trackContext.mode === 'track' ? heroSummary : (xp?.stage.description ?? 'Just starting out. Empty desk, full potential.')}
               </Text>
-              {xp ? (
-                <XPProgressBar
-                  progress={xp.progress}
-                  color={accentColor}
-                  dailyXp={xp.dailyXp}
-                  dailyGoalTarget={dailyGoal}
-                />
-              ) : null}
             </View>
           </View>
+
+          {/* Route-line journey */}
+          {trackContext.mode === 'track' ? (
+            <View style={styles.routeSection}>
+              <RouteLine
+                variant="journey"
+                static
+                stations={[
+                  { state: 'you', label: 'You are here', caption: xp?.stage.name ?? 'Stage 1' },
+                  { state: 'bridge', label: trackContext.focusAreas[0] ?? 'Next milestone' },
+                  { state: 'target', label: trackContext.focusAreas[1] ?? 'Track goal' },
+                ]}
+              />
+            </View>
+          ) : null}
+
+          {xp ? (
+            <XPProgressBar
+              progress={xp.progress}
+              color={accentColor}
+              dailyXp={xp.dailyXp}
+              dailyGoalTarget={dailyGoal}
+            />
+          ) : null}
+
           <SifterButton
             label={trackContext.mode === 'track' ? 'Resume track' : 'Explore tracks'}
             onPress={() => go(continueHref)}
@@ -794,23 +820,51 @@ export default function HomeScreen() {
           />
         </Animated.View>
 
-        <Animated.View style={[styles.statsGrid, contentStyle]}>
-          <View style={styles.statsRow}>
-            <StatCard iconLabel="DAY" label="Streak" color={colors.orange} value={`${streak?.streak ?? 0}`} sub={streak?.completedToday ? 'Checked in today' : 'Complete one lesson'} />
-            <StatCard iconLabel="XP" label="Total XP" color={accentColor} value={`${xp?.totalXp ?? 0}`} sub={`${xp?.xpToNextStage ?? '-'} to next stage`} />
-          </View>
-          <View style={styles.statsRow}>
-            <StatCard iconLabel="GOAL" label={trackContext.mode === 'track' ? (trackContext.stats[0]?.label ?? 'Focus') : 'Daily XP'} color={trackContext.mode === 'track' ? accentColor : colors.xpGreen} value={trackContext.mode === 'track' ? (trackContext.stats[0]?.value ?? 'Ready') : `${xp?.dailyXp ?? 0}`} sub={trackContext.mode === 'track' ? (trackContext.stats[1]?.value ?? trackContext.tagline) : `Goal: ${dailyGoal} XP`} />
-            <StatCard iconLabel="LVL" label={trackContext.mode === 'track' ? (trackContext.stats[2]?.label ?? 'Mode') : 'Stage'} color={colors.gold} value={trackContext.mode === 'track' ? (trackContext.stats[2]?.value ?? 'Track view') : `${stage} / 8`} sub={trackContext.mode === 'track' ? (trackContext.stats[3]?.value ?? trackContext.worldName) : (xp?.stage.name ?? '-')} />
+        {/* ── Stats: asymmetric 2-column grid with StatTile ── */}
+        <Animated.View style={contentStyle}>
+          <SectionLabel>Your numbers</SectionLabel>
+          <View style={styles.statTileGrid}>
+            <StatTile
+              value={streak?.streak ?? 0}
+              label="Day streak"
+              delta={streak?.completedToday ? { trend: 'up', text: 'Checked in today' } : undefined}
+              tone={colors.accentRole.status}
+              stamp="Active"
+              style={styles.statTile}
+            />
+            <StatTile
+              value={xp?.totalXp ?? 0}
+              label="Total XP"
+              delta={xp?.xpToNextStage != null ? { trend: 'up', text: `${xp.xpToNextStage} to next stage` } : undefined}
+              tone={accentColor}
+              stamp={`Stage ${stage}`}
+              style={styles.statTile}
+            />
+            <StatTile
+              value={xp?.dailyXp ?? 0}
+              label="Daily XP"
+              suffix={` / ${dailyGoal}`}
+              tone={colors.accentRole.success}
+              stamp="Today"
+              style={styles.statTile}
+            />
+            <StatTile
+              value={`${stage} / 8`}
+              label={xp?.stage.name ?? 'Stage'}
+              tone={colors.accentRole.status}
+              stamp="Level"
+              style={styles.statTile}
+            />
           </View>
         </Animated.View>
 
+        {/* ── Quick actions ── */}
         <Animated.View style={[styles.actionsSection, contentStyle]}>
-          <Text style={[styles.sectionLabel, { color: colors.textMuted }]}>{trackContext.mode === 'track' ? 'NEXT ACTIONS' : 'QUICK ACTIONS'}</Text>
+          <SectionLabel>{trackContext.mode === 'track' ? 'Next actions' : 'Quick actions'}</SectionLabel>
           <QuickAction iconLabel="GO" label={trackContext.mode === 'track' ? 'Resume Track' : 'Explore Tracks'} sub={trackContext.mode === 'track' ? continueSub : 'Choose a live track to enter'} color={accentColor} onPress={() => go(continueHref)} />
-          <QuickAction iconLabel="MAP" label="Explore Tracks" sub="Browse career fields" color={colors.green} onPress={() => go('/(tabs)/fields')} />
-          <QuickAction iconLabel="NEWS" label="Open Feed" sub="News, data, jobs for your track" color={colors.orange} onPress={() => go('/(tabs)/feed')} />
-          <QuickAction iconLabel="XP" label="Artifacts + XP" sub="View tasks, artifacts, and pushes" color={colors.gold} onPress={() => go('/(tabs)/portfolio')} />
+          <QuickAction iconLabel="MAP" label="Explore Tracks" sub="Browse career fields" color={colors.accentRole.success} onPress={() => go('/(tabs)/fields')} />
+          <QuickAction iconLabel="NEWS" label="Open Feed" sub="News, data, jobs for your track" color={colors.accentRole.status} onPress={() => go('/(tabs)/feed')} />
+          <QuickAction iconLabel="XP" label="Artifacts + XP" sub="View tasks, artifacts, and pushes" color={colors.accentRole.status} onPress={() => go('/(tabs)/portfolio')} />
         </Animated.View>
       </ScrollView>
     </SafeAreaView>
@@ -822,10 +876,19 @@ const styles = StyleSheet.create({
   scroll: { ...webContainer, paddingBottom: Spacing.xxxl },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.md },
   headerLeft: { flex: 1 },
-  greeting: { fontSize: FontSize.sm, fontWeight: FontWeight.semibold, marginBottom: 2 },
-  headline: { fontSize: FontSize.xl, fontWeight: FontWeight.black },
+  greeting: { fontSize: FontSize.sm, marginBottom: 2 },
+  headline: { fontSize: FontSize.xl, lineHeight: FontSize.xl * 1.15 },
   mobileHeaderSub: { fontSize: FontSize.sm, lineHeight: 18, marginTop: 6, maxWidth: 280 },
-  mobileBoltBtn: { borderWidth: 1, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 14 },
+  mobileBoltBtn: { borderWidth: 1, borderRadius: Radius.md, paddingVertical: 8, paddingHorizontal: 14 },
+
+  editorialHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: Spacing.lg },
+  heroRouteCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Spacing.lg, marginBottom: Spacing.lg, gap: Spacing.md },
+  heroRouteHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  heroRouteVisual: { flexDirection: 'row', gap: Spacing.md, alignItems: 'center' },
+  heroRouteCopy: { flex: 1, gap: 4 },
+  routeSection: { marginVertical: Spacing.sm },
+  statTileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: Spacing.sm },
+  statTile: { minWidth: 140 },
 
   streakBanner: { borderRadius: 10, borderWidth: 1, padding: Platform.OS === 'web' ? 10 : 12, marginBottom: Spacing.md },
   streakBannerText: { fontSize: FontSize.sm, fontWeight: FontWeight.bold, textAlign: 'center' },
@@ -904,11 +967,11 @@ const styles = StyleSheet.create({
 
   mobileHeroCard: { borderRadius: Radius.xl, borderWidth: 1, padding: Platform.OS === 'web' ? 16 : 14, marginBottom: Spacing.lg, gap: Spacing.md },
   mobileHeroHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  mobileHeroTrackPill: { fontSize: FontSize.xs, fontWeight: FontWeight.bold },
+  mobileHeroTrackPill: { fontSize: FontSize.xs },
   mobileHeroBody: { flexDirection: 'row', gap: Spacing.md, alignItems: 'center' },
   mobileArtworkGlobe: { width: 120, aspectRatio: 1, flexShrink: 0 },
   mobileArtworkScene: { width: 132, aspectRatio: 560 / 300, flexShrink: 0 },
-  mobileHeroTitle: { fontSize: FontSize.lg, fontWeight: FontWeight.black, marginBottom: 4 },
+  mobileHeroTitle: { fontSize: FontSize.lg, marginBottom: 4 },
   mobileHeroSummary: { fontSize: FontSize.sm, lineHeight: 18, marginBottom: Spacing.md },
   mobilePrimaryBtn: {},
 

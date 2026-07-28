@@ -192,7 +192,7 @@ export default function MySchoolScreen() {
             Link your school
           </Text>
           <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
-            Enter your school's code to link your account. By default your school
+            Enter your school&apos;s code to link your account. By default your school
             only sees anonymous totals — never your individual progress — unless
             you choose to share it below.
           </Text>
@@ -230,7 +230,7 @@ export default function MySchoolScreen() {
                   Share your individual progress with {affiliated.schoolName ?? "your school"}?
                 </Text>
                 <Text style={[styles.cardBody, { color: colors.textRole.muted }, CompassFonts.body]}>
-                  This lets your school's counsellor see your career progress and
+                  This lets your school&apos;s counsellor see your career progress and
                   report. You can turn it off anytime.
                 </Text>
                 <View style={{ flexDirection: "row", gap: Spacing.sm }}>

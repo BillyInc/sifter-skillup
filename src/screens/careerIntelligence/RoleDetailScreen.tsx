@@ -1,13 +1,12 @@
 /**
  * RoleDetailScreen — the deep view for a single role in the v2 taxonomy.
  *
- * Consumes careerData.getRoleV2(roleKey) → DataState<DomainRoleV2>. Teaches the
- * student what the role needs (essential vs optional skills) and that a role is
- * a destination reachable from MULTIPLE fields (appearsIn). Loading / coming_soon
- * / error are handled by DetailScaffold's DataStateView.
+ * Flagship redesign (Phase 10): hero with badges, stat-tile demand row,
+ * "routes into this role" journey, skills bridge, and related roles rail.
+ * Uses the careerIntelligence component library for all design-system tokens.
  */
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import {
   DetailScaffold,
@@ -17,6 +16,8 @@ import {
   SkillsBridge,
   MappingFeedbackButton,
   SectionLabel,
+  StatTile,
+  RouteLine,
 } from "@/components/careerIntelligence";
 import { DemandMetricsBlock } from "@/components/careerIntelligence/DemandMetricsBlock";
 import { careerData } from "@/lib/careerData";
@@ -27,7 +28,7 @@ import {
   type DomainRoleV2,
   type DomainRoleV2Enriched,
 } from "@/types/career";
-import { useTheme, Spacing, Radius, FontSize, FontWeight } from "@/theme";
+import { useTheme, Spacing, Radius, FontSize, FontWeight, CompassFonts } from "@/theme";
 import type { ColorPalette } from "@/theme";
 
 export interface RoleDetailScreenProps {
@@ -76,35 +77,36 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
   const appearsIn = role.appearsIn ?? [];
   const enriched = role as DomainRoleV2Enriched;
   const currency = enriched.currencyStatus;
+  const metrics = role.demandMetrics?.ng_local;
 
   return (
-    <View style={{ gap: Spacing.lg }}>
-      {/* 1 — identity: aka, tier, elite, currency */}
-      {aka || role.tier || isElite(role.eliteStatus) || currency ? (
-        <View style={{ gap: Spacing.sm }}>
+    <View style={styles.body}>
+      {/* 1 — identity badges */}
+      {(aka || role.tier || isElite(role.eliteStatus) || currency) ? (
+        <View style={styles.identitySection}>
           {aka ? (
-            <Text style={[styles.aka, { color: colors.textMuted }]}>
+            <Text style={[styles.aka, { color: colors.textRole.muted }]}>
               Also known as: {aka}
             </Text>
           ) : null}
           {role.tier || isElite(role.eliteStatus) || currency ? (
             <View style={styles.badgeRow}>
               {currency ? (
-                <CurrencyBadge
-                  status={currency}
-                  source={enriched.currencySource}
-                />
+                <CurrencyBadge status={currency} source={enriched.currencySource} />
               ) : null}
               <TierBadgeView tier={role.tier} />
               {isElite(role.eliteStatus) ? (
                 <View
                   style={[
                     styles.eliteChip,
-                    { backgroundColor: colors.eliteSoft, borderColor: colors.elite },
+                    {
+                      backgroundColor: colors.accentRole.status + "14",
+                      borderColor: colors.accentRole.status,
+                    },
                   ]}
                 >
                   <Text style={styles.eliteGlyph}>★</Text>
-                  <Text style={[styles.eliteText, { color: colors.gold }]}>
+                  <Text style={[styles.eliteText, { color: colors.accentRole.status }]}>
                     Elite role
                   </Text>
                 </View>
@@ -112,71 +114,73 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
             </View>
           ) : null}
           {currency && enriched.currencySource ? (
-            <Text style={[styles.currencySource, { color: colors.textMuted }]}>
+            <Text style={[styles.currencySource, { color: colors.textRole.muted }]}>
               Verified via {formatCurrencySource(enriched.currencySource)}
             </Text>
           ) : null}
         </View>
       ) : null}
 
-      {/* 2 — what you'd need: essential + optional skills */}
-      {essential.length || optional.length ? (
-        <View style={{ gap: Spacing.md }}>
+      {/* 2 — demand stats row */}
+      <DemandMetricsBlock metrics={metrics} title="Demand snapshot" />
+
+      {/* 3 — routes into this role */}
+      <RouteIntoSection appearsIn={appearsIn} careerLadder={role.careerLadder} router={router} colors={colors} />
+
+      {/* 4 — skills bridge: what to build */}
+      {essential.length ? (
+        <View style={{ gap: Spacing.sm }}>
+          <SectionLabel>Skills gap</SectionLabel>
+          <SkillsBridge
+            domainBridgeSkills={essential.map((name) => ({ name }))}
+            roleBridgeSkills={optional.map((name) => ({ name }))}
+          />
+        </View>
+      ) : null}
+
+      {/* 5 — essential / optional skill chips (compact reference) */}
+      {(essential.length || optional.length) ? (
+        <View style={{ gap: Spacing.sm }}>
           {essential.length ? (
-            <View style={{ gap: Spacing.sm }}>
-              <SectionLabel>Essential skills</SectionLabel>
+            <View style={{ gap: Spacing.xs }}>
+              <Text style={[styles.chipLabel, { color: colors.textRole.muted }]}>
+                Essential
+              </Text>
               <ChipCloud items={essential} colors={colors} prominent />
             </View>
           ) : null}
           {optional.length ? (
-            <View style={{ gap: Spacing.sm }}>
-              <SectionLabel>Optional / edge skills</SectionLabel>
+            <View style={{ gap: Spacing.xs }}>
+              <Text style={[styles.chipLabel, { color: colors.textRole.muted }]}>
+                Optional / edge
+              </Text>
               <ChipCloud items={optional} colors={colors} prominent={false} />
             </View>
           ) : null}
         </View>
       ) : null}
 
-      {/* 2b — skills bridge: the role's essentials framed as what to build. */}
-      {essential.length ? (
-        <SkillsBridge
-          domainBridgeSkills={essential.map((name) => ({ name }))}
-          roleBridgeSkills={optional.map((name) => ({ name }))}
-        />
-      ) : null}
-
-      {/* 3 — reachable from: role is a destination from multiple fields */}
-      {appearsIn.length ? (
+      {/* 6 — related roles from career ladder */}
+      {role.careerLadder?.length ? (
         <View style={{ gap: Spacing.sm }}>
-          <SectionLabel>Reachable from</SectionLabel>
-          <Text style={[styles.caption, { color: colors.textMuted }]}>
-            This role is a destination from {appearsIn.length}{" "}
-            {appearsIn.length === 1 ? "field" : "fields"}.
-          </Text>
-          <View style={styles.appearsWrap}>
-            {appearsIn.map((a) => (
-              <Text
-                key={a.domainId}
-                onPress={() => exploreNav.domain(router, a.domainId)}
-                style={[
-                  styles.domainChip,
-                  {
-                    backgroundColor: colors.surface.subtle,
-                    borderColor: colors.borderRole.subtle,
-                    color: colors.text,
-                  },
-                ]}
-                numberOfLines={1}
-              >
-                {a.domainName}
-              </Text>
+          <SectionLabel>Related roles</SectionLabel>
+          <View style={styles.relatedWrap}>
+            {role.careerLadder.map((name, i) => (
+              <RelatedRoleChip
+                key={`${name}-${i}`}
+                name={name}
+                colors={colors}
+                onPress={() => {
+                  const slug = `${roleKey.split("|")[0]}|${name.toLowerCase()}`;
+                  exploreNav.role(router, slug);
+                }}
+              />
             ))}
           </View>
         </View>
       ) : null}
 
-      {/* 4 — notes + level-up CTA */}
-      <DemandMetricsBlock metrics={role.demandMetrics?.ng_local} title="Local demand" />
+      {/* 7 — footer actions */}
       <MappingFeedbackButton
         edgeType="domain_role"
         sourceId={appearsIn[0]?.domainId ?? roleKey}
@@ -194,7 +198,111 @@ function RoleBody({ role, roleKey }: { role: DomainRoleV2; roleKey: string }) {
   );
 }
 
-/** A wrapping cloud of skill chips, consistent with ToolGroupsBlock's chips. */
+// ─── Sub-components ───────────────────────────────────────────
+
+/** "Routes into this role" — shows career ladder as a journey diagram. */
+function RouteIntoSection({
+  appearsIn,
+  careerLadder,
+  router,
+  colors,
+}: {
+  appearsIn: DomainRoleV2["appearsIn"];
+  careerLadder?: string[];
+  router: ReturnType<typeof useRouter>;
+  colors: ColorPalette;
+}) {
+  const hasLadder = careerLadder?.length;
+  const hasDomains = appearsIn.length;
+
+  if (!hasLadder && !hasDomains) return null;
+
+  return (
+    <View style={{ gap: Spacing.sm }}>
+      <SectionLabel>Routes into this role</SectionLabel>
+
+      {hasDomains ? (
+        <Text style={[styles.routeCaption, { color: colors.textRole.muted }]}>
+          Reachable from {appearsIn.length} {appearsIn.length === 1 ? "field" : "fields"}
+        </Text>
+      ) : null}
+
+      {/* Domain entry points as a spine */}
+      {hasDomains ? (
+        <View style={styles.domainChips}>
+          {appearsIn.map((a) => (
+            <TouchableOpacity
+              key={a.domainId}
+              onPress={() => exploreNav.domain(router, a.domainId)}
+              style={[
+                styles.domainChip,
+                {
+                  backgroundColor: colors.surface.subtle,
+                  borderColor: colors.borderRole.subtle,
+                },
+              ]}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.domainChipText, { color: colors.textRole.primary }]} numberOfLines={1}>
+                {a.domainName}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ) : null}
+
+      {/* Career ladder as a journey route-line */}
+      {hasLadder ? (
+        <RouteLine
+          variant="journey"
+          stations={[
+            { state: "you", label: "You are here" },
+            ...careerLadder!.map((step, i) => ({
+              state: (i === careerLadder!.length - 1 ? "target" : "bridge") as "target" | "bridge",
+              label: step,
+            })),
+          ]}
+          edges={[
+            "solid",
+            ...careerLadder!.slice(1).map(() => "solid" as const),
+          ]}
+        />
+      ) : null}
+    </View>
+  );
+}
+
+/** A tappable chip for a related role. */
+function RelatedRoleChip({
+  name,
+  colors,
+  onPress,
+}: {
+  name: string;
+  colors: ColorPalette;
+  onPress: () => void;
+}) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.relatedChip,
+        {
+          backgroundColor: colors.surface.subtle,
+          borderColor: colors.borderRole.subtle,
+        },
+      ]}
+      activeOpacity={0.7}
+    >
+      <Text style={[styles.relatedChipText, { color: colors.textRole.primary }]} numberOfLines={1}>
+        {name}
+      </Text>
+      <Text style={[styles.relatedArrow, { color: colors.textRole.muted }]}>→</Text>
+    </TouchableOpacity>
+  );
+}
+
+/** A wrapping cloud of skill chips. */
 function ChipCloud({
   items,
   colors,
@@ -217,10 +325,8 @@ function ChipCloud({
           <Text
             style={[
               styles.chipText,
-              {
-                color: textColor,
-                fontWeight: prominent ? FontWeight.bold : FontWeight.semibold,
-              },
+              { color: textColor },
+              prominent ? CompassFonts.bodyBold : CompassFonts.bodySemibold,
             ]}
             numberOfLines={1}
           >
@@ -239,9 +345,7 @@ function isElite(status?: string): boolean {
   return s.length > 0 && s !== "deferred" && s !== "none";
 }
 
-/** A role's WEF/O*NET currency status — current (neutral/green), emerging (blue),
- *  legacy (muted). Only "emerging"/"legacy" are worth surfacing prominently, but
- *  we show all three so the signal is honest. */
+/** A role's WEF/O*NET currency status badge. */
 function CurrencyBadge({
   status,
   source: _source,
@@ -256,9 +360,9 @@ function CurrencyBadge({
   > = {
     current: {
       label: "Current",
-      bg: colors.greenSoft,
-      text: colors.green,
-      border: colors.green,
+      bg: colors.accentRole.success + "18",
+      text: colors.accentRole.success,
+      border: colors.accentRole.success,
     },
     emerging: {
       label: "Emerging",
@@ -302,31 +406,16 @@ function formatCurrencySource(
 export default RoleDetailScreen;
 
 const styles = StyleSheet.create({
+  body: {
+    gap: Spacing.lg,
+  },
+
+  // identity
+  identitySection: { gap: Spacing.sm },
   aka: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.medium,
     lineHeight: FontSize.sm * 1.4,
-  },
-  caption: {
-    fontSize: FontSize.sm,
-    fontWeight: FontWeight.medium,
-  },
-  currencyChip: {
-    alignSelf: "flex-start",
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: Radius.full,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 3,
-  },
-  currencyText: {
-    fontSize: FontSize.xs,
-    fontWeight: FontWeight.semibold,
-    letterSpacing: 0.3,
-    textTransform: "uppercase",
-  },
-  currencySource: {
-    fontSize: FontSize.xs,
-    fontWeight: FontWeight.medium,
   },
   badgeRow: {
     flexDirection: "row",
@@ -348,6 +437,52 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
   },
+  currencyChip: {
+    alignSelf: "flex-start",
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 3,
+  },
+  currencyText: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.3,
+    textTransform: "uppercase",
+  },
+  currencySource: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.medium,
+  },
+
+  // routes
+  routeCaption: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.medium,
+  },
+  domainChips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: Spacing.sm,
+  },
+  domainChip: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 6,
+  },
+  domainChipText: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.semibold,
+  },
+
+  // chips
+  chipLabel: {
+    fontSize: FontSize.xs,
+    fontWeight: FontWeight.semibold,
+    letterSpacing: 0.6,
+    textTransform: "uppercase",
+  },
   chipWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -360,18 +495,28 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   chipText: { fontSize: FontSize.sm },
-  appearsWrap: {
+
+  // related roles
+  relatedWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: Spacing.sm,
   },
-  domainChip: {
-    overflow: "hidden",
+  relatedChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.xs,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: 6,
+  },
+  relatedChipText: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.semibold,
+  },
+  relatedArrow: {
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.bold,
   },
 });

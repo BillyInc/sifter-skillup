@@ -8,7 +8,7 @@ import { QUANT_LABS, isQuantLabUnlocked, type QuantLab } from '../data/quantIsla
 import { QUANT_LEVELS } from '../data/quantLevels';
 import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
-import { Spacing, Radius, FontSize, Shadow, useTheme, webContainer, type ColorPalette } from '../theme';
+import { Spacing, Radius, FontSize, FontWeight, Shadow, useTheme, webContainer, type ColorPalette } from '../theme';
 import LessonScreen from './LessonScreen';
 import { VRBridge } from '../lib/vrBridge';
 import type { VRScenarioKey } from '../lib/vrBridge';
@@ -244,7 +244,7 @@ function LevelDot({ levelId, labColor, onPress, completed, isBoss, locked, inter
       activeOpacity={locked ? 1 : 0.8}
     >
       {emoji
-        ? <Text style={{ fontSize: isBoss ? 18 : 14, fontWeight: '800' }}>{emoji}</Text>
+        ? <Text style={{ fontSize: isBoss ? 18 : 14, fontWeight: FontWeight.heavy }}>{emoji}</Text>
         : <Text style={[styles.dotText, { color: completed ? colors.textRole.inverse : labColor, fontSize: isBoss ? 16 : 12 }]}>
             {String(levelId - 1000)}
           </Text>}
@@ -412,9 +412,9 @@ function QuantHeader({ completedLevels }: { completedLevels: number[] }) {
   const currentLab = getFirstActiveLab(completedLevels);
 
   return (
-    <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+    <View style={[styles.header, { backgroundColor: colors.surface.raised, borderBottomColor: colors.borderRole.subtle }]}>
       <View style={styles.headerTop}>
-        <Text style={[styles.headerEyebrow, { color: colors.textMuted }]}>Quant Workspace</Text>
+        <Text style={[styles.headerEyebrow, { color: colors.textRole.muted }]}>Quant Workspace</Text>
         <Text style={styles.headerTitle}>Quant Program</Text>
         <Text style={styles.headerSub}>Trader Track · {currentLab ? `${currentLab.name} next` : 'Review ready'}</Text>
       </View>
@@ -462,31 +462,31 @@ export default function QuantMapScreen() {
     <>
       <View style={dashStyles.headerRow}>
         <View style={dashStyles.headerCopy}>
-          <Text style={[dashStyles.headerTitle, { color: colors.text }]}>
+          <Text style={[dashStyles.headerTitle, { color: colors.textRole.primary }]}>
             {cfg.title}
           </Text>
-          <Text style={[dashStyles.headerSubtitle, { color: colors.textSoft }]}>
+          <Text style={[dashStyles.headerSubtitle, { color: colors.textRole.secondary }]}>
             {cfg.subtitle}
           </Text>
         </View>
-        <View style={[dashStyles.notifCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[dashStyles.notifLabel, { color: colors.textMuted }]}>NOTIFICATION</Text>
-          <Text style={[dashStyles.notifText, { color: colors.textSoft }]}>{cfg.notifText}</Text>
+        <View style={[dashStyles.notifCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[dashStyles.notifLabel, { color: colors.textRole.muted }]}>NOTIFICATION</Text>
+          <Text style={[dashStyles.notifText, { color: colors.textRole.secondary }]}>{cfg.notifText}</Text>
           <TouchableOpacity
             style={[dashStyles.ctaButton, { backgroundColor: colors.navy }]}
           >
-            <Text style={[dashStyles.ctaButtonText, { color: colors.textInverse }]}>
+            <Text style={[dashStyles.ctaButtonText, { color: colors.textRole.inverse }]}>
               {cfg.ctaButtonLabel}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={[dashStyles.scenePanel, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <Text style={[dashStyles.scenePanelTitle, { color: colors.text }]}>
+      <View style={[dashStyles.scenePanel, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+        <Text style={[dashStyles.scenePanelTitle, { color: colors.textRole.primary }]}>
           {cfg.statsLabel}
         </Text>
-        <Text style={[dashStyles.scenePanelSub, { color: colors.textMuted }]}>
+        <Text style={[dashStyles.scenePanelSub, { color: colors.textRole.muted }]}>
           Map your expertise across sectors.
         </Text>
         <TrackScene
@@ -497,16 +497,16 @@ export default function QuantMapScreen() {
         />
       </View>
 
-      <Text style={[dashStyles.statsSection, { color: colors.textMuted }]}>
+      <Text style={[dashStyles.statsSection, { color: colors.textRole.muted }]}>
         {cfg.statsLabel}
       </Text>
       <View style={dashStyles.statsRow}>
-        <View style={[dashStyles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[dashStyles.statsCardTitle, { color: colors.text }]}>
+        <View style={[dashStyles.statsCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[dashStyles.statsCardTitle, { color: colors.textRole.primary }]}>
             {cfg.perfCardTitle}
           </Text>
           <View style={dashStyles.statsCardRow}>
-            <Text style={[dashStyles.statsCardLabel, { color: colors.textMuted }]}>
+            <Text style={[dashStyles.statsCardLabel, { color: colors.textRole.muted }]}>
               {cfg.perfCardStat1Label}
             </Text>
             <Text style={[dashStyles.statsCardValue, { color: accentColor }]}>
@@ -514,7 +514,7 @@ export default function QuantMapScreen() {
             </Text>
           </View>
           <View style={dashStyles.statsCardRow}>
-            <Text style={[dashStyles.statsCardLabel, { color: colors.textMuted }]}>
+            <Text style={[dashStyles.statsCardLabel, { color: colors.textRole.muted }]}>
               {cfg.perfCardStat2Label}
             </Text>
             <Text style={[dashStyles.statsCardValue, { color: accentColor }]}>
@@ -523,32 +523,32 @@ export default function QuantMapScreen() {
           </View>
         </View>
 
-        <View style={[dashStyles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[dashStyles.statsCardTitle, { color: colors.text }]}>
+        <View style={[dashStyles.statsCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[dashStyles.statsCardTitle, { color: colors.textRole.primary }]}>
             {cfg.labCardTitle}
           </Text>
-          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textRole.secondary }]}>
             {cfg.labCardStat1}
           </Text>
-          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textRole.secondary }]}>
             {cfg.labCardStat2}
           </Text>
         </View>
 
-        <View style={[dashStyles.statsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-          <Text style={[dashStyles.statsCardTitle, { color: colors.text }]}>
+        <View style={[dashStyles.statsCard, { backgroundColor: colors.surface.raised, borderColor: colors.borderRole.subtle }]}>
+          <Text style={[dashStyles.statsCardTitle, { color: colors.textRole.primary }]}>
             {cfg.simCardTitle}
           </Text>
-          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textRole.secondary }]}>
             {cfg.simStat1}
           </Text>
-          <Text style={[dashStyles.statsCardBody, { color: colors.textSoft }]}>
+          <Text style={[dashStyles.statsCardBody, { color: colors.textRole.secondary }]}>
             {cfg.simStat2}
           </Text>
         </View>
       </View>
 
-      <View style={[dashStyles.divider, { backgroundColor: colors.border }]} />
+      <View style={[dashStyles.divider, { backgroundColor: colors.borderRole.subtle }]} />
     </>
   );
 
@@ -591,18 +591,18 @@ export default function QuantMapScreen() {
           <WebPageHeader
             title="Quant Quarter"
             subtitle={`${completedCount} / ${totalLevels} levels complete · ${labsUnlocked} labs unlocked`}
-            accentColor={colors.accent}
+            accentColor={colors.accentRole.action}
           />
 
           <WebRow>
             <WebCol weight={1}>
-              <WebCard title="Your Progress" accentBar accentColor={colors.accent}>
+              <WebCard title="Your Progress" accentBar accentColor={colors.accentRole.action}>
                 <WebStatTile emoji="OK" label="Levels Done" value={`${completedCount}`} sub={`of ${totalLevels}`} color={colors.xpGreen} />
-                <WebStatTile emoji="LB" label="Labs Unlocked" value={`${labsUnlocked}`} sub={`of ${QUANT_LABS.length}`} color={colors.accent} />
-                <WebStatTile emoji="BS" label="Bosses Beaten" value={`${QUANT_LABS.filter(l => completed.includes(l.bossLevel)).length}`} sub="boss completions" color={colors.gold} />
+                <WebStatTile emoji="LB" label="Labs Unlocked" value={`${labsUnlocked}`} sub={`of ${QUANT_LABS.length}`} color={colors.accentRole.action} />
+                <WebStatTile emoji="BS" label="Bosses Beaten" value={`${QUANT_LABS.filter(l => completed.includes(l.bossLevel)).length}`} sub="boss completions" color={colors.accentRole.status} />
               </WebCard>
 
-              <WebCard title="Jump to Lab" accentBar accentColor={colors.gold} style={{ marginTop: 20 }}>
+              <WebCard title="Jump to Lab" accentBar accentColor={colors.accentRole.status} style={{ marginTop: 20 }}>
                 {QUANT_LABS.map(lab => {
                   const state = getLabState(lab, completed);
                   return (
@@ -618,10 +618,10 @@ export default function QuantMapScreen() {
                           backgroundColor: state === 'review'
                             ? colors.xpGreen + '20'
                             : state === 'locked'
-                              ? colors.bgSecondary
-                              : colors.accent + '20',
+                              ? colors.surface.subtle
+                              : colors.accentRole.action + '20',
                         }}>
-                          <Text style={{ fontSize: 10, fontWeight: '700', color: state === 'review' ? colors.xpGreen : state === 'locked' ? colors.textMuted : colors.accent }}>
+                          <Text style={{ fontSize: 10, fontWeight: FontWeight.bold, color: state === 'review' ? colors.xpGreen : state === 'locked' ? colors.textRole.muted : colors.accentRole.action }}>
                             {state === 'review' ? 'Review' : state === 'continue' ? 'Continue' : state === 'ready' ? 'Start' : 'Locked'}
                           </Text>
                         </View>
@@ -637,27 +637,27 @@ export default function QuantMapScreen() {
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
                 {QUANT_LABS.map(lab => {
                   const state = getLabState(lab, completed);
-                  const accent = state === 'review' ? colors.xpGreen : state === 'locked' ? colors.textMuted : colors.accent;
+                  const accent = state === 'review' ? colors.xpGreen : state === 'locked' ? colors.textRole.muted : colors.accentRole.action;
                   return (
                     <View key={lab.id} style={{ width: '48%' }}>
                       <WebCard accentBar accentColor={accent} style={{ opacity: state === 'locked' ? 0.6 : 1 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                           <Text style={{ fontSize: 18 }}>{lab.icon ?? 'Q'}</Text>
                           <View style={{ flex: 1 }}>
-                            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.text }}>{lab.name}</Text>
-                            <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 1 }}>
+                            <Text style={{ fontSize: 14, fontWeight: FontWeight.bold, color: colors.textRole.primary }}>{lab.name}</Text>
+                            <Text style={{ fontSize: 11, color: colors.textRole.muted, marginTop: 1 }}>
                               {state === 'review' ? 'Review complete run' : state === 'continue' ? 'Continue current run' : state === 'ready' ? 'Ready to start' : 'Locked path'}
                             </Text>
                           </View>
                         </View>
                         {lab.description ? (
-                          <Text style={{ fontSize: 12, color: colors.textSoft, lineHeight: 17, marginBottom: 10 }} numberOfLines={2}>
+                          <Text style={{ fontSize: 12, color: colors.textRole.secondary, lineHeight: 17, marginBottom: 10 }} numberOfLines={2}>
                             {lab.description}
                           </Text>
                         ) : null}
                         {lab.vrScenario && state !== 'locked' && (
-                          <View style={{ backgroundColor: colors.accent + '18', borderRadius: Radius.sm, padding: 7, marginBottom: 10 }}>
-                            <Text style={{ fontSize: 11, color: colors.accent, fontWeight: '700' }}>VR unlocks on boss</Text>
+                          <View style={{ backgroundColor: colors.accentRole.action + '18', borderRadius: Radius.sm, padding: 7, marginBottom: 10 }}>
+                            <Text style={{ fontSize: 11, color: colors.accentRole.action, fontWeight: FontWeight.bold }}>VR unlocks on boss</Text>
                           </View>
                         )}
                         {state !== 'locked' && state !== 'review' && (
@@ -665,7 +665,7 @@ export default function QuantMapScreen() {
                             style={{ backgroundColor: accent, borderRadius: Radius.md, paddingVertical: 8, alignItems: 'center' }}
                             onPress={() => handleLevelPress(lab.start)}
                           >
-                            <Text style={{ color: colors.textRole.inverse, fontSize: 12, fontWeight: '700' }}>{state === 'continue' ? 'Continue Lab' : 'Start Lab'}</Text>
+                            <Text style={{ color: colors.textRole.inverse, fontSize: 12, fontWeight: FontWeight.bold }}>{state === 'continue' ? 'Continue Lab' : 'Start Lab'}</Text>
                           </TouchableOpacity>
                         )}
                       </WebCard>
@@ -735,34 +735,34 @@ const makeStyles = (colors: ColorPalette) => StyleSheet.create({
   scrollContent: { ...webContainer, gap: Spacing.lg, paddingBottom: 18 },
   header: { backgroundColor: colors.navy, borderRadius: Radius.xl, padding: Spacing.xl, gap: Spacing.md },
   headerTop: { gap: 2 },
-  headerEyebrow: { fontSize: 10, fontWeight: '900', letterSpacing: 1, textTransform: 'uppercase' },
-  headerTitle: { fontSize: FontSize.xxl, fontWeight: '900', color: colors.textRole.inverse },
-  headerSub: { fontSize: FontSize.sm, color: '#94a3b8', fontWeight: '600' },
+  headerEyebrow: { fontSize: 10, fontWeight: FontWeight.black, letterSpacing: 1, textTransform: 'uppercase' },
+  headerTitle: { fontSize: FontSize.xxl, fontWeight: FontWeight.black, color: colors.textRole.inverse },
+  headerSub: { fontSize: FontSize.sm, color: '#94a3b8', fontWeight: FontWeight.semibold },
   headerStats: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
   stat: { alignItems: 'center' },
-  statVal: { fontSize: FontSize.xl, fontWeight: '800', color: colors.textRole.inverse },
-  statLabel: { fontSize: FontSize.xs, color: '#94a3b8', fontWeight: '600' },
+  statVal: { fontSize: FontSize.xl, fontWeight: FontWeight.heavy, color: colors.textRole.inverse },
+  statLabel: { fontSize: FontSize.xs, color: '#94a3b8', fontWeight: FontWeight.semibold },
   statDivider: { width: 1, height: 32, backgroundColor: '#334155' },
   overallBar: { height: 6, backgroundColor: '#334155', borderRadius: 3, overflow: 'hidden' },
   overallFill: { height: '100%', backgroundColor: colors.accentRole.action, borderRadius: 3 },
-  overallLabel: { fontSize: FontSize.xs, color: '#94a3b8', textAlign: 'center', fontWeight: '600' },
+  overallLabel: { fontSize: FontSize.xs, color: '#94a3b8', textAlign: 'center', fontWeight: FontWeight.semibold },
   labCard: { backgroundColor: colors.surface.raised, borderRadius: Radius.xl, overflow: 'hidden', borderWidth: 1, borderColor: colors.borderRole.subtle },
   labCardLocked: { opacity: 0.65 },
   labHeader: { flexDirection: 'row', gap: Spacing.md, padding: Spacing.lg, alignItems: 'flex-start' },
   labIcon: { fontSize: 18, lineHeight: 22 },
-  labName: { fontSize: FontSize.lg, fontWeight: '900', color: colors.textRole.inverse, marginTop: 2 },
-  labSubtitle: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)', fontWeight: '600', marginTop: 2 },
+  labName: { fontSize: FontSize.lg, fontWeight: FontWeight.black, color: colors.textRole.inverse, marginTop: 2 },
+  labSubtitle: { fontSize: FontSize.xs, color: 'rgba(255,255,255,0.8)', fontWeight: FontWeight.semibold, marginTop: 2 },
   tierPill: { alignSelf: 'flex-start', borderRadius: Radius.full, paddingHorizontal: 8, paddingVertical: 2, marginBottom: 4 },
-  tierText: { fontSize: FontSize.xs, fontWeight: '800', letterSpacing: 0.5 },
+  tierText: { fontSize: FontSize.xs, fontWeight: FontWeight.heavy, letterSpacing: 0.5 },
   stateBadge: { borderRadius: Radius.full, paddingHorizontal: 10, paddingVertical: 5, alignSelf: 'flex-start' },
-  stateBadgeText: { fontSize: 10, fontWeight: '800' },
+  stateBadgeText: { fontSize: 10, fontWeight: FontWeight.heavy },
   labBody: { padding: Spacing.lg, gap: Spacing.md },
   labDesc: { fontSize: FontSize.sm, color: colors.textRole.secondary, lineHeight: 20 },
   stateHelper: { fontSize: FontSize.xs, color: colors.textRole.muted, lineHeight: 18 },
   progressRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   progressTrack: { flex: 1, height: 6, backgroundColor: colors.borderRole.subtle, borderRadius: 3, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: 3 },
-  progressLabel: { fontSize: FontSize.xs, color: colors.textRole.muted, fontWeight: '700', minWidth: 72, textAlign: 'right' },
+  progressLabel: { fontSize: FontSize.xs, color: colors.textRole.muted, fontWeight: FontWeight.bold, minWidth: 72, textAlign: 'right' },
   vrBadge: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 1.5, borderRadius: Radius.md, paddingHorizontal: 10, paddingVertical: 6, alignSelf: 'flex-start' },
   vrBadgeIcon: { fontSize: 12, fontWeight: '800' },
   vrBadgeText: { fontSize: FontSize.xs, fontWeight: '800' },

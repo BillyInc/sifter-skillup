@@ -61,7 +61,7 @@ export function QualificationUpgradesScreen() {
       {() => (
         <View style={styles.body}>
           <Text style={[styles.lead, { color: colors.textRole.secondary }, CompassFonts.body]}>
-            An OND or HND is not the ceiling — it's a rung. The routes below move
+            An OND or HND is not the ceiling — it&apos;s a rung. The routes below move
             you up the ladder honestly, naming the entry requirement and the real
             number of years each step takes, with no over-claiming.
           </Text>

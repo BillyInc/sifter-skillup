@@ -79,11 +79,13 @@ export function RouteLine({
     draw.value = withTiming(1, Timing.route);
   }, [isStatic, reduced, draw]);
 
+  // ── hooks called unconditionally ──
+  const ruleStyle = useAnimatedStyle(() => ({
+    transform: [{ scaleX: draw.value }],
+  }));
+
   // ── "rule": a header underline that wipes in from the left ──
   if (variant === 'rule') {
-    const ruleStyle = useAnimatedStyle(() => ({
-      transform: [{ scaleX: draw.value }],
-    }));
     return (
       <View style={[styles.ruleTrack, { backgroundColor: colors.border }, style]}>
         <AView

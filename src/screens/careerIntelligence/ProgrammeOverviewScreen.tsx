@@ -241,7 +241,7 @@ function TrackAEmployment({
             source="Standard national naming"
           />
           <Text style={[styles.provenanceNote, { color: colors.textMuted }]}>
-            Showing the standard programme name — your institution's exact naming
+            Showing the standard programme name — your institution&apos;s exact naming
             is being verified.
           </Text>
         </View>

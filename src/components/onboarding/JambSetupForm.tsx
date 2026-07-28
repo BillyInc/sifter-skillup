@@ -288,7 +288,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             kind="programme"
           />
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            🎓 We'll surface the universities offering this programme and their
+            🎓 We&apos;ll surface the universities offering this programme and their
             JAMB / Post-UTME cut-offs from the latest admission snapshot.
           </Text>
         </View>
@@ -304,7 +304,7 @@ export function JambSetupForm({ value, onChange, onContinue }: SetupFormProps) {
             multi
           />
           <Text style={[styles.caption, { color: colors.textMuted }]}>
-            We'll match these to programmes you qualify for once programme data
+            We&apos;ll match these to programmes you qualify for once programme data
             is live.
           </Text>
           <ChoiceChips

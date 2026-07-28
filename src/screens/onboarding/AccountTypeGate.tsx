@@ -96,7 +96,7 @@ export default function AccountTypeGate() {
         <Text
           style={[styles.title, { color: colors.textRole.primary }, CompassFonts.displayBold]}
         >
-          Who's joining?
+          Who&apos;s joining?
         </Text>
         <Text
           style={[styles.sub, { color: colors.textRole.secondary }, CompassFonts.body]}

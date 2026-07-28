@@ -120,7 +120,7 @@ export function ProfessionalSetupForm({
           Your background
         </Text>
         <Text style={[styles.sub, { color: colors.textSoft }]}>
-          Tell us where you're coming from so we can show the right next steps.
+          Tell us where you&apos;re coming from so we can show the right next steps.
         </Text>
       </View>
 

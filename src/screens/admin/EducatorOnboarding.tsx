@@ -337,8 +337,8 @@ export default function EducatorOnboarding() {
           </Text>
           <Text style={[styles.sub, { color: colors.textSoft }]}>
             You can explore national aggregate intelligence right away. Verifying
-            unlocks your institution's own dashboard — the programmes, domains
-            and demand specific to you. We'll capture your claim now; review
+            unlocks your institution&apos;s own dashboard — the programmes, domains
+            and demand specific to you. We&apos;ll capture your claim now; review
             happens during the institutional rollout, so verification stays
             pending until then.
           </Text>
@@ -358,7 +358,7 @@ export default function EducatorOnboarding() {
           />
 
           <Text style={[styles.note, { color: colors.textMuted }]}>
-            📄 No document needed right now. You'll be able to upload proof of
+            📄 No document needed right now. You&apos;ll be able to upload proof of
             affiliation later — your dashboard stays in the national-aggregate
             tier until verification completes.
           </Text>

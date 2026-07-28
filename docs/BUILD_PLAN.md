@@ -17,6 +17,7 @@
 | Phase 7b | ✅ | Search integration: SearchOverlay wired into ReferenceShell (global search trigger on mobile + web), scoped SearchBar in OpportunitiesScreen. Removed legacy search stub from shell. |
 | Phase 8a | ✅ | New components: Toast (provider + inline + showToast), StatusBadge (locked/pending/verified/live), SkeletonRedesign (shimmer bar + SkeletonText/Avatar/Card/Row/Stat), PersonaCard, ApplicationWindowTimeline. Secondary button variant added to SifterButton. |
 | Phase 8b | ✅ | InputComponents (TextInput, Select, ChipSelect, DatePicker), TierBadgeView freshness stamp, MetricTooltip relocated to careerIntelligence/ + semantic tokens, Banner unified (offline/sync/streak/celebration variants + dismiss), SifterButton `danger` → `destructive` rename. |
+| Phase 9 | ✅ | All 9 legacy screens migrated: PortfolioScreen, PortfolioHubScreen, SkillsScreen, QuantMapScreen, OnboardingScreen, HomeScreen, GitHubScreen, LessonScreen, InterviewModeScreen. All pre-existing type errors fixed (13→0). Zero TypeScript errors. |
 | Fixes | ✅ | webContainer width (30+ errors), CareerProfileScreen, WebGrid, IslandMapScreen |
 
 ---
@@ -172,21 +173,25 @@ All structural components built. Input system complete. Badge system enhanced wi
 
 ---
 
-## Phase 9 — Legacy Screen Migration (9 screens)
+## Phase 9 — Legacy Screen Migration ✅
 
-Full Colors→semantic tokens + CompassFonts migration.
+All 9 legacy screens migrated to semantic tokens + CompassFonts. All 13 pre-existing type errors fixed. **Zero TypeScript errors.**
 
-| Screen | Lines | Work |
-|--------|-------|------|
-| `GitHubScreen.tsx` | ~1043 | Full migration: Colors→semantic tokens, CompassFonts |
-| `LessonScreen.tsx` | ~1414 | Full migration: Colors→semantic tokens, CompassFonts |
-| `InterviewModeScreen.tsx` | ~570 | Full migration: Colors→semantic tokens, CompassFonts |
-| `PortfolioScreen.tsx` | — | Remove Colors imports, use semantic tokens only |
-| `PortfolioHubScreen.tsx` | — | Remove Colors imports, use semantic tokens only |
-| `SkillsScreen.tsx` | — | Remove Colors imports, use semantic tokens only |
-| `QuantMapScreen.tsx` | — | Remove Colors imports, use semantic tokens only, fix active_track_id |
-| `OnboardingScreen.tsx` | — | Remove Colors imports, use semantic tokens only (legacy onboarding — may be dead code) |
-| `HomeScreen.tsx` | — | Fix 5 string/number type errors |
+| Screen | Status |
+|--------|--------|
+| `PortfolioScreen.tsx` | ✅ Colors→semantic tokens |
+| `PortfolioHubScreen.tsx` | ✅ Colors→semantic tokens |
+| `SkillsScreen.tsx` | ✅ Colors→semantic tokens |
+| `QuantMapScreen.tsx` | ✅ Colors→semantic tokens + fixed `active_track_id` → `active_track` |
+| `OnboardingScreen.tsx` | ✅ Colors→semantic tokens |
+| `HomeScreen.tsx` | ✅ Fixed 5 string/number type errors (TrackIsometricScene width/height parsing) |
+| `GitHubScreen.tsx` | ✅ Colors→semantic tokens + FontWeight constants |
+| `LessonScreen.tsx` | ✅ Colors→semantic tokens (102 refs) |
+| `InterviewModeScreen.tsx` | ✅ Colors→semantic tokens + fixed `statusSoft` → `${accentRole.status}18` |
+| `GuildScreen.tsx` | ✅ Pre-existing errors resolved |
+| `WorldScreen.tsx` | ✅ Pre-existing errors resolved |
+| `FeedScreen.tsx` | ✅ CompassFonts spread fix (3 errors) |
+| `StarknetLabRef` (type) | ✅ Added `title?: string` property |
 
 ---
 
@@ -344,15 +349,9 @@ The 37 clusters feed directly into expert dossier categories. Each cluster repre
 
 ---
 
-## Pre-Existing Errors Still Open (9)
+## Pre-Existing Errors — RESOLVED ✅
 
-| Error | File | Fix |
-|-------|------|-----|
-| string/number type | HomeScreen.tsx:305,306,767,768 | Fix prop types |
-| track vs island comparison | HomeScreen.tsx:425 | Fix union type |
-| title missing on StarknetLabRef | LessonScreen.tsx:852,918 | Add title to type |
-| active_track_id → active_track | QuantMapScreen.tsx:444 | Rename property |
-| accentColor missing | WorldScreen.tsx:344 | Add to FieldSkillTrack |
+All 13 pre-existing TypeScript errors fixed during Phase 9. Zero errors remain.
 
 ---
 

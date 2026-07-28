@@ -415,7 +415,7 @@ export function CareerChangerScreen() {
           What did you study or do?
         </Text>
         <Text style={[styles.pickerHelp, { color: colors.textRole.muted }, CompassFonts.body]}>
-          Tell us your background field and we'll find the fields your existing
+          Tell us your background field and we&apos;ll find the fields your existing
           skills transfer into.
         </Text>
         <View
@@ -563,13 +563,13 @@ function IntroCard({ colors }: { colors: ColorPalette }) {
     <SifterCard style={styles.introCard}>
       <Text style={styles.introIcon}>🧭</Text>
       <Text style={[styles.introTitle, { color: colors.textRole.primary }, CompassFonts.displayBold]}>
-        Changing direction isn't starting from zero
+        Changing direction isn&apos;t starting from zero
       </Text>
       <Text style={[styles.introBody, { color: colors.textRole.secondary }, CompassFonts.body]}>
-        Pick the field you studied or worked in above. We'll rank the fields you
+        Pick the field you studied or worked in above. We&apos;ll rank the fields you
         can realistically move into — ordered by how much of your existing skill
         set transfers — and show you exactly which skills carry over. Some moves
-        are short sideways steps; others are bigger, honest stretches. We'll tell
+        are short sideways steps; others are bigger, honest stretches. We&apos;ll tell
         you which is which.
       </Text>
     </SifterCard>
